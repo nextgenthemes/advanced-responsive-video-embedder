@@ -1,5 +1,4 @@
-jQuery(
-    function( $ ) {
+jQuery( function($) {
 	
 	var w = 770;
 	w = $(window).width();

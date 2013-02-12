@@ -143,7 +143,7 @@ jQuery(document).ready(function($) {
 					return output;
 				}
 
-				regExp = /dailymotion\.com\/(?:video|hub)\/([a-z0-9]{2,6})/i;
+				regExp = /dailymotion\.com\/(?:video|hub)\/([a-z0-9]{2,7})/i;
 				match = code.match(regExp);
 				if (match&&match[1]) {
 					output[0] = 'dailymotion';
@@ -152,7 +152,7 @@ jQuery(document).ready(function($) {
 				}
 
 				// dailymotion with # in url
-				regExp = /dailymotion\.com\/(?:video|hub)\/[a-z0-9]{2,6}_[a-z0-9_\-]+#video=([a-z0-9]{2,6})/i;
+				regExp = /dailymotion\.com\/(?:video|hub)\/[a-z0-9]{2,7}_[a-z0-9_\-]+#video=([a-z0-9]{2,7})/i;
 				match = code.match(regExp);
 				if (match&&match[1]) {
 					output[0] = 'dailymotion';
@@ -161,7 +161,7 @@ jQuery(document).ready(function($) {
 				}
 
 				// dailymotion playlist
-				regExp = /dailymotion\.com\/(?:playlist\/|widget\/jukebox\?list\[\]=%2Fplaylist%2F)([a-z0-9]{6})/i;
+				regExp = /dailymotion\.com\/(?:playlist\/|widget\/jukebox\?list\[\]=%2Fplaylist%2F)([a-z0-9]+)/i;
 				match = code.match(regExp);
 				if (match&&match[1]) {
 					output[0] = 'dailymotionlist';
@@ -308,8 +308,6 @@ jQuery(document).ready(function($) {
 				}
 
 				// regExp = /clipfish\.de\/(?:embed_image\/\?vid=|[a-z\/\-]+)([0-9]{2,7})/i;
-
-
 
 				console.log('nothing matched');
 				return 'nothing matched';

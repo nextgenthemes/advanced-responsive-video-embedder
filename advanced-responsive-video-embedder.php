@@ -3,7 +3,7 @@
 Plugin Name: Advanced Responsive Video Embedder
 Plugin URI: http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/
 Description: Embed Videos with simple shortcodes from many providers in full resonsible sizes. Generate thumbnails of videos to open them in colorbox.
-Version: 1.8
+Version: 1.8beta
 Author: Nicolas Jonas
 Author URI: http://nextgenthemes.com
 Licence: GPL v3
@@ -941,7 +941,7 @@ function arve_admin_notice() {
         ?>
         <div class="updated">
         	<p>
-        	Sorry for this nag but i am planning to remove the fixed mode from the Advanced Responsive Video Embedder Plugin and i suggest you use the max-width feature instead. If you really use/need this feature <a href="https://github.com/nextgenthemes/advanced-responsive-video-embedder/issues">let me know</a> please. | <a href="?arve_nag_ignore=0">Dismiss</a>
+        	Sorry for this nag but i am planning to remove the fixed mode from the Advanced Responsive Video Embedder Plugin and i suggest you use the max-width feature instead. If you really use/need this feature <a href="https://github.com/nextgenthemes/advanced-responsive-video-embedder/issues">let me know</a> please. Check out the new button in your rich text editor! <a href="?arve_nag_ignore=0">Dismiss</a>
         	</p>
     	</div>
         <?php

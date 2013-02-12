@@ -21,7 +21,7 @@ Simple Lightweight Plugin lets embed videos with a click of a button from many p
 * Blip
 * Break
 * CollegeHumor
-* Dailymotion
+* Dailymotion (inc. playlists)
 * FunnyOrDie
 * Gametrailers
 * Liveleak
@@ -35,12 +35,12 @@ Simple Lightweight Plugin lets embed videos with a click of a button from many p
 * Viddler
 * Videojug
 * Vimeo
-* YouTube
+* YouTube (inc. playlists)
 * More in future versions
 
 == Installation ==
 
-1. For most Hosts the usuall way: WP Dashboard -> Plugins -> Add New -> Search `Advanced Responsive Video Embedder` -> Install -> Activate -> Skip to step 5
+1. For most webhosts the usuall way: WP Dashboard -> Plugins -> Add New -> Search `Advanced Responsive Video Embedder` -> Install -> Activate -> Skip to step 5
 2. Manuall install: Extract the zip file
 3. Upload the `advanced-responsive-video-embedder` directory to the `/wp-content/plugins/` directory
 4. Activate the plugin through the 'Plugins' menu in WordPress
