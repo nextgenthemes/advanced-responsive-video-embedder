@@ -12,7 +12,7 @@ Embed videos with a click of a button from many providers with full responsive s
 
 == Description ==
 
-Simple Lightweight Plugin lets embed videos with a click of a button from many providers with full responsive sizes. Show videos as thumbnails and let them open in colorbox. Clean and easy shortcode Syntax.
+Simple lightweight plugin lets you embed videos from many providers with full responsive sizes with a click of a button. Show videos as thumbnails and let them open in colorbox. Clean and easy shortcode Syntax.
 
 [More info and demo](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/)
 
@@ -30,6 +30,7 @@ Simple Lightweight Plugin lets embed videos with a click of a button from many p
 * Myspace
 * Myvideo
 * Snotr
+* Spike
 * Ustream
 * Veoh
 * Viddler
@@ -46,7 +47,7 @@ Simple Lightweight Plugin lets embed videos with a click of a button from many p
 4. Activate the plugin through the 'Plugins' menu in WordPress
 5. Make some Options if you like
 6. If you want to use the `Thumbnail Mode` you need to install the [jQuery Colorbox Plugin](http://wordpress.org/extend/plugins/jquery-colorbox/) or make colorbox load in any way on your WordPress
-6. Click the Video icon in your wordpress Post editor, enjoy!
+6. Click the Video icon in your WordPress rich text editor, enjoy!
 
 == Frequently Asked Questions ==
 
@@ -63,11 +64,11 @@ Depends, but most likely yes.
 = TODO =
 * autoplay maybe
 
-= 1.8 =
+= 1.8beta =
 * added new tinymce botton with dialog to detect ids from URL's and embed codes and automatically create shortcodes
 * removed the image resizer (Faster and more secure for servers), now uses just CSS. Polyfill for for IE to support 'background-size' included.
-* added comedycentral
-* videos
+* added comedycentral, spike
+* removed google video, it died
 * lots of improvements and fixes
 
 = 1.7 =
