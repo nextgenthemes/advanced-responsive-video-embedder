@@ -370,7 +370,6 @@ class ArveMakeShortcodes {
 		), $atts ) );
 		return arve_build_embed($id, $this->shortcode, $align, $mode, $maxw, $w, $h );
 	}
-	
 }
 
 function arve_do_youtube_shortcode( $atts ) {
@@ -641,18 +640,18 @@ switch ($time) {
 }
 
 // for testing
-// echo "________________________after valid check<br />";
-// echo "id: "; 		var_dump($id);			echo "<br />";
-// echo "provider: "; 	var_dump($provider);	echo "<br />";
-// echo "align: "; 		var_dump($align);		echo "<br />";
-// echo "mode: ";		var_dump($mode);		echo "<br />";
-// echo "maxwidth: "; 	var_dump($width);		echo "<br />";
-// echo "width: "; 		var_dump($width);		echo "<br />";
-// echo "height: "; 	var_dump($height); 		echo "<br />";
-// echo "time: "; 		var_dump($time); 		echo "<br />";
-// echo "customwidth: ";	var_dump($customwidth);		echo "<br />";
-// echo "customheight: ";	var_dump($customheight);	echo "<br />";
-// echo "<hr /></p>";
+echo "________________________after valid check<br />";
+echo "id: "; 		var_dump($id);			echo "<br />";
+echo "provider: "; 	var_dump($provider);	echo "<br />";
+echo "align: "; 		var_dump($align);		echo "<br />";
+echo "mode: ";		var_dump($mode);		echo "<br />";
+echo "maxwidth: "; 	var_dump($width);		echo "<br />";
+echo "width: "; 		var_dump($width);		echo "<br />";
+echo "height: "; 	var_dump($height); 		echo "<br />";
+echo "time: "; 		var_dump($time); 		echo "<br />";
+echo "customwidth: ";	var_dump($customwidth);		echo "<br />";
+echo "customheight: ";	var_dump($customheight);	echo "<br />";
+echo "<hr /></p>";
 
 $iframe = true;
 
@@ -718,7 +717,7 @@ case 'videojug':
 	$param_autoplay = '';
 	break;
 case 'veoh':
-	$urlcode = 'http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1311&amp;permalinkId=' . $id . '&amp;player=videodetailsembedded&amp;id=anonymous';
+	$urlcode = 'http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1396&amp;permalinkId=' . $id . '&amp;player=videodetailsembedded&amp;id=anonymous';
 	$param_no_autoplay = '&amp;videoAutoPlay=0';
 	$param_autoplay = '&amp;videoAutoPlay=1';
 	break;

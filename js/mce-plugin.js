@@ -143,6 +143,14 @@ jQuery(document).ready(function($) {
 					return output;
 				}
 
+				regExp = /veoh\.com\/watch\/([a-z0-9]+)/i;
+				match = code.match(regExp);
+				if (match&&match[1]) {
+					output[0] = 'veoh';
+					output[1] = match[1];
+					return output;
+				}
+
 				regExp = /dailymotion\.com\/(?:video|hub)\/([a-z0-9]{2,7})/i;
 				match = code.match(regExp);
 				if (match&&match[1]) {
