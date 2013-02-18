@@ -1,5 +1,7 @@
-<?php
-/*
+<?php /*
+
+*******************************************************************************
+
 Plugin Name: Advanced Responsive Video Embedder
 Plugin URI: http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/
 Description: Embed Videos with simple shortcodes from many providers in full resonsible sizes. Generate thumbnails of videos to open them in colorbox.
@@ -7,7 +9,15 @@ Version: 1.8beta
 Author: Nicolas Jonas
 Author URI: http://nextgenthemes.com
 Licence: GPL v3
-*/
+
+*******************************************************************************
+
+Copyleft (ɔ) 2013
+_  _ ____ _  _ ___ ____ ____ _  _ ___ _  _ ____ _  _ ____ ____  ____ ____ _  _ 
+|\ | |___  \/   |  | __ |___ |\ |  |  |__| |___ |\/| |___ [__   |    |  | |\/| 
+| \| |___ _/\_  |  |__] |___ | \|  |  |  | |___ |  | |___ ___] .|___ |__| |  | 
+
+*******************************************************************************/
 
 if ( ! defined( 'ABSPATH' ) )
 	die( "Can't load this file directly" );

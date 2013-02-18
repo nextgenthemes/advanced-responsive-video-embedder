@@ -67,6 +67,7 @@ Depends, but most likely yes.
 = 1.8beta =
 * added new tinymce botton with dialog to detect ids from URL's and embed codes and automatically create shortcodes
 * removed the image resizer (Faster and more secure for servers), now uses just CSS. Polyfill for for IE to support 'background-size' included.
+* changed the play overlay image to a bigger one
 * added comedycentral, spike
 * removed google video, it died
 * lots of improvements and fixes
