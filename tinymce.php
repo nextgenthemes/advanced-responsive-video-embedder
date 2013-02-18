@@ -42,7 +42,7 @@ class ArveButton
 						<label for="arve-url">URL</label><br>
 						<small class="description">
 							<?php _e('For Blip.tv, Videojug, Movieweb, Gametrailers and Comedycentral paste the embed code, for all others paste the URL!<br>', 'arve-plugin'); ?><br>
-							<a id="arve-open-url-info"><?php _e('More info', 'arve-plugin'); ?></a>
+							<a href="#" id="arve-open-url-info"><?php _e('More info', 'arve-plugin'); ?></a>
 						</small>
 
 						<div id="arve-url-info" style="display: none; padding: 0 15px;">
@@ -71,11 +71,11 @@ class ArveButton
 				</tr>
 				<tr>
 					<th>
-						<label for="arve-float"><?php _e('Float', 'arve-plugin'); ?></label><br>
+						<label for="arve-align"><?php _e('Align', 'arve-plugin'); ?></label><br>
 						<small class="description"><?php _e('');?></small>
 					</th>
 					<td>
-						<select id="arve-float">
+						<select id="arve-align">
 							<option value=""></option>
 							<option value="left"><?php _e('left', 'arve-plugin'); ?></option>
 							<option value="right"><?php _e('right', 'arve-plugin'); ?></option>
@@ -124,7 +124,7 @@ class ArveButton
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" style="padding: 15px; font-size: 22px; text-align: center;" id="arve-shortcode">
+					<td colspan="2" style="padding: 15px; font-size: 17px; text-align: center;" id="arve-shortcode">
 						-
 					</td>
 				</tr>	

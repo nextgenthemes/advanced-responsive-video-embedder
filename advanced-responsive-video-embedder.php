@@ -33,13 +33,14 @@ add_action( 'init', 'arve_options' );
 function arve_options( $reset = false ) {
 
 	$defaults = array(
-	'mode'           => 'normal',
-	'fakethumb'      => 0,
-	'thumb_width'    => 300,
-	'thumb_height'   => 180,
-	'video_width'    => 0,
-	'video_height'   => 0,
-	'video_maxwidth' => 0,
+	'mode'                  => 'normal',
+	'fakethumb'             => 0,
+	'thumb_width'           => 300,
+	'thumb_height'          => 180,
+	'custom_thumb_image'    => '',
+	'video_width'           => 0,
+	'video_height'          => 0,
+	'video_maxwidth'        => 0,
 	
 	'archiveorg_tag'      => 'archiveorg',
 	'bliptv_tag'          => 'bliptv',
@@ -100,12 +101,13 @@ function arve_validate_options( $input ) {
 	$output = array();
 
 	$output['mode'] = wp_filter_nohtml_kses( $input['mode'] );
+	$output['custom_thumb_image'] = esc_url_raw( $input['custom_thumb_image'] );
 	
 	$output['fakethumb']      = (int) $input['fakethumb'];
 	$output['thumb_width']    = (int) $input['thumb_width'];
 	$output['thumb_height']   = (int) $input['thumb_height'];
-	$output['video_width']    = (int) $input['video_width'];
-	$output['video_height']   = (int) $input['video_height'];
+	//$output['video_width']    = (int) $input['video_width'];
+	//$output['video_height']   = (int) $input['video_height'];
 	$output['video_maxwidth'] = (int) $input['video_maxwidth'];
 	
 	if( $input['thumb_width'] < 50)
@@ -197,13 +199,10 @@ function arve_render_form() {
 			</td>
 		</tr>
 		<tr valign="top">
-			<th scope="row"><label>Fixed Video Size:</label></th>
+			<th scope="row"><label for="custom_thumb_image">Custom Thumbnail Image: </label></th>
 			<td>
-				<label for="arve_options[video_width]">Width</label>
-				<input name="arve_options[video_width]" type="text" value="<?php echo $options['video_width'] ?>" class="small-text"><br/>
-				<label for="arve_options[video_height]">Height</label>
-				<input name="arve_options[video_height]" type="text" value="<?php echo $options['video_height'] ?>" class="small-text"><br/>
-				<span class='description'><?php _e('Only needed for fixed mode. Must be 50+ to work. Recommended: Set to "0" if you don\'t want to use the fixed mode without shortcode variables (w=xxx h=xxx) anyway.'); ?></span>
+				<input name="arve_options[custom_thumb_image]" type="text" value="<?php echo $options['custom_thumb_image'] ?>" class="large-text"><br>
+				<span class='description'><?php _e('To be used instead of black background. Upload a 16:10 Image with a size bigger or equal the thumbnials size you want to use into your WordPress and paste the URL of it here.'); ?></span>
 			</td>
 		</tr>
 	</table>
@@ -243,7 +242,7 @@ function arve_render_form() {
 add_action( 'wp_enqueue_scripts', 'arve_jquery_args' );
 
 function arve_jquery_args() {
-	wp_enqueue_script( 'arve-colorbox-args', plugin_dir_url( __FILE__ ) . 'js/colorbox.args.js', array( 'colorbox' ), '1.0', TRUE );
+	wp_enqueue_script( 'arve-colorbox-args', plugin_dir_url( __FILE__ ) . 'js/colorbox.args.js', array( 'colorbox' ), '1.0', true );
 }
 
 add_action( 'wp_enqueue_scripts', 'arve_style');
@@ -491,9 +490,11 @@ $output = '';
 $thumbnail = null;
 $randid = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 10);
 $options = get_option('arve_options');
+
 $fakethumb = $options['fakethumb'];
 $thumb_width = $options['thumb_width'];
 $thumb_height = $options['thumb_height'];
+$custom_thumb_image = $options['custom_thumb_image'];
 
 $flashvars = '';
 $flashvars_autoplay = '';
@@ -640,18 +641,18 @@ switch ($time) {
 }
 
 // for testing
-echo "________________________after valid check<br />";
-echo "id: "; 		var_dump($id);			echo "<br />";
-echo "provider: "; 	var_dump($provider);	echo "<br />";
-echo "align: "; 		var_dump($align);		echo "<br />";
-echo "mode: ";		var_dump($mode);		echo "<br />";
-echo "maxwidth: "; 	var_dump($width);		echo "<br />";
-echo "width: "; 		var_dump($width);		echo "<br />";
-echo "height: "; 	var_dump($height); 		echo "<br />";
-echo "time: "; 		var_dump($time); 		echo "<br />";
-echo "customwidth: ";	var_dump($customwidth);		echo "<br />";
-echo "customheight: ";	var_dump($customheight);	echo "<br />";
-echo "<hr /></p>";
+// echo "________________________after valid check<br />";
+// echo "id: "; 		var_dump($id);			echo "<br />";
+// echo "provider: "; 	var_dump($provider);	echo "<br />";
+// echo "align: "; 		var_dump($align);		echo "<br />";
+// echo "mode: ";		var_dump($mode);		echo "<br />";
+// echo "maxwidth: "; 	var_dump($width);		echo "<br />";
+// echo "width: "; 		var_dump($width);		echo "<br />";
+// echo "height: "; 	var_dump($height); 		echo "<br />";
+// echo "time: "; 		var_dump($time); 		echo "<br />";
+// echo "customwidth: ";	var_dump($customwidth);		echo "<br />";
+// echo "customheight: ";	var_dump($customheight);	echo "<br />";
+// echo "<hr /></p>";
 
 $iframe = true;
 
@@ -893,8 +894,12 @@ if ( $mode == 'fixed' ) {
 	}
 	
 	$thumbnail_background_css = '';
-	if ( $thumbnail )
+	if ( $thumbnail ) {
 		$thumbnail_background_css = "style='background-image: url($thumbnail);'";
+	} elseif ( $custom_thumb_image != '' ) {
+		$custom_thumb_image = esc_url( $custom_thumb_image );
+		$thumbnail_background_css = "style='background-image: url($custom_thumb_image);'";
+	}
 
 	$output .= "<div class='arve-thumbsize arve-thumb-wrapper $align' $thumbnail_background_css>";
 

@@ -16,7 +16,7 @@ tinymce.create('tinymce.plugins.arve', {
 					var width = jQuery(window).width(), H = jQuery(window).height(), W = ( 720 < width ) ? 720 : width;
 					W = W - 80;
 					H = H - 84;
-					tb_show( 'My Gallery Shortcode', '#TB_inline?width=' + W + '&height=' + H + '&inlineId=arve-form' );
+					tb_show( 'Advanced Responsive Video Embedder Shortcode Creater', '#TB_inline?width=' + W + '&height=' + H + '&inlineId=arve-form' );
 				}
 			});
 			return button;
@@ -53,7 +53,7 @@ jQuery(document).ready(function($) {
 					'id'         : '',
 					'mode'       : '',
 					'maxw'       : '',
-					'float'      : ''
+					'align'      : ''
 				};
 
 				var shortcode = '[' + $('#arve-provider').val();
@@ -119,11 +119,11 @@ jQuery(document).ready(function($) {
 				var match;
 				var output = new Array(2);
 
-				regExp = /(?:vimeo\.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/))?([0-9]+)/i;
+				regExp = /vimeo\.com\/(?:(?:channels\/[A-z]+\/)|(?:groups\/[A-z]+\/videos\/))?([0-9]+)/i;
 				match = code.match(regExp);
-				if (match&&match[5]) {
+				if (match&&match[1]) {
 					output[0] = 'vimeo';
-					output[1] = match[5];
+					output[1] = match[1];
 					return output;
 				}
 
@@ -331,7 +331,7 @@ jQuery(document).ready(function($) {
 				}
 			});
 
-			$('#arve-url, #arve-provider, #arve-id, #arve-maxw, #arve-mode, #arve-float').bind('keyup mouseup change',function() {
+			$('#arve-url, #arve-provider, #arve-id, #arve-maxw, #arve-mode, #arve-align').bind('keyup mouseup change',function() {
 				console.log('some field changed');
 
 				shortcode = create_shortcode();
