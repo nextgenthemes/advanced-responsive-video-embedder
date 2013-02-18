@@ -682,7 +682,7 @@ if ( in_array($provider, $no_wmode_transparent) )
 
 switch ($provider) {
 case 'youtube':
-	$urlcode = 'http://www.youtube-nocookie.com/embed/' . $id . '?rel=0&amp;autohide=1&amp;hd=1&amp;iv_load_policy=3&amp;wmode=transparent' . $time;
+	$urlcode = 'http://www.youtube-nocookie.com/embed/' . $id . '?rel=0&amp;autohide=1&amp;hd=1&amp;iv_load_policy=3&amp;wmode=transparent&amp;modestbranding=1' . $time;
 	$param_no_autoplay = '&amp;autoplay=0';
 	$param_autoplay = '&amp;autoplay=1';
 	break;
