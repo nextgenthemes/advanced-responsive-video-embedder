@@ -57,9 +57,8 @@ Depends, but most likely yes.
 
 == Changelog ==
 
-= 2.2-beta =
+= 2.3-beta =
 * fix for maxwidth wrapper no maxwidth option is set
-* 
 
 = 2.1-beta =
 * Security and general code improvements
