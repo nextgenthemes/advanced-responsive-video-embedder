@@ -330,12 +330,15 @@ add_action( 'wp_print_styles', 'arve_style');
 function arve_style() {
 	$options = get_option('arve_options');
 
-	$css = '';
+	$maxwidth = '';
+	if ( (int) $options["video_maxwidth"] > 0 )
+		$maxwidth = 'max-width: ' . (int) $options["video_maxwidth"] . 'px;';
 
-	if ( $options["video_maxwidth"] > 0 )
-		$css .= '.arve-maxwidth-wrapper { width: 100%; max-width: ' . (int) $options["video_maxwidth"] . 'px; }';
-
-	$css .= '
+	$css = '
+	.arve-maxwidth-wrapper { 
+		width: 100%;
+		' . $maxwidth . '
+	}
 	.arve-embed-container {
 		position: relative;
 		padding-bottom: 56.25%; /* 16/9 ratio */

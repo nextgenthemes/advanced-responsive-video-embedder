@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: responsive, embeds, embed, flash, iframe, minimal, lightweight, simple, simplicity, shortcodes, videos, youtube, blip, bliptv, dailymotion, videojug, collegehumor, veoh, break, movieweb, snotr, gametrailers, vimeo, viddler, funnyordie, myspace, liveleak, metacafe, googlevideo, myvideo, yahoo, spike,
 Requires at least: 3.3.1
 Tested up to: 3.5.1
-Stable tag: 2.2-beta
+Stable tag: 2.3-beta
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -12,7 +12,7 @@ Embed videos with a click of a button from many providers with full responsive s
 
 == Description ==
 
-Simple lightweight plugin lets you embed videos from many providers with full responsive sizes with a click of a button. Show videos as thumbnails and let them open in colorbox. Clean and easy shortcode Syntax.
+Simple lightweight plugin lets you embed videos from many providers with full responsive sizes with a click of a single button for all providers. Show videos as thumbnails and let them open in colorbox. Clean and easy shortcode syntax.
 
 [More info and demo](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/)
 
@@ -23,7 +23,7 @@ Simple lightweight plugin lets you embed videos from many providers with full re
 * CollegeHumor
 * Dailymotion (inc. playlists)
 * FunnyOrDie
-* Iframes (in general)
+* Iframes (in general, every provider that supports iframe embed codes)
 * Gametrailers
 * Liveleak
 * Metacafe
@@ -56,6 +56,9 @@ Depends, but most likely yes.
 -
 
 == Changelog ==
+
+= 2.3-beta =
+* fix for maxwidth wrapper no maxwidth option is set
 
 = 2.1-beta =
 * Security and general code improvements
