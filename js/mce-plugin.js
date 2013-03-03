@@ -9,7 +9,7 @@ tinymce.create('tinymce.plugins.arve', {
 		if (id == 'arve_button') {
 			// creates the button
 			var button = controlManager.createButton('arve_button', {
-				title : 'MyGallery Shortcode', // title of the button
+				title : 'Embed Videos', // title of the button
 				image : '../wp-content/plugins/advanced-responsive-video-embedder/img/tinymce-icon.png',  // path to the button's image
 				onclick : function() {
 					// triggers the thickbox
