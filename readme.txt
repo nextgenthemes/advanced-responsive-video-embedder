@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: responsive, embeds, embed, flash, iframe, minimal, lightweight, simple, simplicity, shortcodes, videos, youtube, blip, bliptv, dailymotion, videojug, collegehumor, veoh, break, movieweb, snotr, gametrailers, vimeo, viddler, funnyordie, myspace, liveleak, metacafe, googlevideo, myvideo, yahoo, spike,
 Requires at least: 3.3.1
 Tested up to: 3.5.1
-Stable tag: trunk
+Stable tag: 2.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -56,6 +56,10 @@ Depends, but most likely yes.
 -
 
 == Changelog ==
+
+= 2.4 =
+* propper licence statements
+* 
 
 = 2.3-beta =
 * fix for maxwidth wrapper no maxwidth option is set
@@ -115,7 +119,7 @@ Depends, but most likely yes.
 * Changed the way shortcodes were implemented from regexp to wordpress 'add shortcode' function
 
 = 0.1 =
-* Started by inproving the Wordpress 'Video Embedder Plugin' but now almost complete new code
+* Started by improving the Wordpress 'Video Embedder Plugin' but now complete new code
 
 == Upgrade Notice ==
 
