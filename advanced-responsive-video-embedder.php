@@ -5,7 +5,7 @@
 Plugin Name:  Advanced Responsive Video Embedder
 Plugin URI:   http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/
 Description:  Embed Videos with simple shortcodes from many providers in full resonsible sizes. Generate thumbnails of videos to open them in colorbox.
-Version:      2.4
+Version:      2.5
 Author:       Nicolas Jonas
 Author URI:   http://nextgenthemes.com
 Licence:      GPLv3 or later
@@ -124,9 +124,7 @@ function arve_action_init() {
 		'custom_thumb_image'    => '',
 		'video_maxwidth'        => 0,
 		'autoplay'              => false,
-		
 		'shortcodes'            => array(
-
 			'archiveorg'            => 'archiveorg',
 			'bliptv'                => 'bliptv',
 			'break'                 => 'break',
@@ -177,7 +175,9 @@ function arve_action_init() {
 	update_option( 'arve_options', $options, '', 'yes' );
 
 	// Shortcode Handling
-	add_shortcode( $options['shortcodes']['youtube'], 'arve_do_youtube_shortcode');
+	$youtube = new ArveMakeShortcodes();
+	$youtube->shortcode = 'youtube';
+	$youtube->create_shortcode();
 
 	$metacafe = new ArveMakeShortcodes();
 	$metacafe->shortcode = 'metacafe';
@@ -295,21 +295,12 @@ class ArveMakeShortcodes {
 			'id' => '',
 			'align' => '',
 			'mode' => '',
-			'maxw' => ''
+			'maxw' => '',
+			'time' => '',
+			'autoplay' => '',
 		), $atts ) );
-		return arve_build_embed($id, $this->shortcode, $align, $mode, $maxw );
+		return arve_build_embed($id, $this->shortcode, $align, $mode, $maxw, $time, $autoplay );
 	}
-}
-
-function arve_do_youtube_shortcode( $atts ) {
-	extract( shortcode_atts( array(
-		'id' => '',
-		'align' => '',
-		'mode' => '',
-		'maxw' => '',
-		'time' => ''
-	), $atts ) );
-	return arve_build_embed($id, 'youtube', $align, $mode, $maxw, $time );
 }
 
 function arve_action_plugins_loaded() {
@@ -661,7 +652,7 @@ function arve_build_embed( $id, $provider, $align = null, $mode = null, $maxwidt
 	switch ($time) {
 		case '':
 			break;
-		case ( ! preg_match("/^[0-9]{1,5}$/", $time) ):
+		case ( ! preg_match("/^[0-9a-z]{1,6}$/", $time) ):
 		default:
 			return "<p><strong>ARVE Error:</strong> Time '$time' not valid.</p>";
 			break;
@@ -669,20 +660,6 @@ function arve_build_embed( $id, $provider, $align = null, $mode = null, $maxwidt
 			$time = "&start=".$time;
 			break;
 	}
-
-	// for testing
-	// echo "________________________after valid check<br />";
-	// echo "id: "; 		var_dump($id);			echo "<br />";
-	// echo "provider: "; 	var_dump($provider);	echo "<br />";
-	// echo "align: "; 		var_dump($align);		echo "<br />";
-	// echo "mode: ";		var_dump($mode);		echo "<br />";
-	// echo "maxwidth: "; 	var_dump($width);		echo "<br />";
-	// echo "width: "; 		var_dump($width);		echo "<br />";
-	// echo "height: "; 	var_dump($height); 		echo "<br />";
-	// echo "time: "; 		var_dump($time); 		echo "<br />";
-	// echo "customwidth: ";	var_dump($customwidth);		echo "<br />";
-	// echo "customheight: ";	var_dump($customheight);	echo "<br />";
-	// echo "<hr /></p>";
 
 	$iframe = true;
 
@@ -695,7 +672,7 @@ function arve_build_embed( $id, $provider, $align = null, $mode = null, $maxwidt
 		'videojug'
 	);
 
-	if ( in_array($provider, $no_iframe) )
+	if ( in_array( $provider, $no_iframe ) )
 		$iframe = false;
 
 	$no_wmode_transparent = array(
@@ -779,8 +756,10 @@ function arve_build_embed( $id, $provider, $align = null, $mode = null, $maxwidt
 		break;
 	case 'vimeo':
 		$urlcode = 'http://player.vimeo.com/video/' . $id . '?title=0&byline=0&portrait=0';
-		$param_no_autoplay = '&autoplay=0';
-		$param_do_autoplay = '&autoplay=1';
+		if ( '' != $time )
+			$time = '#t=' . $time;
+		$param_no_autoplay = '&autoplay=0' . $time;
+		$param_do_autoplay = '&autoplay=1' . $time;
 		break;
 	case 'gametrailers':
 		$urlcode = 'http://media.mtvnservices.com/embed/mgid:arc:video:gametrailers.com:' . $id;
@@ -921,7 +900,7 @@ function arve_build_embed( $id, $provider, $align = null, $mode = null, $maxwidt
 
 		$output .= sprintf('<div class="arve-thumbsize arve-thumb-wrapper %s" %s>', esc_attr( $align ), $thumbnail_background_css );
 
-		/** if we not have a real thumbnail by now and fakethumb is enabled */
+		//* if we not have a real thumbnail by now and fakethumb is enabled
 		if ( ! $thumbnail && $fakethumb ) {
 
 			if ( $iframe == true )
@@ -935,7 +914,7 @@ function arve_build_embed( $id, $provider, $align = null, $mode = null, $maxwidt
 			$output .= "<a href='$href' class='arve-inner arve-play-background $fancybox_class'>&nbsp;</a>";
 		}
 		
-		$output .= "</div>"; /** end arve-thumb-wrapper */
+		$output .= "</div>"; //* end arve-thumb-wrapper
 		
 		if ( $iframe == false )
 			$output .= '<div class="arve-hidden">' . arve_create_object( $urlcode, $param_do_autoplay, $flashvars, $flashvars_autoplay, $randid ) . '</div>';
@@ -948,7 +927,7 @@ function arve_build_embed( $id, $provider, $align = null, $mode = null, $maxwidt
 function arve_create_object( $urlcode, $url_params, $flashvars, $flashvars_autoplay, $id = null ) {
 
 	if ( $id )
-		$class_or_id = "id='inline_$id'";
+		$class_or_id = "id='inline_$id' class='arve-hidden-obj'";
 	else
 		$class_or_id = 'class="arve-inner"';
 

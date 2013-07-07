@@ -3,8 +3,8 @@ Contributors: nico23
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC
 Tags: responsive, embeds, embed, flash, iframe, minimal, lightweight, simple, simplicity, shortcodes, videos, youtube, blip, bliptv, dailymotion, videojug, collegehumor, veoh, break, movieweb, snotr, gametrailers, vimeo, viddler, funnyordie, myspace, liveleak, metacafe, googlevideo, myvideo, yahoo, spike,
 Requires at least: 3.3.1
-Tested up to: 3.5.1
-Stable tag: 2.4
+Tested up to: 3.6
+Stable tag: 2.5
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -36,9 +36,9 @@ Simple lightweight plugin lets you embed videos from many providers with full re
 * Veoh
 * Viddler
 * Videojug
-* Vimeo
+* Vimeo (starttime supported)
 * Yahoo!
-* YouTube (inc. playlists)
+* YouTube (inc. playlists + starttime support)
 * More in future versions
 
 == Installation ==
@@ -57,9 +57,14 @@ Depends, but most likely yes.
 
 == Changelog ==
 
+= 2.5 =
+* fix objects in Colorboxes, now always have width and height 100%
+* new shortcode attribute 'autoplay' for single videos
+* support for start at given time for vimeo
+
 = 2.4 =
-* propper licence statements
-* 
+* propper licence
+* Class remamed
 
 = 2.3-beta =
 * fix for maxwidth wrapper no maxwidth option is set
