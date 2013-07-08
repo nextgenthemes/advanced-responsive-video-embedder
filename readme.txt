@@ -64,7 +64,7 @@ Depends, but most likely yes.
 
 = 2.4 =
 * propper licence
-* Class remamed
+* Class renamed
 
 = 2.3-beta =
 * fix for maxwidth wrapper no maxwidth option is set
