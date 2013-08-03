@@ -511,13 +511,19 @@ function arve_action_wp_print_styles() {
 	.arve-thumb-wrapper {
 		/** background image is applied with inline CSS */
 		background-position: center center;
-		behavior: url(' . plugin_dir_url( __FILE__ ) . 'js/backgroundsize.min.htc); /** IE polyfill for background size */
 		background-size: cover;
 		background-color: #000;
 		width: ' . (int) $options['thumb_width'] . 'px;
 		height: ' . (int) $options['thumb_height'] . 'px;
 		position: relative;
 		margin-bottom: 20px;
+		behavior: url(' . plugin_dir_url( __FILE__ ) . 'js/backgroundsize.min.htc); /** IE polyfill for background size */
+	}
+	.arve-wrapper.alignright {
+		margin-left: 20px;
+	}
+	.arve-wrapper.alignleft {
+		margin-right: 20px;
 	}
 	.arve-play-background {
 		background: transparent url(' . plugin_dir_url( __FILE__ ) . 'img/play.png) no-repeat center center;
@@ -850,9 +856,9 @@ function arve_build_embed( $id, $provider, $align = null, $mode = null, $maxwidt
 	if ( $mode == 'normal' ) {
 
 		if ( isset( $maxwidth_shortcode ) )
-			$output .= '<div class="arve-maxwidth-wrapper ' . esc_attr( $align ) . '" style="max-width:' . (int) $maxwidth_shortcode . 'px">';
+			$output .= '<div class="arve-wrapper arve-maxwidth-wrapper ' . esc_attr( $align ) . '" style="max-width:' . (int) $maxwidth_shortcode . 'px">';
 		elseif ( isset( $maxwidth_options ) )
-			$output .= '<div class="arve-maxwidth-wrapper ' . esc_attr( $align ) . '">';
+			$output .= '<div class="arve-wrapper arve-maxwidth-wrapper ' . esc_attr( $align ) . '">';
 		
 		if ( $iframe == true )
 			$output .= '<div class="arve-embed-container">' . arve_create_iframe( $urlcode, $param_autoplay ) . '</div>';
@@ -898,7 +904,7 @@ function arve_build_embed( $id, $provider, $align = null, $mode = null, $maxwidt
 		elseif ( $options['custom_thumb_image'] != '' )
 			$thumbnail_background_css = sprintf( ' style="background-image: url(%s); "', esc_url( $options['custom_thumb_image'] ) );
 
-		$output .= sprintf('<div class="arve-thumbsize arve-thumb-wrapper %s" %s>', esc_attr( $align ), $thumbnail_background_css );
+		$output .= sprintf('<div class="arve-thumbsize arve-wrapper arve-thumb-wrapper %s" %s>', esc_attr( $align ), $thumbnail_background_css );
 
 		//* if we not have a real thumbnail by now and fakethumb is enabled
 		if ( ! $thumbnail && $fakethumb ) {
