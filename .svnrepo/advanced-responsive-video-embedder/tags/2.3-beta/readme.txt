@@ -3,8 +3,8 @@ Contributors: nico23
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC
 Tags: responsive, embeds, embed, flash, iframe, minimal, lightweight, simple, simplicity, shortcodes, videos, youtube, blip, bliptv, dailymotion, videojug, collegehumor, veoh, break, movieweb, snotr, gametrailers, vimeo, viddler, funnyordie, myspace, liveleak, metacafe, googlevideo, myvideo, yahoo, spike,
 Requires at least: 3.3.1
-Tested up to: 3.6
-Stable tag: 2.5
+Tested up to: 3.5.1
+Stable tag: 2.3-beta
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -36,9 +36,9 @@ Simple lightweight plugin lets you embed videos from many providers with full re
 * Veoh
 * Viddler
 * Videojug
-* Vimeo (starttime supported)
+* Vimeo
 * Yahoo!
-* YouTube (inc. playlists + starttime support)
+* YouTube (inc. playlists)
 * More in future versions
 
 == Installation ==
@@ -56,15 +56,6 @@ Depends, but most likely yes.
 -
 
 == Changelog ==
-
-= 2.5 =
-* fix objects in Colorboxes, now always have width and height 100%
-* new shortcode attribute 'autoplay' for single videos
-* support for start at given time for vimeo
-
-= 2.4 =
-* propper licence
-* Class renamed
 
 = 2.3-beta =
 * fix for maxwidth wrapper no maxwidth option is set
@@ -124,7 +115,7 @@ Depends, but most likely yes.
 * Changed the way shortcodes were implemented from regexp to wordpress 'add shortcode' function
 
 = 0.1 =
-* Started by improving the Wordpress 'Video Embedder Plugin' but now complete new code
+* Started by inproving the Wordpress 'Video Embedder Plugin' but now almost complete new code
 
 == Upgrade Notice ==
 

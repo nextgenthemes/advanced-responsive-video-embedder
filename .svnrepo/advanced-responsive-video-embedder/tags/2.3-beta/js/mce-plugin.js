@@ -1,35 +1,36 @@
 // closure to avoid namespace collision
-(function() {
+(function(){
 
-	// creates the plugin
-	tinymce.create('tinymce.plugins.arve', {
-		// creates control instances based on the control's id.
-		// our button's id is "arve_button"
-		createControl : function(id, controlManager) {
-			if ( id == 'arve_button' ) {
-				// creates the button
-				var button = controlManager.createButton('arve_button', {
-					title : 'Embed Videos', // title of the button
-					image : '../wp-content/plugins/advanced-responsive-video-embedder/img/tinymce-icon.png',  // path to the button's image
-					onclick : function() {
-						// triggers the thickbox
-						var width = jQuery(window).width(), H = jQuery(window).height(), W = ( 720 < width ) ? 720 : width;
-						W = W - 80;
-						H = H - 84;
-						tb_show( 'Advanced Responsive Video Embedder Shortcode Creater', '#TB_inline?width=' + W + '&height=' + H + '&inlineId=arve-form' );
-					}
-				});
-				return button;
-			}
-			return null;
+// creates the plugin
+tinymce.create('tinymce.plugins.arve', {
+	// creates control instances based on the control's id.
+	// our button's id is "arve_button"
+	createControl : function(id, controlManager) {
+		if (id == 'arve_button') {
+			// creates the button
+			var button = controlManager.createButton('arve_button', {
+				title : 'MyGallery Shortcode', // title of the button
+				image : '../wp-content/plugins/advanced-responsive-video-embedder/img/tinymce-icon.png',  // path to the button's image
+				onclick : function() {
+					// triggers the thickbox
+					var width = jQuery(window).width(), H = jQuery(window).height(), W = ( 720 < width ) ? 720 : width;
+					W = W - 80;
+					H = H - 84;
+					tb_show( 'Advanced Responsive Video Embedder Shortcode Creater', '#TB_inline?width=' + W + '&height=' + H + '&inlineId=arve-form' );
+				}
+			});
+			return button;
 		}
-	});
+		return null;
+	}
+});
 
-	tinymce.PluginManager.add('arve', tinymce.plugins.arve);
-
-})();
+// registers the plugin. DON'T MISS THIS STEP!!!
+tinymce.PluginManager.add('arve', tinymce.plugins.arve);
 
 jQuery(document).ready(function($) {
+
+	console.log('ready');
 
 	$.ajax({
 		type: 'GET',
@@ -337,6 +338,7 @@ jQuery(document).ready(function($) {
 			};
 
 			$('#arve-url').bind('keyup mouseup change',function() {
+				console.log('url changed');
 
 				var provider_and_id = getid( $(this).val() );
 				if ( provider_and_id != 'nothing matched' ) {
@@ -346,6 +348,7 @@ jQuery(document).ready(function($) {
 			});
 
 			$('#arve-url, #arve-provider, #arve-id, #arve-maxw, #arve-mode, #arve-align').bind('keyup mouseup change',function() {
+				console.log('some field changed');
 
 				shortcode = create_shortcode();
 
@@ -361,3 +364,5 @@ jQuery(document).ready(function($) {
 	});
 
 }); // $(document).ready(function() end
+	
+})()
