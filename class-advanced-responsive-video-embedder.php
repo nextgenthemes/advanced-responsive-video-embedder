@@ -55,7 +55,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	protected $version = '2.6.0';
+	protected $version = '2.6.1';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -67,7 +67,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var      string
 	 */
-	protected $plugin_slug = 'advanced-responsive-video-embedder';
+	protected $plugin_slug = 'ngt-arve';
 
 	/**
 	 * Instance of this class.
@@ -222,7 +222,7 @@ class Advanced_Responsive_Video_Embedder {
 	 * @since    2.6.0
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script( $this->plugin_slug . '-plugin-script', plugins_url( 'js/public.js', __FILE__ ), array( 'jquery' ), $this->version );
+		wp_enqueue_script( $this->plugin_slug . '-plugin-script', plugins_url( 'js/public.js', __FILE__ ), array( 'jquery', 'colorbox' ), $this->version );
 	}
 
 	/**
@@ -255,17 +255,48 @@ class Advanced_Responsive_Video_Embedder {
 		if ( ! empty( $maxw ) && empty( $maxwidth ) )
 			$maxwidth = $maxw;
 
-		$output = '';
-		$thumbnail = null;
-		$randid = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 10);
-		$options = get_option('arve_options');
+		$output             = '';
+		$thumbnail          = null;
+		$randid             = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 10);
+		$options            = get_option('arve_options');
 
-		$fakethumb = $options['fakethumb'];
-		// $thumb_width = (int) $options['thumb_width'];
-		// $thumb_height = (int) $options['thumb_height'];
-
-		$flashvars = '';
+		$flashvars          = '';
 		$flashvars_autoplay = '';
+
+		$param_no_autoplay  = '';
+		$param_do_autoplay  = '';		
+
+		$no_wmode_transparent = array(
+			'comedycentral',
+			'gametrailers',
+			'iframe',
+			'liveleak',
+			'movieweb',
+			'myvideo',
+			'snotr',
+			'spike',
+			'ustream',
+			'viddler'
+		);
+
+		$fakethumb  = $options['fakethumb'];
+
+		if ( in_array($provider, $no_wmode_transparent) )
+			$fakethumb = false;
+
+		$iframe = true;
+
+		$no_iframe = array(
+			'break',
+			'flickr',
+			'metacafe',
+			'myspace',
+			'veoh',
+			'videojug'
+		);
+
+		if ( in_array( $provider, $no_iframe ) )
+			$iframe = false;
 
 		switch ( $id ) {
 			case '':
@@ -310,6 +341,8 @@ class Advanced_Responsive_Video_Embedder {
 				break;
 		}
 
+		$maxwidth = str_replace( 'px', '', $maxwidth );
+
 		switch ( $maxwidth ) {
 			case '':
 				if ( $options['video_maxwidth'] > 0)
@@ -321,7 +354,7 @@ class Advanced_Responsive_Video_Embedder {
 				break;
 			case ( $maxwidth > 50 ):
 				if ($mode != 'normal')
-					return "<p><strong>ARVE Error:</strong> for the maxwidth (maxw) option you need to have normal mode enabled, either for all videos in the plugins options or through shortcode '[youbube id=your_id <strong>mode=normal</strong> maxw=999 ]'.</p>";
+					return "<p><strong>ARVE Error:</strong> for the maxwidth (maxw) option you need to have normal mode enabled, either for all videos in the plugins options or through shortcode e.g. '[youtube id=your_id <strong>mode=normal</strong> maxw=999 ]'.</p>";
 				$maxwidth_shortcode = $maxwidth;
 				break;
 		}
@@ -373,39 +406,6 @@ class Advanced_Responsive_Video_Embedder {
 				$time = "&start=".$time;
 				break;
 		}
-
-		$iframe = true;
-
-		$no_iframe = array(
-			'break',
-			'flickr',
-			'metacafe',
-			'myspace',
-			'veoh',
-			'videojug'
-		);
-
-		if ( in_array( $provider, $no_iframe ) )
-			$iframe = false;
-
-		$no_wmode_transparent = array(
-			'comedycentral',
-			'gametrailers',
-			'iframe',
-			'liveleak',
-			'movieweb',
-			'myvideo',
-			'snotr',
-			'spike',
-			'ustream',
-			'viddler'
-		);
-
-		if ( in_array($provider, $no_wmode_transparent) )
-			$fakethumb = false;
-
-		$param_no_autoplay = '';
-		$param_do_autoplay = '';
 
 		switch ($provider) {
 		case 'youtube':
@@ -594,9 +594,9 @@ class Advanced_Responsive_Video_Embedder {
 			if ( ! $thumbnail && $fakethumb ) {
 
 				if ( $iframe == true )
-					$output .= arve_create_iframe( $urlcode, $param_no_autoplay );
+					$output .= Advanced_Responsive_Video_Embedder::create_iframe( $urlcode . $param_no_autoplay );
 				else
-					$output .= arve_create_object( $urlcode, $param_no_autoplay, $flashvars, '' );
+					$output .= Advanced_Responsive_Video_Embedder::create_object( $urlcode . $param_no_autoplay, $flashvars, '' );
 
 				$output .= "<a href='$href' class='arve-inner $fancybox_class'>&nbsp;</a>";
 
@@ -607,7 +607,7 @@ class Advanced_Responsive_Video_Embedder {
 			$output .= "</div>"; //* end arve-thumb-wrapper
 			
 			if ( $iframe == false )
-				$output .= '<div class="arve-hidden">' . arve_create_object( $urlcode, $param_do_autoplay, $flashvars, $flashvars_autoplay, $randid ) . '</div>';
+				$output .= '<div class="arve-hidden">' . Advanced_Responsive_Video_Embedder::create_object( $urlcode, $param_do_autoplay, $flashvars, $flashvars_autoplay, $randid ) . '</div>';
 		}
 
 		return $output;

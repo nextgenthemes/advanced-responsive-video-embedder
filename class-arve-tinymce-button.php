@@ -37,6 +37,10 @@ class Arve_Tinymce_Button {
 	 */
 	protected static $instance = null;
 
+	/**
+	 *
+	 * @since     2.6.0
+	 */
 	public function __construct() {
 		add_action( 'admin_init', array( $this, 'action_admin_init' ) );
 		add_action( 'wp_ajax_get_arve_form', array( $this, 'get_mce_form' ) );
@@ -59,6 +63,10 @@ class Arve_Tinymce_Button {
 		return self::$instance;
 	}
 
+	/**
+	 *
+	 * @since     2.6.0
+	 */
 	public function action_admin_init() {
 		// only hook up these filters if we're in the admin panel, and the current user has permission
 		// to edit posts and pages
@@ -68,18 +76,30 @@ class Arve_Tinymce_Button {
 		}
 	}
 	
+	/**
+	 *
+	 * @since     2.6.0
+	 */	
 	public function filter_mce_button( $buttons ) {
 		// add a separation before our button, here our button's id is "arve_button"
 		array_push( $buttons, '|', 'arve_button' );
 		return $buttons;
 	}
 	
+	/**
+	 *
+	 * @since     2.6.0
+	 */	
 	public function filter_mce_plugin( $plugins ) {
 		// this plugin file will work the magic of our button
 		$plugins['arve'] = plugin_dir_url( __FILE__ ) . 'js/mce-plugin.js';
 		return $plugins;
 	}
-
+	
+	/**
+	 *
+	 * @since     2.6.0
+	 */
 	public function get_mce_form() {
 		?>
 		<div id="arve-form">
@@ -90,16 +110,16 @@ class Arve_Tinymce_Button {
 					<th>
 						<label for="arve-url">URL</label><br>
 						<small class="description">
-							<?php _e('For Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike and Comedycentral paste the embed code, for all others paste the URL!', 'arve-plugin'); ?><br>
-							<a href="#" id="arve-open-url-info"><?php _e('More info', 'arve-plugin'); ?></a>
+							<?php _e('For Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike and Comedycentral paste the embed code, for all others paste the URL!', 'ngt-arve'); ?><br>
+							<a href="#" id="arve-open-url-info"><?php _e('More info', 'ngt-arve'); ?></a>
 						</small>
 
 						<div id="arve-url-info" style="display: none; padding: 0 15px;">
 							<p>
-								<?php _e('Ustream: If your Address bar URL not contains a number. Click Share->URL-icon and paste the URL you get there here.', 'arve-plugin'); ?>
+								<?php _e('Ustream: If your Address bar URL not contains a number. Click Share->URL-icon and paste the URL you get there here.', 'ngt-arve'); ?>
 							</p>
 							<p>
-								<?php _e("For Youtube, Archiveorg, Metacafe and Viddler embed codes and URL's should work.", 'arve-plugin'); ?>
+								<?php _e("For Youtube, Archiveorg, Metacafe and Viddler embed codes and URL's should work.", 'ngt-arve'); ?>
 							</p>
 						</div>
 					</th>
@@ -109,28 +129,28 @@ class Arve_Tinymce_Button {
 				</tr>
 				<tr>
 					<th>
-						<label for="arve-mode"><?php _e('Mode', 'arve-plugin'); ?></label><br>
-						<small class="description"><?php _e('Only use it of you want some vidoes have a mode that differs from the one you set in the options.', 'arve-plugin');?></small>
+						<label for="arve-mode"><?php _e('Mode', 'ngt-arve'); ?></label><br>
+						<small class="description"><?php _e('Optional override setting for single videos.', 'ngt-arve');?></small>
 					</th>
 					<td>
 						<select id="arve-mode">
 							<option value=""></option>
-							<option value="normal"><?php _e('Normal', 'arve-plugin'); ?></option>
-							<option value="thumbnail"><?php _e('Thumbnail', 'arve-plugin'); ?></option>
+							<option value="normal"><?php _e('Normal', 'ngt-arve'); ?></option>
+							<option value="thumbnail"><?php _e('Thumbnail', 'ngt-arve'); ?></option>
 						</select>
 					</td>				
 				</tr>
 				<tr>
 					<th>
-						<label for="arve-align"><?php _e('Align', 'arve-plugin'); ?></label><br>
+						<label for="arve-align"><?php _e('Align', 'ngt-arve'); ?></label><br>
 						<small class="description"><?php _e('');?></small>
 					</th>
 					<td>
 						<select id="arve-align">
 							<option value=""></option>
-							<option value="left"><?php _e('left', 'arve-plugin'); ?></option>
-							<option value="right"><?php _e('right', 'arve-plugin'); ?></option>
-							<option value="center"><?php _e('center', 'arve-plugin'); ?></option>
+							<option value="left"><?php _e('left', 'ngt-arve'); ?></option>
+							<option value="right"><?php _e('right', 'ngt-arve'); ?></option>
+							<option value="center"><?php _e('center', 'ngt-arve'); ?></option>
 						</select>
 					</td>
 				</tr>
@@ -142,16 +162,30 @@ class Arve_Tinymce_Button {
 				</tr>
 				<tr style="display: none;" class="arve-hidden">
 					<th>
-						<label for="arve-maxw"><?php _e('Maximal width', 'arve-plugin'); ?></label><br>
-						<small class="description"><?php _e('Only use it of you want some vidoes have a maximal width that differs from the one you set in the options.', 'arve-plugin'); ?></small>
+						<label for="arve-autoplay"><?php _e('Autoplay this video', 'ngt-arve'); ?></label><br>
+						<small class="description"><?php _e('Optional override setting for single videos.', 'ngt-arve'); ?></small>
 					</th>
 					<td>
-						<input type="text" id="arve-maxw" />	
+						<select id="arve-autoplay">
+							<option value=""></option>
+							<option value="yes"><?php _e('yes', 'ngt-arve'); ?></option>
+							<option value="no"><?php _e('no', 'ngt-arve'); ?></option>
+						</select>
 					</td>
 				</tr>
 				<tr style="display: none;" class="arve-hidden">
 					<th>
-						<label for="arve-provider"><?php _e('Provider', 'arve-plugin'); ?></label>
+						<label for="arve-maxwidth"><?php _e('Maximal width', 'ngt-arve'); ?></label><br>
+						<small class="description"><?php _e('Optional override setting for single videos.', 'ngt-arve'); ?></small>
+					</th>
+					<td>
+						<input type="text" id="arve-maxwidth" value="" />	
+					</td>
+				</tr>
+				<!-- always hidden -->
+				<tr style="display: none;">
+					<th>
+						<label for="arve-provider"><?php _e('Provider', 'ngt-arve'); ?></label>
 					</th>
 					<td>
 						<select id="arve-provider">
@@ -164,15 +198,16 @@ class Arve_Tinymce_Button {
 						</select>
 					</td>
 				</tr>
-				<tr style="display: none;" class="arve-hidden">
+				<tr style="display: none;">
 					<th>
-						<label for="arve-id"><?php _e('Video ID', 'arve-plugin'); ?></label><br>
-						<small class="description"><?php _e('If not filled in automatically after pasting the url above you have to insert the video ID in here.', 'arve-plugin'); ?></small>
+						<label for="arve-id"><?php _e('Video ID', 'ngt-arve'); ?></label><br>
+						<small class="description"><?php _e('If not filled in automatically after pasting the url above you have to insert the video ID in here.', 'ngt-arve'); ?></small>
 					</th>
 					<td>
 						<input type="text" id="arve-id" value="" /><br>
 					</td>
 				</tr>
+				<!-- end always hidden-->
 				<tr>
 					<td colspan="2" style="padding: 15px; font-size: 17px; text-align: center;" id="arve-shortcode">
 						-
@@ -180,7 +215,7 @@ class Arve_Tinymce_Button {
 				</tr>	
 				<tr>
 					<th>
-						<label for="arve-submit"><?php _e('Ready?', 'arve-plugin'); ?></label>
+						<label for="arve-submit"><?php _e('Ready?', 'ngt-arve'); ?></label>
 					</th>
 					<td>
 						<input type="button" id="arve-submit" class="button-primary" value="Insert Shortcode" name="submit" />
