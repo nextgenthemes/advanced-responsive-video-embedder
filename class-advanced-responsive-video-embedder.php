@@ -55,7 +55,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	protected $version = '2.6.1';
+	protected $version = '2.6.2';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -409,7 +409,7 @@ class Advanced_Responsive_Video_Embedder {
 
 		switch ($provider) {
 		case 'youtube':
-			$urlcode = 'http://www.youtube-nocookie.com/embed/' . $id . '?rel=0&autohide=1&hd=1&iv_load_policy=3&wmode=transparent&modestbranding=1' . $time;
+			$urlcode = '//www.youtube-nocookie.com/embed/' . $id . '?rel=0&autohide=1&hd=1&iv_load_policy=3&wmode=transparent&modestbranding=1' . $time;
 			$param_no_autoplay = '&autoplay=0';
 			$param_do_autoplay = '&autoplay=1';
 			break;
@@ -515,8 +515,8 @@ class Advanced_Responsive_Video_Embedder {
 			break;
 		case 'iframe':
 			$urlcode = $id;
-			$param_no_autoplay = '&ap=0&autoplay=0&autoplay=false&autoStart=false&player_autoplay=false';
-			$param_do_autoplay = '&ap=1&autoplay=1&autoplay=true&autoStart=true&player_autoplay=true';
+			$param_no_autoplay = '?ap=0&autoplay=0&autoplay=false&autoStart=false&player_autoplay=false';
+			$param_do_autoplay = '?ap=1&autoplay=1&autoplay=true&autoStart=true&player_autoplay=true';
 			break;
 		default:
 			$output .= 'ARVE Error: No provider';
@@ -607,7 +607,7 @@ class Advanced_Responsive_Video_Embedder {
 			$output .= "</div>"; //* end arve-thumb-wrapper
 			
 			if ( $iframe == false )
-				$output .= '<div class="arve-hidden">' . Advanced_Responsive_Video_Embedder::create_object( $urlcode, $param_do_autoplay, $flashvars, $flashvars_autoplay, $randid ) . '</div>';
+				$output .= '<div class="arve-hidden">' . Advanced_Responsive_Video_Embedder::create_object( $urlcode . $param_do_autoplay, $flashvars, $flashvars_autoplay, $randid ) . '</div>';
 		}
 
 		return $output;
@@ -784,31 +784,26 @@ class Advanced_Responsive_Video_Embedder {
 		.arve-embed-container {
 			position: relative;
 			padding-bottom: 56.25%; /* 16/9 ratio */
-			/* padding-top: 30px; */ /* IE6 workaround */
+			margin-bottom: 20px;
 			height: 0;
 			overflow: hidden;
-			margin-bottom: 20px;
 		}
-		* html .arve-embed-container {
+		* html .REMarve-embed-container {
 			margin-bottom: 45px;
 			margin-bot\tom: 0;
-		}
-		.arve-embed-container a{
-			z-index: 9999;
-		}
-		.arve-embed-container iframe, .arve-embed-container object, .arve-embed-container embed {
-			z-index: 5000;
 		}
 		.arve-inner {
 			display: block;
 			position: absolute;
 			top: 0;
 			left: 0;
+			bottom: 0;
+			right: 0;
 			width: 100%;
 			height: 100%;
 		}
 		.arve-thumb-wrapper {
-			/** background image is applied with inline CSS */
+			/* Background image is applied with inline CSS */
 			background-position: center center;
 			background-size: cover;
 			background-color: #000;
