@@ -275,7 +275,17 @@ jQuery(document).ready(function($) {
 					return output;
 				}
 
-				regExp = /myspace\.com\/video\/(?:[a-z\/\-]+)?([0-9]{9})/i;
+				// Iframe
+				regExp = /myspace\.com\/play\/video\/([a-z0-9\-]+)/i;
+				match = code.match(regExp);
+				if ( match && match[1] ) {
+					output[0] = 'myspace';
+					output[1] = match[1];
+					return output;
+				}
+
+				// URL
+				regExp = /myspace\.com\/(?:[a-z\-]+\/)video\/(?:[a-z\-]+\/)?([0-9]{9})/i;
 				match = code.match(regExp);
 				if ( match && match[1] ) {
 					output[0] = 'myspace';
@@ -333,7 +343,6 @@ jQuery(document).ready(function($) {
 
 				// regExp = /clipfish\.de\/(?:embed_image\/\?vid=|[a-z\/\-]+)([0-9]{2,7})/i;
 
-				console.log('nothing matched');
 				return 'nothing matched';
 			};
 

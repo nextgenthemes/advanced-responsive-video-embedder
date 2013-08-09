@@ -55,7 +55,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	protected $version = '2.6.2';
+	protected $version = '2.6.3';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -285,14 +285,11 @@ class Advanced_Responsive_Video_Embedder {
 			$fakethumb = false;
 
 		$iframe = true;
-
+							
 		$no_iframe = array(
 			'break',
 			'flickr',
-			'metacafe',
-			'myspace',
-			'veoh',
-			'videojug'
+			'veoh'
 		);
 
 		if ( in_array( $provider, $no_iframe ) )
@@ -414,16 +411,15 @@ class Advanced_Responsive_Video_Embedder {
 			$param_do_autoplay = '&autoplay=1';
 			break;
 		case 'metacafe':
-			$urlcode = 'http://www.metacafe.com/fplayer/' . $id . '/.swf';
-			$flashvars_autoplay = '<param name="flashVars" value="playerVars=autoPlay=yes" /><!-- metacafee -->';
+			$urlcode = 'http://www.metacafe.com/embed/' . $id . '/';
+			$param_no_autoplay = '?ap=0';
+			$param_do_autoplay = '?ap=1';
 			break;
 		case 'liveleak':
 			$urlcode = 'http://www.liveleak.com/e/' . $id . '?wmode=transparent';
 			break;
 		case 'myspace':
-			$urlcode = 'http://mediaservices.myspace.com/services/media/embed.aspx/m=' . $id . ',t=1,mt=video';
-			$param_no_autoplay = ',ap=0';
-			$param_do_autoplay = ',ap=1';
+			$urlcode = 'https://myspace.com/play/video/' . $id;
 			break;
 		case 'bliptv':
 			$urlcode = 'http://blip.tv/play/' . $id . '.html?p=1&backcolor=0x000000&lightcolor=0xffffff';
@@ -434,7 +430,9 @@ class Advanced_Responsive_Video_Embedder {
 			$urlcode = 'http://www.collegehumor.com/e/' . $id;
 			break;
 		case 'videojug':
-			$urlcode = 'http://www.videojug.com/film/player?id=' . $id;
+			$urlcode = 'http://www.videojug.com/embed/' . $id;
+			$param_no_autoplay = '?ap=0';
+			$param_do_autoplay = '?ap=1';
 			break;
 		case 'veoh':
 			$urlcode = 'http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1396&permalinkId=' . $id . '&player=videodetailsembedded&id=anonymous';
@@ -514,9 +512,20 @@ class Advanced_Responsive_Video_Embedder {
 			$param_do_autoplay = '&player_autoplay=true';
 			break;
 		case 'iframe':
-			$urlcode = $id;
-			$param_no_autoplay = '?ap=0&autoplay=0&autoplay=false&autoStart=false&player_autoplay=false';
-			$param_do_autoplay = '?ap=1&autoplay=1&autoplay=true&autoStart=true&player_autoplay=true';
+			$urlcode = '';
+			//* We are guessing autplay parameters here
+			$param_no_autoplay = add_query_arg( array(
+				'ap'               => '0',
+				'autoplay'         => '0',
+				'autoStart'        => 'false',
+				'player_autoStart' => 'false',
+			), $id );
+			$param_do_autoplay = add_query_arg( array(
+				'ap'               => '1',
+				'autoplay'         => '1',
+				'autoStart'        => 'true',
+				'player_autoStart' => 'true',
+			), $id );
 			break;
 		default:
 			$output .= 'ARVE Error: No provider';
@@ -643,7 +652,7 @@ class Advanced_Responsive_Video_Embedder {
 	 */
 	public static function create_iframe( $url ) {
 
-		return '<iframe class="arve-inner" src="' . esc_url( $url ) . '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+		return '<iframe class="arve-inner" src="' . esc_url( $url ) . '" frameborder="0" scrolling="no" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
 
 	}
 
@@ -783,12 +792,13 @@ class Advanced_Responsive_Video_Embedder {
 		}
 		.arve-embed-container {
 			position: relative;
+			padding-top: 30px; /* IE6 workaround */
 			padding-bottom: 56.25%; /* 16/9 ratio */
 			margin-bottom: 20px;
 			height: 0;
 			overflow: hidden;
 		}
-		* html .REMarve-embed-container {
+		* html .arve-embed-container {
 			margin-bottom: 45px;
 			margin-bot\tom: 0;
 		}
@@ -797,8 +807,6 @@ class Advanced_Responsive_Video_Embedder {
 			position: absolute;
 			top: 0;
 			left: 0;
-			bottom: 0;
-			right: 0;
 			width: 100%;
 			height: 100%;
 		}

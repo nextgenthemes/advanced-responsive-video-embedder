@@ -38,7 +38,7 @@ _  _ ____ _  _ ___ ____ ____ _  _ ___ _  _ ____ _  _ ____ ____  ____ ____ _  _
  * Plugin Name: Advanced Responsive Video Embedder
  * Plugin URI:  http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/
  * Description: Embed videos with a click of a button from many providers with full responsive sizes. Show videos as thumbnails and let them open in colorbox.
- * Version:     2.6.2
+ * Version:     2.6.3
  * Author:      Nicolas Jonas
  * Author URI:  http://nextgenthemes.com
  * Text Domain: ngt-arve
@@ -65,7 +65,7 @@ Arve_Tinymce_Button::get_instance();
 
 add_action( 'init', 'arve_create_shortcodes', 99 );
 /**
- * Create all shortcodes, because ****** people over and over again using this plugin toghter with jetback or 
+ * Create all shortcodes at a very late stage because ****** people over and over again using this plugin toghter with jetback or 
  * other plugins that handle shortcodes we will now overwrite all this suckers.
  *
  * @since    2.6.2
