@@ -55,7 +55,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	protected $version = '2.6.4';
+	protected $version = '2.6.3';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -792,10 +792,15 @@ class Advanced_Responsive_Video_Embedder {
 		}
 		.arve-embed-container {
 			position: relative;
+			padding-top: 30px; /* IE6 workaround */
 			padding-bottom: 56.25%; /* 16/9 ratio */
 			margin-bottom: 20px;
 			height: 0;
 			overflow: hidden;
+		}
+		* html .arve-embed-container {
+			margin-bottom: 45px;
+			margin-bot\tom: 0;
 		}
 		.arve-inner {
 			display: block;
