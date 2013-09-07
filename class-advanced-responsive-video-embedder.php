@@ -55,7 +55,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	protected $version = '2.6.4';
+	protected $version = '2.7.0';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -235,7 +235,7 @@ class Advanced_Responsive_Video_Embedder {
 		$this->plugin_screen_hook_suffix = add_plugins_page(
 			__( 'Advanced Responsive Video Embedder', $this->plugin_slug ),
 			__( 'A.R. Video Embedder', $this->plugin_slug ),
-			'read',
+			'manage_options',
 			$this->plugin_slug,
 			array( $this, 'display_plugin_admin_page' )
 		);
@@ -285,7 +285,7 @@ class Advanced_Responsive_Video_Embedder {
 			$fakethumb = false;
 
 		$iframe = true;
-							
+			
 		$no_iframe = array(
 			'break',
 			'flickr',
@@ -483,6 +483,7 @@ class Advanced_Responsive_Video_Embedder {
 		case 'funnyordie':
 			$urlcode = 'http://www.funnyordie.com/embed/' . $id;
 			break;
+		//* DEPICATED
 		case 'youtubelist':
 			$urlcode = 'http://www.youtube-nocookie.com/embed/videoseries?list=' . $id . '&wmode=transparent&rel=0&autohide=1&hd=1&iv_load_policy=3';
 			$param_no_autoplay = '&autoplay=0';

@@ -183,7 +183,7 @@ class Arve_Tinymce_Button {
 					</td>
 				</tr>
 				<!-- always hidden -->
-				<tr style="display: none;">
+				<tr style="display: none;" class="arve-hidden">
 					<th>
 						<label for="arve-provider"><?php _e('Provider', 'ngt-arve'); ?></label>
 					</th>
@@ -198,7 +198,7 @@ class Arve_Tinymce_Button {
 						</select>
 					</td>
 				</tr>
-				<tr style="display: none;">
+				<tr style="display: none;" class="arve-hidden">
 					<th>
 						<label for="arve-id"><?php _e('Video ID', 'ngt-arve'); ?></label><br>
 						<small class="description"><?php _e('If not filled in automatically after pasting the url above you have to insert the video ID in here.', 'ngt-arve'); ?></small>
