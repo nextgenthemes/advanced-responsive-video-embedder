@@ -57,7 +57,7 @@ Depends, but most likely yes.
 
 == Changelog ==
 
-= 2.7.0
+= 2.7.0 =
 * Fixed admin page capabilities
 * Reintroduced the manual provider and ID input to be used then not detected correctly.
 
