@@ -55,7 +55,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	protected $version = '2.7.0';
+	protected $version = '2.7.2';
 
 	/**
 	 * Unique identifier for your plugin.

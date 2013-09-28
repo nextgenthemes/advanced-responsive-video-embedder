@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: responsive, embeds, embed, flash, iframe, minimal, lightweight, simple, simplicity, shortcodes, videos, youtube, blip, bliptv, dailymotion, videojug, collegehumor, veoh, break, movieweb, snotr, gametrailers, vimeo, viddler, funnyordie, myspace, liveleak, metacafe, googlevideo, myvideo, yahoo, spike,
 Requires at least: 3.3.1
 Tested up to: 3.6
-Stable tag: 2.7.0
+Stable tag: 2.7.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -56,6 +56,10 @@ Depends, but most likely yes.
 1. Options Page.
 
 == Changelog ==
+
+= 2.7.2 =
+* Added French Translation from Karel - neo7.fr
+* Fixed permissions for the button, now authors who 
 
 = 2.7.0 =
 * Fixed admin page capabilities

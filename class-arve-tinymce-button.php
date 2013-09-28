@@ -70,7 +70,17 @@ class Arve_Tinymce_Button {
 	public function action_admin_init() {
 		// only hook up these filters if we're in the admin panel, and the current user has permission
 		// to edit posts and pages
-		if ( current_user_can( 'edit_posts' ) && current_user_can( 'edit_pages' ) ) {
+		if (
+			current_user_can( 'publish_posts' )
+			|| current_user_can( 'edit_posts' )
+			|| current_user_can( 'edit_private_posts' )
+			|| current_user_can( 'edit_published_posts' )
+			|| current_user_can( 'publish_pages' )
+			|| current_user_can( 'edit_pages' )
+			|| current_user_can( 'edit_private_pages' )
+			|| current_user_can( 'edit_published_pages' )
+			|| current_user_can( 'edit_other_pages' )
+		) {
 			add_filter( 'mce_buttons', array( $this, 'filter_mce_button' ) );
 			add_filter( 'mce_external_plugins', array( $this, 'filter_mce_plugin' ) );
 		}
