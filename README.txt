@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: responsive, embeds, embed, flash, iframe, minimal, lightweight, simple, simplicity, shortcodes, videos, youtube, blip, bliptv, dailymotion, videojug, collegehumor, veoh, break, movieweb, snotr, gametrailers, vimeo, viddler, funnyordie, myspace, liveleak, metacafe, googlevideo, myvideo, yahoo, spike,
 Requires at least: 3.3.1
 Tested up to: 3.6
-Stable tag: 2.7.2
+Stable tag: 2.7.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -57,44 +57,49 @@ Depends, but most likely yes.
 
 == Changelog ==
 
+= 2.7.4 =
+* Fix: Dropped mb_detect_encoding now using just preg_match to support rare php setups.
+
+= 2.7.3 =
+* New: Added French Translation from Karel - neo7.fr
+
 = 2.7.2 =
-* Added French Translation from Karel - neo7.fr
-* Fixed permissions for the button, now authors who 
+* Fix: Permissions for the button, now authors who 
 
 = 2.7.0 =
-* Fixed admin page capabilities
-* Reintroduced the manual provider and ID input to be used then not detected correctly.
+* Fix: Admin page capabilities
+* Improved: Reintroduced the manual provider and ID input to be used then not detected correctly.
 
 = 2.6.4 =
-* Fix black bar issue. (Dropped IE6 hacks/workarounds)
+* Fix: Black bar issue. (Dropped IE6 hacks/workarounds)
 
 = 2.6.3 =
-* Fix normal embeds not sizing correctly
-* Added scrolling="no" to Iframes
-* Init shortcodes at a late stage to dominate conflicts
-* Improved Iframe parameter handling
-* Metacafe, Myspace, Videojug are now handled via Iframe
+* Fix: Normal embeds not sizing correctly
+* New: Added scrolling="no" to Iframes
+* Improved: Init shortcodes at a late stage to dominate conflicts
+* Improved: Improved Iframe parameter handling
+* Improved: Metacafe, Myspace, Videojug are now handled via Iframe
 
 = 2.6.2 =
-* Fix Objects open correctly in Colorbox
-* Fix Iframe autoplay parameters startign with '&'
-* Added screenshot for options page
-* Youtube Videos with now me embedded with the same protocol your website is on, meaning if your website is https youtube embeds will be in https as well.
+* Fix: Objects open correctly in Colorbox
+* Fix: Iframe autoplay parameters startign with '&'
+* New: Added screenshot for options page
+* Improved: Youtube Videos with now me embedded with the same protocol your website is on, meaning if your website is https youtube embeds will be in https as well.
 
 = 2.6.1 =
-* Fix Colorbox args script not having colorbox in depenency array
-* Fix maxwidth shortcode generotor field now has default value=""
-* Fix Blip embed code detection
+* Fix: Colorbox args script not having colorbox in depenency array
+* Fix: Maxwidth shortcode generotor field now has default value=""
+* Fix: Blip embed code detection
 
 = 2.6.0 =
-* Move to a class structure with help of the great https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate
-* Some smaller Improvements
-* Shortcode Dialog now has Autoplay option
-* Guessing of autoplay parameters for the Iframe shortcodes.
+* Improved: Move to a class structure with help of the great https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate
+* Improved: Some smaller Improvements
+* New: Shortcode Dialog now has Autoplay option
+* New: Guessing of autoplay parameters for the Iframe shortcodes.
 * Hopefully fixed issues with other plugins and some themes, Javascript was messed up and is fine now.
 
 = 2.5 =
-* fix objects in Colorboxes, now always have width and height 100%
+* Fix: Objects in Colorboxes, now always have width and height 100%
 * new shortcode attribute 'autoplay' for single videos
 * support for start at given time for vimeo
 

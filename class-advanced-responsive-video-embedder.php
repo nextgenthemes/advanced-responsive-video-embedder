@@ -55,7 +55,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	protected $version = '2.7.2';
+	protected $version = '2.7.4';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -299,7 +299,7 @@ class Advanced_Responsive_Video_Embedder {
 			case '':
 				return "<p><strong>ARVE Error:</strong> no video ID</p>";
 				break;
-			case ( mb_detect_encoding( $id, 'ASCII', true ) == true ):
+			case ( ! preg_match('/[^\x20-\x7f]/', $id ) ):
 				break;
 			default:
 				return "<p><strong>ARVE Error:</strong> id '$id' not valid.</p>";
@@ -310,7 +310,7 @@ class Advanced_Responsive_Video_Embedder {
 			case '':
 				return "<p><strong>ARVE Error:</strong> no provider set";
 				break;
-			case ( mb_detect_encoding( $provider, 'ASCII', true ) == true ):
+			case ( ! preg_match('/[^\x20-\x7f]/', $id ) ):
 				break;
 			default:
 				return "<p><strong>ARVE Error:</strong> provider '$provider' not valid.</p>";
