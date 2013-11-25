@@ -56,129 +56,36 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-require_once( plugin_dir_path( __FILE__ ) . 'class-advanced-responsive-video-embedder.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'class-arve-tinymce-button.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'class-arve-make-shortcodes.php' );
+/*----------------------------------------------------------------------------*
+ * Public-Facing Functionality
+ *----------------------------------------------------------------------------*/
 
-// Register hooks that are fired when the plugin is activated, deactivated, and uninstalled, respectively.
+/*
+ *
+ */
+require_once( plugin_dir_path( __FILE__ ) . '/public/class-advanced-responsive-video-embedder.php' );
+require_once( plugin_dir_path( __FILE__ ) . '/public/class-advanced-responsive-video-embedder-create-shortcodes.php' );
+
+/*
+ * Register hooks that are fired when the plugin is activated or deactivated.
+ * When the plugin is deleted, the uninstall.php file is loaded.
+ *
+ */
 register_activation_hook( __FILE__, array( 'Advanced_Responsive_Video_Embedder', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'Advanced_Responsive_Video_Embedder', 'deactivate' ) );
 
-Advanced_Responsive_Video_Embedder::get_instance();
-Arve_Tinymce_Button::get_instance();
-
-add_action( 'init', 'arve_create_shortcodes', 99 );
-/**
- * Create all shortcodes at a very late stage because ****** people over and over again using this plugin toghter with jetback or 
- * other plugins that handle shortcodes we will now overwrite all this suckers.
+/*
  *
- * @since    2.6.2
- *
- * @uses Arve_Make_Shortcodes()
  */
-function arve_create_shortcodes() {
+add_action( 'plugins_loaded', array( 'Advanced_Responsive_Video_Embedder', 'get_instance' ) );
 
-	$youtube = new Arve_Make_Shortcodes();
-	$youtube->provider = 'youtube';
-	$youtube->create_shortcode();
+/*----------------------------------------------------------------------------*
+ * Dashboard and Administrative Functionality
+ *----------------------------------------------------------------------------*/
 
-	$metacafe = new Arve_Make_Shortcodes();
-	$metacafe->provider = 'metacafe';
-	$metacafe->create_shortcode();
+if ( is_admin() ) {
 
-	$videojug = new Arve_Make_Shortcodes();
-	$videojug->provider = 'videojug';
-	$videojug->create_shortcode();
+	require_once( plugin_dir_path( __FILE__ ) . '/admin/class-advanced-responsive-video-embedder-admin.php' );
+	add_action( 'plugins_loaded', array( 'Advanced_Responsive_Video_Embedder_Admin', 'get_instance' ) );
 
-	$break = new Arve_Make_Shortcodes();
-	$break->provider = 'break';
-	$break->create_shortcode();
-
-	$funnyordie = new Arve_Make_Shortcodes();
-	$funnyordie->provider = 'funnyordie';
-	$funnyordie->create_shortcode();
-
-	$myspace = new Arve_Make_Shortcodes();
-	$myspace->provider = 'myspace';
-	$myspace->create_shortcode();
-
-	$bliptv = new Arve_Make_Shortcodes();
-	$bliptv->provider = 'bliptv';
-	$bliptv->create_shortcode();
-
-	$snotr = new Arve_Make_Shortcodes();
-	$snotr->provider = 'snotr';
-	$snotr->create_shortcode();
-
-	$liveleak = new Arve_Make_Shortcodes();
-	$liveleak->provider = 'liveleak';
-	$liveleak->create_shortcode();
-
-	$collegehumor = new Arve_Make_Shortcodes();
-	$collegehumor->provider = 'collegehumor';
-	$collegehumor->create_shortcode();
-
-	$veoh = new Arve_Make_Shortcodes();
-	$veoh->provider = 'veoh';
-	$veoh->create_shortcode();
-
-	$dailymotion = new Arve_Make_Shortcodes();
-	$dailymotion->provider = 'dailymotion';
-	$dailymotion->create_shortcode();
-
-	$dailymotionlist = new Arve_Make_Shortcodes();
-	$dailymotionlist->provider = 'dailymotionlist';
-	$dailymotionlist->create_shortcode();
-
-	$movieweb = new Arve_Make_Shortcodes();
-	$movieweb->provider = 'movieweb';
-	$movieweb->create_shortcode();
-
-	$vimeo = new Arve_Make_Shortcodes();
-	$vimeo->provider = 'vimeo';
-	$vimeo->create_shortcode();
-
-	$myvideo = new Arve_Make_Shortcodes();
-	$myvideo->provider = 'myvideo';
-	$myvideo->create_shortcode();
-
-	$gametrailers = new Arve_Make_Shortcodes();
-	$gametrailers->provider = 'gametrailers';
-	$gametrailers->create_shortcode();
-
-	$viddler = new Arve_Make_Shortcodes();
-	$viddler->provider = 'viddler';
-	$viddler->create_shortcode();
-
-	$youtubelist = new Arve_Make_Shortcodes();
-	$youtubelist->provider = 'youtubelist';
-	$youtubelist->create_shortcode();
-
-	$flickr = new Arve_Make_Shortcodes();
-	$flickr->provider = 'flickr';
-	$flickr->create_shortcode();
-
-	$archiveorg = new Arve_Make_Shortcodes();
-	$archiveorg->provider = 'archiveorg';
-	$archiveorg->create_shortcode();
-
-	$ustream = new Arve_Make_Shortcodes();
-	$ustream->provider = 'ustream';
-	$ustream->create_shortcode();
-
-	$comedycentral = new Arve_Make_Shortcodes();
-	$comedycentral->provider = 'comedycentral';
-	$comedycentral->create_shortcode();
-
-	$spike = new Arve_Make_Shortcodes();
-	$spike->provider = 'spike';
-	$spike->create_shortcode();
-
-	$yahoo = new Arve_Make_Shortcodes();
-	$yahoo->provider = 'yahoo';
-	$yahoo->create_shortcode();
-
-	$iframe = new Arve_Make_Shortcodes();
-	$iframe->provider = 'iframe';
-	$iframe->create_shortcode();
 }

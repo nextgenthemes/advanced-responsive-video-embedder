@@ -1,0 +1,133 @@
+Archive.org
+
+[archive id="gov.law.66.harvard"]
+
+Blip
+
+[bliptv id="AYGNjj4C" mode="normal"]
+
+
+Break
+
+[break id="2280788" mode="normal"]
+
+
+Collegehumor
+
+[collegehumor id="6668573" mode="normal"]
+
+
+<!--nextpage-->
+Comedycentral
+
+[comedycentral id="y08oac" mode="normal"]
+
+
+Dailymotion Playlist
+
+[dailymotionlist id="x1j8" mode="normal"]
+
+
+Dailymotion
+
+[dailymotion id="xnb5a9" mode="normal"]
+
+
+Flickr
+
+[flickr id="2856467015" mode="normal"]
+
+
+Funnyordie
+
+[funnyordie id="25c17d6eb2" mode="normal"]
+
+
+Gametrailers
+
+[gametrailers id="7dde02c5-451f-4c71-b317-b496529a9eed" mode="normal"]
+
+
+Iframe (with TED talks URL)
+
+[iframe id="http://embed.ted.com/talks/lang/de/camille_seaman_photos_from_a_storm_chaser.html"]
+
+
+Liveleak
+
+[liveleak id="8f4_1325079516" mode="normal"]
+
+
+Metacafe
+
+[metacafe id="9847658" mode="normal"]
+
+
+Movieweb
+
+[movieweb id="VIBwLO1WUuh4FE" mode="normal"]
+
+
+Myspace
+
+[myspace id="55699162" mode="normal"]
+
+
+Myvideo
+
+[myvideo id="8362276" mode="normal"]
+
+
+Snotr
+
+[snotr id="8525" mode="normal"]
+
+
+Spike
+
+[spike id="5afddf30-31d8-40fb-81e6-bb5c6f45525f" mode="normal"]
+
+
+Ustream
+
+[ustream id="9663645" mode="normal"]
+
+
+Veoh
+
+[veoh id="v25923577KP3s76Dp" mode="normal"]
+
+
+Vevo
+
+[vevo id="USUV71301934" mode="normal"]
+
+
+Viddler
+
+[viddler id="db41ec69" mode="normal"]
+
+
+Videojub
+
+[videojug id="fa15cafd-556f-165b-d660-ff0008c90d2d" mode="normal"]
+
+
+Vimeo
+
+[vimeo id="32107002" mode="normal"]
+
+
+Yahoo
+
+-
+
+
+Youtube Playlist
+
+[youtubelist id="PL63F0C78739B09958" mode="normal"]
+
+
+Youtube
+
+[youtube id="lntJxWNJPW4" mode="normal"]

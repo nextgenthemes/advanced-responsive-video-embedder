@@ -1,0 +1,298 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Advanced Responsive Video Embedder v2.6.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2013-09-22 10:47+0100\n"
+"Last-Translator: nico <nicolasjonas@web.de>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Textdomain-Support: yes\n"
+"Language: de_DE\n"
+"X-Poedit-SearchPath-0: .\n"
+
+# @ ngt-arve
+#: views/admin.php:63
+msgid "Needed! Must be 50+ to work."
+msgstr "Requis! Il en faut +50 pour fonctionner."
+
+# @ ngt-arve
+#: views/admin.php:70
+msgid ""
+"To be used instead of black background. Upload a 16:10 Image with a size "
+"bigger or equal the thumbnials size you want to use into your WordPress and "
+"paste the URL of it here."
+msgstr ""
+"Utilisée à la place du fond noir. Envoyer une image au ratio 16:10 avec une "
+"taille supérieure ou égale à la taille des miniatures dont vous voulez vous "
+"servir dans Wordpress, et copiez l'URL ici."
+
+# @ ngt-arve
+#: views/admin.php:85
+msgid ""
+"You might need this to prevent conflicts with other plugins you want to use. "
+"At least 3 alphanumec characters with optional underscores are needed!"
+msgstr ""
+"Vous pourriez en avoir besoin pour empêcher les conflits avec d'autres "
+"modules. Au moins 3 caractères alphanumériques sont requis avec un "
+"underscore optionnel!"
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:114
+msgid "More info"
+msgstr "En savoir plus"
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:132
+msgid "Mode"
+msgstr "Mode"
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:133
+msgid ""
+"Only use it of you want some vidoes have a mode that differs from the one "
+"you set in the options."
+msgstr ""
+"Utiliser seulement si vous voulez que des vidéos aient un mode différent de "
+"celui défini dans les options."
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:138 views/admin.php:30
+msgid "Normal"
+msgstr "Normal"
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:139 views/admin.php:31
+msgid "Thumbnail"
+msgstr "Miniatures"
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:145
+msgid "Align"
+msgstr "Alignement"
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:151
+msgid "left"
+msgstr "Gauche"
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:152
+msgid "right"
+msgstr "Droite"
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:153
+msgid "center"
+msgstr "Centrer"
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:119
+msgid ""
+"Ustream: If your Address bar URL not contains a number. Click Share->URL-"
+"icon and paste the URL you get there here."
+msgstr ""
+"Ustream: si l'URL dans la barre d'adresse ne contient pas un nombre. Cliquer "
+"sur l'icône Share->URL et copier ici l'URL obtenue."
+
+# @ ngt-arve
+#: views/admin.php:39
+msgid ""
+"Not needed, if you set this to \"0\" your videos will me the maximum size of "
+"the container they are in. If your Page has a big width you might want to "
+"set this."
+msgstr ""
+"Optionnel, si vous mettez ceci à \"0\" vos vidéos vont avoir la taille "
+"maximum de leur conteneur. Si votre page a une grande largeur, il est "
+"recommandé de mettre un paramètre ici."
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:122
+msgid ""
+"For Youtube, Archiveorg, Metacafe and Viddler embed codes and URL's should "
+"work."
+msgstr ""
+"Pour Youtube, Archiveorg, Metacafe et Viddler les codes à insérer ou "
+"l'adresse URL devraient fonctionner."
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:166
+msgid ""
+"Only use it of you want some vidoes have a maximal width that differs from "
+"the one you set in the options."
+msgstr ""
+"A utiliser seulement si certaines vidéos ont une largeur maximale qui "
+"diffère de celle saisie dans les options."
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:113
+msgid ""
+"For Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike and "
+"Comedycentral paste the embed code, for all others paste the URL!"
+msgstr ""
+"Pour  Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike et  "
+"Comedycentral coller le code à insérer, pour tous les autres, collez "
+"l'adresse de la vidéo!"
+
+# @ ngt-arve
+#: views/admin.php:58
+msgid "Width"
+msgstr "Largeur"
+
+# @ ngt-arve
+#: views/admin.php:61
+msgid "Height"
+msgstr "Hauteur"
+
+# @ ngt-arve
+#: views/admin.php:75
+msgid "Reset options"
+msgstr "Réinitialiser les options"
+
+# @ ngt-arve
+#: views/admin.php:83
+msgid "Change shortcode tags"
+msgstr "Modifier le shortcode"
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:178
+msgid "Maximal width"
+msgstr "Largeur maximale"
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:188
+msgid "Provider"
+msgstr "Fournisseur"
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:203
+msgid "Video ID"
+msgstr "ID Vidéo"
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:204
+msgid ""
+"If not filled in automatically after pasting the url above you have to "
+"insert the video ID in here."
+msgstr ""
+"Si ce champ n'est pas rempli automatiquement après avoir collé le code, "
+"insérer l'identifiant de la vidéo ici."
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:218
+msgid "Ready?"
+msgstr "Prêt(e) ?"
+
+# @ ngt-arve
+#: views/admin.php:36
+msgid "Video Maximal Width"
+msgstr "Largeur maximale de la vidéo"
+
+# @ ngt-arve
+#: views/admin.php:43
+msgid "Fake Thumbnails"
+msgstr "Fausses miniatures"
+
+# @ ngt-arve
+#: views/admin.php:56
+msgid "Thumbnail Size"
+msgstr "Taille de miniature"
+
+# @ ngt-arve
+#. translators: plugin header field 'Name'
+#: advanced-responsive-video-embedder.php:0
+#: class-advanced-responsive-video-embedder.php:236
+msgid "Advanced Responsive Video Embedder"
+msgstr "Advanced Responsive Video Embedder"
+
+# @ ngt-arve
+#. translators: plugin header field 'PluginURI'
+#: advanced-responsive-video-embedder.php:0
+msgid "http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/"
+msgstr "http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/"
+
+# @ ngt-arve
+#. translators: plugin header field 'Description'
+#: advanced-responsive-video-embedder.php:0
+msgid ""
+"Embed videos with a click of a button from many providers with full "
+"responsive sizes. Show videos as thumbnails and let them open in colorbox."
+msgstr ""
+"Insère des vidéos en un clic pour la plupart des fournisseurs avec une "
+"taille responsive. Peut afficher les vidéos sous forme de miniatures avec "
+"ouverture dans colorbox."
+
+# @ ngt-arve
+#. translators: plugin header field 'Author'
+#: advanced-responsive-video-embedder.php:0
+msgid "Nicolas Jonas"
+msgstr "Nicolas Jonas"
+
+# @ ngt-arve
+#. translators: plugin header field 'AuthorURI'
+#: advanced-responsive-video-embedder.php:0
+msgid "http://nextgenthemes.com"
+msgstr "http://nextgenthemes.com"
+
+# @ ngt-arve
+#. translators: plugin header field 'Version'
+#: advanced-responsive-video-embedder.php:0
+msgid "2.6.0"
+msgstr "2.6.0"
+
+# @ ngt-arve
+#: class-advanced-responsive-video-embedder.php:237
+msgid "A.R. Video Embedder"
+msgstr "A.R. Video Embedder"
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:165
+msgid "Autoplay this video"
+msgstr "Lecture auto."
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:171
+msgid "yes"
+msgstr "oui"
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:172
+msgid "no"
+msgstr "non"
+
+# @ ngt-arve
+#: class-arve-tinymce-button.php:179
+msgid ""
+"Only use it of you want some vidoes override the autoplay setting for single "
+"videos."
+msgstr ""
+"Utiliser seulement si vous voulez saisir un paramètre différent pour la "
+"lecture auto que celle mise dans les options."
+
+# @ ngt-arve
+#: views/admin.php:46
+msgid ""
+"Loads the actual Videoplayer as \"background image\" to for thumbnails to "
+"emulate the feature Youtube, Dailymotion, and Bliptv have. If not enabled "
+"thumbnails are displayed black or you can choose a image below."
+msgstr ""
+"Charge le lecteur video en tant qu'image de fond pour les miniatures pour "
+"simuler la fonction de Youtube, Dailymotion, et  Bliptv. Si désactivé, les "
+"miniatures sont affichées en noir et vous pouvez mettre une image ci-dessous."
+
+# @ ngt-arve
+#: views/admin.php:50
+msgid "Autoplay all"
+msgstr "Tout mettre en lecture auto."
+
+# @ ngt-arve
+#: views/admin.php:67
+msgid "Custom Thumbnail Image"
+msgstr "Image miniature personnalisée"
