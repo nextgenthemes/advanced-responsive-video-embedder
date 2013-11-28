@@ -472,7 +472,7 @@ class Advanced_Responsive_Video_Embedder {
 			'metacafe'            => $hw . 'metacafe\.com/(?:watch|fplayer)/([0-9]+)',
 			'movieweb'            => $hw . 'movieweb\.com/v/([a-z0-9]{14})',
 			# https://myspace.com/myspace/video/au-revoir-simone-five-minutes-to-the-stage/109467721
-			'myspace'             => $hw . 'myspace\.com/.+([0-9]{9})',
+			'myspace'             => $hw . 'myspace\.com/.+/([0-9]+)',
 			'myvideo'             => $hw . 'myvideo\.de/(?:watch|embed)/([0-9]{7})',
 			'snotr'               => $hw . 'snotr\.com/(?:video|embed)/([0-9]+)',
 			##'spike'             => 'spike',
