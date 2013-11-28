@@ -73,13 +73,15 @@ class Advanced_Responsive_Video_Embedder_Create_Shortcodes {
 	public function do_shortcode( $atts ) {
 
 		$shortcode_atts = shortcode_atts( array(
-			'id'       => '',
 			'align'    => '',
-			'mode'     => '',
+			'autoplay' => '',
+			'id'       => '',
 			'maxw'     => '',
 			'maxwidth' => '',
+			'mode'     => '',
+			'start'    => '',
+			'end'      => '',
 			'time'     => '',
-			'autoplay' => '',
 		), $atts );
 
 		$arve = Advanced_Responsive_Video_Embedder::get_instance();

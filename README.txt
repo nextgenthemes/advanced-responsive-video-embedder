@@ -34,6 +34,7 @@ Simple lightweight plugin lets you embed videos from many providers with full re
 * Spike
 * Ustream
 * Veoh
+* Vevo
 * Viddler
 * Videojug
 * Vimeo (starttime supported)
@@ -56,6 +57,15 @@ Depends, but most likely yes.
 1. Options Page.
 
 == Changelog ==
+
+= 3.0.0 (beta) =
+* New: Support for embedding via simply pasting of URLs into posts (need to be on their own line, no button or shortcodes needed)
+* New: Thumbnails are now responsive
+* New: Vevo support
+* New: TED Talks support
+* Improved: 'bliptv' shortcode deprecated on favor of 'blip' that uses the ids from blip.tv URLs instead of the ones from embed codes
+* Improved: Moved code to newest Plugin Boilerplate
+* Improved: Massive code improvements
 
 = 2.7.4 =
 * Fix: Dropped mb_detect_encoding now using just preg_match to support rare php setups.

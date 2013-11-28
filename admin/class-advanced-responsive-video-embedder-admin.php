@@ -74,14 +74,19 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		// Load admin style sheet and JavaScript.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
-		
+
 		// Add the options page and menu item.
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
-		
+
 		// Add an action link pointing to the options page.
-		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_slug . '.php' );
+		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) ) . $this->plugin_slug . '.php';
+
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
-		
+	
+		//* Display a notice that can be dismissed
+		#add_action( 'admin_init',    array( $this, 'admin_notice_ignore') );
+		#add_action( 'admin_notices', array( $this, 'admin_notice') );
+
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_init', array( $this, 'init_mce_plugin' ) );
 
@@ -176,12 +181,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		 *
 		 *        Administration Menus: http://codex.wordpress.org/Administration_Menus
 		 *
-		 * TODO:
-		 *
-		 * - Change 'Page Title' to the title of your plugin admin page
-		 * - Change 'Menu Text' to the text for menu item for the plugin settings page
-		 * - Change 'manage_options' to the capability you see fit
-		 *   For reference: http://codex.wordpress.org/Roles_and_Capabilities
 		 */
 		$this->plugin_screen_hook_suffix = add_options_page(
 			__( 'Advanced Responsive Video Embedder Settings', $this->plugin_slug ),
@@ -209,13 +208,12 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	public function add_action_links( $links ) {
 
-		$link = array( 'settings' => sprintf( 
-			'<a href="%s">%s</a>',
-			admin_url( 'options-general.php?page=' . $this->plugin_slug ), 
-			__( 'Settings', $this->plugin_slug ) )
+		$extra_links = array(
+			'settings' => sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=' . $this->plugin_slug ), __( 'Settings', $this->plugin_slug ) ),
+			'donate'   => sprintf( '<a href="%s">%s</a>', 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC', __( 'Donate', $this->plugin_slug ) ),
 		);
 
-		return array_merge( $link, $links );
+		return array_merge( $extra_links, $links );
 
 	}
 
@@ -244,12 +242,57 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	}
 
 	/**
-	 * R
+	 * 
 	 *
 	 * @since    2.6.0
 	 */
 	public function register_settings() {
-	        register_setting( 'arve_plugin_options', 'arve_options', array( $this, 'validate_options' ) );
+		register_setting( 'arve_plugin_options', 'arve_options', array( $this, 'validate_options' ) );
+	}
+
+	/**
+	 * 
+	 *
+	 * @since    2.6.0
+	 */
+	public function validate_options( $input ) {
+		
+		// simply returning nothing will cause the reset/defaults of all options
+		if( isset( $input['reset'] ) )
+			return;
+
+		$output = array();
+
+		$output['mode'] = wp_filter_nohtml_kses( $input['mode'] );
+		$output['custom_thumb_image'] = esc_url_raw( $input['custom_thumb_image'] );
+
+		$output['fakethumb']      = isset( $input['fakethumb'] );
+		$output['autoplay']       = isset( $input['autoplay'] );
+		
+		if( (int) $input['thumb_width'] > 50 ) {
+			$output['thumb_width'] = (int) $input['thumb_width'];
+		} else {
+			$output['thumb_width'] = '';
+		}
+
+		if( (int) $input['video_maxwidth'] > 50 ) {
+			$output['video_maxwidth'] = (int) $input['video_maxwidth'];
+		} else {
+			$output['video_maxwidth'] = '';
+		}
+
+		foreach ( $input['shortcodes'] as $key => $var ) {
+		
+			$var = preg_replace('/[_]+/', '_', $var );	// remove multiple underscores
+			$var = preg_replace('/[^A-Za-z0-9_]/', '', $var );	// strip away everything except a-z,0-9 and underscores
+			
+			if ( strlen($var) < 3 )
+				continue;
+			
+			$output['shortcodes'][$key] = $var;
+		}
+		
+		return $output;
 	}
 
 	/**
@@ -280,22 +323,19 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		?>
 		<div id="arve-form">
 			<table id="arve-table" class="form-table">
-				<colgroup style="width: 45%;"></colgroup>
-				<colgroup style="width: 55%;"></colgroup>
+				<colgroup style="width: 40%;"></colgroup>
+				<colgroup style="width: 60%;"></colgroup>
 				<tr>
 					<th>
-						<label for="arve-url">URL</label><br>
+						<label for="arve-url">URL/Embed Code</label><br>
 						<small class="description">
 							<?php _e('For Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike and Comedycentral paste the embed code, for all others paste the URL!', 'ngt-arve'); ?><br>
-							<a href="#" id="arve-open-url-info"><?php _e('More info', 'ngt-arve'); ?></a>
+							<a href="#" id="arve-open-url-info"><?php _e('Usteam info', 'ngt-arve'); ?></a>
 						</small>
 
 						<div id="arve-url-info" style="display: none; padding: 0 15px;">
 							<p>
 								<?php _e('Ustream: If your Address bar URL not contains a number. Click Share->URL-icon and paste the URL you get there here.', 'ngt-arve'); ?>
-							</p>
-							<p>
-								<?php _e("For Youtube, Archiveorg, Metacafe and Viddler embed codes and URL's should work.", 'ngt-arve'); ?>
 							</p>
 						</div>
 					</th>
@@ -404,4 +444,39 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		exit;
 	}
 
+	/**
+	 * Display a notice that can be dismissed
+	 *
+	 * @since     3.0.0
+	 */
+	function admin_notice() {
+		global $current_user ;
+		$user_id = $current_user->ID;
+		//* Check that the user hasn't already clicked to ignore the message
+		if ( ! get_user_meta($user_id, 'arve_ignore_admin_notice') ) {
+			echo '<div class="updated"><p>';
+			_e( 'Hey guys, this is Nico the Author of the Advanced Responsive Video Embedder Plugin. I have worked long and hard on version 3.0 of this plugin and not want to abuse all users as beta testers again. I would be glad if some of you can manually install and test the upcoming version and report back. Thanks.', 'ngt-arve' );
+			printf( __( ' <a href="%s" target="_blank">%s</a> | <a href="?arve_nag_ignore=1">%s</a>' ),
+				'https://github.com/nextgenthemes/advanced-responsive-video-embedder/archive/master.zip',
+				__( 'Download Beta', 'ngt-arve' ),
+				__( 'Dismiss', 'ngt-arve' )
+			);
+			echo "</p></div>";
+		}
+	}
+
+	/**
+	 * Maybe dismiss admin Notice
+	 *
+	 * @since     3.0.0
+	 */
+	function admin_notice_ignore() {
+		global $current_user;
+
+		$user_id = $current_user->ID;
+		//* If user clicks to ignore the notice, add that to their user meta
+		if ( isset( $_GET['arve_nag_ignore'] ) && '1' == $_GET['arve_nag_ignore'] ) {
+			add_user_meta( $user_id, 'arve_ignore_admin_notice', 'true', true );
+		}
+	}
 }

@@ -1,298 +1,269 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Advanced Responsive Video Embedder v2.6.0\n"
+"Project-Id-Version: Advanced Responsive Video Embedder v2.7.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-09-22 10:47+0100\n"
+"PO-Revision-Date: 2013-11-28 14:59:16+0000\n"
 "Last-Translator: nico <nicolasjonas@web.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
 "X-Generator: Poedit 1.5.5\n"
+"X-Poedit-Language: \n"
+"X-Poedit-Country: \n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
-"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
-"X-Textdomain-Support: yes\n"
-"Language: de_DE\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
 "X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
 
-# @ ngt-arve
-#: views/admin.php:63
+#: admin/views/admin.php:46
+#@ ngt-arve
 msgid "Needed! Must be 50+ to work."
 msgstr "Requis! Il en faut +50 pour fonctionner."
 
-# @ ngt-arve
-#: views/admin.php:70
-msgid ""
-"To be used instead of black background. Upload a 16:10 Image with a size "
-"bigger or equal the thumbnials size you want to use into your WordPress and "
-"paste the URL of it here."
-msgstr ""
-"Utilisée à la place du fond noir. Envoyer une image au ratio 16:10 avec une "
-"taille supérieure ou égale à la taille des miniatures dont vous voulez vous "
-"servir dans Wordpress, et copiez l'URL ici."
+#: admin/views/admin.php:66
+#@ ngt-arve
+msgid "To be used instead of black background. Upload a 16:10 Image with a size bigger or equal the thumbnials size you want to use into your WordPress and paste the URL of it here."
+msgstr "Utilisée à la place du fond noir. Envoyer une image au ratio 16:10 avec une taille supérieure ou égale à la taille des miniatures dont vous voulez vous servir dans Wordpress, et copiez l'URL ici."
 
-# @ ngt-arve
-#: views/admin.php:85
-msgid ""
-"You might need this to prevent conflicts with other plugins you want to use. "
-"At least 3 alphanumec characters with optional underscores are needed!"
-msgstr ""
-"Vous pourriez en avoir besoin pour empêcher les conflits avec d'autres "
-"modules. Au moins 3 caractères alphanumériques sont requis avec un "
-"underscore optionnel!"
+#: admin/views/admin.php:81
+#@ ngt-arve
+msgid "You might need this to prevent conflicts with other plugins you want to use. At least 3 alphanumec characters with optional underscores are needed!"
+msgstr "Vous pourriez en avoir besoin pour empêcher les conflits avec d'autres modules. Au moins 3 caractères alphanumériques sont requis avec un underscore optionnel!"
 
-# @ ngt-arve
-#: class-arve-tinymce-button.php:114
-msgid "More info"
-msgstr "En savoir plus"
-
-# @ ngt-arve
-#: class-arve-tinymce-button.php:132
+#: admin/class-advanced-responsive-video-embedder-admin.php:348
+#@ ngt-arve
 msgid "Mode"
 msgstr "Mode"
 
-# @ ngt-arve
-#: class-arve-tinymce-button.php:133
-msgid ""
-"Only use it of you want some vidoes have a mode that differs from the one "
-"you set in the options."
-msgstr ""
-"Utiliser seulement si vous voulez que des vidéos aient un mode différent de "
-"celui défini dans les options."
-
-# @ ngt-arve
-#: class-arve-tinymce-button.php:138 views/admin.php:30
+#: admin/class-advanced-responsive-video-embedder-admin.php:354
+#: admin/views/admin.php:30
+#@ ngt-arve
 msgid "Normal"
 msgstr "Normal"
 
-# @ ngt-arve
-#: class-arve-tinymce-button.php:139 views/admin.php:31
+#: admin/class-advanced-responsive-video-embedder-admin.php:355
+#: admin/views/admin.php:31
+#@ ngt-arve
 msgid "Thumbnail"
 msgstr "Miniatures"
 
-# @ ngt-arve
-#: class-arve-tinymce-button.php:145
+#: admin/class-advanced-responsive-video-embedder-admin.php:361
+#@ ngt-arve
 msgid "Align"
 msgstr "Alignement"
 
-# @ ngt-arve
-#: class-arve-tinymce-button.php:151
+#: admin/class-advanced-responsive-video-embedder-admin.php:367
+#@ ngt-arve
 msgid "left"
 msgstr "Gauche"
 
-# @ ngt-arve
-#: class-arve-tinymce-button.php:152
+#: admin/class-advanced-responsive-video-embedder-admin.php:368
+#@ ngt-arve
 msgid "right"
 msgstr "Droite"
 
-# @ ngt-arve
-#: class-arve-tinymce-button.php:153
+#: admin/class-advanced-responsive-video-embedder-admin.php:369
+#@ ngt-arve
 msgid "center"
 msgstr "Centrer"
 
-# @ ngt-arve
-#: class-arve-tinymce-button.php:119
-msgid ""
-"Ustream: If your Address bar URL not contains a number. Click Share->URL-"
-"icon and paste the URL you get there here."
-msgstr ""
-"Ustream: si l'URL dans la barre d'adresse ne contient pas un nombre. Cliquer "
-"sur l'icône Share->URL et copier ici l'URL obtenue."
+#: admin/class-advanced-responsive-video-embedder-admin.php:338
+#@ ngt-arve
+msgid "Ustream: If your Address bar URL not contains a number. Click Share->URL-icon and paste the URL you get there here."
+msgstr "Ustream: si l'URL dans la barre d'adresse ne contient pas un nombre. Cliquer sur l'icône Share->URL et copier ici l'URL obtenue."
 
-# @ ngt-arve
-#: views/admin.php:39
-msgid ""
-"Not needed, if you set this to \"0\" your videos will me the maximum size of "
-"the container they are in. If your Page has a big width you might want to "
-"set this."
-msgstr ""
-"Optionnel, si vous mettez ceci à \"0\" vos vidéos vont avoir la taille "
-"maximum de leur conteneur. Si votre page a une grande largeur, il est "
-"recommandé de mettre un paramètre ici."
+#: admin/class-advanced-responsive-video-embedder-admin.php:332
+#@ ngt-arve
+msgid "For Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike and Comedycentral paste the embed code, for all others paste the URL!"
+msgstr "Pour  Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike et  Comedycentral coller le code à insérer, pour tous les autres, collez l'adresse de la vidéo!"
 
-# @ ngt-arve
-#: class-arve-tinymce-button.php:122
-msgid ""
-"For Youtube, Archiveorg, Metacafe and Viddler embed codes and URL's should "
-"work."
-msgstr ""
-"Pour Youtube, Archiveorg, Metacafe et Viddler les codes à insérer ou "
-"l'adresse URL devraient fonctionner."
-
-# @ ngt-arve
-#: class-arve-tinymce-button.php:166
-msgid ""
-"Only use it of you want some vidoes have a maximal width that differs from "
-"the one you set in the options."
-msgstr ""
-"A utiliser seulement si certaines vidéos ont une largeur maximale qui "
-"diffère de celle saisie dans les options."
-
-# @ ngt-arve
-#: class-arve-tinymce-button.php:113
-msgid ""
-"For Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike and "
-"Comedycentral paste the embed code, for all others paste the URL!"
-msgstr ""
-"Pour  Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike et  "
-"Comedycentral coller le code à insérer, pour tous les autres, collez "
-"l'adresse de la vidéo!"
-
-# @ ngt-arve
-#: views/admin.php:58
-msgid "Width"
-msgstr "Largeur"
-
-# @ ngt-arve
-#: views/admin.php:61
-msgid "Height"
-msgstr "Hauteur"
-
-# @ ngt-arve
-#: views/admin.php:75
+#: admin/views/admin.php:71
+#@ ngt-arve
 msgid "Reset options"
 msgstr "Réinitialiser les options"
 
-# @ ngt-arve
-#: views/admin.php:83
+#: admin/views/admin.php:79
+#@ ngt-arve
 msgid "Change shortcode tags"
 msgstr "Modifier le shortcode"
 
-# @ ngt-arve
-#: class-arve-tinymce-button.php:178
+#: admin/class-advanced-responsive-video-embedder-admin.php:394
+#@ ngt-arve
 msgid "Maximal width"
 msgstr "Largeur maximale"
 
-# @ ngt-arve
-#: class-arve-tinymce-button.php:188
+#: admin/class-advanced-responsive-video-embedder-admin.php:404
+#@ ngt-arve
 msgid "Provider"
 msgstr "Fournisseur"
 
-# @ ngt-arve
-#: class-arve-tinymce-button.php:203
+#: admin/class-advanced-responsive-video-embedder-admin.php:419
+#@ ngt-arve
 msgid "Video ID"
 msgstr "ID Vidéo"
 
-# @ ngt-arve
-#: class-arve-tinymce-button.php:204
-msgid ""
-"If not filled in automatically after pasting the url above you have to "
-"insert the video ID in here."
-msgstr ""
-"Si ce champ n'est pas rempli automatiquement après avoir collé le code, "
-"insérer l'identifiant de la vidéo ici."
+#: admin/class-advanced-responsive-video-embedder-admin.php:420
+#@ ngt-arve
+msgid "If not filled in automatically after pasting the url above you have to insert the video ID in here."
+msgstr "Si ce champ n'est pas rempli automatiquement après avoir collé le code, insérer l'identifiant de la vidéo ici."
 
-# @ ngt-arve
-#: class-arve-tinymce-button.php:218
+#: admin/class-advanced-responsive-video-embedder-admin.php:434
+#@ ngt-arve
 msgid "Ready?"
 msgstr "Prêt(e) ?"
 
-# @ ngt-arve
-#: views/admin.php:36
+#: admin/views/admin.php:36
+#@ ngt-arve
 msgid "Video Maximal Width"
 msgstr "Largeur maximale de la vidéo"
 
-# @ ngt-arve
-#: views/admin.php:43
+#: admin/views/admin.php:50
+#@ ngt-arve
 msgid "Fake Thumbnails"
 msgstr "Fausses miniatures"
 
-# @ ngt-arve
-#: views/admin.php:56
-msgid "Thumbnail Size"
-msgstr "Taille de miniature"
-
-# @ ngt-arve
 #. translators: plugin header field 'Name'
 #: advanced-responsive-video-embedder.php:0
-#: class-advanced-responsive-video-embedder.php:236
+#@ ngt-arve
 msgid "Advanced Responsive Video Embedder"
 msgstr "Advanced Responsive Video Embedder"
 
-# @ ngt-arve
 #. translators: plugin header field 'PluginURI'
 #: advanced-responsive-video-embedder.php:0
+#@ ngt-arve
 msgid "http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/"
 msgstr "http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/"
 
-# @ ngt-arve
 #. translators: plugin header field 'Description'
 #: advanced-responsive-video-embedder.php:0
-msgid ""
-"Embed videos with a click of a button from many providers with full "
-"responsive sizes. Show videos as thumbnails and let them open in colorbox."
-msgstr ""
-"Insère des vidéos en un clic pour la plupart des fournisseurs avec une "
-"taille responsive. Peut afficher les vidéos sous forme de miniatures avec "
-"ouverture dans colorbox."
+#@ ngt-arve
+msgid "Embed videos with a click of a button from many providers with full responsive sizes. Show videos as thumbnails and let them open in colorbox."
+msgstr "Insère des vidéos en un clic pour la plupart des fournisseurs avec une taille responsive. Peut afficher les vidéos sous forme de miniatures avec ouverture dans colorbox."
 
-# @ ngt-arve
 #. translators: plugin header field 'Author'
 #: advanced-responsive-video-embedder.php:0
+#@ ngt-arve
 msgid "Nicolas Jonas"
 msgstr "Nicolas Jonas"
 
-# @ ngt-arve
 #. translators: plugin header field 'AuthorURI'
 #: advanced-responsive-video-embedder.php:0
+#@ ngt-arve
 msgid "http://nextgenthemes.com"
 msgstr "http://nextgenthemes.com"
 
-# @ ngt-arve
-#. translators: plugin header field 'Version'
-#: advanced-responsive-video-embedder.php:0
-msgid "2.6.0"
-msgstr "2.6.0"
-
-# @ ngt-arve
-#: class-advanced-responsive-video-embedder.php:237
-msgid "A.R. Video Embedder"
-msgstr "A.R. Video Embedder"
-
-# @ ngt-arve
-#: class-arve-tinymce-button.php:165
+#: admin/class-advanced-responsive-video-embedder-admin.php:381
+#@ ngt-arve
 msgid "Autoplay this video"
 msgstr "Lecture auto."
 
-# @ ngt-arve
-#: class-arve-tinymce-button.php:171
+#: admin/class-advanced-responsive-video-embedder-admin.php:387
+#@ ngt-arve
 msgid "yes"
 msgstr "oui"
 
-# @ ngt-arve
-#: class-arve-tinymce-button.php:172
+#: admin/class-advanced-responsive-video-embedder-admin.php:388
+#@ ngt-arve
 msgid "no"
 msgstr "non"
 
-# @ ngt-arve
-#: class-arve-tinymce-button.php:179
-msgid ""
-"Only use it of you want some vidoes override the autoplay setting for single "
-"videos."
-msgstr ""
-"Utiliser seulement si vous voulez saisir un paramètre différent pour la "
-"lecture auto que celle mise dans les options."
+#: admin/views/admin.php:53
+#@ ngt-arve
+msgid "Loads the actual Videoplayer as \"background image\" to for thumbnails to emulate the feature Youtube, Dailymotion, and Bliptv have. If not enabled thumbnails are displayed black or you can choose a image below."
+msgstr "Charge le lecteur video en tant qu'image de fond pour les miniatures pour simuler la fonction de Youtube, Dailymotion, et  Bliptv. Si désactivé, les miniatures sont affichées en noir et vous pouvez mettre une image ci-dessous."
 
-# @ ngt-arve
-#: views/admin.php:46
-msgid ""
-"Loads the actual Videoplayer as \"background image\" to for thumbnails to "
-"emulate the feature Youtube, Dailymotion, and Bliptv have. If not enabled "
-"thumbnails are displayed black or you can choose a image below."
-msgstr ""
-"Charge le lecteur video en tant qu'image de fond pour les miniatures pour "
-"simuler la fonction de Youtube, Dailymotion, et  Bliptv. Si désactivé, les "
-"miniatures sont affichées en noir et vous pouvez mettre une image ci-dessous."
-
-# @ ngt-arve
-#: views/admin.php:50
+#: admin/views/admin.php:57
+#@ ngt-arve
 msgid "Autoplay all"
 msgstr "Tout mettre en lecture auto."
 
-# @ ngt-arve
-#: views/admin.php:67
+#: admin/views/admin.php:63
+#@ ngt-arve
 msgid "Custom Thumbnail Image"
 msgstr "Image miniature personnalisée"
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:186
+#@ ngt-arve
+msgid "Advanced Responsive Video Embedder Settings"
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:187
+#@ ngt-arve
+msgid "A.R. Video Embedder Settings"
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:212
+#: admin/class-plugin-name-admin.php:217
+#@ ngt-arve
+msgid "Settings"
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:213
+#@ ngt-arve
+msgid "Donate"
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:333
+#@ ngt-arve
+msgid "Usteam info"
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:349
+#: admin/class-advanced-responsive-video-embedder-admin.php:382
+#: admin/class-advanced-responsive-video-embedder-admin.php:395
+#@ ngt-arve
+msgid "Optional override setting for single videos."
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:458
+#@ ngt-arve
+msgid "Hey guys, this is Nico the Author of the Advanced Responsive Video Embedder Plugin. I have worked long and hard on version 3.0 of this plugin and not want to abuse all users as beta testers again. I would be glad if some of you can manually install and test the upcoming version and report back. Thanks."
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:459
+#, php-format
+#@ default
+msgid " <a href=\"%s\" target=\"_blank\">%s</a> | <a href=\"?arve_nag_ignore=1\">%s</a>"
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:461
+#@ default
+msgid "Download Beta"
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:462
+#@ ngt-arve
+msgid "Dismiss"
+msgstr ""
+
+#: admin/class-plugin-name-admin.php:190
+#@ ngt-arve
+msgid "Page Title"
+msgstr ""
+
+#: admin/class-plugin-name-admin.php:191
+#@ ngt-arve
+msgid "Menu Text"
+msgstr ""
+
+#: admin/views/admin.php:39
+#@ ngt-arve
+msgid "Optional, if not set your videos will be the maximum size of the container they are in. If your content area has a big width you might want to set this."
+msgstr ""
+
+#: admin/views/admin.php:43
+#@ ngt-arve
+msgid "Thumbnail Maximal Width"
+msgstr ""
+
+#. translators: plugin header field 'Version'
+#: advanced-responsive-video-embedder.php:0
+#@ ngt-arve
+msgid "2.7.4"
+msgstr ""
+

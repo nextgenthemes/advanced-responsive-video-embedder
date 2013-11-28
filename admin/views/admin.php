@@ -27,7 +27,7 @@ $options = get_option( 'arve_options', array() );
 				<th scope="row">Default Mode:</th>
 				<td>
 					<select id="arve_options[mode]" name="arve_options[mode]" size="1">
-					  <option<?php selected( $options['mode'], 'normal'); ?> value="normal"><?php _e('Normal', 'ngt-arve'); ?></option>
+					  <option<?php selected( $options['mode'], 'normal'); ?> value="normal"><?php _e('Normal', 'ngt-arve' ); ?></option>
 					  <option<?php selected( $options['mode'], 'thumbnail'); ?> value="thumbnail"><?php _e('Thumbnail', 'ngt-arve'); ?></option>
 					</select>
 				</td>
@@ -36,7 +36,14 @@ $options = get_option( 'arve_options', array() );
 				<th scope="row"><label for="video_maxwidth"><?php _e('Video Maximal Width', 'ngt-arve'); ?></label></th>
 				<td>
 					<input id="arve_options[video_maxwidth]" name="arve_options[video_maxwidth]" type="text" value="<?php echo $options['video_maxwidth'] ?>" class="small-text"><br>
-					<span class='description'><?php _e('Not needed, if you set this to "0" your videos will me the maximum size of the container they are in. If your Page has a big width you might want to set this.', 'ngt-arve'); ?></span>
+					<span class='description'><?php _e('Optional, if not set your videos will be the maximum size of the container they are in. If your content area has a big width you might want to set this.', 'ngt-arve'); ?></span>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><label for="arve_options[thumb_width]"><?php _e('Thumbnail Maximal Width', 'ngt-arve'); ?></label></label></th>
+				<td>
+					<input id="arve_options[thumb_width]" name="arve_options[thumb_width]" type="text" value="<?php echo $options['thumb_width'] ?>" class="small-text"><br>
+					<span class="description"><?php _e('Needed! Must be 50+ to work.', 'ngt-arve'); ?></span>
 				</td>
 			</tr>
 			<tr valign="top">
@@ -50,17 +57,6 @@ $options = get_option( 'arve_options', array() );
 				<th scope="row"><label for="autoplay"><?php _e('Autoplay all', 'ngt-arve'); ?></label></th>
 				<td>
 					<input id="arve_options[autoplay]" name="arve_options[autoplay]" type="checkbox" value="1" <?php checked( 1, $options['autoplay'] ); ?> /><br>
-				</td>
-			</tr>
-			<tr valign="top">
-				<th scope="row"><label><?php _e('Thumbnail Size', 'ngt-arve'); ?></label></th>
-				<td>
-					<label for="arve_options[thumb_width]"><?php _e('Width', 'ngt-arve'); ?></label>
-					<input id="arve_options[thumb_width]" name="arve_options[thumb_width]" type="text" value="<?php echo $options['thumb_width'] ?>" class="small-text"><br>
-
-					<label for="arve_options[thumb_height]"><?php _e('Height', 'ngt-arve'); ?></label>
-					<input id="arve_options[thumb_height]" name="arve_options[thumb_height]" type="text" value="<?php echo $options['thumb_height'] ?>" class="small-text"><br>
-					<span class="description"><?php _e('Needed! Must be 50+ to work.', 'ngt-arve'); ?></span>
 				</td>
 			</tr>
 			<tr valign="top">

@@ -63,8 +63,8 @@ if ( ! defined( 'WPINC' ) ) {
 /*
  *
  */
-require_once( plugin_dir_path( __FILE__ ) . '/public/class-advanced-responsive-video-embedder.php' );
 require_once( plugin_dir_path( __FILE__ ) . '/public/class-advanced-responsive-video-embedder-create-shortcodes.php' );
+require_once( plugin_dir_path( __FILE__ ) . '/public/class-advanced-responsive-video-embedder.php' );
 
 /*
  * Register hooks that are fired when the plugin is activated or deactivated.

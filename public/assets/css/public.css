@@ -1,7 +1,6 @@
 .arve-embed-container {
 	position: relative;
 	padding-bottom: 56.25%; /* 16/9 ratio */
-	margin-bottom: 20px;
 	height: 0;
 	overflow: hidden;
 }
@@ -14,22 +13,25 @@
 	height: 100%;
 }
 .arve-thumb-wrapper {
+	max-width: 100%;
 	/* Background image is applied with inline CSS */
 	background-position: center center;
 	background-size: cover;
 	background-color: #000;
 	position: relative;
-	margin-bottom: 20px;
 	behavior: url(../js/backgroundsize.min.htc); /* IE polyfill for background size */
 }
-.arve-maxwidth-wrapper.alignright,
+
+.arve-wrapper {
+	margin-bottom: 20px;
+}
 .arve-wrapper.alignright {
 	margin-left: 20px;
 }
-.arve-maxwidth-wrapper.alignleft,
 .arve-wrapper.alignleft {
 	margin-right: 20px;
 }
+
 .arve-play-background {
 	background: transparent url(../img/play.png) no-repeat center center;
 }

@@ -143,14 +143,17 @@ jQuery(document).ready(function($) {
 					return output;
 				}
 
-				embed_regex.videojug      = /videojug\.com\/embed\/([a-z0-9\-]{36})/i;
-				embed_regex.blip          = /blip\.tv\/play\/([a-z0-9]+)/i;
 				// MTV services
 				embed_regex.comedycentral = /comedycentral\.com:([a-z0-9\-]{36})/i;
 				embed_regex.gametrailers  = /gametrailers\.com:([a-z0-9\-]{36})/i;
 				embed_regex.spike         = /spike\.com:([a-z0-9\-]{36})/i;
 
-				embed_regex.iframe        = /src="(http[^"]+)"/i
+				embed_regex.flickr        = /flickr\.com\/photos\/[a-zA-Z0-9@_\-]+\/([0-9]+)/i;
+				embed_regex.videojug      = /videojug\.com\/embed\/([a-z0-9\-]{36})/i;
+				embed_regex.bliptv        = /blip\.tv\/play\/([a-z0-9]+)/i;
+				embed_regex.movieweb      = /movieweb\.com\/v\/([a-z0-9]{14})/i
+
+				embed_regex.iframe        = /src="https?:\/\/(?:www\.)?([^"]+)/i
 
 				$.each(embed_regex, function(provider, regex) {
 
@@ -167,6 +170,8 @@ jQuery(document).ready(function($) {
 				if( ! $.isEmptyObject(output) ) {
 					return output;
 				}
+
+				/*
 
 				regExp = /vimeo\.com\/(?:(?:channels\/[A-z]+\/)|(?:groups\/[A-z]+\/videos\/))?([0-9]+)/i;
 				match = code.match(regExp);
