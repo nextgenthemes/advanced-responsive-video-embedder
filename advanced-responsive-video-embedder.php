@@ -42,13 +42,13 @@ Karel - neo7.fr (French Translation)
  * Plugin Name: Advanced Responsive Video Embedder
  * Plugin URI:  http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/
  * Description: Embed videos with a click of a button from many providers with full responsive sizes. Show videos as thumbnails and let them open in colorbox.
- * Version:     2.7.4
+ * Version:     3.0.0
  * Author:      Nicolas Jonas
  * Author URI:  http://nextgenthemes.com
- * Text Domain: ngt-arve
+ * Text Domain: advanced-responsive-video-embedder
  * License:     GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
- * Domain Path: /lang
+ * Domain Path: /languages
  */
 
 // If this file is called directly, abort.

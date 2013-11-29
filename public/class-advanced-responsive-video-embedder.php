@@ -70,7 +70,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var      string
 	 */
-	protected $plugin_slug = 'ngt-arve';
+	protected $plugin_slug = 'advanced-responsive-video-embedder';
 
 	/**
 	 * Instance of this class.
@@ -471,7 +471,6 @@ class Advanced_Responsive_Video_Embedder {
 			'liveleak'            => $hw . 'liveleak\.com/(?:view|ll_embed)\?((f|i)=[0-9a-z\_]+)',
 			'metacafe'            => $hw . 'metacafe\.com/(?:watch|fplayer)/([0-9]+)',
 			'movieweb'            => $hw . 'movieweb\.com/v/([a-z0-9]{14})',
-			# https://myspace.com/myspace/video/au-revoir-simone-five-minutes-to-the-stage/109467721
 			'myspace'             => $hw . 'myspace\.com/.+/([0-9]+)',
 			'myvideo'             => $hw . 'myvideo\.de/(?:watch|embed)/([0-9]{7})',
 			'snotr'               => $hw . 'snotr\.com/(?:video|embed)/([0-9]+)',

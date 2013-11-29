@@ -3,10 +3,10 @@
  * Plugin Name.
  *
  * @package   Advanced_Responsive_Video_Embedder_Admin
- * @author    Your Name <email@example.com>
+ * @author    Nicolas Jonas
  * @license   GPL-3.0+
  * @link      http://example.com
- * @copyright 2013 Your Name or Company Name
+ * @copyright 2013 Nicolas Jonas
  */
 
 /*****************************************************************************
@@ -329,13 +329,13 @@ class Advanced_Responsive_Video_Embedder_Admin {
 					<th>
 						<label for="arve-url">URL/Embed Code</label><br>
 						<small class="description">
-							<?php _e('For Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike and Comedycentral paste the embed code, for all others paste the URL!', 'ngt-arve'); ?><br>
-							<a href="#" id="arve-open-url-info"><?php _e('Usteam info', 'ngt-arve'); ?></a>
+							<?php _e('For Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike and Comedycentral paste the embed code, for all others paste the URL!', $this->plugin_slug); ?><br>
+							<a href="#" id="arve-open-url-info"><?php _e('Usteam info', $this->plugin_slug); ?></a>
 						</small>
 
 						<div id="arve-url-info" style="display: none; padding: 0 15px;">
 							<p>
-								<?php _e('Ustream: If your Address bar URL not contains a number. Click Share->URL-icon and paste the URL you get there here.', 'ngt-arve'); ?>
+								<?php _e('Ustream: If your Address bar URL not contains a number. Click Share->URL-icon and paste the URL you get there here.', $this->plugin_slug); ?>
 							</p>
 						</div>
 					</th>
@@ -345,28 +345,28 @@ class Advanced_Responsive_Video_Embedder_Admin {
 				</tr>
 				<tr>
 					<th>
-						<label for="arve-mode"><?php _e('Mode', 'ngt-arve'); ?></label><br>
-						<small class="description"><?php _e('Optional override setting for single videos.', 'ngt-arve');?></small>
+						<label for="arve-mode"><?php _e('Mode', $this->plugin_slug); ?></label><br>
+						<small class="description"><?php _e('Optional override setting for single videos.', $this->plugin_slug);?></small>
 					</th>
 					<td>
 						<select id="arve-mode">
 							<option value=""></option>
-							<option value="normal"><?php _e('Normal', 'ngt-arve'); ?></option>
-							<option value="thumbnail"><?php _e('Thumbnail', 'ngt-arve'); ?></option>
+							<option value="normal"><?php _e('Normal', $this->plugin_slug); ?></option>
+							<option value="thumbnail"><?php _e('Thumbnail', $this->plugin_slug); ?></option>
 						</select>
 					</td>				
 				</tr>
 				<tr>
 					<th>
-						<label for="arve-align"><?php _e('Align', 'ngt-arve'); ?></label><br>
+						<label for="arve-align"><?php _e('Align', $this->plugin_slug); ?></label><br>
 						<small class="description"><?php _e('');?></small>
 					</th>
 					<td>
 						<select id="arve-align">
 							<option value=""></option>
-							<option value="left"><?php _e('left', 'ngt-arve'); ?></option>
-							<option value="right"><?php _e('right', 'ngt-arve'); ?></option>
-							<option value="center"><?php _e('center', 'ngt-arve'); ?></option>
+							<option value="left"><?php _e('left', $this->plugin_slug); ?></option>
+							<option value="right"><?php _e('right', $this->plugin_slug); ?></option>
+							<option value="center"><?php _e('center', $this->plugin_slug); ?></option>
 						</select>
 					</td>
 				</tr>
@@ -378,21 +378,21 @@ class Advanced_Responsive_Video_Embedder_Admin {
 				</tr>
 				<tr style="display: none;" class="arve-hidden">
 					<th>
-						<label for="arve-autoplay"><?php _e('Autoplay this video', 'ngt-arve'); ?></label><br>
-						<small class="description"><?php _e('Optional override setting for single videos.', 'ngt-arve'); ?></small>
+						<label for="arve-autoplay"><?php _e('Autoplay this video', $this->plugin_slug); ?></label><br>
+						<small class="description"><?php _e('Optional override setting for single videos.', $this->plugin_slug); ?></small>
 					</th>
 					<td>
 						<select id="arve-autoplay">
 							<option value=""></option>
-							<option value="yes"><?php _e('yes', 'ngt-arve'); ?></option>
-							<option value="no"><?php _e('no', 'ngt-arve'); ?></option>
+							<option value="yes"><?php _e('yes', $this->plugin_slug); ?></option>
+							<option value="no"><?php _e('no', $this->plugin_slug); ?></option>
 						</select>
 					</td>
 				</tr>
 				<tr style="display: none;" class="arve-hidden">
 					<th>
-						<label for="arve-maxwidth"><?php _e('Maximal width', 'ngt-arve'); ?></label><br>
-						<small class="description"><?php _e('Optional override setting for single videos.', 'ngt-arve'); ?></small>
+						<label for="arve-maxwidth"><?php _e('Maximal width', $this->plugin_slug); ?></label><br>
+						<small class="description"><?php _e('Optional override setting for single videos.', $this->plugin_slug); ?></small>
 					</th>
 					<td>
 						<input type="text" id="arve-maxwidth" value="" />	
@@ -401,7 +401,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 				<!-- always hidden -->
 				<tr style="display: none;" class="arve-hidden">
 					<th>
-						<label for="arve-provider"><?php _e('Provider', 'ngt-arve'); ?></label>
+						<label for="arve-provider"><?php _e('Provider', $this->plugin_slug); ?></label>
 					</th>
 					<td>
 						<select id="arve-provider">
@@ -416,8 +416,8 @@ class Advanced_Responsive_Video_Embedder_Admin {
 				</tr>
 				<tr style="display: none;" class="arve-hidden">
 					<th>
-						<label for="arve-id"><?php _e('Video ID', 'ngt-arve'); ?></label><br>
-						<small class="description"><?php _e('If not filled in automatically after pasting the url above you have to insert the video ID in here.', 'ngt-arve'); ?></small>
+						<label for="arve-id"><?php _e('Video ID', $this->plugin_slug); ?></label><br>
+						<small class="description"><?php _e('If not filled in automatically after pasting the url above you have to insert the video ID in here.', $this->plugin_slug); ?></small>
 					</th>
 					<td>
 						<input type="text" id="arve-id" value="" />
@@ -431,7 +431,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 				</tr>	
 				<tr>
 					<th>
-						<label for="arve-submit"><?php _e('Ready?', 'ngt-arve'); ?></label>
+						<label for="arve-submit"><?php _e('Ready?', $this->plugin_slug); ?></label>
 					</th>
 					<td>
 						<input type="button" id="arve-submit" class="button-primary" value="Insert Shortcode" name="submit" />
@@ -455,11 +455,11 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		//* Check that the user hasn't already clicked to ignore the message
 		if ( ! get_user_meta($user_id, 'arve_ignore_admin_notice') ) {
 			echo '<div class="updated"><p>';
-			_e( 'Hey guys, this is Nico the Author of the Advanced Responsive Video Embedder Plugin. I have worked long and hard on version 3.0 of this plugin and not want to abuse all users as beta testers again. I would be glad if some of you can manually install and test the upcoming version and report back. Thanks.', 'ngt-arve' );
+			_e( 'Hey guys, this is Nico the Author of the Advanced Responsive Video Embedder Plugin. I have worked long and hard on version 3.0 of this plugin and not want to abuse all users as beta testers again. I would be glad if some of you can manually install and test the upcoming version and report back. Thanks.', $this->plugin_slug );
 			printf( __( ' <a href="%s" target="_blank">%s</a> | <a href="?arve_nag_ignore=1">%s</a>' ),
 				'https://github.com/nextgenthemes/advanced-responsive-video-embedder/archive/master.zip',
-				__( 'Download Beta', 'ngt-arve' ),
-				__( 'Dismiss', 'ngt-arve' )
+				__( 'Download Beta', $this->plugin_slug ),
+				__( 'Dismiss', $this->plugin_slug )
 			);
 			echo "</p></div>";
 		}
