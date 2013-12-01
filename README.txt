@@ -63,6 +63,9 @@ Depends, but most likely yes.
 * New: Thumbnails are now responsive
 * New: Vevo support
 * New: TED Talks support
+* New: IGN support
+* New: Kickstarter support
+* Improved: request large thumbnail from vimeo instead of medium
 * Improved: 'youtubelist' shortcode deprecated YouTube playlists are now handled via the normal youtube shortcode with support for starting video
 * Improved: 'bliptv' shortcode deprecated on favor of 'blip' that uses the ids from blip.tv URLs instead of the ones from embed codes
 * Improved: Moved code to newest Plugin Boilerplate

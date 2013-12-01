@@ -353,6 +353,7 @@ class Advanced_Responsive_Video_Embedder {
 				'funnyordie'            => 'funnyordie',
 				'gametrailers'          => 'gametrailers',	
 				'iframe'                => 'iframe',
+				'kickstarter'           => 'kickstarter',
 				'liveleak'              => 'liveleak',
 				'metacafe'              => 'metacafe',   
 				'movieweb'              => 'movieweb',
@@ -467,7 +468,9 @@ class Advanced_Responsive_Video_Embedder {
 			#'flickr'             => 'flickr',
 			'funnyordie'          => $hw . 'funnyordie\.com/videos/([a-z0-9_]+)',
 			##'gametrailers'      => null,
+			'ign'                 => '(https?://(?:www\.)?ign\.com/videos/[0-9]{4}/[0-9]{2}/[0-9]{2}/[0-9a-z\-]+)',
 			##'iframe'            => 'iframe',
+			'kickstarter'         => $hw . 'kickstarter\.com/projects/([0-9]+/[a-z\-]+)',
 			'liveleak'            => $hw . 'liveleak\.com/(?:view|ll_embed)\?((f|i)=[0-9a-z\_]+)',
 			'metacafe'            => $hw . 'metacafe\.com/(?:watch|fplayer)/([0-9]+)',
 			'movieweb'            => $hw . 'movieweb\.com/v/([a-z0-9]{14})',
@@ -487,8 +490,8 @@ class Advanced_Responsive_Video_Embedder {
 			'youtube'             => $hw . 'youtube\.com/watch\?v=([a-z0-9_\-]{11})',
   
 			//* Shorteners  
-			'youtu_be'            => 'http://youtu.be/([a-z0-9_-]{11}).*',
-			'dai_ly'              => 'http://dai.ly/([^_]+).*',
+			'youtu_be'            => 'http://youtu.be/([a-z0-9_-]{11})',
+			'dai_ly'              => 'http://dai.ly/([^_]+)',
 		);
 	}
 
@@ -500,7 +503,7 @@ class Advanced_Responsive_Video_Embedder {
 	public function create_url_handlers() {
 
 		foreach ( $this->get_regex_list() as $provider => $regex ) {
-			wp_embed_register_handler( 'arve_' . $provider, '#' . $regex . '#i', array( $this, $provider ) );
+			wp_embed_register_handler( 'arve_' . $provider, '#' . $regex . '#i', array( $this, "1$provider" ) );
 		}
 		
 	}
@@ -538,8 +541,18 @@ class Advanced_Responsive_Video_Embedder {
 	 */
 	public function url_build_embed( $provider, $matches, $attr, $url, $rawattr ) {
 
-		if ( empty( $matches[1] ) ) {
-			return '<p><strong>Critical ARVE error:</strong> No match, please report';
+		$id = $matches[1];
+
+		if ( empty( $id ) ) {
+			return '<p><strong>Critical ARVE error:</strong> No match, please report this bug';
+		}
+
+		//* Fix 'Markdown on save enhanced' issue
+		if ( substr( $url, -4 ) === '</p>' ) {
+			$url = substr( $url, 0, -4 );
+		}
+		if ( substr( $id, -4 ) === '</p>' ) {
+			$id = substr( $id, 0, -4 );
 		}
 
 		$output     = '';
@@ -568,22 +581,13 @@ class Advanced_Responsive_Video_Embedder {
 			'time'     => '',
 		), $args );
 
-		$shortcode_atts['id'] = $matches[1];
+		$shortcode_atts['id'] = $id;
 
-		#$output .= showr($args);
-		#$output .= showr($shortcode_atts);
+		#$output .= showr($url);
+		#$output .= showr($id);
 
 		$output .= $this->build_embed( $provider, $shortcode_atts );
 		$output .= sprintf( '<a href="%s" class="arve-hidden">%s</a>', esc_url( $url ), esc_html( $url ) );
-
-		#$output .= '<h4>matches</h4>';
-		#$output .= '<pre>' . print_r($matches, true) . '</pre>';
-		#$output .= '<h4>Attr</h4>';
-		#$output .= '<pre>' . print_r($attr, true) . '</pre>';
-		#$output .= '<h4>url</h4>';
-		#$output .= '<pre>' . print_r($url, true) . '</pre>';
-		#$output .= '<h4>rawattr</h4>';
-		#$output .= '<pre>' . print_r($rawattr, true) . '</pre>';
 
 		return $output;
 
@@ -877,6 +881,12 @@ class Advanced_Responsive_Video_Embedder {
 			case 'iframe':
 				$urlcode = $id;
 				break;
+			case 'kickstarter':
+				$urlcode = 'http://www.kickstarter.com/projects/' . $id . '/widget/video.html';
+				break;
+			case 'ign':
+				$urlcode = 'http://widgets.ign.com/video/embed/content.html?url=' . $id;
+				break;
 			default:
 				$output .= 'ARVE Error: No provider';
 				break;
@@ -918,6 +928,11 @@ class Advanced_Responsive_Video_Embedder {
 			case 'snotr':
 				$url_autoplay_no  = $urlcode;
 				$url_autoplay_yes = add_query_arg( 'autoplay', '', $urlcode );
+				break;
+			//* Do nothing for providers that to not support autoplay
+			case 'ign':
+				$url_autoplay_no  = $urlcode;
+				$url_autpplay_yes = $urlcode;
 				break;
 			case 'iframe':
 			default:
@@ -989,7 +1004,7 @@ class Advanced_Responsive_Video_Embedder {
 				case 'vimeo':
 
 					if ( $vimeo_hash = unserialize(file_get_contents('http://vimeo.com/api/v2/video/' . $id . '.php')) ) {
-						$thumbnail = (string) $vimeo_hash[0]['thumbnail_medium'];
+						$thumbnail = (string) $vimeo_hash[0]['thumbnail_large'];
 					} else {
 						return "<p><strong>ARVE Error:</strong> could not get Vimeo thumbnail";
 					}
@@ -1056,10 +1071,12 @@ class Advanced_Responsive_Video_Embedder {
 	 */
 	public function create_object( $url, $flashvars = '', $flashvars_autoplay = '', $id = false ) {
 
-		if ( $id )
+		if ( $id ) {
 			$class_or_id = "id='inline_$id' class='arve-hidden-obj'";
-		else
+		}
+		else {
 			$class_or_id = 'class="arve-inner"';
+		}
 
 		return
 			'<object ' . $class_or_id . ' data="' . esc_url( $url ) . '" type="application/x-shockwave-flash">' .
@@ -1086,7 +1103,7 @@ class Advanced_Responsive_Video_Embedder {
 	/**
 	 * 
 	 *
-	 * @since    2.6.0
+	 * @since    3.0.0
 	 */
 	public function create_html5fullscreen( $url ) {
 		return '';
