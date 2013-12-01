@@ -503,7 +503,7 @@ class Advanced_Responsive_Video_Embedder {
 	public function create_url_handlers() {
 
 		foreach ( $this->get_regex_list() as $provider => $regex ) {
-			wp_embed_register_handler( 'arve_' . $provider, '#' . $regex . '#i', array( $this, "1$provider" ) );
+			wp_embed_register_handler( 'arve_' . $provider, '#' . $regex . '#i', array( $this, $provider ) );
 		}
 		
 	}
