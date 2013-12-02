@@ -1,0 +1,47 @@
+.arve-embed-container {
+	position: relative;
+	padding-bottom: 56.25%; /* 16/9 ratio */
+	height: 0;
+	overflow: hidden;
+}
+.arve-inner {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+.arve-thumb-wrapper {
+	max-width: 100%;
+	/* Background image is applied with inline CSS */
+	background-position: center center;
+	background-size: cover;
+	background-color: #000;
+	position: relative;
+	behavior: url(../js/backgroundsize.min.htc); /* IE polyfill for background size */
+}
+
+.arve-wrapper {
+	margin-bottom: 20px;
+}
+.arve-wrapper.alignright {
+	margin-left: 20px;
+}
+.arve-wrapper.alignleft {
+	margin-right: 20px;
+}
+
+.arve-play-background {
+	background: transparent url(../img/play.png) no-repeat center center;
+}
+.arve-hidden {
+	display: none;
+}
+.arve-hidden-obj {
+	width: 100%;
+	height: 100%;
+}
+.arve-fakethumb {
+	background-color: transparent;
+}

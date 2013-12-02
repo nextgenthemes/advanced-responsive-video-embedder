@@ -1,0 +1,194 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Advanced Responsive Video Embedder v2.1-beta\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2013-02-28 18:37:38+0000\n"
+"Last-Translator: nico <nicolasjonas@web.de>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: CSL v1.x\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: advanced-responsive-video-embedder.php:205
+#@ default
+msgid "Settings"
+msgstr ""
+
+#: advanced-responsive-video-embedder.php:268
+#@ arve-plugin
+msgid "Needed! Must be 50+ to work."
+msgstr "Benötigt. Muss 50+ sein um zu arbeiten."
+
+#: advanced-responsive-video-embedder.php:275
+#@ arve-plugin
+msgid "To be used instead of black background. Upload a 16:10 Image with a size bigger or equal the thumbnials size you want to use into your WordPress and paste the URL of it here."
+msgstr "Wird benutzt anstelle eines schwarzen Hintergrundes. Lade ein 16:10 mindestens der Größe der Thumbnails in die Wordpress Media Gallery und füge die URL hier ein."
+
+#: advanced-responsive-video-embedder.php:290
+#@ arve-plugin
+msgid "You might need this to prevent conflicts with other plugins you want to use. At least 3 alphanumec characters with optional underscores are needed!"
+msgstr "Du brauchst das unter Umständen um Konflikte mit anderen Plugins zu verhindern. Mindestens 3 alphanumerische Zeichen mit optionalen Unterstrichen sind benötigt."
+
+#: tinymce.php:45
+#@ arve-plugin
+msgid "More info"
+msgstr "Mehr Infos"
+
+#: tinymce.php:63
+#@ arve-plugin
+msgid "Mode"
+msgstr "Modus"
+
+#: tinymce.php:64
+#@ arve-plugin
+msgid "Only use it of you want some vidoes have a mode that differs from the one you set in the options."
+msgstr "Nur für Videos benutzen die einen anderen Modus benutzen sollen als der, welcher in den Optionen eingestellt ist."
+
+#: advanced-responsive-video-embedder.php:235
+#: tinymce.php:69
+#@ arve-plugin
+msgid "Normal"
+msgstr "Normal"
+
+#: advanced-responsive-video-embedder.php:236
+#: tinymce.php:70
+#@ arve-plugin
+msgid "Thumbnail"
+msgstr "Vorschaubild"
+
+#: tinymce.php:76
+#@ arve-plugin
+msgid "Align"
+msgstr "Ausrichtung"
+
+#: tinymce.php:82
+#@ arve-plugin
+msgid "left"
+msgstr "links"
+
+#: tinymce.php:83
+#@ arve-plugin
+msgid "right"
+msgstr "rechts"
+
+#: tinymce.php:84
+#@ arve-plugin
+msgid "center"
+msgstr "zentriert"
+
+#: tinymce.php:50
+#@ arve-plugin
+msgid "Ustream: If your Address bar URL not contains a number. Click Share->URL-icon and paste the URL you get there here."
+msgstr "Ustream: Wenn die Adresszeile im Browser keine nummern enthält. Bitte im Video den Share/Teilen Button klicken."
+
+#: advanced-responsive-video-embedder.php:244
+#@ arve-plugin
+msgid "Not needed, if you set this to \"0\" your videos will me the maximum size of the container they are in. If your Page has a big width you might want to set this."
+msgstr "Nicht benötigt, wenn auf \\\"0\\\" gesetzt werden die Videos so groß wie es das Elternelement zulässt. Wenn deine Seitenbreite sehr groß ist wirst du dies vielleicht benötigen."
+
+#: advanced-responsive-video-embedder.php:251
+#@ arve-plugin
+msgid "Loads the actual Videoplayer as background image\" to for thumbnails to emulate the feature Youtube, Dailymotion,  and Bliptv have. If not enabled thumbnails are displayed black."
+msgstr "Lädt den Videoplayer in als \\\"Hintergrundbild\\\" für Vorschaubilder und emuliert damit echt Vorschaubilder."
+
+#: tinymce.php:53
+#@ arve-plugin
+msgid "For Youtube, Archiveorg, Metacafe and Viddler embed codes and URL's should work."
+msgstr "Für Youtube, Archiveorg, Metacafe and Viddler sollten embed codes und URL's funktionieren."
+
+#: tinymce.php:97
+#@ arve-plugin
+msgid "Only use it of you want some vidoes have a maximal width that differs from the one you set in the options."
+msgstr "Nur benutzen wenn du möchtest das einzelne Videos eine andere maximale breite haben als die, welche in den Optionen festgelegt ist."
+
+#: tinymce.php:44
+#@ arve-plugin
+msgid "For Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike and Comedycentral paste the embed code, for all others paste the URL!"
+msgstr "Für Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike and Comedycentral füge den Embed-code hier ein, für alle anderen die URL."
+
+#: advanced-responsive-video-embedder.php:263
+#@ arve-plugin
+msgid "Width"
+msgstr "Breite"
+
+#: advanced-responsive-video-embedder.php:266
+#@ arve-plugin
+msgid "Height"
+msgstr "Höhe"
+
+#: advanced-responsive-video-embedder.php:272
+#@ arve-plugin
+msgid "Custom Thumbnail Image:"
+msgstr "Benutzerdefiniertes Vorschaubild"
+
+#: advanced-responsive-video-embedder.php:283
+#@ arve-plugin
+msgid "Reset options"
+msgstr "Optionen zurücksetzen"
+
+#: advanced-responsive-video-embedder.php:288
+#@ arve-plugin
+msgid "Change shortcode tags"
+msgstr "Shortcode Tags ändern"
+
+#: tinymce.php:96
+#@ arve-plugin
+msgid "Maximal width"
+msgstr "Maximale Breite"
+
+#: tinymce.php:105
+#@ arve-plugin
+msgid "Provider"
+msgstr "Anbieter"
+
+#: tinymce.php:120
+#@ arve-plugin
+msgid "Video ID"
+msgstr "Video ID"
+
+#: tinymce.php:121
+#@ arve-plugin
+msgid "If not filled in automatically after pasting the url above you have to insert the video ID in here."
+msgstr "Wenn dies nicht automatisch nach einfügen der URL gesetzt wurde müsst Du die Video ID hier angeben."
+
+#: tinymce.php:134
+#@ arve-plugin
+msgid "Ready?"
+msgstr "Fertig?"
+
+#: advanced-responsive-video-embedder.php:241
+#@ arve-plugin
+msgid "Video Maximal Width"
+msgstr "Maximale Video-breite"
+
+#: advanced-responsive-video-embedder.php:248
+#@ arve-plugin
+msgid "Fake Thumbnails"
+msgstr "Fake Vorschaubilder"
+
+#: advanced-responsive-video-embedder.php:255
+#@ arve-plugin
+msgid "Autoplay"
+msgstr "Autoplay"
+
+#: advanced-responsive-video-embedder.php:261
+#@ arve-plugin
+msgid "Thumbnail Size"
+msgstr "Vorschaubild Größe"
+
+#: advanced-responsive-video-embedder.php:226
+#@ arve-plugin
+msgid "Advanced Responsive Video Embedder Settings"
+msgstr "Advanced Responsive Video Embedder Einstellungen"
+

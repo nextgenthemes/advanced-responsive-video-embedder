@@ -1,0 +1,246 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Advanced Responsive Video Embedder v2.6.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2013-08-04 19:15:47+0000\n"
+"Last-Translator: nico <nicolasjonas@web.de>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: CSL v1.x\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: views/admin.php:63
+#@ advanced-responsive-video-embedder
+msgid "Needed! Must be 50+ to work."
+msgstr "Benötigt. Muss 50+ sein um zu arbeiten."
+
+#: views/admin.php:70
+#@ advanced-responsive-video-embedder
+msgid "To be used instead of black background. Upload a 16:10 Image with a size bigger or equal the thumbnials size you want to use into your WordPress and paste the URL of it here."
+msgstr "Wird benutzt anstelle eines schwarzen Hintergrundes. Lade ein 16:10 mindestens der Größe der Thumbnails in die Wordpress Media Gallery und füge die URL hier ein."
+
+#: views/admin.php:85
+#@ advanced-responsive-video-embedder
+msgid "You might need this to prevent conflicts with other plugins you want to use. At least 3 alphanumec characters with optional underscores are needed!"
+msgstr "Du brauchst das unter Umständen um Konflikte mit anderen Plugins zu verhindern. Mindestens 3 alphanumerische Zeichen mit optionalen Unterstrichen sind benötigt."
+
+#: class-arve-tinymce-button.php:114
+#@ advanced-responsive-video-embedder
+msgid "More info"
+msgstr "Mehr Infos"
+
+#: class-arve-tinymce-button.php:132
+#@ advanced-responsive-video-embedder
+msgid "Mode"
+msgstr "Modus"
+
+#: class-arve-tinymce-button.php:133
+#@ advanced-responsive-video-embedder
+msgid "Only use it of you want some vidoes have a mode that differs from the one you set in the options."
+msgstr "Nur für Videos benutzen die einen anderen Modus benutzen sollen als der, welcher in den Optionen eingestellt ist."
+
+#: class-arve-tinymce-button.php:138
+#: views/admin.php:30
+#@ advanced-responsive-video-embedder
+msgid "Normal"
+msgstr "Normal"
+
+#: class-arve-tinymce-button.php:139
+#: views/admin.php:31
+#@ advanced-responsive-video-embedder
+msgid "Thumbnail"
+msgstr "Vorschaubild"
+
+#: class-arve-tinymce-button.php:145
+#@ advanced-responsive-video-embedder
+msgid "Align"
+msgstr "Ausrichtung"
+
+#: class-arve-tinymce-button.php:151
+#@ advanced-responsive-video-embedder
+msgid "left"
+msgstr "links"
+
+#: class-arve-tinymce-button.php:152
+#@ advanced-responsive-video-embedder
+msgid "right"
+msgstr "rechts"
+
+#: class-arve-tinymce-button.php:153
+#@ advanced-responsive-video-embedder
+msgid "center"
+msgstr "zentriert"
+
+#: class-arve-tinymce-button.php:119
+#@ advanced-responsive-video-embedder
+msgid "Ustream: If your Address bar URL not contains a number. Click Share->URL-icon and paste the URL you get there here."
+msgstr "Ustream: Wenn die Adresszeile im Browser keine nummern enthält. Bitte im Video den Share/Teilen Button klicken."
+
+#: views/admin.php:39
+#@ advanced-responsive-video-embedder
+msgid "Not needed, if you set this to \"0\" your videos will me the maximum size of the container they are in. If your Page has a big width you might want to set this."
+msgstr "Nicht benötigt, wenn auf \\\"0\\\" gesetzt werden die Videos so groß wie es das Elternelement zulässt. Wenn deine Seitenbreite sehr groß ist wirst du dies vielleicht benötigen."
+
+#: class-arve-tinymce-button.php:122
+#@ advanced-responsive-video-embedder
+msgid "For Youtube, Archiveorg, Metacafe and Viddler embed codes and URL's should work."
+msgstr "Für Youtube, Archiveorg, Metacafe and Viddler sollten embed codes und URL's funktionieren."
+
+#: class-arve-tinymce-button.php:166
+#@ advanced-responsive-video-embedder
+msgid "Only use it of you want some vidoes have a maximal width that differs from the one you set in the options."
+msgstr "Nur benutzen wenn du möchtest das einzelne Videos eine andere maximale breite haben als die, welche in den Optionen festgelegt ist."
+
+#: class-arve-tinymce-button.php:113
+#@ advanced-responsive-video-embedder
+msgid "For Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike and Comedycentral paste the embed code, for all others paste the URL!"
+msgstr "Für Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike and Comedycentral füge den Embed-code hier ein, für alle anderen die URL."
+
+#: views/admin.php:58
+#@ advanced-responsive-video-embedder
+msgid "Width"
+msgstr "Breite"
+
+#: views/admin.php:61
+#@ advanced-responsive-video-embedder
+msgid "Height"
+msgstr "Höhe"
+
+#: views/admin.php:75
+#@ advanced-responsive-video-embedder
+msgid "Reset options"
+msgstr "Optionen zurücksetzen"
+
+#: views/admin.php:83
+#@ advanced-responsive-video-embedder
+msgid "Change shortcode tags"
+msgstr "Shortcode Tags ändern"
+
+#: class-arve-tinymce-button.php:178
+#@ advanced-responsive-video-embedder
+msgid "Maximal width"
+msgstr "Maximale Breite"
+
+#: class-arve-tinymce-button.php:188
+#@ advanced-responsive-video-embedder
+msgid "Provider"
+msgstr "Anbieter"
+
+#: class-arve-tinymce-button.php:203
+#@ advanced-responsive-video-embedder
+msgid "Video ID"
+msgstr "Video ID"
+
+#: class-arve-tinymce-button.php:204
+#@ advanced-responsive-video-embedder
+msgid "If not filled in automatically after pasting the url above you have to insert the video ID in here."
+msgstr "Wenn dies nicht automatisch nach einfügen der URL gesetzt wurde müsst Du die Video ID hier angeben."
+
+#: class-arve-tinymce-button.php:218
+#@ advanced-responsive-video-embedder
+msgid "Ready?"
+msgstr "Fertig?"
+
+#: views/admin.php:36
+#@ advanced-responsive-video-embedder
+msgid "Video Maximal Width"
+msgstr "Maximale Video-breite"
+
+#: views/admin.php:43
+#@ advanced-responsive-video-embedder
+msgid "Fake Thumbnails"
+msgstr "Fake Vorschaubilder"
+
+#: views/admin.php:56
+#@ advanced-responsive-video-embedder
+msgid "Thumbnail Size"
+msgstr "Vorschaubild Größe"
+
+#. translators: plugin header field 'Name'
+#: advanced-responsive-video-embedder.php:0
+#: class-advanced-responsive-video-embedder.php:236
+#@ advanced-responsive-video-embedder
+msgid "Advanced Responsive Video Embedder"
+msgstr "Advanced Responsive Video Embedder"
+
+#. translators: plugin header field 'PluginURI'
+#: advanced-responsive-video-embedder.php:0
+#@ advanced-responsive-video-embedder
+msgid "http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/"
+msgstr "http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/"
+
+#. translators: plugin header field 'Description'
+#: advanced-responsive-video-embedder.php:0
+#@ advanced-responsive-video-embedder
+msgid "Embed videos with a click of a button from many providers with full responsive sizes. Show videos as thumbnails and let them open in colorbox."
+msgstr "Videos mit einem einfachen Klick auf einen Button einbetten, als Vorschaubilder anzeigen und in Colorbox öffnen."
+
+#. translators: plugin header field 'Author'
+#: advanced-responsive-video-embedder.php:0
+#@ advanced-responsive-video-embedder
+msgid "Nicolas Jonas"
+msgstr "Nicolas Jonas"
+
+#. translators: plugin header field 'AuthorURI'
+#: advanced-responsive-video-embedder.php:0
+#@ advanced-responsive-video-embedder
+msgid "http://nextgenthemes.com"
+msgstr "http://nextgenthemes.com"
+
+#. translators: plugin header field 'Version'
+#: advanced-responsive-video-embedder.php:0
+#@ advanced-responsive-video-embedder
+msgid "2.6.0"
+msgstr "2.6.0"
+
+#: class-advanced-responsive-video-embedder.php:237
+#@ advanced-responsive-video-embedder
+msgid "A.R. Video Embedder"
+msgstr "A.R. Video Embedder"
+
+#: class-arve-tinymce-button.php:165
+#@ advanced-responsive-video-embedder
+msgid "Autoplay this video"
+msgstr "Autoplay für dieses Video"
+
+#: class-arve-tinymce-button.php:171
+#@ advanced-responsive-video-embedder
+msgid "yes"
+msgstr "ja"
+
+#: class-arve-tinymce-button.php:172
+#@ advanced-responsive-video-embedder
+msgid "no"
+msgstr "nein"
+
+#: class-arve-tinymce-button.php:179
+#@ advanced-responsive-video-embedder
+msgid "Only use it of you want some vidoes override the autoplay setting for single videos."
+msgstr "Überschreibt die generelle Plugin-Einstellung."
+
+#: views/admin.php:46
+#@ advanced-responsive-video-embedder
+msgid "Loads the actual Videoplayer as \"background image\" to for thumbnails to emulate the feature Youtube, Dailymotion, and Bliptv have. If not enabled thumbnails are displayed black or you can choose a image below."
+msgstr "Lädt den Videoplayer als \\\"Huntergrundbild\\\" für Vorschaubilder bei Anbietern die diese Feature nicht ünterstützen."
+
+#: views/admin.php:50
+#@ advanced-responsive-video-embedder
+msgid "Autoplay all"
+msgstr "Alle Videos automatisch abspielen."
+
+#: views/admin.php:67
+#@ advanced-responsive-video-embedder
+msgid "Custom Thumbnail Image"
+msgstr "Selbst definiertes Vorschaubild."
+

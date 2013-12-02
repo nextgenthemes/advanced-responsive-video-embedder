@@ -1,0 +1,6 @@
+/* This stylesheet is used to style the admin option form of the plugin. */
+
+.description {
+	display: block;
+	max-width: 500px;
+}

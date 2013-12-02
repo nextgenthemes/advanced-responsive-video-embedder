@@ -312,6 +312,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	public function filter_mce_plugin( $plugins ) {
 		// this plugin file will work the magic of our button
 		$plugins['arve'] = plugin_dir_url( __FILE__ ) . 'assets/js/mce-plugin.js';
+		dbgx_trace_var( $plugins, $var_name = false );
 		return $plugins;
 	}
 	
