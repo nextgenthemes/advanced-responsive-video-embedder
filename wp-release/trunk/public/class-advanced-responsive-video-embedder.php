@@ -56,7 +56,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '3.0.1';
+	const VERSION = '3.0.2';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -322,7 +322,7 @@ class Advanced_Responsive_Video_Embedder {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script( $this->plugin_slug . '-plugin-script', plugins_url( 'assets/js/public.js', __FILE__ ), array( 'jquery' ), self::VERSION );
+		wp_enqueue_script( $this->plugin_slug . '-plugin-script', plugins_url( 'assets/js/public.js', __FILE__ ), array( 'jquery', 'colorbox' ), self::VERSION );
 	}
 
 	/**
