@@ -3,6 +3,7 @@
 *******************************************************************************
 
 Copyright (C) 2013 Nicolas Jonas
+Copyright (C) 2013 Tom Mc Farlin and WP Plugin Boilerplate Contributors
 
 This file is part of Advanced Responsive Video Embedder.
 
@@ -39,16 +40,17 @@ Karel - neo7.fr (French Translation)
  * @copyright 2013 Nicolas Jonas
  *
  * @wordpress-plugin
- * Plugin Name: Advanced Responsive Video Embedder
- * Plugin URI:  http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/
- * Description: Embed videos with a click of a button from many providers with full responsive sizes. Show videos as thumbnails and let them open in colorbox.
- * Version:     3.0.4
- * Author:      Nicolas Jonas
- * Author URI:  http://nextgenthemes.com
- * Text Domain: advanced-responsive-video-embedder
- * License:     GPL-3.0+
- * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
- * Domain Path: /languages
+ * Plugin Name:       Advanced Responsive Video Embedder
+ * Plugin URI:        http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/
+ * Description:       Embed videos with a click of a button from many providers with full responsive sizes. Show videos as thumbnails and let them open in colorbox.
+ * Version:           3.0.5
+ * Author:            Nicolas Jonas
+ * Author URI:        http://nextgenthemes.com
+ * Text Domain:       advanced-responsive-video-embedder
+ * License:           GPL-3.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
+ * Domain Path:       /languages
+ * GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-embedder
  */
 
 // If this file is called directly, abort.

@@ -3,6 +3,7 @@
 *******************************************************************************
 
 Copyright (C) 2013 Nicolas Jonas
+Copyright (C) 2013 Tom Mc Farlin and WP Plugin Boilerplate Contributors
 
 This file is part of Advanced Responsive Video Embedder.
 

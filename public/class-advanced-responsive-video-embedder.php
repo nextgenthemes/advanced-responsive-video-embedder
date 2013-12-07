@@ -56,7 +56,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '3.0.4';
+	const VERSION = '3.0.5';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -314,6 +314,11 @@ class Advanced_Responsive_Video_Embedder {
 	 */
 	public function enqueue_styles() {
 		wp_enqueue_style( $this->plugin_slug . '-plugin-styles', plugins_url( 'assets/css/public.css', __FILE__ ), array(), self::VERSION );
+
+		if ( function_exists( 'dbgx_trace_var' ) ) {
+			$ffs = plugins_url( __FILE__ );
+			dbgx_trace_var( $ffs );
+		}
 	}
 
 	/**
@@ -334,16 +339,16 @@ class Advanced_Responsive_Video_Embedder {
 
 		$defaults = array(
 			'mode'                  => 'normal',
-			'fakethumb'             => 0,
+			'video_maxwidth'        => '',
+			'align_width'           => 400,
 			'thumb_width'           => 300,
-			'thumb_height'          => 180,
+			'fakethumb'             => true,
 			'custom_thumb_image'    => '',
-			'video_maxwidth'        => 0,
 			'autoplay'              => false,
 			'shortcodes'            => array(
 				'archiveorg'            => 'archiveorg',
 				'blip'                  => 'blip',
-				'bliptv'                => 'bliptv',
+				'bliptv'                => 'bliptv', //* Deprecated
 				'break'                 => 'break',
 				'collegehumor'          => 'collegehumor',
 				'comedycentral'         => 'comedycentral',
@@ -353,6 +358,7 @@ class Advanced_Responsive_Video_Embedder {
 				'funnyordie'            => 'funnyordie',
 				'gametrailers'          => 'gametrailers',	
 				'iframe'                => 'iframe',
+				'ign'                   => 'ign',
 				'kickstarter'           => 'kickstarter',
 				'liveleak'              => 'liveleak',
 				'metacafe'              => 'metacafe',   
@@ -370,13 +376,13 @@ class Advanced_Responsive_Video_Embedder {
 				'vimeo'                 => 'vimeo',
 				'yahoo'                 => 'yahoo',
 				'youtube'               => 'youtube',
-				'youtubelist'           => 'youtubelist',
+				'youtubelist'           => 'youtubelist', //* Deprecated
 			)
 		);
 
 		$options = get_option( 'arve_options', array() );
 
-		$options = wp_parse_args( $options, $defaults );
+		$options               = wp_parse_args( $options, $defaults );
 		$options['shortcodes'] = wp_parse_args( $options['shortcodes'], $defaults['shortcodes'] );
 
 		update_option( 'arve_options', $options );
@@ -631,7 +637,7 @@ class Advanced_Responsive_Video_Embedder {
 			'viddler'
 		);
 
-		$fakethumb = $options['fakethumb'];
+		$fakethumb = (bool) $options['fakethumb'];
 
 		if ( in_array($provider, $no_wmode_transparent) ) {
 			$fakethumb = false;
@@ -690,7 +696,7 @@ class Advanced_Responsive_Video_Embedder {
 
 		switch ( $maxwidth ) {
 			case '':
-				if ( $options['video_maxwidth'] > 0)
+				if ( $options['video_maxwidth'] > 0 )
 					$maxwidth_options = true;
 				break;
 			case ( ! preg_match("/^[0-9]{2,4}$/", $maxwidth) ):
@@ -704,7 +710,7 @@ class Advanced_Responsive_Video_Embedder {
 				break;
 		}
 
-		switch ($align) {
+		switch ( $align ) {
 			case '':
 				break;
 			case 'left':
@@ -986,9 +992,8 @@ class Advanced_Responsive_Video_Embedder {
 		if ( $mode == 'normal' ) {
 
 			$output .= sprintf(
-				'<div class="arve-wrapper %s %s"%s><div class="arve-embed-container">%s</div></div>',
+				'<div class="arve-wrapper arve-normal-wrapper %s"%s><div class="arve-embed-container">%s</div></div>',
 				esc_attr( $align ),
-				( isset( $maxwidth_shortcode ) || isset( $maxwidth_options ) ) ? 'arve-maxwidth-wrapper' : '',
 				( isset( $maxwidth_shortcode ) ) ? sprintf( ' style="max-width: %spx;"', (int) $maxwidth_shortcode ) : '',
 				( $iframe ) ? $this->create_iframe( $url_option_autoplay ) : $this->create_object( $url_option_autoplay, $flashvars, $flashvars_autoplay )
 			);
@@ -1037,7 +1042,7 @@ class Advanced_Responsive_Video_Embedder {
 				$thumb_bg = sprintf( ' style="background-image: url(%s);"', esc_url( $options['custom_thumb_image'] ) );
 			}
 
-			$output .= sprintf( '<div class="arve-thumbsize arve-wrapper arve-thumb-wrapper %s" %s>', esc_attr( $align ), $thumb_bg );
+			$output .= sprintf( '<div class="arve-wrapper arve-thumb-wrapper%s"%s>', esc_attr( ' ' . $align ), $thumb_bg );
 			$output .= '<div class="arve-embed-container">';
 
 			//* if we not have a real thumbnail by now and fakethumb is enabled
@@ -1119,10 +1124,18 @@ class Advanced_Responsive_Video_Embedder {
 		$options  = get_option('arve_options');
 		$maxwidth = (int) $options["video_maxwidth"];
 
-		$css = sprintf(
-			'.arve-maxwidth-wrapper { width: 100%%; %s } .arve-thumb-wrapper { width: %spx; }',
-			( $maxwidth > 0 ) ? sprintf( 'max-width: %spx;', $maxwidth ) : '',
-			(int) $options['thumb_width']
+		$css = sprintf( '.arve-thumb-wrapper { width: %spx; }', (int) $options['thumb_width'] );
+
+		if ( $maxwidth > 0 ) {
+			$css .= sprintf( '.arve-normal-wrapper { width: %spx; }', $maxwidth );
+		}
+		
+		//* Fallback if no width is set neither with options nor with shortcode (inline CSS)
+		$css .= sprintf(
+			'.arve-normal-wrapper.alignleft, ' .
+			'.arve-normal-wrapper.alignright, ' . 
+			'.arve-normal-wrapper.aligncenter { width: %spx; }', 
+			(int) $options['align_width']
 		);
 
 		echo '<style type="text/css">' . $css . "</style>\n";

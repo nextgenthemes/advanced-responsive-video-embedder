@@ -12,6 +12,7 @@
 /*****************************************************************************
 
 Copyright (c) 2013 Nicolas Jonas
+Copyright (C) 2013 Tom Mc Farlin and WP Plugin Boilerplate Contributors
 
 This file is part of Advanced Responsive Video Embedder.
 
@@ -263,7 +264,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		$output = array();
 
-		$output['mode'] = wp_filter_nohtml_kses( $input['mode'] );
+		$output['mode']               = wp_filter_nohtml_kses( $input['mode'] );
 		$output['custom_thumb_image'] = esc_url_raw( $input['custom_thumb_image'] );
 
 		$output['fakethumb']      = isset( $input['fakethumb'] );
@@ -271,9 +272,11 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		
 		if( (int) $input['thumb_width'] > 50 ) {
 			$output['thumb_width'] = (int) $input['thumb_width'];
-		} else {
-			$output['thumb_width'] = '';
 		}
+
+		if( (int) $input['align_width'] > 200 ) {
+			$output['align_width'] = (int) $input['align_width'];
+		}	
 
 		if( (int) $input['video_maxwidth'] > 50 ) {
 			$output['video_maxwidth'] = (int) $input['video_maxwidth'];

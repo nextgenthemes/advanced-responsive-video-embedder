@@ -40,6 +40,13 @@ $options = get_option( 'arve_options', array() );
 				</td>
 			</tr>
 			<tr valign="top">
+				<th scope="row"><label for="arve_options[align_width]"><?php _e('Aligned Maximal Width (Normal Mode)', $this->plugin_slug); ?></label></label></th>
+				<td>
+					<input id="arve_options[align_width]" name="arve_options[align_width]" type="text" value="<?php echo $options['align_width'] ?>" class="small-text"><br>
+					<span class="description"><?php _e('Needed! Must be 200+ to work.', $this->plugin_slug); ?></span>
+				</td>
+			</tr>			
+			<tr valign="top">
 				<th scope="row"><label for="arve_options[thumb_width]"><?php _e('Thumbnail Maximal Width', $this->plugin_slug); ?></label></label></th>
 				<td>
 					<input id="arve_options[thumb_width]" name="arve_options[thumb_width]" type="text" value="<?php echo $options['thumb_width'] ?>" class="small-text"><br>
@@ -54,16 +61,16 @@ $options = get_option( 'arve_options', array() );
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row"><label for="autoplay"><?php _e('Autoplay all', $this->plugin_slug); ?></label></th>
-				<td>
-					<input id="arve_options[autoplay]" name="arve_options[autoplay]" type="checkbox" value="1" <?php checked( 1, $options['autoplay'] ); ?> /><br>
-				</td>
-			</tr>
-			<tr valign="top">
 				<th scope="row"><label for="custom_thumb_image"><?php _e('Custom Thumbnail Image', $this->plugin_slug); ?></label></th>
 				<td>
 					<input id="arve_options[custom_thumb_image]" name="arve_options[custom_thumb_image]" type="text" value="<?php echo $options['custom_thumb_image'] ?>" class="large-text"><br>
 					<span class='description'><?php _e('To be used instead of black background. Upload a 16:10 Image with a size bigger or equal the thumbnials size you want to use into your WordPress and paste the URL of it here.', $this->plugin_slug); ?></span>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><label for="autoplay"><?php _e('Autoplay all', $this->plugin_slug); ?></label></th>
+				<td>
+					<input id="arve_options[autoplay]" name="arve_options[autoplay]" type="checkbox" value="1" <?php checked( 1, $options['autoplay'] ); ?> /><br>
 				</td>
 			</tr>
 			<tr>

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: responsive, embeds, embed, flash, iframe, minimal, lightweight, simple, simplicity, shortcodes, videos, youtube, blip, bliptv, dailymotion, videojug, collegehumor, veoh, break, movieweb, snotr, gametrailers, vimeo, viddler, funnyordie, myspace, liveleak, metacafe, googlevideo, myvideo, yahoo, spike,
 Requires at least: 3.3.1
 Tested up to: 3.6
-Stable tag: 3.0.4
+Stable tag: 3.0.5
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -52,7 +52,7 @@ Simple lightweight plugin lets you embed videos from many providers with full re
 
 = Can you add a video provider? =
 
-Depends, but most likely yes.
+I have no plans on implementing providers that inculde videos via JavaScript such as http://www.nicovideo.jp. I also will not implement videos from mainstream media news organisations. For others, feel free to ask.
 
 == Screenshots ==
 
@@ -60,7 +60,10 @@ Depends, but most likely yes.
 
 == Changelog ==
 
-= 3.0.2 (beta) =
+= 3.0.5 (beta) =
+* Fix invisible normal mode embeds with align
+
+= 3.0.4 (beta) =
 * Javascript Fix
 
 = 3.0.0 (beta) =
