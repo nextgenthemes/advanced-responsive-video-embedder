@@ -114,7 +114,7 @@ class Advanced_Responsive_Video_Embedder {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
-		add_action( 'wp_print_styles',  array( $this, 'print_styles' ) );
+		add_action( 'wp_head', array( $this, 'print_styles' ) );
 
 		#add_filter( 'oembed_providers', array( $this, 'remove_wp_default_oembeds' ), 99 );
 	}
@@ -476,7 +476,7 @@ class Advanced_Responsive_Video_Embedder {
 			##'gametrailers'      => null,
 			'ign'                 => '(https?://(?:www\.)?ign\.com/videos/[0-9]{4}/[0-9]{2}/[0-9]{2}/[0-9a-z\-]+)',
 			##'iframe'            => 'iframe',
-			'kickstarter'         => $hw . 'kickstarter\.com/projects/([0-9]+/[a-z\-]+)',
+			'kickstarter'         => $hw . 'kickstarter\.com/projects/([0-9]+/[0-9a-z\-]+)',
 			'liveleak'            => $hw . 'liveleak\.com/(?:view|ll_embed)\?((f|i)=[0-9a-z\_]+)',
 			'metacafe'            => $hw . 'metacafe\.com/(?:watch|fplayer)/([0-9]+)',
 			'movieweb'            => $hw . 'movieweb\.com/v/([a-z0-9]{14})',
@@ -1129,7 +1129,7 @@ class Advanced_Responsive_Video_Embedder {
 		if ( $maxwidth > 0 ) {
 			$css .= sprintf( '.arve-normal-wrapper { width: %spx; }', $maxwidth );
 		}
-		
+
 		//* Fallback if no width is set neither with options nor with shortcode (inline CSS)
 		$css .= sprintf(
 			'.arve-normal-wrapper.alignleft, ' .

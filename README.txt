@@ -52,7 +52,7 @@ Simple lightweight plugin lets you embed videos from many providers with full re
 
 = Can you add a video provider? =
 
-I have no plans on implementing providers that inculde videos via JavaScript such as http://www.nicovideo.jp. I also will not implement videos from mainstream media news organisations. For others, feel free to ask.
+I have no plans on implementing providers that include videos via JavaScript such as http://www.nicovideo.jp. I also will not implement videos from mainstream media news organizations. For others, feel free to ask.
 
 == Screenshots ==
 
@@ -61,7 +61,9 @@ I have no plans on implementing providers that inculde videos via JavaScript suc
 == Changelog ==
 
 = 3.0.5 (beta) =
-* Fix invisible normal mode embeds with align
+* New: Development versions now available via [Github Plugin Updater](https://github.com/afragen/github-updater)
+* New: Introducing 'Align Maximal Width' option
+* Fix: Invisible normal mode embeds with align
 
 = 3.0.4 (beta) =
 * Javascript Fix
