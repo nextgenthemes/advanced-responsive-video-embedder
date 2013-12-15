@@ -9,6 +9,7 @@
 .arve-wrapper.alignleft {
 	margin-right: 20px;
 }
+
 .arve-thumb-wrapper {
 	/* Background image is applied with inline CSS */
 	background-position: center center;
@@ -24,6 +25,9 @@
 	height: 0;
 	overflow: hidden;
 }
+
+.arve-dailymotionlist-normal-wrapper .arve-embed-container { padding-bottom: 72%; }
+
 .arve-inner {
 	display: block;
 	position: absolute;

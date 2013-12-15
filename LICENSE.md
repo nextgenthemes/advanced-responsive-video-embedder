@@ -3,7 +3,7 @@ Contributors: nico23
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC
 Tags: responsive, embeds, embed, flash, iframe, minimal, lightweight, simple, simplicity, shortcodes, videos, youtube, blip, bliptv, dailymotion, videojug, collegehumor, veoh, break, movieweb, snotr, gametrailers, vimeo, viddler, funnyordie, myspace, liveleak, metacafe, googlevideo, myvideo, yahoo, spike,
 Requires at least: 3.3.1
-Tested up to: 3.6
+Tested up to: 3.8
 Stable tag: 3.0.5
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -12,7 +12,7 @@ Embed videos with a click of a button from many providers with full responsive s
 
 == Description ==
 
-Simple lightweight plugin lets you embed videos from many providers with full responsive sizes via URL or Shortcode. Show videos as thumbnails and let them open in colorbox. Clean and easy shortcode syntax.
+Simple lightweight plugin lets you embed videos from many providers with full responsive sizes via URL or Shortcode. Show videos as thumbnails and let them open in Colorbox. Clean and easy shortcode syntax.
 
 [More info and demo](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/)
 
@@ -68,6 +68,9 @@ I have no plans on implementing providers that include videos via JavaScript suc
 * Fix: Yahoo detection
 * Fix: Kickstarter detection
 * Fix: Dailymoition Playlist
+* Improved: Screenshots updated
+* Improved: Beginning process of provider based aspect ratios. Daylimotion playlists/jukeboxes ajusted first.
+* Improved: Daylimotion playlists/jukeboxes now show Native thumbnails 
 * Improved: Iframe embed code detection with with single quoted `src=''`
 
 = 3.0.4 (beta) =

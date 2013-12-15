@@ -281,7 +281,13 @@ class Advanced_Responsive_Video_Embedder {
 	 * @since    1.0.0
 	 */
 	private static function single_activate() {
-		// @TODO: Define activation functionality here
+
+		global $current_user;
+
+		$user_id = $current_user->ID;
+		
+		delete_user_meta( $user_id, 'arve_ignore_admin_notice' );
+
 	}
 
 	/**
@@ -314,11 +320,6 @@ class Advanced_Responsive_Video_Embedder {
 	 */
 	public function enqueue_styles() {
 		wp_enqueue_style( $this->plugin_slug . '-plugin-styles', plugins_url( 'assets/css/public.css', __FILE__ ), array(), self::VERSION );
-
-		if ( function_exists( 'dbgx_trace_var' ) ) {
-			$ffs = plugins_url( __FILE__ );
-			dbgx_trace_var( $ffs );
-		}
 	}
 
 	/**
@@ -408,7 +409,7 @@ class Advanced_Responsive_Video_Embedder {
 		}
 	}
 
-	/**
+	/** 
 	 *
 	 * @since    3.0.0
 	 *
@@ -463,39 +464,38 @@ class Advanced_Responsive_Video_Embedder {
 		$this->regex_list = array(
 			'archiveorg'          => $hw . 'archive\.org/(?:details|embed)/([0-9a-z]+)',
 			'blip'                => $hw . 'blip\.tv/[^/]+/[^/]+-([0-9]{7})',
-			##'bliptv'            => 'bliptv',
+			##'bliptv'            => 
 			'break'               => $hw . 'break\.com/video/(?:[a-z\-]+)-([0-9]+)',
 			'collegehumor'        => $hw . 'collegehumor\.com/video/([0-9]+)',
-			##'comedycentral'     => 'comedycentral',
-			'dailymotion'         => $hw . 'dailymotion\.com/video/([^_]+)',
+			##'comedycentral'     => 
 			'dailymotion_hub'     => $hw . 'dailymotion\.com/hub/' .  '[a-z0-9]+_[a-z0-9_\-]+\#video=([a-z0-9]+)',
 			'dailymotionlist'     => $hw . 'dailymotion\.com/playlist/([a-z0-9]+_[a-z0-9_\-]+)',
+			'dailymotion'         => $hw . 'dailymotion\.com/video/([^_]+)',
 			#'dailymotion_jukebox' => $hw . 'dailymotion\.com/widget/jukebox?list\[\]=%2Fplaylist%2F([a-z0-9]+_[a-z0-9_\-]+)',
 			#'flickr'             => 'flickr',
 			'funnyordie'          => $hw . 'funnyordie\.com/videos/([a-z0-9_]+)',
-			##'gametrailers'      => null,
+			##'gametrailers'      => 
 			'ign'                 => '(https?://(?:www\.)?ign\.com/videos/[0-9]{4}/[0-9]{2}/[0-9]{2}/[0-9a-z\-]+)',
-			##'iframe'            => 'iframe',
-			'kickstarter'         => $hw . 'kickstarter\.com/projects/([0-9]+/[0-9a-z\-]+)',
+			##'iframe'            => 
+			'kickstarter'         => $hw . 'kickstarter\.com/projects/([0-9a-z\-]+/[0-9a-z\-]+)',
 			'liveleak'            => $hw . 'liveleak\.com/(?:view|ll_embed)\?((f|i)=[0-9a-z\_]+)',
 			'metacafe'            => $hw . 'metacafe\.com/(?:watch|fplayer)/([0-9]+)',
 			'movieweb'            => $hw . 'movieweb\.com/v/([a-z0-9]{14})',
 			'myspace'             => $hw . 'myspace\.com/.+/([0-9]+)',
 			'myvideo'             => $hw . 'myvideo\.de/(?:watch|embed)/([0-9]{7})',
 			'snotr'               => $hw . 'snotr\.com/(?:video|embed)/([0-9]+)',
-			##'spike'             => 'spike',
+			##'spike'             => 
 			'ustream'             => $hw . 'ustream\.tv/(?:channel/)?([0-9]{8}|recorded/[0-9]{8}(/highlight/[0-9]+)?)',
 			'veoh'                => $hw . 'veoh\.com/watch/([a-z0-9]+)',
 			'vevo'                => $hw . 'vevo\.com/watch/[a-z0-9:\-]+/[a-z0-9:\-]+/([a-z0-9]+)',
 			'viddler'             => $hw . 'viddler\.com/(?:embed|v)/([a-z0-9]{8})',
-			##'videojug'          => 'videojug',
+			##'videojug'          => 
 			'vimeo'               => $hw . 'vimeo\.com/(?:(?:channels/[a-z]+/)|(?:groups/[a-z]+/videos/))?([0-9]+)',
-			#'yahoo'              => 'yahoo',
+			'yahoo'               => $hw . '(?:screen|shine|omg)\.yahoo\.com/(?:embed/)?([a-z0-9\-]+/[a-z0-9\-]+)\.html',
 			'ted'                 => $hw . 'ted\.com/talks/([a-z0-9_]+)',
 			'youtubelist'         => $hw . 'youtube\.com/watch\?v=([a-z0-9_\-]{11}&list=[a-z0-9_\-]+)',
 			'youtube'             => $hw . 'youtube\.com/watch\?v=([a-z0-9_\-]{11})',
-  
-			//* Shorteners  
+			//* Shorteners
 			'youtu_be'            => 'http://youtu.be/([a-z0-9_-]{11})',
 			'dai_ly'              => 'http://dai.ly/([^_]+)',
 		);
@@ -868,7 +868,8 @@ class Advanced_Responsive_Video_Embedder {
 				$urlcode = 'http://www.ustream.tv/embed/' . $id . '?v=3&wmode=transparent';
 				break;
 			case 'yahoo':
-				$urlcode = 'http://' . $id . '.html?format=embed';
+				$id = str_replace( array( 'screen.yahoo,com/', 'screen.yahoo.com/embed/' ), '', $id );
+				$urlcode = 'http://screen.yahoo.com/embed/' . $id . '.html';
 				break;
 			case 'vevo':
 				$urlcode = 'http://videoplayer.vevo.com/embed/Embedded?videoId=' . $id;
@@ -974,7 +975,7 @@ class Advanced_Responsive_Video_Embedder {
 		#$output .= showr($urlcode);
 
 		if ( $iframe == true ) {
-			$href = esc_url( $url_autoplay_yes );
+			$href = str_replace( 'jukebox?list%5B0%5D', 'jukebox?list[]', esc_url( $url_autoplay_yes ) );
 			$fancybox_class = 'fancybox arve_iframe iframe';
 			//$href = "#inline_".$randid;
 			//$fancybox_class = 'fancybox';	
@@ -992,7 +993,8 @@ class Advanced_Responsive_Video_Embedder {
 		if ( $mode == 'normal' ) {
 
 			$output .= sprintf(
-				'<div class="arve-wrapper arve-normal-wrapper %s"%s><div class="arve-embed-container">%s</div></div>',
+				'<div class="arve-wrapper arve-normal-wrapper arve-%s-normal-wrapper %s"%s><div class="arve-embed-container">%s</div></div>',
+				esc_attr( $provider ),
 				esc_attr( $align ),
 				( isset( $maxwidth_shortcode ) ) ? sprintf( ' style="max-width: %spx;"', (int) $maxwidth_shortcode ) : '',
 				( $iframe ) ? $this->create_iframe( $url_option_autoplay ) : $this->create_object( $url_option_autoplay, $flashvars, $flashvars_autoplay )
@@ -1019,7 +1021,6 @@ class Advanced_Responsive_Video_Embedder {
 				case 'bliptv':
 
 					if ( $blip_xml = simplexml_load_file( "http://blip.tv/players/episode/$id?skin=rss" ) ) {
-						//$blip_xml = simplexml_load_file("http://blip.tv/file/$id?skin=rss");
 						$blip_result = $blip_xml->xpath( "/rss/channel/item/media:thumbnail/@url" );
 						$thumbnail = (string) $blip_result[0]['url'];
 					} else {
@@ -1030,6 +1031,19 @@ class Advanced_Responsive_Video_Embedder {
 				case 'dailymotion':
 
 					$thumbnail = 'http://www.dailymotion.com/thumbnail/video/' . $id;
+					break;
+
+				case 'dailymotionlist':
+
+					$dayli_api = file_get_contents( 'https://api.dailymotion.com/playlist/' . $id . '?fields=thumbnail_large_url' );
+					$dayli_api = json_decode( $dayli_api, true );
+
+					$thumbnail = (string) $dayli_api['thumbnail_large_url'];
+
+					if ( empty( $thumbnail ) ) {
+						return "<p><strong>ARVE Error:</strong> could not get Thumbnail for this dailymotion playlist";
+					}
+
 					break;
 			}
 			
@@ -1042,7 +1056,7 @@ class Advanced_Responsive_Video_Embedder {
 				$thumb_bg = sprintf( ' style="background-image: url(%s);"', esc_url( $options['custom_thumb_image'] ) );
 			}
 
-			$output .= sprintf( '<div class="arve-wrapper arve-thumb-wrapper%s"%s>', esc_attr( ' ' . $align ), $thumb_bg );
+			$output .= sprintf( '<div class="arve-wrapper arve-thumb-wrapper arve-%s-thumb-wrapper %s"%s>', esc_attr( $provider ), esc_attr( $align ), $thumb_bg );
 			$output .= '<div class="arve-embed-container">';
 
 			//* if we not have a real thumbnail by now and fakethumb is enabled
@@ -1101,7 +1115,10 @@ class Advanced_Responsive_Video_Embedder {
 	 */
 	public function create_iframe( $url ) {
 
-		return '<iframe class="arve-inner" src="' . esc_url( $url ) . '" frameborder="0" scrolling="no" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+		//* Fix escaped brackets we don't want escaped for dailymotion playlists
+		$url = str_replace( 'jukebox?list%5B0%5D', 'jukebox?list[]', esc_url( $url ) );
+
+		return '<iframe class="arve-inner" src="' . $url . '" frameborder="0" scrolling="no" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
 
 	}
 

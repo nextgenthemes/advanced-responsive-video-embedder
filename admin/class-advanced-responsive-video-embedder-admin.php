@@ -80,13 +80,12 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
 
 		// Add an action link pointing to the options page.
-		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) ) . $this->plugin_slug . '.php';
-
+		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_slug . '.php' );
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
 	
 		//* Display a notice that can be dismissed
-		#add_action( 'admin_init',    array( $this, 'admin_notice_ignore') );
-		#add_action( 'admin_notices', array( $this, 'admin_notice') );
+		add_action( 'admin_init',    array( $this, 'admin_notice_ignore') );
+		add_action( 'admin_notices', array( $this, 'admin_notice') );
 
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_init', array( $this, 'init_mce_plugin' ) );
@@ -147,7 +146,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		}
 
 		$screen = get_current_screen();
-		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
+		if ( $this->plugin_screen_hook_suffix != $screen->id ) {
 			return;
 		}
 
@@ -156,15 +155,16 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		$plugin = Advanced_Responsive_Video_Embedder::get_instance();
 		$regex_list = $plugin->get_regex_list();
 
-		foreach ( $regex_list as $provider => $regex ) {
-			$regex_list[$provider] = str_replace(
-				array( 'https?://(?:www\.)?', 'http://', '/'  ),
-				array( ''                   , ''       , '\/' ),
-				$regex
-			);
-		}
+        foreach ( $regex_list as $provider => $regex ) {
+
+            if ( $provider != 'ign' ) {
+            	$regex_list[$provider] = str_replace( array( 'https?://(?:www\.)?', 'http://' ), '', $regex );
+            }
+
+        }
 
 		wp_localize_script( 'jquery', 'arve_regex_list', $regex_list );
+		wp_localize_script( 'jquery', 'arve_test', 'TTTRTRT' );
 
 	}
 
@@ -210,8 +210,9 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	public function add_action_links( $links ) {
 
 		$extra_links = array(
-			'settings' => sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=' . $this->plugin_slug ), __( 'Settings', $this->plugin_slug ) ),
-			'donate'   => sprintf( '<a href="%s">%s</a>', 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC', __( 'Donate', $this->plugin_slug ) ),
+			'contribute' => sprintf( '<a href="%s">%s</a>', 'http://nextgenthemes.com/', __( 'Contribute', $this->plugin_slug ) ),
+			'settings'   => sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=' . $this->plugin_slug ), __( 'Settings', $this->plugin_slug ) ),
+			'donate'     => sprintf( '<a href="%s">%s</a>', 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC', __( 'Donate', $this->plugin_slug ) ),
 		);
 
 		return array_merge( $extra_links, $links );
@@ -457,14 +458,13 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		$user_id = $current_user->ID;
 		//* Check that the user hasn't already clicked to ignore the message
 		if ( ! get_user_meta($user_id, 'arve_ignore_admin_notice') ) {
-			echo '<div class="updated"><p>';
-			_e( 'Hey guys, this is Nico the Author of the Advanced Responsive Video Embedder Plugin. I have worked long and hard on version 3.0 of this plugin and not want to abuse all users as beta testers again. I would be glad if some of you can manually install and test the upcoming version and report back. Thanks.', $this->plugin_slug );
-			printf( __( ' <a href="%s" target="_blank">%s</a> | <a href="?arve_nag_ignore=1">%s</a>' ),
-				'https://github.com/nextgenthemes/advanced-responsive-video-embedder/archive/master.zip',
-				__( 'Download Beta', $this->plugin_slug ),
+
+			printf( '<div class="updated"><p>%s <a href="%s" target="_blank">%s</a>. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="?arve_nag_ignore=1">%s</a></p></div>',
+				__( 'Hey guys, this is Nico the Author of the A. R. Video Embedder Plugin. I would like you ', $this->plugin_slug ),
+				'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/contribute/',
+				__( 'to help testing future versions of this plugins', $this->plugin_slug ),
 				__( 'Dismiss', $this->plugin_slug )
 			);
-			echo "</p></div>";
 		}
 	}
 

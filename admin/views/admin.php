@@ -17,8 +17,17 @@ $options = get_option( 'arve_options', array() );
 ?>
 <div class="wrap">
 
-	<?php screen_icon(); ?>
 	<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
+
+	<?php
+	printf( '<div class="updated"><p>%s <a href="%s" target="_blank">%s</a> or <a href="%s" target="_blank">%s</a></p></div>',
+		__( 'It is always nice when people show their appreciation for a plugin by ', $this->plugin_slug ),
+		'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/contribute/',
+		__( 'contributing', $this->plugin_slug ),
+		'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/contribute/',
+		__( 'Dismiss', $this->plugin_slug )
+	);
+	?>
 
 	<form method="post" action="options.php">
 		<?php settings_fields('arve_plugin_options'); ?>
