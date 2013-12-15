@@ -146,25 +146,24 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		}
 
 		$screen = get_current_screen();
-		if ( $this->plugin_screen_hook_suffix != $screen->id ) {
-			return;
+		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
+			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), Advanced_Responsive_Video_Embedder::VERSION );
 		}
-
-		#wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), Advanced_Responsive_Video_Embedder::VERSION );
 
 		$plugin = Advanced_Responsive_Video_Embedder::get_instance();
 		$regex_list = $plugin->get_regex_list();
 
-        foreach ( $regex_list as $provider => $regex ) {
+		foreach ( $regex_list as $provider => $regex ) {
 
             if ( $provider != 'ign' ) {
-            	$regex_list[$provider] = str_replace( array( 'https?://(?:www\.)?', 'http://' ), '', $regex );
+            	$regex = str_replace( array( 'https?://(?:www\.)?', 'http://' ), '', $regex );
             }
+
+            $regex_list[$provider] = $regex;
 
         }
 
 		wp_localize_script( 'jquery', 'arve_regex_list', $regex_list );
-		wp_localize_script( 'jquery', 'arve_test', 'TTTRTRT' );
 
 	}
 
@@ -459,12 +458,15 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		//* Check that the user hasn't already clicked to ignore the message
 		if ( ! get_user_meta($user_id, 'arve_ignore_admin_notice') ) {
 
-			printf( '<div class="updated"><p>%s <a href="%s" target="_blank">%s</a>. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="?arve_nag_ignore=1">%s</a></p></div>',
-				__( 'Hey guys, this is Nico the Author of the A. R. Video Embedder Plugin. I would like you ', $this->plugin_slug ),
+			$message = sprintf(
+				__( 'It is always nice when people show their appreciation for a plugin by <a href="%s" target="_blank">testing, contributing</a> or <a href="%s" target="_blank">donating</a>. Thank you!', $this->plugin_slug ),
 				'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/contribute/',
-				__( 'to help testing future versions of this plugins', $this->plugin_slug ),
-				__( 'Dismiss', $this->plugin_slug )
+				'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC'
 			);
+
+			$dismiss = sprintf( '<a class="alignright" href="?arve_nag_ignore=1">%s</a>', __( 'Dismiss', $this->plugin_slug ) );
+
+			echo '<div class="updated"><p><big>' . $message . $dismiss . '</big></p></div>';
 		}
 	}
 

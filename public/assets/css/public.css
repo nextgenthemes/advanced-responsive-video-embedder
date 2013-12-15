@@ -26,7 +26,22 @@
 	overflow: hidden;
 }
 
-.arve-dailymotionlist-normal-wrapper .arve-embed-container { padding-bottom: 72%; }
+.arve-dailymotionlist-wrapper.arve-normal-wrapper .arve-embed-container { 
+	padding-bottom: 72%;
+}
+
+.arve-collegehumor-wrapper .arve-embed-container, 
+.arve-ustream-wrapper .arve-embed-container { 
+	padding-bottom: 61%;
+}
+
+.arve-blip-wrapper .arve-embed-container { 
+	padding-bottom: 61.4%;
+}
+
+.arve-snotr-wrapper .arve-embed-container {
+	padding-bottom: 59.8%;
+}
 
 .arve-inner {
 	display: block;

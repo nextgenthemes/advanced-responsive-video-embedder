@@ -56,7 +56,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '3.0.5';
+	const VERSION = '3.1.0';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -936,8 +936,10 @@ class Advanced_Responsive_Video_Embedder {
 				$url_autoplay_no  = $urlcode;
 				$url_autoplay_yes = add_query_arg( 'autoplay', '', $urlcode );
 				break;
-			//* Do nothing for providers that to not support autoplay
+			//* Do nothing for providers that to not support autoplay or fail with parameters
 			case 'ign':
+			case 'ign':
+			case 'collegehumor':
 				$url_autoplay_no  = $urlcode;
 				$url_autpplay_yes = $urlcode;
 				break;
@@ -993,7 +995,7 @@ class Advanced_Responsive_Video_Embedder {
 		if ( $mode == 'normal' ) {
 
 			$output .= sprintf(
-				'<div class="arve-wrapper arve-normal-wrapper arve-%s-normal-wrapper %s"%s><div class="arve-embed-container">%s</div></div>',
+				'<div class="arve-wrapper arve-normal-wrapper arve-%s-wrapper %s"%s><div class="arve-embed-container">%s</div></div>',
 				esc_attr( $provider ),
 				esc_attr( $align ),
 				( isset( $maxwidth_shortcode ) ) ? sprintf( ' style="max-width: %spx;"', (int) $maxwidth_shortcode ) : '',
@@ -1056,7 +1058,7 @@ class Advanced_Responsive_Video_Embedder {
 				$thumb_bg = sprintf( ' style="background-image: url(%s);"', esc_url( $options['custom_thumb_image'] ) );
 			}
 
-			$output .= sprintf( '<div class="arve-wrapper arve-thumb-wrapper arve-%s-thumb-wrapper %s"%s>', esc_attr( $provider ), esc_attr( $align ), $thumb_bg );
+			$output .= sprintf( '<div class="arve-wrapper arve-thumb-wrapper arve-%s-wrapper %s"%s>', esc_attr( $provider ), esc_attr( $align ), $thumb_bg );
 			$output .= '<div class="arve-embed-container">';
 
 			//* if we not have a real thumbnail by now and fakethumb is enabled

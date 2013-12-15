@@ -20,13 +20,13 @@ $options = get_option( 'arve_options', array() );
 	<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 
 	<?php
-	printf( '<div class="updated"><p>%s <a href="%s" target="_blank">%s</a> or <a href="%s" target="_blank">%s</a></p></div>',
-		__( 'It is always nice when people show their appreciation for a plugin by ', $this->plugin_slug ),
+	$message = sprintf(
+		__( 'It is always nice when people show their appreciation for a plugin by <a href="%s" target="_blank">testing, contributing</a> or <a href="%s" target="_blank">donating</a>. Thank you!', $this->plugin_slug ),
 		'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/contribute/',
-		__( 'contributing', $this->plugin_slug ),
-		'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/contribute/',
-		__( 'Dismiss', $this->plugin_slug )
+		'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC'
 	);
+
+	echo '<div class="updated"><p><big>' . $message . '</big></p></div>';
 	?>
 
 	<form method="post" action="options.php">
