@@ -44,21 +44,21 @@ $options = get_option( 'arve_options', array() );
 			<tr valign="top">
 				<th scope="row"><label for="video_maxwidth"><?php _e('Video Maximal Width', $this->plugin_slug); ?></label></th>
 				<td>
-					<input id="arve_options[video_maxwidth]" name="arve_options[video_maxwidth]" type="text" value="<?php echo $options['video_maxwidth'] ?>" class="small-text"><br>
+					<input id="arve_options[video_maxwidth]" name="arve_options[video_maxwidth]" type="text" value="<?php echo $options['video_maxwidth'] ?>" class="small-text">px<br>
 					<span class='description'><?php _e('Optional, if not set your videos will be the maximum size of the container they are in. If your content area has a big width you might want to set this.', $this->plugin_slug); ?></span>
 				</td>
 			</tr>
 			<tr valign="top">
 				<th scope="row"><label for="arve_options[align_width]"><?php _e('Aligned Maximal Width (Normal Mode)', $this->plugin_slug); ?></label></label></th>
 				<td>
-					<input id="arve_options[align_width]" name="arve_options[align_width]" type="text" value="<?php echo $options['align_width'] ?>" class="small-text"><br>
+					<input id="arve_options[align_width]" name="arve_options[align_width]" type="text" value="<?php echo $options['align_width'] ?>" class="small-text">px<br>
 					<span class="description"><?php _e('Needed! Must be 200+ to work.', $this->plugin_slug); ?></span>
 				</td>
 			</tr>			
 			<tr valign="top">
 				<th scope="row"><label for="arve_options[thumb_width]"><?php _e('Thumbnail Maximal Width', $this->plugin_slug); ?></label></label></th>
 				<td>
-					<input id="arve_options[thumb_width]" name="arve_options[thumb_width]" type="text" value="<?php echo $options['thumb_width'] ?>" class="small-text"><br>
+					<input id="arve_options[thumb_width]" name="arve_options[thumb_width]" type="text" value="<?php echo $options['thumb_width'] ?>" class="small-text">px<br>
 					<span class="description"><?php _e('Needed! Must be 50+ to work.', $this->plugin_slug); ?></span>
 				</td>
 			</tr>

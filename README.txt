@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: responsive, embeds, embed, flash, iframe, minimal, lightweight, simple, simplicity, shortcodes, videos, youtube, blip, bliptv, dailymotion, videojug, collegehumor, veoh, break, movieweb, snotr, gametrailers, vimeo, viddler, funnyordie, myspace, liveleak, metacafe, googlevideo, myvideo, yahoo, spike,
 Requires at least: 3.3.1
 Tested up to: 3.8
-Stable tag: 3.1.0
+Stable tag: 3.1.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -50,6 +50,10 @@ Simple lightweight plugin lets you embed videos from many providers with full re
 
 == Frequently Asked Questions ==
 
+= Why are videos opening full window (provider URL) when I click on them?
+You are
+
+
 = Can you add a video provider? =
 
 I have no plans on implementing providers that include videos via JavaScript such as http://www.nicovideo.jp. I also will not implement videos from mainstream media news organizations. For others, feel free to ask.
@@ -60,6 +64,9 @@ I have no plans on implementing providers that include videos via JavaScript suc
 2. Options page
 
 == Changelog ==
+
+= 3.1.1 =
+* Improved; Added `px` suffix to values on options page 
 
 = 3.1.0 (beta) =
 * New: Development versions now available via [Github Plugin Updater](https://github.com/afragen/github-updater) please install this to test cutting edge versions

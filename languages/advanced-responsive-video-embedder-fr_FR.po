@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Advanced Responsive Video Embedder v2.7.4\n"
+"Project-Id-Version: Advanced Responsive Video Embedder v3.1.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-11-28 14:59:16+0000\n"
+"PO-Revision-Date: 2013-12-31 07:16:01+0000\n"
 "Last-Translator: nico <nicolasjonas@web.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -20,109 +20,109 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Textdomain-Support: yes"
 
-#: admin/views/admin.php:46
+#: admin/views/admin.php:62
 #@ advanced-responsive-video-embedder
 msgid "Needed! Must be 50+ to work."
 msgstr "Requis! Il en faut +50 pour fonctionner."
 
-#: admin/views/admin.php:66
+#: admin/views/admin.php:76
 #@ advanced-responsive-video-embedder
 msgid "To be used instead of black background. Upload a 16:10 Image with a size bigger or equal the thumbnials size you want to use into your WordPress and paste the URL of it here."
 msgstr "Utilisée à la place du fond noir. Envoyer une image au ratio 16:10 avec une taille supérieure ou égale à la taille des miniatures dont vous voulez vous servir dans Wordpress, et copiez l'URL ici."
 
-#: admin/views/admin.php:81
+#: admin/views/admin.php:97
 #@ advanced-responsive-video-embedder
 msgid "You might need this to prevent conflicts with other plugins you want to use. At least 3 alphanumec characters with optional underscores are needed!"
 msgstr "Vous pourriez en avoir besoin pour empêcher les conflits avec d'autres modules. Au moins 3 caractères alphanumériques sont requis avec un underscore optionnel!"
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:348
+#: admin/class-advanced-responsive-video-embedder-admin.php:351
 #@ advanced-responsive-video-embedder
 msgid "Mode"
 msgstr "Mode"
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:354
-#: admin/views/admin.php:30
+#: admin/class-advanced-responsive-video-embedder-admin.php:357
+#: admin/views/admin.php:39
 #@ advanced-responsive-video-embedder
 msgid "Normal"
 msgstr "Normal"
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:355
-#: admin/views/admin.php:31
+#: admin/class-advanced-responsive-video-embedder-admin.php:358
+#: admin/views/admin.php:40
 #@ advanced-responsive-video-embedder
 msgid "Thumbnail"
 msgstr "Miniatures"
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:361
+#: admin/class-advanced-responsive-video-embedder-admin.php:364
 #@ advanced-responsive-video-embedder
 msgid "Align"
 msgstr "Alignement"
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:367
+#: admin/class-advanced-responsive-video-embedder-admin.php:370
 #@ advanced-responsive-video-embedder
 msgid "left"
 msgstr "Gauche"
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:368
+#: admin/class-advanced-responsive-video-embedder-admin.php:371
 #@ advanced-responsive-video-embedder
 msgid "right"
 msgstr "Droite"
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:369
+#: admin/class-advanced-responsive-video-embedder-admin.php:372
 #@ advanced-responsive-video-embedder
 msgid "center"
 msgstr "Centrer"
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:338
+#: admin/class-advanced-responsive-video-embedder-admin.php:341
 #@ advanced-responsive-video-embedder
 msgid "Ustream: If your Address bar URL not contains a number. Click Share->URL-icon and paste the URL you get there here."
 msgstr "Ustream: si l'URL dans la barre d'adresse ne contient pas un nombre. Cliquer sur l'icône Share->URL et copier ici l'URL obtenue."
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:332
+#: admin/class-advanced-responsive-video-embedder-admin.php:335
 #@ advanced-responsive-video-embedder
 msgid "For Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike and Comedycentral paste the embed code, for all others paste the URL!"
 msgstr "Pour  Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike et  Comedycentral coller le code à insérer, pour tous les autres, collez l'adresse de la vidéo!"
 
-#: admin/views/admin.php:71
+#: admin/views/admin.php:87
 #@ advanced-responsive-video-embedder
 msgid "Reset options"
 msgstr "Réinitialiser les options"
 
-#: admin/views/admin.php:79
+#: admin/views/admin.php:95
 #@ advanced-responsive-video-embedder
 msgid "Change shortcode tags"
 msgstr "Modifier le shortcode"
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:394
+#: admin/class-advanced-responsive-video-embedder-admin.php:397
 #@ advanced-responsive-video-embedder
 msgid "Maximal width"
 msgstr "Largeur maximale"
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:404
+#: admin/class-advanced-responsive-video-embedder-admin.php:407
 #@ advanced-responsive-video-embedder
 msgid "Provider"
 msgstr "Fournisseur"
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:419
+#: admin/class-advanced-responsive-video-embedder-admin.php:422
 #@ advanced-responsive-video-embedder
 msgid "Video ID"
 msgstr "ID Vidéo"
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:420
+#: admin/class-advanced-responsive-video-embedder-admin.php:423
 #@ advanced-responsive-video-embedder
 msgid "If not filled in automatically after pasting the url above you have to insert the video ID in here."
 msgstr "Si ce champ n'est pas rempli automatiquement après avoir collé le code, insérer l'identifiant de la vidéo ici."
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:434
+#: admin/class-advanced-responsive-video-embedder-admin.php:437
 #@ advanced-responsive-video-embedder
 msgid "Ready?"
 msgstr "Prêt(e) ?"
 
-#: admin/views/admin.php:36
+#: admin/views/admin.php:45
 #@ advanced-responsive-video-embedder
 msgid "Video Maximal Width"
 msgstr "Largeur maximale de la vidéo"
 
-#: admin/views/admin.php:50
+#: admin/views/admin.php:66
 #@ advanced-responsive-video-embedder
 msgid "Fake Thumbnails"
 msgstr "Fausses miniatures"
@@ -157,32 +157,32 @@ msgstr "Nicolas Jonas"
 msgid "http://nextgenthemes.com"
 msgstr "http://nextgenthemes.com"
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:381
+#: admin/class-advanced-responsive-video-embedder-admin.php:384
 #@ advanced-responsive-video-embedder
 msgid "Autoplay this video"
 msgstr "Lecture auto."
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:387
+#: admin/class-advanced-responsive-video-embedder-admin.php:390
 #@ advanced-responsive-video-embedder
 msgid "yes"
 msgstr "oui"
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:388
+#: admin/class-advanced-responsive-video-embedder-admin.php:391
 #@ advanced-responsive-video-embedder
 msgid "no"
 msgstr "non"
 
-#: admin/views/admin.php:53
+#: admin/views/admin.php:69
 #@ advanced-responsive-video-embedder
 msgid "Loads the actual Videoplayer as \"background image\" to for thumbnails to emulate the feature Youtube, Dailymotion, and Bliptv have. If not enabled thumbnails are displayed black or you can choose a image below."
 msgstr "Charge le lecteur video en tant qu'image de fond pour les miniatures pour simuler la fonction de Youtube, Dailymotion, et  Bliptv. Si désactivé, les miniatures sont affichées en noir et vous pouvez mettre une image ci-dessous."
 
-#: admin/views/admin.php:57
+#: admin/views/admin.php:80
 #@ advanced-responsive-video-embedder
 msgid "Autoplay all"
 msgstr "Tout mettre en lecture auto."
 
-#: admin/views/admin.php:63
+#: admin/views/admin.php:73
 #@ advanced-responsive-video-embedder
 msgid "Custom Thumbnail Image"
 msgstr "Image miniature personnalisée"
@@ -197,73 +197,68 @@ msgstr ""
 msgid "A.R. Video Embedder Settings"
 msgstr ""
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:212
-#: admin/class-plugin-name-admin.php:217
+#: admin/class-advanced-responsive-video-embedder-admin.php:213
 #@ advanced-responsive-video-embedder
 msgid "Settings"
 msgstr ""
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:213
+#: admin/class-advanced-responsive-video-embedder-admin.php:214
 #@ advanced-responsive-video-embedder
 msgid "Donate"
 msgstr ""
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:333
+#: admin/class-advanced-responsive-video-embedder-admin.php:336
 #@ advanced-responsive-video-embedder
 msgid "Usteam info"
 msgstr ""
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:349
-#: admin/class-advanced-responsive-video-embedder-admin.php:382
-#: admin/class-advanced-responsive-video-embedder-admin.php:395
+#: admin/class-advanced-responsive-video-embedder-admin.php:352
+#: admin/class-advanced-responsive-video-embedder-admin.php:385
+#: admin/class-advanced-responsive-video-embedder-admin.php:398
 #@ advanced-responsive-video-embedder
 msgid "Optional override setting for single videos."
 msgstr ""
 
-#: admin/class-advanced-responsive-video-embedder-admin.php:458
-#@ advanced-responsive-video-embedder
-msgid "Hey guys, this is Nico the Author of the Advanced Responsive Video Embedder Plugin. I have worked long and hard on version 3.0 of this plugin and not want to abuse all users as beta testers again. I would be glad if some of you can manually install and test the upcoming version and report back. Thanks."
-msgstr ""
-
-#: admin/class-advanced-responsive-video-embedder-admin.php:459
-#, php-format
-#@ default
-msgid " <a href=\"%s\" target=\"_blank\">%s</a> | <a href=\"?arve_nag_ignore=1\">%s</a>"
-msgstr ""
-
-#: admin/class-advanced-responsive-video-embedder-admin.php:461
-#@ default
-msgid "Download Beta"
-msgstr ""
-
-#: admin/class-advanced-responsive-video-embedder-admin.php:462
+#: admin/class-advanced-responsive-video-embedder-admin.php:467
 #@ advanced-responsive-video-embedder
 msgid "Dismiss"
 msgstr ""
 
-#: admin/class-plugin-name-admin.php:190
-#@ advanced-responsive-video-embedder
-msgid "Page Title"
-msgstr ""
-
-#: admin/class-plugin-name-admin.php:191
-#@ advanced-responsive-video-embedder
-msgid "Menu Text"
-msgstr ""
-
-#: admin/views/admin.php:39
+#: admin/views/admin.php:48
 #@ advanced-responsive-video-embedder
 msgid "Optional, if not set your videos will be the maximum size of the container they are in. If your content area has a big width you might want to set this."
 msgstr ""
 
-#: admin/views/admin.php:43
+#: admin/views/admin.php:59
 #@ advanced-responsive-video-embedder
 msgid "Thumbnail Maximal Width"
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:212
+#@ advanced-responsive-video-embedder
+msgid "Contribute"
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:462
+#: admin/views/admin.php:24
+#, php-format
+#@ advanced-responsive-video-embedder
+msgid "It is always nice when people show their appreciation for a plugin by <a href=\"%s\" target=\"_blank\">testing, contributing</a> or <a href=\"%s\" target=\"_blank\">donating</a>. Thank you!"
+msgstr ""
+
+#: admin/views/admin.php:52
+#@ advanced-responsive-video-embedder
+msgid "Aligned Maximal Width (Normal Mode)"
+msgstr ""
+
+#: admin/views/admin.php:55
+#@ advanced-responsive-video-embedder
+msgid "Needed! Must be 200+ to work."
 msgstr ""
 
 #. translators: plugin header field 'Version'
 #: advanced-responsive-video-embedder.php:0
 #@ advanced-responsive-video-embedder
-msgid "2.7.4"
+msgid "3.1.1"
 msgstr ""
 

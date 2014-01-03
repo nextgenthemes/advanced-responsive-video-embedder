@@ -56,7 +56,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '3.1.0';
+	const VERSION = '3.1.1';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -436,7 +436,7 @@ class Advanced_Responsive_Video_Embedder {
 		#unset( $providers['#https?://(.+\.)?polldaddy\.com/.*#i'               ]);
 		unset( $providers['#https?://(www\.)?funnyordie\.com/videos/.*#i'      ]);
 		#unset( $providers['#https?://(www\.)?twitter\.com/.+?/status(es)?/.*#i']);
- 		#unset( $providers['#https?://(www\.)?soundcloud\.com/.*#i'             ]);
+		#unset( $providers['#https?://(www\.)?soundcloud\.com/.*#i'             ]);
 		#unset( $providers['#https?://(www\.)?slideshare\.net/*#'               ]);
 		#unset( $providers['#http://instagr(\.am|am\.com)/p/.*#i'               ]);
 		#unset( $providers['#https?://(www\.)?rdio\.com/.*#i'                   ]);
@@ -522,23 +522,23 @@ class Advanced_Responsive_Video_Embedder {
 	 */
 	function __call( $func, $params ) {
 
-        if( ! array_key_exists( $func, $this->regex_list ) ) {
-            wp_die('__call');
-        }
-        
-        switch ( $func ) {
-        	case 'youtubelist':
-        	case 'youtu_be':
-        		$func = 'youtube';
-        		break;
-        	case 'dailymotion_hub':
-        	case 'dai_ly':
-        		$func = 'dailymotion';
-        }
+		if( ! array_key_exists( $func, $this->regex_list ) ) {
+			wp_die('__call');
+		}
+		
+		switch ( $func ) {
+			case 'youtubelist':
+			case 'youtu_be':
+				$func = 'youtube';
+				break;
+			case 'dailymotion_hub':
+			case 'dai_ly':
+				$func = 'dailymotion';
+		}
 
-        return $this->url_build_embed( $func, $params[0], $params[1], $params[2], $params[3] );
+		return $this->url_build_embed( $func, $params[0], $params[1], $params[2], $params[3] );
 
-    }
+	}
 
 	/**
 	 *

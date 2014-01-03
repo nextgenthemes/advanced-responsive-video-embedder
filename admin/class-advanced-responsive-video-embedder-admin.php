@@ -209,7 +209,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	public function add_action_links( $links ) {
 
 		$extra_links = array(
-			'contribute' => sprintf( '<a href="%s">%s</a>', 'http://nextgenthemes.com/', __( 'Contribute', $this->plugin_slug ) ),
+			'contribute' => sprintf( '<a href="%s">%s</a>', 'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/contribute/', __( 'Contribute', $this->plugin_slug ) ),
 			'settings'   => sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=' . $this->plugin_slug ), __( 'Settings', $this->plugin_slug ) ),
 			'donate'     => sprintf( '<a href="%s">%s</a>', 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC', __( 'Donate', $this->plugin_slug ) ),
 		);
@@ -466,7 +466,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 			$dismiss = sprintf( '<a class="alignright" href="?arve_nag_ignore=1">%s</a>', __( 'Dismiss', $this->plugin_slug ) );
 
-			echo '<div class="updated"><p><big>' . $message . $dismiss . '</big></p></div>';
+			echo '<div class="updated"><p><big>' . $message . $dismiss . '</big><br class="clear"></p></div>';
 		}
 	}
 
