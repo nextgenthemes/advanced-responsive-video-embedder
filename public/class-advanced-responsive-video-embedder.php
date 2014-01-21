@@ -56,7 +56,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '3.1.1';
+	const VERSION = '3.1.2';
 
 	/**
 	 * Unique identifier for your plugin.

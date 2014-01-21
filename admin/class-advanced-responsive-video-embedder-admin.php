@@ -456,9 +456,10 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		global $current_user ;
 		$user_id = $current_user->ID;
 		//* Check that the user hasn't already clicked to ignore the message
-		if ( ! get_user_meta($user_id, 'arve_ignore_admin_notice') ) {
+		if ( ! get_user_meta( $user_id, 'arve_ignore_admin_notice' ) ) {
 
-			$message = sprintf(
+			$message  = __( 'A quick message from the author of the Advanced Responsive Video Embedder Plugin:', $this->plugin_slug ) . '<br>';
+			$message .= sprintf(
 				__( 'It is always nice when people show their appreciation for a plugin by <a href="%s" target="_blank">testing, contributing</a> or <a href="%s" target="_blank">donating</a>. Thank you!', $this->plugin_slug ),
 				'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/contribute/',
 				'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC'

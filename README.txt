@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: responsive, embeds, embed, flash, iframe, minimal, lightweight, simple, simplicity, shortcodes, videos, youtube, blip, bliptv, dailymotion, videojug, collegehumor, veoh, break, movieweb, snotr, gametrailers, vimeo, viddler, funnyordie, myspace, liveleak, metacafe, googlevideo, myvideo, yahoo, spike,
 Requires at least: 3.3.1
 Tested up to: 3.8
-Stable tag: 3.1.1
+Stable tag: 3.1.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -65,8 +65,12 @@ I have no plans on implementing providers that include videos via JavaScript suc
 
 == Changelog ==
 
-= 3.1.1 =
-* Improved; Added `px` suffix to values on options page 
+= 3.1.2 =
+* Fix: IE8 Javscript errors
+* Improved: The evil message at the admin.
+
+= 3.1.1 (github only) =
+* Improved: Added `px` suffix to values on options page 
 
 = 3.1.0 (beta) =
 * New: Development versions now available via [Github Plugin Updater](https://github.com/afragen/github-updater) please install this to test cutting edge versions
@@ -74,11 +78,11 @@ I have no plans on implementing providers that include videos via JavaScript suc
 * Fix: Invisible normal mode embeds with align
 * Fix: Yahoo detection
 * Fix: Kickstarter detection
-* Fix: Dailymoition Playlist
+* Fix: Daylimoition Playlist
 * Fix: Colleghumor
 * Improved: Screenshots updated
 * Improved: Beginning process of provider based aspect ratios.
-* Improved: Daylimotion playlists/jukeboxes now show Native thumbnails 
+* Improved: Dailymotion playlists/jukeboxes now show Native thumbnails 
 * Improved: Iframe embed code detection with with single quoted `src=''`
 
 = 3.0.4 (beta) =

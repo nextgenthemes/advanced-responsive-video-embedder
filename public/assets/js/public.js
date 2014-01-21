@@ -38,33 +38,5 @@
 			});
 		}
 
-		var toggleFullScreen = function(e) {
-
-			if (!document.mozFullScreen && !document.webkitFullScreen) {
-				if (e.mozRequestFullScreen) {
-					e.mozRequestFullScreen();
-				} else {
-					e.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-				}
-			} else {
-				if (document.mozCancelFullScreen) {
-					document.mozCancelFullScreen();
-				} else {
-					document.webkitCancelFullScreen();
-				}
-			}
-		}
-
-		$('.TTTarve-thumb-wrapper').click( function() {
-			toggleFullScreen( $(this).get(0) );
-		});
-		
-		document.addEventListener("keydown", function(e) {
-			if (e.keyCode == 13) {
-				toggleFullScreen();
-			}
-		}, false);
-
-
 	});
 }(jQuery));
