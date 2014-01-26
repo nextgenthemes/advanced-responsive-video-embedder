@@ -91,10 +91,53 @@ $options = get_option( 'arve_options', array() );
 				</td>
 			</tr>
 		</table>
+
+		<h3><?php _e('Set custom parameters', $this->plugin_slug); ?></h3>
+		<p>
+			<?php _e("You may use spaces to seperate them instead of <code>&amp;</code>'s. They will be transformed to two spaces after save. Resources: ", $this->plugin_slug); ?>
+			<a target="_blank" href="https://developers.google.com/youtube/player_parameters">Youtube Parameters</a>, 
+			<a target="_blank" href="http://www.dailymotion.com/doc/api/player#DailymotionPlayerTools-Parameters">Dailymotion Parameters</a>
+		</p>
+		
+		<table class="form-table">
+			<?php
+
+			foreach ( $options['params'] as $provider => $params ) {
+
+				$params_str = '';
+
+				if ( is_array( $params ) ) {
+
+					foreach ( $params as $key => $var ) {
+						$params_str .= (string) "$key=$var  ";
+					}
+				}
+
+				?>
+				<tr valign="top">
+					<th scope="row">
+						<?php printf( '<label for="arve_options[params][%s]">%s</label>', $provider, ucwords( $provider ) . ' Parameters' ); ?>
+					</th>
+					<td>
+						<?php printf( '<input type="text" id="arve_options[params][%s]" class="widefat" name="arve_options[params][%s]" value="%s">', $provider, $provider, $params_str ); ?>
+					</td>
+				</tr>
+				<?php
+			}
+			
+			?>
+
+			<tr>
+				<th></th>
+				<td>
+					<?php submit_button(); ?>
+				</td>
+			</tr>
+		</table>
 		
 		<h3><?php _e('Change shortcode tags', $this->plugin_slug); ?></h3>
 		<p>
-			<?php _e('You might need this to prevent conflicts with other plugins you want to use. At least 3 alphanumec characters with optional underscores are needed!', $this->plugin_slug); ?>
+			<?php _e('Do not touch this is you not know what you are doing. You might need this to prevent conflicts with other plugins you want to use. At least 3 alphanumec characters with optional underscores are needed!', $this->plugin_slug); ?>
 		</p>
 		
 		<table class="form-table">

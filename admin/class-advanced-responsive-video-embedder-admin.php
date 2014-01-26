@@ -294,6 +294,14 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			
 			$output['shortcodes'][$key] = $var;
 		}
+
+		foreach ( $input['params'] as $key => $var ) {
+		
+			$plugin = Advanced_Responsive_Video_Embedder::get_instance();
+			$var = $plugin->parse_parameters( $var );
+			
+			$output['params'][$key] = $var;
+		}		
 		
 		return $output;
 	}
@@ -461,7 +469,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			$message  = __( 'A quick message from the author of the Advanced Responsive Video Embedder Plugin:', $this->plugin_slug ) . '<br>';
 			$message .= sprintf(
 				__( 'It is always nice when people show their appreciation for a plugin by <a href="%s" target="_blank">testing, contributing</a> or <a href="%s" target="_blank">donating</a>. Thank you!', $this->plugin_slug ),
-				'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/contribute/',
+				'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/#contribute',
 				'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC'
 			);
 

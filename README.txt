@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: responsive, embeds, embed, flash, iframe, minimal, lightweight, simple, simplicity, shortcodes, videos, youtube, blip, bliptv, dailymotion, videojug, collegehumor, veoh, break, movieweb, snotr, gametrailers, vimeo, viddler, funnyordie, myspace, liveleak, metacafe, googlevideo, myvideo, yahoo, spike,
 Requires at least: 3.3.1
 Tested up to: 3.8
-Stable tag: 3.1.2
+Stable tag: 3.5.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -50,13 +50,13 @@ Simple lightweight plugin lets you embed videos from many providers with full re
 
 == Frequently Asked Questions ==
 
-= Why are videos opening full window (provider URL) when I click on them?
-You are
+= Why are videos opening full window (provider URL) when I click on them? =
 
+You most likely do not have the 'jQuery Colorbox' Plugin installed or JavaScript disabled both is needed for thumbnail mode. Another reason can be that do have JavascriptErrors or Browser addons like NoScript blocking JavaScript trom Executing.
 
 = Can you add a video provider? =
 
-I have no plans on implementing providers that include videos via JavaScript such as http://www.nicovideo.jp. I also will not implement videos from mainstream media news organizations. For others, feel free to ask.
+I have no plans on implementing providers that include videos via JavaScript such as www.nicovideo.jp. I also will not implement videos from mainstream media news organizations. For others, feel free to ask.
 
 == Screenshots ==
 
@@ -65,8 +65,14 @@ I have no plans on implementing providers that include videos via JavaScript suc
 
 == Changelog ==
 
+= 3.5.0 =
+* New: Custom parameters!
+* Fix: Youtube playlists now work correctly
+* Fix: Translations are working again (incomplete German and French)
+* Deprecated: `start` and `end` shortcode parametets should not be used anymore with youtube, instead use the new parameters feature like `[youtube id="123456" parameters="start=60 end=120"]`
+
 = 3.1.2 =
-* Fix: IE8 Javscript errors
+* Fix: IE8 JavaScript errors
 * Improved: The evil message at the admin.
 
 = 3.1.1 (github only) =

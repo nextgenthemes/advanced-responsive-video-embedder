@@ -56,7 +56,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '3.1.2';
+	const VERSION = '3.5.0';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -310,7 +310,7 @@ class Advanced_Responsive_Video_Embedder {
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 
 		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
-
+		load_plugin_textdomain( $domain, false, basename( plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/' );
 	}
 
 	/**
@@ -339,45 +339,92 @@ class Advanced_Responsive_Video_Embedder {
 	public function init_options() {
 
 		$defaults = array(
-			'mode'                  => 'normal',
-			'video_maxwidth'        => '',
-			'align_width'           => 400,
-			'thumb_width'           => 300,
-			'fakethumb'             => true,
-			'custom_thumb_image'    => '',
-			'autoplay'              => false,
-			'shortcodes'            => array(
-				'archiveorg'            => 'archiveorg',
-				'blip'                  => 'blip',
-				'bliptv'                => 'bliptv', //* Deprecated
-				'break'                 => 'break',
-				'collegehumor'          => 'collegehumor',
-				'comedycentral'         => 'comedycentral',
-				'dailymotion'           => 'dailymotion',
-				'dailymotionlist'       => 'dailymotionlist',
-				'flickr'                => 'flickr',
-				'funnyordie'            => 'funnyordie',
-				'gametrailers'          => 'gametrailers',	
-				'iframe'                => 'iframe',
-				'ign'                   => 'ign',
-				'kickstarter'           => 'kickstarter',
-				'liveleak'              => 'liveleak',
-				'metacafe'              => 'metacafe',   
-				'movieweb'              => 'movieweb',
-				'myspace'               => 'myspace',
-				'myvideo'               => 'myvideo',
-				'snotr'                 => 'snotr',
-				'spike'                 => 'spike',
-				'ted'                   => 'ted',   
-				'ustream'               => 'ustream',
-				'veoh'                  => 'veoh',
-				'vevo'                  => 'vevo',
-				'viddler'               => 'viddler',
-				'videojug'              => 'videojug',
-				'vimeo'                 => 'vimeo',
-				'yahoo'                 => 'yahoo',
-				'youtube'               => 'youtube',
-				'youtubelist'           => 'youtubelist', //* Deprecated
+			'mode'                => 'normal',
+			'video_maxwidth'      => '',
+			'align_width'         => 400,
+			'thumb_width'         => 300,
+			'fakethumb'           => true,
+			'custom_thumb_image'  => '',
+			'autoplay'            => false,
+			'shortcodes'          => array(
+				'archiveorg'          => 'archiveorg',
+				'blip'                => 'blip',
+				'bliptv'              => 'bliptv', //* Deprecated
+				'break'               => 'break',
+				'collegehumor'        => 'collegehumor',
+				'comedycentral'       => 'comedycentral',
+				'dailymotion'         => 'dailymotion',
+				'dailymotionlist'     => 'dailymotionlist',
+				'flickr'              => 'flickr',
+				'funnyordie'          => 'funnyordie',
+				'gametrailers'        => 'gametrailers',	
+				'iframe'              => 'iframe',
+				'ign'                 => 'ign',
+				'kickstarter'         => 'kickstarter',
+				'liveleak'            => 'liveleak',
+				'metacafe'            => 'metacafe',   
+				'movieweb'            => 'movieweb',
+				'myspace'             => 'myspace',
+				'myvideo'             => 'myvideo',
+				'snotr'               => 'snotr',
+				'spike'               => 'spike',
+				'ted'                 => 'ted',
+				'ustream'             => 'ustream',
+				'veoh'                => 'veoh',
+				'vevo'                => 'vevo',
+				'viddler'             => 'viddler',
+				'videojug'            => 'videojug',
+				'vimeo'               => 'vimeo',
+				'yahoo'               => 'yahoo',
+				'youtube'             => 'youtube',
+				'youtubelist'         => 'youtubelist', //* Deprecated
+			),
+			'params' => array(
+				#'archiveorg'      => '',
+				'blip'            => '',
+				#'bliptv'          => '', //* Deprecated
+				#'break'           => '',
+				#'collegehumor'    => '',
+				#'comedycentral'   => '',
+				'dailymotion'     => array( 'logo' => 0, 'hideInfos' => 1, 'related' => 0, 'forcedQuality' => 'hq' ),
+				'dailymotionlist' => array( 'logo' => 0, 'hideInfos' => 1, 'related' => 0, 'forcedQuality' => 'hq' ),
+				#'flickr'          => '',
+				#'funnyordie'      => '',
+				#'gametrailers'    => '',
+				'iframe'          => '',
+				#'ign'             => '',
+				#'kickstarter'     => '',
+				'liveleak'        => array( 'wmode' => 'transparent' ),
+				#'metacafe'        => '',
+				#'movieweb'        => '',
+				#'myspace'         => '',
+				#'myvideo'         => '',
+				#'snotr'           => '',
+				#'spike'           => '',
+				#'ted'             => '',
+				'ustream'         => array( 'v' => 3, 'wmode' => 'transparent' ),
+				'veoh'            => array( 'player' => 'videodetailsembedded', 'id' => 'anonymous' ),
+				'vevo'            => array(
+					'playlist'       => 'false',
+					'playerType'     => 'embedded',
+					#'playerId'       => '62FF0A5C-0D9E-4AC1-AF04-1D9E97EE3961',
+					'env'            => 0,
+					#'cultureName'    => 'en-US',
+					#'cultureIsRTL'   => 'False',
+				),
+				'viddler'         => array( 'f' => 1, 'disablebranding' => 1, 'wmode' => 'transparent' ),
+				#'videojug'        => '',
+				'vimeo'           => array ( 'title' => 0, 'byline' => 0, 'portrait' => 0 ),
+				#'yahoo'           => '',
+				'youtube'         => array(
+					#'theme'          => 'dark',
+					'autohide'       => 1,
+					'iv_load_policy' => 3,
+					'modestbranding' => 1,
+					'rel'            => 0,
+					'wmode'          => 'transparent',
+				),
+				#'youtubelist'     => '', //* Deprecated
 			)
 		);
 
@@ -385,6 +432,7 @@ class Advanced_Responsive_Video_Embedder {
 
 		$options               = wp_parse_args( $options, $defaults );
 		$options['shortcodes'] = wp_parse_args( $options['shortcodes'], $defaults['shortcodes'] );
+		$options['params']     = wp_parse_args( $options['params'],     $defaults['params'] );
 
 		update_option( 'arve_options', $options );
 	}
@@ -493,8 +541,8 @@ class Advanced_Responsive_Video_Embedder {
 			'vimeo'               => $hw . 'vimeo\.com/(?:(?:channels/[a-z]+/)|(?:groups/[a-z]+/videos/))?([0-9]+)',
 			'yahoo'               => $hw . '(?:screen|shine|omg)\.yahoo\.com/(?:embed/)?([a-z0-9\-]+/[a-z0-9\-]+)\.html',
 			'ted'                 => $hw . 'ted\.com/talks/([a-z0-9_]+)',
-			'youtubelist'         => $hw . 'youtube\.com/watch\?v=([a-z0-9_\-]{11}&list=[a-z0-9_\-]+)',
-			'youtube'             => $hw . 'youtube\.com/watch\?v=([a-z0-9_\-]{11})',
+			#'youtubelist'         => $hw . 'youtube\.com/watch\?v=([a-z0-9_\-]{11}&list=[a-z0-9_\-]+)',
+			'youtube'             => $hw . 'youtube\.com/watch\?v=([a-z0-9_\-]{11}(&list=[a-z0-9_\-]+)?)',
 			//* Shorteners
 			'youtu_be'            => 'http://youtu.be/([a-z0-9_-]{11})',
 			'dai_ly'              => 'http://dai.ly/([^_]+)',
@@ -523,7 +571,7 @@ class Advanced_Responsive_Video_Embedder {
 	function __call( $func, $params ) {
 
 		if( ! array_key_exists( $func, $this->regex_list ) ) {
-			wp_die('__call');
+			wp_die( "__call '$func' failed"  );
 		}
 		
 		switch ( $func ) {
@@ -576,27 +624,43 @@ class Advanced_Responsive_Video_Embedder {
 		}
 
 		$shortcode_atts = shortcode_atts( array(
-			'align'    => '',
-			'autoplay' => '',
-			#'id'       => '',
-			'maxw'     => '',
-			'maxwidth' => '',
-			'mode'     => '',
-			'start'    => '',
-			'end'      => '',
-			'time'     => '',
+			'align'      => '',
+			'autoplay'   => '',
+			'end'        => '',
+			#'id'         => '',
+			'maxw'       => '',
+			'maxwidth'   => '',
+			'mode'       => '',
+			'parameters' => '',
+			'start'      => '',
+			'time'       => '',
 		), $args );
 
 		$shortcode_atts['id'] = $id;
-
-		#$output .= showr($url);
-		#$output .= showr($id);
 
 		$output .= $this->build_embed( $provider, $shortcode_atts );
 		$output .= sprintf( '<a href="%s" class="arve-hidden">%s</a>', esc_url( $url ), esc_html( $url ) );
 
 		return $output;
 
+	}
+
+	/**
+	 *
+	 * @since     3.1.3
+	 */	
+	public function parse_parameters( $params_str ) {
+
+		$params_str = preg_replace( '!\s+!', '&', trim( $params_str ) );
+
+		//* Overkill or just awesome? I say awesome ^^
+		$remove = array( 'autostart' => 123, 'autoplay' => 123, 'videoautostart' => 123, 'ap' => 123 );
+		
+		$params_array = array_diff_ukey(  wp_parse_args( $params_str ), $remove, 'strcasecmp' );
+
+		//* TODO: Something to check here?
+
+		return $params_array;
 	}
 
 	/**
@@ -639,7 +703,7 @@ class Advanced_Responsive_Video_Embedder {
 
 		$fakethumb = (bool) $options['fakethumb'];
 
-		if ( in_array($provider, $no_wmode_transparent) ) {
+		if ( in_array( $provider, $no_wmode_transparent ) ) {
 			$fakethumb = false;
 		}
 
@@ -746,7 +810,7 @@ class Advanced_Responsive_Video_Embedder {
 				break;
 		}
 
-		switch ($start) {
+		switch ( $start ) {
 			case '':
 			case ( $start > 0 ):
 				break;
@@ -756,7 +820,7 @@ class Advanced_Responsive_Video_Embedder {
 				break;
 		}
 
-		switch ($end) {
+		switch ( $end ) {
 			case '':
 			case ( $end > 0 ):
 				break;
@@ -766,7 +830,7 @@ class Advanced_Responsive_Video_Embedder {
 				break;
 		}
 
-		switch ($provider) {
+		switch ( $provider ) {
 			case 'metacafe':
 				$urlcode = 'http://www.metacafe.com/embed/' . $id . '/';
 				break;
@@ -775,7 +839,7 @@ class Advanced_Responsive_Video_Embedder {
 				if ( $id[0] != 'f' && $id[0] != 'i' ) {
 					$id = 'i=' . $id;
 				}
-				$urlcode = 'http://www.liveleak.com/ll_embed?' . $id . '&wmode=transparent';
+				$urlcode = 'http://www.liveleak.com/ll_embed?' . $id;
 				break;
 			case 'myspace':
 				$urlcode = 'https://myspace.com/play/video/' . $id;
@@ -787,7 +851,7 @@ class Advanced_Responsive_Video_Embedder {
 				} else {
 					return '<p><strong>ARVE Error:</strong> could not get Blip.tv thumbnail</p>';
 				}
-			case 'bliptv':
+			case 'bliptv': //* Deprecated
 				$urlcode = 'http://blip.tv/play/' . $id . '.html?p=1&backcolor=0x000000&lightcolor=0xffffff';
 				break;
 			case 'collegehumor':
@@ -797,16 +861,16 @@ class Advanced_Responsive_Video_Embedder {
 				$urlcode = 'http://www.videojug.com/embed/' . $id;
 				break;
 			case 'veoh':
-				$urlcode = 'http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1396&permalinkId=' . $id . '&player=videodetailsembedded&id=anonymous';
+				$urlcode = 'http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1396&permalinkId=' . $id;
 				break;
 			case 'break':
 				$urlcode = 'http://break.com/embed/' . $id;
 				break;
 			case 'dailymotion':
-				$urlcode = 'http://www.dailymotion.com/embed/video/' . $id . '?logo=0&hideInfos=1&forcedQuality=hq';
+				$urlcode = 'http://www.dailymotion.com/embed/video/' . $id;
 				break;
 			case 'dailymotionlist':
-				$urlcode = 'http://www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2F' . $id . '%2F1&skin=default';
+				$urlcode = 'http://www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2F' . $id . '%2F1';
 				break;
 			case 'movieweb':
 				$urlcode = 'http://www.movieweb.com/v/' . $id;
@@ -815,7 +879,7 @@ class Advanced_Responsive_Video_Embedder {
 				$urlcode = 'http://www.myvideo.de/movie/' . $id;
 				break;
 			case 'vimeo':
-				$urlcode = 'http://player.vimeo.com/video/' . $id . '?title=0&byline=0&portrait=0';
+				$urlcode = 'http://player.vimeo.com/video/' . $id;
 				break;
 			case 'gametrailers':
 				$urlcode = 'http://media.mtvnservices.com/embed/mgid:arc:video:gametrailers.com:' . $id;
@@ -827,7 +891,7 @@ class Advanced_Responsive_Video_Embedder {
 				$urlcode = 'http://media.mtvnservices.com/embed/mgid:arc:video:spike.com:' . $id;
 				break;
 			case 'viddler':
-				$urlcode = 'http://www.viddler.com/player/' . $id . '/?f=1&disablebranding=1&wmode=transparent';
+				$urlcode = 'http://www.viddler.com/player/' . $id . '/';
 				break;
 			case 'snotr':
 				$urlcode = 'http://www.snotr.com/embed/' . $id;
@@ -836,23 +900,8 @@ class Advanced_Responsive_Video_Embedder {
 				$urlcode = 'http://www.funnyordie.com/embed/' . $id;
 				break;
 			case 'youtube':
-				//* If we have a playlist
-				#if ( strpos( $id, '&list=' ) !== false ) {
-				#	$id = str_replace( '&list=', '?list=', $id );
-				#	$urlcode = '//www.youtube.com/embed/' . $id;
-				#} else {
-				#	$urlcode = '//www.youtube-nocookie.com/embed/' . $id;
-				#}
-				$id = str_replace( '&list=', '?list=', $id );
+				$id = str_replace( array( '&list=', '&amp;list=' ), '?list=', $id );
 				$urlcode = '//www.youtube-nocookie.com/embed/' . $id;
-				$urlcode = add_query_arg( array(
-					'autohide'       => 1,
-					'hd'             => 1,
-					'iv_load_policy' => 3,
-					'modestbranding' => 1,
-					'rel'            => 0,
-					'wmode'          => 'transparent',
-				), $urlcode );
 				break;
 			case 'youtubelist': //* DEPRICATED
 				$urlcode = 'http://www.youtube-nocookie.com/embed/videoseries?list=' . $id . '&wmode=transparent&rel=0&autohide=1&hd=1&iv_load_policy=3';
@@ -868,19 +917,11 @@ class Advanced_Responsive_Video_Embedder {
 				$urlcode = 'http://www.ustream.tv/embed/' . $id . '?v=3&wmode=transparent';
 				break;
 			case 'yahoo':
-				$id = str_replace( array( 'screen.yahoo,com/', 'screen.yahoo.com/embed/' ), '', $id );
+				$id = str_ireplace( array( 'screen.yahoo,com/', 'screen.yahoo.com/embed/' ), '', $id );
 				$urlcode = 'http://screen.yahoo.com/embed/' . $id . '.html';
 				break;
 			case 'vevo':
 				$urlcode = 'http://videoplayer.vevo.com/embed/Embedded?videoId=' . $id;
-				$urlcode = add_query_arg( array(
-					'playlist'       => 'false',
-					'playerType'     => 'embedded',
-					#'playerId'       => '62FF0A5C-0D9E-4AC1-AF04-1D9E97EE3961',
-					'env'            => 0,
-					#'cultureName'    => 'en-US',
-					#'cultureIsRTL'   => 'False',
-				), $urlcode );
 				break;
 			case 'ted':
 				$urlcode = 'http://embed.ted.com/talks/' . $id . '.html';
@@ -899,7 +940,14 @@ class Advanced_Responsive_Video_Embedder {
 				break;
 		}
 
-		switch ($provider) {
+		//* Take parameters from Options as defaults and maybe merge custom parameters from shortcode in. If there are no options we assume the provider not supports any params and do nothing.
+		if ( ! empty( $options['params'][$provider] ) ) {
+			$parameters = $this->parse_parameters( $parameters );
+			$params  = wp_parse_args( $parameters, $options['params'][$provider] );
+			$urlcode = add_query_arg( $params, $urlcode );
+		}
+
+		switch ( $provider ) {
 			case 'youtube':
 			case 'youtubelist':
 			case 'vimeo':
@@ -961,7 +1009,7 @@ class Advanced_Responsive_Video_Embedder {
 			break;
 		}
 
-		// Maybe add start-/endtime
+		//* Maybe add start-/endtime
 		if ( 'youtube' == $provider && ! empty( $start ) ) {
 			$url_autoplay_no  = add_query_arg( 'start', $start, $url_autoplay_no  );
 			$url_autoplay_yes = add_query_arg( 'start', $start, $url_autoplay_yes );
