@@ -125,8 +125,6 @@ jQuery(document).ready(function($) {
 				var output      = new Object();
 				var match;
 
-				console.log(arve_regex_list);
-
 				$.each(arve_regex_list, function(provider, regex) {
 
 					regex = new RegExp(regex,"i");
@@ -184,11 +182,17 @@ jQuery(document).ready(function($) {
 					return;
 				}
 
-				$('#arve-provider').val( response.provider );
+				$("#arve-provider option").each(function () {
+					if ( $(this).html() == response.provider ) {
+						$(this).attr("selected", "selected");
+						return;
+					}
+				});
+
 				$('#arve-id').val( response.videoid );
 			});
 
-			$('#arve-url, #arve-provider, #arve-id, #arve-maxwidth, #arve-mode, #arve-align, #arve-autoplay').bind('keyup mouseup change',function() {
+			$( '#arve-url, #arve-provider, #arve-id, #arve-maxwidth, #arve-mode, #arve-align, #arve-autoplay' ).bind( 'keyup mouseup change', function() {
 
 				shortcode = create_shortcode();
 

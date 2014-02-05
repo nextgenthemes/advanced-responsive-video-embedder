@@ -66,7 +66,7 @@ $options = get_option( 'arve_options', array() );
 				<th scope="row"><label for="fakethumb"><?php _e('Fake Thumbnails', $this->plugin_slug); ?></label></th>
 				<td>
 					<input id="arve_options[fakethumb]" name="arve_options[fakethumb]" type="checkbox" value="1" <?php checked( 1, $options['fakethumb'] ); ?> /><br>
-					<span class='description'><?php _e('Loads the actual Videoplayer as "background image" to for thumbnails to emulate the feature Youtube, Dailymotion, and Bliptv have. If not enabled thumbnails are displayed black or you can choose a image below.', $this->plugin_slug); ?></span>
+					<span class='description'><?php _e('Loads the actual Videoplayer as "background image" to for thumbnails to emulate the feature Youtube, Dailymotion, and Bliptv have. If not enabled or the provider not supports `wmode=transparent` thumbnails are displayed black or you can choose a image below.', $this->plugin_slug); ?></span>
 				</td>
 			</tr>
 			<tr valign="top">
@@ -96,7 +96,8 @@ $options = get_option( 'arve_options', array() );
 		<p>
 			<?php _e("You may use spaces to seperate them instead of <code>&amp;</code>'s. They will be transformed to two spaces after save. Resources: ", $this->plugin_slug); ?>
 			<a target="_blank" href="https://developers.google.com/youtube/player_parameters">Youtube Parameters</a>, 
-			<a target="_blank" href="http://www.dailymotion.com/doc/api/player#DailymotionPlayerTools-Parameters">Dailymotion Parameters</a>
+			<a target="_blank" href="http://www.dailymotion.com/doc/api/player#DailymotionPlayerTools-Parameters">Dailymotion Parameters</a>.<br>
+			<strong><?php _e("<code>wmode=transparent</code> should not be changed if you want to use thumbnail mode", $this->plugin_slug); ?></strong>
 		</p>
 		
 		<table class="form-table">
