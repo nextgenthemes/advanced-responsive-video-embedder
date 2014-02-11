@@ -77,6 +77,20 @@ $options = get_option( 'arve_options', array() );
 				</td>
 			</tr>
 			<tr valign="top">
+				<th scope="row"><label for="use_transient"><?php _e('Transient thumbnails', $this->plugin_slug); ?></label></th>
+				<td>
+					<input id="arve_options[use_transient]" name="arve_options[use_transient]" type="checkbox" value="1" <?php checked( 1, $options['use_transient'] ); ?> /><br>
+					<span class='description'><?php _e('Uses Wordpress transients to cache video thumbnails that greatly speeds up page loading.', $this->plugin_slug); ?></span>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><label for="arve_options[transient_expire_time]"><?php _e('Transients expire time', $this->plugin_slug); ?></label></label></th>
+				<td>
+					<input id="arve_options[transient_expire_time]" name="arve_options[transient_expire_time]" type="text" value="<?php echo $options['transient_expire_time'] ?>" class="small-text">s<br>
+					<span class="description"><?php _e('The maximum of seconds to keep the thumbnail image before refreshing. For example: hour - 3600, day - 86400, week - 604800.', $this->plugin_slug); ?></span>
+				</td>
+			</tr>
+			<tr valign="top">
 				<th scope="row"><label for="autoplay"><?php _e('Autoplay all', $this->plugin_slug); ?></label></th>
 				<td>
 					<input id="arve_options[autoplay]" name="arve_options[autoplay]" type="checkbox" value="1" <?php checked( 1, $options['autoplay'] ); ?> /><br>
