@@ -83,7 +83,6 @@ class Advanced_Responsive_Video_Embedder_Create_Shortcodes {
 			'mode'       => '',
 			'parameters' => '',
 			'start'      => '',
-			'time'       => '',
 		), $atts );
 
 		$arve = Advanced_Responsive_Video_Embedder::get_instance();

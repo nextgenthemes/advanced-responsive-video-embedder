@@ -56,7 +56,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '3.5.1';
+	const VERSION = '3.5.2';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -286,7 +286,8 @@ class Advanced_Responsive_Video_Embedder {
 
 		$user_id = $current_user->ID;
 		
-		delete_user_meta( $user_id, 'arve_ignore_admin_notice' );
+		//* TODO
+		#delete_user_meta( $user_id, 'arve_ignore_admin_notice' );
 
 	}
 
@@ -356,7 +357,6 @@ class Advanced_Responsive_Video_Embedder {
 				'dailymotion'         => 'dailymotion',
 				'dailymotionlist'     => 'dailymotionlist',
 				'flickr'              => 'flickr',
-				//'facebook'            => 'facebook_video',
 				'funnyordie'          => 'funnyordie',
 				'gametrailers'        => 'gametrailers',	
 				'iframe'              => 'iframe',
@@ -370,6 +370,7 @@ class Advanced_Responsive_Video_Embedder {
 				'snotr'               => 'snotr',
 				'spike'               => 'spike',
 				'ted'                 => 'ted',
+				'twitch'              => 'twitch',
 				'ustream'             => 'ustream',
 				'veoh'                => 'veoh',
 				'vevo'                => 'vevo',
@@ -460,6 +461,7 @@ class Advanced_Responsive_Video_Embedder {
 	}
 
 	/** 
+	 * Unused, seems not needed
 	 *
 	 * @since    3.0.0
 	 *
@@ -506,11 +508,7 @@ class Advanced_Responsive_Video_Embedder {
 	public function set_regex_list() {
 
 		$hw = 'https?://(?:www\.)?';
-
-		/**
-		 * Double hash comment = no id in URL
-		 *
-		 */
+		//* Double hash comment = no id in URL
 		$this->regex_list = array(
 			'archiveorg'          => $hw . 'archive\.org/(?:details|embed)/([0-9a-z]+)',
 			'blip'                => $hw . 'blip\.tv/[^/]+/[^/]+-([0-9]{7})',
@@ -535,6 +533,7 @@ class Advanced_Responsive_Video_Embedder {
 			'myspace'             => $hw . 'myspace\.com/.+/([0-9]+)',
 			'myvideo'             => $hw . 'myvideo\.de/(?:watch|embed)/([0-9]{7})',
 			'snotr'               => $hw . 'snotr\.com/(?:video|embed)/([0-9]+)',
+			'twitch'              => 'https?://(?:www\.|[a-z\-]{2,5}\.)?twitch.tv/([a-z0-9_/]+)',
 			##'spike'             => 
 			'ustream'             => $hw . 'ustream\.tv/(?:channel/)?([0-9]{8}|recorded/[0-9]{8}(/highlight/[0-9]+)?)',
 			'veoh'                => $hw . 'veoh\.com/watch/([a-z0-9]+)',
@@ -543,7 +542,7 @@ class Advanced_Responsive_Video_Embedder {
 			##'videojug'          => 
 			'vimeo'               => $hw . 'vimeo\.com/(?:(?:channels/[a-z]+/)|(?:groups/[a-z]+/videos/))?([0-9]+)',
 			'yahoo'               => $hw . '(?:screen|shine|omg)\.yahoo\.com/(?:embed/)?([a-z0-9\-]+/[a-z0-9\-]+)\.html',
-			'ted'                 => $hw . 'ted\.com/talks/([a-z0-9_]+)',
+			'ted'                 => 'https?://(?:www\.|new\.)?ted\.com/talks/([a-z0-9_]+)',
 			'xtube'               => $hw . 'xtube\.com/watch\.php\?v=([a-z0-9_\-]+)',
 			#'youtubelist'         => $hw . 'youtube\.com/watch\?v=([a-z0-9_\-]{11}&list=[a-z0-9_\-]+)',
 			'youtube'             => $hw . 'youtube\.com/watch\?v=([a-z0-9_\-]{11}(&list=[a-z0-9_\-]+)?)',
@@ -667,6 +666,16 @@ class Advanced_Responsive_Video_Embedder {
 		return $params_array;
 	}
 
+	public function error( $message ) {
+
+		return sprintf(
+			'<p><strong>%s</strong> %s</p>',
+			__('ARVE Error:', $this->plugin_slug ),
+			$message
+		);
+
+	} 
+
 	/**
 	 *
 	 *
@@ -676,22 +685,21 @@ class Advanced_Responsive_Video_Embedder {
 
 		extract( $shortcode_atts );
 
-		//* Remap for backwards compatibility
 		if ( ! empty( $maxw ) && empty( $maxwidth ) ) {
 			$maxwidth = $maxw;
 		}
-		$start = $time;
 
-		$options   = get_option('arve_options');
+		$maxwidth = (int) $maxwidth;
+
+		static $hidden_id = 0;
+		$hidden_id++;
+		
 		$output    = '';
-		$randid    = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 10);
 		$thumbnail = null;
 		$iframe    = true;
 
-		$object_param_autoplay = '';
-
-		$url_autoplay_no   = '';
-		$url_autoplay_yes  = '';
+		#$url_autoplay_no   = '';
+		#$url_autoplay_yes  = '';
 
 		$no_wmode_transparent = array(
 			'comedycentral',
@@ -705,6 +713,7 @@ class Advanced_Responsive_Video_Embedder {
 			'viddler'
 		);
 
+		$options   = get_option('arve_options');
 		$fakethumb = (bool) $options['fakethumb'];
 
 		if ( in_array( $provider, $no_wmode_transparent ) ) {
@@ -713,23 +722,23 @@ class Advanced_Responsive_Video_Embedder {
 
 		switch ( $id ) {
 			case '':
-				return "<p><strong>ARVE Error:</strong> no video ID</p>";
+				return $this->error( __( 'no video ID', $this->plugin_slug ) );
 				break;
 			case ( ! preg_match('/[^\x20-\x7f]/', $id ) ):
 				break;
 			default:
-				return "<p><strong>ARVE Error:</strong> id '$id' not valid.</p>";
+				return $this->error( sprintf( __( 'ID <code>%s</code> not valid', $this->plugin_slug ), $id ) );
 				break;
 		}
 
 		switch ( $provider ) {
 			case '':
-				return "<p><strong>ARVE Error:</strong> no provider set";
+				return $this->error( __( 'no video ID', $this->plugin_slug ) );
 				break;
 			case ( ! preg_match('/[^\x20-\x7f]/', $provider ) ):
 				break;
 			default:
-				return "<p><strong>ARVE Error:</strong> provider '$provider' not valid.</p>";
+				return $this->error( sprintf( __( 'Provider <code>%s</code> not valid', $this->plugin_slug ), $provider ) );			
 				break;
 		}
 
@@ -737,24 +746,17 @@ class Advanced_Responsive_Video_Embedder {
 			case '':
 				$mode = $options['mode'];
 				break;
-			case 'fixed':
-				if ( $customsize_inline_css != '' )
-					break;
-				elseif ( ( $options["video_width"] < 50 ) || ( $options["video_height"] < 50 ) )
-					return "<p><strong>ARVE Error:</strong> No sizes for mode 'fixed' in options. Set it up in options or use the shortcode values (w=xxx h=xxx) for this.</p>";
-				break;
 			case 'thumb':
 				$mode = 'thumbnail';
 			case 'normal':
 			case 'thumbnail':
-			case 'special':
 				break;
 			default:
-				return "<p><strong>ARVE Error:</strong> mode '$mode' not valid.</p>";
+				return $this->error( sprintf( __( 'Mode <code>%s</code> not valid', $this->plugin_slug ), $mode ) );
 				break;
 		}
 
-		$maxwidth = str_replace( 'px', '', $maxwidth );
+		
 
 		switch ( $maxwidth ) {
 			case '':
@@ -810,9 +812,8 @@ class Advanced_Responsive_Video_Embedder {
 
 		switch ( $start ) {
 			case '':
-			case ( $start > 0 ):
+			case ( preg_match("/^[0-9a-z]$/", $start) ):
 				break;
-			case ( ! preg_match("/^[0-9a-z]{1,6}$/", $start) ):
 			default:
 				return "<p><strong>ARVE Error:</strong> Time '$start' not valid.</p>";
 				break;
@@ -820,9 +821,8 @@ class Advanced_Responsive_Video_Embedder {
 
 		switch ( $end ) {
 			case '':
-			case ( $end > 0 ):
+			case ( ! preg_match("/^[0-9a-z]$/", $end) ):
 				break;
-			case ( ! preg_match("/^[0-9a-z]{1,6}$/", $end) ):
 			default:
 				return "<p><strong>ARVE Error:</strong> Time '$end' not valid.</p>";
 				break;
@@ -944,6 +944,34 @@ class Advanced_Responsive_Video_Embedder {
 			case 'facebook':
 				$urlcode = 'http://www.facebook.com/video/embed?video_id=' . $id;
 				break;
+			case 'twitch':
+				$tw = explode( '/', $id );
+
+				$urlcode = 'http://twitch.tv/widgets/live_embed_player.swf?channel=' . $tw[0];
+				$videoid_flashvar = '';
+
+				if ( isset( $tw[1] ) && isset( $tw[2] ) && is_numeric( $tw[2] ) ) {
+					$urlcode = 'http://twitch.tv/widgets/live_embed_player.swf';
+
+					switch( $tw[1] ) {
+						case 'c':
+							$videoid_flashvar = '&amp;chapter_id=' . (int) $tw[2];
+							break;
+						case 'b':
+							$videoid_flashvar = '&amp;archive_id=' . (int) $tw[2];
+							break;
+						default:
+							return $this->error( sprintf( __('Twitch ID <code>%s</code> is invalid', $this->plugin_slug ), $id ) );
+							break;
+					}
+				}
+
+				$object_params  = '<param name="allowNetworking" value="all" />';
+				$object_params .= '<param name="movie" value="http://twitch.tv/widgets/live_embed_player.swf" />';
+
+				$object_params_autoplay_yes = $object_params . sprintf( '<param name="flashvars" value="channel=%s%s&amp;auto_play=true" />', $tw[0], $videoid_flashvar );
+				$object_params_autoplay_no  = $object_params . sprintf( '<param name="flashvars" value="channel=%s%s&amp;auto_play=false" />', $tw[0], $videoid_flashvar );
+				break;
 			default:
 				$output .= 'ARVE Error: No provider';
 				break;
@@ -951,6 +979,11 @@ class Advanced_Responsive_Video_Embedder {
 
 		if ( ! empty( $object_params ) ) {
 			$iframe = false;
+
+			if ( empty( $object_params_autoplay_yes ) ) {
+				$object_params_autoplay_yes = $object_params;
+				$object_params_autoplay_no  = $object_params;
+			}
 		}
 
 		//* Take parameters from Options as defaults and maybe merge custom parameters from shortcode in. If there are no options we assume the provider not supports any params and do nothing.
@@ -1002,8 +1035,9 @@ class Advanced_Responsive_Video_Embedder {
 			case 'xtube':
 			case 'collegehumor':
 			case 'facebook':
+			case 'twitch': //* uses flashvar for autoplay
 				$url_autoplay_no  = $urlcode;
-				$url_autpplay_yes = $urlcode;
+				$url_autoplay_yes = $urlcode;
 				break;
 			case 'iframe':
 			default:
@@ -1021,6 +1055,10 @@ class Advanced_Responsive_Video_Embedder {
 					'player_autoStart' => 'true',
 				), $urlcode );
 			break;
+		}
+
+		if ( function_exists('dbgx_trace_var') ) {
+			dbgx_trace_var( $url_autoplay_yes, '$url_autoplay_yes after adding autoplay parameters');
 		}
 
 		//* Maybe add start-/endtime
@@ -1041,17 +1079,17 @@ class Advanced_Responsive_Video_Embedder {
 		if ( $iframe == true ) {
 			$href = str_replace( 'jukebox?list%5B0%5D', 'jukebox?list[]', esc_url( $url_autoplay_yes ) );
 			$fancybox_class = 'fancybox arve_iframe iframe';
-			//$href = "#inline_".$randid;
+			//$href = "#inline_".$hidden_id;
 			//$fancybox_class = 'fancybox';	
 		} else {
-			$href = "#inline_" . $randid;
+			$href = '#arve-hidden-' . $hidden_id;
 			$fancybox_class = 'fancybox inline';
 		}
 
 		if ( true == $autoplay ) {
-			$url_option_autoplay = $url_autoplay_yes;
+			$normal_embed = ( $iframe ) ? $this->create_iframe( $url_autoplay_yes ) : $this->create_object( $url_autoplay_yes, $object_params_autoplay_yes );
 		} else {
-			$url_option_autoplay = $url_autoplay_no;
+			$normal_embed = ( $iframe ) ? $this->create_iframe( $url_autoplay_no ) : $this->create_object( $url_autoplay_no, $object_params_autoplay_no );
 		}
 
 		if ( $mode == 'normal' ) {
@@ -1061,7 +1099,7 @@ class Advanced_Responsive_Video_Embedder {
 				esc_attr( $provider ),
 				esc_attr( $align ),
 				( isset( $maxwidth_shortcode ) ) ? sprintf( ' style="max-width: %spx;"', (int) $maxwidth_shortcode ) : '',
-				( $iframe ) ? $this->create_iframe( $url_option_autoplay ) : $this->create_object( $url_option_autoplay, $object_params, $object_param_autoplay )
+				$normal_embed
 			);
 
 		} elseif ( $mode == 'thumbnail' ) {
@@ -1126,7 +1164,7 @@ class Advanced_Responsive_Video_Embedder {
 				if ( $iframe )
 					$output .= $this->create_iframe( $url_autoplay_no  );
 				else
-					$output .= $this->create_object( $url_autoplay_no , $object_params, '' );
+					$output .= $this->create_object( $url_autoplay_no , $object_params_autoplay_no, '' );
 
 				$output .= "<a href='$href' class='arve-inner $fancybox_class'>&nbsp;</a>";
 
@@ -1143,7 +1181,7 @@ class Advanced_Responsive_Video_Embedder {
 			);
 			
 			if ( $iframe == false )
-				$output .= '<div class="arve-hidden">' . $this->create_object( $url_autoplay_yes, $object_params, $object_param_autoplay, $randid ) . '</div>';
+				$output .= '<div class="arve-hidden">' . $this->create_object( $url_autoplay_yes, $object_params_autoplay_yes, $hidden_id ) . '</div>';
 		}
 
 		return $output;
@@ -1154,23 +1192,19 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @since    2.6.0
 	 */
-	public function create_object( $url, $object_params, $object_param_autoplay = '', $id = false ) {
-
-		if ( $id ) {
-			$class_or_id = "id='inline_$id' class='arve-hidden-obj'";
-		}
-		else {
-			$class_or_id = 'class="arve-inner"';
-		}
+	public function create_object( $url, $object_params, $id = false ) {
 
 		return
-			'<object ' . $class_or_id . ' data="' . esc_url( $url ) . '" type="application/x-shockwave-flash">' .
-				'<param name="quality" value="high" />' .
-				'<param name="wmode" value="transparent" />' .
-				'<param name="allowFullScreen" value="true" />' .
-				'<param name="allowScriptAccess" value="always" />' .
-				$object_params .
-				$object_param_autoplay .
+			sprintf( '<object%s class="%s" data="%s" type="application/x-shockwave-flash">',
+				( $id ) ? " id='arve-hidden-$id'" : '',
+				( $id ) ? 'arve-hidden-obj' : 'arve-inner',
+				esc_url( $url )
+			) .
+			'<param name="quality" value="high" />' .
+			'<param name="wmode" value="transparent" />' .
+			'<param name="allowFullScreen" value="true" />' .
+			'<param name="allowScriptAccess" value="always" />' .
+			$object_params .
 			'</object>';
 	}
 

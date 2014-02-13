@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: responsive, embeds, embed, flash, iframe, minimal, lightweight, simple, simplicity, shortcodes, videos, youtube, blip, bliptv, dailymotion, videojug, collegehumor, veoh, break, movieweb, snotr, gametrailers, vimeo, viddler, funnyordie, myspace, liveleak, metacafe, googlevideo, myvideo, yahoo, spike,
 Requires at least: 3.3.1
 Tested up to: 3.8
-Stable tag: 3.5.1
+Stable tag: 3.5.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -34,6 +34,7 @@ Simple lightweight plugin lets you embed videos from many providers with full re
 * Myvideo
 * Snotr
 * Spike
+* Twitch
 * Ustream
 * Veoh
 * Vevo
@@ -70,11 +71,17 @@ I have no plans on implementing providers that include videos via JavaScript suc
 
 == Changelog ==
 
+= 3.5.2 =
+* New: Twitch.tv support
+* New: Spanish Translation from Andrew Kurtis webhostinghub.com
+* Improved: Support for `http://new.ted.com/...` URLs
+* Improved: Some code improvements, among them IDs of hidden objects are now generated with a simple `static` counter instead of some random generated string.
+
 = 3.5.1 =
-* Fix: Bug causing the Shortcode Creator not detecting shortcode tags when customized-
+* Fix: Bug causing the Shortcode Creator not detecting shortcode tags when customized
 * Improved how embeds `<object>` embed codes are generated.
 * Updated FAQ
-* New: Xtube support (On request! Not sure if this is a good idea starting to add porn sites but this but the guy donated incredible $20 so I can't really say no [/irony]. I reserve the right to remove it. Lol this guy has this site dedicated to material of guys getting their balls hurt, not sure if this should be sad or funny but I decided this deserves a comment on my changelog even if this is the totally wrong place for this. But its MY changelog so ... For now my opinion is do what ever the fuck you like as long as you not hurting any 3rd parties and all happens with consent. Anyway I learned a new word that day - Ballbusting. If you have objections please contact your local ... OK thats enough!)
+* New: Xtube support (On request)
 
 = 3.5.0 =
 * New: Custom parameters!
