@@ -347,6 +347,8 @@ class Advanced_Responsive_Video_Embedder {
 			'fakethumb'           => true,
 			'custom_thumb_image'  => '',
 			'autoplay'            => false,
+			'use_transient'       => true,
+			'transient_expire_time' => DAY_IN_SECONDS,
 			'shortcodes'          => array(
 				'archiveorg'          => 'archiveorg',
 				'blip'                => 'blip',
@@ -1104,54 +1106,63 @@ class Advanced_Responsive_Video_Embedder {
 
 		} elseif ( $mode == 'thumbnail' ) {
 
-			switch ($provider) {
-				case 'youtube':
+                        $transient_name = $provider . '_' . $id;
+                        if($options['use_transient'] && get_transient($transient_name)) {
+                                $thumbnail = get_transient($transient_name);
+                        }
+                        else {
+                                switch ($provider) {
+                                        case 'youtube':
 
-					$thumbnail = 'http://img.youtube.com/vi/' . $id . '/0.jpg';
-					break;
+                                                $thumbnail = 'http://img.youtube.com/vi/' . $id . '/0.jpg';
+                                                break;
 
-				case 'vimeo':
+                                        case 'vimeo':
+                                                if ( $vimeo_hash = unserialize(file_get_contents('http://vimeo.com/api/v2/video/' . $id . '.php')) ) {
+                                                        $thumbnail = (string) $vimeo_hash[0]['thumbnail_large'];
+                                                } else {
+                                                        return "<p><strong>ARVE Error:</strong> could not get Vimeo thumbnail";
+                                                }
+                                                
+                                                break;
+                
+                                        case 'blip':
+                                        case 'bliptv':
 
-					if ( $vimeo_hash = unserialize(file_get_contents('http://vimeo.com/api/v2/video/' . $id . '.php')) ) {
-						$thumbnail = (string) $vimeo_hash[0]['thumbnail_large'];
-					} else {
-						return "<p><strong>ARVE Error:</strong> could not get Vimeo thumbnail";
-					}
-					break;
-	
-				case 'blip':
-				case 'bliptv':
+                                                if ( $blip_xml = simplexml_load_file( "http://blip.tv/players/episode/$id?skin=rss" ) ) {
+                                                        $blip_result = $blip_xml->xpath( "/rss/channel/item/media:thumbnail/@url" );
+                                                        $thumbnail = (string) $blip_result[0]['url'];
+                                                } else {
+                                                        return '<p><strong>ARVE Error:</strong> could not get Blip.tv thumbnail</p>';
+                                                }
+                                                break;
 
-					if ( $blip_xml = simplexml_load_file( "http://blip.tv/players/episode/$id?skin=rss" ) ) {
-						$blip_result = $blip_xml->xpath( "/rss/channel/item/media:thumbnail/@url" );
-						$thumbnail = (string) $blip_result[0]['url'];
-					} else {
-						return '<p><strong>ARVE Error:</strong> could not get Blip.tv thumbnail</p>';
-					}
-					break;
+                                        case 'dailymotion':
 
-				case 'dailymotion':
+                                                $thumbnail = 'http://www.dailymotion.com/thumbnail/video/' . $id;
+                                                break;
 
-					$thumbnail = 'http://www.dailymotion.com/thumbnail/video/' . $id;
-					break;
+                                        case 'dailymotionlist':
 
-				case 'dailymotionlist':
+                                                $dayli_api = file_get_contents( 'https://api.dailymotion.com/playlist/' . $id . '?fields=thumbnail_large_url' );
+                                                $dayli_api = json_decode( $dayli_api, true );
 
-					$dayli_api = file_get_contents( 'https://api.dailymotion.com/playlist/' . $id . '?fields=thumbnail_large_url' );
-					$dayli_api = json_decode( $dayli_api, true );
+                                                $thumbnail = (string) $dayli_api['thumbnail_large_url'];
 
-					$thumbnail = (string) $dayli_api['thumbnail_large_url'];
+                                                if ( empty( $thumbnail ) ) {
+                                                        return "<p><strong>ARVE Error:</strong> could not get Thumbnail for this dailymotion playlist";
+                                                }
 
-					if ( empty( $thumbnail ) ) {
-						return "<p><strong>ARVE Error:</strong> could not get Thumbnail for this dailymotion playlist";
-					}
-
-					break;
-			}
+                                                break;
+                                }
+                        }
 			
 			$thumb_bg = '';
 
 			if ( $thumbnail ) {
+                                if ($options['use_transient']) {
+                                        set_transient($transient_name, $thumbnail, $options['transient_expire_time']);
+                                }
 				$thumb_bg = sprintf( ' style="background-image: url(%s);"', esc_url( $thumbnail ) );
 			}
 			elseif ( ! empty( $options['custom_thumb_image'] ) ) {

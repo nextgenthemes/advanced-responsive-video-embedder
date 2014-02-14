@@ -269,6 +269,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		$output['fakethumb']      = isset( $input['fakethumb'] );
 		$output['autoplay']       = isset( $input['autoplay'] );
+		$output['use_transient']  = isset( $input['use_transient'] );
 		
 		if( (int) $input['thumb_width'] > 50 ) {
 			$output['thumb_width'] = (int) $input['thumb_width'];
@@ -283,6 +284,11 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		} else {
 			$output['video_maxwidth'] = '';
 		}
+
+		if( (int) $input['transient_expire_time'] > 0 ) {
+			$output['transient_expire_time'] = (int) $input['transient_expire_time'];
+		}
+
 
 		foreach ( $input['shortcodes'] as $key => $var ) {
 		
