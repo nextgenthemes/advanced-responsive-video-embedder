@@ -77,15 +77,9 @@ $options = get_option( 'arve_options', array() );
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row"><label for="use_transient"><?php _e('Transient thumbnails', $this->plugin_slug); ?></label></th>
-				<td>
-					<input id="arve_options[use_transient]" name="arve_options[use_transient]" type="checkbox" value="1" <?php checked( 1, $options['use_transient'] ); ?> /><br>
-					<span class='description'><?php _e('Uses Wordpress transients to cache video thumbnails that greatly speeds up page loading.', $this->plugin_slug); ?></span>
-				</td>
-			</tr>
-			<tr valign="top">
 				<th scope="row"><label for="arve_options[transient_expire_time]"><?php _e('Transients expire time', $this->plugin_slug); ?></label></label></th>
 				<td>
+					<span class='description'><?php _e('This Pluigin uses Wordpress transients to cache video thumbnails that greatly speeds up page loading.', $this->plugin_slug); ?>
 					<input id="arve_options[transient_expire_time]" name="arve_options[transient_expire_time]" type="text" value="<?php echo $options['transient_expire_time'] ?>" class="small-text">s<br>
 					<span class="description"><?php _e('The maximum of seconds to keep the thumbnail image before refreshing. For example: hour - 3600, day - 86400, week - 604800.', $this->plugin_slug); ?></span>
 				</td>
@@ -110,7 +104,7 @@ $options = get_option( 'arve_options', array() );
 		<p>
 			<?php _e("You may use spaces to seperate them instead of <code>&amp;</code>'s. They will be transformed to two spaces after save. Resources: ", $this->plugin_slug); ?>
 			<a target="_blank" href="https://developers.google.com/youtube/player_parameters">Youtube Parameters</a>, 
-			<a target="_blank" href="http://www.dailymotion.com/doc/api/player#DailymotionPlayerTools-Parameters">Dailymotion Parameters</a>.<br>
+			<a target="_blank" href="http://www.dailymotion.com/doc/api/player.html#parameters">Dailymotion Parameters</a>.<br>
 			<strong><?php _e("<code>wmode=transparent</code> should not be changed if you want to use thumbnail mode", $this->plugin_slug); ?></strong>
 		</p>
 		

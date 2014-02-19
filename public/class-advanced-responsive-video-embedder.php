@@ -32,7 +32,7 @@ _  _ ____ _  _ ___ ____ ____ _  _ ___ _  _ ____ _  _ ____ ____  ____ ____ _  _
  *
  * @package   Advanced_Responsive_Video_Embedder
  * @author    Nicolas Jonas
- * @license   GPL-3.0+
+ * @license   GPL-3.0
  * @link      http://nextgenthemes.com
  * @copyright 2013 Nicolas Jonas
  */
@@ -56,7 +56,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '3.5.2';
+	const VERSION = '3.6.0';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -287,8 +287,7 @@ class Advanced_Responsive_Video_Embedder {
 		$user_id = $current_user->ID;
 		
 		//* TODO
-		#delete_user_meta( $user_id, 'arve_ignore_admin_notice' );
-
+		delete_user_meta( $user_id, 'arve_ignore_admin_notice' );
 	}
 
 	/**
@@ -340,49 +339,48 @@ class Advanced_Responsive_Video_Embedder {
 	public function init_options() {
 
 		$defaults = array(
-			'mode'                => 'normal',
-			'video_maxwidth'      => '',
-			'align_width'         => 400,
-			'thumb_width'         => 300,
-			'fakethumb'           => true,
-			'custom_thumb_image'  => '',
-			'autoplay'            => false,
-			'use_transient'       => true,
+			'mode'                  => 'normal',
+			'video_maxwidth'        => '',
+			'align_width'           => 400,
+			'thumb_width'           => 300,
+			'fakethumb'             => true,
+			'custom_thumb_image'    => '',
+			'autoplay'              => false,
 			'transient_expire_time' => DAY_IN_SECONDS,
-			'shortcodes'          => array(
-				'archiveorg'          => 'archiveorg',
-				'blip'                => 'blip',
-				'bliptv'              => 'bliptv', //* Deprecated
-				'break'               => 'break',
-				'collegehumor'        => 'collegehumor',
-				'comedycentral'       => 'comedycentral',
-				'dailymotion'         => 'dailymotion',
-				'dailymotionlist'     => 'dailymotionlist',
-				'flickr'              => 'flickr',
-				'funnyordie'          => 'funnyordie',
-				'gametrailers'        => 'gametrailers',	
-				'iframe'              => 'iframe',
-				'ign'                 => 'ign',
-				'kickstarter'         => 'kickstarter',
-				'liveleak'            => 'liveleak',
-				'metacafe'            => 'metacafe',   
-				'movieweb'            => 'movieweb',
-				'myspace'             => 'myspace',
-				'myvideo'             => 'myvideo',
-				'snotr'               => 'snotr',
-				'spike'               => 'spike',
-				'ted'                 => 'ted',
-				'twitch'              => 'twitch',
-				'ustream'             => 'ustream',
-				'veoh'                => 'veoh',
-				'vevo'                => 'vevo',
-				'viddler'             => 'viddler',
-				'videojug'            => 'videojug',
-				'vimeo'               => 'vimeo',
-				'xtube'               => 'xtube',
-				'yahoo'               => 'yahoo',
-				'youtube'             => 'youtube',
-				'youtubelist'         => 'youtubelist', //* Deprecated
+			'shortcodes'            => array(
+				'archiveorg'             => 'archiveorg',
+				'blip'                   => 'blip',
+				'bliptv'                 => 'bliptv', //* Deprecated
+				'break'                  => 'break',
+				'collegehumor'           => 'collegehumor',
+				'comedycentral'          => 'comedycentral',
+				'dailymotion'            => 'dailymotion',
+				'dailymotionlist'        => 'dailymotionlist',
+				'flickr'                 => 'flickr',
+				'funnyordie'             => 'funnyordie',
+				'gametrailers'           => 'gametrailers',	
+				'iframe'                 => 'iframe',
+				'ign'                    => 'ign',
+				'kickstarter'            => 'kickstarter',
+				'liveleak'               => 'liveleak',
+				'metacafe'               => 'metacafe',   
+				'movieweb'               => 'movieweb',
+				'myspace'                => 'myspace',
+				'myvideo'                => 'myvideo',
+				'snotr'                  => 'snotr',
+				'spike'                  => 'spike',
+				'ted'                    => 'ted',
+				'twitch'                 => 'twitch',
+				'ustream'                => 'ustream',
+				'veoh'                   => 'veoh',
+				'vevo'                   => 'vevo',
+				'viddler'                => 'viddler',
+				'videojug'               => 'videojug',
+				'vimeo'                  => 'vimeo',
+				'xtube'                  => 'xtube',
+				'yahoo'                  => 'yahoo',
+				'youtube'                => 'youtube',
+				'youtubelist'            => 'youtubelist', //* Deprecated
 			),
 			'params' => array(
 				#'archiveorg'      => '',
@@ -429,7 +427,6 @@ class Advanced_Responsive_Video_Embedder {
 					'rel'            => 0,
 					'wmode'          => 'transparent',
 				),
-				#'youtubelist'     => '', //* Deprecated
 			)
 		);
 
@@ -603,7 +600,7 @@ class Advanced_Responsive_Video_Embedder {
 		$id = $matches[1];
 
 		if ( empty( $id ) ) {
-			return '<p><strong>Critical ARVE error:</strong> No match, please report this bug';
+			return $this->error( __( 'No ID, please report this bug', $this->plugin_slug ) );
 		}
 
 		//* Fix 'Markdown on save enhanced' issue
@@ -632,13 +629,11 @@ class Advanced_Responsive_Video_Embedder {
 			'align'      => '',
 			'autoplay'   => '',
 			'end'        => '',
-			#'id'         => '',
 			'maxw'       => '',
 			'maxwidth'   => '',
 			'mode'       => '',
 			'parameters' => '',
-			'start'      => '',
-			'time'       => '',
+			'start'      => ''
 		), $args );
 
 		$shortcode_atts['id'] = $id;
@@ -668,6 +663,10 @@ class Advanced_Responsive_Video_Embedder {
 		return $params_array;
 	}
 
+	/**
+	 *
+	 * @since     3.6.0
+	 */	
 	public function error( $message ) {
 
 		return sprintf(
@@ -724,7 +723,7 @@ class Advanced_Responsive_Video_Embedder {
 
 		switch ( $id ) {
 			case '':
-				return $this->error( __( 'no video ID', $this->plugin_slug ) );
+				return $this->error( __( 'no video ID set', $this->plugin_slug ) );
 				break;
 			case ( ! preg_match('/[^\x20-\x7f]/', $id ) ):
 				break;
@@ -735,7 +734,7 @@ class Advanced_Responsive_Video_Embedder {
 
 		switch ( $provider ) {
 			case '':
-				return $this->error( __( 'no video ID', $this->plugin_slug ) );
+				return $this->error( __( 'no provider set', $this->plugin_slug ) );
 				break;
 			case ( ! preg_match('/[^\x20-\x7f]/', $provider ) ):
 				break;
@@ -758,8 +757,6 @@ class Advanced_Responsive_Video_Embedder {
 				break;
 		}
 
-		
-
 		switch ( $maxwidth ) {
 			case '':
 				if ( $options['video_maxwidth'] > 0 )
@@ -767,11 +764,11 @@ class Advanced_Responsive_Video_Embedder {
 				break;
 			case ( ! preg_match("/^[0-9]{2,4}$/", $maxwidth) ):
 			default:
-				return "<p><strong>ARVE Error:</strong> maxwidth (maxw) '$maxwidth' not valid.</p>";
+				return $this->error( sprintf( __( 'Maxwidth <code>%s</code> not valid', $this->plugin_slug ), $maxwidth ) );
 				break;
 			case ( $maxwidth > 50 ):
 				if ($mode != 'normal')
-					return "<p><strong>ARVE Error:</strong> for the maxwidth (maxw) option you need to have normal mode enabled, either for all videos in the plugins options or through shortcode e.g. '[youtube id=your_id <strong>mode=normal</strong> maxw=999 ]'.</p>";
+					return $this->error( __( 'For the maxwidth (maxw) option you need to have normal mode enabled, either for all videos in the plugins options or through shortcode e.g. [youtube id=123456 <strong>mode=normal</strong> maxw=999 ].', $this->plugin_slug ) );
 				$maxwidth_shortcode = $maxwidth;
 				break;
 		}
@@ -789,7 +786,7 @@ class Advanced_Responsive_Video_Embedder {
 				$align = "aligncenter";
 				break;
 			default:
-				return "<p><strong>ARVE Error:</strong> align '$align' not valid.</p>";
+				return $this->error( sprintf( __( 'Align <code>%s</code> not valid', $this->plugin_slug ), $align ) );
 				break;
 		}
 
@@ -808,7 +805,7 @@ class Advanced_Responsive_Video_Embedder {
 				$autoplay = false;
 				break;
 			default:
-				return "<p><strong>ARVE Error:</strong> Autoplay '$autoplay' not valid.</p>";
+				return $this->error( sprintf( __( 'Autoplay <code>%s</code> not valid', $this->plugin_slug ), $autoplay ) );
 				break;
 		}
 
@@ -817,7 +814,7 @@ class Advanced_Responsive_Video_Embedder {
 			case ( preg_match("/^[0-9a-z]$/", $start) ):
 				break;
 			default:
-				return "<p><strong>ARVE Error:</strong> Time '$start' not valid.</p>";
+				return $this->error( sprintf( __( 'Start <code>%s</code> not valid', $this->plugin_slug ), $start ) );
 				break;
 		}
 
@@ -826,7 +823,7 @@ class Advanced_Responsive_Video_Embedder {
 			case ( ! preg_match("/^[0-9a-z]$/", $end) ):
 				break;
 			default:
-				return "<p><strong>ARVE Error:</strong> Time '$end' not valid.</p>";
+				return $this->error( sprintf( __( 'End <code>%s</code> not valid', $this->plugin_slug ), $end ) );
 				break;
 		}
 
@@ -849,7 +846,7 @@ class Advanced_Responsive_Video_Embedder {
 					$blip_result = $blip_xml->xpath( "/rss/channel/item/blip:embedLookup" );
 					$id = (string) $blip_result[0];
 				} else {
-					return '<p><strong>ARVE Error:</strong> could not get Blip.tv thumbnail</p>';
+					return $this->error( __( 'Could not get Blip.tv embed ID', $this->plugin_slug ) );
 				}
 			case 'bliptv': //* Deprecated
 				$urlcode = 'http://blip.tv/play/' . $id . '.html?p=1&backcolor=0x000000&lightcolor=0xffffff';
@@ -975,7 +972,7 @@ class Advanced_Responsive_Video_Embedder {
 				$object_params_autoplay_no  = $object_params . sprintf( '<param name="flashvars" value="channel=%s%s&amp;auto_play=false" />', $tw[0], $videoid_flashvar );
 				break;
 			default:
-				$output .= 'ARVE Error: No provider';
+				return $this->error( sprintf( __( 'Provider <code>%s</code> not valid', $this->plugin_slug ), $provider ) );
 				break;
 		}
 
@@ -1106,63 +1103,67 @@ class Advanced_Responsive_Video_Embedder {
 
 		} elseif ( $mode == 'thumbnail' ) {
 
-                        $transient_name = $provider . '_' . $id;
-                        if($options['use_transient'] && get_transient($transient_name)) {
-                                $thumbnail = get_transient($transient_name);
-                        }
-                        else {
-                                switch ($provider) {
-                                        case 'youtube':
+			$transient_name = 'arve_' . $provider . '_' . $id;
+			if( get_transient( $transient_name ) ) {
+				$thumbnail = get_transient( $transient_name );
+			}
+			else {
+				switch ( $provider ) {
+					case 'youtube':
 
-                                                $thumbnail = 'http://img.youtube.com/vi/' . $id . '/0.jpg';
-                                                break;
+						//* Because for youtube playlists the ID consists of 123456&list=123456789 so we extract just the video id here
+						preg_match( '/[0-9a-z_\-]+/i', $id, $yt_video_id );
+						$thumbnail = 'http://img.youtube.com/vi/' . $yt_video_id[0] . '/0.jpg';
+						break;
 
-                                        case 'vimeo':
-                                                if ( $vimeo_hash = unserialize(file_get_contents('http://vimeo.com/api/v2/video/' . $id . '.php')) ) {
-                                                        $thumbnail = (string) $vimeo_hash[0]['thumbnail_large'];
-                                                } else {
-                                                        return "<p><strong>ARVE Error:</strong> could not get Vimeo thumbnail";
-                                                }
-                                                
-                                                break;
-                
-                                        case 'blip':
-                                        case 'bliptv':
+					case 'vimeo':
 
-                                                if ( $blip_xml = simplexml_load_file( "http://blip.tv/players/episode/$id?skin=rss" ) ) {
-                                                        $blip_result = $blip_xml->xpath( "/rss/channel/item/media:thumbnail/@url" );
-                                                        $thumbnail = (string) $blip_result[0]['url'];
-                                                } else {
-                                                        return '<p><strong>ARVE Error:</strong> could not get Blip.tv thumbnail</p>';
-                                                }
-                                                break;
+						if ( $vimeo_hash = unserialize( file_get_contents( 'http://vimeo.com/api/v2/video/' . $id . '.php' ) ) ) {
+							$thumbnail = (string) $vimeo_hash[0]['thumbnail_large'];
+						} else {
+							return $this->error( __( 'Could not get Vimeo thumbnail', $this->plugin_slug ) );
+						}
+						
+						break;
 
-                                        case 'dailymotion':
+					case 'blip':
+					case 'bliptv':
 
-                                                $thumbnail = 'http://www.dailymotion.com/thumbnail/video/' . $id;
-                                                break;
+						if ( $blip_xml = simplexml_load_file( "http://blip.tv/players/episode/$id?skin=rss" ) ) {
+							$blip_result = $blip_xml->xpath( "/rss/channel/item/media:thumbnail/@url" );
+							$thumbnail = (string) $blip_result[0]['url'];
+						} else {
+							return $this->error( __( 'Could not get Blip.tv thumbnail', $this->plugin_slug ) );
+						}
+						break;
 
-                                        case 'dailymotionlist':
+					case 'dailymotion':
 
-                                                $dayli_api = file_get_contents( 'https://api.dailymotion.com/playlist/' . $id . '?fields=thumbnail_large_url' );
-                                                $dayli_api = json_decode( $dayli_api, true );
+						$thumbnail = 'http://www.dailymotion.com/thumbnail/video/' . $id;
+						break;
 
-                                                $thumbnail = (string) $dayli_api['thumbnail_large_url'];
+					case 'dailymotionlist':
 
-                                                if ( empty( $thumbnail ) ) {
-                                                        return "<p><strong>ARVE Error:</strong> could not get Thumbnail for this dailymotion playlist";
-                                                }
+						$dayli_api = file_get_contents( 'https://api.dailymotion.com/playlist/' . $id . '?fields=thumbnail_large_url' );
+						$dayli_api = json_decode( $dayli_api, true );
 
-                                                break;
-                                }
-                        }
-			
+						$thumbnail = (string) $dayli_api['thumbnail_large_url'];
+
+						if ( empty( $thumbnail ) ) {
+							return $this->error( __( 'Could not get Thumbnail for this dailymotion playlist', $this->plugin_slug ) );
+						}
+						break;
+				}
+			}
+
 			$thumb_bg = '';
 
 			if ( $thumbnail ) {
-                                if ($options['use_transient']) {
-                                        set_transient($transient_name, $thumbnail, $options['transient_expire_time']);
-                                }
+
+				//* For Providers that need a API just to get a thumbnail image URL (stupid) we cache this URL now to speed up future pageloads
+				if ( in_array( $provider, array( 'blip', 'bliptv', 'vimeo', 'dailymotionlist' ) ) ) {
+					set_transient( $transient_name, $thumbnail, $options['transient_expire_time'] );
+				}
 				$thumb_bg = sprintf( ' style="background-image: url(%s);"', esc_url( $thumbnail ) );
 			}
 			elseif ( ! empty( $options['custom_thumb_image'] ) ) {
@@ -1205,8 +1206,8 @@ class Advanced_Responsive_Video_Embedder {
 	 */
 	public function create_object( $url, $object_params, $id = false ) {
 
-		return
-			sprintf( '<object%s class="%s" data="%s" type="application/x-shockwave-flash">',
+		return sprintf(
+			'<object%s class="%s" data="%s" type="application/x-shockwave-flash">',
 				( $id ) ? " id='arve-hidden-$id'" : '',
 				( $id ) ? 'arve-hidden-obj' : 'arve-inner',
 				esc_url( $url )

@@ -1,20 +1,26 @@
 === Advanced Responsive Video Embedder ===
 Contributors: nico23
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC
-Tags: responsive, embeds, embed, flash, iframe, minimal, lightweight, simple, simplicity, shortcodes, videos, youtube, blip, bliptv, dailymotion, videojug, collegehumor, veoh, break, movieweb, snotr, gametrailers, vimeo, viddler, funnyordie, myspace, liveleak, metacafe, googlevideo, myvideo, yahoo, spike,
+Tags: video, responsive, embed, video-embedder, iframe, minimal, lightweight, simplicity, shortcodes, Youtube, Blip, Dailymotion, Videojug, Collegehumor, Veoh, Break, Movieweb, Snotr, Gametrailers, Vimeo, Viddler, Funnyordie, Myspace, Liveleak, Metacafe, Myvideo, Yahoo Screen, Spike
 Requires at least: 3.3.1
 Tested up to: 3.8
-Stable tag: 3.5.2
-License: GPLv3 or later
+Stable tag: 3.6.0
+License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Embed videos with a click of a button from many providers with full responsive sizes. Show videos as thumbnails and let them open in colorbox.
+Easy responsive video embeds via URL (like WordPress) or Shortcode. Optionally show them as thumbnails and open in Colorbox. Customize as you wish.
 
 == Description ==
 
 Simple lightweight plugin lets you embed videos from many providers with full responsive sizes via URL or Shortcode. Show videos as thumbnails and let them open in Colorbox. Clean and easy shortcode syntax.
 
-[More info and demo](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/)
+The Plugin has a set of customization options to embed the video exactly as you like, this includes custom URL parameters. Defaults to make the videos as unobtrusive as possible and keep your visitors on your site are already included.
+
+[Features](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/)
+
+[Quick introduction with demonstration](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/quick-introduction-and-demo)
+
+[Documentation](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/documentation) (For advanced usage)
 
 = Supported video sites: =
 
@@ -24,7 +30,7 @@ Simple lightweight plugin lets you embed videos from many providers with full re
 * Dailymotion (inc. playlists)
 * FunnyOrDie
 * Gametrailers
-* Iframes (in general, every provider that supports iframe embed codes)
+* Iframes (In general, every provider that supports iframe embed codes that can be displayed responsive)
 * IGN
 * Kickstarter
 * Liveleak
@@ -40,21 +46,21 @@ Simple lightweight plugin lets you embed videos from many providers with full re
 * Vevo
 * Viddler
 * Videojug
-* Vimeo (starttime supported)
+* Vimeo
 * Xtube
 * Yahoo!
-* YouTube (inc. playlists + starttime support)
+* YouTube (inc. playlists)
 * More in future versions
 
 == Installation ==
 
-[More info and demo](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/)
+The usual way.
 
 == Frequently Asked Questions ==
 
 = Why are my videos not filling their container? =
 
-You are most likely use `align`, this plugin has a option for limiting video with with alignment. If you want your videos to fill their containers then you should not use the `align=left/right/center` shortcode attribute or the `arve-align=` URL parameter. This assumes that you left the 'Video Width' field empty (default + recommended)
+You are most likely use `align`, this plugin has a option for limiting video with with alignment. If you want your videos to fill their containers then you should not use the `align=left/right/center` shortcode attribute or the `arve-align=` URL parameter. This assumes that you left the 'Video Maximal Width' field on the options page empty (default + recommended)
 
 = Why are videos opening full window (provider URL) when I click on them? =
 
@@ -64,12 +70,25 @@ You most likely do not have the 'jQuery Colorbox' Plugin installed or JavaScript
 
 I have no plans on implementing providers that include videos via JavaScript such as www.nicovideo.jp. I also will not implement videos from mainstream media news organizations. For others, feel free to ask.
 
+= Why does my Youtube video not repeat/loop?
+
+This plugins embed is considered as 'custom player' by Youtube so you have to pass the video ID as playlist parameters to make the loop work.
+
+`[youtube id="123456" parameters="loop=1 playlist=123456" ]`
+
 == Screenshots ==
 
 1. In action
 2. Options page
 
 == Changelog ==
+
+= 3.6.0 =
+* New: Thanks to [Ilya Grishkov](http://ilyagrishkov.com) thumbnail URLs for Vimeo, Blip and Dailymotion Playlists are now cached (by default 24hours) this drastically reduces page loading times for thumbnail embeds from these providers because it bypasses calling their APIs for that period.
+* Fix: Thumbnails for YouTube playlists.
+* Fix: Shortcode creator ID detection for iframes (src URL)
+* Fix: Updated Dailymoton docs link on Options page
+* Improved: Error messages are now all ready to be translated. Current Translation status: German 50%, French 50%, Spanish 84%. Register at [nextgenthemes.com](http://nextgenthemes.com) and then login to [translate.nextgenthemes.com](http://translate.nextgenthemes.com) to help translate.
 
 = 3.5.2 =
 * New: Twitch.tv support
@@ -226,7 +245,7 @@ I have no plans on implementing providers that include videos via JavaScript suc
 
 = 1.4.2 =
 * Options dialog overhaul
-* replaced fancybox with colorbox
+* replaced Fancybox with Colorbox
 
 = 1.0 =
 * Removed Services that went down over the years

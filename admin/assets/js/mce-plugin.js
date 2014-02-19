@@ -153,7 +153,7 @@ jQuery(document).ready(function($) {
 				embed_regex.bliptv        = /blip\.tv\/play\/([a-z0-9]+)/i;
 				embed_regex.movieweb      = /movieweb\.com\/v\/([a-z0-9]{14})/i
 
-				embed_regex.iframe        = /src=(:?"|')https?:\/\/(?:www\.)?([^'"]+)/i
+				embed_regex.iframe        = /src=(?:'|")(https?:\/\/(www\.)?[^'"]+)/i
 
 				$.each(embed_regex, function(provider, regex) {
 

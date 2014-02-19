@@ -126,7 +126,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		$screen = get_current_screen();
 		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
-			wp_enqueue_style( $this->plugin_slug .'-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), Advanced_Responsive_Video_Embedder::VERSION );
+			wp_enqueue_style( $this->plugin_slug . '-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), Advanced_Responsive_Video_Embedder::VERSION );
 		}
 
 	}
@@ -258,9 +258,11 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	public function validate_options( $input ) {
 		
-		// simply returning nothing will cause the reset/defaults of all options
-		if( isset( $input['reset'] ) )
-			return;
+		//* Reset options by deleting the options and returning nothing will cause the reset/defaults of all options at the init options function
+		if( isset( $input['reset'] ) ) {
+			delete_option( 'arve_options' );
+			return array();
+		}
 
 		$output = array();
 
@@ -269,7 +271,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		$output['fakethumb']      = isset( $input['fakethumb'] );
 		$output['autoplay']       = isset( $input['autoplay'] );
-		$output['use_transient']  = isset( $input['use_transient'] );
 		
 		if( (int) $input['thumb_width'] > 50 ) {
 			$output['thumb_width'] = (int) $input['thumb_width'];
@@ -285,10 +286,9 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			$output['video_maxwidth'] = '';
 		}
 
-		if( (int) $input['transient_expire_time'] > 0 ) {
+		if( (int) $input['transient_expire_time'] > 29 ) {
 			$output['transient_expire_time'] = (int) $input['transient_expire_time'];
 		}
-
 
 		foreach ( $input['shortcodes'] as $key => $var ) {
 		
