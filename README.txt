@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: video, responsive, embed, video-embedder, iframe, minimal, lightweight, simplicity, shortcodes, Youtube, Blip, Dailymotion, Videojug, Collegehumor, Veoh, Break, Movieweb, Snotr, Gametrailers, Vimeo, Viddler, Funnyordie, Myspace, Liveleak, Metacafe, Myvideo, Yahoo Screen, Spike
 Requires at least: 3.3.1
 Tested up to: 3.8
-Stable tag: 3.6.0
+Stable tag: 3.6.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -83,12 +83,16 @@ This plugins embed is considered as 'custom player' by Youtube so you have to pa
 
 == Changelog ==
 
+= 3.6.1 =
+
+* Fix: Register link in changelog.
+
 = 3.6.0 =
 * New: Thanks to [Ilya Grishkov](http://ilyagrishkov.com) thumbnail URLs for Vimeo, Blip and Dailymotion Playlists are now cached (by default 24hours) this drastically reduces page loading times for thumbnail embeds from these providers because it bypasses calling their APIs for that period.
 * Fix: Thumbnails for YouTube playlists.
 * Fix: Shortcode creator ID detection for iframes (src URL)
 * Fix: Updated Dailymoton docs link on Options page
-* Improved: Error messages are now all ready to be translated. Current Translation status: German 50%, French 50%, Spanish 84%. Register at [nextgenthemes.com](http://nextgenthemes.com) and then login to [translate.nextgenthemes.com](http://translate.nextgenthemes.com) to help translate.
+* Improved: Error messages are now all ready to be translated. Current Translation status: German 50%, French 50%, Spanish 84%. Register at [nextgenthemes.com](http://nextgenthemes.com/wp-login.php?action=register) and then login to [translate.nextgenthemes.com](http://translate.nextgenthemes.com) to help translate.
 
 = 3.5.2 =
 * New: Twitch.tv support
