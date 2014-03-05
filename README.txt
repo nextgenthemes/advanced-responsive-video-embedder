@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: video, responsive, embed, video-embedder, iframe, minimal, lightweight, simplicity, shortcodes, Youtube, Blip, Dailymotion, Videojug, Collegehumor, Veoh, Break, Movieweb, Snotr, Gametrailers, Vimeo, Viddler, Funnyordie, Myspace, Liveleak, Metacafe, Myvideo, Yahoo Screen, Spike
 Requires at least: 3.3.1
 Tested up to: 3.8
-Stable tag: 3.9.7
+Stable tag: 3.9.7.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -22,7 +22,7 @@ The Plugin has a set of customization options to embed the video exactly as you 
 
 [Documentation](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/documentation) (For advanced usage)
 
-[How to report a problem](http://nextgenthemes.local/plugins/advanced-responsive-video-embedder/reporting-issues-for-advanced-responsive-video-embedder/)
+[How to report a problem](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/reporting-issues-for-advanced-responsive-video-embedder/)
 
 = Supported video sites: =
 
@@ -62,8 +62,14 @@ The Plugin has a set of customization options to embed the video exactly as you 
 
 Pull requests on github to help me out with this would be great
 
- * Move shortcode creator button out of the TinyMCE rich text editor button bar and put it after the add media icon to meke it aviable to the code editor as well.
+ * Check compatibility with Wordpress 3.9
+ * Move shortcode creator button out of the TinyMCE rich text editor button bar and put it after the add media icon to make it available to the code editor as well.
  * Make objects lazyload (currently effects twitch only)
+ * The Jetpack 'Shortcode Embeds' module provides some useful shortcodes not related to video but currently breaks if activated. Figure out if its possible to make them work together.
+
+= Known bugs =
+
+ * At least some parts of the Plugin (youtube embeds via URL and maybe more) are broken if the 'Shortcode Embeds' Jetpack module is activated. Please deactive this module if you want to use ARVE for now.
 
 == Installation ==
 
@@ -73,7 +79,7 @@ The usual way.
 
 = I have a problem ... =
 
-Plese read: [Reporting Issues for Advanced Responsive Video Embedder](http://nextgenthemes.local/plugins/advanced-responsive-video-embedder/reporting-issues-for-advanced-responsive-video-embedder/)
+Please read: [Reporting Issues for Advanced Responsive Video Embedder](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/reporting-issues-for-advanced-responsive-video-embedder/)
 
 = Why are my videos not filling their container? =
 
