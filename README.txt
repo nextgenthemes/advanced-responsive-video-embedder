@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: video, responsive, embed, video-embedder, iframe, minimal, lightweight, simplicity, shortcodes, Youtube, Blip, Dailymotion, Videojug, Collegehumor, Veoh, Break, Movieweb, Snotr, Gametrailers, Vimeo, Viddler, Funnyordie, Myspace, Liveleak, Metacafe, Myvideo, Yahoo Screen, Spike
 Requires at least: 3.3.1
 Tested up to: 3.8
-Stable tag: 3.6.1
+Stable tag: 3.9.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -22,41 +22,58 @@ The Plugin has a set of customization options to embed the video exactly as you 
 
 [Documentation](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/documentation) (For advanced usage)
 
+[How to report a problem](http://nextgenthemes.local/plugins/advanced-responsive-video-embedder/reporting-issues-for-advanced-responsive-video-embedder/)
+
 = Supported video sites: =
 
-* Blip
-* Break
-* CollegeHumor
-* Dailymotion (inc. playlists)
-* FunnyOrDie
-* Gametrailers
-* Iframes (In general, every provider that supports iframe embed codes that can be displayed responsive)
-* IGN
-* Kickstarter
-* Liveleak
-* Metacafe
-* Movieweb
-* Myspace
-* Myvideo
-* Snotr
-* Spike
-* Twitch
-* Ustream
-* Veoh
-* Vevo
-* Viddler
-* Videojug
-* Vimeo
-* Xtube
-* Yahoo!
-* YouTube (inc. playlists)
-* More in future versions
+ * archive.org
+ * blip
+ * break
+ * CollegeHumor
+ * Comedy Central
+ * dailymotion
+ * flickr
+ * Funny or Die
+ * gametrailers
+ * iframe
+ * IGN
+ * kickstarter
+ * LiveLeak
+ * metacafe
+ * movieweb
+ * MPORA
+ * myspace
+ * MyVideo
+ * snotr
+ * spike
+ * TED Talks
+ * twitch
+ * USTREAM
+ * veoh
+ * vevo
+ * viddler
+ * videojug
+ * vimeo
+ * XTube
+ * Yahoo Screen
+ * YouTube
+
+= Roadmap  =
+
+Pull requests on github to help me out with this would be great
+
+ * Move shortcode creator button out of the TinyMCE rich text editor button bar and put it after the add media icon to meke it aviable to the code editor as well.
+ * Make objects lazyload (currently effects twitch only)
 
 == Installation ==
 
 The usual way.
 
 == Frequently Asked Questions ==
+
+= I have a problem ... =
+
+Plese read: [Reporting Issues for Advanced Responsive Video Embedder](http://nextgenthemes.local/plugins/advanced-responsive-video-embedder/reporting-issues-for-advanced-responsive-video-embedder/)
 
 = Why are my videos not filling their container? =
 
@@ -70,11 +87,15 @@ You most likely do not have the 'jQuery Colorbox' Plugin installed or JavaScript
 
 I have no plans on implementing providers that include videos via JavaScript such as www.nicovideo.jp. I also will not implement videos from mainstream media news organizations. For others, feel free to ask.
 
-= Why does my Youtube video not repeat/loop?
+= Why does my Youtube video not repeat/loop? =
 
-This plugins embed is considered as 'custom player' by Youtube so you have to pass the video ID as playlist parameters to make the loop work.
+This plugins embed is considered as 'custom player' by YouTube so you have to pass the video ID as playlist parameters to make the loop work.
 
-`[youtube id="123456" parameters="loop=1 playlist=123456" ]`
+`[youtube id="123456" parameters="loop=1 playlist=123456"]`
+
+= You dare to show this pure evil satanic blood drinking message on the admin. ( Fill in some lies here ). You suck and your entire plugins sucks because of this. You bastard stole 5 seconds of my life that I will never get back, FU! I am gonna delete this plugin now! =
+
+OK thanks, please do so silently.
 
 == Screenshots ==
 
@@ -82,6 +103,20 @@ This plugins embed is considered as 'custom player' by Youtube so you have to pa
 2. Options page
 
 == Changelog ==
+
+= 3.9.7 ALPHA! =
+
+* **Do not upgrade just jet if you are not ready to downgrade manually if something fails! But please test if you can.**
+* New: I am proud to introduce the new 'lazyload' mode. ARVEs new default mode. Load Images only and load the Video only on click. Like Google+ without the title.
+* New: Added MPORA support
+* New: Added (real) thumbnail support for Collegehumor, Twitch, FunnyOrDie, MPORA
+* New: `[arve_tests]` shortcode that is used to test the plugin and provide examples.
+* New: `[arve_supported]` shortcode probably of no use for users. It will generate the a list of what providers with what features are supported.
+* Improved: Enabled fake thumbnails for Comedycentral, Gametrailers and Spike
+* Improved: Remote API calls and handling their errors.
+* Improved: Get high resolution thumbnails from YouTube if available.
+* Improved: The evil admin message is now only shown once to users who can delete plugins (Admins and the like) and if the plugin is installed longer than a week.
+* Improved: Lots of smaller code improvements.
 
 = 3.6.1 =
 

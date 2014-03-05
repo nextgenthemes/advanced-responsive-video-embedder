@@ -260,13 +260,12 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		
 		//* Reset options by deleting the options and returning nothing will cause the reset/defaults of all options at the init options function
 		if( isset( $input['reset'] ) ) {
-			delete_option( 'arve_options' );
-			return array();
+			return;
 		}
 
 		$output = array();
 
-		$output['mode']               = wp_filter_nohtml_kses( $input['mode'] );
+		$output['mode']               = wp_filter_nohtml_kses( (string) $input['mode'] );
 		$output['custom_thumb_image'] = esc_url_raw( $input['custom_thumb_image'] );
 
 		$output['fakethumb']      = isset( $input['fakethumb'] );
@@ -278,7 +277,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		if( (int) $input['align_width'] > 200 ) {
 			$output['align_width'] = (int) $input['align_width'];
-		}	
+		}
 
 		if( (int) $input['video_maxwidth'] > 50 ) {
 			$output['video_maxwidth'] = (int) $input['video_maxwidth'];
@@ -286,7 +285,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			$output['video_maxwidth'] = '';
 		}
 
-		if( (int) $input['transient_expire_time'] > 29 ) {
+		if( (int) $input['transient_expire_time'] >= 1 ) {
 			$output['transient_expire_time'] = (int) $input['transient_expire_time'];
 		}
 
@@ -467,22 +466,30 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 * @since     3.0.0
 	 */
 	function admin_notice() {
+
 		global $current_user ;
 		$user_id = $current_user->ID;
-		//* Check that the user hasn't already clicked to ignore the message
-		if ( ! get_user_meta( $user_id, 'arve_ignore_admin_notice' ) ) {
 
-			$message  = __( 'A quick message from the author of the Advanced Responsive Video Embedder Plugin:', $this->plugin_slug ) . '<br>';
-			$message .= sprintf(
-				__( 'It is always nice when people show their appreciation for a plugin by <a href="%s" target="_blank">testing, contributing</a> or <a href="%s" target="_blank">donating</a>. Thank you!', $this->plugin_slug ),
-				'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/#contribute',
-				'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC'
-			);
+		$current_date = current_time( 'timestamp' );
+		$install_date = get_option( 'arve_install_date', $current_date );
 
-			$dismiss = sprintf( '<a class="alignright" href="?arve_nag_ignore=1">%s</a>', __( 'Dismiss', $this->plugin_slug ) );
-
-			echo '<div class="updated"><p><big>' . $message . $dismiss . '</big><br class="clear"></p></div>';
+		#delete_user_meta( $user_id, 'arve_ignore_admin_notice' );
+		#$install_date = strtotime('-7 days', $current_date);
+		
+		if ( ! current_user_can( 'delete_plugins' ) || get_user_meta( $user_id, 'arve_ignore_admin_notice' ) || ( $current_date - $install_date ) < 604800 ) {
+			return;
 		}
+
+		$message  = __( 'The Advanced Responsive Video Embedder Plugin is installed on this site for over a week now. I hope you like it.', $this->plugin_slug ) . '<br>';
+		$message .= sprintf(
+			__( 'It is always nice when people show their appreciation for a plugin by <a href="%s" target="_blank">testing, contributing</a> or <a href="%s" target="_blank">donating</a>. Thank you!', $this->plugin_slug ),
+			'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/#contribute',
+			'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC'
+		);
+
+		$dismiss = sprintf( '<a class="alignright" href="?arve_nag_ignore=1">%s</a>', __( 'Dismiss', $this->plugin_slug ) );
+
+		echo '<div class="updated"><p><big>' . $message . $dismiss . '</big><br class="clear"></p></div>';
 	}
 
 	/**

@@ -2,21 +2,18 @@
 	margin-bottom: 20px;
 	width: 100%;
 	max-width: 100%;
-}
-.arve-wrapper.alignright {
-	margin-left: 20px;
-}
-.arve-wrapper.alignleft {
-	margin-right: 20px;
-}
-
-.arve-thumb-wrapper {
 	/* Background image is applied with inline CSS */
 	background-position: center center;
 	background-size: cover;
 	background-color: #000;
 	position: relative;
 	behavior: url(../js/backgroundsize.min.htc); /* IE polyfill for background size */
+}
+.arve-wrapper.alignright {
+	margin-left: 20px;
+}
+.arve-wrapper.alignleft {
+	margin-right: 20px;
 }
 
 .arve-embed-container {
@@ -33,6 +30,10 @@
 .arve-collegehumor-wrapper .arve-embed-container, 
 .arve-ustream-wrapper .arve-embed-container { 
 	padding-bottom: 61%;
+}
+
+.arve-veoh-wrapper .arve-embed-container { 
+	padding-bottom: 60.257%;
 }
 
 .arve-blip-wrapper .arve-embed-container { 
