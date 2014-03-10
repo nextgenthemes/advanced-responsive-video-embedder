@@ -812,8 +812,8 @@ class Advanced_Responsive_Video_Embedder {
 				return $this->error( sprintf( __( 'Maxwidth <code>%s</code> not valid', $this->plugin_slug ), $maxwidth ) );
 				break;
 			case ( $maxwidth > 50 ):
-				if ($mode != 'normal')
-					return $this->error( __( 'For the maxwidth (maxw) option you need to have normal mode enabled, either for all videos in the plugins options or through shortcode e.g. [youtube id=123456 <strong>mode=normal</strong> maxw=999 ].', $this->plugin_slug ) );
+				if ( $mode === 'thumbnail' )
+					return $this->error( __( 'For the maxwidth (maxw) option you need to have normal or lazyload mode enabled, either for all videos in the plugins options or through shortcode e.g. [youtube id=123456 <strong>mode=normal</strong> maxw=999 ].', $this->plugin_slug ) );
 				$maxwidth_shortcode = $maxwidth;
 				break;
 		}
@@ -1018,6 +1018,9 @@ class Advanced_Responsive_Video_Embedder {
 
 				$object_params_autoplay_yes = $object_params . sprintf( '<param name="flashvars" value="channel=%s%s&amp;auto_play=true" />', $tw[0], $videoid_flashvar );
 				$object_params_autoplay_no  = $object_params . sprintf( '<param name="flashvars" value="channel=%s%s&amp;auto_play=false" />', $tw[0], $videoid_flashvar );
+				break;
+			case 'vine':
+				$urlcode = '';
 				break;
 			default:
 				return $this->error( sprintf( __( 'Provider <code>%s</code> not valid', $this->plugin_slug ), $provider ) );

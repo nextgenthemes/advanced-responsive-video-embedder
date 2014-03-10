@@ -69,7 +69,7 @@ Pull requests on Github to help me out with this would be great
 
 = Known limitations =
 
- * At least some parts of the Plugin (youtube embeds via URL and maybe more) are broken if the 'Shortcode Embeds' Jetpack module is activated. Please deactive this module if you want to use ARVE for now.
+ * At least some parts of the Plugin (youtube embeds via URL and maybe more) are broken if the 'Shortcode Embeds' Jetpack module is activated. Please deactivate this module if you want to use ARVE for now.
 
 == Installation ==
 
@@ -109,6 +109,9 @@ OK thanks, please do so silently.
 2. Options page
 
 == Changelog ==
+
+= 3.9.9 =
+* Improved: Allowing `maxwidth` parameter in `lazyload` mode
 
 = 3.9.8 =
 * Fix: Thumbnail not opening Colorbox
