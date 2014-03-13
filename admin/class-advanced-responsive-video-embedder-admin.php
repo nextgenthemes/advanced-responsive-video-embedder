@@ -480,9 +480,9 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			return;
 		}
 
-		$message  = __( 'The Advanced Responsive Video Embedder Plugin is installed on this site for over a week now. I hope you like it.', $this->plugin_slug ) . '<br>';
+		$message  = __( 'The Advanced Responsive Video Embedder Plugin was activated on this site for over a week now. I hope you like it.', $this->plugin_slug ) . '<br>';
 		$message .= sprintf(
-			__( 'It is always nice when people show their appreciation for a plugin by <a href="%s" target="_blank">testing, contributing</a> or <a href="%s" target="_blank">donating</a>. Thank you!', $this->plugin_slug ),
+			__( 'It is always nice when people show their appreciation for a plugin by <a href="%s" target="_blank">contributing</a> or <a href="%s" target="_blank">donating</a>. Thank you!', $this->plugin_slug ),
 			'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/#contribute',
 			'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC'
 		);

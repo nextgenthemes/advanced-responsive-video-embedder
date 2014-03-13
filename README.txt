@@ -110,6 +110,10 @@ OK thanks, please do so silently.
 
 == Changelog ==
 
+= 4.0.0 =
+* Improved: The `[arve_tests]` shortcode now includes alignment and maxwidth tests
+* Fix: Thumbnail image now displayed when using lazyload with `maxwidth` parameter
+
 = 3.9.9 =
 * Improved: Allowing `maxwidth` parameter in `lazyload` mode
 
@@ -118,7 +122,7 @@ OK thanks, please do so silently.
 
 = 3.9.7 ALPHA! =
 
-* **Do not upgrade just jet if you are not ready to downgrade manually if something fails! But please test if you can.**
+* **Do not upgrade just yet if you are not ready to downgrade manually if something fails! But please test if you can.**
 * New: I am proud to introduce the new 'lazyload' mode. ARVEs new default mode. Load Images only and load the Video only on click. Like Google+ without the title.
 * New: Added MPORA support
 * New: Added (real) thumbnail support for Collegehumor, Twitch, FunnyOrDie, MPORA
