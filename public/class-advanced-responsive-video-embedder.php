@@ -57,7 +57,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '3.9.9';
+	const VERSION = '4.0.0';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -1231,18 +1231,26 @@ class Advanced_Responsive_Video_Embedder {
 
 		if ( isset( $_GET['arve-debug'] ) ) {
 
-			ob_start();
-			var_dump( $options );
-			$options_dump = ob_get_clean();
+			static $show_options_debug = true;
 
+			$options_dump = '';
+
+			if ( $show_options_debug ) {
+
+				ob_start();
+				var_dump( $options );
+				$options_dump = sprintf( 'Options: <pre>%s</pre>', ob_get_clean() );
+			}
+			$show_options_debug = false;
+			
 			ob_start();
 			var_dump( $shortcode_atts );
-			$atts_dump = ob_get_clean();
+			$atts_dump = sprintf( '<pre>%s</pre>', ob_get_clean() );
 
 			return sprintf(
-				'<div>Provider: %s<br>Options: %s<br>Atts: %s<br>Embed Code: <code>%s</code></div>%s', 
-				$provider,
+				'<div>%s Provider: %s<br>%s<pre>%s</pre></div>%s', 
 				$options_dump,
+				$provider,
 				$atts_dump,
 				esc_html( $output ),
 				$output
@@ -1926,6 +1934,7 @@ function arve_load_video(e,link) {
 			'<p><form method="get">' .
 			sprintf( '<select name="arvet-provider">%s</select>', $provider_options ) .
 			sprintf( '<select name="arvet-mode">%s</select>', $mode_options ) .
+			'Debug output? <input type="checkbox" name="arve-debug">' . 
 			sprintf( '<button tyle="submit">%s</button>', __('Test', $this->plugin_slug ) ) .
 			'</form></p>';
 
