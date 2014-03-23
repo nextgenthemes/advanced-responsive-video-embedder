@@ -4,17 +4,19 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: video, responsive, embed, video-embedder, iframe, minimal, lightweight, simplicity, shortcodes, Youtube, Blip, Dailymotion, Videojug, Collegehumor, Veoh, Break, Movieweb, Snotr, Gametrailers, Vimeo, Viddler, Funnyordie, Myspace, Liveleak, Metacafe, Myvideo, Yahoo Screen, Spike
 Requires at least: 3.3.1
 Tested up to: 3.8
-Stable tag: 4.0.0
+Stable tag: 4.1.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Easy responsive video embeds via URL (like WordPress) or Shortcode. Optionally show them as thumbnails and open in Colorbox. Customize as you wish.
+Easy responsive video embeds via URL (like WordPress) or Shortcodes. Normal, Lazyload or Thumbnails that open a Colorbox your choice!  
 
 == Description ==
 
-Simple lightweight plugin lets you embed videos from many providers with full responsive sizes via URL or Shortcode. Show videos as thumbnails and let them open in Colorbox. Clean and easy shortcode syntax.
+Simple lightweight plugin lets you embed videos from many providers with full responsive sizes via URL or Shortcodes. Let your sites load faster with Lazyload mode (Provider must support native thumbnails) Show videos as thumbnails and let them open in Colorbox. Clean and easy shortcode syntax.
 
 The Plugin has a set of customization options to embed the video exactly as you like, this includes custom URL parameters. Defaults to make the videos as unobtrusive as possible and keep your visitors on your site are already included.
+
+= This is very likely the one and only Plugin you will ever need to handle Video embeds in your WordPress site(s) =
 
 [Features](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/)
 
@@ -54,6 +56,7 @@ The Plugin has a set of customization options to embed the video exactly as you 
  * viddler
  * videojug
  * vimeo
+ * Vine
  * XTube
  * Yahoo Screen
  * YouTube
@@ -62,7 +65,6 @@ The Plugin has a set of customization options to embed the video exactly as you 
 
 Pull requests on Github to help me out with this would be great
 
- * Check compatibility with Wordpress 3.9
  * Move shortcode creator button out of the TinyMCE rich text editor button bar and put it after the add media icon to make it available to the code editor as well.
  * Make objects lazyload (currently effects twitch only)
  * The Jetpack 'Shortcode Embeds' module provides some useful shortcodes not related to video but currently breaks if activated. Figure out if its possible to make them work together.
@@ -99,16 +101,18 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 `[youtube id="123456" parameters="loop=1 playlist=123456"]`
 
-= You dare to show this pure evil satanic blood drinking message on the admin. ( Fill in some lies here ). You suck and your entire plugins sucks because of this. You bastard stole 5 seconds of my life that I will never get back, FU! I am gonna delete this plugin now! =
-
-OK thanks, please do so silently.
-
 == Screenshots ==
 
 1. In action
 2. Options page
 
 == Changelog ==
+
+= 4.1.0 =
+* New: Vine support
+* New: Support for starttime from youtube URLs
+* Improved: Include play image inside CSS, -1 http request may speed things up
+* Improved: Tests
 
 = 4.0.0 =
 * New: Trigger-able debug output.
@@ -122,8 +126,6 @@ OK thanks, please do so silently.
 * Fix: Thumbnail not opening Colorbox
 
 = 3.9.7 ALPHA! =
-
-* **Do not upgrade just yet if you are not ready to downgrade manually if something fails! But please test if you can.**
 * New: I am proud to introduce the new 'lazyload' mode. ARVEs new default mode. Load Images only and load the Video only on click. Like Google+ without the title.
 * New: Added MPORA support
 * New: Added (real) thumbnail support for Collegehumor, Twitch, FunnyOrDie, MPORA
@@ -136,7 +138,6 @@ OK thanks, please do so silently.
 * Improved: Lots of smaller code improvements.
 
 = 3.6.1 =
-
 * Fix: Register link in changelog.
 
 = 3.6.0 =

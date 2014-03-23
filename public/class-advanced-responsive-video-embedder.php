@@ -57,7 +57,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '4.0.0';
+	const VERSION = '4.1.0';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -393,6 +393,7 @@ class Advanced_Responsive_Video_Embedder {
 				'vevo'                   => 'vevo',
 				'viddler'                => 'viddler',
 				'videojug'               => 'videojug',
+				'vine'                   => 'vine',
 				'vimeo'                  => 'vimeo',
 				'xtube'                  => 'xtube',
 				'yahoo'                  => 'yahoo',
@@ -401,7 +402,7 @@ class Advanced_Responsive_Video_Embedder {
 			),
 			'params' => array(
 				#'archiveorg'      => '',
-				'blip'            => '',
+				'blip'            => array(),
 				#'bliptv'          => '', //* Deprecated
 				#'break'           => '',
 				#'collegehumor'    => '',
@@ -433,6 +434,7 @@ class Advanced_Responsive_Video_Embedder {
 					#'cultureIsRTL'   => 'False',
 				),
 				'viddler'         => array( 'f' => 1, 'disablebranding' => 1, 'wmode' => 'transparent' ),
+				'vine'            => array(), //* audio=1 supported
 				#'videojug'        => '',
 				'vimeo'           => array ( 'title' => 0, 'byline' => 0, 'portrait' => 0 ),
 				#'yahoo'           => '',
@@ -488,6 +490,7 @@ class Advanced_Responsive_Video_Embedder {
 			'vevo'            => array(                             'url' => true,  'native_thumbnail' => false, 'wmode_transparent' => true  ),
 			'viddler'         => array(                             'url' => true,  'native_thumbnail' => false, 'wmode_transparent' => false ),
 			'videojug'        => array(                             'url' => false, 'native_thumbnail' => false, 'wmode_transparent' => true  ),
+			'vine'            => array(                             'url' => true,  'native_thumbnail' => false, 'wmode_transparent' => true  ),
 			'vimeo'           => array(                             'url' => true,  'native_thumbnail' => true,  'wmode_transparent' => true  ),
 			'xtube'           => array( 'name' => 'XTube',          'url' => true,  'native_thumbnail' => false, 'wmode_transparent' => true  ),
 			'yahoo'           => array( 'name' => 'Yahoo Screen',   'url' => true,  'native_thumbnail' => false, 'wmode_transparent' => true  ),
@@ -599,6 +602,7 @@ class Advanced_Responsive_Video_Embedder {
 			'veoh'                => $hw . 'veoh\.com/watch/([a-z0-9]+)',
 			'vevo'                => $hw . 'vevo\.com/watch/[a-z0-9:\-]+/[a-z0-9:\-]+/([a-z0-9]+)',
 			'viddler'             => $hw . 'viddler\.com/(?:embed|v)/([a-z0-9]{8})',
+			'vine'                => $hw . 'vine\.co/v/([a-z0-9]+)',
 			##'videojug'          => 
 			'vimeo'               => $hw . 'vimeo\.com/(?:(?:channels/[a-z]+/)|(?:groups/[a-z]+/videos/))?([0-9]+)',
 			'yahoo'               => $hw . '(?:screen|shine|omg)\.yahoo\.com/(?:embed/)?([a-z0-9\-]+/[a-z0-9\-]+)\.html',
@@ -673,16 +677,20 @@ class Advanced_Responsive_Video_Embedder {
 
 		$output     = '';
 		$parsed_url = parse_url( $url );
-		$args       = array();
+		$url_args = $atts = array();
 
 		if ( ! empty( $parsed_url['query'] ) ) {
-			parse_str( $parsed_url['query'], $args );
+			parse_str( $parsed_url['query'], $url_args );
 		}
 
-		foreach ( $args as $key => $value ) {
-			$new_key = str_replace( 'arve-', '', $key );
-			$args[$new_key] = $value;
-			unset( $args[$key] );
+		foreach ( $url_args as $key => $value ) {
+
+			$atts_key = str_replace( 'arve-', '', $key );
+			$atts[$atts_key] = $value;
+		}
+
+		if ( 'youtube' == $provider && ! empty( $url_args['t'] ) ) {
+			$atts['parameters'] = 'start=' . $this->youtube_time_to_seconds( $url_args['t'] );
 		}
 
 		$shortcode_atts = shortcode_atts( array(
@@ -694,7 +702,7 @@ class Advanced_Responsive_Video_Embedder {
 			'mode'       => '',
 			'parameters' => '',
 			'start'      => ''
-		), $args );
+		), $atts );
 
 		$shortcode_atts['id'] = $id;
 
@@ -1019,7 +1027,7 @@ class Advanced_Responsive_Video_Embedder {
 				$object_params_autoplay_no  = $object_params . sprintf( '<param name="flashvars" value="channel=%s%s&amp;auto_play=false" />', $tw[0], $videoid_flashvar );
 				break;
 			case 'vine':
-				$urlcode = '';
+				$urlcode = 'https://vine.co/v/' . $id . '/embed/simple';
 				break;
 			default:
 				return $this->error( sprintf( __( 'Provider <code>%s</code> not valid', $this->plugin_slug ), $provider ) );
@@ -1229,6 +1237,10 @@ class Advanced_Responsive_Video_Embedder {
 				$output .= sprintf( '<div class="arve-hidden">%s</div>', $this->create_object( $url_autoplay_yes, $object_params_autoplay_yes, $counter ) );
 		}
 
+		if ( 'vine' == $provider ) {
+			$output .= '<script async src="//platform.vine.co/static/scripts/embed.js" charset="utf-8"></script>';
+		}
+
 		if ( isset( $_GET['arve-debug'] ) ) {
 
 			static $show_options_debug = true;
@@ -1258,7 +1270,6 @@ class Advanced_Responsive_Video_Embedder {
 		}
 
 		return $output;
-		
 	}
 
 	/**
@@ -1773,6 +1784,8 @@ function arve_load_video(e,link) {
 			),
 			'ted' => array(
 
+				__( 'To my knowlege TED forces autoplay and there is no way disable it', $this->plugin_slug ),
+
 				array(
 					'url'      => 'http://ted.com/talks/jill_bolte_taylor_s_powerful_stroke_of_insight',
 					'expected' => ''
@@ -1859,6 +1872,32 @@ function arve_load_video(e,link) {
 					'expected' => ''
 				),
 			),
+			'vimeo' => array(
+
+				array(
+					'shortcode' => '[vimeo id="12901672"]',
+					'expected'  => ''
+				),
+				array(
+					'url'      => 'http://vimeo.com/23316783',
+					'expected' => ''
+				),
+			),
+			'vine' => array(
+
+				array(
+					'shortcode' => '[vine id="MbrreglaFrA"]',
+					'expected'  => ''
+				),
+				array(
+					'url'      => 'https://vine.co/v/bjAaLxQvOnQ',
+					'expected' => ''
+				),
+				array(
+					'url'      => 'https://vine.co/v/bjHh0zHdgZT/embed',
+					'expected' => ''
+				),
+			),
 			'yahoo' => array(
 
 				array(
@@ -1890,6 +1929,29 @@ function arve_load_video(e,link) {
 				array(
 					'desc'       => __( 'Enable annotations and light theme', $this->plugin_slug ),
 					'shortcode'  => '[youtube id="uCQXKYPiz6M" parameters="iv_load_policy=1 theme=light"]',
+					'expected'   => ''
+				),
+			),
+			'youtube-starttimes' => array(
+
+				array(
+					'url'        => 'http://youtu.be/vrXgLhkv21Y?t=1h19m14s',
+					'expected'   => ''
+				),
+				array(
+					'url'        => 'http://youtu.be/vrXgLhkv21Y?t=19m14s',
+					'expected'   => ''
+				),
+				array(
+					'url'        => 'http://youtu.be/vrXgLhkv21Y?t=1h',
+					'expected'   => ''
+				),
+				array(
+					'url'        => 'http://youtu.be/vrXgLhkv21Y?t=5m',
+					'expected'   => ''
+				),
+				array(
+					'url'        => 'http://youtu.be/vrXgLhkv21Y?t=30s',
 					'expected'   => ''
 				),
 			),
@@ -1934,7 +1996,7 @@ function arve_load_video(e,link) {
 			'<p><form method="get">' .
 			sprintf( '<select name="arvet-provider">%s</select>', $provider_options ) .
 			sprintf( '<select name="arvet-mode">%s</select>', $mode_options ) .
-			'Debug output? <input type="checkbox" name="arve-debug">' . 
+			' Debug output? <input type="checkbox" name="arve-debug">' . 
 			sprintf( '<button tyle="submit">%s</button>', __('Test', $this->plugin_slug ) ) .
 			'</form></p>';
 
@@ -2032,6 +2094,62 @@ function arve_load_video(e,link) {
 			'<tr><td><sup><del>URL</del></sup></td><td>Only supported via Shortcode</td></tr>' . 
 			'<tr><td><sup>iframe</sup></td><td>General support for providers that offer iframe embed codes that can be displayed responsively.</td></tr>' . 
 			'</table>';
+	}
+
+	/**
+	 * Calculates seconds based on youtube times
+	 *
+	 * @since     4.0.1
+	 *
+	 * @param     string $yttime   The '1h25m13s' part of youtube URLs
+	 *
+	 * @return    int   Starttime in seconds
+	 */
+	public function youtube_time_to_seconds( $yttime ) {
+
+		$format = false;
+		$hours  = $minutes = $seconds = 0;
+
+		$pattern['hms'] = '/([0-9]+)h([0-9]+)m([0-9]+)s/'; // hours, minutes, seconds
+		$pattern['ms']  =          '/([0-9]+)m([0-9]+)s/'; // minutes, seconds
+		$pattern['h']   = '/([0-9]+)h/';
+		$pattern['m']   = '/([0-9]+)m/';
+		$pattern['s']   = '/([0-9]+)s/';
+
+		foreach ( $pattern as $k => $v ) {
+
+			preg_match( $v, $yttime, $result );
+
+			if ( ! empty( $result ) ) {
+				$format = $k;
+				break;
+			}
+		}
+
+		switch ( $format ) {
+			case 'hms':
+				$hours   = $result[1];
+				$minutes = $result[2];
+				$seconds = $result[3];
+				break;
+			case 'ms':
+				$minutes = $result[1];
+				$seconds = $result[2];
+				break;
+			case 'h':
+				$hours = $result[1];
+				break;
+			case 'm':
+				$minutes = $result[1];
+				break;
+			case 's':
+				$seconds = $result[1];
+				break;
+			default:
+				return false;
+		}
+
+		return ( $hours * 60 * 60 ) + ( $minutes * 60 ) + $seconds;
 	}
 
 }
