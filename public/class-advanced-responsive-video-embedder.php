@@ -298,11 +298,11 @@ class Advanced_Responsive_Video_Embedder {
 
 		add_option( 'arve_install_date', current_time( 'timestamp' ) );
 		
-		/*
-		global $current_user;
-		$user_id = $current_user->ID;
-		delete_user_meta( $user_id, 'arve_ignore_admin_notice' );
-		*/
+		# TODO Remove later
+		$options = get_option( 'arve_options' );
+		$options['params']['vimeo']['html5'] = 1;
+
+		update_option( 'arve_options', $options );
 	}
 
 	/**
@@ -436,7 +436,7 @@ class Advanced_Responsive_Video_Embedder {
 				'viddler'         => array( 'f' => 1, 'disablebranding' => 1, 'wmode' => 'transparent' ),
 				'vine'            => array(), //* audio=1 supported
 				#'videojug'        => '',
-				'vimeo'           => array ( 'title' => 0, 'byline' => 0, 'portrait' => 0 ),
+				'vimeo'           => array ( 'html5' => 1, 'title' => 0, 'byline' => 0, 'portrait' => 0 ),
 				#'yahoo'           => '',
 				'youtube'         => array(
 					#'theme'          => 'dark',
@@ -694,14 +694,15 @@ class Advanced_Responsive_Video_Embedder {
 		}
 
 		$shortcode_atts = shortcode_atts( array(
-			'align'      => '',
-			'autoplay'   => '',
-			'end'        => '',
-			'maxw'       => '',
-			'maxwidth'   => '',
-			'mode'       => '',
-			'parameters' => '',
-			'start'      => ''
+			'align'        => '',
+			'autoplay'     => '',
+			'aspect_ratio' => '',
+			'end'          => '',
+			'maxw'         => '',
+			'maxwidth'     => '',
+			'mode'         => '',
+			'parameters'   => '',
+			'start'        => ''
 		), $atts );
 
 		$shortcode_atts['id'] = $id;
@@ -771,6 +772,8 @@ class Advanced_Responsive_Video_Embedder {
 		if ( ! $this->properties[$provider]['wmode_transparent'] ) {
 			$fakethumb = false;
 		}
+
+		$aspect_ratio = $this->aspect_ratio_to_padding( $aspect_ratio );
 
 		switch ( $id ) {
 			case '':
@@ -1150,10 +1153,13 @@ class Advanced_Responsive_Video_Embedder {
 
 		if ( 'normal' == $mode ) {
 
+			$style = $this->get_wrapper_style( false, $maxwidth );
+
 			$output .= sprintf(
-				'<div class="%s"%s><div class="arve-embed-container">%s</div></div>',
+				'<div class="%s"%s><div class="arve-embed-container"%s>%s</div></div>',
 				esc_attr( "arve-wrapper arve-normal-wrapper arve-$provider-wrapper $align" ),
-				( isset( $maxwidth_shortcode ) ) ? sprintf( ' style="max-width: %dpx;"', $maxwidth_shortcode ) : '',
+				( $style ) ? sprintf( ' style="%s"', esc_attr( trim( $style ) ) ) : '',
+				( $aspect_ratio ) ? sprintf( ' style="padding-bottom: %d%%"', $aspect_ratio ) : '',
 				$normal_embed
 			);
 
@@ -1187,9 +1193,10 @@ class Advanced_Responsive_Video_Embedder {
 			$style = $this->get_wrapper_style( $thumbnail, $maxwidth );
 
 			$output .= sprintf(
-				'<div class="%s"%s><div class="arve-embed-container">%s</div></div>',
+				'<div class="%s"%s><div class="arve-embed-container"%s>%s</div></div>',
 				esc_attr( "arve-wrapper arve-normal-wrapper arve-$provider-wrapper $align" ),
-				( $style ) ? sprintf( ' style="%s"', esc_attr( trim( $style ) ) ) : '', 
+				( $style ) ? sprintf( ' style="%s"', esc_attr( trim( $style ) ) ) : '',
+				( $aspect_ratio ) ? sprintf( ' style="padding-bottom: %d%%"', $aspect_ratio ) : '',
 				$inner
 			);
 
@@ -1224,12 +1231,13 @@ class Advanced_Responsive_Video_Embedder {
 				);
 			}
 
-			$style = $this->get_wrapper_style( $thumbnail );
+			$style = $this->get_wrapper_style( $thumbnail, false );
 
 			$output .= sprintf(
-				'<div class="%s"%s><div class="arve-embed-container">%s</div></div>',
+				'<div class="%s"%s><div class="arve-embed-container"%s>%s</div></div>',
 				esc_attr( "arve-wrapper arve-thumb-wrapper arve-$provider-wrapper $align" ),
-				( $style ) ? sprintf( ' style="%s"', esc_attr( trim( $style ) ) ) : '', 
+				( $style ) ? sprintf( ' style="%s"', esc_attr( trim( $style ) ) ) : '',
+				( $aspect_ratio ) ? sprintf( ' style="padding-bottom: %d%%"', $aspect_ratio ) : '',
 				$inner
 			);
 			
@@ -2151,5 +2159,25 @@ function arve_load_video(e,link) {
 
 		return ( $hours * 60 * 60 ) + ( $minutes * 60 ) + $seconds;
 	}
+
+	/**
+	 * Calculates padding percentage value for a particular aspect ratio
+	 *
+	 * @since     4.2.0
+	 *
+	 * @param     string $aspect_ratio '4:3'
+	 *
+	 * @return    mixed  false / int    65.25 in case of 4:3
+	 */
+
+	function aspect_ratio_to_padding( $aspect_ratio ) {
+
+		$aspect_ratio = explode(':', $aspect_ratio);
+
+		if( is_numeric($aspect_ratio[0]) && is_numeric($aspect_ratio[1]) )
+			return ( $aspect_ratio[1] / $aspect_ratio[0] ) * 100;
+		else
+			return false;
+	}	
 
 }
