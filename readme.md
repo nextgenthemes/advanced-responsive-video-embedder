@@ -114,7 +114,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ### 4.2.0 ###
 * New: As requested: `aspect_ratio` parameter
-* Fix: Vimeo not playing in Firefox.
+* Fix: Vimeo playing problems in Firefox.
 
 ### 4.1.1 ###
 * Fix: Play button not showing.
