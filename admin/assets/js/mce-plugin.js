@@ -10,7 +10,7 @@
 				// creates the button
 				var button = controlManager.createButton('arve_button', {
 					title : 'Embed Videos', // title of the button
-					image : '../wp-content/plugins/advanced-responsive-video-embedder/admin/assets/img/tinymce-icon.png',  // path to the button's image
+					image : arve_mce_icon,  // path to the button's image
 					onclick : function() {
 						// triggers the thickbox
 						var width = jQuery(window).width(),

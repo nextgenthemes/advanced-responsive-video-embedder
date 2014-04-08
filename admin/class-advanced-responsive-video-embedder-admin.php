@@ -164,7 +164,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
         }
 
 		wp_localize_script( 'jquery', 'arve_regex_list', $regex_list );
-
+		wp_localize_script( 'jquery', 'arve_mce_icon', plugins_url( 'assets/img/tinymce-icon.png', __FILE__ ) );
 	}
 
 	/**
