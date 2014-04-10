@@ -4,7 +4,7 @@
 **Tags:** video, responsive, embed, video-embedder, iframe, minimal, lightweight, simplicity, shortcodes, Youtube, Blip, Dailymotion, Videojug, Collegehumor, Veoh, Break, Movieweb, Snotr, Gametrailers, Vimeo, Viddler, Funnyordie, Myspace, Liveleak, Metacafe, Myvideo, Yahoo Screen, Spike  
 **Requires at least:** 3.3.1  
 **Tested up to:** 3.9  
-**Stable tag:** 4.2.0  
+**Stable tag:** 4.3.0  
 **License:** GPLv3  
 **License URI:** http://www.gnu.org/licenses/gpl-3.0.html  
 
@@ -95,6 +95,10 @@ You most likely do not have the 'jQuery Colorbox' Plugin installed or JavaScript
 
 I have no plans on implementing providers that include videos via JavaScript such as www.nicovideo.jp. I also will not implement videos from mainstream media news organizations. For others, feel free to ask.
 
+### How do I embed Iframes? ###
+
+This plugin not changes anything to usual HTML `<iframe>` embed codes you have to use the shortcode creator dialog and paste iframe embed codes there or write them manually. They will become `[iframe id="http://..."]`. The id represents what is the `src` in HTML embeds.
+
 ### Why does my Youtube video not repeat/loop? ###
 
 This plugins embed is considered as 'custom player' by YouTube so you have to pass the video ID as playlist parameters to make the loop work.
@@ -111,6 +115,12 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 
 ## Changelog ##
+
+### 4.3.0 ###
+* New: Added Iframe examples.
+* Improved: Limited support for self hosted Videos. Dialog will detect URLS that end up with .webm .mp4 .ogg creates a iframe embed code with them. This is probaly not the best way to do this but it works. Real HTML5 video tag embeds might come later.
+* Improved: Redesigned the button to look like WordPress and move it out of the Tiny MCE Editor. This enables you to embed videos in the code editor as well.
+* Improved: Redesigned the Shortcode Creator dialog. Less clutter, more compact and it now includes the recently introduced `aspect_ratio`.
 
 ### 4.2.0 ###
 * New: As requested: `aspect_ratio` parameter

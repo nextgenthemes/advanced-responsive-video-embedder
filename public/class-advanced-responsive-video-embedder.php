@@ -57,7 +57,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '4.2.0';
+	const VERSION = '4.3.0';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -478,7 +478,7 @@ class Advanced_Responsive_Video_Embedder {
 			'liveleak'        => array( 'name' => 'LiveLeak',       'url' => true,  'native_thumbnail' => false, 'wmode_transparent' => true  ),
 			'metacafe'        => array(                             'url' => true,  'native_thumbnail' => false, 'wmode_transparent' => true  ),
 			'movieweb'        => array(                             'url' => true,  'native_thumbnail' => false, 'wmode_transparent' => false ),
-			'mpora'           => array( 'name' => 'MPORA',          'url' => true,  'native_thumbnail' => false, 'wmode_transparent' => true  ),
+			'mpora'           => array( 'name' => 'MPORA',          'url' => true,  'native_thumbnail' => true,  'wmode_transparent' => true  ),
 			'myspace'         => array(                             'url' => true,  'native_thumbnail' => false, 'wmode_transparent' => true  ),
 			'myvideo'         => array( 'name' => 'MyVideo',        'url' => true,  'native_thumbnail' => false, 'wmode_transparent' => false ),
 			'snotr'           => array(                             'url' => true,  'native_thumbnail' => false, 'wmode_transparent' => false ),
@@ -1064,7 +1064,7 @@ class Advanced_Responsive_Video_Embedder {
 				$url_autoplay_no  = add_query_arg( 'autoplay', 0, $urlcode );
 				$url_autoplay_yes = add_query_arg( 'autoplay', 1, $urlcode );
 				break;
-			case 'usrteam':
+			case 'ustream':
 				$url_autoplay_no  = add_query_arg( 'autoplay', 'false', $urlcode );
 				$url_autoplay_yes = add_query_arg( 'autoplay', 'true',  $urlcode );
 				break;
@@ -1705,6 +1705,22 @@ function arve_load_video(e,link) {
 					'expected'  => ''
 				),
 			),
+			'iframe' => array(
+
+				__( 'This plugin allows iframe embeds for every URL by using this <code>[iframe]</code> shortcode. This should only be used for providers not supported by this via a named shortcode. The result is a 16:9 resonsive iframe by default, aspect ratio can be changed as usual.', $this->plugin_slug ),
+
+				array(
+					'shortcode' => '[iframe id="http://example.com/"]',
+					'expected'  => ''
+				),
+
+				array(
+					'desc'      => esc_html__( 'This can also be used to have limited support for self hosted videos my passing URLs to .webm, .mp4 or .ogg to it. This might not be the best way to do because this is what the <video> tag is for but it works in my tests.', $this->plugin_slug ),
+					'shortcode' => '[iframe id="http://video.webmfiles.org/big-buck-bunny_trailer.webm"]',
+					'expected'  => ''
+				),
+
+			),
 			'ign' => array(
 
 				array(
@@ -2107,13 +2123,11 @@ function arve_load_video(e,link) {
 	/**
 	 * Calculates seconds based on youtube times
 	 *
-	 * @since     4.0.1
-	 *
 	 * @param     string $yttime   The '1h25m13s' part of youtube URLs
 	 *
 	 * @return    int   Starttime in seconds
 	 */
-	public function youtube_time_to_seconds( $yttime ) {
+	function youtube_time_to_seconds( $yttime ) {
 
 		$format = false;
 		$hours  = $minutes = $seconds = 0;

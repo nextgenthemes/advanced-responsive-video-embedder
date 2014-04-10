@@ -72,10 +72,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		$plugin = Advanced_Responsive_Video_Embedder::get_instance();
 		$this->plugin_slug = $plugin->get_plugin_slug();
 
-		// Load admin style sheet and JavaScript.
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
-
 		// Add the options page and menu item.
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
 
@@ -88,9 +84,35 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		add_action( 'admin_notices', array( $this, 'admin_notice') );
 
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
-		add_action( 'admin_init', array( $this, 'init_mce_plugin' ) );
 
-		add_action( 'wp_ajax_get_arve_form', array( $this, 'get_mce_form' ) );
+		add_action( 'media_buttons', array( $this, 'add_media_button'), 11 );
+
+		// Only loaded on admin pages with editor
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
+		add_action( 'admin_footer', array( $this, 'print_dialog' ) );
+	}
+
+	/**
+	 *
+	 * @since 4.3.0
+	 */
+	public function print_dialog() {
+
+		if ( $this->admin_page_has_post_editor() ) {
+
+			include_once( 'views/admin-dialog.php' );
+		}
+	}
+
+	/**
+	 * Render the settings page for this plugin.
+	 *
+	 * @since    1.0.0
+	 */
+	public function display_plugin_admin_page() {
+
+		include_once( 'views/admin.php' );
 	}
 
 	/**
@@ -120,15 +142,10 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	public function enqueue_admin_styles() {
 
-		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
-			return;
-		}
+		if ( $this->admin_page_has_post_editor() ) {
 
-		$screen = get_current_screen();
-		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
 			wp_enqueue_style( $this->plugin_slug . '-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), Advanced_Responsive_Video_Embedder::VERSION );
 		}
-
 	}
 
 	/**
@@ -141,30 +158,33 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	public function enqueue_admin_scripts() {
 
-		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
-			return;
+		if ( $this->admin_page_has_post_editor() ) {
+
+			wp_enqueue_script(
+				$this->plugin_slug . '-admin-script',
+				plugins_url( 'assets/js/admin.js', __FILE__ ),
+				array( 'jquery' ),
+				Advanced_Responsive_Video_Embedder::VERSION,
+				true
+			);
+
+			$plugin = Advanced_Responsive_Video_Embedder::get_instance();
+			
+			$regex_list = $plugin->get_regex_list();
+
+			foreach ( $regex_list as $provider => $regex ) {
+
+	            if ( $provider != 'ign' ) {
+
+	            	$regex = str_replace( array( 'https?://(?:www\.)?', 'http://' ), '', $regex );
+	            }
+
+	            $regex_list[$provider] = $regex;
+
+	        }
+
+			wp_localize_script( 'jquery', 'arve_regex_list', $regex_list );
 		}
-
-		$screen = get_current_screen();
-		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
-			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), Advanced_Responsive_Video_Embedder::VERSION );
-		}
-
-		$plugin = Advanced_Responsive_Video_Embedder::get_instance();
-		$regex_list = $plugin->get_regex_list();
-
-		foreach ( $regex_list as $provider => $regex ) {
-
-            if ( $provider != 'ign' ) {
-            	$regex = str_replace( array( 'https?://(?:www\.)?', 'http://' ), '', $regex );
-            }
-
-            $regex_list[$provider] = $regex;
-
-        }
-
-		wp_localize_script( 'jquery', 'arve_regex_list', $regex_list );
-
 	}
 
 	/**
@@ -193,15 +213,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	}
 
 	/**
-	 * Render the settings page for this plugin.
-	 *
-	 * @since    1.0.0
-	 */
-	public function display_plugin_admin_page() {
-		include_once( 'views/admin.php' );
-	}
-
-	/**
 	 * Add settings action link to the plugins page.
 	 *
 	 * @since    1.0.0
@@ -218,28 +229,29 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 	}
 
+#<a href="#" id="insert-media-button" class="button insert-media add_media" data-editor="content" title="Dateien hinzufügen">
+#<span class="wp-media-buttons-icon"></span> Dateien hinzufügen</a>
+
 	/**
-	 * Register and enqueue admin-specific style sheet.
+	 * Action to add a custom button to the content editor
 	 *
-	 * @since     2.6.0
+	 * @since 4.3.0
 	 */
-	public function init_mce_plugin() {
-		// only hook up these filters if we're in the admin panel, and the current user has permission
-		// to edit posts and pages
-		if (
-			current_user_can( 'publish_posts' )
-			|| current_user_can( 'edit_posts' )
-			|| current_user_can( 'edit_private_posts' )
-			|| current_user_can( 'edit_published_posts' )
-			|| current_user_can( 'publish_pages' )
-			|| current_user_can( 'edit_pages' )
-			|| current_user_can( 'edit_private_pages' )
-			|| current_user_can( 'edit_published_pages' )
-			|| current_user_can( 'edit_other_pages' )
-		) {
-			add_filter( 'mce_buttons', array( $this, 'filter_mce_button' ) );
-			add_filter( 'mce_external_plugins', array( $this, 'filter_mce_plugin' ) );
-		}
+	public function add_media_button() {
+
+		// The ID of the container I want to show in the popup
+		$popup_id = 'arve-form';
+
+		// Our popup's title
+		$title = 'Advanced Responsive Video Embedder Shortcode Creator';
+
+		// Append the icon
+		printf(
+			'<a href="%1$s" id="arve-btn" class="button add_media thickbox" title="%2$s"><span class="wp-media-buttons-icon arve-icon"></span> %3$s</a>',
+			esc_url( '#TB_inline?width=640&height=400&inlineId=' . $popup_id ),
+			esc_attr( $title ),
+			esc_html__( 'Embed Video', $this->plugin_slug )
+		);
 	}
 
 	/**
@@ -312,155 +324,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	}
 
 	/**
-	 *
-	 * @since     2.6.0
-	 */	
-	public function filter_mce_button( $buttons ) {
-		// add a separation before our button, here our button's id is "arve_button"
-		array_push( $buttons, '|', 'arve_button' );
-		return $buttons;
-	}
-	
-	/**
-	 *
-	 * @since     2.6.0
-	 */	
-	public function filter_mce_plugin( $plugins ) {
-		// this plugin file will work the magic of our button
-		$plugins['arve'] = plugin_dir_url( __FILE__ ) . 'assets/js/mce-plugin.js';
-		return $plugins;
-	}
-	
-	/**
-	 *
-	 * @since     2.6.0
-	 */
-	public function get_mce_form() {
-		?>
-		<div id="arve-form">
-			<table id="arve-table" class="form-table">
-				<colgroup style="width: 40%;"></colgroup>
-				<colgroup style="width: 60%;"></colgroup>
-				<tr>
-					<th>
-						<label for="arve-url">URL/Embed Code</label><br>
-						<small class="description">
-							<?php _e('For Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike and Comedycentral paste the embed code, for all others paste the URL!', $this->plugin_slug); ?><br>
-							<a href="#" id="arve-open-url-info"><?php _e('Usteam info', $this->plugin_slug); ?></a>
-						</small>
-
-						<div id="arve-url-info" style="display: none; padding: 0 15px;">
-							<p>
-								<?php _e('Ustream: If your Address bar URL not contains a number. Click Share->URL-icon and paste the URL you get there here.', $this->plugin_slug); ?>
-							</p>
-						</div>
-					</th>
-					<td>
-						<textarea id="arve-url" rows="4" value="" style="width: 100%;"></textarea><br>
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="arve-mode"><?php _e('Mode', $this->plugin_slug); ?></label><br>
-						<small class="description"><?php _e('Optional override setting for single videos.', $this->plugin_slug);?></small>
-					</th>
-					<td>
-						<select id="arve-mode">
-							<option value=""></option>
-							<option value="normal"><?php _e('Normal', $this->plugin_slug); ?></option>
-							<option value="thumbnail"><?php _e('Thumbnail', $this->plugin_slug); ?></option>
-						</select>
-					</td>				
-				</tr>
-				<tr>
-					<th>
-						<label for="arve-align"><?php _e('Align', $this->plugin_slug); ?></label><br>
-						<small class="description"><?php _e('');?></small>
-					</th>
-					<td>
-						<select id="arve-align">
-							<option value=""></option>
-							<option value="left"><?php _e('left', $this->plugin_slug); ?></option>
-							<option value="right"><?php _e('right', $this->plugin_slug); ?></option>
-							<option value="center"><?php _e('center', $this->plugin_slug); ?></option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th></th>
-					<td>
-						<input type="button" id="arve-show-more" class="button-secondary" value="Show More Options" name="arve-show-more" />
-					</td>
-				</tr>
-				<tr style="display: none;" class="arve-hidden">
-					<th>
-						<label for="arve-autoplay"><?php _e('Autoplay this video', $this->plugin_slug); ?></label><br>
-						<small class="description"><?php _e('Optional override setting for single videos.', $this->plugin_slug); ?></small>
-					</th>
-					<td>
-						<select id="arve-autoplay">
-							<option value=""></option>
-							<option value="yes"><?php _e('yes', $this->plugin_slug); ?></option>
-							<option value="no"><?php _e('no', $this->plugin_slug); ?></option>
-						</select>
-					</td>
-				</tr>
-				<tr style="display: none;" class="arve-hidden">
-					<th>
-						<label for="arve-maxwidth"><?php _e('Maximal width', $this->plugin_slug); ?></label><br>
-						<small class="description"><?php _e('Optional override setting for single videos.', $this->plugin_slug); ?></small>
-					</th>
-					<td>
-						<input type="text" id="arve-maxwidth" value="" />	
-					</td>
-				</tr>
-				<!-- always hidden -->
-				<tr style="display: none;" class="arve-hidden">
-					<th>
-						<label for="arve-provider"><?php _e('Provider', $this->plugin_slug); ?></label>
-					</th>
-					<td>
-						<select id="arve-provider">
-							<option value=""></option>
-							<?php
-							$options = get_option('arve_options');
-							foreach( $options['shortcodes'] as $key => $val )
-								printf( '<option value="%s">%s</option>', esc_attr( $val ), esc_html( $key ) );
-							?>
-						</select>
-					</td>
-				</tr>
-				<tr style="display: none;" class="arve-hidden">
-					<th>
-						<label for="arve-id"><?php _e('Video ID', $this->plugin_slug); ?></label><br>
-						<small class="description"><?php _e('If not filled in automatically after pasting the url above you have to insert the video ID in here.', $this->plugin_slug); ?></small>
-					</th>
-					<td>
-						<input type="text" id="arve-id" value="" />
-					</td>
-				</tr>
-				<!-- end always hidden-->
-				<tr>
-					<td colspan="2" style="padding: 15px; font-size: 17px; text-align: center;" id="arve-shortcode">
-						-
-					</td>
-				</tr>	
-				<tr>
-					<th>
-						<label for="arve-submit"><?php _e('Ready?', $this->plugin_slug); ?></label>
-					</th>
-					<td>
-						<input type="button" id="arve-submit" class="button-primary" value="Insert Shortcode" name="submit" />
-					</td>
-				</tr>
-			</table>
-		</div>
-		<?php
-		
-		exit;
-	}
-
-	/**
 	 * Display a notice that can be dismissed
 	 *
 	 * @since     3.0.0
@@ -506,4 +369,26 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			add_user_meta( $user_id, 'arve_ignore_admin_notice', 'true', true );
 		}
 	}
+
+	/**
+	 * Maybe dismiss admin Notice
+	 *
+	 * @since     4.3.0
+	 */
+	function admin_page_has_post_editor() {
+
+		global $pagenow;
+
+	    if ( empty ( $pagenow ) ) {
+
+	        return false;
+	    }
+
+	    if ( ! in_array( $pagenow, array ( 'post-new.php', 'post.php' ) ) ) {
+	        
+	        return false;
+	    }
+
+	    return post_type_supports( get_current_screen()->post_type, 'editor' );
+	}	
 }
