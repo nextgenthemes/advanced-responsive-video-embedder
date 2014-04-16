@@ -41,37 +41,42 @@ _  _ ____ _  _ ___ ____ ____ _  _ ___ _  _ ____ _  _ ____ ____  ____ ____ _  _
 
 
 /**
- * Helper class to create all the shortcode with two methods.
+ * Helper class to create all the shortcodes.
  *
  *
  * @package Advanced_Responsive_Video_Embedder
  * @author  Nicolas Jonas
  */
 class Advanced_Responsive_Video_Embedder_Create_Shortcodes {
-	
+
 	/**
-	 * Current shortcode provider helper variable
 	 *
-	 * @since    2.6.0
-	 *
-	 * @var      string
-	 */
-	public $provider = null;
+	 * @since    4.4.0
+	 */	
+	function __construct( $provider ) {
+
+		$arve = Advanced_Responsive_Video_Embedder::get_instance();
+		$this->options = $arve->get_options();
+
+		$this->provider = $provider;
+
+		$this->create_shortcode();
+	}
 
 	/**
 	 *
 	 * @since    2.6.0
 	 */	
 	public function create_shortcode() {
-		$options = get_option('arve_options');
-		add_shortcode( $options['shortcodes'][$this->provider], array( $this, 'do_shortcode' ) );
+
+		add_shortcode( $this->options['shortcodes'][ $this->provider ], array( $this, 'shortcode' ) );
 	}
 
 	/**
 	 *
-	 * @since    2.6.0
+	 * @since    4.4.0
 	 */
-	public function do_shortcode( $atts ) {
+	public function shortcode( $atts ) {
 
 		$shortcode_atts = shortcode_atts( array(
 			'align'        => '',

@@ -14,20 +14,18 @@ Easy responsive video embeds via URL (like WordPress) or Shortcodes. Normal, Laz
 
 = This is very likely the one and only plugin you will ever need to handle video embeds on your WordPress site(s) =
 
-Simple lightweight plugin lets you embed videos from many providers with full responsive sizes via URL or Shortcodes. Let your sites load faster with Lazyload mode (Provider must support native thumbnails). Show videos as thumbnails and let them open in Colorbox. Clean and easy shortcode syntax.
+It lets you embed videos from many providers with full responsive sizes via URL or Shortcodes. Let your sites load faster with Lazyload mode (Provider must support native thumbnails). Show videos as thumbnails and let them open in Colorbox. Clean and easy shortcode syntax.
 
 The Plugin has a set of customization options to embed the video exactly as you like, this includes custom URL parameters. Defaults to make the videos as unobtrusive as possible and keep your visitors on your site are already included.
 
-[Features](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/)
-
-[Quick introduction with demonstration](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/quick-introduction-and-demo)
-
-[Documentation](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/documentation) (For advanced usage)
-
-[How to report a problem](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/reporting-issues-for-advanced-responsive-video-embedder/)
+* [Features](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/)
+* [Quick introduction with demonstration](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/quick-introduction-and-demo)
+* [Documentation](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/documentation) (For advanced usage)
+* **[How to report a problem](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/reporting-issues-for-advanced-responsive-video-embedder/)**
 
 = Supported video sites: =
 
+ * 4players.de
  * archive.org
  * blip
  * break
@@ -61,17 +59,16 @@ The Plugin has a set of customization options to embed the video exactly as you 
  * Yahoo Screen
  * YouTube
 
-= Roadmap  =
-
-Pull requests on Github to help me out with this would be great
-
- * Move shortcode creator button out of the TinyMCE rich text editor button bar and put it after the add media icon to make it available to the code editor as well.
- * Make objects lazyload (currently effects twitch only)
- * The Jetpack 'Shortcode Embeds' module provides some useful shortcodes not related to video but currently breaks if activated. Figure out if its possible to make them work together.
-
 = Known limitations =
 
  * At least some parts of the Plugin (youtube embeds via URL and maybe more) are broken if the 'Shortcode Embeds' Jetpack module is activated. Please deactivate this module if you want to use ARVE for now.
+
+= Roadmap  =
+
+Pull requests on Github to help me out with this would be great.
+
+ * Make objects lazyload (currently effects twitch only)
+ * The Jetpack 'Shortcode Embeds' module provides some useful shortcodes not related to video but currently breaks if activated. Figure out if its possible to make them work together.
 
 == Installation ==
 
@@ -81,7 +78,7 @@ The usual way.
 
 = I have a problem ... =
 
-Please read: [Reporting Issues for Advanced Responsive Video Embedder](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/reporting-issues-for-advanced-responsive-video-embedder/)
+**Please read [Reporting Issues for Advanced Responsive Video Embedder](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/reporting-issues-for-advanced-responsive-video-embedder/)**
 
 = Why are my videos not filling their container? =
 
@@ -112,9 +109,19 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 == Changelog ==
 
+= 4.5.0 =
+
+= 4.4.0 =
+* New: 4players.de support
+* New: Added parameter input to the shortcode dialog.
+* Improved: Default options are no longer stored in the database.
+* Improved: Lots of code improvements.
+* Fix: Minor options page spelling and field association fixes.
+* Fix: Added Lazyload to mode select in the shortcode dialog.
+
 = 4.3.0 =
 * New: Added Iframe examples.
-* Improved: Limited support for self hosted Videos. Dialog will detect URLS that end up with .webm .mp4 .ogg creates a iframe embed code with them. This is probaly not the best way to do this but it works. Real HTML5 video tag embeds might come later.
+* Improved: Limited support for self hosted Videos. Dialog will detect URLS that end up with .webm .mp4 .ogg creates a iframe embed code with them. This is probaly not the best way to do this but it works. Real HTML5 video tag embeds may come later.
 * Improved: Redesigned the button to look like WordPress and move it out of the Tiny MCE Editor. This enables you to embed videos in the code editor as well.
 * Improved: Redesigned the Shortcode Creator dialog. Less clutter, more compact and it now includes the recently introduced `aspect_ratio`.
 
