@@ -1,0 +1,55 @@
+#arve-btn {
+	padding-left: 3px;
+}
+
+#arve-form {
+	display: none;
+}
+
+.arve-icon:before {
+	content: "\f236" !important; /* dashicon-video-alt */
+}
+
+.arve-input-group {
+	float: left;
+	margin-top: 10px;
+	height: 35px;
+	width: 275px;
+}
+
+.arve-input-group label,
+.arve-input-group input,
+.arve-input-group select {
+	display: inline-block;
+	width: 120px;
+	margin-right: 15px;
+}
+
+.arve-input-group-full {
+	float: none;
+	width: 550px;
+	max-width: 100%;
+}
+
+.arve-input-group-full input {
+	width: 396px;
+	max-width: 100%;
+}
+
+#arve-url {
+	width: 100%;
+}
+
+.arve-shortcode-display {
+	padding: 15px;
+	font-size: 17px;
+	text-align: center;
+}
+
+.arve-submit-wrap {
+	text-align: center;
+}
+
+.arve-button-primary {
+	display: inline-block;
+}

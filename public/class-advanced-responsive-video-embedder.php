@@ -56,7 +56,7 @@ class Advanced_Responsive_Video_Embedder {
 	 * @since   2.6.0
 	 * @var     string
 	 */
-	const VERSION = '4.3.0';
+	const VERSION = '4.5.0';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -1205,7 +1205,7 @@ class Advanced_Responsive_Video_Embedder {
 					$inner = $this->create_object( $url_autoplay_yes, $object_params_autoplay_yes );
 
 				$inner .= sprintf(
-					'<a href="#arve-load-video" data-target="arve-iframe-%d" class="arve-inner arve-play-background" onclick="arve_load_video(event,this)"></a>',
+					'<button class="arve-inner arve-play-background arve-iframe-btn" data-target="arve-iframe-%d"></button>',
 					$counter
 				);
 			}
@@ -1414,21 +1414,24 @@ class Advanced_Responsive_Video_Embedder {
 	public function print_javascript() {
 
 ?><script type="text/javascript">
-function arve_load_video( e, link ) {
 
-	if ( !e )
-		var e = window.event;
+window.onload = function() {
 
-	e.cancelBubble = true;
+	"use_strict";
 
-	if ( e.stopPropagation )
-		e.stopPropagation();
+    var arve_iframe_btns = document.getElementsByClassName( "arve-iframe-btn" );
 
-	var target = document.getElementById( link.getAttribute("data-target") );
-	target.setAttribute("src", target.getAttribute("data-src") );
-	target.className = "arve-inner";
-	link.className += " arve-hidden";
-}
+    for ( var i=0; i < arve_iframe_btns.length; i++ ) {
+
+    	arve_iframe_btns[i].onclick = function() {
+
+			var target = document.getElementById( this.getAttribute( "data-target" ) );
+			target.setAttribute( "src", target.getAttribute( "data-src" ) );
+			target.className = "arve-inner";
+			this.className += " arve-hidden";
+    	};
+    };
+};
 </script>
 <?php
 	}
@@ -2216,9 +2219,9 @@ function arve_load_video( e, link ) {
 
 	function aspect_ratio_to_padding( $aspect_ratio ) {
 
-		$aspect_ratio = explode(':', $aspect_ratio);
+		$aspect_ratio = explode( ':', $aspect_ratio );
 
-		if( is_numeric($aspect_ratio[0]) && is_numeric($aspect_ratio[1]) )
+		if( is_numeric( $aspect_ratio[0] ) && is_numeric( $aspect_ratio[1] ) )
 			return ( $aspect_ratio[1] / $aspect_ratio[0] ) * 100;
 		else
 			return false;

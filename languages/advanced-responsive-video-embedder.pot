@@ -1,0 +1,402 @@
+# Copyright (C) 2014 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version:  \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/advanced-responsive-video-"
+"embedder\n"
+"POT-Creation-Date: 2014-04-13 03:37:16+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:206
+msgid "Advanced Responsive Video Embedder Settings"
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:207
+msgid "A.R. Video Embedder Settings"
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:223
+msgid "Settings"
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:224
+msgid "Contribute"
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:225
+msgid "Donate"
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:253
+msgid "Embed Video"
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:346
+msgid ""
+"The Advanced Responsive Video Embedder Plugin was activated on this site for "
+"over a week now. I hope you like it."
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:348
+msgid ""
+"It is always nice when people show their appreciation for a plugin by <a "
+"href=\"%s\" target=\"_blank\">contributing</a> or <a href=\"%s\" target="
+"\"_blank\">donating</a>. Thank you!"
+msgstr ""
+
+#: admin/class-advanced-responsive-video-embedder-admin.php:353
+msgid "Dismiss"
+msgstr ""
+
+#: admin/views/admin-dialog.php:7
+msgid ""
+"For Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike, Comedycentral "
+"and general iframe embed codes paste the embed code, for all others paste "
+"the URL! Ustream: If your Address bar URL not contains a number, click the "
+"Share->URL icons and paste that URL."
+msgstr ""
+
+#: admin/views/admin-dialog.php:13
+msgid "Align"
+msgstr ""
+
+#: admin/views/admin-dialog.php:16
+msgid "left"
+msgstr ""
+
+#: admin/views/admin-dialog.php:17
+msgid "right"
+msgstr ""
+
+#: admin/views/admin-dialog.php:18
+msgid "center"
+msgstr ""
+
+#: admin/views/admin-dialog.php:23
+msgid "Mode"
+msgstr ""
+
+#: admin/views/admin-dialog.php:26 admin/views/admin.php:39
+msgid "Normal"
+msgstr ""
+
+#: admin/views/admin-dialog.php:27 admin/views/admin.php:41
+msgid "Thumbnail"
+msgstr ""
+
+#: admin/views/admin-dialog.php:32
+msgid "Autoplay"
+msgstr ""
+
+#: admin/views/admin-dialog.php:35
+msgid "yes"
+msgstr ""
+
+#: admin/views/admin-dialog.php:36
+msgid "no"
+msgstr ""
+
+#: admin/views/admin-dialog.php:41
+msgid "Maximal width (px)"
+msgstr ""
+
+#: admin/views/admin-dialog.php:46
+msgid "Aspect ratio (4:3)"
+msgstr ""
+
+#: admin/views/admin-dialog.php:58
+msgid "Provider"
+msgstr ""
+
+#: admin/views/admin-dialog.php:69
+msgid "Video ID"
+msgstr ""
+
+#: admin/views/admin-dialog.php:70
+msgid ""
+"If not filled in automatically after pasting the url above you have to "
+"insert the video ID in here."
+msgstr ""
+
+#: admin/views/admin.php:24
+msgid ""
+"It is always nice when people show their appreciation for a plugin by <a "
+"href=\"%s\" target=\"_blank\">testing, contributing</a> or <a href=\"%s\" "
+"target=\"_blank\">donating</a>. Thank you!"
+msgstr ""
+
+#: admin/views/admin.php:40
+msgid "Lazyload"
+msgstr ""
+
+#: admin/views/admin.php:46
+msgid "Video Maximal Width"
+msgstr ""
+
+#: admin/views/admin.php:49
+msgid ""
+"Optional, if not set your videos will be the maximum size of the container "
+"they are in. If your content area has a big width you might want to set this."
+msgstr ""
+
+#: admin/views/admin.php:53
+msgid "Aligned Maximal Width (Normal Mode)"
+msgstr ""
+
+#: admin/views/admin.php:56
+msgid "Needed! Must be 200+ to work."
+msgstr ""
+
+#: admin/views/admin.php:60
+msgid "Thumbnail Maximal Width"
+msgstr ""
+
+#: admin/views/admin.php:63
+msgid "Needed! Must be 50+ to work."
+msgstr ""
+
+#: admin/views/admin.php:67
+msgid "Fake Thumbnails"
+msgstr ""
+
+#: admin/views/admin.php:70
+msgid ""
+"Loads the actual Videoplayer as \"background image\" to for thumbnails to "
+"emulate the feature Youtube, Dailymotion, and Bliptv have. If not enabled or "
+"the provider not supports `wmode=transparent` thumbnails are displayed black "
+"or you can choose a image below."
+msgstr ""
+
+#: admin/views/admin.php:74
+msgid "Custom Thumbnail Image"
+msgstr ""
+
+#: admin/views/admin.php:77
+msgid ""
+"To be used instead of black background. Upload a 16:10 Image with a size "
+"bigger or equal the thumbnials size you want to use into your WordPress and "
+"paste the URL of it here."
+msgstr ""
+
+#: admin/views/admin.php:81
+msgid "Transients expire time"
+msgstr ""
+
+#: admin/views/admin.php:84
+msgid ""
+"This Pluigin uses Wordpress transients to cache video thumbnails that "
+"greatly speeds up page loading. The maximum of seconds to keep the thumbnail "
+"image before refreshing. For example: hour - 3600, day - 86400, week - "
+"604800."
+msgstr ""
+
+#: admin/views/admin.php:88
+msgid "Autoplay all"
+msgstr ""
+
+#: admin/views/admin.php:95
+msgid "Reset options"
+msgstr ""
+
+#: admin/views/admin.php:103
+msgid "Set custom parameters"
+msgstr ""
+
+#: admin/views/admin.php:105
+msgid ""
+"You may use spaces to seperate them instead of <code>&amp;</code>'s. They "
+"will be transformed to two spaces after save. Resources: "
+msgstr ""
+
+#: admin/views/admin.php:108
+msgid ""
+"<code>wmode=transparent</code> should not be changed if you want to use "
+"thumbnail mode"
+msgstr ""
+
+#: admin/views/admin.php:147
+msgid "Change shortcode tags"
+msgstr ""
+
+#: admin/views/admin.php:149
+msgid ""
+"Do not touch this is you not know what you are doing. You might need this to "
+"prevent conflicts with other plugins you want to use. At least 3 alphanumec "
+"characters with optional underscores are needed!"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:667
+msgid "No ID, please report this bug"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:742
+msgid "<abbr title=\"Advanced Responsive Video Embedder\">ARVE</abbr> Error:"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:780
+msgid "no video ID set"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:785
+msgid "ID <code>%s</code> not valid"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:791
+msgid "no provider set"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:796
+#: public/class-advanced-responsive-video-embedder.php:1036
+msgid "Provider <code>%s</code> not valid"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:811
+msgid "Mode <code>%s</code> not valid"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:822
+msgid "Maxwidth <code>%s</code> not valid"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:826
+msgid ""
+"For the maxwidth (maxw) option you need to have normal or lazyload mode "
+"enabled, either for all videos in the plugins options or through shortcode e."
+"g. [youtube id=123456 <strong>mode=normal</strong> maxw=999 ]."
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:844
+msgid "Align <code>%s</code> not valid"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:863
+msgid "Autoplay <code>%s</code> not valid"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:872
+msgid "Start <code>%s</code> not valid"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:881
+msgid "End <code>%s</code> not valid"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:904
+msgid "Could not get Blip.tv embed ID"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1021
+msgid "Twitch ID <code>%s</code> is invalid"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1418
+msgid ""
+"Error retrieving video information from the URL <a href=\"%s\">%s</a> using "
+"<code>wp_remote_get()</code>. If opening that URL in your web browser "
+"returns anything else than an error page, the problem may be related to your "
+"web server and might be something your host administrator can solve.<br /"
+">Details: %s"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1472
+msgid ""
+"Could not get Blip.tv thumbnail from <a href=\"%s\">%s</a>.<br>Details: %s"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1672
+msgid "URL just the ID withoutout the long title"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1677
+msgid "URL from a hub with the Video ID at the end"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1682
+msgid "Playlist"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1710
+msgid ""
+"This plugin allows iframe embeds for every URL by using this <code>[iframe]</"
+"code> shortcode. This should only be used for providers not supported by "
+"this via a named shortcode. The result is a 16:9 resonsive iframe by "
+"default, aspect ratio can be changed as usual."
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1718
+msgid ""
+"This can also be used to have limited support for self hosted videos my "
+"passing URLs to .webm, .mp4 or .ogg to it. This might not be the best way to "
+"do because this is what the <video> tag is for but it works in my tests."
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1741
+msgid "Page/item <code>i=</code> URL"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1746
+msgid "File <code>f=</code> URL"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1811
+msgid "To my knowlege TED forces autoplay and there is no way disable it"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1818
+msgid "Beta site URLs work as well"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1830
+msgid "Past breadcast URL"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1835
+#: public/class-advanced-responsive-video-embedder.php:1855
+msgid "Highlight URL"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1842
+msgid "To my knowlege Ustream forces autoplay and there is no way disable it"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1845
+msgid ""
+"Channel URL - get them from the share button URLS with names instead of "
+"numeric IDs will not work!"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1850
+msgid "Recorded URL"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1939
+msgid "URL from youtu.be shortener"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1944
+msgid ""
+"Youtube playlist URL inlusive the video to start at. The index part will be "
+"ignored and is not needed"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1949
+msgid "Loop a YouTube video"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:1954
+msgid "Enable annotations and light theme"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:2024
+msgid "Test"
+msgstr ""
+
+#: public/class-advanced-responsive-video-embedder.php:2036
+msgid "Info:"
+msgstr ""
