@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: video, responsive, embed, video-embedder, iframe, minimal, lightweight, simplicity, shortcodes, Youtube, Blip, Dailymotion, Videojug, Collegehumor, Veoh, Break, Movieweb, Snotr, Gametrailers, Vimeo, Viddler, Funnyordie, Myspace, Liveleak, Metacafe, Myvideo, Yahoo Screen, Spike
 Requires at least: 3.3.1
 Tested up to: 3.9
-Stable tag: 4.5.1
+Stable tag: 4.5.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -109,14 +109,18 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 == Changelog ==
 
+= 4.5.2 =
+* Fix: Fatal PHP Error on activation.
+* Fix: Readme spellings.
+
 = 4.5.0 =
 * Fix: Minor options page spelling and field association fixes.
 * Fix: Added Lazyload to mode select in the shortcode dialog.
 * New: 4players.de support.
 * New: Added parameter input to the shortcode dialog.
 * Improved: Default options are no longer stored in the database.
-* Improved: Transparency fade animation thumbnail hover.
-* Improved: No more ungly URL hash (#arve-load-video) after clicking links.
+* Improved: Transparency fade animation on thumbnail hover.
+* Improved: No more ugly URL hash (#arve-load-video) after clicking links.
 * Improved: Dropped IE 8 support for Lazyload mode.
 * Improved: Lots of code improvements.
 
