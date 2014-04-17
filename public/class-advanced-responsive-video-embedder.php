@@ -56,7 +56,7 @@ class Advanced_Responsive_Video_Embedder {
 	 * @since   2.6.0
 	 * @var     string
 	 */
-	const VERSION = '4.5.2';
+	const VERSION = '4.5.3';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -317,13 +317,6 @@ class Advanced_Responsive_Video_Embedder {
 	private static function single_activate() {
 
 		add_option( 'arve_install_date', current_time( 'timestamp' ) );
-		
-		# TODO Remove later
-		#$options = get_option( 'arve_options' );
-		$options = $this->options;
-		$options['params']['vimeo']['html5'] = 1;
-
-		update_option( 'arve_options', $options );
 	}
 
 	/**
