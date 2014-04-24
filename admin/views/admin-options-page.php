@@ -127,22 +127,13 @@
 
 			foreach ( $this->options['params'] as $provider => $params ) {
 
-				$params_str = '';
-
-				if ( is_array( $params ) ) {
-
-					foreach ( $params as $key => $var ) {
-						$params_str .= (string) "$key=$var  ";
-					}
-				}
-
 				?>
 				<tr valign="top">
 					<th scope="row">
 						<?php printf( '<label for="arve_options[params][%s]">%s</label>', $provider, ucwords( $provider ) . ' Parameters' ); ?>
 					</th>
 					<td>
-						<?php printf( '<input type="text" id="arve_options[params][%s]" class="widefat" name="arve_options[params][%s]" value="%s">', $provider, $provider, $params_str ); ?>
+						<?php printf( '<input type="text" id="arve_options[params][%s]" class="widefat" name="arve_options[params][%s]" value="%s">', $provider, $provider, $params ); ?>
 					</td>
 				</tr>
 				<?php
