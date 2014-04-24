@@ -11,7 +11,7 @@
  * Plugin Name:       Advanced Responsive Video Embedder
  * Plugin URI:        http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/
  * Description:       Embed videos with a click of a button from many providers with full responsive sizes. Show videos as thumbnails and let them open in colorbox.
- * Version: 4.5.4
+ * Version:           4.5.4
  * Author:            Nicolas Jonas
  * Author URI:        http://nextgenthemes.com
  * Text Domain:       advanced-responsive-video-embedder
@@ -19,6 +19,7 @@
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  * Domain Path:       /languages
  * GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-embedder
+ * GitHub Branch:     master
  */
 
 // If this file is called directly, abort.

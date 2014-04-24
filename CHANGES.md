@@ -1,5 +1,9 @@
 ## Changelog ##
 
+### 4.5.4 ###
+* Fix: Save of custom URL parameters
+* New: CHANGES.md file for github updater
+
 ### 4.5.3 ###
 * Fix: Fatal PHP Error on activation.
 * Fix: Readme spellings.
