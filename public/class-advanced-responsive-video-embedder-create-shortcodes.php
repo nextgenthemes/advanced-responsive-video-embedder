@@ -1,51 +1,13 @@
-<?php /*
-
-*******************************************************************************
-
-Copyright (C) 2013 Nicolas Jonas
-Copyright (C) 2013 Tom Mc Farlin and WP Plugin Boilerplate Contributors
-
-This file is part of Advanced Responsive Video Embedder.
-
-Advanced Responsive Video Embedder is free software: you can redistribute it
-and/or modify it under the terms of the GNU General Public License as
-published by the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-Advanced Responsive Video Embedder is distributed in the hope that it will be
-useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
-Public License for more details.
-
-You should have received a copy of the GNU General Public License along with
-Advanced Responsive Video Embedder.  If not, see
-<http://www.gnu.org/licenses/>.
-
-_  _ ____ _  _ ___ ____ ____ _  _ ___ _  _ ____ _  _ ____ ____  ____ ____ _  _ 
-|\ | |___  \/   |  | __ |___ |\ |  |  |__| |___ |\/| |___ [__   |    |  | |\/| 
-| \| |___ _/\_  |  |__] |___ | \|  |  |  | |___ |  | |___ ___] .|___ |__| |  | 
-
-*******************************************************************************/
+<?php
 
 /**
- * Plugin Name.
+ * Advanced_Responsive_Video_Embedder.
  *
  * @package   Advanced_Responsive_Video_Embedder
  * @author    Nicolas Jonas
  * @license   GPL-3.0+
  * @link      http://nextgenthemes.com
- * @copyright 2013 Nicolas Jonas
- */
-
-
-
-
-/**
- * Helper class to create all the shortcodes.
- *
- *
- * @package Advanced_Responsive_Video_Embedder
- * @author  Nicolas Jonas
+ * @copyright Copyright (c) 2014 Nicolas Jonas, Copyright (c) 2014 Tom Mc Farlin and WP Plugin Boilerplate Contributors (Used as base for this plugin)
  */
 class Advanced_Responsive_Video_Embedder_Create_Shortcodes {
 

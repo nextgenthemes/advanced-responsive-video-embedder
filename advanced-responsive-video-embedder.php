@@ -5,13 +5,13 @@
  * @author    Nicolas Jonas
  * @license   GPL-3.0+
  * @link      http://nextgenthemes.com
- * @copyright Copyright (c) 2013 Nicolas Jonas, Copyright (C) 2013 Tom Mc Farlin and WP Plugin Boilerplate Contributors
+ * @copyright Copyright (c) 2014 Nicolas Jonas, Copyright (c) 2014 Tom Mc Farlin and WP Plugin Boilerplate Contributors
  *
  * @wordpress-plugin
  * Plugin Name:       Advanced Responsive Video Embedder
  * Plugin URI:        http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/
  * Description:       Embed videos with a click of a button from many providers with full responsive sizes. Show videos as thumbnails and let them open in colorbox.
- * Version: 4.5.8
+ * Version:           4.6.0
  * Author:            Nicolas Jonas
  * Author URI:        http://nextgenthemes.com
  * Text Domain:       advanced-responsive-video-embedder

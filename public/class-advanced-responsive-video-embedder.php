@@ -1,33 +1,4 @@
-<?php /*
-
-*******************************************************************************
-
-Copyright (C) 2013 Nicolas Jonas ( This entire thing )
-Copyright (C) 2013 Sutherland Boswell ( some code in the 'get_thumbnail' method is based on https://github.com/suth/video-thumbnails/tree/master/php/providers )
-Copyright (C) 2013 Tom Mc Farlin and WP Plugin Boilerplate Contributors ( Used as base for this plugin )
-
-This file is part of Advanced Responsive Video Embedder.
-
-Advanced Responsive Video Embedder is free software: you can redistribute it
-and/or modify it under the terms of the GNU General Public License as
-published by the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-Advanced Responsive Video Embedder is distributed in the hope that it will be
-useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
-Public License for more details.
-
-You should have received a copy of the GNU General Public License along with
-Advanced Responsive Video Embedder.  If not, see
-<http://www.gnu.org/licenses/>.
-
-_  _ ____ _  _ ___ ____ ____ _  _ ___ _  _ ____ _  _ ____ ____  ____ ____ _  _ 
-|\ | |___  \/   |  | __ |___ |\ |  |  |__| |___ |\/| |___ [__   |    |  | |\/| 
-| \| |___ _/\_  |  |__] |___ | \|  |  |  | |___ |  | |___ ___] .|___ |__| |  | 
-
-*******************************************************************************/
-
+<?php
 /**
  * Plugin Name.
  *
@@ -35,16 +6,13 @@ _  _ ____ _  _ ___ ____ ____ _  _ ___ _  _ ____ _  _ ____ ____  ____ ____ _  _
  * @author    Nicolas Jonas
  * @license   GPL-3.0
  * @link      http://nextgenthemes.com
- * @copyright 2013 Nicolas Jonas
+ * @copyright Copyright (c) 2014 Nicolas Jonas, Copyright (c) 2014 Tom Mc Farlin and WP Plugin Boilerplate Contributors (Used as base for this plugin), Copyright (c) 2014 Sutherland Boswell (some code in the 'get_thumbnail' method is based on https://github.com/suth/video-thumbnails/tree/master/php/providers)
+ * _  _ ____ _  _ ___ ____ ____ _  _ ___ _  _ ____ _  _ ____ ____  ____ ____ _  _  
+ * |\ | |___  \/   |  | __ |___ |\ |  |  |__| |___ |\/| |___ [__   |    |  | |\/| 
+ * | \| |___ _/\_  |  |__] |___ | \|  |  |  | |___ |  | |___ ___] .|___ |__| |  | 
  */
 
 /**
- * Plugin class. This class should ideally be used to work with the
- * public-facing side of the WordPress site.
- *
- * If you're interested in introducing administrative or dashboard
- * functionality, then refer to `class-plugin-name-admin.php`
- *
  * @package Advanced_Responsive_Video_Embedder
  * @author  Nicolas Jonas
  */
@@ -56,7 +24,7 @@ class Advanced_Responsive_Video_Embedder {
 	 * @since   2.6.0
 	 * @var     string
 	 */
-	const VERSION = '4.5.8';
+	const VERSION = '4.6.0';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -471,7 +439,7 @@ class Advanced_Responsive_Video_Embedder {
 			}
 		}
 
-		$options['params']     = wp_parse_args( $options['params'],     $defaults['params'] );
+		$options['params'] = wp_parse_args( $options['params'], $defaults['params'] );
 
 		#update_option( 'arve_options', $options );
 		$this->options = $options;

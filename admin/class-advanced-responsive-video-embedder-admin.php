@@ -74,7 +74,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
 
 		// Add an action link pointing to the options page.
-		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_slug . '.php' );
+		$plugin_basename = plugin_basename( plugin_dir_path( realpath( dirname( __FILE__ ) ) ) . $this->plugin_slug . '.php' );
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
 	
 		//* Display a notice that can be dismissed
@@ -168,13 +168,13 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 			foreach ( $this->regex_list as $provider => $regex ) {
 
-	            if ( $provider != 'ign' ) {
+				if ( $provider != 'ign' ) {
 
-	            	$regex = str_replace( array( 'https?://(?:www\.)?', 'http://' ), '', $regex );
-	            }
+					$regex = str_replace( array( 'https?://(?:www\.)?', 'http://' ), '', $regex );
+				}
 
-	            $regex_list[ $provider ] = $regex;
-	        }
+				$regex_list[ $provider ] = $regex;
+			}
 
 			wp_localize_script( "{$this->plugin_slug}-admin-dialog", 'arve_regex_list', $regex_list );
 		}
@@ -300,10 +300,11 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			$var = preg_replace( '/[_]+/', '_', $var );	// remove multiple underscores
 			$var = preg_replace( '/[^A-Za-z0-9_]/', '', $var );	// strip away everything except a-z,0-9 and underscores
 			
-			if ( strlen($var) < 3 )
+			if ( strlen($var) < 3 ) {
 				continue;
+			}
 			
-			$output['shortcodes'][$key] = $var;
+			$output['shortcodes'][ $key ] = $var;
 		}
 
 		$arve = Advanced_Responsive_Video_Embedder::get_instance();
@@ -312,7 +313,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		
 			$var = $arve->parse_parameters( $var );
 			
-			$output['params'][$key] = $var;
+			$output['params'][ $key ] = $var;
 		}
 
 		//* Store only the options in the database that are different from the defaults.
@@ -328,32 +329,33 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	public function array_diff_assoc_recursive( $array1, $array2 ) {
 
-	    $difference = array();
+		$difference = array();
 
-	    foreach( $array1 as $key => $value ) {
+		foreach( $array1 as $key => $value ) {
 
-	        if( is_array( $value ) ) {
-	            
-	            if( !isset( $array2[ $key ] ) || !is_array( $array2[ $key ] ) ) {
-	                
-	                $difference[ $key ] = $value;
-	            
-	            } else {
-	                
-	                $new_diff = $this->array_diff_assoc_recursive( $value, $array2[ $key ] );
+			if( is_array( $value ) ) {
+				
+				if( !isset( $array2[ $key ] ) || !is_array( $array2[ $key ] ) ) {
+					
+					$difference[ $key ] = $value;
+				
+				} else {
+					
+					$new_diff = $this->array_diff_assoc_recursive( $value, $array2[ $key ] );
 
-	                if( !empty( $new_diff ) ) {
+					if( !empty( $new_diff ) ) {
 
-	                    $difference[ $key ] = $new_diff;
-	                }
-	            }
-	        } elseif( !array_key_exists( $key, $array2 ) || $array2[ $key ] !== $value ) {
-	            
-	            $difference[ $key ] = $value;
-	        }
-	    }
+						$difference[ $key ] = $new_diff;
+					}
+				}
 
-	    return $difference;
+			} elseif( !array_key_exists( $key, $array2 ) || $array2[ $key ] !== $value ) {
+				
+				$difference[ $key ] = $value;
+			}
+		}
+
+		return $difference;
 	}
 
 	/**
@@ -412,16 +414,16 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		global $pagenow;
 
-	    if ( empty ( $pagenow ) ) {
+		if ( empty ( $pagenow ) ) {
 
-	        return false;
-	    }
+			return false;
+		}
 
-	    if ( ! in_array( $pagenow, array ( 'post-new.php', 'post.php' ) ) ) {
-	        
-	        return false;
-	    }
+		if ( ! in_array( $pagenow, array ( 'post-new.php', 'post.php' ) ) ) {
+			
+			return false;
+		}
 
-	    return post_type_supports( get_current_screen()->post_type, 'editor' );
+		return post_type_supports( get_current_screen()->post_type, 'editor' );
 	}	
 }
