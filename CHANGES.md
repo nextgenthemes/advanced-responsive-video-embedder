@@ -1,6 +1,9 @@
 
 ## Changelog ##
 
+### 4.7.0 ###
+* Fix: Iframe code detection
+
 ### 4.6.0 ###
 * Improvement: PHP required version lowered to 5.2.4
 

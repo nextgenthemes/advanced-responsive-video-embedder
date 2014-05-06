@@ -24,7 +24,7 @@ class Advanced_Responsive_Video_Embedder {
 	 * @since   2.6.0
 	 * @var     string
 	 */
-	const VERSION = '4.6.0';
+	const VERSION = '4.7.0';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -1189,7 +1189,7 @@ class Advanced_Responsive_Video_Embedder {
 			$output .= sprintf(
 				'<div class="%s"%s><div class="arve-embed-container"%s>%s</div></div>',
 				esc_attr( "arve-wrapper arve-normal-wrapper arve-$provider-wrapper $align" ),
-				( $style ) ? sprintf( ' style="%s"', esc_attr( trim( $style ) ) ) : '',
+				( $style )        ? sprintf( ' style="%s"', esc_attr( trim( $style ) ) ) : '',
 				( $aspect_ratio ) ? sprintf( ' style="padding-bottom: %d%%"', $aspect_ratio ) : '',
 				$inner
 			);
