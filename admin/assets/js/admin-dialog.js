@@ -70,13 +70,19 @@
 		embed_regex.bliptv        = /blip\.tv\/play\/([a-z0-9]+)/i;
 		embed_regex.movieweb      = /movieweb\.com\/v\/([a-z0-9]{14})/i;
 
-		embed_regex.iframe        = /(.*\.(mp4|webm|ogg))$|src=(?:'|")(https?:\/\/(www\.)?[^'"]+)/i;
+		// Iframe
+		embed_regex.iframe        = /src=(?:'|")(https?:\/\/(www\.)?[^'"]+)/i;
+		embed_regex.fileurl       = /(.*\.(mp4|webm|ogg))$/i;
 
 		$.each( embed_regex, function( provider, regex ) {
 
 			var match = code.match( regex );
 
 			if ( match && match[1] ) {
+
+				if ( 'fileurl' == provider ) {
+					provider = 'iframe';				
+				}
 
 				output.provider = provider;
 				output.videoid  = match[1];
