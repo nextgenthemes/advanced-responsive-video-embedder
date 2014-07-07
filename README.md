@@ -8,7 +8,7 @@
 **License:** GPLv3
 **License URI:** http://www.gnu.org/licenses/gpl-3.0.html
 
-Easy responsive video embeds via URL (like WordPress) or Shortcodes. Normal, Lazyload or Thumbnails that open a Colorbox your choice!  
+Easy responsive video embeds via URL (like WordPress) or Shortcodes. Normal, Lazyload or Thumbnails that open a Colorbox - Your choice!  
 
 ## Description ##
 

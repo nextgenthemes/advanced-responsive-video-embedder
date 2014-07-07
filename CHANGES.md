@@ -1,5 +1,12 @@
-
 ## Changelog ##
+
+### 4.9.0 Beta ###
+* Improved: All Javascript is loaded from files now and they are only loaded when there are embeds on the page. This improves page load times on pages with no embeds.
+* Fix: Removed autohide=1 from default YouTube Parameters since it causes a YouTube bug in the HTML5 player.
+
+### 4.8.0 ###
+* Updated: Spanish translation now 80% complete. Thanks Xarkitu!
+* Improved: Do not load admin dialog when doing AJAX
 
 ### 4.7.0 ###
 * Fix: Iframe code detection

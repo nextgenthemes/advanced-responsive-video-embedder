@@ -24,7 +24,7 @@ class Advanced_Responsive_Video_Embedder {
 	 * @since   2.6.0
 	 * @var     string
 	 */
-	const VERSION = '4.7.0';
+	const VERSION = '4.8.0';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -95,10 +95,9 @@ class Advanced_Responsive_Video_Embedder {
 
 		// Load public-facing style sheet and JavaScript.
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ), 0 );
 
 		add_action( 'wp_head', array( $this, 'print_styles' ) );
-		add_action( 'wp_footer', array( $this, 'print_javascript' ) );
 
 		add_filter( 'widget_text', 'do_shortcode' );
 		#add_filter( 'oembed_providers', array( $this, 'remove_wp_default_oembeds' ), 99 );
@@ -322,10 +321,11 @@ class Advanced_Responsive_Video_Embedder {
 	/**
 	 * Register and enqueues public-facing JavaScript files.
 	 *
-	 * @since    1.0.0
+	 * @since    4.9.0
 	 */
-	public function enqueue_scripts() {
-		wp_enqueue_script( $this->plugin_slug . '-plugin-colorbox-setup', plugins_url( 'assets/js/colorbox-setup.js', __FILE__ ), array( 'jquery', 'colorbox' ), self::VERSION, true );
+	public function register_scripts() {
+		wp_register_script( $this->plugin_slug . '-plugin-colorbox-setup', plugins_url( 'assets/js/colorbox-setup.js', __FILE__ ), array( 'jquery', 'colorbox' ), self::VERSION, true );
+		wp_register_script( $this->plugin_slug . '-plugin-lazyload',       plugins_url( 'assets/js/lazyload.js', __FILE__ ),       array(),                       self::VERSION, true );
 		#wp_enqueue_script( 'screenfull', plugins_url( 'assets/js/screenfull.min.js', __FILE__ ), array(), self::VERSION );
 	}
 
@@ -413,7 +413,7 @@ class Advanced_Responsive_Video_Embedder {
 				#'videojug'        => '',
 				'vimeo'           => 'html5=1  title=0  byline=0  portrait=0  ',
 				#'yahoo'           => '',
-				'youtube'         => 'autohide=1  iv_load_policy=3  modestbranding=1  rel=0  wmode=transparent  ',
+				'youtube'         => 'iv_load_policy=3  modestbranding=1  rel=0  wmode=transparent  ',
 			)
 		);
 
@@ -798,6 +798,15 @@ class Advanced_Responsive_Video_Embedder {
 				break;
 		}
 
+		if ( 'lazyload' == $mode ) {
+
+			wp_enqueue_script( $this->plugin_slug . '-plugin-lazyload' );
+
+		} elseif ( 'thumbnail' == $mode ) {
+
+			wp_enqueue_script( $this->plugin_slug . '-plugin-colorbox-setup' );
+		}
+
 		switch ( $maxwidth ) {
 			case '':
 				if ( $options['video_maxwidth'] > 0 )
@@ -1150,7 +1159,7 @@ class Advanced_Responsive_Video_Embedder {
 			$style = $this->get_wrapper_style( false, $maxwidth );
 
 			$output .= sprintf(
-				'<div class="%s"%s><div class="arve-embed-container"%s>%s</div></div>',
+				'<div class="%s" itemscope itemtype="http://schema.org/VideoObject"%s><div class="arve-embed-container" %s>%s</div></div>',
 				esc_attr( "arve-wrapper arve-normal-wrapper arve-$provider-wrapper $align" ),
 				( $style )        ? sprintf( ' style="%s"', esc_attr( trim( $style ) ) ) : '',
 				( $aspect_ratio ) ? sprintf( ' style="padding-bottom: %d%%"', $aspect_ratio ) : '',
@@ -1187,7 +1196,7 @@ class Advanced_Responsive_Video_Embedder {
 			$style = $this->get_wrapper_style( $thumbnail, $maxwidth );
 
 			$output .= sprintf(
-				'<div class="%s"%s><div class="arve-embed-container"%s>%s</div></div>',
+				'<div class="%s" itemscope itemtype="http://schema.org/VideoObject"%s><div class="arve-embed-container"%s>%s</div></div>',
 				esc_attr( "arve-wrapper arve-normal-wrapper arve-$provider-wrapper $align" ),
 				( $style )        ? sprintf( ' style="%s"', esc_attr( trim( $style ) ) ) : '',
 				( $aspect_ratio ) ? sprintf( ' style="padding-bottom: %d%%"', $aspect_ratio ) : '',
@@ -1228,9 +1237,9 @@ class Advanced_Responsive_Video_Embedder {
 			$style = $this->get_wrapper_style( $thumbnail, false );
 
 			$output .= sprintf(
-				'<div class="%s"%s><div class="arve-embed-container"%s>%s</div></div>',
-				esc_attr( "arve-wrapper arve-thumb-wrapper arve-$provider-wrapper $align" ),
-				( $style ) ? sprintf( ' style="%s"', esc_attr( trim( $style ) ) ) : '',
+				'<div class="%s" itemscope itemtype="http://schema.org/VideoObject"%s><div class="arve-embed-container"%s>%s</div></div>',
+				esc_attr( "arve-wrapper arve-thumb-wrapper arve-{$provider}-wrapper {$align}" ),
+				( $style )        ? sprintf( ' style="%s"', esc_attr( trim( $style ) ) ) : '',
 				( $aspect_ratio ) ? sprintf( ' style="padding-bottom: %d%%"', $aspect_ratio ) : '',
 				$inner
 			);
@@ -1372,36 +1381,6 @@ class Advanced_Responsive_Video_Embedder {
 		);
 
 		echo '<style type="text/css">' . $css . "</style>\n";
-	}
-
-	/**
-	 * Print variable CSS
-	 *
-	 * @since    2.6.0
-	 */
-	public function print_javascript() {
-
-?><script type="text/javascript">
-
-window.onload = function() {
-
-	"use_strict";
-
-    var arve_iframe_btns = document.getElementsByClassName( "arve-iframe-btn" );
-
-    for ( var i=0; i < arve_iframe_btns.length; i++ ) {
-
-    	arve_iframe_btns[i].onclick = function() {
-
-			var target = document.getElementById( this.getAttribute( "data-target" ) );
-			target.setAttribute( "src", target.getAttribute( "data-src" ) );
-			target.className = "arve-inner";
-			this.className += " arve-hidden";
-    	};
-    };
-};
-</script>
-<?php
 	}
 
 	public function get_thumbnail( $provider, $id ) {
