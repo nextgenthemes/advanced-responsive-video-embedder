@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### 5.0.2 Beta ###
+* Improved: Marked as working with WP 4.0
+
 ### 5.0.1 Beta ###
 * Fix: Options var error
 
