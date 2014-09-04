@@ -5,9 +5,9 @@
  *
  * @package   Advanced_Responsive_Video_Embedder
  * @author    Nicolas Jonas
- * @license   GPL-3.0+
+ * @license   GPL-3.0
  * @link      http://nextgenthemes.com
- * @copyright Copyright (c) 2014 Nicolas Jonas, Copyright (c) 2014 Tom Mc Farlin and WP Plugin Boilerplate Contributors (Used as base for this plugin)
+ * @copyright Copyright (c) 2014 Nicolas Jonas
  */
 class Advanced_Responsive_Video_Embedder_Create_Shortcodes {
 

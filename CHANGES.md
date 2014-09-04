@@ -1,5 +1,13 @@
 ## Changelog ##
 
+### 5.0.1 Beta ###
+* Fix: Options var error
+
+### 5.0.0 Beta ###
+* Fix: Max-width options should now work in all circumstances
+* Improved: Various CSS improvements
+* Improved: Changed play overlay image to a Google+ style image 
+
 ### 4.9.0 Beta ###
 * Improved: All Javascript is loaded from files now and they are only loaded when there are embeds on the page. This improves page load times on pages with no embeds.
 * Fix: Removed autohide=1 from default YouTube Parameters since it causes a YouTube bug in the HTML5 player.
