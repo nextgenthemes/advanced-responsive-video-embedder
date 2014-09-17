@@ -24,7 +24,7 @@ class Advanced_Responsive_Video_Embedder {
 	 * @since   2.6.0
 	 * @var     string
 	 */
-	const VERSION = '5.0.2';
+	const VERSION = '5.1.0';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -933,7 +933,7 @@ class Advanced_Responsive_Video_Embedder {
 				$urlcode = 'http://www.myvideo.de/movie/' . $id;
 				break;
 			case 'vimeo':
-				$urlcode = 'http://player.vimeo.com/video/' . $id;
+				$urlcode = '//player.vimeo.com/video/' . $id;
 				break;
 			case 'gametrailers':
 				$urlcode = 'http://media.mtvnservices.com/embed/mgid:arc:video:gametrailers.com:' . $id;

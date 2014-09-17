@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### 5.1.0 ###
+* New: Vimeo HTTPS support (works automatically if your site is HTTPS)
+
 ### 5.0.2 Beta ###
 * Improved: Marked as working with WP 4.0
 
