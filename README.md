@@ -1,11 +1,19 @@
 # Advanced Responsive Video Embedder #
+
 **Contributors:** nico23
+
 **Donate link:** https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC
+
 **Tags:** video, responsive, embed, video-embedder, iframe, minimal, lightweight, simplicity, shortcodes, Youtube, Blip, Dailymotion, Videojug, Collegehumor, Veoh, Break, Movieweb, Snotr, Gametrailers, Vimeo, Viddler, Funnyordie, Myspace, Liveleak, Metacafe, Myvideo, Yahoo Screen, Spike
+
 **Requires at least:** 3.3.1
+
 **Tested up to:** 4.0
+
 **Stable tag:** trunk
+
 **License:** GPLv3
+
 **License URI:** http://www.gnu.org/licenses/gpl-3.0.html
 
 Easy responsive video embeds via URL (like WordPress) or Shortcodes. Normal, Lazyload or Thumbnails that open a Colorbox - Your choice!  
