@@ -7,9 +7,9 @@
  * @license   GPL-3.0
  * @link      http://nextgenthemes.com
  * @copyright Copyright (c) 2014 Nicolas Jonas, Copyright (c) 2014 Tom Mc Farlin and WP Plugin Boilerplate Contributors (Used as base for this plugin), Copyright (c) 2014 Sutherland Boswell (some code in the 'get_thumbnail' method is based on https://github.com/suth/video-thumbnails/tree/master/php/providers)
- * _  _ ____ _  _ ___ ____ ____ _  _ ___ _  _ ____ _  _ ____ ____  ____ ____ _  _  
- * |\ | |___  \/   |  | __ |___ |\ |  |  |__| |___ |\/| |___ [__   |    |  | |\/| 
- * | \| |___ _/\_  |  |__] |___ | \|  |  |  | |___ |  | |___ ___] .|___ |__| |  | 
+ * _  _ ____ _  _ ___ ____ ____ _  _ ___ _  _ ____ _  _ ____ ____  ____ ____ _  _
+ * |\ | |___  \/   |  | __ |___ |\ |  |  |__| |___ |\/| |___ [__   |    |  | |\/|
+ * | \| |___ _/\_  |  |__] |___ | \|  |  |  | |___ |  | |___ ___] .|___ |__| |  |
  */
 
 /**
@@ -24,7 +24,7 @@ class Advanced_Responsive_Video_Embedder {
 	 * @since   2.6.0
 	 * @var     string
 	 */
-	const VERSION = '5.1.0';
+	const VERSION = '5.1.1';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -48,7 +48,7 @@ class Advanced_Responsive_Video_Embedder {
 	protected static $instance = null;
 
 	/**
-	 * 
+	 *
 	 * @since    4.4.0
 	 * @var      array
 	 */
@@ -292,7 +292,7 @@ class Advanced_Responsive_Video_Embedder {
 	 * @since    1.0.0
 	 */
 	private static function single_deactivate() {
-		
+
 	}
 
 	/**
@@ -357,12 +357,12 @@ class Advanced_Responsive_Video_Embedder {
 				'dailymotionlist'        => 'dailymotionlist',
 				'flickr'                 => 'flickr',
 				'funnyordie'             => 'funnyordie',
-				'gametrailers'           => 'gametrailers',	
+				'gametrailers'           => 'gametrailers',
 				'iframe'                 => 'iframe',
 				'ign'                    => 'ign',
 				'kickstarter'            => 'kickstarter',
 				'liveleak'               => 'liveleak',
-				'metacafe'               => 'metacafe',   
+				'metacafe'               => 'metacafe',
 				'movieweb'               => 'movieweb',
 				'mpora'                  => 'mpora',
 				'myspace'                => 'myspace',
@@ -489,7 +489,7 @@ class Advanced_Responsive_Video_Embedder {
 	}
 
 	/**
-	 * Create all shortcodes at a late stage because people over and over again using this plugin toghter with jetback or 
+	 * Create all shortcodes at a late stage because people over and over again using this plugin toghter with jetback or
 	 * other plugins that handle shortcodes we will now overwrite all this suckers.
 	 *
 	 * @since    2.6.2
@@ -507,7 +507,7 @@ class Advanced_Responsive_Video_Embedder {
 		add_shortcode( 'arve_supported', array( $this, 'supported_shortcode' ) );
 	}
 
-	/** 
+	/**
 	 * Unused, seems not needed
 	 *
 	 * @since    3.0.0
@@ -560,19 +560,19 @@ class Advanced_Responsive_Video_Embedder {
 			'4players'            => $hw . '4players\.de/4players\.php/tvplayer/4PlayersTV/([0-9a-z_/]+\.html)',
 			'archiveorg'          => $hw . 'archive\.org/(?:details|embed)/([0-9a-z]+)',
 			'blip'                => $hw . 'blip\.tv/[^/]+/[^/]+-([0-9]{7})',
-			##'bliptv'            => 
+			##'bliptv'            =>
 			'break'               => $hw . 'break\.com/video/(?:[a-z\-]+)-([0-9]+)',
 			'collegehumor'        => $hw . 'collegehumor\.com/video/([0-9]+)',
-			##'comedycentral'     => 
+			##'comedycentral'     =>
 			'dailymotion_hub'     => $hw . 'dailymotion\.com/hub/' .  '[a-z0-9]+_[a-z0-9_\-]+\#video=([a-z0-9]+)',
 			'dailymotionlist'     => $hw . 'dailymotion\.com/playlist/([a-z0-9]+_[a-z0-9_\-]+)',
 			'dailymotion'         => $hw . 'dailymotion\.com/video/([^_]+)',
 			#'dailymotion_jukebox' => $hw . 'dailymotion\.com/widget/jukebox?list\[\]=%2Fplaylist%2F([a-z0-9]+_[a-z0-9_\-]+)',
 			#'flickr'             => 'flickr',
 			'funnyordie'          => $hw . 'funnyordie\.com/videos/([a-z0-9_]+)',
-			##'gametrailers'      => 
+			##'gametrailers'      =>
 			'ign'                 => '(https?://(?:www\.)?ign\.com/videos/[0-9]{4}/[0-9]{2}/[0-9]{2}/[0-9a-z\-]+)',
-			##'iframe'            => 
+			##'iframe'            =>
 			'kickstarter'         => $hw . 'kickstarter\.com/projects/([0-9a-z\-]+/[0-9a-z\-]+)',
 			'liveleak'            => $hw . 'liveleak\.com/(?:view|ll_embed)\?((f|i)=[0-9a-z\_]+)',
 			'metacafe'            => $hw . 'metacafe\.com/(?:watch|fplayer)/([0-9]+)',
@@ -582,13 +582,13 @@ class Advanced_Responsive_Video_Embedder {
 			'myvideo'             => $hw . 'myvideo\.de/(?:watch|embed)/([0-9]{7})',
 			'snotr'               => $hw . 'snotr\.com/(?:video|embed)/([0-9]+)',
 			'twitch'              => 'https?://(?:www\.|[a-z\-]{2,5}\.)?twitch.tv/([a-z0-9_/]+)',
-			##'spike'             => 
+			##'spike'             =>
 			'ustream'             => $hw . 'ustream\.tv/(?:channel/)?([0-9]{8}|recorded/[0-9]{8}(/highlight/[0-9]+)?)',
 			'veoh'                => $hw . 'veoh\.com/watch/([a-z0-9]+)',
 			'vevo'                => $hw . 'vevo\.com/watch/[a-z0-9:\-]+/[a-z0-9:\-]+/([a-z0-9]+)',
 			'viddler'             => $hw . 'viddler\.com/(?:embed|v)/([a-z0-9]{8})',
 			'vine'                => $hw . 'vine\.co/v/([a-z0-9]+)',
-			##'videojug'          => 
+			##'videojug'          =>
 			'vimeo'               => $hw . 'vimeo\.com/(?:(?:channels/[a-z]+/)|(?:groups/[a-z]+/videos/))?([0-9]+)',
 			'yahoo'               => $hw . '(?:screen|shine|omg)\.yahoo\.com/(?:embed/)?([a-z0-9\-]+/[a-z0-9\-]+)\.html',
 			'ted'                 => 'https?://(?:www\.|new\.)?ted\.com/talks/([a-z0-9_]+)',
@@ -610,7 +610,7 @@ class Advanced_Responsive_Video_Embedder {
 		foreach ( $this->get_regex_list() as $provider => $regex ) {
 			wp_embed_register_handler( 'arve_' . $provider, '#' . $regex . '#i', array( $this, $provider ) );
 		}
-		
+
 	}
 
 	/**
@@ -624,7 +624,7 @@ class Advanced_Responsive_Video_Embedder {
 		if( ! array_key_exists( $func, $this->regex_list ) ) {
 			wp_die( "__call '$func' failed"  );
 		}
-		
+
 		switch ( $func ) {
 			case 'youtubelist':
 			case 'youtu_be':
@@ -702,7 +702,7 @@ class Advanced_Responsive_Video_Embedder {
 	/**
 	 *
 	 * @since     3.1.3
-	 */	
+	 */
 	public function parse_parameters( $params ) {
 
 		$params = preg_replace( '!\s+!', '&', trim( $params ) );
@@ -719,7 +719,7 @@ class Advanced_Responsive_Video_Embedder {
 	/**
 	 *
 	 * @since     3.6.0
-	 */	
+	 */
 	public function error( $message ) {
 
 		return sprintf(
@@ -747,7 +747,7 @@ class Advanced_Responsive_Video_Embedder {
 
 		static $counter = 0;
 		$counter++;
-		
+
 		$output    = '';
 		$iframe    = true;
 
@@ -779,7 +779,7 @@ class Advanced_Responsive_Video_Embedder {
 			case ( ! preg_match('/[^\x20-\x7f]/', $provider ) ):
 				break;
 			default:
-				return $this->error( sprintf( __( 'Provider <code>%s</code> not valid', $this->plugin_slug ), $provider ) );			
+				return $this->error( sprintf( __( 'Provider <code>%s</code> not valid', $this->plugin_slug ), $provider ) );
 				break;
 		}
 
@@ -958,7 +958,7 @@ class Advanced_Responsive_Video_Embedder {
 				$urlcode = '//www.youtube-nocookie.com/embed/' . $id;
 				break;
 			case 'youtubelist': //* DEPRICATED
-				$urlcode = 'http://www.youtube-nocookie.com/embed/videoseries?list=' . $id . '&wmode=transparent&rel=0&autohide=1&hd=1&iv_load_policy=3';
+				$urlcode = '//www.youtube-nocookie.com/embed/videoseries?list=' . $id . '&wmode=transparent&rel=0&autohide=1&hd=1&iv_load_policy=3';
 				break;
 			case 'archiveorg':
 				$urlcode = 'http://www.archive.org/embed/' . $id . '/';
@@ -1044,7 +1044,7 @@ class Advanced_Responsive_Video_Embedder {
 			}
 		}
 
-		//* Take parameters from Options as defaults and maybe merge custom parameters from shortcode in. 
+		//* Take parameters from Options as defaults and maybe merge custom parameters from shortcode in.
 		//* If there are no options we assume the provider not supports any params and do nothing.
 		if ( ! empty( $options['params'][ $provider ] ) ) {
 
@@ -1142,7 +1142,7 @@ class Advanced_Responsive_Video_Embedder {
 			$href = str_replace( 'jukebox?list%5B0%5D', 'jukebox?list[]', esc_url( $url_autoplay_yes ) );
 			$fancybox_class = 'fancybox arve_iframe iframe';
 			//$href = "#inline_".$counter;
-			//$fancybox_class = 'fancybox';	
+			//$fancybox_class = 'fancybox';
 		} else {
 			$href = '#arve-hidden-' . $counter;
 			$fancybox_class = 'fancybox inline';
@@ -1220,14 +1220,14 @@ class Advanced_Responsive_Video_Embedder {
 				else
 					$inner = $this->create_object( $url_autoplay_no, $object_params_autoplay_no, '' );
 
-				$inner .= sprintf( 
+				$inner .= sprintf(
 					'<a href="%s" class="%s"></a>',
 					esc_url( $href ),
 					esc_attr( 'arve-inner ' . $fancybox_class )
 				);
 			}
 			else {
-				$inner = sprintf( 
+				$inner = sprintf(
 					'<a href="%s" class="%s"></a>',
 					esc_url( $href ),
 					esc_attr( 'arve-inner arve-play-background ' . $fancybox_class )
@@ -1243,7 +1243,7 @@ class Advanced_Responsive_Video_Embedder {
 				( $aspect_ratio ) ? sprintf( ' style="padding-bottom: %d%%"', $aspect_ratio ) : '',
 				$inner
 			);
-			
+
 			if ( ! $iframe )
 				$output .= sprintf( '<div class="arve-hidden">%s</div>', $this->create_object( $url_autoplay_yes, $object_params_autoplay_yes, $counter ) );
 		}
@@ -1265,13 +1265,13 @@ class Advanced_Responsive_Video_Embedder {
 				$options_dump = sprintf( 'Options: <pre>%s</pre>', ob_get_clean() );
 			}
 			$show_options_debug = false;
-			
+
 			ob_start();
 			var_dump( $shortcode_atts );
 			$atts_dump = sprintf( '<pre>%s</pre>', ob_get_clean() );
 
 			return sprintf(
-				'<div>%s Provider: %s<br>%s<pre>%s</pre></div>%s', 
+				'<div>%s Provider: %s<br>%s<pre>%s</pre></div>%s',
 				$options_dump,
 				$provider,
 				$atts_dump,
@@ -1311,7 +1311,7 @@ class Advanced_Responsive_Video_Embedder {
 	}
 
 	/**
-	 * 
+	 *
 	 *
 	 * @since    2.6.0
 	 */
@@ -1332,7 +1332,7 @@ class Advanced_Responsive_Video_Embedder {
 	}
 
 	/**
-	 * 
+	 *
 	 *
 	 * @since    2.6.0
 	 */
@@ -1348,7 +1348,7 @@ class Advanced_Responsive_Video_Embedder {
 	}
 
 	/**
-	 * 
+	 *
 	 *
 	 * @since    3.0.0
 	 */
@@ -1372,8 +1372,8 @@ class Advanced_Responsive_Video_Embedder {
 		//* Fallback if no width is set neither with options nor with shortcode (inline CSS)
 		$css .= sprintf(
 			'.arve-normal-wrapper.alignleft, ' .
-			'.arve-normal-wrapper.alignright, ' . 
-			'.arve-normal-wrapper.aligncenter { max-width: %dpx; }', 
+			'.arve-normal-wrapper.alignright, ' .
+			'.arve-normal-wrapper.aligncenter { max-width: %dpx; }',
 			$this->options['align_width']
 		);
 
@@ -1400,12 +1400,12 @@ class Advanced_Responsive_Video_Embedder {
 				preg_match( '/[0-9a-z_\-]+/i', $id, $found );
 				$id = $found[0];
 
-				$maxres = 'http://img.youtube.com/vi/' . $id . '/maxresdefault.jpg';
+				$maxres = '//img.youtube.com/vi/' . $id . '/maxresdefault.jpg';
 				$response = wp_remote_head( $maxres );
 				if ( ! is_wp_error( $response ) && $response['response']['code'] == '200' ) {
 					$result = $maxres;
 				} else {
-					$result = 'http://img.youtube.com/vi/' . $id . '/0.jpg';
+					$result = '//img.youtube.com/vi/' . $id . '/0.jpg';
 				}
 				break;
 
@@ -1422,8 +1422,9 @@ class Advanced_Responsive_Video_Embedder {
 					$result = new WP_Error( 'vimeo_thumbnail_retrieval', __( 'The Vimeo endpoint located at <a href="' . $request . '">' . $request . '</a> returned a 403 error.<br />This can occur when a video has embedding disabled or restricted to certain domains. Try entering API credentials in the provider settings.' ) );
 				} else {
 					$result = json_decode( $response['body'] );
-					$result = $result->thumbnail_url;
+					$result = str_replace( 'http://', '//', $result->thumbnail_url );
 				}
+
 				break;
 
 			case 'blip':
@@ -1443,7 +1444,7 @@ class Advanced_Responsive_Video_Embedder {
 					$blip_result = $blip_xml->xpath( "/rss/channel/item/media:thumbnail/@url" );
 					$result = (string) $blip_result[0]['url'];
 				} else {
-					$result = new WP_Error( 'arve_get_blip_thumb', sprintf( 
+					$result = new WP_Error( 'arve_get_blip_thumb', sprintf(
 						__( 'Could not get Blip.tv thumbnail from <a href="%s">%s</a>.<br>Details: %s', $this->plugin_slug ),
 						esc_url( $request ),
 						esc_html( $request ),
@@ -1567,7 +1568,7 @@ class Advanced_Responsive_Video_Embedder {
 
 		if ( ! is_singular() )
 			return $content;
-		
+
 		$tests = array(
 
 			'align-tests' => array(
@@ -1615,14 +1616,14 @@ class Advanced_Responsive_Video_Embedder {
 				array(
 					'url'      => 'http://blip.tv/the-spoony-experiment/b-fest-2014-recap-part-1-of-2-6723548',
 					'expected' => ''
-				),		
+				),
 			),
 			'break' => array(
 
 				array(
 					'url'      => 'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591',
 					'expected' => ''
-				),		
+				),
 			),
 			'collegehumor' => array(
 
@@ -1633,7 +1634,7 @@ class Advanced_Responsive_Video_Embedder {
 			),
 			'comedycentral' => array(
 
-				array( 
+				array(
 					'shortcode' => '[comedycentral id="c80adf02-3e24-437a-8087-d6b77060571c"]',
 					'expected'  => ''
 				),
@@ -1976,7 +1977,7 @@ class Advanced_Responsive_Video_Embedder {
 		$provider_options = $mode_options = '';
 
 		foreach ( $tests as $provider => $value ) {
-			$provider_options .= sprintf( 
+			$provider_options .= sprintf(
 				'<option%s value="%s">%s</option>',
 				selected( $provider, $get_provider, false ),
 				esc_attr( $provider ),
@@ -1985,7 +1986,7 @@ class Advanced_Responsive_Video_Embedder {
 		}
 
 		foreach ( array( 'lazyload', 'normal', 'thumbnail',  ) as $mode ) {
-			$mode_options .= sprintf( 
+			$mode_options .= sprintf(
 				'<option%s value="%s">%s</option>',
 				selected( $mode, $selected_mode, false ),
 				esc_attr( $mode ),
@@ -1997,7 +1998,7 @@ class Advanced_Responsive_Video_Embedder {
 			'<p><form method="get">' .
 			sprintf( '<select name="arvet-provider">%s</select>', $provider_options ) .
 			sprintf( '<select name="arvet-mode">%s</select>', $mode_options ) .
-			' Debug output? <input type="checkbox" name="arve-debug">' . 
+			' Debug output? <input type="checkbox" name="arve-debug">' .
 			sprintf( '<button tyle="submit">%s</button>', __('Test', $this->plugin_slug ) ) .
 			'</form></p>';
 
@@ -2008,7 +2009,7 @@ class Advanced_Responsive_Video_Embedder {
 			#$content .= "<h5>$provider tests</h5>";
 
 			foreach ( $tests[$get_provider] as $key => $values ) {
-				
+
 				if ( is_string( $values ) ) {
 					$content .= sprintf( '<p>%s %s</p>', __('Info:', $this->plugin_slug ), $values );
 					continue;
@@ -2050,7 +2051,7 @@ class Advanced_Responsive_Video_Embedder {
 				unset( $shorcode );
 			}
 		}
-		
+
 		return $content;
 	}
 
@@ -2063,7 +2064,7 @@ class Advanced_Responsive_Video_Embedder {
 		unset( $providers['dailymotionlist'] );
 
 		foreach ( $providers as $key => $values ) {
-			
+
 			if( ! isset( $values['name'] ) )
 				$values['name'] = $key;
 
@@ -2090,10 +2091,10 @@ class Advanced_Responsive_Video_Embedder {
 
 		return
 			sprintf( '<ul>%s</ul>', implode( '', $lis ) ) .
-			'<br>' . 
-			'<table>' . 
-			'<tr><td><sup><del>URL</del></sup></td><td>Only supported via Shortcode</td></tr>' . 
-			'<tr><td><sup>iframe</sup></td><td>General support for providers that offer iframe embed codes that can be displayed responsively.</td></tr>' . 
+			'<br>' .
+			'<table>' .
+			'<tr><td><sup><del>URL</del></sup></td><td>Only supported via Shortcode</td></tr>' .
+			'<tr><td><sup>iframe</sup></td><td>General support for providers that offer iframe embed codes that can be displayed responsively.</td></tr>' .
 			'</table>';
 	}
 
@@ -2169,6 +2170,6 @@ class Advanced_Responsive_Video_Embedder {
 			return ( $aspect_ratio[1] / $aspect_ratio[0] ) * 100;
 		else
 			return false;
-	}	
+	}
 
 }
