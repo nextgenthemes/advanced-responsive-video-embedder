@@ -1,28 +1,100 @@
 <?php
+
 /**
- * Plugin Name.
+ * The dashboard-specific functionality of the plugin.
  *
- * @package   Advanced_Responsive_Video_Embedder_Admin
- * @author    Nicolas Jonas
- * @license   GPL-3.0+
- * @link      http://example.com
- * @copyright Copyright (C) 2013 Nicolas Jonas, Copyright (C) 2013 Tom Mc Farlin and WP Plugin Boilerplate Contributors
- * _  _ ____ _  _ ___ ____ ____ _  _ ___ _  _ ____ _  _ ____ ____  ____ ____ _  _ 
- * |\ | |___  \/   |  | __ |___ |\ |  |  |__| |___ |\/| |___ [__   |    |  | |\/| 
- * | \| |___ _/\_  |  |__] |___ | \|  |  |  | |___ |  | |___ ___] .|___ |__| |  | 
- * 
+ * @link       http://nico.onl
+ * @since      1.0.0
+ *
+ * @package    Advanced_Responsive_Video_Embedder
+ * @subpackage Advanced_Responsive_Video_Embedder/admin
  */
 
+/**
+ * The dashboard-specific functionality of the plugin.
+ *
+ * Defines the plugin name, version, and two examples hooks for how to
+ * enqueue the dashboard-specific stylesheet and JavaScript.
+ *
+ * @package    Advanced_Responsive_Video_Embedder
+ * @subpackage Advanced_Responsive_Video_Embedder/admin
+ * @author     Nicolas Jonas <dont@like.mails>
+ */
 class Advanced_Responsive_Video_Embedder_Admin {
 
 	/**
-	 * Instance of this class.
+	 * The ID of this plugin.
 	 *
-	 * @since    2.6.0
-	 *
-	 * @var      object
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $advanced_responsive_video_embedder    The ID of this plugin.
 	 */
-	protected static $instance = null;
+	private $plugin_slug;
+
+	/**
+	 * The version of this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $version    The current version of this plugin.
+	 */
+	private $version;
+
+	/**
+	 * Initialize the class and set its properties.
+	 *
+	 * @since    1.0.0
+	 * @var      string    $plugin_slug       The name of this plugin.
+	 * @var      string    $version    The version of this plugin.
+	 */
+	public function __construct( $plugin_slug, $version ) {
+
+		$this->plugin_slug = $plugin_slug;
+		$this->version = $version;
+		
+		$arve_shared = new Advanced_Responsive_Video_Embedder_Shared;
+		$this->regex_list       = $arve_shared->get_regex_list();
+		$this->options          = $arve_shared->get_options();
+		$this->options_defaults = $arve_shared->get_options_defaults();	
+	}
+
+	/**
+	 * Register the stylesheets for the Dashboard.
+	 *
+	 * @since    1.0.0
+	 */
+	public function enqueue_styles() {
+
+		if ( $this->admin_page_has_post_editor() ) {
+		
+			wp_enqueue_style( $this->plugin_slug, plugin_dir_url( __FILE__ ) . 'advanced-responsive-video-embedder-admin.css', array(), $this->version, 'all' );
+		}
+	}
+
+	/**
+	 * Register the JavaScript for the dashboard.
+	 *
+	 * @since    1.0.0
+	 */
+	public function enqueue_scripts() {
+
+		if ( $this->admin_page_has_post_editor() ) {
+
+			wp_enqueue_script( $this->plugin_slug, plugin_dir_url( __FILE__ ) . 'advanced-responsive-video-embedder-admin.js', array( 'jquery' ), $this->version, true );
+			
+			foreach ( $this->regex_list as $provider => $regex ) {
+
+				if ( $provider != 'ign' ) {
+
+					$regex = str_replace( array( 'https?://(?:www\.)?', 'http://' ), '', $regex );
+				}
+
+				$regex_list[ $provider ] = $regex;
+			}
+
+			wp_localize_script( $this->plugin_slug, 'arve_regex_list', $regex_list );
+		}
+	}
 
 	/**
 	 * Slug of the plugin screen.
@@ -34,41 +106,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	protected $plugin_screen_hook_suffix = null;
 
 	/**
-	 * Initialize the plugin by loading admin scripts & styles and adding a
-	 * settings page and menu.
-	 *
-	 * @since     1.0.0
-	 */
-	private function __construct() {
-
-		$plugin = Advanced_Responsive_Video_Embedder::get_instance();
-		$this->plugin_slug      = $plugin->get_plugin_slug();
-		$this->regex_list       = $plugin->get_regex_list();
-		$this->options          = $plugin->get_options();
-		$this->options_defaults = $plugin->get_options_defaults();
-
-		// Add the options page and menu item.
-		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
-
-		// Add an action link pointing to the options page.
-		$plugin_basename = plugin_basename( plugin_dir_path( realpath( dirname( __FILE__ ) ) ) . $this->plugin_slug . '.php' );
-		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
-	
-		//* Display a notice that can be dismissed
-		add_action( 'admin_init',    array( $this, 'admin_notice_ignore') );
-		add_action( 'admin_notices', array( $this, 'admin_notice') );
-
-		add_action( 'admin_init', array( $this, 'register_settings' ) );
-
-		add_action( 'media_buttons', array( $this, 'add_media_button'), 11 );
-
-		// Only loaded on admin pages with editor
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
-		add_action( 'admin_footer', array( $this, 'print_dialog' ) );
-	}
-
-	/**
 	 *
 	 * @since 4.3.0
 	 */
@@ -76,7 +113,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		if ( $this->admin_page_has_post_editor() ) {
 
-			include_once( 'views/admin-dialog.php' );
+			include_once( 'partials/advanced-responsive-video-embedder-admin-shortcode-dialog.php' );
 		}
 	}
 
@@ -87,74 +124,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	public function display_plugin_admin_page() {
 
-		include_once( 'views/admin-options-page.php' );
-	}
-
-	/**
-	 * Return an instance of this class.
-	 *
-	 * @since     2.6.0
-	 *
-	 * @return    object    A single instance of this class.
-	 */
-	public static function get_instance() {
-
-		// If the single instance hasn't been set, set it now.
-		if ( null == self::$instance ) {
-			self::$instance = new self;
-		}
-
-		return self::$instance;
-	}
-
-	/**
-	 * Register and enqueue admin-specific style sheet.
-	 *
-	 *
-	 * @since     1.0.0
-	 *
-	 * @return    null    Return early if no settings page is registered.
-	 */
-	public function enqueue_admin_styles() {
-
-		if ( $this->admin_page_has_post_editor() ) {
-
-			wp_enqueue_style( $this->plugin_slug . '-admin-styles', plugins_url( 'assets/css/admin-dialog.css', __FILE__ ), array(), Advanced_Responsive_Video_Embedder::VERSION );
-		}
-	}
-
-	/**
-	 * Register and enqueue admin-specific JavaScript.
-	 *
-	 *
-	 * @since     1.0.0
-	 *
-	 * @return    null    Return early if no settings page is registered.
-	 */
-	public function enqueue_admin_scripts() {
-
-		if ( $this->admin_page_has_post_editor() ) {
-
-			wp_enqueue_script(
-				"{$this->plugin_slug}-admin-dialog",
-				plugins_url( 'assets/js/admin-dialog.js', __FILE__ ),
-				array( 'jquery' ),
-				Advanced_Responsive_Video_Embedder::VERSION,
-				true
-			);
-
-			foreach ( $this->regex_list as $provider => $regex ) {
-
-				if ( $provider != 'ign' ) {
-
-					$regex = str_replace( array( 'https?://(?:www\.)?', 'http://' ), '', $regex );
-				}
-
-				$regex_list[ $provider ] = $regex;
-			}
-
-			wp_localize_script( "{$this->plugin_slug}-admin-dialog", 'arve_regex_list', $regex_list );
-		}
+		include_once( 'partials/advanced-responsive-video-embedder-admin-options.php' );
 	}
 
 	/**
@@ -284,15 +254,11 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			$output['shortcodes'][ $key ] = $var;
 		}
 
-		$arve = Advanced_Responsive_Video_Embedder::get_instance();
-
 		foreach ( $input['params'] as $key => $var ) {
-		
-			$var = $arve->parse_parameters( $var );
 			
-			$output['params'][ $key ] = $var;
+			$output['params'][ $key ] = preg_replace( '!\s+!', '  ', trim( $var ) );
 		}
-
+		
 		//* Store only the options in the database that are different from the defaults.
 		$output = $this->array_diff_assoc_recursive( $output, $this->options_defaults );
 
@@ -336,6 +302,20 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	}
 
 	/**
+	 * Return Admin message to be used on the dashboard notice and the options page.
+	 *
+	 * @since     3.0.0
+	 */	
+	public function get_admin_message() {
+		
+		return sprintf(
+			__( 'It is always nice when people show their appreciation for a plugin by <a href="%s" target="_blank">contributing</a> or <a href="%s" target="_blank">donating</a>. Thank you!', $this->plugin_slug ),
+			'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/#contribute',
+			'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC'
+		);
+	}
+	
+	/**
 	 * Display a notice that can be dismissed
 	 *
 	 * @since     3.0.0
@@ -356,11 +336,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		}
 
 		$message  = __( 'The Advanced Responsive Video Embedder Plugin was activated on this site for over a week now. I hope you like it.', $this->plugin_slug ) . '<br>';
-		$message .= sprintf(
-			__( 'It is always nice when people show their appreciation for a plugin by <a href="%s" target="_blank">contributing</a> or <a href="%s" target="_blank">donating</a>. Thank you!', $this->plugin_slug ),
-			'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/#contribute',
-			'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC'
-		);
+		$message .= $this->get_admin_message();
 
 		$dismiss = sprintf( '<a class="alignright" href="?arve_nag_ignore=1">%s</a>', __( 'Dismiss', $this->plugin_slug ) );
 
@@ -383,7 +359,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	}
 
 	/**
-	 * Maybe dismiss admin Notice
+	 * 
 	 *
 	 * @since     4.3.0
 	 */

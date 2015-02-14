@@ -1,25 +1,28 @@
 <?php
+
 /**
+ * The plugin bootstrap file
  *
- * @package   Advanced Responsive Video Embedder
- * @author    Nicolas Jonas
- * @license   GPL-3.0
- * @link      http://nextgenthemes.com
- * @copyright Copyright (C) 2014 Nicolas Jonas, Copyright (C) 2014 Tom Mc Farlin and WP Plugin Boilerplate Contributors
+ * This file is read by WordPress to generate the plugin information in the plugin
+ * Dashboard. This file also includes all of the dependencies used by the plugin,
+ * registers the activation and deactivation functions, and defines a function
+ * that starts the plugin.
+ *
+ * @link              http://nico.onl
+ * @since             3,0,0
+ * @package           Advanced_Responsive_Video_Embedder
  *
  * @wordpress-plugin
  * Plugin Name:       Advanced Responsive Video Embedder
  * Plugin URI:        http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/
- * Description:       Embed videos with a click of a button from many providers with full responsive sizes. Show videos as thumbnails and let them open in colorbox.
- * Version:           5.1.1
+ * Description:       This is a short description of what the plugin does. It's displayed in the WordPress dashboard.
+ * Version:           5.3.0
  * Author:            Nicolas Jonas
- * Author URI:        http://nextgenthemes.com
+ * Author URI:        http://nico.onl
+ * License:           GPL-3.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       advanced-responsive-video-embedder
- * License:           GPL-3.0
- * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  * Domain Path:       /languages
- * GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-embedder
- * GitHub Branch:     master
  */
 
 // If this file is called directly, abort.
@@ -27,36 +30,46 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-/*----------------------------------------------------------------------------*
- * Public-Facing Functionality
- *----------------------------------------------------------------------------*/
-
-/*
- *
+/**
+ * The code that runs during plugin activation.
+ * This action is documented in includes/class-advanced-responsive-video-embedder-activator.php
  */
-require_once( plugin_dir_path( __FILE__ ) . '/public/class-advanced-responsive-video-embedder-create-shortcodes.php' );
-require_once( plugin_dir_path( __FILE__ ) . '/public/class-advanced-responsive-video-embedder.php' );
+function activate_advanced_responsive_video_embedder() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-advanced-responsive-video-embedder-activator.php';
+	Advanced_Responsive_Video_Embedder_Activator::activate();
+}
 
-/*
- * Register hooks that are fired when the plugin is activated or deactivated.
- * When the plugin is deleted, the uninstall.php file is loaded.
- *
+/**
+ * The code that runs during plugin deactivation.
+ * This action is documented in includes/class-advanced-responsive-video-embedder-deactivator.php
  */
-register_activation_hook( __FILE__, array( 'Advanced_Responsive_Video_Embedder', 'activate' ) );
-register_deactivation_hook( __FILE__, array( 'Advanced_Responsive_Video_Embedder', 'deactivate' ) );
+function deactivate_advanced_responsive_video_embedder() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-advanced-responsive-video-embedder-deactivator.php';
+	Advanced_Responsive_Video_Embedder_Deactivator::deactivate();
+}
 
-/*
- *
+register_activation_hook( __FILE__, 'activate_advanced_responsive_video_embedder' );
+register_deactivation_hook( __FILE__, 'deactivate_advanced_responsive_video_embedder' );
+
+/**
+ * The core plugin class that is used to define internationalization,
+ * dashboard-specific hooks, and public-facing site hooks.
  */
-add_action( 'plugins_loaded', array( 'Advanced_Responsive_Video_Embedder', 'get_instance' ) );
+require plugin_dir_path( __FILE__ ) . 'includes/class-advanced-responsive-video-embedder.php';
 
-/*----------------------------------------------------------------------------*
- * Dashboard and Administrative Functionality
- *----------------------------------------------------------------------------*/
+/**
+ * Begins execution of the plugin.
+ *
+ * Since everything within the plugin is registered via hooks,
+ * then kicking off the plugin from this point in the file does
+ * not affect the page life cycle.
+ *
+ * @since    1.0.0
+ */
+function run_advanced_responsive_video_embedder() {
 
-if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
-
-	require_once( plugin_dir_path( __FILE__ ) . '/admin/class-advanced-responsive-video-embedder-admin.php' );
-	add_action( 'plugins_loaded', array( 'Advanced_Responsive_Video_Embedder_Admin', 'get_instance' ) );
+	$plugin = new Advanced_Responsive_Video_Embedder();
+	$plugin->run();
 
 }
+run_advanced_responsive_video_embedder();
