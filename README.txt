@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: video, responsive, embed, video-embedder, iframe, minimal, lightweight, simplicity, shortcodes, Youtube, Blip, Dailymotion, Videojug, Collegehumor, Veoh, Break, Movieweb, Snotr, Gametrailers, Vimeo, Viddler, Funnyordie, Myspace, Liveleak, Metacafe, Myvideo, Yahoo Screen, Spike
 Requires at least: 3.3.1
 Tested up to: 4.1
-Stable tag: trunk
+Stable tag: 5.3.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -108,7 +108,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 == Changelog ==
 
-= 5.2.0 Beta =
+= 5.3.0 Beta =
 * **If you get a error '... array ...' please reset your options on the options page and redo the options you had before**
 * Fix: '... expected array' error when saving options on some cases. If you get a error please reset your 
 * Fix: ttp://youtu.be/... shortlinks are not detected correctly in the shortcode creator dialog.
