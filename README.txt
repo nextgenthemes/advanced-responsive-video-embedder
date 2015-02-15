@@ -109,7 +109,8 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 == Changelog ==
 
 = 5.2.0 Beta =
-* Fix: 'String should not be array' error when saving options on some cases.
+* **If you get a error '... array ...' please reset your options on the options page and redo the options you had before**
+* Fix: '... expected array' error when saving options on some cases. If you get a error please reset your 
 * Fix: ttp://youtu.be/... shortlinks are not detected correctly in the shortcode creator dialog.
 * Improved: Ported code to WordPress Plugin Boilerplate 3.0 style.
 * Improved: Switched vevo and xtube from object to iframe embeds.
