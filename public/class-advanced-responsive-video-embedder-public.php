@@ -1513,6 +1513,11 @@ class Advanced_Responsive_Video_Embedder_Public {
 					'url'        => 'http://youtu.be/vrXgLhkv21Y?t=30s',
 					'expected'   => ''
 				),
+				array(
+					'desc'       => __( 'The Parameter start only takes values in seconds, this will start the video at 1 minute and 1 second', $this->plugin_slug ),
+					'shortcode'  => '[youtube id="uCQXKYPiz6M" parameters="start=61"]',
+					'expected'   => ''
+				),
 			),
 
 		);

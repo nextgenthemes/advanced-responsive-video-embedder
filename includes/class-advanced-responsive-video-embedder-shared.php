@@ -122,11 +122,25 @@ class Advanced_Responsive_Video_Embedder_Shared {
 		
 		$options = get_option( 'arve_options', array() );
 
+		foreach( $options['params'] as $provider => $params ) {
+			
+			if ( is_array( $params ) ) {
+				
+				$params_str = '';
+				
+				foreach ( $params as $key => $var ) {
+					
+					$params_str .= (string) "{$key}={$var}  ";
+				}
+				
+				$options['params'][ $provider ] = $params_str;
+			}
+		}
+		
 		$options               = wp_parse_args( $options,               $defaults );
 		$options['shortcodes'] = wp_parse_args( $options['shortcodes'], $defaults['shortcodes'] );
 		$options['params']     = wp_parse_args( $options['params'],     $defaults['params'] );
 
-		#update_option( 'arve_options', $options );
 		return $options;
 	}
 	

@@ -309,7 +309,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	public function get_admin_message() {
 		
 		return sprintf(
-			__( 'It is always nice when people show their appreciation for a plugin by <a href="%s" target="_blank">contributing</a> or <a href="%s" target="_blank">donating</a>. Thank you!', $this->plugin_slug ),
+			__( 'This is Nico the Author of the Advanced Responsive Video Embedder plugin. It is always nice when people show their appreciation for a plugin by <a href="%s" target="_blank">contributing</a> or <a href="%s" target="_blank">donating</a>. Thank you! ', $this->plugin_slug ),
 			'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/#contribute',
 			'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC'
 		);
@@ -335,8 +335,8 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			return;
 		}
 
-		$message  = __( 'The Advanced Responsive Video Embedder Plugin was activated on this site for over a week now. I hope you like it.', $this->plugin_slug ) . '<br>';
-		$message .= $this->get_admin_message();
+		$message  = $this->get_admin_message();
+		$message .= __( 'This Message is shown here because the ARVE Plugin was activated on this site for over a week now. I hope you like it.', $this->plugin_slug ) . '<br>';
 
 		$dismiss = sprintf( '<a class="alignright" href="?arve_nag_ignore=1">%s</a>', __( 'Dismiss', $this->plugin_slug ) );
 
