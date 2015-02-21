@@ -117,23 +117,26 @@ class Advanced_Responsive_Video_Embedder_Shared {
 	 * @since    2.6.0
 	 */
 	public function get_options() {
-			
+
 		$defaults = $this->get_options_defaults();
 		
 		$options = get_option( 'arve_options', array() );
 
-		foreach( $options['params'] as $provider => $params ) {
-			
-			if ( is_array( $params ) ) {
-				
-				$params_str = '';
-				
-				foreach ( $params as $key => $var ) {
-					
-					$params_str .= (string) "{$key}={$var}  ";
+		if ( !empty( $options['params'] ) ) {
+		
+			foreach( $options['params'] as $provider => $params ) {
+
+				if ( is_array( $params ) ) {
+
+					$params_str = '';
+
+					foreach ( $params as $key => $var ) {
+
+						$params_str .= (string) "{$key}={$var}  ";
+					}
+
+					$options['params'][ $provider ] = $params_str;
 				}
-				
-				$options['params'][ $provider ] = $params_str;
 			}
 		}
 		

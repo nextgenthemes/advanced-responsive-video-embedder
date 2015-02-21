@@ -511,10 +511,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 				break;
 			case 'youtube':
 				$id = str_replace( array( '&list=', '&amp;list=' ), '?list=', $id );
-				$urlcode = '//www.youtube-nocookie.com/embed/' . $id;
+				$urlcode = '//www.youtube.com/embed/' . $id; # TODO switch back to -nocookie.com when YT resolves issue
 				break;
 			case 'youtubelist': //* DEPRICATED
-				$urlcode = '//www.youtube-nocookie.com/embed/videoseries?list=' . $id . '&wmode=transparent&rel=0&autohide=1&hd=1&iv_load_policy=3';
+				$urlcode = '//www.youtube.com/embed/videoseries?list=' . $id . '&wmode=transparent&rel=0&autohide=1&hd=1&iv_load_policy=3';
 				break;
 			case 'archiveorg':
 				$urlcode = 'http://www.archive.org/embed/' . $id . '/';

@@ -2,7 +2,7 @@
 Contributors: nico23
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC
 Tags: video, responsive, embed, video-embedder, iframe, minimal, lightweight, simplicity, shortcodes, Youtube, Blip, Dailymotion, Videojug, Collegehumor, Veoh, Break, Movieweb, Snotr, Gametrailers, Vimeo, Viddler, Funnyordie, Myspace, Liveleak, Metacafe, Myvideo, Yahoo Screen, Spike
-Requires at least: 3.3.1
+Requires at least: 3.3.2
 Tested up to: 4.1
 Stable tag: trunk
 License: GPLv3
@@ -108,8 +108,13 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 == Changelog ==
 
+= 5.3.3 Beta =
+* Fix: Workarround for a currently ongoing YouTube issue causing YouTube embeds to fail with erros on mobile devives. This was not a 'bug' caused by this plugin btw.
+
+= 5.3.2 Beta =
+* Fix: Die 'Array' errors DIE!
+
 = 5.3.1 Beta =
-* Fix: Prevent 'Array' errors.
 * Improved: Added shortcode example to youtube starttime examples.
 * Improved: Clarified from who the admin messages come.
 
