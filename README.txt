@@ -108,21 +108,6 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 == Changelog ==
 
-= 6.0.0 Alpha (2015/) =
-* Become a alpha/beta tester and get the pro version for free.
-* New: Pro Version coming up with new modes.
-* New: 'Lazyload -> Experiment' Fullscreen/-window mode with ability to resize fixed video on screen while reading the page
-* New: 'Lazyload -> Fullscreen' mode to instandly go Fullscreen after clicking the Lazyloaded preview image.
-* Changed: 'Lazyload' mode now supports growing the video size after thumbnails are clicked.
-* Changed: 'Thumbnail' mode is now called 'Lazyload -> Colorbox' and has a sightly different behavior.
-* Improved: TED Talks shortcodes now support the 'lang' parameter.
-* Improved: Enabled HTTPS support for Viddler and MyVideo.
-* Improved: New embed URLs for MyVideo.
-* Improved: Enabled fake thumbnails for USTREAM and myvideo.de.
-* Improved Twitch support.
-* Improved: Massive code improvements.
-* Depricated: Providers that only support `<object>` are from now on only supported in normal mode, will switch automatically. This effects only recorded Twitch videos, flickr and veoh.
-
 = 5.3.4 Beta =
 * Fix: Myvideo.de videos with old 8 digit IDs. 
 
