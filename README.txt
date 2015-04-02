@@ -108,6 +108,9 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 == Changelog ==
 
+= 5.3.4 Beta =
+* Fix: Myvideo.de videos with old 8 digit IDs. 
+
 = 5.3.3 Beta =
 * Fix: Workarround for a currently ongoing YouTube issue causing YouTube embeds to fail with erros on mobile devives. This was not a 'bug' caused by this plugin btw.
 

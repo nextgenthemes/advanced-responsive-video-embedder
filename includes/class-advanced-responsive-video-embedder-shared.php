@@ -179,7 +179,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'movieweb'            => $hw . 'movieweb\.com/v/([a-z0-9]{14})',
 			'mpora'               => $hw . 'mpora\.(?:com|de)/videos/([a-z0-9]+)',
 			'myspace'             => $hw . 'myspace\.com/.+/([0-9]+)',
-			'myvideo'             => $hw . 'myvideo\.de/(?:watch|embed)/([0-9]{7})',
+			'myvideo'             => $hw . 'myvideo\.de/(?:watch|embed)/([0-9]{7,8})',
 			'snotr'               => $hw . 'snotr\.com/(?:video|embed)/([0-9]+)',
 			'twitch'              => 'https?://(?:www\.|[a-z\-]{2,5}\.)?twitch.tv/([a-z0-9_/]+)',
 			##'spike'             =>
