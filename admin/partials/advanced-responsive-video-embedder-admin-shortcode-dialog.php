@@ -4,11 +4,19 @@
 		<label for="arve-url">URL/Embed Code</label><br>
 
 		<small class="description">
-			<?php _e('For Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike, Comedycentral and general iframe embed codes paste the embed code, for all others paste the URL! Ustream: If your Address bar URL not contains a number, click the Share->URL icons and paste that URL.', $this->plugin_slug ); ?></span>
+			<?php _e('For Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike, Comedycentral and general iframe embed codes paste the embed code, for all others paste the URL! Ustream: If your Address bar URL not contains a number, click the Share->URL icons and paste that URL.', $this->plugin_slug ); ?>
 		</small>
 
 		<textarea id="arve-url" rows="4" value=""></textarea><br>
 
+		<div class="arve-input-group">
+			<label for="arve-mode"><?php _e('Mode', $this->plugin_slug ); ?></label>
+			<select id="arve-mode">
+				<option value=""></option>
+				<?php echo Advanced_Responsive_Video_Embedder_Shared::get_mode_options( $this->plugin_slug ); ?>
+			</select>
+		</div>
+	
 		<div class="arve-input-group">
 			<label for="arve-align"><?php _e('Align', $this->plugin_slug ); ?></label>
 			<select id="arve-align">
@@ -17,17 +25,7 @@
 				<option value="right"><?php _e('right', $this->plugin_slug ); ?></option>
 				<option value="center"><?php _e('center', $this->plugin_slug ); ?></option>
 			</select>
-		</div>
-
-		<div class="arve-input-group">
-			<label for="arve-mode"><?php _e('Mode', $this->plugin_slug ); ?></label>
-			<select id="arve-mode">
-				<option value=""></option>
-				<option value="lazyload"><?php _e('Lazyload', $this->plugin_slug ); ?></option>
-				<option value="normal"><?php _e('Normal', $this->plugin_slug ); ?></option>
-				<option value="thumbnail"><?php _e('Thumbnail', $this->plugin_slug ); ?></option>
-			</select>
-		</div>
+		</div>	
 
 		<div class="arve-input-group">
 			<label for="arve-autoplay"><?php _e('Autoplay', $this->plugin_slug ); ?></label>

@@ -16,11 +16,11 @@
  * Plugin Name:       Advanced Responsive Video Embedder
  * Plugin URI:        http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress dashboard.
- * Version:           5.3.4
+ * Version:           5.9.0
  * Author:            Nicolas Jonas
  * Author URI:        http://nico.onl
- * License:           GPL-3.0
- * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
+ * License:           GPL-3.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain:       advanced-responsive-video-embedder
  * Domain Path:       /languages
  */

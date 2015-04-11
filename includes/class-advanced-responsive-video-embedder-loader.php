@@ -19,7 +19,7 @@
  *
  * @package    Advanced_Responsive_Video_Embedder
  * @subpackage Advanced_Responsive_Video_Embedder/includes
- * @author     Nicolas Jonas <dont@like.mails>
+ * @author     Nicolas Jonas
  */
 class Advanced_Responsive_Video_Embedder_Loader {
 

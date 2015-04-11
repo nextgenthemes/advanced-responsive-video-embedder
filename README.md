@@ -1,16 +1,4 @@
-=== Advanced Responsive Video Embedder ===
-Contributors: nico23
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC
-Tags: video, responsive, embed, video-embedder, iframe, minimal, lightweight, simplicity, shortcodes, Youtube, Blip, Dailymotion, Videojug, Collegehumor, Veoh, Break, Movieweb, Snotr, Gametrailers, Vimeo, Viddler, Funnyordie, Myspace, Liveleak, Metacafe, Myvideo, Yahoo Screen, Spike
-Requires at least: 3.3.2
-Tested up to: 4.2
-Stable tag: trunk
-License: GPLv3
-License URI: https://www.gnu.org/licenses/gpl-3.0.html
-
-Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement for WordPress' default embeds. Best plugin for videos?
-
-== Description ==
+## Description ##
 
 ### This is very likely the one and only plugin you will ever need to handle video embeds on your WordPress site(s) ###
 
@@ -57,7 +45,7 @@ Simple &bull; Lightweight &bull; Responsive &bull; Customizable
 * One single button for all providers (for most providers not required because of URL embeds, but allows to create custom shortcodes with advances features within seconds)
 * Responsive embeds with CSS, much better then with JS IMO
 * Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disabled related videos at the end ... to help keep people on your Site rather then going to YouTube or keep watching videos
-* Clean Shortcode syntax `[vimeo id="123456"]` no ugly URLs, no unnecessary Shortcode wrapping.
+* Clean Shortcode syntax `[[vimeo id="123456"]]` no ugly URLs, no unnecessary Shortcode wrapping.
 * Autostart (for providers that support them)
 * Custom URL Parameters to use all options providers offer
 * Optional maximal width
@@ -119,17 +107,17 @@ https://youtu.be/Q6goNzXrmFs?arve-mode=normal
 Extremly customizable with support for anything providers offer to customize embeds. Other plugins offer some of this features with huge bloated dialogs, ARVE is different, it just lets you do anything you want if you have a few seconds to look up what the parameters do.
 
 Here we are starting the video 30 seconds in, disable the fullscreen button, switch to YouTubes light theme and set the aspect_ratio to cinemascope.
-`[youtube id="Q6goNzXrmFs\" aspect_ratio="21:9" parameters="start=30 fs=0 theme=light"]`
+`[[youtube id="Q6goNzXrmFs\" aspect_ratio="21:9" parameters="start=30 fs=0 theme=light"]]`
 
-
+[youtube id="Q6goNzXrmFs" aspect_ratio="21:9" parameters="start=30 fs=0 theme=light"]
 
 With the Pro Addon you get 4 lazyload modes, they automatically load the thumbnails from the provider 
 
 ### Pro addon Featue Demonstration ###
 
-`[youtube id="Q6goNzXrmFs\" mode="lazyload" maxwidth="400" align="left"]] This is a demo of a aligned lazyloaded video [...]`
+`[[youtube id="Q6goNzXrmFs\" mode="lazyload" maxwidth="400" align="left"]] This is a demo of a aligned lazyloaded video [...]`
 
- This is a demo of a aligned lazyloaded video that has a maximal width set and will grow on click before loading the video.
+[youtube id="Q6goNzXrmFs\" mode="lazyload" maxwidth="400" align="left"] This is a demo of a aligned lazyloaded video that has a maximal width set and will grow on click before loading the video.
 
 Just a bit of Lorem ipsum to not have this look area look empty dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
 
@@ -137,21 +125,21 @@ Just a bit of Lorem ipsum to not have this look area look empty dolor sit amet, 
 
 We can also center videos and open then inside a Colorbox. This requires the jQuery Colorbox plugin to be installed. This site uses theme 3.
 
-`[youtube id="Q6goNzXrmFs\" mode="lazyload-lightbox" maxwidth="600" align="center"]`
+`[[youtube id="Q6goNzXrmFs\" mode="lazyload-lightbox" maxwidth="600" align="center"]]`
 
-
+[youtube id="Q6goNzXrmFs\" mode="lazyload-lightbox" maxwidth="600" align="center"]
 
 ### Lazyloaded Preview Images in HD ###
 
 Contrary to what you might think, *thumnail* in ARVE does not nessasary mean *small* images. You can provide your own images with 'thumbnail="http://your.image.url"'. Most providers also support HD thumbnail images and this plugin will get the highest aviable size.
 
+[vimeo id="23371242" mode="lazyload" maxwidth=9000]
 
-
-== Installation ==
+## Installation ##
 
 Please refer to [codex.wordpress.org/Managing_Plugins#Automatic_Plugin_Installation](https://codex.wordpress.org/Managing_Plugins#Automatic_Plugin_Installation).
 
-== Frequently Asked Questions ==
+## Frequently Asked Questions ##
 
 ### I have a problem ... ###
 
@@ -177,14 +165,14 @@ This plugin not changes anything to usual HTML `<iframe>` embed codes you have t
 
 This plugins embed is considered as 'custom player' by YouTube so you have to pass the video ID as playlist parameters to make the loop work.
 
-`[youtube id="123456" parameters="loop=1 playlist=123456"]`
+`[[youtube id="123456" parameters="loop=1 playlist=123456"]`
 
-== Screenshots ==
+## Screenshots ##
 
 1. In action
 2. Options page
 
-== Changelog ==
+## Changelog ##
 
 ### 5.9.0 Alpha 2015/03/18 work time: 20 days ###
 
