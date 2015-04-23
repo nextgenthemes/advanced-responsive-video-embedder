@@ -315,6 +315,15 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		);
 	}
 	
+	public function admin_notice_2() {
+	
+		if (  get_user_meta( $user_id, 'arve_ignore_admin_notice_2' ) ) {
+			return;
+		}		
+		
+		echo '<div class="updated"><p>There will be a Pro Addon for Advanced Resonsive Video Embedder, I need some people to help me out testing. Please <a href="https://nextgenthemes.com/">read this</a> you will get the Pro Addon for FREE! | <a href="?arve_msg_ignore=2">Dismiss</a></p></div>';
+	}
+	
 	/**
 	 * Display a notice that can be dismissed
 	 *
@@ -355,6 +364,11 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		//* If user clicks to ignore the notice, add that to their user meta
 		if ( isset( $_GET['arve_nag_ignore'] ) && '1' == $_GET['arve_nag_ignore'] ) {
 			add_user_meta( $user_id, 'arve_ignore_admin_notice', 'true', true );
+		}
+		
+		//* If user clicks to ignore the notice, add that to their user meta
+		if ( isset( $_GET['arve_nag_ignore'] ) && '2' == $_GET['arve_nag_ignore'] ) {
+			add_user_meta( $user_id, 'arve_ignore_admin_notice_2', 'true', true );
 		}
 	}
 
