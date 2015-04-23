@@ -30,7 +30,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 	public static function get_options_defaults( $section ) {
 
 		$options = array(
-			'main'                  => array(
+			'main' => array(
 				'promote_link'          => false,
 				'autoplay'              => false,
 				'mode'                  => 'normal',
@@ -38,7 +38,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'align_maxwidth'        => 400,
 				'last_options_tab'      => '#arve-settings-section-main',
 			),
-			'shortcodes'            => array(
+			'shortcodes' => array(
 				'4players'               => '4players',
 				'archiveorg'             => 'archiveorg',
 				'blip'                   => 'blip',

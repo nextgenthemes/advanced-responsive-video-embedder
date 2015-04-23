@@ -549,13 +549,13 @@ class Advanced_Responsive_Video_Embedder_Admin {
 				. '<p>You can also <a href="%s" target="_blank">donate</a> or help <a href="%s" target="_blank">translate</a> if you like. Thanks so much!</p>',
 				$this->plugin_slug
 			),
-			'http://nextgenthemes.com/downloads/advanced-responsive-video-embedder/',
+			'https://nextgenthemes.com/downloads/advanced-responsive-video-embedder/',
 			'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC',
 			'http://translate.nextgenthemes.com/projects/arve'
 		);
 		
 		if ( get_option( 'arve_install_date' ) < 1426470182 ) {
-			$message .= '<p>If you do not want to buy the Pro Addon (because you are used to thumbnial and colorbox mode that are no longer part of the free version) use this 100% discount code <code>legacy install</code> and get it <strong>for FREE!</strong></p>';
+			$message .= '<p>If you do not want to buy the Pro Addon (because you are used to thumbnail or colorbox modes that are no longer part of the free version) use this 100% discount code <code>legacy install</code> and get it <strong>for FREE!</strong></p>';
 		}
 		
 		return apply_filters( 'arve_admin_message', $message );
@@ -601,6 +601,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		global $current_user;
 
 		$user_id = $current_user->ID;
+		
 		//* If user clicks to ignore the notice, add that to their user meta
 		if ( isset( $_GET['arve_msg_ignore'] ) && '1' === $_GET['arve_msg_ignore'] ) {
 			add_user_meta( $user_id, 'arve_ignore_admin_notice', 'true', true );

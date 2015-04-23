@@ -16,7 +16,7 @@
 [1]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/
 [2]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/#quick-introduction
 [3]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/#features
-[3]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/#additional-features-with-the-pro-addon
+[4]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/#additional-features-with-the-pro-addon
 <!--- Other Pages on Site -->
 [10]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/quick-introduction-and-demonstration/
 [11]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/reporting-issues-for-advanced-responsive-video-embedder/

@@ -46,24 +46,6 @@ module.exports = function (grunt) {
       options: {
         separator: '\n\n',
       },
-      readme_txt: {
-        src: [
-          'readme/top.txt',
-          'readme/description-links.md',
-		  'readme/description-intro.md',
-          'readme/description-whatitis.md',
-          'readme/description-features.md',
-          'readme/description-supportedproviders.md',
-		  'readme/description-shortdemo.md',
-		  'readme/description-proaddondemo.md',
-          'readme/description-profull.md',
-          'readme/installation.md',
-          'readme/faq.md',
-          'readme/screenshots.md',
-          'CHANGELOG.md'
-        ],
-        dest: 'README.txt'
-      },
       readme_md: {
         src: [
           'readme/description-links.md',
@@ -80,9 +62,15 @@ module.exports = function (grunt) {
           'CHANGELOG.md'
         ],
         dest: 'README.md'
+      },
+      readme_txt: {
+        src: [
+          'readme/top.txt',
+          'README.md'
+        ],
+        dest: 'README.txt'
       }
     }
-    
   });
   
   require('load-grunt-tasks')(grunt, { scope: 'devDependencies' });
