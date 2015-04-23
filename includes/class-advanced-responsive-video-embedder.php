@@ -172,6 +172,7 @@ class Advanced_Responsive_Video_Embedder {
 		//* Display a notice that can be dismissed
 		$this->loader->add_action( 'admin_init',    $plugin_admin, 'admin_notice_ignore' );
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'admin_notice' );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'admin_notice_2' );
 
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
 
