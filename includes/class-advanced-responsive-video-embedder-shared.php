@@ -195,7 +195,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'xtube'               => $hw . 'xtube\.com/watch\.php\?v=([a-z0-9_\-]+)',
 			'youtube'             => $hw . 'youtube\.com/watch\?v=([a-z0-9_\-]{11}(&list=[a-z0-9_\-]+)?)',
 			//* Shorteners
-			'youtu_be'            => 'http://youtu\.be/([a-z0-9_-]{11})',
+			'youtu_be'            => $hw . 'youtu\.be/([a-z0-9_-]{11})',
 			'dai_ly'              => 'http://dai\.ly/([^_]+)',
 		);
 	}
