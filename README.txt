@@ -108,6 +108,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 == Changelog ==
 
+= 5.3.5 =
+* Fix: Support for `https://youtu.be` URLs
+* New: Added message to invide people to test testing the upcoming [Pro Addon](). It will be free for 50 testers and people who had the plugin installed before the release of the Addon.
+
 = 5.3.4 Beta =
 * Fix: Myvideo.de videos with old 8 digit IDs. 
 
