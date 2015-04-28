@@ -493,6 +493,8 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 	public function validate_options_shortcodes( $input ) {
 		
+		$output = array();
+		
 		//* Storing the Options Section as a empty array will cause the plugin to use defaults
 		if( isset( $input['reset'] ) ) {
 			return array();

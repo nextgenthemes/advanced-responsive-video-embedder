@@ -53,7 +53,7 @@ module.exports = function (grunt) {
           'readme/description-whatitis.md',
           'readme/description-features.md',
           'readme/description-supportedproviders.md',
-		  'readme/description-shortdemo.md',
+		  'readme/description-quick-intro.md',
 		  'readme/description-proaddondemo.md',
           'readme/description-profull.md',
           'readme/installation.md',

@@ -7,6 +7,7 @@ Tested up to: 4.2
 Stable tag: trunk
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
+GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-embedder
 
 Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement for WordPress' default embeds. Best plugin for videos?
 
@@ -28,7 +29,7 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 [1]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/
 [2]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/#quick-introduction
 [3]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/#features
-[3]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/#additional-features-with-the-pro-addon
+[4]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/#additional-features-with-the-pro-addon
 <!--- Other Pages on Site -->
 [10]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/quick-introduction-and-demonstration/
 [11]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/reporting-issues-for-advanced-responsive-video-embedder/
@@ -66,7 +67,7 @@ Simple &bull; Lightweight &bull; Responsive &bull; Customizable
 * Detailed description of options in-place, also available translated into German, French and Spanish.
 * Custom Aspect Ratio
 
-### Additional Features with the Pro Addon ### {#was}
+### Additional Features with the Pro Addon ###
 
 * Feel good about yourself for helping me support my continiues work on this plugin. Tons of hours, weekends ... always worked on [improving](https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/) 3+ years.
 * Lazyload mode: Only load a preview image on pageload instead of the Video itself, makes you site load faster.
