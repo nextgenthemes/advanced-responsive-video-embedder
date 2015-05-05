@@ -556,9 +556,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			'http://translate.nextgenthemes.com/projects/arve'
 		);
 		
-		#dd( get_option('timezone_string') );
-		
-		$pro_release = DateTime::createFromFormat( 'd-m-Y', '29-04-2015', new DateTimeZone('UTC') );
+		$pro_release = DateTime::createFromFormat( 'd-m-Y', '11-05-2015', new DateTimeZone('UTC') );
 		
 		$pro_release = $pro_release->getTimestamp();
 		
