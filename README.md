@@ -58,7 +58,7 @@ Simple &bull; Lightweight &bull; Responsive &bull; Customizable
 
 * Feel good about yourself for helping me support my continiues work on this plugin. Tons of hours, weekends ... always worked on [improving](https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/) 3+ years.
 * Lazyload mode: Only load a preview image on pageload instead of the Video itself, makes you site load faster.
-* Lazyload -> Lightbox: Open videos in a jQuery Colorbox.
+* Lazyload -> Lightbox: Open videos in a [jQuery Colorbox](https://wordpress.org/plugins/jquery-colorbox/). Plugin needs to be installed.
 * Lazyload -> HTML5 Fullscreen: (experimental) This is a dream come true for me. Be aware that this has a Issue of going fullsceen a 2nd time from without fullscreen and fullscreen Buttons not working as expected.
 * Lazyload -> Half Screen Sticky: (experimental) Video that fills about half the screen/window and lets users continue to scroll and read the site, start writing a comment ... while watching a video. This relies on modern HTML5 features (calc, vw + vh) and may not work everywhere.
 
@@ -100,9 +100,9 @@ Simple &bull; Lightweight &bull; Responsive &bull; Customizable
 
 ### Quick Introduction ###
 
-URLs like `https://youtu.be/Q6goNzXrmFs` on its own line will produce full responsive embeds. If you already use this with WordPress default, this is the perfect drop-in replacement to make everything responsive, no need to do anything.
+URLs like `https://youtu.be/WHZPEkZCqwA` on its own line will produce full responsive embeds. If you already use this with WordPress default, this is the perfect drop-in replacement to make everything responsive, no need to do anything.
 
-https://youtu.be/Q6goNzXrmFs?arve-mode=normal
+https://youtu.be/WHZPEkZCqwA?arve-mode=normal
 
 Extremly customizable with support for anything providers offer to customize embeds. Other plugins offer some of this features with huge bloated dialogs, ARVE is different, it just lets you do anything you want if you have a few seconds to look up what the parameters do.
 
@@ -115,9 +115,9 @@ With the Pro Addon you get 4 lazyload modes, they automatically load the thumbna
 
 ### Pro addon Featue Demonstration ###
 
-`[[youtube id="Q6goNzXrmFs\" mode="lazyload" maxwidth="400" align="left"]] This is a demo of a aligned lazyloaded video [...]`
+`[[vimeo id="124858722" mode="lazyload" maxwidth="400" align="left"]] This is a demo of a aligned lazyloaded video [...]`
 
-[youtube id="Q6goNzXrmFs\" mode="lazyload" maxwidth="400" align="left"] This is a demo of a aligned lazyloaded video that has a maximal width set and will grow on click before loading the video.
+[vimeo id="124858722" mode="lazyload" maxwidth="400" align="left"] This is a demo of a aligned lazyloaded video that has a maximal width set and will grow on click before loading the video.
 
 Just a bit of Lorem ipsum to not have this look area look empty dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
 
@@ -131,9 +131,9 @@ We can also center videos and open then inside a Colorbox. This requires the jQu
 
 ### Lazyloaded Preview Images in HD ###
 
-Contrary to what you might think, *thumnail* in ARVE does not nessasary mean *small* images. You can provide your own images with 'thumbnail="http://your.image.url"'. Most providers also support HD thumbnail images and this plugin will get the highest aviable size.
+Contrary to what you might think, *thumnail* in ARVE does not nessasary mean *small* images. You can provide your own images with thumbnail="https://your.image.url". Most providers also support HD thumbnail images and this plugin will get the highest aviable size.
 
-[vimeo id="23371242" mode="lazyload" maxwidth=9000]
+[vimeo id="124400795" mode="lazyload" maxwidth=9000]
 
 ## Installation ##
 
