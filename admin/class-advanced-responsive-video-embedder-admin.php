@@ -320,12 +320,12 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		global $current_user ;
 		$user_id = $current_user->ID;	
 		
-		if ( get_user_meta( $user_id, 'arve_ignore_admin_notice_2' ) ) {
+		if ( get_user_meta( $user_id, 'arve_ignore_pro_notice' ) ) {
 			return;
 		} ?>
 		
 		<div class="updated">
-			<p>There will be a Pro Addon for Advanced Resonsive Video Embedder, I need your help to help me out testing. Please <a href="https://nextgenthemes.com/?p=1371">read this</a> you will get the Pro Addon for <strong>FREE!</strong> | <a href="?arve_msg_ignore=2">Dismiss</a>
+			<p>There will be a Pro Addon for Advanced Resonsive Video Embedder, I need your help to help me out testing. Please <a href="https://nextgenthemes.com/?p=1371">read this</a> you will get the Pro Addon for <strong>FREE!</strong> | <a href="?arve_pro_ignore=1">Dismiss</a>
 			</p>
 		</div>
 
@@ -375,8 +375,8 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		}
 		
 		//* If user clicks to ignore the notice, add that to their user meta
-		if ( isset( $_GET['arve_nag_ignore'] ) && '2' == $_GET['arve_nag_ignore'] ) {
-			add_user_meta( $user_id, 'arve_ignore_admin_notice_2', 'true', true );
+		if ( isset( $_GET['arve_pro_ignore'] ) && '1' == $_GET['arve_pro_ignore'] ) {
+			add_user_meta( $user_id, 'arve_ignore_pro_notice', 'true', true );
 		}
 	}
 
