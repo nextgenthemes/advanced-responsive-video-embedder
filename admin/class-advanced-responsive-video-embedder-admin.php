@@ -535,7 +535,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 * Return Admin message to be used on the dashboard notice and the options page.
 	 *
 	 * @since     3.0.0
-	 */	
+	 */
 	public function get_admin_message() {
 		
 		$message = sprintf(
@@ -556,7 +556,13 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			'http://translate.nextgenthemes.com/projects/arve'
 		);
 		
-		if ( get_option( 'arve_install_date' ) < 1426470182 ) {
+		#dd( get_option('timezone_string') );
+		
+		$pro_release = DateTime::createFromFormat( 'd-m-Y', '29-04-2015', new DateTimeZone('UTC') );
+		
+		$pro_release = $pro_release->getTimestamp();
+		
+		if ( get_option( 'arve_install_date' ) < $pro_release ) {
 			$message .= '<p>If you do not want to buy the Pro Addon (because you are used to thumbnail or colorbox modes that are no longer part of the free version) use this 100% discount code <code>legacy install</code> and get it <strong>for FREE!</strong></p>';
 		}
 		

@@ -212,30 +212,37 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		$parsed_url = parse_url( $url );
 		$url_args   = array();
-		
 
 		if ( ! empty( $parsed_url['query'] ) ) {
 			parse_str( $parsed_url['query'], $url_args );
 		}
-
+		
 		foreach ( $url_args as $key => $value ) {
-
-			$atts[ $key ] = str_replace( 'arve-', '', $value );
-		}
+			
+			if ( $this->starts_with( $key, 'arve-' ) ) {
+				
+				$key = substr( $key, 5 );
+			}
+			
+			$atts[ $key ] = $value;
+		}		
 		
 		$atts['id'] = $id;
 
 		if ( 'youtube' == $provider && ! empty( $url_args['t'] ) ) {
 			$atts['parameters'] = 'start=' . $this->youtube_time_to_seconds( $url_args['t'] );
 		}
-		
-		//d($atts);
 
 		$output  = $this->build_embed( $provider, $atts );
 		// Output the original posted URL for SEO and other scraping purposes
 		$output .= sprintf( '<a href="%s" class="arve-hidden">%s</a>', esc_url( $url ), esc_html( $url ) );
 
 		return $output;
+	}
+	
+	public function starts_with( $haystack, $needle ) {
+		// search backwards starting from haystack length characters from the end
+		return $needle === "" || strrpos( $haystack, $needle, -strlen( $haystack ) ) !== false;
 	}
 	
 	/**
@@ -671,7 +678,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		
 		$promote_link = sprintf(
 			'<a href="%s" title="%s" class="arve-promote-link">%s</a>',
-			esc_url( 'http://nextgenthemes.com/download/advanced-responsive-video-embedder/' ),
+			esc_url( 'https://nextgenthemes.com/download/advanced-responsive-video-embedder-pro/' ),
 			esc_attr( __('embedded with Advanced Responsive Video Embedder (ARVE) WordPress plugin', $this->plugin_slug) ),
 			esc_html( __('by ARVE', $this->plugin_slug) )
 		);
@@ -798,7 +805,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 *
 	 * @since    5.9.7
 	 */
-	public function create_videoe( $args ) {
+	public function create_video( $args ) {
 		
 		$defaults = array (
 			'mp4'             => false,
@@ -812,8 +819,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 		extract( $args );
 		
 		return sprintf(
-			'<video %s%s%s%sframeborder="0" scrolling="no">' . 
-			( $args['mp4'] ) .
+			'<video %s%s%s%s>' . 
+			( $args['mp4'] ) ? sprintf( 'class="%s" ', esc_attr( $class ) ) : '',
 			'' .
 			'</video>',
 			( $class )    ? sprintf( 'class="%s" ', esc_attr( $class ) ) : '',
