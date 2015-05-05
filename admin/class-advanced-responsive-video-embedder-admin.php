@@ -329,7 +329,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			</p>
 		</div>
 
-		<?
+		<?php
 	}
 	
 	/**
