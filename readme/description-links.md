@@ -24,3 +24,9 @@
 <!--- External Links -->
 [20]: https://downloads.wordpress.org/plugin/advanced-responsive-video-embedder.latest-stable.zip
 [21]: https://github.com/nextgenthemes/advanced-responsive-video-embedder
+
+<ul class="nav nav-pills">
+  <li role="presentation"><a href="https://github.com/nextgenthemes/advanced-responsive-video-embedder">Github Page</a></li>
+  <li role="presentation"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder/documentation/">Documentation</a></li>
+  <li role="presentation"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder/reporting-issues-for-advanced-responsive-video-embedder/">How to report a problem</a></li>
+</ul>
