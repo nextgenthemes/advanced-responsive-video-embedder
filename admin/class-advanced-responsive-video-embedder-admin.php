@@ -574,7 +574,9 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	public function admin_notice() {
 		
-		if ( empty( $message = $this->get_admin_message() ) ) {
+		$message = $this->get_admin_message();
+		
+		if ( empty( $message ) ) {
 			return;
 		}
 		
