@@ -322,14 +322,19 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		
 		if ( get_user_meta( $user_id, 'arve_ignore_pro_notice' ) ) {
 			return;
-		} ?>
+		} 
 		
-		<div class="updated">
-			<p>There will be a Pro Addon for Advanced Resonsive Video Embedder, I need your help to help me out testing. Please <a href="https://nextgenthemes.com/?p=1371">read this</a> you will get the Pro Addon for <strong>FREE!</strong> | <a href="?arve_pro_ignore=1">Dismiss</a>
-			</p>
-		</div>
-
-		<?php
+		$pro_release = DateTime::createFromFormat( 'd-m-Y', '11-05-2015', new DateTimeZone('UTC') );
+		$pro_release = $pro_release->getTimestamp();
+		
+		if ( get_option( 'arve_install_date' ) < $pro_release ) {
+			?>
+			<div class="updated">
+				<p>There will be a Pro Addon for Advanced Resonsive Video Embedder, I need your help to help me out testing. Please <a href="https://nextgenthemes.com/?p=1371">read this</a> you will get the Pro Addon for <strong>FREE!</strong> | <a href="?arve_pro_ignore=1">Dismiss</a>
+				</p>
+			</div>
+			<?php
+		}
 	}
 	
 	/**
