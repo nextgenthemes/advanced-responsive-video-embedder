@@ -302,11 +302,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		add_settings_section(
 			'params_section',
 			sprintf( '<span class="arve-settings-section" id="arve-settings-section-params" title="%s"></span>%s', esc_attr( $params_title ), esc_html( $params_title ) ),
-			function() {
-				$url = 'http://nextgenthemes.com';
-				$desc = sprintf( __( 'Please read <a href="%s" target="_blank">the documentation</a> in how this settings work. Do not remove <code>wmode=transparent</code>, this will make some modes fail to work.', $this->plugin_slug ), esc_url( $url ) );
-				echo "<p>$desc</p>";
-			},
+			array( $this, 'params_section_description' ),
 			$this->plugin_slug
 		);
 		
@@ -338,16 +334,13 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			)
 		);
 		
-		// Shotcode Tags
-		$shortcodes_title = __( 'Shotcode Tags', $this->plugin_slug );
+		// Shortcode Tags
+		$shortcodes_title = __( 'Shortcode Tags', $this->plugin_slug );
 		
 		add_settings_section(
-			'shotcodes_section',
+			'shortcodes_section',
 			sprintf( '<span class="arve-settings-section" id="arve-settings-section-shortcodes" title="%s"></span>%s', esc_attr( $shortcodes_title ), esc_html( $shortcodes_title ) ),
-			function() {
-				$desc = __( 'You can change the shortcode tags. You may need this to prevent conflicts with other plugins you want to use.', $this->plugin_slug );
-				echo "<p>$desc</p>";
-			},
+			array( $this, 'shortcodes_section_description' ),
 			$this->plugin_slug
 		);
 		
@@ -358,7 +351,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 				ucfirst ( $provider ),
 				array( $this, 'input_field' ),
 				$this->plugin_slug,
-				'shotcodes_section',
+				'shortcodes_section',
 				array(
 					'label_for'   => "arve_options_shortcodes[$provider]",
 					'value'       => $shortcode,
@@ -375,7 +368,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			null,
 			array( $this, 'submit_reset' ),
 			$this->plugin_slug,
-			'shotcodes_section',
+			'shortcodes_section',
 			array(
 				'reset_name' => 'arve_options_shortcodes[reset]',
 			)
@@ -393,6 +386,35 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		echo '&nbsp;&nbsp;';
 		submit_button( __('Reset This Settings Section', $this->plugin_slug ), 'secondary', $args['reset_name'],   false );
 	}
+	
+	public function shortcodes_section_description() {
+		$desc = __( 'You can change the shortcode tags. You may need this to prevent conflicts with other plugins you want to use.', $this->plugin_slug );
+		echo "<p>$desc</p>";
+	}
+	
+	public function params_section_description() {
+		
+		$url  = 'https://nextgenthemes.com/advanced-responsive-video-embedder-pro/documentation';
+		
+		$desc = sprintf(
+			__( 'Please read <a href="%s" target="_blank">the documentation</a> in how this settings work. Do not remove <code>wmode=transparent</code>, this will make some modes fail to work.',
+			$this->plugin_slug ),
+			esc_url( $url )
+		);
+		
+		echo "<p>$desc</p>";
+
+		?>
+		<p>
+			<?php _e("You may use spaces to seperate them instead of <code>&amp;</code>. They will be transformed to two spaces after save. Resources: ", $this->plugin_slug); ?>
+			<a target="_blank" href="https://developers.google.com/youtube/player_parameters">Youtube Parameters</a>, 
+			<a target="_blank" href="http://www.dailymotion.com/doc/api/player.html#parameters">Dailymotion Parameters</a>,
+			<a target="_blank" href="https://developer.vimeo.com/player/embedding">Vimeo Parameters</a>. 
+			<strong><?php _e("<code>wmode=transparent</code> should not be changed/removed", $this->plugin_slug); ?></strong>
+		</p>
+		<?php
+	}
+	
 
 	/* ------------------------------------------------------------------------ *
 	 * Field Callbacks
@@ -515,20 +537,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		$options_defaults = Advanced_Responsive_Video_Embedder_Shared::get_options_defaults( 'shortcodes' );
 		//* Store only the options in the database that are different from the defaults.
 		return array_diff_assoc( $output, $options_defaults );
-	}
-	
-	
-	public function params_section_description() { ?>
-
-		<p>
-			<?php _e("You may use spaces to seperate them instead of <code>&amp;</code>'s. They will be transformed to two spaces after save. Resources: ", $this->plugin_slug); ?>
-			<a target="_blank" href="https://developers.google.com/youtube/player_parameters">Youtube Parameters</a>, 
-			<a target="_blank" href="http://www.dailymotion.com/doc/api/player.html#parameters">Dailymotion Parameters</a>,
-			<a target="_blank" href="https://developer.vimeo.com/player/embedding">Vimeo Parameters</a>.<br>
-			<strong><?php _e("<code>wmode=transparent</code> should not be changed/removed", $this->plugin_slug); ?></strong>
-		</p>
-
-	<?php
 	}
 
 	/**
