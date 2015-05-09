@@ -10,5 +10,3 @@ Here we are starting the video 30 seconds in, disable the fullscreen button, swi
 `[[youtube id="Q6goNzXrmFs\" aspect_ratio="21:9" parameters="start=30 fs=0 theme=light"]]`
 
 [youtube id="Q6goNzXrmFs" aspect_ratio="21:9" parameters="start=30 fs=0 theme=light"]
-
-With the Pro Addon you get 4 lazyload modes, they automatically load the thumbnails from the provider 

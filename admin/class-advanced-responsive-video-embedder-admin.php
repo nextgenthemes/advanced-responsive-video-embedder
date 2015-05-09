@@ -159,8 +159,8 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 * @since    1.0.0
 	 */
 	public function add_action_links( $links ) {
-
-		$extra_links = array(
+		
+		$extra_linksss = array(
 			'settings'      => sprintf( '<a href="%s">%s</a>', admin_url( "options-general.php?page={$this->plugin_slug}" ), __( 'Settings', $this->plugin_slug ) ),
 			'buy_pro_addon' => sprintf( 
 				'<a href="%s"><strong style="display: inline;">%s</strong></a>',
@@ -169,6 +169,18 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			),
 			'donate'       => sprintf( '<a href="%s">%s</a>', 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC', __( 'Donate', $this->plugin_slug ) ),
 		);
+		
+		if( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
+		
+			$extra_links['buy_pro_addon'] = sprintf(
+				'<a href="%s"><strong style="display: inline;">%s</strong></a>',
+				'http://nextgenthemes.com/downloads/advanced-responsive-video-embedder',
+				__( 'Buy Pro Addon', $this->plugin_slug )
+			);
+		}
+		
+		$extra_links['settings'] = sprintf( '<a href="%s">%s</a>', admin_url( "options-general.php?page={$this->plugin_slug}" ), __( 'Settings', $this->plugin_slug ) );
+		$extra_links['donate']   = sprintf( '<a href="%s">%s</a>', 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC', __( 'Donate', $this->plugin_slug ) );
 
 		return array_merge( $extra_links, $links );
 

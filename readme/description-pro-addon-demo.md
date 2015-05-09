@@ -1,4 +1,4 @@
-### Pro addon Featue Demonstration ###
+### Pro Addon Feature Demonstration ###
 
 `[[vimeo id="124858722" mode="lazyload" maxwidth="400" align="left"]] This is a demo of a aligned lazyloaded video [...]`
 
