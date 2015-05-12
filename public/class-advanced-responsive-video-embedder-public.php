@@ -336,11 +336,15 @@ class Advanced_Responsive_Video_Embedder_Public {
 				break;
 		}
 		
+		if ( 'thumbnail' === $mode ) {
+			$mode = 'lazyload-lightbox';
+		}
+		
 		$supported_modes = Advanced_Responsive_Video_Embedder_Shared::get_supported_modes();
 		
 		if ( !array_key_exists( $mode, $supported_modes ) ) {
 			
-			return $this->error( sprintf( __( 'Mode: <code>%s</code> is not supported.', $this->plugin_slug ), esc_html( $mode ) ) );
+			return $this->error( sprintf( __( 'Mode: <code>%s</code> is invalid or not supported. Note that you will need the Pro Addon for lazyload modes.', $this->plugin_slug ), esc_html( $mode ) ) );
 		}
 		
 		if ( in_array( $align, array( 'left', 'right', 'center' ) ) ) {
