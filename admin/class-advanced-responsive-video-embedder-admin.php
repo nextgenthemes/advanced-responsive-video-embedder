@@ -322,9 +322,9 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		
 		if ( get_user_meta( $user_id, 'arve_ignore_pro_notice' ) ) {
 			return;
-		} 
+		}
 		
-		$pro_release = DateTime::createFromFormat( 'd-m-Y', '11-05-2015', new DateTimeZone('UTC') );
+		$pro_release = DateTime::createFromFormat( 'd-m-Y', '20-05-2015', new DateTimeZone('UTC') );
 		$pro_release = $pro_release->getTimestamp();
 		
 		if ( get_option( 'arve_install_date' ) < $pro_release ) {

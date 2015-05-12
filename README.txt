@@ -108,9 +108,6 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 == Changelog ==
 
-= 5.3.7 =
-* Offer pro addon only to legacy installs.
-
 = 5.3.6 =
 * Fix: Admin message not dismissable.
 
