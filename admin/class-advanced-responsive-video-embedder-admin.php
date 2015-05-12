@@ -605,9 +605,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		
 		$current_date = current_time( 'timestamp' );
 		$install_date = get_option( 'arve_install_date', $current_date );
-
-		delete_user_meta( $user_id, 'arve_ignore_admin_notice' );
-		$install_date = strtotime('-7 days', $current_date);
 		
 		if ( ! current_user_can( 'delete_plugins' ) || get_user_meta( $user_id, 'arve_ignore_admin_notice' ) || ( $current_date - $install_date ) < 604800 ) {
 			return;
