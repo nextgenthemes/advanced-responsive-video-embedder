@@ -291,16 +291,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$maxwidth     = (int) $maxwidth;
 		$aspect_ratio = $this->aspect_ratio_to_padding( $aspect_ratio );
 		$thumbnail    = trim( $thumbnail );
-
-		switch ( $thumbnail ) {
-			case null:
-			case '':
-			case ( filter_var( $thumbnail, FILTER_VALIDATE_URL ) ):
-				break;
-			default:
-				return $this->error( sprintf( __( 'Thumbnail: <code>%s</code> is not valid', $this->plugin_slug ), esc_html( $thumbnail ) ) );
-				break;
-		}
 		
 		if ( 'dailymotionlist' === $provider ) {
 			

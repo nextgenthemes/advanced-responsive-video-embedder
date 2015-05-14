@@ -48,9 +48,9 @@ module.exports = function (grunt) {
       },
       readme_md: {
         src: [
-          'readme/description-links.md',
+		  'readme/description.md',
 		  'readme/description-intro.md',
-          'readme/description-whatitis.md',
+          'readme/description-links.md',
           'readme/description-features.md',
           'readme/description-supported-providers.md',
 		  'readme/description-quick-intro.md',

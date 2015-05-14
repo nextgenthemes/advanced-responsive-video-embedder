@@ -11,32 +11,25 @@ GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-em
 
 Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement for WordPress' default embeds. Best plugin for videos?
 
-== Description ==
-
-### This is very likely the one and only plugin you will ever need to handle video embeds on your WordPress site(s) ###
-
 * [Overview][1]
 * [Quick Introduction][2]
 * [Features][3]
 * [Additional Features with the Pro Addon][4]
 * [Tests & Examples][12]
-* [Download][20]
 * [Github Page][21]
 * [Documentation][10]
 * [How to report a problem][11]
 
-<!--- Landing Page -->
-[1]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/
-[2]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/#quick-introduction
-[3]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/#features
-[4]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/#additional-features-with-the-pro-addon
-<!--- Other Pages on Site -->
-[10]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/quick-introduction-and-demonstration/
-[11]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/reporting-issues-for-advanced-responsive-video-embedder/
-[12]: https://nextgenthemes.com/downloads/advanced-responsive-video-embedder-pro/tests-and-examples/
-<!--- External Links -->
-[20]: https://downloads.wordpress.org/plugin/advanced-responsive-video-embedder.latest-stable.zip
-[21]: https://github.com/nextgenthemes/advanced-responsive-video-embedder
+ [1]: https://nextgenthemes.com/advanced-responsive-video-embedder-pro/
+ [2]: https://nextgenthemes.com/advanced-responsive-video-embedder-pro/#quick-introduction
+ [3]: https://nextgenthemes.com/advanced-responsive-video-embedder-pro/#features
+ [4]: https://nextgenthemes.com/advanced-responsive-video-embedder-pro/#additional-features-with-the-pro-addon
+ [10]: https://nextgenthemes.com/advanced-responsive-video-embedder-pro/documentation/
+ [11]: https://nextgenthemes.com/advanced-responsive-video-embedder-pro/reporting-issues-for-advanced-responsive-video-embedder/
+ [12]: https://nextgenthemes.com/advanced-responsive-video-embedder-pro/tests-and-examples/
+ [21]: https://github.com/nextgenthemes/advanced-responsive-video-embedder
+
+== Description ==
 
 ### The best WordPress plugin for videos? Supports close to everything you can imagine, still keeping it easy &amp; simple. ###
 
@@ -69,10 +62,10 @@ Simple &bull; Lightweight &bull; Responsive &bull; Customizable
 
 ### Additional Features with the Pro Addon ###
 
-* Feel good about yourself for helping me support my continiues work on this plugin. Tons of hours, weekends ... always worked on [improving](https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/) 3+ years.
+* Feel good about yourself for helping me support my long time work on this plugin. Tons of hours, weekends ... always worked on [improving](https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/) 3+ years.
 * Lazyload mode: Only load a preview image on pageload instead of the Video itself, makes you site load faster.
 * Lazyload -> Lightbox: Open videos in a [jQuery Colorbox](https://wordpress.org/plugins/jquery-colorbox/). Plugin needs to be installed.
-* Lazyload -> HTML5 Fullscreen: (experimental) This is a dream come true for me. Be aware that this has a Issue of going fullsceen a 2nd time from without fullscreen and fullscreen Buttons not working as expected.
+* Lazyload -> HTML5 Fullscreen: (experimental) This is a dream come true for me. Be aware that this has a Issue of going fullsceen a 2nd time from within fullscreen and fullscreen Buttons not working as expected.
 * Lazyload -> Half Screen Sticky: (experimental) Video that fills about half the screen/window and lets users continue to scroll and read the site, start writing a comment ... while watching a video. This relies on modern HTML5 features (calc, vw + vh) and may not work everywhere.
 
 ### Supported providers ###
@@ -124,15 +117,13 @@ Here we are starting the video 30 seconds in, disable the fullscreen button, swi
 
 
 
-With the Pro Addon you get 4 lazyload modes, they automatically load the thumbnails from the provider 
-
-### Pro addon Featue Demonstration ###
+### Pro Addon Feature Demonstration ###
 
 `[vimeo id="124858722" mode="lazyload" maxwidth="400" align="left"]] This is a demo of a aligned lazyloaded video [...]`
 
  This is a demo of a aligned lazyloaded video that has a maximal width set and will grow on click before loading the video.
 
-Just a bit of Lorem ipsum to not have this look area look empty dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
+Just a bit of Lorem ipsum to fill this aera with text. dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
 
 <div class="clearfix"></div>
 
