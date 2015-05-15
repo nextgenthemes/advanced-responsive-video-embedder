@@ -17,7 +17,7 @@ Up for beta testing
 
 ### **Pro Addon** version 0.8.0 ###
 
-* Changed: 'Lazyload' mode now supports growing the video size after thumbnails are clicked (optional).
+* Changed: 'Lazyload' mode now grows the video size after thumbnails are clicked.
 * Changed: 'Thumbnail' mode is now called 'Lazyload -> Colorbox' and has a sightly different behavior.
 * New: 'Lazyload -> Fullscreen' mode to instandly go Fullscreen after clicking the Lazyloaded preview image.
 * New: 'Lazyload -> Fixed' Fullscreen/-window mode (extremly experimental) with ability to resize fixed video on screen while reading the page.
