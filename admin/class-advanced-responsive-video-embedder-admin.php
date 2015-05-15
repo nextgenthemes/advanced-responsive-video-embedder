@@ -576,11 +576,9 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			'http://translate.nextgenthemes.com/projects/arve'
 		);
 		
-		$pro_release = DateTime::createFromFormat( 'd-m-Y', '20-05-2015', new DateTimeZone('UTC') );
+		$inst = (int) get_option( 'arve_install_date' );
 		
-		$pro_release = $pro_release->getTimestamp();
-		
-		if ( get_option( 'arve_install_date' ) < $pro_release ) {
+		if ( $inst < 1429516800 ) {
 			$message .= '<p>If you do not want to buy the Pro Addon (because you are used to lazyload or thumbnail modes that are no longer part of the free version) use this 100% discount code <code>legacy install</code> and get it <strong>for FREE!</strong></p>';
 		}
 		
