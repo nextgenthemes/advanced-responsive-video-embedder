@@ -1,6 +1,6 @@
 ## Changelog ##
 
-### 5.9.0 Alpha 2015/03/18 work time: 20 days ###
+### 5.9.0 Alpha - 2015/03/18 - work time: ~50 days ###
 
 Version 6 is coming up and things will from that point split into a free Plugin and a pro Addon, I need beta testers. Please do
 Up for beta testing 
@@ -11,8 +11,8 @@ Up for beta testing
 * Improved: New embed URLs for MyVideo.
 * Improved: Better Twitch support.
 * Improved: To reduce CSS and keep it simpler aspect ratios are now handled with inline styles.
-* Improved: Moved to complete WP Settings API
-* Improved: Tabbed and extendable options page
+* Improved: Moved to complete WP Settings API.
+* Improved: Tabbed and extendable options page.
 * Improved: Massive code improvements.
 
 ### **Pro Addon** version 0.8.0 ###
@@ -21,6 +21,7 @@ Up for beta testing
 * Changed: 'Thumbnail' mode is now called 'Lazyload -> Colorbox' and has a sightly different behavior.
 * New: 'Lazyload -> Fullscreen' mode to instandly go Fullscreen after clicking the Lazyloaded preview image.
 * New: 'Lazyload -> Fixed' Fullscreen/-window mode (extremly experimental) with ability to resize fixed video on screen while reading the page.
+* New: 'thumbnail' parameter, take image URL or a ID to a media libray image to be used as thumbnail image.
 * Improved: Enabled fake thumbnails for USTREAM and myvideo.de.
 * Depricated: Providers that only support `<object>` are from now only supported in normal mode, will switch automatically. This effects only recorded Twitch videos, flickr and veoh.
 

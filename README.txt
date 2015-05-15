@@ -11,6 +11,14 @@ GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-em
 
 Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement for WordPress' default embeds. Best plugin for videos?
 
+== Description ==
+
+### The best WordPress plugin for videos? Supports close to everything you can imagine, still keeping it easy &amp; simple. ###
+
+This is very likely the one and only plugin you will ever need to handle video embeds on your WordPress site(s)
+
+Simple &bull; Lightweight &bull; Responsive &bull; Customizable
+
 * [Overview][1]
 * [Quick Introduction][2]
 * [Features][3]
@@ -20,29 +28,14 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * [Documentation][10]
 * [How to report a problem][11]
 
- [1]: https://nextgenthemes.com/advanced-responsive-video-embedder-pro/
- [2]: https://nextgenthemes.com/advanced-responsive-video-embedder-pro/#quick-introduction
- [3]: https://nextgenthemes.com/advanced-responsive-video-embedder-pro/#features
- [4]: https://nextgenthemes.com/advanced-responsive-video-embedder-pro/#additional-features-with-the-pro-addon
- [10]: https://nextgenthemes.com/advanced-responsive-video-embedder-pro/documentation/
- [11]: https://nextgenthemes.com/advanced-responsive-video-embedder-pro/reporting-issues-for-advanced-responsive-video-embedder/
- [12]: https://nextgenthemes.com/advanced-responsive-video-embedder-pro/tests-and-examples/
+ [1]:  https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
+ [2]:  https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#quick-introduction
+ [3]:  https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#features
+ [4]:  https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#additional-features-with-the-pro-addon
+ [10]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/
+ [11]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/reporting-issues-for-advanced-responsive-video-embedder/
+ [12]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/tests-and-examples/
  [21]: https://github.com/nextgenthemes/advanced-responsive-video-embedder
-
-== Description ==
-
-### The best WordPress plugin for videos? Supports close to everything you can imagine, still keeping it easy &amp; simple. ###
-
-This is very likely the one and only plugin you will ever need to handle video embeds on your WordPress site(s)
-
-Simple &bull; Lightweight &bull; Responsive &bull; Customizable
-
-### What it is ###
-
- * Simple
- * Lightweight
- * Responsive
- * Customizable
 
 ### Features ###
 
