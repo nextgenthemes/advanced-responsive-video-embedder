@@ -305,7 +305,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 * Return Admin message to be used on the dashboard notice and the options page.
 	 *
 	 * @since     3.0.0
-	 */	
+	 */
 	public function get_admin_message() {
 		
 		return sprintf(
@@ -330,8 +330,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		if ( get_option( 'arve_install_date' ) < $pro_release ) {
 			?>
 			<div class="updated">
-				<p>There will be a Pro Addon for Advanced Resonsive Video Embedder, I need your help to help me out testing. Please <a href="https://nextgenthemes.com/?p=1371">read this</a> you will get the Pro Addon for <strong>FREE!</strong>. Note that the free  | <a href="?arve_pro_ignore=1">Dismiss</a>
-				</p>
+				<p>There will be a Pro Addon for Advanced Resonsive Video Embedder, I need your help to help me out testing. Please <a href="https://nextgenthemes.com/?p=1371">read this</a> you will get the Pro Addon for <strong>FREE!</strong>. Note that the Pro Addon will be <strong>mandatory</strong> for all other nodes then normal when version 6 will come out. | <a href="?arve_pro_ignore=1">Dismiss</a></p>
 			</div>
 			<?php
 		}
@@ -359,7 +358,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		}
 
 		$message  = $this->get_admin_message();
-		$message .= __( 'This Message is shown here because the ARVE Plugin was activated on this site for over a week now. I hope you like it.', $this->plugin_slug ) . '<br>';
+		$message .= __( 'This Message is shown here because the ARVE Plugin was activated on this site for over a week now. I hope you like it.', $this->plugin_slug );
 
 		$dismiss = sprintf( '| <a href="?arve_nag_ignore=1">%s</a>', __( 'Dismiss', $this->plugin_slug ) );
 
