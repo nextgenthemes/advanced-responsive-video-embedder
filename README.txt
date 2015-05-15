@@ -108,8 +108,8 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 == Changelog ==
 
-= 5.4.0 =
-* Trying to fix 'dashboard blank' issue.
+= 5.4.1 =
+* Fix: 'dashboard blank' issue.
 
 = 5.3.6 =
 * Fix: Admin message not dismissable.

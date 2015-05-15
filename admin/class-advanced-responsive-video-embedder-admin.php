@@ -324,10 +324,9 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			return;
 		}
 		
-		$pro_release = DateTime::createFromFormat( 'd-m-Y', '20-05-2015', new DateTimeZone('UTC') );
-		$pro_release = $pro_release->getTimestamp();
+		$inst = (int) get_option( 'arve_install_date' );
 		
-		if ( get_option( 'arve_install_date' ) < $pro_release ) {
+		if ( $inst < 1429516800 ) {
 			?>
 			<div class="updated">
 				<p>There will be a Pro Addon for Advanced Resonsive Video Embedder, I need your help to help me out testing. Please <a href="https://nextgenthemes.com/?p=1371">read this</a> you will get the Pro Addon for <strong>FREE!</strong>. Note that the Pro Addon will be <strong>mandatory</strong> for all other nodes then normal when version 6 will come out. | <a href="?arve_pro_ignore=1">Dismiss</a></p>
