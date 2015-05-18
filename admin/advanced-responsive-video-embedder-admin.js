@@ -191,9 +191,7 @@
 	var last_tab_input = $( '#arve_options_main\\[last_options_tab\\]' );
 	
 	$('.arve-settings-tabs a').on( 'click', function(e) {
-		
-		e.preventDefault();
-		
+
 		var target = $(this).attr('data-target');
 	
 		$('.arve-settings-section').show();
@@ -204,6 +202,8 @@
 		
 		$('.arve-settings-tabs a').removeClass( 'nav-tab-active' );
 		$(this).addClass( 'nav-tab-active' );
+		
+		e.preventDefault();
 	});
 	
 	if( last_tab_input.val() ) {

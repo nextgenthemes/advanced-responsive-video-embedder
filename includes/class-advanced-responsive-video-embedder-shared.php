@@ -101,7 +101,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'ustream'         => 'wmode=transparent  v=3  ',
 				'veoh'            => 'player=videodetailsembedded  id=anonymous  ',
 				'vevo'            => 'playlist=false  playerType=embedded  env=0  ',
-				'viddler'         => 'wmode=transparent  player=ful  f=1  disablebranding=1  ',
+				'viddler'         => 'wmode=transparent  player=full  f=1  disablebranding=1  ',
 				'vine'            => '', //* audio=1 supported
 				#'videojug'        => '',
 				'vimeo'           => 'html5=1  title=0  byline=0  portrait=0  ',

@@ -1,6 +1,6 @@
 ## Changelog ##
 
-### 5.9.0 Alpha - 2015/03/18 - work time: ~50 days ###
+### 6.0.0 Beta - 2015/06/01 - work time: ~50 days ###
 
 Version 6 is coming up and things will from that point split into a free Plugin and a pro Addon, I need beta testers. Please do
 Up for beta testing 
@@ -15,7 +15,7 @@ Up for beta testing
 * Improved: Tabbed and extendable options page.
 * Improved: Massive code improvements.
 
-### **Pro Addon** version 0.8.0 ###
+### **Pro Addon** 0.9.0 ###
 
 * Changed: 'Lazyload' mode now grows the video size after thumbnails are clicked.
 * Changed: 'Thumbnail' mode is now called 'Lazyload -> Colorbox' and has a sightly different behavior.

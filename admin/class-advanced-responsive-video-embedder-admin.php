@@ -263,7 +263,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			array(
 				'label_for'   => 'arve_options_main[autoplay]',
 				'value'       => $this->options['autoplay'],
-				'description' => __( 'URL of image to be used when no thumbnail is submited via shortcode or when no thumbnail can be catched from the provider', $this->plugin_slug ),
+				'description' => __( 'Autoplay videos in normal mode, has no effect on lazyload modes.', $this->plugin_slug ),
 			)
 		);
 
@@ -278,7 +278,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 				'value'       => $this->options['video_maxwidth'],
 				'suffix'      => 'px',
 				'class'       => 'small-text',
-				'description' => __('Optional, if not set your videos will be the maximum size of the container they are in. If your content area has a big width you might want to set this. Must be 100+ to work.', $this->plugin_slug )
+				'description' => __( 'Optional, if not set your videos will be the maximum size of the container they are in. If your content area has a big width you might want to set this. Must be 100+ to work.', $this->plugin_slug ),
 			)
 		);	
 		
