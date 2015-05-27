@@ -198,6 +198,8 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 Version 6 is coming up and things will from that point split into a free Plugin and a pro Addon. I carefully do not want to cripple peoples features who are familiar with lazyload and thumbnail mode so I give the Pro Addon out for free to everyone who had the plugin installed before version 6.0.0 Beta. If you are happy with the plugin 
 
 * Fix: Jackpack Shortcode Embeds module incompatibility.
+* New: URL parameters are now possible via URLs used for embeds (passed to iframe src).
+* Improved: URL parameters to controll arve features are now 'arve[mode]=' style instead of 'arve-mode='.
 * Improved: Enabled HTTPS support for Viddler and MyVideo.
 * Improved: TED Talks shortcodes now support the 'lang' parameter.
 * Improved: New embed URLs for MyVideo.
