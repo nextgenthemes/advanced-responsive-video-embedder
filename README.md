@@ -193,9 +193,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
-### 6.0.0 Beta - 2015/06/01 - work time: ~50 days ###
-
-Version 6 is coming up and things will from that point split into a free Plugin and a pro Addon. I carefully do not want to cripple peoples features who are familiar with lazyload and thumbnail mode so I give the Pro Addon out for free to everyone who had the plugin installed before version 6.0.0 Beta. If you are happy with the plugin 
+### 6.0.0 Beta - ~2015/06/15 - work time: ~50 days ###
 
 * Fix: Jackpack Shortcode Embeds module incompatibility.
 * New: URL parameters are now possible via URLs used for embeds (passed to iframe src).
