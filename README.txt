@@ -14,7 +14,7 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 
 This readme represents the upcoming version 6.0 and the Pro Addon, when it will be release only the normal mode (still responsive, very configurable ...) will be part of the free version here. If you not like this change, old versions will be aviable on Github. On top of this I give out free Pro Addons for people who installed this plugin before this announcement. I am afraid there will be still people hating, maybe more details on that later.
 
-Many many thanks to everyone who donated or baught the Pro Addon already even if they could get it for free.
+Many many thanks to everyone who donated or bought the Pro Addon already even if they could get it for free.
 
 ### The best WordPress plugin for videos? Supports close to everything you can imagine, still keeping it easy &amp; simple. ###
 
@@ -46,7 +46,7 @@ Simple &bull; Lightweight &bull; Responsive &bull; Customizable
 * Embeds via pasting the URL in its own line just like WordPress!
 * Optionally use Shortcodes instead
 * One single button for all providers (for most providers not required because of URL embeds, but allows to create custom shortcodes with advances features within seconds)
-* Responsive embeds with CSS, much better then with JS IMO
+* Responsive embeds with CSS, much better then with JavaScript IMO
 * Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disabled related videos at the end ... to help keep people on your Site rather then going to YouTube or keep watching videos
 * Clean Shortcode syntax `[vimeo id="123456"]` no ugly URLs, no unnecessary Shortcode wrapping.
 * Autostart (for providers that support them)
