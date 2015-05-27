@@ -7,6 +7,5 @@ Tested up to: 4.2.2
 Stable tag: trunk
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-embedder
 
 Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement for WordPress' default embeds. Best plugin for videos?

@@ -56,6 +56,8 @@ module.exports = function (grunt) {
 		  'readme/description-quick-intro.md',
 		  'readme/description-pro-addon-demo.md',
           'readme/description-hd-thumbnail.md',
+		  'readme/description-reviews.md',
+          'readme/description-roadmap.md',
           'readme/installation.md',
           'readme/faq.md',
           'readme/screenshots.md',

@@ -2,11 +2,11 @@
 
 ### I have a problem ... ###
 
-**Please read [Reporting Issues for Advanced Responsive Video Embedder][11]**
+Please report it on [community.nextgenthemes.com](https://community.nextgenthemes.com) **and plaese not on the wordpess.org forums, thanks.**
 
 ### Why are my videos not filling their container? ###
 
-You are most likely use `align`, this plugin has a option for limiting video with with alignment. If you want your videos to fill their containers then you should not use the `align=left/right/center` shortcode attribute or the `arve-align=` URL parameter. This assumes that you left the 'Video Maximal Width' field on the options page empty (default + recommended)
+You are most likely use `align`, this plugin has a option for limiting video with with alignment. If you want your videos to fill their containers then you should not use the `align=left/right/center` shortcode attribute or the `arve[align]=` URL parameter. This assumes that you left the 'Video Maximal Width' field on the options page empty (default + recommended)
 
 ### Why are videos opening full window (provider URL) when I click on them? ###
 

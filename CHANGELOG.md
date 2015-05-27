@@ -2,8 +2,7 @@
 
 ### 6.0.0 Beta - 2015/06/01 - work time: ~50 days ###
 
-Version 6 is coming up and things will from that point split into a free Plugin and a pro Addon, I need beta testers. Please do
-Up for beta testing 
+Version 6 is coming up and things will from that point split into a free Plugin and a pro Addon. I carefully do not want to cripple peoples features who are familiar with lazyload and thumbnail mode so I give the Pro Addon out for free to everyone who had the plugin installed before version 6.0.0 Beta. If you are happy with the plugin 
 
 * Fix: Jackpack Shortcode Embeds module incompatibility.
 * Improved: Enabled HTTPS support for Viddler and MyVideo.
@@ -14,6 +13,11 @@ Up for beta testing
 * Improved: Moved to complete WP Settings API.
 * Improved: Tabbed and extendable options page.
 * Improved: Massive code improvements.
+
+### **Pro Addon** 0.9.5 ###
+
+* Fix: Licensing Activation should now finally work correcty. (Multisite may need some tweaks)
+* Fix: Pissibility of unwanted margins/paddings on the transparent button.
 
 ### **Pro Addon** 0.9.0 ###
 

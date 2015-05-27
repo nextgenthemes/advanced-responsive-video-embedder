@@ -577,8 +577,8 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		);
 		
 		$inst = (int) get_option( 'arve_install_date' );
-		
-		if ( $inst < 1429516800 ) {
+
+		if ( $inst < 1491350400 ) {
 			$message .= '<p>If you do not want to buy the Pro Addon (because you are used to lazyload or thumbnail modes that are no longer part of the free version) use this 100% discount code <code>legacy install</code> and get it <strong>for FREE!</strong></p>';
 		}
 		

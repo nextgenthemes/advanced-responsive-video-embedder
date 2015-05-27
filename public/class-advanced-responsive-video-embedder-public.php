@@ -222,17 +222,20 @@ class Advanced_Responsive_Video_Embedder_Public {
 			if ( $this->starts_with( $key, 'arve-' ) ) {
 				
 				$key = substr( $key, 5 );
+				$old_atts[ $key ] = $value;
 			}
-			
-			$atts[ $key ] = $value;
-		}		
-		
-		$atts['id'] = $id;
-
-		if ( 'youtube' == $provider && ! empty( $url_args['t'] ) ) {
-			$atts['parameters'] = 'start=' . $this->youtube_time_to_seconds( $url_args['t'] );
 		}
-
+		
+		unset( $old_atts['param'] );
+		
+		$new_atts = $url_args['arve'];
+		unset( $url_args['arve'] );
+		
+		//* Pure awesomeness!
+		$atts               = array_merge( (array) $old_atts, (array) $new_atts );
+		$atts['parameters'] = build_query( $url_args );
+		$atts['id']         = $id;
+		
 		$output  = $this->build_embed( $provider, $atts );
 		// Output the original posted URL for SEO and other scraping purposes
 		$output .= sprintf( '<a href="%s" class="arve-hidden">%s</a>', esc_url( $url ), esc_html( $url ) );
@@ -541,13 +544,15 @@ class Advanced_Responsive_Video_Embedder_Public {
 		//* Take parameters from Options as defaults and maybe merge custom parameters from shortcode in.
 		//* If there are no options we assume the provider not supports any params and do nothing.
 		if ( ! empty( $this->options['params'][ $provider ] ) ) {
-
-			$parameters        = $this->parse_parameters( $parameters );
-			$option_parameters = $this->parse_parameters( $this->options['params'][ $provider ] );
+			
+			$parameters        = wp_parse_args( preg_replace( '!\s+!', '&', trim( $parameters ) ) );
+			$option_parameters = wp_parse_args( preg_replace( '!\s+!', '&', trim( $this->options['params'][ $provider ] ) ) );
 
 			$parameters = wp_parse_args( $parameters, $option_parameters );
-
+			
 			$url = add_query_arg( $parameters, $url );
+			
+			#d($url);
 		}
 
 		switch ( $provider ) {
@@ -1213,9 +1218,9 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 *
 	 * @since     4.2.0
 	 *
-	 * @param     string $aspect_ratio '4:3'
+	 * @param     string $aspect_ratio '4:3' or percentage value with percent sign
 	 *
-	 * @return    mixed  false / int    65.25 in case of 4:3
+	 * @return    mixed  false/int    65.25 in case of 4:3
 	 */
 
 	function aspect_ratio_to_padding( $aspect_ratio ) {
@@ -1230,23 +1235,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 			return ( $aspect_ratio[1] / $aspect_ratio[0] ) * 100;
 		else
 			return false;
-	}
-	
-	/**
-	 *
-	 * @since     3.1.3
-	 */
-	public function parse_parameters( $params ) {
-
-		$params = preg_replace( '!\s+!', '&', trim( $params ) );
-
-		//* Overkill or just awesome?
-		$remove = array( 'autostart' => 123, 'autoplay' => 123, 'videoautostart' => 123, 'ap' => 123 );
-		$params = array_diff_ukey( wp_parse_args( $params ), $remove, 'strcasecmp' );
-
-		//* TODO: Something to check here?
-
-		return $params;
 	}
 	
 	/**
