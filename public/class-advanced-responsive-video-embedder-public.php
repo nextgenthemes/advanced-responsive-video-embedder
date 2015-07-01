@@ -474,7 +474,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$urlcode = 'http://break.com/embed/' . $id;
 				break;
 			case 'dailymotion':
-				$urlcode = 'http://www.dailymotion.com/embed/video/' . $id;
+				$urlcode = '//www.dailymotion.com/embed/video/' . $id;
 				break;
 			case 'dailymotionlist':
 				$urlcode = 'http://www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2F' . $id . '%2F1';
