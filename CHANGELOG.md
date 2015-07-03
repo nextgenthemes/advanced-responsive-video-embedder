@@ -4,7 +4,7 @@
 
 * Fix: Jackpack Shortcode Embeds module incompatibility.
 * New: URL parameters are now possible via URLs used for embeds (passed to iframe src).
-* Improved: URL parameters to controll arve features are now 'arve[mode]=' style instead of 'arve-mode='.
+* Changed: URL parameters to controll arve features are now 'arve[mode]=' style instead of 'arve-mode='.
 * Improved: Enabled HTTPS support for Viddler and MyVideo.
 * Improved: TED Talks shortcodes now support the 'lang' parameter.
 * Improved: New embed URLs for MyVideo.
