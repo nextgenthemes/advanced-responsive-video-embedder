@@ -1,6 +1,11 @@
 ## Changelog ##
 
-### 6.0.0 Beta - ~2015/06/15 - work time: ~50 days ###
+### **Pro Addon** 0.9.7 ###
+
+* Fix: Lazyload videos not growing when global maxwidth setting was set.
+* Improved: Finally got rid of the jQuery Colorbox depency, the Pro Addon now includes lity for lightboxes.
+
+### 6.0.0 Beta - ~2015/07/03 - work time: ~60 days ###
 
 * Fix: Jackpack Shortcode Embeds module incompatibility.
 * New: URL parameters are now possible via URLs used for embeds (passed to iframe src).
@@ -9,10 +14,12 @@
 * Improved: TED Talks shortcodes now support the 'lang' parameter.
 * Improved: New embed URLs for MyVideo.
 * Improved: Better Twitch support.
+* Improved: Dailymotion HTTPS support.
 * Improved: To reduce CSS and keep it simpler aspect ratios are now handled with inline styles.
 * Improved: Moved to complete WP Settings API.
 * Improved: Tabbed and extendable options page.
 * Improved: Massive code improvements.
+* Improved: Replaced all Admin Messages that caused bugs and annoyance for users with a dashboard Widget.
 
 ### **Pro Addon** 0.9.5 ###
 

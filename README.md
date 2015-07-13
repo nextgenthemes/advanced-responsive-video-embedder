@@ -1,8 +1,5 @@
 ## Description ##
 
-This readme represents the upcoming version 6.0 and the Pro Addon, when it will be release only the normal mode (still responsive, very configurable ...) will be part of the free version here. If you not like this change, old versions will be aviable on Github. On top of this I give out free Pro Addons for people who installed this plugin before this announcement. I am afraid there will be still people hating, maybe more details on that later.
-
-Many many thanks to everyone who donated or bought the Pro Addon already even if they could get it for free.
 
 ### The best WordPress plugin for videos? Supports close to everything you can imagine, still keeping it easy &amp; simple. ###
 
@@ -10,14 +7,14 @@ This is very likely the one and only plugin you will ever need to handle video e
 
 Simple &bull; Lightweight &bull; Responsive &bull; Customizable
 
+* Please report issues on [community.nextgenthemes.com](https://community.nextgenthemes.com/) **and not on the wordpress.org forums.**
+
 * [Overview][1]
 * [Quick Introduction][2]
-* Please report issues on [community.nextgenthemes.com][13] **and not on the wordpress.org forums.**
 * [Features][3]
 * [Additional Features with the Pro Addon][4]
 * [Documentation][10]
 * [Tests & Examples][11]
-* Please report issues on [community.nextgenthemes.com][13] **and not on the wordpress.org forums.**
 * [Github Page][21]
 
  [1]:  https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
@@ -26,7 +23,6 @@ Simple &bull; Lightweight &bull; Responsive &bull; Customizable
  [4]:  https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#additional-features-with-the-pro-addon
  [10]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/
  [11]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/tests-and-examples/
- [13]: https://community.nextgenthemes.com/
  [21]: https://github.com/nextgenthemes/advanced-responsive-video-embedder
 
 ### Features ###
@@ -49,7 +45,7 @@ Simple &bull; Lightweight &bull; Responsive &bull; Customizable
 
 * Feel good about yourself for helping me support my long time work on this plugin. Tons of hours, weekends ... always worked on [improving](https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/) 3+ years.
 * Lazyload mode: Only load a preview image on pageload instead of the Video itself, makes you site load faster.
-* Lazyload -> Lightbox: Open videos in a [jQuery Colorbox](https://wordpress.org/plugins/jquery-colorbox/). Plugin needs to be installed.
+* Lazyload -> Lightbox: Shows the Video in a Lightbox after clicking a preview image.
 * Lazyload -> HTML5 Fullscreen: (experimental) This is a dream come true for me. Be aware that this has a Issue of going fullsceen a 2nd time from within fullscreen and fullscreen Buttons not working as expected.
 * Lazyload -> Half Screen Sticky: (experimental) Video that fills about half the screen/window and lets users continue to scroll and read the site, start writing a comment ... while watching a video. This relies on modern HTML5 features (calc, vw + vh) and may not work everywhere.
 
@@ -119,13 +115,13 @@ Just a bit of Lorem ipsum to fill this aera with text. dolor sit amet, consetetu
 
 We can also center videos and open then inside a Colorbox. This requires the jQuery Colorbox plugin to be installed. This site uses theme 3.
 
-`[[youtube id="Q6goNzXrmFs\" mode="lazyload-lightbox" maxwidth="600" align="center"]]`
+`[[youtube id="Q6goNzXrmFs" mode="lazyload-lightbox" maxwidth="600" align="center"]]`
 
-[youtube id="Q6goNzXrmFs\" mode="lazyload-lightbox" maxwidth="600" align="center"]
+[youtube id="Q6goNzXrmFs" mode="lazyload-lightbox" maxwidth="600" align="center"]
 
 ### Lazyloaded Preview Images in HD ###
 
-Contrary to what you might think, *thumbnail* in ARVE does not nessasary mean *small* images. You can provide your own images with thumbnail="https://your.image.url". Most providers also support HD thumbnail images and this plugin will get the highest aviable size.
+Contrary to what you might think, thumbnail in ARVE does not nessasary mean small images. You can provide your own images with thumbnail="https://your.image.url" or thumbnail="1234" where 1234 is the ID of the image in your WP Media Gallery. Most providers, which support automatic thubnails also support HD thumbnail images and this plugin will get the highest aviable size.
 
 [vimeo id="124400795" mode="lazyload" maxwidth="9000"]
 
@@ -152,7 +148,6 @@ I used a lot of high ranking plug-ins but they still broke my design. Downloaded
 Planned features are:
 
 * Support for self-hosted videos.
-* Getting rid of the over 2 year not updated 'jQuery Colorbox' plugin dependency and replace it with a modern responsive and touch friendly lightbox that will be included inside the pro addon. If you have any suggestions please let me know.
 
 ## Installation ##
 
@@ -193,15 +188,21 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
-### 6.0.0 Beta - ~2015/06/15 - work time: ~50 days ###
+### **Pro Addon** 0.9.7 ###
+
+* Fix: Lazyload videos not growing when global maxwidth setting was set.
+* Improved: Finally got rid of the jQuery Colorbox depency, the Pro Addon now includes lity for lightboxes.
+
+### 6.0.0 Beta - ~2015/07/03 - work time: ~60 days ###
 
 * Fix: Jackpack Shortcode Embeds module incompatibility.
 * New: URL parameters are now possible via URLs used for embeds (passed to iframe src).
-* Improved: URL parameters to controll arve features are now 'arve[mode]=' style instead of 'arve-mode='.
+* Changed: URL parameters to controll arve features are now 'arve[mode]=' style instead of 'arve-mode='.
 * Improved: Enabled HTTPS support for Viddler and MyVideo.
 * Improved: TED Talks shortcodes now support the 'lang' parameter.
 * Improved: New embed URLs for MyVideo.
 * Improved: Better Twitch support.
+* Improved: Dailymotion HTTPS support.
 * Improved: To reduce CSS and keep it simpler aspect ratios are now handled with inline styles.
 * Improved: Moved to complete WP Settings API.
 * Improved: Tabbed and extendable options page.

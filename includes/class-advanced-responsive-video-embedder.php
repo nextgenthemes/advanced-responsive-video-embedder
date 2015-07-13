@@ -69,7 +69,7 @@ class Advanced_Responsive_Video_Embedder {
 	public function __construct() {
 
 		$this->plugin_slug = 'advanced-responsive-video-embedder';
-		$this->version = '5.9.5';
+		$this->version = '6.0.0';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -169,11 +169,9 @@ class Advanced_Responsive_Video_Embedder {
 		// Add an action link pointing to the options page.
 		$plugin_basename = plugin_basename( plugin_dir_path( realpath( dirname( __FILE__ ) ) ) . $this->plugin_slug . '.php' );
 		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $_arve_admin, 'add_action_links' );
-	
-		//* Display a notice that can be dismissed
-		$this->loader->add_action( 'admin_init',    $_arve_admin, 'admin_notice_ignore' );
-		$this->loader->add_action( 'admin_notices', $_arve_admin, 'admin_notice' );
 
+		$this->loader->add_action( 'wp_dashboard_setup', $_arve_admin, 'add_dashboard_widget' );
+		
 		$this->loader->add_action( 'admin_init', $_arve_admin, 'register_settings' );
 
 		$this->loader->add_action( 'media_buttons', $_arve_admin, 'add_media_button', 11 );
@@ -201,7 +199,7 @@ class Advanced_Responsive_Video_Embedder {
 
 		$this->loader->add_action( 'wp_head', $_arve_public, 'print_styles' );
 		
-		$this->loader->add_action( 'arve_inner', $_arve_public, 'normal_inner', 10, 2 );
+		$this->loader->add_action( 'arve_output', $_arve_public, 'normal_output', 10, 2 );
 		
 		add_filter( 'widget_text', 'do_shortcode' );
 	}

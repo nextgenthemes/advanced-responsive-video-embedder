@@ -348,7 +348,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		switch ( $autoplay ) {
 			case null:
-			case '':			
+			case '':
 				break;
 			case 'true':
 			case '1':
@@ -416,10 +416,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$url = 'http://break.com/embed/' . $id;
 				break;
 			case 'dailymotion':
-				$url = 'http://www.dailymotion.com/embed/video/' . $id;
+				$url = '//www.dailymotion.com/embed/video/' . $id;
 				break;
 			case 'dailymotionlist':
-				$url = 'http://www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2F' . $id . '%2F1';
+				$url = '//www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2F' . $id . '%2F1';
 				break;
 			case 'movieweb':
 				$url = 'http://www.movieweb.com/v/' . $id;
@@ -637,7 +637,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 			return $this->error( $thumbnail->get_error_message() );
 		}
 
-		$inner = apply_filters( 'arve_inner', '', array(
+		$output = apply_filters( 'arve_output', '', array(
+			'aspect_ratio'                => $aspect_ratio,
 			'iframe'                      => $iframe,
 			'autoplay'                    => $autoplay,
 			'maxwidth'                    => $maxwidth,
@@ -653,41 +654,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'object_params_autoplay_no'   => $object_params_autoplay_no,
 		) );
 
-		if ( is_wp_error( $inner ) ) {
-			return $this->error( $inner->get_error_message() );
-		} elseif ( empty( $inner ) ) {
-			return $this->error( 'The inner is empty, this should not happen' );
-		}
-		
-		$wrapper_style = $this->get_wrapper_style( $maxwidth, $thumbnail );
-		
-		$output .= sprintf(
-			'<div id="%s" class="%s" data-arve-mode="%s" %s itemscope itemtype="http://schema.org/VideoObject">',
-			esc_attr( 'video-' . urlencode( $id ) ),
-			esc_attr( "arve-wrapper {$align}" ),
-			esc_attr( $mode ),
-			( $wrapper_style ) ? sprintf( ' style="%s"', esc_attr( $wrapper_style ) ) : ''
-		);
-		$output .= sprintf(
-			'<div class="arve-embed-container"%s>%s</div>',
-			( $aspect_ratio ) ? sprintf( ' style="padding-bottom: %g%%"', $aspect_ratio ) : '',
-			$inner
-		);
-		$output .= '<button class="arve-btn arve-btn-close arve-hidden">x</button>';
-		
-		$promote_link = sprintf(
-			'<a href="%s" title="%s" class="arve-promote-link">%s</a>',
-			esc_url( 'https://nextgenthemes.com/download/advanced-responsive-video-embedder-pro/' ),
-			esc_attr( __('embedded with Advanced Responsive Video Embedder (ARVE) WordPress plugin', $this->plugin_slug) ),
-			esc_html( __('by ARVE', $this->plugin_slug) )
-		);
-
-		$output .= ( $this->options['promote_link'] ) ? $promote_link : '';
-		$output .= '</div>'; // arve-wrapper
-
-		if ( 'vine' === $provider ) {
-			# Wordpress.org not allows this I think
-			#$output .= '<script async src="//platform.vine.co/static/scripts/embed.js" charset="utf-8"></script>';
+		if ( is_wp_error( $output ) ) {
+			return $this->error( $output->get_error_message() );
+		} elseif ( empty( $output ) ) {
+			return $this->error( 'The output is empty, this should not happen' );
 		}
 
 		if ( isset( $_GET['arve-debug'] ) ) {
@@ -720,14 +690,39 @@ class Advanced_Responsive_Video_Embedder_Public {
 		return $output;
 	}
 	
-	public function normal_inner( $inner, $args ) {
+	public function wrappers( $inner, $args ) {
+	
+		$promote_link = sprintf(
+			'<a href="%s" title="%s" class="arve-promote-link">%s</a>',
+			esc_url( 'https://nextgenthemes.com/download/advanced-responsive-video-embedder-pro/' ),
+			esc_attr( __('embedded with Advanced Responsive Video Embedder (ARVE) WordPress plugin', $this->plugin_slug) ),
+			esc_html( __('by ARVE', $this->plugin_slug) )
+		);
+	
+		$wrapper_style = $this->get_wrapper_style( $args['maxwidth'], $args['thumbnail'] );
+
+		$output = sprintf(
+			'<div id="video-%s" class="arve-wrapper %s" data-arve-mode="%s" %s itemscope itemtype="http://schema.org/VideoObject">',
+			esc_attr( urlencode( $args['id'] ) ),
+			esc_attr( $args['align'] ),
+			esc_attr( $args['mode'] ),
+			( $wrapper_style ) ? sprintf( ' style="%s"', esc_attr( $wrapper_style ) ) : ''
+		);
+		$output .= sprintf( '<div class="arve-embed-container" style="padding-bottom: %g%%">%s</div>', $args['aspect_ratio'], $inner );
+		$output .= '<button class="arve-btn arve-btn-close arve-hidden">x</button>';
+		$output .= ( $this->options['promote_link'] ) ? $promote_link : '';
+		$output .= '</div>'; // .arve-wrapper
+	
+		return $output;
+	}
+	
+	public function normal_output( $output, $args ) {
 		
 		if ( 'normal' === $args['mode'] ) {
 		
 			if ( $args['iframe'] ) {
 
-				$inner .= $this->create_iframe( array (
-					'provider' => $args['provider'],
+				$embed = $this->create_iframe( array (
 					'src'      => ( $args['autoplay'] ) ? $args['url_autoplay_yes'] : $args['url_autoplay_no'],
 				) );
 
@@ -736,22 +731,21 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$data    = ( $args['autoplay'] ) ? $args['url_autoplay_yes']           : $args['url_autoplay_no'];
 				$oparams = ( $args['autoplay'] ) ? $args['object_params_autoplay_yes'] : $args['object_params_autoplay_no'];
 
-				$inner .= $this->create_object( $data, $oparams );
+				$embed = $this->create_object( $data, $oparams );
 			}
+			
+			$output .= $this->wrappers( $embed, $args );
+
 		}
-		
-		return $inner;
+
+		return $output;
 	}
 
-	public function esc_url( $provider, $url ) {
+	public function esc_url( $url ) {
 		
-		if ( 'dailymotionlist' == $provider ) {
-			return str_replace( 'jukebox?list%5B0%5D', 'jukebox?list[]', esc_url( $url ) );
-		} else {
-			return esc_url( $url );
-		}
+		return str_replace( 'jukebox?list%5B0%5D', 'jukebox?list[]', esc_url( $url ) );
 	}
-		
+	
 	/**
 	 *
 	 * @since    4.0.0
@@ -781,23 +775,36 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$defaults = array (
 			'provider'        => null,
 			'src'             => false,
-			'data_src'        => false,
+			'data-src'        => false,
 			'class'           => 'arve-inner',
-			'allowfullscreen' => true
+			'allowfullscreen' => '',
+			'frameborder'     => '0',
 		);
 
 		$args = wp_parse_args( $args, $defaults );
-
-		extract( $args );
 		
-		return sprintf(
-			'<iframe %s%s%s%sframeborder="0" scrolling="no"></iframe>',
-			( $class )    ? sprintf( 'class="%s" ', esc_attr( $class ) ) : '',
-			( $src )      ? sprintf( 'src="%s" ', $this->esc_url( $provider, $src ) ) : '',
-			( $data_src ) ? sprintf( 'data-src="%s" ', $this->esc_url( $provider, $data_src ) ) : '',
-			( $allowfullscreen ) ? 'allowfullscreen mozallowfullscreen webkitallowfullScreen ' : ''
-		);
-	}
+		return sprintf( '<iframe %s></iframe>', $this->parse_attr( $args ) );
+	}	
+	
+	public function parse_attr( $attr = array() ) {
+
+		$out = '';
+
+		foreach ( $attr as $key => $value ) {
+
+			if ( false === $value || null === $value ) {
+				continue;
+			} elseif ( '' === $value ) {
+				$out .= sprintf( ' %s', esc_html( $key ) );
+			} elseif ( in_array( $key, array( 'href', 'src', 'data-src' ) ) ) {
+				$out .= sprintf( ' %s="%s"', esc_html( $key ), $this->esc_url( $value ) );
+			} else {
+				$out .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );
+			}
+		}
+
+		return $out;
+	}	
 
 	/**
 	 *

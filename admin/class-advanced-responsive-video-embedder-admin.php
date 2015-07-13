@@ -558,77 +558,81 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	public function get_admin_message() {
 		
-		$message = sprintf(
+		if ( ! current_user_can( 'update_plugins' ) ) {
+			return;
+		}
+		
+		$message     = '';
+		$pro_message = '';
+		$inst        = (int) get_option( 'arve_install_date' );
+		
+		if ( $inst < 1435958686 ) {
+			$message .= '<p>Your Advanced Responsive Video Embedder plugin was updated to version 6.0. Some things changed, please see <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/migration-guide/">migration guide</a> for details.</p>';
+		}		
+		
+		$message .= sprintf(
 			__(
-				'<p><big>This is Nico the Author of the Advanced Responsive Video Embedder plugin. When you <strong><a href="%s" target="_blank">buy the Pro Addon</a></strong> of this plugin you will get this:</big></p>'
-				. '<big><ul>'
-				. '<li><span class="dashicons dashicons-yes"></span> Feel good about yourself because you make me feel good by paying me for the long time work I put into this.</li>'
-				. '<li><span class="dashicons dashicons-yes"></span> 4 Lazyload modes</li>'
-				. '<li><span class="dashicons dashicons-yes"></span> Faster loading of videos</li>'
-				. '<li><span class="dashicons dashicons-yes"></span> Automatic or your own preview images</li>'
-				. '<li><span class="dashicons dashicons-yes"></span> Get rid of this message and more</li>'
-				. '</ul></big>'
-				. '<p>You can also <a href="%s" target="_blank">donate</a> or help <a href="%s" target="_blank">translate</a> if you like. Thanks so much!</p>',
+				'<p>This is Nico the Author of the Advanced Responsive Video Embedder plugin. When you <strong><a href="%s" target="_blank">buy the Pro Addon</a></strong> of this plugin you will get this:</p>
+				<ul>
+					<li><span class="dashicons dashicons-yes"></span> Feel good about yourself because you make me feel good by paying me for the long time work I put into this.</li>
+					<li><span class="dashicons dashicons-yes"></span> 4 Lazyload modes</li>
+					<li><span class="dashicons dashicons-yes"></span> Faster loading of videos</li>
+					<li><span class="dashicons dashicons-yes"></span> Automatic or your own preview images</li>
+					<li><span class="dashicons dashicons-yes"></span> Get rid of this message and more</li>
+				</ul>
+				<p>You can also <a href="%s" target="_blank">donate</a> or help <a href="%s" target="_blank">translate</a> if you like. Thanks so much!</p>',
 				$this->plugin_slug
 			),
-			'https://nextgenthemes.com/downloads/advanced-responsive-video-embedder/',
+			'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/',
 			'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC',
 			'http://translate.nextgenthemes.com/projects/arve'
 		);
-		
-		$inst = (int) get_option( 'arve_install_date' );
 
-		if ( $inst < 1491350400 ) {
-			$message .= '<p>If you do not want to buy the Pro Addon (because you are used to lazyload or thumbnail modes that are no longer part of the free version) use this 100% discount code <code>legacy install</code> and get it <strong>for FREE!</strong></p>';
+		if ( $inst < 1435958686 ) {
+			$pro_message .= '<p>If you do not want to buy the Pro Addon (because you are used to lazyload or thumbnail modes that are no longer part of the free version) use this 100% discount code <code>legacy install</code> and get it for free!</p>';
 		}
 		
-		return apply_filters( 'arve_admin_message', $message );
+		return $message . apply_filters( 'arve_admin_pro_message', $pro_message );
+	}
+
+	function add_dashboard_widget() {
+		
+		wp_add_dashboard_widget(
+			'arve_dashboard_widget',              // Widget slug.
+			'Advanced Responsive Video Embedder', // Title.
+			array( $this, 'dashboard_widget_output' ) // Display function.
+		);
+
+		// Globalize the metaboxes array, this holds all the widgets for wp-admin
+
+		global $wp_meta_boxes;
+
+		// Get the regular dashboard widgets array 
+		// (which has our new widget already but at the end)
+
+		$normal_dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
+
+		// Backup and delete our new dashboard widget from the end of the array
+
+		$arve_widget_backup = array( 'arve_dashboard_widget' => $normal_dashboard['arve_dashboard_widget'] );
+		unset( $normal_dashboard['arve_dashboard_widget'] );
+
+		// Merge the two arrays together so our widget is at the beginning
+
+		$sorted_dashboard = array_merge( $arve_widget_backup, $normal_dashboard );
+
+		// Save the sorted array back into the original metaboxes 
+
+		$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
 	}
 	
+	
 	/**
-	 * Display a notice that can be dismissed
-	 *
-	 * @since     3.0.0
+	 * Create the function to output the contents of our Dashboard Widget.
 	 */
-	public function admin_notice() {
-		
-		$message = $this->get_admin_message();
-		
-		if ( empty( $message ) ) {
-			return;
-		}
-		
-		global $current_user ;
-		$user_id = $current_user->ID;
-		
-		$current_date = current_time( 'timestamp' );
-		$install_date = get_option( 'arve_install_date', $current_date );
-		
-		if ( ! current_user_can( 'delete_plugins' ) || get_user_meta( $user_id, 'arve_ignore_admin_notice' ) || ( $current_date - $install_date ) < 604800 ) {
-			return;
-		}
-		
-		$message_dash = __( 'This message is shown here because the ARVE Plugin was activated on this site for over a week now. I hope you like it.', $this->plugin_slug );
+	function dashboard_widget_output() {
 
-		$dismiss = sprintf( '| <a href="?arve_msg_ignore=1">%s</a>', __( 'Dismiss', $this->plugin_slug ) );
-
-		echo '<div class="updated">' . $message . '<p>' . $message_dash . $dismiss . '</p></div>';
-	}
-
-	/**
-	 * Maybe dismiss admin Notice
-	 *
-	 * @since     3.0.0
-	 */
-	public function admin_notice_ignore() {
-		global $current_user;
-
-		$user_id = $current_user->ID;
-		
-		//* If user clicks to ignore the notice, add that to their user meta
-		if ( isset( $_GET['arve_msg_ignore'] ) && '1' === $_GET['arve_msg_ignore'] ) {
-			add_user_meta( $user_id, 'arve_ignore_admin_notice', 'true', true );
-		}
+		echo $this->get_admin_message();
 	}
 
 	/**

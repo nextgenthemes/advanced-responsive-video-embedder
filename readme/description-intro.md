@@ -3,3 +3,5 @@
 This is very likely the one and only plugin you will ever need to handle video embeds on your WordPress site(s)
 
 Simple &bull; Lightweight &bull; Responsive &bull; Customizable
+
+* Please report issues on [community.nextgenthemes.com](https://community.nextgenthemes.com/) **and not on the wordpress.org forums.**
