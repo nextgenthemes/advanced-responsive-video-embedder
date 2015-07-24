@@ -1,6 +1,6 @@
 ## Changelog ##
 
-### 6.0.1 Beta - 2015/07/24 - work time: ~60 days ###
+### 6.0.2 Beta - 2015/07/24 - work time: ~60 days ###
 
 Please check the migration guide
 
