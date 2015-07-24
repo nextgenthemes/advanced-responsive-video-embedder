@@ -285,6 +285,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'parameters'   => null,
 			'start'        => null, # Only used for vimeo
 			'thumbnail'    => null,
+			'link_text'    => null,
 		);
 		
 		$atts = shortcode_atts( $shortcode_atts_defaults, $atts, $this->options['shortcodes'][ $provider ] );
@@ -647,7 +648,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'mode'                        => $mode, 
 			'provider'                    => $provider,
 			'properties'                  => $properties,
-			'thumbnail'                   => $thumbnail, 
+			'thumbnail'                   => $thumbnail,
+			'link_text'                   => $link_text,
 			'url_autoplay_no'             => $url_autoplay_no, 
 			'url_autoplay_yes'            => $url_autoplay_yes,
 			'object_params_autoplay_yes'  => $object_params_autoplay_yes,
@@ -802,7 +804,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$out .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );
 			}
 		}
-
+		
 		return $out;
 	}	
 
