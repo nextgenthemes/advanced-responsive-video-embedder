@@ -566,19 +566,19 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		$pro_message = '';
 		$inst        = (int) get_option( 'arve_install_date' );
 		
-		if ( $inst < 1435958686 ) {
-			$message .= '<p>Your Advanced Responsive Video Embedder plugin was updated to version 6.0. Some things changed, please see <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/migration-guide/">migration guide</a> for details.</p>';
-		}		
+		if ( $inst < 1437734272 ) {
+			$message .= '<p>Your Advanced Responsive Video Embedder plugin was updated to version 6.0. Some things changed, please see <a href="https://nextgenthemes.com/?p=1875">migration guide</a> for details.</p>';
+		}
 		
 		$message .= sprintf(
 			__(
 				'<p>This is Nico the Author of the Advanced Responsive Video Embedder plugin. When you <strong><a href="%s" target="_blank">buy the Pro Addon</a></strong> of this plugin you will get this:</p>
 				<ul>
 					<li><span class="dashicons dashicons-yes"></span> Feel good about yourself because you make me feel good by paying me for the long time work I put into this.</li>
-					<li><span class="dashicons dashicons-yes"></span> 4 Lazyload modes</li>
+					<li><span class="dashicons dashicons-yes"></span> 5 Lazyload modes</li>
 					<li><span class="dashicons dashicons-yes"></span> Faster loading of videos</li>
 					<li><span class="dashicons dashicons-yes"></span> Automatic or your own preview images</li>
-					<li><span class="dashicons dashicons-yes"></span> Get rid of this message and more</li>
+					<li><span class="dashicons dashicons-yes"></span> And more</li>
 				</ul>
 				<p>You can also <a href="%s" target="_blank">donate</a> or help <a href="%s" target="_blank">translate</a> if you like. Thanks so much!</p>',
 				$this->plugin_slug

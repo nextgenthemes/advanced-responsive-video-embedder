@@ -195,7 +195,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 *
 	 */
 	public function url_build_embed( $provider, $matches, $attr, $url, $rawattr ) {
-
+		
 		$id = $matches[1];
 
 		if ( empty( $id ) ) {
@@ -211,7 +211,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		$parsed_url = parse_url( $url );
-		$url_args   = array();
+		$url_args = $old_atts = $new_atts = array();
 
 		if ( ! empty( $parsed_url['query'] ) ) {
 			parse_str( $parsed_url['query'], $url_args );
@@ -228,7 +228,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 		
 		unset( $old_atts['param'] );
 		
-		$new_atts = $url_args['arve'];
+		if ( isset( $url_args['arve'] ) ) {
+			$new_atts = $url_args['arve'];
+		}
+		
 		unset( $url_args['arve'] );
 		
 		//* Pure awesomeness!

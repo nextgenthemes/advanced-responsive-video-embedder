@@ -19,6 +19,7 @@ This is very likely the one and only plugin you will ever need to handle video e
 
 Simple &bull; Lightweight &bull; Responsive &bull; Customizable
 
+* Please check the [migration guide](https://nextgenthemes.com/?p=1875) after updating to version 6.0.0+.
 * Please report issues on [community.nextgenthemes.com](https://community.nextgenthemes.com/) **and not on the wordpress.org forums.**
 
 * [Overview][1]
@@ -157,8 +158,6 @@ I used a lot of high ranking plug-ins but they still broke my design. Downloaded
 
 ### Roadmap ###
 
-Planned features are:
-
 * Support for self-hosted videos.
 
 == Installation ==
@@ -200,12 +199,9 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 == Changelog ==
 
-### **Pro Addon** 0.9.7 ###
+### 6.0.1 Beta - 2015/07/24 - work time: ~60 days ###
 
-* Fix: Lazyload videos not growing when global maxwidth setting was set.
-* Improved: Finally got rid of the jQuery Colorbox depency, the Pro Addon now includes lity for lightboxes.
-
-### 6.0.0 Beta - ~2015/07/03 - work time: ~60 days ###
+Please check the migration guide
 
 * Fix: Jackpack Shortcode Embeds module incompatibility.
 * New: URL parameters are now possible via URLs used for embeds (passed to iframe src).
@@ -219,6 +215,16 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * Improved: Moved to complete WP Settings API.
 * Improved: Tabbed and extendable options page.
 * Improved: Massive code improvements.
+* Improved: Replaced all Admin Messages that caused bugs and annoyance for users with a dashboard Widget.
+
+### **Pro Addon** 1.0.1 ###
+
+* New: link-lightbox mode creates a link the triggers a lightbox with a video on click.
+
+### **Pro Addon** 0.9.7 ###
+
+* Fix: Lazyload videos not growing when global maxwidth setting was set.
+* Improved: Finally got rid of the jQuery Colorbox depency, the Pro Addon now includes lity for lightboxes.
 
 ### **Pro Addon** 0.9.5 ###
 

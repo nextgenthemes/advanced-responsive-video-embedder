@@ -1,11 +1,8 @@
 ## Changelog ##
 
-### **Pro Addon** 0.9.7 ###
+### 6.0.1 Beta - 2015/07/24 - work time: ~60 days ###
 
-* Fix: Lazyload videos not growing when global maxwidth setting was set.
-* Improved: Finally got rid of the jQuery Colorbox depency, the Pro Addon now includes lity for lightboxes.
-
-### 6.0.0 Beta - ~2015/07/03 - work time: ~60 days ###
+Please check the migration guide
 
 * Fix: Jackpack Shortcode Embeds module incompatibility.
 * New: URL parameters are now possible via URLs used for embeds (passed to iframe src).
@@ -20,6 +17,15 @@
 * Improved: Tabbed and extendable options page.
 * Improved: Massive code improvements.
 * Improved: Replaced all Admin Messages that caused bugs and annoyance for users with a dashboard Widget.
+
+### **Pro Addon** 1.0.1 ###
+
+* New: link-lightbox mode creates a link the triggers a lightbox with a video on click.
+
+### **Pro Addon** 0.9.7 ###
+
+* Fix: Lazyload videos not growing when global maxwidth setting was set.
+* Improved: Finally got rid of the jQuery Colorbox depency, the Pro Addon now includes lity for lightboxes.
 
 ### **Pro Addon** 0.9.5 ###
 
