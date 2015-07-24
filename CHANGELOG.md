@@ -2,7 +2,7 @@
 
 ### 6.0.2 Beta - 2015/07/24 - work time: ~60 days ###
 
-Please check the migration guide
+Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgrading to this version. 
 
 * Fix: Jackpack Shortcode Embeds module incompatibility.
 * New: URL parameters are now possible via URLs used for embeds (passed to iframe src).
