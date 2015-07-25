@@ -344,7 +344,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			return $this->error( sprintf( __( 'Mode: <code>%s</code> is invalid or not supported. Note that you will need the Pro Addon for lazyload modes.', $this->plugin_slug ), esc_html( $mode ) ) );
 		}
 		
-		if ( in_array( $align, array( 'alignleft', 'alignright', 'aligncenter' ) ) ) {
+		if ( $maxwidth < 100 && in_array( $align, array( 'alignleft', 'alignright', 'aligncenter' ) ) ) {
 
 			$maxwidth = (int) $this->options['align_maxwidth'];
 		}

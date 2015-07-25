@@ -18,10 +18,10 @@ Simple &bull; Lightweight &bull; Responsive &bull; Customizable
 * [Tests & Examples][11]
 * [Github Page][21]
 
- [1]:  https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
- [2]:  https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#quick-introduction
- [3]:  https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#features
- [4]:  https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#additional-features-with-the-pro-addon
+ [1]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
+ [2]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#quick-introduction
+ [3]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#features
+ [4]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#additional-features-with-the-pro-addon
  [10]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/
  [11]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/tests-and-examples/
  [21]: https://github.com/nextgenthemes/advanced-responsive-video-embedder
@@ -187,6 +187,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
+### ### 6.0.3 Beta, Pro Addon 1.0.3 ###
+
+* Fix: Max-width output issue.
+
 ### 6.0.2 Beta - 2015/07/24 - work time: ~60 days ###
 
 Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgrading to this version. 
@@ -205,21 +209,21 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 * Improved: Massive code improvements.
 * Improved: Replaced all Admin Messages that caused bugs and annoyance for users with a dashboard Widget.
 
-### **Pro Addon** 1.0.1 ###
+### Pro Addon 1.0.1 ###
 
 * New: link-lightbox mode creates a link the triggers a lightbox with a video on click.
 
-### **Pro Addon** 0.9.7 ###
+### Pro Addon 0.9.7 ###
 
 * Fix: Lazyload videos not growing when global maxwidth setting was set.
 * Improved: Finally got rid of the jQuery Colorbox depency, the Pro Addon now includes lity for lightboxes.
 
-### **Pro Addon** 0.9.5 ###
+### Pro Addon 0.9.5 ###
 
 * Fix: Licensing Activation should now finally work correcty. (Multisite may need some tweaks)
 * Fix: Pissibility of unwanted margins/paddings on the transparent button.
 
-### **Pro Addon** 0.9.0 ###
+### Pro Addon 0.9.0 ###
 
 * Changed: 'Lazyload' mode now grows the video size after thumbnails are clicked.
 * Changed: 'Thumbnail' mode is now called 'Lazyload -> Colorbox' and has a sightly different behavior.
