@@ -214,10 +214,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$url_args = $old_atts = $new_atts = array();
 
 		if ( ! empty( $parsed_url['query'] ) ) {
-			parse_str( $parsed_url['query'], $url_args );
+			parse_str( $parsed_url['query'], $url_query );
 		}
 		
-		foreach ( $url_args as $key => $value ) {
+		foreach ( $url_query as $key => $value ) {
 			
 			if ( $this->starts_with( $key, 'arve-' ) ) {
 				
@@ -228,15 +228,20 @@ class Advanced_Responsive_Video_Embedder_Public {
 		
 		unset( $old_atts['param'] );
 		
-		if ( isset( $url_args['arve'] ) ) {
-			$new_atts = $url_args['arve'];
+		if ( isset( $url_query['arve'] ) ) {
+			$new_atts = $url_query['arve'];
 		}
 		
-		unset( $url_args['arve'] );
+		if ( isset( $url_query['t'] ) ) {
+			$url_query['start'] = $this->youtube_time_to_seconds( $url_query['t'] );
+		}
+		
+		unset( $url_query['arve'] );
+		unset( $url_query['t'] );
 		
 		//* Pure awesomeness!
 		$atts               = array_merge( (array) $old_atts, (array) $new_atts );
-		$atts['parameters'] = build_query( $url_args );
+		$atts['parameters'] = build_query( $url_query );
 		$atts['id']         = $id;
 		
 		$output  = $this->build_embed( $provider, $atts );

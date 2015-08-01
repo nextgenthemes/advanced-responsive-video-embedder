@@ -26,10 +26,7 @@
   "bugs": {
     "url": "https://github.com/twbs/bootstrap/issues"
   },
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/twbs/bootstrap/blob/master/LICENSE"
-  },
+  "license": "GPLv3",
   "devDependencies": {
     "glob": "~5.0.3",
     "grunt": "~0.4.5",

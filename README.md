@@ -10,6 +10,7 @@ Simple &bull; Lightweight &bull; Responsive &bull; Customizable
 * Please check the [migration guide](https://nextgenthemes.com/?p=1875) after updating to version 6.0.0+.
 * Please report issues on [community.nextgenthemes.com](https://community.nextgenthemes.com/) **and not on the wordpress.org forums.**
 
+
 * [Overview][1]
 * [Quick Introduction][2]
 * [Features][3]
@@ -110,8 +111,9 @@ https://youtu.be/Q6goNzXrmFs?start=30&fs=0&theme=light&arve[aspect_ratio]=21:9
 
 [vimeo id="124858722" mode="lazyload" maxwidth="400" align="left"] This is a demo of a aligned lazyloaded video that has a maximal width set and will grow on click before loading the video.
 
-Just a bit of Lorem ipsum to fill this aera with text. dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
+You can open up a lightbox with a normal link [youtube id="Q6goNzXrmFs" mode="link-lightbox" link_text="click me"] this:
 
+`[[youtube id="Q6goNzXrmFs" mode="link-lightbox" link_text="click me"]]`
 <div class="clearfix"></div>
 
 We can also center videos and open then inside a Colorbox. This requires the jQuery Colorbox plugin to be installed. This site uses theme 3.
@@ -187,7 +189,11 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
-### ### 6.0.3 Beta, Pro Addon 1.0.3 ###
+### 6.0.4 Beta ###
+
+* Fix: Youtube URL with starttime.
+
+### 6.0.3 Beta, Pro Addon 1.0.3 ###
 
 * Fix: Max-width output issue.
 

@@ -1,6 +1,10 @@
 ## Changelog ##
 
-### ### 6.0.3 Beta, Pro Addon 1.0.3 ###
+### 6.0.4 Beta ###
+
+* Fix: Youtube URL with starttime.
+
+### 6.0.3 Beta, Pro Addon 1.0.3 ###
 
 * Fix: Max-width output issue.
 
