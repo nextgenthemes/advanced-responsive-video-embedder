@@ -211,7 +211,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		$parsed_url = parse_url( $url );
-		$url_args = $old_atts = $new_atts = array();
+		$url_query = $old_atts = $new_atts = array();
 
 		if ( ! empty( $parsed_url['query'] ) ) {
 			parse_str( $parsed_url['query'], $url_query );
