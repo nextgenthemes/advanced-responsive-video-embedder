@@ -53,3 +53,8 @@
 .arve-button-primary {
 	display: inline-block;
 }
+
+
+.arve-options-wrap {
+	max-width: 1000px;
+}

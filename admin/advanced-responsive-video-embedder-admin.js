@@ -1,6 +1,10 @@
 (function ( $ ) {
 	"use strict";
-
+	/*global alert */
+	/*global tb_remove */
+	/*global arve_regex_list */
+	/*global send_to_editor */
+	
 	var create_shortcode = function() {
 
 		if ( ( $('#arve-provider').val() === '' ) || ( $('#arve-id').val() === '' ) ) {
@@ -38,9 +42,8 @@
 	var detect_id = function( code ) {
 
 		//var regExp;
-		var embed_regex = new Object(); 
-		var output      = new Object();
-		var match;
+		var embed_regex = {}; 
+		var output      = {};
 
 		$.each( arve_regex_list, function( provider, regex ) {
 
@@ -120,7 +123,7 @@
 		event.preventDefault();
 
 		if ( ( $( '#arve-id' ).val() === '' ) || ( $('#arve-id').val() === 'nothing matched' ) ) {
-			alert('no id');
+			alert( 'no id' );
 			return;
 		}
 
@@ -163,7 +166,58 @@
 		} else {
 			$( '#arve-shortcode' ).html( '-' );
 		}
-
 	});
 
+	// Options Page
+	$('.arve-settings-section').each( function() {
+
+		$(this).insertBefore( $(this).parent() );
+	});
+	
+	$('.arve-settings-section').each( function() {
+	
+		var id     = $(this).attr( 'id' );
+		var classs = $(this).attr( 'class' );
+		var title  = $(this).attr( 'title' );
+		
+		$(this).nextUntil( '.arve-settings-section' ).wrapAll( '<section id="' + id + '" class="' + classs + '" />' );
+		
+		$( '<a href="#" data-target="#' + id + '" class="nav-tab">' + title + '</a>' ).appendTo( '.arve-settings-tabs' );
+		
+		$(this).remove();
+	});
+	
+	// Its hidden!
+	var last_tab_input = $( '#arve_options_main\\[last_options_tab\\]' );
+	
+	$('.arve-settings-tabs a').on( 'click', function(e) {
+
+		var target = $(this).attr('data-target');
+	
+		$('.arve-settings-section').show();
+		$( target ).prependTo( '.arve-options-form' );
+		$('.arve-settings-section').not( target ).hide();
+		
+		$( last_tab_input ).val( target );
+		
+		$('.arve-settings-tabs a').removeClass( 'nav-tab-active' );
+		$(this).addClass( 'nav-tab-active' );
+		
+		e.preventDefault();
+	});
+	
+	if( last_tab_input.val() ) {
+	
+		var last_tab = last_tab_input.val();
+		
+		if( $( last_tab ).length === 0 ) {
+			last_tab = '#arve-settings-section-main';
+		}
+
+		$('.arve-settings-tabs a[data-target='+last_tab+']').addClass( 'nav-tab-active' );
+
+		$( last_tab ).prependTo( '.arve-options-form' );
+		$('.arve-settings-section').not( last_tab ).hide();
+	}
+		
 }(jQuery));

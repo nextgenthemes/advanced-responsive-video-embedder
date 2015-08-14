@@ -18,7 +18,7 @@
  * @since      1.0.0
  * @package    Advanced_Responsive_Video_Embedder
  * @subpackage Advanced_Responsive_Video_Embedder/includes
- * @author     Nicolas Jonas <dont@like.mails>
+ * @author     Nicolas Jonas
  */
 class Advanced_Responsive_Video_Embedder_Shared {
 
@@ -27,18 +27,18 @@ class Advanced_Responsive_Video_Embedder_Shared {
 	 *
 	 * @since    2.6.0
 	 */
-	public function get_options_defaults() {
+	public static function get_options_defaults( $section ) {
 
-		return array(
-			'mode'                  => 'lazyload',
-			'video_maxwidth'        => '',
-			'align_width'           => 400,
-			'thumb_width'           => 300,
-			'fakethumb'             => true,
-			'custom_thumb_image'    => '',
-			'autoplay'              => false,
-			'transient_expire_time' => DAY_IN_SECONDS,
-			'shortcodes'            => array(
+		$options = array(
+			'main' => array(
+				'promote_link'          => false,
+				'autoplay'              => false,
+				'mode'                  => 'normal',
+				'video_maxwidth'        => '',
+				'align_maxwidth'        => 400,
+				'last_options_tab'      => '#arve-settings-section-main',
+			),
+			'shortcodes' => array(
 				'4players'               => '4players',
 				'archiveorg'             => 'archiveorg',
 				'blip'                   => 'blip',
@@ -98,51 +98,32 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				#'snotr'           => '',
 				#'spike'           => '',
 				#'ted'             => '',
-				'ustream'         => 'v=3  wmode=transparent  ',
+				'ustream'         => 'wmode=transparent  v=3  ',
 				'veoh'            => 'player=videodetailsembedded  id=anonymous  ',
-				'vevo'            => 'playlist=false  playerType=embedded  env=0  ', // playerId=62FF0A5C-0D9E-4AC1-AF04-1D9E97EE3961
-				'viddler'         => 'f=1  disablebranding=1  wmode=transparent  ',
+				'vevo'            => 'playlist=false  playerType=embedded  env=0  ',
+				'viddler'         => 'wmode=transparent  player=full  f=1  disablebranding=1  ',
 				'vine'            => '', //* audio=1 supported
 				#'videojug'        => '',
 				'vimeo'           => 'html5=1  title=0  byline=0  portrait=0  ',
 				#'yahoo'           => '',
-				'youtube'         => 'iv_load_policy=3  modestbranding=1  rel=0  wmode=transparent  ',
+				'youtube'         => 'wmode=transparent  iv_load_policy=3  modestbranding=1  rel=0  autohide=1',
 			)
 		);
-	}
 		
+		return $options[ $section ];
+	}
+
+	
 	/**
 	 * Get options by merging possibly existing options with defaults
 	 *
 	 * @since    2.6.0
 	 */
-	public function get_options() {
+	public static function get_options() {
 
-		$defaults = $this->get_options_defaults();
-		
-		$options = get_option( 'arve_options', array() );
-
-		if ( !empty( $options['params'] ) ) {
-		
-			foreach( $options['params'] as $provider => $params ) {
-
-				if ( is_array( $params ) ) {
-
-					$params_str = '';
-
-					foreach ( $params as $key => $var ) {
-
-						$params_str .= (string) "{$key}={$var}  ";
-					}
-
-					$options['params'][ $provider ] = $params_str;
-				}
-			}
-		}
-		
-		$options               = wp_parse_args( $options,               $defaults );
-		$options['shortcodes'] = wp_parse_args( $options['shortcodes'], $defaults['shortcodes'] );
-		$options['params']     = wp_parse_args( $options['params'],     $defaults['params'] );
+		$options               = wp_parse_args( get_option( 'arve_options_main', array() ),       self::get_options_defaults( 'main' ) );
+		$options['shortcodes'] = wp_parse_args( get_option( 'arve_options_shortcodes', array() ), self::get_options_defaults( 'shortcodes' ) );
+		$options['params']     = wp_parse_args( get_option( 'arve_options_params', array() ),     self::get_options_defaults( 'params' ) );
 
 		return $options;
 	}
@@ -152,7 +133,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 	 * @since    3.0.0
 	 *
 	 */
-	public function get_regex_list() {
+	public static function get_regex_list() {
 
 		$hw = 'https?://(?:www\.)?';
 		//* Double hash comment = no id in URL
@@ -165,7 +146,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'collegehumor'        => $hw . 'collegehumor\.com/video/([0-9]+)',
 			##'comedycentral'     =>
 			'dailymotion_hub'     => $hw . 'dailymotion\.com/hub/' .  '[a-z0-9]+_[a-z0-9_\-]+\#video=([a-z0-9]+)',
-			'dailymotionlist'     => $hw . 'dailymotion\.com/playlist/([a-z0-9]+_[a-z0-9_\-]+)',
+			'dailymotionlist'     => $hw . 'dailymotion\.com/playlist/([a-z0-9]+)',
 			'dailymotion'         => $hw . 'dailymotion\.com/video/([^_]+)',
 			#'dailymotion_jukebox' => $hw . 'dailymotion\.com/widget/jukebox?list\[\]=%2Fplaylist%2F([a-z0-9]+_[a-z0-9_\-]+)',
 			#'flickr'             => 'flickr',
@@ -196,21 +177,34 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'youtube'             => $hw . 'youtube\.com/watch\?v=([a-z0-9_\-]{11}(&list=[a-z0-9_\-]+)?)',
 			//* Shorteners
 			'youtu_be'            => $hw . 'youtu\.be/([a-z0-9_-]{11})',
-			'dai_ly'              => 'http://dai\.ly/([^_]+)',
+			'dai_ly'              => $hw . 'dai\.ly/([^_]+)',
 		);
 	}
 	
 	/**
+	 * 
 	 *
-	 * @since    3.2.0
-	 *
+	 * @since     5.4.0
 	 */
-	public function is_legacy_install() {
-	
-		if( get_option( 'arve_install_date' ) < 1423846281000 ) {
-			return true;
+	public static function get_mode_options( $selected ) {
+		
+		$modes = self::get_supported_modes();
+		$out   = '';
+		
+		foreach( $modes as $mode => $desc ) {
+			
+			$out .= sprintf(
+				'<option value="%s" %s>%s</option>',
+				esc_attr( $mode ),
+				selected( $selected, $mode, false ),
+				$desc
+			);
 		}
 		
-		return false;
+		return $out;
+	}
+	
+	public static function get_supported_modes() {
+		return apply_filters( 'arve_modes', array( 'normal' => __( 'Normal', 'advanced-responsive-video-embedder' ) ) );
 	}
 }
