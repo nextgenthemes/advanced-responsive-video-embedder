@@ -2,7 +2,7 @@
 
 * Embeds via pasting the URL in its own line just like WordPress!
 * Optionally use Shortcodes instead
-* One single button for all providers (for most providers not required because of URL embeds, but allows to create custom shortcodes with advances features within seconds)
+* One single button for all providers (for most providers not required because of URL embeds, but allows to create custom shortcodes with advanced features within seconds)
 * Responsive embeds with CSS, much better then with JS IMO
 * Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disabled related videos at the end ... to help keep people on your Site rather then going to YouTube or keep watching videos
 * Clean Shortcode syntax `[[vimeo id="123456"]]` no ugly URLs, no unnecessary Shortcode wrapping.

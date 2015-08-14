@@ -1,5 +1,37 @@
 ## Changelog ##
 
+### Pro Addon 1.1.0 ###
+
+* Fix: Various issues reguarding lightbox mode.
+
+### 6.1.0 ###
+
+* Fix: Messages about pro addon removed when it is installed.
+
+### Pro Addon 1.0.7 ###
+
+* Fix: Video start playing again invisible when closeing lightbox with ESC.
+
+### 6.0.6 Beta ###
+
+* Improved: Adds a "Debug Info" tab to the settings page copy pasting when there is are issue.
+
+### Pro Addon 1.0.6 ###
+
+* Remove development functions.
+
+### Pro Addon 1.0.4 ###
+
+* Possibly Fixes SSL issues during activation.
+
+### Pro Addon 1.0.3 ###
+
+* Fix: Maxwidth issue.
+
+### 6.0.5 Beta ###
+
+* Fix: Foreach php error
+
 ### 6.0.4 Beta ###
 
 * Fix: Youtube URL with starttime.

@@ -4,5 +4,6 @@ This is very likely the one and only plugin you will ever need to handle video e
 
 Simple &bull; Lightweight &bull; Responsive &bull; Customizable
 
-* Please check the [migration guide](https://nextgenthemes.com/?p=1875) after updating to version 6.0.0+.
-* Please report issues on [community.nextgenthemes.com](https://community.nextgenthemes.com/) **and not on the wordpress.org forums.**
+Please check the [migration guide](https://nextgenthemes.com/?p=1875) after updating to version 6.0.0+.
+
+Please report issues on [community.nextgenthemes.com](https://community.nextgenthemes.com/) **and not on the wordpress.org forums.**

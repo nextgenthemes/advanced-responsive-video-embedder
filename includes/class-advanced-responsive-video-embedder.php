@@ -69,7 +69,7 @@ class Advanced_Responsive_Video_Embedder {
 	public function __construct() {
 
 		$this->plugin_slug = 'advanced-responsive-video-embedder';
-		$this->version = '6.0.5';
+		$this->version = '6.1.0';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -173,6 +173,7 @@ class Advanced_Responsive_Video_Embedder {
 		$this->loader->add_action( 'wp_dashboard_setup', $_arve_admin, 'add_dashboard_widget' );
 		
 		$this->loader->add_action( 'admin_init', $_arve_admin, 'register_settings' );
+		$this->loader->add_action( 'admin_init', $_arve_admin, 'register_settings_debug', 99 );
 
 		$this->loader->add_action( 'media_buttons', $_arve_admin, 'add_media_button', 11 );
 	}

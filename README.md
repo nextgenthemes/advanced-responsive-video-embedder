@@ -7,8 +7,9 @@ This is very likely the one and only plugin you will ever need to handle video e
 
 Simple &bull; Lightweight &bull; Responsive &bull; Customizable
 
-* Please check the [migration guide](https://nextgenthemes.com/?p=1875) after updating to version 6.0.0+.
-* Please report issues on [community.nextgenthemes.com](https://community.nextgenthemes.com/) **and not on the wordpress.org forums.**
+Please check the [migration guide](https://nextgenthemes.com/?p=1875) after updating to version 6.0.0+.
+
+Please report issues on [community.nextgenthemes.com](https://community.nextgenthemes.com/) **and not on the wordpress.org forums.**
 
 
 * [Overview][1]
@@ -31,7 +32,7 @@ Simple &bull; Lightweight &bull; Responsive &bull; Customizable
 
 * Embeds via pasting the URL in its own line just like WordPress!
 * Optionally use Shortcodes instead
-* One single button for all providers (for most providers not required because of URL embeds, but allows to create custom shortcodes with advances features within seconds)
+* One single button for all providers (for most providers not required because of URL embeds, but allows to create custom shortcodes with advanced features within seconds)
 * Responsive embeds with CSS, much better then with JS IMO
 * Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disabled related videos at the end ... to help keep people on your Site rather then going to YouTube or keep watching videos
 * Clean Shortcode syntax `[[vimeo id="123456"]]` no ugly URLs, no unnecessary Shortcode wrapping.
@@ -89,9 +90,9 @@ Simple &bull; Lightweight &bull; Responsive &bull; Customizable
 
 ### Quick Introduction ###
 
-URLs like `https://youtu.be/WHZPEkZCqwA` on its own line will produce full responsive embeds. If you already use this with WordPress default, this is the perfect drop-in replacement to make everything responsive, no need to do anything.
+URLs like `https://vimeo.com/124400795` on its own line will produce full responsive embeds. If you already use this with WordPress default, this is the perfect drop-in replacement to make everything responsive, no need to do anything.
 
-https://youtu.be/WHZPEkZCqwA?arve[mode]=normal
+https://vimeo.com/124400795
 
 Extremly customizable with support for anything providers offer to customize embeds. Other plugins offer some of this features with huge bloated dialogs, ARVE is different, it just lets you do anything you want if you have a few seconds to look up what the parameters do.
 
@@ -188,6 +189,30 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 2. Options page
 
 ## Changelog ##
+
+### Pro Addon 1.0.7 ###
+
+* Fix: Video start playing again invisible when closeing lightbox with ESC.
+
+### 6.0.6 Beta ###
+
+* Improved: Adds a "Debug Info" tab to the settings page copy pasting when there is are issue.
+
+### Pro Addon 1.0.6 ###
+
+* Remove development functions.
+
+### Pro Addon 1.0.4 ###
+
+* Possibly Fixes SSL issues during activation.
+
+### Pro Addon 1.0.3 ###
+
+* Fix: Maxwidth issue.
+
+### 6.0.5 Beta ###
+
+* Fix: Foreach php error
 
 ### 6.0.4 Beta ###
 

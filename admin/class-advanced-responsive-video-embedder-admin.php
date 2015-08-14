@@ -252,7 +252,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 				'value'       => $this->options['promote_link'],
 				'description' => __( "Shows a small 'by ARVE' link below the videos to help me promote this plugin", $this->plugin_slug ),
 			)
-		);	
+		);
 		
 		add_settings_field(
 			'arve_options_main[autoplay]',
@@ -392,6 +392,24 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		register_setting( 'arve-settings-group', 'arve_options_shortcodes', array( $this, 'validate_options_shortcodes' ) );
 	}
 	
+	/**
+	 * 
+	 *
+	 * @since    6.0.6
+	 */
+	public function register_settings_debug() {
+	
+		// Debug Information
+		$debug_title = __( 'Debug Info', $this->plugin_slug );
+		
+		add_settings_section(
+			'debug_section',
+			sprintf( '<span class="arve-settings-section" id="arve-settings-section-debug" title="%s"></span>%s', esc_attr( $debug_title ), esc_html( $debug_title ) ),
+			array( $this, 'debug_section_description' ),
+			$this->plugin_slug
+		);
+	}
+	
 	public function submit_reset( $args ) {
 		
 		submit_button( __('Save Changes' ),                                    'primary',   'submit',              false );
@@ -427,7 +445,68 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		<?php
 	}
 	
+	public function debug_section_description() {
 
+		global $wp_version;
+		
+		ob_start();
+		var_dump( $this->options );
+		$options_dump = ob_get_clean();
+		
+		$active_plugins = implode( "\n\t", get_option('active_plugins') );
+	
+		$php_version = phpversion();
+		
+		$plugin_data    = get_plugin_data( WP_PLUGIN_DIR . '/advanced-responsive-video-embedder/advanced-responsive-video-embedder.php' );
+		$pro_data       = get_plugin_data( WP_PLUGIN_DIR . '/arve-pro/arve-pro.php' );
+		
+		$plugin_version = $plugin_data['Version'];
+		$pro_version    = $pro_data['Version'];
+		
+		if( ! is_plugin_active( 'advanced-responsive-video-embedder/advanced-responsive-video-embedder.php' ) ) {
+			$plugin_version .= ' INACTIVE';
+		}
+		
+		if( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
+			$pro_version .= ' INACTIVE';
+			$pro_options_dump = '';
+		} else {
+			$pro_options = get_option( 'arve_options_pro' );
+			unset( $pro_options['key'] );
+			ob_start();
+			var_dump( $pro_options );
+			$pro_options_dump = ob_get_clean();		
+		}
+		
+		echo '<textarea style="font-family: monospace; font-size: 9px; width: 100%" rows="30">';
+		
+		echo "ARVE Version:      $plugin_version\n";
+		echo "ARVE-Pro Version:  $pro_version\n";
+		echo "WordPress Version: $wp_version\n";
+		echo "PHP Version:       $php_version\n";
+		echo "\n";
+		echo "Active Plugins:\n";
+		echo	"\t$active_plugins\n";
+		echo "\n";
+		echo "ARVE Options:\n";
+		echo "$options_dump\n";
+		echo "\n";
+		
+		if( is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
+			echo "ARVE-Pro Options:\n";
+			echo "$pro_options_dump\n";
+			echo "\n";
+		}
+		
+		echo "URL or Shortcode with the issue: \n";
+		echo "Link to my live site with the issue: http \n";
+		echo "\n";
+		echo "Detailed Description of the Issue:\n";
+		echo "What you are expecting and what you are seeing instead?\n";
+		echo "\n";
+		echo "</textarea>";
+	}
+	
 	/* ------------------------------------------------------------------------ *
 	 * Field Callbacks
 	 * ------------------------------------------------------------------------ */ 
@@ -570,7 +649,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			$message .= '<p>Your Advanced Responsive Video Embedder plugin was updated to version 6.0. Some things changed, please see <a href="https://nextgenthemes.com/?p=1875">migration guide</a> for details.</p>';
 		}
 		
-		$message .= sprintf(
+		$pro_message .= sprintf(
 			__(
 				'<p>This is Nico the Author of the Advanced Responsive Video Embedder plugin. When you <strong><a href="%s" target="_blank">buy the Pro Addon</a></strong> of this plugin you will get this:</p>
 				<ul>
