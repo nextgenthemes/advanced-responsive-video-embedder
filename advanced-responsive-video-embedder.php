@@ -24,7 +24,7 @@
  * Text Domain:       advanced-responsive-video-embedder
  * Domain Path:       /languages
  * GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-embedder
- * Github Branch:     master
+ * GitHub Branch:     master
  */
 
 // If this file is called directly, abort.

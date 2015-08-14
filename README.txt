@@ -12,12 +12,6 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 
 == Description ==
 
-<<<<<<< HEAD
-This readme represents the upcoming version 6.0 and the Pro Addon, when it will be release only the normal mode (still responsive, very configurable ...) will be part of the free version here. If you not like this change, old versions will be aviable on Github. On top of this I give out free Pro Addons for people who installed this plugin before this announcement. I am afraid there will be still people hating, maybe more details on that later.
-
-Many many thanks to everyone who donated or bought the Pro Addon already even if they could get it for free.
-=======
->>>>>>> dev
 
 ### The best WordPress plugin for videos? Supports close to everything you can imagine, still keeping it easy &amp; simple. ###
 
@@ -25,11 +19,6 @@ This is very likely the one and only plugin you will ever need to handle video e
 
 Simple &bull; Lightweight &bull; Responsive &bull; Customizable
 
-<<<<<<< HEAD
-* [Overview][1]
-* [Quick Introduction][2]
-* Please report issues on [community.nextgenthemes.com][13] **and not on the wordpress.org forums.**
-=======
 Please check the [migration guide](https://nextgenthemes.com/?p=1875) after updating to version 6.0.0+.
 
 Please report issues on [community.nextgenthemes.com](https://community.nextgenthemes.com/) **and not on the wordpress.org forums.**
@@ -37,23 +26,10 @@ Please report issues on [community.nextgenthemes.com](https://community.nextgent
 
 * [Overview][1]
 * [Quick Introduction][2]
->>>>>>> dev
 * [Features][3]
 * [Additional Features with the Pro Addon][4]
 * [Documentation][10]
 * [Tests & Examples][11]
-<<<<<<< HEAD
-* Please report issues on [community.nextgenthemes.com][13] **and not on the wordpress.org forums.**
-* [Github Page][21]
-
- [1]:  https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
- [2]:  https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#quick-introduction
- [3]:  https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#features
- [4]:  https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#additional-features-with-the-pro-addon
- [10]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/
- [11]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/tests-and-examples/
- [13]: https://community.nextgenthemes.com/
-=======
 * [Github Page][21]
 
  [1]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
@@ -62,20 +38,14 @@ Please report issues on [community.nextgenthemes.com](https://community.nextgent
  [4]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#additional-features-with-the-pro-addon
  [10]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/
  [11]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/tests-and-examples/
->>>>>>> dev
  [21]: https://github.com/nextgenthemes/advanced-responsive-video-embedder
 
 ### Features ###
 
 * Embeds via pasting the URL in its own line just like WordPress!
 * Optionally use Shortcodes instead
-<<<<<<< HEAD
-* One single button for all providers (for most providers not required because of URL embeds, but allows to create custom shortcodes with advances features within seconds)
-* Responsive embeds with CSS, much better then with JavaScript IMO
-=======
 * One single button for all providers (for most providers not required because of URL embeds, but allows to create custom shortcodes with advanced features within seconds)
 * Responsive embeds with CSS, much better then with JS IMO
->>>>>>> dev
 * Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disabled related videos at the end ... to help keep people on your Site rather then going to YouTube or keep watching videos
 * Clean Shortcode syntax `[vimeo id="123456"]` no ugly URLs, no unnecessary Shortcode wrapping.
 * Autostart (for providers that support them)
@@ -90,11 +60,7 @@ Please report issues on [community.nextgenthemes.com](https://community.nextgent
 
 * Feel good about yourself for helping me support my long time work on this plugin. Tons of hours, weekends ... always worked on [improving](https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/) 3+ years.
 * Lazyload mode: Only load a preview image on pageload instead of the Video itself, makes you site load faster.
-<<<<<<< HEAD
-* Lazyload -> Lightbox: Open videos in a [jQuery Colorbox](https://wordpress.org/plugins/jquery-colorbox/). Plugin needs to be installed.
-=======
 * Lazyload -> Lightbox: Shows the Video in a Lightbox after clicking a preview image.
->>>>>>> dev
 * Lazyload -> HTML5 Fullscreen: (experimental) This is a dream come true for me. Be aware that this has a Issue of going fullsceen a 2nd time from within fullscreen and fullscreen Buttons not working as expected.
 * Lazyload -> Half Screen Sticky: (experimental) Video that fills about half the screen/window and lets users continue to scroll and read the site, start writing a comment ... while watching a video. This relies on modern HTML5 features (calc, vw + vh) and may not work everywhere.
 
@@ -136,15 +102,9 @@ Please report issues on [community.nextgenthemes.com](https://community.nextgent
 
 ### Quick Introduction ###
 
-<<<<<<< HEAD
-URLs like `https://youtu.be/WHZPEkZCqwA` on its own line will produce full responsive embeds. If you already use this with WordPress default, this is the perfect drop-in replacement to make everything responsive, no need to do anything.
-
-https://youtu.be/WHZPEkZCqwA?arve[mode]=normal
-=======
 URLs like `https://vimeo.com/124400795` on its own line will produce full responsive embeds. If you already use this with WordPress default, this is the perfect drop-in replacement to make everything responsive, no need to do anything.
 
 https://vimeo.com/124400795
->>>>>>> dev
 
 Extremly customizable with support for anything providers offer to customize embeds. Other plugins offer some of this features with huge bloated dialogs, ARVE is different, it just lets you do anything you want if you have a few seconds to look up what the parameters do.
 
@@ -164,33 +124,20 @@ https://youtu.be/Q6goNzXrmFs?start=30&fs=0&theme=light&arve[aspect_ratio]=21:9
 
  This is a demo of a aligned lazyloaded video that has a maximal width set and will grow on click before loading the video.
 
-<<<<<<< HEAD
-Just a bit of Lorem ipsum to fill this aera with text. dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
-
-=======
 You can open up a lightbox with a normal link [youtube id="Q6goNzXrmFs" mode="link-lightbox" link_text="click me"] with this sortcode:
 
 `[youtube id="Q6goNzXrmFs" mode="link-lightbox" link_text="click me"]`
->>>>>>> dev
 <div class="clearfix"></div>
 
 We can also center videos and open then inside a Colorbox. This requires the jQuery Colorbox plugin to be installed. This site uses theme 3.
 
-<<<<<<< HEAD
-`[youtube id="Q6goNzXrmFs\" mode="lazyload-lightbox" maxwidth="600" align="center"]`
-=======
 `[youtube id="Q6goNzXrmFs" mode="lazyload-lightbox" maxwidth="600" align="center"]`
->>>>>>> dev
 
 
 
 ### Lazyloaded Preview Images in HD ###
 
-<<<<<<< HEAD
-Contrary to what you might think, *thumbnail* in ARVE does not nessasary mean *small* images. You can provide your own images with thumbnail="https://your.image.url". Most providers also support HD thumbnail images and this plugin will get the highest aviable size.
-=======
 Contrary to what you might think, thumbnail in ARVE does not nessasary mean small images. You can provide your own images with thumbnail="https://your.image.url" or thumbnail="1234" where 1234 is the ID of the image in your WP Media Gallery. Most providers, which support automatic thubnails also support HD thumbnail images and this plugin will get the highest aviable size.
->>>>>>> dev
 
 
 
@@ -214,14 +161,7 @@ I used a lot of high ranking plug-ins but they still broke my design. Downloaded
 
 ### Roadmap ###
 
-<<<<<<< HEAD
-Planned features are:
-
 * Support for self-hosted videos.
-* Getting rid of the over 2 year not updated 'jQuery Colorbox' plugin dependency and replace it with a modern responsive and touch friendly lightbox that will be included inside the pro addon. If you have any suggestions please let me know.
-=======
-* Support for self-hosted videos.
->>>>>>> dev
 
 == Installation ==
 
@@ -230,15 +170,6 @@ Please refer to [codex.wordpress.org/Managing_Plugins#Automatic_Plugin_Installat
 == Frequently Asked Questions ==
 
 ### I have a problem ... ###
-<<<<<<< HEAD
-
-Please report it on [community.nextgenthemes.com](https://community.nextgenthemes.com) **and plaese not on the wordpess.org forums, thanks.**
-
-### Why are my videos not filling their container? ###
-
-You are most likely use `align`, this plugin has a option for limiting video with with alignment. If you want your videos to fill their containers then you should not use the `align=left/right/center` shortcode attribute or the `arve[align]=` URL parameter. This assumes that you left the 'Video Maximal Width' field on the options page empty (default + recommended)
-
-=======
 
 Please report it on [community.nextgenthemes.com](https://community.nextgenthemes.com) **and plaese not on the wordpess.org forums, thanks.**
 
@@ -255,7 +186,6 @@ You can not at this point. I do not recommend the bad workarround I gave out bef
 
 You are most likely use `align`, this plugin has a option for limiting video with with alignment. If you want your videos to fill their containers then you should not use the `align=left/right/center` shortcode attribute or the `arve[align]=` URL parameter. This assumes that you left the 'Video Maximal Width' field on the options page empty (default + recommended)
 
->>>>>>> dev
 ### Why are videos opening full window (provider URL) when I click on them? ###
 
 You most likely do not have the 'jQuery Colorbox' Plugin installed or JavaScript disabled both is needed for thumbnail mode. Another reason can be that do have JavascriptErrors or Browser addons like NoScript blocking JavaScript trom Executing.
@@ -281,13 +211,6 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 == Changelog ==
 
-<<<<<<< HEAD
-### 6.0.0 Beta - ~2015/06/15 - work time: ~50 days ###
-
-* Fix: Jackpack Shortcode Embeds module incompatibility.
-* New: URL parameters are now possible via URLs used for embeds (passed to iframe src).
-* Improved: URL parameters to controll arve features are now 'arve[mode]=' style instead of 'arve-mode='.
-=======
 ### Pro Addon 1.1.0 ###
 
 * Fix: Various issues reguarding lightbox mode.
@@ -335,23 +258,15 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 * Fix: Jackpack Shortcode Embeds module incompatibility.
 * New: URL parameters are now possible via URLs used for embeds (passed to iframe src).
 * Changed: URL parameters to controll arve features are now 'arve[mode]=' style instead of 'arve-mode='.
->>>>>>> dev
 * Improved: Enabled HTTPS support for Viddler and MyVideo.
 * Improved: TED Talks shortcodes now support the 'lang' parameter.
 * Improved: New embed URLs for MyVideo.
 * Improved: Better Twitch support.
-<<<<<<< HEAD
-=======
 * Improved: Dailymotion HTTPS support.
->>>>>>> dev
 * Improved: To reduce CSS and keep it simpler aspect ratios are now handled with inline styles.
 * Improved: Moved to complete WP Settings API.
 * Improved: Tabbed and extendable options page.
 * Improved: Massive code improvements.
-<<<<<<< HEAD
-
-### **Pro Addon** 0.9.5 ###
-=======
 * Improved: Replaced all Admin Messages that caused bugs and annoyance for users with a dashboard Widget.
 
 ### Pro Addon 1.0.1 ###
@@ -364,16 +279,11 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 * Improved: Finally got rid of the jQuery Colorbox depency, the Pro Addon now includes lity for lightboxes.
 
 ### Pro Addon 0.9.5 ###
->>>>>>> dev
 
 * Fix: Licensing Activation should now finally work correcty. (Multisite may need some tweaks)
 * Fix: Pissibility of unwanted margins/paddings on the transparent button.
 
-<<<<<<< HEAD
-### **Pro Addon** 0.9.0 ###
-=======
 ### Pro Addon 0.9.0 ###
->>>>>>> dev
 
 * Changed: 'Lazyload' mode now grows the video size after thumbnails are clicked.
 * Changed: 'Thumbnail' mode is now called 'Lazyload -> Colorbox' and has a sightly different behavior.
