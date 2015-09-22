@@ -40,6 +40,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			),
 			'shortcodes' => array(
 				'4players'               => '4players',
+				'alugha'								 => 'alugha',
 				'archiveorg'             => 'archiveorg',
 				'blip'                   => 'blip',
 				'bliptv'                 => 'bliptv', //* Deprecated
@@ -109,11 +110,11 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'youtube'         => 'wmode=transparent  iv_load_policy=3  modestbranding=1  rel=0  autohide=1',
 			)
 		);
-		
+
 		return $options[ $section ];
 	}
 
-	
+
 	/**
 	 * Get options by merging possibly existing options with defaults
 	 *
@@ -127,7 +128,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 
 		return $options;
 	}
-	
+
 	/**
 	 *
 	 * @since    3.0.0
@@ -139,6 +140,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 		//* Double hash comment = no id in URL
 		return array(
 			'4players'            => $hw . '4players\.de/4players\.php/tvplayer/4PlayersTV/([0-9a-z_/]+\.html)',
+			'alugha'							=> $hw . 'alugha.com/1/videos/([a-z0-9_\-]+)',
 			'archiveorg'          => $hw . 'archive\.org/(?:details|embed)/([0-9a-z]+)',
 			'blip'                => $hw . 'blip\.tv/[^/]+/[^/]+-([0-9]{7})',
 			##'bliptv'            =>
@@ -180,19 +182,19 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'dai_ly'              => $hw . 'dai\.ly/([^_]+)',
 		);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 *
 	 * @since     5.4.0
 	 */
 	public static function get_mode_options( $selected ) {
-		
+
 		$modes = self::get_supported_modes();
 		$out   = '';
-		
+
 		foreach( $modes as $mode => $desc ) {
-			
+
 			$out .= sprintf(
 				'<option value="%s" %s>%s</option>',
 				esc_attr( $mode ),
@@ -200,10 +202,10 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				$desc
 			);
 		}
-		
+
 		return $out;
 	}
-	
+
 	public static function get_supported_modes() {
 		return apply_filters( 'arve_modes', array( 'normal' => __( 'Normal', 'advanced-responsive-video-embedder' ) ) );
 	}
