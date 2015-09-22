@@ -1,5 +1,5 @@
 === Advanced Responsive Video Embedder ===
-Contributors: nico23
+Contributors: nico23, niklaskorz
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC
 Tags: video, responsive, embed, video-embedder, iframe, minimal, lightweight, simplicity, shortcodes, Youtube, Blip, Dailymotion, Videojug, Collegehumor, Veoh, Break, Movieweb, Snotr, Gametrailers, Vimeo, Viddler, Funnyordie, Myspace, Liveleak, Metacafe, Myvideo, Yahoo Screen, Spike
 Requires at least: 3.3.2
@@ -253,7 +253,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ### 6.0.2 Beta - 2015/07/24 - work time: ~60 days ###
 
-Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgrading to this version. 
+Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgrading to this version.
 
 * Fix: Jackpack Shortcode Embeds module incompatibility.
 * New: URL parameters are now possible via URLs used for embeds (passed to iframe src).
@@ -295,8 +295,8 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 
 ### 5.3.4 Beta - 2015/03/15 ###
 
-* Fix: ID detection for youtu.be and dai.ly URLs, will now work with https://(www.) as well. 
-* Fix: Myvideo.de videos with 7 and 8 digit IDs. 
+* Fix: ID detection for youtu.be and dai.ly URLs, will now work with https://(www.) as well.
+* Fix: Myvideo.de videos with 7 and 8 digit IDs.
 
 ### 5.3.3 Beta ###
 
@@ -314,7 +314,7 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 ### 5.3.0 Beta ###
 
 * **If you get a error '... array ...' please reset your options on the options page and redo the options you had before**
-* Fix: '... expected array' error when saving options on some cases. If you get a error please reset your 
+* Fix: '... expected array' error when saving options on some cases. If you get a error please reset your
 * Fix: ttp://youtu.be/... shortlinks are not detected correctly in the shortcode creator dialog.
 * Improved: Ported code to WordPress Plugin Boilerplate 3.0 style.
 * Improved: Switched vevo and xtube from object to iframe embeds.
@@ -341,7 +341,7 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 
 * Fix: Max-width options should now work in all circumstances
 * Improved: Various CSS improvements
-* Improved: Changed play overlay image to a Google+ style image 
+* Improved: Changed play overlay image to a Google+ style image
 
 ### 4.9.0 Beta ###
 
@@ -473,7 +473,7 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 
 ### 3.1.1 (github only) ###
 
-* Improved: Added `px` suffix to values on options page 
+* Improved: Added `px` suffix to values on options page
 
 ### 3.1.0 (beta) ###
 
@@ -486,7 +486,7 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 * Fix: Colleghumor
 * Improved: Screenshots updated
 * Improved: Beginning process of provider based aspect ratios.
-* Improved: Dailymotion playlists/jukeboxes now show Native thumbnails 
+* Improved: Dailymotion playlists/jukeboxes now show Native thumbnails
 * Improved: Iframe embed code detection with with single quoted `src#''`
 
 ### 3.0.4 (beta) ###
@@ -517,7 +517,7 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 
 ### 2.7.2 ###
 
-* Fix: Permissions for the button, now authors who 
+* Fix: Permissions for the button, now authors who
 
 ### 2.7.0 ###
 
