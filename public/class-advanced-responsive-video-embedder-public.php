@@ -42,7 +42,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 * @var      string    $version    The current version of this plugin.
 	 */
 	private $version;
-	
+
 	protected $options = array();
 
 	/**
@@ -53,13 +53,13 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 * @var      string    $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_slug, $version ) {
-		
+
 		$this->plugin_slug = $plugin_slug;
 		$this->version = $version;
-		
+
 		$this->options = Advanced_Responsive_Video_Embedder_Shared::get_options();
 	}
-	
+
 	/**
 	 * Register and enqueue public-facing style sheet.
 	 *
@@ -75,14 +75,15 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 * @since    4.9.0
 	 */
 	public function register_scripts() {
-		
-		
+
+
 	}
 
 	public function get_properties() {
 
 		return array(
 			'4players'        => array( 'name' => '4players.de',     'url' => true,   'thumb' => false, 'wmode_transparent' => true   , 'aspect_ratio' => 56.25 ),
+			'alugha'					=> array( 														 'url' => true,   'thumb' => true,  'wmode_transparent' => true   , 'aspect_ratio' => 56.25 ),
 			'archiveorg'      => array( 'name' => 'archive.org',     'url' => true,   'thumb' => false, 'wmode_transparent' => true   , 'aspect_ratio' => 56.25 ),
 			'blip'            => array(                              'url' => true,   'thumb' => false, 'wmode_transparent' => true   , 'aspect_ratio' => 61.4 ),
 			'bliptv'          => array(                              'url' => true,   'thumb' => false, 'wmode_transparent' => true   , 'aspect_ratio' => 56.25 ),
@@ -120,7 +121,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'youtubelist'     => array( 'name' => 'YouTube Playlist','url' => true,   'thumb' => true,  'wmode_transparent' => true   , 'aspect_ratio' => 56.25 )
 		);
 	}
-	
+
 	/**
 	 * Create all shortcodes at a late stage because people over and over again using this plugin toghter with jetback or
 	 * other plugins that handle shortcodes we will now overwrite all this suckers.
@@ -130,7 +131,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 * @uses Advanced_Responsive_Video_Embedder_Create_Shortcodes()
 	 */
 	public function create_shortcodes() {
-		
+
 		foreach( $this->options['shortcodes'] as $provider => $shortcode ) {
 
 			add_shortcode( $shortcode, array( $this, 'shortcode_' . $provider ) );
@@ -146,9 +147,9 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 *
 	 */
 	public function create_url_handlers() {
-		
+
 		$regex_list = Advanced_Responsive_Video_Embedder_Shared::get_regex_list();
-		
+
 		foreach ( $regex_list as $provider => $regex ) {
 			wp_embed_register_handler( 'arve_' . $provider, '#' . $regex . '#i', array( $this, 'url_embed_' . $provider ) );
 		}
@@ -161,11 +162,11 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 *
 	 */
 	function __call( $function_name, $params ) {
-		
+
 		if ( 0 === strpos( $function_name, 'url_embed_' ) ) {
 
 			$provider = substr( $function_name, 10 );
-			
+
 			switch ( $provider ) {
 				case 'youtubelist':
 				case 'youtu_be':
@@ -176,26 +177,26 @@ class Advanced_Responsive_Video_Embedder_Public {
 					$provider = 'dailymotion';
 					break;
 			}
-			
+
 			return $this->url_build_embed( $provider, $params[0], $params[1], $params[2], $params[3] );
 		}
-		
+
 		elseif ( 0 === strpos( $function_name, 'shortcode_' ) ) {
-			
+
 			$atts     = $params[0];
 			$provider = substr( $function_name, 10 );
-			
+
 			return $this->build_embed( $provider, $atts );
 		}
 	}
-	
+
 	/**
 	 *
 	 * @since    3.0.0
 	 *
 	 */
 	public function url_build_embed( $provider, $matches, $attr, $url, $rawattr ) {
-		
+
 		$id = $matches[1];
 
 		if ( empty( $id ) ) {
@@ -216,46 +217,46 @@ class Advanced_Responsive_Video_Embedder_Public {
 		if ( ! empty( $parsed_url['query'] ) ) {
 			parse_str( $parsed_url['query'], $url_query );
 		}
-		
+
 		foreach ( $url_query as $key => $value ) {
-			
+
 			if ( $this->starts_with( $key, 'arve-' ) ) {
-				
+
 				$key = substr( $key, 5 );
 				$old_atts[ $key ] = $value;
 			}
 		}
-		
+
 		unset( $old_atts['param'] );
-		
+
 		if ( isset( $url_query['arve'] ) ) {
 			$new_atts = $url_query['arve'];
 		}
-		
+
 		if ( isset( $url_query['t'] ) ) {
 			$url_query['start'] = $this->youtube_time_to_seconds( $url_query['t'] );
 		}
-		
+
 		unset( $url_query['arve'] );
 		unset( $url_query['t'] );
-		
+
 		//* Pure awesomeness!
 		$atts               = array_merge( (array) $old_atts, (array) $new_atts );
 		$atts['parameters'] = build_query( $url_query );
 		$atts['id']         = $id;
-		
+
 		$output  = $this->build_embed( $provider, $atts );
 		// Output the original posted URL for SEO and other scraping purposes
 		$output .= sprintf( '<a href="%s" class="arve-hidden">%s</a>', esc_url( $url ), esc_html( $url ) );
 
 		return $output;
 	}
-	
+
 	public function starts_with( $haystack, $needle ) {
 		// search backwards starting from haystack length characters from the end
 		return $needle === "" || strrpos( $haystack, $needle, -strlen( $haystack ) ) !== false;
 	}
-	
+
 	/**
 	 *
 	 * @since     3.6.0
@@ -276,12 +277,12 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 * @since    2.6.0
 	 */
 	public function build_embed( $provider, $atts ) {
-		
+
 		$object_params_autoplay_yes = $object_params_autoplay_no = '';
 		$output     = '';
 		$iframe     = true;
 		$properties = $this->get_properties();
-		
+
 		$shortcode_atts_defaults = array(
 			'align'        => null,
 			'aspect_ratio' => (float) $properties[ $provider ]['aspect_ratio'],
@@ -295,17 +296,17 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'thumbnail'    => null,
 			'link_text'    => null,
 		);
-		
+
 		$atts = shortcode_atts( $shortcode_atts_defaults, $atts, $this->options['shortcodes'][ $provider ] );
-		
+
 		extract( $atts );
-		
+
 		$maxwidth     = (int) $maxwidth;
 		$aspect_ratio = $this->aspect_ratio_to_padding( $aspect_ratio );
 		$thumbnail    = trim( $thumbnail );
-		
+
 		if ( 'dailymotionlist' === $provider ) {
-			
+
 			switch ( $mode ) {
 				case 'normal':
 				case 'lazyload':
@@ -315,7 +316,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 					break;
 			}
 		}
-		
+
 		if ( empty( $id ) ) {
 			return $this->error( __( 'no id set', $this->plugin_slug ) );
 		} elseif ( ! preg_match('/[^\x20-\x7f]/', $provider ) ) {
@@ -323,7 +324,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		} else {
 			return $this->error( sprintf( __( 'Provider <code>%s</code> not valid', $this->plugin_slug ), esc_html( $provider ) ) );
 		}
-		
+
 		switch ( $align ) {
 			case null:
 			case '':
@@ -337,23 +338,23 @@ class Advanced_Responsive_Video_Embedder_Public {
 				return $this->error( sprintf( __( 'Align <code>%s</code> not valid', $this->plugin_slug ), esc_html( $align ) ) );
 				break;
 		}
-		
+
 		if ( 'thumbnail' === $mode ) {
 			$mode = 'lazyload-lightbox';
 		}
-		
+
 		$supported_modes = Advanced_Responsive_Video_Embedder_Shared::get_supported_modes();
-		
+
 		if ( !array_key_exists( $mode, $supported_modes ) ) {
-			
+
 			return $this->error( sprintf( __( 'Mode: <code>%s</code> is invalid or not supported. Note that you will need the Pro Addon for lazyload modes.', $this->plugin_slug ), esc_html( $mode ) ) );
 		}
-		
+
 		if ( $maxwidth < 100 && in_array( $align, array( 'alignleft', 'alignright', 'aligncenter' ) ) ) {
 
 			$maxwidth = (int) $this->options['align_maxwidth'];
 		}
-		
+
 		$maxwidth = apply_filters( 'arve_maxwidth', $maxwidth, $align, $mode );
 
 		switch ( $autoplay ) {
@@ -373,8 +374,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 			default:
 				return $this->error( sprintf( __( 'Autoplay <code>%s</code> not valid', $this->plugin_slug ), $autoplay ) );
 				break;
-		}	
-		
+		}
+
 		switch ( $start ) {
 			case null:
 			case '':
@@ -388,6 +389,9 @@ class Advanced_Responsive_Video_Embedder_Public {
 		switch ( $provider ) {
 			case '4players':
 				$url = 'http://www.4players.de/4players.php/tvplayer_embed/4PlayersTV/' . $id;
+				break;
+			case 'alugha':
+				$url = 'https://alugha.com/embed/polymer-live/?v=' . $id;
 				break;
 			case 'metacafe':
 				$url = 'http://www.metacafe.com/embed/' . $id . '/';
@@ -438,7 +442,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$url = 'http://mpora.com/videos/' . $id . '/embed';
 				break;
 			case 'myvideo':
-				$url = '//www.myvideo.de/embed/' . $id;		
+				$url = '//www.myvideo.de/embed/' . $id;
 				break;
 			case 'vimeo':
 				$url = '//player.vimeo.com/video/' . $id;
@@ -509,14 +513,14 @@ class Advanced_Responsive_Video_Embedder_Public {
 				break;
 			case 'twitch':
 				$tw = explode( '/', $id );
-			
+
 				$url = 'http://www.twitch.tv/' . $tw[0] . '/embed';
-		
+
 				if ( isset( $tw[1] ) && isset( $tw[2] ) && is_numeric( $tw[2] ) ) {
 					$url =                                       'http://www.twitch.tv/swflibs/TwitchPlayer.swf';
 					$object_params  = '<param name="movie" value="http://www.twitch.tv/swflibs/TwitchPlayer.swf">';
 					$object_params .= '<param name="allowNetworking" value="all">';
-					
+
 					switch( $tw[1] ) {
 						case 'b':
 						case 'c':
@@ -531,7 +535,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 					$object_params_autoplay_yes = $object_params . sprintf( '<param name="flashvars" value="channel=%s%s&amp;auto_play=true">', $tw[0], $videoid_flashvar );
 					$object_params_autoplay_no  = $object_params . sprintf( '<param name="flashvars" value="channel=%s%s&amp;auto_play=false">', $tw[0], $videoid_flashvar );
 				}
-					
+
 				break;
 			case 'vine':
 				$url = 'https://vine.co/v/' . $id . '/embed/simple';
@@ -554,14 +558,14 @@ class Advanced_Responsive_Video_Embedder_Public {
 		//* Take parameters from Options as defaults and maybe merge custom parameters from shortcode in.
 		//* If there are no options we assume the provider not supports any params and do nothing.
 		if ( ! empty( $this->options['params'][ $provider ] ) ) {
-			
+
 			$parameters        = wp_parse_args( preg_replace( '!\s+!', '&', trim( $parameters ) ) );
 			$option_parameters = wp_parse_args( preg_replace( '!\s+!', '&', trim( $this->options['params'][ $provider ] ) ) );
 
 			$parameters = wp_parse_args( $parameters, $option_parameters );
-			
+
 			$url = add_query_arg( $parameters, $url );
-			
+
 			#d($url);
 		}
 
@@ -631,15 +635,15 @@ class Advanced_Responsive_Video_Embedder_Public {
 				), $url );
 				break;
 		}
-		
+
 		if ( 'vimeo' == $provider && ! empty( $start ) ) {
 			$url_autoplay_no  .= '#t=' . $start;
 			$url_autoplay_yes .= '#t=' . $start;
 		}
-			
+
 		$thumbnail = apply_filters( 'arve_thumbnail', $thumbnail, array(
 			'id'       => $id,
-			'provider' => $provider, 
+			'provider' => $provider,
 			'mode'     => $mode
 		) );
 
@@ -654,12 +658,12 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'maxwidth'                    => $maxwidth,
 			'align'                       => $align,
 			'id'                          => $id,
-			'mode'                        => $mode, 
+			'mode'                        => $mode,
 			'provider'                    => $provider,
 			'properties'                  => $properties,
 			'thumbnail'                   => $thumbnail,
 			'link_text'                   => $link_text,
-			'url_autoplay_no'             => $url_autoplay_no, 
+			'url_autoplay_no'             => $url_autoplay_no,
 			'url_autoplay_yes'            => $url_autoplay_yes,
 			'object_params_autoplay_yes'  => $object_params_autoplay_yes,
 			'object_params_autoplay_no'   => $object_params_autoplay_no,
@@ -672,11 +676,11 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		if ( isset( $_GET['arve-debug'] ) ) {
-			
+
 			static $show_options_debug = true;
 
 			$options_dump = '';
-			
+
 			if ( $show_options_debug ) {
 				ob_start();
 				var_dump( $this->options );
@@ -700,16 +704,16 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		return $output;
 	}
-	
+
 	public function wrappers( $inner, $args ) {
-	
+
 		$promote_link = sprintf(
 			'<a href="%s" title="%s" class="arve-promote-link">%s</a>',
 			esc_url( 'https://nextgenthemes.com/download/advanced-responsive-video-embedder-pro/' ),
 			esc_attr( __('embedded with Advanced Responsive Video Embedder (ARVE) WordPress plugin', $this->plugin_slug) ),
 			esc_html( __('by ARVE', $this->plugin_slug) )
 		);
-	
+
 		$wrapper_style = $this->get_wrapper_style( $args['maxwidth'], $args['thumbnail'] );
 
 		$output = sprintf(
@@ -723,14 +727,14 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$output .= '<button class="arve-btn arve-btn-close arve-hidden">x</button>';
 		$output .= ( $this->options['promote_link'] ) ? $promote_link : '';
 		$output .= '</div>'; // .arve-wrapper
-	
+
 		return $output;
 	}
-	
+
 	public function normal_output( $output, $args ) {
-		
+
 		if ( 'normal' === $args['mode'] ) {
-		
+
 			if ( $args['iframe'] ) {
 
 				$embed = $this->create_iframe( array (
@@ -744,7 +748,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 				$embed = $this->create_object( $data, $oparams );
 			}
-			
+
 			$output .= $this->wrappers( $embed, $args );
 
 		}
@@ -753,10 +757,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 	}
 
 	public function esc_url( $url ) {
-		
+
 		return str_replace( 'jukebox?list%5B0%5D', 'jukebox?list[]', esc_url( $url ) );
 	}
-	
+
 	/**
 	 *
 	 * @since    4.0.0
@@ -764,15 +768,15 @@ class Advanced_Responsive_Video_Embedder_Public {
 	public function get_wrapper_style( $maxwidth = false, $thumbnail = false ) {
 
 		$style = false;
-		
+
 		if ( $maxwidth ) {
 			$style .= sprintf( 'max-width: %dpx;', $maxwidth );
 		}
-		
+
 		if ( $thumbnail ) {
 			$style .= sprintf( 'background-image: url(%s);', esc_url( $thumbnail ) );
 		}
-		
+
 		return $style;
 	}
 
@@ -782,7 +786,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 * @since    2.6.0
 	 */
 	public function create_iframe( $args ) {
-		
+
 		$defaults = array (
 			'provider'        => null,
 			'src'             => false,
@@ -793,10 +797,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 		);
 
 		$args = wp_parse_args( $args, $defaults );
-		
+
 		return sprintf( '<iframe %s></iframe>', $this->parse_attr( $args ) );
-	}	
-	
+	}
+
 	public function parse_attr( $attr = array() ) {
 
 		$out = '';
@@ -813,9 +817,9 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$out .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );
 			}
 		}
-		
+
 		return $out;
-	}	
+	}
 
 	/**
 	 *
@@ -823,7 +827,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 * @since    5.9.7
 	 */
 	public function create_video( $args ) {
-		
+
 		$defaults = array (
 			'mp4'             => false,
 			'data_src'        => false,
@@ -834,9 +838,9 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$args = wp_parse_args( $args, $defaults );
 
 		extract( $args );
-		
+
 		return sprintf(
-			'<video %s%s%s%s>' . 
+			'<video %s%s%s%s>' .
 			( $args['mp4'] ) ? sprintf( 'class="%s" ', esc_attr( $class ) ) : '',
 			'' .
 			'</video>',
@@ -846,14 +850,14 @@ class Advanced_Responsive_Video_Embedder_Public {
 			( $allowfullscreen ) ? 'allowfullscreen mozallowfullscreen webkitallowfullScreen ' : ''
 		);
 	}
-	
+
 	/**
 	*
 	*
 	* @since 2.6.0
 	*/
-	public function create_object( $data, $object_params ) {	
-		
+	public function create_object( $data, $object_params ) {
+
 		return sprintf(
 			'<object class="arve-inner" data="%s" type="application/x-shockwave-flash">',
 			esc_url( $data )
@@ -865,33 +869,33 @@ class Advanced_Responsive_Video_Embedder_Public {
 		'<param name="allowScriptAccess" value="always">' .
 		'</object>';
 	}
-	
+
 	/**
 	* Print variable CSS
 	*
 	* @since 2.6.0
 	*/
 	public function print_styles() {
-		
+
 		if ( (int) $this->options["video_maxwidth"] > 0 ) {
 			$css .= sprintf( '.arve-wrapper { max-width: %dpx; }', $this->options['video_maxwidth'] );
-			
+
 			echo '<style type="text/css">' . $css . "</style>\n";
 		}
 	}
-	
+
 	public function begins_with( $haystack, $needle ) {
 		return strpos( $haystack, $needle ) === 0;
 	}
-	
+
 	public function tests_shortcode( $args, $content = null ) {
 
 		if ( ! is_singular() ) {
 			return $content;
 		}
-			
+
 		$tests = array(
-			
+
 			'align-tests' => array(
 				'[vimeo id="23316783"] This text should apper below the video',
 				'[vimeo id="23316783" align=center]',
@@ -919,13 +923,13 @@ class Advanced_Responsive_Video_Embedder_Public {
 			),
 			'dailymotion' => array(
 				'http://www.dailymotion.com/video/x44lvd_rates-of-exchange-like-a-renegade_music',
-				
+
 				__( 'URL just the ID withoutout the long title', $this->plugin_slug ),
 				'http://www.dailymotion.com/video/x44lvd',
-				
+
 				__( 'URL from a hub with the Video ID at the end', $this->plugin_slug ),
 				'http://www.dailymotion.com/hub/x9q_Galatasaray#video=xjw21s',
-				
+
 				__( 'Playlist', $this->plugin_slug ),
 				'http://www.dailymotion.com/playlist/xr2rp_RTnews_exclusive-interveiws/1#video=xafhh9',
 			),
@@ -942,7 +946,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 				__( 'This plugin allows iframe embeds for every URL by using this <code>[iframe]</code> shortcode. This should only be used for providers not supported by this via a named shortcode. The result is a 16:9 resonsive iframe by default, aspect ratio can be changed as usual.', $this->plugin_slug ),
 				'[iframe id="http://example.com/"]',
-				
+
 				esc_html__( 'This can also be used to have limited support for self hosted videos my passing URLs to .webm, .mp4 or .ogg to it. This might not be the best way to do because this is what the <video> tag is for but it works in my tests.', $this->plugin_slug ),
 				'[iframe id="http://video.webmfiles.org/big-buck-bunny_trailer.webm"]',
 			),
@@ -1091,7 +1095,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				esc_html( $provider )
 			);
 		}
-		
+
 		$form =
 			'<p><form method="get">' .
 			sprintf( '<select name="arvet-provider">%s</select>', $provider_options ) .
@@ -1107,15 +1111,15 @@ class Advanced_Responsive_Video_Embedder_Public {
 			foreach ( $tests[$get_provider] as $line ) {
 
 				if ( $this->begins_with( $line, 'http' ) ) {
-					
+
 					global $wp_embed;
-			
+
 					$line     = add_query_arg( 'arve-mode', $get_mode, $line );
 					$content .= sprintf( '<code>%s</code></p><p>%s</p>', esc_html( $line ), $wp_embed->autoembed( $line ) );
 					$content .= '<div style="display: block; clear: both;"></div><br><hr><br>';
-					
+
 				} elseif ( $this->begins_with( $line, '[' ) )  {
-					
+
 					if ( $get_mode ) {
 						$line = str_replace(
 							']',
@@ -1125,7 +1129,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 					$content .= sprintf( '<code>%s</code></p><p>%s</p>', esc_html( $line ), do_shortcode( $line ) );
 					$content .= '<div style="display: block; clear: both;"></div><br><hr><br>';
-					
+
 				} else {
 					$content .= "<p>$line</p>";
 				}
@@ -1138,7 +1142,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 	public function supported_shortcode( $args, $content = null ) {
 
 		$providers = $this->get_properties();
-		
+
 		// unset deprecated and doubled
 		unset( $providers['bliptv'] );
 		unset( $providers['youtubelist'] );
@@ -1167,7 +1171,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			else
 				$sups = '';
 
-			$lis[] = sprintf( 
+			$lis[] = sprintf(
 				'<li>%s%s</li>',
 				esc_html( $values['name'] ),
 				$sups
@@ -1242,11 +1246,11 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 */
 
 	function aspect_ratio_to_padding( $aspect_ratio ) {
-		
+
 		if ( is_numeric( $aspect_ratio ) ) {
 			return $aspect_ratio;
 		}
-		
+
 		$aspect_ratio = explode( ':', $aspect_ratio );
 
 		if ( is_numeric( $aspect_ratio[0] ) && is_numeric( $aspect_ratio[1] ) )
@@ -1254,7 +1258,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		else
 			return false;
 	}
-	
+
 	/**
 	 * Remove the Wordpress default Oembed support for video providers that ARVE Supports. Array taken from wp-includes/class-oembed.php __construct
 	 *
@@ -1262,7 +1266,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 *
 	 */
 	public function oembed_remove_providers() {
-		
+
 		$wp_core_oembed_shits = array(
 			'#http://(www\.)?youtube\.com/watch.*#i'              => array( 'http://www.youtube.com/oembed',                      true  ),
 			'#https://(www\.)?youtube\.com/watch.*#i'             => array( 'http://www.youtube.com/oembed?scheme=https',         true  ),
@@ -1302,12 +1306,12 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'#https?://(www\.|embed\.)?ted\.com/talks/.*#i'       => array( 'http://www.ted.com/talks/oembed.{format}',           true  ),
 			#'#https?://(www\.)?(animoto|video214)\.com/play/.*#i' => array( 'http://animoto.com/oembeds/create',                  true  ),
 		);
-		
+
 		foreach( $wp_core_oembed_shits as $shit => $fuck ) {
-			
+
 			wp_oembed_remove_provider( $shit );
 		}
-		
+
 		// Jetpack shit
 		remove_shortcode( 'dailymotion', 'dailymotion_shortcode' );
 		remove_filter( 'pre_kses', 'jetpack_dailymotion_embed_reversal' );
