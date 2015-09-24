@@ -1,4 +1,5 @@
 ## Screenshots ##
 
-1. In action
-2. Options page
+1. Main Options
+2. Pro Options
+3. Features

@@ -15,7 +15,7 @@ Please report issues on [community.nextgenthemes.com](https://community.nextgent
 * [Overview][1]
 * [Quick Introduction][2]
 * [Features][3]
-* [Additional Features with the Pro Addon][4]
+* [Pro Addon Features][4]
 * [Documentation][10]
 * [Tests & Examples][11]
 * [Github Page][21]
@@ -48,9 +48,10 @@ Please report issues on [community.nextgenthemes.com](https://community.nextgent
 
 * Feel good about yourself for helping me support my long time work on this plugin. Tons of hours, weekends ... always worked on [improving](https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/) 3+ years.
 * Lazyload mode: Only load a preview image on pageload instead of the Video itself, makes you site load faster.
-* Lazyload -> Lightbox: Shows the Video in a Lightbox after clicking a preview image.
+* lazyload -> Lightbox Shows the Video in a Lightbox after clicking a preview image.
 * Lazyload -> HTML5 Fullscreen: (experimental) This is a dream come true for me. Be aware that this has a Issue of going fullsceen a 2nd time from within fullscreen and fullscreen Buttons not working as expected.
 * Lazyload -> Half Screen Sticky: (experimental) Video that fills about half the screen/window and lets users continue to scroll and read the site, start writing a comment ... while watching a video. This relies on modern HTML5 features (calc, vw + vh) and may not work everywhere.
+* Link -> Lightbox: Make 
 
 ### Supported providers ###
 
@@ -117,7 +118,7 @@ You can open up a lightbox with a normal link [youtube id="Q6goNzXrmFs" mode="li
 `[[youtube id="Q6goNzXrmFs" mode="link-lightbox" link_text="click me"]]`
 <div class="clearfix"></div>
 
-We can also center videos and open then inside a Colorbox. This requires the jQuery Colorbox plugin to be installed. This site uses theme 3.
+We can also center videos and open then inside a Lightboxbox.
 
 `[[youtube id="Q6goNzXrmFs" mode="lazyload-lightbox" maxwidth="600" align="center"]]`
 
@@ -194,10 +195,25 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Screenshots ##
 
-1. In action
-2. Options page
+1. Main Options
+2. Pro Options
+3. Features
 
 ## Changelog ##
+
+### Pro Addon 1.1.5 ###
+
+* New: Added setting and parameter grow="yes/no" to controll the grow-on-click behaviour that was introduced in 6.0 to your liking.
+
+### 6.1.2 ###
+
+* Improved: Added thumbnail and grow parameters to the Shortcode Creator Dialog.
+* Improved: Updated sceenshots.
+
+### Pro Addon 1.1.3 ###
+
+* Improved: link-linghtbox mode does not force a newline for the link anymore.
+* Fix: Autoplaying in Background when navigating back in browser.
 
 ### Pro Addon 1.1.0 ###
 

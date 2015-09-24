@@ -21,7 +21,9 @@
 			'autoplay'     : '',
 			'aspect_ratio' : '',
 			'maxwidth'     : '',
-			'parameters'   : ''
+			'parameters'   : '',
+			'thumbnail'    : '',
+			'grow'         : '',
 		};
 
 		var shortcode = '[' + $('#arve-provider').val();
@@ -157,7 +159,8 @@
 		$('#arve-id').val( response.videoid );
 	});
 
-	$( '#arve-url, #arve-provider, #arve-id, #arve-maxwidth, #arve-mode, #arve-align, #arve-autoplay, #arve-aspect_ratio, #arve-parameters' ).bind( 'keyup mouseup change', function() {
+	$( '#arve-url, #arve-provider, #arve-id, #arve-maxwidth, #arve-mode, #arve-align, #arve-autoplay, #arve-aspect_ratio, #arve-parameters, #arve-grow, #arve-thumbnail' )
+		.bind( 'keyup mouseup change', function() {
 
 		var shortcode = create_shortcode();
 

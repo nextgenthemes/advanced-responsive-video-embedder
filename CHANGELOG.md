@@ -1,5 +1,19 @@
 ## Changelog ##
 
+### Pro Addon 1.1.5 ###
+
+* New: Added setting and parameter grow="yes/no" to controll the grow-on-click behaviour that was introduced in 6.0 to your liking.
+
+### 6.1.2 ###
+
+* Improved: Added thumbnail and grow parameters to the Shortcode Creator Dialog.
+* Improved: Updated sceenshots.
+
+### Pro Addon 1.1.3 ###
+
+* Improved: link-linghtbox mode does not force a newline for the link anymore.
+* Fix: Autoplaying in Background when navigating back in browser.
+
 ### Pro Addon 1.1.0 ###
 
 * Fix: Various issues reguarding lightbox mode.

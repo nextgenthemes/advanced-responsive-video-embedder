@@ -18,6 +18,7 @@
 
 * Feel good about yourself for helping me support my long time work on this plugin. Tons of hours, weekends ... always worked on [improving](https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/) 3+ years.
 * Lazyload mode: Only load a preview image on pageload instead of the Video itself, makes you site load faster.
-* Lazyload -> Lightbox: Shows the Video in a Lightbox after clicking a preview image.
+* lazyload -> Lightbox Shows the Video in a Lightbox after clicking a preview image.
 * Lazyload -> HTML5 Fullscreen: (experimental) This is a dream come true for me. Be aware that this has a Issue of going fullsceen a 2nd time from within fullscreen and fullscreen Buttons not working as expected.
 * Lazyload -> Half Screen Sticky: (experimental) Video that fills about half the screen/window and lets users continue to scroll and read the site, start writing a comment ... while watching a video. This relies on modern HTML5 features (calc, vw + vh) and may not work everywhere.
+* Link -> Lightbox: Make 

@@ -9,7 +9,7 @@ You can open up a lightbox with a normal link [youtube id="Q6goNzXrmFs" mode="li
 `[[youtube id="Q6goNzXrmFs" mode="link-lightbox" link_text="click me"]]`
 <div class="clearfix"></div>
 
-We can also center videos and open then inside a Colorbox. This requires the jQuery Colorbox plugin to be installed. This site uses theme 3.
+We can also center videos and open then inside a Lightboxbox.
 
 `[[youtube id="Q6goNzXrmFs" mode="lazyload-lightbox" maxwidth="600" align="center"]]`
 

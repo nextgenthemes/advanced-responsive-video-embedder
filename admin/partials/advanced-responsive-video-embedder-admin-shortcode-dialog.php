@@ -7,7 +7,7 @@
 			<?php _e('For Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike, Comedycentral and general iframe embed codes paste the embed code, for all others paste the URL! Ustream: If your Address bar URL not contains a number, click the Share->URL icons and paste that URL.', $this->plugin_slug ); ?>
 		</small>
 
-		<textarea id="arve-url" rows="4" value=""></textarea><br>
+		<textarea id="arve-url" rows="3" value=""></textarea><br>
 
 		<div class="arve-input-group">
 			<label for="arve-mode"><?php _e('Mode', $this->plugin_slug ); ?></label>
@@ -45,9 +45,23 @@
 			<label for="arve-aspect_ratio"><?php _e('Aspect ratio (4:3)', $this->plugin_slug ); ?></label>
 			<input type="text" id="arve-aspect_ratio" value="" />
 		</div>
+		
+		<div class="arve-input-group">
+			<label for="arve-grow"><?php _e('Grow on Click (Lazyload)', $this->plugin_slug ); ?></label>
+			<select id="arve-grow">
+				<option value=""></option>
+				<option value="yes"><?php _e('yes', $this->plugin_slug ); ?></option>
+				<option value="no"><?php _e('no', $this->plugin_slug ); ?></option>
+			</select>
+		</div>
 
 		<div class="clear"></div>
 
+		<div class="arve-input-group arve-input-group-full">
+			<label for="arve-thumbnail"><?php _e('Thumbnail', $this->plugin_slug ); ?></label>
+			<input type="text" id="arve-thumbnail" class="arve-input-full" value="" />
+		</div>
+		
 		<div class="arve-input-group arve-input-group-full">
 			<label for="arve-parameters"><?php _e('URL Parameters', $this->plugin_slug ); ?></label>
 			<input type="text" id="arve-parameters" class="arve-input-full" value="" />

@@ -294,6 +294,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'start'        => null, # Only used for vimeo
 			'thumbnail'    => null,
 			'link_text'    => null,
+            'grow'         => null,
 		);
 		
 		$atts = shortcode_atts( $shortcode_atts_defaults, $atts, $this->options['shortcodes'][ $provider ] );
@@ -648,21 +649,22 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		$output = apply_filters( 'arve_output', '', array(
-			'aspect_ratio'                => $aspect_ratio,
-			'iframe'                      => $iframe,
-			'autoplay'                    => $autoplay,
-			'maxwidth'                    => $maxwidth,
 			'align'                       => $align,
+			'aspect_ratio'                => $aspect_ratio,
+			'autoplay'                    => $autoplay,
+			'grow'                        => $grow,
 			'id'                          => $id,
-			'mode'                        => $mode, 
-			'provider'                    => $provider,
-			'properties'                  => $properties,
-			'thumbnail'                   => $thumbnail,
+			'iframe'                      => $iframe,
 			'link_text'                   => $link_text,
+			'maxwidth'                    => $maxwidth,
+			'mode'                        => $mode,
+			'object_params_autoplay_no'   => $object_params_autoplay_no,
+			'object_params_autoplay_yes'  => $object_params_autoplay_yes,
+			'properties'                  => $properties,
+			'provider'                    => $provider,
+			'thumbnail'                   => $thumbnail,
 			'url_autoplay_no'             => $url_autoplay_no, 
 			'url_autoplay_yes'            => $url_autoplay_yes,
-			'object_params_autoplay_yes'  => $object_params_autoplay_yes,
-			'object_params_autoplay_no'   => $object_params_autoplay_no,
 		) );
 
 		if ( is_wp_error( $output ) ) {
@@ -702,7 +704,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 	}
 	
 	public function wrappers( $inner, $args ) {
-	
+		
 		$promote_link = sprintf(
 			'<a href="%s" title="%s" class="arve-promote-link">%s</a>',
 			esc_url( 'https://nextgenthemes.com/download/advanced-responsive-video-embedder-pro/' ),
@@ -713,10 +715,11 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$wrapper_style = $this->get_wrapper_style( $args['maxwidth'], $args['thumbnail'] );
 
 		$output = sprintf(
-			'<div id="video-%s" class="arve-wrapper %s" data-arve-mode="%s" %s itemscope itemtype="http://schema.org/VideoObject">',
+			'<div id="video-%s" class="arve-wrapper %s" data-arve-mode="%s" %s %s itemscope itemtype="http://schema.org/VideoObject">',
 			esc_attr( urlencode( $args['id'] ) ),
 			esc_attr( $args['align'] ),
 			esc_attr( $args['mode'] ),
+			( 'lazyload' === $args['mode'] ) ? sprintf( 'data-arve-grow="%s"', esc_attr( (string) $args['grow'] ) ) : '',
 			( $wrapper_style ) ? sprintf( ' style="%s"', esc_attr( $wrapper_style ) ) : ''
 		);
 		$output .= sprintf( '<div class="arve-embed-container" style="padding-bottom: %g%%">%s</div>', $args['aspect_ratio'], $inner );

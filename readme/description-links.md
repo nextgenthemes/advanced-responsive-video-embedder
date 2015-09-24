@@ -2,7 +2,7 @@
 * [Overview][1]
 * [Quick Introduction][2]
 * [Features][3]
-* [Additional Features with the Pro Addon][4]
+* [Pro Addon Features][4]
 * [Documentation][10]
 * [Tests & Examples][11]
 * [Github Page][21]
