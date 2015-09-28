@@ -531,7 +531,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		if ( $args['description'] ) {
 			printf( '<p class="description">%s</p>', $args['description'] );
 		}
-	}	
+	}
 	
 	public function input_field( $args ) {
 		

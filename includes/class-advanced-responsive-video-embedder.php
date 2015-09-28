@@ -69,7 +69,7 @@ class Advanced_Responsive_Video_Embedder {
 	public function __construct() {
 
 		$this->plugin_slug = 'advanced-responsive-video-embedder';
-		$this->version = '6.1.0';
+		$this->version = '6.3.0';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -112,12 +112,12 @@ class Advanced_Responsive_Video_Embedder {
 		 * The class for admin and public.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-responsive-video-embedder-shared.php';
-		
+
 		/**
 		 * The class responsible for defining all actions that occur in the Dashboard.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-advanced-responsive-video-embedder-admin.php';
-		
+
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
@@ -155,14 +155,14 @@ class Advanced_Responsive_Video_Embedder {
 	private function define_admin_hooks() {
 
 		global $_arve_admin;
-		
+
 		$_arve_admin = new Advanced_Responsive_Video_Embedder_Admin( $this->get_plugin_slug(), $this->get_version() );
-		
+
 		// Only loaded on admin pages with editor
 		$this->loader->add_action( 'admin_enqueue_scripts', $_arve_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $_arve_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_footer', $_arve_admin, 'print_dialog' );
-		
+
 		// Add the options page and menu item.
 		$this->loader->add_action( 'admin_menu', $_arve_admin, 'add_plugin_admin_menu' );
 
@@ -171,7 +171,7 @@ class Advanced_Responsive_Video_Embedder {
 		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $_arve_admin, 'add_action_links' );
 
 		$this->loader->add_action( 'wp_dashboard_setup', $_arve_admin, 'add_dashboard_widget' );
-		
+
 		$this->loader->add_action( 'admin_init', $_arve_admin, 'register_settings' );
 		$this->loader->add_action( 'admin_init', $_arve_admin, 'register_settings_debug', 99 );
 
@@ -188,7 +188,7 @@ class Advanced_Responsive_Video_Embedder {
 	private function define_public_hooks() {
 
 		global $_arve_public;
-		
+
 		$_arve_public = new Advanced_Responsive_Video_Embedder_Public( $this->get_plugin_slug(), $this->get_version() );
 
 		$this->loader->add_action( 'init', $_arve_public, 'oembed_remove_providers', 99 );
@@ -199,9 +199,9 @@ class Advanced_Responsive_Video_Embedder {
 		#$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'register_scripts', 0 );
 
 		$this->loader->add_action( 'wp_head', $_arve_public, 'print_styles' );
-		
+
 		$this->loader->add_action( 'arve_output', $_arve_public, 'normal_output', 10, 2 );
-		
+
 		add_filter( 'widget_text', 'do_shortcode' );
 	}
 
