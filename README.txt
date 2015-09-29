@@ -63,7 +63,7 @@ Please report issues on [community.nextgenthemes.com](https://community.nextgent
 * lazyload -> Lightbox Shows the Video in a Lightbox after clicking a preview image.
 * Lazyload -> HTML5 Fullscreen: (experimental) This is a dream come true for me. Be aware that this has a Issue of going fullsceen a 2nd time from within fullscreen and fullscreen Buttons not working as expected.
 * Lazyload -> Half Screen Sticky: (experimental) Video that fills about half the screen/window and lets users continue to scroll and read the site, start writing a comment ... while watching a video. This relies on modern HTML5 features (calc, vw + vh) and may not work everywhere.
-* Link -> Lightbox: Make 
+* Link -> Lightbox: Make
 
 ### Supported providers ###
 
@@ -219,7 +219,10 @@ I would be glad if someone could help me with this, I can send you cash for help
 - [ ] Code review
 - [ ] Extensive testing
 - [ ] Write a special thanks page to [Howard Iken](http://www.myfloridalaw.com/)
-- [ ] Improve [Documentation](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) (wordding, grammer, extend, simplify, write about iframe usage)
+- [ ] Improve [Documentation][55] - wording, grammer
+- [ ] Improve [Documentation][55] - extend
+- [ ] Improve [Documentation][55] - simplify
+- [ ] Improve [Documentation][55] - write how to use kaltura, and other not directly supported providers with iframe
 - [ ] Create a Feature Table?
 - [ ] Comparison with other Plugins (Table?)
 - [ ] Write docs about how to use iframe for not supported providers.
@@ -228,6 +231,8 @@ I would be glad if someone could help me with this, I can send you cash for help
 - [ ] WordPress Language Pack thing (anything needed to do?)
 - [ ] Pro Addon: Fix bug when sometimes the URL of iframe starts with "#lity" and fails (IGN example)
 - [ ] Fix/investigate issue where some YouTube URL is not detected by the shortcode creator. This may have something to do how php regexes are carried over do JS.
+
+ [50]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation
 
 
 == Changelog ==
