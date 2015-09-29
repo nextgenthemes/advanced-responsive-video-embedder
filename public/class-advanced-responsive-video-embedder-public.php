@@ -1030,7 +1030,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'properties'                  => $properties,
 			'provider'                    => $provider,
 			'thumbnail'                   => $thumbnail,
-			'url_autoplay_no'             => $url_autoplay_no,
 			'link_text'                   => $link_text,
 			'url_autoplay_no'             => $url_autoplay_no,
 			'url_autoplay_yes'            => $url_autoplay_yes,
