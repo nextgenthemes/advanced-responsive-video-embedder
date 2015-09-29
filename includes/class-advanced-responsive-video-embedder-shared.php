@@ -40,6 +40,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			),
 			'shortcodes' => array(
 				'4players'               => '4players',
+				'alugha'                 => 'alugha',
 				'archiveorg'             => 'archiveorg',
 				'blip'                   => 'blip',
 				'bliptv'                 => 'bliptv', //* Deprecated
@@ -79,6 +80,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'params' => array(
 				#'archiveorg'      => '',
 				'blip'            => '',
+				'alugha'          => 'nologo=1  ',
 				#'break'           => '',
 				#'collegehumor'    => '',
 				#'comedycentral'   => '',
@@ -139,6 +141,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 		//* Double hash comment = no id in URL
 		return array(
 			'4players'            => $hw . '4players\.de/4players\.php/tvplayer/4PlayersTV/([0-9a-z_/]+\.html)',
+			'alugha'              => $hw . 'alugha.com/1/videos/([a-z0-9_\-]+)',
 			'archiveorg'          => $hw . 'archive\.org/(?:details|embed)/([0-9a-z]+)',
 			'blip'                => $hw . 'blip\.tv/[^/]+/[^/]+-([0-9]{7})',
 			##'bliptv'            =>
