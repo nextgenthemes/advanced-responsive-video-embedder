@@ -42,11 +42,9 @@ Check out this cool video:
 That was a cool video.
 ```
 
-As a bonus you can add url parameters for ARVE to customize videos. If your URL already contains a query (everything behind a `?` like the Youtube URL above) then you need to start with `&`</p>
+As a bonus you can add url parameters for ARVE to customize videos. If your URL already contains a query (everything behind a `?` like the Youtube URL above) then you need to start with `&`
 
 `arve[xxxxx]=` controls the options the plugin provides, see [supported-attributes](#supported-attributes)
-
-`arve-param[XXXXX]` can be used to create parameters for the URL-query used for the iframe src. See below in the shortcode section for links to the providers documentations.
 
 ## Examples
 This examples assume you post this URLs on their own line like
@@ -118,13 +116,13 @@ Lets assume you have the parameters for YouTube on the ARVE settings page set to
 
 `[[youtube id="123456" paramaters="iv_load_policy=1&start=123"]]`
 
-This shorcode would create the parameters</p>
+This shorcode would create the parameters
 
 `?iv_load_policy=1&rel=0&wmode=transparent&;start=123`, rather then just
 
-`?iv_load_policy=1&start=123` because it merges the one from the options page, overriding existing ones and adding not set ones.</p>
+`?iv_load_policy=1&start=123` because it merges the one from the options page, overriding existing ones and adding not set ones.
 
-As for shortcode attributes it is also recommended to prefer options instead of adding the same parameters to every single video. While obviously parameters like `start` and `end` make not much sense on the options page.</p>
+As for shortcode attributes it is also recommended to prefer options instead of adding the same parameters to every single video. While obviously parameters like `start` and `end` make not much sense on the options page.
 
 Parameters for providers that are currently have on option field are ignored inside shortcodes. If you happed to find out one of them supports parameters please let me know.
 <div class="alert alert-warning" markdown=1>
@@ -136,10 +134,10 @@ Do not use any autoplay parameters, use the auto-play attribute instead. This is
 </div>
 
 # General Iframe Embedding
-This plugin not changes anything to usual HTML `iframe` embed codes you have to use the shortcode creator dialog and paste iframe embed codes there or write them manually. They will become `[[iframe id="http://..."]]`</code>`. The`id=`</code>` represents what is the `src=` in HTML embeds.</p>
+This plugin not changes anything to usual HTML `iframe` embed codes you have to use the shortcode creator dialog and paste iframe embed codes there or write them manually. They will become `[[iframe id="http://..."]]`. The`id=` represents what is the `src=` in HTML embeds.
 
 # Manual Shortcode Creation
-This is not really needed anymore since the URL embeds and the Shortcode Creator should detect the IDs automatically, but in case something fails or you prefer to write shortcodes manually.</p>
+This is not really needed anymore since the URL embeds and the Shortcode Creator should detect the IDs automatically, but in case something fails or you prefer to write shortcodes manually.
 
 The id of a video is easy to find in the providers URL, for example:
 - metacafe.com/watch/**237147**/9_11_alex_jones_and_charlie_sheen_interview
@@ -148,8 +146,8 @@ The id of a video is easy to find in the providers URL, for example:
 - dailymotion.com/video/**abcdef_some_long_title**
 
 I won't list all here, they are easy to guess, exceptions below:
-<p>For Ustream when you can often get the id from the URL http://www.ustream.tv/<strong>recorded/28355397/highlight/316911</strong> all this is the id! Sometimes its just like this http://www.ustream.tv/<strong>28355397</strong>/ if you are on a channel that has no number in the URL then go hover over the video and click share->url-icon (below the twitter icon), a URL like this http://www.ustream.tv/channel/<strong>12882755</strong> will be copied to your clipboard, that number is your video id.</p>
+For Ustream when you can often get the id from the URL http://www.ustream.tv/<strong>recorded/28355397/highlight/316911</strong> all this is the id! Sometimes its just like this http://www.ustream.tv/<strong>28355397</strong>/ if you are on a channel that has no number in the URL then go hover over the video and click share->url-icon (below the twitter icon), a URL like this http://www.ustream.tv/channel/<strong>12882755</strong> will be copied to your clipboard, that number is your video id.
 
 ## Exceptions for the getting the embed code instead of the URL
-- Videojug: <object [...] /player?id=**e37b3839-21e4-de7d-f6ee-ff0008ca2ccd**"></param> [...] </li>
-- Gametrailers, Comedycentral and Spike: [...] <iframe src="[...] [http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com](http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com):**8a0cde95-c528-44b9-ab44-5ff91955a38d**" [...]</li>
+- Videojug: <object [...] /player?id=**e37b3839-21e4-de7d-f6ee-ff0008ca2ccd**"></param> [...]
+- Gametrailers, Comedycentral and Spike: [...] <iframe src="[...] [http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com](http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com):**8a0cde95-c528-44b9-ab44-5ff91955a38d**" [...]
