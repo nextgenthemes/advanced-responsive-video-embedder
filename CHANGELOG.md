@@ -1,6 +1,6 @@
 ## Changelog ##
 
-### Pro Addon 1.3.2 ###
+### Pro Addon 1.4 ###
 
 * Fix: Fake thumbnails now work for lazyload-lightbox mode.
 

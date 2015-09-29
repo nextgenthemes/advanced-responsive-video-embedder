@@ -24,9 +24,10 @@ Please report issues on [community.nextgenthemes.com](https://community.nextgent
  [2]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#quick-introduction
  [3]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#features
  [4]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#additional-features-with-the-pro-addon
- [10]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/
+ [10]: https://github.com/nextgenthemes/advanced-responsive-video-embedder/blob/master/docs.md
  [11]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/tests-and-examples/
  [21]: https://github.com/nextgenthemes/advanced-responsive-video-embedder
+
 
 ### Features ###
 
@@ -201,16 +202,20 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Todo List ##
 
-I would be glad if someone could help me with this, I can send you cash for helping out.
+I would be glad if someone could [help me](https://github.com/nextgenthemes/advanced-responsive-video-embedder) with this, I can send you cash for helping out.
 
+These are not in any real priority order (for now)
+
+- [ ] Get advice how I could improve my sales of this the Pro Addon
+- [ ] Advertise the Pro Addon somewhere
 - [ ] Make the [Plugin Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) and the selling process UX more professional look and feel.
-- [ ] Code review
+- [ ] Code review (and improvements)
 - [ ] Extensive testing
 - [ ] Write a special thanks page to [Howard Iken](http://www.myfloridalaw.com/)
-- [ ] Improve [Documentation][55] - wording, grammer
-- [ ] Improve [Documentation][55] - extend
-- [ ] Improve [Documentation][55] - simplify
-- [ ] Improve [Documentation][55] - write how to use kaltura, and other not directly supported providers with iframe
+- [ ] Improve [Documentation][50] - wording, grammer
+- [ ] Improve [Documentation][50] - extend
+- [ ] Improve [Documentation][50] - simplify
+- [ ] Improve [Documentation][50] - write how to use kaltura, and other not directly supported providers with iframe
 - [ ] Create a Feature Table?
 - [ ] Comparison with other Plugins (Table?)
 - [ ] Write docs about how to use iframe for not supported providers.
@@ -219,13 +224,15 @@ I would be glad if someone could help me with this, I can send you cash for help
 - [ ] WordPress Language Pack thing (anything needed to do?)
 - [ ] Pro Addon: Fix bug when sometimes the URL of iframe starts with "#lity" and fails (IGN example)
 - [ ] Fix/investigate issue where some YouTube URL is not detected by the shortcode creator. This may have something to do how php regexes are carried over do JS.
+- [ ] Get rid of globals in PHP Code
+- [ ] Consider writing JS create URL querys for embed customization (for use in shortcode creator dialog but also easy to use independant)
 
  [50]: https://github.com/nextgenthemes/advanced-responsive-video-embedder/blob/master/docs.md
 
 
 ## Changelog ##
 
-### Pro Addon 1.3.2 ###
+### Pro Addon 1.4 ###
 
 * Fix: Fake thumbnails now work for lazyload-lightbox mode.
 
