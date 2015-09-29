@@ -3,7 +3,7 @@
  * http://getbootstrap.com
  * Copyright 2013-2015 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- * 
+ *
  */
 
 module.exports = function (grunt) {
@@ -14,7 +14,7 @@ module.exports = function (grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    
+
     sed: {
       h2: {
         path: 'README.txt',
@@ -41,27 +41,28 @@ module.exports = function (grunt) {
         recursive: true
       }
     },
-    
+
     concat: {
       options: {
         separator: '\n\n',
       },
       readme_md: {
         src: [
-		  'readme/description.md',
-		  'readme/description-intro.md',
-          'readme/description-links.md',
-          'readme/description-features.md',
-          'readme/description-supported-providers.md',
-		  'readme/description-quick-intro.md',
-		  'readme/description-pro-addon-demo.md',
-          'readme/description-hd-thumbnail.md',
-		  'readme/description-reviews.md',
-          'readme/description-roadmap.md',
-          'readme/installation.md',
-          'readme/faq.md',
-          'readme/screenshots.md',
-          'CHANGELOG.md'
+           'readme/description.md',
+           'readme/description-intro.md',
+           'readme/description-links.md',
+           'readme/description-features.md',
+           'readme/description-supported-providers.md',
+           'readme/description-quick-intro.md',
+           'readme/description-pro-addon-demo.md',
+           'readme/description-hd-thumbnail.md',
+           'readme/description-reviews.md',
+           'readme/description-roadmap.md',
+           'readme/installation.md',
+           'readme/faq.md',
+           'readme/screenshots.md',
+           'todo.md',
+           'CHANGELOG.md'
         ],
         dest: 'README.md'
       },
@@ -74,9 +75,9 @@ module.exports = function (grunt) {
       }
     }
   });
-  
+
   require('load-grunt-tasks')(grunt, { scope: 'devDependencies' });
-  
+
   // Default task.
   grunt.registerTask('default', ['concat', 'sed']);
 };

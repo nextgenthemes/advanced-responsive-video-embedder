@@ -1,9 +1,17 @@
+## Todo List ##
+
+I would be glad if someone could help me with this, I can send you cash for helping out.
+
+- [ ] Make the [Plugin Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) and the selling process UX more professional look and feel.
 - [ ] Code review
 - [ ] Extensive testing
-- [ ] Improve Documentation
+- [ ] Write a special thanks page to [Howard Iken](http://www.myfloridalaw.com/)
+- [ ] Improve [Documentation](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) (wordding, grammer, extend, simplify, write about iframe usage)
+- [ ] Create a Feature Table?
+- [ ] Comparison with other Plugins (Table?)
 - [ ] Write docs about how to use iframe for not supported providers.
 - [ ] Support for self hosting videos (or at least make them responsive as they are), consider making the WordPress videos responsive (maybe it just take a wrapper).
 - [ ] How to manage beta versions with WordPress.org and the EDD Software licensing plugin (for the Pro Version)
 - [ ] WordPress Language Pack thing (anything needed to do?)
-- [ ] Pro Addon: Fix bug when sometimes the URL if iframe starts with "#lity" (IGN example)
-- [ ] Fix/invenstigate issue where some YouTube URL is not detected by the shortcode creator. This may have something to do how php regexes are carried over do JS.
+- [ ] Pro Addon: Fix bug when sometimes the URL of iframe starts with "#lity" and fails (IGN example)
+- [ ] Fix/investigate issue where some YouTube URL is not detected by the shortcode creator. This may have something to do how php regexes are carried over do JS.
