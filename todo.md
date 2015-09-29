@@ -1,6 +1,6 @@
 ## Todo List ##
 
-I would be glad if someone could help me with this, I can send you cash for helping out.
+I would be glad if someone could [help me](https://github.com/nextgenthemes/advanced-responsive-video-embedder) with this, I can send you cash for helping out.
 
 - [ ] Make the [Plugin Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) and the selling process UX more professional look and feel.
 - [ ] Code review
@@ -19,4 +19,4 @@ I would be glad if someone could help me with this, I can send you cash for help
 - [ ] Pro Addon: Fix bug when sometimes the URL of iframe starts with "#lity" and fails (IGN example)
 - [ ] Fix/investigate issue where some YouTube URL is not detected by the shortcode creator. This may have something to do how php regexes are carried over do JS.
 
- [50]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation
+ [50]: https://github.com/nextgenthemes/advanced-responsive-video-embedder/blob/master/docs.md

@@ -146,8 +146,8 @@ The id of a video is easy to find in the providers URL, for example:
 - dailymotion.com/video/**abcdef_some_long_title**
 
 I won't list all here, they are easy to guess, exceptions below:
-For Ustream when you can often get the id from the URL http://www.ustream.tv/<strong>recorded/28355397/highlight/316911</strong> all this is the id! Sometimes its just like this http://www.ustream.tv/<strong>28355397</strong>/ if you are on a channel that has no number in the URL then go hover over the video and click share->url-icon (below the twitter icon), a URL like this http://www.ustream.tv/channel/<strong>12882755</strong> will be copied to your clipboard, that number is your video id.
+For Ustream when you can often get the id from the URL ttp://www.ustream.tv/<strong>recorded/28355397/highlight/316911</strong> all this is the id! Sometimes its just like this ttp://www.ustream.tv/<strong>28355397</strong>/ if you are on a channel that has no number in the URL then go hover over the video and click share->url-icon (below the twitter icon), a URL like this ttp://www.ustream.tv/channel/<strong>12882755</strong> will be copied to your clipboard, that number is your video id.
 
 ## Exceptions for the getting the embed code instead of the URL
 - Videojug: <object [...] /player?id=**e37b3839-21e4-de7d-f6ee-ff0008ca2ccd**"></param> [...]
-- Gametrailers, Comedycentral and Spike: [...] <iframe src="[...] [http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com](http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com):**8a0cde95-c528-44b9-ab44-5ff91955a38d**" [...]
+- Gametrailers, Comedycentral and Spike: [...] <iframe src="[...]  http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:**8a0cde95-c528-44b9-ab44-5ff91955a38d**" [...]

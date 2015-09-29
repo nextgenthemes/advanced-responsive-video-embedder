@@ -207,7 +207,10 @@ I would be glad if someone could help me with this, I can send you cash for help
 - [ ] Code review
 - [ ] Extensive testing
 - [ ] Write a special thanks page to [Howard Iken](http://www.myfloridalaw.com/)
-- [ ] Improve [Documentation](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) (wordding, grammer, extend, simplify, write about iframe usage)
+- [ ] Improve [Documentation][55] - wording, grammer
+- [ ] Improve [Documentation][55] - extend
+- [ ] Improve [Documentation][55] - simplify
+- [ ] Improve [Documentation][55] - write how to use kaltura, and other not directly supported providers with iframe
 - [ ] Create a Feature Table?
 - [ ] Comparison with other Plugins (Table?)
 - [ ] Write docs about how to use iframe for not supported providers.
@@ -217,14 +220,16 @@ I would be glad if someone could help me with this, I can send you cash for help
 - [ ] Pro Addon: Fix bug when sometimes the URL of iframe starts with "#lity" and fails (IGN example)
 - [ ] Fix/investigate issue where some YouTube URL is not detected by the shortcode creator. This may have something to do how php regexes are carried over do JS.
 
+ [50]: https://github.com/nextgenthemes/advanced-responsive-video-embedder/blob/master/docs.md
+
 
 ## Changelog ##
 
 ### Pro Addon 1.3.2 ###
 
-* Fix: Fake thumbnails now work for lazyload-lightbox.
+* Fix: Fake thumbnails now work for lazyload-lightbox mode.
 
-### 6.3.0 & Pro Addon 1.3.0 ###
+### 6.3.0 & Pro Addon 1.4.0 ###
 
 * Improved: Testing Shortcode.
 * Improved: When there is no thumbnail lazyload mode will fall back to normal mode.

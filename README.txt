@@ -63,7 +63,7 @@ Please report issues on [community.nextgenthemes.com](https://community.nextgent
 * lazyload -> Lightbox Shows the Video in a Lightbox after clicking a preview image.
 * Lazyload -> HTML5 Fullscreen: (experimental) This is a dream come true for me. Be aware that this has a Issue of going fullsceen a 2nd time from within fullscreen and fullscreen Buttons not working as expected.
 * Lazyload -> Half Screen Sticky: (experimental) Video that fills about half the screen/window and lets users continue to scroll and read the site, start writing a comment ... while watching a video. This relies on modern HTML5 features (calc, vw + vh) and may not work everywhere.
-* Link -> Lightbox: Make
+* Link -> Lightbox: Make 
 
 ### Supported providers ###
 
@@ -232,16 +232,16 @@ I would be glad if someone could help me with this, I can send you cash for help
 - [ ] Pro Addon: Fix bug when sometimes the URL of iframe starts with "#lity" and fails (IGN example)
 - [ ] Fix/investigate issue where some YouTube URL is not detected by the shortcode creator. This may have something to do how php regexes are carried over do JS.
 
- [50]: https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation
+ [50]: https://github.com/nextgenthemes/advanced-responsive-video-embedder/blob/master/docs.md
 
 
 == Changelog ==
 
 ### Pro Addon 1.3.2 ###
 
-* Fix: Fake thumbnails now work for lazyload-lightbox.
+* Fix: Fake thumbnails now work for lazyload-lightbox mode.
 
-### 6.3.0 & Pro Addon 1.3.0 ###
+### 6.3.0 & Pro Addon 1.4.0 ###
 
 * Improved: Testing Shortcode.
 * Improved: When there is no thumbnail lazyload mode will fall back to normal mode.
