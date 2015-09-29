@@ -6,10 +6,10 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 - [ ] Code review
 - [ ] Extensive testing
 - [ ] Write a special thanks page to [Howard Iken](http://www.myfloridalaw.com/)
-- [ ] Improve [Documentation][55] - wording, grammer
-- [ ] Improve [Documentation][55] - extend
-- [ ] Improve [Documentation][55] - simplify
-- [ ] Improve [Documentation][55] - write how to use kaltura, and other not directly supported providers with iframe
+- [ ] Improve [Documentation][50] - wording, grammer
+- [ ] Improve [Documentation][50] - extend
+- [ ] Improve [Documentation][50] - simplify
+- [ ] Improve [Documentation][50] - write how to use kaltura, and other not directly supported providers with iframe
 - [ ] Create a Feature Table?
 - [ ] Comparison with other Plugins (Table?)
 - [ ] Write docs about how to use iframe for not supported providers.
@@ -18,5 +18,6 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 - [ ] WordPress Language Pack thing (anything needed to do?)
 - [ ] Pro Addon: Fix bug when sometimes the URL of iframe starts with "#lity" and fails (IGN example)
 - [ ] Fix/investigate issue where some YouTube URL is not detected by the shortcode creator. This may have something to do how php regexes are carried over do JS.
+- [ ] Get rid of globals in PHP Code
 
  [50]: https://github.com/nextgenthemes/advanced-responsive-video-embedder/blob/master/docs.md
