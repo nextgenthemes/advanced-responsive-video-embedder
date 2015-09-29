@@ -2,8 +2,12 @@
 
 I would be glad if someone could [help me](https://github.com/nextgenthemes/advanced-responsive-video-embedder) with this, I can send you cash for helping out.
 
+These are not in any real priority order (for now)
+
+- [ ] Get advice how I could improve my sales of this the Pro Addon
+- [ ] Advertise the Pro Addon somewhere
 - [ ] Make the [Plugin Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) and the selling process UX more professional look and feel.
-- [ ] Code review
+- [ ] Code review (and improvements)
 - [ ] Extensive testing
 - [ ] Write a special thanks page to [Howard Iken](http://www.myfloridalaw.com/)
 - [ ] Improve [Documentation][50] - wording, grammer
@@ -19,5 +23,6 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 - [ ] Pro Addon: Fix bug when sometimes the URL of iframe starts with "#lity" and fails (IGN example)
 - [ ] Fix/investigate issue where some YouTube URL is not detected by the shortcode creator. This may have something to do how php regexes are carried over do JS.
 - [ ] Get rid of globals in PHP Code
+- [ ] Consider writing JS create URL querys for embed customization (for use in shortcode creator dialog but also easy to use independant)
 
  [50]: https://github.com/nextgenthemes/advanced-responsive-video-embedder/blob/master/docs.md
