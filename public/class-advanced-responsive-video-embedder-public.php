@@ -1389,7 +1389,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			)
 		);
 
-		$out  = sprintf( '<code>%s</code>', esc_html( $escaped_sc ) );
+		$out  = sprintf( '<p><code>%s</code></p>', esc_html( $escaped_sc ) );
 		$out .= "\n$shortcode\n";
 		$out .= '<div style="display: block; clear: both;"></div><br><hr><br>';
 
@@ -1398,7 +1398,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 	public function test_url( $url ) {
 
-		$out  = sprintf( '<code>%s</code>', esc_html( $url ) );
+		$out  = sprintf( '<p><code>%s</code></p>', esc_html( $url ) );
 		$out .= "\n$url\n";
 		$out .= '<div style="display: block; clear: both;"></div><br><hr><br>';
 
