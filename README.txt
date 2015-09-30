@@ -224,7 +224,7 @@ These are not in any real priority order (for now)
 - [ ] Code review (and improvements)
 - [ ] Extensive testing
 - [ ] Write a special thanks page to [Howard Iken](http://www.myfloridalaw.com/)
-- [ ] Improve [Documentation][50] - wording, grammer
+- [ ] Improve [Documentation][50] - wording, grammar
 - [ ] Improve [Documentation][50] - extend
 - [ ] Improve [Documentation][50] - simplify
 - [ ] Improve [Documentation][50] - write how to use kaltura, and other not directly supported providers with iframe
@@ -234,8 +234,8 @@ These are not in any real priority order (for now)
 - [ ] Support for self hosting videos (or at least make them responsive as they are), consider making the WordPress videos responsive (maybe it just take a wrapper).
 - [ ] How to manage beta versions with WordPress.org and the EDD Software licensing plugin (for the Pro Version)
 - [ ] WordPress Language Pack thing (anything needed to do?)
-- [ ] Pro Addon: Fix bug when sometimes the URL of iframe starts with "#lity" and fails (IGN example)
-- [ ] Fix/investigate issue where some YouTube URL is not detected by the shortcode creator. This may have something to do how php regexes are carried over do JS.
+- [ ] Pro Addon: Fix bug when sometimes the URL of iframe starts with "#lity" and fails use [arve_tests] Shortcode and look at the IGN example, the lazyload-lightbox fails.
+- [ ] [Fix bug](https://community.nextgenthemes.com/90/i-put-in-youtube-url-and-get-the-no-provider-selected-message?show=90#q90) where youtube.be/xxxxx URLs are not detected by the shortcode creator. This may have something to do how PHP regexes are carried over do JS.
 - [ ] Get rid of globals in PHP Code
 - [ ] Consider writing JS create URL querys for embed customization (for use in shortcode creator dialog but also easy to use independant)
 
@@ -248,7 +248,7 @@ These are not in any real priority order (for now)
 
 * Fix: Fake thumbnails now work for lazyload-lightbox mode.
 
-### 6.3.0 & Pro Addon 1.4.0 ###
+### 6.3.1 & Pro Addon 1.4.0 ###
 
 * Improved: Testing Shortcode.
 * Improved: When there is no thumbnail lazyload mode will fall back to normal mode.
