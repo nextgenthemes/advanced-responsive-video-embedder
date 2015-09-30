@@ -91,7 +91,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'http://www.4players.de/4players.php/tvplayer/4PlayersTV/Alle/20943/105302/Mass_Effect_3/Trilogie-Rueckblick.html',
 				)
-			) ,
+			),
 			'alugha' => array(
 				'url' => true,
 				'thumb' => true,
@@ -100,7 +100,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'https://alugha.com/1/videos/youtube-54m1YfEuYU8?arve[mode]=lazyload',
 				)
-			) ,
+			),
 			'archiveorg' => array(
 				'name' => 'archive.org',
 				'url' => true,
@@ -110,7 +110,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'https://archive.org/details/AlexJonesInterviewsDeanHaglund',
 				)
-			) ,
+			),
 			'blip' => array(
 				'url' => true,
 				'thumb' => false,
@@ -119,14 +119,14 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'http://blip.tv/the-spoony-experiment/b-fest-2014-recap-part-1-of-2-6723548',
 				)
-			) ,
+			),
 			'bliptv' => array(
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
 				'aspect_ratio' => 56.25,
 				'tests' => array()
-			) ,
+			),
 			'break' => array(
 				'url' => true,
 				'thumb' => false,
@@ -135,7 +135,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591',
 				)
-			) ,
+			),
 			'collegehumor' => array(
 				'name' => 'CollegeHumor',
 				'url' => true,
@@ -145,7 +145,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'http://collegehumor.com/video/6922670/bleep-bloop-your-best-game',
 				)
-			) ,
+			),
 			'comedycentral' => array(
 				'name' => 'Comedy Central',
 				'url' => false,
@@ -155,7 +155,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'[comedycentral id="c80adf02-3e24-437a-8087-d6b77060571c"]',
 				)
-			) ,
+			),
 			'dailymotion' => array(
 				'url' => true,
 				'thumb' => true,
@@ -170,14 +170,14 @@ class Advanced_Responsive_Video_Embedder_Public {
 					__('Playlist', $this->plugin_slug) ,
 					'http://www.dailymotion.com/playlist/xr2rp_RTnews_exclusive-interveiws/1#video=xafhh9',
 				)
-			) ,
+			),
 			'dailymotionlist' => array(
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
 				'aspect_ratio' => 56.25,
 				'tests' => array()
-			) ,
+			),
 			'flickr' => array(
 				'url' => false,
 				'thumb' => false,
@@ -186,7 +186,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'[flickr id="2856467015"]',
 				)
-			) ,
+			),
 			'funnyordie' => array(
 				'name' => 'Funny or Die',
 				'url' => true,
@@ -196,7 +196,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'http://www.funnyordie.com/videos/76585438d8/sarah-silverman-s-we-are-miracles-hbo-special',
 				)
-			) ,
+			),
 			'gametrailers' => array(
 				'url' => false,
 				'thumb' => false,
@@ -205,7 +205,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'[gametrailers id="797121a1-4685-4ecc-9388-72a88b0ef8da"]',
 				)
-			) ,
+			),
 			'iframe' => array(
 				'url' => false,
 				'thumb' => false,
@@ -217,7 +217,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 					esc_html__('This can also be used to have limited support for self hosted videos my passing URLs to .webm, .mp4 or .ogg to it. This might not be the best way to do because this is what the <video> tag is for but it works in my tests.', $this->plugin_slug) ,
 					'[iframe id="http://video.webmfiles.org/big-buck-bunny_trailer.webm"]',
 				)
-			) ,
+			),
 			'ign' => array(
 				'name' => 'IGN',
 				'url' => true,
@@ -227,7 +227,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'http://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
 				)
-			) ,
+			),
 			'kickstarter' => array(
 				'url' => true,
 				'thumb' => false,
@@ -236,7 +236,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'https://www.kickstarter.com/projects/obsidian/project-eternity?ref=discovery',
 				)
-			) ,
+			),
 			'liveleak' => array(
 				'name' => 'LiveLeak',
 				'url' => true,
@@ -249,7 +249,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 					__('File <code>f=</code> URL', $this->plugin_slug) ,
 					'http://www.liveleak.com/view?f=c85bdf5e45b2',
 				)
-			) ,
+			),
 			'metacafe' => array(
 				'url' => true,
 				'thumb' => false,
@@ -259,7 +259,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 					'http://www.metacafe.com/watch/11159703/why_youre_fat/',
 					'http://www.metacafe.com/watch/11322264/everything_wrong_with_robocop_in_7_minutes/',
 				)
-			) ,
+			),
 			'movieweb' => array(
 				'url' => true,
 				'thumb' => false,
@@ -268,7 +268,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'[movieweb id="VIwFzmdbyoy9zB"]',
 				)
-			) ,
+			),
 			'mpora' => array(
 				'name' => 'MPORA',
 				'url' => true,
@@ -279,7 +279,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 					'http://mpora.com/videos/AAdphry14rkn',
 					'http://mpora.de/videos/AAdpxhiv6pqd',
 				)
-			) ,
+			),
 			'myspace' => array(
 				'url' => true,
 				'thumb' => false,
@@ -288,7 +288,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'https://myspace.com/myspace/video/dark-rooms-the-shadow-that-looms-o-er-my-heart-live-/109471212',
 				)
-			) ,
+			),
 			'myvideo' => array(
 				'name' => 'MyVideo',
 				'url' => true,
@@ -298,7 +298,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'http://www.myvideo.de/watch/8432624/Angeln_mal_anders',
 				)
-			) ,
+			),
 			'snotr' => array(
 				'url' => true,
 				'thumb' => false,
@@ -307,7 +307,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'http://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is',
 				)
-			) ,
+			),
 			'spike' => array(
 				'url' => false,
 				'thumb' => false,
@@ -316,7 +316,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'[spike id="5afddf30-31d8-40fb-81e6-bb5c6f45525f"]',
 				)
-			) ,
+			),
 			'ted' => array(
 				'name' => 'TED Talks',
 				'url' => true,
@@ -329,7 +329,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 					__('Beta site URLs work as well', $this->plugin_slug) ,
 					'http://new.ted.com/talks/brene_brown_on_vulnerability',
 				)
-			) ,
+			),
 			'twitch' => array(
 				'url' => true,
 				'thumb' => false,
@@ -342,7 +342,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 					__('Highlight URL', $this->plugin_slug) ,
 					'http://www.twitch.tv/tsm_dyrus/c/3674140',
 				)
-			) ,
+			),
 			'ustream' => array(
 				'name' => 'USTREAM',
 				'url' => true,
@@ -358,7 +358,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 					__('Highlight URL', $this->plugin_slug) ,
 					'http://www.ustream.tv/recorded/31217313/highlight/344029',
 				)
-			) ,
+			),
 			'veoh' => array(
 				'url' => true,
 				'thumb' => false,
@@ -367,7 +367,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'http://www.veoh.com/watch/v19866882CAdjNF9b',
 				)
-			) ,
+			),
 			'vevo' => array(
 				'url' => true,
 				'thumb' => false,
@@ -377,7 +377,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 					'[vevo id="US4E51286201"]',
 					'http://www.vevo.com/watch/the-offspring/the-kids-arent-alright/USSM20100649',
 				)
-			) ,
+			),
 			'viddler' => array(
 				'url' => true,
 				'thumb' => false,
@@ -386,7 +386,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'http://www.viddler.com/v/a695c468',
 				)
-			) ,
+			),
 			'videojug' => array(
 				'url' => false,
 				'thumb' => false,
@@ -395,7 +395,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'[videojug id="fa15cafd-556f-165b-d660-ff0008c90d2d"]',
 				)
-			) ,
+			),
 			'vine' => array(
 				'url' => true,
 				'thumb' => false,
@@ -408,7 +408,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'specific_tests' => array(
 					'https://vine.co/v/bjHh0zHdgZT/embed',
 				),
-			) ,
+			),
 			'vimeo' => array(
 				'url' => true,
 				'thumb' => true,
@@ -418,7 +418,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 					'[vimeo id="12901672"]',
 					'http://vimeo.com/23316783',
 				)
-			) ,
+			),
 			'xtube' => array(
 				'name' => 'XTube',
 				'url' => true,
@@ -426,7 +426,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'wmode_transparent' => true,
 				'aspect_ratio' => 56.25,
 				'tests' => array()
-			) ,
+			),
 			'yahoo' => array(
 				'name' => 'Yahoo Screen',
 				'url' => true,
@@ -436,7 +436,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'tests' => array(
 					'http://screen.yahoo.com/buzzfeed/eye-opening-facts-vaginas-210102842.html',
 				)
-			) ,
+			),
 			'youtube' => array(
 				'name' => 'YouTube',
 				'url' => true,
@@ -465,7 +465,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 					__( 'The Parameter start only takes values in seconds, this will start the video at 1 minute and 1 second', $this->plugin_slug ),
 					'[youtube id="uCQXKYPiz6M" parameters="start=61"]',
 				),
-			) ,
+			),
 			'youtubelist' => array(
 				'name' => 'YouTube Playlist',
 				'url' => true,
@@ -1262,16 +1262,21 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		global $wp;
-
 		$current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
-		$content = '';
-		$properties = $this->get_properties();
+		$content     = '';
+		$properties  = $this->get_properties();
+
+		if ( ! empty( $_GET['arvet-provider'] ) ) {
+			$get_provider = $_GET['arvet-provider'];
+		} else {
+			$get_provider = 'youtube';
+		}
 
 		$additional_tests = array(
 			'align-tests' => array(
 				'specific_tests' => array(
-					'[vimeo id="23316783"] This text should apper below the video',
-					'[vimeo id="23316783" align="center"]',
+					#'[vimeo id="23316783"] This text should apper below the video',
+					'[vimeo id="23316783" align="center"] This text should apper below the video',
 					'[vimeo id="23316783" align="left"] This text should appear right next to the video',
 					'[vimeo id="23316783" align="right"] This text should appear left next to the video',
 				),
@@ -1283,12 +1288,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 				),
 			),
 		);
-
-		if ( ! empty( $_GET['arvet-provider'] ) ) {
-			$get_provider = $_GET['arvet-provider'];
-		} else {
-			$get_provider = 'youtube';
-		}
 
 		$properties = array_merge( $properties, $additional_tests );
 
@@ -1333,12 +1332,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 						$url = add_query_arg( $query, $line );
 
-						$content .= sprintf(
-							"<code>%s</code>\n%s\n",
-							esc_html( $url ),
-							$url
-						);
-						$content .= '<div style="display: block; clear: both;"></div><br><hr><br>';
+						$content .= $this->test_url( $url );
 					}
 
 				} elseif ( $this->begins_with( $line, '[' ) )  {
@@ -1352,14 +1346,9 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 					foreach( $shortcode_tests as $atts ) {
 
-						$sc = str_replace( ']', $atts, $line );
+						$shortcode = str_replace( ']', $atts, $line );
 
-						$content .= sprintf(
-							"<code>[%s]</code>\n%s\n",
-							esc_html( $sc ),
-							$sc
-						);
-						$content .= '<div style="display: block; clear: both;"></div><br><hr><br>';
+						$content .= $this->test_shortcode( $shortcode );
 					}
 				} else {
 					$content .= "<p>$line</p>";
@@ -1370,30 +1359,50 @@ class Advanced_Responsive_Video_Embedder_Public {
 		if ( isset( $specific_tests[ $get_provider ] ) ) {
 
 			foreach ( $specific_tests[ $get_provider ] as $line ) {
+
 				if ( $this->begins_with( $line, 'http' ) ) {
 
-					$content .= sprintf(
-						"<code>%s</code>\n%s\n",
-						esc_html( $line ),
-						$line
-					);
-					$content .= '<div style="display: block; clear: both;"></div><br><hr><br>';
+					$content .= $this->test_url( $line );
 
-				} elseif ( $this->begins_with( $line, '[' ) )  {
+				} elseif ( $this->begins_with( $line, '[' ) ) {
 
-					$content .= sprintf(
-						"<code>[%s]</code>\n%s\n",
-						esc_html( $line ),
-						$line
-					);
-					$content .= '<div style="display: block; clear: both;"></div><br><hr><br>';
+					$content .= $this->test_shortcode( $line );
+
 				} else {
 					$content .= "<p>$line</p>";
 				}
 			}
 		}
 
-		return apply_filters( 'the_content', $content );
+		$content = apply_filters( 'the_content', $content );
+
+		return $content;
+	}
+
+	public function test_shortcode( $shortcode ) {
+
+		$escaped_sc = strtr(
+			$shortcode,
+			array(
+				'[' => '[[',
+				']' => ']]',
+			)
+		);
+
+		$out  = sprintf( '<code>%s</code>', esc_html( $escaped_sc ) );
+		$out .= "\n$shortcode\n";
+		$out .= '<div style="display: block; clear: both;"></div><br><hr><br>';
+
+		return $out;
+	}
+
+	public function test_url( $url ) {
+
+		$out  = sprintf( '<code>%s</code>', esc_html( $url ) );
+		$out .= "\n$url\n";
+		$out .= '<div style="display: block; clear: both;"></div><br><hr><br>';
+
+		return $out;
 	}
 
 	public function supported_shortcode( $args, $content = null ) {
@@ -1411,22 +1420,27 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$values['name'] = $key;
 
 			unset( $sups );
-			if ( $values['thumb'] )
-				$sups[] = sprintf( ' <span class="glyphicon glyphicon-picture" data-toggle="tooltip" title="%s" style="cursor: help;"></span>', esc_attr( __('automatic thumbnail', $this->plugin_slug) ) );
+			if ( $values['thumb'] ) {
+				$sups[] = get_the_icon( 'picture', __('automatic thumbnail', $this->plugin_slug ) );
+			}
 
-			if ( ! $values['url'] )
-				$sups[] = sprintf( ' <span class="glyphicon glyphicon-link text-danger" data-toggle="tooltip" title="%s" style="cursor: help;"></span>', esc_attr( __('no URL embeds', $this->plugin_slug) ) );
+			if ( ! $values['url'] ) {
+				$sups[] = get_the_icon( 'attachment', __('no URL embeds', $this->plugin_slug ) );
+			}
 
-			if ( ! $values['wmode_transparent'] )
-				$sups[] = sprintf( ' <span class="glyphicon glyphicon-picture text-danger" data-toggle="tooltip" title="%s" style="cursor: help;"></span>', esc_attr( __('no fake thumbnails', $this->plugin_slug) ) );
+			if ( ! $values['wmode_transparent'] ) {
+				$sups[] = get_the_icon( 'picture', __('no fake thumbnails', $this->plugin_slug ) );
+			}
 
-			if ( 'iframe' === $key )
-				$sups[] = sprintf( ' <span class="glyphicon glyphicon-unchecked" data-toggle="tooltip" title="%s" style="cursor: help;"></span>', esc_attr( __('Support for every provider not listed that supports iframe embed codes', $this->plugin_slug) ) );
+			if ( 'iframe' === $key ) {
+				$sups[] = get_the_icon( 'focus', __('Support for every provider not listed that supports iframe embed codes', $this->plugin_slug ) );
+			}
 
-			if ( ! empty( $sups ) )
+			if ( ! empty( $sups ) ) {
 				$sups = implode( ' ', $sups );
-			else
+			} else {
 				$sups = '';
+			}
 
 			$lis[] = sprintf(
 				'<li>%s%s</li>',
@@ -1435,7 +1449,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			);
 		}
 
-		return sprintf( '<ol>%s</ol>', implode( '', $lis ) );
+		return sprintf( '<ol class="supported-providers-list">%s</ol>', implode( '', $lis ) );
 	}
 
 	/**
