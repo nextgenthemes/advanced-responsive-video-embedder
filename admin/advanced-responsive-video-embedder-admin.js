@@ -78,7 +78,7 @@
 
 		// Iframe
 		embed_regex.iframe        = /src=(?:'|")(https?:\/\/(www\.)?[^'"]+)/i;
-		embed_regex.fileurl       = /(.*\.(mp4|webm|ogg))$/i;
+		//embed_regex.fileurl       = /(.*\.(mp4|webm|ogg))$/i;
 
 		$.each( embed_regex, function( provider, regex ) {
 

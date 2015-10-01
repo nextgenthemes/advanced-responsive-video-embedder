@@ -2,7 +2,7 @@
 
 ### 6.3.2 ###
 
-Fixed/Improved: [arve_tests] shortcode.
+* Fixed/Improved: [arve_tests] shortcode.
 
 ### Pro Addon 1.4 ###
 
