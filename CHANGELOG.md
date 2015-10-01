@@ -1,5 +1,9 @@
 ## Changelog ##
 
+### 6.3.2 ###
+
+Fixed/Improved: [arve_tests] shortcode.
+
 ### Pro Addon 1.4 ###
 
 * Fix: Fake thumbnails now work for lazyload-lightbox mode.
