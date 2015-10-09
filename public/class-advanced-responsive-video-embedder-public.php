@@ -1161,6 +1161,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'class'           => 'arve-inner',
 			'allowfullscreen' => '',
 			'frameborder'     => '0',
+			'width'           => is_feed() ? 853 : false,
+			'height'          => is_feed() ? 480 : false,
 		);
 
 		$args = wp_parse_args( $args, $defaults );

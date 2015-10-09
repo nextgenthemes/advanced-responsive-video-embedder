@@ -1,5 +1,13 @@
 ## Changelog ##
 
+### 6.3.4 ###
+
+* Fix?: Iframes are now created with a fixed 853x480 size in feeds, this probably will fix some feedreaders incorrectly or not displaying videos.
+
+### 6.3.3 ###
+
+* Improved: Disabled file URL detection as this solution was bad.
+
 ### 6.3.2 ###
 
 * Fixed/Improved: [arve_tests] shortcode.
@@ -363,7 +371,7 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 ### 2.6.1 ###
 
 * Fix: Colorbox args script not having colorbox in depenency array
-* Fix: Maxwidth shortcode generotor field now has default value#""
+* Fix: Maxwidth shortcode generator field now has default value#""
 * Fix: Blip embed code detection
 
 ### 2.6.0 ###

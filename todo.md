@@ -2,8 +2,8 @@
 
 I would be glad if someone could [help me](https://github.com/nextgenthemes/advanced-responsive-video-embedder) with this, I can send you cash for helping out.
 
-- [ ] Fix youtube.be/xxxxx URLs in shortcode creator. #16
-- [ ] Pro Addon: Fix issue #17 Lazyload Lightbox fails with IGN (and maybe others)
+- [ ] Fix [issue 16][16] Youtube.be/xxxxx URLs in shortcode creator
+- [ ] Pro Addon: Fix [issue 17][17] Lazyload Lightbox fails with IGN (and maybe others)
 - [ ] Get advice how I could improve my sales of this the Pro Addon
 - [ ] Advertise the Pro Addon somewhere
 - [ ] Make the [Plugin Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) and the selling process UX more professional look and feel.
@@ -22,5 +22,8 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 - [ ] WordPress Language Pack thing (anything needed to do?)
 - [ ] Get rid of globals in PHP Code
 - [ ] Consider writing JS create URL querys for embed customization (for use in shortcode creator dialog but also easy to use independant)
+
+ [16]: https://github.com/nextgenthemes/advanced-responsive-video-embedder/issues/16
+ [17]: https://github.com/nextgenthemes/advanced-responsive-video-embedder/issues/17
 
  [50]: https://github.com/nextgenthemes/advanced-responsive-video-embedder/blob/master/docs.md
