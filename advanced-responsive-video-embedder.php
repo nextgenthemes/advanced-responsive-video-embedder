@@ -16,7 +16,7 @@
  * Plugin Name:       Advanced Responsive Video Embedder
  * Plugin URI:        https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
  * Description:       Easy responsive video embeds via URL (like WordPress) or Shortcodes. Supports almost anything you can imagine.
- * Version:           6.3.4
+ * Version:           6.6.0
  * Author:            Nicolas Jonas
  * Author URI:        http://nico.onl
  * License:           GPL-3.0
@@ -34,19 +34,19 @@ if ( ! defined( 'WPINC' ) ) {
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-advanced-responsive-video-embedder-activator.php
+ * This action is documented in includes/class-arve-activator.php
  */
 function activate_advanced_responsive_video_embedder() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-advanced-responsive-video-embedder-activator.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-arve-activator.php';
 	Advanced_Responsive_Video_Embedder_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-advanced-responsive-video-embedder-deactivator.php
+ * This action is documented in includes/class-arve-deactivator.php
  */
 function deactivate_advanced_responsive_video_embedder() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-advanced-responsive-video-embedder-deactivator.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-arve-deactivator.php';
 	Advanced_Responsive_Video_Embedder_Deactivator::deactivate();
 }
 
@@ -57,7 +57,7 @@ register_deactivation_hook( __FILE__, 'deactivate_advanced_responsive_video_embe
  * The core plugin class that is used to define internationalization,
  * dashboard-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-advanced-responsive-video-embedder.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-arve.php';
 
 /**
  * Begins execution of the plugin.

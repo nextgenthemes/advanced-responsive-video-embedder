@@ -4,6 +4,7 @@
 	/*global tb_remove */
 	/*global arve_regex_list */
 	/*global send_to_editor */
+	/*global console */
 
 	var create_shortcode = function() {
 
@@ -89,13 +90,11 @@
 				if ( 'fileurl' === provider ) {
 					provider = 'iframe';
 				}
-
 				output.provider = provider;
 				output.videoid  = match[1];
 				return false;
 			}
-
-		});
+		} );
 
 		if( ! $.isEmptyObject(output) ) {
 			return output;
@@ -173,6 +172,7 @@
 	});
 
 	// Options Page
+	//
 	$('.arve-settings-section').each( function() {
 
 		$(this).insertBefore( $(this).parent() );
@@ -208,7 +208,7 @@
 		$(this).addClass( 'nav-tab-active' );
 
 		e.preventDefault();
-	});
+	} );
 
 	if( last_tab_input.val() ) {
 
@@ -223,5 +223,28 @@
 		$( last_tab ).prependTo( '.arve-options-form' );
 		$('.arve-settings-section').not( last_tab ).hide();
 	}
+
+	$('[data-arve-image-upload]').click(function(e) {
+			e.preventDefault();
+
+			var target = $( this ).attr('data-arve-image-upload');
+			var image = wp.media({
+					title: 'Upload Image',
+					// mutiple: true if you want to upload multiple files at once
+					multiple: false
+			}).open()
+			.on('select', function(){
+					console.log( target );
+					// This will return the selected image from the Media Uploader, the result is an object
+					var uploaded_image = image.state().get('selection').first();
+					// We convert uploaded_image to a JSON object to make accessing it easier
+					// Output to the console uploaded_image
+					//console.log(uploaded_image);
+					//console.log( $( this ) );
+					var image_url = uploaded_image.toJSON().url;
+					// Let's assign the url value to the input field
+					$( '[name="' + target + '"]' ).val(image_url);
+			});
+	});
 
 }(jQuery));

@@ -1,5 +1,14 @@
 ## Changelog ##
 
+### 6.6.0 Beta ###
+* New: A default alignment can now be set in the Settings page (fulfilled request)
+* Deleted Language files in favor of [wordpress.org managed translations](https://translate.wordpress.org/projects/wp-plugins/advanced-responsive-video-embedder/dev) volunteers are welcome ;)
+* Improved: Got rid of globals
+* Improved: Settings page code
+* Improved: SSL enabled for Vevo
+* Fix: youtube.be URLs now detected correct in shortcode dialog
+* Fix: All Vevo URLs are now detected correctly
+
 ### 6.3.4 ###
 
 * Fix?: Iframes are now created with a fixed 853x480 size in feeds, this probably will fix some feedreaders incorrectly or not displaying videos.

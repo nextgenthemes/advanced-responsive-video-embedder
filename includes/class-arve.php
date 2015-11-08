@@ -69,7 +69,7 @@ class Advanced_Responsive_Video_Embedder {
 	public function __construct() {
 
 		$this->plugin_slug = 'advanced-responsive-video-embedder';
-		$this->version = '6.3.4';
+		$this->version = '6.6.0';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -100,29 +100,29 @@ class Advanced_Responsive_Video_Embedder {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-responsive-video-embedder-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-arve-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-responsive-video-embedder-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-arve-i18n.php';
 
 		/**
 		 * The class for admin and public.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-advanced-responsive-video-embedder-shared.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-arve-shared.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the Dashboard.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-advanced-responsive-video-embedder-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-arve-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-advanced-responsive-video-embedder-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-arve-public.php';
 
 		$this->loader = new Advanced_Responsive_Video_Embedder_Loader();
 	}
@@ -142,7 +142,6 @@ class Advanced_Responsive_Video_Embedder {
 		$plugin_i18n->set_domain( $this->get_plugin_slug() );
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -154,29 +153,29 @@ class Advanced_Responsive_Video_Embedder {
 	 */
 	private function define_admin_hooks() {
 
-		global $_arve_admin;
-
-		$_arve_admin = new Advanced_Responsive_Video_Embedder_Admin( $this->get_plugin_slug(), $this->get_version() );
+		$plugin_admin = new Advanced_Responsive_Video_Embedder_Admin( $this->get_plugin_slug(), $this->get_version() );
 
 		// Only loaded on admin pages with editor
-		$this->loader->add_action( 'admin_enqueue_scripts', $_arve_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $_arve_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 'admin_footer', $_arve_admin, 'print_dialog' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_footer', $plugin_admin, 'print_dialog' );
 
 		// Add the options page and menu item.
-		$this->loader->add_action( 'admin_menu', $_arve_admin, 'add_plugin_admin_menu' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
+
+		$this->loader->add_action( 'register_shortcode_ui', $plugin_admin, 'register_shortcode_ui' );
 
 		// Add an action link pointing to the options page.
 		$plugin_basename = plugin_basename( plugin_dir_path( realpath( dirname( __FILE__ ) ) ) . $this->plugin_slug . '.php' );
 
-		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $_arve_admin, 'add_action_links' );
+		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links' );
 
-		$this->loader->add_action( 'wp_dashboard_setup', $_arve_admin, 'add_dashboard_widget' );
+		$this->loader->add_action( 'wp_dashboard_setup', $plugin_admin, 'add_dashboard_widget' );
 
-		$this->loader->add_action( 'admin_init', $_arve_admin, 'register_settings' );
-		$this->loader->add_action( 'admin_init', $_arve_admin, 'register_settings_debug', 99 );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings_debug', 99 );
 
-		$this->loader->add_action( 'media_buttons', $_arve_admin, 'add_media_button', 11 );
+		$this->loader->add_action( 'media_buttons', $plugin_admin, 'add_media_button', 11 );
 	}
 
 	/**
@@ -188,20 +187,18 @@ class Advanced_Responsive_Video_Embedder {
 	 */
 	private function define_public_hooks() {
 
-		global $_arve_public;
+		$plugin_public = new Advanced_Responsive_Video_Embedder_Public( $this->get_plugin_slug(), $this->get_version() );
 
-		$_arve_public = new Advanced_Responsive_Video_Embedder_Public( $this->get_plugin_slug(), $this->get_version() );
+		$this->loader->add_action( 'init', $plugin_public, 'oembed_remove_providers', 99 );
+		$this->loader->add_action( 'init', $plugin_public, 'create_shortcodes', 99 );
+		$this->loader->add_action( 'init', $plugin_public, 'create_url_handlers', 99 );
 
-		$this->loader->add_action( 'init', $_arve_public, 'oembed_remove_providers', 99 );
-		$this->loader->add_action( 'init', $_arve_public, 'create_shortcodes', 99 );
-		$this->loader->add_action( 'init', $_arve_public, 'create_url_handlers', 99 );
-
-		$this->loader->add_action( 'wp_enqueue_scripts', $_arve_public, 'enqueue_styles' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		#$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'register_scripts', 0 );
 
-		$this->loader->add_action( 'wp_head', $_arve_public, 'print_styles' );
+		$this->loader->add_action( 'wp_head', $plugin_public, 'print_styles' );
 
-		$this->loader->add_action( 'arve_output', $_arve_public, 'normal_output', 10, 2 );
+		$this->loader->add_action( 'arve_output', $plugin_public, 'normal_output', 10, 2 );
 
 		add_filter( 'widget_text', 'do_shortcode' );
 	}

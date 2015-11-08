@@ -43,6 +43,15 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	private $options = array();
 
 	/**
+	 * Slug of the plugin screen.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @var      string
+	 */
+	protected $plugin_screen_hook_suffix = null;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -64,10 +73,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	public function enqueue_styles() {
 
-		if ( $this->admin_page_has_post_editor() ) {
-
-			wp_enqueue_style( $this->plugin_slug, plugin_dir_url( __FILE__ ) . 'advanced-responsive-video-embedder-admin.css', array(), $this->version, 'all' );
-		}
+		wp_enqueue_style( $this->plugin_slug, plugin_dir_url( __FILE__ ) . 'arve-admin.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -77,34 +83,28 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	public function enqueue_scripts() {
 
-		if ( $this->admin_page_has_post_editor() ) {
+		$regex_list = Advanced_Responsive_Video_Embedder_Shared::get_regex_list();
 
-			$regex_list = Advanced_Responsive_Video_Embedder_Shared::get_regex_list();
+		wp_enqueue_script( $this->plugin_slug, plugin_dir_url( __FILE__ ) . 'arve-admin.js', array( 'jquery' ), $this->version, true );
 
-			wp_enqueue_script( $this->plugin_slug, plugin_dir_url( __FILE__ ) . 'advanced-responsive-video-embedder-admin.js', array( 'jquery' ), $this->version, true );
+		foreach ( $regex_list as $provider => $regex ) {
 
-			foreach ( $regex_list as $provider => $regex ) {
+			if ( $provider != 'ign' ) {
 
-				if ( $provider != 'ign' ) {
-
-					$regex = str_replace( array( 'https?://(?:www\.)?', 'http://' ), '', $regex );
-				}
-
-				$regex_list[ $provider ] = $regex;
+				$regex = str_replace( array( 'https?://(?:www\.)?', 'http://' ), '', $regex );
 			}
 
-			wp_localize_script( $this->plugin_slug, 'arve_regex_list', $regex_list );
+			$regex_list[ $provider ] = $regex;
 		}
-	}
 
-	/**
-	 * Slug of the plugin screen.
-	 *
-	 * @since    1.0.0
-	 *
-	 * @var      string
-	 */
-	protected $plugin_screen_hook_suffix = null;
+		wp_localize_script( $this->plugin_slug, 'arve_regex_list', $regex_list );
+
+		foreach( $this->options['shortcodes'] as $provider_id => $provider_shortcode ) {
+			$shortcodes[ $provider_id ] = $provider_shortcode;
+		}
+
+		wp_localize_script( $this->plugin_slug, 'arve_shortcodes', $shortcodes );
+	}
 
 	/**
 	 *
@@ -112,10 +112,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	public function print_dialog() {
 
-		if ( $this->admin_page_has_post_editor() ) {
-
-			include_once( 'partials/advanced-responsive-video-embedder-admin-shortcode-dialog.php' );
-		}
+		include_once( 'partials/arve-admin-shortcode-dialog.php' );
 	}
 
 	/**
@@ -125,7 +122,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	public function display_plugin_admin_page() {
 
-		include_once( 'partials/advanced-responsive-video-embedder-admin-options.php' );
+		include_once( 'partials/arve-admin-options.php' );
 	}
 
 	/**
@@ -186,9 +183,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 	}
 
-#<a href="#" id="insert-media-button" class="button insert-media add_media" data-editor="content" title="Dateien hinzufügen">
-#<span class="wp-media-buttons-icon"></span> Dateien hinzufügen</a>
-
 	/**
 	 * Action to add a custom button to the content editor
 	 *
@@ -211,6 +205,118 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		);
 	}
 
+	public function register_shortcode_ui() {
+
+		$attrs = Advanced_Responsive_Video_Embedder_Shared::get_settings_definitions();
+
+		if( class_exists( 'Advanced_Responsive_Video_Embedder_Pro' ) ) {
+			$attrs = array_merge( $attrs, Advanced_Responsive_Video_Embedder_Pro::get_settings_definitions() );
+		}
+
+		foreach ( $attrs as $key => $values) {
+
+			if( isset( $values['hide_from_sc'] ) && $values['hide_from_sc'] ) {
+				continue;
+			}
+
+			if( 'bool' === $values['type'] ) {
+				$values['type'] = 'select';
+				$values['options'] = array(
+					'' => __( 'Default (uses settings)', $this->plugin_slug ),
+					'on'  => __( 'On', $this->plugin_slug ),
+					'off' => __( 'Off', $this->plugin_slug ),
+				);
+			}
+
+			$sc_attrs[] = $values;
+		}
+
+		foreach ($this->options['shortcodes'] as $sc_id => $sc) {
+
+			shortcode_ui_register_for_shortcode(
+				$sc_id,
+				array(
+					'label' => esc_html( ucfirst("$sc_id ") ) . esc_html__( '(arve)', $this->plugin_slug),
+					'listItemImage' => 'dashicons-format-video',
+					'attrs' => $sc_attrs,
+				)
+			);
+		}
+	}
+
+	public static function input( $args ) {
+
+		if ( 'url' === $args['input_attr']['type'] ) {
+			$args['input_attr']['class'] = 'large-text';
+		}
+
+		$out = sprintf( '<input %s>', Advanced_Responsive_Video_Embedder_Shared::attr( $args['input_attr'] ) );
+
+		if ( 'url' === $args['input_attr']['type'] ) {
+
+			// jQuery
+			wp_enqueue_script('jquery');
+			// This will enqueue the Media Uploader script
+			wp_enqueue_media();
+
+			$out .= sprintf(
+				'<a %s>%s</a>',
+				Advanced_Responsive_Video_Embedder_Shared::attr(
+					array(
+						'data-arve-image-upload' => $args['input_attr']['name'],
+						'class' => 'button-secondary',
+					)
+				),
+				__('Upload Image', 'advanced-responsive-video-embedder' )
+			);
+		}
+
+		if ( ! empty( $args['description'] ) ) {
+			$out = $out . '<p class="description">' . $args['description'] . '</p>';
+		}
+
+		echo $out;
+	}
+
+	public static function textarea( $args ) {
+
+		unset( $args['input_attr']['type'] );
+
+		$out = sprintf( '<textarea %s></textarea>', Advanced_Responsive_Video_Embedder_Shared::attr( $args['input_attr'] ) );
+
+		if ( ! empty( $args['description'] ) ) {
+			$out = $out . '<p class="description">' . $args['description'] . '</p>';
+		}
+
+		echo $out;
+	}
+
+	public static function select( $args ) {
+
+		unset( $args['input_attr']['type'] );
+
+		foreach ( $args['option_values']['options'] as $key => $value ) {
+
+			$current_option = ( 'bool' === $args['option_values']['type'] ) ? (bool) $args['input_attr']['value'] : $args['input_attr']['value'];
+			$compare_option = ( 'bool' === $args['option_values']['type'] ) ? (bool) $key : $key;
+
+			$options[] = sprintf(
+				'<option value="%s" %s>%s</option>',
+				esc_attr( $key ),
+				selected( $current_option, $compare_option, false ),
+				esc_html( $value )
+			);
+		}
+
+		$out = sprintf( '<select %s>%s</select>', Advanced_Responsive_Video_Embedder_Shared::attr( $args['input_attr'] ), implode( '', $options ) );
+
+		if ( ! empty( $args['description'] ) ) {
+			$out = $out . '<p class="description">' . $args['description'] . '</p>';
+		}
+
+		echo $out;
+	}
+
 	/**
 	 *
 	 *
@@ -228,79 +334,56 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			$this->plugin_slug
 		);
 
-		add_settings_field(
-			'arve_options_main[mode]',
-			__( 'Default mode', $this->plugin_slug ),
-			array( $this, 'mode_select' ),
-			$this->plugin_slug,
-			'main_section',
-			array(
-				'label_for'   => 'arve_options_main[mode]',
-				'value'       => $this->options['mode'],
-				'description' => __( '', $this->plugin_slug ),
-			)
-		);
+		foreach( Advanced_Responsive_Video_Embedder_Shared::get_settings_definitions() as $k => $v ) {
 
-		add_settings_field(
-			'arve_options_main[promote_link]',
-			__( 'Help Me?', $this->plugin_slug ),
-			array( $this, 'yes_no_select' ),
-			$this->plugin_slug,
-			'main_section',
-			array(
-				'label_for'   => 'arve_options_main[promote_link]',
-				'value'       => $this->options['promote_link'],
-				'description' => __( "Shows a small 'by ARVE' link below the videos to help me promote this plugin", $this->plugin_slug ),
-			)
-		);
+			if ( ! empty( $v['hide_from_settings'] ) ) {
+				continue;
+			};
 
-		add_settings_field(
-			'arve_options_main[autoplay]',
-			__( 'Autoplay', $this->plugin_slug ),
-			array( $this, 'yes_no_select' ),
-			$this->plugin_slug,
-			'main_section',
-			array(
-				'label_for'   => 'arve_options_main[autoplay]',
-				'value'       => $this->options['autoplay'],
-				'description' => __( 'Autoplay videos in normal mode, has no effect on lazyload modes.', $this->plugin_slug ),
-			)
-		);
+			if ( isset( $v['options'][''] ) ) {
+				unset( $v['options'][''] );
+			}
 
-		add_settings_field(
-			'arve_options_main[video_maxwidth]',
-			__( 'Maximal Width', $this->plugin_slug ),
-			array( $this, 'input_field' ),
-			$this->plugin_slug,
-			'main_section',
-			array(
-				'label_for'   => 'arve_options_main[video_maxwidth]',
-				'value'       => $this->options['video_maxwidth'],
-				'suffix'      => 'px',
-				'class'       => 'small-text',
-				'description' => __( 'Optional, if not set your videos will be the maximum size of the container they are in. If your content area has a big width you might want to set this. Must be 100+ to work.', $this->plugin_slug ),
-			)
-		);
+			if( in_array( $v['type'], array( 'text', 'number', 'url' ) ) ) {
+				$callback_function = 'input';
+			} elseif( 'bool' === $v['type'] ) {
+				$callback_function = 'select';
+				$v['options'] = array(
+					1 => __( 'Yes', $this->plugin_slug ),
+					0 => __( 'No', $this->plugin_slug ),
+				);
+			} else {
+				$callback_function = $v['type'];
+			}
 
-		add_settings_field(
-			'arve_options_main[align_maxwidth]',
-			__( 'Align Maximal Width', $this->plugin_slug ),
-			array( $this, 'input_field' ),
-			$this->plugin_slug,
-			'main_section',
-			array(
-				'label_for'   => 'arve_options_main[align_maxwidth]',
-				'value'       => $this->options['align_maxwidth'],
-				'suffix'      => 'px',
-				'class'       => 'small-text',
-				'description' => __( 'Needed! Must be 100+ to work.', $this->plugin_slug ),
-			)
-		);
+			add_settings_field(
+				"arve_options_main[{$v['attr']}]",  // ID
+				$v['label'],                        // title
+				"Advanced_Responsive_Video_Embedder_Admin::$callback_function", // callback
+				$this->plugin_slug,                 // page
+				'main_section',                     // section
+				array(                              // args
+					'label_for'   => ( 'radio' === $v['type'] ) ? null : "arve_options_main[{$v['attr']}]",
+					'input_attr'  => array(
+						'type'        => $v['type'],
+						'value'       => $this->options[ $v['attr'] ],
+						'id'          => "arve_options_main[{$v['attr']}]",
+						'name'        => "arve_options_main[{$v['attr']}]",
+						'class'       => null,
+						'placeholder' => empty( $v['placeholder'] ) ? null : $v['placeholder'],
+					),
+					'description'   => ! empty( $v['description'] ) ? $v['description'] : null,
+					#'options'       => $this->options,
+					#'option_id'     => $v['attr'],
+					'option_values' => $v,
+				)
+			);
+		}
 
 		add_settings_field(
 			'arve_options_main[reset]',
 			null,
-			array( $this, 'submit_reset' ),
+			"Advanced_Responsive_Video_Embedder_Admin::submit_reset",
 			$this->plugin_slug,
 			'main_section',
 			array(
@@ -310,7 +393,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		// Params
 		$params_title = __( 'URL Parameters', $this->plugin_slug );
-
 		add_settings_section(
 			'params_section',
 			sprintf( '<span class="arve-settings-section" id="arve-settings-section-params" title="%s"></span>%s', esc_attr( $params_title ), esc_html( $params_title ) ),
@@ -318,19 +400,24 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			$this->plugin_slug
 		);
 
+		// Options
 		foreach ( $this->options['params'] as $provider => $params ) {
 
 			add_settings_field(
 				"arve_options_params[$provider]",
 				ucfirst ( $provider ),
-				array( $this, 'input_field' ),
+				"Advanced_Responsive_Video_Embedder_Admin::input",
 				$this->plugin_slug,
 				'params_section',
 				array(
 					'label_for'   => "arve_options_params[$provider]",
-					'value'       => $params,
-					'class'       => 'large-text',
-					'description' => null
+					'input_attr'  => array(
+						'type'        => 'text',
+						'value'       => $params,
+						'id'          => "arve_options_params[$provider]",
+						'name'        => "arve_options_params[$provider]",
+						'class'       => 'large-text'
+					),
 				)
 			);
 		}
@@ -361,16 +448,18 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			add_settings_field(
 				"arve_options_shortcodes[$provider]",
 				ucfirst ( $provider ),
-				array( $this, 'input_field' ),
+				"Advanced_Responsive_Video_Embedder_Admin::input",
 				$this->plugin_slug,
 				'shortcodes_section',
 				array(
 					'label_for'   => "arve_options_shortcodes[$provider]",
-					'value'       => $shortcode,
-					'prefix'      => '[',
-					'suffix'      => ']',
-					'class'       => 'medium-text',
-					'description' => null
+					'input_attr'  => array(
+						'type'        => 'text',
+						'value'       => $shortcode,
+						'id'          => "arve_options_shortcodes[$provider]",
+						'name'        => "arve_options_shortcodes[$provider]",
+						'class'       => 'medium-text'
+					),
 				)
 			);
 		}
@@ -392,6 +481,34 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		register_setting( 'arve-settings-group', 'arve_options_shortcodes', array( $this, 'validate_options_shortcodes' ) );
 	}
 
+	public function create_settings_field( $args ) {
+
+		extract( $args );
+
+		add_settings_field(
+			"arve_options_{$section_name}[{$option_id}]", // ID
+			$option_values['name'],                       // title
+			array( $this, 'input_creator' ),              // callback
+			$page,                                        // page
+			"{$section_name}_section",                    // section
+			array(                                        // args
+				'label_for'   => is_array( $option_values['type'] ) ? null : "arve_options_{$section_name}[{$option_id}]",
+				'input_attr'  => array(
+					'value'       => $value,
+					'id'          => "arve_options_{$section_name}[{$option_id}]",
+					'name'        => "arve_options_{$section_name}[{$option_id}]",
+					'class'       => is_string ( $option_values['type'] ) ? $option_values['type'] : null,
+					'placeholder' => empty( $option_values['placeholder'] ) ? null : $option_values['placeholder'],
+				),
+				'description'   => ! empty( $option_values['description'] ) ? $option_values['description'] : null,
+				'option_type'   => $option_values['type'],
+				'option_id'     => $option_id,
+				'options'       => $options,
+				'settings'      => $settings,
+			)
+		);
+	}
+
 	/**
 	 *
 	 *
@@ -410,11 +527,11 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		);
 	}
 
-	public function submit_reset( $args ) {
+	public static function submit_reset( $args ) {
 
-		submit_button( __('Save Changes' ),                                    'primary',   'submit',              false );
+		submit_button( __('Save Changes' ), 'primary','submit', false );
 		echo '&nbsp;&nbsp;';
-		submit_button( __('Reset This Settings Section', $this->plugin_slug ), 'secondary', $args['reset_name'],   false );
+		submit_button( __('Reset This Settings Section', 'advanced-responsive-video-embedder' ), 'secondary', $args['reset_name'], false );
 	}
 
 	public function shortcodes_section_description() {
@@ -478,7 +595,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			$pro_options_dump = ob_get_clean();
 		}
 
-		echo '<textarea style="font-family: monospace; font-size: 9px; width: 100%" rows="30">';
+		echo '<textarea style="font-family: monospace; width: 100%" rows="25">';
 
 		echo "ARVE Version:      $plugin_version\n";
 		echo "ARVE-Pro Version:  $pro_version\n";
@@ -522,36 +639,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		}
 	}
 
-	public function mode_select( $args ) {
-
-		printf( '<select id="%1$s" name="%1$s" size="1">', esc_attr( $args['label_for'] ) );
-		echo Advanced_Responsive_Video_Embedder_Shared::get_mode_options( $args['value'] );
-		echo '</select>';
-
-		if ( $args['description'] ) {
-			printf( '<p class="description">%s</p>', $args['description'] );
-		}
-	}
-
-	public function input_field( $args ) {
-
-		$prefix = ( !empty( $args['prefix'] ) ) ? $args['prefix'] : '';
-		$suffix = ( !empty( $args['suffix'] ) ) ? $args['suffix'] : '';
-
-		printf(
-			'%1$s<input id="%2$s" name="%2$s" type="text" value="%3$s" class="%4$s">%5$s',
-			esc_attr( $prefix ),
-			esc_attr( $args['label_for'] ),
-			esc_attr( $args['value'] ),
-			esc_attr( $args['class'] ),
-			esc_html( $suffix )
-		);
-
-		if ( $args['description'] ) {
-			printf( '<p class="description">%s</p>', $args['description'] );
-		}
-	}
-
 	/**
 	 *
 	 *
@@ -566,6 +653,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		$output = array();
 
+		$output['align']              = sanitize_text_field( $input['align'] );
 		$output['last_options_tab']   = sanitize_text_field( $input['last_options_tab'] );
 		$output['mode']               = sanitize_text_field( $input['mode'] );
 
@@ -712,30 +800,5 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	function dashboard_widget_output() {
 
 		echo $this->get_admin_message();
-	}
-
-	/**
-	 *
-	 *
-	 * @since     4.3.0
-	 */
-	public function admin_page_has_post_editor() {
-
-		//* TODO Since there are reports of frontend editors or plugins using this plugins on the widgets screen having this plugin not working maybe remove this entirely and load things always? Temporary disabling for now.
-		return true;
-
-		global $pagenow;
-
-		if ( empty ( $pagenow ) ) {
-
-			return false;
-		}
-
-		if ( ! in_array( $pagenow, array ( 'post-new.php', 'post.php' ) ) ) {
-
-			return false;
-		}
-
-		return post_type_supports( get_current_screen()->post_type, 'editor' );
 	}
 }

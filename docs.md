@@ -79,14 +79,14 @@ For example if you have set Mode to Normal and Maximal Video Width to 500 the pl
 Attribute     | Used for
 ------------- | ----------------------------
 id            | Is required for shortcodes and automatically generated within the shortcode button, obsolete for embeds via URL. For the `[[iframe]]` Shortcode this becomes the what would be the `src` for in a html iframe code
-mode          | (Pro Addon only) normal/lazyload/lazyload-lightbox/lazyload-fullscreen/lazyload-fixed, optional option override
+mode          | (Pro Addon only) normal/lazyload/lazyload-lightbox/link-lightbox (lazyload-fullscreen/lazyload-fixed are experimental), optional option override
 thumbnail     | (Pro Addon only) either a URL to a image or a ID to a media gallery image to be used as thumbnail. To get a item ID from the media gallery click a image in WordPress Admin -&gt; Media -&gt; Library and your URL will look like `.../upload.php?item=1234` where `1234` is the ID
 autoplay      | optional option override
 aspect\_ratio | for example `4:3`
 maxwidth      | maximal width for videos in normal mode, optional option override
 align         | left/right/center
 start         | only for vimeo (1m2s format)
-parameters    | support for custom URL parameters providers offer, currently only supported via shortcodes, will merge/overwrite with the values set on the options page
+parameters    | support for custom URL parameters providers offer, will merge/overwrite with the values set on the settings page. Fur URL you can simply append them to the url like `https://youtu.be/Q6goNzXrmFs?start=30&fs=0` the `?start=30&fs=0.
 
 # URL Query arguments
 Some Providers offer to customize their iframe embed codes with URL-query arguments. They always start with `?` and then `&` is used as a seperator.

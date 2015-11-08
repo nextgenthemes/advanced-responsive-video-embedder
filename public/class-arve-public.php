@@ -66,7 +66,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_slug, plugin_dir_url( __FILE__ ) . 'advanced-responsive-video-embedder-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_slug, plugin_dir_url( __FILE__ ) . 'arve-public.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -78,405 +78,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 
 	}
-
-	public function get_properties() {
-
-		return array(
-			'4players' => array(
-				'name' => '4players.de',
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'http://www.4players.de/4players.php/tvplayer/4PlayersTV/Alle/20943/105302/Mass_Effect_3/Trilogie-Rueckblick.html',
-				)
-			),
-			'alugha' => array(
-				'url' => true,
-				'thumb' => true,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'https://alugha.com/1/videos/youtube-54m1YfEuYU8?arve[mode]=lazyload',
-				)
-			),
-			'archiveorg' => array(
-				'name' => 'archive.org',
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'https://archive.org/details/AlexJonesInterviewsDeanHaglund',
-				)
-			),
-			'blip' => array(
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 61.4,
-				'tests' => array(
-					'http://blip.tv/the-spoony-experiment/b-fest-2014-recap-part-1-of-2-6723548',
-				)
-			),
-			'bliptv' => array(
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array()
-			),
-			'break' => array(
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591',
-				)
-			),
-			'collegehumor' => array(
-				'name' => 'CollegeHumor',
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 61,
-				'tests' => array(
-					'http://collegehumor.com/video/6922670/bleep-bloop-your-best-game',
-				)
-			),
-			'comedycentral' => array(
-				'name' => 'Comedy Central',
-				'url' => false,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'[comedycentral id="c80adf02-3e24-437a-8087-d6b77060571c"]',
-				)
-			),
-			'dailymotion' => array(
-				'url' => true,
-				'thumb' => true,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'http://www.dailymotion.com/video/x44lvd_rates-of-exchange-like-a-renegade_music',
-					__('URL just the ID withoutout the long title', $this->plugin_slug) ,
-					'http://www.dailymotion.com/video/x44lvd',
-					__('URL from a hub with the Video ID at the end', $this->plugin_slug) ,
-					'http://www.dailymotion.com/hub/x9q_Galatasaray#video=xjw21s',
-					__('Playlist', $this->plugin_slug) ,
-					'http://www.dailymotion.com/playlist/xr2rp_RTnews_exclusive-interveiws/1#video=xafhh9',
-				)
-			),
-			'dailymotionlist' => array(
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array()
-			),
-			'flickr' => array(
-				'url' => false,
-				'thumb' => false,
-				'wmode_transparent' => false,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'[flickr id="2856467015"]',
-				)
-			),
-			'funnyordie' => array(
-				'name' => 'Funny or Die',
-				'url' => true,
-				'thumb' => true,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'http://www.funnyordie.com/videos/76585438d8/sarah-silverman-s-we-are-miracles-hbo-special',
-				)
-			),
-			'gametrailers' => array(
-				'url' => false,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'[gametrailers id="797121a1-4685-4ecc-9388-72a88b0ef8da"]',
-				)
-			),
-			'iframe' => array(
-				'url' => false,
-				'thumb' => false,
-				'wmode_transparent' => false,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					__('This plugin allows iframe embeds for every URL by using this <code>[iframe]</code> shortcode. This should only be used for providers not supported by this via a named shortcode. The result is a 16:9 resonsive iframe by default, aspect ratio can be changed as usual.', $this->plugin_slug) ,
-					'[iframe id="http://example.com/"]',
-					esc_html__('This can also be used to have limited support for self hosted videos my passing URLs to .webm, .mp4 or .ogg to it. This might not be the best way to do because this is what the <video> tag is for but it works in my tests.', $this->plugin_slug) ,
-					'[iframe id="http://video.webmfiles.org/big-buck-bunny_trailer.webm"]',
-				)
-			),
-			'ign' => array(
-				'name' => 'IGN',
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'http://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
-				)
-			),
-			'kickstarter' => array(
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'https://www.kickstarter.com/projects/obsidian/project-eternity?ref=discovery',
-				)
-			),
-			'liveleak' => array(
-				'name' => 'LiveLeak',
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					__('Page/item <code>i=</code> URL', $this->plugin_slug) ,
-					'http://www.liveleak.com/view?i=703_1385224413',
-					__('File <code>f=</code> URL', $this->plugin_slug) ,
-					'http://www.liveleak.com/view?f=c85bdf5e45b2',
-				)
-			),
-			'metacafe' => array(
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'http://www.metacafe.com/watch/11159703/why_youre_fat/',
-					'http://www.metacafe.com/watch/11322264/everything_wrong_with_robocop_in_7_minutes/',
-				)
-			),
-			'movieweb' => array(
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'[movieweb id="VIwFzmdbyoy9zB"]',
-				)
-			),
-			'mpora' => array(
-				'name' => 'MPORA',
-				'url' => true,
-				'thumb' => true,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'http://mpora.com/videos/AAdphry14rkn',
-					'http://mpora.de/videos/AAdpxhiv6pqd',
-				)
-			),
-			'myspace' => array(
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'https://myspace.com/myspace/video/dark-rooms-the-shadow-that-looms-o-er-my-heart-live-/109471212',
-				)
-			),
-			'myvideo' => array(
-				'name' => 'MyVideo',
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'http://www.myvideo.de/watch/8432624/Angeln_mal_anders',
-				)
-			),
-			'snotr' => array(
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => false,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'http://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is',
-				)
-			),
-			'spike' => array(
-				'url' => false,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 59.8,
-				'tests' => array(
-					'[spike id="5afddf30-31d8-40fb-81e6-bb5c6f45525f"]',
-				)
-			),
-			'ted' => array(
-				'name' => 'TED Talks',
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					__('To my knowlege TED forces autoplay and there is no way disable it', $this->plugin_slug) ,
-					'http://ted.com/talks/jill_bolte_taylor_s_powerful_stroke_of_insight',
-					__('Beta site URLs work as well', $this->plugin_slug) ,
-					'http://new.ted.com/talks/brene_brown_on_vulnerability',
-				)
-			),
-			'twitch' => array(
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'http://www.twitch.tv/tsm_dyrus',
-					__('Past breadcast URL', $this->plugin_slug) ,
-					'http://www.twitch.tv/tsm_dyrus/b/500898967',
-					__('Highlight URL', $this->plugin_slug) ,
-					'http://www.twitch.tv/tsm_dyrus/c/3674140',
-				)
-			),
-			'ustream' => array(
-				'name' => 'USTREAM',
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 61,
-				'tests' => array(
-					__('To my knowlege Ustream forces autoplay and there is no way disable it', $this->plugin_slug) ,
-					__('Channel URL - get them from the share button URLS with names instead of numeric IDs will not work!', $this->plugin_slug) ,
-					'http://www.ustream.tv/channel/15844301',
-					__('Recorded URL', $this->plugin_slug) ,
-					'http://www.ustream.tv/recorded/40976103',
-					__('Highlight URL', $this->plugin_slug) ,
-					'http://www.ustream.tv/recorded/31217313/highlight/344029',
-				)
-			),
-			'veoh' => array(
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 60.257,
-				'tests' => array(
-					'http://www.veoh.com/watch/v19866882CAdjNF9b',
-				)
-			),
-			'vevo' => array(
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'[vevo id="US4E51286201"]',
-					'http://www.vevo.com/watch/the-offspring/the-kids-arent-alright/USSM20100649',
-				)
-			),
-			'viddler' => array(
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => false,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'http://www.viddler.com/v/a695c468',
-				)
-			),
-			'videojug' => array(
-				'url' => false,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'[videojug id="fa15cafd-556f-165b-d660-ff0008c90d2d"]',
-				)
-			),
-			'vine' => array(
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 100,
-				'tests' => array(
-					'[vine id="MbrreglaFrA"]',
-					'https://vine.co/v/bjAaLxQvOnQ',
-				),
-				'specific_tests' => array(
-					'https://vine.co/v/bjHh0zHdgZT/embed',
-				),
-			),
-			'vimeo' => array(
-				'url' => true,
-				'thumb' => true,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'[vimeo id="12901672"]',
-					'http://vimeo.com/23316783',
-				)
-			),
-			'xtube' => array(
-				'name' => 'XTube',
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array()
-			),
-			'yahoo' => array(
-				'name' => 'Yahoo Screen',
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'http://screen.yahoo.com/buzzfeed/eye-opening-facts-vaginas-210102842.html',
-				)
-			),
-			'youtube' => array(
-				'name' => 'YouTube',
-				'url' => true,
-				'thumb' => true,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array(
-					'[youtube id="XQEiv7t1xuQ"]',
-					'http://www.youtube.com/watch?v=vrXgLhkv21Y',
-				),
-				'specific_tests' => array(
-					__('URL from youtu.be shortener', $this->plugin_slug),
-					'http://youtu.be/3Y8B93r2gKg',
-					__('Youtube playlist URL inlusive the video to start at. The index part will be ignored and is not needed', $this->plugin_slug) ,
-					'http://www.youtube.com/watch?v=GjL82KUHVb0&list=PLI46g-I12_9qGBq-4epxOay0hotjys5iA&index=10',
-					__('Loop a YouTube video', $this->plugin_slug),
-					'[youtube id="FKkejo2dMV4" parameters="playlist=FKkejo2dMV4 loop=1"]',
-					__('Enable annotations and related video at the end (disable by default with this plugin)', $this->plugin_slug),
-					'[youtube id="uCQXKYPiz6M" parameters="iv_load_policy=1 "]',
-					__('Testing Youtube Starttimes', $this->plugin_slug),
-					'http://youtu.be/vrXgLhkv21Y?t=1h19m14s',
-					'http://youtu.be/vrXgLhkv21Y?t=19m14s',
-					'http://youtu.be/vrXgLhkv21Y?t=1h',
-					'http://youtu.be/vrXgLhkv21Y?t=5m',
-					'http://youtu.be/vrXgLhkv21Y?t=30s',
-					__( 'The Parameter start only takes values in seconds, this will start the video at 1 minute and 1 second', $this->plugin_slug ),
-					'[youtube id="uCQXKYPiz6M" parameters="start=61"]',
-				),
-			),
-			'youtubelist' => array(
-				'name' => 'YouTube Playlist',
-				'url' => true,
-				'thumb' => true,
-				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
-				'tests' => array()
-			)
-		);
-	}
-
 
 	/**
 	 * Create all shortcodes at a late stage because people over and over again using this plugin toghter with jetback or
@@ -524,12 +125,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			$provider = substr( $function_name, 10 );
 
 			switch ( $provider ) {
-				case 'youtubelist':
-				case 'youtu_be':
-					$provider = 'youtube';
-					break;
 				case 'dailymotion_hub':
-				case 'dai_ly':
 					$provider = 'dailymotion';
 					break;
 			}
@@ -576,7 +172,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		foreach ( $url_query as $key => $value ) {
 
-			if ( $this->starts_with( $key, 'arve-' ) ) {
+			if ( Advanced_Responsive_Video_Embedder_Shared::starts_with( $key, 'arve-' ) ) {
 
 				$key = substr( $key, 5 );
 				$old_atts[ $key ] = $value;
@@ -608,11 +204,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 		return $output;
 	}
 
-	public function starts_with( $haystack, $needle ) {
-		// search backwards starting from haystack length characters from the end
-		return $needle === "" || strrpos( $haystack, $needle, -strlen( $haystack ) ) !== false;
-	}
-
 	/**
 	 *
 	 * @since     3.6.0
@@ -637,10 +228,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$object_params_autoplay_yes = $object_params_autoplay_no = '';
 		$output     = '';
 		$iframe     = true;
-		$properties = $this->get_properties();
+		$properties = Advanced_Responsive_Video_Embedder_Shared::get_properties();
 
 		$shortcode_atts_defaults = array(
-			'align'        => null,
+			'align'        => $this->options['align'],
 			'aspect_ratio' => (float) $properties[ $provider ]['aspect_ratio'],
 			'autoplay'     => (bool) $this->options['autoplay'],
 			'id'           => null,
@@ -683,6 +274,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		switch ( $align ) {
+			case 'none':
+				$align = null;
 			case null:
 			case '':
 				break;
@@ -721,11 +314,13 @@ class Advanced_Responsive_Video_Embedder_Public {
 			case 'true':
 			case '1':
 			case 'yes':
+			case 'on':
 				$autoplay = true;
 				break;
 			case 'false':
 			case '0':
 			case 'no':
+			case 'off':
 				$autoplay = false;
 				break;
 			default:
@@ -1071,16 +666,18 @@ class Advanced_Responsive_Video_Embedder_Public {
 		return $output;
 	}
 
-	public function wrappers( $inner, $args ) {
+	public static function wrappers( $inner, $args ) {
+
+		$options = Advanced_Responsive_Video_Embedder_Shared::get_options();
 
 		$promote_link = sprintf(
 			'<a href="%s" title="%s" class="arve-promote-link">%s</a>',
 			esc_url( 'https://nextgenthemes.com/download/advanced-responsive-video-embedder-pro/' ),
-			esc_attr( __('embedded with Advanced Responsive Video Embedder (ARVE) WordPress plugin', $this->plugin_slug) ),
-			esc_html( __('by ARVE', $this->plugin_slug) )
+			esc_attr( __('embedded with Advanced Responsive Video Embedder (ARVE) WordPress plugin', 'advanced-responsive-video-embedder') ),
+			esc_html( __('by ARVE', 'advanced-responsive-video-embedder') )
 		);
 
-		$wrapper_style = $this->get_wrapper_style( $args['maxwidth'], $args['thumbnail'] );
+		$wrapper_style = static::get_wrapper_style( $args['maxwidth'], $args['thumbnail'], $options );
 
 		$output = sprintf(
 			'<div id="video-%s" class="arve-wrapper %s" data-arve-mode="%s" %s %s itemscope itemtype="http://schema.org/VideoObject">',
@@ -1090,9 +687,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 			( 'lazyload' === $args['mode'] ) ? sprintf( 'data-arve-grow="%s"', esc_attr( (string) $args['grow'] ) ) : '',
 			( $wrapper_style ) ? sprintf( ' style="%s"', esc_attr( $wrapper_style ) ) : ''
 		);
+
 		$output .= sprintf( '<div class="arve-embed-container" style="padding-bottom: %g%%">%s</div>', $args['aspect_ratio'], $inner );
 		$output .= '<button class="arve-btn arve-btn-close arve-hidden">x</button>';
-		$output .= ( $this->options['promote_link'] ) ? $promote_link : '';
+		$output .= ( $options['promote_link'] ) ? $promote_link : '';
 		$output .= '</div>'; // .arve-wrapper
 
 		return $output;
@@ -1104,7 +702,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 			if ( $args['iframe'] ) {
 
-				$embed = $this->create_iframe( array (
+				$embed = static::create_iframe( array (
 					'src'      => ( $args['autoplay'] ) ? $args['url_autoplay_yes'] : $args['url_autoplay_no'],
 				) );
 
@@ -1116,14 +714,13 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$embed = $this->create_object( $data, $oparams );
 			}
 
-			$output .= $this->wrappers( $embed, $args );
-
+			$output .= static::wrappers( $embed, $args );
 		}
 
 		return $output;
 	}
 
-	public function esc_url( $url ) {
+	public static function esc_url( $url ) {
 
 		return str_replace( 'jukebox?list%5B0%5D', 'jukebox?list[]', esc_url( $url ) );
 	}
@@ -1132,7 +729,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 *
 	 * @since    4.0.0
 	 */
-	public function get_wrapper_style( $maxwidth = false, $thumbnail = false ) {
+	public static function get_wrapper_style( $maxwidth = false, $thumbnail = false ) {
 
 		$style = false;
 
@@ -1152,7 +749,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 *
 	 * @since    2.6.0
 	 */
-	public function create_iframe( $args ) {
+	public static function create_iframe( $args ) {
 
 		$defaults = array (
 			'provider'        => null,
@@ -1167,10 +764,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		return sprintf( '<iframe %s></iframe>', $this->parse_attr( $args ) );
+		return sprintf( '<iframe %s></iframe>', static::parse_attr( $args ) );
 	}
 
-	public function parse_attr( $attr = array() ) {
+	public static function parse_attr( $attr = array() ) {
 
 		$out = '';
 
@@ -1181,7 +778,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			} elseif ( '' === $value ) {
 				$out .= sprintf( ' %s', esc_html( $key ) );
 			} elseif ( in_array( $key, array( 'href', 'src', 'data-src' ) ) ) {
-				$out .= sprintf( ' %s="%s"', esc_html( $key ), $this->esc_url( $value ) );
+				$out .= sprintf( ' %s="%s"', esc_html( $key ), static::esc_url( $value ) );
 			} else {
 				$out .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );
 			}
@@ -1214,8 +811,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'' .
 			'</video>',
 			( $class )    ? sprintf( 'class="%s" ', esc_attr( $class ) ) : '',
-			( $src )      ? sprintf( 'src="%s" ', $this->esc_url( $provider, $src ) ) : '',
-			( $data_src ) ? sprintf( 'data-src="%s" ', $this->esc_url( $provider, $data_src ) ) : '',
+			( $src )      ? sprintf( 'src="%s" ', static::esc_url( $provider, $src ) ) : '',
+			( $data_src ) ? sprintf( 'data-src="%s" ', static::esc_url( $provider, $data_src ) ) : '',
 			( $allowfullscreen ) ? 'allowfullscreen mozallowfullscreen webkitallowfullScreen ' : ''
 		);
 	}
@@ -1247,7 +844,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 	public function print_styles() {
 
 		if ( (int) $this->options["video_maxwidth"] > 0 ) {
-			$css .= sprintf( '.arve-wrapper { max-width: %dpx; }', $this->options['video_maxwidth'] );
+			$css = sprintf( '.arve-wrapper { max-width: %dpx; }', $this->options['video_maxwidth'] );
 
 			echo '<style type="text/css">' . $css . "</style>\n";
 		}
@@ -1266,7 +863,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		global $wp;
 		$current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
 		$content     = '';
-		$properties  = $this->get_properties();
+		$properties  = Advanced_Responsive_Video_Embedder_Shared::get_properties();
 
 		if ( ! empty( $_GET['arvet-provider'] ) ) {
 			$get_provider = $_GET['arvet-provider'];
@@ -1409,49 +1006,35 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 	public function supported_shortcode( $args, $content = null ) {
 
-		$providers = $this->get_properties();
+		$providers = Advanced_Responsive_Video_Embedder_Shared::get_properties();
 
 		// unset deprecated and doubled
 		unset( $providers['bliptv'] );
 		unset( $providers['youtubelist'] );
 		unset( $providers['dailymotionlist'] );
 
+		$count = 1;
+
 		foreach ( $providers as $key => $values ) {
 
 			if ( ! isset( $values['name'] ) )
 				$values['name'] = $key;
 
-			unset( $sups );
-			if ( $values['thumb'] ) {
-				$sups[] = get_the_icon( 'picture', __('automatic thumbnail', $this->plugin_slug ) );
-			}
-
-			if ( ! $values['url'] ) {
-				$sups[] = get_the_icon( 'attachment', __('no URL embeds', $this->plugin_slug ) );
-			}
-
-			if ( ! $values['wmode_transparent'] ) {
-				$sups[] = get_the_icon( 'picture', __('no fake thumbnails', $this->plugin_slug ) );
-			}
-
-			if ( 'iframe' === $key ) {
-				$sups[] = get_the_icon( 'focus', __('Support for every provider not listed that supports iframe embed codes', $this->plugin_slug ) );
-			}
-
-			if ( ! empty( $sups ) ) {
-				$sups = implode( ' ', $sups );
-			} else {
-				$sups = '';
-			}
-
-			$lis[] = sprintf(
-				'<li>%s%s</li>',
+			$trs[] = sprintf(
+				'<tr> <td>%d</td> <td>%s</td> <td>&#x2713;</td> <td>%s</td> <td>%s</td> </tr>',
+				$count++,
 				esc_html( $values['name'] ),
-				$sups
+				( $values['url'] )   ? '&#x2713;' : '',
+				( $values['thumb'] ) ? '&#x2713;' : ''
 			);
 		}
 
-		return sprintf( '<ol class="supported-providers-list">%s</ol>', implode( '', $lis ) );
+		$out  = '<table class="table table-sm table-hover table-arve-supported">';
+	  	$out .= '<tr> <th></th> <th>Provider</th> <th>Shortcode</th> <th>URL</th> <th>Auto Thumbnail</th></tr>';
+		$out .= implode( '', $trs );
+		$out .= '</table>';
+
+		return $out;
 	}
 
 	/**
