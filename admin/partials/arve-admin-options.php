@@ -20,7 +20,7 @@ $options = Advanced_Responsive_Video_Embedder_Shared::get_options();
 	<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 
 	<?php
-	if ( $admin_message = $this->get_admin_message() ) {
+	if ( $admin_message = $this->get_admin_pro_message() ) {
 		echo '<div class="updated">' . $admin_message . '</div>';
 	} ?>
 

@@ -4,10 +4,12 @@
 * New: A default alignment can now be set in the Settings page (fulfilled request)
 * Deleted Language files in favor of [wordpress.org managed translations](https://translate.wordpress.org/projects/wp-plugins/advanced-responsive-video-embedder/dev) volunteers are welcome ;)
 * Improved: Got rid of globals
+* Improved: Added image upload dialog to settings page
 * Improved: Settings page code
 * Improved: SSL enabled for Vevo
 * Fix: youtube.be URLs now detected correct in shortcode dialog
 * Fix: All Vevo URLs are now detected correctly
+
 
 ### 6.3.4 ###
 

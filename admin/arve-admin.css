@@ -36,6 +36,11 @@
 	max-width: 100%;
 }
 
+.arve-input-group-full input.arve-input-url {
+	width: 274px;
+}
+
+
 #arve-url {
 	width: 100%;
 }

@@ -16,7 +16,7 @@
 				<?php echo Advanced_Responsive_Video_Embedder_Shared::get_mode_options( $this->plugin_slug ); ?>
 			</select>
 		</div>
-	
+
 		<div class="arve-input-group">
 			<label for="arve-align"><?php _e('Align', $this->plugin_slug ); ?></label>
 			<select id="arve-align">
@@ -25,7 +25,7 @@
 				<option value="right"><?php _e('right', $this->plugin_slug ); ?></option>
 				<option value="center"><?php _e('center', $this->plugin_slug ); ?></option>
 			</select>
-		</div>	
+		</div>
 
 		<div class="arve-input-group">
 			<label for="arve-autoplay"><?php _e('Autoplay', $this->plugin_slug ); ?></label>
@@ -45,7 +45,7 @@
 			<label for="arve-aspect_ratio"><?php _e('Aspect ratio (4:3)', $this->plugin_slug ); ?></label>
 			<input type="text" id="arve-aspect_ratio" value="" />
 		</div>
-		
+
 		<div class="arve-input-group">
 			<label for="arve-grow"><?php _e('Grow on Click (Lazyload)', $this->plugin_slug ); ?></label>
 			<select id="arve-grow">
@@ -58,13 +58,14 @@
 		<div class="clear"></div>
 
 		<div class="arve-input-group arve-input-group-full">
-			<label for="arve-thumbnail"><?php _e('Thumbnail', $this->plugin_slug ); ?></label>
-			<input type="text" id="arve-thumbnail" class="arve-input-full" value="" />
+			<label for="arve-thumbnail"><?php _e('Thumbnail (Lazyload)', $this->plugin_slug ); ?></label>
+			<input type="text" id="arve-thumbnail" class="arve-input-url" value="" />
+			<a class="button-secondary" data-arve-image-upload="#arve-thumbnail">Upload Image</a>
 		</div>
-		
+
 		<div class="arve-input-group arve-input-group-full">
 			<label for="arve-parameters"><?php _e('URL Parameters', $this->plugin_slug ); ?></label>
-			<input type="text" id="arve-parameters" class="arve-input-full" value="" />
+			<input type="text" id="arve-parameters" value="" />
 		</div>
 
 		<div id="arve-shortcode" class="arve-shortcode-display">-</div>
@@ -84,7 +85,7 @@
 
 					printf( '<option value="%s">%s</option>', esc_attr( $val ), esc_html( $key ) );
 				}
-				
+
 				?>
 			</select>
 

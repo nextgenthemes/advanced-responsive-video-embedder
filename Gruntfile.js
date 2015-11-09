@@ -24,6 +24,7 @@ module.exports = function (grunt) {
            'readme/description.md',
            'readme/description-lead.html',
            'readme/description-features.html',
+           'readme/description-features-pro.html',
            'readme/description-supported-providers.md',
            'readme/description-only-wp-org.md',
            'readme/description-reviews.html',

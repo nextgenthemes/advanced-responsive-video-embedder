@@ -226,15 +226,13 @@
 
 	$('[data-arve-image-upload]').click(function(e) {
 			e.preventDefault();
-
-			var target = $( this ).attr('data-arve-image-upload');
-			var image = wp.media({
+			var target = $( this ).attr('data-arve-image-upload'),
+			image = wp.media({
 					title: 'Upload Image',
 					// mutiple: true if you want to upload multiple files at once
 					multiple: false
 			}).open()
 			.on('select', function(){
-					console.log( target );
 					// This will return the selected image from the Media Uploader, the result is an object
 					var uploaded_image = image.state().get('selection').first();
 					// We convert uploaded_image to a JSON object to make accessing it easier
@@ -243,8 +241,18 @@
 					//console.log( $( this ) );
 					var image_url = uploaded_image.toJSON().url;
 					// Let's assign the url value to the input field
-					$( '[name="' + target + '"]' ).val(image_url);
+					$( target ).val(image_url);
 			});
+	});
+
+	$(document).on( 'click', '.arve-pro-notice .notice-dismiss', function() {
+
+    jQuery.ajax({
+        url: ajaxurl,
+        data: {
+            action: 'arve_ajax_dismiss_pro_notice'
+        }
+    });
 	});
 
 }(jQuery));

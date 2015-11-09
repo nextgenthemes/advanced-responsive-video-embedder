@@ -4,7 +4,7 @@ Donate link: https://nextgenthemes.com/donate/
 Tags: video, responsive, embed, video-embedder, iframe, minimal, lightweight, simplicity, shortcodes, Youtube, Blip, Dailymotion, Videojug, Collegehumor, Veoh, Break, Movieweb, Snotr, Gametrailers, Vimeo, Viddler, Funnyordie, Myspace, Liveleak, Metacafe, Myvideo, Yahoo Screen, Spike
 Requires at least: 3.3.2
 Tested up to: 4.4.0
-Stable tag: trunk
+Stable tag: 6.6.0
 License: GPL 3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -31,7 +31,7 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 	<li>One single button for all providers (for most providers not required because of URL embeds, but allows to create custom shortcodes with advanced features within seconds)</li>
 	<li>Responsive embeds with CSS, much better then with JS IMO</li>
 	<li>Tries to be as unobtrusive as possible, sets ‘hide brand’ variables if supported, disabled related videos at the end … to help keep people on your Site rather then going to YouTube or keep watching videos</li>
-	<li>Clean Shortcode syntax <code>[[vimeo id="123456"]]</code> no ugly URLs, no unnecessary shortcode wrapping.</li>
+	<li>Clean Shortcode syntax <code>[vimeo id="123456"]</code> no ugly URLs, no unnecessary shortcode wrapping.</li>
 	<li>Autostart (for providers that support them)</li>
 	<li>Custom URL Parameters to use all options providers offer</li>
 	<li>Optional maximal width</li>
@@ -41,14 +41,26 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 	<li>Custom Aspect Ratio</li>
 </ul>
 
+
 <h3>Additional Features with the Pro Addon</h3>
 <ul class="list-checked">
-	<li>Feel good about yourself for helping me support my long time work on this plugin. Tons of hours, weekends … always worked on <a href="https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/">improving</a> 3+ years.</li>
-	<li>Lazyload mode: Only loads a preview image on pageload instead of the Video players itself. This makes your site load faster, especially with multiple videos in the same page.</li>
-	<li>lazyload -&gt; Lightbox Shows the Video in a Lightbox after clicking a preview image.</li>
-	<li>Lazyload -&gt; HTML5 Fullscreen: (experimental) This is a dream come true for me. Be aware that this has a issue of going fullsceen a 2nd time from within fullscreen and fullscreen Buttons not working as expected.</li>
-	<li>Lazyload -&gt; Half Screen Sticky: (experimental) Video that fills about half the screen/window and lets users continue to scroll and read the site, start writing a comment … while watching a video. This relies on modern HTML5 features (calc, vw + vh) and may not work everywhere.</li>
-	<li>Link -&gt; Lightbox: Use links as triggers for lightboxed videos.</li>
+	<li><strong>Feel good about yourself</strong><br>
+		for supporting my long time work on this plugin. Tons of hours, weekends … always worked on <a href="https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/">improving it</a> 3+ years.</li>
+
+	<li><strong>Lazyload mode</strong><br>
+		Make your site load <strong>faster</strong> by loading only a image instead if the entire video player on pageload.</li>
+
+	<li><strong>Lazyload -&gt; Lightbox</strong><br>
+		Shows the Video in a Lightbox after clicking a preview image</li>
+
+	<li><strong>Link -&gt; Lightbox</strong><br>
+		Use simple links as triggers for lightboxed videos</li>
+
+	<li><strong>Lazyload -&gt; HTML5 Fullscreen</strong> (experimental)</li>
+
+	<li><strong>Lazyload -&gt; Half Screen Sticky</strong> (experimental)</li>
+
+	<li><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/">Check out more</a></li>
 </ul>
 
 
@@ -103,7 +115,6 @@ Please report issues on [community.nextgenthemes.com](https://community.nextgent
 	</div>
 	<div class="media-body media-middle">
 		<h4>&#9733; &#9733; &#9733; &#9733; &#9733; Finally something that works</h4>
-
 		So I have a responsive theme but on pages with you tube videos it wasn't making the you tube videos fit in the mobile screen. I have spent the last hour trying many plugins and researching on google and finally I installed this. And I didn't have to update any settings or anything just refreshed a post with videos and all the sudden it is beautiful and responsive on my mobile phone!!!!!! THANK YOU!!!!<br>
 		<a href="https://wordpress.org/support/view/plugin-reviews/advanced-responsive-video-embedder?filter=5">review by happyecho</a>
 	</div>
@@ -115,7 +126,6 @@ Please report issues on [community.nextgenthemes.com](https://community.nextgent
 	</div>
 	<div class="media-body media-middle">
 		<h4>&#9733; &#9733; &#9733; &#9733; &#9733; Only Plug-in that worked</h4>
-
 		I used a lot of high ranking plug-ins but they still broke my design. Downloaded this and worked right away. Thanks!<br>
 		<a href="https://wordpress.org/support/view/plugin-reviews/advanced-responsive-video-embedder?filter=5">review by crconnell89</a>
 	</div>
@@ -197,10 +207,12 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 * New: A default alignment can now be set in the Settings page (fulfilled request)
 * Deleted Language files in favor of [wordpress.org managed translations](https://translate.wordpress.org/projects/wp-plugins/advanced-responsive-video-embedder/dev) volunteers are welcome ;)
 * Improved: Got rid of globals
+* Improved: Added image upload dialog to settings page
 * Improved: Settings page code
 * Improved: SSL enabled for Vevo
 * Fix: youtube.be URLs now detected correct in shortcode dialog
 * Fix: All Vevo URLs are now detected correctly
+
 
 ### 6.3.4 ###
 

@@ -202,8 +202,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'4players'            => $hw . '4players\.de/4players\.php/tvplayer/4PlayersTV/([0-9a-z_/]+\.html)',
 			'alugha'              => $hw . 'alugha.com/1/videos/([a-z0-9_\-]+)',
 			'archiveorg'          => $hw . 'archive\.org/(?:details|embed)/([0-9a-z]+)',
-			'blip'                => $hw . 'blip\.tv/[^/]+/[^/]+-([0-9]{7})',
-			##'bliptv'            =>
 			'break'               => $hw . 'break\.com/video/(?:[a-z\-]+)-([0-9]+)',
 			'collegehumor'        => $hw . 'collegehumor\.com/video/([0-9]+)',
 			##'comedycentral'     =>
@@ -228,7 +226,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			##'spike'             =>
 			'ustream'             => $hw . 'ustream\.tv/(?:channel/)?([0-9]{8}|recorded/[0-9]{8}(/highlight/[0-9]+)?)',
 			'veoh'                => $hw . 'veoh\.com/watch/([a-z0-9]+)',
-			'vevo'                => $hw . 'vevo\.com/watch/(?:[a-z0-9:\-%]+/[a-z0-9:\-%]+/)?([a-z0-9]+)',
+			'vevo'                => $hw . 'vevo\.com/watch/(?:[^\/]+/[^\/]+/)?([a-z0-9]+)',
 			'viddler'             => $hw . 'viddler\.com/(?:embed|v)/([a-z0-9]{8})',
 			'vine'                => $hw . 'vine\.co/v/([a-z0-9]+)',
 			##'videojug'          =>
@@ -584,7 +582,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-
 				'tests' => array(
 					'[vevo id="US4E51286201"]',
 					'http://www.vevo.com/watch/the-offspring/the-kids-arent-alright/USSM20100649',
@@ -593,7 +590,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 					'http://www.vevo.com/watch/john-tibbs/Silver-in-Stone-%28Official-Performance%29/USM2C1505826',
 					'http://www.vevo.com/watch/SEUV71500234',
 					'http://www.vevo.com/watch/kj-52/That-Was-My-Life/USBR21200239',
-					'http://www.vevo.com/watch/the-offspring/the-kids-arent-alright/USSM20100649',
+					'http://www.vevo.com/watch/sara-groves/Signal-(Official-Music-Video)/USM2C1505839',
 				 )
 			),
 			'viddler' => array(
@@ -652,7 +649,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-
 				'tests' => array()
 			),
 			'yahoo' => array(

@@ -180,7 +180,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		$extra_links['donate']   = sprintf( '<a href="%s">%s</a>', 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC', __( 'Donate', $this->plugin_slug ) );
 
 		return array_merge( $extra_links, $links );
-
 	}
 
 	/**
@@ -695,43 +694,25 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 *
 	 * @since     3.0.0
 	 */
-	public function get_admin_message() {
+	public function get_admin_pro_message() {
 
 		if ( ! current_user_can( 'update_plugins' ) ) {
 			return;
 		}
 
-		$message     = '';
-		$pro_message = '';
-		$inst        = (int) get_option( 'arve_install_date' );
+		$inst = (int) get_option( 'arve_install_date' );
 
-		if ( $inst < 1437734272 ) {
-			$message .= '<p>Your Advanced Responsive Video Embedder plugin was updated to version 6.0. Some things changed, please see <a href="https://nextgenthemes.com/?p=1875">migration guide</a> for details.</p>';
-		}
+		$pro_message = __( '<p>This is Nico the Author of the Advanced Responsive Video Embedder plugin. When you <strong><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/">buy the Pro Addon</a></strong> of this plugin you will get this:</p>', $this->plugin_slug );
 
-		$pro_message .= sprintf(
-			__(
-				'<p>This is Nico the Author of the Advanced Responsive Video Embedder plugin. When you <strong><a href="%s">buy the Pro Addon</a></strong> of this plugin you will get this:</p>
-				<ul>
-					<li><span class="dashicons dashicons-yes"></span> Feel good about yourself because you make me feel good by paying me for the long time work I put into this.</li>
-					<li><span class="dashicons dashicons-yes"></span> 5 Lazyload modes</li>
-					<li><span class="dashicons dashicons-yes"></span> Faster loading of videos</li>
-					<li><span class="dashicons dashicons-yes"></span> Automatic or your own preview images</li>
-					<li><span class="dashicons dashicons-yes"></span> And more</li>
-				</ul>
-				<p>You can also <a href="%s">donate</a> or help <a href="%s">translate</a> if you like. Thanks so much!</p>',
-				$this->plugin_slug
-			),
-			'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/',
-			'https://nextgenthemes.com/donate/',
-			'https://translate.wordpress.org/projects/wp-plugins/advanced-responsive-video-embedder/dev'
-		);
+		$pro_message .= file_get_contents( plugin_dir_path( dirname( __FILE__ ) ) . 'readme/description-features-pro.html' );
+
+		$pro_message = str_replace( '<ul ', '<ul style="list-style: square; padding-left: 20px;" ', $pro_message );
 
 		if ( $inst < 1435958686 ) {
 			$pro_message .= '<p>If you do not want to buy the Pro Addon (because you are used to lazyload or thumbnail modes that are no longer part of the free version) use this 100% discount code <code>legacy install</code> and get it for free!</p>';
 		}
 
-		return $message . apply_filters( 'arve_admin_pro_message', $pro_message );
+		return apply_filters( 'arve_admin_pro_message', $pro_message );
 	}
 
 	function add_dashboard_widget() {
@@ -743,25 +724,20 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		);
 
 		// Globalize the metaboxes array, this holds all the widgets for wp-admin
-
 		global $wp_meta_boxes;
 
 		// Get the regular dashboard widgets array
 		// (which has our new widget already but at the end)
-
 		$normal_dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
 
 		// Backup and delete our new dashboard widget from the end of the array
-
 		$arve_widget_backup = array( 'arve_dashboard_widget' => $normal_dashboard['arve_dashboard_widget'] );
 		unset( $normal_dashboard['arve_dashboard_widget'] );
 
 		// Merge the two arrays together so our widget is at the beginning
-
 		$sorted_dashboard = array_merge( $arve_widget_backup, $normal_dashboard );
 
 		// Save the sorted array back into the original metaboxes
-
 		$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
 	}
 
@@ -771,6 +747,25 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	function dashboard_widget_output() {
 
-		echo $this->get_admin_message();
+		echo $this->get_admin_pro_message();
+	}
+
+	function pro_notice() {
+		#delete_user_meta( get_current_user_id(), 'arve_dismiss_pro_notice' );
+
+		if( ! empty( get_user_meta( get_current_user_id(), 'arve_dismiss_pro_notice' ) ) ) {
+			return;
+		}
+
+		echo '<div class="notice updated arve-pro-notice is-dismissible" style="font-size: 1.15em;">';
+		echo $this->get_admin_pro_message();
+		echo '</div>';
+	}
+
+	function arve_ajax_dismiss_pro_notice() {
+
+		add_user_meta( get_current_user_id(), 'arve_dismiss_pro_notice', true );
+
+		wp_die();
 	}
 }

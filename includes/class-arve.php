@@ -75,7 +75,6 @@ class Advanced_Responsive_Video_Embedder {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-
 	}
 
 	/**
@@ -162,6 +161,9 @@ class Advanced_Responsive_Video_Embedder {
 
 		// Add the options page and menu item.
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
+
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'pro_notice' );
+		$this->loader->add_action( 'wp_ajax_arve_ajax_dismiss_pro_notice', $plugin_admin, 'arve_ajax_dismiss_pro_notice' );
 
 		$this->loader->add_action( 'register_shortcode_ui', $plugin_admin, 'register_shortcode_ui' );
 

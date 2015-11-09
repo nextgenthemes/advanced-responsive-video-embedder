@@ -106,7 +106,6 @@ class Advanced_Responsive_Video_Embedder_Loader {
 		);
 
 		return $hooks;
-
 	}
 
 	/**
