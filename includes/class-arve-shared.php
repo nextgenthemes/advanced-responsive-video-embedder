@@ -276,7 +276,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
 				'tests' => array(
 					'http://www.4players.de/4players.php/tvplayer/4PlayersTV/Alle/20943/105302/Mass_Effect_3/Trilogie-Rueckblick.html',
 				)
@@ -285,9 +284,8 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => true,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
 				'tests' => array(
-					'https://alugha.com/1/videos/youtube-54m1YfEuYU8?arve[mode]=lazyload',
+					'https://alugha.com/1/videos/youtube-54m1YfEuYU8',
 				)
 			),
 			'archiveorg' => array(
@@ -295,7 +293,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
 				'tests' => array(
 					'https://archive.org/details/AlexJonesInterviewsDeanHaglund',
 				)
@@ -313,14 +310,12 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
 				'tests' => array()
 			),
 			'break' => array(
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
 				'tests' => array(
 					'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591',
 				)
@@ -330,7 +325,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 61,
+				'aspect_ratio' => '600:369',
 				'tests' => array(
 					'http://collegehumor.com/video/6922670/bleep-bloop-your-best-game',
 				)
@@ -340,7 +335,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => false,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					'[comedycentral id="c80adf02-3e24-437a-8087-d6b77060571c"]',
 				)
@@ -349,7 +344,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => true,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					'http://www.dailymotion.com/video/x44lvd_rates-of-exchange-like-a-renegade_music',
 					__('URL just the ID withoutout the long title', 'advanced-responsive-video-embedder'),
@@ -389,14 +384,14 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array()
 			),
 			'flickr' => array(
 				'url' => false,
 				'thumb' => false,
 				'wmode_transparent' => false,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					'[flickr id="2856467015"]',
 				)
@@ -406,7 +401,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => true,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+				'aspect_ratio' => '640:400',
 				'tests' => array(
 					'http://www.funnyordie.com/videos/76585438d8/sarah-silverman-s-we-are-miracles-hbo-special',
 				)
@@ -415,7 +410,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => false,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					'[gametrailers id="797121a1-4685-4ecc-9388-72a88b0ef8da"]',
 				)
@@ -424,7 +419,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => false,
 				'thumb' => false,
 				'wmode_transparent' => false,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 
 
@@ -440,7 +435,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					'http://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
 				)
@@ -449,7 +444,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					'https://www.kickstarter.com/projects/obsidian/project-eternity?ref=discovery',
 				)
@@ -459,7 +454,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					__('Page/item <code>i=</code> URL', 'advanced-responsive-video-embedder') ,
 					'http://www.liveleak.com/view?i=703_1385224413',
@@ -471,7 +466,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					'http://www.metacafe.com/watch/11159703/why_youre_fat/',
 					'http://www.metacafe.com/watch/11322264/everything_wrong_with_robocop_in_7_minutes/',
@@ -481,7 +476,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					'[movieweb id="VIwFzmdbyoy9zB"]',
 				)
@@ -491,7 +486,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => true,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					'http://mpora.com/videos/AAdphry14rkn',
 					'http://mpora.de/videos/AAdpxhiv6pqd',
@@ -501,7 +496,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					'https://myspace.com/myspace/video/dark-rooms-the-shadow-that-looms-o-er-my-heart-live-/109471212',
 				)
@@ -511,7 +506,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					'http://www.myvideo.de/watch/8432624/Angeln_mal_anders',
 				)
@@ -520,7 +515,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => false,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					'http://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is',
 				)
@@ -529,7 +524,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => false,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 59.8,
+				#'aspect_ratio' => 59.8,
 				'tests' => array(
 					'[spike id="5afddf30-31d8-40fb-81e6-bb5c6f45525f"]',
 				)
@@ -539,7 +534,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					__('To my knowlege TED forces autoplay and there is no way disable it', 'advanced-responsive-video-embedder') ,
 					'http://ted.com/talks/jill_bolte_taylor_s_powerful_stroke_of_insight',
@@ -551,7 +546,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					'http://www.twitch.tv/tsm_dyrus',
 					__('Past breadcast URL', 'advanced-responsive-video-embedder') ,
@@ -565,7 +560,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 61,
+				'aspect_ratio' => '480:270', #61,
 				'tests' => array(
 					__('To my knowlege Ustream forces autoplay and there is no way disable it', 'advanced-responsive-video-embedder') ,
 					__('Channel URL - get them from the share button URLS with names instead of numeric IDs will not work!', 'advanced-responsive-video-embedder') ,
@@ -580,7 +575,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 60.257,
+				#'aspect_ratio' => 60.257,
 				'tests' => array(
 					'http://www.veoh.com/watch/v19866882CAdjNF9b',
 				)
@@ -589,7 +584,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					'[vevo id="US4E51286201"]',
 					'http://www.vevo.com/watch/the-offspring/the-kids-arent-alright/USSM20100649',
@@ -605,7 +600,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => false,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					'http://www.viddler.com/v/a695c468',
 				)
@@ -614,7 +609,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => false,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					'[videojug id="fa15cafd-556f-165b-d660-ff0008c90d2d"]',
 				)
@@ -623,7 +618,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 100,
+				'aspect_ratio' => '1:1',
 				'tests' => array(
 					'[vine id="MbrreglaFrA"]',
 					'https://vine.co/v/bjAaLxQvOnQ',
@@ -636,7 +631,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => true,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array(
 					'[vimeo id="12901672"]',
 					'http://vimeo.com/23316783',
@@ -657,7 +652,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array()
 			),
 			'yahoo' => array(
@@ -665,7 +660,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
 				'tests' => array(
 					'http://screen.yahoo.com/buzzfeed/eye-opening-facts-vaginas-210102842.html',
 				)
@@ -675,7 +669,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => true,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
 				'tests' => array(
 					'[youtube id="XQEiv7t1xuQ"]',
 					'http://www.youtube.com/watch?v=vrXgLhkv21Y',
@@ -843,7 +836,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => true,
 				'wmode_transparent' => true,
-				'aspect_ratio' => 56.25,
+
 				'tests' => array()
 			),
 		);

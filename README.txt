@@ -4,7 +4,7 @@ Donate link: https://nextgenthemes.com/donate/
 Tags: video, responsive, embed, video-embedder, iframe, minimal, lightweight, simplicity, shortcodes, Youtube, Blip, Dailymotion, Videojug, Collegehumor, Veoh, Break, Movieweb, Snotr, Gametrailers, Vimeo, Viddler, Funnyordie, Myspace, Liveleak, Metacafe, Myvideo, Yahoo Screen, Spike
 Requires at least: 3.3.2
 Tested up to: 4.4.0
-Stable tag: 6.6.0
+Stable tag: trunk
 License: GPL 3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 

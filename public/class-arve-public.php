@@ -232,7 +232,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		$shortcode_atts_defaults = array(
 			'align'        => $this->options['align'],
-			'aspect_ratio' => (float) $properties[ $provider ]['aspect_ratio'],
+			'aspect_ratio' => isset( $properties[ $provider ]['aspect_ratio'] ) ? $properties[ $provider ]['aspect_ratio'] : '16:9',
 			'autoplay'     => (bool) $this->options['autoplay'],
 			'id'           => null,
 			'lang'         => null, # Only used for TED
@@ -250,7 +250,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 		extract( $atts );
 
 		$maxwidth     = (int) $maxwidth;
-		$aspect_ratio = $this->aspect_ratio_to_padding( $aspect_ratio );
 		$thumbnail    = trim( $thumbnail );
 
 		if ( 'dailymotionlist' === $provider ) {
@@ -260,7 +259,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				case 'lazyload':
 				case 'lazyload-fixed':
 				case 'lazyload-fullscreen':
-					$aspect_ratio = 72;
+					$aspect_ratio = '640:370';
 					break;
 			}
 		}
@@ -688,7 +687,11 @@ class Advanced_Responsive_Video_Embedder_Public {
 			( $wrapper_style ) ? sprintf( ' style="%s"', esc_attr( $wrapper_style ) ) : ''
 		);
 
-		$output .= sprintf( '<div class="arve-embed-container" style="padding-bottom: %g%%">%s</div>', $args['aspect_ratio'], $inner );
+		$output .= sprintf(
+			'<div class="arve-embed-container" style="padding-bottom: %F%%">%s</div>',
+			static::aspect_ratio_to_padding( $args['aspect_ratio'] ),
+			$inner
+		);
 		$output .= '<button class="arve-btn arve-btn-close arve-hidden">x</button>';
 		$output .= ( $options['promote_link'] ) ? $promote_link : '';
 		$output .= '</div>'; // .arve-wrapper
@@ -850,10 +853,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 	}
 
-	public function begins_with( $haystack, $needle ) {
-		return strpos( $haystack, $needle ) === 0;
-	}
-
 	public function tests_shortcode( $args, $content = null ) {
 
 		if ( ! is_singular() ) {
@@ -912,7 +911,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 			foreach ( $tests[ $get_provider ] as $line ) {
 
-				if ( $this->begins_with( $line, 'http' ) ) {
+				if ( Advanced_Responsive_Video_Embedder_Shared::starts_with( $line, 'http' ) ) {
 
 					$query_tests = array(
 						array( 'arve[mode]' => 'lazyload' ),
@@ -934,7 +933,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 						$content .= $this->test_url( $url );
 					}
 
-				} elseif ( $this->begins_with( $line, '[' ) )  {
+				} elseif ( Advanced_Responsive_Video_Embedder_Shared::starts_with( $line, '[' ) )  {
 
 					$shortcode_tests = array(
 						' mode="lazyload"]',
@@ -959,11 +958,11 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 			foreach ( $specific_tests[ $get_provider ] as $line ) {
 
-				if ( $this->begins_with( $line, 'http' ) ) {
+				if ( Advanced_Responsive_Video_Embedder_Shared::starts_with( $line, 'http' ) ) {
 
 					$content .= $this->test_url( $line );
 
-				} elseif ( $this->begins_with( $line, '[' ) ) {
+				} elseif ( Advanced_Responsive_Video_Embedder_Shared::starts_with( $line, '[' ) ) {
 
 					$content .= $this->test_shortcode( $line );
 
@@ -1098,21 +1097,19 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 *
 	 * @param     string $aspect_ratio '4:3' or percentage value with percent sign
 	 *
-	 * @return    mixed  false/int    65.25 in case of 4:3
+	 * @return    float
 	 */
-
-	function aspect_ratio_to_padding( $aspect_ratio ) {
-
-		if ( is_numeric( $aspect_ratio ) ) {
-			return $aspect_ratio;
-		}
+	public static function aspect_ratio_to_padding( $aspect_ratio ) {
 
 		$aspect_ratio = explode( ':', $aspect_ratio );
 
-		if ( is_numeric( $aspect_ratio[0] ) && is_numeric( $aspect_ratio[1] ) )
-			return ( $aspect_ratio[1] / $aspect_ratio[0] ) * 100;
-		else
-			return false;
+		if ( is_numeric( $aspect_ratio[0] ) && is_numeric( $aspect_ratio[1] ) ) {
+
+			return ( ( $aspect_ratio[1] / $aspect_ratio[0] ) * 100 );
+
+		} else {
+			return 56.25;
+		}
 	}
 
 	/**

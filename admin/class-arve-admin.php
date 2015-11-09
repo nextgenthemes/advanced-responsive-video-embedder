@@ -481,34 +481,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		register_setting( 'arve-settings-group', 'arve_options_shortcodes', array( $this, 'validate_options_shortcodes' ) );
 	}
 
-	public function create_settings_field( $args ) {
-
-		extract( $args );
-
-		add_settings_field(
-			"arve_options_{$section_name}[{$option_id}]", // ID
-			$option_values['name'],                       // title
-			array( $this, 'input_creator' ),              // callback
-			$page,                                        // page
-			"{$section_name}_section",                    // section
-			array(                                        // args
-				'label_for'   => is_array( $option_values['type'] ) ? null : "arve_options_{$section_name}[{$option_id}]",
-				'input_attr'  => array(
-					'value'       => $value,
-					'id'          => "arve_options_{$section_name}[{$option_id}]",
-					'name'        => "arve_options_{$section_name}[{$option_id}]",
-					'class'       => is_string ( $option_values['type'] ) ? $option_values['type'] : null,
-					'placeholder' => empty( $option_values['placeholder'] ) ? null : $option_values['placeholder'],
-				),
-				'description'   => ! empty( $option_values['description'] ) ? $option_values['description'] : null,
-				'option_type'   => $option_values['type'],
-				'option_id'     => $option_id,
-				'options'       => $options,
-				'settings'      => $settings,
-			)
-		);
-	}
-
 	/**
 	 *
 	 *
