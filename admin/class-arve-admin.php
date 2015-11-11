@@ -262,7 +262,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 				'<a %s>%s</a>',
 				Advanced_Responsive_Video_Embedder_Shared::attr(
 					array(
-						'data-arve-image-upload' => $args['input_attr']['name'],
+						'data-arve-image-upload' => '[name="' . $args['input_attr']['name'] . '"]',
 						'class' => 'button-secondary',
 					)
 				),

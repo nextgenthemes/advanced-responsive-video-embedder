@@ -94,8 +94,26 @@ class Advanced_Responsive_Video_Embedder_Public {
 			add_shortcode( $shortcode, array( $this, 'shortcode_' . $provider ) );
 		}
 
+		add_shortcode( 'arve', array( $this, 'arve_shortcode' ) );
 		add_shortcode( 'arve_tests', array( $this, 'tests_shortcode' ) );
 		add_shortcode( 'arve_supported', array( $this, 'supported_shortcode' ) );
+	}
+
+	public function arve_shortcode( $atts ) {
+
+		$regex_list = Advanced_Responsive_Video_Embedder_Shared::get_regex_list();
+
+		foreach ( $regex_list as $provider => $regex ) {
+
+			preg_match( '#' . $regex . '#i', $atts['url'], $matches );
+
+			if ( ! empty( $matches[1] ) ) {
+				$atts['id'] = $matches[1];
+				return $this->build_embed( $provider, $atts );
+			}
+		}
+
+		return 'No video detected';
 	}
 
 	/**
@@ -438,7 +456,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$url = 'http://screen.yahoo.com/embed/' . $id . '.html';
 				break;
 			case 'vevo':
-				$url = 'http://cache.vevo.com/assets/html/embed.html?video=' . $id;
+				$url = '//scache.vevo.com/assets/html/embed.html?video=' . $id;
 				break;
 			case 'ted':
 				if ( preg_match( "/^[a-z]{2}$/", $lang ) === 1 ) {
@@ -460,7 +478,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$url = 'http://www.xtube.com/embedded/user/play.php?v=' . $id;
 				break;
 			case 'facebook':
-				$url = 'http://www.facebook.com/video/embed?video_id=' . $id;
+				$url = '//www.facebook.com/video/embed?video_id=' . $id;
 				break;
 			case 'twitch':
 				$tw = explode( '/', $id );
@@ -679,12 +697,16 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$wrapper_style = static::get_wrapper_style( $args['maxwidth'], $args['thumbnail'], $options );
 
 		$output = sprintf(
-			'<div id="video-%s" class="arve-wrapper %s" data-arve-mode="%s" %s %s itemscope itemtype="http://schema.org/VideoObject">',
-			esc_attr( urlencode( $args['id'] ) ),
-			esc_attr( $args['align'] ),
-			esc_attr( $args['mode'] ),
-			( 'lazyload' === $args['mode'] ) ? sprintf( 'data-arve-grow="%s"', esc_attr( (string) $args['grow'] ) ) : '',
-			( $wrapper_style ) ? sprintf( ' style="%s"', esc_attr( $wrapper_style ) ) : ''
+			'<div %s>',
+			Advanced_Responsive_Video_Embedder_Shared::attr( array(
+				'id' => 'video-' . urlencode( $args['id'] ),
+				'class' => 'arve-wrapper ' . $args['align'],
+				'data-arve-mode' => $args['mode'],
+				'data-arve-grow' => ( 'lazyload' === $args['mode'] ) ? (string) $args['grow'] : '',
+				'itemscope' => '',
+				'itemtype' => 'http://schema.org/VideoObject',
+				'style' => static::get_wrapper_style( $args['maxwidth'], $args['thumbnail'], $options ),
+			) )
 		);
 
 		$output .= sprintf(
@@ -706,7 +728,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			if ( $args['iframe'] ) {
 
 				$embed = static::create_iframe( array (
-					'src'      => ( $args['autoplay'] ) ? $args['url_autoplay_yes'] : $args['url_autoplay_no'],
+					'src' => ( $args['autoplay'] ) ? $args['url_autoplay_yes'] : $args['url_autoplay_no'],
 				) );
 
 			} else {
