@@ -1,15 +1,24 @@
 ## Changelog ##
 
-### 6.6.0 Beta ###
+### Pro Addon 1.5. ###
+* **you must have version 6.6.3 or greater of the main plugin installed for pro addon 1.5 or greater**
+* Improved: rectangle animation.
+* Improved: updated lity (lightbox script) to version 1.5.0
+* Improved: thumbnail handling.
+
+### 6.6.3 Beta ###
+* New: Amazing new catchall shortcode [arve url=""] that can be used for all supported providers instead of URLs embeds, all known apply.
 * New: A default alignment can now be set in the Settings page (fulfilled request)
 * Deleted Language files in favor of [wordpress.org managed translations](https://translate.wordpress.org/projects/wp-plugins/advanced-responsive-video-embedder/dev) volunteers are welcome ;)
 * Improved: Got rid of globals
-* Improved: Added image upload dialog to settings page
-* Improved: Settings page code
+* Improved: Added image upload dialog to settings page and shortcode dialog
+* Improved:
+* Improved: Lots if code improvements
 * Improved: SSL enabled for Vevo
+* Fix: issue with unwanted borders showing on embeds
 * Fix: youtube.be URLs now detected correct in shortcode dialog
 * Fix: All Vevo URLs are now detected correctly
-
+* Removed blip because the service was shutdown.
 
 ### 6.3.4 ###
 
@@ -35,7 +44,7 @@
 
 ### Pro Addon 1.1.5 ###
 
-* New: Added setting and parameter grow="yes/no" to controll the grow-on-click behaviour that was introduced in 6.0 to your liking.
+* New: Added setting and parameter grow="yes/no" to control the grow-on-click behaviour that was introduced in 6.0 to your liking.
 
 ### 6.1.2 ###
 

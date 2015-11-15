@@ -372,18 +372,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 				}
 				$url = 'http://www.liveleak.com/ll_embed?' . $id;
 				break;
-			case 'myspace':
-				$url = 'https://myspace.com/play/video/' . $id;
-				break;
-			case 'blip':
-				if ( $blip_xml = simplexml_load_file( 'http://blip.tv/rss/view/' . $id ) ) {
-					$blip_result = $blip_xml->xpath( "/rss/channel/item/blip:embedLookup" );
-					$id = (string) $blip_result[0];
-				} else {
-					return $this->error( __( 'Could not get Blip.tv embed ID', $this->plugin_slug ) );
-				}
-			case 'bliptv': //* Deprecated
-				$url = 'http://blip.tv/play/' . $id . '.html?p=1&backcolor=0x000000&lightcolor=0xffffff';
+			case 'myspace': # <iframe width="480" height="270" src="//media.myspace.com/play/video/ne-yo-five-minutes-to-the-stage-109621196-112305871
+				$url = '//myspace.com/play/video/' . $id;
 				break;
 			case 'collegehumor':
 				$url = 'http://www.collegehumor.com/e/' . $id;
@@ -436,7 +426,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				break;
 			case 'youtube':
 				$id = str_replace( array( '&list=', '&amp;list=' ), '?list=', $id );
-				$url = '//www.youtube.com/embed/' . $id; # TODO switch back to -nocookie.com when YT resolves issue
+				$url = '//www.youtube-nocookie.com/embed/' . $id;
 				break;
 			case 'youtubelist': //* DEPRICATED
 				$url = '//www.youtube.com/embed/videoseries?list=' . $id . '&wmode=transparent&rel=0&autohide=1&hd=1&iv_load_policy=3';
@@ -565,11 +555,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$url_autoplay_no  = add_query_arg( 'ap', 0, $url );
 				$url_autoplay_yes = add_query_arg( 'ap', 1, $url );
 				break;
-			case 'blip':
-			case 'bliptv':
-				$url_autoplay_no  = add_query_arg( 'autoStart', 'false', $url );
-				$url_autoplay_yes = add_query_arg( 'autoStart', 'true',  $url );
-				break;
 			case 'veoh':
 				$url_autoplay_no  = add_query_arg( 'videoAutoPlay', 0, $url );
 				$url_autoplay_yes = add_query_arg( 'videoAutoPlay', 1, $url );
@@ -689,7 +674,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		$promote_link = sprintf(
 			'<a href="%s" title="%s" class="arve-promote-link">%s</a>',
-			esc_url( 'https://nextgenthemes.com/download/advanced-responsive-video-embedder-pro/' ),
+			esc_url( 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/' ),
 			esc_attr( __('embedded with Advanced Responsive Video Embedder (ARVE) WordPress plugin', 'advanced-responsive-video-embedder') ),
 			esc_html( __('by ARVE', 'advanced-responsive-video-embedder') )
 		);
@@ -714,7 +699,11 @@ class Advanced_Responsive_Video_Embedder_Public {
 			static::aspect_ratio_to_padding( $args['aspect_ratio'] ),
 			$inner
 		);
-		$output .= '<button class="arve-btn arve-btn-close arve-hidden">x</button>';
+
+		if( 'lazyload-fullscreen' === $args['mode'] || 'lazyload-fixed' === $args['mode'] ) {
+			$output .= '<button class="arve-btn arve-btn-close arve-hidden">x</button>';
+		}
+
 		$output .= ( $options['promote_link'] ) ? $promote_link : '';
 		$output .= '</div>'; // .arve-wrapper
 
@@ -1030,8 +1019,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$providers = Advanced_Responsive_Video_Embedder_Shared::get_properties();
 
 		// unset deprecated and doubled
-		unset( $providers['bliptv'] );
-		unset( $providers['youtubelist'] );
 		unset( $providers['dailymotionlist'] );
 
 		$count = 1;
@@ -1149,7 +1136,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 			#'#https://(www\.)?youtube\.com/playlist.*#i'          => array( 'http://www.youtube.com/oembed?scheme=https',         true  ),
 			'#http://youtu\.be/.*#i'                              => array( 'http://www.youtube.com/oembed',                      true  ),
 			'#https://youtu\.be/.*#i'                             => array( 'http://www.youtube.com/oembed?scheme=https',         true  ),
-			'http://blip.tv/*'                                    => array( 'http://blip.tv/oembed/',                             false ),
 			'#https?://(.+\.)?vimeo\.com/.*#i'                    => array( 'http://vimeo.com/api/oembed.{format}',               true  ),
 			'#https?://(www\.)?dailymotion\.com/.*#i'             => array( 'http://www.dailymotion.com/services/oembed',         true  ),
 			'http://dai.ly/*'                                     => array( 'http://www.dailymotion.com/services/oembed',         false ),
@@ -1204,8 +1190,5 @@ class Advanced_Responsive_Video_Embedder_Public {
 		remove_shortcode( 'ted', 'shortcode_ted' );
 		wp_oembed_remove_provider( '!https?://(www\.)?ted.com/talks/view/id/.+!i' );
 		wp_oembed_remove_provider( '!https?://(www\.)?ted.com/talks/[a-zA-Z\-\_]+\.html!i' );
-
-		remove_filter( 'pre_kses', 'blip_embed_to_shortcode' );
-		remove_shortcode( 'blip.tv', 'blip_shortcode' );
 	}
 }

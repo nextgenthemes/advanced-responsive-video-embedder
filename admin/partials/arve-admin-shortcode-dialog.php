@@ -4,7 +4,7 @@
 		<label for="arve-url">URL/Embed Code</label><br>
 
 		<small class="description">
-			<?php _e('For Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike, Comedycentral and general iframe embed codes paste the embed code, for all others paste the URL! Ustream: If your Address bar URL not contains a number, click the Share->URL icons and paste that URL.', $this->plugin_slug ); ?>
+			<?php _e('For Videojug, Movieweb, Gametrailers, Yahoo!, Spike, Comedycentral and general iframe embed codes paste the embed code, for all others paste the URL! Ustream: If your Address bar URL not contains a number, click the Share->URL icons and paste that URL.', $this->plugin_slug ); ?>
 		</small>
 
 		<textarea id="arve-url" rows="3" value=""></textarea><br>

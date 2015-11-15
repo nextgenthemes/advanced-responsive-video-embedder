@@ -4,7 +4,7 @@
 	/*global tb_remove */
 	/*global arve_regex_list */
 	/*global send_to_editor */
-	/*global console */
+	/*global ajaxurl */
 
 	var create_shortcode = function() {
 
@@ -74,7 +74,6 @@
 
 		embed_regex.flickr        = /flickr\.com\/photos\/[a-zA-Z0-9@_\-]+\/([0-9]+)/i;
 		embed_regex.videojug      = /videojug\.com\/embed\/([a-z0-9\-]{36})/i;
-		embed_regex.bliptv        = /blip\.tv\/play\/([a-z0-9]+)/i;
 		embed_regex.movieweb      = /movieweb\.com\/v\/([a-z0-9]{14})/i;
 
 		// Iframe

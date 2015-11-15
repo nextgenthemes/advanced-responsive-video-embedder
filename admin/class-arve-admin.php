@@ -573,6 +573,14 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		echo "WordPress Version: $wp_version\n";
 		echo "PHP Version:       $php_version\n";
 		echo "\n";
+
+		echo "URL or Shortcode with the issue: \n";
+		echo "Link to live site with the issue: \n";
+		echo "\n";
+		echo "Detailed Description of the issue:\n";
+		echo "What you are expecting and what you are seeing instead?\n";
+		echo "\n";
+
 		echo "Active Plugins:\n";
 		echo	"\t$active_plugins\n";
 		echo "\n";
@@ -585,13 +593,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			echo "$pro_options_dump\n";
 			echo "\n";
 		}
-
-		echo "URL or Shortcode with the issue: \n";
-		echo "Link to my live site with the issue: http \n";
-		echo "\n";
-		echo "Detailed Description of the Issue:\n";
-		echo "What you are expecting and what you are seeing instead?\n";
-		echo "\n";
 		echo "</textarea>";
 	}
 
