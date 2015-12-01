@@ -180,12 +180,19 @@ class Advanced_Responsive_Video_Embedder_Shared {
 	public static function get_settings_definitions() {
 
 		return array(
+
+			array(
+				'attr'               => 'url',
+				'label'              => __( 'URL of video', 'advanced-responsive-video-embedder'),
+				'type'               => 'text',
+				'description'        => __( 'Video URL (Embed Code for some prividers)', 'advanced-responsive-video-embedder' ),
+				'hide_from_settings' => true,
+			),
 			array(
 				'attr'    => 'mode',
 				'label'   => __( 'Mode', 'advanced-responsive-video-embedder' ),
 				'type'  => 'select',
-				'options' => array(
-					'' => __( 'Default (arve-shortcode-btn value)', 'advanced-responsive-video-embedder' ) ) + Advanced_Responsive_Video_Embedder_Shared::get_supported_modes(),
+				'options' => array( '' => __( 'Default (Settings Value)', 'advanced-responsive-video-embedder' ) ) + Advanced_Responsive_Video_Embedder_Shared::get_supported_modes(),
 			),
 			array(
 				'attr'        => 'promote_link',

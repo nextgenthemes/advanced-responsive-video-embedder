@@ -25,13 +25,15 @@
 }
 
 .arve-inner {
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	height: 100%;
-	width: 100%;
-	border: 0;
+	position: absolute !important;
+	top: 0 !important;
+	left: 0 !important;
+	bottom: 0 !important;
+	height: 100% !important;
+	width: 100% !important;
+	border: 0 !important;
+	padding: 0 !important;
+	margin: 0 !important;
 }
 
 .arve-promote-link {

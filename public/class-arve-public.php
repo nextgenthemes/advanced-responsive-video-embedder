@@ -101,6 +101,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 	public function arve_shortcode( $atts ) {
 
+		if ( empty( $atts['url'] ) ) {
+			return $this->error( __( 'Missing url shortcode attribute', $this->plugin_slug ) );
+		}
+
 		$regex_list = Advanced_Responsive_Video_Embedder_Shared::get_regex_list();
 
 		foreach ( $regex_list as $provider => $regex ) {
@@ -113,7 +117,12 @@ class Advanced_Responsive_Video_Embedder_Public {
 			}
 		}
 
-		return 'No video detected';
+		if ( false === filter_var( $atts['url'], FILTER_VALIDATE_URL ) ) {
+			return $this->error( __( 'Not a valid URL', $this->plugin_slug ) );
+		}
+
+		$atts['id'] = $atts['url'];
+		return $this->build_embed( 'iframe', $atts );
 	}
 
 	/**
@@ -690,6 +699,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'data-arve-grow' => ( 'lazyload' === $args['mode'] ) ? (string) $args['grow'] : '',
 				'itemscope' => '',
 				'itemtype' => 'http://schema.org/VideoObject',
+				'thumbnailUrl' => $args['thumbnail'],
 				'style' => static::get_wrapper_style( $args['maxwidth'], $args['thumbnail'], $options ),
 			) )
 		);

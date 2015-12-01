@@ -16,15 +16,15 @@
 		// again, this is not the most elegant way to do this
 		// but well, this gets the job done nonetheless
 		var options = {
-			'id'           : '',
-			'align'        : '',
-			'mode'         : '',
-			'autoplay'     : '',
+			'id'		   : '',
+			'align'		: '',
+			'mode'		 : '',
+			'autoplay'	 : '',
 			'aspect_ratio' : '',
-			'maxwidth'     : '',
+			'maxwidth'	 : '',
 			'parameters'   : '',
-			'thumbnail'    : '',
-			'grow'         : ''
+			'thumbnail'	: '',
+			'grow'		 : ''
 		};
 
 		var shortcode = '[' + $('#arve-provider').val();
@@ -47,7 +47,7 @@
 
 		//var regExp;
 		var embed_regex = {};
-		var output      = {};
+		var output	  = {};
 
 		$.each( arve_regex_list, function( provider, regex ) {
 
@@ -70,15 +70,15 @@
 		// MTV services
 		embed_regex.comedycentral = /comedycentral\.com:([a-z0-9\-]{36})/i;
 		embed_regex.gametrailers  = /gametrailers\.com:([a-z0-9\-]{36})/i;
-		embed_regex.spike         = /spike\.com:([a-z0-9\-]{36})/i;
+		embed_regex.spike		 = /spike\.com:([a-z0-9\-]{36})/i;
 
-		embed_regex.flickr        = /flickr\.com\/photos\/[a-zA-Z0-9@_\-]+\/([0-9]+)/i;
-		embed_regex.videojug      = /videojug\.com\/embed\/([a-z0-9\-]{36})/i;
-		embed_regex.movieweb      = /movieweb\.com\/v\/([a-z0-9]{14})/i;
+		embed_regex.flickr		= /flickr\.com\/photos\/[a-zA-Z0-9@_\-]+\/([0-9]+)/i;
+		embed_regex.videojug	  = /videojug\.com\/embed\/([a-z0-9\-]{36})/i;
+		embed_regex.movieweb	  = /movieweb\.com\/v\/([a-z0-9]{14})/i;
 
 		// Iframe
-		embed_regex.iframe        = /src=(?:'|")(https?:\/\/(www\.)?[^'"]+)/i;
-		//embed_regex.fileurl       = /(.*\.(mp4|webm|ogg))$/i;
+		embed_regex.iframe		= /src=(?:'|")(https?:\/\/(www\.)?[^'"]+)/i;
+		//embed_regex.fileurl	   = /(.*\.(mp4|webm|ogg))$/i;
 
 		$.each( embed_regex, function( provider, regex ) {
 
@@ -179,7 +179,7 @@
 
 	$('.arve-settings-section').each( function() {
 
-		var id     = $(this).attr( 'id' );
+		var id	 = $(this).attr( 'id' );
 		var classs = $(this).attr( 'class' );
 		var title  = $(this).attr( 'title' );
 
@@ -224,34 +224,54 @@
 	}
 
 	$('[data-arve-image-upload]').click(function(e) {
-			e.preventDefault();
-			var target = $( this ).attr('data-arve-image-upload'),
-			image = wp.media({
-					title: 'Upload Image',
-					// mutiple: true if you want to upload multiple files at once
-					multiple: false
-			}).open()
-			.on('select', function(){
-					// This will return the selected image from the Media Uploader, the result is an object
-					var uploaded_image = image.state().get('selection').first();
-					// We convert uploaded_image to a JSON object to make accessing it easier
-					// Output to the console uploaded_image
-					//console.log(uploaded_image);
-					//console.log( $( this ) );
-					var image_url = uploaded_image.toJSON().url;
-					// Let's assign the url value to the input field
-					$( target ).val(image_url);
-			});
+		e.preventDefault();
+		var target = $( this ).attr('data-arve-image-upload'),
+		image = wp.media({
+			title: 'Upload Image',
+			// mutiple: true if you want to upload multiple files at once
+			multiple: false
+		}).open()
+		.on('select', function(){
+			// This will return the selected image from the Media Uploader, the result is an object
+			var uploaded_image = image.state().get('selection').first();
+			// We convert uploaded_image to a JSON object to make accessing it easier
+			// Output to the console uploaded_image
+			//console.log(uploaded_image);
+			//console.log( $( this ) );
+			var image_url = uploaded_image.toJSON().url;
+			// Let's assign the url value to the input field
+			$( target ).val(image_url);
+		});
 	});
 
 	$(document).on( 'click', '.arve-pro-notice .notice-dismiss', function() {
 
-    jQuery.ajax({
-        url: ajaxurl,
-        data: {
-            action: 'arve_ajax_dismiss_pro_notice'
-        }
-    });
+	jQuery.ajax({
+		url: ajaxurl,
+		data: {
+			action: 'arve_ajax_dismiss_pro_notice'
+		}
 	});
+	});
+
+	$(window).on( 'keyup', function(e) {
+		if ( e.ctrlKey && 'p' === e.key ) {
+			open_arve_dialog();
+		}
+	} );
+
+	$( '#arve-btn-new' ).on( 'click', function(e) {
+		e.preventDefault();
+		open_arve_dialog();
+	} );
+
+	function open_arve_dialog() {
+		wp.media.editor.open( 'content', {
+		  frame: 'post',
+		  state: 'shortcode-ui',
+		  currentShortcode: sui.shortcodes.findWhere( { shortcode_tag: 'arve' } ).clone(),
+		  title: shortcodeUIData.strings.media_frame_title
+		});
+	}
 
 }(jQuery));

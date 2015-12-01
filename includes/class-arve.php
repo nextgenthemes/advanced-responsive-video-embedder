@@ -156,7 +156,10 @@ class Advanced_Responsive_Video_Embedder {
 
 		// Only loaded on admin pages with editor
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
+		$this->loader->add_filter( 'mce_css', $plugin_admin, 'mce_css' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'enqueue_shortcode_ui', $plugin_admin, 'enqueue_shortcode_ui_scripts' );
+
 		$this->loader->add_action( 'admin_footer', $plugin_admin, 'print_dialog' );
 
 		// Add the options page and menu item.

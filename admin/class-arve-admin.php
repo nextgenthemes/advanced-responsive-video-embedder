@@ -76,6 +76,19 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		wp_enqueue_style( $this->plugin_slug, plugin_dir_url( __FILE__ ) . 'arve-admin.css', array(), $this->version, 'all' );
 	}
 
+	public function mce_css( $mce_css ) {
+
+		if ( ! empty( $mce_css ) ) {
+			$mce_css .= ',';
+		}
+
+		$css_file = plugin_dir_url( __DIR__ ) . 'public/arve-public.css';
+
+		$mce_css .= $css_file;
+
+		return $mce_css;
+	}
+
 	/**
 	 * Register the JavaScript for the dashboard.
 	 *
@@ -104,6 +117,10 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		}
 
 		wp_localize_script( $this->plugin_slug, 'arve_shortcodes', $shortcodes );
+	}
+
+	public function enqueue_shortcode_ui_scripts() {
+		wp_enqueue_script( $this->plugin_slug . '-sc-ui', plugin_dir_url( __FILE__ ) . 'arve-shortcode-ui.js', array(), $this->version );
 	}
 
 	/**
@@ -195,9 +212,14 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		// Our popup's title
 		$title = 'Advanced Responsive Video Embedder Shortcode Creator';
 
+		printf(
+			'<button id="arve-btn-new" class="arve-btn button add_media" title="%s" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
+			esc_attr( $title ),
+			esc_html__( 'Embed Video', $this->plugin_slug )
+		);
 		// Append the icon
 		printf(
-			'<a href="%1$s" id="arve-btn" class="button add_media thickbox" title="%2$s"><span class="wp-media-buttons-icon arve-icon"></span> %3$s</a>',
+			'<a href="%1$s" id="arve-btn" class="arve-btn button add_media thickbox" title="%2$s"><span class="wp-media-buttons-icon arve-icon"></span> %3$s</a>',
 			esc_url( '#TB_inline?&inlineId=' . $popup_id ),
 			esc_attr( $title ),
 			esc_html__( 'Embed Video', $this->plugin_slug )
@@ -212,14 +234,21 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			$attrs = array_merge( $attrs, Advanced_Responsive_Video_Embedder_Pro::get_settings_definitions() );
 		}
 
-		foreach ( $attrs as $key => $values) {
+		foreach ( $attrs as $key => $values ) {
 
 			if( isset( $values['hide_from_sc'] ) && $values['hide_from_sc'] ) {
 				continue;
 			}
 
+			if ( 'thumbnail' === $values['attr'] ) {
+				$values['type'] = 'attachment';
+				$values['libraryType'] = array( 'image' );
+				$values['addButton']   = esc_html__( 'Select Image', 'shortcode-ui' );
+				$values['frameTitle']  = esc_html__( 'Select Image', 'shortcode-ui' );
+			}
+
 			if( 'bool' === $values['type'] ) {
-				$values['type'] = 'select';
+				$values['type'] = 'radio';
 				$values['options'] = array(
 					'' => __( 'Default (uses settings)', $this->plugin_slug ),
 					'on'  => __( 'On', $this->plugin_slug ),
@@ -229,6 +258,17 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 			$sc_attrs[] = $values;
 		}
+
+		shortcode_ui_register_for_shortcode(
+			'arve',
+			array(
+				'label' => esc_html( 'ARVE' ),
+				'listItemImage' => 'dashicons-format-video',
+				'attrs' => $sc_attrs,
+			)
+		);
+
+		/*
 
 		foreach ($this->options['shortcodes'] as $sc_id => $sc) {
 
@@ -241,6 +281,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 				)
 			);
 		}
+		*/
 	}
 
 	public static function input( $args ) {
@@ -537,14 +578,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		global $wp_version;
 
-		ob_start();
-		var_dump( $this->options );
-		$options_dump = ob_get_clean();
-
-		$active_plugins = implode( "\n\t", get_option('active_plugins') );
-
-		$php_version = phpversion();
-
 		$plugin_data    = get_plugin_data( WP_PLUGIN_DIR . '/advanced-responsive-video-embedder/advanced-responsive-video-embedder.php' );
 		$pro_data       = get_plugin_data( WP_PLUGIN_DIR . '/arve-pro/arve-pro.php' );
 
@@ -566,34 +599,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			$pro_options_dump = ob_get_clean();
 		}
 
-		echo '<textarea style="font-family: monospace; width: 100%" rows="25">';
-
-		echo "ARVE Version:      $plugin_version\n";
-		echo "ARVE-Pro Version:  $pro_version\n";
-		echo "WordPress Version: $wp_version\n";
-		echo "PHP Version:       $php_version\n";
-		echo "\n";
-
-		echo "URL or Shortcode with the issue: \n";
-		echo "Link to live site with the issue: \n";
-		echo "\n";
-		echo "Detailed Description of the issue:\n";
-		echo "What you are expecting and what you are seeing instead?\n";
-		echo "\n";
-
-		echo "Active Plugins:\n";
-		echo	"\t$active_plugins\n";
-		echo "\n";
-		echo "ARVE Options:\n";
-		echo "$options_dump\n";
-		echo "\n";
-
-		if( is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
-			echo "ARVE-Pro Options:\n";
-			echo "$pro_options_dump\n";
-			echo "\n";
-		}
-		echo "</textarea>";
+		include_once( 'partials/arve-debug-info.php' );
 	}
 
 	/* ------------------------------------------------------------------------ *

@@ -7,7 +7,7 @@
 
 <p>Simple • Lightweight • Responsive • Customizable</p>
 
-<a class="btn btn-primary btn-lg" href="#purchase">Purchase Pro Addon</a>
+<a class="btn btn-primary btn-lg" href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">Purchase Pro Addon</a>
 
 
 <h3>Features</h3>
@@ -28,6 +28,8 @@
 	<li>Custom Aspect Ratio</li>
 </ul>
 
+<img src="https://nextgenthemes.com/wp-content/uploads/2015/11/GPLv3_Logo.svg" class="img-resonsive" style="width: 320px; margin-bottom: 2rem;">
+
 
 <h3>Additional Features with the Pro Addon</h3>
 <ul class="list-checked">
@@ -35,7 +37,7 @@
 		for supporting my long time work on this plugin. Tons of hours, weekends … always worked on <a href="https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/">improving it</a> 3+ years.</li>
 
 	<li><strong>Lazyload mode</strong><br>
-		Make your site load <strong>faster</strong> by loading only a image instead if the entire video player on pageload.</li>
+		Make your site load <strong>faster</strong> by loading only a image instead of the entire video player on pageload.</li>
 
 	<li><strong>Lazyload -&gt; Lightbox</strong><br>
 		Shows the Video in a Lightbox after clicking a preview image</li>
@@ -46,8 +48,6 @@
 	<li><strong>Lazyload -&gt; HTML5 Fullscreen</strong> (experimental)</li>
 
 	<li><strong>Lazyload -&gt; Half Screen Sticky</strong> (experimental)</li>
-
-	<li><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/">Check out more</a></li>
 </ul>
 
 
@@ -190,16 +190,25 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 
 ## Changelog ##
 
-### 6.6.0 Beta ###
+### Pro Addon 1.5. ###
+* **you must have version 6.6.3 or greater of the main plugin installed for pro addon 1.5 or greater**
+* Improved: rectangle animation.
+* Improved: updated lity (lightbox script) to version 1.5.0
+* Improved: thumbnail handling.
+
+### 6.6.3 Beta ###
+* New: Amazing new catchall shortcode [arve url=""] that can be used for all supported providers instead of URLs embeds, all known apply.
 * New: A default alignment can now be set in the Settings page (fulfilled request)
 * Deleted Language files in favor of [wordpress.org managed translations](https://translate.wordpress.org/projects/wp-plugins/advanced-responsive-video-embedder/dev) volunteers are welcome ;)
 * Improved: Got rid of globals
-* Improved: Added image upload dialog to settings page
-* Improved: Settings page code
+* Improved: Added image upload dialog to settings page and shortcode dialog
+* Improved:
+* Improved: Lots if code improvements
 * Improved: SSL enabled for Vevo
+* Fix: issue with unwanted borders showing on embeds
 * Fix: youtube.be URLs now detected correct in shortcode dialog
 * Fix: All Vevo URLs are now detected correctly
-
+* Removed blip because the service was shutdown.
 
 ### 6.3.4 ###
 
@@ -225,7 +234,7 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 
 ### Pro Addon 1.1.5 ###
 
-* New: Added setting and parameter grow="yes/no" to controll the grow-on-click behaviour that was introduced in 6.0 to your liking.
+* New: Added setting and parameter grow="yes/no" to control the grow-on-click behaviour that was introduced in 6.0 to your liking.
 
 ### 6.1.2 ###
 
