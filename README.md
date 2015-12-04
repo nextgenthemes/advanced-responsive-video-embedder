@@ -190,25 +190,31 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 
 ## Changelog ##
 
-### Pro Addon 1.5. ###
-* **you must have version 6.6.3 or greater of the main plugin installed for pro addon 1.5 or greater**
-* Improved: rectangle animation.
-* Improved: updated lity (lightbox script) to version 1.5.0
-* Improved: thumbnail handling.
+### Pro Addon 1.5 Beta ###
+* **you must have version 7.0.0 or greater of the main plugin installed for pro addon 1.5 or greater**
+* New: Added support for displaying title and desription (if size allows it)
+* Improved: Rectangle animation.
+* Improved: Updated lity (lightbox script) to version 1.5.0
+* Improved: Thumbnail handling.
+* Improved: Dropped the 'Lazyload Maximal Width' setting to simplify things (there still is 'Maximal Width' and 'Aligned Maximal Width').
 
-### 6.6.3 Beta ###
-* New: Amazing new catchall shortcode [arve url=""] that can be used for all supported providers instead of URLs embeds, all known apply.
+### 7.0.0 Beta ###
+* Beta is aviable this way.
+* New: Amazing new catch-all shortcode [arve url="..."] that can be used for all supported providers.
+* New: Better shortcode UI, with thumbnail selection from media gallery, preview ... requires shortcake plugin.
 * New: A default alignment can now be set in the Settings page (fulfilled request)
 * Deleted Language files in favor of [wordpress.org managed translations](https://translate.wordpress.org/projects/wp-plugins/advanced-responsive-video-embedder/dev) volunteers are welcome ;)
-* Improved: Got rid of globals
+* Improved: Got rid of globals.
 * Improved: Added image upload dialog to settings page and shortcode dialog
-* Improved:
-* Improved: Lots if code improvements
-* Improved: SSL enabled for Vevo
-* Fix: issue with unwanted borders showing on embeds
-* Fix: youtube.be URLs now detected correct in shortcode dialog
-* Fix: All Vevo URLs are now detected correctly
+* Improved: Better CSS to overwrite unwanted theme styles.
+* Improved: Lots if code improvements.
+* Improved: SSL enabled for Vevo.
+* Fix: Prevent conflicts with WP Helpers plugin (possibly others). thanks to Steve Bruner.
+* Fix: Issue with unwanted borders showing on embeds.
+* Fix: youtube.be URLs now detected correct in shortcode dialog.
+* Fix: All Vevo URLs are now detected correctly.
 * Removed blip because the service was shutdown.
+* Background-images are now applied to .arve-embed-container instead of .arve-wrapper.
 
 ### 6.3.4 ###
 
