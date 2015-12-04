@@ -187,6 +187,14 @@ class Advanced_Responsive_Video_Embedder_Public {
 					'[flickr id="2856467015"]',
 				)
 			),
+			'facebook' => array(
+				'url' => true,
+				'thumb' => false,
+				'wmode_transparent' => false,
+				'tests' => array(
+					'https://www.facebook.com/UScoastguard/videos/10153791849322679/',
+				)
+			),
 			'funnyordie' => array(
 				'name' => 'Funny or Die',
 				'url' => true,

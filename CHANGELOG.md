@@ -1,6 +1,10 @@
 ## Changelog ##
 
-### 6.3.6 ###
+### 6.3.8 ###
+
+* Fix: Facebook in lazyload modes.
+
+### 6.3.7 ###
 
 * New: Facebook video support.
 
