@@ -2,6 +2,7 @@
 
 * iframe (General support for any provider that not included that support responsive iframe embeds)
 * 4players.de
+* alugha
 * archive.org
 * blip
 * break

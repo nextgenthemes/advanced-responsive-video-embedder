@@ -4,7 +4,6 @@
 	/* Background image is applied with inline CSS */
 	background-position: center center;
 	background-size: cover;
-	background-color: #eee;
 	position: relative;
 	behavior: url(backgroundsize.min.htc); /* IE polyfill for background size */
 }

@@ -50,6 +50,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'dailymotion'            => 'dailymotion',
 				'dailymotionlist'        => 'dailymotionlist',
 				'flickr'                 => 'flickr',
+				'facebook'               => 'facebook',
 				'funnyordie'             => 'funnyordie',
 				'gametrailers'           => 'gametrailers',
 				'iframe'                 => 'iframe',
@@ -111,11 +112,11 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'youtube'         => 'wmode=transparent  iv_load_policy=3  modestbranding=1  rel=0  autohide=1',
 			)
 		);
-		
+
 		return $options[ $section ];
 	}
 
-	
+
 	/**
 	 * Get options by merging possibly existing options with defaults
 	 *
@@ -129,7 +130,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 
 		return $options;
 	}
-	
+
 	/**
 	 *
 	 * @since    3.0.0
@@ -153,6 +154,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'dailymotion'         => $hw . 'dailymotion\.com/video/([^_]+)',
 			#'dailymotion_jukebox' => $hw . 'dailymotion\.com/widget/jukebox?list\[\]=%2Fplaylist%2F([a-z0-9]+_[a-z0-9_\-]+)',
 			#'flickr'             => 'flickr',
+			'facebook'            => $hw . 'facebook\.com/(?:[^/]+)/videos/([0-9]+)',
 			'funnyordie'          => $hw . 'funnyordie\.com/videos/([a-z0-9_]+)',
 			##'gametrailers'      =>
 			'ign'                 => '(https?://(?:www\.)?ign\.com/videos/[0-9]{4}/[0-9]{2}/[0-9]{2}/[0-9a-z\-]+)',
@@ -183,19 +185,19 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'dai_ly'              => $hw . 'dai\.ly/([^_]+)',
 		);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 *
 	 * @since     5.4.0
 	 */
 	public static function get_mode_options( $selected ) {
-		
+
 		$modes = self::get_supported_modes();
 		$out   = '';
-		
+
 		foreach( $modes as $mode => $desc ) {
-			
+
 			$out .= sprintf(
 				'<option value="%s" %s>%s</option>',
 				esc_attr( $mode ),
@@ -203,10 +205,10 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				$desc
 			);
 		}
-		
+
 		return $out;
 	}
-	
+
 	public static function get_supported_modes() {
 		return apply_filters( 'arve_modes', array( 'normal' => __( 'Normal', 'advanced-responsive-video-embedder' ) ) );
 	}

@@ -1,5 +1,13 @@
 ## Changelog ##
 
+### 6.3.6 ###
+
+* New: Facebook video support.
+
+### 6.3.5 ###
+
+* Removed Github updater information that may cause some unwanted updates. You should not run any version higher then current one on wordpress.org unless your adventurous and try beta code.
+
 ### 6.3.4 ###
 
 * Fix?: Iframes are now created with a fixed 853x480 size in feeds, this probably will fix some feedreaders incorrectly or not displaying videos.
