@@ -31,20 +31,35 @@ function updateSelectFieldListener( changed, collection, shortcode ) {
 		);
 	}
 
-	var updatedVal = changed.value,
+	var val = changed.value,
+		autoplay = attributeByName( 'autoplay' ),
 		thumbnail = attributeByName( 'thumbnail' ),
-		grow = attributeByName( 'grow' );
+		grow = attributeByName( 'grow' ),
+		align = attributeByName( 'align' ),
+		mode_setting = jQuery( '#arve-btn' ).attr( 'data-arve-mode' );
 
-	if( typeof updatedVal === 'undefined' ) {
+	if( typeof val === 'undefined' ) {
 		return;
 	}
 
-	if ( '' === updatedVal || updatedVal.match('^lazyload') ) {
+	var lazyload_modes = ['lazyload', 'lazyload-lightbox', 'lazyload-fullscreen', 'lazyload-fixed'];
+
+	if ( -1 === jQuery.inArray( val, lazyload_modes ) ) {
+		autoplay.$el.show();
+		thumbnail.$el.hide();
+		grow.$el.hide(); 
+	} else {
+		autoplay.$el.hide();
 		thumbnail.$el.show();
 		grow.$el.show();
+	}
+
+	if ( 'link-lightbox' === val ) {
+		autoplay.$el.hide();
+		align.$el.hide();
 	} else {
-		thumbnail.$el.hide();
-		grow.$el.hide();
+		autoplay.$el.show();
+		align.$el.hide();
 	}
 }
 

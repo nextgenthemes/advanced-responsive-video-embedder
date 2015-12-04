@@ -102,7 +102,7 @@
 		return 'nothing matched';
 	};
 
-	$( '#arve-btn' ).click( function( event ) {
+	$( '#arve-btn-old' ).click( function( event ) {
 
 		event.preventDefault();
 
@@ -260,7 +260,7 @@
 		}
 	} );
 
-	$( '#arve-btn-new' ).on( 'click', function(e) {
+	$( '#arve-btn' ).on( 'click', function(e) {
 		e.preventDefault();
 		open_arve_dialog();
 	} );

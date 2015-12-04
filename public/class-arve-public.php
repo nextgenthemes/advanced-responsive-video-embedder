@@ -252,88 +252,89 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 */
 	public function build_embed( $provider, $atts ) {
 
-		$object_params_autoplay_yes = $object_params_autoplay_no = '';
-		$output     = '';
-		$iframe     = true;
-		$properties = Advanced_Responsive_Video_Embedder_Shared::get_properties();
-
 		$shortcode_atts_defaults = array(
 			'align'        => $this->options['align'],
 			'aspect_ratio' => isset( $properties[ $provider ]['aspect_ratio'] ) ? $properties[ $provider ]['aspect_ratio'] : '16:9',
 			'autoplay'     => (bool) $this->options['autoplay'],
 			'id'           => null,
 			'lang'         => null, # Only used for TED
-			'maxwidth'     => null,
+			'maxwidth'     => (int) $this->options['video_maxwidth'],
 			'mode'         => (string) $this->options['mode'],
 			'parameters'   => null,
 			'start'        => null, # Only used for vimeo
 			'thumbnail'    => null,
 			'link_text'    => null,
+			'title'        => null,
+			'description'  => null,
 			'grow'         => null,
 		);
 
-		$atts = shortcode_atts( $shortcode_atts_defaults, $atts, $this->options['shortcodes'][ $provider ] );
+		$args = shortcode_atts( $shortcode_atts_defaults, $atts, $this->options['shortcodes'][ $provider ] );
+		$args['iframe']      = true;
+		$args['maxwidth']    = (int) $args['maxwidth'];
+		$args['object_params_autoplay_no']  = '';
+		$args['object_params_autoplay_yes'] = '';
+		$args['properties']  = Advanced_Responsive_Video_Embedder_Shared::get_properties();
+		$args['provider']    = $provider;
 
-		extract( $atts );
+		$args['thumbnail']   = trim( $args['thumbnail'] );
+		$args['title']       = trim( $args['title'] );
+		$args['description'] = trim( $args['description'] );
 
-		$maxwidth     = (int) $maxwidth;
-		$thumbnail    = trim( $thumbnail );
+		if ( 'dailymotionlist' === $args['provider'] ) {
 
-		if ( 'dailymotionlist' === $provider ) {
-
-			switch ( $mode ) {
+			switch ( $args['mode'] ) {
 				case 'normal':
 				case 'lazyload':
 				case 'lazyload-fixed':
 				case 'lazyload-fullscreen':
-					$aspect_ratio = '640:370';
+					$args['aspect_ratio'] = '640:370';
 					break;
 			}
 		}
 
-		if ( empty( $id ) ) {
+		if ( empty( $args['id'] ) ) {
 			return $this->error( __( 'no id set', $this->plugin_slug ) );
-		} elseif ( ! preg_match('/[^\x20-\x7f]/', $provider ) ) {
+		} elseif ( ! preg_match('/[^\x20-\x7f]/', $args['provider'] ) ) {
 			// fine
 		} else {
-			return $this->error( sprintf( __( 'Provider <code>%s</code> not valid', $this->plugin_slug ), esc_html( $provider ) ) );
+			return $this->error( sprintf( __( 'Provider <code>%s</code> not valid', $this->plugin_slug ), esc_html( $args['provider'] ) ) );
 		}
 
-		switch ( $align ) {
+		switch ( $args['align'] ) {
 			case 'none':
-				$align = null;
+				$args['align'] = null;
 			case null:
 			case '':
 				break;
 			case 'left':
 			case 'right':
 			case 'center':
-				$align = "align{$align}";
+				$args['align'] = 'align' . $args['align'];
 				break;
 			default:
-				return $this->error( sprintf( __( 'Align <code>%s</code> not valid', $this->plugin_slug ), esc_html( $align ) ) );
+				return $this->error( sprintf( __( 'Align <code>%s</code> not valid', $this->plugin_slug ), esc_html( $args['align'] ) ) );
 				break;
 		}
 
-		if ( 'thumbnail' === $mode ) {
-			$mode = 'lazyload-lightbox';
+		if ( 'thumbnail' === $args['mode'] ) {
+			$args['mode'] = 'lazyload-lightbox';
 		}
 
 		$supported_modes = Advanced_Responsive_Video_Embedder_Shared::get_supported_modes();
 
-		if ( !array_key_exists( $mode, $supported_modes ) ) {
-
-			return $this->error( sprintf( __( 'Mode: <code>%s</code> is invalid or not supported. Note that you will need the Pro Addon for lazyload modes.', $this->plugin_slug ), esc_html( $mode ) ) );
+		if ( ! array_key_exists( $args['mode'], $supported_modes ) ) {
+			return $this->error( sprintf( __( 'Mode: <code>%s</code> is invalid or not supported. Note that you will need the Pro Addon for lazyload modes.', $this->plugin_slug ), esc_html( $args['mode'] ) ) );
 		}
 
-		if ( $maxwidth < 100 && in_array( $align, array( 'alignleft', 'alignright', 'aligncenter' ) ) ) {
+		if ( $args['maxwidth'] < 100 && in_array( $args['align'], array( 'alignleft', 'alignright', 'aligncenter' ) ) ) {
 
-			$maxwidth = (int) $this->options['align_maxwidth'];
+			$args['maxwidth'] = (int) $this->options['align_maxwidth'];
 		}
 
-		$maxwidth = apply_filters( 'arve_maxwidth', $maxwidth, $align, $mode );
+		$args['maxwidth'] = apply_filters( 'arve_maxwidth', $args['maxwidth'], $args['align'], $args['mode'] );
 
-		switch ( $autoplay ) {
+		switch ( $args['autoplay'] ) {
 			case null:
 			case '':
 				break;
@@ -341,151 +342,151 @@ class Advanced_Responsive_Video_Embedder_Public {
 			case '1':
 			case 'yes':
 			case 'on':
-				$autoplay = true;
+				$args['autoplay'] = true;
 				break;
 			case 'false':
 			case '0':
 			case 'no':
 			case 'off':
-				$autoplay = false;
+				$args['autoplay'] = false;
 				break;
 			default:
-				return $this->error( sprintf( __( 'Autoplay <code>%s</code> not valid', $this->plugin_slug ), $autoplay ) );
+				return $this->error( sprintf( __( 'Autoplay <code>%s</code> not valid', $this->plugin_slug ), $args['autoplay'] ) );
 				break;
 		}
 
-		switch ( $start ) {
+		switch ( $args['start'] ) {
 			case null:
 			case '':
-			case ( preg_match("/^[0-9a-z]$/", $start) ):
+			case ( preg_match("/^[0-9a-z]$/", $args['start']) ):
 				break;
 			default:
-				return $this->error( sprintf( __( 'Start <code>%s</code> not valid', $this->plugin_slug ), $start ) );
+				return $this->error( sprintf( __( 'Start <code>%s</code> not valid', $this->plugin_slug ), $args['start'] ) );
 				break;
 		}
 
-		switch ( $provider ) {
+		switch ( $args['provider'] ) {
 			case '4players':
-				$url = 'http://www.4players.de/4players.php/tvplayer_embed/4PlayersTV/' . $id;
+				$args['src'] = 'http://www.4players.de/4players.php/tvplayer_embed/4PlayersTV/' . $args['id'];
 				break;
 			case 'alugha':
-				$url = 'https://alugha.com/embed/polymer-live/?v=' . $id;
+				$args['src'] = 'https://alugha.com/embed/polymer-live/?v=' . $args['id'];
 				break;
 			case 'metacafe':
-				$url = 'http://www.metacafe.com/embed/' . $id . '/';
+				$args['src'] = 'http://www.metacafe.com/embed/' . $args['id'] . '/';
 				break;
 			case 'liveleak':
 				//* For backwards compatibilty and possible mistakes
-				if ( $id[0] != 'f' && $id[0] != 'i' ) {
-					$id = 'i=' . $id;
+				if ( $args['id'][0] != 'f' && $args['id'][0] != 'i' ) {
+					$args['id'] = 'i=' . $args['id'];
 				}
-				$url = 'http://www.liveleak.com/ll_embed?' . $id;
+				$args['src'] = 'http://www.liveleak.com/ll_embed?' . $args['id'];
 				break;
 			case 'myspace': # <iframe width="480" height="270" src="//media.myspace.com/play/video/ne-yo-five-minutes-to-the-stage-109621196-112305871
-				$url = '//myspace.com/play/video/' . $id;
+				$args['src'] = '//myspace.com/play/video/' . $args['id'];
 				break;
 			case 'collegehumor':
-				$url = 'http://www.collegehumor.com/e/' . $id;
+				$args['src'] = 'http://www.collegehumor.com/e/' . $args['id'];
 				break;
 			case 'videojug':
-				$url = 'http://www.videojug.com/embed/' . $id;
+				$args['src'] = 'http://www.videojug.com/embed/' . $args['id'];
 				break;
 			case 'veoh':
-				$url = 'http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1396&permalinkId=' . $id;
-				$object_params = sprintf( '<param name="movie" value="%s" />', esc_url( $url ) );
+				$args['src'] = 'http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1396&permalinkId=' . $args['id'];
+				$object_params = sprintf( '<param name="movie" value="%s" />', esc_url( $args['src'] ) );
 				break;
 			case 'break':
-				$url = 'http://break.com/embed/' . $id;
+				$args['src'] = 'http://break.com/embed/' . $args['id'];
 				break;
 			case 'dailymotion':
-				$url = '//www.dailymotion.com/embed/video/' . $id;
+				$args['src'] = '//www.dailymotion.com/embed/video/' . $args['id'];
 				break;
 			case 'dailymotionlist':
-				$url = '//www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2F' . $id . '%2F1';
+				$args['src'] = '//www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2F' . $args['id'] . '%2F1';
 				break;
 			case 'movieweb':
-				$url = 'http://www.movieweb.com/v/' . $id;
+				$args['src'] = 'http://www.movieweb.com/v/' . $args['id'];
 				break;
 			case 'mpora':
-				$url = 'http://mpora.com/videos/' . $id . '/embed';
+				$args['src'] = 'http://mpora.com/videos/' . $args['id'] . '/embed';
 				break;
 			case 'myvideo':
-				$url = '//www.myvideo.de/embed/' . $id;
+				$args['src'] = '//www.myvideo.de/embed/' . $args['id'];
 				break;
 			case 'vimeo':
-				$url = '//player.vimeo.com/video/' . $id;
+				$args['src'] = '//player.vimeo.com/video/' . $args['id'];
 				break;
 			case 'gametrailers':
-				$url = 'http://media.mtvnservices.com/embed/mgid:arc:video:gametrailers.com:' . $id;
+				$args['src'] = 'http://media.mtvnservices.com/embed/mgid:arc:video:gametrailers.com:' . $args['id'];
 				break;
 			case 'comedycentral':
-				$url = 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:' . $id;
+				$args['src'] = 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:' . $args['id'];
 				break;
 			case 'spike':
-				$url = 'http://media.mtvnservices.com/embed/mgid:arc:video:spike.com:' . $id;
+				$args['src'] = 'http://media.mtvnservices.com/embed/mgid:arc:video:spike.com:' . $args['id'];
 				break;
 			case 'viddler':
-				$url = '//www.viddler.com/player/' . $id . '/';
+				$args['src'] = '//www.viddler.com/player/' . $args['id'] . '/';
 				break;
 			case 'snotr':
-				$url = 'http://www.snotr.com/embed/' . $id;
+				$args['src'] = 'http://www.snotr.com/embed/' . $args['id'];
 				break;
 			case 'funnyordie':
-				$url = 'http://www.funnyordie.com/embed/' . $id;
+				$args['src'] = 'http://www.funnyordie.com/embed/' . $args['id'];
 				break;
 			case 'youtube':
-				$id = str_replace( array( '&list=', '&amp;list=' ), '?list=', $id );
-				$url = '//www.youtube-nocookie.com/embed/' . $id;
+				$args['id'] = str_replace( array( '&list=', '&amp;list=' ), '?list=', $args['id'] );
+				$args['src'] = '//www.youtube-nocookie.com/embed/' . $args['id'];
 				break;
 			case 'youtubelist': //* DEPRICATED
-				$url = '//www.youtube.com/embed/videoseries?list=' . $id . '&wmode=transparent&rel=0&autohide=1&hd=1&iv_load_policy=3';
+				$args['src'] = '//www.youtube.com/embed/videoseries?list=' . $args['id'] . '&wmode=transparent&rel=0&autohide=1&hd=1&iv_load_policy=3';
 				break;
 			case 'archiveorg':
-				$url = 'http://www.archive.org/embed/' . $id . '/';
+				$args['src'] = 'http://www.archive.org/embed/' . $args['id'] . '/';
 				break;
 			case 'flickr':
-				$url = 'http://www.flickr.com/apps/video/stewart.swf?v=109786';
-				$object_params = '<param name="flashvars" value="intl_lang=en-us&photo_secret=9da70ced92&photo_id=' . $id . '"></param>';
+				$args['src'] = 'http://www.flickr.com/apps/video/stewart.swf?v=109786';
+				$object_params = '<param name="flashvars" value="intl_lang=en-us&photo_secret=9da70ced92&photo_id=' . $args['id'] . '"></param>';
 				break;
 			case 'ustream':
-				$url = 'http://www.ustream.tv/embed/' . $id . '?v=3&wmode=transparent';
+				$args['src'] = 'http://www.ustream.tv/embed/' . $args['id'] . '?v=3&wmode=transparent';
 				break;
 			case 'yahoo':
-				$id = str_ireplace( array( 'screen.yahoo,com/', 'screen.yahoo.com/embed/' ), '', $id );
-				$url = 'http://screen.yahoo.com/embed/' . $id . '.html';
+				$id = str_ireplace( array( 'screen.yahoo,com/', 'screen.yahoo.com/embed/' ), '', $args['id'] );
+				$args['src'] = 'http://screen.yahoo.com/embed/' . $args['id'] . '.html';
 				break;
 			case 'vevo':
-				$url = '//scache.vevo.com/assets/html/embed.html?video=' . $id;
+				$args['src'] = '//scache.vevo.com/assets/html/embed.html?video=' . $args['id'];
 				break;
 			case 'ted':
 				if ( preg_match( "/^[a-z]{2}$/", $lang ) === 1 ) {
-					$url = "https://embed-ssl.ted.com/talks/lang/{$lang}/{$id}.html";
+					$args['src'] = 'https://embed-ssl.ted.com/talks/lang/' . $args['lang'] . '/' . $args['id'] . '.html';
 				} else {
-					$url = "https://embed-ssl.ted.com/talks/{$id}.html";
+					$args['src'] = 'https://embed-ssl.ted.com/talks/' . $args['id'] . 'html';
 				}
 				break;
 			case 'iframe':
-				$url = $id;
+				$args['src'] = $args['id'];
 				break;
 			case 'kickstarter':
-				$url = 'http://www.kickstarter.com/projects/' . $id . '/widget/video.html';
+				$args['src'] = 'http://www.kickstarter.com/projects/' . $args['id'] . '/widget/video.html';
 				break;
 			case 'ign':
-				$url = 'http://widgets.ign.com/video/embed/content.html?url=' . $id;
+				$args['src'] = 'http://widgets.ign.com/video/embed/content.html?url=' . $args['id'];
 				break;
 			case 'xtube':
-				$url = 'http://www.xtube.com/embedded/user/play.php?v=' . $id;
+				$args['src'] = 'http://www.xtube.com/embedded/user/play.php?v=' . $args['id'];
 				break;
 			case 'facebook':
-				$url = '//www.facebook.com/video/embed?video_id=' . $id;
+				$args['src'] = '//www.facebook.com/video/embed?video_id=' . $args['id'];
 				break;
 			case 'twitch':
-				$tw = explode( '/', $id );
+				$tw = explode( '/', $args['id'] );
 
-				$url = 'http://www.twitch.tv/' . $tw[0] . '/embed';
+				$args['src'] = 'http://www.twitch.tv/' . $tw[0] . '/embed';
 
 				if ( isset( $tw[1] ) && isset( $tw[2] ) && is_numeric( $tw[2] ) ) {
-					$url =                                       'http://www.twitch.tv/swflibs/TwitchPlayer.swf';
+					$args['src'] =                                       'http://www.twitch.tv/swflibs/TwitchPlayer.swf';
 					$object_params  = '<param name="movie" value="http://www.twitch.tv/swflibs/TwitchPlayer.swf">';
 					$object_params .= '<param name="allowNetworking" value="all">';
 
@@ -496,7 +497,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 							$videoid_flashvar = '&amp;videoId=' . $tw[1] . $tw[2];
 							break;
 						default:
-							return $this->error( sprintf( __('Twitch ID <code>%s</code> is invalid', $this->plugin_slug ), $id ) );
+							return $this->error( sprintf( __('Twitch ID <code>%s</code> is invalid', $this->plugin_slug ), $args['id'] ) );
 							break;
 					}
 
@@ -506,16 +507,16 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 				break;
 			case 'vine':
-				$url = 'https://vine.co/v/' . $id . '/embed/simple';
+				$args['src'] = 'https://vine.co/v/' . $args['id'] . '/embed/simple';
 				break;
 			default:
-				return $this->error( sprintf( __( 'Provider <code>%s</code> not valid', $this->plugin_slug ), $provider ) );
+				return $this->error( sprintf( __( 'Provider <code>%s</code> not valid', $this->plugin_slug ), $args['provider'] ) );
 				break;
 		}
 
 		if ( ! empty( $object_params ) ) {
 			$iframe = false;
-			$mode = 'normal';
+			$args['mode'] = 'normal';
 
 			if ( empty( $object_params_autoplay_yes ) ) {
 				$object_params_autoplay_yes = $object_params;
@@ -525,19 +526,17 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		//* Take parameters from Options as defaults and maybe merge custom parameters from shortcode in.
 		//* If there are no options we assume the provider not supports any params and do nothing.
-		if ( ! empty( $this->options['params'][ $provider ] ) ) {
+		if ( ! empty( $this->options['params'][ $args['provider'] ] ) ) {
 
-			$parameters        = wp_parse_args( preg_replace( '!\s+!', '&', trim( $parameters ) ) );
-			$option_parameters = wp_parse_args( preg_replace( '!\s+!', '&', trim( $this->options['params'][ $provider ] ) ) );
+			$args['parameters']        = wp_parse_args( preg_replace( '!\s+!', '&', trim( $args['parameters'] ) ) );
+			$option_parameters = wp_parse_args( preg_replace( '!\s+!', '&', trim( $this->options['params'][ $args['provider'] ] ) ) );
 
-			$parameters = wp_parse_args( $parameters, $option_parameters );
+			$args['parameters'] = wp_parse_args( $args['parameters'], $option_parameters );
 
-			$url = add_query_arg( $parameters, $url );
-
-			#d($url);
+			$args['src'] = add_query_arg( $args['parameters'], $args['src'] );
 		}
 
-		switch ( $provider ) {
+		switch ( $args['provider'] ) {
 			case 'youtube':
 			case 'youtubelist':
 			case 'vimeo':
@@ -545,32 +544,32 @@ class Advanced_Responsive_Video_Embedder_Public {
 			case 'dailymotionlist':
 			case 'viddler':
 			case 'vevo':
-				$url_autoplay_no  = add_query_arg( 'autoplay', 0, $url );
-				$url_autoplay_yes = add_query_arg( 'autoplay', 1, $url );
+				$args['url_autoplay_no']  = add_query_arg( 'autoplay', 0, $args['src'] );
+				$args['url_autoplay_yes'] = add_query_arg( 'autoplay', 1, $args['src'] );
 				break;
 			case 'ustream':
-				$url_autoplay_no  = add_query_arg( 'autoplay', 'false', $url );
-				$url_autoplay_yes = add_query_arg( 'autoplay', 'true',  $url );
+				$args['url_autoplay_no']  = add_query_arg( 'autoplay', 'false', $args['src'] );
+				$args['url_autoplay_yes'] = add_query_arg( 'autoplay', 'true',  $args['src'] );
 				break;
 			case 'yahoo':
-				$url_autoplay_no  = add_query_arg( 'player_autoplay', 'false', $url );
-				$url_autoplay_yes = add_query_arg( 'player_autoplay', 'true',  $url );
+				$args['url_autoplay_no']  = add_query_arg( 'player_autoplay', 'false', $args['src'] );
+				$args['url_autoplay_yes'] = add_query_arg( 'player_autoplay', 'true',  $args['src'] );
 				break;
 			case 'metacafe':
-				$url_autoplay_no  = $url;
-				$url_autoplay_yes = add_query_arg( 'ap', 1, $url );
+				$args['url_autoplay_no']  = $args['src'];
+				$args['url_autoplay_yes'] = add_query_arg( 'ap', 1, $args['src'] );
 				break;
 			case 'videojug':
-				$url_autoplay_no  = add_query_arg( 'ap', 0, $url );
-				$url_autoplay_yes = add_query_arg( 'ap', 1, $url );
+				$args['url_autoplay_no']  = add_query_arg( 'ap', 0, $args['src'] );
+				$args['url_autoplay_yes'] = add_query_arg( 'ap', 1, $args['src'] );
 				break;
 			case 'veoh':
-				$url_autoplay_no  = add_query_arg( 'videoAutoPlay', 0, $url );
-				$url_autoplay_yes = add_query_arg( 'videoAutoPlay', 1, $url );
+				$args['url_autoplay_no']  = add_query_arg( 'videoAutoPlay', 0, $args['src'] );
+				$args['url_autoplay_yes'] = add_query_arg( 'videoAutoPlay', 1, $args['src'] );
 				break;
 			case 'snotr':
-				$url_autoplay_no  = $url;
-				$url_autoplay_yes = add_query_arg( 'autoplay', '', $url );
+				$args['url_autoplay_no']  = $args['src'];
+				$args['url_autoplay_yes'] = add_query_arg( 'autoplay', '', $args['src'] );
 				break;
 			//* Do nothing for providers that to not support autoplay or fail with parameters
 			case 'ign':
@@ -578,68 +577,44 @@ class Advanced_Responsive_Video_Embedder_Public {
 			case 'collegehumor':
 			case 'facebook':
 			case 'twitch': //* uses flashvar for autoplay
-				$url_autoplay_no  = $url;
-				$url_autoplay_yes = $url;
+				$args['url_autoplay_no']  = $args['src'];
+				$args['url_autoplay_yes'] = $args['src'];
 				break;
 			case 'iframe':
 			default:
 				//* We are spamming all kinds of autoplay parameters here in hope of a effect
-				$url_autoplay_no  = add_query_arg( array(
+				$args['url_autoplay_no']  = add_query_arg( array(
 					'ap'               => '0',
 					'autoplay'         => '0',
 					'autoStart'        => 'false',
 					'player_autoStart' => 'false',
-				), $url );
-				$url_autoplay_yes = add_query_arg( array(
+				), $args['src'] );
+				$args['url_autoplay_yes'] = add_query_arg( array(
 					'ap'               => '1',
 					'autoplay'         => '1',
 					'autoStart'        => 'true',
 					'player_autoStart' => 'true',
-				), $url );
+				), $args['src'] );
 				break;
 		}
 
-		if ( 'vimeo' == $provider && ! empty( $start ) ) {
-			$url_autoplay_no  .= '#t=' . $start;
-			$url_autoplay_yes .= '#t=' . $start;
+		if ( 'vimeo' == $args['provider'] && ! empty( $args['start'] ) ) {
+			$args['url_autoplay_no']  .= '#t=' . $args['start'];
+			$args['url_autoplay_yes'] .= '#t=' . $args['start'];
 		}
 
-		$thumbnail = apply_filters( 'arve_thumbnail', $thumbnail, array(
-			'id'       => $id,
-			'provider' => $provider,
-			'mode'     => $mode
-		) );
+		$args['thumbnail'] = apply_filters( 'arve_thumbnail', $args['thumbnail'], $args );
 
-		if ( is_wp_error( $thumbnail ) ) {
-			return $this->error( $thumbnail->get_error_message() );
+		if ( is_wp_error( $args['thumbnail'] ) ) {
+			return $this->error( $args['thumbnail']->get_error_message() );
 		}
 
 		// We have no thumbnail for lazyload, so treat this embed as normal
-		if ( 'lazyload' === $mode && ! $thumbnail ) {
-			$mode = 'normal';
+		if ( 'lazyload' === $args['mode'] && ! $args['thumbnail'] ) {
+			$args['mode'] = 'normal';
 		}
 
-		$output = apply_filters( 'arve_output', '', array(
-			'align'                       => $align,
-			'aspect_ratio'                => $aspect_ratio,
-			'autoplay'                    => $autoplay,
-			'grow'                        => $grow,
-			'id'                          => $id,
-			'iframe'                      => $iframe,
-			'link_text'                   => $link_text,
-			'maxwidth'                    => $maxwidth,
-			'mode'                        => $mode,
-			'object_params_autoplay_no'   => $object_params_autoplay_no,
-			'object_params_autoplay_yes'  => $object_params_autoplay_yes,
-			'mode'                        => $mode,
-			'provider'                    => $provider,
-			'properties'                  => $properties,
-			'provider'                    => $provider,
-			'thumbnail'                   => $thumbnail,
-			'link_text'                   => $link_text,
-			'url_autoplay_no'             => $url_autoplay_no,
-			'url_autoplay_yes'            => $url_autoplay_yes,
-		) );
+		$output = apply_filters( 'arve_output', '', $args );
 
 		if ( is_wp_error( $output ) ) {
 			return $this->error( $output->get_error_message() );
@@ -667,7 +642,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			return sprintf(
 				'<div>%s Provider: %s<br>%s<pre>%s</pre></div>%s',
 				$options_dump,
-				$provider,
+				$args['provider'],
 				$atts_dump,
 				esc_html( $output ),
 				$output
@@ -684,34 +659,37 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$promote_link = sprintf(
 			'<a href="%s" title="%s" class="arve-promote-link">%s</a>',
 			esc_url( 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/' ),
-			esc_attr( __('embedded with Advanced Responsive Video Embedder (ARVE) WordPress plugin', 'advanced-responsive-video-embedder') ),
-			esc_html( __('by ARVE', 'advanced-responsive-video-embedder') )
+			esc_attr( __('Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', 'advanced-responsive-video-embedder') ),
+			esc_html__( 'ARVE', 'advanced-responsive-video-embedder' )
 		);
-
-		$wrapper_style = static::get_wrapper_style( $args['maxwidth'], $args['thumbnail'], $options );
 
 		$output = sprintf(
 			'<div %s>',
 			Advanced_Responsive_Video_Embedder_Shared::attr( array(
-				'id' => 'video-' . urlencode( $args['id'] ),
-				'class' => 'arve-wrapper ' . $args['align'],
+				'class'          => 'arve-wrapper ' . $args['align'],
+				'data-arve-grow' => ( 'lazyload' === $args['mode'] ) ? (string) $args['grow'] : null,
 				'data-arve-mode' => $args['mode'],
-				'data-arve-grow' => ( 'lazyload' === $args['mode'] ) ? (string) $args['grow'] : '',
-				'itemscope' => '',
-				'itemtype' => 'http://schema.org/VideoObject',
+				'id'             => 'video-' . urlencode( $args['id'] ),
+				'style'          => empty( $args['maxwidth'] ) ? false : sprintf( 'max-width: %dpx;', $args['maxwidth'] ),
+				// Schema.org
+				'itemscope'    => '',
+				'itemtype'     => 'http://schema.org/VideoObject',
+				'name'         => $args['title'],
+				'description'  => $args['description'],
 				'thumbnailUrl' => $args['thumbnail'],
-				'style' => static::get_wrapper_style( $args['maxwidth'], $args['thumbnail'], $options ),
+				'embedURL'     => $args['src'],
 			) )
 		);
 
 		$output .= sprintf(
-			'<div class="arve-embed-container" style="padding-bottom: %F%%">%s</div>',
+			'<div class="arve-embed-container" style="padding-bottom: %F%%; %s">%s</div>',
 			static::aspect_ratio_to_padding( $args['aspect_ratio'] ),
+			( $args['thumbnail'] ) ? sprintf( 'background-image:url(%s);', $args['thumbnail'] ) : '',
 			$inner
 		);
 
 		if( 'lazyload-fullscreen' === $args['mode'] || 'lazyload-fixed' === $args['mode'] ) {
-			$output .= '<button class="arve-btn arve-btn-close arve-hidden">x</button>';
+			$output .= '<button class="arve-btn arve-btn-close arve-hidden"></button>';
 		}
 
 		$output .= ( $options['promote_link'] ) ? $promote_link : '';
@@ -751,25 +729,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 	/**
 	 *
-	 * @since    4.0.0
-	 */
-	public static function get_wrapper_style( $maxwidth = false, $thumbnail = false ) {
-
-		$style = false;
-
-		if ( $maxwidth ) {
-			$style .= sprintf( 'max-width: %dpx;', $maxwidth );
-		}
-
-		if ( $thumbnail ) {
-			$style .= sprintf( 'background-image: url(%s);', esc_url( $thumbnail ) );
-		}
-
-		return $style;
-	}
-
-	/**
-	 *
 	 *
 	 * @since    2.6.0
 	 */
@@ -784,6 +743,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'frameborder'     => '0',
 			'width'           => is_feed() ? 853 : false,
 			'height'          => is_feed() ? 480 : false,
+			'style'           => null,
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -835,8 +795,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'' .
 			'</video>',
 			( $class )    ? sprintf( 'class="%s" ', esc_attr( $class ) ) : '',
-			( $src )      ? sprintf( 'src="%s" ', static::esc_url( $provider, $src ) ) : '',
-			( $data_src ) ? sprintf( 'data-src="%s" ', static::esc_url( $provider, $data_src ) ) : '',
+			( $src )      ? sprintf( 'src="%s" ', static::esc_url( $args['provider'], $src ) ) : '',
+			( $data_src ) ? sprintf( 'data-src="%s" ', static::esc_url( $args['provider'], $data_src ) ) : '',
 			( $allowfullscreen ) ? 'allowfullscreen mozallowfullscreen webkitallowfullScreen ' : ''
 		);
 	}

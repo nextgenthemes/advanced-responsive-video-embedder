@@ -155,7 +155,7 @@ class Advanced_Responsive_Video_Embedder {
 		$plugin_admin = new Advanced_Responsive_Video_Embedder_Admin( $this->get_plugin_slug(), $this->get_version() );
 
 		// Only loaded on admin pages with editor
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles', 99 );
 		$this->loader->add_filter( 'mce_css', $plugin_admin, 'mce_css' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'enqueue_shortcode_ui', $plugin_admin, 'enqueue_shortcode_ui_scripts' );

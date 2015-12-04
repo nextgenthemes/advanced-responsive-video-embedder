@@ -1,19 +1,20 @@
 .arve-wrapper {
-	margin-bottom: 20px;
+	margin-bottom: 1.5em;
 	width: 100%;
-	/* Background image is applied with inline CSS */
-	background-position: center center;
-	background-size: cover;
-	position: relative;
-	behavior: url(backgroundsize.min.htc); /* IE polyfill for background size */
+}
+
+.arve-wrapper::after {
+	content: "";
+	display: table;
+	clear: both;
 }
 
 .arve-wrapper.alignright {
-	margin-left: 20px;
+	margin-left: 1.5em;
 }
 
 .arve-wrapper.alignleft {
-	margin-right: 20px;
+	margin-right: 1.5em;
 }
 
 .arve-embed-container {
@@ -22,27 +23,29 @@
 	height: 0;
 	padding: 0 0 56.25%; /* 16/9 ratio */
 	overflow: hidden;
+	/* Background image is applied with inline CSS */
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	behavior: url(backgroundsize.min.htc); /* IE polyfill for background size */
 }
 
 .arve-inner {
 	position: absolute !important;
+	padding: 0 !important;
+	margin: 0 !important;
 	top: 0 !important;
 	left: 0 !important;
 	bottom: 0 !important;
 	height: 100% !important;
 	width: 100% !important;
 	border: 0 !important;
-	padding: 0 !important;
-	margin: 0 !important;
 }
 
 .arve-promote-link {
-	position: absolute;
-	right: 0;
-	bottom: -10px;
-	font-family: "Open Sans", "Sagoe UI", Arial, sans-serif;
-	font-size: 9px;
-	line-height: 1;
+	float: right;
+	font-family: "Open Sans", "Sagoe UI", "Arvo", "Lato", Arial, sans-serif;
+	font-size: 10px;
 }
 
 .arve-hidden {

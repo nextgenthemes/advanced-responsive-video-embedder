@@ -37,14 +37,12 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'archiveorg'          => $hw . 'archive\.org/(?:details|embed)/([0-9a-z]+)',
 			'break'               => $hw . 'break\.com/video/(?:[a-z\-]+)-([0-9]+)',
 			'collegehumor'        => $hw . 'collegehumor\.com/video/([0-9]+)',
-			##'comedycentral'     =>
 			'dailymotion_hub'     => $hw . 'dailymotion\.com/hub/' .  '[a-z0-9]+_[a-z0-9_\-]+\#video=([a-z0-9]+)',
 			'dailymotionlist'     => $hw . 'dailymotion\.com/playlist/([a-z0-9]+)',
 			'dailymotion'         => $hw . '(?:dai\.ly|dailymotion\.com/video)/([^_]+)',
 			#'dailymotion_jukebox' => $hw . 'dailymotion\.com/widget/jukebox?list\[\]=%2Fplaylist%2F([a-z0-9]+_[a-z0-9_\-]+)',
-			#'flickr'             => 'flickr',
+			'facebook'            => $hw . 'facebook\.com/(?:[^/]+)/videos/([0-9]+)', #https://www.facebook.com/UScoastguard/videos/10153791849322679/
 			'funnyordie'          => $hw . 'funnyordie\.com/videos/([a-z0-9_]+)',
-			##'gametrailers'      =>
 			'ign'                 => '(https?://(?:www\.)?ign\.com/videos/[0-9]{4}/[0-9]{2}/[0-9]{2}/[0-9a-z\-]+)',
 			##'iframe'            =>
 			'kickstarter'         => $hw . 'kickstarter\.com/projects/([0-9a-z\-]+/[0-9a-z\-]+)',
@@ -56,18 +54,24 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'myvideo'             => $hw . 'myvideo\.de/(?:watch|embed)/([0-9]{7,8})',
 			'snotr'               => $hw . 'snotr\.com/(?:video|embed)/([0-9]+)',
 			'twitch'              => 'https?://(?:www\.|[a-z\-]{2,5}\.)?twitch.tv/([a-z0-9_/]+)',
-			##'spike'             =>
 			'ustream'             => $hw . 'ustream\.tv/(?:channel/)?([0-9]{8}|recorded/[0-9]{8}(/highlight/[0-9]+)?)',
 			'veoh'                => $hw . 'veoh\.com/watch/([a-z0-9]+)',
 			'vevo'                => $hw . 'vevo\.com/watch/(?:[^\/]+/[^\/]+/)?([a-z0-9]+)',
 			'viddler'             => $hw . 'viddler\.com/(?:embed|v)/([a-z0-9]{8})',
 			'vine'                => $hw . 'vine\.co/v/([a-z0-9]+)',
-			##'videojug'          =>
 			'vimeo'               => $hw . 'vimeo\.com/(?:(?:channels/[a-z]+/)|(?:groups/[a-z]+/videos/))?([0-9]+)',
 			'yahoo'               => $hw . '(?:screen|shine|omg)\.yahoo\.com/(?:embed/)?([a-z0-9\-]+/[a-z0-9\-]+)\.html',
 			'ted'                 => 'https?://(?:www\.|new\.)?ted\.com/talks/([a-z0-9_]+)',
 			'xtube'               => $hw . 'xtube\.com/watch\.php\?v=([a-z0-9_\-]+)',
 			'youtube'             => $hw . '(?:youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v\=))|youtu\.be\/)([a-zA-Z0-9_-]{6,11}((?:\?|&)list=[a-z0-9_\-]+)?)',
+			// iframe src only
+			'flickr'              => $hw . 'flickr\.com\/photos\/[a-zA-Z0-9@_\-]+\/([0-9]+)',
+			'videojug'	          => $hw . 'videojug\.com\/embed\/([a-z0-9\-]{36})',
+			'movieweb'	          => $hw . 'movieweb\.com\/v\/([a-z0-9]{14})',
+			// MTV iframe only
+			'comedycentral'       => $hw . 'comedycentral\.com:([a-z0-9\-]{36})',
+			'gametrailers'        => $hw . 'gametrailers\.com:([a-z0-9\-]{36})',
+			'spike'               => $hw . 'spike\.com:([a-z0-9\-]{36})',
 		);
 	}
 
@@ -98,6 +102,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'dailymotion'     => 'dailymotion',
 				'dailymotionlist' => 'dailymotionlist',
 				'flickr'          => 'flickr',
+				'facebook'        => 'facebook',
 				'funnyordie'      => 'funnyordie',
 				'gametrailers'    => 'gametrailers',
 				'iframe'          => 'iframe',
@@ -155,7 +160,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				#'videojug'        => '',
 				'vimeo'           => 'html5=1  title=0  byline=0  portrait=0  ',
 				#'yahoo'           => '',
-				'youtube'         => 'wmode=transparent  iv_load_policy=3  modestbranding=1  rel=0  autohide=1',
+				'youtube'         => 'wmode=transparent  iv_load_policy=3  modestbranding=1  rel=0  autohide=1  ',
 			)
 		);
 
@@ -179,39 +184,78 @@ class Advanced_Responsive_Video_Embedder_Shared {
 
 	public static function get_settings_definitions() {
 
-		return array(
+		$options = static::get_options();
+		$modes = static::get_supported_modes();
 
+		if ( ! empty( $modes ) ) {
+			$current_mode_name = $modes[ $options['mode'] ];
+		} else {
+			$current_mode_name = $options['mode'];
+		}
+
+		return array(
 			array(
-				'attr'               => 'url',
-				'label'              => __( 'URL of video', 'advanced-responsive-video-embedder'),
-				'type'               => 'text',
-				'description'        => __( 'Video URL (Embed Code for some prividers)', 'advanced-responsive-video-embedder' ),
 				'hide_from_settings' => true,
+				'attr'   => 'url',
+				'label'  => __( 'URL of video', 'advanced-responsive-video-embedder'),
+				'type'   => 'text',
+				'meta'   => array(
+					'class'       => 'large-text',
+					'placeholder' => __( 'Video URL (Embed Code for some prividers)', 'advanced-responsive-video-embedder' ),
+				)
 			),
 			array(
 				'attr'    => 'mode',
 				'label'   => __( 'Mode', 'advanced-responsive-video-embedder' ),
-				'type'  => 'select',
-				'options' => array( '' => __( 'Default (Settings Value)', 'advanced-responsive-video-embedder' ) ) + Advanced_Responsive_Video_Embedder_Shared::get_supported_modes(),
+				'type'    => 'select',
+				'options' =>
+					array(
+						'' => sprintf( __( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $current_mode_name )
+					) + Advanced_Responsive_Video_Embedder_Shared::get_supported_modes(),
 			),
 			array(
-				'attr'        => 'promote_link',
-				'label'       => __( 'Help Me?', 'advanced-responsive-video-embedder'),
-				'type'        => 'bool',
-				'description' => __( "Shows a small 'by ARVE' link below the videos to help me promote this plugin", 'advanced-responsive-video-embedder' ),
-				'hide_from_sc'   => true,
+				'hide_from_sc' => true,
+				'attr'         => 'promote_link',
+				'label'        => __( 'Help Me?', 'advanced-responsive-video-embedder' ),
+				'type'         => 'select',
+				'options' => array(
+					'' => sprintf( __( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $options['align'] ),
+					'yes'   => __( 'Yes', 'advanced-responsive-video-embedder' ),
+					'no'    => __( 'No', 'advanced-responsive-video-embedder' ),
+				),
+				'description'  => __( "Shows a small 'by ARVE' link below the videos to help me promote this plugin", 'advanced-responsive-video-embedder' ),
 			),
 			array(
 				'attr'  => 'align',
 				'label' => __('Alignment', 'advanced-responsive-video-embedder' ),
 				'type'  => 'select',
 				'options' => array(
-					''       => __( 'Default', 'advanced-responsive-video-embedder' ),
+					'' => sprintf( __( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $options['align'] ),
 					'none'   => __( 'None', 'advanced-responsive-video-embedder' ),
 					'left'   => __( 'Left', 'advanced-responsive-video-embedder' ),
 					'right'  => __( 'Right', 'advanced-responsive-video-embedder' ),
 					'center' => __( 'center', 'advanced-responsive-video-embedder' ),
 				),
+			),
+			array(
+				'hide_from_settings' => true,
+				'attr'  => 'title',
+				'label' => __('Title', 'advanced-responsive-video-embedder'),
+				'type'  => 'text',
+				'meta'  => array(
+					'class' => 'large-text',
+					'placeholder' => __( 'Title for lazyload thumbnail & schema.org "name" for SEO', 'advanced-responsive-video-embedder' ),
+				)
+			),
+			array(
+				'hide_from_settings' => true,
+				'attr'  => 'description',
+				'label' => __('Description', 'advanced-responsive-video-embedder'),
+				'type'  => 'text',
+				'meta'  => array(
+					'class' => 'large-text',
+					'placeholder' => __( 'Schema.org "description" for SEO', 'advanced-responsive-video-embedder' ),
+				)
 			),
 			array(
 				'attr'  => 'autoplay',
@@ -220,24 +264,36 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'description' => __( 'Autoplay videos in normal mode, has no effect on lazyload modes.', 'advanced-responsive-video-embedder' ),
 			),
 			array(
+				'hide_from_sc'   => true,
 				'attr'  => 'video_maxwidth',
 				'label'       => __('Maximal Width', 'advanced-responsive-video-embedder'),
 				'type'        =>  'number',
 				'description' => __( 'Optional, if not set your videos will be the maximum size of the container they are in. If your content area has a big width you might want to set this. Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
 			),
 			array(
+				'hide_from_settings' => true,
+				'attr'  => 'maxwidth',
+				'label' => __('Maximal Width', 'advanced-responsive-video-embedder'),
+				'type'  =>  'number',
+				'meta'  => array(
+					'placeholder' => __( 'in px - leave empty to use settings', 'advanced-responsive-video-embedder'),
+				),
+			),
+			array(
+				'hide_from_sc'   => true,
 				'attr'  => 'align_maxwidth',
 				'label'       => __('Align Maximal Width', 'advanced-responsive-video-embedder'),
 				'type'        => 'number',
-				'description'   => __( 'Needed! Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
-				'hide_from_sc'   => true,
+				'description' => __( 'Needed! Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
 			),
 			array(
-				'attr'  => 'aspect_ratio',
-				'label'            => __('Aspect Ratio', 'advanced-responsive-video-embedder'),
-				'type'             => 'text',
-				'placeholder'      => '4:3',
 				'hide_from_settings' => true,
+				'attr'  => 'aspect_ratio',
+				'label' => __('Aspect Ratio', 'advanced-responsive-video-embedder'),
+				'type'  => 'text',
+				'meta'  => array(
+					'placeholder' => __( 'Leave empty if there is no specific need for a unusial ratio like 4:3, 21:9 ...', 'advanced-responsive-video-embedder'),
+				),
 			),
 		);
 	}
@@ -249,9 +305,9 @@ class Advanced_Responsive_Video_Embedder_Shared {
 	 */
 	public static function get_mode_options( $selected ) {
 
-		$modes = self::get_supported_modes();
+		$modes = static::get_supported_modes();
 
-		$out   = '';
+		$out = '';
 
 		foreach( $modes as $mode => $desc ) {
 
@@ -341,7 +397,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				),
 				'query_args' => array(
 					'api' => array(
-						'name' => __('API', 'advanced-responsive-video-embedder'),
+						'name' => __( 'API', 'advanced-responsive-video-embedder' ),
 						'type' => 'bool',
 					),
 				),

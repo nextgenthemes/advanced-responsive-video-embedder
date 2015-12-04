@@ -53,9 +53,11 @@ ARVE OPTIONS:
 ob_start();
 var_dump( get_option( 'arve_options_main' ) );
 echo ob_get_clean();
+
 ob_start();
 var_dump( get_option( 'arve_options_shortcodes' ) );
 echo ob_get_clean();
+
 ob_start();
 var_dump( get_option( 'arve_options_params' ) );
 echo ob_get_clean();

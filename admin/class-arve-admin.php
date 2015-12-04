@@ -213,13 +213,13 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		$title = 'Advanced Responsive Video Embedder Shortcode Creator';
 
 		printf(
-			'<button id="arve-btn-new" class="arve-btn button add_media" title="%s" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
+			'<button id="arve-btn" title="%s" data-arve-mode="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
 			esc_attr( $title ),
+			esc_attr( $this->options['mode'] ),
 			esc_html__( 'Embed Video', $this->plugin_slug )
 		);
-		// Append the icon
 		printf(
-			'<a href="%1$s" id="arve-btn" class="arve-btn button add_media thickbox" title="%2$s"><span class="wp-media-buttons-icon arve-icon"></span> %3$s</a>',
+			'<a href="%1$s" id="arve-btn-old" class="arve-btn button add_media thickbox" title="%2$s"><span class="wp-media-buttons-icon arve-icon"></span> %3$s</a>',
 			esc_url( '#TB_inline?&inlineId=' . $popup_id ),
 			esc_attr( $title ),
 			esc_html__( 'Embed Video', $this->plugin_slug )
@@ -731,23 +731,25 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		);
 
 		// Globalize the metaboxes array, this holds all the widgets for wp-admin
-		global $wp_meta_boxes;
+		global $wp_meta_boxes, $pagenow;
 
-		// Get the regular dashboard widgets array
-		// (which has our new widget already but at the end)
-		$normal_dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
+		if( 'index.php' == $pagenow ) {
 
-		// Backup and delete our new dashboard widget from the end of the array
-		$arve_widget_backup = array( 'arve_dashboard_widget' => $normal_dashboard['arve_dashboard_widget'] );
-		unset( $normal_dashboard['arve_dashboard_widget'] );
+			// Get the regular dashboard widgets array
+			// (which has our new widget already but at the end)
+			$normal_dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
 
-		// Merge the two arrays together so our widget is at the beginning
-		$sorted_dashboard = array_merge( $arve_widget_backup, $normal_dashboard );
+			// Backup and delete our new dashboard widget from the end of the array
+			$arve_widget_backup = array( 'arve_dashboard_widget' => $normal_dashboard['arve_dashboard_widget'] );
+			unset( $normal_dashboard['arve_dashboard_widget'] );
 
-		// Save the sorted array back into the original metaboxes
-		$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
+			// Merge the two arrays together so our widget is at the beginning
+			$sorted_dashboard = array_merge( $arve_widget_backup, $normal_dashboard );
+
+			// Save the sorted array back into the original metaboxes
+			$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
+		}
 	}
-
 
 	/**
 	 * Create the function to output the contents of our Dashboard Widget.
