@@ -238,20 +238,20 @@
 			// Output to the console uploaded_image
 			//console.log(uploaded_image);
 			//console.log( $( this ) );
-			var image_url = uploaded_image.toJSON().url;
+			var attachment_id = uploaded_image.toJSON().id;
 			// Let's assign the url value to the input field
-			$( target ).val(image_url);
+			$( target ).val(attachment_id);
 		});
 	});
 
 	$(document).on( 'click', '.arve-pro-notice .notice-dismiss', function() {
 
-	jQuery.ajax({
-		url: ajaxurl,
-		data: {
-			action: 'arve_ajax_dismiss_pro_notice'
-		}
-	});
+		jQuery.ajax({
+			url: ajaxurl,
+			data: {
+				action: 'arve_ajax_dismiss_pro_notice'
+			}
+		});
 	});
 
 	$(window).on( 'keyup', function(e) {

@@ -41,7 +41,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'dailymotionlist'     => $hw . 'dailymotion\.com/playlist/([a-z0-9]+)',
 			'dailymotion'         => $hw . '(?:dai\.ly|dailymotion\.com/video)/([^_]+)',
 			#'dailymotion_jukebox' => $hw . 'dailymotion\.com/widget/jukebox?list\[\]=%2Fplaylist%2F([a-z0-9]+_[a-z0-9_\-]+)',
-			'facebook'            => $hw . 'facebook\.com/(?:[^/]+)/videos/([0-9]+)', #https://www.facebook.com/UScoastguard/videos/10153791849322679/
+			'facebook'            => $hw . 'facebook\.com/(?:[^/]+)/videos/([0-9]+)',
 			'funnyordie'          => $hw . 'funnyordie\.com/videos/([a-z0-9_]+)',
 			'ign'                 => '(https?://(?:www\.)?ign\.com/videos/[0-9]{4}/[0-9]{2}/[0-9]{2}/[0-9a-z\-]+)',
 			##'iframe'            =>
@@ -425,7 +425,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,
-
 				'tests' => array()
 			),
 			'flickr' => array(
@@ -434,6 +433,14 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'wmode_transparent' => false,
 				'tests' => array(
 					'[flickr id="2856467015"]',
+				)
+			),
+			'facebook' => array(
+				'url' => true,
+				'thumb' => false,
+				'wmode_transparent' => false,
+				'tests' => array(
+					'https://www.facebook.com/UScoastguard/videos/10153791849322679/',
 				)
 			),
 			'funnyordie' => array(

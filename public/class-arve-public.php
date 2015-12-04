@@ -483,6 +483,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			case 'twitch':
 				$tw = explode( '/', $args['id'] );
 
+				/*
 				$args['src'] = 'http://www.twitch.tv/' . $tw[0] . '/embed';
 
 				if ( isset( $tw[1] ) && isset( $tw[2] ) && is_numeric( $tw[2] ) ) {
@@ -504,6 +505,27 @@ class Advanced_Responsive_Video_Embedder_Public {
 					$object_params_autoplay_yes = $object_params . sprintf( '<param name="flashvars" value="channel=%s%s&amp;auto_play=true">', $tw[0], $videoid_flashvar );
 					$object_params_autoplay_no  = $object_params . sprintf( '<param name="flashvars" value="channel=%s%s&amp;auto_play=false">', $tw[0], $videoid_flashvar );
 				}
+				*/
+
+				$args['src'] = 'http://player.twitch.tv/?channel=' . $tw[0];
+
+				if ( isset( $tw[1] ) && isset( $tw[2] ) && is_numeric( $tw[2] ) ) {
+
+					switch( $tw[1] ) {
+						case 'b':
+							$args['src'] = 'http://player.twitch.tv/?video=a' . $tw[2];
+							break;
+						case 'c':
+							$args['src'] = 'http://player.twitch.tv/?video=c' . $tw[2];
+							break;
+						case 'v':
+							$args['src'] = 'http://player.twitch.tv/?video=v' . $tw[2];
+							break;
+						default:
+							return $this->error( sprintf( __('Twitch ID <code>%s</code> is invalid', $this->plugin_slug ), $args['id'] ) );
+							break;
+					}
+				}
 
 				break;
 			case 'vine':
@@ -515,8 +537,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		if ( ! empty( $object_params ) ) {
-			$iframe = false;
-			$args['mode'] = 'normal';
+			$args['iframe'] = false;
+			$args['mode']   = 'normal';
 
 			if ( empty( $object_params_autoplay_yes ) ) {
 				$object_params_autoplay_yes = $object_params;
@@ -528,8 +550,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 		//* If there are no options we assume the provider not supports any params and do nothing.
 		if ( ! empty( $this->options['params'][ $args['provider'] ] ) ) {
 
-			$args['parameters']        = wp_parse_args( preg_replace( '!\s+!', '&', trim( $args['parameters'] ) ) );
-			$option_parameters = wp_parse_args( preg_replace( '!\s+!', '&', trim( $this->options['params'][ $args['provider'] ] ) ) );
+			$args['parameters'] = wp_parse_args( preg_replace( '!\s+!', '&', trim( $args['parameters'] ) ) );
+			$option_parameters  = wp_parse_args( preg_replace( '!\s+!', '&', trim( $this->options['params'][ $args['provider'] ] ) ) );
 
 			$args['parameters'] = wp_parse_args( $args['parameters'], $option_parameters );
 
@@ -544,32 +566,32 @@ class Advanced_Responsive_Video_Embedder_Public {
 			case 'dailymotionlist':
 			case 'viddler':
 			case 'vevo':
-				$args['url_autoplay_no']  = add_query_arg( 'autoplay', 0, $args['src'] );
-				$args['url_autoplay_yes'] = add_query_arg( 'autoplay', 1, $args['src'] );
+				$args['src_autoplay_no']  = add_query_arg( 'autoplay', 0, $args['src'] );
+				$args['src_autoplay_yes'] = add_query_arg( 'autoplay', 1, $args['src'] );
 				break;
 			case 'ustream':
-				$args['url_autoplay_no']  = add_query_arg( 'autoplay', 'false', $args['src'] );
-				$args['url_autoplay_yes'] = add_query_arg( 'autoplay', 'true',  $args['src'] );
+				$args['src_autoplay_no']  = add_query_arg( 'autoplay', 'false', $args['src'] );
+				$args['src_autoplay_yes'] = add_query_arg( 'autoplay', 'true',  $args['src'] );
 				break;
 			case 'yahoo':
-				$args['url_autoplay_no']  = add_query_arg( 'player_autoplay', 'false', $args['src'] );
-				$args['url_autoplay_yes'] = add_query_arg( 'player_autoplay', 'true',  $args['src'] );
+				$args['src_autoplay_no']  = add_query_arg( 'player_autoplay', 'false', $args['src'] );
+				$args['src_autoplay_yes'] = add_query_arg( 'player_autoplay', 'true',  $args['src'] );
 				break;
 			case 'metacafe':
-				$args['url_autoplay_no']  = $args['src'];
-				$args['url_autoplay_yes'] = add_query_arg( 'ap', 1, $args['src'] );
+				$args['src_autoplay_no']  = $args['src'];
+				$args['src_autoplay_yes'] = add_query_arg( 'ap', 1, $args['src'] );
 				break;
 			case 'videojug':
-				$args['url_autoplay_no']  = add_query_arg( 'ap', 0, $args['src'] );
-				$args['url_autoplay_yes'] = add_query_arg( 'ap', 1, $args['src'] );
+				$args['src_autoplay_no']  = add_query_arg( 'ap', 0, $args['src'] );
+				$args['src_autoplay_yes'] = add_query_arg( 'ap', 1, $args['src'] );
 				break;
 			case 'veoh':
-				$args['url_autoplay_no']  = add_query_arg( 'videoAutoPlay', 0, $args['src'] );
-				$args['url_autoplay_yes'] = add_query_arg( 'videoAutoPlay', 1, $args['src'] );
+				$args['src_autoplay_no']  = add_query_arg( 'videoAutoPlay', 0, $args['src'] );
+				$args['src_autoplay_yes'] = add_query_arg( 'videoAutoPlay', 1, $args['src'] );
 				break;
 			case 'snotr':
-				$args['url_autoplay_no']  = $args['src'];
-				$args['url_autoplay_yes'] = add_query_arg( 'autoplay', '', $args['src'] );
+				$args['src_autoplay_no']  = $args['src'];
+				$args['src_autoplay_yes'] = add_query_arg( 'autoplay', '', $args['src'] );
 				break;
 			//* Do nothing for providers that to not support autoplay or fail with parameters
 			case 'ign':
@@ -577,19 +599,19 @@ class Advanced_Responsive_Video_Embedder_Public {
 			case 'collegehumor':
 			case 'facebook':
 			case 'twitch': //* uses flashvar for autoplay
-				$args['url_autoplay_no']  = $args['src'];
-				$args['url_autoplay_yes'] = $args['src'];
+				$args['src_autoplay_no']  = $args['src'];
+				$args['src_autoplay_yes'] = $args['src'];
 				break;
 			case 'iframe':
 			default:
 				//* We are spamming all kinds of autoplay parameters here in hope of a effect
-				$args['url_autoplay_no']  = add_query_arg( array(
+				$args['src_autoplay_no']  = add_query_arg( array(
 					'ap'               => '0',
 					'autoplay'         => '0',
 					'autoStart'        => 'false',
 					'player_autoStart' => 'false',
 				), $args['src'] );
-				$args['url_autoplay_yes'] = add_query_arg( array(
+				$args['src_autoplay_yes'] = add_query_arg( array(
 					'ap'               => '1',
 					'autoplay'         => '1',
 					'autoStart'        => 'true',
@@ -599,8 +621,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		if ( 'vimeo' == $args['provider'] && ! empty( $args['start'] ) ) {
-			$args['url_autoplay_no']  .= '#t=' . $args['start'];
-			$args['url_autoplay_yes'] .= '#t=' . $args['start'];
+			$args['src_autoplay_no']  .= '#t=' . $args['start'];
+			$args['src_autoplay_yes'] .= '#t=' . $args['start'];
 		}
 
 		$args['thumbnail'] = apply_filters( 'arve_thumbnail', $args['thumbnail'], $args );
@@ -705,12 +727,12 @@ class Advanced_Responsive_Video_Embedder_Public {
 			if ( $args['iframe'] ) {
 
 				$embed = static::create_iframe( array (
-					'src' => ( $args['autoplay'] ) ? $args['url_autoplay_yes'] : $args['url_autoplay_no'],
+					'src' => ( $args['autoplay'] ) ? $args['src_autoplay_yes'] : $args['src_autoplay_no'],
 				) );
 
 			} else {
 
-				$data    = ( $args['autoplay'] ) ? $args['url_autoplay_yes']           : $args['url_autoplay_no'];
+				$data    = ( $args['autoplay'] ) ? $args['src_autoplay_yes']           : $args['src_autoplay_no'];
 				$oparams = ( $args['autoplay'] ) ? $args['object_params_autoplay_yes'] : $args['object_params_autoplay_no'];
 
 				$embed = $this->create_object( $data, $oparams );
