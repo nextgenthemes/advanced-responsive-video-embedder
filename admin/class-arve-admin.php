@@ -240,22 +240,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 				continue;
 			}
 
-			if ( 'thumbnail' === $values['attr'] ) {
-				$values['type'] = 'attachment';
-				$values['libraryType'] = array( 'image' );
-				$values['addButton']   = esc_html__( 'Select Image', 'shortcode-ui' );
-				$values['frameTitle']  = esc_html__( 'Select Image', 'shortcode-ui' );
-			}
-
-			if( 'bool' === $values['type'] ) {
-				$values['type'] = 'radio';
-				$values['options'] = array(
-					'' => __( 'Default (uses settings)', $this->plugin_slug ),
-					'on'  => __( 'On', $this->plugin_slug ),
-					'off' => __( 'Off', $this->plugin_slug ),
-				);
-			}
-
 			$sc_attrs[] = $values;
 		}
 
@@ -286,13 +270,9 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 	public static function input( $args ) {
 
-		if ( 'url' === $args['input_attr']['type'] ) {
-			$args['input_attr']['class'] = 'large-text';
-		}
-
 		$out = sprintf( '<input %s>', Advanced_Responsive_Video_Embedder_Shared::attr( $args['input_attr'] ) );
 
-		if ( 'url' === $args['input_attr']['type'] ) {
+		if ( ! empty( $args['option_values']['attr'] ) &&'thumbnail_fallback' == $args['option_values']['attr'] ) {
 
 			// jQuery
 			wp_enqueue_script('jquery');
@@ -337,8 +317,17 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		foreach ( $args['option_values']['options'] as $key => $value ) {
 
-			$current_option = ( 'bool' === $args['option_values']['type'] ) ? (bool) $args['input_attr']['value'] : $args['input_attr']['value'];
-			$compare_option = ( 'bool' === $args['option_values']['type'] ) ? (bool) $key : $key;
+			if (
+				2 === count( $args['option_values']['options'] ) &&
+				array_key_exists( 0, $args['option_values']['options'] ) &&
+				array_key_exists( 1, $args['option_values']['options'] )
+			) {
+				$current_option = (bool) $args['input_attr']['value'];
+				$compare_option = (bool) $key;
+			} else {
+				$current_option = $args['input_attr']['value'];
+				$compare_option = $key;
+			}
 
 			$options[] = sprintf(
 				'<option value="%s" %s>%s</option>',
@@ -380,18 +369,16 @@ class Advanced_Responsive_Video_Embedder_Admin {
 				continue;
 			};
 
+			if ( empty( $v['meta'] ) ) {
+				$v['meta'] = array();
+			};
+
 			if ( isset( $v['options'][''] ) ) {
 				unset( $v['options'][''] );
 			}
 
 			if( in_array( $v['type'], array( 'text', 'number', 'url' ) ) ) {
 				$callback_function = 'input';
-			} elseif( 'bool' === $v['type'] ) {
-				$callback_function = 'select';
-				$v['options'] = array(
-					1 => __( 'Yes', $this->plugin_slug ),
-					0 => __( 'No', $this->plugin_slug ),
-				);
 			} else {
 				$callback_function = $v['type'];
 			}
@@ -404,17 +391,13 @@ class Advanced_Responsive_Video_Embedder_Admin {
 				'main_section',                     // section
 				array(                              // args
 					'label_for'   => ( 'radio' === $v['type'] ) ? null : "arve_options_main[{$v['attr']}]",
-					'input_attr'  => array(
+					'input_attr'  => $v['meta'] + array(
 						'type'        => $v['type'],
 						'value'       => $this->options[ $v['attr'] ],
 						'id'          => "arve_options_main[{$v['attr']}]",
 						'name'        => "arve_options_main[{$v['attr']}]",
-						'class'       => null,
-						'placeholder' => empty( $v['placeholder'] ) ? null : $v['placeholder'],
 					),
 					'description'   => ! empty( $v['description'] ) ? $v['description'] : null,
-					#'options'       => $this->options,
-					#'option_id'     => $v['attr'],
 					'option_values' => $v,
 				)
 			);

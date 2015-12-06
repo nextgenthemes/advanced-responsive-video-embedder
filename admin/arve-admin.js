@@ -5,6 +5,7 @@
 	/*global arve_regex_list */
 	/*global send_to_editor */
 	/*global ajaxurl */
+	/*global sui */
 
 	var create_shortcode = function() {
 
@@ -255,7 +256,7 @@
 	});
 
 	$(window).on( 'keyup', function(e) {
-		if ( e.ctrlKey && 'p' === e.key ) {
+		if ( e.ctrlKey && e.shiftKey && 'v' === e.key ) {
 			open_arve_dialog();
 		}
 	} );
@@ -266,12 +267,12 @@
 	} );
 
 	function open_arve_dialog() {
-		wp.media.editor.open( 'content', {
-		  frame: 'post',
-		  state: 'shortcode-ui',
-		  currentShortcode: sui.shortcodes.findWhere( { shortcode_tag: 'arve' } ).clone(),
-		  title: shortcodeUIData.strings.media_frame_title
-		});
+		var arve_shortcode = sui.utils.shortcodeViewConstructor.parseShortcodeString( '[arve]' );
+		wp.media({
+			frame : 'post',
+			state : 'shortcode-ui',
+			currentShortcode : arve_shortcode
+		}).open();
 	}
 
 }(jQuery));

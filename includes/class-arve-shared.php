@@ -219,9 +219,9 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'label'        => __( 'Help Me?', 'advanced-responsive-video-embedder' ),
 				'type'         => 'select',
 				'options' => array(
-					'' => sprintf( __( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $options['align'] ),
-					'yes'   => __( 'Yes', 'advanced-responsive-video-embedder' ),
-					'no'    => __( 'No', 'advanced-responsive-video-embedder' ),
+					''  => sprintf( __( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $options['align'] ),
+					1 => __( 'Yes', 'advanced-responsive-video-embedder' ),
+					0 => __( 'No', 'advanced-responsive-video-embedder' ),
 				),
 				'description'  => __( "Shows a small 'by ARVE' link below the videos to help me promote this plugin", 'advanced-responsive-video-embedder' ),
 			),
@@ -260,7 +260,12 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			array(
 				'attr'  => 'autoplay',
 				'label' => __('Autoplay', 'advanced-responsive-video-embedder' ),
-				'type'  => 'bool',
+				'type'  => 'select',
+				'options' => array(
+					''  => sprintf( __( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $options['autoplay'] ),
+					1 => __( 'Yes', 'advanced-responsive-video-embedder' ),
+					0 => __( 'No', 'advanced-responsive-video-embedder' ),
+				),
 				'description' => __( 'Autoplay videos in normal mode, has no effect on lazyload modes.', 'advanced-responsive-video-embedder' ),
 			),
 			array(
@@ -284,7 +289,9 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'attr'  => 'align_maxwidth',
 				'label'       => __('Align Maximal Width', 'advanced-responsive-video-embedder'),
 				'type'        => 'number',
-				'description' => __( 'Needed! Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
+				'meta'        => array(
+					'placeholder' => __( 'Needed! Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
+				)
 			),
 			array(
 				'hide_from_settings' => true,
