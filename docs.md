@@ -78,6 +78,7 @@ For example if you have set Mode to Normal and Maximal Video Width to 500 the pl
 
 Attribute     | Used for
 ------------- | ----------------------------
+url           | [[arve]] shortcode only.
 id            | Is required for shortcodes and automatically generated within the shortcode button, obsolete for embeds via URL. For the `[[iframe]]` Shortcode this becomes the what would be the `src` for in a html iframe code
 mode          | (Pro Addon only) normal/lazyload/lazyload-lightbox/link-lightbox (lazyload-fullscreen/lazyload-fixed are experimental), optional option override
 thumbnail     | (Pro Addon only) either a URL to a image or a ID to a media gallery image to be used as thumbnail. To get a item ID from the media gallery click a image in WordPress Admin -&gt; Media -&gt; Library and your URL will look like `.../upload.php?item=1234` where `1234` is the ID

@@ -16,7 +16,7 @@
  * Plugin Name:       ARVE Advanced Responsive Video Embedder
  * Plugin URI:        https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
  * Description:       Easy responsive video embeds via URL (like WordPress) or Shortcodes. Supports almost anything you can imagine.
- * Version:           6.6.2
+ * Version:           7.0.0
  * Author:            Nicolas Jonas
  * Author URI:        http://nico.onl
  * License:           GPL-3.0
