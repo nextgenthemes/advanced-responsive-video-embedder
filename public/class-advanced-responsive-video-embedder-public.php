@@ -258,6 +258,16 @@ class Advanced_Responsive_Video_Embedder_Public {
 					'http://www.liveleak.com/view?f=c85bdf5e45b2',
 				)
 			),
+			'livestream' => array(
+				'url' => true,
+				'thumb' => false,
+				'wmode_transparent' => true,
+				'aspect_ratio' => 56.25,
+				'tests' => array(
+					'http://original.livestream.com/bethanychurchnh',
+					'http://original.livestream.com/bethanychurchnh/video?clipId=flv_b54a694b-043c-4886-9f35-03c8008c23ca',
+				)
+			),
 			'metacafe' => array(
 				'url' => true,
 				'thumb' => false,
@@ -603,6 +613,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		unset( $url_query['arve'] );
 		unset( $url_query['t'] );
+		unset( $url_query['clipId'] );
 
 		//* Pure awesomeness!
 		$atts               = array_merge( (array) $old_atts, (array) $new_atts );
@@ -767,6 +778,15 @@ class Advanced_Responsive_Video_Embedder_Public {
 					$id = 'i=' . $id;
 				}
 				$url = 'http://www.liveleak.com/ll_embed?' . $id;
+				break;
+			case 'livestream':
+				if( $this->starts_with( $id, 'accounts/' ) ) {
+					$url = '//livestream.com/accounts/' .  $id . '/player';
+				} else {
+					str_replace( '/video?clipId=', '?clip=', $id );
+					$url = '//cdn.livestream.com/embed/' . $id;
+					$url = add_query_arg( 'layout', 4, $url );
+				}
 				break;
 			case 'myspace':
 				$url = 'https://myspace.com/play/video/' . $id;
@@ -948,6 +968,9 @@ class Advanced_Responsive_Video_Embedder_Public {
 			case 'ustream':
 				$url_autoplay_no  = add_query_arg( 'autoplay', 'false', $url );
 				$url_autoplay_yes = add_query_arg( 'autoplay', 'true',  $url );
+			case 'livestream':
+				$url_autoplay_no  = add_query_arg( 'autoPlay', 'false', $url );
+				$url_autoplay_yes = add_query_arg( 'autoPlay', 'true',  $url );
 				break;
 			case 'yahoo':
 				$url_autoplay_no  = add_query_arg( 'player_autoplay', 'false', $url );

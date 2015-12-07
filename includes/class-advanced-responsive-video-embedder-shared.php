@@ -57,6 +57,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'ign'                    => 'ign',
 				'kickstarter'            => 'kickstarter',
 				'liveleak'               => 'liveleak',
+				'livestream'             => 'livestream',
 				'metacafe'               => 'metacafe',
 				'movieweb'               => 'movieweb',
 				'mpora'                  => 'mpora',
@@ -94,6 +95,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				#'ign'             => '',
 				#'kickstarter'     => '',
 				'liveleak'        => 'wmode=transparent  ',
+				'livestream'      => 'layout=4  height=340  width=560  ',
 				#'metacafe'        => '',
 				#'movieweb'        => '',
 				#'myspace'         => '',
@@ -138,7 +140,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 	 */
 	public static function get_regex_list() {
 
-		$hw = 'https?://(?:www\.)?';
+		$hw = 'https?://(?:[a-z0-9]+\.)?';
 		//* Double hash comment = no id in URL
 		return array(
 			'4players'            => $hw . '4players\.de/4players\.php/tvplayer/4PlayersTV/([0-9a-z_/]+\.html)',
@@ -161,6 +163,8 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			##'iframe'            =>
 			'kickstarter'         => $hw . 'kickstarter\.com/projects/([0-9a-z\-]+/[0-9a-z\-]+)',
 			'liveleak'            => $hw . 'liveleak\.com/(?:view|ll_embed)\?((f|i)=[0-9a-z\_]+)',
+			'livestream'          => $hw . 'livestream\.com/accounts/([0-9]+/events/[0-9]+(?:/videos/[0-9]+)?)',
+			#'livestream'          => $hw . 'livestream\.com/(?|(accounts/[0-9]+/events/[0-9]+(?:/videos/[0-9]+)?)|([^\s/]+/video\?clipId=[^\s&]+)|([^\s/]+))',
 			'metacafe'            => $hw . 'metacafe\.com/(?:watch|fplayer)/([0-9]+)',
 			'movieweb'            => $hw . 'movieweb\.com/v/([a-z0-9]{14})',
 			'mpora'               => $hw . 'mpora\.(?:com|de)/videos/([a-z0-9]+)',
