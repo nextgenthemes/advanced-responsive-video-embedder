@@ -192,14 +192,16 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 
 ### Pro Addon 1.5 Beta ###
 * **you must have version 7.0.0 or greater of the main plugin installed for pro addon 1.5 or greater**
-* New: Added support for displaying title and desription (if size allows it)
+* New: Added support for displaying title and description (if size allows it)
 * Improved: Rectangle animation.
 * Improved: Updated lity (lightbox script) to version 1.5.0
 * Improved: Thumbnail handling.
-* Improved: Dropped the 'Lazyload Maximal Width' setting to simplify things (there still is 'Maximal Width' and 'Aligned Maximal Width').
+* Improved: Removed the 'Lazyload Maximal Width' setting to simplify things (there still is 'Maximal Width' and 'Aligned Maximal Width').
+* Improved: Removed the 'Fake Thumbnail' because I now think the entire idea was bad and real thumbnails should be used.
 
 ### 7.0.0 Beta ###
-* Beta is aviable this way.
+* **Pro Addon 1.5.0 or greater must be used with this version**
+* Beta is aviable [this way]().
 * New: Amazing new catch-all shortcode [arve url="..."] that can be used for all supported providers.
 * New: Better shortcode UI, with thumbnail selection from media gallery, preview ... requires shortcake plugin.
 * New: A default alignment can now be set in the Settings page (fulfilled request)
