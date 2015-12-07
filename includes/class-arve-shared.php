@@ -29,7 +29,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 	 */
 	public static function get_regex_list() {
 
-		$hw = 'https?://(?:www\.)?';
+		$hw = 'https?://(?:[a-z]+\.)?';
 		//* Double hash comment = no id in URL
 		return array(
 			'4players'            => $hw . '4players\.de/4players\.php/tvplayer/4PlayersTV/([0-9a-z_/]+\.html)',
@@ -47,6 +47,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			##'iframe'            =>
 			'kickstarter'         => $hw . 'kickstarter\.com/projects/([0-9a-z\-]+/[0-9a-z\-]+)',
 			'liveleak'            => $hw . 'liveleak\.com/(?:view|ll_embed)\?((f|i)=[0-9a-z\_]+)',
+			'livestream'          => $hw . 'livestream\.com/accounts/([0-9]+/events/[0-9]+(?:/videos/[0-9]+)?)',
 			'metacafe'            => $hw . 'metacafe\.com/(?:watch|fplayer)/([0-9]+)',
 			'movieweb'            => $hw . 'movieweb\.com/v/([a-z0-9]{14})',
 			'mpora'               => $hw . 'mpora\.(?:com|de)/videos/([a-z0-9]+)',
@@ -61,7 +62,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'vine'                => $hw . 'vine\.co/v/([a-z0-9]+)',
 			'vimeo'               => $hw . 'vimeo\.com/(?:(?:channels/[a-z]+/)|(?:groups/[a-z]+/videos/))?([0-9]+)',
 			'yahoo'               => $hw . '(?:screen|shine|omg)\.yahoo\.com/(?:embed/)?([a-z0-9\-]+/[a-z0-9\-]+)\.html',
-			'ted'                 => 'https?://(?:www\.|new\.)?ted\.com/talks/([a-z0-9_]+)',
+			'ted'                 => $hw . 'ted\.com/talks/([a-z0-9_]+)',
 			'xtube'               => $hw . 'xtube\.com/watch\.php\?v=([a-z0-9_\-]+)',
 			'youtube'             => $hw . '(?:youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v\=))|youtu\.be\/)([a-zA-Z0-9_-]{6,11}((?:\?|&)list=[a-z0-9_\-]+)?)',
 			// iframe src only
@@ -109,6 +110,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'ign'             => 'ign',
 				'kickstarter'     => 'kickstarter',
 				'liveleak'        => 'liveleak',
+				'livestream'      => 'livestream',
 				'metacafe'        => 'metacafe',
 				'movieweb'        => 'movieweb',
 				'mpora'           => 'mpora',
@@ -145,6 +147,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				#'ign'             => '',
 				#'kickstarter'     => '',
 				'liveleak'        => 'wmode=transparent  ',
+				'livestream'      => 'height=720  width=1280  ',
 				#'metacafe'        => '',
 				#'movieweb'        => '',
 				#'myspace'         => '',
@@ -501,6 +504,14 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			),
 			'liveleak' => array(
 				'name' => 'LiveLeak',
+				'url' => true,
+				'thumb' => false,
+				'wmode_transparent' => true,
+				'tests' => array(
+
+				)
+			),
+			'livestream' => array(
 				'url' => true,
 				'thumb' => false,
 				'wmode_transparent' => true,

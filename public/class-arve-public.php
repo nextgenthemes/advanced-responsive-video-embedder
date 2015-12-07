@@ -382,6 +382,9 @@ class Advanced_Responsive_Video_Embedder_Public {
 				}
 				$args['src'] = 'http://www.liveleak.com/ll_embed?' . $args['id'];
 				break;
+			case 'livestream':
+				$args['src'] = '//livestream.com/accounts/' .  $args['id'] . '/player';
+				break;
 			case 'myspace': # <iframe width="480" height="270" src="//media.myspace.com/play/video/ne-yo-five-minutes-to-the-stage-109621196-112305871
 				$args['src'] = '//myspace.com/play/video/' . $args['id'];
 				break;
@@ -573,6 +576,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$args['src_autoplay_no']  = add_query_arg( 'autoplay', 'false', $args['src'] );
 				$args['src_autoplay_yes'] = add_query_arg( 'autoplay', 'true',  $args['src'] );
 				break;
+			case 'livestream':
+				$args['src_autoplay_no']  = add_query_arg( 'autoPlay', 'false', $args['src'] );
+				$args['src_autoplay_yes'] = add_query_arg( 'autoPlay', 'true',  $args['src'] );
+				break;
 			case 'yahoo':
 				$args['src_autoplay_no']  = add_query_arg( 'player_autoplay', 'false', $args['src'] );
 				$args['src_autoplay_yes'] = add_query_arg( 'player_autoplay', 'true',  $args['src'] );
@@ -633,7 +640,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		// We have no thumbnail for lazyload, so treat this embed as normal
 		if ( 'lazyload' === $args['mode'] && ! $args['thumbnail'] ) {
-			$args['mode'] = 'normal';
+			//$args['mode'] = 'normal';
 		}
 
 		$output = apply_filters( 'arve_output', '', $args );
