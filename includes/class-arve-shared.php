@@ -189,6 +189,16 @@ class Advanced_Responsive_Video_Embedder_Shared {
 
 		$options = static::get_options();
 		$modes = static::get_supported_modes();
+		$properties = static::get_properties();
+
+		foreach ( $properties as $provider => $values ) {
+
+			if( ! empty( $values['thumb'] ) && $values['thumb'] ) {
+				$auto_thumbs[] = $provider;
+			}
+		}
+
+		$auto_thumbs = implode( ', ', $auto_thumbs );
 
 		if ( ! empty( $modes ) ) {
 			$current_mode_name = $modes[ $options['mode'] ];
@@ -217,18 +227,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 					) + Advanced_Responsive_Video_Embedder_Shared::get_supported_modes(),
 			),
 			array(
-				'hide_from_sc' => true,
-				'attr'         => 'promote_link',
-				'label'        => __( 'Help Me?', 'advanced-responsive-video-embedder' ),
-				'type'         => 'select',
-				'options' => array(
-					''  => sprintf( __( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $options['align'] ),
-					1 => __( 'Yes', 'advanced-responsive-video-embedder' ),
-					0 => __( 'No', 'advanced-responsive-video-embedder' ),
-				),
-				'description'  => __( "Shows a small 'by ARVE' link below the videos to help me promote this plugin", 'advanced-responsive-video-embedder' ),
-			),
-			array(
 				'attr'  => 'align',
 				'label' => __('Alignment', 'advanced-responsive-video-embedder' ),
 				'type'  => 'select',
@@ -241,13 +239,36 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				),
 			),
 			array(
+				'attr'         => 'promote_link',
+				'label'        => __( 'ARVE Link', 'advanced-responsive-video-embedder' ),
+				'type'         => 'select',
+				'options' => array(
+					'' => sprintf(
+						__( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ),
+						( $options['promote_link'] ) ? __( 'Yes', 'advanced-responsive-video-embedder' ) : __( 'No', 'advanced-responsive-video-embedder' )
+					),
+					'yes' => __( 'Yes', 'advanced-responsive-video-embedder' ),
+					'no'  => __( 'No', 'advanced-responsive-video-embedder' ),
+				),
+				'description'  => __( "Shows a small 'ARVE' link below the videos. Be the most awesome person and turn this on to help me own a bit of money with more Pro Addon sales thanks to ", 'advanced-responsive-video-embedder' ),
+			),
+			array(
+				'hide_from_settings' => true,
+				'attr'  => 'thumbnail',
+				'label' => __('Thumbnail', 'advanced-responsive-video-embedder'),
+				'type'  => 'attachment',
+				'libraryType' => array( 'image' ),
+				'addButton'   => esc_html__( 'Select Image', 'shortcode-ui' ),
+				'frameTitle'  => esc_html__( 'Select Image', 'shortcode-ui' ),
+				'description' => sprintf( __( 'The Pro Addon uses thumbnails for lazyload modes and automatically gets thumbnails for %s so you may leave it empty for those. Always used as schema.org "thumbnailUrl" for SEO', 'advanced-responsive-video-embedder' ), $auto_thumbs ),
+			),
+			array(
 				'hide_from_settings' => true,
 				'attr'  => 'title',
 				'label' => __('Title', 'advanced-responsive-video-embedder'),
 				'type'  => 'text',
 				'meta'  => array(
-					'class' => 'large-text',
-					'placeholder' => __( 'Title for lazyload thumbnail & schema.org "name" for SEO', 'advanced-responsive-video-embedder' ),
+					'placeholder' => __( 'visible title for Lazyload mode (Pro Addon only) & schema.org "name" for SEO', 'advanced-responsive-video-embedder' ),
 				)
 			),
 			array(
@@ -256,8 +277,16 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'label' => __('Description', 'advanced-responsive-video-embedder'),
 				'type'  => 'text',
 				'meta'  => array(
-					'class' => 'large-text',
 					'placeholder' => __( 'Schema.org "description" for SEO', 'advanced-responsive-video-embedder' ),
+				)
+			),
+			array(
+				'hide_from_settings' => true,
+				'attr'  => 'upload_date',
+				'label' => __( 'Upload Date', 'advanced-responsive-video-embedder' ),
+				'type'  => 'text',
+				'meta'  => array(
+					'placeholder' => __( 'ISO 8601 format, Schema.org "uploadDate" for SEO', 'advanced-responsive-video-embedder' ),
 				)
 			),
 			array(
@@ -265,9 +294,12 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'label' => __('Autoplay', 'advanced-responsive-video-embedder' ),
 				'type'  => 'select',
 				'options' => array(
-					''  => sprintf( __( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $options['autoplay'] ),
-					1 => __( 'Yes', 'advanced-responsive-video-embedder' ),
-					0 => __( 'No', 'advanced-responsive-video-embedder' ),
+					'' => sprintf(
+						__( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ),
+						( $options['autoplay'] ) ? __( 'Yes', 'advanced-responsive-video-embedder' ) : __( 'No', 'advanced-responsive-video-embedder' )
+					),
+					'yes' => __( 'Yes', 'advanced-responsive-video-embedder' ),
+					'no'  => __( 'No', 'advanced-responsive-video-embedder' ),
 				),
 				'description' => __( 'Autoplay videos in normal mode, has no effect on lazyload modes.', 'advanced-responsive-video-embedder' ),
 			),
@@ -290,9 +322,9 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			array(
 				'hide_from_sc'   => true,
 				'attr'  => 'align_maxwidth',
-				'label'       => __('Align Maximal Width', 'advanced-responsive-video-embedder'),
-				'type'        => 'number',
-				'meta'        => array(
+				'label' => __('Align Maximal Width', 'advanced-responsive-video-embedder'),
+				'type'  => 'number',
+				'meta'  => array(
 					'placeholder' => __( 'Needed! Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
 				)
 			),

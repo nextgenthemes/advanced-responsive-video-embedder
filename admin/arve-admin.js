@@ -263,6 +263,7 @@
 
 	$( '#arve-btn' ).on( 'click', function(e) {
 		e.preventDefault();
+
 		open_arve_dialog();
 	} );
 

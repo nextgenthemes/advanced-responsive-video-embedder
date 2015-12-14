@@ -206,23 +206,14 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	public function add_media_button() {
 
-		// The ID of the container I want to show in the popup
-		$popup_id = 'arve-form';
-
-		// Our popup's title
-		$title = 'Advanced Responsive Video Embedder Shortcode Creator';
+		$sui = is_plugin_active( 'shortcode-ui/shortcode-ui.php' );
 
 		printf(
-			'<button id="arve-btn" title="%s" data-arve-mode="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
-			esc_attr( $title ),
+			'<button id="arve-btn" title="%s" data-arve-sui="%s" data-arve-mode="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
+			esc_attr__( 'ARVE Advanced Responsive Video Embedder', $this->plugin_slug ),
+			esc_attr( ( $sui ) ? 'true' : 'false' ),
 			esc_attr( $this->options['mode'] ),
-			esc_html__( 'Embed Video', $this->plugin_slug )
-		);
-		printf(
-			'<a href="%1$s" id="arve-btn-old" class="arve-btn button add_media thickbox" title="%2$s"><span class="wp-media-buttons-icon arve-icon"></span> %3$s</a>',
-			esc_url( '#TB_inline?&inlineId=' . $popup_id ),
-			esc_attr( $title ),
-			esc_html__( 'Embed Video', $this->plugin_slug )
+			esc_html__( ( $sui ) ? 'Embed Video' : 'ARVE needs "Shortcake (Shortcode UI)" plugin installed', $this->plugin_slug )
 		);
 	}
 
@@ -230,8 +221,8 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		$attrs = Advanced_Responsive_Video_Embedder_Shared::get_settings_definitions();
 
-		if( class_exists( 'Advanced_Responsive_Video_Embedder_Pro' ) ) {
-			$attrs = array_merge( $attrs, Advanced_Responsive_Video_Embedder_Pro::get_settings_definitions() );
+		if( function_exists( 'arve_pro_get_settings_definitions' ) ) {
+			$attrs = array_merge( $attrs, arve_pro_get_settings_definitions() );
 		}
 
 		foreach ( $attrs as $key => $values ) {
@@ -585,21 +576,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		include_once( 'partials/arve-debug-info.php' );
 	}
 
-	/* ------------------------------------------------------------------------ *
-	 * Field Callbacks
-	 * ------------------------------------------------------------------------ */
-	public function yes_no_select( $args ) {
-
-		printf( '<select id="%1$s" name="%1$s" size="1">', esc_attr( $args['label_for'] ) );
-		printf( '<option %s value="1">%s</option>', selected( $args['value'], true,  false ), __('Yes', $this->plugin_slug ) );
-		printf( '<option %s value="0">%s</option>', selected( $args['value'], false, false ), __('No',  $this->plugin_slug ) );
-		echo '</select>';
-
-		if ( $args['description'] ) {
-			printf( '<p class="description">%s</p>', $args['description'] );
-		}
-	}
-
 	/**
 	 *
 	 *
@@ -618,8 +594,8 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		$output['last_options_tab']   = sanitize_text_field( $input['last_options_tab'] );
 		$output['mode']               = sanitize_text_field( $input['mode'] );
 
-		$output['promote_link'] = (bool) $input['promote_link'];
-		$output['autoplay']     = (bool) $input['autoplay'];
+		$output['promote_link'] = ( 'yes' === $input['promote_link'] ) ? true : false;
+		$output['autoplay']     = ( 'yes' === $input['autoplay'] ) ? true : false;
 
 		if( (int) $input['video_maxwidth'] > 100 ) {
 			$output['video_maxwidth'] = (int) $input['video_maxwidth'];

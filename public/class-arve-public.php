@@ -267,6 +267,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'title'        => null,
 			'description'  => null,
 			'grow'         => null,
+			'arve_link'    => (string) $this->options['promote_link'],
 		);
 
 		$args = shortcode_atts( $shortcode_atts_defaults, $atts, $this->options['shortcodes'][ $provider ] );
@@ -685,46 +686,58 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		$options = Advanced_Responsive_Video_Embedder_Shared::get_options();
 
-		$promote_link = sprintf(
-			'<a href="%s" title="%s" class="arve-promote-link">%s</a>',
-			esc_url( 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/' ),
-			esc_attr( __('Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', 'advanced-responsive-video-embedder') ),
-			esc_html__( 'ARVE', 'advanced-responsive-video-embedder' )
+		$meta = $arve_link = $close_btn = '';
+
+		if ( ! empty( $args['uploadDate'] ) ) {
+			$meta .= sprintf( '<meta itemprop="thumbnailUrl" content="%s" />', esc_attr( $args['thumbnail'] ) );
+		}
+		if ( ! empty( $args['uploadDate'] ) ) {
+			$meta .= sprintf( '<meta itemprop="uploadDate" content="%s" />', esc_attr( $args['upload_date'] ) );
+		}
+
+		$meta .= sprintf( '<meta itemprop="embedURL" content="%s" />', esc_attr( $args['src'] ) );
+
+		if ( ! empty( $args['title'] ) ) {
+			$meta .= '<h5 itemprop="name" class="arve-title arve-hidden">' . esc_attr( $args['title'] ) . '</h5>';
+		}
+		if ( ! empty( $args['description'] ) ) {
+			$meta .= '<span itemprop="description" class="arve-description arve-hidden">' . esc_attr( $args['description'] ) . '</span>';
+		}
+
+		if( 'lazyload-fullscreen' === $args['mode'] || 'lazyload-fixed' === $args['mode'] ) {
+			$close_btn = '<button class="arve-btn arve-btn-close arve-hidden"></button>';
+		}
+
+		if ( $args['promote_link'] ) {
+			$arve_link = sprintf(
+				'<a href="%s" title="%s" class="arve-promote-link">%s</a>',
+				esc_url( 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/' ),
+				esc_attr( __('Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', 'advanced-responsive-video-embedder') ),
+				esc_html__( 'ARVE', 'advanced-responsive-video-embedder' )
+			);
+		}
+
+		$conteiner .= sprintf(
+			'<div class="arve-embed-container" style="padding-bottom: %F%%; %s">%s</div>',
+			static::aspect_ratio_to_padding( $args['aspect_ratio'] ),
+			( $args['thumbnail'] ) ? sprintf( 'background-image:url(%s);', $args['thumbnail'] ) : '',
+			$meta . $inner . $close_btn
 		);
 
-		$output = sprintf(
-			'<div %s>',
+		return sprintf(
+			'<div %s>%s</div>',
 			Advanced_Responsive_Video_Embedder_Shared::attr( array(
+				'id'             => 'video-' . urlencode( $args['id'] ),
 				'class'          => 'arve-wrapper ' . $args['align'],
 				'data-arve-grow' => ( 'lazyload' === $args['mode'] ) ? (string) $args['grow'] : null,
 				'data-arve-mode' => $args['mode'],
-				'id'             => 'video-' . urlencode( $args['id'] ),
 				'style'          => empty( $args['maxwidth'] ) ? false : sprintf( 'max-width: %dpx;', $args['maxwidth'] ),
 				// Schema.org
 				'itemscope'    => '',
 				'itemtype'     => 'http://schema.org/VideoObject',
-				'name'         => $args['title'],
-				'description'  => $args['description'],
-				'thumbnailUrl' => $args['thumbnail'],
-				'embedURL'     => $args['src'],
-			) )
+			) ),
+			$container . $arve_link
 		);
-
-		$output .= sprintf(
-			'<div class="arve-embed-container" style="padding-bottom: %F%%; %s">%s</div>',
-			static::aspect_ratio_to_padding( $args['aspect_ratio'] ),
-			( $args['thumbnail'] ) ? sprintf( 'background-image:url(%s);', $args['thumbnail'] ) : '',
-			$inner
-		);
-
-		if( 'lazyload-fullscreen' === $args['mode'] || 'lazyload-fixed' === $args['mode'] ) {
-			$output .= '<button class="arve-btn arve-btn-close arve-hidden"></button>';
-		}
-
-		$output .= ( $options['promote_link'] ) ? $promote_link : '';
-		$output .= '</div>'; // .arve-wrapper
-
-		return $output;
 	}
 
 	public function normal_output( $output, $args ) {

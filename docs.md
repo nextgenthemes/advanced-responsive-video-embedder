@@ -1,18 +1,3 @@
-<!-- TOC depth:6 withLinks:1 updateOnSave:1 orderedList:0 -->
-
-- [Embedding via Shortcodes](#embedding-via-shortcodes)
-	- [Examples](#examples)
-- [Embedding Videos via URL](#embedding-videos-via-url)
-	- [Examples](#examples)
-	- [Limitations](#limitations)
-- [Recommended use of Options and Attributes](#recommended-use-of-options-and-attributes)
-- [Supported Attributes](#supported-attributes)
-- [URL Query arguments](#url-query-arguments)
-- [General Iframe Embedding](#general-iframe-embedding)
-- [Manual Shortcode Creation](#manual-shortcode-creation)
-	- [Exceptions for the getting the embed code instead of the URL](#exceptions-for-the-getting-the-embed-code-instead-of-the-url)
-<!-- /TOC -->
-
 # Embedding via Shortcodes
 Press the 'Embed Video' button in your post editor in WordPress and paste the URL or embed code into the field, optionally select options and press 'Insert Shortcode'. You can of course manually write Shortcodes. They have the advantage of being easier to read then URLs and you also can place them everywhere without the need for them to be on their own line, this becomes useful when aligning videos to text. You can also use them inside text widgets.
 
@@ -78,16 +63,19 @@ For example if you have set Mode to Normal and Maximal Video Width to 500 the pl
 
 Attribute     | Used for
 ------------- | ----------------------------
-url           | URL to video. [[arve]] shortcode only. 
+url           | URL to video. [[arve]] shortcode only.
 id            | Is required for shortcodes and automatically generated within the shortcode button, obsolete for embeds via URL. For the `[[iframe]]` Shortcode this becomes the what would be the `src` for in a html iframe code
 mode          | (Pro Addon only) normal/lazyload/lazyload-lightbox/link-lightbox (lazyload-fullscreen/lazyload-fixed are experimental), optional option override
 thumbnail     | (Pro Addon only) either a URL to a image or a ID to a media gallery image to be used as thumbnail. To get a item ID from the media gallery click a image in WordPress Admin -&gt; Media -&gt; Library and your URL will look like `.../upload.php?item=1234` where `1234` is the ID
+title         |
+description   |
+upload\_date  |
 autoplay      | optional option override
 aspect\_ratio | for example `4:3`
 maxwidth      | maximal width for videos in normal mode, optional option override
 align         | left/right/center
 start         | only for vimeo (1m2s format)
-parameters    | support for custom URL parameters providers offer, will merge/overwrite with the values set on the settings page. Fur URL you can simply append them to the url like `https://youtu.be/Q6goNzXrmFs?start=30&fs=0` the `?start=30&fs=0.
+parameters    | support for custom URL parameters providers offer, will merge/overwrite with the values set on the settings page. Fur URL you can simply append them to the url like `https://youtu.be/Q6goNzXrmFs?start=30&fs=0` the `?start=30&fs=0`.
 
 # URL Query arguments
 Some Providers offer to customize their iframe embed codes with URL-query arguments. They always start with `?` and then `&` is used as a seperator.

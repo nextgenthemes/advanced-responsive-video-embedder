@@ -1,17 +1,12 @@
 ## Changelog ##
 
-### Pro Addon 1.5 Beta ###
-* **you must have version 7.0.0 or greater of the main plugin installed for pro addon 1.5 or greater**
-* New: Added support for displaying title and description (if size allows it)
-* Improved: Rectangle animation.
-* Improved: Updated lity (lightbox script) to version 1.5.0
-* Improved: Thumbnail handling.
-* Improved: Removed the 'Lazyload Maximal Width' setting to simplify things (there still is 'Maximal Width' and 'Aligned Maximal Width').
-* Improved: Removed the 'Fake Thumbnail' because I now think the entire idea was bad and real thumbnails should be used.
+### [Please help testing the beta version](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/) ###
 
-### 7.0.0 Beta ###
+### 7.0.1 Beta ###
 * **Pro Addon 1.5.0 or greater must be used with this version**
-* Beta is aviable [this way]().
+* New: New Advanced shotcode Dialog, with very detailed helping texts, display of default settings, hiding of fields based on need.
+* New: YSWYG Preview of shortcodes.
+* New: The two above features need the [Shortcake (Shortcode UI)]() Plugin that is maybe moving into WordPress core later.
 * New: Amazing new catch-all shortcode [arve url="..."] that can be used for all supported providers.
 * New: Better shortcode UI, with thumbnail selection from media gallery, preview ... requires shortcake plugin.
 * New: A default alignment can now be set in the Settings page (fulfilled request)
@@ -27,6 +22,16 @@
 * Fix: All Vevo URLs are now detected correctly.
 * Removed blip because the service was shutdown.
 * Background-images are now applied to .arve-embed-container instead of .arve-wrapper.
+
+### Pro Addon 1.5 Beta ###
+* **you must have version 7.0.0 or greater of the main plugin installed for pro addon 1.5 or greater**
+* New: Added support for displaying title of videos on top of the thumbnail images.
+* Improved: Rectangle animation.
+* Improved: Updated lity (lightbox script) to version 1.5.0
+* Improved: Thumbnail handling.
+* Improved: Removed the 'Lazyload Maximal Width' setting to simplify things (there still is 'Maximal Width' and 'Aligned Maximal Width').
+* Improved: Removed the 'Fake Thumbnail' because I now think the entire idea was bad and real thumbnails should be used.
+* Dropped PHP Class
 
 ### 6.3.4 ###
 
