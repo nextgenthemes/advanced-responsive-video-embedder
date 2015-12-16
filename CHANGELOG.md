@@ -1,16 +1,23 @@
 ## Changelog ##
 
+### Thanks to everyone who bought the Pro Addon ###
+
+I really appreciate this. I commercialized parts of this plugin because I no longer can work on this for free. I am glad not everyone thinks, everything needs to be gratis on the internet and especially in Open Source. The Pro Addon, like the base version here its still Free Software, free as in Freedom! not as in gratis. Well, actually I have given 712 licenses out free of charge to legacy users. I am thinking of stopping the giveaways.
+
 ### Version 7 is coming. [Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/) ###
+
+I worked very hard on version 7 and hope it will be worth it. Since there is a lot of changes in v7 and like to get a bit more professional with releasing stable versions here instead if just throwing betas out there with fear of bugs and bad reviews, I need some people who will run the latest code and help test.
 
 ### 7.0.2 Beta ###
 
-* **Pro Addon 1.5.0 or greater must be used with this version**
-* New: New Advanced shotcode Dialog, with very detailed helping texts, display of default settings, hiding of fields based on need.
+* **The latest Pro Addon beta (1.5.2 at the time of writing) must be used with this version**
+* New: New Advanced shotcode Dialog, with very detailed helping texts, display of default settings, hiding of fields based on need ...
 * New: WYSIWYG Preview of shortcodes.
 * New: The two above features need the [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) Plugin that is maybe moving into WordPress core later.
 * New: Amazing catch-all shortcode [arve url="..."] that can be used for all supported providers.
-* New: Better shortcode UI, with thumbnail selection from media gallery, preview ... requires shortcake plugin.
-* New: A default alignment can now be set in the Settings page (fulfilled request)
+* New: A default alignment can now be set in the Settings page. (fulfilled request)
+* New: 'iframe_name' shortcode parameter for `<iframe name="xxxxx"`, useful when wanting to target ARVE embeds with links. (fulfilled request)
+* New: ARVE is now SEO friendly giving you the ability to add some schema.org microdata. Googles tools should not complain anymore. (fulfilled request)
 * Deleted Language files in favor of [wordpress.org managed translations](https://translate.wordpress.org/projects/wp-plugins/advanced-responsive-video-embedder/dev) volunteers are welcome ;)
 * Improved: Got rid of PHP globals.
 * Improved: Added image upload dialog to settings page and shortcode dialog
@@ -24,16 +31,18 @@
 * Removed blip because the service was shutdown.
 * Background-images are now applied to .arve-embed-container instead of .arve-wrapper.
 
-### Pro Addon 1.5 Beta ###
+### Pro Addon 1.5.2 Beta ###
 
-* **you must have version 7.0.0 or greater of the main plugin installed for pro addon 1.5 or greater**
+* **You must have version 7.0.2 or greater of the main plugin installed for Pro Addon 1.5.2 or greater to work**
 * New: Added support for displaying title of videos on top of the thumbnail images.
 * Improved: Rectangle animation.
-* Improved: Updated lity (lightbox script) to version 1.5.0
+* Improved: Updated lity (lightbox script) to version 1.5.1
 * Improved: Thumbnail handling.
 * Improved: Removed the 'Lazyload Maximal Width' setting to simplify things (there still is 'Maximal Width' and 'Aligned Maximal Width').
 * Improved: Removed the 'Fake Thumbnail' because I now think the entire idea was bad and real thumbnails should be used.
 * Dropped PHP Class
+
+
 
 ### 6.3.4 ###
 
