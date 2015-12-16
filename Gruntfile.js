@@ -14,7 +14,6 @@ module.exports = function (grunt) {
 
   // Project configuration.
   grunt.initConfig({
-
     concat: {
       options: {
         separator: '\n\n',
@@ -23,6 +22,7 @@ module.exports = function (grunt) {
         src: [
            'readme/description.md',
            'readme/description-lead.html',
+           'readme/description-links.html',
            'readme/description-features.html',
            'readme/description-features-pro.html',
            'readme/description-supported-providers.md',

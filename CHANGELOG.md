@@ -1,22 +1,23 @@
 ## Changelog ##
 
-### [Please help testing the beta version](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/) ###
+### Version 7 is coming. [Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/) ###
 
-### 7.0.1 Beta ###
+### 7.0.2 Beta ###
+
 * **Pro Addon 1.5.0 or greater must be used with this version**
 * New: New Advanced shotcode Dialog, with very detailed helping texts, display of default settings, hiding of fields based on need.
-* New: YSWYG Preview of shortcodes.
-* New: The two above features need the [Shortcake (Shortcode UI)]() Plugin that is maybe moving into WordPress core later.
-* New: Amazing new catch-all shortcode [arve url="..."] that can be used for all supported providers.
+* New: WYSIWYG Preview of shortcodes.
+* New: The two above features need the [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) Plugin that is maybe moving into WordPress core later.
+* New: Amazing catch-all shortcode [arve url="..."] that can be used for all supported providers.
 * New: Better shortcode UI, with thumbnail selection from media gallery, preview ... requires shortcake plugin.
 * New: A default alignment can now be set in the Settings page (fulfilled request)
 * Deleted Language files in favor of [wordpress.org managed translations](https://translate.wordpress.org/projects/wp-plugins/advanced-responsive-video-embedder/dev) volunteers are welcome ;)
-* Improved: Got rid of globals.
+* Improved: Got rid of PHP globals.
 * Improved: Added image upload dialog to settings page and shortcode dialog
 * Improved: Better CSS to overwrite unwanted theme styles.
 * Improved: Lots if code improvements.
 * Improved: SSL enabled for Vevo.
-* Fix: Prevent conflicts with WP Helpers plugin (possibly others). thanks to Steve Bruner.
+* Fix: Prevent conflicts with WP Helpers plugin (possibly others). Thanks to Steve Bruner.
 * Fix: Issue with unwanted borders showing on embeds.
 * Fix: youtube.be URLs now detected correct in shortcode dialog.
 * Fix: All Vevo URLs are now detected correctly.
@@ -24,6 +25,7 @@
 * Background-images are now applied to .arve-embed-container instead of .arve-wrapper.
 
 ### Pro Addon 1.5 Beta ###
+
 * **you must have version 7.0.0 or greater of the main plugin installed for pro addon 1.5 or greater**
 * New: Added support for displaying title of videos on top of the thumbnail images.
 * Improved: Rectangle animation.

@@ -44,7 +44,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'facebook'            => $hw . 'facebook\.com/(?:[^/]+)/videos/([0-9]+)',
 			'funnyordie'          => $hw . 'funnyordie\.com/videos/([a-z0-9_]+)',
 			'ign'                 => '(https?://(?:www\.)?ign\.com/videos/[0-9]{4}/[0-9]{2}/[0-9]{2}/[0-9a-z\-]+)',
-			##'iframe'            =>
 			'kickstarter'         => $hw . 'kickstarter\.com/projects/([0-9a-z\-]+/[0-9a-z\-]+)',
 			'liveleak'            => $hw . 'liveleak\.com/(?:view|ll_embed)\?((f|i)=[0-9a-z\_]+)',
 			'livestream'          => $hw . 'livestream\.com/accounts/([0-9]+/events/[0-9]+(?:/videos/[0-9]+)?)',
@@ -54,14 +53,14 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'myspace'             => $hw . 'myspace\.com/.+/([0-9]+)',
 			'myvideo'             => $hw . 'myvideo\.de/(?:watch|embed)/([0-9]{7,8})',
 			'snotr'               => $hw . 'snotr\.com/(?:video|embed)/([0-9]+)',
-			'twitch'              => 'https?://(?:www\.|[a-z\-]{2,5}\.)?twitch.tv/([a-z0-9_/]+)',
+			'twitch'              => $hw . 'twitch.tv/([a-z0-9_/]+)',
 			'ustream'             => $hw . 'ustream\.tv/(?:channel/)?([0-9]{8}|recorded/[0-9]{8}(/highlight/[0-9]+)?)',
 			'veoh'                => $hw . 'veoh\.com/watch/([a-z0-9]+)',
 			'vevo'                => $hw . 'vevo\.com/watch/(?:[^\/]+/[^\/]+/)?([a-z0-9]+)',
 			'viddler'             => $hw . 'viddler\.com/(?:embed|v)/([a-z0-9]{8})',
 			'vine'                => $hw . 'vine\.co/v/([a-z0-9]+)',
 			'vimeo'               => $hw . 'vimeo\.com/(?:(?:channels/[a-z]+/)|(?:groups/[a-z]+/videos/))?([0-9]+)',
-			'yahoo'               => $hw . '(?:screen|shine|omg)\.yahoo\.com/(?:embed/)?([a-z0-9\-]+/[a-z0-9\-]+)\.html',
+			'yahoo'               => $hw . 'yahoo\.com/(?:embed/)?([a-z0-9\-]+/[a-z0-9\-]+)\.html',
 			'ted'                 => $hw . 'ted\.com/talks/([a-z0-9_]+)',
 			'xtube'               => $hw . 'xtube\.com/watch\.php\?v=([a-z0-9_\-]+)',
 			'youtube'             => $hw . '(?:youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v\=))|youtu\.be\/)([a-zA-Z0-9_-]{6,11}((?:\?|&)list=[a-z0-9_\-]+)?)',
@@ -210,122 +209,121 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			array(
 				'hide_from_settings' => true,
 				'attr'   => 'url',
-				'label'  => __( 'URL of video', 'advanced-responsive-video-embedder'),
+				'label'  => esc_html__( 'URL of video', 'advanced-responsive-video-embedder'),
 				'type'   => 'text',
 				'meta'   => array(
-					'class'       => 'large-text',
-					'placeholder' => __( 'Video URL (Embed Code for some prividers)', 'advanced-responsive-video-embedder' ),
+					'placeholder' => esc_html__( 'Video URL (Embed Code for some prividers)', 'advanced-responsive-video-embedder' ),
 				)
 			),
 			array(
 				'attr'    => 'mode',
-				'label'   => __( 'Mode', 'advanced-responsive-video-embedder' ),
+				'label'   => esc_html__( 'Mode', 'advanced-responsive-video-embedder' ),
 				'type'    => 'select',
 				'options' =>
 					array(
-						'' => sprintf( __( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $current_mode_name )
+						'' => sprintf( esc_html__( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $current_mode_name )
 					) + Advanced_Responsive_Video_Embedder_Shared::get_supported_modes(),
 			),
 			array(
 				'attr'  => 'align',
-				'label' => __('Alignment', 'advanced-responsive-video-embedder' ),
+				'label' => esc_html__('Alignment', 'advanced-responsive-video-embedder' ),
 				'type'  => 'select',
 				'options' => array(
-					'' => sprintf( __( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $options['align'] ),
-					'none'   => __( 'None', 'advanced-responsive-video-embedder' ),
-					'left'   => __( 'Left', 'advanced-responsive-video-embedder' ),
-					'right'  => __( 'Right', 'advanced-responsive-video-embedder' ),
-					'center' => __( 'center', 'advanced-responsive-video-embedder' ),
+					'' => sprintf( esc_html__( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $options['align'] ),
+					'none'   => esc_html__( 'None', 'advanced-responsive-video-embedder' ),
+					'left'   => esc_html__( 'Left', 'advanced-responsive-video-embedder' ),
+					'right'  => esc_html__( 'Right', 'advanced-responsive-video-embedder' ),
+					'center' => esc_html__( 'center', 'advanced-responsive-video-embedder' ),
 				),
 			),
 			array(
-				'attr'         => 'promote_link',
-				'label'        => __( 'ARVE Link', 'advanced-responsive-video-embedder' ),
-				'type'         => 'select',
+				'attr'  => 'promote_link',
+				'label' => esc_html__( 'ARVE Link', 'advanced-responsive-video-embedder' ),
+				'type'  => 'select',
 				'options' => array(
 					'' => sprintf(
 						__( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ),
-						( $options['promote_link'] ) ? __( 'Yes', 'advanced-responsive-video-embedder' ) : __( 'No', 'advanced-responsive-video-embedder' )
+						( $options['promote_link'] ) ? esc_html__( 'Yes', 'advanced-responsive-video-embedder' ) : esc_html__( 'No', 'advanced-responsive-video-embedder' )
 					),
-					'yes' => __( 'Yes', 'advanced-responsive-video-embedder' ),
-					'no'  => __( 'No', 'advanced-responsive-video-embedder' ),
+					'yes' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
+					'no'  => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
 				),
-				'description'  => __( "Shows a small 'ARVE' link below the videos. Be the most awesome person and turn this on to help me own a bit of money with more Pro Addon sales thanks to ", 'advanced-responsive-video-embedder' ),
+				'description'  => esc_html__( "Shows a small 'ARVE' link below the videos. Be the most awesome person and turn this on to help me own a bit of money with more Pro Addon sales thanks to ", 'advanced-responsive-video-embedder' ),
 			),
 			array(
 				'hide_from_settings' => true,
 				'attr'  => 'thumbnail',
-				'label' => __('Thumbnail', 'advanced-responsive-video-embedder'),
+				'label' => esc_html__( 'Thumbnail', 'advanced-responsive-video-embedder' ),
 				'type'  => 'attachment',
 				'libraryType' => array( 'image' ),
 				'addButton'   => esc_html__( 'Select Image', 'shortcode-ui' ),
 				'frameTitle'  => esc_html__( 'Select Image', 'shortcode-ui' ),
-				'description' => sprintf( __( 'The Pro Addon uses thumbnails for lazyload modes and automatically gets thumbnails for %s so you may leave it empty for those. Always used as schema.org "thumbnailUrl" for SEO', 'advanced-responsive-video-embedder' ), $auto_thumbs ),
+				'description' => sprintf( esc_html__( 'The Pro Addon displays thumbnails in Lazyload modes and automatically gets them for %s so you may leave it empty for those if you own it. Always used as schema.org "thumbnailUrl" for SEO', 'advanced-responsive-video-embedder' ), $auto_thumbs ),
 			),
 			array(
 				'hide_from_settings' => true,
 				'attr'  => 'title',
-				'label' => __('Title', 'advanced-responsive-video-embedder'),
+				'label' => esc_html__('Title', 'advanced-responsive-video-embedder'),
 				'type'  => 'text',
 				'meta'  => array(
-					'placeholder' => __( 'visible title for Lazyload mode (Pro Addon only) & schema.org "name" for SEO', 'advanced-responsive-video-embedder' ),
+					'placeholder' => esc_html__( 'Visible title for Lazyload modes (Pro Addon only) & schema.org "name" for SEO', 'advanced-responsive-video-embedder' ),
 				)
 			),
 			array(
 				'hide_from_settings' => true,
 				'attr'  => 'description',
-				'label' => __('Description', 'advanced-responsive-video-embedder'),
+				'label' => esc_html__('Description', 'advanced-responsive-video-embedder'),
 				'type'  => 'text',
 				'meta'  => array(
-					'placeholder' => __( 'Schema.org "description" for SEO', 'advanced-responsive-video-embedder' ),
+					'placeholder' => esc_html__( 'Schema.org "description" for SEO', 'advanced-responsive-video-embedder' ),
 				)
 			),
 			array(
 				'hide_from_settings' => true,
 				'attr'  => 'upload_date',
-				'label' => __( 'Upload Date', 'advanced-responsive-video-embedder' ),
+				'label' => esc_html__( 'Upload Date', 'advanced-responsive-video-embedder' ),
 				'type'  => 'text',
 				'meta'  => array(
-					'placeholder' => __( 'ISO 8601 format, Schema.org "uploadDate" for SEO', 'advanced-responsive-video-embedder' ),
+					'placeholder' => esc_html__( 'ISO 8601 format, Schema.org "uploadDate" for SEO', 'advanced-responsive-video-embedder' ),
 				)
 			),
 			array(
 				'attr'  => 'autoplay',
-				'label' => __('Autoplay', 'advanced-responsive-video-embedder' ),
+				'label' => esc_html__('Autoplay', 'advanced-responsive-video-embedder' ),
 				'type'  => 'select',
 				'options' => array(
 					'' => sprintf(
 						__( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ),
-						( $options['autoplay'] ) ? __( 'Yes', 'advanced-responsive-video-embedder' ) : __( 'No', 'advanced-responsive-video-embedder' )
+						( $options['autoplay'] ) ? esc_html__( 'Yes', 'advanced-responsive-video-embedder' ) : esc_html__( 'No', 'advanced-responsive-video-embedder' )
 					),
-					'yes' => __( 'Yes', 'advanced-responsive-video-embedder' ),
-					'no'  => __( 'No', 'advanced-responsive-video-embedder' ),
+					'yes' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
+					'no'  => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
 				),
-				'description' => __( 'Autoplay videos in normal mode, has no effect on lazyload modes.', 'advanced-responsive-video-embedder' ),
+				'description' => esc_html__( 'Autoplay videos in normal mode, has no effect on lazyload modes.', 'advanced-responsive-video-embedder' ),
 			),
 			array(
 				'hide_from_sc'   => true,
 				'attr'  => 'video_maxwidth',
-				'label'       => __('Maximal Width', 'advanced-responsive-video-embedder'),
+				'label'       => esc_html__('Maximal Width', 'advanced-responsive-video-embedder'),
 				'type'        =>  'number',
-				'description' => __( 'Optional, if not set your videos will be the maximum size of the container they are in. If your content area has a big width you might want to set this. Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
+				'description' => esc_html__( 'Optional, if not set your videos will be the maximum size of the container they are in. If your content area has a big width you might want to set this. Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
 			),
 			array(
 				'hide_from_settings' => true,
 				'attr'  => 'maxwidth',
-				'label' => __('Maximal Width', 'advanced-responsive-video-embedder'),
+				'label' => esc_html__('Maximal Width', 'advanced-responsive-video-embedder'),
 				'type'  =>  'number',
 				'meta'  => array(
-					'placeholder' => __( 'in px - leave empty to use settings', 'advanced-responsive-video-embedder'),
+					'placeholder' => esc_html__( 'in px - leave empty to use settings', 'advanced-responsive-video-embedder'),
 				),
 			),
 			array(
 				'hide_from_sc'   => true,
 				'attr'  => 'align_maxwidth',
-				'label' => __('Align Maximal Width', 'advanced-responsive-video-embedder'),
+				'label' => esc_html__('Align Maximal Width', 'advanced-responsive-video-embedder'),
 				'type'  => 'number',
 				'meta'  => array(
-					'placeholder' => __( 'Needed! Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
+					'placeholder' => esc_html__( 'Needed! Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
 				)
 			),
 			array(

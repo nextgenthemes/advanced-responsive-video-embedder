@@ -268,6 +268,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'description'  => null,
 			'grow'         => null,
 			'arve_link'    => (string) $this->options['promote_link'],
+			'iframe_name'  => null,
 		);
 
 		$args = shortcode_atts( $shortcode_atts_defaults, $atts, $this->options['shortcodes'][ $provider ] );
@@ -685,44 +686,46 @@ class Advanced_Responsive_Video_Embedder_Public {
 	public static function wrappers( $inner, $args ) {
 
 		$options = Advanced_Responsive_Video_Embedder_Shared::get_options();
-
-		$meta = $arve_link = $close_btn = '';
-
-		if ( ! empty( $args['uploadDate'] ) ) {
-			$meta .= sprintf( '<meta itemprop="thumbnailUrl" content="%s" />', esc_attr( $args['thumbnail'] ) );
-		}
-		if ( ! empty( $args['uploadDate'] ) ) {
-			$meta .= sprintf( '<meta itemprop="uploadDate" content="%s" />', esc_attr( $args['upload_date'] ) );
-		}
+		$meta = '';
 
 		$meta .= sprintf( '<meta itemprop="embedURL" content="%s" />', esc_attr( $args['src'] ) );
+		if ( ! empty( $args['thumbnail'] ) ) {
 
+			if ( is_numeric( $args['thumbnail'] ) ) {
+				$meta_thumb =  wp_get_attachment_image( $args['thumbnail'] );
+			} else {
+				$meta_thumb = $args['thumbnail'];
+			}
+
+			$meta .= sprintf( '<meta itemprop="thumbnailUrl" content="%s" />', esc_attr( $meta_thumb ) );
+		}
+		if ( ! empty( $args['upload_date'] ) ) {
+			$meta .= sprintf( '<meta itemprop="uploadDate" content="%s" />', esc_attr( $args['upload_date'] ) );
+		}
 		if ( ! empty( $args['title'] ) ) {
-			$meta .= '<h5 itemprop="name" class="arve-title arve-hidden">' . esc_attr( $args['title'] ) . '</h5>';
+			$meta .= '<h5 itemprop="name" class="arve-title arve-hidden">' . esc_html( $args['title'] ) . '</h5>';
 		}
 		if ( ! empty( $args['description'] ) ) {
-			$meta .= '<span itemprop="description" class="arve-description arve-hidden">' . esc_attr( $args['description'] ) . '</span>';
+			$meta .= '<span itemprop="description" class="arve-description arve-hidden">' . esc_html( $args['description'] ) . '</span>';
 		}
 
-		if( 'lazyload-fullscreen' === $args['mode'] || 'lazyload-fixed' === $args['mode'] ) {
-			$close_btn = '<button class="arve-btn arve-btn-close arve-hidden"></button>';
-		}
+		$container = sprintf(
+			'<div class="arve-embed-container" style="padding-bottom: %F%%; %s">%s</div>',
+			static::aspect_ratio_to_padding( $args['aspect_ratio'] ),
+			( $args['thumbnail'] ) ? sprintf( 'background-image:url(%s);', $args['thumbnail'] ) : '',
+			$meta . $inner
+		);
 
-		if ( $args['promote_link'] ) {
+		if ( $args['arve_link'] ) {
 			$arve_link = sprintf(
 				'<a href="%s" title="%s" class="arve-promote-link">%s</a>',
 				esc_url( 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/' ),
 				esc_attr( __('Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', 'advanced-responsive-video-embedder') ),
 				esc_html__( 'ARVE', 'advanced-responsive-video-embedder' )
 			);
+		} else {
+			$arve_link = '';
 		}
-
-		$conteiner .= sprintf(
-			'<div class="arve-embed-container" style="padding-bottom: %F%%; %s">%s</div>',
-			static::aspect_ratio_to_padding( $args['aspect_ratio'] ),
-			( $args['thumbnail'] ) ? sprintf( 'background-image:url(%s);', $args['thumbnail'] ) : '',
-			$meta . $inner . $close_btn
-		);
 
 		return sprintf(
 			'<div %s>%s</div>',
@@ -747,7 +750,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 			if ( $args['iframe'] ) {
 
 				$embed = static::create_iframe( array (
-					'src' => ( $args['autoplay'] ) ? $args['src_autoplay_yes'] : $args['src_autoplay_no'],
+					'src'  => ( $args['autoplay'] ) ? $args['src_autoplay_yes'] : $args['src_autoplay_no'],
+					'name' => ! empty( $args['iframe_name'] ) ? $args['iframe_name'] : false,
 				) );
 
 			} else {
@@ -776,8 +780,9 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 */
 	public static function create_iframe( $args ) {
 
-		$defaults = array (
+		$defaults = array(
 			'provider'        => null,
+			'name'            => false,
 			'src'             => false,
 			'data-src'        => false,
 			'class'           => 'arve-inner',
