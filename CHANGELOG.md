@@ -1,12 +1,6 @@
 ## Changelog ##
 
-### Thanks to everyone who bought the Pro Addon ###
-
-I really appreciate this. I commercialized parts of this plugin because I no longer can work on this for free. I am glad not everyone thinks, everything needs to be gratis on the internet and especially in Open Source. The Pro Addon, like the base version here its still Free Software, free as in Freedom! not as in gratis. Well, actually I have given 712 licenses out free of charge to legacy users. I am thinking of stopping the giveaways.
-
 ### Version 7 is coming. [Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/) ###
-
-I worked very hard on version 7 and hope it will be worth it. Since there is a lot of changes in v7 and like to get a bit more professional with releasing stable versions here instead if just throwing betas out there with fear of bugs and bad reviews, I need some people who will run the latest code and help test.
 
 ### 7.0.2 Beta ###
 
@@ -42,7 +36,17 @@ I worked very hard on version 7 and hope it will be worth it. Since there is a l
 * Improved: Removed the 'Fake Thumbnail' because I now think the entire idea was bad and real thumbnails should be used.
 * Dropped PHP Class
 
+### 6.3.9 ###
 
+
+
+### 6.3.8 ###
+
+* Fix: Facebook in lazyload modes.
+
+### 6.3.7 ###
+
+* New: Facebook video support.
 
 ### 6.3.4 ###
 
