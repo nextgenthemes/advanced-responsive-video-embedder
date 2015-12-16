@@ -190,6 +190,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'facebook' => array(
 				'url' => true,
 				'thumb' => false,
+				'aspect_ratio' => 56.25,
 				'wmode_transparent' => false,
 				'tests' => array(
 					'https://www.facebook.com/UScoastguard/videos/10153791849322679/',
@@ -894,7 +895,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$url = 'http://www.xtube.com/embedded/user/play.php?v=' . $id;
 				break;
 			case 'facebook':
-				$url = 'http://www.facebook.com/video/embed?video_id=' . $id;
+				$url = '//www.facebook.com/video/embed?video_id=' . $id;
 				break;
 			case 'twitch':
 				$tw = explode( '/', $id );
