@@ -272,6 +272,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		);
 
 		$args = shortcode_atts( $shortcode_atts_defaults, $atts, $this->options['shortcodes'][ $provider ] );
+		$args['element_id']  = preg_replace( '/[^-a-zA-Z0-9]+/', '', $args['id'] );
 		$args['iframe']      = true;
 		$args['maxwidth']    = (int) $args['maxwidth'];
 		$args['object_params_autoplay_no']  = '';
@@ -282,6 +283,12 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$args['thumbnail']   = trim( $args['thumbnail'] );
 		$args['title']       = trim( $args['title'] );
 		$args['description'] = trim( $args['description'] );
+
+		if ( is_numeric( $args['thumbnail'] ) ) {
+			$meta_thumb =  wp_get_attachment_image( $args['thumbnail'] );
+		} else {
+			$meta_thumb = $args['thumbnail'];
+		}
 
 		if ( 'dailymotionlist' === $args['provider'] ) {
 
@@ -689,15 +696,9 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$meta = '';
 
 		$meta .= sprintf( '<meta itemprop="embedURL" content="%s" />', esc_attr( $args['src'] ) );
+
 		if ( ! empty( $args['thumbnail'] ) ) {
-
-			if ( is_numeric( $args['thumbnail'] ) ) {
-				$meta_thumb =  wp_get_attachment_image( $args['thumbnail'] );
-			} else {
-				$meta_thumb = $args['thumbnail'];
-			}
-
-			$meta .= sprintf( '<meta itemprop="thumbnailUrl" content="%s" />', esc_attr( $meta_thumb ) );
+			$meta .= sprintf( '<meta itemprop="thumbnailUrl" content="%s" />', esc_attr( $args['thumbnail'] ) );
 		}
 		if ( ! empty( $args['upload_date'] ) ) {
 			$meta .= sprintf( '<meta itemprop="uploadDate" content="%s" />', esc_attr( $args['upload_date'] ) );
@@ -730,7 +731,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		return sprintf(
 			'<div %s>%s</div>',
 			Advanced_Responsive_Video_Embedder_Shared::attr( array(
-				'id'             => 'video-' . urlencode( $args['id'] ),
+				'id'             => 'video-' . $args['element_id'],
 				'class'          => 'arve-wrapper ' . $args['align'],
 				'data-arve-grow' => ( 'lazyload' === $args['mode'] ) ? (string) $args['grow'] : null,
 				'data-arve-mode' => $args['mode'],

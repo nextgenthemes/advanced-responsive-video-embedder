@@ -22,16 +22,17 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 
 <p class="lead">Thanks to everyone who bought the <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">Pro Addon</a></p>
 
-<p>I really appreciate this. I commercialized parts of this plugin because I no longer can work on this for free and donations were not really doing it. I am glad not everyone thinks, everything needs to be gratis on the Internet and especially in Open Source. The Pro Addon, like the base version here is still Free Software, free as in Freedom! not as in gratis. Well, actually I have given 712 licenses out free of charge to legacy users. I am thinking of stopping the giveaways.</p>
+<p>I really appreciate this. I commercialized parts of this plugin because I no longer can work on this for free and donations were not really doing it. I am glad not everyone thinks, everything needs to be gratis on the Internet, especially in Open Source. The Pro Addon, like the base version here, is still Free Software - free as in Freedom! not as in gratis. Well, actually I have given 712 licenses out free of charge to legacy users. I am thinking of stopping the giveaways.</p>
 
 <a class="btn btn-primary btn-lg" href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">Purchase Pro Addon</a>
 
 
-### Version 7 is coming. [Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/) ###
+### Version 7 is coming ###
+
+[Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/).
 
 ### 7.0.2 Beta ###
 
-* **The latest Pro Addon beta (1.5.2 at the time of writing) must be used with this version**
 * New: New Advanced shotcode Dialog, with very detailed helping texts, display of default settings, hiding of fields based on need ...
 * New: WYSIWYG Preview of shortcodes.
 * New: The two above features need the [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) Plugin that is maybe moving into WordPress core later.
@@ -52,11 +53,10 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * Removed blip because the service was shutdown.
 * Background-images are now applied to .arve-embed-container instead of .arve-wrapper.
 
-### Pro Addon 1.5.2 Beta ###
+### Pro Addon 1.5.3 Beta ###
 
-* **You must have version 7.0.2 or greater of the main plugin installed for Pro Addon 1.5.2 or greater to work**
 * New: Added support for displaying title of videos on top of the thumbnail images.
-* Improved: Rectangle animation.
+* Improved: Rectangle animation. (thinking about removing it completely)
 * Improved: Updated lity (lightbox script) to version 1.5.1
 * Improved: Thumbnail handling.
 * Improved: Removed the 'Lazyload Maximal Width' setting to simplify things (there still is 'Maximal Width' and 'Aligned Maximal Width').
@@ -254,11 +254,12 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 
 ## Changelog ##
 
-### Version 7 is coming. [Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/) ###
+### Version 7 is coming ###
+
+[Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/).
 
 ### 7.0.2 Beta ###
 
-* **The latest Pro Addon beta (1.5.2 at the time of writing) must be used with this version**
 * New: New Advanced shotcode Dialog, with very detailed helping texts, display of default settings, hiding of fields based on need ...
 * New: WYSIWYG Preview of shortcodes.
 * New: The two above features need the [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) Plugin that is maybe moving into WordPress core later.
@@ -279,11 +280,10 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 * Removed blip because the service was shutdown.
 * Background-images are now applied to .arve-embed-container instead of .arve-wrapper.
 
-### Pro Addon 1.5.2 Beta ###
+### Pro Addon 1.5.3 Beta ###
 
-* **You must have version 7.0.2 or greater of the main plugin installed for Pro Addon 1.5.2 or greater to work**
 * New: Added support for displaying title of videos on top of the thumbnail images.
-* Improved: Rectangle animation.
+* Improved: Rectangle animation. (thinking about removing it completely)
 * Improved: Updated lity (lightbox script) to version 1.5.1
 * Improved: Thumbnail handling.
 * Improved: Removed the 'Lazyload Maximal Width' setting to simplify things (there still is 'Maximal Width' and 'Aligned Maximal Width').
@@ -292,7 +292,7 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 
 ### 6.3.9 ###
 
-
+* Fix: Facebook (now really, hopefully).
 
 ### 6.3.8 ###
 

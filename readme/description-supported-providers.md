@@ -9,6 +9,7 @@
 * CollegeHumor
 * Comedy Central
 * dailymotion
+* Facebook (Only iframe embeds, Facebook have deprecated those)
 * flickr
 * Funny or Die
 * gametrailers

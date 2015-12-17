@@ -1,8 +1,9 @@
-### Version 7 is coming. [Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/) ###
+### Version 7 is coming ###
+
+[Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/).
 
 ### 7.0.2 Beta ###
 
-* **The latest Pro Addon beta (1.5.2 at the time of writing) must be used with this version**
 * New: New Advanced shotcode Dialog, with very detailed helping texts, display of default settings, hiding of fields based on need ...
 * New: WYSIWYG Preview of shortcodes.
 * New: The two above features need the [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) Plugin that is maybe moving into WordPress core later.
@@ -23,11 +24,10 @@
 * Removed blip because the service was shutdown.
 * Background-images are now applied to .arve-embed-container instead of .arve-wrapper.
 
-### Pro Addon 1.5.2 Beta ###
+### Pro Addon 1.5.3 Beta ###
 
-* **You must have version 7.0.2 or greater of the main plugin installed for Pro Addon 1.5.2 or greater to work**
 * New: Added support for displaying title of videos on top of the thumbnail images.
-* Improved: Rectangle animation.
+* Improved: Rectangle animation. (thinking about removing it completely)
 * Improved: Updated lity (lightbox script) to version 1.5.1
 * Improved: Thumbnail handling.
 * Improved: Removed the 'Lazyload Maximal Width' setting to simplify things (there still is 'Maximal Width' and 'Aligned Maximal Width').
