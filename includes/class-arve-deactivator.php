@@ -3,7 +3,7 @@
 /**
  * Fired during plugin deactivation
  *
- * @link       http://nico.onl
+ * @link       https://nextgenthemes.com
  * @since      1.0.0
  *
  * @package    Advanced_Responsive_Video_Embedder

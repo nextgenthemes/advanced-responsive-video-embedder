@@ -6,7 +6,7 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the dashboard.
  *
- * @link       http://nico.onl
+ * @link       https://nextgenthemes.com
  * @since      1.0.0
  *
  * @package    Advanced_Responsive_Video_Embedder
@@ -69,7 +69,7 @@ class Advanced_Responsive_Video_Embedder {
 	public function __construct() {
 
 		$this->plugin_slug = 'advanced-responsive-video-embedder';
-		$this->version = '7.0.2';
+		$this->version = '7.0.3';
 
 		$this->load_dependencies();
 		$this->set_locale();

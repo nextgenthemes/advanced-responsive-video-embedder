@@ -3,7 +3,7 @@
 /**
  * The dashboard-specific functionality of the plugin.
  *
- * @link       http://nico.onl
+ * @link       https://nextgenthemes.com
  * @since      1.0.0
  *
  * @package    Advanced_Responsive_Video_Embedder
@@ -310,20 +310,18 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 			if (
 				2 === count( $args['option_values']['options'] ) &&
-				array_key_exists( 0, $args['option_values']['options'] ) &&
-				array_key_exists( 1, $args['option_values']['options'] )
+				array_key_exists( 'yes', $args['option_values']['options'] ) &&
+				array_key_exists( 'no', $args['option_values']['options'] )
 			) {
-				$current_option = (bool) $args['input_attr']['value'];
-				$compare_option = (bool) $key;
+				$current_option = $args['input_attr']['value'] ? 'yes' : 'no';
 			} else {
 				$current_option = $args['input_attr']['value'];
-				$compare_option = $key;
 			}
 
 			$options[] = sprintf(
 				'<option value="%s" %s>%s</option>',
 				esc_attr( $key ),
-				selected( $current_option, $compare_option, false ),
+				selected( $current_option, $key, false ),
 				esc_html( $value )
 			);
 		}
@@ -594,8 +592,10 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		$output['last_options_tab']   = sanitize_text_field( $input['last_options_tab'] );
 		$output['mode']               = sanitize_text_field( $input['mode'] );
 
-		$output['promote_link'] = ( 'yes' === $input['promote_link'] ) ? true : false;
-		$output['autoplay']     = ( 'yes' === $input['autoplay'] ) ? true : false;
+		$output['promote_link'] = ( 'yes' == $input['promote_link'] ) ? true : false;
+		$output['autoplay']     = ( 'yes' == $input['autoplay'] )     ? true : false;
+
+		#dd($input['promote_link']);
 
 		if( (int) $input['video_maxwidth'] > 100 ) {
 			$output['video_maxwidth'] = (int) $input['video_maxwidth'];

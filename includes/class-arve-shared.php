@@ -3,7 +3,7 @@
 /**
  * Fired during plugin activation
  *
- * @link       http://nico.onl
+ * @link       https://nextgenthemes.com
  * @since      1.0.0
  *
  * @package    Advanced_Responsive_Video_Embedder
@@ -53,7 +53,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'myspace'             => $hw . 'myspace\.com/.+/([0-9]+)',
 			'myvideo'             => $hw . 'myvideo\.de/(?:watch|embed)/([0-9]{7,8})',
 			'snotr'               => $hw . 'snotr\.com/(?:video|embed)/([0-9]+)',
-			'twitch'              => $hw . 'twitch.tv/([a-z0-9_/]+)',
+			'twitch'              => $hw . 'twitch.tv/(?!directory)(?|[a-z0-9_]+/v/([0-9]+)|([a-z0-9_]+))',
 			'ustream'             => $hw . 'ustream\.tv/(?:channel/)?([0-9]{8}|recorded/[0-9]{8}(/highlight/[0-9]+)?)',
 			'veoh'                => $hw . 'veoh\.com/watch/([a-z0-9]+)',
 			'vevo'                => $hw . 'vevo\.com/watch/(?:[^\/]+/[^\/]+/)?([a-z0-9]+)',

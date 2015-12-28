@@ -3,7 +3,7 @@
 /**
  * The public-facing functionality of the plugin.
  *
- * @link       http://nico.onl
+ * @link       https://nextgenthemes.com
  * @since      1.0.0
  *
  * @package    Advanced_Responsive_Video_Embedder
@@ -471,7 +471,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$args['src'] = '//scache.vevo.com/assets/html/embed.html?video=' . $args['id'];
 				break;
 			case 'ted':
-				if ( preg_match( "/^[a-z]{2}$/", $lang ) === 1 ) {
+				if ( preg_match( "/^[a-z]{2}$/", $args['lang'] ) === 1 ) {
 					$args['src'] = 'https://embed-ssl.ted.com/talks/lang/' . $args['lang'] . '/' . $args['id'] . '.html';
 				} else {
 					$args['src'] = 'https://embed-ssl.ted.com/talks/' . $args['id'] . 'html';
@@ -493,52 +493,15 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$args['src'] = '//www.facebook.com/video/embed?video_id=' . $args['id'];
 				break;
 			case 'twitch':
-				$tw = explode( '/', $args['id'] );
 
-				/*
-				$args['src'] = 'http://www.twitch.tv/' . $tw[0] . '/embed';
+				if ( is_numeric( $args['id'] ) ) {
 
-				if ( isset( $tw[1] ) && isset( $tw[2] ) && is_numeric( $tw[2] ) ) {
-					$args['src'] =                                       'http://www.twitch.tv/swflibs/TwitchPlayer.swf';
-					$object_params  = '<param name="movie" value="http://www.twitch.tv/swflibs/TwitchPlayer.swf">';
-					$object_params .= '<param name="allowNetworking" value="all">';
+					$args['src'] = 'http://player.twitch.tv/?video=v' . $args['id'];
 
-					switch( $tw[1] ) {
-						case 'b':
-						case 'c':
-						case 'v':
-							$videoid_flashvar = '&amp;videoId=' . $tw[1] . $tw[2];
-							break;
-						default:
-							return $this->error( sprintf( __('Twitch ID <code>%s</code> is invalid', $this->plugin_slug ), $args['id'] ) );
-							break;
-					}
+				} else {
 
-					$object_params_autoplay_yes = $object_params . sprintf( '<param name="flashvars" value="channel=%s%s&amp;auto_play=true">', $tw[0], $videoid_flashvar );
-					$object_params_autoplay_no  = $object_params . sprintf( '<param name="flashvars" value="channel=%s%s&amp;auto_play=false">', $tw[0], $videoid_flashvar );
+					$args['src'] = 'http://player.twitch.tv/?channel=' . $args['id'];
 				}
-				*/
-
-				$args['src'] = 'http://player.twitch.tv/?channel=' . $tw[0];
-
-				if ( isset( $tw[1] ) && isset( $tw[2] ) && is_numeric( $tw[2] ) ) {
-
-					switch( $tw[1] ) {
-						case 'b':
-							$args['src'] = 'http://player.twitch.tv/?video=a' . $tw[2];
-							break;
-						case 'c':
-							$args['src'] = 'http://player.twitch.tv/?video=c' . $tw[2];
-							break;
-						case 'v':
-							$args['src'] = 'http://player.twitch.tv/?video=v' . $tw[2];
-							break;
-						default:
-							return $this->error( sprintf( __('Twitch ID <code>%s</code> is invalid', $this->plugin_slug ), $args['id'] ) );
-							break;
-					}
-				}
-
 				break;
 			case 'vine':
 				$args['src'] = 'https://vine.co/v/' . $args['id'] . '/embed/simple';
