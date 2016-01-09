@@ -30,8 +30,10 @@ class Advanced_Responsive_Video_Embedder_Shared {
 	public static function get_regex_list() {
 
 		$hw = 'https?://(?:[a-z]+\.)?';
-		//* Double hash comment = no id in URL
+
 		return array(
+			'file'                => $hw . '([^\s]+\.(?:mp4|webm|ogg)$)',
+
 			'4players'            => $hw . '4players\.de/4players\.php/tvplayer/4PlayersTV/([0-9a-z_/]+\.html)',
 			'alugha'              => $hw . 'alugha.com/1/videos/([a-z0-9_\-]+)',
 			'archiveorg'          => $hw . 'archive\.org/(?:details|embed)/([0-9a-z]+)',
@@ -106,6 +108,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'funnyordie'      => 'funnyordie',
 				'gametrailers'    => 'gametrailers',
 				'iframe'          => 'iframe',
+				'video'           => 'arve_video',
 				'ign'             => 'ign',
 				'kickstarter'     => 'kickstarter',
 				'liveleak'        => 'liveleak',
@@ -160,7 +163,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'viddler'         => 'wmode=transparent  player=full  f=1  disablebranding=1  ',
 				'vine'            => '', //* audio=1 supported
 				#'videojug'        => '',
-				'vimeo'           => 'html5=1  title=0  byline=0  portrait=0  ',
+				'vimeo'           => 'html5=1  title=1  byline=0  portrait=0  ',
 				#'yahoo'           => '',
 				'youtube'         => 'wmode=transparent  iv_load_policy=3  modestbranding=1  rel=0  autohide=1  ',
 			)
@@ -212,7 +215,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'label'  => esc_html__( 'URL of video', 'advanced-responsive-video-embedder'),
 				'type'   => 'text',
 				'meta'   => array(
-					'placeholder' => esc_html__( 'Video URL (Embed Code for some prividers)', 'advanced-responsive-video-embedder' ),
+					'placeholder' => esc_attr__( 'Video URL (Embed Code for some prividers)', 'advanced-responsive-video-embedder' ),
 				)
 			),
 			array(
@@ -266,7 +269,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'label' => esc_html__('Title', 'advanced-responsive-video-embedder'),
 				'type'  => 'text',
 				'meta'  => array(
-					'placeholder' => esc_html__( 'Visible title for Lazyload modes (Pro Addon only) & schema.org "name" for SEO', 'advanced-responsive-video-embedder' ),
+					'placeholder' => esc_attr__( 'Visible title for Lazyload modes (Pro Addon only) & schema.org "name" for SEO', 'advanced-responsive-video-embedder' ),
 				)
 			),
 			array(
@@ -275,7 +278,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'label' => esc_html__('Description', 'advanced-responsive-video-embedder'),
 				'type'  => 'text',
 				'meta'  => array(
-					'placeholder' => esc_html__( 'Schema.org "description" for SEO', 'advanced-responsive-video-embedder' ),
+					'placeholder' => esc_attr__( 'Schema.org "description" for SEO', 'advanced-responsive-video-embedder' ),
 				)
 			),
 			array(
@@ -284,7 +287,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'label' => esc_html__( 'Upload Date', 'advanced-responsive-video-embedder' ),
 				'type'  => 'text',
 				'meta'  => array(
-					'placeholder' => esc_html__( 'ISO 8601 format, Schema.org "uploadDate" for SEO', 'advanced-responsive-video-embedder' ),
+					'placeholder' => esc_attr__( 'ISO 8601 format, Schema.org "uploadDate" for SEO', 'advanced-responsive-video-embedder' ),
 				)
 			),
 			array(
@@ -314,7 +317,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'label' => esc_html__('Maximal Width', 'advanced-responsive-video-embedder'),
 				'type'  =>  'number',
 				'meta'  => array(
-					'placeholder' => esc_html__( 'in px - leave empty to use settings', 'advanced-responsive-video-embedder'),
+					'placeholder' => esc_attr__( 'in px - leave empty to use settings', 'advanced-responsive-video-embedder'),
 				),
 			),
 			array(
@@ -323,7 +326,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'label' => esc_html__('Align Maximal Width', 'advanced-responsive-video-embedder'),
 				'type'  => 'number',
 				'meta'  => array(
-					'placeholder' => esc_html__( 'Needed! Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
+					'placeholder' => esc_attr__( 'Needed! Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
 				)
 			),
 			array(
@@ -373,7 +376,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'name' => '4players.de',
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'http://www.4players.de/4players.php/tvplayer/4PlayersTV/Alle/20943/105302/Mass_Effect_3/Trilogie-Rueckblick.html',
 				)
@@ -381,7 +383,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'alugha' => array(
 				'url' => true,
 				'thumb' => true,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'https://alugha.com/1/videos/youtube-54m1YfEuYU8',
 				)
@@ -390,7 +391,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'name' => 'archive.org',
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'https://archive.org/details/AlexJonesInterviewsDeanHaglund',
 				)
@@ -398,7 +398,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'break' => array(
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591',
 				)
@@ -407,7 +406,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'name' => 'CollegeHumor',
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'aspect_ratio' => '600:369',
 				'tests' => array(
 					'http://collegehumor.com/video/6922670/bleep-bloop-your-best-game',
@@ -417,7 +415,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'name' => 'Comedy Central',
 				'url' => false,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'[comedycentral id="c80adf02-3e24-437a-8087-d6b77060571c"]',
 				)
@@ -425,7 +422,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'dailymotion' => array(
 				'url' => true,
 				'thumb' => true,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'http://www.dailymotion.com/video/x44lvd_rates-of-exchange-like-a-renegade_music',
 					__('URL just the ID withoutout the long title', 'advanced-responsive-video-embedder'),
@@ -464,7 +460,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'dailymotionlist' => array(
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array()
 			),
 			'flickr' => array(
@@ -487,7 +482,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'name' => 'Funny or Die',
 				'url' => true,
 				'thumb' => true,
-				'wmode_transparent' => true,
 				'aspect_ratio' => '640:400',
 				'tests' => array(
 					'http://www.funnyordie.com/videos/76585438d8/sarah-silverman-s-we-are-miracles-hbo-special',
@@ -496,7 +490,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'gametrailers' => array(
 				'url' => false,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'[gametrailers id="797121a1-4685-4ecc-9388-72a88b0ef8da"]',
 				)
@@ -506,20 +499,14 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'thumb' => false,
 				'wmode_transparent' => false,
 				'tests' => array(
-
-
-					esc_html__('The iframe embed codes can be used for providers that support iframe embed codes but are not specifically listed under supported providers.', 'advanced-responsive-video-embedder'),
-					'[iframe id="http://video.webmfiles.org/big-buck-bunny_trailer.webm"]',
-
 					__('This plugin allows iframe embeds for every URL by using this <code>[iframe]</code> shortcode. This should only be used for providers not supported by this via a named shortcode. The result is a 16:9 resonsive iframe by default, aspect ratio can be changed as usual.', 'advanced-responsive-video-embedder'),
-					'[iframe id="http://example.com/" aspect_ratio="1:1"]',
+					'[iframe src="http://example.com/" aspect_ratio="1:1"]',
 				),
 			),
 			'ign' => array(
 				'name' => 'IGN',
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'http://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
 				)
@@ -527,7 +514,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'kickstarter' => array(
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'https://www.kickstarter.com/projects/obsidian/project-eternity?ref=discovery',
 				)
@@ -536,7 +522,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'name' => 'LiveLeak',
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array(
 
 				)
@@ -544,7 +529,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'livestream' => array(
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array(
 					__('Page/item <code>i=</code> URL', 'advanced-responsive-video-embedder') ,
 					'http://www.liveleak.com/view?i=703_1385224413',
@@ -555,7 +539,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'metacafe' => array(
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'http://www.metacafe.com/watch/11159703/why_youre_fat/',
 					'http://www.metacafe.com/watch/11322264/everything_wrong_with_robocop_in_7_minutes/',
@@ -564,7 +547,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'movieweb' => array(
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'[movieweb id="VIwFzmdbyoy9zB"]',
 				)
@@ -573,7 +555,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'name' => 'MPORA',
 				'url' => true,
 				'thumb' => true,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'http://mpora.com/videos/AAdphry14rkn',
 					'http://mpora.de/videos/AAdpxhiv6pqd',
@@ -582,7 +563,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'myspace' => array(
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'https://myspace.com/myspace/video/dark-rooms-the-shadow-that-looms-o-er-my-heart-live-/109471212',
 				)
@@ -591,7 +571,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'name' => 'MyVideo',
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'http://www.myvideo.de/watch/8432624/Angeln_mal_anders',
 				)
@@ -599,7 +578,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'snotr' => array(
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => false,
 				'tests' => array(
 					'http://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is',
 				)
@@ -607,8 +585,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'spike' => array(
 				'url' => false,
 				'thumb' => false,
-				'wmode_transparent' => true,
-				#'aspect_ratio' => 59.8,
 				'tests' => array(
 					'[spike id="5afddf30-31d8-40fb-81e6-bb5c6f45525f"]',
 				)
@@ -617,7 +593,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'name' => 'TED Talks',
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array(
 					__('To my knowlege TED forces autoplay and there is no way disable it', 'advanced-responsive-video-embedder') ,
 					'http://ted.com/talks/jill_bolte_taylor_s_powerful_stroke_of_insight',
@@ -628,7 +603,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'twitch' => array(
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'http://www.twitch.tv/tsm_dyrus',
 					__('Past breadcast URL', 'advanced-responsive-video-embedder') ,
@@ -641,7 +615,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'name' => 'USTREAM',
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'aspect_ratio' => '480:270', #61,
 				'tests' => array(
 					__('To my knowlege Ustream forces autoplay and there is no way disable it', 'advanced-responsive-video-embedder') ,
@@ -656,7 +629,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'veoh' => array(
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				#'aspect_ratio' => 60.257,
 				'tests' => array(
 					'http://www.veoh.com/watch/v19866882CAdjNF9b',
@@ -665,7 +637,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'vevo' => array(
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'[vevo id="US4E51286201"]',
 					'http://www.vevo.com/watch/the-offspring/the-kids-arent-alright/USSM20100649',
@@ -688,7 +659,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'videojug' => array(
 				'url' => false,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'[videojug id="fa15cafd-556f-165b-d660-ff0008c90d2d"]',
 				)
@@ -696,7 +666,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'vine' => array(
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'aspect_ratio' => '1:1',
 				'tests' => array(
 					'[vine id="MbrreglaFrA"]',
@@ -709,7 +678,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'vimeo' => array(
 				'url' => true,
 				'thumb' => true,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'[vimeo id="12901672"]',
 					'http://vimeo.com/23316783',
@@ -729,23 +697,12 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'name' => 'XTube',
 				'url' => true,
 				'thumb' => false,
-				'wmode_transparent' => true,
 				'tests' => array()
-			),
-			'yahoo' => array(
-				'name' => 'Yahoo Screen',
-				'url' => true,
-				'thumb' => false,
-				'wmode_transparent' => true,
-				'tests' => array(
-					'http://screen.yahoo.com/buzzfeed/eye-opening-facts-vaginas-210102842.html',
-				)
 			),
 			'youtube' => array(
 				'name' => 'YouTube',
 				'url' => true,
 				'thumb' => true,
-				'wmode_transparent' => true,
 				'tests' => array(
 					'[youtube id="XQEiv7t1xuQ"]',
 					'http://www.youtube.com/watch?v=vrXgLhkv21Y',
@@ -912,7 +869,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'name' => 'YouTube Playlist',
 				'url' => true,
 				'thumb' => true,
-				'wmode_transparent' => true,
 				'tests' => array()
 			),
 		);

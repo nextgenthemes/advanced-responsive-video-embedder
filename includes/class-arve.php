@@ -205,6 +205,8 @@ class Advanced_Responsive_Video_Embedder {
 
 		$this->loader->add_action( 'arve_output', $plugin_public, 'normal_output', 10, 2 );
 
+		$this->loader->add_action( 'wp_video_shortcode_override', $plugin_public, 'wp_video_shortcode_override', 10, 4 );
+
 		add_filter( 'widget_text', 'do_shortcode' );
 	}
 

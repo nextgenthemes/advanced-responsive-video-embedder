@@ -95,7 +95,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		add_shortcode( 'arve', array( $this, 'arve_shortcode' ) );
-		add_shortcode( 'arve_tests', array( $this, 'tests_shortcode' ) );
+		add_shortcode( 'arve_tests', array( $this, 'arve_tests_shortcode' ) );
 		add_shortcode( 'arve_supported', array( $this, 'supported_shortcode' ) );
 	}
 
@@ -242,7 +242,28 @@ class Advanced_Responsive_Video_Embedder_Public {
 			__('<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error:', $this->plugin_slug ),
 			$message
 		);
+	}
 
+	public function wp_video_shortcode_override( $out, $attr, $content, $instance ) {
+
+		if( ! empty( $attr['wmv'] ) && ! empty( $attr['flv'] ) ) {
+			return $out;
+		}
+
+		$remap = array(
+			'src'      => 'id',
+			'poster'   => 'thumbnail',
+			'width'    => 'maxwidth'
+		);
+
+		foreach ( $remap as $key => $value ) {
+
+			if( ! empty( $attr[ $key ] ) ) {
+				$attr[ $value ] = $attr[ $key ];
+			}
+		}
+
+		return $this->build_embed( 'video', $attr );
 	}
 
 	/**
@@ -252,42 +273,74 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 */
 	public function build_embed( $provider, $atts ) {
 
-		$shortcode_atts_defaults = array(
-			'align'        => $this->options['align'],
+		$properties = Advanced_Responsive_Video_Embedder_Shared::get_properties();
+
+		if( 'iframe' == $provider && empty( $atts['src'] ) && ! empty( $atts['id'] ) ) {
+			$atts['src'] = $atts['id'];
+		}
+
+		$pairs = array(
 			'aspect_ratio' => isset( $properties[ $provider ]['aspect_ratio'] ) ? $properties[ $provider ]['aspect_ratio'] : '16:9',
-			'autoplay'     => (bool) $this->options['autoplay'],
-			'id'           => null,
-			'lang'         => null, # Only used for TED
-			'maxwidth'     => (int) $this->options['video_maxwidth'],
-			'mode'         => (string) $this->options['mode'],
-			'parameters'   => null,
-			'start'        => null, # Only used for vimeo
-			'thumbnail'    => null,
-			'link_text'    => null,
-			'title'        => null,
 			'description'  => null,
 			'grow'         => null,
-			'arve_link'    => (string) $this->options['promote_link'],
+			'id'           => null,
 			'iframe_name'  => null,
+			'link_text'    => null,
+			'thumbnail'    => null,
+			'title'        => null,
+			'align'        => (string) $this->options['align'],
+			'arve_link'    => (string) $this->options['promote_link'],
+			'autoplay'     => (bool)   $this->options['autoplay'],
+			'maxwidth'     => (int)    $this->options['video_maxwidth'],
+			'mode'         => (string) $this->options['mode'],
 		);
 
-		$args = shortcode_atts( $shortcode_atts_defaults, $atts, $this->options['shortcodes'][ $provider ] );
+		if( 'ted' == $provider ) {
+			$pairs['lang'] = null;
+		}
+		if( 'vimeo' == $provider ) {
+			$pairs['start'] = null;
+		}
+		if( 'video' == $provider ) {
+			$pairs['loop'] = null;
+			#$default_types = wp_get_video_extensions();
+			foreach ( array( 'mp4', 'm4v', 'ogg', 'webm', 'ogv' ) as $type ) {
+
+				#if ( in_array( $type, $default_types ) ) {
+					$pairs[ $type ] = null;
+				#}
+			}
+		}
+		if( in_array( $provider, array( 'iframe', 'video' ) ) ) {
+			$pairs['src'] = null;
+		} else {
+			$pairs['parameters'] = null;
+		}
+
+		$args = shortcode_atts( $pairs, $atts, $this->options['shortcodes'][ $provider ] );
+		$args['description'] = trim( $args['description'] );
 		$args['element_id']  = preg_replace( '/[^-a-zA-Z0-9]+/', '', $args['id'] );
 		$args['iframe']      = true;
 		$args['maxwidth']    = (int) $args['maxwidth'];
+		$args['provider']    = $provider;
+		$args['thumbnail']   = trim( $args['thumbnail'] );
 		$args['object_params_autoplay_no']  = '';
 		$args['object_params_autoplay_yes'] = '';
-		$args['properties']  = Advanced_Responsive_Video_Embedder_Shared::get_properties();
-		$args['provider']    = $provider;
+		$args = apply_filters( 'arve_args', $args );
 
-		$args['thumbnail']   = trim( $args['thumbnail'] );
-		$args['title']       = trim( $args['title'] );
-		$args['description'] = trim( $args['description'] );
+		if( is_numeric( $args['thumbnail'] ) ) {
+			$image_attributes = wp_get_attachment_image_src( $args['thumbnail'], 'full' ); // returns an array
 
-		if ( is_numeric( $args['thumbnail'] ) ) {
-			$meta_thumb =  wp_get_attachment_image( $args['thumbnail'] );
+			if( $image_attributes ) {
+				$args['thumbnail'] = $image_attributes[0];
+			}
+		}
+
+		if( ! filter_var( $args['thumbnail'], FILTER_VALIDATE_URL ) === false ) {
+
 		} else {
-			$meta_thumb = $args['thumbnail'];
+
+			#return $this->error( sprintf( __( 'Thumbnail <code>%s</code> is not a valid URL', $this->plugin_slug ), esc_html( $args['thumbnail'] ) ) );
 		}
 
 		if ( 'dailymotionlist' === $args['provider'] ) {
@@ -302,12 +355,12 @@ class Advanced_Responsive_Video_Embedder_Public {
 			}
 		}
 
-		if ( empty( $args['id'] ) ) {
+		if ( ! in_array( $args['provider'], array( 'iframe', 'video' ) ) && empty( $args['id'] ) ) {
 			return $this->error( __( 'no id set', $this->plugin_slug ) );
-		} elseif ( ! preg_match('/[^\x20-\x7f]/', $args['provider'] ) ) {
+		} elseif ( ! preg_match('/^[^\x20-\x7f]+$/', $args['provider'] ) ) {
 			// fine
 		} else {
-			return $this->error( sprintf( __( 'Provider <code>%s</code> not valid', $this->plugin_slug ), esc_html( $args['provider'] ) ) );
+			return $this->error( sprintf( __( 'ID <code>%s</code> not valid', $this->plugin_slug ), esc_html( $args['id'] ) ) );
 		}
 
 		switch ( $args['align'] ) {
@@ -364,32 +417,25 @@ class Advanced_Responsive_Video_Embedder_Public {
 				break;
 		}
 
-		switch ( $args['start'] ) {
-			case null:
-			case '':
-			case ( preg_match("/^[0-9a-z]$/", $args['start']) ):
-				break;
-			default:
-				return $this->error( sprintf( __( 'Start <code>%s</code> not valid', $this->plugin_slug ), $args['start'] ) );
-				break;
-		}
-
 		switch ( $args['provider'] ) {
+			case 'iframe':
+			case 'video':
+				break;
 			case '4players':
-				$args['src'] = 'http://www.4players.de/4players.php/tvplayer_embed/4PlayersTV/' . $args['id'];
+				$args['src'] = '//www.4players.de/4players.php/tvplayer_embed/4PlayersTV/' . $args['id'];
 				break;
 			case 'alugha':
 				$args['src'] = 'https://alugha.com/embed/polymer-live/?v=' . $args['id'];
 				break;
 			case 'metacafe':
-				$args['src'] = 'http://www.metacafe.com/embed/' . $args['id'] . '/';
+				$args['src'] = '//www.metacafe.com/embed/' . $args['id'] . '/';
 				break;
 			case 'liveleak':
 				//* For backwards compatibilty and possible mistakes
 				if ( $args['id'][0] != 'f' && $args['id'][0] != 'i' ) {
 					$args['id'] = 'i=' . $args['id'];
 				}
-				$args['src'] = 'http://www.liveleak.com/ll_embed?' . $args['id'];
+				$args['src'] = '//www.liveleak.com/ll_embed?' . $args['id'];
 				break;
 			case 'livestream':
 				$args['src'] = '//livestream.com/accounts/' .  $args['id'] . '/player';
@@ -398,17 +444,17 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$args['src'] = '//myspace.com/play/video/' . $args['id'];
 				break;
 			case 'collegehumor':
-				$args['src'] = 'http://www.collegehumor.com/e/' . $args['id'];
+				$args['src'] = '//www.collegehumor.com/e/' . $args['id'];
 				break;
 			case 'videojug':
-				$args['src'] = 'http://www.videojug.com/embed/' . $args['id'];
+				$args['src'] = '//www.videojug.com/embed/' . $args['id'];
 				break;
 			case 'veoh':
-				$args['src'] = 'http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1396&permalinkId=' . $args['id'];
+				$args['src'] = '//www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1396&permalinkId=' . $args['id'];
 				$object_params = sprintf( '<param name="movie" value="%s" />', esc_url( $args['src'] ) );
 				break;
 			case 'break':
-				$args['src'] = 'http://break.com/embed/' . $args['id'];
+				$args['src'] = '//break.com/embed/' . $args['id'];
 				break;
 			case 'dailymotion':
 				$args['src'] = '//www.dailymotion.com/embed/video/' . $args['id'];
@@ -417,34 +463,43 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$args['src'] = '//www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2F' . $args['id'] . '%2F1';
 				break;
 			case 'movieweb':
-				$args['src'] = 'http://www.movieweb.com/v/' . $args['id'];
+				$args['src'] = '//www.movieweb.com/v/' . $args['id'];
 				break;
 			case 'mpora':
-				$args['src'] = 'http://mpora.com/videos/' . $args['id'] . '/embed';
+				$args['src'] = '//mpora.com/videos/' . $args['id'] . '/embed';
 				break;
 			case 'myvideo':
 				$args['src'] = '//www.myvideo.de/embed/' . $args['id'];
 				break;
 			case 'vimeo':
+				switch ( $args['start'] ) {
+					case null:
+					case '':
+					case ( preg_match("/^[0-9a-z]$/", $args['start']) ):
+						break;
+					default:
+						return $this->error( sprintf( __( 'Start <code>%s</code> not valid', $this->plugin_slug ), $args['start'] ) );
+						break;
+				}
 				$args['src'] = '//player.vimeo.com/video/' . $args['id'];
 				break;
 			case 'gametrailers':
-				$args['src'] = 'http://media.mtvnservices.com/embed/mgid:arc:video:gametrailers.com:' . $args['id'];
+				$args['src'] = '//media.mtvnservices.com/embed/mgid:arc:video:gametrailers.com:' . $args['id'];
 				break;
 			case 'comedycentral':
-				$args['src'] = 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:' . $args['id'];
+				$args['src'] = '//media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:' . $args['id'];
 				break;
 			case 'spike':
-				$args['src'] = 'http://media.mtvnservices.com/embed/mgid:arc:video:spike.com:' . $args['id'];
+				$args['src'] = '//media.mtvnservices.com/embed/mgid:arc:video:spike.com:' . $args['id'];
 				break;
 			case 'viddler':
 				$args['src'] = '//www.viddler.com/player/' . $args['id'] . '/';
 				break;
 			case 'snotr':
-				$args['src'] = 'http://www.snotr.com/embed/' . $args['id'];
+				$args['src'] = '//www.snotr.com/embed/' . $args['id'];
 				break;
 			case 'funnyordie':
-				$args['src'] = 'http://www.funnyordie.com/embed/' . $args['id'];
+				$args['src'] = '//www.funnyordie.com/embed/' . $args['id'];
 				break;
 			case 'youtube':
 				$args['id'] = str_replace( array( '&list=', '&amp;list=' ), '?list=', $args['id'] );
@@ -454,53 +509,43 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$args['src'] = '//www.youtube.com/embed/videoseries?list=' . $args['id'] . '&wmode=transparent&rel=0&autohide=1&hd=1&iv_load_policy=3';
 				break;
 			case 'archiveorg':
-				$args['src'] = 'http://www.archive.org/embed/' . $args['id'] . '/';
+				$args['src'] = '//www.archive.org/embed/' . $args['id'] . '/';
 				break;
 			case 'flickr':
-				$args['src'] = 'http://www.flickr.com/apps/video/stewart.swf?v=109786';
+				$args['src'] = '//www.flickr.com/apps/video/stewart.swf?v=109786';
 				$object_params = '<param name="flashvars" value="intl_lang=en-us&photo_secret=9da70ced92&photo_id=' . $args['id'] . '"></param>';
 				break;
 			case 'ustream':
-				$args['src'] = 'http://www.ustream.tv/embed/' . $args['id'] . '?v=3&wmode=transparent';
-				break;
-			case 'yahoo':
-				$id = str_ireplace( array( 'screen.yahoo,com/', 'screen.yahoo.com/embed/' ), '', $args['id'] );
-				$args['src'] = 'http://screen.yahoo.com/embed/' . $args['id'] . '.html';
+				$args['src'] = '//www.ustream.tv/embed/' . $args['id'] . '?v=3&wmode=transparent';
 				break;
 			case 'vevo':
 				$args['src'] = '//scache.vevo.com/assets/html/embed.html?video=' . $args['id'];
 				break;
 			case 'ted':
+
 				if ( preg_match( "/^[a-z]{2}$/", $args['lang'] ) === 1 ) {
 					$args['src'] = 'https://embed-ssl.ted.com/talks/lang/' . $args['lang'] . '/' . $args['id'] . '.html';
 				} else {
-					$args['src'] = 'https://embed-ssl.ted.com/talks/' . $args['id'] . 'html';
+					$args['src'] = 'https://embed-ssl.ted.com/talks/' . $args['id'] . '.html';
 				}
 				break;
-			case 'iframe':
-				$args['src'] = $args['id'];
-				break;
 			case 'kickstarter':
-				$args['src'] = 'http://www.kickstarter.com/projects/' . $args['id'] . '/widget/video.html';
+				$args['src'] = '//www.kickstarter.com/projects/' . $args['id'] . '/widget/video.html';
 				break;
 			case 'ign':
-				$args['src'] = 'http://widgets.ign.com/video/embed/content.html?url=' . $args['id'];
+				$args['src'] = '//widgets.ign.com/video/embed/content.html?url=' . $args['id'];
 				break;
 			case 'xtube':
-				$args['src'] = 'http://www.xtube.com/embedded/user/play.php?v=' . $args['id'];
+				$args['src'] = '//www.xtube.com/embedded/user/play.php?v=' . $args['id'];
 				break;
 			case 'facebook':
 				$args['src'] = '//www.facebook.com/video/embed?video_id=' . $args['id'];
 				break;
 			case 'twitch':
-
 				if ( is_numeric( $args['id'] ) ) {
-
-					$args['src'] = 'http://player.twitch.tv/?video=v' . $args['id'];
-
+					$args['src'] = '//player.twitch.tv/?video=v' . $args['id'];
 				} else {
-
-					$args['src'] = 'http://player.twitch.tv/?channel=' . $args['id'];
+					$args['src'] = '//player.twitch.tv/?channel=' . $args['id'];
 				}
 				break;
 			case 'vine':
@@ -604,24 +649,16 @@ class Advanced_Responsive_Video_Embedder_Public {
 			$args['src_autoplay_yes'] .= '#t=' . $args['start'];
 		}
 
-		$args['thumbnail'] = apply_filters( 'arve_thumbnail', $args['thumbnail'], $args );
-
-		if ( is_wp_error( $args['thumbnail'] ) ) {
-			return $this->error( $args['thumbnail']->get_error_message() );
+		if ( ! empty( $args['error'] ) && is_wp_error( $args['error'] ) ) {
+			return $this->error( $args['error']->get_error_message() );
 		}
 
-		// We have no thumbnail for lazyload, so treat this embed as normal
-		if ( 'lazyload' === $args['mode'] && ! $args['thumbnail'] ) {
-			//$args['mode'] = 'normal';
-		}
+		#$output = '';
+		#$output .= sprintf( '<a href="%s">auto</a><br>', str_replace( 'https://', '//', $args['src_autoplay_no'] ) );
+		#$output .= sprintf( '<a href="%s">auto</a><br>', str_replace( 'http://', 'https://', $args['src_autoplay_no'] ) );
 
-		$output = apply_filters( 'arve_output', '', $args );
-
-		if ( is_wp_error( $output ) ) {
-			return $this->error( $output->get_error_message() );
-		} elseif ( empty( $output ) ) {
-			return $this->error( 'The output is empty, this should not happen' );
-		}
+		#$output .= sprintf( '<img src="%s"><br>', str_replace( 'https://', 'http://', $args['thumbnail'] ) );
+		#$output .= sprintf( '<img src="%s"><br>', str_replace( 'http://', 'https://', $args['thumbnail'] ) );
 
 		if ( isset( $_GET['arve-debug'] ) ) {
 
@@ -631,23 +668,22 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 			if ( $show_options_debug ) {
 				ob_start();
-				var_dump( $this->options );
-				$options_dump = sprintf( 'Options: <pre>%s</pre>', ob_get_clean() );
+				var_dump( $this->options['main'] );
+				$output .= sprintf( 'Options: <pre>%s</pre>', ob_get_clean() );
 			}
 			$show_options_debug = false;
 
 			ob_start();
-			var_dump( $atts );
-			$atts_dump = sprintf( '<pre>%s</pre>', ob_get_clean() );
+			var_dump( $args );
+			$output .= sprintf( '<pre>%s</pre>', ob_get_clean() );
+		}
 
-			return sprintf(
-				'<div>%s Provider: %s<br>%s<pre>%s</pre></div>%s',
-				$options_dump,
-				$args['provider'],
-				$atts_dump,
-				esc_html( $output ),
-				$output
-			);
+		$output = apply_filters( 'arve_output', '', $args );
+
+		if ( is_wp_error( $output ) ) {
+			return $this->error( $output->get_error_message() );
+		} elseif ( empty( $output ) ) {
+			return $this->error( 'The output is empty, this should not happen' );
 		}
 
 		return $output;
@@ -709,32 +745,34 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 	public function normal_output( $output, $args ) {
 
-		if ( 'normal' === $args['mode'] ) {
-
-			if ( $args['iframe'] ) {
-
-				$embed = static::create_iframe( array (
-					'src'  => ( $args['autoplay'] ) ? $args['src_autoplay_yes'] : $args['src_autoplay_no'],
-					'name' => ! empty( $args['iframe_name'] ) ? $args['iframe_name'] : false,
-				) );
-
-			} else {
-
-				$data    = ( $args['autoplay'] ) ? $args['src_autoplay_yes']           : $args['src_autoplay_no'];
-				$oparams = ( $args['autoplay'] ) ? $args['object_params_autoplay_yes'] : $args['object_params_autoplay_no'];
-
-				$embed = $this->create_object( $data, $oparams );
-			}
-
-			$output .= static::wrappers( $embed, $args );
+		if ( 'normal' != $args['mode'] ) {
+			return $output;
 		}
+
+		$video = static::video_or_iframe( $args );
+
+		$output .= static::wrappers( $video, $args );
 
 		return $output;
 	}
 
-	public static function esc_url( $url ) {
+	public static function video_or_iframe( $args ) {
 
-		return str_replace( 'jukebox?list%5B0%5D', 'jukebox?list[]', esc_url( $url ) );
+		if ( 'video' == $args['provider'] ) {
+
+			return static::create_video( $args );
+
+		} elseif ( $args['iframe'] ) {
+
+			return static::create_iframe( $args );
+
+		} else {
+
+			$data    = ( $args['autoplay'] ) ? $args['src_autoplay_yes']           : $args['src_autoplay_no'];
+			$oparams = ( $args['autoplay'] ) ? $args['object_params_autoplay_yes'] : $args['object_params_autoplay_no'];
+
+			return static::create_object( $data, $oparams );
+		}
 	}
 
 	/**
@@ -744,22 +782,88 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 */
 	public static function create_iframe( $args ) {
 
-		$defaults = array(
-			'provider'        => null,
-			'name'            => false,
-			'src'             => false,
-			'data-src'        => false,
+		if ( in_array( $args['mode'], array( 'lazyload', 'lazyload-fullscreen', 'lazyload-fixed' ) ) ) {
+			$args['src'] = null;
+		}
+
+		$pairs = array(
+			'name'            => ! empty( $args['iframe_name'] ) ? $args['iframe_name'] : false,
+			'src'             => $args['autoplay'] ? $args['src_autoplay_yes'] : $args['src_autoplay_no'],
+			'data-src'        => in_array( $args['mode'], array( 'lazyload', 'lazyload-fullscreen', 'lazyload-fixed' ) ) ? $args['src_autoplay_yes'] : null,
 			'class'           => 'arve-inner',
 			'allowfullscreen' => '',
 			'frameborder'     => '0',
 			'width'           => is_feed() ? 853 : false,
 			'height'          => is_feed() ? 480 : false,
-			'style'           => null,
+			#'style'           => null,
+			''
 		);
 
-		$args = wp_parse_args( $args, $defaults );
+		$args = shortcode_atts( $pairs, $args );
 
 		return sprintf( '<iframe %s></iframe>', static::parse_attr( $args ) );
+	}
+
+	public static function create_video( $args ) {
+
+		if ( in_array( $args['mode'], array( 'lazyload', 'lazyload-fullscreen', 'lazyload-fixed' ) ) ) {
+			$args['autoplay'] = null;
+		}
+
+		$sources = '';
+		$pairs = array(
+			'autoplay'  => $args['autoplay'] ? '' : null,
+			'class'     => 'arve-inner arve-hidden',
+			'controls'  => '',
+			'loop'      => null,
+			'poster'    => $args['thumbnail'],
+			'preload'   => 'none',
+			'src'       => $args['src'],
+			#'style'     => null,
+			'width'     => is_feed() ? 853 : false,
+			'height'    => is_feed() ? 480 : false,
+		);
+		$video_attr = shortcode_atts( $pairs, $args );
+
+		foreach ( array( 'mp4', 'm4v', 'ogg', 'webm', 'ogv' ) as $ext ) {
+
+			$file = $args[ $ext ];
+
+			if ( empty( $file ) ) {
+				continue;
+			}
+
+			$type = wp_check_filetype( $file, wp_get_mime_types() );
+
+			if ( strtolower( $type['ext'] ) === $ext ) {
+				$sources .= sprintf( '<source src="%s" type="%s" />', esc_url( $file ), $type['type'] );
+			}
+		}
+
+		return sprintf(
+			'<video %s>%s</video>',
+			static::parse_attr( $video_attr ),
+			$sources
+		);
+	}
+
+	/**
+	*
+	*
+	* @since 2.6.0
+	*/
+	public static function create_object( $data, $object_params ) {
+
+		return sprintf(
+			'<object class="arve-inner" data="%s" type="application/x-shockwave-flash">',
+			esc_url( $data )
+		) .
+		$object_params .
+		'<param name="quality" value="high">' .
+		'<param name="wmode" value="transparent">' .
+		'<param name="allowFullScreen" value="true">' .
+		'<param name="allowScriptAccess" value="always">' .
+		'</object>';
 	}
 
 	public static function parse_attr( $attr = array() ) {
@@ -782,53 +886,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 		return $out;
 	}
 
-	/**
-	 *
-	 *
-	 * @since    5.9.7
-	 */
-	public function create_video( $args ) {
-
-		$defaults = array (
-			'mp4'             => false,
-			'data_src'        => false,
-			'class'           => 'arve-inner',
-			'allowfullscreen' => true
-		);
-
-		$args = wp_parse_args( $args, $defaults );
-
-		extract( $args );
-
-		return sprintf(
-			'<video %s%s%s%s>' .
-			( $args['mp4'] ) ? sprintf( 'class="%s" ', esc_attr( $class ) ) : '',
-			'' .
-			'</video>',
-			( $class )    ? sprintf( 'class="%s" ', esc_attr( $class ) ) : '',
-			( $src )      ? sprintf( 'src="%s" ', static::esc_url( $args['provider'], $src ) ) : '',
-			( $data_src ) ? sprintf( 'data-src="%s" ', static::esc_url( $args['provider'], $data_src ) ) : '',
-			( $allowfullscreen ) ? 'allowfullscreen mozallowfullscreen webkitallowfullScreen ' : ''
-		);
-	}
-
-	/**
-	*
-	*
-	* @since 2.6.0
-	*/
-	public function create_object( $data, $object_params ) {
-
-		return sprintf(
-			'<object class="arve-inner" data="%s" type="application/x-shockwave-flash">',
-			esc_url( $data )
-		) .
-		$object_params .
-		'<param name="quality" value="high">' .
-		'<param name="wmode" value="transparent">' .
-		'<param name="allowFullScreen" value="true">' .
-		'<param name="allowScriptAccess" value="always">' .
-		'</object>';
+	public static function esc_url( $url ) {
+		return str_replace( 'jukebox?list%5B0%5D', 'jukebox?list[]', esc_url( $url ) );
 	}
 
 	/**
@@ -845,7 +904,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 	}
 
-	public function tests_shortcode( $args, $content = null ) {
+	public function arve_tests_shortcode( $args, $content = null ) {
 
 		if ( ! is_singular() ) {
 			return $content;
