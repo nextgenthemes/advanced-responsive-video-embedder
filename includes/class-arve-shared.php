@@ -33,7 +33,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 
 		return array(
 			'file'                => $hw . '([^\s]+\.(?:mp4|webm|ogg)$)',
-
+			'klatv'               => $hw . 'kla.tv/([0-9]+)',
 			'4players'            => $hw . '4players\.de/4players\.php/tvplayer/4PlayersTV/([0-9a-z_/]+\.html)',
 			'alugha'              => $hw . 'alugha.com/1/videos/([a-z0-9_\-]+)',
 			'archiveorg'          => $hw . 'archive\.org/(?:details|embed)/([0-9a-z]+)',
@@ -95,6 +95,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'last_options_tab' => '#arve-settings-section-main',
 			),
 			'shortcodes' => array(
+				'klatv'           => 'klatv',
 				'4players'        => '4players',
 				'alugha'          => 'alugha',
 				'archiveorg'      => 'archiveorg',
@@ -269,7 +270,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'label' => esc_html__('Title', 'advanced-responsive-video-embedder'),
 				'type'  => 'text',
 				'meta'  => array(
-					'placeholder' => esc_attr__( 'Visible title for Lazyload modes (Pro Addon only) & schema.org "name" for SEO', 'advanced-responsive-video-embedder' ),
+					'placeholder' => __( "Visible title for Lazyload modes, automattic for major providers (Pro Addon only) & schema.org 'name' for SEO", 'advanced-responsive-video-embedder' ),
 				)
 			),
 			array(
@@ -278,7 +279,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'label' => esc_html__('Description', 'advanced-responsive-video-embedder'),
 				'type'  => 'text',
 				'meta'  => array(
-					'placeholder' => esc_attr__( 'Schema.org "description" for SEO', 'advanced-responsive-video-embedder' ),
+					'placeholder' => __( "Schema.org 'description' for SEO", 'advanced-responsive-video-embedder' ),
 				)
 			),
 			array(
@@ -287,7 +288,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'label' => esc_html__( 'Upload Date', 'advanced-responsive-video-embedder' ),
 				'type'  => 'text',
 				'meta'  => array(
-					'placeholder' => esc_attr__( 'ISO 8601 format, Schema.org "uploadDate" for SEO', 'advanced-responsive-video-embedder' ),
+					'placeholder' => __( "ISO 8601 format, Schema.org 'uploadDate' for SEO", 'advanced-responsive-video-embedder' ),
 				)
 			),
 			array(
@@ -336,6 +337,15 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'type'  => 'text',
 				'meta'  => array(
 					'placeholder' => __( 'Leave empty if there is no specific need for a unusial ratio like 4:3, 21:9 ...', 'advanced-responsive-video-embedder'),
+				),
+			),
+			array(
+				'hide_from_settings' => true,
+				'attr'  => 'parameters',
+				'label' => esc_html__('Parameters', 'advanced-responsive-video-embedder'),
+				'type'  => 'text',
+				'meta'  => array(
+					'placeholder' => __( 'See Documention', 'advanced-responsive-video-embedder' ),
 				),
 			),
 		);
@@ -534,6 +544,13 @@ class Advanced_Responsive_Video_Embedder_Shared {
 					'http://www.liveleak.com/view?i=703_1385224413',
 					__('File <code>f=</code> URL', 'advanced-responsive-video-embedder') ,
 					'http://www.liveleak.com/view?f=c85bdf5e45b2',
+				)
+			),
+			'klartv' => array(
+				'url'   => true,
+				'thumb' => false,
+				'tests' => array(
+					'www.kla.tv/7494',
 				)
 			),
 			'metacafe' => array(

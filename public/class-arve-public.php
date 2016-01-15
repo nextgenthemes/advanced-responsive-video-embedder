@@ -462,6 +462,9 @@ class Advanced_Responsive_Video_Embedder_Public {
 			case 'dailymotionlist':
 				$args['src'] = '//www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2F' . $args['id'] . '%2F1';
 				break;
+			case 'klatv':
+				$args['src'] = '//www.kla.tv/index.php?a=showembed&vidid=' . $args['id'];
+				break;
 			case 'movieweb':
 				$args['src'] = '//www.movieweb.com/v/' . $args['id'];
 				break;
