@@ -9,7 +9,7 @@ function arve_extract_url( changed, collection, shortcode ) {
 		);
 	}
 
-	var val       = changed.value,
+	var val     = changed.value,
 		short_val = changed.value,
 		input     = attr_by_name( 'url' ).$el.find( 'input' );
 

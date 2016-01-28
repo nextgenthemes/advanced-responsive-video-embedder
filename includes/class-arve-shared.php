@@ -32,9 +32,8 @@ class Advanced_Responsive_Video_Embedder_Shared {
 		$hw = 'https?://(?:[a-z]+\.)?';
 
 		return array(
-			'file'                => $hw . '([^\s]+\.(?:mp4|webm|ogg)$)',
+			'video'               => $hw . '([^\s]+\.(?:mp4|webm|ogg)$)',
 			'klatv'               => $hw . 'kla.tv/([0-9]+)',
-			'4players'            => $hw . '4players\.de/4players\.php/tvplayer/4PlayersTV/([0-9a-z_/]+\.html)',
 			'alugha'              => $hw . 'alugha.com/1/videos/([a-z0-9_\-]+)',
 			'archiveorg'          => $hw . 'archive\.org/(?:details|embed)/([0-9a-z]+)',
 			'break'               => $hw . 'break\.com/video/(?:[a-z\-]+)-([0-9]+)',
@@ -66,6 +65,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'ted'                 => $hw . 'ted\.com/talks/([a-z0-9_]+)',
 			'xtube'               => $hw . 'xtube\.com/watch\.php\?v=([a-z0-9_\-]+)',
 			'youtube'             => $hw . '(?:youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v\=))|youtu\.be\/)([a-zA-Z0-9_-]{6,11}((?:\?|&)list=[a-z0-9_\-]+)?)',
+			'youku'               => $hw . 'youku.com/v_show/id_([a-z0-9]+)',
 			// iframe src only
 			'flickr'              => $hw . 'flickr\.com\/photos\/[a-zA-Z0-9@_\-]+\/([0-9]+)',
 			'videojug'	          => $hw . 'videojug\.com\/embed\/([a-z0-9\-]{36})',
@@ -96,7 +96,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			),
 			'shortcodes' => array(
 				'klatv'           => 'klatv',
-				'4players'        => '4players',
 				'alugha'          => 'alugha',
 				'archiveorg'      => 'archiveorg',
 				'break'           => 'break',
@@ -190,21 +189,21 @@ class Advanced_Responsive_Video_Embedder_Shared {
 
 	public static function get_settings_definitions() {
 
-		$options = static::get_options();
-		$modes = static::get_supported_modes();
-		$properties = static::get_properties();
+		$options         = static::get_options();
+		$supported_modes = static::get_supported_modes();
+		$properties      = static::get_properties();
 
 		foreach ( $properties as $provider => $values ) {
 
-			if( ! empty( $values['thumb'] ) && $values['thumb'] ) {
+			if( ! empty( $values['auto_thumbnail'] ) && $values['auto_thumbnail'] ) {
 				$auto_thumbs[] = $provider;
 			}
 		}
 
 		$auto_thumbs = implode( ', ', $auto_thumbs );
 
-		if ( ! empty( $modes ) ) {
-			$current_mode_name = $modes[ $options['mode'] ];
+		if ( in_array( $options['mode'], $supported_modes ) ) {
+			$current_mode_name = $supported_modes[ $options['mode'] ];
 		} else {
 			$current_mode_name = $options['mode'];
 		}
@@ -223,10 +222,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'attr'    => 'mode',
 				'label'   => esc_html__( 'Mode', 'advanced-responsive-video-embedder' ),
 				'type'    => 'select',
-				'options' =>
-					array(
-						'' => sprintf( esc_html__( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $current_mode_name )
-					) + Advanced_Responsive_Video_Embedder_Shared::get_supported_modes(),
+				'options' => array( '' => sprintf( esc_html__( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $current_mode_name ) ) + static::get_supported_modes(),
 			),
 			array(
 				'attr'  => 'align',
@@ -279,7 +275,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'label' => esc_html__('Description', 'advanced-responsive-video-embedder'),
 				'type'  => 'text',
 				'meta'  => array(
-					'placeholder' => __( "Schema.org 'description' for SEO", 'advanced-responsive-video-embedder' ),
+					'placeholder' => __( 'Description for SEO', 'advanced-responsive-video-embedder' ),
 				)
 			),
 			array(
@@ -288,7 +284,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'label' => esc_html__( 'Upload Date', 'advanced-responsive-video-embedder' ),
 				'type'  => 'text',
 				'meta'  => array(
-					'placeholder' => __( "ISO 8601 format, Schema.org 'uploadDate' for SEO", 'advanced-responsive-video-embedder' ),
+					'placeholder' => __( 'Upload Date for SEO, ISO 8601 format', 'advanced-responsive-video-embedder' ),
 				)
 			),
 			array(
@@ -382,40 +378,29 @@ class Advanced_Responsive_Video_Embedder_Shared {
 	public static function get_properties() {
 
 		return array(
-			'4players' => array(
-				'name' => '4players.de',
-				'url' => true,
-				'thumb' => false,
-				'tests' => array(
-					'http://www.4players.de/4players.php/tvplayer/4PlayersTV/Alle/20943/105302/Mass_Effect_3/Trilogie-Rueckblick.html',
-				)
-			),
 			'alugha' => array(
-				'url' => true,
-				'thumb' => true,
+				'auto_thumbnail' => true,
 				'tests' => array(
 					'https://alugha.com/1/videos/youtube-54m1YfEuYU8',
 				)
 			),
 			'archiveorg' => array(
-				'name' => 'archive.org',
-				'url' => true,
-				'thumb' => false,
+				'name' => 'Archive.org',
+				'auto_thumbnail' => false,
 				'tests' => array(
 					'https://archive.org/details/AlexJonesInterviewsDeanHaglund',
 				)
 			),
 			'break' => array(
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => false,
 				'tests' => array(
 					'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591',
 				)
 			),
 			'collegehumor' => array(
 				'name' => 'CollegeHumor',
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => true,
+				'auto_title' => true,
 				'aspect_ratio' => '600:369',
 				'tests' => array(
 					'http://collegehumor.com/video/6922670/bleep-bloop-your-best-game',
@@ -423,15 +408,15 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			),
 			'comedycentral' => array(
 				'name' => 'Comedy Central',
-				'url' => false,
-				'thumb' => false,
+				'no_url_embeds' => true,
+				'auto_thumbnail' => false,
 				'tests' => array(
 					'[comedycentral id="c80adf02-3e24-437a-8087-d6b77060571c"]',
 				)
 			),
 			'dailymotion' => array(
-				'url' => true,
-				'thumb' => true,
+				'auto_thumbnail' => true,
+				'auto_title' => true,
 				'tests' => array(
 					'http://www.dailymotion.com/video/x44lvd_rates-of-exchange-like-a-renegade_music',
 					__('URL just the ID withoutout the long title', 'advanced-responsive-video-embedder'),
@@ -448,41 +433,39 @@ class Advanced_Responsive_Video_Embedder_Shared {
 					),
 				),
 				'query_argss' => array(
-			          'api'                => array( 0, 1 ),
-			          'autoplay'           => array( 0, 1 ),
-			          'chromeless'         => array( 0, 1 ),
-			          'highlight'          => array( 0, 1 ),
-			          'html'               => array( 0, 1 ),
-			          'id'                 => 'int',
-			          'info'               => array( 0, 1 ),
-			          'logo'               => array( 0, 1 ),
-			          'network'            => array( 'dsl', 'cellular' ),
-			          'origin'             => array( 0, 1 ),
-			          'quality'            => array( 240, 380, 480, 720, 1080, 1440, 2160 ),
-			          'related'            => array( 0, 1 ),
-			          'start'              => 'int',
-			          'startscreen'        => array( 0, 1 ),
-			          'syndication'        => 'int',
-			          'webkit-playsinline' => array( 0, 1 ),
-			          'wmode'              => array( 'direct', 'opaque' ),
+          'api'                => array( 0, 1 ),
+          'autoplay'           => array( 0, 1 ),
+          'chromeless'         => array( 0, 1 ),
+          'highlight'          => array( 0, 1 ),
+          'html'               => array( 0, 1 ),
+          'id'                 => 'int',
+          'info'               => array( 0, 1 ),
+          'logo'               => array( 0, 1 ),
+          'network'            => array( 'dsl', 'cellular' ),
+          'origin'             => array( 0, 1 ),
+          'quality'            => array( 240, 380, 480, 720, 1080, 1440, 2160 ),
+          'related'            => array( 0, 1 ),
+          'start'              => 'int',
+          'startscreen'        => array( 0, 1 ),
+          'syndication'        => 'int',
+          'webkit-playsinline' => array( 0, 1 ),
+          'wmode'              => array( 'direct', 'opaque' ),
 				),
 			),
 			'dailymotionlist' => array(
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => false,
 				'tests' => array()
 			),
 			'flickr' => array(
-				'url' => false,
-				'thumb' => false,
+				'no_url_embeds' => true,
+				'auto_thumbnail' => false,
 				'wmode_transparent' => false,
 				'tests' => array(
 					'[flickr id="2856467015"]',
 				)
 			),
 			'facebook' => array(
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => false,
 				'wmode_transparent' => false,
 				'tests' => array(
 					'https://www.facebook.com/UScoastguard/videos/10153791849322679/',
@@ -490,23 +473,23 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			),
 			'funnyordie' => array(
 				'name' => 'Funny or Die',
-				'url' => true,
-				'thumb' => true,
+				'auto_thumbnail' => true,
+				'auto_title' => true,
 				'aspect_ratio' => '640:400',
 				'tests' => array(
 					'http://www.funnyordie.com/videos/76585438d8/sarah-silverman-s-we-are-miracles-hbo-special',
 				)
 			),
 			'gametrailers' => array(
-				'url' => false,
-				'thumb' => false,
+				'no_url_embeds' => true,
+				'auto_thumbnail' => false,
 				'tests' => array(
 					'[gametrailers id="797121a1-4685-4ecc-9388-72a88b0ef8da"]',
 				)
 			),
 			'iframe' => array(
-				'url' => false,
-				'thumb' => false,
+				'no_url_embeds' => true,
+				'auto_thumbnail' => false,
 				'wmode_transparent' => false,
 				'tests' => array(
 					__('This plugin allows iframe embeds for every URL by using this <code>[iframe]</code> shortcode. This should only be used for providers not supported by this via a named shortcode. The result is a 16:9 resonsive iframe by default, aspect ratio can be changed as usual.', 'advanced-responsive-video-embedder'),
@@ -515,30 +498,26 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			),
 			'ign' => array(
 				'name' => 'IGN',
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => false,
 				'tests' => array(
 					'http://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
 				)
 			),
 			'kickstarter' => array(
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => false,
 				'tests' => array(
 					'https://www.kickstarter.com/projects/obsidian/project-eternity?ref=discovery',
 				)
 			),
 			'liveleak' => array(
 				'name' => 'LiveLeak',
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => false,
 				'tests' => array(
 
 				)
 			),
 			'livestream' => array(
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => false,
 				'tests' => array(
 					__('Page/item <code>i=</code> URL', 'advanced-responsive-video-embedder') ,
 					'http://www.liveleak.com/view?i=703_1385224413',
@@ -548,68 +527,62 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			),
 			'klartv' => array(
 				'url'   => true,
-				'thumb' => false,
+				'auto_thumbnail' => false,
 				'tests' => array(
 					'www.kla.tv/7494',
 				)
 			),
 			'metacafe' => array(
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => false,
 				'tests' => array(
 					'http://www.metacafe.com/watch/11159703/why_youre_fat/',
 					'http://www.metacafe.com/watch/11322264/everything_wrong_with_robocop_in_7_minutes/',
 				)
 			),
 			'movieweb' => array(
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => false,
 				'tests' => array(
 					'[movieweb id="VIwFzmdbyoy9zB"]',
 				)
 			),
 			'mpora' => array(
 				'name' => 'MPORA',
-				'url' => true,
-				'thumb' => true,
+				'auto_thumbnail' => true,
 				'tests' => array(
 					'http://mpora.com/videos/AAdphry14rkn',
 					'http://mpora.de/videos/AAdpxhiv6pqd',
 				)
 			),
 			'myspace' => array(
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => false,
 				'tests' => array(
 					'https://myspace.com/myspace/video/dark-rooms-the-shadow-that-looms-o-er-my-heart-live-/109471212',
 				)
 			),
 			'myvideo' => array(
 				'name' => 'MyVideo',
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => false,
 				'tests' => array(
 					'http://www.myvideo.de/watch/8432624/Angeln_mal_anders',
 				)
 			),
 			'snotr' => array(
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => false,
 				'tests' => array(
 					'http://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is',
 				)
 			),
 			'spike' => array(
-				'url' => false,
-				'thumb' => false,
+				'no_url_embeds' => true,
+				'auto_thumbnail' => false,
 				'tests' => array(
 					'[spike id="5afddf30-31d8-40fb-81e6-bb5c6f45525f"]',
 				)
 			),
 			'ted' => array(
 				'name' => 'TED Talks',
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => true,
+				'auto_title' => true,
 				'tests' => array(
 					__('To my knowlege TED forces autoplay and there is no way disable it', 'advanced-responsive-video-embedder') ,
 					'http://ted.com/talks/jill_bolte_taylor_s_powerful_stroke_of_insight',
@@ -618,8 +591,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				)
 			),
 			'twitch' => array(
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => true,
 				'tests' => array(
 					'http://www.twitch.tv/tsm_dyrus',
 					__('Past breadcast URL', 'advanced-responsive-video-embedder') ,
@@ -630,8 +602,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			),
 			'ustream' => array(
 				'name' => 'USTREAM',
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => false,
 				'aspect_ratio' => '480:270', #61,
 				'tests' => array(
 					__('To my knowlege Ustream forces autoplay and there is no way disable it', 'advanced-responsive-video-embedder') ,
@@ -644,16 +615,14 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				)
 			),
 			'veoh' => array(
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => false,
 				#'aspect_ratio' => 60.257,
 				'tests' => array(
 					'http://www.veoh.com/watch/v19866882CAdjNF9b',
 				)
 			),
 			'vevo' => array(
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => false,
 				'tests' => array(
 					'[vevo id="US4E51286201"]',
 					'http://www.vevo.com/watch/the-offspring/the-kids-arent-alright/USSM20100649',
@@ -666,23 +635,22 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				 )
 			),
 			'viddler' => array(
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => true,
+				'auto_title' => true,
 				'wmode_transparent' => false,
 				'tests' => array(
 					'http://www.viddler.com/v/a695c468',
 				)
 			),
 			'videojug' => array(
-				'url' => false,
-				'thumb' => false,
+				'no_url_embeds' => true,
+				'auto_thumbnail' => false,
 				'tests' => array(
 					'[videojug id="fa15cafd-556f-165b-d660-ff0008c90d2d"]',
 				)
 			),
 			'vine' => array(
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => false,
 				'aspect_ratio' => '1:1',
 				'tests' => array(
 					'[vine id="MbrreglaFrA"]',
@@ -693,8 +661,8 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				),
 			),
 			'vimeo' => array(
-				'url' => true,
-				'thumb' => true,
+				'auto_thumbnail' => true,
+				'auto_title' => true,
 				'tests' => array(
 					'[vimeo id="12901672"]',
 					'http://vimeo.com/23316783',
@@ -712,14 +680,13 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			),
 			'xtube' => array(
 				'name' => 'XTube',
-				'url' => true,
-				'thumb' => false,
+				'auto_thumbnail' => false,
 				'tests' => array()
 			),
 			'youtube' => array(
 				'name' => 'YouTube',
-				'url' => true,
-				'thumb' => true,
+				'auto_thumbnail' => true,
+				'auto_title' => true,
 				'tests' => array(
 					'[youtube id="XQEiv7t1xuQ"]',
 					'http://www.youtube.com/watch?v=vrXgLhkv21Y',
@@ -884,8 +851,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			),
 			'youtubelist' => array(
 				'name' => 'YouTube Playlist',
-				'url' => true,
-				'thumb' => true,
+				'auto_thumbnail' => true,
 				'tests' => array()
 			),
 		);

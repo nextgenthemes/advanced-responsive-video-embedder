@@ -17,7 +17,7 @@
 * New: New Advanced shotcode Dialog, with very detailed helping texts, display of default settings, hiding of fields based on need ...
 * New: WYSIWYG Preview of shortcodes.
 * New: The two above features need the [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) Plugin that is maybe moving into WordPress core later.
-* New: Amazing catch-all shortcode [arve url="..."] that can be used for all supported providers.
+* New: Amazing catch-all shortcode [arve url="..."] that can be used for all supported providers and even with any iframe `src` if all unlisted providers that support responsive iframe embeds.
 * New: A default alignment can now be set in the Settings page. (fulfilled request)
 * New: 'iframe_name' shortcode parameter for `<iframe name="xxxxx"`, useful when wanting to target ARVE embeds with links. (fulfilled request)
 * New: ARVE is now SEO friendly giving you the ability to add some schema.org microdata. Googles tools should not complain anymore. (fulfilled request)

@@ -69,7 +69,7 @@ class Advanced_Responsive_Video_Embedder {
 	public function __construct() {
 
 		$this->plugin_slug = 'advanced-responsive-video-embedder';
-		$this->version = '7.0.4';
+		$this->version = '7.0.5';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -116,6 +116,7 @@ class Advanced_Responsive_Video_Embedder {
 		 * The class responsible for defining all actions that occur in the Dashboard.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-arve-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-arve-admin-notice-factory.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
@@ -181,6 +182,21 @@ class Advanced_Responsive_Video_Embedder {
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings_debug', 99 );
 
 		$this->loader->add_action( 'media_buttons', $plugin_admin, 'add_media_button', 11 );
+
+		$msg = sprintf(
+			__( 'WTF %s', $this->plugin_slug ),
+			'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/installing-and-license-management/'
+		);
+		new Advanced_Responsive_Video_Embedder_Admin_Notice_Factory( 'wtf', $msg );
+
+		if( is_file( WP_PLUGIN_DIR . '/arve-pro/arve-pro.php' ) && ( ! defined( 'ARVE_PRO_VERSION' ) || version_compare( ARVE_PRO_VERSION, ARVE_PRO_VERSION_REQUIRED, '<' ) ) ) {
+
+			$msg = sprintf(
+				__( 'Your ARVE Pro Addon is outdated, please <a href="%s">look here</a> for manual updates if your auto-updates do not work or are disabled.', $this->plugin_slug ),
+				'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/installing-and-license-management/'
+			);
+			new Advanced_Responsive_Video_Embedder_Admin_Notice_Factory(	'arve-pro-outdated', $msg, false );
+		}
 	}
 
 	/**

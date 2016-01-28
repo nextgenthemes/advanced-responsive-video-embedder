@@ -71,9 +71,9 @@
 		// MTV services
 		embed_regex.comedycentral = /comedycentral\.com:([a-z0-9\-]{36})/i;
 		embed_regex.gametrailers  = /gametrailers\.com:([a-z0-9\-]{36})/i;
-		embed_regex.spike		 = /spike\.com:([a-z0-9\-]{36})/i;
+		embed_regex.spike		      = /spike\.com:([a-z0-9\-]{36})/i;
 
-		embed_regex.flickr		= /flickr\.com\/photos\/[a-zA-Z0-9@_\-]+\/([0-9]+)/i;
+		embed_regex.flickr		  = /flickr\.com\/photos\/[a-zA-Z0-9@_\-]+\/([0-9]+)/i;
 		embed_regex.videojug	  = /videojug\.com\/embed\/([a-z0-9\-]{36})/i;
 		embed_regex.movieweb	  = /movieweb\.com\/v\/([a-z0-9]{14})/i;
 
@@ -254,6 +254,20 @@
 			}
 		});
 	});
+
+	/*$(document).on( 'click', '[data-notice-id] .notice-dismiss', function() {
+
+    var id = $( this ).closest( '[data-notice-id]' ).attr( 'data-notice-id' );
+
+    console.log(id);
+
+		jQuery.ajax({
+			url: ajaxurl,
+			data: {
+				action: id
+			}
+		});
+	});*/
 
 	$(window).on( 'keyup', function(e) {
 		if ( e.ctrlKey && e.shiftKey && 'v' === e.key ) {

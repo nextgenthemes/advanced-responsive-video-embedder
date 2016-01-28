@@ -97,6 +97,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		add_shortcode( 'arve', array( $this, 'arve_shortcode' ) );
 		add_shortcode( 'arve_tests', array( $this, 'arve_tests_shortcode' ) );
 		add_shortcode( 'arve_supported', array( $this, 'supported_shortcode' ) );
+		add_shortcode( 'arve_params', array( $this, 'params_shortcode' ) );
 	}
 
 	public function arve_shortcode( $atts ) {
@@ -511,6 +512,9 @@ class Advanced_Responsive_Video_Embedder_Public {
 			case 'youtubelist': //* DEPRICATED
 				$args['src'] = '//www.youtube.com/embed/videoseries?list=' . $args['id'] . '&wmode=transparent&rel=0&autohide=1&hd=1&iv_load_policy=3';
 				break;
+			case 'youku':
+				$args['src'] = '//player.youku.com/embed/' . $args['id'];
+				break;
 			case 'archiveorg':
 				$args['src'] = '//www.archive.org/embed/' . $args['id'] . '/';
 				break;
@@ -525,7 +529,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$args['src'] = '//scache.vevo.com/assets/html/embed.html?video=' . $args['id'];
 				break;
 			case 'ted':
-
 				if ( preg_match( "/^[a-z]{2}$/", $args['lang'] ) === 1 ) {
 					$args['src'] = 'https://embed-ssl.ted.com/talks/lang/' . $args['lang'] . '/' . $args['id'] . '.html';
 				} else {
@@ -791,6 +794,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		$pairs = array(
 			'name'            => ! empty( $args['iframe_name'] ) ? $args['iframe_name'] : false,
+			'sandbox'         => ! empty( $args['sandbox'] ) ? $args['sandbox'] : false,
 			'src'             => $args['autoplay'] ? $args['src_autoplay_yes'] : $args['src_autoplay_no'],
 			'data-src'        => in_array( $args['mode'], array( 'lazyload', 'lazyload-fullscreen', 'lazyload-fixed' ) ) ? $args['src_autoplay_yes'] : null,
 			'class'           => 'arve-inner',
@@ -798,8 +802,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'frameborder'     => '0',
 			'width'           => is_feed() ? 853 : false,
 			'height'          => is_feed() ? 480 : false,
-			#'style'           => null,
-			''
 		);
 
 		$args = shortcode_atts( $pairs, $args );
@@ -1060,29 +1062,77 @@ class Advanced_Responsive_Video_Embedder_Public {
 	public function supported_shortcode( $args, $content = null ) {
 
 		$providers = Advanced_Responsive_Video_Embedder_Shared::get_properties();
-
 		// unset deprecated and doubled
 		unset( $providers['dailymotionlist'] );
+		unset( $providers['iframe'] );
+
+		$out  = '<table class="table table-sm table-hover table-arve-supported">';
+	  $out .= '<tr>';
+		$out .= '<th></th>';
+		$out .= '<th>Provider</th>';
+		$out .= '<th>URL</th>';
+		$out .= '<th>Auto Thumbnail</th>';
+		$out .= '<th>Auto Title</th>';
+		$out .= '</tr>';
 
 		$count = 1;
-
 		foreach ( $providers as $key => $values ) {
-
 			if ( ! isset( $values['name'] ) )
 				$values['name'] = $key;
 
-			$trs[] = sprintf(
-				'<tr> <td>%d</td> <td>%s</td> <td>&#x2713;</td> <td>%s</td> <td>%s</td> </tr>',
-				$count++,
-				esc_html( $values['name'] ),
-				( $values['url'] )   ? '&#x2713;' : '',
-				( $values['thumb'] ) ? '&#x2713;' : ''
-			);
+			$out .= '<tr>';
+			$out .= sprintf( '<td>%d</td>', $count++ );
+			$out .= sprintf( '<td>%s</td>', esc_html( $values['name'] ) );
+			$out .= sprintf( '<td>%s</td>', ( isset( $values['no_url_embeds'] ) && $values['no_url_embeds'] )     ? '' : '&#x2713;' );
+			$out .= sprintf( '<td>%s</td>', ( ! empty( $values['auto_thumbnail'] ) && $values['auto_thumbnail'] ) ? '&#x2713;' : '' );
+			$out .= sprintf( '<td>%s</td>', ( ! empty( $values['auto_title'] ) && $values['auto_title'] )         ? '&#x2713;' : '' );
+			$out .= '</tr>';
 		}
 
-		$out  = '<table class="table table-sm table-hover table-arve-supported">';
-	  	$out .= '<tr> <th></th> <th>Provider</th> <th>Shortcode</th> <th>URL</th> <th>Auto Thumbnail</th></tr>';
-		$out .= implode( '', $trs );
+		$out .= '<tr>';
+		$out .= '<td></td>';
+		$out .= '<td colspan="4"><a href="https://nextgenthemes.com/documentation/iframe">All providers with responsive iframe embed codes</a></td>';
+		$out .= '</tr>';
+		$out .= '</table>';
+
+		return $out;
+	}
+
+	public function params_shortcode( $args, $content = null ) {
+
+		$settings = Advanced_Responsive_Video_Embedder_Shared::get_settings_definitions();
+
+		$out  = '<table class="table table-hover table-arve-params">';
+	  $out .= '<tr>';
+		$out .= '<th>Parameter</th>';
+		$out .= '<th>Function</th>';
+		$out .= '</tr>';
+
+		foreach ( $settings as $key => $values ) {
+
+			$desc = '';
+			unset( $values['options'][''] );
+			unset( $choices );
+
+			if ( ! empty( $values['options'] ) ) {
+				foreach ($values['options'] as $key => $value) {
+					$choices[] = sprintf( '<code>%s</code>', $key );
+				}
+				$desc .= __('Options: ', $this->plugin_slug ) . implode( ' / ', $choices ) . '<br>';
+			}
+
+			if ( ! empty( $values['description'] ) )
+				$desc .= $values['description'];
+
+			if ( ! empty( $values['meta']['placeholder'] ) )
+				$desc .= $values['meta']['placeholder'];
+
+			$out .= '<tr>';
+			$out .= sprintf( '<td>%s</td>', $values['attr'] );
+			$out .= sprintf( '<td>%s</td>', $desc );
+			$out .= '</tr>';
+		}
+
 		$out .= '</table>';
 
 		return $out;
