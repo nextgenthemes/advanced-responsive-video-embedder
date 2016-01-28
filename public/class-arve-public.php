@@ -702,11 +702,16 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		$meta .= sprintf( '<meta itemprop="embedURL" content="%s" />', esc_attr( $args['src'] ) );
 
-		if ( ! empty( $args['thumbnail'] ) ) {
-			$meta .= sprintf( '<meta itemprop="thumbnailUrl" content="%s" />', esc_attr( $args['thumbnail'] ) );
-		}
 		if ( ! empty( $args['upload_date'] ) ) {
 			$meta .= sprintf( '<meta itemprop="uploadDate" content="%s" />', esc_attr( $args['upload_date'] ) );
+		}
+
+		if ( ! empty( $args['thumbnail'] ) && ! empty( $args['thumbnail_srcset'] ) ) {
+			$meta .= sprintf( '<img itemprop="thumbnailUrl" src="%s" srcset="%s" />', esc_attr( $args['thumbnail'] ) );
+		}	
+		if ( ! empty( $args['thumbnail'] ) ) {
+			$meta .= sprintf( '<meta itemprop="thumbnailUrl" content="%s" />', esc_attr( $args['thumbnail'] ) );
+			$meta .= sprintf( '<img itemprop="thumbnailUrl" src="%s" />', esc_attr( $args['thumbnail'] ) );
 		}
 		if ( ! empty( $args['title'] ) ) {
 			$meta .= '<h5 itemprop="name" class="arve-title arve-hidden">' . esc_html( $args['title'] ) . '</h5>';
@@ -718,7 +723,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$container = sprintf(
 			'<div class="arve-embed-container" style="padding-bottom: %F%%; %s">%s</div>',
 			static::aspect_ratio_to_padding( $args['aspect_ratio'] ),
-			( $args['thumbnail'] ) ? sprintf( 'background-image:url(%s);', $args['thumbnail'] ) : '',
+			( empty(  ) && $args['thumbnail'] ) ? sprintf( 'background-image:url(%s);', $args['thumbnail'] ) : '',
 			$meta . $inner
 		);
 
