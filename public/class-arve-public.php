@@ -288,6 +288,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'iframe_name'  => null,
 			'link_text'    => null,
 			'thumbnail'    => null,
+			'thumbnail_srcset' => null,
 			'title'        => null,
 			'align'        => (string) $this->options['align'],
 			'arve_link'    => (string) $this->options['promote_link'],
@@ -318,7 +319,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			$pairs['parameters'] = null;
 		}
 
-		$args = shortcode_atts( $pairs, $atts, $this->options['shortcodes'][ $provider ] );
+		$args = shortcode_atts( $pairs, $atts, 'arve' );
 		$args['description'] = trim( $args['description'] );
 		$args['element_id']  = preg_replace( '/[^-a-zA-Z0-9]+/', '', $args['id'] );
 		$args['iframe']      = true;
@@ -328,21 +329,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$args['object_params_autoplay_no']  = '';
 		$args['object_params_autoplay_yes'] = '';
 		$args = apply_filters( 'arve_args', $args );
-
-		if( is_numeric( $args['thumbnail'] ) ) {
-			$image_attributes = wp_get_attachment_image_src( $args['thumbnail'], 'full' ); // returns an array
-
-			if( $image_attributes ) {
-				$args['thumbnail'] = $image_attributes[0];
-			}
-		}
-
-		if( ! filter_var( $args['thumbnail'], FILTER_VALIDATE_URL ) === false ) {
-
-		} else {
-
-			#return $this->error( sprintf( __( 'Thumbnail <code>%s</code> is not a valid URL', $this->plugin_slug ), esc_html( $args['thumbnail'] ) ) );
-		}
 
 		if ( 'dailymotionlist' === $args['provider'] ) {
 
@@ -706,12 +692,22 @@ class Advanced_Responsive_Video_Embedder_Public {
 			$meta .= sprintf( '<meta itemprop="uploadDate" content="%s" />', esc_attr( $args['upload_date'] ) );
 		}
 
-		if ( ! empty( $args['thumbnail'] ) && ! empty( $args['thumbnail_srcset'] ) ) {
-			$meta .= sprintf( '<img itemprop="thumbnailUrl" src="%s" srcset="%s" />', esc_attr( $args['thumbnail'] ) );
-		}	
-		if ( ! empty( $args['thumbnail'] ) ) {
+		$metaaaaaa = sprintf(
+			'<img src="%s" srcset="%s" sizes="%s" itemprop="thumbnailUrl" />',
+			esc_attr( $args['thumbnail'] ),
+			esc_attr( $args['thumbnail_srcset'] ),
+			! empty( $args['thumbnail_sizes'] ) ? esc_attr( $args['thumbnail_sizes'] ) : ''
+		);
+
+		if( in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) && is_numeric( $args['thumbnail'] ) && $img_src = wp_get_attachment_image_url( $args['thumbnail'], 'large' ) ) {
+
+			$img = sprintf( '<img src="%s" itemprop="thumbnailUrl" />', esc_attr( $img_src ) );
+			$img_id = $args['thumbnail'];
+			$img_metadata = wp_get_attachment_metadata( $img_id );
+			$meta .= wp_image_add_srcset_and_sizes ( $img, $img_metadata, $img_id );
+		}
+		elseif ( ! empty( $args['thumbnail'] ) ) {
 			$meta .= sprintf( '<meta itemprop="thumbnailUrl" content="%s" />', esc_attr( $args['thumbnail'] ) );
-			$meta .= sprintf( '<img itemprop="thumbnailUrl" src="%s" />', esc_attr( $args['thumbnail'] ) );
 		}
 		if ( ! empty( $args['title'] ) ) {
 			$meta .= '<h5 itemprop="name" class="arve-title arve-hidden">' . esc_html( $args['title'] ) . '</h5>';
@@ -723,7 +719,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$container = sprintf(
 			'<div class="arve-embed-container" style="padding-bottom: %F%%; %s">%s</div>',
 			static::aspect_ratio_to_padding( $args['aspect_ratio'] ),
-			( empty(  ) && $args['thumbnail'] ) ? sprintf( 'background-image:url(%s);', $args['thumbnail'] ) : '',
+			( $args['thumbnail'] ) ? sprintf( 'background-image:url(%s);', $args['thumbnail'] ) : '',
 			$meta . $inner
 		);
 
