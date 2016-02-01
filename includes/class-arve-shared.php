@@ -180,9 +180,9 @@ class Advanced_Responsive_Video_Embedder_Shared {
 	 */
 	public static function get_options() {
 
-		$options               = wp_parse_args( get_option( 'arve_options_main', array() ),       self::get_options_defaults( 'main' ) );
+		$options               = wp_parse_args( get_option( 'arve_options_main',       array() ), self::get_options_defaults( 'main' ) );
 		$options['shortcodes'] = wp_parse_args( get_option( 'arve_options_shortcodes', array() ), self::get_options_defaults( 'shortcodes' ) );
-		$options['params']     = wp_parse_args( get_option( 'arve_options_params', array() ),     self::get_options_defaults( 'params' ) );
+		$options['params']     = wp_parse_args( get_option( 'arve_options_params',     array() ), self::get_options_defaults( 'params' ) );
 
 		return $options;
 	}
@@ -196,11 +196,15 @@ class Advanced_Responsive_Video_Embedder_Shared {
 		foreach ( $properties as $provider => $values ) {
 
 			if( ! empty( $values['auto_thumbnail'] ) && $values['auto_thumbnail'] ) {
-				$auto_thumbs[] = $provider;
+				$auto_thumbs[] = $values['name'];
+			}
+			if( ! empty( $values['auto_title'] ) && $values['auto_title'] ) {
+				$auto_title[] = $values['name'];
 			}
 		}
 
 		$auto_thumbs = implode( ', ', $auto_thumbs );
+		$auto_title = implode( ', ', $auto_title );
 
 		if ( in_array( $options['mode'], $supported_modes ) ) {
 			$current_mode_name = $supported_modes[ $options['mode'] ];
@@ -248,7 +252,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 					'yes' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
 					'no'  => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
 				),
-				'description'  => esc_html__( "Shows a small 'ARVE' link below the videos. Be the most awesome person and turn this on to help me own a bit of money with more Pro Addon sales thanks to ", 'advanced-responsive-video-embedder' ),
+				'description'  => esc_html__( "Shows a small 'ARVE' link below the videos. Be the most awesome person and turn this on to help me earn a bit of money with more Pro Addon sales thanks to you!", 'advanced-responsive-video-embedder' ),
 			),
 			array(
 				'hide_from_settings' => true,
@@ -258,7 +262,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'libraryType' => array( 'image' ),
 				'addButton'   => esc_html__( 'Select Image', 'shortcode-ui' ),
 				'frameTitle'  => esc_html__( 'Select Image', 'shortcode-ui' ),
-				'description' => sprintf( esc_html__( 'The Pro Addon displays thumbnails in Lazyload modes and automatically gets them for %s so you may leave it empty for those if you own it. Always used as schema.org "thumbnailUrl" for SEO', 'advanced-responsive-video-embedder' ), $auto_thumbs ),
+				'description' => sprintf( esc_html__( 'Shown in Lazyload modes, always used for SEO. and automatically gets them for %s so you may leave it empty for those if you own it.', 'advanced-responsive-video-embedder' ), $auto_thumbs ),
 			),
 			array(
 				'hide_from_settings' => true,
@@ -266,7 +270,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'label' => esc_html__('Title', 'advanced-responsive-video-embedder'),
 				'type'  => 'text',
 				'meta'  => array(
-					'placeholder' => __( "Visible title for Lazyload modes, automattic for major providers (Pro Addon only) & schema.org 'name' for SEO", 'advanced-responsive-video-embedder' ),
+					'placeholder' => __( "Visible title for Lazyload modes, used for SEO in Normal mode. Automattic for major providers (Pro Addon only)", 'advanced-responsive-video-embedder' ),
 				)
 			),
 			array(
@@ -377,7 +381,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 
 	public static function get_properties() {
 
-		return array(
+		$properties = array(
 			'alugha' => array(
 				'auto_thumbnail' => true,
 				'tests' => array(
@@ -601,7 +605,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				)
 			),
 			'ustream' => array(
-				'name' => 'USTREAM',
 				'auto_thumbnail' => false,
 				'aspect_ratio' => '480:270', #61,
 				'tests' => array(
@@ -855,6 +858,13 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'tests' => array()
 			),
 		);
+
+		foreach ( $properties as $key => $value ) {
+			if( empty( $value['name'] ) )
+				$properties[ $key ]['name'] = ucfirst( $key );
+		}
+
+		return $properties;
 	}
 
 	public static function attr( $attr = array() ) {
