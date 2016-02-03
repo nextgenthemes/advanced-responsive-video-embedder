@@ -40,6 +40,7 @@
 	height: 100% !important;
 	width: 100% !important;
 	border: 0 !important;
+	overflow: hidden !important;
 }
 
 .arve-promote-link {

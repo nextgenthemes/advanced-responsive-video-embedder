@@ -693,21 +693,21 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		$metaaaaaa = sprintf(
-			'<img src="%s" srcset="%s" sizes="%s" itemprop="thumbnailUrl" />',
+			'<img src="%s" srcset="%s" itemprop="thumbnailUrl" />',
 			esc_attr( $args['thumbnail'] ),
 			esc_attr( $args['thumbnail_srcset'] ),
 			! empty( $args['thumbnail_sizes'] ) ? esc_attr( $args['thumbnail_sizes'] ) : ''
 		);
 
-		if( in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) && is_numeric( $args['thumbnail'] ) && $img_src = wp_get_attachment_image_url( $args['thumbnail'], 'large' ) ) {
+		if( is_numeric( $args['thumbnail'] ) && $srcset = wp_get_attachment_image_srcset( $args['thumbnail'], 'small' ) ) {
+			$args['srcset'] = $srcset;
+		}
 
-			$img = sprintf( '<img src="%s" itemprop="thumbnailUrl" />', esc_attr( $img_src ) );
-			$img_id = $args['thumbnail'];
-			$img_metadata = wp_get_attachment_metadata( $img_id );
-			$meta .= wp_image_add_srcset_and_sizes ( $img, $img_metadata, $img_id );
+		if( ! empty( $args['srcset'] ) ) {
+			$meta .= sprintf( '<img class="arve-img" src="%s" srcset="%s" itemprop="thumbnailUrl" />', esc_url( $args['thumbnail'] ), esc_url( $args['srcset'] ) );
 		}
 		elseif ( ! empty( $args['thumbnail'] ) ) {
-			$meta .= sprintf( '<meta itemprop="thumbnailUrl" content="%s" />', esc_attr( $args['thumbnail'] ) );
+			$meta .= sprintf( '<meta itemprop="thumbnailUrl" content="%s" />', esc_url( $args['thumbnail'] ) );
 		}
 		if ( ! empty( $args['title'] ) ) {
 			$meta .= '<h5 itemprop="name" class="arve-title arve-hidden">' . esc_html( $args['title'] ) . '</h5>';
@@ -794,13 +794,15 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		$pairs = array(
-			'name'            => ! empty( $args['iframe_name'] ) ? $args['iframe_name'] : false,
-			'sandbox'         => ! empty( $args['sandbox'] ) ? $args['sandbox'] : false,
+			'class'           => isset( $args['iframe_class'] )   ? $args['iframe_class'] : 'arve-inner',
+			'name'            => empty( $args['iframe_name'] )    ? false : $args['iframe_name'],
+			'sandbox'         => empty( $args['iframe_sandbox'] ) ? false : $args['iframe_sandbox'],
+			'style'           => empty( $args['iframe_style'] )   ? false : $args['iframe_style'],
 			'src'             => $args['autoplay'] ? $args['src_autoplay_yes'] : $args['src_autoplay_no'],
 			'data-src'        => in_array( $args['mode'], array( 'lazyload', 'lazyload-fullscreen', 'lazyload-fixed' ) ) ? $args['src_autoplay_yes'] : null,
-			'class'           => 'arve-inner',
 			'allowfullscreen' => '',
 			'frameborder'     => '0',
+			'scrolling'       => 'no',
 			'width'           => is_feed() ? 853 : false,
 			'height'          => is_feed() ? 480 : false,
 		);
@@ -1072,8 +1074,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$out .= '<th></th>';
 		$out .= '<th>Provider</th>';
 		$out .= '<th>URL</th>';
-		$out .= '<th>Auto Thumbnail</th>';
-		$out .= '<th>Auto Title</th>';
+		$out .= '<th>Auto Thumbnail (Pro Addon)</th>';
+		$out .= '<th>Auto Title (Pro Addon)</th>';
 		$out .= '</tr>';
 
 		$count = 1;
@@ -1119,7 +1121,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				foreach ($values['options'] as $key => $value) {
 					$choices[] = sprintf( '<code>%s</code>', $key );
 				}
-				$desc .= __('Options: ', $this->plugin_slug ) . implode( ' / ', $choices ) . '<br>';
+				$desc .= __('Options: ', $this->plugin_slug ) . implode( ', ', $choices ) . '<br>';
 			}
 
 			if ( ! empty( $values['description'] ) )

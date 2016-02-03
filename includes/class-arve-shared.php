@@ -252,7 +252,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 					'yes' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
 					'no'  => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
 				),
-				'description'  => esc_html__( "Shows a small 'ARVE' link below the videos. Be the most awesome person and turn this on to help me earn a bit of money with more Pro Addon sales thanks to you!", 'advanced-responsive-video-embedder' ),
+				'description'  => esc_html__( "Shows a small 'ARVE' link below the videos. Be the most awesome person and help promoting this plugin.", 'advanced-responsive-video-embedder' ),
 			),
 			array(
 				'hide_from_settings' => true,
@@ -262,16 +262,14 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'libraryType' => array( 'image' ),
 				'addButton'   => esc_html__( 'Select Image', 'shortcode-ui' ),
 				'frameTitle'  => esc_html__( 'Select Image', 'shortcode-ui' ),
-				'description' => sprintf( esc_html__( 'Shown in Lazyload modes, always used for SEO. and automatically gets them for %s so you may leave it empty for those if you own it.', 'advanced-responsive-video-embedder' ), $auto_thumbs ),
+				'description' => sprintf( esc_html__( 'Preview image for Lazyload modes, always used for SEO. The Pro Addon is able to get them from %s automatically.', 'advanced-responsive-video-embedder' ), $auto_thumbs ),
 			),
 			array(
 				'hide_from_settings' => true,
 				'attr'  => 'title',
 				'label' => esc_html__('Title', 'advanced-responsive-video-embedder'),
 				'type'  => 'text',
-				'meta'  => array(
-					'placeholder' => __( "Visible title for Lazyload modes, used for SEO in Normal mode. Automattic for major providers (Pro Addon only)", 'advanced-responsive-video-embedder' ),
-				)
+				'description' => sprintf( esc_html__( 'Visible title for Lazyload modes, used for SEO in Normal mode. The Pro Addon is able to get them from %s automatically.', 'advanced-responsive-video-embedder' ), $auto_title ),
 			),
 			array(
 				'hide_from_settings' => true,
@@ -336,7 +334,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'label' => __('Aspect Ratio', 'advanced-responsive-video-embedder'),
 				'type'  => 'text',
 				'meta'  => array(
-					'placeholder' => __( 'Leave empty if there is no specific need for a unusial ratio like 4:3, 21:9 ...', 'advanced-responsive-video-embedder'),
+					'placeholder' => __( 'Custom aspect ratio like 4:3, 21:9 ... Leave empty for default.', 'advanced-responsive-video-embedder'),
 				),
 			),
 			array(
@@ -529,7 +527,8 @@ class Advanced_Responsive_Video_Embedder_Shared {
 					'http://www.liveleak.com/view?f=c85bdf5e45b2',
 				)
 			),
-			'klartv' => array(
+			'klatv' => array(
+				'name' => 'kla.tv',
 				'url'   => true,
 				'auto_thumbnail' => false,
 				'tests' => array(

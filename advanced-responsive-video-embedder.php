@@ -32,7 +32,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'ARVE_PRO_VERSION_REQUIRED', '2.5.4' );
+define( 'ARVE_PRO_VERSION_REQUIRED', '1.5.4' );
 
 /**
  * The code that runs during plugin activation.
