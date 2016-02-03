@@ -1193,6 +1193,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'class'           => 'arve-inner',
 			'allowfullscreen' => '',
 			'frameborder'     => '0',
+			'scrolling'       => 'no',
 			'width'           => is_feed() ? 853 : false,
 			'height'          => is_feed() ? 480 : false,
 		);
