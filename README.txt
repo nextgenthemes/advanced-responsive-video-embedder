@@ -259,6 +259,10 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 
 [Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/).
 
+### 6.4.1 ###
+
+* Fix: Always prevent scrollbars - making sure it works everywhere.
+
 ### 6.4.0 ###
 
 * Fix: Always prevent scrollbars.
