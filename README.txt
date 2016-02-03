@@ -22,7 +22,7 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 
 <p class="lead">Thanks to everyone who bought the <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">Pro Addon</a></p>
 
-<p>I really appreciate this. I commercialized parts of this plugin because I no longer can work on this for free and donations were not really doing it. I am glad not everyone thinks, everything needs to be gratis on the Internet, especially in Open Source. The Pro Addon, like the base version here, is still Free Software - free as in Freedom! not as in gratis. Well, actually I have given 712 licenses out free of charge to legacy users. I am thinking of stopping the giveaways.</p>
+<p>I really appreciate this. I commercialized parts of this plugin because I no longer can work on this for free and donations were not really doing it. I am glad not everyone thinks, everything needs to be gratis on the Internet, especially in Open Source. The Pro Addon, like the base version here, is still Free Software - free as in Freedom! not as in gratis. Well, actually I have given 720 and counting licenses out free of charge to legacy users.</p>
 
 <a class="btn btn-primary btn-lg" href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">Purchase Pro Addon</a>
 
@@ -258,6 +258,10 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 ### Version 7 is coming ###
 
 [Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/).
+
+### 6.4.0 ###
+
+* Fix: Always prevent scrollbars.
 
 ### Pro Addon 1.4.4
 

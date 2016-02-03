@@ -4,6 +4,10 @@
 
 [Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/).
 
+### 6.4.0 ###
+
+* Fix: Always prevent scrollbars.
+
 ### Pro Addon 1.4.4
 
 * Fixed: Infinite update loop.
