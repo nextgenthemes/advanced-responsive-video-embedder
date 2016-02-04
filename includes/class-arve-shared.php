@@ -687,6 +687,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			),
 			'youtube' => array(
 				'name' => 'YouTube',
+				'sandbox_able' => true,
 				'auto_thumbnail' => true,
 				'auto_title' => true,
 				'tests' => array(
@@ -881,13 +882,17 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			} elseif ( '' === $value ) {
 				$out .= sprintf( ' %s', esc_html( $key ) );
 			} elseif ( in_array( $key, array( 'href', 'src', 'data-src' ) ) ) {
-				$out .= sprintf( ' %s="%s"', esc_html( $key ), $this->esc_url( $value ) );
+				$out .= sprintf( ' %s="%s"', esc_html( $key ), static::esc_url( $value ) );
 			} else {
 				$out .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );
 			}
 		}
 
 		return $out;
+	}
+
+	public static function esc_url( $url ) {
+		return str_replace( 'jukebox?list%5B0%5D', 'jukebox?list[]', esc_url( $url ) );
 	}
 
 	public static function starts_with( $haystack, $needle ) {

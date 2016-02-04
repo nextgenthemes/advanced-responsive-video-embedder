@@ -645,13 +645,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 			return $this->error( $args['error']->get_error_message() );
 		}
 
-		#$output = '';
-		#$output .= sprintf( '<a href="%s">auto</a><br>', str_replace( 'https://', '//', $args['src_autoplay_no'] ) );
-		#$output .= sprintf( '<a href="%s">auto</a><br>', str_replace( 'http://', 'https://', $args['src_autoplay_no'] ) );
-
-		#$output .= sprintf( '<img src="%s"><br>', str_replace( 'https://', 'http://', $args['thumbnail'] ) );
-		#$output .= sprintf( '<img src="%s"><br>', str_replace( 'http://', 'https://', $args['thumbnail'] ) );
-
 		if ( isset( $_GET['arve-debug'] ) ) {
 
 			static $show_options_debug = true;
@@ -692,23 +685,42 @@ class Advanced_Responsive_Video_Embedder_Public {
 			$meta .= sprintf( '<meta itemprop="uploadDate" content="%s" />', esc_attr( $args['upload_date'] ) );
 		}
 
-		$metaaaaaa = sprintf(
-			'<img src="%s" srcset="%s" itemprop="thumbnailUrl" />',
-			esc_attr( $args['thumbnail'] ),
-			esc_attr( $args['thumbnail_srcset'] ),
-			! empty( $args['thumbnail_sizes'] ) ? esc_attr( $args['thumbnail_sizes'] ) : ''
-		);
+		if( is_numeric( $args['thumbnail'] ) ) {
 
-		if( is_numeric( $args['thumbnail'] ) && $srcset = wp_get_attachment_image_srcset( $args['thumbnail'], 'small' ) ) {
-			$args['srcset'] = $srcset;
+			$attachment_id = $args['thumbnail'];
+
+			if( $img_src = wp_get_attachment_image_url( $attachment_id, 'medium' ) ) {
+				$args['thumbnail'] = $img_src;
+
+				if ( in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox', 'lazyload-fixed', 'lazyload-fullscreen' ) ) ) {
+					$args['thumbnail_bg'] = $img_src;
+
+					if( $srcset = wp_get_attachment_image_srcset( $attachment_id, 'thumbnail' ) ) {
+						$args['thumbnail_srcset'] = $srcset;
+					}
+				}
+			} else {
+				$args['thumbnail'] = null;
+			}
 		}
+		if( ! empty( $args['thumbnail'] ) && ! empty( $args['thumbnail_srcset'] ) ) {
 
-		if( ! empty( $args['srcset'] ) ) {
-			$meta .= sprintf( '<img class="arve-img" src="%s" srcset="%s" itemprop="thumbnailUrl" />', esc_url( $args['thumbnail'] ), esc_url( $args['srcset'] ) );
+			$meta .= sprintf(
+				'<img %s>',
+				Advanced_Responsive_Video_Embedder_Shared::attr( array(
+					'class'    => 'arve-thumbnail arve-inner',
+					'itemprop' => 'thumbnailUrl',
+					'src'      => $args['thumbnail'],
+					'srcset'   => $args['thumbnail_srcset'],
+					#'sizes'    => '(max-width: 700px) 100vw, 1280px',
+					'alt'      => __( 'Video Thumbnail', 'advanced-responsive-video-embedder' ),
+				) )
+			);
 		}
 		elseif ( ! empty( $args['thumbnail'] ) ) {
 			$meta .= sprintf( '<meta itemprop="thumbnailUrl" content="%s" />', esc_url( $args['thumbnail'] ) );
 		}
+
 		if ( ! empty( $args['title'] ) ) {
 			$meta .= '<h5 itemprop="name" class="arve-title arve-hidden">' . esc_html( $args['title'] ) . '</h5>';
 		}
@@ -719,7 +731,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$container = sprintf(
 			'<div class="arve-embed-container" style="padding-bottom: %F%%; %s">%s</div>',
 			static::aspect_ratio_to_padding( $args['aspect_ratio'] ),
-			( $args['thumbnail'] ) ? sprintf( 'background-image:url(%s);', $args['thumbnail'] ) : '',
+			! empty( $args['thumbnail_bg'] ) ? sprintf( 'background-image: url(%s);', esc_url( $args['thumbnail_bg'] ) ) : '',
 			$meta . $inner
 		);
 
@@ -809,7 +821,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		$args = shortcode_atts( $pairs, $args );
 
-		return sprintf( '<iframe %s></iframe>', static::parse_attr( $args ) );
+		return sprintf( '<iframe %s></iframe>', Advanced_Responsive_Video_Embedder_Shared::attr( $args ) );
 	}
 
 	public static function create_video( $args ) {
@@ -872,30 +884,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 		'<param name="allowFullScreen" value="true">' .
 		'<param name="allowScriptAccess" value="always">' .
 		'</object>';
-	}
-
-	public static function parse_attr( $attr = array() ) {
-
-		$out = '';
-
-		foreach ( $attr as $key => $value ) {
-
-			if ( false === $value || null === $value ) {
-				continue;
-			} elseif ( '' === $value ) {
-				$out .= sprintf( ' %s', esc_html( $key ) );
-			} elseif ( in_array( $key, array( 'href', 'src', 'data-src' ) ) ) {
-				$out .= sprintf( ' %s="%s"', esc_html( $key ), static::esc_url( $value ) );
-			} else {
-				$out .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );
-			}
-		}
-
-		return $out;
-	}
-
-	public static function esc_url( $url ) {
-		return str_replace( 'jukebox?list%5B0%5D', 'jukebox?list[]', esc_url( $url ) );
 	}
 
 	/**

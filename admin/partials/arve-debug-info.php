@@ -66,8 +66,10 @@ echo ob_get_clean();
 <?php if( is_plugin_active( 'arve-pro/arve-pro.php' ) ) : ?>
 ARVE Pro Options:
 <?php
+$pro_options = get_option( 'arve_options_pro' );
+unset($pro_options['key']);
 ob_start();
-var_dump( get_option( 'arve_options_pro' ) );
+var_dump( $pro_options );
 echo ob_get_clean();
 ?>
 <?php endif; ?>

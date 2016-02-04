@@ -1,18 +1,15 @@
-### 7.0.3 Beta & Pro Addon 1.5.4 Beta ###
+### Pro Addon 2.0.0 Beta (everything since 1.4.0 Beta) ###
 
-* Fix: Bool options settings.
+* New: Responsive thumbnails using srcset the browser takes the best image resolution for the users device. This is automatic for
+*
 
-### Pro Addon 1.5.4 Beta ###
-
-* Fix: License API call.
-
-### 7.0.2 Beta ###
+### 7.0.6 Beta (everyting since 7.0.0 beta) ###
 
 * New: Amazing catch-all shortcode [arve url="..."] that can be used for all supported providers and even with any iframe `src` if all unlisted providers that support responsive iframe embeds.
-* New: Support for kla.tv
-* New: Support for youku,  (fulfilled request)
-* New: New Advanced shotcode Dialog, with very detailed helping texts, display of default settings, hiding of fields based on need ...
-* New: WYSIWYG Preview of shortcodes.
+* New: Support for kla.tv.
+* New: Support for youku, (fulfilled request)
+* New: New Advanced Shortcode Dialog with nice UI for choose thumbnails from your WP Media Gallery, very detailed helping texts, display of default settings, hiding of fields based on need ...
+* New: WYSIWYG Preview of Shortcodes.
 * New: The two above features need the [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) Plugin that is maybe moving into WordPress core later.
 * New: A default alignment can now be set in the Settings page. (fulfilled request)
 * New: 'iframe_name' shortcode parameter for `<iframe name="xxxxx"`, useful when wanting to target ARVE embeds with links. (fulfilled request)
@@ -27,8 +24,13 @@
 * Fix: Issue with unwanted borders showing on embeds.
 * Fix: youtube.be URLs now detected correct in shortcode dialog.
 * Fix: All Vevo URLs are now detected correctly.
+* Fix: Bool options settings.
 * Removed blip because the service was shutdown.
 * Background-images are now applied to .arve-embed-container instead of .arve-wrapper.
+
+### Pro Addon 1.5.4 Beta ###
+
+* Fix: License API call.
 
 ### Pro Addon 1.5.3 Beta ###
 
