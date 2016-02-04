@@ -226,9 +226,8 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Todo List ##
 
-I would be glad if someone could [help me](https://github.com/nextgenthemes/advanced-responsive-video-embedder) with this, I can send you cash for helping out.
+I would be glad if someone could [help me](https://github.com/nextgenthemes/advanced-responsive-video-embedder) with this, I can pay for helping out.
 
-- [ ] Pro Addon: Fix [issue 17][17] Lazyload Lightbox fails with IGN (and maybe others)
 - [ ] Get advice how I could improve my sales of this the Pro Addon
 - [ ] Advertise the Pro Addon somewhere
 - [ ] Make the [Plugin Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) and the selling process UX more professional look and feel.
@@ -242,9 +241,7 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 - [x] Create a Features Table?
 - [ ] Comparison with other Plugins (Table?)
 - [ ] Write docs about how to use iframe for not supported providers.
-- [ ] How to manage beta versions with WordPress.org and the EDD Software licensing plugin (for the Pro Version)
 - [ ] WordPress Language Pack thing
-- [ ] Get rid of globals in PHP Code
 - [ ] Consider writing JS create URL querys for embed customization (for use in shortcode creator dialog but also easy to use independant)
 
  [16]: https://github.com/nextgenthemes/advanced-responsive-video-embedder/issues/16
