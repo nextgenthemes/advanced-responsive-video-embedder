@@ -685,7 +685,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			$meta .= sprintf( '<meta itemprop="uploadDate" content="%s" />', esc_attr( $args['upload_date'] ) );
 		}
 
-		if( is_numeric( $args['thumbnail'] ) ) {
+		if( is_numeric( $args['thumbnail'] )  ) {
 
 			$attachment_id = $args['thumbnail'];
 
@@ -695,7 +695,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				if ( in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox', 'lazyload-fixed', 'lazyload-fullscreen' ) ) ) {
 					$args['thumbnail_bg'] = $img_src;
 
-					if( $srcset = wp_get_attachment_image_srcset( $attachment_id, 'thumbnail' ) ) {
+					if( $srcset = wp_get_attachment_image_srcset( $attachment_id, 'medium' ) ) {
 						$args['thumbnail_srcset'] = $srcset;
 					}
 				}
@@ -703,6 +703,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$args['thumbnail'] = null;
 			}
 		}
+
 		if( ! empty( $args['thumbnail'] ) && ! empty( $args['thumbnail_srcset'] ) ) {
 
 			$meta .= sprintf(
@@ -718,6 +719,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			);
 		}
 		elseif ( ! empty( $args['thumbnail'] ) ) {
+			$thumbnail_bg = $args['thumbnail'];
 			$meta .= sprintf( '<meta itemprop="thumbnailUrl" content="%s" />', esc_url( $args['thumbnail'] ) );
 		}
 
@@ -731,7 +733,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$container = sprintf(
 			'<div class="arve-embed-container" style="padding-bottom: %F%%; %s">%s</div>',
 			static::aspect_ratio_to_padding( $args['aspect_ratio'] ),
-			! empty( $args['thumbnail_bg'] ) ? sprintf( 'background-image: url(%s);', esc_url( $args['thumbnail_bg'] ) ) : '',
+			! empty( $thumbnail_bg ) ? sprintf( 'background-image: url(%s);', esc_url( $thumbnail_bg ) ) : '',
 			$meta . $inner
 		);
 
@@ -801,11 +803,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 */
 	public static function create_iframe( $args ) {
 
-		if ( in_array( $args['mode'], array( 'lazyload', 'lazyload-fullscreen', 'lazyload-fixed' ) ) ) {
-			$args['src'] = null;
-		}
-
-		$pairs = array(
+		$iframe_attr = array(
 			'class'           => isset( $args['iframe_class'] )   ? $args['iframe_class'] : 'arve-inner',
 			'name'            => empty( $args['iframe_name'] )    ? false : $args['iframe_name'],
 			'sandbox'         => empty( $args['iframe_sandbox'] ) ? false : $args['iframe_sandbox'],
@@ -819,9 +817,11 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'height'          => is_feed() ? 480 : false,
 		);
 
-		$args = shortcode_atts( $pairs, $args );
+		if ( in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ) {
+			$iframe_attr['src'] = null;
+		}
 
-		return sprintf( '<iframe %s></iframe>', Advanced_Responsive_Video_Embedder_Shared::attr( $args ) );
+		return sprintf( '<iframe %s></iframe>', Advanced_Responsive_Video_Embedder_Shared::attr( $iframe_attr ) );
 	}
 
 	public static function create_video( $args ) {
