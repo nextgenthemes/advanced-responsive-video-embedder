@@ -1057,13 +1057,17 @@ class Advanced_Responsive_Video_Embedder_Public {
 		unset( $providers['dailymotionlist'] );
 		unset( $providers['iframe'] );
 
-		$out  = '<table class="table table-sm table-hover table-arve-supported">';
+		$out  = '<table class="table table-sm table-hover">';
 	  $out .= '<tr>';
 		$out .= '<th></th>';
 		$out .= '<th>Provider</th>';
 		$out .= '<th>URL</th>';
-		$out .= '<th>Auto Thumbnail (Pro Addon)</th>';
-		$out .= '<th>Auto Title (Pro Addon)</th>';
+		$out .= '<th>Auto Thumbnail<br>(Pro Addon)</th>';
+		$out .= '<th>Auto Title<br>(Pro Addon)</th>';
+		$out .= '</tr>';
+		$out .= '<tr>';
+		$out .= '<td></td>';
+		$out .= '<td colspan="4"><a href="https://nextgenthemes.com/documentation/iframe">All providers with responsive iframe embed codes</a></td>';
 		$out .= '</tr>';
 
 		$count = 1;

@@ -1,13 +1,13 @@
-### Pro Addon 2.0.0 Beta (everything since 1.4.0 Beta) ###
+### Pro Addon 1.9.2 Beta (everything since 1.4.0 Beta) ###
 
+* Fix: Make the srcset youtube images to to protocol relative.
 * New: Responsive thumbnails using srcset the browser takes the best image resolution for the users device. This is automatic for
-*
 
-### 7.0.6 Beta (everyting since 7.0.0 beta) ###
+### 7.0.9 Beta (everyting since 7.0.0 beta) ###
 
 * New: Amazing catch-all shortcode [arve url="..."] that can be used for all supported providers and even with any iframe `src` if all unlisted providers that support responsive iframe embeds.
 * New: Support for kla.tv.
-* New: Support for youku, (fulfilled request)
+* New: Support for youku (fulfilled request)
 * New: New Advanced Shortcode Dialog with nice UI for choose thumbnails from your WP Media Gallery, very detailed helping texts, display of default settings, hiding of fields based on need ...
 * New: WYSIWYG Preview of Shortcodes.
 * New: The two above features need the [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) Plugin that is maybe moving into WordPress core later.

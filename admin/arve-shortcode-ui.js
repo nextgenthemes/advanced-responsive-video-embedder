@@ -17,11 +17,11 @@ function arve_extract_url( changed, collection, shortcode ) {
 		return;
 	}
 
-	short_val =       val.replace( 'https://www.youtube.com/watch?v=', 'https://youtu.be/' );
-	short_val = short_val.replace( 'http://www.dailymotion.com/video/', 'http://dai.ly/' );
+	short_val =       val.replace( '://www.youtube.com/watch?v=', '://youtu.be/' );
+	short_val = short_val.replace( '://www.dailymotion.com/video/', '://dai.ly/' );
 
 	if( short_val !== val ) {
-		input.val( short_val );
+		input.val( short_val ).trigger( 'input' );
 	}
 
 	if( val.match(/src="([^"]+)/) ) {
@@ -29,7 +29,7 @@ function arve_extract_url( changed, collection, shortcode ) {
 		var test_url = val.match(/src="([^"]+)/),
 			only_url = test_url && test_url[1];
 
-		input.val( only_url );
+		input.val( only_url ).trigger( 'input' );
 	}
 }
 wp.shortcake.hooks.addAction( 'arve.url', arve_extract_url );

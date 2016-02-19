@@ -2,6 +2,13 @@
 
 I would be glad if someone could [help me](https://github.com/nextgenthemes/advanced-responsive-video-embedder) with this, I can pay for helping out.
 
+
+- [ ] Mass emails to customers howto
+- [ ] Release management of 7.0
+- [ ] Company name and legal clearing.
+- [ ] Theme Framework name and legal aspects.
+- [ ] Handle beta versions with EDD Possible?
+
 - [ ] Get advice how I could improve my sales of this the Pro Addon
 - [ ] Advertise the Pro Addon somewhere
 - [ ] Make the [Plugin Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) and the selling process UX more professional look and feel.
@@ -12,7 +19,7 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 - [ ] Improve [Documentation][50] - extend
 - [ ] Improve [Documentation][50] - simplify
 - [ ] Improve [Documentation][50] - write how to use kaltura, and other not directly supported providers with iframe
-- [x] Create a Features Table?
+- [ ] Create a Features Table?
 - [ ] Comparison with other Plugins (Table?)
 - [ ] Write docs about how to use iframe for not supported providers.
 - [ ] WordPress Language Pack thing

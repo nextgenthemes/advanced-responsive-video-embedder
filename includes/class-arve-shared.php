@@ -136,20 +136,20 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			),
 			'params' => array(
 				#'archiveorg'      => '',
-				'alugha'          => 'nologo=1  ',
+				'alugha'          => 'nologo=1',
 				#'break'           => '',
 				#'collegehumor'    => '',
 				#'comedycentral'   => '',
-				'dailymotion'     => 'logo=0  hideInfos=1  related=0  forcedQuality=hd  ',
-				'dailymotionlist' => 'logo=0  hideInfos=1  related=0  forcedQuality=hd  ',
+				'dailymotion'     => 'logo=0&hideInfos=1&related=0&forcedQuality=hd',
+				'dailymotionlist' => 'logo=0&hideInfos=1&related=0&forcedQuality=hd',
 				#'flickr'          => '',
 				#'funnyordie'      => '',
 				#'gametrailers'    => '',
 				'iframe'          => '',
 				#'ign'             => '',
 				#'kickstarter'     => '',
-				'liveleak'        => 'wmode=transparent  ',
-				'livestream'      => 'height=720  width=1280  ',
+				'liveleak'        => 'wmode=transparent',
+				'livestream'      => 'height=720&width=1280',
 				#'metacafe'        => '',
 				#'movieweb'        => '',
 				#'myspace'         => '',
@@ -157,15 +157,15 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				#'snotr'           => '',
 				#'spike'           => '',
 				#'ted'             => '',
-				'ustream'         => 'wmode=transparent  v=3  ',
-				'veoh'            => 'player=videodetailsembedded  id=anonymous  ',
-				'vevo'            => 'playlist=false  playerType=embedded  env=0  ',
-				'viddler'         => 'wmode=transparent  player=full  f=1  disablebranding=1  ',
+				'ustream'         => 'wmode=transparent&v=3',
+				'veoh'            => 'player=videodetailsembedded&id=anonymous',
+				'vevo'            => 'playlist=false&playerType=embedded&env=0',
+				'viddler'         => 'wmode=transparent&player=full&f=1&disablebranding=1',
 				'vine'            => '', //* audio=1 supported
 				#'videojug'        => '',
-				'vimeo'           => 'html5=1  title=1  byline=0  portrait=0  ',
+				'vimeo'           => 'html5=1&title=1&byline=0&portrait=0',
 				#'yahoo'           => '',
-				'youtube'         => 'wmode=transparent  iv_load_policy=3  modestbranding=1  rel=0  autohide=1  ',
+				'youtube'         => 'wmode=transparent&iv_load_policy=3&modestbranding=1&rel=0&autohide=1',
 			)
 		);
 
@@ -201,10 +201,14 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			if( ! empty( $values['auto_title'] ) && $values['auto_title'] ) {
 				$auto_title[] = $values['name'];
 			}
+			if( empty( $values['url'] ) || ! $values['url'] ) {
+				$embed_code_only[] = $values['name'];
+			}
 		}
 
-		$auto_thumbs = implode( ', ', $auto_thumbs );
-		$auto_title = implode( ', ', $auto_title );
+		$auto_thumbs      = implode( ', ', $auto_thumbs );
+		$auto_title       = implode( ', ', $auto_title );
+		$embed_code_only  = implode( ', ', $embed_code_only );
 
 		if ( in_array( $options['mode'], $supported_modes ) ) {
 			$current_mode_name = $supported_modes[ $options['mode'] ];
@@ -215,11 +219,16 @@ class Advanced_Responsive_Video_Embedder_Shared {
 		return array(
 			array(
 				'hide_from_settings' => true,
-				'attr'   => 'url',
-				'label'  => esc_html__( 'URL of video', 'advanced-responsive-video-embedder'),
-				'type'   => 'text',
-				'meta'   => array(
-					'placeholder' => esc_attr__( 'Video URL (Embed Code for some prividers)', 'advanced-responsive-video-embedder' ),
+				'attr'  => 'url',
+				'label' => esc_html__( 'URL / Embed Code', 'advanced-responsive-video-embedder'),
+				'type'  => 'text',
+				'meta'  => array(
+					'placeholder' => esc_attr__( 'Video URL / iframe Embed Code', 'advanced-responsive-video-embedder' ),
+				),
+				'description' => sprintf(
+					__('For %s or any unlisted <a href="%s">unlisted</a> providers that gives out iframe enbed codes that can be used responsively. This dialog extracts only the url from the <code>src="http://..."</code> attribute of iframe embed codes because that all ARVE needs.', 'advanced-responsive-video-embedder' ),
+					$embed_code_only,
+					'https://nextgenthemes.com/advanced-responsive-video-embedder-pro/#'
 				)
 			),
 			array(
@@ -343,8 +352,9 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'label' => esc_html__('Parameters', 'advanced-responsive-video-embedder'),
 				'type'  => 'text',
 				'meta'  => array(
-					'placeholder' => __( 'See Documention', 'advanced-responsive-video-embedder' ),
+					'placeholder' => __( 'provider specific parameters', 'advanced-responsive-video-embedder' ),
 				),
+				'description' => sprintf( __( 'Note there are also general settings for this. This values get merged with the settings values. Example for YouTube <code>fs=0&start=30</code>. For reference: <a target="_blank" href="https://developers.google.com/youtube/player_parameters">Youtube Parameters</a>, <a target="_blank" href="http://www.dailymotion.com/doc/api/player.html#parameters">Dailymotion Parameters</a>, <a target="_blank" href="https://developer.vimeo.com/player/embedding">Vimeo Parameters</a>.', 'advanced-responsive-video-embedder' ), 'TODO settings page link' ),
 			),
 		);
 	}
