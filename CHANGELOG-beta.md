@@ -1,10 +1,24 @@
-### Pro Addon 1.9.2 Beta (everything since 1.4.0 Beta) ###
+### Version 7 is coming ###
 
+[Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/).
+
+### Pro Addon 1.9.4 Beta (everything since 1.4.0 Beta) ###
+
+* Fix: Screenfull error
 * Fix: Make the srcset youtube images to to protocol relative.
 * New: Responsive thumbnails using srcset the browser takes the best image resolution for the users device. This is automatic for
+* Fix: License API call.
+* New: Added support for displaying title of videos on top of the thumbnail images.
+* Improved: Rectangle animation. (thinking about removing it completely)
+* Improved: Updated lity (lightbox script) to version 1.5.1
+* Improved: Thumbnail handling.
+* Improved: Removed the 'Lazyload Maximal Width' setting to simplify things (there still is 'Maximal Width' and 'Aligned Maximal Width').
+* Improved: Removed the 'Fake Thumbnail' because I now think the entire idea was bad and real thumbnails should be used.
+* Dropped PHP Class
 
-### 7.0.9 Beta (everyting since 7.0.0 beta) ###
+### 7.1.0 Beta (everyting since 7.0.0 beta) ###
 
+* New: Recommend and guide to users to install [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) via [TGMPA](http://tgmpluginactivation.com/)
 * New: Amazing catch-all shortcode [arve url="..."] that can be used for all supported providers and even with any iframe `src` if all unlisted providers that support responsive iframe embeds.
 * New: Support for kla.tv.
 * New: Support for youku (fulfilled request)
@@ -27,17 +41,3 @@
 * Fix: Bool options settings.
 * Removed blip because the service was shutdown.
 * Background-images are now applied to .arve-embed-container instead of .arve-wrapper.
-
-### Pro Addon 1.5.4 Beta ###
-
-* Fix: License API call.
-
-### Pro Addon 1.5.3 Beta ###
-
-* New: Added support for displaying title of videos on top of the thumbnail images.
-* Improved: Rectangle animation. (thinking about removing it completely)
-* Improved: Updated lity (lightbox script) to version 1.5.1
-* Improved: Thumbnail handling.
-* Improved: Removed the 'Lazyload Maximal Width' setting to simplify things (there still is 'Maximal Width' and 'Aligned Maximal Width').
-* Improved: Removed the 'Fake Thumbnail' because I now think the entire idea was bad and real thumbnails should be used.
-* Dropped PHP Class

@@ -753,7 +753,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			Advanced_Responsive_Video_Embedder_Shared::attr( array(
 				'id'             => 'video-' . $args['element_id'],
 				'class'          => 'arve-wrapper ' . $args['align'],
-				'data-arve-grow' => ( 'lazyload' === $args['mode'] ) ? (string) $args['grow'] : null,
+				'data-arve-grow' => ( 'lazyload' === $args['mode'] && $args['grow'] ) ? '' : null,
 				'data-arve-mode' => $args['mode'],
 				'style'          => empty( $args['maxwidth'] ) ? false : sprintf( 'max-width: %dpx;', $args['maxwidth'] ),
 				// Schema.org

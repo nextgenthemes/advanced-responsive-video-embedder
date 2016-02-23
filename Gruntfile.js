@@ -22,7 +22,7 @@ module.exports = function (grunt) {
         src: [
            'readme/description.md',
            'readme/description-lead.html',
-           'readme/description-beta-test.md',
+           'CHANGELOG-beta.md',
            'readme/description-links.html',
            'readme/description-features.html',
            'readme/description-features-pro.html',
