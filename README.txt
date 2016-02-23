@@ -31,30 +31,12 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 
 [Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/).
 
-### 7.0.2 Beta ###
+### Pro Addon 1.9.4 Beta (everything since 1.4.0 Beta) ###
 
-* New: New Advanced shotcode Dialog, with very detailed helping texts, display of default settings, hiding of fields based on need ...
-* New: WYSIWYG Preview of shortcodes.
-* New: The two above features need the [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) Plugin that is maybe moving into WordPress core later.
-* New: Amazing catch-all shortcode [arve url="..."] that can be used for all supported providers.
-* New: A default alignment can now be set in the Settings page. (fulfilled request)
-* New: 'iframe_name' shortcode parameter for `<iframe name="xxxxx"`, useful when wanting to target ARVE embeds with links. (fulfilled request)
-* New: ARVE is now SEO friendly giving you the ability to add some schema.org microdata. Googles tools should not complain anymore. (fulfilled request)
-* Deleted Language files in favor of [wordpress.org managed translations](https://translate.wordpress.org/projects/wp-plugins/advanced-responsive-video-embedder/dev) volunteers are welcome ;)
-* Improved: Got rid of PHP globals.
-* Improved: Added image upload dialog to settings page and shortcode dialog
-* Improved: Better CSS to overwrite unwanted theme styles.
-* Improved: Lots if code improvements.
-* Improved: SSL enabled for Vevo.
-* Fix: Prevent conflicts with WP Helpers plugin (possibly others). Thanks to Steve Bruner.
-* Fix: Issue with unwanted borders showing on embeds.
-* Fix: youtube.be URLs now detected correct in shortcode dialog.
-* Fix: All Vevo URLs are now detected correctly.
-* Removed blip because the service was shutdown.
-* Background-images are now applied to .arve-embed-container instead of .arve-wrapper.
-
-### Pro Addon 1.5.3 Beta ###
-
+* Fix: Screenfull error
+* Fix: Make the srcset youtube images to to protocol relative.
+* New: Responsive thumbnails using srcset the browser takes the best image resolution for the users device. This is automatic for
+* Fix: License API call.
 * New: Added support for displaying title of videos on top of the thumbnail images.
 * Improved: Rectangle animation. (thinking about removing it completely)
 * Improved: Updated lity (lightbox script) to version 1.5.1
@@ -62,6 +44,32 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * Improved: Removed the 'Lazyload Maximal Width' setting to simplify things (there still is 'Maximal Width' and 'Aligned Maximal Width').
 * Improved: Removed the 'Fake Thumbnail' because I now think the entire idea was bad and real thumbnails should be used.
 * Dropped PHP Class
+
+### 7.1.0 Beta (everyting since 7.0.0 beta) ###
+
+* New: Recommend and guide to users to install [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) via [TGMPA](http://tgmpluginactivation.com/)
+* New: Amazing catch-all shortcode [arve url="..."] that can be used for all supported providers and even with any iframe `src` if all unlisted providers that support responsive iframe embeds.
+* New: Support for kla.tv.
+* New: Support for youku (fulfilled request)
+* New: New Advanced Shortcode Dialog with nice UI for choose thumbnails from your WP Media Gallery, very detailed helping texts, display of default settings, hiding of fields based on need ...
+* New: WYSIWYG Preview of Shortcodes.
+* New: The two above features need the [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) Plugin that is maybe moving into WordPress core later.
+* New: A default alignment can now be set in the Settings page. (fulfilled request)
+* New: 'iframe_name' shortcode parameter for `<iframe name="xxxxx"`, useful when wanting to target ARVE embeds with links. (fulfilled request)
+* New: ARVE is now SEO friendly giving you the ability to add some schema.org microdata. Googles tools should not complain anymore. (fulfilled request)
+* Deleted Language files in favor of [wordpress.org managed translations](https://translate.wordpress.org/projects/wp-plugins/advanced-responsive-video-embedder/dev) volunteers are welcome ;)
+* Improved: Got rid of PHP globals.
+* Improved: Added image upload dialog to settings page and shortcode dialog.
+* Improved: Better CSS to overwrite unwanted theme styles.
+* Improved: Lots if code improvements.
+* Improved: SSL enabled for Vevo.
+* Fix: Prevent Dashboard Widget conflicts with WP Helpers plugin (possibly others). Thanks to Steve Bruner.
+* Fix: Issue with unwanted borders showing on embeds.
+* Fix: youtube.be URLs now detected correct in shortcode dialog.
+* Fix: All Vevo URLs are now detected correctly.
+* Fix: Bool options settings.
+* Removed blip because the service was shutdown.
+* Background-images are now applied to .arve-embed-container instead of .arve-wrapper.
 
 
 <ul class="nav nav-pills">
@@ -77,22 +85,23 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 <h3>Features</h3>
 <ul class="list-checked">
 	<li>Embeds via pasting the URL in its own line just like WordPress!</li>
+	<li>Magigally makes those url embedded videos embedded responsive</li>
+	<li>No 'lock in' for the above' if you use Providers WordPress already supports</li>
 	<li>Supports <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#supported-providers">almost every video hoster</a> that supports iframe embed codes.</li>
-	<li>Optionally use Shortcodes instead</li>
+	<li>Optionally use very powerfull Shortcodes instead</li>
 	<li>One single button for all providers (for most providers not required because of URL embeds, but allows to create custom shortcodes with advanced features within seconds)</li>
 	<li>Responsive embeds with CSS, much better then with JS IMO</li>
 	<li>Tries to be as unobtrusive as possible, sets ‘hide brand’ variables if supported, disabled related videos at the end … to help keep people on your Site rather then going to YouTube or keep watching videos</li>
-	<li>Clean Shortcode syntax <code>[vimeo id="123456"]</code> no ugly URLs, no unnecessary shortcode wrapping.</li>
-	<li>Autostart (for providers that support them)</li>
+	<li>Clean Shortcode syntax <code>[arve url="https://youtu.be/yUCFRL43Zm4"]</code>, no unnecessary shortcode wrapping.</li>
+	<li>Autostart (for providers that support it, mobile browers prevent this)</li>
 	<li>Custom URL Parameters to use all options providers offer</li>
 	<li>Optional maximal width</li>
 	<li>Video alignment</li>
-	<li>General iframe support for any provider that not included that support responsive iframe embeds or any URL you with to display in a iframe.</li>
 	<li>Detailed description of options in-place.</li>
 	<li>Custom Aspect Ratio</li>
 </ul>
 
-<img src="https://nextgenthemes.com/wp-content/uploads/2015/11/GPLv3_Logo.svg" class="img-resonsive" style="width: 320px; margin-bottom: 2rem;">
+<img src="https://nextgenthemes.com/wp-content/uploads/2015/11/GPLv3_Logo.svg" class="img-responsive" style="width: 320px; margin-bottom: 2rem;">
 
 
 <h3>Additional Features with the Pro Addon</h3>
@@ -228,6 +237,13 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 I would be glad if someone could [help me](https://github.com/nextgenthemes/advanced-responsive-video-embedder) with this, I can pay for helping out.
 
+
+- [ ] Mass emails to customers howto
+- [ ] Release management of 7.0
+- [ ] Company name and legal clearing.
+- [ ] Theme Framework name and legal aspects.
+- [ ] Handle beta versions with EDD Possible?
+
 - [ ] Get advice how I could improve my sales of this the Pro Addon
 - [ ] Advertise the Pro Addon somewhere
 - [ ] Make the [Plugin Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) and the selling process UX more professional look and feel.
@@ -238,7 +254,7 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 - [ ] Improve [Documentation][50] - extend
 - [ ] Improve [Documentation][50] - simplify
 - [ ] Improve [Documentation][50] - write how to use kaltura, and other not directly supported providers with iframe
-- [x] Create a Features Table?
+- [ ] Create a Features Table?
 - [ ] Comparison with other Plugins (Table?)
 - [ ] Write docs about how to use iframe for not supported providers.
 - [ ] WordPress Language Pack thing
