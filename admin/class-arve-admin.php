@@ -143,15 +143,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	}
 
 	/**
-	 *
-	 * @since 4.3.0
-	 */
-	public function print_dialog() {
-
-		include_once( 'partials/arve-admin-shortcode-dialog.php' );
-	}
-
-	/**
 	 * Render the settings page for this plugin.
 	 *
 	 * @since    1.0.0

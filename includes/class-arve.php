@@ -69,7 +69,7 @@ class Advanced_Responsive_Video_Embedder {
 	public function __construct() {
 
 		$this->plugin_slug = 'advanced-responsive-video-embedder';
-		$this->version = '7.1.0';
+		$this->version = '7.1.1';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -162,8 +162,6 @@ class Advanced_Responsive_Video_Embedder {
 		$this->loader->add_filter( 'mce_css', $plugin_admin, 'mce_css' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'enqueue_shortcode_ui', $plugin_admin, 'enqueue_shortcode_ui_scripts' );
-
-		$this->loader->add_action( 'admin_footer', $plugin_admin, 'print_dialog' );
 
 		// Add the options page and menu item.
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
