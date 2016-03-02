@@ -282,6 +282,17 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			),
 			array(
 				'hide_from_settings' => true,
+				'attr'  => 'hide_title',
+				'label' => esc_html__('Hide Title', 'advanced-responsive-video-embedder'),
+				'type'  => 'select',
+				'options' => array(
+					''    => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
+					'yes' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
+				),
+				'description' => esc_html__( 'Usefull when the thumbnail image already displays the video title. The title will still be used for SEO.' ),
+			),
+			array(
+				'hide_from_settings' => true,
 				'attr'  => 'description',
 				'label' => esc_html__('Description', 'advanced-responsive-video-embedder'),
 				'type'  => 'text',
@@ -913,5 +924,9 @@ class Advanced_Responsive_Video_Embedder_Shared {
 	public static function ends_with( $haystack, $needle ) {
 		// search forward starting from end minus needle length characters
 		return $needle === "" || ( ( $temp = strlen($haystack) - strlen( $needle ) ) >= 0 && strpos( $haystack, $needle, $temp ) !== false );
+	}
+
+	public static function contains( $haystack, $needle ) {
+    return strpos( $haystack, $needle ) !== false;
 	}
 }

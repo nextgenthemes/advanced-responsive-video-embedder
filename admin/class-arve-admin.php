@@ -125,12 +125,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 	public function action_admin_init_setup_messages() {
 
-		$msg = sprintf(
-			__( 'haha', $this->plugin_slug ),
-			'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/installing-and-license-management/'
-		);
-		new Advanced_Responsive_Video_Embedder_Admin_Notice_Factory( 'haha', $msg );
-
 		if( is_file( WP_PLUGIN_DIR . '/arve-pro/arve-pro.php' ) && ( ! defined( 'ARVE_PRO_VERSION' ) || version_compare( ARVE_PRO_VERSION_REQUIRED, ARVE_PRO_VERSION, '>' ) ) ) {
 
 			$msg = sprintf(
@@ -681,12 +675,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		$pro_message = __( '<p>This is Nico the Author of the Advanced Responsive Video Embedder plugin. When you <strong><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/">buy the Pro Addon</a></strong> of this plugin you will get this:</p>', $this->plugin_slug );
 
 		$pro_message .= file_get_contents( plugin_dir_path( dirname( __FILE__ ) ) . 'readme/description-features-pro.html' );
-
 		$pro_message = str_replace( '<ul ', '<ul style="list-style: square; padding-left: 20px;" ', $pro_message );
-
-		if ( $inst < 1435958686 ) {
-			$pro_message .= '<p>If you do not want to buy the Pro Addon (because you are used to lazyload or thumbnail modes that are no longer part of the free version) use this 100% discount code <code>legacy install</code> and get it for free!</p>';
-		}
 
 		return apply_filters( 'arve_admin_pro_message', $pro_message );
 	}

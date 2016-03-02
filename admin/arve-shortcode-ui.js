@@ -46,30 +46,35 @@ function arve_mode_select_listener( changed, collection, shortcode ) {
 	}
 
 	var val = changed.value,
-		autoplay = attr_by_name( 'autoplay' ),
-		grow = attr_by_name( 'grow' ),
-		align = attr_by_name( 'align' );
+		autoplay   = attr_by_name( 'autoplay' ),
+		grow       = attr_by_name( 'grow' ),
+		align      = attr_by_name( 'align' ),
+		hide_title = attr_by_name( 'hide_title' );
 
 	if( typeof val === 'undefined' ) {
 		return;
 	}
 
-	if ( -1 < jQuery.inArray( val, ['lazyload-lightbox', 'lazyload-fullscreen', 'lazyload-fixed'] ) ) {
+	if ( 'lazyload-lightbox' === val ) {
 		align.$el.show();
 		autoplay.$el.hide();
 		grow.$el.hide();
-	} else if ( 'lazyload' === val ){
+		hide_title.$el.show();
+	} else if ( 'lazyload' === val ) {
 		align.$el.show();
 		autoplay.$el.hide();
 		grow.$el.show();
-	} else if ( 'link-lightbox' === val ){
+		hide_title.$el.show();
+	} else if ( 'link-lightbox' === val ) {
 		align.$el.hide();
 		autoplay.$el.hide();
 		grow.$el.hide();
+		hide_title.$el.hide();
 	} else { // normal
 		align.$el.show();
 		autoplay.$el.show();
 		grow.$el.hide();
+		hide_title.$el.hide();
 	}
 }
 wp.shortcake.hooks.addAction( 'arve.mode', arve_mode_select_listener );

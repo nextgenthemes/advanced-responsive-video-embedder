@@ -4,13 +4,13 @@ class Advanced_Responsive_Video_Embedder_Admin_Notice_Factory {
 
   private $notice_id;
   private $notice;
-  private $dismissible;
+  private $dismiss_forever;
 
-  function __construct( $notice_id, $notice, $dismissible = true ) {
+  function __construct( $notice_id, $notice, $dismiss_forever = true ) {
 
     $this->notice_id   = "admin-notice-factory-$notice_id";
     $this->notice      = $notice;
-    $this->dismissible = $dismissible;
+    $this->dismiss_forever = $dismiss_forever;
 
 		add_action( 'admin_notices', array( $this, 'action_admin_notices' ) );
     add_action( 'admin_head',                  array( $this, 'action_admin_head' ) );
@@ -20,7 +20,7 @@ class Advanced_Responsive_Video_Embedder_Admin_Notice_Factory {
   function action_admin_notices() {
 		#delete_user_meta( get_current_user_id(), $this->notice_id );
 
-		if( $this->dismissible && ! empty( get_user_meta( get_current_user_id(), $this->notice_id ) ) ) {
+		if( $this->dismiss_forever && ! empty( get_user_meta( get_current_user_id(), $this->notice_id ) ) ) {
 			return;
 		} elseif( get_transient( $this->notice_id ) ) {
       return;
@@ -28,14 +28,14 @@ class Advanced_Responsive_Video_Embedder_Admin_Notice_Factory {
 
     printf(
       '<div class="%s"><p style="font-size: 1.15em;">%s</p></div>',
-      esc_attr( "notice updated is-dismissible $this->notice_id" ),
+      esc_attr( "notice updated is-dismissable $this->notice_id" ),
       $this->notice
     );
 	}
 
 	function ajax_call() {
 
-    if( $this->dismissible ) {
+    if( $this->dismiss_forever ) {
       add_user_meta( get_current_user_id(), $this->notice_id, true );
     } else {
       set_transient( $this->notice_id, true, HOUR_IN_SECONDS );

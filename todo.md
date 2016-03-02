@@ -3,11 +3,14 @@
 I would be glad if someone could [help me](https://github.com/nextgenthemes/advanced-responsive-video-embedder) with this, I can pay for helping out.
 
 
-- [ ] Mass emails to customers howto
-- [ ] Release management of 7.0
+- [ ] Mass emails to customers, Howto import EDD customer databases into Mailchimp of something liek that.
+
+- [ ] Gain and communicate with beta Testers. Deal fast with a possible influx of support and comlains after version 7 release. (mailing list)
+- [ ] Release management of 7.0. Communication with customers. Deal fast with a possible influx of support and comlains after ARVE version 7 release. (mailing list)
 - [ ] Company name and legal clearing.
 - [ ] Theme Framework name and legal aspects.
 - [ ] Handle beta versions with EDD Possible?
+
 
 - [ ] Get advice how I could improve my sales of this the Pro Addon
 - [ ] Advertise the Pro Addon somewhere

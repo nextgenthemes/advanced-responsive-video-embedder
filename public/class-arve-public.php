@@ -123,6 +123,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		$atts['id'] = $atts['url'];
+		d($atts['id']);
 		return $this->build_embed( 'iframe', $atts );
 	}
 
@@ -290,6 +291,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'thumbnail'    => null,
 			'thumbnail_srcset' => null,
 			'title'        => null,
+			'hide_title'   => false,
 			'align'        => (string) $this->options['align'],
 			'arve_link'    => (string) $this->options['promote_link'],
 			'autoplay'     => (bool)   $this->options['autoplay'],
@@ -720,14 +722,17 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 		elseif ( ! empty( $args['thumbnail'] ) ) {
 			$thumbnail_bg = $args['thumbnail'];
-			$meta .= sprintf( '<meta itemprop="thumbnailUrl" content="%s" />', esc_url( $args['thumbnail'] ) );
+			$meta .= sprintf( '<meta itemprop="thumbnailUrl" content="%s">', esc_url( $args['thumbnail'] ) );
 		}
 
-		if ( ! empty( $args['title'] ) ) {
-			$meta .= '<h5 itemprop="name" class="arve-title arve-hidden">' . esc_html( $args['title'] ) . '</h5>';
+		if ( ! empty( $args['title'] ) && in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) && ! $args['hide_title'] ) {
+			$meta .= '<h5 itemprop="name" class="arve-title">' . esc_html( trim( $args['title'] ) ) . '</h5>';
+		} elseif( ! empty( $args['title'] ) ) {
+			$meta .= sprintf( '<meta itemprop="name" content="%s">', esc_attr( trim( $args['title'] ) ) );
 		}
+
 		if ( ! empty( $args['description'] ) ) {
-			$meta .= '<span itemprop="description" class="arve-description arve-hidden">' . esc_html( $args['description'] ) . '</span>';
+			$meta .= '<span itemprop="description" class="arve-description arve-hidden">' . esc_html( trim( $args['description'] ) ) . '</span>';
 		}
 
 		$container = sprintf(
@@ -803,13 +808,20 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 */
 	public static function create_iframe( $args ) {
 
+		$properties = Advanced_Responsive_Video_Embedder_Shared::get_properties();
+
+		if ( empty( $args['iframe_sandbox'] ) && ! empty( $properties[ $args['provider'] ]['sandbox'] ) ) {
+			$args['iframe_sandbox'] = 'allow-scripts';
+		}
+
 		$iframe_attr = array(
 			'class'           => isset( $args['iframe_class'] )   ? $args['iframe_class'] : 'arve-inner',
 			'name'            => empty( $args['iframe_name'] )    ? false : $args['iframe_name'],
 			'sandbox'         => empty( $args['iframe_sandbox'] ) ? false : $args['iframe_sandbox'],
+			'security'        => 'restricted',
 			'style'           => empty( $args['iframe_style'] )   ? false : $args['iframe_style'],
 			'src'             => $args['autoplay'] ? $args['src_autoplay_yes'] : $args['src_autoplay_no'],
-			'data-src'        => in_array( $args['mode'], array( 'lazyload', 'lazyload-fullscreen', 'lazyload-fixed' ) ) ? $args['src_autoplay_yes'] : null,
+			'data-src'        => in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ? $args['src_autoplay_yes'] : null,
 			'allowfullscreen' => '',
 			'frameborder'     => '0',
 			'scrolling'       => 'no',
@@ -1067,11 +1079,13 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$out .= '</tr>';
 		$out .= '<tr>';
 		$out .= '<td></td>';
-		$out .= '<td colspan="4"><a href="https://nextgenthemes.com/documentation/iframe">All providers with responsive iframe embed codes</a></td>';
+		$out .= '<td colspan="4"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/">All providers with responsive iframe embed codes</a></td>';
 		$out .= '</tr>';
 
 		$count = 1;
+
 		foreach ( $providers as $key => $values ) {
+
 			if ( ! isset( $values['name'] ) )
 				$values['name'] = $key;
 
@@ -1086,7 +1100,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		$out .= '<tr>';
 		$out .= '<td></td>';
-		$out .= '<td colspan="4"><a href="https://nextgenthemes.com/documentation/iframe">All providers with responsive iframe embed codes</a></td>';
+		$out .= '<td colspan="4"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/">All providers with responsive iframe embed codes</a></td>';
 		$out .= '</tr>';
 		$out .= '</table>';
 
