@@ -322,15 +322,49 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		$args = shortcode_atts( $pairs, $atts, 'arve' );
-		$args['description'] = trim( $args['description'] );
+
+		foreach ( $args as $key => $value ) {
+
+			if ( ! empty( $value ) && is_string( $value ) )
+				$args[ $key ] = trim( $value );
+		}
+
 		$args['element_id']  = preg_replace( '/[^-a-zA-Z0-9]+/', '', $args['id'] );
 		$args['iframe']      = true;
 		$args['maxwidth']    = (int) $args['maxwidth'];
 		$args['provider']    = $provider;
-		$args['thumbnail']   = trim( $args['thumbnail'] );
 		$args['object_params_autoplay_no']  = '';
 		$args['object_params_autoplay_yes'] = '';
+
 		$args = apply_filters( 'arve_args', $args );
+
+		if( is_numeric( $args['thumbnail'] ) ) {
+
+			$attachment_id  = $args['thumbnail'];
+
+			if( $img_src = wp_get_attachment_image_url( $attachment_id, 'medium' ) ) {
+				$args['thumbnail'] = $img_src;
+
+				if ( in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ) {
+					$args['thumbnail_bg'] = $img_src;
+
+					if( $srcset = wp_get_attachment_image_srcset( $attachment_id, 'medium' ) ) {
+						$args['thumbnail_srcset'] = $srcset;
+					}
+				}
+			} else {
+				return $this->error( __( 'thumbnail parameter needs be a valid URL or media attachment ID', $this->plugin_slug ) );
+			}
+		} elseif ( ! empty( $args['thumbnail'] ) && filter_var( $args['thumbnail'], FILTER_VALIDATE_URL ) === false ) {
+
+			return $this->error( __( 'thumbnail parameter needs be a valid URL or media attachment ID', $this->plugin_slug ) );
+
+		} elseif ( ! empty( $args['thumbnail'] ) && in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ) {
+
+			d( $args['thumbnail'] );
+
+			$args['thumbnail_bg'] = $args['thumbnail'];
+		}
 
 		if ( 'dailymotionlist' === $args['provider'] ) {
 
@@ -687,25 +721,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 			$meta .= sprintf( '<meta itemprop="uploadDate" content="%s" />', esc_attr( $args['upload_date'] ) );
 		}
 
-		if( is_numeric( $args['thumbnail'] )  ) {
-
-			$attachment_id = $args['thumbnail'];
-
-			if( $img_src = wp_get_attachment_image_url( $attachment_id, 'medium' ) ) {
-				$args['thumbnail'] = $img_src;
-
-				if ( in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox', 'lazyload-fixed', 'lazyload-fullscreen' ) ) ) {
-					$args['thumbnail_bg'] = $img_src;
-
-					if( $srcset = wp_get_attachment_image_srcset( $attachment_id, 'medium' ) ) {
-						$args['thumbnail_srcset'] = $srcset;
-					}
-				}
-			} else {
-				$args['thumbnail'] = null;
-			}
-		}
-
 		if( ! empty( $args['thumbnail'] ) && ! empty( $args['thumbnail_srcset'] ) ) {
 
 			$meta .= sprintf(
@@ -721,7 +736,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 			);
 		}
 		elseif ( ! empty( $args['thumbnail'] ) ) {
-			$thumbnail_bg = $args['thumbnail'];
 			$meta .= sprintf( '<meta itemprop="thumbnailUrl" content="%s">', esc_url( $args['thumbnail'] ) );
 		}
 
@@ -736,9 +750,9 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		$container = sprintf(
-			'<div class="arve-embed-container" style="padding-bottom: %F%%; %s">%s</div>',
+			'<div class="arve-embed-container" style="padding-bottom: %F%%;%s">%s</div>',
 			static::aspect_ratio_to_padding( $args['aspect_ratio'] ),
-			! empty( $thumbnail_bg ) ? sprintf( 'background-image: url(%s);', esc_url( $thumbnail_bg ) ) : '',
+			! empty( $args['thumbnail_bg'] ) ? sprintf( ' background-image: url(%s);', esc_url( $args['thumbnail_bg'] ) ) : '',
 			$meta . $inner
 		);
 
