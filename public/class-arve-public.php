@@ -123,7 +123,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		$atts['id'] = $atts['url'];
-		d($atts['id']);
+
 		return $this->build_embed( 'iframe', $atts );
 	}
 
@@ -360,8 +360,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 			return $this->error( __( 'thumbnail parameter needs be a valid URL or media attachment ID', $this->plugin_slug ) );
 
 		} elseif ( ! empty( $args['thumbnail'] ) && in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ) {
-
-			d( $args['thumbnail'] );
 
 			$args['thumbnail_bg'] = $args['thumbnail'];
 		}
