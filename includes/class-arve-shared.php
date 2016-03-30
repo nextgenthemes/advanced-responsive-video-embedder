@@ -34,7 +34,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 		return array(
 			'video'               => $hw . '([^\s]+\.(?:mp4|webm|ogg)$)',
 			'klatv'               => $hw . 'kla.tv/([0-9]+)',
-			'alugha'              => $hw . 'alugha.com/1/videos/([a-z0-9_\-]+)',
+			'alugha'              => $hw . 'alugha.com/(?:1/)?videos/([a-z0-9_\-]+)',
 			'archiveorg'          => $hw . 'archive\.org/(?:details|embed)/([0-9a-z]+)',
 			'break'               => $hw . 'break\.com/video/(?:[a-z\-]+)-([0-9]+)',
 			'collegehumor'        => $hw . 'collegehumor\.com/video/([0-9]+)',
@@ -404,7 +404,9 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'alugha' => array(
 				'auto_thumbnail' => true,
 				'tests' => array(
-					'https://alugha.com/1/videos/youtube-54m1YfEuYU8',
+				    	'https://alugha.com/1/videos/youtube-54m1YfEuYU8',
+				    	__('New URLs with unique ids', 'advanced-responsive-video-embedder'),
+				    	'https://alugha.com/videos/7cab9cd7-f64a-11e5-939b-c39074d29b86',
 				)
 			),
 			'archiveorg' => array(
