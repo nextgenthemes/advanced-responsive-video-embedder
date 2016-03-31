@@ -281,13 +281,16 @@ class Advanced_Responsive_Video_Embedder_Public {
 			$atts['src'] = $atts['id'];
 		}
 
+		if ( ! empty( $atts['link_text'] ) && ! empty( $atts['mode'] ) && 'link-lightbox' === $atts['mode'] ) {
+			$atts['title'] = $atts['link_text'];
+		}
+
 		$pairs = array(
 			'aspect_ratio' => isset( $properties[ $provider ]['aspect_ratio'] ) ? $properties[ $provider ]['aspect_ratio'] : '16:9',
 			'description'  => null,
 			'grow'         => null,
 			'id'           => null,
 			'iframe_name'  => null,
-			'link_text'    => null,
 			'thumbnail'    => null,
 			'thumbnail_srcset' => null,
 			'title'        => null,
@@ -350,6 +353,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 					if( $srcset = wp_get_attachment_image_srcset( $attachment_id, 'medium' ) ) {
 						$args['thumbnail_srcset'] = $srcset;
+					} else {
+						$args['thumbnail_srcset'] = false;
 					}
 				}
 			} else {
@@ -361,7 +366,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		} elseif ( ! empty( $args['thumbnail'] ) && in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ) {
 
-			$args['thumbnail_bg'] = $args['thumbnail'];
+			$args['thumbnail_bg']     = $args['thumbnail'];
+			$args['thumbnail_srcset'] = false;
 		}
 
 		if ( 'dailymotionlist' === $args['provider'] ) {
@@ -496,15 +502,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$args['src'] = '//www.myvideo.de/embed/' . $args['id'];
 				break;
 			case 'vimeo':
-				switch ( $args['start'] ) {
-					case null:
-					case '':
-					case ( preg_match("/^[0-9a-z]$/", $args['start']) ):
-						break;
-					default:
-						return $this->error( sprintf( __( 'Start <code>%s</code> not valid', $this->plugin_slug ), $args['start'] ) );
-						break;
-				}
 				$args['src'] = '//player.vimeo.com/video/' . $args['id'];
 				break;
 			case 'gametrailers':
@@ -671,8 +668,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		if ( 'vimeo' == $args['provider'] && ! empty( $args['start'] ) ) {
-			$args['src_autoplay_no']  .= '#t=' . $args['start'];
-			$args['src_autoplay_yes'] .= '#t=' . $args['start'];
+			$args['src_autoplay_no']  .= '#t=' . (int) $args['start'];
+			$args['src_autoplay_yes'] .= '#t=' . (int) $args['start'];
 		}
 
 		if ( ! empty( $args['error'] ) && is_wp_error( $args['error'] ) ) {
@@ -822,27 +819,23 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		$properties = Advanced_Responsive_Video_Embedder_Shared::get_properties();
 
-		if ( empty( $args['iframe_sandbox'] ) && ! empty( $properties[ $args['provider'] ]['sandbox'] ) ) {
-			$args['iframe_sandbox'] = 'allow-scripts';
-		}
-
 		$iframe_attr = array(
 			'class'           => isset( $args['iframe_class'] )   ? $args['iframe_class'] : 'arve-inner',
 			'name'            => empty( $args['iframe_name'] )    ? false : $args['iframe_name'],
-			'sandbox'         => empty( $args['iframe_sandbox'] ) ? false : $args['iframe_sandbox'],
-			'security'        => 'restricted',
 			'style'           => empty( $args['iframe_style'] )   ? false : $args['iframe_style'],
+			'sandbox'         => ! empty( $properties[ $args['provider'] ]['sandbox'] ) ? 'allow-scripts' : false,
 			'src'             => $args['autoplay'] ? $args['src_autoplay_yes'] : $args['src_autoplay_no'],
-			'data-src'        => in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ? $args['src_autoplay_yes'] : null,
+			'data-src'        => in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ? $args['src_autoplay_yes'] : null,
+			'width'           => is_feed() ? 853 : false,
+			'height'          => is_feed() ? 480 : false,
 			'allowfullscreen' => '',
 			'frameborder'     => '0',
 			'scrolling'       => 'no',
-			'width'           => is_feed() ? 853 : false,
-			'height'          => is_feed() ? 480 : false,
+			'security'        => 'restricted',
 		);
 
-		if ( in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ) {
-			$iframe_attr['src'] = null;
+		if ( in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ) {
+			$iframe_attr['src'] = false;
 		}
 
 		return sprintf( '<iframe %s></iframe>', Advanced_Responsive_Video_Embedder_Shared::attr( $iframe_attr ) );

@@ -720,8 +720,10 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	function pro_notice() {
 		#delete_user_meta( get_current_user_id(), 'arve_dismiss_pro_notice' );
 
-		if( ! empty( get_user_meta( get_current_user_id(), 'arve_dismiss_pro_notice' ) ) ) {
-			return;
+		$user_meta = get_user_meta( get_current_user_id(), 'arve_dismiss_pro_notice' );
+
+		if( ! empty( $user_meta ) ) {
+		    return;
 		}
 
 		echo '<div class="notice updated arve-pro-notice is-dismissible" style="font-size: 1.15em;">';
@@ -774,6 +776,18 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			'dismiss_msg'  => '',                      // If 'dismissable' is false, this message will be output at top of nag.
 			'is_automatic' => false,                   // Automatically activate plugins after installation or not.
 			'message'      => '',                      // Message to output right before the plugins table.
+			'strings'      => array(
+				'notice_can_install_required'     => _n_noop(
+					'Advanced Responsive Video Embedder requires the following plugin: %1$s.',
+					'Advanced Responsive Video Embedder requires the following plugins: %1$s.',
+					'advanced-responsive-video-embedder'
+				), // %1$s = plugin name(s).
+				'notice_can_install_recommended'  => _n_noop(
+					'Advanced Responsive Video Embedder recommends the following plugin: %1$s.',
+					'Advanced Responsive Video Embedder recommends the following plugins: %1$s.',
+					'advanced-responsive-video-embedder'
+				), // %1$s = plugin name(s).
+			),
 		);
 
 		tgmpa( $plugins, $config );

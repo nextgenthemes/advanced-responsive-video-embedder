@@ -61,6 +61,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'viddler'             => $hw . 'viddler\.com/(?:embed|v)/([a-z0-9]{8})',
 			'vine'                => $hw . 'vine\.co/v/([a-z0-9]+)',
 			'vimeo'               => $hw . 'vimeo\.com/(?:(?:channels/[a-z]+/)|(?:groups/[a-z]+/videos/))?([0-9]+)',
+			#'vimeo'               => $hw . 'vimeo\.com/(?:(?:channels/[a-z]+/)|(?:groups/[a-z]+/videos/))?([0-9]+(#t=[0-9]+))',
 			'yahoo'               => $hw . 'yahoo\.com/(?:embed/)?([a-z0-9\-]+/[a-z0-9\-]+)\.html',
 			'ted'                 => $hw . 'ted\.com/talks/([a-z0-9_]+)',
 			'xtube'               => $hw . 'xtube\.com/watch\.php\?v=([a-z0-9_\-]+)',
@@ -278,7 +279,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'attr'  => 'title',
 				'label' => esc_html__('Title', 'advanced-responsive-video-embedder'),
 				'type'  => 'text',
-				'description' => sprintf( esc_html__( 'Visible title for Lazyload modes, used for SEO in Normal mode. The Pro Addon is able to get them from %s automatically.', 'advanced-responsive-video-embedder' ), $auto_title ),
+				'description' => sprintf( esc_html__( 'Used for SEO, is visible on top of thumbnails in Lazyload modes, is used as link text in link-lightbox mode. The Pro Addon is able to get them from %s automatically.', 'advanced-responsive-video-embedder' ), $auto_title ),
 			),
 			array(
 				'hide_from_settings' => true,
