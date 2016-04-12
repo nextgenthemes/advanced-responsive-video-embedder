@@ -29,32 +29,8 @@
  */
 class Advanced_Responsive_Video_Embedder {
 
-	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power
-	 * the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      Advanced_Responsive_Video_Embedder_Loader    $loader    Maintains and registers all hooks for the plugin.
-	 */
 	protected $loader;
-
-	/**
-	 * The unique identifier of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    $plugin_slug    The string used to uniquely identify this plugin.
-	 */
 	protected $plugin_slug;
-
-	/**
-	 * The current version of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
-	 */
 	protected $version;
 
 	/**
@@ -69,7 +45,7 @@ class Advanced_Responsive_Video_Embedder {
 	public function __construct() {
 
 		$this->plugin_slug = 'advanced-responsive-video-embedder';
-		$this->version = '7.1.4';
+		$this->version = '7.1.7';
 
 		$this->load_dependencies();
 		$this->set_locale();

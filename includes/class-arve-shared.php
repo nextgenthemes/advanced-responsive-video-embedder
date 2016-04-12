@@ -23,152 +23,76 @@
 class Advanced_Responsive_Video_Embedder_Shared {
 
 	/**
-	 *
-	 * @since    3.0.0
-	 *
-	 */
-	public static function get_regex_list() {
-
-		$hw = 'https?://(?:[a-z]+\.)?';
-
-		return array(
-			'video'               => $hw . '([^\s]+\.(?:mp4|webm|ogg)$)',
-			'klatv'               => $hw . 'kla.tv/([0-9]+)',
-			'alugha'              => $hw . 'alugha.com/1/videos/([a-z0-9_\-]+)',
-			'archiveorg'          => $hw . 'archive\.org/(?:details|embed)/([0-9a-z]+)',
-			'break'               => $hw . 'break\.com/video/(?:[a-z\-]+)-([0-9]+)',
-			'collegehumor'        => $hw . 'collegehumor\.com/video/([0-9]+)',
-			'dailymotion_hub'     => $hw . 'dailymotion\.com/hub/' .  '[a-z0-9]+_[a-z0-9_\-]+\#video=([a-z0-9]+)',
-			'dailymotionlist'     => $hw . 'dailymotion\.com/playlist/([a-z0-9]+)',
-			'dailymotion'         => $hw . '(?:dai\.ly|dailymotion\.com/video)/([^_]+)',
-			#'dailymotion_jukebox' => $hw . 'dailymotion\.com/widget/jukebox?list\[\]=%2Fplaylist%2F([a-z0-9]+_[a-z0-9_\-]+)',
-			'facebook'            => $hw . 'facebook\.com/(?:[^/]+)/videos/([0-9]+)',
-			'funnyordie'          => $hw . 'funnyordie\.com/videos/([a-z0-9_]+)',
-			'ign'                 => '(https?://(?:www\.)?ign\.com/videos/[0-9]{4}/[0-9]{2}/[0-9]{2}/[0-9a-z\-]+)',
-			'kickstarter'         => $hw . 'kickstarter\.com/projects/([0-9a-z\-]+/[0-9a-z\-]+)',
-			'liveleak'            => $hw . 'liveleak\.com/(?:view|ll_embed)\?((f|i)=[0-9a-z\_]+)',
-			'livestream'          => $hw . 'livestream\.com/accounts/([0-9]+/events/[0-9]+(?:/videos/[0-9]+)?)',
-			'metacafe'            => $hw . 'metacafe\.com/(?:watch|fplayer)/([0-9]+)',
-			'movieweb'            => $hw . 'movieweb\.com/v/([a-z0-9]{14})',
-			'mpora'               => $hw . 'mpora\.(?:com|de)/videos/([a-z0-9]+)',
-			'myspace'             => $hw . 'myspace\.com/.+/([0-9]+)',
-			'myvideo'             => $hw . 'myvideo\.de/(?:watch|embed)/([0-9]{7,8})',
-			'snotr'               => $hw . 'snotr\.com/(?:video|embed)/([0-9]+)',
-			'twitch'              => $hw . 'twitch.tv/(?!directory)(?|[a-z0-9_]+/v/([0-9]+)|([a-z0-9_]+))',
-			'ustream'             => $hw . 'ustream\.tv/(?:channel/)?([0-9]{8}|recorded/[0-9]{8}(/highlight/[0-9]+)?)',
-			'veoh'                => $hw . 'veoh\.com/watch/([a-z0-9]+)',
-			'vevo'                => $hw . 'vevo\.com/watch/(?:[^\/]+/[^\/]+/)?([a-z0-9]+)',
-			'viddler'             => $hw . 'viddler\.com/(?:embed|v)/([a-z0-9]{8})',
-			'vine'                => $hw . 'vine\.co/v/([a-z0-9]+)',
-			'vimeo'               => $hw . 'vimeo\.com/(?:(?:channels/[a-z]+/)|(?:groups/[a-z]+/videos/))?([0-9]+)',
-			#'vimeo'               => $hw . 'vimeo\.com/(?:(?:channels/[a-z]+/)|(?:groups/[a-z]+/videos/))?([0-9]+(#t=[0-9]+))',
-			'yahoo'               => $hw . 'yahoo\.com/(?:embed/)?([a-z0-9\-]+/[a-z0-9\-]+)\.html',
-			'ted'                 => $hw . 'ted\.com/talks/([a-z0-9_]+)',
-			'xtube'               => $hw . 'xtube\.com/watch\.php\?v=([a-z0-9_\-]+)',
-			'youtube'             => $hw . '(?:youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v\=))|youtu\.be\/)([a-zA-Z0-9_-]{6,11}((?:\?|&)list=[a-z0-9_\-]+)?)',
-			'youku'               => $hw . 'youku.com/v_show/id_([a-z0-9]+)',
-			// iframe src only
-			'flickr'              => $hw . 'flickr\.com\/photos\/[a-zA-Z0-9@_\-]+\/([0-9]+)',
-			'videojug'	          => $hw . 'videojug\.com\/embed\/([a-z0-9\-]{36})',
-			'movieweb'	          => $hw . 'movieweb\.com\/v\/([a-z0-9]{14})',
-			// MTV iframe only
-			'comedycentral'       => $hw . 'comedycentral\.com:([a-z0-9\-]{36})',
-			'gametrailers'        => $hw . 'gametrailers\.com:([a-z0-9\-]{36})',
-			'spike'               => $hw . 'spike\.com:([a-z0-9\-]{36})',
-		);
-	}
-
-	/**
 	 * Initialise options by merging possibly existing options with defaults
 	 *
 	 * @since    2.6.0
 	 */
 	public static function get_options_defaults( $section ) {
 
-		$options = array(
-			'main' => array(
-				'promote_link'     => false,
-				'autoplay'         => false,
-				'align'            => 'none',
-				'mode'             => 'normal',
-				'video_maxwidth'   => '',
-				'align_maxwidth'   => 400,
-				'last_options_tab' => '#arve-settings-section-main',
-			),
-			'shortcodes' => array(
-				'klatv'           => 'klatv',
-				'alugha'          => 'alugha',
-				'archiveorg'      => 'archiveorg',
-				'break'           => 'break',
-				'collegehumor'    => 'collegehumor',
-				'comedycentral'   => 'comedycentral',
-				'dailymotion'     => 'dailymotion',
-				'dailymotionlist' => 'dailymotionlist',
-				'flickr'          => 'flickr',
-				'facebook'        => 'facebook',
-				'funnyordie'      => 'funnyordie',
-				'gametrailers'    => 'gametrailers',
-				'iframe'          => 'iframe',
-				'video'           => 'arve_video',
-				'ign'             => 'ign',
-				'kickstarter'     => 'kickstarter',
-				'liveleak'        => 'liveleak',
-				'livestream'      => 'livestream',
-				'metacafe'        => 'metacafe',
-				'movieweb'        => 'movieweb',
-				'mpora'           => 'mpora',
-				'myspace'         => 'myspace',
-				'myvideo'         => 'myvideo',
-				'snotr'           => 'snotr',
-				'spike'           => 'spike',
-				'ted'             => 'ted',
-				'twitch'          => 'twitch',
-				'ustream'         => 'ustream',
-				'veoh'            => 'veoh',
-				'vevo'            => 'vevo',
-				'viddler'         => 'viddler',
-				'videojug'        => 'videojug',
-				'vine'            => 'vine',
-				'vimeo'           => 'vimeo',
-				'xtube'           => 'xtube',
-				'yahoo'           => 'yahoo',
-				'youtube'         => 'youtube',
-				'youtubelist'     => 'youtubelist', //* Deprecated
-			),
-			'params' => array(
-				#'archiveorg'      => '',
-				'alugha'          => 'nologo=1',
-				#'break'           => '',
-				#'collegehumor'    => '',
-				#'comedycentral'   => '',
-				'dailymotion'     => 'logo=0&hideInfos=1&related=0&forcedQuality=hd',
-				'dailymotionlist' => 'logo=0&hideInfos=1&related=0&forcedQuality=hd',
-				#'flickr'          => '',
-				#'funnyordie'      => '',
-				#'gametrailers'    => '',
-				'iframe'          => '',
-				#'ign'             => '',
-				#'kickstarter'     => '',
-				'liveleak'        => 'wmode=transparent',
-				'livestream'      => 'height=720&width=1280',
-				#'metacafe'        => '',
-				#'movieweb'        => '',
-				#'myspace'         => '',
-				#'myvideo'         => '',
-				#'snotr'           => '',
-				#'spike'           => '',
-				#'ted'             => '',
-				'ustream'         => 'wmode=transparent&v=3',
-				'veoh'            => 'player=videodetailsembedded&id=anonymous',
-				'vevo'            => 'playlist=false&playerType=embedded&env=0',
-				'viddler'         => 'wmode=transparent&player=full&f=1&disablebranding=1',
-				'vine'            => '', //* audio=1 supported
-				#'videojug'        => '',
-				'vimeo'           => 'html5=1&title=1&byline=0&portrait=0',
-				#'yahoo'           => '',
-				'youtube'         => 'wmode=transparent&iv_load_policy=3&modestbranding=1&rel=0&autohide=1',
-			)
+		$options['main'] = array(
+			'promote_link'     => false,
+			'autoplay'         => false,
+			'align'            => 'none',
+			'mode'             => 'normal',
+			'video_maxwidth'   => '',
+			'align_maxwidth'   => 400,
+			'last_options_tab' => '#arve-settings-section-main',
 		);
+
+
+		$tw['shortcodes'] = array(
+			'alugha'          => 'alugha',
+			'archiveorg'      => 'archiveorg',
+			'break'           => 'break',
+			'collegehumor'    => 'collegehumor',
+			'comedycentral'   => 'comedycentral',
+			'dailymotion'     => 'dailymotion',
+			'dailymotionlist' => 'dailymotionlist',
+			'facebook'        => 'facebook',
+			'flickr'          => 'flickr',
+			'funnyordie'      => 'funnyordie',
+			'gametrailers'    => 'gametrailers',
+			'iframe'          => 'iframe',
+			'ign'             => 'ign',
+			'kickstarter'     => 'kickstarter',
+			'klatv'           => 'klatv',
+			'liveleak'        => 'liveleak',
+			'livestream'      => 'livestream',
+			'metacafe'        => 'metacafe',
+			'movieweb'        => 'movieweb',
+			'mpora'           => 'mpora',
+			'myspace'         => 'myspace',
+			'myvideo'         => 'myvideo',
+			'snotr'           => 'snotr',
+			'spike'           => 'spike',
+			'ted'             => 'ted',
+			'twitch'          => 'twitch',
+			'ustream'         => 'ustream',
+			'veoh'            => 'veoh',
+			'vevo'            => 'vevo',
+			'viddler'         => 'viddler',
+			'video'           => 'arve_video',
+			'videojug'        => 'videojug',
+			'vimeo'           => 'vimeo',
+			'vine'            => 'vine',
+			'xtube'           => 'xtube',
+			'yahoo'           => 'yahoo',
+			'youtube'         => 'youtube',
+			'youtubelist'     => 'youtubelist', //* Deprecated
+		);
+
+		$properties = static::get_properties();
+		unset( $properties['video'] );
+
+		foreach ( $properties as $provider => $values ) {
+
+			if ( ! empty( $values['embed_url'] ) ) {
+				$options['shortcodes'][ $provider ] = $provider;
+			}
+			if ( isset( $values['default_params'] ) ) {
+				$options['params'][ $provider ] = $values['default_params'];
+			}
+		}
 
 		return $options[ $section ];
 	}
@@ -399,57 +323,64 @@ class Advanced_Responsive_Video_Embedder_Shared {
 		return apply_filters( 'arve_modes', array( 'normal' => __( 'Normal', 'advanced-responsive-video-embedder' ) ) );
 	}
 
+	public static function get_iframe_providers() {
+
+	}
+
 	public static function get_properties() {
 
 		$properties = array(
 			'alugha' => array(
+				'regex'     => 'https?://(?:www\.)?alugha.com/(?:1/)?videos/([a-z0-9_\-]+)',
+				'embed_url' => 'https://alugha.com/embed/polymer-live/?v=%s',
+				'default_params' => 'nologo=1',
 				'auto_thumbnail' => true,
 				'tests' => array(
 					'https://alugha.com/1/videos/youtube-54m1YfEuYU8',
+				 	__('New URLs with unique ids', 'advanced-responsive-video-embedder'),
+					'https://alugha.com/videos/7cab9cd7-f64a-11e5-939b-c39074d29b86',
 				)
 			),
 			'archiveorg' => array(
-				'name' => 'Archive.org',
+				'name'           => 'Archive.org',
+				'regex'          => 'https?://(?:www\.)?archive\.org/(?:details|embed)/([0-9a-z\-]+)',
+				'default_params' => '',
+				'embed_url'      => 'https://www.archive.org/embed/%s/',
 				'auto_thumbnail' => false,
-				'tests' => array(
-					'https://archive.org/details/AlexJonesInterviewsDeanHaglund',
-				)
 			),
 			'break' => array(
+				'regex'          => 'https?://(?:www\.)?break\.com/video/(?:[a-z\-]+)-([0-9]+)',
+				'embed_url'      => 'http://break.com/embed/%s',
+				'default_params' => 'embed=1',
 				'auto_thumbnail' => false,
 				'tests' => array(
 					'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591',
 				)
 			),
 			'collegehumor' => array(
-				'name' => 'CollegeHumor',
+				'name'           => 'CollegeHumor',
+				'regex'          => 'https?://(?:www\.)?collegehumor\.com/video/([0-9]+)',
+				#'embed_url'      => 'http://www.collegehumor.com/e/%s',
 				'auto_thumbnail' => true,
-				'auto_title' => true,
-				'aspect_ratio' => '600:369',
-				'tests' => array(
-					'http://collegehumor.com/video/6922670/bleep-bloop-your-best-game',
-				)
+				'auto_title'     => true,
+				'aspect_ratio'   => '600:369',
 			),
 			'comedycentral' => array(
-				'name' => 'Comedy Central',
-				'no_url_embeds' => true,
+				'name'           => 'Comedy Central',
+				'regex'          => 'https?://(?:www\.)?comedycentral\.com:([a-z0-9\-]{36})',
+				'embed_url'      => 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:%s',
+				'no_url_embeds'  => true,
 				'auto_thumbnail' => false,
 				'tests' => array(
 					'[comedycentral id="c80adf02-3e24-437a-8087-d6b77060571c"]',
 				)
 			),
 			'dailymotion' => array(
+				'regex'          => 'https?://(?:www\.)?(?:dai\.ly|dailymotion\.com/video)/([^_]+)',
+				'embed_url'      => 'https://www.dailymotion.com/embed/video/%s',
+				'default_params' => 'logo=0&hideInfos=1&related=0',
 				'auto_thumbnail' => true,
 				'auto_title' => true,
-				'tests' => array(
-					'http://www.dailymotion.com/video/x44lvd_rates-of-exchange-like-a-renegade_music',
-					__('URL just the ID withoutout the long title', 'advanced-responsive-video-embedder'),
-					'http://www.dailymotion.com/video/x44lvd',
-					__('URL from a hub with the Video ID at the end', 'advanced-responsive-video-embedder'),
-					'http://www.dailymotion.com/hub/x9q_Galatasaray#video=xjw21s',
-					__('Playlist', 'advanced-responsive-video-embedder'),
-					'http://www.dailymotion.com/playlist/xr2rp_RTnews_exclusive-interveiws/1#video=xafhh9',
-				),
 				'query_args' => array(
 					'api' => array(
 						'name' => __( 'API', 'advanced-responsive-video-embedder' ),
@@ -477,70 +408,65 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				),
 			),
 			'dailymotionlist' => array(
-				'auto_thumbnail' => false,
-				'tests' => array()
-			),
-			'flickr' => array(
-				'no_url_embeds' => true,
-				'auto_thumbnail' => false,
-				'wmode_transparent' => false,
-				'tests' => array(
-					'[flickr id="2856467015"]',
-				)
+				'regex'           => 'https?://(?:www\.)?dailymotion\.com/playlist/([a-z0-9]+)',
+				'embed_url'       => 'https://www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2F%s%2F1',
+				'auto_thumbnail'  => false,
 			),
 			'facebook' => array(
-				'auto_thumbnail' => false,
+				'regex'             => 'https?://(?:www\.)?facebook\.com/(?:[^/]+)/videos/([0-9]+)',
+				'embed_url'         => 'https://www.facebook.com/video/embed?video_id=%s',
+				'auto_thumbnail'    => false,
 				'wmode_transparent' => false,
 				'tests' => array(
 					'https://www.facebook.com/UScoastguard/videos/10153791849322679/',
 				)
 			),
 			'funnyordie' => array(
-				'name' => 'Funny or Die',
+				'name'           => 'Funny or Die',
+				'regex'          => 'https?://(?:www\.)?funnyordie\.com/videos/([a-z0-9_]+)',
+				'embed_url'      => 'https://www.funnyordie.com/embed/%s',
 				'auto_thumbnail' => true,
-				'auto_title' => true,
-				'aspect_ratio' => '640:400',
+				'auto_title'     => true,
+				'aspect_ratio'   => '640:400',
 				'tests' => array(
 					'http://www.funnyordie.com/videos/76585438d8/sarah-silverman-s-we-are-miracles-hbo-special',
 				)
 			),
 			'gametrailers' => array(
-				'no_url_embeds' => true,
-				'auto_thumbnail' => false,
+				/*
+				'regex'            => 'https?://embed.gametrailers\.com/([0-9\-]{36})',
+				#'embed_url'        => 'http://media.mtvnservices.com/embed/mgid:arc:video:gametrailers.com:%s',
+				'embed_url'        => 'http://embed.gametrailers.com/embed/2999432',
+				'default_params'   => 'embed=1&suppressBumper=1',
+				'no_url_embeds'    => true,
+				'auto_thumbnail'   => false,
 				'tests' => array(
 					'[gametrailers id="797121a1-4685-4ecc-9388-72a88b0ef8da"]',
 				)
-			),
-			'iframe' => array(
-				'no_url_embeds' => true,
-				'auto_thumbnail' => false,
-				'wmode_transparent' => false,
-				'tests' => array(
-					__('This plugin allows iframe embeds for every URL by using this <code>[iframe]</code> shortcode. This should only be used for providers not supported by this via a named shortcode. The result is a 16:9 resonsive iframe by default, aspect ratio can be changed as usual.', 'advanced-responsive-video-embedder'),
-					'[iframe src="http://example.com/" aspect_ratio="1:1"]',
-				),
+				*/
 			),
 			'ign' => array(
-				'name' => 'IGN',
+				'name'           => 'IGN',
+				'regex'          => '(https?://(?:www\.)?ign\.com/videos/[0-9]{4}/[0-9]{2}/[0-9]{2}/[0-9a-z\-]+)',
+				'embed_url'      => 'http://widgets.ign.com/video/embed/content.html?url=%s',
 				'auto_thumbnail' => false,
 				'tests' => array(
 					'http://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
 				)
 			),
 			'kickstarter' => array(
+				'regex'          => 'https?://(?:www\.)?kickstarter\.com/projects/([0-9a-z\-]+/[0-9a-z\-]+)',
+				'embed_url'      => 'https://www.kickstarter.com/projects/%s/widget/video.html',
 				'auto_thumbnail' => false,
 				'tests' => array(
 					'https://www.kickstarter.com/projects/obsidian/project-eternity?ref=discovery',
 				)
 			),
 			'liveleak' => array(
-				'name' => 'LiveLeak',
-				'auto_thumbnail' => false,
-				'tests' => array(
-
-				)
-			),
-			'livestream' => array(
+				'name'           => 'LiveLeak',
+			  'regex'          => 'https?://(?:www\.)?liveleak\.com/(?:view|ll_embed)\?((f|i)=[0-9a-z\_]+)',
+				'embed_url'      => 'http://www.liveleak.com/ll_embed?%s',
+				'default_params' => 'wmode=transparent',
 				'auto_thumbnail' => false,
 				'tests' => array(
 					__('Page/item <code>i=</code> URL', 'advanced-responsive-video-embedder') ,
@@ -549,15 +475,23 @@ class Advanced_Responsive_Video_Embedder_Shared {
 					'http://www.liveleak.com/view?f=c85bdf5e45b2',
 				)
 			),
-			'klatv' => array(
-				'name' => 'kla.tv',
-				'url'   => true,
+			'livestream' => array(
+				# <iframe width="560" height="340" src="http://cdn.livestream.com/embed/telefuturohd?layout=4&amp;height=340&amp;width=560&amp;autoplay=false" style="border:0;outline:0" frameborder="0" scrolling="no"></iframe>
+				'regex'          => 'https?://(?:www\.)?livestream\.com/accounts/([0-9]+/events/[0-9]+(?:/videos/[0-9]+)?)',
+				'embed_url'      => 'https://livestream.com/accounts/%s/player',
+				'default_params' => 'utm_source=lsplayer&utm_medium=embed&height=720&width=1280',
 				'auto_thumbnail' => false,
-				'tests' => array(
-					'www.kla.tv/7494',
-				)
+			),
+			'klatv' => array(
+				'regex'          => 'https?://(?:www\.)?kla(?:gemauer)?.tv/([0-9]+)',
+				'embed_url'      => 'http://www.kla.tv/index.php?a=showembed&vidid=%s',
+				'name'           => 'kla.tv',
+				'url'            => true,
+				'auto_thumbnail' => false,
 			),
 			'metacafe' => array(
+				'regex'          => 'https?://(?:www\.)?metacafe\.com/(?:watch|fplayer)/([0-9]+)',
+				'embed_url'      => 'http://www.metacafe.com/embed/%s/',
 				'auto_thumbnail' => false,
 				'tests' => array(
 					'http://www.metacafe.com/watch/11159703/why_youre_fat/',
@@ -565,13 +499,15 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				)
 			),
 			'movieweb' => array(
+				'regex'          => 'https?://(?:www\.)?movieweb\.com/v/([a-z0-9]{14})',
+				'embed_url'      => 'http://movieweb.com/v/%s/embed',
 				'auto_thumbnail' => false,
-				'tests' => array(
-					'[movieweb id="VIwFzmdbyoy9zB"]',
-				)
+				'no_url_embeds'  => true,
 			),
 			'mpora' => array(
-				'name' => 'MPORA',
+				'name'           => 'MPORA',
+				'regex'          => 'https?://(?:www\.)?mpora\.(?:com|de)/videos/([a-z0-9]+)',
+				'embed_url'      => 'http://mpora.com/videos/%s/embed',
 				'auto_thumbnail' => true,
 				'tests' => array(
 					'http://mpora.com/videos/AAdphry14rkn',
@@ -579,66 +515,65 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				)
 			),
 			'myspace' => array(
+				#<iframe width="480" height="270" src="//media.myspace.com/play/video/house-of-lies-season-5-premiere-109903807-112606834" frameborder="0" allowtransparency="true" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe><p><a href="https://media.myspace.com/showtime/video/house-of-lies-season-5-premiere/109903807">House of Lies Season 5 Premiere</a> from <a href="https://media.myspace.com/Showtime">Showtime</a> on <a href="https://media.myspace.com">Myspace</a>.</p>
+
+				'regex'          => 'https?://(?:www\.)?myspace\.com/.+/([0-9]+)',
+				'embed_url'      => 'https://media.myspace.com/play/video/%s',
 				'auto_thumbnail' => false,
 				'tests' => array(
 					'https://myspace.com/myspace/video/dark-rooms-the-shadow-that-looms-o-er-my-heart-live-/109471212',
 				)
 			),
 			'myvideo' => array(
-				'name' => 'MyVideo',
+				'name'           => 'MyVideo',
+				'regex'          => 'https?://(?:www\.)?myvideo\.de/(?:watch|embed)/([0-9]+)',
+				'embed_url'      => 'http://www.myvideo.de/embedded/public/%s',
 				'auto_thumbnail' => false,
 				'tests' => array(
 					'http://www.myvideo.de/watch/8432624/Angeln_mal_anders',
 				)
 			),
 			'snotr' => array(
+				'regex'          => 'https?://(?:www\.)?snotr\.com/(?:video|embed)/([0-9]+)',
+				'embed_url'      => 'http://www.snotr.com/embed/%s',
 				'auto_thumbnail' => false,
 				'tests' => array(
 					'http://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is',
 				)
 			),
 			'spike' => array(
-				'no_url_embeds' => true,
+				# <iframe src="http://media.mtvnservices.com/embed/mgid:arc:video:spike.com:6a219882-c412-46ce-a8c9-32e043396621" width="512" height="288" frameborder="0"></iframe><p style="text-align:left;background-color:#FFFFFF;padding:4px;margin-top:4px;margin-bottom:0px;font-family:Arial, Helvetica, sans-serif;font-size:12px;"><b><a href="http://www.spike.com/shows/ink-master">Ink Master</a></b></p></div></div>
+				'regex'          => 'https?://media.mtvnservices.com/embed/mgid:arc:video:spike\.com:([a-z0-9\-]{36})',
+				'embed_url'      => 'http://media.mtvnservices.com/embed/mgid:arc:video:spike.com:%s',
+				'no_url_embeds'  => true,
 				'auto_thumbnail' => false,
 				'tests' => array(
 					'[spike id="5afddf30-31d8-40fb-81e6-bb5c6f45525f"]',
 				)
 			),
 			'ted' => array(
-				'name' => 'TED Talks',
+				'name'           => 'TED Talks',
+				'regex'          => 'https?://(?:www\.)?ted\.com/talks/([a-z0-9_]+)',
+				'embed_url'      => 'https://embed-ssl.ted.com/talks/%s.html',
 				'auto_thumbnail' => true,
-				'auto_title' => true,
-				'tests' => array(
-					__('To my knowlege TED forces autoplay and there is no way disable it', 'advanced-responsive-video-embedder') ,
-					'http://ted.com/talks/jill_bolte_taylor_s_powerful_stroke_of_insight',
-					__('Beta site URLs work as well', 'advanced-responsive-video-embedder') ,
-					'http://new.ted.com/talks/brene_brown_on_vulnerability',
-				)
+				'auto_title'     => true,
 			),
 			'twitch' => array(
+				'regex'          => 'https?://(?:www\.)?twitch.tv/(?!directory)(?|[a-z0-9_]+/v/([0-9]+)|([a-z0-9_]+))',
+				'embed_url'      => 'https://player.twitch.tv/?channel=%s', # if numeric id http://player.twitch.tv/?video=v%s
 				'auto_thumbnail' => true,
-				'tests' => array(
-					'http://www.twitch.tv/tsm_dyrus',
-					__('Past breadcast URL', 'advanced-responsive-video-embedder') ,
-					'http://www.twitch.tv/tsm_dyrus/b/500898967',
-					__('Highlight URL', 'advanced-responsive-video-embedder') ,
-					'http://www.twitch.tv/tsm_dyrus/c/3674140',
-				)
 			),
 			'ustream' => array(
+				'regex'          => 'https?://(?:www\.)?ustream\.tv/(?:channel/)?([0-9]{8}|recorded/[0-9]{8}(/highlight/[0-9]+)?)',
+				'embed_url'      => 'http://www.ustream.tv/embed/%s',
+				'default_params' => 'html5ui',
 				'auto_thumbnail' => false,
-				'aspect_ratio' => '480:270', #61,
-				'tests' => array(
-					__('To my knowlege Ustream forces autoplay and there is no way disable it', 'advanced-responsive-video-embedder') ,
-					__('Channel URL - get them from the share button URLS with names instead of numeric IDs will not work!', 'advanced-responsive-video-embedder') ,
-					'http://www.ustream.tv/channel/15844301',
-					__('Recorded URL', 'advanced-responsive-video-embedder') ,
-					'http://www.ustream.tv/recorded/40976103',
-					__('Highlight URL', 'advanced-responsive-video-embedder') ,
-					'http://www.ustream.tv/recorded/31217313/highlight/344029',
-				)
+				'aspect_ratio'   => '480:270',
 			),
 			'veoh' => array(
+				'regex'          => 'https?://(?:www\.)?veoh\.com/watch/([a-z0-9]+)',
+				'embed_url'      => 'http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1396&permalinkId=%s',
+				'default_params' => 'player=videodetailsembedded&id=anonymous',
 				'auto_thumbnail' => false,
 				#'aspect_ratio' => 60.257,
 				'tests' => array(
@@ -646,36 +581,36 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				)
 			),
 			'vevo' => array(
+				'regex'          => 'https?://(?:www\.)?vevo\.com/watch/(?:[^\/]+/[^\/]+/)?([a-z0-9]+)',
+				'embed_url'      => 'https://scache.vevo.com/assets/html/embed.html?video=%s',
+				'default_params' => 'playlist=false&playerType=embedded&env=0',
 				'auto_thumbnail' => false,
-				'tests' => array(
-					'[vevo id="US4E51286201"]',
-					'http://www.vevo.com/watch/the-offspring/the-kids-arent-alright/USSM20100649',
-				),
-				'specific_tests' => array(
-					'http://www.vevo.com/watch/john-tibbs/Silver-in-Stone-%28Official-Performance%29/USM2C1505826',
-					'http://www.vevo.com/watch/SEUV71500234',
-					'http://www.vevo.com/watch/kj-52/That-Was-My-Life/USBR21200239',
-					'http://www.vevo.com/watch/sara-groves/Signal-(Official-Music-Video)/USM2C1505839',
-				 )
 			),
 			'viddler' => array(
+				'regex'          => 'https?://(?:www\.)?viddler\.com/(?:embed|v)/([a-z0-9]{8})',
+				'embed_url'      => 'https://www.viddler.com/player/%s/',
+				'default_params' => 'wmode=transparent&player=full&f=1&disablebranding=1',
 				'auto_thumbnail' => true,
-				'auto_title' => true,
-				'wmode_transparent' => false,
-				'tests' => array(
-					'http://www.viddler.com/v/a695c468',
-				)
+				'auto_title'     => true,
+				'aspect_ratio'   => '650:408',
 			),
+			/*
 			'videojug' => array(
-				'no_url_embeds' => true,
+				'regex'	         => 'https?://(?:www\.)?videojug\.com\/embed\/([a-z0-9\-]{36})',
+				'embed_url'      => 'http://www.videojug.com/embed/%s',
+				'no_url_embeds'  => true,
 				'auto_thumbnail' => false,
 				'tests' => array(
 					'[videojug id="fa15cafd-556f-165b-d660-ff0008c90d2d"]',
 				)
 			),
+			*/
 			'vine' => array(
+				'regex'          => 'https?://(?:www\.)?vine\.co/v/([a-z0-9]+)',
+				'embed_url'      => 'https://vine.co/v/%s/embed/simple',
+				'default_params' => '', //* audio=1 supported
 				'auto_thumbnail' => false,
-				'aspect_ratio' => '1:1',
+				'aspect_ratio'   => '1:1',
 				'tests' => array(
 					'[vine id="MbrreglaFrA"]',
 					'https://vine.co/v/bjAaLxQvOnQ',
@@ -685,8 +620,11 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				),
 			),
 			'vimeo' => array(
+				'regex'          => 'https?://(?:www\.)?vimeo\.com/(?:(?:channels/[a-z]+/)|(?:groups/[a-z]+/videos/))?([0-9]+)',
+				'embed_url'      => 'https://player.vimeo.com/video/%s',
+				'default_params' => 'html5=1&title=1&byline=0&portrait=0',
 				'auto_thumbnail' => true,
-				'auto_title' => true,
+				'auto_title'     => true,
 				'tests' => array(
 					'[vimeo id="12901672"]',
 					'http://vimeo.com/23316783',
@@ -703,15 +641,26 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				),
 			),
 			'xtube' => array(
-				'name' => 'XTube',
+				'name'           => 'XTube',
+				'regex'          => 'https?://(?:www\.)?xtube\.com/watch\.php\?v=([a-z0-9_\-]+)',
+				'embed_url'      => 'http://www.xtube.com/embedded/user/play.php?v=%s',
 				'auto_thumbnail' => false,
-				'tests' => array()
+			),
+			'youku'=> array(
+				# <iframe height=498 width=510 src="http://player.youku.com/embed/XMTUyODYwOTc4OA==" frameborder=0 allowfullscreen></iframe>
+				'regex'          => 'https?://(?:www\.)?youku.com/v_show/id_([a-z0-9]+)',
+				'embed_url'      => 'http://player.youku.com/embed/%s',
+				'auto_thumbnail' => false,
+				'aspect_ratio'   => '510:498',
 			),
 			'youtube' => array(
-				'name' => 'YouTube',
-				'sandbox_able' => true,
+				'name'           => 'YouTube',
+				'regex'          => 'https?://(?:www\.)?(?:youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v\=))|youtu\.be\/)([a-zA-Z0-9_-]{6,11}((?:\?|&)list=[a-z0-9_\-]+)?)',
+				'embed_url'      => 'https://www.youtube-nocookie.com/embed/%s',
+				'default_params' => 'wmode=transparent&iv_load_policy=3&modestbranding=1&rel=0&autohide=1',
+				'sandbox_able'   => true,
 				'auto_thumbnail' => true,
-				'auto_title' => true,
+				'auto_title'     => true,
 				'tests' => array(
 					'[youtube id="XQEiv7t1xuQ"]',
 					'http://www.youtube.com/watch?v=vrXgLhkv21Y',
@@ -875,15 +824,45 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				),
 			),
 			'youtubelist' => array(
-				'name' => 'YouTube Playlist',
+				'name'           => 'YouTube Playlist',
+				'embed_url'      => 'http://www.youtube.com/embed/videoseries?list=%s',
 				'auto_thumbnail' => true,
-				'tests' => array()
+			),
+			'iframe' => array(
+				#'regex'             => '(https?://([^"/s]+)',
+				'default_params'    => '',
+				'no_url_embeds'     => true,
+				'auto_thumbnail'    => false,
+				'wmode_transparent' => false,
+				'tests' => array(
+					__('This plugin allows iframe embeds for every URL by using this <code>[iframe]</code> shortcode. This should only be used for providers not supported by this via a named shortcode. The result is a 16:9 resonsive iframe by default, aspect ratio can be changed as usual.', 'advanced-responsive-video-embedder'),
+					'[iframe src="http://example.com/" aspect_ratio="1:1"]',
+				),
 			),
 		);
 
 		foreach ( $properties as $key => $value ) {
+
 			if( empty( $value['name'] ) )
 				$properties[ $key ]['name'] = ucfirst( $key );
+
+			if( empty( $value['embed_url'] ) ) {
+				$properties[ $key ]['embed_url'] = '%s';
+			}
+		}
+
+		return $properties;
+	}
+
+	public static function get_fully_supported_properties() {
+
+		$properties = static::get_properties();
+
+		foreach ( $properties as $provider => $values ) {
+
+			if ( empty( $values['regex'] ) ) {
+				unset( $properties[ $provider ] );
+			}
 		}
 
 		return $properties;

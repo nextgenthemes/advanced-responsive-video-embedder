@@ -22,33 +22,9 @@
  */
 class Advanced_Responsive_Video_Embedder_Admin {
 
-	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $advanced_responsive_video_embedder    The ID of this plugin.
-	 */
 	private $plugin_slug;
-
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
 	private $version;
-
 	private $options = array();
-
-	/**
-	 * Slug of the plugin screen.
-	 *
-	 * @since    1.0.0
-	 *
-	 * @var      string
-	 */
 	protected $plugin_screen_hook_suffix = null;
 
 	/**
@@ -96,9 +72,10 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	public function enqueue_scripts() {
 
-		$regex_list = Advanced_Responsive_Video_Embedder_Shared::get_regex_list();
-
 		wp_enqueue_script( $this->plugin_slug, plugin_dir_url( __FILE__ ) . 'arve-admin.js', array( 'jquery' ), $this->version, true );
+
+		/*
+		$regex_list = Advanced_Responsive_Video_Embedder_Shared::get_regex_list();
 
 		foreach ( $regex_list as $provider => $regex ) {
 
@@ -117,6 +94,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		}
 
 		wp_localize_script( $this->plugin_slug, 'arve_shortcodes', $shortcodes );
+		*/
 	}
 
 	public function enqueue_shortcode_ui_scripts() {
@@ -330,7 +308,10 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			);
 		}
 
-		$out = sprintf( '<select %s>%s</select>', Advanced_Responsive_Video_Embedder_Shared::attr( $args['input_attr'] ), implode( '', $options ) );
+		$select_attr = $args['input_attr'];
+		unset( $select_attr['value'] );
+
+		$out = sprintf( '<select %s>%s</select>', Advanced_Responsive_Video_Embedder_Shared::attr( $select_attr ), implode( '', $options ) );
 
 		if ( ! empty( $args['description'] ) ) {
 			$out = $out . '<p class="description">' . $args['description'] . '</p>';
