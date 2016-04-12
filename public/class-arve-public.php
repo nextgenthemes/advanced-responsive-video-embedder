@@ -695,7 +695,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'name'            => empty( $args['iframe_name'] )  ? false : $args['iframe_name'],
 			'style'           => empty( $args['iframe_style'] ) ? false : $args['iframe_style'],
 			'sandbox'         => ! empty( $properties[ $args['provider'] ]['sandbox'] ) ? 'allow-scripts' : false,
-			'src'             => $args['autoplay'] ? $args['src_autoplay_yes'] : $args['src_autoplay_no'],
+			#'src'             => $args['autoplay'] ? $args['src_autoplay_yes'] : $args['src_autoplay_no'],
 			'data-src'        => in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ? $args['src_autoplay_yes'] : null,
 			'width'           => is_feed() ? 853 : false,
 			'height'          => is_feed() ? 480 : false,
@@ -706,10 +706,18 @@ class Advanced_Responsive_Video_Embedder_Public {
 		);
 
 		if ( in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ) {
-			$iframe_attr['src'] = false;
+			$iframe_attr['src'] = $args['src_autoplay_yes'];
+		} else {
+			$iframe_attr['src'] = $args['autoplay'] ? $args['src_autoplay_yes'] : $args['src_autoplay_no'];
 		}
 
-		return sprintf( '<iframe %s></iframe>', Advanced_Responsive_Video_Embedder_Shared::attr( $iframe_attr ) );
+		$iframe = sprintf( '<iframe %s></iframe>', Advanced_Responsive_Video_Embedder_Shared::attr( $iframe_attr ) );
+
+		if ( in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ) {
+			return "<!--$iframe-->";
+		} else {
+			return $iframe;
+		}
 	}
 
 	public static function create_video( $args ) {
