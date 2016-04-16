@@ -36,11 +36,11 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'mode'             => 'normal',
 			'video_maxwidth'   => '',
 			'align_maxwidth'   => 400,
+			'sandbox'          => false,
 			'last_options_tab' => '#arve-settings-section-main',
 		);
 
-
-		$tw['shortcodes'] = array(
+		$oldoldold['shortcodes'] = array(
 			'alugha'          => 'alugha',
 			'archiveorg'      => 'archiveorg',
 			'break'           => 'break',
@@ -357,6 +357,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 					'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591',
 				)
 			),
+			'brightcove'   => array(),
 			'collegehumor' => array(
 				'name'           => 'CollegeHumor',
 				'regex'          => 'https?://(?:www\.)?collegehumor\.com/video/([0-9]+)',
@@ -516,7 +517,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			),
 			'myspace' => array(
 				#<iframe width="480" height="270" src="//media.myspace.com/play/video/house-of-lies-season-5-premiere-109903807-112606834" frameborder="0" allowtransparency="true" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe><p><a href="https://media.myspace.com/showtime/video/house-of-lies-season-5-premiere/109903807">House of Lies Season 5 Premiere</a> from <a href="https://media.myspace.com/Showtime">Showtime</a> on <a href="https://media.myspace.com">Myspace</a>.</p>
-
 				'regex'          => 'https?://(?:www\.)?myspace\.com/.+/([0-9]+)',
 				'embed_url'      => 'https://media.myspace.com/play/video/%s',
 				'auto_thumbnail' => false,
@@ -658,7 +658,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'regex'          => 'https?://(?:www\.)?(?:youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v\=))|youtu\.be\/)([a-zA-Z0-9_-]{6,11}((?:\?|&)list=[a-z0-9_\-]+)?)',
 				'embed_url'      => 'https://www.youtube-nocookie.com/embed/%s',
 				'default_params' => 'wmode=transparent&iv_load_policy=3&modestbranding=1&rel=0&autohide=1',
-				'sandbox_able'   => true,
+				'html5'          => true,
 				'auto_thumbnail' => true,
 				'auto_title'     => true,
 				'tests' => array(
@@ -831,7 +831,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'iframe' => array(
 				#'regex'             => '(https?://([^"/s]+)',
 				'default_params'    => '',
-				'no_url_embeds'     => true,
 				'auto_thumbnail'    => false,
 				'wmode_transparent' => false,
 				'tests' => array(
@@ -845,24 +844,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 
 			if( empty( $value['name'] ) )
 				$properties[ $key ]['name'] = ucfirst( $key );
-
-			if( empty( $value['embed_url'] ) ) {
-				$properties[ $key ]['embed_url'] = '%s';
-			}
-		}
-
-		return $properties;
-	}
-
-	public static function get_fully_supported_properties() {
-
-		$properties = static::get_properties();
-
-		foreach ( $properties as $provider => $values ) {
-
-			if ( empty( $values['regex'] ) ) {
-				unset( $properties[ $provider ] );
-			}
 		}
 
 		return $properties;

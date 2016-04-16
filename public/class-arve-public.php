@@ -28,6 +28,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 	private $plugin_slug;
 	private $version;
 	protected $options = array();
+	protected $properties = array();
 
 	/**
 	 * Initialize the class and set its properties.
@@ -39,9 +40,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 	public function __construct( $plugin_slug, $version ) {
 
 		$this->plugin_slug = $plugin_slug;
-		$this->version = $version;
+		$this->version     = $version;
 
-		$this->options = Advanced_Responsive_Video_Embedder_Shared::get_options();
+		$this->options    = Advanced_Responsive_Video_Embedder_Shared::get_options();
+		$this->properties = Advanced_Responsive_Video_Embedder_Shared::get_properties();
 	}
 
 	/**
@@ -89,9 +91,11 @@ class Advanced_Responsive_Video_Embedder_Public {
 			return $this->error( __( 'Missing url shortcode attribute', $this->plugin_slug ) );
 		}
 
-		$properties = Advanced_Responsive_Video_Embedder_Shared::get_fully_supported_properties();
+		foreach ( $this->properties as $provider => $values ) {
 
-		foreach ( $properties as $provider => $values ) {
+			if ( empty( $values['regex'] ) ) {
+				continue;
+			}
 
 			preg_match( '#' . $values['regex'] . '#i', $atts['url'], $matches );
 
@@ -117,10 +121,11 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 */
 	public function create_url_handlers() {
 
-		$properties = Advanced_Responsive_Video_Embedder_Shared::get_fully_supported_properties();
+		foreach ( $this->properties as $provider => $values ) {
 
-		foreach ( $properties as $provider => $values ) {
-			wp_embed_register_handler( 'arve_' . $provider, '#' . $values['regex'] . '#i', array( $this, 'url_embed_' . $provider ) );
+			if ( ! empty( $values['regex'] ) ) {
+				wp_embed_register_handler( 'arve_' . $provider, '#' . $values['regex'] . '#i', array( $this, 'url_embed_' . $provider ) );
+			}
 		}
 	}
 
@@ -258,8 +263,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 */
 	public function build_embed( $provider, $atts ) {
 
-		$properties = Advanced_Responsive_Video_Embedder_Shared::get_properties();
-
 		if( 'iframe' == $provider && empty( $atts['src'] ) && ! empty( $atts['id'] ) ) {
 			$atts['src'] = $atts['id'];
 		}
@@ -269,7 +272,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		$pairs = array(
-			'aspect_ratio' => isset( $properties[ $provider ]['aspect_ratio'] ) ? $properties[ $provider ]['aspect_ratio'] : '16:9',
+			'aspect_ratio' => isset( $this->properties[ $provider ]['aspect_ratio'] ) ? $this->properties[ $provider ]['aspect_ratio'] : '16:9',
 			'description'  => null,
 			'grow'         => null,
 			'id'           => null,
@@ -319,6 +322,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$args['iframe']      = true;
 		$args['maxwidth']    = (int) $args['maxwidth'];
 		$args['provider']    = $provider;
+		$args['thumbnail_srcset'] = false;
 		$args['object_params_autoplay_no']  = '';
 		$args['object_params_autoplay_yes'] = '';
 
@@ -331,26 +335,20 @@ class Advanced_Responsive_Video_Embedder_Public {
 			if( $img_src = wp_get_attachment_image_url( $attachment_id, 'medium' ) ) {
 				$args['thumbnail'] = $img_src;
 
-				if ( in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ) {
-					$args['thumbnail_bg'] = $img_src;
-
-					if( $srcset = wp_get_attachment_image_srcset( $attachment_id, 'medium' ) ) {
-						$args['thumbnail_srcset'] = $srcset;
-					} else {
-						$args['thumbnail_srcset'] = false;
-					}
+				if( $srcset = wp_get_attachment_image_srcset( $attachment_id, 'medium' ) ) {
+					$args['thumbnail_srcset'] = $srcset;
 				}
 			} else {
-				return $this->error( __( 'thumbnail parameter needs be a valid URL or media attachment ID', $this->plugin_slug ) );
+				return $this->error( __( 'No attachmend with that ID', $this->plugin_slug ) );
 			}
 		} elseif ( ! empty( $args['thumbnail'] ) && filter_var( $args['thumbnail'], FILTER_VALIDATE_URL ) === false ) {
 
-			return $this->error( __( 'thumbnail parameter needs be a valid URL or media attachment ID', $this->plugin_slug ) );
+			return $this->error( __( 'Not a valid URL giving as thumbnail', $this->plugin_slug ) );
+		}
 
-		} elseif ( ! empty( $args['thumbnail'] ) && in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ) {
+		if ( empty( $args['thumbnail_srcset'] ) && ! empty( $args['thumbnail'] ) && in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ) {
 
-			$args['thumbnail_bg']     = $args['thumbnail'];
-			$args['thumbnail_srcset'] = false;
+			$args['thumbnail_bg'] = $args['thumbnail'];
 		}
 
 		if ( 'dailymotionlist' === $args['provider'] ) {
@@ -427,10 +425,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 				break;
 		}
 
-		if ( ! isset( $properties[ $args['provider'] ]['embed_url'] ) ) {
-			return 'ARVE Error: No embed url pattern defined';
+		if ( isset( $this->properties[ $args['provider'] ]['embed_url'] ) ) {
+			$embed_url_pattern = $this->properties[ $args['provider'] ]['embed_url'];
 		} else {
-			$embed_url_pattern = $properties[ $args['provider'] ]['embed_url'];
+			$embed_url_pattern = '%s';
 		}
 
 		if ( 'veoh' == $args['provider'] ) {
@@ -688,21 +686,20 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 */
 	public static function create_iframe( $args ) {
 
+		$options    = Advanced_Responsive_Video_Embedder_Shared::get_options();
 		$properties = Advanced_Responsive_Video_Embedder_Shared::get_properties();
 
 		$iframe_attr = array(
 			'class'           => isset( $args['iframe_class'] ) ? $args['iframe_class'] : 'arve-inner',
 			'name'            => empty( $args['iframe_name'] )  ? false : $args['iframe_name'],
 			'style'           => empty( $args['iframe_style'] ) ? false : $args['iframe_style'],
-			'sandbox'         => ! empty( $properties[ $args['provider'] ]['sandbox'] ) ? 'allow-scripts' : false,
-			#'src'             => $args['autoplay'] ? $args['src_autoplay_yes'] : $args['src_autoplay_no'],
-			'data-src'        => in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ? $args['src_autoplay_yes'] : null,
+			'sandbox'         => ( $options['sandbox'] && empty( $properties[ $args['provider'] ]['no_html5'] ) ) ? 'allow-scripts allow-same-origin' : false,
 			'width'           => is_feed() ? 853 : false,
 			'height'          => is_feed() ? 480 : false,
 			'allowfullscreen' => '',
 			'frameborder'     => '0',
 			'scrolling'       => 'no',
-			#'security'        => 'restricted',
+			'security'        => 'restricted',
 		);
 
 		if ( in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ) {
@@ -827,7 +824,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			$out .= '<tr>';
 			$out .= sprintf( '<td>%d</td>', $count++ );
 			$out .= sprintf( '<td>%s</td>', esc_html( $values['name'] ) );
-			$out .= sprintf( '<td>%s</td>', ( isset( $values['no_url_embeds'] )  && $values['no_url_embeds'] )  ? '' : '&#x2713;' );
+			$out .= sprintf( '<td>%s</td>', ( ! isset( $values['embed_url'] ) || ( isset( $values['no_url_embeds'] ) && $values['no_url_embeds'] ) ) ? '' : '&#x2713;' );
 			$out .= sprintf( '<td>%s</td>', ( isset( $values['embed_url'] ) && Advanced_Responsive_Video_Embedder_Shared::starts_with( $values['embed_url'], 'https' ) ) ? '&#x2713;' : '' );
 			$out .= sprintf( '<td>%s</td>', ( isset( $values['auto_thumbnail'] ) && $values['auto_thumbnail'] ) ? '&#x2713;' : '' );
 			$out .= sprintf( '<td>%s</td>', ( isset( $values['auto_title'] )     && $values['auto_title'] )     ? '&#x2713;' : '' );
