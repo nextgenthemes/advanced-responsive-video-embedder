@@ -274,6 +274,17 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				)
 			),
 			array(
+				'hide_from_sc'   => true,
+				'attr'  => 'sandbox',
+				'label' => esc_html__('Use Sandbox', 'advanced-responsive-video-embedder'),
+				'type'  => 'select',
+				'options' => array(
+					'yes' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
+					'no'  => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
+				),
+				'description' => esc_html__( 'Use HTML5 sandboxed iframes to prevent users from navigating away from your site by clicking links inside video embeds. (does not work with all providers)' ),
+			),
+			array(
 				'hide_from_settings' => true,
 				'attr'  => 'aspect_ratio',
 				'label' => __('Aspect Ratio', 'advanced-responsive-video-embedder'),
@@ -361,7 +372,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'collegehumor' => array(
 				'name'           => 'CollegeHumor',
 				'regex'          => 'https?://(?:www\.)?collegehumor\.com/video/([0-9]+)',
-				#'embed_url'      => 'http://www.collegehumor.com/e/%s',
+				'embed_url'      => 'http://www.collegehumor.com/e/%s',
 				'auto_thumbnail' => true,
 				'auto_title'     => true,
 				'aspect_ratio'   => '600:369',
@@ -414,13 +425,12 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'auto_thumbnail'  => false,
 			),
 			'facebook' => array(
+				#<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10153231379946729%2F&width=500&show_text=false&height=281&appId" width="500" height="281" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
 				'regex'             => 'https?://(?:www\.)?facebook\.com/(?:[^/]+)/videos/([0-9]+)',
-				'embed_url'         => 'https://www.facebook.com/video/embed?video_id=%s',
+				'embed_url'         => 'https://www.facebook.com/plugins/video.php?href=https%%3A%%2F%%2Fwww.facebook.com%%2Ffacebook%%2Fvideos%%2F%s%%2F',
+				#'embed_url'         => 'https://www.facebook.com/video/embed?video_id=%s',
 				'auto_thumbnail'    => false,
 				'wmode_transparent' => false,
-				'tests' => array(
-					'https://www.facebook.com/UScoastguard/videos/10153791849322679/',
-				)
 			),
 			'funnyordie' => array(
 				'name'           => 'Funny or Die',
@@ -537,6 +547,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'regex'          => 'https?://(?:www\.)?snotr\.com/(?:video|embed)/([0-9]+)',
 				'embed_url'      => 'http://www.snotr.com/embed/%s',
 				'auto_thumbnail' => false,
+				'flash_only'     => true,
 				'tests' => array(
 					'http://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is',
 				)
@@ -625,10 +636,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'default_params' => 'html5=1&title=1&byline=0&portrait=0',
 				'auto_thumbnail' => true,
 				'auto_title'     => true,
-				'tests' => array(
-					'[vimeo id="12901672"]',
-					'http://vimeo.com/23316783',
-				),
 				'query_argss' => array(
 					'autoplay'  => array( 'bool', __( 'Autoplay', 'advanced-responsive-video-embedder' ) ),
 					'badge'     => array( 'bool', __( 'Badge', 'advanced-responsive-video-embedder' ) ),
@@ -645,6 +652,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'regex'          => 'https?://(?:www\.)?xtube\.com/watch\.php\?v=([a-z0-9_\-]+)',
 				'embed_url'      => 'http://www.xtube.com/embedded/user/play.php?v=%s',
 				'auto_thumbnail' => false,
+				'flash_only'     => true,
 			),
 			'youku'=> array(
 				# <iframe height=498 width=510 src="http://player.youku.com/embed/XMTUyODYwOTc4OA==" frameborder=0 allowfullscreen></iframe>
@@ -652,13 +660,13 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'embed_url'      => 'http://player.youku.com/embed/%s',
 				'auto_thumbnail' => false,
 				'aspect_ratio'   => '510:498',
+				'flash_only'     => true,
 			),
 			'youtube' => array(
 				'name'           => 'YouTube',
 				'regex'          => 'https?://(?:www\.)?(?:youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v\=))|youtu\.be\/)([a-zA-Z0-9_-]{6,11}((?:\?|&)list=[a-z0-9_\-]+)?)',
 				'embed_url'      => 'https://www.youtube-nocookie.com/embed/%s',
 				'default_params' => 'wmode=transparent&iv_load_policy=3&modestbranding=1&rel=0&autohide=1',
-				'html5'          => true,
 				'auto_thumbnail' => true,
 				'auto_title'     => true,
 				'tests' => array(

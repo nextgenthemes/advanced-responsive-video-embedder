@@ -281,6 +281,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'thumbnail_srcset' => null,
 			'title'        => null,
 			'hide_title'   => false,
+			'parameters'   => null,
 			'align'        => (string) $this->options['align'],
 			'arve_link'    => (string) $this->options['promote_link'],
 			'autoplay'     => (bool)   $this->options['autoplay'],
@@ -306,8 +307,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 		if( in_array( $provider, array( 'iframe', 'video' ) ) ) {
 			$pairs['src'] = null;
-		} else {
-			$pairs['parameters'] = null;
 		}
 
 		$args = shortcode_atts( $pairs, $atts, 'arve' );
@@ -344,11 +343,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 		} elseif ( ! empty( $args['thumbnail'] ) && filter_var( $args['thumbnail'], FILTER_VALIDATE_URL ) === false ) {
 
 			return $this->error( __( 'Not a valid URL giving as thumbnail', $this->plugin_slug ) );
-		}
-
-		if ( empty( $args['thumbnail_srcset'] ) && ! empty( $args['thumbnail'] ) && in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ) {
-
-			$args['thumbnail_bg'] = $args['thumbnail'];
 		}
 
 		if ( 'dailymotionlist' === $args['provider'] ) {
@@ -585,7 +579,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			$meta .= sprintf( '<meta itemprop="uploadDate" content="%s" />', esc_attr( $args['upload_date'] ) );
 		}
 
-		if( ! empty( $args['thumbnail'] ) && ! empty( $args['thumbnail_srcset'] ) ) {
+		if( ! empty( $args['thumbnail'] ) ) {
 
 			$meta .= sprintf(
 				'<img %s>',
@@ -599,9 +593,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 				) )
 			);
 		}
-		elseif ( ! empty( $args['thumbnail'] ) ) {
-			$meta .= sprintf( '<meta itemprop="thumbnailUrl" content="%s">', esc_url( $args['thumbnail'] ) );
-		}
 
 		if ( ! empty( $args['title'] ) && in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) && ! $args['hide_title'] ) {
 			$meta .= '<h5 itemprop="name" class="arve-title">' . esc_html( trim( $args['title'] ) ) . '</h5>';
@@ -614,9 +605,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		$container = sprintf(
-			'<div class="arve-embed-container" style="padding-bottom: %F%%;%s">%s</div>',
+			'<div class="arve-embed-container" style="padding-bottom: %F%%;">%s</div>',
 			static::aspect_ratio_to_padding( $args['aspect_ratio'] ),
-			! empty( $args['thumbnail_bg'] ) ? sprintf( ' background-image: url(%s);', esc_url( $args['thumbnail_bg'] ) ) : '',
 			$meta . $inner
 		);
 
@@ -693,7 +683,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'class'           => isset( $args['iframe_class'] ) ? $args['iframe_class'] : 'arve-inner',
 			'name'            => empty( $args['iframe_name'] )  ? false : $args['iframe_name'],
 			'style'           => empty( $args['iframe_style'] ) ? false : $args['iframe_style'],
-			'sandbox'         => ( $options['sandbox'] && empty( $properties[ $args['provider'] ]['no_html5'] ) ) ? 'allow-scripts allow-same-origin' : false,
+			'sandbox'         => ( $options['sandbox'] && empty( $properties[ $args['provider'] ]['flash_only'] ) ) ? 'allow-scripts allow-same-origin' : false,
 			'width'           => is_feed() ? 853 : false,
 			'height'          => is_feed() ? 480 : false,
 			'allowfullscreen' => '',

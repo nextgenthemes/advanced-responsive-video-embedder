@@ -579,6 +579,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		$output['promote_link'] = ( 'yes' == $input['promote_link'] ) ? true : false;
 		$output['autoplay']     = ( 'yes' == $input['autoplay'] )     ? true : false;
+		$output['sandbox']      = ( 'yes' == $input['sandbox'] )      ? true : false;
 
 		#dd($input['promote_link']);
 
