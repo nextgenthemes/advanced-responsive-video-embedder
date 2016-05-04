@@ -341,6 +341,11 @@ class Advanced_Responsive_Video_Embedder_Shared {
 	public static function get_properties() {
 
 		$properties = array(
+			'allmyvideos' => array(
+				'name'      => 'allmyvideos.net',
+				'regex'     => 'https?://(?:www\.)?allmyvideos.net/([a-z0-9]+)',
+				'embed_url' => 'https://allmyvideos.net/embed-otqf1jt18mif.html',
+			),
 			'alugha' => array(
 				'regex'     => 'https?://(?:www\.)?alugha.com/(?:1/)?videos/([a-z0-9_\-]+)',
 				'embed_url' => 'https://alugha.com/embed/polymer-live/?v=%s',
@@ -604,6 +609,11 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'auto_thumbnail' => true,
 				'auto_title'     => true,
 				'aspect_ratio'   => '650:408',
+			),
+			'vidspot' => array(
+				'name'      => 'vidspot.net',
+				'regex'     => 'https?://(?:www\.)?vidspot.net/([a-z0-9]+)',
+				'embed_url' => 'https://allmyvideos.net/embed-otqf1jt18mif.html',
 			),
 			/*
 			'videojug' => array(
