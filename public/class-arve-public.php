@@ -80,12 +80,12 @@ class Advanced_Responsive_Video_Embedder_Public {
 			add_shortcode( $shortcode, array( $this, 'shortcode_' . $provider ) );
 		}
 
-		add_shortcode( 'arve', array( $this, 'arve_shortcode' ) );
-		add_shortcode( 'arve_supported', array( $this, 'supported_shortcode' ) );
-		add_shortcode( 'arve_params', array( $this, 'params_shortcode' ) );
+		add_shortcode( 'arve',           array( $this, 'shortcode_arve' ) );
+		add_shortcode( 'arve_supported', array( $this, 'shortcode_arve_supported' ) );
+		add_shortcode( 'arve_params',    array( $this, 'shortcode_arve_params' ) );
 	}
 
-	public function arve_shortcode( $atts ) {
+	public function shortcode_arve( $atts ) {
 
 		if ( empty( $atts['url'] ) ) {
 			return $this->error( __( 'Missing url shortcode attribute', $this->plugin_slug ) );
@@ -783,14 +783,15 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 	}
 
-	public function supported_shortcode( $args, $content = null ) {
+	public function shortcode_arve_supported( $args, $content = null ) {
 
 		$providers = Advanced_Responsive_Video_Embedder_Shared::get_properties();
 		// unset deprecated and doubled
 		unset( $providers['dailymotionlist'] );
 		unset( $providers['iframe'] );
 
-		$out  = '<table class="table table-sm table-hover">';
+		$out  = '<p>The limiting factor of the following features is not ARVE but what the prividers offer.</p>';
+		$out .= '<table class="table table-sm table-hover">';
 	  $out .= '<tr>';
 		$out .= '<th></th>';
 		$out .= '<th>Provider</th>';
@@ -830,7 +831,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		return $out;
 	}
 
-	public function params_shortcode( $args, $content = null ) {
+	public function shortcode_arve_params( $args, $content = null ) {
 
 		$settings = Advanced_Responsive_Video_Embedder_Shared::get_settings_definitions();
 

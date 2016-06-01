@@ -87,11 +87,9 @@
 		});
 	});
 
-	/*$(document).on( 'click', '[data-notice-id] .notice-dismiss', function() {
+	$(document).on( 'click', '[data-notice-id] .notice-dismiss', function() {
 
-    var id = $( this ).closest( '[data-notice-id]' ).attr( 'data-notice-id' );
-
-    console.log(id);
+    var id = $(this).closest('[data-notice-id]').attr('data-notice-id');
 
 		jQuery.ajax({
 			url: ajaxurl,
@@ -99,13 +97,15 @@
 				action: id
 			}
 		});
-	});*/
+	});
 
+	/*
 	$(window).on( 'keyup', function(e) {
 		if ( e.ctrlKey && e.shiftKey && 'v' === e.key ) {
 			open_arve_dialog();
 		}
 	} );
+	*/
 
 	$( '#arve-btn' ).on( 'click', function(e) {
 		e.preventDefault();

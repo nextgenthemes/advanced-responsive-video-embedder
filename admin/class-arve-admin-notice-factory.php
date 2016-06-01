@@ -8,17 +8,17 @@ class Advanced_Responsive_Video_Embedder_Admin_Notice_Factory {
 
   function __construct( $notice_id, $notice, $dismiss_forever = true ) {
 
-    $this->notice_id   = "admin-notice-factory-$notice_id";
-    $this->notice      = $notice;
+    $this->notice_id       = "admin-notice-factory-$notice_id";
+    $this->notice          = $notice;
     $this->dismiss_forever = $dismiss_forever;
 
 		add_action( 'admin_notices', array( $this, 'action_admin_notices' ) );
-    add_action( 'admin_head',                  array( $this, 'action_admin_head' ) );
     add_action( 'wp_ajax_' . $this->notice_id, array( $this, 'ajax_call' ) );
   }
 
   function action_admin_notices() {
 		#delete_user_meta( get_current_user_id(), $this->notice_id );
+    #delete_transient( $this->notice_id );
 
 		if( $this->dismiss_forever && ! empty( get_user_meta( get_current_user_id(), $this->notice_id ) ) ) {
 			return;
@@ -27,8 +27,8 @@ class Advanced_Responsive_Video_Embedder_Admin_Notice_Factory {
     }
 
     printf(
-      '<div class="%s"><p style="font-size: 1.15em;">%s</p></div>',
-      esc_attr( "notice updated is-dismissable $this->notice_id" ),
+      '<div class="notice is-dismissible updated" data-notice-id="%s"><p style="font-size: 1.15em;">%s</p></div>',
+      esc_attr( $this->notice_id ),
       $this->notice
     );
 	}
@@ -42,23 +42,4 @@ class Advanced_Responsive_Video_Embedder_Admin_Notice_Factory {
     }
 		wp_die();
 	}
-
-  function action_admin_head() {
-    ?>
-<script>
-(function ( $ ) {
-	'use strict';
-
-	$(document).on( 'click', '.<?php echo $this->notice_id; ?> .notice-dismiss', function() {
-		jQuery.ajax({
-			url: ajaxurl,
-			data: {
-				action: '<?php echo $this->notice_id; ?>'
-			}
-		});
-	});
-}(jQuery));
-</script>
-<?php
-  }
 }

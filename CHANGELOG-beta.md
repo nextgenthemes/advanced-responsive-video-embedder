@@ -2,7 +2,7 @@
 
 [Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/).
 
-### Pro Addon 1.9.4 Beta (everything since 1.4.0 Beta) ###
+### Pro Addon 1.9.14 Beta (everything since 1.4.0 Beta) ###
 
 * Fix: Screenfull error
 * Fix: Make the srcset youtube images to to protocol relative.
