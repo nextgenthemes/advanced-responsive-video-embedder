@@ -69,7 +69,7 @@ class Advanced_Responsive_Video_Embedder {
 	public function __construct() {
 
 		$this->plugin_slug = 'advanced-responsive-video-embedder';
-		$this->version = '6.4.1';
+		$this->version = '6.4.2';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -117,6 +117,7 @@ class Advanced_Responsive_Video_Embedder {
 		 * The class responsible for defining all actions that occur in the Dashboard.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-advanced-responsive-video-embedder-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-arve-admin-notice-factory.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
@@ -173,6 +174,7 @@ class Advanced_Responsive_Video_Embedder {
 
 		$this->loader->add_action( 'wp_dashboard_setup', $_arve_admin, 'add_dashboard_widget' );
 
+		$this->loader->add_action( 'admin_init', $_arve_admin, 'action_admin_init_setup_messages' );
 		$this->loader->add_action( 'admin_init', $_arve_admin, 'register_settings' );
 		$this->loader->add_action( 'admin_init', $_arve_admin, 'register_settings_debug', 99 );
 
