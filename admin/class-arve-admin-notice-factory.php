@@ -41,7 +41,7 @@ class Advanced_Responsive_Video_Embedder_Admin_Notice_Factory {
     $user_id = get_current_user_id();
 
     if( $this->dismiss_forever ) {
-      add_user_meta( get_current_user_id(), $user_id, true );
+      add_user_meta( $user_id, $this->notice_id, true );
     } else {
       set_transient( $this->notice_id, true, HOUR_IN_SECONDS );
     }
