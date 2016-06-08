@@ -62,10 +62,10 @@ class Advanced_Responsive_Video_Embedder_Admin {
     $msg = sprintf(
       __( '<p>Dear ARVE users, I am working for a long time on the next version on ARVE, it seems stable to be but I am a bit afraid to release it because there may be problems. People may be angry about changes (happened before) ... even though I tried to make everyhing better. I want to try to prevent that as best as possible and I need you to <a href="%s">help me test it</a>.</p>
 			<p>New Features are a WYSIWYG Preview, SEO friedlyness and new better hover effect (zoom) among many other inprovements.</p>
-			<p>I will again give <strong>a limited amount of free pro licenses</strong> out to people who test and give some feedback. Thanks ;)</p>', $this->plugin_slug ),
-      'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/installing-and-license-management/'
+			<p>I will again give <strong>a limited amount of free pro licenses</strong> out to people who test and give some feedback. Thanks!</p>', $this->plugin_slug ),
+      'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/'
     );
-	  new Advanced_Responsive_Video_Embedder_Admin_Notice_Factory( 'beta-test', $msg, true );
+	  new Advanced_Responsive_Video_Embedder_Admin_Notice_Factory( 'beta-test2', $msg, true );
 	}
 
 	/**

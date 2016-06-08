@@ -1,5 +1,6 @@
 (function ( $ ) {
 	'use strict';
+	/*global ajaxurl */
 	/*global alert */
 	/*global tb_remove */
 	/*global arve_regex_list */
@@ -103,6 +104,18 @@
 
 		return 'nothing matched';
 	};
+
+	$(document).on( 'click', '[data-nj-notice-id] .notice-dismiss', function() {
+
+    var id = $(this).closest('[data-nj-notice-id]').attr('data-nj-notice-id');
+
+		jQuery.ajax({
+			url: ajaxurl,
+			data: {
+				action: id
+			}
+		});
+	});
 
 	$( '#arve-btn' ).click( function( event ) {
 
