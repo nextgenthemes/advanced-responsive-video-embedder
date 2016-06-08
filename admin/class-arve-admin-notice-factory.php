@@ -27,7 +27,7 @@ class Advanced_Responsive_Video_Embedder_Admin_Notice_Factory {
     }
 
     printf(
-      '<div class="notice is-dismissible updated" data-notice-id="%s"><p style="font-size: 1.15em;">%s</p></div>',
+      '<div class="notice is-dismissible updated" data-nj-notice-id="%s">%s</div>',
       esc_attr( $this->notice_id ),
       $this->notice
     );

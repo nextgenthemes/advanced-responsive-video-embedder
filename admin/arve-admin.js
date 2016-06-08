@@ -87,9 +87,9 @@
 		});
 	});
 
-	$(document).on( 'click', '[data-notice-id] .notice-dismiss', function() {
+	$(document).on( 'click', '[data-nj-notice-id] .notice-dismiss', function() {
 
-    var id = $(this).closest('[data-notice-id]').attr('data-notice-id');
+    var id = $(this).closest('[data-nj-notice-id]').attr('data-nj-notice-id');
 
 		jQuery.ajax({
 			url: ajaxurl,
