@@ -7,28 +7,87 @@
 
 <p>Simple • Lightweight • Responsive • Customizable</p>
 
+<p class="lead">Thanks to everyone who bought the <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">Pro Addon</a></p>
+
+<p>I really appreciate this. I commercialized parts of this plugin because I no longer can work on this for free and donations were not really doing it. I am glad not everyone thinks, everything needs to be gratis on the Internet, especially in Open Source. The Pro Addon, like the base version here, is still Free Software - free as in Freedom! not as in gratis. Well, actually I have given 720 and counting licenses out free of charge to legacy users.</p>
+
 <a class="btn btn-primary btn-lg" href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">Purchase Pro Addon</a>
+
+
+### Version 7 is coming ###
+
+[Please help testing the soon to be released beta version](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/). You will benefit from the following new features and if you give feedback you will have a chance if getting the pro addon for free (very limited offer).
+
+### Pro Addon 1.9.14 Beta (everything since 1.4.0 Beta) ###
+
+* Fix: Screenfull error
+* Fix: Make the srcset youtube images to to protocol relative.
+* New: Responsive thumbnails using srcset the browser takes the best image resolution for the users device. This is automatic for
+* Fix: License API call.
+* New: Added support for displaying title of videos on top of the thumbnail images.
+* Improved: Rectangle animation. (thinking about removing it completely)
+* Improved: Updated lity (lightbox script) to version 1.5.1
+* Improved: Thumbnail handling.
+* Improved: Removed the 'Lazyload Maximal Width' setting to simplify things (there still is 'Maximal Width' and 'Aligned Maximal Width').
+* Improved: Removed the 'Fake Thumbnail' because I now think the entire idea was bad and real thumbnails should be used.
+* Dropped PHP Class
+
+### 7.1.0 Beta (everyting since 7.0.0 beta) ###
+
+* New: Recommend and guide to users to install [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) via [TGMPA](http://tgmpluginactivation.com/)
+* New: Amazing catch-all shortcode [arve url="..."] that can be used for all supported providers and even with any iframe `src` if all unlisted providers that support responsive iframe embeds.
+* New: Support for kla.tv.
+* New: Support for youku (fulfilled request)
+* New: New Advanced Shortcode Dialog with nice UI for choose thumbnails from your WP Media Gallery, very detailed helping texts, display of default settings, hiding of fields based on need ...
+* New: WYSIWYG Preview of Shortcodes.
+* New: The two above features need the [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) Plugin that is maybe moving into WordPress core later.
+* New: A default alignment can now be set in the Settings page. (fulfilled request)
+* New: 'iframe_name' shortcode parameter for `<iframe name="xxxxx"`, useful when wanting to target ARVE embeds with links. (fulfilled request)
+* New: ARVE is now SEO friendly giving you the ability to add some schema.org microdata. Googles tools should not complain anymore. (fulfilled request)
+* Deleted Language files in favor of [wordpress.org managed translations](https://translate.wordpress.org/projects/wp-plugins/advanced-responsive-video-embedder/dev) volunteers are welcome ;)
+* Improved: Got rid of PHP globals.
+* Improved: Added image upload dialog to settings page and shortcode dialog.
+* Improved: Better CSS to overwrite unwanted theme styles.
+* Improved: Lots if code improvements.
+* Improved: SSL enabled and forced when supported by provoders.
+* Fix: Prevent Dashboard Widget conflicts with WP Helpers plugin (possibly others). Thanks to Steve Bruner.
+* Fix: Issue with unwanted borders showing on embeds.
+* Fix: youtube.be URLs now detected correct in shortcode dialog.
+* Fix: All Vevo URLs are now detected correctly.
+* Fix: Bool options settings.
+* Removed blip because the service was shutdown.
+* Background-images are now applied to .arve-embed-container instead of .arve-wrapper.
+
+
+<ul class="nav nav-pills">
+  <li class="nav-item"><a class="nav-link" href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/">Plugin Page with examples</a></li>
+  <li class="nav-item"><a class="nav-link" href="https://github.com/nextgenthemes/advanced-responsive-video-embedder">Github Page</a></li>
+</ul>
 
 
 <h3>Features</h3>
 <ul class="list-checked">
+	<li>ARVE is now SEO friendly. Letting you specify title, description, upload date to provide search engines with the schema.org data they like to have for better indexing.(in beta)</li>
+	<li><abbr title="What You See Is What You Get">WYSIWYG</abbr> Editor. No more messing arround with shortcodes and previewing.(in beta)</li>
+	<li>New improved dialog for embedding videos.(in beta)</li>
 	<li>Embeds via pasting the URL in its own line just like WordPress!</li>
+	<li>Magigally makes those url embedded videos responsive</li>
+	<li>No 'lock in' for the above' if you use providers WordPress already supports</li>
 	<li>Supports <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#supported-providers">almost every video hoster</a> that supports iframe embed codes.</li>
-	<li>Optionally use Shortcodes instead</li>
+	<li>Optionally use very powerfull Shortcodes instead</li>
 	<li>One single button for all providers (for most providers not required because of URL embeds, but allows to create custom shortcodes with advanced features within seconds)</li>
-	<li>Responsive embeds with CSS, much better then with JS IMO</li>
-	<li>Tries to be as unobtrusive as possible, sets ‘hide brand’ variables if supported, disabled related videos at the end … to help keep people on your Site rather then going to YouTube or keep watching videos</li>
-	<li>Clean Shortcode syntax <code>[vimeo id="123456"]</code> no ugly URLs, no unnecessary shortcode wrapping.</li>
-	<li>Autostart (for providers that support them)</li>
-	<li>Custom URL Parameters to use all options providers offer</li>
+	<li>Responsive embeds with CSS, much better then with Javascript</li>
+	<li>Tries to be as unobtrusive as possible, sets ‘hide brand’ variables if supported, disabled related videos at the end … to help keep people on your Site rather then going to YouTube or keep watching videos.</li>
+	<li>Clean shortcode syntax <code>[arve url="https://youtu.be/yUCFRL43Zm4"]</code>, no unnecessary shortcode wrapping.</li>
+	<li>Autostart (for providers that support it, mobile browsers prevent this)</li>
+	<li>Custom URL parameters to use all options providers offer</li>
 	<li>Optional maximal width</li>
 	<li>Video alignment</li>
-	<li>General iframe support for any provider that not included that support responsive iframe embeds or any URL you with to display in a iframe.</li>
 	<li>Detailed description of options in-place.</li>
-	<li>Custom Aspect Ratio</li>
+	<li>Custom aspect ratio</li>
 </ul>
 
-<img src="https://nextgenthemes.com/wp-content/uploads/2015/11/GPLv3_Logo.svg" class="img-resonsive" style="width: 320px; margin-bottom: 2rem;">
+<img src="https://nextgenthemes.com/wp-content/uploads/2015/11/GPLv3_Logo.svg" class="img-responsive" style="width: 320px; margin-bottom: 2rem;">
 
 
 <h3>Additional Features with the Pro Addon</h3>
@@ -45,9 +104,10 @@
 	<li><strong>Link -&gt; Lightbox</strong><br>
 		Use simple links as triggers for lightboxed videos</li>
 
-	<li><strong>Lazyload -&gt; HTML5 Fullscreen</strong> (experimental)</li>
-
-	<li><strong>Lazyload -&gt; Half Screen Sticky</strong> (experimental)</li>
+	<li>Custom thumbnail images</li>
+	<li>Custom titles on top of your thumbnails</li>
+	<li>'Grow on click'</li>
+	<li>Responsive Thumbnails using cutting edge HTML5 technology (srcset and sizes) <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/">(in beta)</a></li>
 </ul>
 
 
@@ -62,6 +122,7 @@
 * CollegeHumor
 * Comedy Central
 * dailymotion
+* Facebook (Only iframe embeds, Facebook have deprecated those)
 * flickr
 * Funny or Die
 * gametrailers
@@ -159,38 +220,72 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 2. Pro Options
 3. Features
 
-## Todo List ##
+## Job Offers - Todo List ##
 
-I would be glad if someone could [help me](https://github.com/nextgenthemes/advanced-responsive-video-embedder) with this, I can send you cash for helping out.
 
-- [ ] Fix [issue 16][16] Youtube.be/xxxxx URLs in shortcode creator
-- [ ] Pro Addon: Fix [issue 17][17] Lazyload Lightbox fails with IGN (and maybe others)
-- [ ] Get advice how I could improve my sales of this the Pro Addon
-- [ ] Advertise the Pro Addon somewhere
-- [ ] Make the [Plugin Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) and the selling process UX more professional look and feel.
-- [ ] Code review (and improvements)
-- [ ] Extensive testing
-- [ ] Write a special thanks page to [Howard Iken](http://www.myfloridalaw.com/)
-- [ ] Improve [Documentation][50] - wording, grammar
-- [ ] Improve [Documentation][50] - extend
-- [ ] Improve [Documentation][50] - simplify
-- [ ] Improve [Documentation][50] - write how to use kaltura, and other not directly supported providers with iframe
-- [ ] Create a Features Table?
-- [ ] Comparison with other Plugins (Table?)
-- [ ] Write docs about how to use iframe for not supported providers.
-- [ ] Support for self hosting videos (or at least make them responsive as they are), consider making the WordPress videos responsive (maybe it just take a wrapper).
-- [ ] How to manage beta versions with WordPress.org and the EDD Software licensing plugin (for the Pro Version)
-- [ ] WordPress Language Pack thing (anything needed to do?)
-- [ ] Get rid of globals in PHP Code
-- [ ] Consider writing JS create URL querys for embed customization (for use in shortcode creator dialog but also easy to use independant)
 
- [16]: https://github.com/nextgenthemes/advanced-responsive-video-embedder/issues/16
- [17]: https://github.com/nextgenthemes/advanced-responsive-video-embedder/issues/17
 
- [50]: https://github.com/nextgenthemes/advanced-responsive-video-embedder/blob/master/docs.md
+
+Writing examples and tutorials
+Screencasts
+
+
+Company name and legal clearing +ngt
+Theme Framework name and legal aspects +ngt
+
+
+Mass emails to customers. Howto import EDD customer databases into Mailchimp of something like that. +arve
+
+Gain and communicate with beta Testers. +arve
+Deal fast with a possible influx of support and complains after version 7 release. (mailing list) +arve
+Handle beta versions with EDD Possible? (no ETA but planned) +arve
+Get advice how I could improve my sales of this the Pro Addon +arve
+Advertise the Pro Addon somewhere +arve
+Make the Plugin Page and the selling process UX more professional look and feel. +arve
+Code review (and improvements) +arve
+Extensive testing +arve
+Write a special thanks page to Howard Iken http://www.myfloridalaw.com +arve
+Improve Documentation - wording, grammar +arve
+Improve Documentation - extend +arve
+Improve Documentation - simplify +arve
+Improve Documentation - write how to use Kaltura, and other not directly supported providers with iframe +arve
+Create a Features Table? +arve
+Comparison with other Plugins (Table?) +arve
+Write docs about how to use iframe for not supported providers. +arve
+WordPress.org translation management +arve
+Consider writing JS create URL querys for embed customization (for use in shortcode creator dialog but also easy to use independant) +arve
 
 
 ## Changelog ##
+
+### Version 7 is coming ###
+
+[Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/).
+
+### 6.4.0 ###
+
+* Fix: Always prevent scrollbars.
+
+### Pro Addon 1.4.4
+
+* Fixed: Infinite update loop.
+* Improved: Updated Updater class.
+
+### Pro Addon 1.4.3
+
+* Fixed: rectangle overflow issue.
+
+### Pro Addon 1.4.2
+
+* Fixed: license activation problems.
+
+### Pro Addon 1.4.1
+
+* Fixed critical bug for auto updates. Please [click here](https://community.nextgenthemes.com/915/add-wont-update-wordpress-says-download-failed-unauthorized?show=1053#a1053) if your update fails.
+
+### 6.3.9 ###
+
+* Fix: Facebook (now really, hopefully).
 
 ### 6.3.8 ###
 
@@ -199,10 +294,6 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 ### 6.3.7 ###
 
 * New: Facebook video support.
-
-### 6.3.5 ###
-
-* Removed Github updater information that may cause some unwanted updates. You should not run any version higher then current one on wordpress.org unless your adventurous and try beta code.
 
 ### 6.3.4 ###
 
@@ -228,7 +319,7 @@ I would be glad if someone could [help me](https://github.com/nextgenthemes/adva
 
 ### Pro Addon 1.1.5 ###
 
-* New: Added setting and parameter grow="yes/no" to controll the grow-on-click behaviour that was introduced in 6.0 to your liking.
+* New: Added setting and parameter grow="yes/no" to control the grow-on-click behaviour that was introduced in 6.0 to your liking.
 
 ### 6.1.2 ###
 
