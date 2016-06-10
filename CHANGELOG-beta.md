@@ -1,6 +1,6 @@
 ### Version 7 is coming ###
 
-[Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/).
+[Please help testing the soon to be released beta version](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/). You will benefit from the following new features and if you give feedback you will have a chance if getting the pro addon for free (very limited offer).
 
 ### Pro Addon 1.9.14 Beta (everything since 1.4.0 Beta) ###
 
@@ -33,7 +33,7 @@
 * Improved: Added image upload dialog to settings page and shortcode dialog.
 * Improved: Better CSS to overwrite unwanted theme styles.
 * Improved: Lots if code improvements.
-* Improved: SSL enabled for Vevo.
+* Improved: SSL enabled and forced when supported by provoders.
 * Fix: Prevent Dashboard Widget conflicts with WP Helpers plugin (possibly others). Thanks to Steve Bruner.
 * Fix: Issue with unwanted borders showing on embeds.
 * Fix: youtube.be URLs now detected correct in shortcode dialog.
