@@ -42,6 +42,7 @@
 		e.preventDefault();
 	} );
 
+	/*
 	if( last_tab_input.val() ) {
 
 		var last_tab = last_tab_input.val();
@@ -55,6 +56,7 @@
 		$( last_tab ).prependTo( '.arve-options-form' );
 		$('.arve-settings-section').not( last_tab ).hide();
 	}
+	*/
 
 	$('[data-arve-image-upload]').click(function(e) {
 		e.preventDefault();
