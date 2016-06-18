@@ -62,7 +62,13 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 */
 	public function register_scripts() {
 
-
+		wp_register_script(
+			'advanced-responsive-video-embedder',
+			plugin_dir_url( __FILE__ ) . 'arve-public.js',
+			array( 'jquery' ),
+			$this->version,
+			true
+		);
 	}
 
 	/**
@@ -214,11 +220,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$atts['parameters'] = build_query( $url_query );
 		$atts['id']         = $id;
 
-		$output  = $this->build_embed( $provider, $atts );
-		// Output the original posted URL for SEO and other scraping purposes
-		$output .= sprintf( '<a href="%s" class="arve-hidden">%s</a>', esc_url( $url ), esc_html( $url ) );
-
-		return $output;
+		return $this->build_embed( $provider, $atts );
 	}
 
 	/**
@@ -573,10 +575,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$options = Advanced_Responsive_Video_Embedder_Shared::get_options();
 		$meta = '';
 
-		$meta .= sprintf( '<meta itemprop="embedURL" content="%s" />', esc_attr( $args['src'] ) );
+		$meta .= sprintf( '<meta itemprop="embedURL" content="%s">', esc_attr( $args['src'] ) );
 
 		if ( ! empty( $args['upload_date'] ) ) {
-			$meta .= sprintf( '<meta itemprop="uploadDate" content="%s" />', esc_attr( $args['upload_date'] ) );
+			$meta .= sprintf( '<meta itemprop="uploadDate" content="%s">', esc_attr( $args['upload_date'] ) );
 		}
 
 		if( ! empty( $args['thumbnail'] ) ) {
@@ -620,6 +622,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 		} else {
 			$arve_link = '';
 		}
+
+		wp_enqueue_script( 'advanced-responsive-video-embedder' );
 
 		return sprintf(
 			'<div %s>%s</div>',

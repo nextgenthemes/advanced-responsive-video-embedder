@@ -45,7 +45,7 @@ class Advanced_Responsive_Video_Embedder {
 	public function __construct() {
 
 		$this->plugin_slug = 'advanced-responsive-video-embedder';
-		$this->version = '7.1.16';
+		$this->version = '7.1.17';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -152,6 +152,8 @@ class Advanced_Responsive_Video_Embedder {
 
 		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links' );
 
+		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links' );
+
 		$this->loader->add_action( 'wp_dashboard_setup', $plugin_admin, 'add_dashboard_widget' );
 
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'action_admin_init_setup_messages' );
@@ -179,7 +181,7 @@ class Advanced_Responsive_Video_Embedder {
 		$this->loader->add_action( 'init', $plugin_public, 'create_url_handlers', 99 );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		#$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'register_scripts', 0 );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'register_scripts', 0 );
 
 		$this->loader->add_action( 'wp_head', $plugin_public, 'print_styles' );
 
