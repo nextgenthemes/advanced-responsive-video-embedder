@@ -274,22 +274,22 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		$pairs = array(
-			'aspect_ratio' => isset( $this->properties[ $provider ]['aspect_ratio'] ) ? $this->properties[ $provider ]['aspect_ratio'] : '16:9',
-			'description'  => null,
-			'grow'         => null,
-			'id'           => null,
-			'iframe_name'  => null,
-			'thumbnail'    => null,
-			'thumbnail_srcset' => null,
-			'title'        => null,
-			'hide_title'   => false,
-			'parameters'   => null,
 			'align'        => (string) $this->options['align'],
 			'arve_link'    => (string) $this->options['promote_link'],
+			'aspect_ratio' => isset( $this->properties[ $provider ]['aspect_ratio'] ) ? $this->properties[ $provider ]['aspect_ratio'] : '16:9',
 			'autoplay'     => (bool)   $this->options['autoplay'],
+			'description'  => null,
+			'id'           => null,
+			'iframe_name'  => null,
 			'maxwidth'     => (int)    $this->options['video_maxwidth'],
 			'mode'         => (string) $this->options['mode'],
+			'parameters'   => null,
+			'thumbnail_srcset' => null,
+			'thumbnail'    => null,
+			'title'        => null,
 		);
+
+		$pairs = apply_filters( 'arve_shortcode_pairs', $pairs );
 
 		if( 'ted' == $provider ) {
 			$pairs['lang'] = null;
@@ -596,7 +596,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			);
 		}
 
-		if ( ! empty( $args['title'] ) && in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) && ! $args['hide_title'] ) {
+		if ( ! empty( $args['title'] ) && in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) && empty( $args['hide_title'] ) ) {
 			$meta .= '<h5 itemprop="name" class="arve-title">' . esc_html( trim( $args['title'] ) ) . '</h5>';
 		} elseif( ! empty( $args['title'] ) ) {
 			$meta .= sprintf( '<meta itemprop="name" content="%s">', esc_attr( trim( $args['title'] ) ) );
@@ -629,7 +629,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'<div %s>%s</div>',
 			Advanced_Responsive_Video_Embedder_Shared::attr( array(
 				'id'             => 'video-' . $args['element_id'],
-				'class'          => 'arve-wrapper ' . $args['align'],
+				'class'          => sprintf( 'arve-wrapper arve-hover-effect-%s %s', $args['hover_effect'], $args['align'] ),
 				'data-arve-grow' => ( 'lazyload' === $args['mode'] && $args['grow'] ) ? '' : null,
 				'data-arve-mode' => $args['mode'],
 				'style'          => empty( $args['maxwidth'] ) ? false : sprintf( 'max-width: %dpx;', $args['maxwidth'] ),

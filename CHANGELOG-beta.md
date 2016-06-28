@@ -4,17 +4,19 @@
 
 ### Pro Addon 1.9.14 Beta (everything since 1.4.0 Beta) ###
 
-* Fix: Screenfull error
-* Fix: Make the srcset youtube images to to protocol relative.
-* New: Responsive thumbnails using srcset the browser takes the best image resolution for the users device. This is automatic for
-* Fix: License API call.
 * New: Added support for displaying title of videos on top of the thumbnail images.
-* Improved: Rectangle animation. (thinking about removing it completely)
-* Improved: Updated lity (lightbox script) to version 1.5.1
+* New: Responsive thumbnails using srcset the browser takes the best image resolution for the users device. (HTML5 srcset)
+* New: Choose between 3 hover styles 'rectangle move in' (old), 'zoom image' or 'none'.
+* New: Choose beween 2 play button styles.
+* Fix: Screenfull error.
+* Fix: Make the srcset youtube images to to protocol relative.
+* Fix: License API call.
+* Improved: Rectangle animation.
+* Improved: Updated lity (lightbox script) to version 1.5.1.
 * Improved: Thumbnail handling.
 * Improved: Removed the 'Lazyload Maximal Width' setting to simplify things (there still is 'Maximal Width' and 'Aligned Maximal Width').
 * Improved: Removed the 'Fake Thumbnail' because I now think the entire idea was bad and real thumbnails should be used.
-* Dropped PHP Class
+* Dropped PHP Class.
 
 ### 7.1.0 Beta (everyting since 7.0.0 beta) ###
 

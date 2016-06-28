@@ -207,17 +207,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			),
 			array(
 				'hide_from_settings' => true,
-				'attr'  => 'hide_title',
-				'label' => esc_html__('Hide Title', 'advanced-responsive-video-embedder'),
-				'type'  => 'select',
-				'options' => array(
-					''    => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
-					'yes' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
-				),
-				'description' => esc_html__( 'Usefull when the thumbnail image already displays the video title. The title will still be used for SEO.' ),
-			),
-			array(
-				'hide_from_settings' => true,
 				'attr'  => 'description',
 				'label' => esc_html__('Description', 'advanced-responsive-video-embedder'),
 				'type'  => 'text',

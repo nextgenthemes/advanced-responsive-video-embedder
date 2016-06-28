@@ -110,7 +110,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 				ARVE_PRO_VERSION_REQUIRED,
 				'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/installing-and-license-management/'
 			);
-			new Advanced_Responsive_Video_Embedder_Admin_Notice_Factory(	'arve-pro-outdated', $msg, false );
+			new Advanced_Responsive_Video_Embedder_Admin_Notice_Factory(	'arve-pro-outdated', "<p>$msg</p>", false );
 		}
 	}
 
