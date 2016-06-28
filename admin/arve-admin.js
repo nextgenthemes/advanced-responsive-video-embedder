@@ -111,7 +111,11 @@
 
 	$( '#arve-btn' ).on( 'click', function(e) {
 		e.preventDefault();
-		open_arve_dialog();
+		if( $( '#arve-btn[data-arve-sui]' ).length ) {
+			open_arve_dialog();
+		} else {
+			alert( "ARVE needs the 'Shortcake (Shortcode UI)' plugin active for this fuctionality" );
+		}
 	} );
 
 	function open_arve_dialog() {

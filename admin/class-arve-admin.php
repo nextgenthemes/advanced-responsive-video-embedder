@@ -191,11 +191,11 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		$sui = is_plugin_active( 'shortcode-ui/shortcode-ui.php' );
 
 		printf(
-			'<button id="arve-btn" title="%s" data-arve-sui="%s" data-arve-mode="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
+			'<button id="arve-btn" title="%s" %s data-arve-mode="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
 			esc_attr__( 'ARVE Advanced Responsive Video Embedder', $this->plugin_slug ),
-			esc_attr( ( $sui ) ? 'true' : 'false' ),
+			$sui ? 'data-arve-sui' : '',
 			esc_attr( $this->options['mode'] ),
-			esc_html__( ( $sui ) ? 'Embed Video' : 'ARVE needs "Shortcake (Shortcode UI)" plugin installed', $this->plugin_slug )
+			esc_html__( 'Embed Video', $this->plugin_slug )
 		);
 	}
 
