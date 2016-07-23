@@ -605,6 +605,8 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			return array();
 		}
 
+		$output = array();
+
 		foreach ( $input as $key => $var ) {
 			$output[ $key ] = preg_replace( '!\s+!', '&', trim( $var ) );
 			$output[ $key ] = preg_replace( '!\s+!', '&', trim( $var ) );
