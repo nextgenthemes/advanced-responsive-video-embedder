@@ -239,8 +239,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 [Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/).
 
-
-### 6.4.6 ###
+### 6.5.0 ###
 
 * Fix: 'Undefined variable: css in ...'
 
