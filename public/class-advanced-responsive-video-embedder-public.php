@@ -1279,6 +1279,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 	*/
 	public function print_styles() {
 
+		$css = '';
+
 		if ( (int) $this->options["video_maxwidth"] > 0 ) {
 			$css .= sprintf( '.arve-wrapper { max-width: %dpx; }', $this->options['video_maxwidth'] );
 
