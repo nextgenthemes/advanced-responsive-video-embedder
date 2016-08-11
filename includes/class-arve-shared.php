@@ -40,46 +40,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'last_options_tab' => '#arve-settings-section-main',
 		);
 
-		$oldoldold['shortcodes'] = array(
-			'alugha'          => 'alugha',
-			'archiveorg'      => 'archiveorg',
-			'break'           => 'break',
-			'collegehumor'    => 'collegehumor',
-			'comedycentral'   => 'comedycentral',
-			'dailymotion'     => 'dailymotion',
-			'dailymotionlist' => 'dailymotionlist',
-			'facebook'        => 'facebook',
-			'flickr'          => 'flickr',
-			'funnyordie'      => 'funnyordie',
-			'gametrailers'    => 'gametrailers',
-			'iframe'          => 'iframe',
-			'ign'             => 'ign',
-			'kickstarter'     => 'kickstarter',
-			'klatv'           => 'klatv',
-			'liveleak'        => 'liveleak',
-			'livestream'      => 'livestream',
-			'metacafe'        => 'metacafe',
-			'movieweb'        => 'movieweb',
-			'mpora'           => 'mpora',
-			'myspace'         => 'myspace',
-			'myvideo'         => 'myvideo',
-			'snotr'           => 'snotr',
-			'spike'           => 'spike',
-			'ted'             => 'ted',
-			'twitch'          => 'twitch',
-			'ustream'         => 'ustream',
-			'veoh'            => 'veoh',
-			'vevo'            => 'vevo',
-			'viddler'         => 'viddler',
-			'video'           => 'arve_video',
-			'videojug'        => 'videojug',
-			'vimeo'           => 'vimeo',
-			'vine'            => 'vine',
-			'xtube'           => 'xtube',
-			'yahoo'           => 'yahoo',
-			'youtube'         => 'youtube',
-			'youtubelist'     => 'youtubelist', //* Deprecated
-		);
+
 
 		$properties = static::get_properties();
 		unset( $properties['video'] );

@@ -36,6 +36,7 @@
 * Improved: Better CSS to overwrite unwanted theme styles.
 * Improved: Lots if code improvements.
 * Improved: SSL enabled and forced when supported by provoders.
+* Fix: Blury Vimeo thumbnails
 * Fix: Prevent Dashboard Widget conflicts with WP Helpers plugin (possibly others). Thanks to Steve Bruner.
 * Fix: Issue with unwanted borders showing on embeds.
 * Fix: youtube.be URLs now detected correct in shortcode dialog.

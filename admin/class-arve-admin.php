@@ -103,7 +103,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 	public function action_admin_init_setup_messages() {
 
-		if( is_file( WP_PLUGIN_DIR . '/arve-pro/arve-pro.php' ) && ( ! defined( 'ARVE_PRO_VERSION' ) || version_compare( ARVE_PRO_VERSION_REQUIRED, ARVE_PRO_VERSION, '>' ) ) ) {
+		if( defined( 'ARVE_PRO_VERSION' ) && version_compare( ARVE_PRO_VERSION_REQUIRED, ARVE_PRO_VERSION, '>' ) ) {
 
 			$msg = sprintf(
 				__( 'Your ARVE Pro Addon is outdated, you need version %s or later. Please <a href="%s">look here</a> for manual updates if you run the beta version or your auto-updates do not work or are disabled.', $this->plugin_slug ),
