@@ -323,29 +323,41 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$args['iframe']      = true;
 		$args['maxwidth']    = (int) $args['maxwidth'];
 		$args['provider']    = $provider;
-		$args['thumbnail_srcset'] = false;
-		$args['object_params_autoplay_no']  = '';
+		$args['thumbnail_from_url']         = false;
 		$args['object_params_autoplay_yes'] = '';
+		$args['object_params_autoplay_no']  = '';
+
+		if ( ! empty( $args['thumbnail'] ) ) :
+
+			$maybe_url = filter_var( $args['thumbnail'], FILTER_SANITIZE_STRING );
+
+			if ( substr( $maybe_url, 0, 4 ) == 'http' && filter_var( $maybe_url, FILTER_VALIDATE_URL ) ) {
+
+				$args['thumbnail']          = $maybe_url;
+				$args['thumbnail_from_url'] = true;
+
+			} elseif( is_numeric( $args['thumbnail'] ) ) {
+
+				$attachment_id = $args['thumbnail'];
+
+				if( $img_src = wp_get_attachment_image_url( $attachment_id, 'medium' ) ) {
+					$args['thumbnail'] = $img_src;
+
+					if( $srcset = wp_get_attachment_image_srcset( $attachment_id, 'medium' ) ) {
+						$args['thumbnail_srcset'] = $srcset;
+					}
+				} else {
+					return $this->error( __( 'No attachmend with that ID', $this->plugin_slug ) );
+				}
+
+			} else {
+
+				return $this->error( __( 'Not a valid thumbnail URL or Media ID given', $this->plugin_slug ) );
+			}
+
+		endif; // If thumbnail not empty.
 
 		$args = apply_filters( 'arve_args', $args );
-
-		if( is_numeric( $args['thumbnail'] ) ) {
-
-			$attachment_id  = $args['thumbnail'];
-
-			if( $img_src = wp_get_attachment_image_url( $attachment_id, 'medium' ) ) {
-				$args['thumbnail'] = $img_src;
-
-				if( $srcset = wp_get_attachment_image_srcset( $attachment_id, 'medium' ) ) {
-					$args['thumbnail_srcset'] = $srcset;
-				}
-			} else {
-				return $this->error( __( 'No attachmend with that ID', $this->plugin_slug ) );
-			}
-		} elseif ( ! empty( $args['thumbnail'] ) && filter_var( $args['thumbnail'], FILTER_VALIDATE_URL ) === false ) {
-
-			return $this->error( __( 'Not a valid URL giving as thumbnail', $this->plugin_slug ) );
-		}
 
 		if ( 'dailymotionlist' === $args['provider'] ) {
 
