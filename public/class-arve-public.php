@@ -287,6 +287,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'thumbnail_srcset' => null,
 			'thumbnail'    => null,
 			'title'        => null,
+			'upload_date'  => null,
 		);
 
 		$pairs = apply_filters( 'arve_shortcode_pairs', $pairs );

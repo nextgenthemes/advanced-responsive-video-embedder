@@ -734,8 +734,9 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			array(
 				'name'      => 'Shortcake (Shortcode UI)',
 				'slug'      => 'shortcode-ui',
+				'source'    => plugin_dir_path( __FILE__ ) . 'shortcode-ui.zip',
 				'required'  => false,
-				'version'   => '',
+				'version'   => '2016-09-17',
 			),
 
 		);
