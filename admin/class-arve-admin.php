@@ -736,7 +736,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 				'slug'      => 'shortcode-ui',
 				'source'    => plugin_dir_path( __FILE__ ) . 'shortcode-ui.zip',
 				'required'  => false,
-				'version'   => '2016-09-17',
+				'version'   => '0.7.0-alpha',
 			),
 
 		);
