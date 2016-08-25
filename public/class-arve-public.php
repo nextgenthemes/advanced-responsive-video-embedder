@@ -284,7 +284,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'maxwidth'         => (int)    $this->options['video_maxwidth'],
 			'mode'             => (string) $this->options['mode'],
 			'parameters'       => null,
-			'thumbnail_srcset' => null,
 			'thumbnail'        => null,
 			'title'            => null,
 			'upload_date'      => null,
@@ -594,7 +593,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			$meta .= sprintf( '<meta itemprop="uploadDate" content="%s">', esc_attr( $args['upload_date'] ) );
 		}
 
-		if( ! empty( $args['thumbnail'] ) ) {
+		if( ! empty( $args['thumbnail'] ) ) :
 
 			if( in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ) {
 
@@ -616,11 +615,12 @@ class Advanced_Responsive_Video_Embedder_Public {
 					'<meta %s>',
 					Advanced_Responsive_Video_Embedder_Shared::attr( array(
 						'itemprop' => 'thumbnailUrl',
-						'src'      => $args['thumbnail'],
+						'content'  => $args['thumbnail'],
 					) )
 				);
 			}
-		}
+
+		endif;
 
 		if ( ! empty( $args['title'] ) && in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) && empty( $args['hide_title'] ) ) {
 			$meta .= '<h5 itemprop="name" class="arve-title">' . esc_html( trim( $args['title'] ) ) . '</h5>';
@@ -660,8 +660,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 				'data-arve-mode' => $args['mode'],
 				'style'          => empty( $args['maxwidth'] ) ? false : sprintf( 'max-width: %dpx;', $args['maxwidth'] ),
 				// Schema.org
-				'itemscope'    => '',
-				'itemtype'     => 'http://schema.org/VideoObject',
+				'itemscope'      => '',
+				'itemtype'       => 'http://schema.org/VideoObject',
 			) ),
 			$container . $arve_link
 		);
@@ -711,7 +711,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		$iframe_attr = array(
 			'class'           => empty( $args['iframe_class'] ) ? 'arve-inner' : $args['iframe_class'],
-			'name'            => empty( $args['iframe_name'] )  ? false : $args['iframe_name'],
+			'name'            => empty( $args['iframe_name'] )  ? false        : $args['iframe_name'],
 			#'style'           => empty( $args['iframe_style'] ) ? false : $args['iframe_style'],
 			'sandbox'         => $args['iframe_sandbox'],
 			'width'           => is_feed() ? 853 : false,
@@ -726,7 +726,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			$iframe_attr['sandbox'] = 'allow-scripts allow-same-origin allow-popups';
 		}
 
-		if ( ! empty( $properties[ $args['provider'] ]['flash_only'] ) ) {
+		if ( ! empty( $properties[ $args['provider'] ]['requires_flash'] ) ) {
 			$iframe_attr['sandbox'] = false;
 		}
 

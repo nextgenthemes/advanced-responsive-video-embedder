@@ -217,9 +217,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'attr'  => 'align_maxwidth',
 				'label' => esc_html__('Align Maximal Width', 'advanced-responsive-video-embedder'),
 				'type'  => 'number',
-				'meta'  => array(
-					'placeholder' => esc_attr__( 'Needed! Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
-				)
+				'description' => esc_attr__( 'In px, Needed! Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
 			),
 			array(
 				'hide_from_settings' => true,
@@ -489,7 +487,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'regex'          => 'https?://(?:www\.)?snotr\.com/(?:video|embed)/([0-9]+)',
 				'embed_url'      => 'http://www.snotr.com/embed/%s',
 				'auto_thumbnail' => false,
-				'flash_only'     => true,
+				'requires_flash'     => true,
 				'tests' => array(
 					'http://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is',
 				)
@@ -510,7 +508,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'embed_url'      => 'https://embed-ssl.ted.com/talks/%s.html',
 				'auto_thumbnail' => true,
 				'auto_title'     => true,
-				'flash_only'     => true,
+				'requires_flash'     => true,
 			),
 			'twitch' => array(
 				'regex'          => 'https?://(?:www\.)?twitch.tv/(?!directory)(?|[a-z0-9_]+/v/([0-9]+)|([a-z0-9_]+))',
@@ -547,6 +545,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'auto_thumbnail' => true,
 				'auto_title'     => true,
 				'aspect_ratio'   => '650:408',
+				'requires_flash'     => true,
 			),
 			'vidspot' => array(
 				'name'      => 'vidspot.net',
@@ -600,7 +599,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'regex'          => 'https?://(?:www\.)?xtube\.com/watch\.php\?v=([a-z0-9_\-]+)',
 				'embed_url'      => 'http://www.xtube.com/embedded/user/play.php?v=%s',
 				'auto_thumbnail' => false,
-				'flash_only'     => true,
+				'requires_flash'     => true,
 			),
 			'youku' => array(
 				# <iframe height=498 width=510 src="http://player.youku.com/embed/XMTUyODYwOTc4OA==" frameborder=0 allowfullscreen></iframe>
@@ -608,7 +607,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'embed_url'      => 'http://player.youku.com/embed/%s',
 				'auto_thumbnail' => false,
 				'aspect_ratio'   => '510:498',
-				'flash_only'     => true,
+				'requires_flash'     => true,
 			),
 			'youtube' => array(
 				'name'           => 'YouTube',
