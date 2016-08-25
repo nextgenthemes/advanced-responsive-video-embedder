@@ -245,7 +245,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		$out = sprintf( '<input %s>', Advanced_Responsive_Video_Embedder_Shared::attr( $args['input_attr'] ) );
 
-		if ( ! empty( $args['option_values']['attr'] ) &&'thumbnail_fallback' == $args['option_values']['attr'] ) {
+		if ( ! empty( $args['option_values']['attr'] ) && 'thumbnail_fallback' == $args['option_values']['attr'] ) {
 
 			// jQuery
 			wp_enqueue_script('jquery');
@@ -579,7 +579,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		$output['promote_link'] = ( 'yes' == $input['promote_link'] ) ? true : false;
 		$output['autoplay']     = ( 'yes' == $input['autoplay'] )     ? true : false;
-		$output['sandbox']      = ( 'yes' == $input['sandbox'] )      ? true : false;
 
 		#dd($input['promote_link']);
 

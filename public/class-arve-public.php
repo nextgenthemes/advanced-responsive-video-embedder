@@ -274,20 +274,20 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		$pairs = array(
-			'align'        => (string) $this->options['align'],
-			'arve_link'    => (string) $this->options['promote_link'],
-			'aspect_ratio' => isset( $this->properties[ $provider ]['aspect_ratio'] ) ? $this->properties[ $provider ]['aspect_ratio'] : '16:9',
-			'autoplay'     => (bool)   $this->options['autoplay'],
-			'description'  => null,
-			'id'           => null,
-			'iframe_name'  => null,
-			'maxwidth'     => (int)    $this->options['video_maxwidth'],
-			'mode'         => (string) $this->options['mode'],
-			'parameters'   => null,
+			'align'            => (string) $this->options['align'],
+			'arve_link'        => (string) $this->options['promote_link'],
+			'aspect_ratio'     => isset( $this->properties[ $provider ]['aspect_ratio'] ) ? $this->properties[ $provider ]['aspect_ratio'] : '16:9',
+			'autoplay'         => (bool)   $this->options['autoplay'],
+			'description'      => null,
+			'id'               => null,
+			'iframe_name'      => null,
+			'maxwidth'         => (int)    $this->options['video_maxwidth'],
+			'mode'             => (string) $this->options['mode'],
+			'parameters'       => null,
 			'thumbnail_srcset' => null,
-			'thumbnail'    => null,
-			'title'        => null,
-			'upload_date'  => null,
+			'thumbnail'        => null,
+			'title'            => null,
+			'upload_date'      => null,
 		);
 
 		$pairs = apply_filters( 'arve_shortcode_pairs', $pairs );
@@ -320,10 +320,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$args[ $key ] = trim( $value );
 		}
 
-		$args['element_id']  = preg_replace( '/[^-a-zA-Z0-9]+/', '', $args['id'] );
-		$args['iframe']      = true;
-		$args['maxwidth']    = (int) $args['maxwidth'];
-		$args['provider']    = $provider;
+		$args['element_id']                 = preg_replace( '/[^-a-zA-Z0-9]+/', '', $args['id'] );
+		$args['iframe']                     = true;
+		$args['maxwidth']                   = (int) $args['maxwidth'];
+		$args['provider']                   = (string) $provider;
 		$args['thumbnail_from_url']         = false;
 		$args['object_params_autoplay_yes'] = '';
 		$args['object_params_autoplay_no']  = '';
@@ -596,17 +596,30 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		if( ! empty( $args['thumbnail'] ) ) {
 
-			$meta .= sprintf(
-				'<img %s>',
-				Advanced_Responsive_Video_Embedder_Shared::attr( array(
-					'class'    => 'arve-thumbnail arve-inner',
-					'itemprop' => 'thumbnailUrl',
-					'src'      => $args['thumbnail'],
-					'srcset'   => $args['thumbnail_srcset'],
-					#'sizes'    => '(max-width: 700px) 100vw, 1280px',
-					'alt'      => __( 'Video Thumbnail', 'advanced-responsive-video-embedder' ),
-				) )
-			);
+			if( in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ) {
+
+				$meta .= sprintf(
+					'<img %s>',
+					Advanced_Responsive_Video_Embedder_Shared::attr( array(
+						'class'    => 'arve-thumbnail arve-inner',
+						'itemprop' => 'thumbnailUrl',
+						'src'      => $args['thumbnail'],
+						'srcset'   => $args['thumbnail_srcset'],
+						#'sizes'    => '(max-width: 700px) 100vw, 1280px',
+						'alt'      => __( 'Video Thumbnail', 'advanced-responsive-video-embedder' ),
+					) )
+				);
+
+			} else {
+
+				$meta .= sprintf(
+					'<meta %s>',
+					Advanced_Responsive_Video_Embedder_Shared::attr( array(
+						'itemprop' => 'thumbnailUrl',
+						'src'      => $args['thumbnail'],
+					) )
+				);
+			}
 		}
 
 		if ( ! empty( $args['title'] ) && in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) && empty( $args['hide_title'] ) ) {
@@ -697,10 +710,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$properties = Advanced_Responsive_Video_Embedder_Shared::get_properties();
 
 		$iframe_attr = array(
-			'class'           => isset( $args['iframe_class'] ) ? $args['iframe_class'] : 'arve-inner',
+			'class'           => empty( $args['iframe_class'] ) ? 'arve-inner' : $args['iframe_class'],
 			'name'            => empty( $args['iframe_name'] )  ? false : $args['iframe_name'],
-			'style'           => empty( $args['iframe_style'] ) ? false : $args['iframe_style'],
-			'sandbox'         => ( $options['sandbox'] && empty( $properties[ $args['provider'] ]['flash_only'] ) ) ? 'allow-scripts allow-same-origin' : false,
+			#'style'           => empty( $args['iframe_style'] ) ? false : $args['iframe_style'],
+			'sandbox'         => $args['iframe_sandbox'],
 			'width'           => is_feed() ? 853 : false,
 			'height'          => is_feed() ? 480 : false,
 			'allowfullscreen' => '',
@@ -708,6 +721,14 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'scrolling'       => 'no',
 			'security'        => 'restricted',
 		);
+
+		if ( empty( $args['iframe_sandbox'] ) ) {
+			$iframe_attr['sandbox'] = 'allow-scripts allow-same-origin allow-popups';
+		}
+
+		if ( ! empty( $properties[ $args['provider'] ]['flash_only'] ) ) {
+			$iframe_attr['sandbox'] = false;
+		}
 
 		if ( in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ) {
 			$iframe_attr['src'] = $args['src_autoplay_yes'];

@@ -40,8 +40,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'last_options_tab' => '#arve-settings-section-main',
 		);
 
-
-
 		$properties = static::get_properties();
 		unset( $properties['video'] );
 
@@ -222,17 +220,6 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'meta'  => array(
 					'placeholder' => esc_attr__( 'Needed! Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
 				)
-			),
-			array(
-				'hide_from_sc'   => true,
-				'attr'  => 'sandbox',
-				'label' => esc_html__('Use Sandbox', 'advanced-responsive-video-embedder'),
-				'type'  => 'select',
-				'options' => array(
-					'yes' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
-					'no'  => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
-				),
-				'description' => esc_html__( 'Use HTML5 sandboxed iframes to prevent users from navigating away from your site by clicking links inside video embeds. (does not work with all providers)' ),
 			),
 			array(
 				'hide_from_settings' => true,
@@ -523,6 +510,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'embed_url'      => 'https://embed-ssl.ted.com/talks/%s.html',
 				'auto_thumbnail' => true,
 				'auto_title'     => true,
+				'flash_only'     => true,
 			),
 			'twitch' => array(
 				'regex'          => 'https?://(?:www\.)?twitch.tv/(?!directory)(?|[a-z0-9_]+/v/([0-9]+)|([a-z0-9_]+))',
@@ -614,7 +602,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'auto_thumbnail' => false,
 				'flash_only'     => true,
 			),
-			'youku'=> array(
+			'youku' => array(
 				# <iframe height=498 width=510 src="http://player.youku.com/embed/XMTUyODYwOTc4OA==" frameborder=0 allowfullscreen></iframe>
 				'regex'          => 'https?://(?:www\.)?youku.com/v_show/id_([a-z0-9]+)',
 				'embed_url'      => 'http://player.youku.com/embed/%s',
