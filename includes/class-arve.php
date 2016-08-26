@@ -45,7 +45,7 @@ class Advanced_Responsive_Video_Embedder {
 	public function __construct() {
 
 		$this->plugin_slug = 'advanced-responsive-video-embedder';
-		$this->version = '7.2.1';
+		$this->version = '7.2.2';
 
 		$this->load_dependencies();
 		$this->set_locale();
