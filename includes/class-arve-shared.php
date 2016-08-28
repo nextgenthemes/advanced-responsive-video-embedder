@@ -300,10 +300,11 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'auto_thumbnail' => false,
 			),
 			'break' => array(
-				'regex'          => 'https?://(?:www\.)?break\.com/video/(?:[a-z\-]+)-([0-9]+)',
+				'regex'          => 'https?://(?:www\.)?break\.com/video/(?:[a-z0-9/-]+)-([0-9]+)$',
 				'embed_url'      => 'http://break.com/embed/%s',
 				'default_params' => 'embed=1',
 				'auto_thumbnail' => false,
+				'requires_flash' => true,
 				'tests' => array(
 					'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591',
 				)
@@ -323,6 +324,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'embed_url'      => 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:%s',
 				'no_url_embeds'  => true,
 				'auto_thumbnail' => false,
+				'requires_flash' => true,
 				'tests' => array(
 					'[comedycentral id="c80adf02-3e24-437a-8087-d6b77060571c"]',
 				)
@@ -432,6 +434,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'embed_url'      => 'https://livestream.com/accounts/%s/player',
 				'default_params' => 'utm_source=lsplayer&utm_medium=embed&height=720&width=1280',
 				'auto_thumbnail' => false,
+				'requires_flash'     => true,
 			),
 			'klatv' => array(
 				'regex'          => 'https?://(?:www\.)?kla(?:gemauer)?.tv/([0-9]+)',
@@ -474,6 +477,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 					'https://myspace.com/myspace/video/dark-rooms-the-shadow-that-looms-o-er-my-heart-live-/109471212',
 				)
 			),
+			/*
 			'myvideo' => array(
 				'name'           => 'MyVideo',
 				'regex'          => 'https?://(?:www\.)?myvideo\.de/(?:watch|embed)/([0-9]+)',
@@ -483,6 +487,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 					'http://www.myvideo.de/watch/8432624/Angeln_mal_anders',
 				)
 			),
+			*/
 			'snotr' => array(
 				'regex'          => 'https?://(?:www\.)?snotr\.com/(?:video|embed)/([0-9]+)',
 				'embed_url'      => 'http://www.snotr.com/embed/%s',
@@ -498,6 +503,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'embed_url'      => 'http://media.mtvnservices.com/embed/mgid:arc:video:spike.com:%s',
 				'no_url_embeds'  => true,
 				'auto_thumbnail' => false,
+				'requires_flash' => true,
 				'tests' => array(
 					'[spike id="5afddf30-31d8-40fb-81e6-bb5c6f45525f"]',
 				)
@@ -508,7 +514,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'embed_url'      => 'https://embed-ssl.ted.com/talks/%s.html',
 				'auto_thumbnail' => true,
 				'auto_title'     => true,
-				'requires_flash'     => true,
+				'requires_flash' => true,
 			),
 			'twitch' => array(
 				'regex'          => 'https?://(?:www\.)?twitch.tv/(?!directory)(?|[a-z0-9_]+/v/([0-9]+)|([a-z0-9_]+))',
@@ -521,6 +527,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'default_params' => 'html5ui',
 				'auto_thumbnail' => false,
 				'aspect_ratio'   => '480:270',
+				'requires_flash' => true,
 			),
 			'veoh' => array(
 				'regex'          => 'https?://(?:www\.)?veoh\.com/watch/([a-z0-9]+)',
@@ -550,19 +557,9 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'vidspot' => array(
 				'name'      => 'vidspot.net',
 				'regex'     => 'https?://(?:www\.)?vidspot.net/([a-z0-9]+)',
-				'embed_url' => 'https://allmyvideos.net/embed-otqf1jt18mif.html',
+				'embed_url' => 'http://vidspot.net/embed-%s.html',
+				'requires_flash' => true,
 			),
-			/*
-			'videojug' => array(
-				'regex'	         => 'https?://(?:www\.)?videojug\.com\/embed\/([a-z0-9\-]{36})',
-				'embed_url'      => 'http://www.videojug.com/embed/%s',
-				'no_url_embeds'  => true,
-				'auto_thumbnail' => false,
-				'tests' => array(
-					'[videojug id="fa15cafd-556f-165b-d660-ff0008c90d2d"]',
-				)
-			),
-			*/
 			'vine' => array(
 				'regex'          => 'https?://(?:www\.)?vine\.co/v/([a-z0-9]+)',
 				'embed_url'      => 'https://vine.co/v/%s/embed/simple',
@@ -613,7 +610,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'name'           => 'YouTube',
 				'regex'          => 'https?://(?:www\.)?(?:youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v\=))|youtu\.be\/)([a-zA-Z0-9_-]{6,11}((?:\?|&)list=[a-z0-9_\-]+)?)',
 				'embed_url'      => 'https://www.youtube-nocookie.com/embed/%s',
-				'default_params' => 'wmode=transparent&iv_load_policy=3&modestbranding=1&rel=0&autohide=1',
+				'default_params' => 'iv_load_policy=3&modestbranding=1&rel=0&autohide=1&playsinline=1',
 				'auto_thumbnail' => true,
 				'auto_title'     => true,
 				'tests' => array(
@@ -788,6 +785,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'default_params'    => '',
 				'auto_thumbnail'    => false,
 				'wmode_transparent' => false,
+				'requires_flash'    => true,
 				'tests' => array(
 					__('This plugin allows iframe embeds for every URL by using this <code>[iframe]</code> shortcode. This should only be used for providers not supported by this via a named shortcode. The result is a 16:9 resonsive iframe by default, aspect ratio can be changed as usual.', 'advanced-responsive-video-embedder'),
 					'[iframe src="http://example.com/" aspect_ratio="1:1"]',

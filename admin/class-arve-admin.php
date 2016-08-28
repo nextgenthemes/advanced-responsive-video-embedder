@@ -73,28 +73,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	public function enqueue_scripts() {
 
 		wp_enqueue_script( $this->plugin_slug, plugin_dir_url( __FILE__ ) . 'arve-admin.js', array( 'jquery' ), $this->version, true );
-
-		/*
-		$regex_list = Advanced_Responsive_Video_Embedder_Shared::get_regex_list();
-
-		foreach ( $regex_list as $provider => $regex ) {
-
-			if ( $provider != 'ign' ) {
-
-				$regex = str_replace( array( 'https?://(?:www\.)?', 'http://' ), '', $regex );
-			}
-
-			$regex_list[ $provider ] = $regex;
-		}
-
-		wp_localize_script( $this->plugin_slug, 'arve_regex_list', $regex_list );
-
-		foreach( $this->options['shortcodes'] as $provider_id => $provider_shortcode ) {
-			$shortcodes[ $provider_id ] = $provider_shortcode;
-		}
-
-		wp_localize_script( $this->plugin_slug, 'arve_shortcodes', $shortcodes );
-		*/
 	}
 
 	public function enqueue_shortcode_ui_scripts() {
@@ -112,6 +90,13 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			);
 			new Advanced_Responsive_Video_Embedder_Admin_Notice_Factory(	'arve-pro-outdated', "<p>$msg</p>", false );
 		}
+
+		$msg = sprintf(
+			__( 'Your ARVE Pro Addon is outdated, you need version %s or later. Please <a href="%s">look here</a> for manual updates if you run the beta version or your auto-updates do not work or are disabled.', $this->plugin_slug ),
+			ARVE_PRO_VERSION_REQUIRED,
+			'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/installing-and-license-management/'
+		);
+
 	}
 
 	/**

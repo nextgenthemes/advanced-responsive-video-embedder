@@ -30,7 +30,7 @@ class Advanced_Responsive_Video_Embedder_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-		
+
 		add_option( 'arve_install_date', current_time( 'timestamp' ) );
 	}
 }

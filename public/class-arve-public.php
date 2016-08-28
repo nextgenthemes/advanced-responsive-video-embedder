@@ -739,10 +739,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$iframe = sprintf( '<iframe %s></iframe>', Advanced_Responsive_Video_Embedder_Shared::attr( $iframe_attr ) );
 
 		if ( in_array( $args['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ) {
-			return "<!--$iframe-->";
-		} else {
-			return $iframe;
+			$iframe = '<script type="text/html" class="arve-lazyload">' . $iframe . '</script>';
 		}
+
+		return $iframe;
 	}
 
 	public static function create_video( $args ) {
@@ -835,12 +835,13 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$out .= '<th>Provider</th>';
 		$out .= '<th>URL</th>';
 		$out .= '<th>SSL</th>';
+		$out .= '<th>Requires Flash</th>';
 		$out .= '<th>Auto Thumbnail<br>(Pro Addon)</th>';
 		$out .= '<th>Auto Title<br>(Pro Addon)</th>';
 		$out .= '</tr>';
 		$out .= '<tr>';
 		$out .= '<td></td>';
-		$out .= '<td colspan="4"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/">All providers with responsive iframe embed codes</a></td>';
+		$out .= '<td colspan="5"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/">All providers with responsive iframe embed codes</a></td>';
 		$out .= '</tr>';
 
 		$count = 1;
@@ -855,6 +856,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			$out .= sprintf( '<td>%s</td>', esc_html( $values['name'] ) );
 			$out .= sprintf( '<td>%s</td>', ( ! isset( $values['embed_url'] ) || ( isset( $values['no_url_embeds'] ) && $values['no_url_embeds'] ) ) ? '' : '&#x2713;' );
 			$out .= sprintf( '<td>%s</td>', ( isset( $values['embed_url'] ) && Advanced_Responsive_Video_Embedder_Shared::starts_with( $values['embed_url'], 'https' ) ) ? '&#x2713;' : '' );
+			$out .= sprintf( '<td>%s</td>', ! empty( $values['requires_flash'] ) ? '&#x2713;' : '' );
 			$out .= sprintf( '<td>%s</td>', ( isset( $values['auto_thumbnail'] ) && $values['auto_thumbnail'] ) ? '&#x2713;' : '' );
 			$out .= sprintf( '<td>%s</td>', ( isset( $values['auto_title'] )     && $values['auto_title'] )     ? '&#x2713;' : '' );
 			$out .= '</tr>';
@@ -862,7 +864,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		$out .= '<tr>';
 		$out .= '<td></td>';
-		$out .= '<td colspan="4"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/">All providers with responsive iframe embed codes</a></td>';
+		$out .= '<td colspan="5"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/">All providers with responsive iframe embed codes</a></td>';
 		$out .= '</tr>';
 		$out .= '</table>';
 
@@ -871,7 +873,11 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 	public function shortcode_arve_params( $args, $content = null ) {
 
-		$settings = Advanced_Responsive_Video_Embedder_Shared::get_settings_definitions();
+		$attrs = Advanced_Responsive_Video_Embedder_Shared::get_settings_definitions();
+
+		if( function_exists( 'arve_pro_get_settings_definitions' ) ) {
+			$attrs = array_merge( $attrs, arve_pro_get_settings_definitions() );
+		}
 
 		$out  = '<table class="table table-hover table-arve-params">';
 	  $out .= '<tr>';
@@ -879,7 +885,11 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$out .= '<th>Function</th>';
 		$out .= '</tr>';
 
-		foreach ( $settings as $key => $values ) {
+		foreach ( $attrs as $key => $values ) {
+
+			if ( ! empty( $values['hide_from_shortcode'] ) ) {
+				continue;
+			}
 
 			$desc = '';
 			unset( $values['options'][''] );
