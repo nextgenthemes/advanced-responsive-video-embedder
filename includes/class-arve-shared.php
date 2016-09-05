@@ -85,7 +85,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			if( ! empty( $values['auto_title'] ) && $values['auto_title'] ) {
 				$auto_title[] = $values['name'];
 			}
-			if( empty( $values['url'] ) || ! $values['url'] ) {
+			if( empty( $values['embed_url'] ) || ! $values['embed_url'] ) {
 				$embed_code_only[] = $values['name'];
 			}
 		}

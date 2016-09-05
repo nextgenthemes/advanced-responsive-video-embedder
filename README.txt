@@ -165,7 +165,7 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 
 Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) for more details on the plugin.
 
-Please report issues on [community.nextgenthemes.com](https://community.nextgenthemes.com/) **and not on the wordpress.org forums.**
+Please report issues on [nextgenthemes.com/support/](https://nextgenthemes.com/support/) **and not on the wordpress.org forums.**
 
 
 <h3>Reviews</h3>
@@ -201,7 +201,7 @@ Please refer to [codex.wordpress.org/Managing_Plugins#Automatic_Plugin_Installat
 
 ### I have a problem ... ###
 
-Please report it on [community.nextgenthemes.com](https://community.nextgenthemes.com) **and plaese not on the wordpess.org forums, thanks.**
+Please report it on [nextgenthemes.com/support/](https://nextgenthemes.com/support/) **and plaese not on the wordpess.org forums, thanks.**
 
 ### How to get the pro version working? ###
 
@@ -258,7 +258,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ### Pro Addon 1.4.1
 
-* Fixed critical bug for auto updates. Please [click here](https://community.nextgenthemes.com/915/add-wont-update-wordpress-says-download-failed-unauthorized?show=1053#a1053) if your update fails.
+* Fixed critical bug for auto updates. Please [click here](https://nextgenthemes.com/support/915/add-wont-update-wordpress-says-download-failed-unauthorized?show=1053#a1053) if your update fails.
 
 ### 6.3.9 ###
 

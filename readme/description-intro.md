@@ -6,4 +6,4 @@ Simple &bull; Lightweight &bull; Responsive &bull; Customizable
 
 Please check the [migration guide](https://nextgenthemes.com/?p=1875) after updating to version 6.0.0+.
 
-Please report issues on [community.nextgenthemes.com](https://community.nextgenthemes.com/) **and not on the wordpress.org forums.**
+Please report issues on [nextgenthemes.com/support/](https://nextgenthemes.com/support/) **and not on the wordpress.org forums.**

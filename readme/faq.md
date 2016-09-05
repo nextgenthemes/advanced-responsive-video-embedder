@@ -2,7 +2,7 @@
 
 ### I have a problem ... ###
 
-Please report it on [community.nextgenthemes.com](https://community.nextgenthemes.com) **and plaese not on the wordpess.org forums, thanks.**
+Please report it on [nextgenthemes.com/support/](https://nextgenthemes.com/support/) **and plaese not on the wordpess.org forums, thanks.**
 
 ### How to get the pro version working? ###
 

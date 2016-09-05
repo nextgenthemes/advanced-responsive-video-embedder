@@ -1,8 +1,46 @@
 ## Changelog ##
 
-### Version 7 is coming ###
+### Pro Addon 2.2.1 beta - 2016-09-7 ###
 
-[Please help testing the beta versions](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/).
+* New: Added support for displaying title of videos on top of the thumbnail images.
+* New: Responsive thumbnails using srcset the browser takes the best image resolution for the users device. (HTML5 srcset)
+* New: Choose between 3 hover styles 'rectangle move in' (old), 'zoom image' or 'none'.
+* New: Choose beween 2 play button styles.
+* Fix: Screenfull error.
+* Fix: License API call.
+* Improved: Rectangle animation.
+* Improved: Updated 'lity' lightbox script.
+* Improved: Thumbnail handling.
+* Improved: Removed the 'Lazyload Maximal Width' setting to simplify things (there still is 'Maximal Width' and 'Aligned Maximal Width').
+* Improved: Removed the 'Fake Thumbnail' feature because the entire idea was bad and real thumbnails should be used.
+* Dropped PHP Class.
+
+### 7.2.5 beta - 2016-09-7 ###
+
+* New: Recommend and guide to users to install [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) via [TGMPA](http://tgmpluginactivation.com/)
+* New: Amazing catch-all shortcode [arve url="..."] that can be used for all supported providers and even with any iframe `src` if all unlisted providers that support responsive iframe embeds.
+* New: Support for kla.tv.
+* New: Support for youku (fulfilled request)
+* New: New Advanced Shortcode Dialog with nice UI for choose thumbnails from your WP Media Gallery, very detailed helping texts, display of default settings, hiding of fields based on need ...
+* New: WYSIWYG Preview of Shortcodes.
+* New: The two above features need the [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) Plugin that is maybe moving into WordPress core later.
+* New: A default alignment can now be set in the Settings page. (fulfilled request)
+* New: 'iframe_name' shortcode parameter for `<iframe name="xxxxx"`, useful when wanting to target ARVE embeds with links. (fulfilled request)
+* New: ARVE is now SEO friendly giving you the ability to add some schema.org microdata. Googles tools should not complain anymore if you add title, description and upload date. (fulfilled request)
+* Deleted Language files in favor of [wordpress.org managed translations](https://translate.wordpress.org/projects/wp-plugins/advanced-responsive-video-embedder/dev) volunteers are welcome ;)
+* Improved: Got rid of PHP globals.
+* Improved: Added image upload dialog to settings page and shortcode dialog.
+* Improved: Better CSS to overwrite unwanted theme styles.
+* Improved: Lots if code improvements.
+* Improved: SSL enabled and forced when supported by provoders.
+* Fix: Blury Vimeo thumbnails
+* Fix: Prevent Dashboard Widget conflicts with WP Helpers plugin (possibly others). Thanks to Steve Bruner.
+* Fix: Issue with unwanted borders showing on embeds.
+* Fix: youtube.be URLs now detected correct in shortcode dialog.
+* Fix: All Vevo URLs are now detected correctly.
+* Fix: Bool options settings.
+* Removed blip because the service was shutdown.
+* Removed myvideo.de because the service was restructured.
 
 ### 6.4.0 ###
 
@@ -23,7 +61,7 @@
 
 ### Pro Addon 1.4.1
 
-* Fixed critical bug for auto updates. Please [click here](https://community.nextgenthemes.com/915/add-wont-update-wordpress-says-download-failed-unauthorized?show=1053#a1053) if your update fails.
+* Fixed critical bug for auto updates. Please [click here](https://nextgenthemes.com/support/915/add-wont-update-wordpress-says-download-failed-unauthorized?show=1053#a1053) if your update fails.
 
 ### 6.3.9 ###
 

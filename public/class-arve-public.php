@@ -841,7 +841,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$out .= '</tr>';
 		$out .= '<tr>';
 		$out .= '<td></td>';
-		$out .= '<td colspan="5"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/">All providers with responsive iframe embed codes</a></td>';
+		$out .= '<td colspan="5"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/#general-iframe-embedding">All providers with responsive iframe embed codes</a></td>';
 		$out .= '</tr>';
 
 		$count = 1;
@@ -864,7 +864,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		$out .= '<tr>';
 		$out .= '<td></td>';
-		$out .= '<td colspan="5"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/">All providers with responsive iframe embed codes</a></td>';
+		$out .= '<td colspan="5"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/#general-iframe-embedding">All providers with responsive iframe embed codes</a></td>';
 		$out .= '</tr>';
 		$out .= '</table>';
 
