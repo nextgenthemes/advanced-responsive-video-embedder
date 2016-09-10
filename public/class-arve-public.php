@@ -93,6 +93,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 	public function shortcode_arve( $atts ) {
 
+		$atts = apply_filters( 'arve_atts', $atts );
+
 		if ( empty( $atts['url'] ) ) {
 			return $this->error( __( 'Missing url shortcode attribute', $this->plugin_slug ) );
 		}
@@ -430,7 +432,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 				break;
 			default:
 				return $this->error( sprintf( __( 'Autoplay <code>%s</code> not valid', $this->plugin_slug ), $args['autoplay'] ) );
-				break;
 		}
 
 		if ( isset( $this->properties[ $args['provider'] ]['embed_url'] ) ) {

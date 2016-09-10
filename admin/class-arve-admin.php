@@ -92,9 +92,9 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		}
 
 		$msg = sprintf(
-			__( '<p>Thanks for using and updating <abbr title="Advanced Responsive Video Embedder">ARVE</abbr>, this was a HUGE update please read about <a href="%s" target="_blank">what is new here</a>. You will see a message about a recommended plugin "Shortcode UI / Shortcake" that is bundled within ARVE its needed for the new shortcode dialog and and the new WYSIWYG Feature for shortcodes inside the post editor. If you do not want that then you can dismiss the install and manually write shortcodes or use URLs. Many thanks to all the beta testers, I will send out free discounts soon.</p>
-			<p>I was still scared to release this as there were so many changes and I still cant guarantee that it will work without new problems on all your themes and plugins combinations out there. I am afraid of bad rating and people flooding me with complaints that they dont like the changes, that I broke their sites or something. But at some point there has to be a release. Please download the <a href="%s" target="_blank">old version here</a>, if you have big problems and need a quick fix please downgrade ARVE (delete and reinstall with the .zip file) and report any problems <a href="%s" target="_blank">here.</a></p>', $this->plugin_slug ),
-			'https://nextgenthemes.com/whats-new-in-version-7.0/',
+			__( '<p>Thanks for using and updating <abbr title="Advanced Responsive Video Embedder">ARVE</abbr>, this was a HUGE update please read about <a href="%s" target="_blank">what is new here</a>. You will see a message about a highly recommended plugin "Shortcode UI / Shortcake" that is bundled within ARVE its needed for the new shortcode dialog and and the new WYSIWYG feature for shortcodes inside the post editor. If you do not want that then you can dismiss the install and manually write shortcodes or use URLs. Many thanks to all the beta testers, I will send out free discounts soon.</p>
+			<p>I was still scared to release this as there were so many changes and I still cant guarantee that it will work without new problems on all your themes and plugins combinations out there. I am afraid of bad rating and people flooding me with complaints that they dont like the changes, that I broke their sites or something. But at some point there has to be a release. Please download the <a href="%s" target="_blank">old version here now</a>, if you have big problems and need a quick fix please downgrade ARVE (delete and reinstall with the .zip file) and report any problems <a href="%s" target="_blank">here.</a></p>', $this->plugin_slug ),
+			'https://nextgenthemes.com/highlights-of-arve-version-7/',
 			'https://nextgenthemes.com/arve-version-6.5.0.zip',
 			'https://nextgenthemes.com/support/'
 		);
@@ -144,16 +144,6 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	public function add_action_links( $links ) {
 
-		$extra_linksss = array(
-			'settings'      => sprintf( '<a href="%s">%s</a>', admin_url( "options-general.php?page={$this->plugin_slug}" ), __( 'Settings', $this->plugin_slug ) ),
-			'buy_pro_addon' => sprintf(
-				'<a href="%s"><strong style="display: inline;">%s</strong></a>',
-				'http://nextgenthemes.com/downloads/advanced-responsive-video-embedder',
-				__( 'Buy Pro Addon', $this->plugin_slug )
-			),
-			'donate'       => sprintf( '<a href="%s">%s</a>', 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC', __( 'Donate', $this->plugin_slug ) ),
-		);
-
 		if( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
 
 			$extra_links['buy_pro_addon'] = sprintf(
@@ -163,8 +153,8 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			);
 		}
 
+		$extra_links['donate']   = sprintf( '<a href="%s"><strong style="display: inline;">%s</strong></a>', 'https://nextgenthemes.com/donate/', __( 'Donate', $this->plugin_slug ) );
 		$extra_links['settings'] = sprintf( '<a href="%s">%s</a>', admin_url( "options-general.php?page={$this->plugin_slug}" ), __( 'Settings', $this->plugin_slug ) );
-		$extra_links['donate']   = sprintf( '<a href="%s">%s</a>', 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC', __( 'Donate', $this->plugin_slug ) );
 
 		return array_merge( $extra_links, $links );
 	}

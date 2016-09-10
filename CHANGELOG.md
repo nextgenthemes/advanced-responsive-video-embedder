@@ -1,6 +1,6 @@
 ## Changelog ##
 
-### Pro Addon 2.2.1 beta - 2016-09-7 ###
+### Pro Addon 2.2.1 beta - 2016-09-07 ###
 
 * New: Added support for displaying title of videos on top of the thumbnail images.
 * New: Responsive thumbnails using srcset the browser takes the best image resolution for the users device. (HTML5 srcset)
@@ -15,7 +15,7 @@
 * Improved: Removed the 'Fake Thumbnail' feature because the entire idea was bad and real thumbnails should be used.
 * Dropped PHP Class.
 
-### 7.2.5 beta - 2016-09-7 ###
+### 7.2.5 beta - 2016-09-07 ###
 
 * New: Recommend and guide to users to install [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) via [TGMPA](http://tgmpluginactivation.com/)
 * New: Amazing catch-all shortcode [arve url="..."] that can be used for all supported providers and even with any iframe `src` if all unlisted providers that support responsive iframe embeds.
