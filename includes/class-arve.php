@@ -174,9 +174,9 @@ class Advanced_Responsive_Video_Embedder {
 
 		$plugin_public = new Advanced_Responsive_Video_Embedder_Public( $this->get_plugin_slug(), $this->get_version() );
 
-		$this->loader->add_action( 'init', $plugin_public, 'oembed_remove_providers', 99 );
-		$this->loader->add_action( 'init', $plugin_public, 'create_shortcodes', 99 );
-		$this->loader->add_action( 'init', $plugin_public, 'create_url_handlers', 99 );
+		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'oembed_remove_providers', 999 );
+		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'create_shortcodes', 999 );
+		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'create_url_handlers', 999 );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'register_scripts', 0 );
