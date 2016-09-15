@@ -3,14 +3,16 @@ Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: video, responsive, embed, video-embedder, iframe, minimal, lightweight, simplicity, shortcodes, Youtube, Blip, Dailymotion, Videojug, Collegehumor, Veoh, Break, Movieweb, Snotr, Gametrailers, Vimeo, Viddler, Funnyordie, Myspace, Liveleak, Metacafe, Myvideo, Yahoo Screen, Spike
 Requires at least: 3.3.2
-Tested up to: 4.6.0
+Tested up to: 4.6.1
 Stable tag: trunk
 License: GPL 3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement for WordPress' default embeds. Best plugin for videos?
 
+
 ## Description ##
+
 
 <p class="lead">The best WordPress plugin for videos? Supports close to everything you can imagine, still keeping it easy &amp; simple.</p>
 
@@ -18,13 +20,15 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 
 <p>Simple &bull; Lightweight &bull; Responsive &bull; Customizable</p>
 
+
 Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) for more details on the plugin.
+
 
 <h3>Features</h3>
 <ul class="list-checked">
-	<li>ARVE is now SEO friendly. Letting you specify title, description, upload date to provide search engines with the schema.org data they like to have for better indexing.(in beta)</li>
-	<li><abbr title="What You See Is What You Get">WYSIWYG</abbr> Editor. No more messing arround with shortcodes and previewing.(in beta)</li>
-	<li>New improved dialog for embedding videos.(in beta)</li>
+	<li>ARVE is now SEO friendly. Letting you specify title, description, upload date to provide search engines with the schema.org data they like to have for better indexing.</li>
+	<li><abbr title="What You See Is What You Get">WYSIWYG</abbr> Editor. No more messing arround with shortcodes and previewing.</li>
+	<li>New improved dialog for embedding videos.</li>
 	<li>Embeds via pasting the URL in its own line just like WordPress!</li>
 	<li>Magigally makes those url embedded videos responsive</li>
 	<li>No 'lock in' for the above' if you use providers WordPress already supports</li>
@@ -42,7 +46,9 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
 	<li>Custom aspect ratio</li>
 </ul>
 
+
 <blockquote>
+
 
 <h3>Additional Features with the Pro Addon</h3>
 
@@ -70,10 +76,12 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
 	<li>'Grow on click' feature</li>
 	<li>3 hover styles</li>
 	<li>2 play icon styles to choose from</li>
-	<li>Responsive Thumbnails using cutting edge HTML5 technology (srcset and sizes) <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/">(in beta)</a></li>
+	<li>Responsive Thumbnails using cutting edge HTML5 technology</li>
 </ul>
 
+
 </blockquote>
+
 
 <h3>Links</h3>
 
@@ -82,6 +90,7 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
   <li class="nav-item"><a class="nav-link" href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/Documentation">Documentation</a></li>
   <li class="nav-item"><a class="nav-link" href="https://github.com/nextgenthemes/advanced-responsive-video-embedder">Github Page</a></li>
 </ul>
+
 
 <h3>Supported Providers</h3>
 
@@ -124,6 +133,7 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
     <li><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/#general-iframe-embedding">All providers with responsive iframe embed codes</a></li>
 </ol>
 
+
 <h3>Reviews</h3>
 
 <div class="media">
@@ -148,6 +158,7 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
 	</div>
 </div>
 
+
 <h3>Thanks</h3>
 
 <ul>
@@ -164,9 +175,11 @@ Thanks to the developers of the software used in ARVE
   <li><a href="http://sorgalla.com/lity/">Lity Lightbox JavaScript</a> (used in Pro Addon)</li>
 </ul>
 
+
 ## Installation ##
 
 Please refer to [codex.wordpress.org/Managing_Plugins#Automatic_Plugin_Installation](https://codex.wordpress.org/Managing_Plugins#Automatic_Plugin_Installation).
+
 ## Frequently Asked Questions ##
 
 ### I have a problem ... ###
@@ -196,11 +209,13 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 `[youtube id="123456" parameters="loop=1&playlist=123456"]`
 
+
 ## Screenshots ##
 
 1. Main Options
 2. Pro Options
 3. Features
+
 ## Changelog ##
 
 ### Pro Addon 2.3.1 beta - 2016-09-15 ###

@@ -8,7 +8,7 @@ module.exports = function (grunt) {
   grunt.initConfig({
     concat: {
       options: {
-        separator: '\n',
+        separator: '\n\n',
       },
       readme_md: {
         src: [
