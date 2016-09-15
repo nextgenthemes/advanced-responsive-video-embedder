@@ -92,10 +92,11 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		}
 
 		$msg = sprintf(
-			__( '<p>Thanks for using and updating <abbr title="Advanced Responsive Video Embedder">ARVE</abbr>, this was a HUGE update please read about <a href="%s" target="_blank">what is new here</a>. You will see a message about a highly recommended plugin "Shortcode UI / Shortcake" that is bundled within ARVE its needed for the new shortcode dialog and and the new WYSIWYG feature for shortcodes inside the post editor. If you do not want that then you can dismiss the install and manually write shortcodes or use URLs. Many thanks to all the beta testers, I will send out free discounts soon.</p>
-			<p>I was still scared to release this as there were so many changes and I still cant guarantee that it will work without new problems on all your themes and plugins combinations out there. I am afraid of bad rating and people flooding me with complaints that they dont like the changes, that I broke their sites or something. But at some point there has to be a release. Please download the <a href="%s" target="_blank">old version here now</a>, if you have big problems and need a quick fix please downgrade ARVE (delete and reinstall with the .zip file) and report any problems <a href="%s" target="_blank">here.</a></p>', $this->plugin_slug ),
-			'https://nextgenthemes.com/highlights-of-arve-version-7/',
+			__( '<p>Thanks for using and updating <abbr title="Advanced Responsive Video Embedder">ARVE</abbr>, this was a <strong>huge</strong> update please read about <a href="%s" target="_blank">what is new here</a>. You will see a message about a highly recommended plugin "Shortcode UI / Shortcake" that is bundled within ARVE its needed for the new shortcode dialog and and the new WYSIWYG feature for shortcodes inside the post editor. If you do not want that then you can dismiss the install and manually write shortcodes or use URLs. Many thanks to all the beta testers, I will send out free discounts soon.</p>
+			<p>I was still scared to release this as there were so many changes and I still cant guarantee that it will work without new problems on all your themes and plugins combinations out there. I am afraid of bad rating and people flooding me with complaints that they dont like the changes, that I broke their sites or something. But at some point there has to be a release. Please download the <a href="%s" target="_blank">old version here now</a> and old pro addon in <a href="%s">from your account</a> if you own it. If you have big problems and need a quick fix please downgrade ARVE (delete and reinstall with the .zip file) and report any problems <a href="%s" target="_blank">here.</a></p>', $this->plugin_slug ),
+			'https://nextgenthemes.com/whats-new-in-arve-version-7/',
 			'https://nextgenthemes.com/arve-version-6.5.0.zip',
+			'https://nextgenthemes.com/my-account/',
 			'https://nextgenthemes.com/support/'
 		);
 
@@ -482,7 +483,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	}
 
 	public function shortcodes_section_description() {
-		$desc = __( 'You can change the shortcode tags. You may need this to prevent conflicts with other plugins you want to use.', $this->plugin_slug );
+		$desc = __( 'This shortcodes exist for backwards compatiblity only. It is not recommended to use them at all, please use the <code>[arve]</code> shortcode. You can change the old shortcode tags here. You may need this to prevent conflicts with other plugins you want to use.', $this->plugin_slug );
 		echo "<p>$desc</p>";
 	}
 

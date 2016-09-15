@@ -86,9 +86,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 			add_shortcode( $shortcode, array( $this, 'shortcode_' . $provider ) );
 		}
 
-		add_shortcode( 'arve',           array( $this, 'shortcode_arve' ) );
-		add_shortcode( 'arve_supported', array( $this, 'shortcode_arve_supported' ) );
-		add_shortcode( 'arve_params',    array( $this, 'shortcode_arve_params' ) );
+		add_shortcode( 'arve',                array( $this, 'shortcode_arve' ) );
+		add_shortcode( 'arve-supported',      array( $this, 'shortcode_arve_supported' ) );
+		add_shortcode( 'arve-supported-list', array( $this, 'shortcode_arve_supported_list' ) );
+		add_shortcode( 'arve-params',         array( $this, 'shortcode_arve_params' ) );
 	}
 
 	public function shortcode_arve( $atts ) {
@@ -842,7 +843,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$out .= '</tr>';
 		$out .= '<tr>';
 		$out .= '<td></td>';
-		$out .= '<td colspan="5"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/#general-iframe-embedding">All providers with responsive iframe embed codes</a></td>';
+		$out .= '<td colspan="6"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/#general-iframe-embedding">All providers with responsive iframe embed codes</a></td>';
 		$out .= '</tr>';
 
 		$count = 1;
@@ -865,11 +866,27 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		$out .= '<tr>';
 		$out .= '<td></td>';
-		$out .= '<td colspan="5"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/#general-iframe-embedding">All providers with responsive iframe embed codes</a></td>';
+		$out .= '<td colspan="6"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/#general-iframe-embedding">All providers with responsive iframe embed codes</a></td>';
 		$out .= '</tr>';
 		$out .= '</table>';
 
 		return $out;
+	}
+
+	public function shortcode_arve_supported_list( $args, $content = null ) {
+
+		$providers = Advanced_Responsive_Video_Embedder_Shared::get_properties();
+		// unset deprecated and doubled
+		unset( $providers['dailymotionlist'] );
+		unset( $providers['iframe'] );
+
+		$lis = '';
+
+		foreach ( $providers as $key => $values ) {
+			$lis .= sprintf( '<li>%s</li>', esc_html( $values['name'] ) );
+		}
+
+		return '<ol>'. $lis . '<li><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/#general-iframe-embedding">All providers with responsive iframe embed codes</a></li></ol>';
 	}
 
 	public function shortcode_arve_params( $args, $content = null ) {

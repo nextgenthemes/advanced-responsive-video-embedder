@@ -8,19 +8,21 @@ module.exports = function (grunt) {
   grunt.initConfig({
     concat: {
       options: {
-        separator: '\n\n',
+        separator: '',
       },
       readme_md: {
         src: [
            'readme/description.md',
            'readme/description-lead.html',
-           'CHANGELOG-beta.md',
-           'readme/description-links.html',
+           'readme/description-lead-wp-org-only.md',
            'readme/description-features.html',
+           'readme/blockquote-open.html',
            'readme/description-features-pro.html',
-           'readme/description-supported-providers.md',
-           'readme/description-only-wp-org.md',
+           'readme/blockquote-close.html',
+           'readme/description-links.html',
+           'readme/description-supported-providers.html',
            'readme/description-reviews.html',
+           'readme/description-thanks.html',
            'readme/installation.md',
            'readme/faq.md',
            'readme/screenshots.md',

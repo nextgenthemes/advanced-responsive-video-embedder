@@ -1,10 +1,10 @@
 ## Changelog ##
 
-### Pro Addon 2.2.1 beta - 2016-09-07 ###
+### Pro Addon 2.3.1 beta - 2016-09-15 ###
 
 * New: Added support for displaying title of videos on top of the thumbnail images.
 * New: Responsive thumbnails using srcset the browser takes the best image resolution for the users device. (HTML5 srcset)
-* New: Choose between 3 hover styles 'rectangle move in' (old), 'zoom image' or 'none'.
+* New: Choose between 3 hover styles for the thumbnails: 'zoom image' (new default), 'rectangle move in' (old), or 'none' where only the play button changes.
 * New: Choose beween 2 play button styles.
 * Fix: Screenfull error.
 * Fix: License API call.
@@ -13,9 +13,10 @@
 * Improved: Thumbnail handling.
 * Improved: Removed the 'Lazyload Maximal Width' setting to simplify things (there still is 'Maximal Width' and 'Aligned Maximal Width').
 * Improved: Removed the 'Fake Thumbnail' feature because the entire idea was bad and real thumbnails should be used.
+* Improved: Updated EDD_SL_Plugin_Updater Class
 * Dropped PHP Class.
 
-### 7.2.5 beta - 2016-09-07 ###
+### 7.2.5 beta - 2016-09-15 ###
 
 * New: Recommend and guide to users to install [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) via [TGMPA](http://tgmpluginactivation.com/)
 * New: Amazing catch-all shortcode [arve url="..."] that can be used for all supported providers and even with any iframe `src` if all unlisted providers that support responsive iframe embeds.
@@ -36,7 +37,7 @@
 * Fix: Blury Vimeo thumbnails
 * Fix: Prevent Dashboard Widget conflicts with WP Helpers plugin (possibly others). Thanks to Steve Bruner.
 * Fix: Issue with unwanted borders showing on embeds.
-* Fix: youtube.be URLs now detected correct in shortcode dialog.
+* Fix: youtu.be URLs now detected correct in shortcode dialog.
 * Fix: All Vevo URLs are now detected correctly.
 * Fix: Bool options settings.
 * Removed blip because the service was shutdown.
