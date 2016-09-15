@@ -9,13 +9,17 @@ License: GPL 3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement for WordPress' default embeds. Best plugin for videos?
+
 ## Description ##
+
 <p class="lead">The best WordPress plugin for videos? Supports close to everything you can imagine, still keeping it easy &amp; simple.</p>
 
 <p>It is very likely the one and only plugin you will ever need to handle video embeds on your WordPress site(s). It goes far beyond just making your videos responsive!</p>
 
 <p>Simple &bull; Lightweight &bull; Responsive &bull; Customizable</p>
+
 Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) for more details on the plugin.
+
 <h3>Features</h3>
 <ul class="list-checked">
 	<li>ARVE is now SEO friendly. Letting you specify title, description, upload date to provide search engines with the schema.org data they like to have for better indexing.(in beta)</li>
@@ -37,10 +41,12 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
 	<li>Detailed description of options in-place.</li>
 	<li>Custom aspect ratio</li>
 </ul>
+
 <blockquote>
+
 <h3>Additional Features with the Pro Addon</h3>
 
-<p>This plugin is financed by the awesome buyers of the <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">Pro Addon</a>. The development and support of this plugins has become a almost full time job for me so I hope you understand that I can not make all features gratis and that you <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">purchase it</a> to support the develoment and support.</p>
+<p>This plugin is financed by the awesome buyers of the <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">Pro Addon</a>. The development and support of this plugins has become a almost full time job for me so I hope you understand that I can not make all features gratis and that you <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">purchase it</a> to support the develoment.</p>
 
 <ul class="list-checked">
 	<li><strong>Feel good about yourself</strong><br>
@@ -66,7 +72,9 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
 	<li>2 play icon styles to choose from</li>
 	<li>Responsive Thumbnails using cutting edge HTML5 technology (srcset and sizes) <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/help-testing-the-beta-version/">(in beta)</a></li>
 </ul>
+
 </blockquote>
+
 <h3>Links</h3>
 
 <ul class="nav nav-pills">
@@ -74,6 +82,7 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
   <li class="nav-item"><a class="nav-link" href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/Documentation">Documentation</a></li>
   <li class="nav-item"><a class="nav-link" href="https://github.com/nextgenthemes/advanced-responsive-video-embedder">Github Page</a></li>
 </ul>
+
 <h3>Supported Providers</h3>
 
 <ol>
@@ -114,11 +123,12 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
     <li>YouTube Playlist</li>
     <li><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/#general-iframe-embedding">All providers with responsive iframe embed codes</a></li>
 </ol>
+
 <h3>Reviews</h3>
 
 <div class="media">
 	<div class="media-left">
-		<img class="media-object" width="140" height="140" src="https://www.gravatar.com/avatar/a00d4c26eb35dfee5b8a3ba1c454e72f?d=mm&s=140&r=G">
+		<img class="media-object img-circle" width="140" height="140" src="https://www.gravatar.com/avatar/a00d4c26eb35dfee5b8a3ba1c454e72f?d=mm&s=140&r=G">
 	</div>
 	<div class="media-body media-middle">
 		<h4>&#9733; &#9733; &#9733; &#9733; &#9733; Finally something that works</h4>
@@ -137,13 +147,14 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
 		<a href="https://wordpress.org/support/view/plugin-reviews/advanced-responsive-video-embedder?filter=5">review by crconnell89</a>
 	</div>
 </div>
+
 <h3>Thanks</h3>
 
 <ul>
   <li>Howard Iken of <a href="https://www.myfloridalaw.com/">www.myfloridalaw.com/</a> top donor, super nice to me even if I was rude and not deserved it!</li>
   <li><a href="https://www.ilyagrishkov.com/">Ilya Grishkov</a> for bringing up the idea the first code to cache thumbnail urls.</li>
-  <li>Anybody giving contructive feedback</li>
-  <li>Anybody I forgot</li>
+  <li>Anybody giving contructive feedback, testing beta versions.</li>
+  <li>Anybody I forgot.</li>
 </ul>
 
 Thanks to the developers of the software used in ARVE
@@ -152,9 +163,11 @@ Thanks to the developers of the software used in ARVE
   <li><a href="http://tgmpluginactivation.com">TGM Plugin Activation</a></li>
   <li><a href="http://sorgalla.com/lity/">Lity Lightbox JavaScript</a> (used in Pro Addon)</li>
 </ul>
+
 ## Installation ##
 
-Please refer to [codex.wordpress.org/Managing_Plugins#Automatic_Plugin_Installation](https://codex.wordpress.org/Managing_Plugins#Automatic_Plugin_Installation).## Frequently Asked Questions ##
+Please refer to [codex.wordpress.org/Managing_Plugins#Automatic_Plugin_Installation](https://codex.wordpress.org/Managing_Plugins#Automatic_Plugin_Installation).
+## Frequently Asked Questions ##
 
 ### I have a problem ... ###
 
@@ -182,11 +195,13 @@ This plugin not changes anything to usual HTML `<iframe>` embed codes you have t
 This plugins embed is considered as 'custom player' by YouTube so you have to pass the video ID as playlist parameters to make the loop work.
 
 `[youtube id="123456" parameters="loop=1&playlist=123456"]`
+
 ## Screenshots ##
 
 1. Main Options
 2. Pro Options
-3. Features## Changelog ##
+3. Features
+## Changelog ##
 
 ### Pro Addon 2.3.1 beta - 2016-09-15 ###
 
