@@ -40,7 +40,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			'last_options_tab' => '#arve-settings-section-main',
 		);
 
-		$properties = static::get_properties();
+		$properties = self::get_properties();
 		unset( $properties['video'] );
 
 		foreach ( $properties as $provider => $values ) {
@@ -73,9 +73,9 @@ class Advanced_Responsive_Video_Embedder_Shared {
 
 	public static function get_settings_definitions() {
 
-		$options         = static::get_options();
-		$supported_modes = static::get_supported_modes();
-		$properties      = static::get_properties();
+		$options         = self::get_options();
+		$supported_modes = self::get_supported_modes();
+		$properties      = self::get_properties();
 
 		foreach ( $properties as $provider => $values ) {
 
@@ -119,7 +119,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'attr'    => 'mode',
 				'label'   => esc_html__( 'Mode', 'advanced-responsive-video-embedder' ),
 				'type'    => 'select',
-				'options' => array( '' => sprintf( esc_html__( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $current_mode_name ) ) + static::get_supported_modes(),
+				'options' => array( '' => sprintf( esc_html__( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $current_mode_name ) ) + self::get_supported_modes(),
 			),
 			array(
 				'attr'  => 'align',
@@ -248,7 +248,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 	 */
 	public static function get_mode_options( $selected ) {
 
-		$modes = static::get_supported_modes();
+		$modes = self::get_supported_modes();
 
 		$out = '';
 
@@ -781,6 +781,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'auto_thumbnail' => true,
 			),
 			'iframe' => array(
+				'embed_url'         => '%s',
 				#'regex'             => '(https?://([^"/s]+)',
 				'default_params'    => '',
 				'auto_thumbnail'    => false,
@@ -817,7 +818,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			} elseif ( '' === $value ) {
 				$out .= sprintf( ' %s', esc_html( $key ) );
 			} elseif ( in_array( $key, array( 'href', 'src', 'data-src' ) ) ) {
-				$out .= sprintf( ' %s="%s"', esc_html( $key ), static::esc_url( $value ) );
+				$out .= sprintf( ' %s="%s"', esc_html( $key ), self::esc_url( $value ) );
 			} else {
 				$out .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );
 			}

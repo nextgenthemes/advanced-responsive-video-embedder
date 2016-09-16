@@ -1,5 +1,11 @@
 ## Changelog ##
 
+### 7.2.11 beta - 2016-09-16 ###
+* Improved: replaced static:: with self:: to support older php versions.
+
+### 7.2.10 beta - 2016-09-15 ###
+* Fix: [iframe] shortcode not working.
+
 ### Pro Addon 2.3.1 beta - 2016-09-15 ###
 
 * New: Added support for displaying title of videos on top of the thumbnail images.
@@ -16,7 +22,7 @@
 * Improved: Updated EDD_SL_Plugin_Updater Class
 * Dropped PHP Class.
 
-### 7.2.5 beta - 2016-09-15 ###
+### 7.2.9 beta - 2016-09-15 ###
 
 * New: Recommend and guide to users to install [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) via [TGMPA](http://tgmpluginactivation.com/)
 * New: Amazing catch-all shortcode [arve url="..."] that can be used for all supported providers and even with any iframe `src` if all unlisted providers that support responsive iframe embeds.

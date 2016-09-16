@@ -81,6 +81,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 	 */
 	public function create_shortcodes() {
 
+		#dd( $this->options['shortcodes'] );
+
 		foreach( $this->options['shortcodes'] as $provider => $shortcode ) {
 
 			add_shortcode( $shortcode, array( $this, 'shortcode_' . $provider ) );
