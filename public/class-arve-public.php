@@ -638,7 +638,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		$container = sprintf(
 			'<div class="arve-embed-container" style="padding-bottom: %F%%;">%s</div>',
-			static::aspect_ratio_to_padding( $args['aspect_ratio'] ),
+			self::aspect_ratio_to_padding( $args['aspect_ratio'] ),
 			$meta . $inner
 		);
 
@@ -677,9 +677,9 @@ class Advanced_Responsive_Video_Embedder_Public {
 			return $output;
 		}
 
-		$video = static::video_or_iframe( $args );
+		$video = self::video_or_iframe( $args );
 
-		$output .= static::wrappers( $video, $args );
+		$output .= self::wrappers( $video, $args );
 
 		return $output;
 	}
@@ -688,18 +688,18 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		if ( 'video' == $args['provider'] ) {
 
-			return static::create_video( $args );
+			return self::create_video( $args );
 
 		} elseif ( $args['iframe'] ) {
 
-			return static::create_iframe( $args );
+			return self::create_iframe( $args );
 
 		} else {
 
 			$data    = ( $args['autoplay'] ) ? $args['src_autoplay_yes']           : $args['src_autoplay_no'];
 			$oparams = ( $args['autoplay'] ) ? $args['object_params_autoplay_yes'] : $args['object_params_autoplay_no'];
 
-			return static::create_object( $data, $oparams );
+			return self::create_object( $data, $oparams );
 		}
 	}
 
@@ -787,7 +787,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		return sprintf(
 			'<video %s>%s</video>',
-			static::parse_attr( $video_attr ),
+			self::parse_attr( $video_attr ),
 			$sources
 		);
 	}

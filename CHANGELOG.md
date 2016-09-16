@@ -1,6 +1,6 @@
 ## Changelog ##
 
-### 7.2.11 beta - 2016-09-16 ###
+### 7.2.12 beta - 2016-09-16 ###
 * Improved: replaced static:: with self:: to support older php versions.
 
 ### 7.2.10 beta - 2016-09-15 ###
