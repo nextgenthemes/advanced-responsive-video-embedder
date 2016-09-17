@@ -23,6 +23,11 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 
 Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) for more details on the plugin.
 
+**Possible fix if you get a white screen of death after installing or updating to version 7:**
+Please check your PHP logs for messages like this: `PHP Fatal error: Cannot redeclare tgmpa_load_bulk_installer() (previously declared in .../wp-content/plugins/advanced-responsive-video-embedder/includes/class-tgm-plugin-activation.php:3154) in .../wp-content/themes/humbleshop/inc/class-tgm-plugin-activation.php on line 1694` as errors like this are caused by your theme or another plugin using a very old version of the TGMPA class that is trying to declare the class without checking if is already declared. You can replace the `class-tgm-plugin-activation.php` of your theme or another plugin with the latest version to get rid of this error. You should however contact the author of a conflicting theme/plugin and ask them to make a update and include a up-to-date version of TGMPA so they play nicely with other users of that php class.
+
+If this is not the problem and you have a white sceen of death please delete the plugin from your plugins folder with SFTP/SSH or your hosts file browser and reinstall the [old version 6.5.0](https://nextgenthemes.com/arve-version-6.5.0.zip)
+
 
 <h3>Features</h3>
 <ul class="list-checked">
@@ -59,7 +64,7 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
 		for supporting my long time work on this plugin. Tons of hours, weekends … always worked on <a href="https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/">improving it</a> 3+ years.</li>
 
 	<li><strong>Disable links in embeds (killer feature!)</strong><br>
-		For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. <strong>Prevent video hosters to lead your visitors away from your site!</strong> Note this also breaks sharing functionality and is not possible when the provider requires flash. Try it on this page. Right click on links still works.</li>
+		For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. <strong>Prevent video hosters to lead your visitors away from your site!</strong> Note this also breaks sharing functionality and is not possible when the provider requires flash. Try it on <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/">this page</a>. Right click on links still works.</li>
 
 	<li><strong>Lazyload mode</strong><br>
 		Make your site load <strong>faster</strong> by loading only a image instead of the entire video player on pageload.<br>
@@ -162,7 +167,7 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
 <h3>Thanks</h3>
 
 <ul>
-  <li>Howard Iken of <a href="https://www.myfloridalaw.com/">www.myfloridalaw.com/</a> top donor, super nice to me even if I was rude and not deserved it!</li>
+  <li>Howard Iken of <a href="https://www.myfloridalaw.com">myfloridalaw.com</a> top donor, super nice to me even if I was rude and not deserved it!</li>
   <li><a href="https://www.ilyagrishkov.com/">Ilya Grishkov</a> for bringing up the idea the first code to cache thumbnail urls.</li>
   <li>Anybody giving contructive feedback, testing beta versions.</li>
   <li>Anybody I forgot.</li>
@@ -218,6 +223,19 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
+### 7.2.13 beta - 2016-09-16 ###
+
+* Fix: Set fitvidsignore class and remove the fitvids container to prevent it from messing with ARVE embeds.
+* Fix: Remove possible width and height paramaeters on iframes to prevent scripts from messing with ARVE embeds.
+
+### 7.2.12 beta - 2016-09-16 ###
+
+* Improved: replaced static:: with self:: to support older php versions.
+
+### 7.2.10 beta - 2016-09-15 ###
+
+* Fix: [iframe] shortcode not working.
+
 ### Pro Addon 2.3.1 beta - 2016-09-15 ###
 
 * New: Added support for displaying title of videos on top of the thumbnail images.
@@ -234,7 +252,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * Improved: Updated EDD_SL_Plugin_Updater Class
 * Dropped PHP Class.
 
-### 7.2.5 beta - 2016-09-15 ###
+### 7.2.9 beta - 2016-09-15 ###
 
 * New: Recommend and guide to users to install [Shortcake (Shortcode UI)](https://de.wordpress.org/plugins/shortcode-ui/) via [TGMPA](http://tgmpluginactivation.com/)
 * New: Amazing catch-all shortcode [arve url="..."] that can be used for all supported providers and even with any iframe `src` if all unlisted providers that support responsive iframe embeds.

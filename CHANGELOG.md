@@ -1,9 +1,25 @@
 ## Changelog ##
 
+### 7.3.0 beta - 2016-09-17 ###
+
+* Improved: Show admin notices only to users who have the 'activate_plugins' capability.
+* Improved: Added upgrade notice to the readme for the TGMPA cause white screen of death issue.
+
+### Pro Addon 2.3.2 - 2016-09-17 ###
+
+* Possible Fix for not centered play button.
+
+### 7.2.13 beta - 2016-09-16 ###
+
+* Fix: Set fitvidsignore class and remove the fitvids container to prevent it from messing with ARVE embeds.
+* Fix: Remove possible width and height paramaeters on iframes to prevent scripts from messing with ARVE embeds.
+
 ### 7.2.12 beta - 2016-09-16 ###
+
 * Improved: replaced static:: with self:: to support older php versions.
 
 ### 7.2.10 beta - 2016-09-15 ###
+
 * Fix: [iframe] shortcode not working.
 
 ### Pro Addon 2.3.1 beta - 2016-09-15 ###

@@ -714,8 +714,8 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$properties = Advanced_Responsive_Video_Embedder_Shared::get_properties();
 
 		$iframe_attr = array(
-			'class'           => empty( $args['iframe_class'] ) ? 'arve-inner' : $args['iframe_class'],
-			'name'            => empty( $args['iframe_name'] )  ? false        : $args['iframe_name'],
+			'class'           => empty( $args['iframe_class'] ) ? 'arve-inner fitvidsignore' : $args['iframe_class'],
+			'name'            => empty( $args['iframe_name'] )  ? false                      : $args['iframe_name'],
 			#'style'           => empty( $args['iframe_style'] ) ? false : $args['iframe_style'],
 			'sandbox'         => $args['iframe_sandbox'],
 			'width'           => is_feed() ? 853 : false,

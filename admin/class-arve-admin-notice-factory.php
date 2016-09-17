@@ -6,7 +6,11 @@ class Advanced_Responsive_Video_Embedder_Admin_Notice_Factory {
   private $notice;
   private $dismiss_forever;
 
-  function __construct( $notice_id, $notice, $dismiss_forever = true ) {
+  function __construct( $notice_id, $notice, $dismiss_forever = true, $capamilities = 'activate_plugins' ) {
+
+    if ( ! current_user_can( $capamilities ) ) {
+      return;
+    }
 
     $this->notice_id       = "admin-notice-factory-$notice_id";
     $this->notice          = $notice;
