@@ -26,7 +26,6 @@ module.exports = function (grunt) {
            'readme/installation.md',
            'readme/faq.md',
            'readme/screenshots.md',
-           'readme/upgrade-notice.md',
            'CHANGELOG.md'
         ],
         dest: 'README.md'

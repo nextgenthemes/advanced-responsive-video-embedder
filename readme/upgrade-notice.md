@@ -1,6 +1,0 @@
-## Upgrade Notice ##
-
-**Possible fix if you get a white screen of death after installing or updating to version 7:**
-Please check your PHP logs for messages like this: `PHP Fatal error: Cannot redeclare tgmpa_load_bulk_installer() (previously declared in .../wp-content/plugins/advanced-responsive-video-embedder/includes/class-tgm-plugin-activation.php:3154) in .../wp-content/themes/humbleshop/inc/class-tgm-plugin-activation.php on line 1694` or as errors like this are caused by your theme or another plugin using a very old version of the TGMPA class that is trying to declare the class without checking if is already declared. You can replace the `class-tgm-plugin-activation.php` of your theme or another plugin with the [latest version](https://github.com/TGMPA/TGM-Plugin-Activation/releases) (you need only this single file from the zip) to get rid of this error. You should however contact the author of a conflicting theme/plugin and ask them to make a update and include a up-to-date version of TGMPA so they play nicely with other users of that php class. Sorry about this but this is not my fault.
-
-If this is not the problem and you have a white sceen of death please delete the plugin from your plugins folder with SFTP/SSH or your hosts file browser and reinstall the [old version 6.5.0](https://nextgenthemes.com/arve-version-6.5.0.zip)

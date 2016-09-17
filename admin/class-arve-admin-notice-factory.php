@@ -6,9 +6,9 @@ class Advanced_Responsive_Video_Embedder_Admin_Notice_Factory {
   private $notice;
   private $dismiss_forever;
 
-  function __construct( $notice_id, $notice, $dismiss_forever = true, $capamilities = 'activate_plugins' ) {
+  function __construct( $notice_id, $notice, $dismiss_forever = true, $capabilities = 'activate_plugins' ) {
 
-    if ( ! current_user_can( $capamilities ) ) {
+    if ( ! current_user_can( $capabilities ) ) {
       return;
     }
 

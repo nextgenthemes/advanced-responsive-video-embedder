@@ -10,10 +10,7 @@
 
 Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) for more details on the plugin.
 
-**Possible fix if you get a white screen of death after installing or updating to version 7:**
-Please check your PHP logs for messages like this: `PHP Fatal error: Cannot redeclare tgmpa_load_bulk_installer() (previously declared in .../wp-content/plugins/advanced-responsive-video-embedder/includes/class-tgm-plugin-activation.php:3154) in .../wp-content/themes/humbleshop/inc/class-tgm-plugin-activation.php on line 1694` as errors like this are caused by your theme or another plugin using a very old version of the TGMPA class that is trying to declare the class without checking if is already declared. You can replace the `class-tgm-plugin-activation.php` of your theme or another plugin with the latest version to get rid of this error. You should however contact the author of a conflicting theme/plugin and ask them to make a update and include a up-to-date version of TGMPA so they play nicely with other users of that php class.
-
-If this is not the problem and you have a white sceen of death please delete the plugin from your plugins folder with SFTP/SSH or your hosts file browser and reinstall the [old version 6.5.0](https://nextgenthemes.com/arve-version-6.5.0.zip)
+[Possible fix if you get a white screen of death after installing or updating to version 7](https://nextgenthemes.com/question/php-fatal-error-cannot-redeclare-tgmpa_load_bulk_installer-previously-declared-in/?show_answer=14103#answer_14103)
 
 
 <h3>Features</h3>
@@ -209,6 +206,15 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 3. Features
 
 ## Changelog ##
+
+### 7.3.0 beta - 2016-09-17 ###
+
+* Improved: Show admin notices only to users who have the 'activate_plugins' capability.
+* Improved: Added upgrade notice to the readme for the TGMPA cause white screen of death issue.
+
+### Pro Addon 2.3.2 - 2016-09-17 ###
+
+* Possible Fix for not centered play button.
 
 ### 7.2.13 beta - 2016-09-16 ###
 

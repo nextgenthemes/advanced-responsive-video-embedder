@@ -385,15 +385,13 @@ class Advanced_Responsive_Video_Embedder_Public {
 		}
 
 		switch ( $args['align'] ) {
-			case 'none':
-				$args['align'] = null;
 			case null:
+				$args['align'] = '';
 			case '':
-				break;
+			case 'none':
 			case 'left':
 			case 'right':
 			case 'center':
-				$args['align'] = 'align' . $args['align'];
 				break;
 			default:
 				return $this->error( sprintf( __( 'Align <code>%s</code> not valid', $this->plugin_slug ), esc_html( $args['align'] ) ) );
@@ -410,7 +408,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			return $this->error( sprintf( __( 'Mode: <code>%s</code> is invalid or not supported. Note that you will need the Pro Addon for lazyload modes.', $this->plugin_slug ), esc_html( $args['mode'] ) ) );
 		}
 
-		if ( $args['maxwidth'] < 100 && in_array( $args['align'], array( 'alignleft', 'alignright', 'aligncenter' ) ) ) {
+		if ( $args['maxwidth'] < 100 && in_array( $args['align'], array( 'left', 'right', 'center' ) ) ) {
 
 			$args['maxwidth'] = (int) $this->options['align_maxwidth'];
 		}
@@ -655,11 +653,17 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		wp_enqueue_script( 'advanced-responsive-video-embedder' );
 
+		$wrapper_class = sprintf(
+			'arve-wrapper%s%s',
+			empty( $args['hover_effect'] ) ? '' : " arve-hover-effect-{$args['hover_effect']} ",
+			empty( $args['align'] )        ? '' : " align{$args['align']}"
+		);
+
 		return sprintf(
 			'<div %s>%s</div>',
 			Advanced_Responsive_Video_Embedder_Shared::attr( array(
 				'id'             => 'video-' . $args['element_id'],
-				'class'          => sprintf( 'arve-wrapper arve-hover-effect-%s %s', $args['hover_effect'], $args['align'] ),
+				'class'          => $wrapper_class,
 				'data-arve-grow' => ( 'lazyload' === $args['mode'] && $args['grow'] ) ? '' : null,
 				'data-arve-mode' => $args['mode'],
 				'style'          => empty( $args['maxwidth'] ) ? false : sprintf( 'max-width: %dpx;', $args['maxwidth'] ),
@@ -717,7 +721,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'class'           => empty( $args['iframe_class'] ) ? 'arve-inner fitvidsignore' : $args['iframe_class'],
 			'name'            => empty( $args['iframe_name'] )  ? false                      : $args['iframe_name'],
 			#'style'           => empty( $args['iframe_style'] ) ? false : $args['iframe_style'],
-			'sandbox'         => $args['iframe_sandbox'],
+			'sandbox'         => empty( $args['iframe_sandbox'] ) ? 'allow-scripts allow-same-origin allow-popups' : $args['iframe_sandbox'],
 			'width'           => is_feed() ? 853 : false,
 			'height'          => is_feed() ? 480 : false,
 			'allowfullscreen' => '',
@@ -725,10 +729,6 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'scrolling'       => 'no',
 			'security'        => 'restricted',
 		);
-
-		if ( empty( $args['iframe_sandbox'] ) ) {
-			$iframe_attr['sandbox'] = 'allow-scripts allow-same-origin allow-popups';
-		}
 
 		if ( ! empty( $properties[ $args['provider'] ]['requires_flash'] ) ) {
 			$iframe_attr['sandbox'] = false;

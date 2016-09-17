@@ -1,9 +1,13 @@
 ## Changelog ##
 
+### 7.3.1 beta - 2016-09-17 ###
+
+* Fix: Get rid of undefined index warnings when pro addon is not active.
+
 ### 7.3.0 beta - 2016-09-17 ###
 
 * Improved: Show admin notices only to users who have the 'activate_plugins' capability.
-* Improved: Added upgrade notice to the readme for the TGMPA cause white screen of death issue.
+* Improved: Added notice to the readme for the TGMPA cause white screen of death issue.
 
 ### Pro Addon 2.3.2 - 2016-09-17 ###
 
