@@ -34,7 +34,7 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
 	<li>Embeds via pasting the URL in its own line just like WordPress!</li>
 	<li>Magigally makes those url embedded videos responsive</li>
 	<li>No 'lock in' for the above' if you use providers WordPress already supports</li>
-	<li>Supports <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#supported-providers">almost every video hoster</a> that supports iframe embed codes.</li>
+	<li>Supports <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#video-host-support">almost every video hoster</a> that supports iframe embed codes.</li>
 	<li>Optionally use very powerfull Shortcodes instead</li>
 	<li>One single button for all providers (for most providers not required because of URL embeds, but allows to create custom shortcodes with advanced features within seconds)</li>
 	<li>Responsive embeds with CSS, much better then with Javascript</li>
@@ -219,6 +219,14 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 3. Features
 
 ## Changelog ##
+
+### Pr Addon 2.4.0 beta - 2016-09-18 ###
+
+* New: Adds Yahoo auto thumnail and title support
+
+### 7.4.1 beta - 2016-09-18 ###
+
+* New: Adds Yahoo Video support
 
 ### 7.3.2 beta - 2016-09-17 ###
 

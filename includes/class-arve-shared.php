@@ -602,11 +602,16 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			# https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html
 			# https://www.yahoo.com/movies/sully-trailer-4-211012511.html?format=embed
 			'yahoo' => array(
-				'regex'          => '(https?://(?:[.a-z]+).yahoo\.com/[/-a-z0-9]+\.html)',
+				'regex'          => '(https?://(?:[.a-z]+).yahoo\.com/[/-a-z0-9öäü]+\.html)',
 				'embed_url'      => '%s',
 				'default_params' => 'format=embed',
 				'auto_thumbnail' => false,
 				'requires_flash' => true,
+				'tests' => array(
+					'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html?format=embed&player_autoplay=false',
+					'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html',
+					'https://www.yahoo.com/movies/sully-trailer-4-211012511.html?format=embed',
+				)
 			),
 			'youku' => array(
 				# <iframe height=498 width=510 src="http://player.youku.com/embed/XMTUyODYwOTc4OA==" frameborder=0 allowfullscreen></iframe>

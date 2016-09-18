@@ -116,8 +116,11 @@ class Advanced_Responsive_Video_Embedder_Public {
 			}
 		}
 
-		if ( false === filter_var( $atts['url'], FILTER_VALIDATE_URL ) ) {
-			return $this->error( __( 'Not a valid URL', $this->plugin_slug ) );
+		if (
+			! Advanced_Responsive_Video_Embedder_Shared::starts_with( $atts['url'], 'http://' ) &&
+			! Advanced_Responsive_Video_Embedder_Shared::starts_with( $atts['url'], 'https://' )
+		) {
+			return $this->error( __( 'URL does not start with http:// or https://', $this->plugin_slug ) );
 		}
 
 		$atts['id'] = $atts['url'];

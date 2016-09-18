@@ -1,6 +1,10 @@
 ## Changelog ##
 
-### 7.4.0 beta - 2016-09-18 ###
+### Pr Addon 2.4.0 beta - 2016-09-18 ###
+
+* New: Adds Yahoo auto thumnail and title support
+
+### 7.4.1 beta - 2016-09-18 ###
 
 * New: Adds Yahoo Video support
 
