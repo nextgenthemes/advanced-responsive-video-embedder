@@ -524,6 +524,10 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$args['src_autoplay_no']  = $args['src'];
 				$args['src_autoplay_yes'] = add_query_arg( 'autoplay', '', $args['src'] );
 				break;
+			case 'yahoo':
+				$args['src_autoplay_no']  = add_query_arg( 'player_autoplay', 'false', $args['src'] );
+				$args['src_autoplay_yes'] = add_query_arg( 'player_autoplay', 'true',  $args['src'] );
+				break;
 			case 'iframe':
 				# We are spamming all kinds of autoplay parameters here in hope of a effect
 				$args['src_autoplay_no'] = add_query_arg( array(
@@ -726,8 +730,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 			'height'          => is_feed() ? 480 : false,
 			'allowfullscreen' => '',
 			'frameborder'     => '0',
-			'scrolling'       => 'no',
-			'security'        => 'restricted',
+			'scrolling'       => 'no'
 		);
 
 		if ( ! empty( $properties[ $args['provider'] ]['requires_flash'] ) ) {
@@ -832,6 +835,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		unset( $providers['dailymotionlist'] );
 		unset( $providers['iframe'] );
 
+		$out  = '<h3 id="video-host-support">Video Host Support</h3>';
 		$out  = '<p>The limiting factor of the following features is not ARVE but what the prividers offer.</p>';
 		$out .= '<table class="table table-sm table-hover">';
 	  $out .= '<tr>';
@@ -907,7 +911,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 
 		foreach ( $attrs as $key => $values ) {
 
-			if ( ! empty( $values['hide_from_shortcode'] ) ) {
+			if( isset( $values['hide_from_sc'] ) && $values['hide_from_sc'] ) {
 				continue;
 			}
 

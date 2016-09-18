@@ -162,7 +162,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'attr'  => 'title',
 				'label' => esc_html__('Title', 'advanced-responsive-video-embedder'),
 				'type'  => 'text',
-				'description' => sprintf( esc_html__( 'Used for SEO, is visible on top of thumbnails in Lazyload modes, is used as link text in link-lightbox mode. The Pro Addon is able to get them from %s automatically.', 'advanced-responsive-video-embedder' ), $auto_title ),
+				'description' => sprintf( esc_html__( 'Used for SEO, is visible on top of thumbnails in Lazyload modes, is used as link text in link-lightbox mode. The Pro Addon is able to get them from %s automatically. Accepts a ID of a image from your WP Media Gallery or URL (no UI) to a image.', 'advanced-responsive-video-embedder' ), $auto_title ),
 			),
 			array(
 				'hide_from_settings' => true,
@@ -596,7 +596,17 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'regex'          => 'https?://(?:www\.)?xtube\.com/watch\.php\?v=([a-z0-9_\-]+)',
 				'embed_url'      => 'http://www.xtube.com/embedded/user/play.php?v=%s',
 				'auto_thumbnail' => false,
-				'requires_flash'     => true,
+				'requires_flash' => true,
+			),
+			# https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html?format=embed&player_autoplay=false
+			# https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html
+			# https://www.yahoo.com/movies/sully-trailer-4-211012511.html?format=embed
+			'yahoo' => array(
+				'regex'          => '(https?://(?:[.a-z]+).yahoo\.com/[/-a-z0-9]+\.html)',
+				'embed_url'      => '%s',
+				'default_params' => 'format=embed',
+				'auto_thumbnail' => false,
+				'requires_flash' => true,
 			),
 			'youku' => array(
 				# <iframe height=498 width=510 src="http://player.youku.com/embed/XMTUyODYwOTc4OA==" frameborder=0 allowfullscreen></iframe>

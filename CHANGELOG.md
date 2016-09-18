@@ -1,5 +1,13 @@
 ## Changelog ##
 
+### 7.4.0 beta - 2016-09-18 ###
+
+* New: Adds Yahoo Video support
+
+### 7.3.2 beta - 2016-09-17 ###
+
+* Fix: Remove security="restricted" from iframes to make IE work again.
+
 ### 7.3.1 beta - 2016-09-17 ###
 
 * Fix: Get rid of undefined index warnings when pro addon is not active.
