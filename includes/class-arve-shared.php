@@ -605,7 +605,8 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'regex'          => '(https?://(?:[.a-z]+).yahoo\.com/[/-a-z0-9öäü]+\.html)',
 				'embed_url'      => '%s',
 				'default_params' => 'format=embed',
-				'auto_thumbnail' => false,
+				'auto_thumbnail' => true,
+				'auto_title'     => true,
 				'requires_flash' => true,
 				'tests' => array(
 					'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html?format=embed&player_autoplay=false',

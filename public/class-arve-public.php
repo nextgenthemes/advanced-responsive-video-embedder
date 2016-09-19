@@ -839,7 +839,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		unset( $providers['iframe'] );
 
 		$out  = '<h3 id="video-host-support">Video Host Support</h3>';
-		$out  = '<p>The limiting factor of the following features is not ARVE but what the prividers offer.</p>';
+		$out .= '<p>The limiting factor of the following features is not ARVE but what the prividers offer.</p>';
 		$out .= '<table class="table table-sm table-hover">';
 	  $out .= '<tr>';
 		$out .= '<th></th>';

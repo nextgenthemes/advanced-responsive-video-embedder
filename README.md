@@ -207,7 +207,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
-### Pr Addon 2.4.0 beta - 2016-09-18 ###
+### Pro Addon 2.4.0 beta - 2016-09-18 ###
 
 * New: Adds Yahoo auto thumnail and title support
 

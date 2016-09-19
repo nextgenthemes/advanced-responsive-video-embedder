@@ -1,9 +1,9 @@
 (function ($) {
 	'use strict';
 	var remove_unwanted_stuff = function() {
-		$('.arve-wrapper').find('p, .fluid-width-video-wrapper').contents().unwrap();
+		$('.arve-wrapper').find('p, .fluid-width-video-wrapper, .fluid-vids').contents().unwrap();
 		$('.arve-wrapper br').remove();
-		$('.arve-inner').removeAttr('width height');
+		$('.arve-inner').removeAttr('width height style');
 	};
 	remove_unwanted_stuff();
 	$( document ).ready(function() {

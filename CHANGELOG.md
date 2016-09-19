@@ -1,6 +1,10 @@
 ## Changelog ##
 
-### Pr Addon 2.4.0 beta - 2016-09-18 ###
+### 7.4.3 beta - 2016-09-19 ###
+
+* Fix: Deal with fluid-vids script messing with this plugin, making videos invisible.
+
+### Pro Addon 2.4.0 beta - 2016-09-18 ###
 
 * New: Adds Yahoo auto thumnail and title support
 
