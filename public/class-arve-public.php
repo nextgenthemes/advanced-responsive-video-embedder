@@ -609,7 +609,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 				$meta .= sprintf(
 					'<img %s>',
 					Advanced_Responsive_Video_Embedder_Shared::attr( array(
-						'class'    => 'arve-thumbnail arve-inner',
+						'class'    => 'arve-thumbnail',
 						'itemprop' => 'thumbnailUrl',
 						'src'      => $args['thumbnail'],
 						'srcset'   => $args['thumbnail_srcset'],
@@ -669,11 +669,13 @@ class Advanced_Responsive_Video_Embedder_Public {
 		return sprintf(
 			'<div %s>%s</div>',
 			Advanced_Responsive_Video_Embedder_Shared::attr( array(
-				'id'             => 'video-' . $args['element_id'],
-				'class'          => $wrapper_class,
-				'data-arve-grow' => ( 'lazyload' === $args['mode'] && $args['grow'] ) ? '' : null,
-				'data-arve-mode' => $args['mode'],
-				'style'          => empty( $args['maxwidth'] ) ? false : sprintf( 'max-width: %dpx;', $args['maxwidth'] ),
+				'id'                  => 'video-' . $args['element_id'],
+				'class'               => $wrapper_class,
+				'data-arve-grow'      => ( 'lazyload' === $args['mode'] && $args['grow'] ) ? '' : null,
+				'data-arve-mode'      => $args['mode'],
+				'data-arve-host'      => $args['provider'],
+				'data-arve-max-width' => empty( $args['maxwidth'] ) ? false : sprintf( '%dpx',             $args['maxwidth'] ),
+				'style'               => empty( $args['maxwidth'] ) ? false : sprintf( 'max-width: %dpx;', $args['maxwidth'] ),
 				// Schema.org
 				'itemscope'      => '',
 				'itemtype'       => 'http://schema.org/VideoObject',
@@ -725,7 +727,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$properties = Advanced_Responsive_Video_Embedder_Shared::get_properties();
 
 		$iframe_attr = array(
-			'class'           => empty( $args['iframe_class'] ) ? 'arve-inner fitvidsignore' : $args['iframe_class'],
+			'class'           => empty( $args['iframe_class'] ) ? 'arve-video fitvidsignore' : $args['iframe_class'],
 			'name'            => empty( $args['iframe_name'] )  ? false                      : $args['iframe_name'],
 			#'style'           => empty( $args['iframe_style'] ) ? false : $args['iframe_style'],
 			'sandbox'         => empty( $args['iframe_sandbox'] ) ? 'allow-scripts allow-same-origin allow-popups' : $args['iframe_sandbox'],
@@ -764,7 +766,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 		$sources = '';
 		$pairs = array(
 			'autoplay'  => $args['autoplay'] ? '' : null,
-			'class'     => 'arve-inner arve-hidden',
+			'class'     => 'arve-video arve-hidden',
 			'controls'  => '',
 			'loop'      => null,
 			'poster'    => $args['thumbnail'],
@@ -806,7 +808,7 @@ class Advanced_Responsive_Video_Embedder_Public {
 	public static function create_object( $data, $object_params ) {
 
 		return sprintf(
-			'<object class="arve-inner" data="%s" type="application/x-shockwave-flash">',
+			'<object class="arve-video" data="%s" type="application/x-shockwave-flash">',
 			esc_url( $data )
 		) .
 		$object_params .

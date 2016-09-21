@@ -19,13 +19,14 @@ module.exports = function (grunt) {
            'readme/blockquote-open.html',
            'readme/description-features-pro.html',
            'readme/blockquote-close.html',
-           'readme/description-links.html',
+           'readme/description-links.md',
            'readme/description-supported-providers.html',
            'readme/description-reviews.html',
            'readme/description-thanks.html',
            'readme/installation.md',
            'readme/faq.md',
            'readme/screenshots.md',
+           'readme/test-section.md',
            'CHANGELOG.md'
         ],
         dest: 'README.md'

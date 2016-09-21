@@ -492,7 +492,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'regex'          => 'https?://(?:www\.)?snotr\.com/(?:video|embed)/([0-9]+)',
 				'embed_url'      => 'http://www.snotr.com/embed/%s',
 				'auto_thumbnail' => false,
-				'requires_flash'     => true,
+				'requires_flash' => true,
 				'tests' => array(
 					'http://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is',
 				)
@@ -598,11 +598,8 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'auto_thumbnail' => false,
 				'requires_flash' => true,
 			),
-			# https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html?format=embed&player_autoplay=false
-			# https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html
-			# https://www.yahoo.com/movies/sully-trailer-4-211012511.html?format=embed
 			'yahoo' => array(
-				'regex'          => '(https?://(?:[.a-z]+).yahoo\.com/[/-a-z0-9öäü]+\.html)',
+				'regex'          => '(https?://(?:[a-z.]+)yahoo\.com/[/-a-z0-9öäü]+\.html)',
 				'embed_url'      => '%s',
 				'default_params' => 'format=embed',
 				'auto_thumbnail' => true,
@@ -615,12 +612,16 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				)
 			),
 			'youku' => array(
-				# <iframe height=498 width=510 src="http://player.youku.com/embed/XMTUyODYwOTc4OA==" frameborder=0 allowfullscreen></iframe>
-				'regex'          => 'https?://(?:www\.)?youku.com/v_show/id_([a-z0-9]+)',
+				'regex'          => 'https?://(?:[a-z.]+)?.youku.com/(?:embed/|v_show/id_)([a-z0-9]+)',
 				'embed_url'      => 'http://player.youku.com/embed/%s',
 				'auto_thumbnail' => false,
-				'aspect_ratio'   => '510:498',
-				'requires_flash'     => true,
+				'aspect_ratio'   => '450:292.5',
+				'requires_flash' => true,
+				# <iframe height=498 width=510 src="http://player.youku.com/embed/XMTUyODYwOTc4OA==" frameborder=0 allowfullscreen></iframe>
+				'tests' => array(
+					'http://v.youku.com/v_show/id_XMTczMDAxMjIyNA==.html?f=27806190',
+					'http://player.youku.com/embed/XMTUyODYwOTc4OA=='
+				),
 			),
 			'youtube' => array(
 				'name'           => 'YouTube',

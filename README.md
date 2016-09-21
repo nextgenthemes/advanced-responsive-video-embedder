@@ -72,13 +72,11 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
 </blockquote>
 
 
-<h3>Links</h3>
+### Links ###
 
-<ul class="nav nav-pills">
-  <li class="nav-item"><a class="nav-link" href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/">Plugin Page</a></li>
-  <li class="nav-item"><a class="nav-link" href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/Documentation">Documentation</a></li>
-  <li class="nav-item"><a class="nav-link" href="https://github.com/nextgenthemes/advanced-responsive-video-embedder">Github Page</a></li>
-</ul>
+[Plugin Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/)
+[Documentation](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/Documentation/)
+[GitHub Page](https://github.com/nextgenthemes/advanced-responsive-video-embedder/)
 
 
 <h3>Supported Providers</h3>
@@ -205,7 +203,30 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 2. Pro Options
 3. Features
 
+== Test Section ==
+
+Test
+
+
 ## Changelog ##
+
+### 7.5.0 beta - 2016-09-20 ###
+
+* Fix: Youku URL detection and aspect ratio.
+* Improved: `.arve-inner` css class in favor of some more specific classes combining styles.
+* Improved: removed TGMPA class because it was causing horrible isses.
+
+[rant from="unprofessional plugin developper"]
+**Fucking TGMPA class! Holy fuck!!!** the class itself is great, I tought I make it easy for people to install the plugin Shortcake UI that is not even updated on wp.org so I bundled it with the plugin and used the TGMPA class for it. Turns out that people themes have horrible outdated versions of that class and guess what early versions to not check of the class is already defined before defining it causing fatal erros on peoples sites. But that not all, I just had a site that has a versions that comes with the `if_class_exist` before the class inside a theme with a non-default filename and using my plugin with a up-to date version broke the entire admin with a white screen of death. I told people before to look for php errors about that class, replace that outdated class in themes and plugins and contact their authors. This ends now I am not using this shit anymore. There is a message when you click the 'Embed Video' that this plugin is needed with a link, thats it! Should have been always this way.
+[/rant]
+
+### Pro Addon 2.4.5 beta - 2016-09-19 ###
+
+* New: Adds the ability to define the pro key in your wp-config.php file with `define( 'ARVE_PRO_KEY', 'your_key_here' )`. When activating the plugin it now also tries to activate its license when a key is defined.
+
+### 7.4.3 beta - 2016-09-19 ###
+
+* Fix: Deal with fluid-vids script messing with this plugin, making videos invisible.
 
 ### Pro Addon 2.4.0 beta - 2016-09-18 ###
 

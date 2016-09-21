@@ -2,7 +2,7 @@
 	'use strict';
 	/*global ajaxurl */
 	/*global sui */
-
+  /*global alert */
 	// Options Page
 	//
 	$('.arve-settings-section').each( function() {
@@ -114,7 +114,7 @@
 		if( $( '#arve-btn[data-arve-sui]' ).length ) {
 			open_arve_dialog();
 		} else {
-			alert( "ARVE needs the 'Shortcake (Shortcode UI)' plugin active for this fuctionality" );
+			alert( 'ARVE needs the "Shortcake (Shortcode UI)" plugin active for this fuctionality, please download this version https://nextgenthemes.com/shortcode-ui-0.7.0-alpha.zip and install from zip. Current wp.org version 0.6.2 has a issue.' );
 		}
 	} );
 

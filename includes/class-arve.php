@@ -1,11 +1,5 @@
 <?php
-
 /**
- * The file that defines the core plugin class
- *
- * A class definition that includes attributes and functions used across both the
- * public-facing side of the site and the dashboard.
- *
  * @link       https://nextgenthemes.com
  * @since      1.0.0
  *
@@ -14,14 +8,6 @@
  */
 
 /**
- * The core plugin class.
- *
- * This is used to define internationalization, dashboard-specific hooks, and
- * public-facing site hooks.
- *
- * Also maintains the unique identifier of this plugin as well as the current
- * version of the plugin.
- *
  * @since      1.0.0
  * @package    Advanced_Responsive_Video_Embedder
  * @subpackage Advanced_Responsive_Video_Embedder/includes
@@ -45,7 +31,7 @@ class Advanced_Responsive_Video_Embedder {
 	public function __construct() {
 
 		$this->plugin_slug = 'advanced-responsive-video-embedder';
-		$this->version = '7.4.3';
+		$this->version = '7.5.0';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -70,8 +56,6 @@ class Advanced_Responsive_Video_Embedder {
 	 * @access   private
 	 */
 	private function load_dependencies() {
-
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-tgm-plugin-activation.php';
 
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
@@ -159,8 +143,6 @@ class Advanced_Responsive_Video_Embedder {
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings_debug', 99 );
 
 		$this->loader->add_action( 'media_buttons', $plugin_admin, 'add_media_button', 11 );
-
-		$this->loader->add_action( 'tgmpa_register', $plugin_admin, 'action_tgmpa_register' );
 	}
 
 	/**

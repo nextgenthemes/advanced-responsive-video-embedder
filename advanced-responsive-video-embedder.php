@@ -1,13 +1,5 @@
 <?php
-
 /**
- * The plugin bootstrap file
- *
- * This file is read by WordPress to generate the plugin information in the plugin
- * Dashboard. This file also includes all of the dependencies used by the plugin,
- * registers the activation and deactivation functions, and defines a function
- * that starts the plugin.
- *
  * @link              https://nextgenthemes.com
  * @since             3.0.0
  * @package           Advanced_Responsive_Video_Embedder
@@ -16,7 +8,7 @@
  * Plugin Name:       ARVE Advanced Responsive Video Embedder
  * Plugin URI:        https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
  * Description:       Easy responsive video embeds via URL (like WordPress) or Shortcodes. Supports almost anything you can imagine.
- * Version:           7.4.3
+ * Version:           7.5.0
  * Author:            Nicolas Jonas
  * Author URI:        https://nextgenthemes.com
  * License:           GPL-3.0
@@ -26,13 +18,11 @@
  * GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-embedder
  * GitHub Branch:     beta
  */
-
-// If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'ARVE_PRO_VERSION_REQUIRED', '2.4.0' );
+define( 'ARVE_PRO_VERSION_REQUIRED', '2.4.3' );
 
 /**
  * The code that runs during plugin activation.
