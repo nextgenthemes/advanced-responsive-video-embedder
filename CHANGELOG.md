@@ -1,5 +1,14 @@
 ## Changelog ##
 
+### Pro Addon 2.5.0 beta - 2016-09-21 ###
+
+* Improved: Thumbnails detection.
+* Improved how license keys are handled when set in wp-config.php.
+
+### 7.5.1 beta - 2016-09-21 ###
+
+* Fix: Liveleak seems to require flash for some videos.
+
 ### 7.5.0 beta - 2016-09-21 ###
 
 * Fix: Youku URL detection and aspect ratio.

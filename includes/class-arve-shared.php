@@ -110,9 +110,9 @@ class Advanced_Responsive_Video_Embedder_Shared {
 					'placeholder' => esc_attr__( 'Video URL / iframe Embed Code', 'advanced-responsive-video-embedder' ),
 				),
 				'description' => sprintf(
-					__('For %s or any unlisted <a href="%s">unlisted</a> providers that gives out iframe enbed codes that can be used responsively. This dialog extracts only the url from the <code>src="http://..."</code> attribute of iframe embed codes because that all ARVE needs.', 'advanced-responsive-video-embedder' ),
+					__('Post the URL of the video here. For %s and any unlisted <a href="%s">unlisted</a> video hosts paste their iframe embed codes in here (providers embeds need to be responsive).', 'advanced-responsive-video-embedder' ),
 					$embed_code_only,
-					'https://nextgenthemes.com/advanced-responsive-video-embedder-pro/#'
+					'https://nextgenthemes.com/advanced-responsive-video-embedder-pro/video-host-support'
 				)
 			),
 			array(
@@ -421,6 +421,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'embed_url'      => 'http://www.liveleak.com/ll_embed?%s',
 				'default_params' => 'wmode=transparent',
 				'auto_thumbnail' => false,
+				'requires_flash' => true,
 				'tests' => array(
 					__('Page/item <code>i=</code> URL', 'advanced-responsive-video-embedder') ,
 					'http://www.liveleak.com/view?i=703_1385224413',
@@ -434,7 +435,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'embed_url'      => 'https://livestream.com/accounts/%s/player',
 				'default_params' => 'utm_source=lsplayer&utm_medium=embed&height=720&width=1280',
 				'auto_thumbnail' => false,
-				'requires_flash'     => true,
+				'requires_flash' => true,
 			),
 			'klatv' => array(
 				'regex'          => 'https?://(?:www\.)?kla(?:gemauer)?.tv/([0-9]+)',
