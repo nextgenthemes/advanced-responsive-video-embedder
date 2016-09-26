@@ -72,9 +72,9 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
 
 ### Links ###
 
-[Plugin Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/),
-[Documentation](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/Documentation/),
-[GitHub Page](https://github.com/nextgenthemes/advanced-responsive-video-embedder/)
+* [Plugin Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/),
+* [Documentation](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/Documentation/),
+* [GitHub Page](https://github.com/nextgenthemes/advanced-responsive-video-embedder/)
 
 
 <h3>Supported Providers</h3>
@@ -203,6 +203,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 ## Changelog ##
 
 ### Pro Addon 2.6.0 - 2016-09-26 (manual beta download only) ###
+
 
 * Fix: YouTube Thumbnail detection.
 * Improved: Code used to cache thumbnails, this may improve improve performance.

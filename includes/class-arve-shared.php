@@ -446,7 +446,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			),
 			'klatv' => array(
 				'regex'          => 'https?://(?:www\.)?kla(?:gemauer)?.tv/([0-9]+)',
-				'embed_url'      => 'http://www.kla.tv/index.php?a=showembed&vidid=%s',
+				'embed_url'      => 'https://www.kla.tv/index.php?a=showembed&vidid=%s',
 				'name'           => 'kla.tv',
 				'url'            => true,
 				'auto_thumbnail' => false,

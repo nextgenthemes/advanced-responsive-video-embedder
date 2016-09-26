@@ -1,7 +1,10 @@
 ## Changelog ##
 
-### Pro Addon 2.6.0 - 2016-09-26 (manual beta download only) ###
+### Pro Addon 2.6.2 - 2016-09-26 (manual beta download only) ###
 
+
+
+### Pro Addon 2.6.0 - 2016-09-26 (manual beta download only) ###
 
 * Fix: YouTube Thumbnail detection.
 * Improved: Code used to cache thumbnails, this may improve improve performance.
