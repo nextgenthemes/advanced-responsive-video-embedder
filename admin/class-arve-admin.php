@@ -169,6 +169,21 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		$sui = is_plugin_active( 'shortcode-ui/shortcode-ui.php' );
 
+		add_thickbox();
+
+		$p1 = __( 'This button can open a optional ARVE a Shortcode creation dialog. ARVE needs the "Shortcake (Shortcode UI)" plugin active for this fuctionality, please download <a href="%s">version 0.7.0-alpha.zip</a> and install from zip. Current <a href="%s">wordpress.org version 0.6.2</a> has a issue that the button needs to be clicked twice.', $this->plugin_slug );
+
+		$p2 = __( 'The "Shortcake (Shortcode UI)" plugin also adds What You See Is What You Get functionality to WordPress visual post editor.', $this->plugin_slug );
+
+		$p3 = __( 'It is perfectly fine to pass on this and <a href="%s">manually</a> write shortcodes or don\'t use shortcodes at all, but it makes things easier.', $this->plugin_slug );
+
+		printf(
+			"<div id='arve-thickbox' style='display:none;'><p>$p1</p><p>$p2</p><p>$p3</p></div>",
+			esc_url( 'https://nextgenthemes.com/shortcode-ui-0.7.0-alpha.zip' ),
+			esc_url( 'https://wordpress.org/plugins/shortcode-ui/' ),
+			esc_url( 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/' )
+		);
+
 		printf(
 			'<button id="arve-btn" title="%s" %s data-arve-mode="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
 			esc_attr__( 'ARVE Advanced Responsive Video Embedder', $this->plugin_slug ),
@@ -559,7 +574,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		$output['promote_link'] = ( 'yes' == $input['promote_link'] ) ? true : false;
 		$output['autoplay']     = ( 'yes' == $input['autoplay'] )     ? true : false;
 
-		#dd($input['promote_link']);
+		$output['wp_image_cache_time'] = (int) $input['wp_image_cache_time'];
 
 		if( (int) $input['video_maxwidth'] > 100 ) {
 			$output['video_maxwidth'] = (int) $input['video_maxwidth'];

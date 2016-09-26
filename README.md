@@ -72,8 +72,8 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
 
 ### Links ###
 
-[Plugin Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/)
-[Documentation](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/Documentation/)
+[Plugin Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/),
+[Documentation](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/Documentation/),
 [GitHub Page](https://github.com/nextgenthemes/advanced-responsive-video-embedder/)
 
 
@@ -156,7 +156,6 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
 Thanks to the developers of the software used in ARVE
 <ul>
   <li><a href="https://wordpress.org/plugins/shortcode-ui/">Shortcode UI</a></li>
-  <li><a href="http://tgmpluginactivation.com">TGM Plugin Activation</a></li>
   <li><a href="http://sorgalla.com/lity/">Lity Lightbox JavaScript</a> (used in Pro Addon)</li>
 </ul>
 
@@ -201,22 +200,39 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 2. Pro Options
 3. Features
 
-== Test Section ==
-
-Test
-
-
 ## Changelog ##
+
+### Pro Addon 2.6.0 - 2016-09-26 (manual beta download only) ###
+
+* Fix: YouTube Thumbnail detection.
+* Improved: Code used to cache thumbnails, this may improve improve performance.
+* Improved: Lots code restructured and improved.
+
+### 7.6.0 - 2016-09-26 (Github only) ###
+
+* New: "Image Cache Time" setting on the setting page. Thumbnail URLs form the media gallery can now be cached with transients, that may improve performance.
+* Improved: Lots code restructured and improved.
+* Fix: Liveleak thumbnail detection issues.
+
+### Pro Addon 2.5.1 beta - 2016-09-21 ###
+
+* New: Thumbnail support for Liveleak.
+* Fix: Update loop.
+
+### Pro Addon 2.5.0 beta - 2016-09-21 ###
+
+* Improved: Thumbnails detection.
+* Improved how license keys are handled when set in wp-config.php.
+
+### 7.5.1 beta - 2016-09-21 ###
+
+* Fix: Liveleak seems to require flash for some videos.
 
 ### 7.5.0 beta - 2016-09-21 ###
 
 * Fix: Youku URL detection and aspect ratio.
 * Improved: `.arve-inner` css class in favor of some more specific classes combining styles.
 * Improved: removed TGMPA class because it was causing horrible isses.
-
-[rant from="unprofessional plugin developper"]
-**Fucking TGMPA class! Holy fuck!!!** the class itself is great, I tought I make it easy for people to install the plugin Shortcake UI that is not even updated on wp.org so I bundled it with the plugin and used the TGMPA class for easy installation and display as recommended. Turns out that people themes have horrible outdated versions of that class and guess what early versions to not check of the class is already defined before defining it causing fatal erros on peoples sites. But that not all, I just had customers site that has a versions that comes with the `if_class_exist` before the class inside a theme with a non-default filename and using my plugin with a up-to date version broke the entire admin with a white screen of death. I told people before to look for php errors about that class, replace that outdated class in themes and plugins and contact their authors. This ends now I am not burdening this shit on users anymore. There is a message when you click the 'Embed Video' that this plugin is needed with a link, thats it! Should have been always this way.
-[/rant]
 
 ### Pro Addon 2.4.5 beta - 2016-09-19 ###
 

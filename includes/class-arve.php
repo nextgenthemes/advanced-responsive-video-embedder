@@ -156,7 +156,9 @@ class Advanced_Responsive_Video_Embedder {
 
 		$plugin_public = new Advanced_Responsive_Video_Embedder_Public( $this->get_plugin_slug(), $this->get_version() );
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'oembed_remove_providers', 999 );
+		$this->loader->add_action( 'init', $plugin_public, 'player_for_embedding' );
+
+		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'oembed_remove_providers', 998 );
 		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'create_shortcodes', 999 );
 		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'create_url_handlers', 999 );
 
@@ -164,8 +166,6 @@ class Advanced_Responsive_Video_Embedder {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'register_scripts', 0 );
 
 		$this->loader->add_action( 'wp_head', $plugin_public, 'print_styles' );
-
-		$this->loader->add_action( 'arve_output', $plugin_public, 'normal_output', 10, 2 );
 
 		#$this->loader->add_action( 'wp_video_shortcode_override', $plugin_public, 'wp_video_shortcode_override', 10, 4 );
 

@@ -1,7 +1,11 @@
 <textarea style="font-family: monospace; width: 100%" rows="25">
 
-URL or Shortcode with the issue:
+Web Browser version you see the issue in:
+
 Link to live site with the issue:
+
+URL(s) or Shortcode(s) you use that to embed videos that have a issue:
+
 Detailed Description of the issue:
 
 What you are expecting and what you are seeing instead?

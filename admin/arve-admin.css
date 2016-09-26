@@ -6,10 +6,6 @@
 	padding-left: 3px;
 }
 
-#arve-form {
-	display: none;
-}
-
 .arve-icon:before {
 	content: "\f236" !important; /* dashicon-video-alt */
 }
@@ -67,7 +63,7 @@
 }
 
 .edit-shortcode-form-fields.shortcode-ui-edit-arve .field-block {
-    padding-top: .4em;
+  padding-top: .4em;
 	padding-bottom: .4em;
 }
 

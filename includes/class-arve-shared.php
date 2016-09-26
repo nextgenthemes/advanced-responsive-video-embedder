@@ -30,14 +30,14 @@ class Advanced_Responsive_Video_Embedder_Shared {
 	public static function get_options_defaults( $section ) {
 
 		$options['main'] = array(
-			'promote_link'     => false,
-			'autoplay'         => false,
-			'align'            => 'none',
-			'mode'             => 'normal',
-			'video_maxwidth'   => '',
-			'align_maxwidth'   => 400,
-			'sandbox'          => false,
-			'last_options_tab' => '#arve-settings-section-main',
+			'align_maxwidth'      => 400,
+			'align'               => 'none',
+			'autoplay'            => false,
+			'mode'                => 'normal',
+			'promote_link'        => false,
+			'sandbox'             => false,
+			'video_maxwidth'      => '',
+			'wp_image_cache_time' => 0,
 		);
 
 		$properties = self::get_properties();
@@ -237,6 +237,13 @@ class Advanced_Responsive_Video_Embedder_Shared {
 					'placeholder' => __( 'provider specific parameters', 'advanced-responsive-video-embedder' ),
 				),
 				'description' => sprintf( __( 'Note there are also general settings for this. This values get merged with the settings values. Example for YouTube <code>fs=0&start=30</code>. For reference: <a target="_blank" href="https://developers.google.com/youtube/player_parameters">Youtube Parameters</a>, <a target="_blank" href="http://www.dailymotion.com/doc/api/player.html#parameters">Dailymotion Parameters</a>, <a target="_blank" href="https://developer.vimeo.com/player/embedding">Vimeo Parameters</a>.', 'advanced-responsive-video-embedder' ), 'TODO settings page link' ),
+			),
+			array(
+				'hide_from_sc'   => true,
+				'attr'  => 'wp_image_cache_time',
+				'label' => esc_html__('Image Cache Time', 'advanced-responsive-video-embedder'),
+				'type'  => 'number',
+				'description' => __( '(seconds) This plugin uses WordPress transients to cache video thumbnail URLS. This setting defines how long image URLs from the media Gallery are being stored before running WPs fuctions again to request them. For example: hour - 3600, day - 86400, week - 604800.', 'advanced-responsive-video-embedder'),
 			),
 		);
 	}
@@ -798,9 +805,10 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'embed_url'      => 'http://www.youtube.com/embed/videoseries?list=%s',
 				'auto_thumbnail' => true,
 			),
+			'self_hosted' => array(
+				'name' => 'Self Hosted Video',
+			),
 			'iframe' => array(
-				'embed_url'         => '%s',
-				#'regex'             => '(https?://([^"/s]+)',
 				'default_params'    => '',
 				'auto_thumbnail'    => false,
 				'wmode_transparent' => false,
@@ -833,7 +841,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 
 			if ( false === $value || null === $value ) {
 				continue;
-			} elseif ( '' === $value ) {
+			} elseif ( '' === $value || true === $value ) {
 				$out .= sprintf( ' %s', esc_html( $key ) );
 			} elseif ( in_array( $key, array( 'href', 'src', 'data-src' ) ) ) {
 				$out .= sprintf( ' %s="%s"', esc_html( $key ), self::esc_url( $value ) );

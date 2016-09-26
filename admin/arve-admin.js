@@ -2,9 +2,9 @@
 	'use strict';
 	/*global ajaxurl */
 	/*global sui */
-  /*global alert */
+  /*global tb_show */
+
 	// Options Page
-	//
 	$('.arve-settings-section').each( function() {
 
 		$(this).insertBefore( $(this).parent() );
@@ -71,8 +71,6 @@
 			var uploaded_image = image.state().get('selection').first();
 			// We convert uploaded_image to a JSON object to make accessing it easier
 			// Output to the console uploaded_image
-			//console.log(uploaded_image);
-			//console.log( $( this ) );
 			var attachment_id = uploaded_image.toJSON().id;
 			// Let's assign the url value to the input field
 			$( target ).val(attachment_id);
@@ -114,7 +112,7 @@
 		if( $( '#arve-btn[data-arve-sui]' ).length ) {
 			open_arve_dialog();
 		} else {
-			alert( 'ARVE needs the "Shortcake (Shortcode UI)" plugin active for this fuctionality, please download this version https://nextgenthemes.com/shortcode-ui-0.7.0-alpha.zip and install from zip. Current wp.org version 0.6.2 has a issue.' );
+			tb_show( 'ARVE Optional Features', '#TB_inline?inlineId=arve-thickbox' );
 		}
 	} );
 
