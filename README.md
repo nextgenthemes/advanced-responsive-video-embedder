@@ -202,14 +202,27 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
-### Pro Addon 2.6.0 - 2016-09-26 (manual beta download only) ###
+### 2016-09-30 - Pro Addon 2.7.0 (manual beta download only) ###
 
+* New: Facebook thumbnail detection.
+* Fix: W3TC issue by using yet another lazyload method. Final this time?
+* Improved: Lots code restructured and improved.
+
+### 2016-09-30 - 7.7.0 (Github Updater only) ###
+
+* Fix: Brightcove Autoplay issue.
+* Fix: Vevo marked to require flash to make it work again.
+* Improved: Facebook embed method.
+* Improved: Lots code restructured and improved.
+* Improved: Better dialog with better description and links about the shortcake UI plugin.
+
+### 2016-09-26 - Pro Addon 2.6.2 (manual beta download only) ###
 
 * Fix: YouTube Thumbnail detection.
 * Improved: Code used to cache thumbnails, this may improve improve performance.
 * Improved: Lots code restructured and improved.
 
-### 7.6.0 - 2016-09-26 (Github only) ###
+### 7.6.0 - 2016-09-26 (Github Updater only) ###
 
 * New: "Image Cache Time" setting on the setting page. Thumbnail URLs form the media gallery can now be cached with transients, that may improve performance.
 * Improved: Lots code restructured and improved.

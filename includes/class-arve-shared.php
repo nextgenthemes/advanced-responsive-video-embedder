@@ -159,6 +159,33 @@ class Advanced_Responsive_Video_Embedder_Shared {
 			),
 			array(
 				'hide_from_settings' => true,
+				'attr'  => 'webm',
+				'label' => esc_html__( 'webm', 'advanced-responsive-video-embedder' ),
+				'type'  => 'attachment',
+				'libraryType' => array( 'video' ),
+				'addButton'   => esc_html__( 'Select webm file', 'shortcode-ui' ),
+				'frameTitle'  => esc_html__( 'Select webm file', 'shortcode-ui' ),
+			),
+			array(
+				'hide_from_settings' => true,
+				'attr'  => 'ogv',
+				'label' => esc_html__( 'ogv', 'advanced-responsive-video-embedder' ),
+				'type'  => 'attachment',
+				'libraryType' => array( 'video' ),
+				'addButton'   => esc_html__( 'Select ogv file', 'shortcode-ui' ),
+				'frameTitle'  => esc_html__( 'Select ogv file', 'shortcode-ui' ),
+			),
+			array(
+				'hide_from_settings' => true,
+				'attr'  => 'mp4',
+				'label' => esc_html__( 'mp4', 'advanced-responsive-video-embedder' ),
+				'type'  => 'attachment',
+				'libraryType' => array( 'video' ),
+				'addButton'   => esc_html__( 'Select mp4 file', 'shortcode-ui' ),
+				'frameTitle'  => esc_html__( 'Select mp4 file', 'shortcode-ui' ),
+			),
+			array(
+				'hide_from_settings' => true,
 				'attr'  => 'title',
 				'label' => esc_html__('Title', 'advanced-responsive-video-embedder'),
 				'type'  => 'text',
@@ -316,7 +343,11 @@ class Advanced_Responsive_Video_Embedder_Shared {
 					'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591',
 				)
 			),
-			'brightcove'   => array(),
+			'brightcove'   => array(
+				'regex'          => 'https?://(?:players|link)\.brightcove\.net/([^" ]+)',
+				'embed_url'      => 'https://players.brightcove.net/%s',
+				'no_url_embeds'  => true,
+			),
 			'collegehumor' => array(
 				'name'           => 'CollegeHumor',
 				'regex'          => 'https?://(?:www\.)?collegehumor\.com/video/([0-9]+)',
@@ -341,8 +372,8 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'embed_url'      => 'https://www.dailymotion.com/embed/video/%s',
 				'default_params' => 'logo=0&hideInfos=1&related=0',
 				'auto_thumbnail' => true,
-				'auto_title' => true,
-				'query_args' => array(
+				'auto_title'     => true,
+				'query_args'     => array(
 					'api' => array(
 						'name' => __( 'API', 'advanced-responsive-video-embedder' ),
 						'type' => 'bool',
@@ -372,15 +403,26 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'regex'           => 'https?://(?:www\.)?dailymotion\.com/playlist/([a-z0-9]+)',
 				'embed_url'       => 'https://www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2F%s%2F1',
 				'auto_thumbnail'  => false,
+				'requires_flash'  => true,
 			),
 			'facebook' => array(
+				# https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/?type=2&theater
+				#<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FTheKillingsOfTonyBlair%2Fvideos%2Fvb.551089058285349%2F562955837098671%2F%3Ftype%3D2%26theater&width=500&show_text=false&height=280&appId" width="500" height="280" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+				'regex'             => '(https?://(?:www\.)?facebook\.com/[-a-z0-9]+/videos/[/a-z0-9]+)',
+				'embed_url'         => 'https://www.facebook.com/plugins/video.php?href=%s',
+				'url_encode_id'     => true,
+				#'embed_url'         => 'https://www.facebook.com/video/embed?video_id=%s',
+				'auto_thumbnail'    => true,
+			),
+			/*
+			'old_facebook' => array(
 				#<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10153231379946729%2F&width=500&show_text=false&height=281&appId" width="500" height="281" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
 				'regex'             => 'https?://(?:www\.)?facebook\.com/(?:[^/]+)/videos/([0-9]+)',
 				'embed_url'         => 'https://www.facebook.com/plugins/video.php?href=https%%3A%%2F%%2Fwww.facebook.com%%2Ffacebook%%2Fvideos%%2F%s%%2F',
 				#'embed_url'         => 'https://www.facebook.com/video/embed?video_id=%s',
 				'auto_thumbnail'    => false,
-				'wmode_transparent' => false,
 			),
+			*/
 			'funnyordie' => array(
 				'name'           => 'Funny or Die',
 				'regex'          => 'https?://(?:www\.)?funnyordie\.com/videos/([a-z0-9_]+)',
@@ -552,6 +594,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'embed_url'      => 'https://scache.vevo.com/assets/html/embed.html?video=%s',
 				'default_params' => 'playlist=false&playerType=embedded&env=0',
 				'auto_thumbnail' => false,
+				'requires_flash' => true,
 			),
 			'viddler' => array(
 				'regex'          => 'https?://(?:www\.)?viddler\.com/(?:embed|v)/([a-z0-9]{8})',
@@ -560,7 +603,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'auto_thumbnail' => true,
 				'auto_title'     => true,
 				'aspect_ratio'   => '650:408',
-				'requires_flash'     => true,
+				'requires_flash' => true,
 			),
 			'vidspot' => array(
 				'name'      => 'vidspot.net',
@@ -648,9 +691,9 @@ class Advanced_Responsive_Video_Embedder_Shared {
 					__('Youtube playlist URL inlusive the video to start at. The index part will be ignored and is not needed', 'advanced-responsive-video-embedder') ,
 					'http://www.youtube.com/watch?v=GjL82KUHVb0&list=PLI46g-I12_9qGBq-4epxOay0hotjys5iA&index=10',
 					__('Loop a YouTube video', 'advanced-responsive-video-embedder'),
-					'[youtube id="FKkejo2dMV4" parameters="playlist=FKkejo2dMV4 loop=1"]',
+					'[youtube id="FKkejo2dMV4" parameters="playlist=FKkejo2dMV4&loop=1"]',
 					__('Enable annotations and related video at the end (disable by default with this plugin)', 'advanced-responsive-video-embedder'),
-					'[youtube id="uCQXKYPiz6M" parameters="iv_load_policy=1 "]',
+					'[youtube id="uCQXKYPiz6M" parameters="iv_load_policy=1"]',
 					__('Testing Youtube Starttimes', 'advanced-responsive-video-embedder'),
 					'http://youtu.be/vrXgLhkv21Y?t=1h19m14s',
 					'http://youtu.be/vrXgLhkv21Y?t=19m14s',
@@ -806,12 +849,11 @@ class Advanced_Responsive_Video_Embedder_Shared {
 				'auto_thumbnail' => true,
 			),
 			'self_hosted' => array(
-				'name' => 'Self Hosted Video',
+				'name' => 'Self Hosted Video (in testing)',
 			),
 			'iframe' => array(
 				'default_params'    => '',
 				'auto_thumbnail'    => false,
-				'wmode_transparent' => false,
 				'requires_flash'    => true,
 				'tests' => array(
 					__('This plugin allows iframe embeds for every URL by using this <code>[iframe]</code> shortcode. This should only be used for providers not supported by this via a named shortcode. The result is a 16:9 resonsive iframe by default, aspect ratio can be changed as usual.', 'advanced-responsive-video-embedder'),
@@ -829,7 +871,7 @@ class Advanced_Responsive_Video_Embedder_Shared {
 		return $properties;
 	}
 
-	public static function attr( $attr = array() ) {
+	public static function attr( $attr = array(), $dailymotion_playlist_fix = false ) {
 
 		if ( empty( $attr ) ) {
 			return '';
