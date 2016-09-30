@@ -773,12 +773,11 @@ class Advanced_Responsive_Video_Embedder_Public {
 			$args['provider'] = 'iframe';
 
 			if ( ! empty( $args['id'] ) && empty( $args['url'] ) ) {
-				$args['src'] = $args['id'];
+				$args['iframe_src'] = $args['id'];
 			} else {
-				$args['src'] = $args['url'];
+				$args['iframe_src'] = $args['url'];
 			}
 		}
-
 
 		$args['thumbnail_from_url'] = false;
 
