@@ -10,7 +10,7 @@ function arv3_get_options_defaults( $section ) {
 		'promote_link'        => false,
 		'sandbox'             => false,
 		'video_maxwidth'      => '',
-		'wp_image_cache_time' => 0,
+		'wp_image_cache_time' => 18000,
 		'last_settings_tab'   => '',
 		'wp_video_override'   => false,
 	);
