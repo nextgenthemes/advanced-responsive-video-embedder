@@ -8,7 +8,7 @@
  * Plugin Name:       ARVE Advanced Responsive Video Embedder
  * Plugin URI:        https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
  * Description:       Easy responsive video embeds via URL (like WordPress) or Shortcodes. Supports almost anything you can imagine.
- * Version:           7.8.1-beta
+ * Version:           7.8.2-beta
  * Author:            Nicolas Jonas
  * Author URI:        https://nextgenthemes.com
  * License:           GPL-3.0
@@ -23,8 +23,8 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 define( 'ARVE_SLUG',                 'advanced-responsive-video-embedder' );
-define( 'ARVE_VERSION',              '7.8.1-beta' );
-define( 'ARVE_PRO_VERSION_REQUIRED', '3.0.0-beta' );
+define( 'ARVE_VERSION',              '7.8.2-beta' );
+define( 'ARVE_PRO_VERSION_REQUIRED', '3.0.2-beta' );
 
 arv3_init();
 #add_action( 'plugins_loaded', 'arv3_init' ); # TODO ??
@@ -70,10 +70,8 @@ function arv3_init() {
 	add_action( 'admin_init',            'arv3_register_settings_debug', 99 );
 	add_action( 'admin_init',            'arv3_register_settings' );
 	add_action( 'admin_menu',            'arv3_add_plugin_admin_menu' );
-	add_action( 'admin_notices',         'arv3_pro_notice' );
 	add_action( 'media_buttons',         'arv3_add_media_button', 11 );
 	add_action( 'register_shortcode_ui', 'arv3_register_shortcode_ui' );
-	add_action( 'wp_ajax_arve_ajax_dismiss_pro_notice', 'arv3_arve_ajax_dismiss_pro_notice' );
 	add_action( 'wp_dashboard_setup',    'arv3_add_dashboard_widget' );
 
 	$plugin_basename = plugin_basename( plugin_dir_path( realpath( dirname( __FILE__ ) ) ) . ARVE_SLUG . '.php' );

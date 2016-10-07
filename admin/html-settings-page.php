@@ -13,15 +13,15 @@
  */
 
 $options = arv3_get_options();
-
+$ad      = arv3_get_pro_ad();
 ?>
 <div class="wrap arve-options-wrap">
 
-	<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
+	<h2><?php esc_html_e( get_admin_page_title() ); ?></h2>
 
 	<?php
-	if ( $admin_message = $this->get_admin_pro_message() ) {
-		echo '<div class="updated">' . $admin_message . '</div>';
+	if ( $ad ) {
+		echo '<div class="updated">' . $ad . '</div>';
 	} ?>
 
 	<h2 class="nav-tab-wrapper arve-settings-tabs"></h2>
@@ -30,7 +30,7 @@ $options = arv3_get_options();
 		<?php do_settings_sections( ARVE_SLUG ); ?>
 		<?php settings_fields( 'arve-settings-group' ); ?>
 
-		<input type="hidden" id="arve_options_main[last_settings_tab]" name="arve_options_main[last_settings_tab]" value="<?php echo esc_attr( $options['last_settings_tab'] ); ?>">
+		<input type="hidden" id="arve_options_main[last_settings_tab]" name="arve_options_main[last_settings_tab]" value="<?php esc_attr_e( $options['last_settings_tab'] ); ?>">
 
 	</form>
 

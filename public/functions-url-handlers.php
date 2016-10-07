@@ -19,7 +19,7 @@ function arv3_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
   $id = $matches[1];
 
   if ( empty( $id ) ) {
-    return $this->error( __( 'No ID, please report this bug', ARVE_SLUG ) );
+    return arv3_error( __( 'No ID, please report this bug', ARVE_SLUG ) );
   }
 
   //* Fix 'Markdown on save enhanced' issue
@@ -53,7 +53,7 @@ function arv3_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
   }
 
   if ( isset( $url_query['t'] ) ) {
-    $url_query['start'] = $this->youtube_time_to_seconds( $url_query['t'] );
+    $url_query['start'] = arv3_youtube_time_to_seconds( $url_query['t'] );
   }
 
   unset( $url_query['arve'] );

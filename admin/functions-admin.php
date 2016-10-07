@@ -9,7 +9,7 @@ function arv3_action_admin_init_setup_messages() {
 			ARVE_PRO_VERSION_REQUIRED,
 			'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/installing-and-license-management/'
 		);
-		new Advanced_Responsive_Video_Embedder_Admin_Notice_Factory(	'arve-pro-outdated', "<p>$msg</p>", false );
+		new ARVE_Admin_Notice_Factory(	'arve-pro-outdated', "<p>$msg</p>", false );
 	}
 
 	$msg = sprintf(
@@ -20,16 +20,67 @@ function arv3_action_admin_init_setup_messages() {
 		'https://nextgenthemes.com/my-account/',
 		'https://nextgenthemes.com/support/'
 	);
+	new ARVE_Admin_Notice_Factory( 'version7', $msg, true );
 
-	new Advanced_Responsive_Video_Embedder_Admin_Notice_Factory( 'version7', $msg, true );
+	$pro_ad_message = arv3_get_pro_ad();
+
+	if( $pro_ad_message ) {
+		new ARVE_Admin_Notice_Factory( 'arve_dismiss_pro_notice', $pro_ad_message, true );
+	}
 }
 
-/**
- * Render the settings page for this plugin.
- *
- * @since    1.0.0
- */
+function arv3_get_pro_ad() {
 
+	if ( ! current_user_can( 'update_plugins' ) || ! apply_filters( 'arve_pro_ad', true ) ) {
+		return false;
+	}
+
+	$inst = (int) get_option( 'arve_install_date' );
+
+	$pro_message = __( '<p>This is Nico the Author of the Advanced Responsive Video Embedder plugin. When you <strong><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/">buy the Pro Addon</a></strong> of this plugin you will get this:</p>', ARVE_SLUG );
+
+	$pro_message .= file_get_contents( plugin_dir_path( dirname( __FILE__ ) ) . 'readme/description-features-pro.html' );
+	$pro_message = str_replace( '<ul ', '<ul style="list-style: square; padding-left: 20px;" ', $pro_message );
+
+	return $pro_message;
+}
+
+function arv3_echo_pro_ad() {
+	echo arv3_get_pro_ad();
+}
+
+function arv3_add_dashboard_widget() {
+
+	if( arv3_get_pro_ad() ) {
+		return;
+	}
+
+	wp_add_dashboard_widget(
+		'arve_dashboard_widget',              // Widget slug.
+		'Advanced Responsive Video Embedder', // Title.
+		'arv3_echo_pro_ad'                    // Display function.
+	);
+
+	// Globalize the metaboxes array, this holds all the widgets for wp-admin
+	global $wp_meta_boxes, $pagenow;
+
+	if( 'index.php' == $pagenow ) {
+
+		// Get the regular dashboard widgets array
+		// (which has our new widget already but at the end)
+		$normal_dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
+
+		// Backup and delete our new dashboard widget from the end of the array
+		$arve_widget_backup = array( 'arve_dashboard_widget' => $normal_dashboard['arve_dashboard_widget'] );
+		unset( $normal_dashboard['arve_dashboard_widget'] );
+
+		// Merge the two arrays together so our widget is at the beginning
+		$sorted_dashboard = array_merge( $arve_widget_backup, $normal_dashboard );
+
+		// Save the sorted array back into the original metaboxes
+		$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
+	}
+}
 
 /**
  * Register the administration menu for this plugin into the WordPress Dashboard menu.
@@ -271,18 +322,18 @@ function arv3_register_settings() {
 		}
 
 		if( in_array( $v['type'], array( 'text', 'number', 'url' ) ) ) {
-			$callback_function = 'input';
+			$callback_function = 'arv3_input';
 		} else {
-			$callback_function = $v['type'];
+			$callback_function = 'arv3_' . $v['type'];
 		}
 
 		add_settings_field(
-			"arve_options_main[{$v['attr']}]",  // ID
-			$v['label'],                        // title
-			"Advanced_Responsive_Video_Embedder_Admin::$callback_function", // callback
-			ARVE_SLUG,                 // page
-			'main_section',                     // section
-			array(                              // args
+			"arve_options_main[{$v['attr']}]", // ID
+			$v['label'],                       // title
+			$callback_function,                // callback
+			ARVE_SLUG,                         // page
+			'main_section',                    // section
+			array(                             // args
 				'label_for'   => ( 'radio' === $v['type'] ) ? null : "arve_options_main[{$v['attr']}]",
 				'input_attr'  => $v['meta'] + array(
 					'type'        => $v['type'],
@@ -299,7 +350,7 @@ function arv3_register_settings() {
 	add_settings_field(
 		'arve_options_main[reset]',
 		null,
-		"Advanced_Responsive_Video_Embedder_Admin::submit_reset",
+		"arv3_submit_reset",
 		ARVE_SLUG,
 		'main_section',
 		array(
@@ -322,7 +373,7 @@ function arv3_register_settings() {
 		add_settings_field(
 			"arve_options_params[$provider]",
 			ucfirst ( $provider ),
-			"Advanced_Responsive_Video_Embedder_Admin::input",
+			'arv3_input',
 			ARVE_SLUG,
 			'params_section',
 			array(
@@ -364,7 +415,7 @@ function arv3_register_settings() {
 		add_settings_field(
 			"arve_options_shortcodes[$provider]",
 			ucfirst ( $provider ),
-			"Advanced_Responsive_Video_Embedder_Admin::input",
+			'arv3_input',
 			ARVE_SLUG,
 			'shortcodes_section',
 			array(
@@ -559,85 +610,6 @@ function arv3_validate_options_shortcodes( $input ) {
 	$options_defaults = arv3_get_options_defaults( 'shortcodes' );
 	//* Store only the options in the database that are different from the defaults.
 	return array_diff_assoc( $output, $options_defaults );
-}
-
-/**
- * Return Admin message to be used on the dashboard notice and the options page.
- *
- * @since     3.0.0
- */
-function arv3_get_admin_pro_message() {
-
-	if ( ! current_user_can( 'update_plugins' ) ) {
-		return;
-	}
-
-	$inst = (int) get_option( 'arve_install_date' );
-
-	$pro_message = __( '<p>This is Nico the Author of the Advanced Responsive Video Embedder plugin. When you <strong><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/">buy the Pro Addon</a></strong> of this plugin you will get this:</p>', ARVE_SLUG );
-
-	$pro_message .= file_get_contents( plugin_dir_path( dirname( __FILE__ ) ) . 'readme/description-features-pro.html' );
-	$pro_message = str_replace( '<ul ', '<ul style="list-style: square; padding-left: 20px;" ', $pro_message );
-
-	return apply_filters( 'arve_admin_pro_message', $pro_message );
-}
-
-function arv3_add_dashboard_widget() {
-
-	wp_add_dashboard_widget(
-		'arve_dashboard_widget',              // Widget slug.
-		'Advanced Responsive Video Embedder', // Title.
-		'arv3_dashboard_widget_output' // Display function.
-	);
-
-	// Globalize the metaboxes array, this holds all the widgets for wp-admin
-	global $wp_meta_boxes, $pagenow;
-
-	if( 'index.php' == $pagenow ) {
-
-		// Get the regular dashboard widgets array
-		// (which has our new widget already but at the end)
-		$normal_dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
-
-		// Backup and delete our new dashboard widget from the end of the array
-		$arve_widget_backup = array( 'arve_dashboard_widget' => $normal_dashboard['arve_dashboard_widget'] );
-		unset( $normal_dashboard['arve_dashboard_widget'] );
-
-		// Merge the two arrays together so our widget is at the beginning
-		$sorted_dashboard = array_merge( $arve_widget_backup, $normal_dashboard );
-
-		// Save the sorted array back into the original metaboxes
-		$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
-	}
-}
-
-/**
- * Create the function to output the contents of our Dashboard Widget.
- */
-function arv3_ashboard_widget_output() {
-
-	echo arv3_get_admin_pro_message();
-}
-
-function arv3_pro_notice() {
-	#delete_user_meta( get_current_user_id(), 'arve_dismiss_pro_notice' );
-
-	$user_meta = get_user_meta( get_current_user_id(), 'arve_dismiss_pro_notice' );
-
-	if( ! empty( $user_meta ) ) {
-	    return;
-	}
-
-	echo '<div class="notice updated arve-pro-notice is-dismissible" style="font-size: 1.15em;">';
-	echo arv3_get_admin_pro_message();
-	echo '</div>';
-}
-
-function arv3_ajax_dismiss_pro_notice() {
-
-	add_user_meta( get_current_user_id(), 'arve_dismiss_pro_notice', true );
-
-	wp_die();
 }
 
 
