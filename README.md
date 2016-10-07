@@ -177,7 +177,7 @@ Please report it on [nextgenthemes.com/support/](https://nextgenthemes.com/suppo
 
 ### Why are my videos not filling their container? ###
 
-You are most likely use `align`, this plugin has a option for limiting video with with alignment. If you want your videos to fill their containers then you should not use the `align=left/right/center` shortcode attribute or the `arve[align]=` URL parameter. This assumes that you left the 'Video Maximal Width' field on the options page empty (default + recommended)
+You are most likely use `align`, this plugin has a option for limiting video with with alignment. If you want your videos to fill their containers then you should not use the `align` shortcode attribute. This assumes that you left the 'Video Maximal Width' field on the options page empty (default + recommended)
 
 ### Can you add a video provider? ###
 
@@ -191,7 +191,7 @@ This plugin not changes anything to usual HTML `<iframe>` embed codes you have t
 
 This plugins embed is considered as 'custom player' by YouTube so you have to pass the video ID as playlist parameters to make the loop work.
 
-`[youtube id="123456" parameters="loop=1&playlist=123456"]`
+`[arve url="https://www.youtube.com/watch?v=pvRqvX413Ik" parameters="loop=1&playlist=pvRqvX413Ik"]`
 
 
 ## Screenshots ##
@@ -202,31 +202,9 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
-### 2016-09-30 - Pro Addon 2.7.0 (manual beta download only) ###
+### 2016-10-03 - Pro Addon 2.5.2 ###
 
-* New: Facebook thumbnail detection.
-* Fix: W3TC issue by using yet another lazyload method. Final this time?
-* Improved: Lots code restructured and improved.
-
-### 2016-09-30 - 7.7.0 (Github Updater only) ###
-
-* Fix: Brightcove Autoplay issue.
-* Fix: Vevo marked to require flash to make it work again.
-* Improved: Facebook embed method.
-* Improved: Lots code restructured and improved.
-* Improved: Better dialog with better description and links about the shortcake UI plugin.
-
-### 2016-09-26 - Pro Addon 2.6.2 (manual beta download only) ###
-
-* Fix: YouTube Thumbnail detection.
-* Improved: Code used to cache thumbnails, this may improve improve performance.
-* Improved: Lots code restructured and improved.
-
-### 7.6.0 - 2016-09-26 (Github Updater only) ###
-
-* New: "Image Cache Time" setting on the setting page. Thumbnail URLs form the media gallery can now be cached with transients, that may improve performance.
-* Improved: Lots code restructured and improved.
-* Fix: Liveleak thumbnail detection issues.
+* Fix: Force button styles to make sure themes styles get overwritten.
 
 ### Pro Addon 2.5.1 beta - 2016-09-21 ###
 

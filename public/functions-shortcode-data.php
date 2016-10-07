@@ -228,6 +228,8 @@ function arv3_create_embed_id( $v ) {
 
 function arv3_maxwidth_when_aligned( $maxwidth, $align ) {
 
+	$options = arv3_get_options();
+
 	if ( $maxwidth < 100 && in_array( $align, array( 'left', 'right', 'center' ) ) ) {
 		$maxwidth = (int) $options['align_maxwidth'];
 	}
