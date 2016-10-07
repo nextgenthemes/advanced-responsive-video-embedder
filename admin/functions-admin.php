@@ -582,7 +582,7 @@ function arv3_get_admin_pro_message() {
 	return apply_filters( 'arve_admin_pro_message', $pro_message );
 }
 
-function add_dashboard_widget() {
+function arv3_add_dashboard_widget() {
 
 	wp_add_dashboard_widget(
 		'arve_dashboard_widget',              // Widget slug.
@@ -633,7 +633,7 @@ function arv3_pro_notice() {
 	echo '</div>';
 }
 
-function arve_ajax_dismiss_pro_notice() {
+function arv3_ajax_dismiss_pro_notice() {
 
 	add_user_meta( get_current_user_id(), 'arve_dismiss_pro_notice', true );
 
