@@ -11,7 +11,7 @@ Please report it on [nextgenthemes.com/support/](https://nextgenthemes.com/suppo
 
 ### Why are my videos not filling their container? ###
 
-You are most likely use `align`, this plugin has a option for limiting video with with alignment. If you want your videos to fill their containers then you should not use the `align=left/right/center` shortcode attribute or the `arve[align]=` URL parameter. This assumes that you left the 'Video Maximal Width' field on the options page empty (default + recommended)
+You are most likely use `align`, this plugin has a option for limiting video with with alignment. If you want your videos to fill their containers then you should not use the `align` shortcode attribute. This assumes that you left the 'Video Maximal Width' field on the options page empty (default + recommended)
 
 ### Can you add a video provider? ###
 
@@ -25,4 +25,4 @@ This plugin not changes anything to usual HTML `<iframe>` embed codes you have t
 
 This plugins embed is considered as 'custom player' by YouTube so you have to pass the video ID as playlist parameters to make the loop work.
 
-`[youtube id="123456" parameters="loop=1&playlist=123456"]`
+`[arve url="https://www.youtube.com/watch?v=pvRqvX413Ik" parameters="loop=1&playlist=pvRqvX413Ik"]`

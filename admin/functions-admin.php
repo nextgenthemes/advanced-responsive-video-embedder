@@ -1,0 +1,669 @@
+<?php
+
+function arv3_action_admin_init_setup_messages() {
+
+	if( defined( 'ARVE_PRO_VERSION' ) && version_compare( ARVE_PRO_VERSION_REQUIRED, ARVE_PRO_VERSION, '>' ) ) {
+
+		$msg = sprintf(
+			__( 'Your ARVE Pro Addon is outdated, you need version %s or later. Please <a href="%s">look here</a> for manual updates if you run the beta version or your auto-updates do not work or are disabled.', ARVE_SLUG ),
+			ARVE_PRO_VERSION_REQUIRED,
+			'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/installing-and-license-management/'
+		);
+		new Advanced_Responsive_Video_Embedder_Admin_Notice_Factory(	'arve-pro-outdated', "<p>$msg</p>", false );
+	}
+
+	$msg = sprintf(
+		__( '<p>Thanks for using and updating <abbr title="Advanced Responsive Video Embedder">ARVE</abbr>, this was a <strong>huge</strong> update please read about <a href="%s" target="_blank">what is new here</a>. You will see a message about a highly recommended plugin "Shortcode UI / Shortcake" that is bundled within ARVE its needed for the new shortcode dialog and and the new WYSIWYG feature for shortcodes inside the post editor. If you do not want that then you can dismiss the install and manually write shortcodes or use URLs. Many thanks to all the beta testers, I will send out free discounts soon.</p>
+		<p>There is no guarantee that it will work without new problems on all your themes and plugins combinations out there. I am afraid of bad rating and people flooding me with complaints that they don\'t like the changes, that I broke their sites or something. But at some point there has to be a release. Please download the <a href="%s" target="_blank">old version here now</a> and old pro addon in <a href="%s">from your account</a> if you own it. If you have big problems and need a quick fix please downgrade ARVE (delete the arve plugin/s and reinstall with the .zip file/s) and report any problems <a href="%s" target="_blank">here.</a> Please don\'t give negative reviews.</p>', ARVE_SLUG ),
+		'https://nextgenthemes.com/whats-new-in-arve-version-7/',
+		'https://nextgenthemes.com/arve-version-6.5.0.zip',
+		'https://nextgenthemes.com/my-account/',
+		'https://nextgenthemes.com/support/'
+	);
+
+	new Advanced_Responsive_Video_Embedder_Admin_Notice_Factory( 'version7', $msg, true );
+}
+
+/**
+ * Render the settings page for this plugin.
+ *
+ * @since    1.0.0
+ */
+
+
+/**
+ * Register the administration menu for this plugin into the WordPress Dashboard menu.
+ *
+ * @since    1.0.0
+ */
+function arv3_add_plugin_admin_menu() {
+
+	/*
+	 * Add a settings page for this plugin to the Settings menu.
+	 *
+	 * NOTE:  Alternative menu locations are available via WordPress administration menu functions.
+	 *
+	 *        Administration Menus: http://codex.wordpress.org/Administration_Menus
+	 *
+	 */
+	$plugin_screen_hook_suffix = add_options_page(
+		__( 'Advanced Responsive Video Embedder Settings', ARVE_SLUG ),
+		__( 'A.R. Video Embedder', ARVE_SLUG ),
+		'manage_options',
+		ARVE_SLUG,
+		'arv3_display_plugin_admin_page'
+	);
+}
+
+function arv3_display_plugin_admin_page() {
+	require_once plugin_dir_path( __FILE__ ) . 'html-settings-page.php';
+}
+
+/**
+ * Add settings action link to the plugins page.
+ *
+ * @since    1.0.0
+ */
+function arv3_add_action_links( $links ) {
+
+	if( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
+
+		$extra_links['buy_pro_addon'] = sprintf(
+			'<a href="%s"><strong style="display: inline;">%s</strong></a>',
+			'http://nextgenthemes.com/downloads/advanced-responsive-video-embedder',
+			__( 'Buy Pro Addon', ARVE_SLUG )
+		);
+	}
+
+	$extra_links['donate']   = sprintf( '<a href="%s"><strong style="display: inline;">%s</strong></a>', 'https://nextgenthemes.com/donate/', __( 'Donate', ARVE_SLUG ) );
+	$extra_links['settings'] = sprintf( '<a href="%s">%s</a>', admin_url( "options-general.php?page={ARVE_SLUG}" ), __( 'Settings', ARVE_SLUG ) );
+
+	return array_merge( $extra_links, $links );
+}
+
+/**
+ * Action to add a custom button to the content editor
+ *
+ * @since 4.3.0
+ */
+function arv3_add_media_button() {
+
+	$options = arv3_get_options();
+
+	$sui = is_plugin_active( 'shortcode-ui/shortcode-ui.php' );
+
+	add_thickbox();
+
+	$p1 = __( 'This button can open a optional ARVE a Shortcode creation dialog. ARVE needs the "Shortcake (Shortcode UI)" plugin active for this fuctionality, please download <a href="%s">version 0.7.0-alpha.zip</a> and install from zip. Current <a href="%s">wordpress.org version 0.6.2</a> has a issue that the button needs to be clicked twice.', ARVE_SLUG );
+
+	$p2 = __( 'The "Shortcake (Shortcode UI)" plugin also adds What You See Is What You Get functionality to WordPress visual post editor.', ARVE_SLUG );
+
+	$p3 = __( 'It is perfectly fine to pass on this and <a href="%s">manually</a> write shortcodes or don\'t use shortcodes at all, but it makes things easier.', ARVE_SLUG );
+
+	printf(
+		"<div id='arve-thickbox' style='display:none;'><p>$p1</p><p>$p2</p><p>$p3</p></div>",
+		esc_url( 'https://nextgenthemes.com/shortcode-ui-0.7.0-alpha.zip' ),
+		esc_url( 'https://wordpress.org/plugins/shortcode-ui/' ),
+		esc_url( 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/' )
+	);
+
+	printf(
+		'<button id="arve-btn" title="%s" %s data-arve-mode="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
+		esc_attr__( 'ARVE Advanced Responsive Video Embedder', ARVE_SLUG ),
+		$sui ? 'data-arve-sui' : '',
+		esc_attr( $options['mode'] ),
+		esc_html__( '[arve] Embed Video', ARVE_SLUG )
+	);
+}
+
+function arv3_register_shortcode_ui() {
+
+	$attrs = arv3_get_settings_definitions();
+
+	if( function_exists( 'arve_pro_get_settings_definitions' ) ) {
+		$attrs = array_merge( $attrs, arve_pro_get_settings_definitions() );
+	}
+
+	foreach ( $attrs as $key => $values ) {
+
+		if( isset( $values['hide_from_sc'] ) && $values['hide_from_sc'] ) {
+			continue;
+		}
+
+		$sc_attrs[] = $values;
+	}
+
+	shortcode_ui_register_for_shortcode(
+		'arve',
+		array(
+			'label' => esc_html( 'ARVE' ),
+			'listItemImage' => 'dashicons-format-video',
+			'attrs' => $sc_attrs,
+		)
+	);
+
+	/*
+
+	foreach ($options['shortcodes'] as $sc_id => $sc) {
+
+		shortcode_ui_register_for_shortcode(
+			$sc_id,
+			array(
+				'label' => esc_html( ucfirst("$sc_id ") ) . esc_html__( '(arve)', ARVE_SLUG),
+				'listItemImage' => 'dashicons-format-video',
+				'attrs' => $sc_attrs,
+			)
+		);
+	}
+	*/
+}
+
+function arv3_input( $args ) {
+
+	$out = sprintf( '<input %s>', arv3_attr( $args['input_attr'] ) );
+
+	if ( ! empty( $args['option_values']['attr'] ) && 'thumbnail_fallback' == $args['option_values']['attr'] ) {
+
+		// jQuery
+		wp_enqueue_script('jquery');
+		// This will enqueue the Media Uploader script
+		wp_enqueue_media();
+
+		$out .= sprintf(
+			'<a %s>%s</a>',
+			arv3_attr(
+				array(
+					'data-arve-image-upload' => '[name="' . $args['input_attr']['name'] . '"]',
+					'class' => 'button-secondary',
+				)
+			),
+			__('Upload Image', 'advanced-responsive-video-embedder' )
+		);
+	}
+
+	if ( ! empty( $args['description'] ) ) {
+		$out = $out . '<p class="description">' . $args['description'] . '</p>';
+	}
+
+	echo $out;
+}
+
+function arv3_textarea( $args ) {
+
+	unset( $args['input_attr']['type'] );
+
+	$out = sprintf( '<textarea %s></textarea>', arv3_attr( $args['input_attr'] ) );
+
+	if ( ! empty( $args['description'] ) ) {
+		$out = $out . '<p class="description">' . $args['description'] . '</p>';
+	}
+
+	echo $out;
+}
+
+function arv3_select( $args ) {
+
+	unset( $args['input_attr']['type'] );
+
+	foreach ( $args['option_values']['options'] as $key => $value ) {
+
+		if (
+			2 === count( $args['option_values']['options'] ) &&
+			array_key_exists( 'yes', $args['option_values']['options'] ) &&
+			array_key_exists( 'no', $args['option_values']['options'] )
+		) {
+			$current_option = $args['input_attr']['value'] ? 'yes' : 'no';
+		} else {
+			$current_option = $args['input_attr']['value'];
+		}
+
+		$options[] = sprintf(
+			'<option value="%s" %s>%s</option>',
+			esc_attr( $key ),
+			selected( $current_option, $key, false ),
+			esc_html( $value )
+		);
+	}
+
+	$select_attr = $args['input_attr'];
+	unset( $select_attr['value'] );
+
+	$out = sprintf( '<select %s>%s</select>', arv3_attr( $select_attr ), implode( '', $options ) );
+
+	if ( ! empty( $args['description'] ) ) {
+		$out = $out . '<p class="description">' . $args['description'] . '</p>';
+	}
+
+	echo $out;
+}
+
+/**
+ *
+ *
+ * @since    2.6.0
+ */
+function arv3_register_settings() {
+
+	$options = arv3_get_options();
+
+	// Main
+	$main_title = __( 'Main Options', ARVE_SLUG );
+
+	add_settings_section(
+		'main_section',
+		sprintf( '<span class="arve-settings-section" id="arve-settings-section-main" title="%s"></span>%s', esc_attr( $main_title ), esc_html( $main_title ) ),
+		null,
+		ARVE_SLUG
+	);
+
+	foreach( arv3_get_settings_definitions() as $k => $v ) {
+
+		if ( ! empty( $v['hide_from_settings'] ) ) {
+			continue;
+		};
+
+		if ( empty( $v['meta'] ) ) {
+			$v['meta'] = array();
+		};
+
+		if ( isset( $v['options'][''] ) ) {
+			unset( $v['options'][''] );
+		}
+
+		if( in_array( $v['type'], array( 'text', 'number', 'url' ) ) ) {
+			$callback_function = 'input';
+		} else {
+			$callback_function = $v['type'];
+		}
+
+		add_settings_field(
+			"arve_options_main[{$v['attr']}]",  // ID
+			$v['label'],                        // title
+			"Advanced_Responsive_Video_Embedder_Admin::$callback_function", // callback
+			ARVE_SLUG,                 // page
+			'main_section',                     // section
+			array(                              // args
+				'label_for'   => ( 'radio' === $v['type'] ) ? null : "arve_options_main[{$v['attr']}]",
+				'input_attr'  => $v['meta'] + array(
+					'type'        => $v['type'],
+					'value'       => $options[ $v['attr'] ],
+					'id'          => "arve_options_main[{$v['attr']}]",
+					'name'        => "arve_options_main[{$v['attr']}]",
+				),
+				'description'   => ! empty( $v['description'] ) ? $v['description'] : null,
+				'option_values' => $v,
+			)
+		);
+	}
+
+	add_settings_field(
+		'arve_options_main[reset]',
+		null,
+		"Advanced_Responsive_Video_Embedder_Admin::submit_reset",
+		ARVE_SLUG,
+		'main_section',
+		array(
+			'reset_name' => 'arve_options_main[reset]',
+		)
+	);
+
+	// Params
+	$params_title = __( 'URL Parameters', ARVE_SLUG );
+	add_settings_section(
+		'params_section',
+		sprintf( '<span class="arve-settings-section" id="arve-settings-section-params" title="%s"></span>%s', esc_attr( $params_title ), esc_html( $params_title ) ),
+		'arv3_params_section_description',
+		ARVE_SLUG
+	);
+
+	// Options
+	foreach ( $options['params'] as $provider => $params ) {
+
+		add_settings_field(
+			"arve_options_params[$provider]",
+			ucfirst ( $provider ),
+			"Advanced_Responsive_Video_Embedder_Admin::input",
+			ARVE_SLUG,
+			'params_section',
+			array(
+				'label_for'   => "arve_options_params[$provider]",
+				'input_attr'  => array(
+					'type'        => 'text',
+					'value'       => $params,
+					'id'          => "arve_options_params[$provider]",
+					'name'        => "arve_options_params[$provider]",
+					'class'       => 'large-text'
+				),
+			)
+		);
+	}
+
+	add_settings_field(
+		'arve_options_params[reset]',
+		null,
+		'arv3_submit_reset',
+		ARVE_SLUG,
+		'params_section',
+		array(
+			'reset_name' => 'arve_options_params[reset]',
+		)
+	);
+
+	// Shortcode Tags
+	$shortcodes_title = __( 'Shortcode Tags', ARVE_SLUG );
+
+	add_settings_section(
+		'shortcodes_section',
+		sprintf( '<span class="arve-settings-section" id="arve-settings-section-shortcodes" title="%s"></span>%s', esc_attr( $shortcodes_title ), esc_html( $shortcodes_title ) ),
+		'arv3_shortcodes_section_description',
+		ARVE_SLUG
+	);
+
+	foreach ( $options['shortcodes'] as $provider => $shortcode ) {
+
+		add_settings_field(
+			"arve_options_shortcodes[$provider]",
+			ucfirst ( $provider ),
+			"Advanced_Responsive_Video_Embedder_Admin::input",
+			ARVE_SLUG,
+			'shortcodes_section',
+			array(
+				'label_for'   => "arve_options_shortcodes[$provider]",
+				'input_attr'  => array(
+					'type'        => 'text',
+					'value'       => $shortcode,
+					'id'          => "arve_options_shortcodes[$provider]",
+					'name'        => "arve_options_shortcodes[$provider]",
+					'class'       => 'medium-text'
+				),
+			)
+		);
+	}
+
+	add_settings_field(
+		'arve_options_shortcodes[reset]',
+		null,
+		'arv3_submit_reset',
+		ARVE_SLUG,
+		'shortcodes_section',
+		array(
+			'reset_name' => 'arve_options_shortcodes[reset]',
+		)
+	);
+
+	// register_setting( $option_group, $option_name, $sanitize_callback )
+	register_setting( 'arve-settings-group', 'arve_options_main',       'arv3_validate_options_main' );
+	register_setting( 'arve-settings-group', 'arve_options_params',     'arv3_validate_options_params' );
+	register_setting( 'arve-settings-group', 'arve_options_shortcodes', 'arv3_validate_options_shortcodes' );
+}
+
+/**
+ *
+ *
+ * @since    6.0.6
+ */
+function arv3_register_settings_debug() {
+
+	// Debug Information
+	$debug_title = __( 'Debug Info', ARVE_SLUG );
+
+	add_settings_section(
+		'debug_section',
+		sprintf( '<span class="arve-settings-section" id="arve-settings-section-debug" title="%s"></span>%s', esc_attr( $debug_title ), esc_html( $debug_title ) ),
+		'arv3_debug_section_description',
+		ARVE_SLUG
+	);
+}
+
+function arv3_submit_reset( $args ) {
+
+	submit_button( __('Save Changes' ), 'primary','submit', false );
+	echo '&nbsp;&nbsp;';
+	submit_button( __('Reset This Settings Section', 'advanced-responsive-video-embedder' ), 'secondary', $args['reset_name'], false );
+}
+
+function arv3_shortcodes_section_description() {
+	$desc = __( 'This shortcodes exist for backwards compatiblity only. It is not recommended to use them at all, please use the <code>[arve]</code> shortcode. You can change the old shortcode tags here. You may need this to prevent conflicts with other plugins you want to use.', ARVE_SLUG );
+	echo "<p>$desc</p>";
+}
+
+function arv3_params_section_description() {
+
+	$url  = 'https://nextgenthemes.com/advanced-responsive-video-embedder-pro/documentation';
+
+	$desc = sprintf(
+		__( 'Please read <a href="%s" target="_blank">the documentation</a> in how this settings work. Do not remove <code>wmode=transparent</code>, this will make some modes fail to work.',
+		ARVE_SLUG ),
+		esc_url( $url )
+	);
+
+	echo "<p>$desc</p>";
+
+	?>
+	<p>
+		<?php _e("You may use spaces to seperate them instead of <code>&amp;</code>. They will be transformed to two spaces after save. Resources: ", ARVE_SLUG); ?>
+		<a target="_blank" href="https://developers.google.com/youtube/player_parameters">Youtube Parameters</a>,
+		<a target="_blank" href="http://www.dailymotion.com/doc/api/player.html#parameters">Dailymotion Parameters</a>,
+		<a target="_blank" href="https://developer.vimeo.com/player/embedding">Vimeo Parameters</a>.
+		<strong><?php _e("<code>wmode=transparent</code> should not be changed/removed", ARVE_SLUG); ?></strong>
+	</p>
+	<?php
+}
+
+function arv3_debug_section_description() {
+
+	global $wp_version;
+
+	$plugin_data    = get_plugin_data( WP_PLUGIN_DIR . '/advanced-responsive-video-embedder/advanced-responsive-video-embedder.php' );
+	$pro_data       = get_plugin_data( WP_PLUGIN_DIR . '/arve-pro/arve-pro.php' );
+
+	$plugin_version = $plugin_data['Version'];
+	$pro_version    = $pro_data['Version'];
+
+	if( ! is_plugin_active( 'advanced-responsive-video-embedder/advanced-responsive-video-embedder.php' ) ) {
+		$plugin_version .= ' INACTIVE';
+	}
+
+	if( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
+		$pro_version .= ' INACTIVE';
+		$pro_options_dump = '';
+	} else {
+		$pro_options = get_option( 'arve_options_pro' );
+		unset( $pro_options['key'] );
+		ob_start();
+		var_dump( $pro_options );
+		$pro_options_dump = ob_get_clean();
+	}
+
+	include_once( plugin_dir_path( __FILE__ ) . 'html-debug-info.php' );
+}
+
+/**
+ *
+ *
+ * @since    2.6.0
+ */
+function arv3_validate_options_main( $input ) {
+
+	//* Storing the Options Section as a empty array will cause the plugin to use defaults
+	if( isset( $input['reset'] ) ) {
+		return array();
+	}
+
+	$output = array();
+
+	$output['align']              = sanitize_text_field( $input['align'] );
+	$output['mode']               = sanitize_text_field( $input['mode'] );
+	$output['last_settings_tab']  = sanitize_text_field( $input['last_settings_tab'] );
+
+	$output['promote_link'] = ( 'yes' == $input['promote_link'] ) ? true : false;
+	$output['autoplay']     = ( 'yes' == $input['autoplay'] )     ? true : false;
+
+	$output['wp_image_cache_time'] = (int) $input['wp_image_cache_time'];
+
+	if( (int) $input['video_maxwidth'] > 100 ) {
+		$output['video_maxwidth'] = (int) $input['video_maxwidth'];
+	} else {
+		$output['video_maxwidth'] = '';
+	}
+
+	if( (int) $input['align_maxwidth'] > 100 ) {
+		$output['align_maxwidth'] = (int) $input['align_maxwidth'];
+	}
+
+	$options_defaults = arv3_get_options_defaults( 'main' );
+	//* Store only the options in the database that are different from the defaults.
+	return array_diff_assoc( $output, $options_defaults );
+}
+
+function arv3_validate_options_params( $input ) {
+
+	//* Storing the Options Section as a empty array will cause the plugin to use defaults
+	if( isset( $input['reset'] ) ) {
+		return array();
+	}
+
+	$output = array();
+
+	foreach ( $input as $key => $var ) {
+		$output[ $key ] = preg_replace( '!\s+!', '&', trim( $var ) );
+		$output[ $key ] = preg_replace( '!\s+!', '&', trim( $var ) );
+	}
+
+	$options_defaults = arv3_get_options_defaults( 'params' );
+	//* Store only the options in the database that are different from the defaults.
+	return array_diff_assoc( $output, $options_defaults );
+}
+
+function arv3_validate_options_shortcodes( $input ) {
+
+	$output = array();
+
+	//* Storing the Options Section as a empty array will cause the plugin to use defaults
+	if( isset( $input['reset'] ) ) {
+		return array();
+	}
+
+	foreach ( $input as $key => $var ) {
+
+		$var = preg_replace( '/[_]+/', '_', $var );	// remove multiple underscores
+		$var = preg_replace( '/[^A-Za-z0-9_]/', '', $var );	// strip away everything except a-z,0-9 and underscores
+
+		if ( strlen($var) < 3 ) {
+			continue;
+		}
+
+		$output[ $key ] = $var;
+	}
+
+	$options_defaults = arv3_get_options_defaults( 'shortcodes' );
+	//* Store only the options in the database that are different from the defaults.
+	return array_diff_assoc( $output, $options_defaults );
+}
+
+/**
+ * Return Admin message to be used on the dashboard notice and the options page.
+ *
+ * @since     3.0.0
+ */
+function arv3_get_admin_pro_message() {
+
+	if ( ! current_user_can( 'update_plugins' ) ) {
+		return;
+	}
+
+	$inst = (int) get_option( 'arve_install_date' );
+
+	$pro_message = __( '<p>This is Nico the Author of the Advanced Responsive Video Embedder plugin. When you <strong><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/">buy the Pro Addon</a></strong> of this plugin you will get this:</p>', ARVE_SLUG );
+
+	$pro_message .= file_get_contents( plugin_dir_path( dirname( __FILE__ ) ) . 'readme/description-features-pro.html' );
+	$pro_message = str_replace( '<ul ', '<ul style="list-style: square; padding-left: 20px;" ', $pro_message );
+
+	return apply_filters( 'arve_admin_pro_message', $pro_message );
+}
+
+function add_dashboard_widget() {
+
+	wp_add_dashboard_widget(
+		'arve_dashboard_widget',              // Widget slug.
+		'Advanced Responsive Video Embedder', // Title.
+		'arv3_dashboard_widget_output' // Display function.
+	);
+
+	// Globalize the metaboxes array, this holds all the widgets for wp-admin
+	global $wp_meta_boxes, $pagenow;
+
+	if( 'index.php' == $pagenow ) {
+
+		// Get the regular dashboard widgets array
+		// (which has our new widget already but at the end)
+		$normal_dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
+
+		// Backup and delete our new dashboard widget from the end of the array
+		$arve_widget_backup = array( 'arve_dashboard_widget' => $normal_dashboard['arve_dashboard_widget'] );
+		unset( $normal_dashboard['arve_dashboard_widget'] );
+
+		// Merge the two arrays together so our widget is at the beginning
+		$sorted_dashboard = array_merge( $arve_widget_backup, $normal_dashboard );
+
+		// Save the sorted array back into the original metaboxes
+		$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
+	}
+}
+
+/**
+ * Create the function to output the contents of our Dashboard Widget.
+ */
+function arv3_ashboard_widget_output() {
+
+	echo arv3_get_admin_pro_message();
+}
+
+function arv3_pro_notice() {
+	#delete_user_meta( get_current_user_id(), 'arve_dismiss_pro_notice' );
+
+	$user_meta = get_user_meta( get_current_user_id(), 'arve_dismiss_pro_notice' );
+
+	if( ! empty( $user_meta ) ) {
+	    return;
+	}
+
+	echo '<div class="notice updated arve-pro-notice is-dismissible" style="font-size: 1.15em;">';
+	echo arv3_get_admin_pro_message();
+	echo '</div>';
+}
+
+function arve_ajax_dismiss_pro_notice() {
+
+	add_user_meta( get_current_user_id(), 'arve_dismiss_pro_notice', true );
+
+	wp_die();
+}
+
+
+function arv3_admin_enqueue_styles() {
+	wp_enqueue_style( ARVE_SLUG, plugin_dir_url( __FILE__ ) . 'arve-admin.css', array(), ARVE_VERSION, 'all' );
+}
+
+function arv3_mce_css( $mce_css ) {
+
+	if ( ! empty( $mce_css ) ) {
+		$mce_css .= ',';
+	}
+
+	$css_file = plugin_dir_url( __DIR__ ) . 'public/arve-public.css';
+
+	$mce_css .= $css_file;
+
+	return $mce_css;
+}
+
+/**
+ * Register the JavaScript for the dashboard.
+ *
+ * @since    1.0.0
+ */
+function arv3_admin_enqueue_scripts() {
+	wp_enqueue_script( ARVE_SLUG,            plugin_dir_url( __FILE__ ) . 'arve-admin.js',        array( 'jquery' ), ARVE_VERSION, true );
+	wp_enqueue_script( ARVE_SLUG . '-sc-ui', plugin_dir_url( __FILE__ ) . 'arve-shortcode-ui.js', array(),           ARVE_VERSION );
+}

@@ -12,7 +12,7 @@
  * @copyright 2013 Nicolas Jonas
  */
 
-$options = Advanced_Responsive_Video_Embedder_Shared::get_options();
+$options = arv3_get_options();
 
 ?>
 <div class="wrap arve-options-wrap">
@@ -25,13 +25,12 @@ $options = Advanced_Responsive_Video_Embedder_Shared::get_options();
 	} ?>
 
 	<h2 class="nav-tab-wrapper arve-settings-tabs"></h2>
-
 	<form class="arve-options-form" method="post" action="options.php">
 
-		<?php do_settings_sections( $this->plugin_slug ); ?>
+		<?php do_settings_sections( ARVE_SLUG ); ?>
 		<?php settings_fields( 'arve-settings-group' ); ?>
 
-		<input type="hidden" id="arve_options_main[last_options_tab]" name="arve_options_main[last_options_tab]" value="<?php esc_attr_e( $this->options['last_options_tab'] ); ?>">
+		<input type="hidden" id="arve_options_main[last_settings_tab]" name="arve_options_main[last_settings_tab]" value="<?php echo esc_attr( $options['last_settings_tab'] ); ?>">
 
 	</form>
 

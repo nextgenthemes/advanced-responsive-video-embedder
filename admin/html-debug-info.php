@@ -1,10 +1,9 @@
 <textarea style="font-family: monospace; width: 100%" rows="25">
+Web Browser and version you see the issue in:
 
-Web Browser version you see the issue in:
+Link to test page on live site with the issue (no not change after posting):
 
-Link to live site with the issue:
-
-URL(s) or Shortcode(s) you use that to embed videos that have a issue:
+Shortcode(s) or URL(s) you used fro embedding and have problems with:
 
 Detailed Description of the issue:
 
@@ -55,7 +54,7 @@ endif; ?>
 ARVE OPTIONS:
 <?php
 ob_start();
-var_dump( get_option( 'arve_options_main' ) );
+var_export( get_option( 'arve_options_main' ) );
 echo ob_get_clean();
 
 ob_start();

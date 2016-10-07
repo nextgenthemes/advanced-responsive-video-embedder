@@ -23,40 +23,26 @@
 		$(this).remove();
 	});
 
-	// Its hidden!
-	var last_tab_input = $( '#arve_options_main\\[last_options_tab\\]' );
-
-	$('.arve-settings-tabs a').on( 'click', function(e) {
-
-		var target = $(this).attr('data-target');
+	function show_tab( target ) {
 
 		$('.arve-settings-section').show();
 		$( target ).prependTo( '.arve-options-form' );
 		$('.arve-settings-section').not( target ).hide();
-
-		$( last_tab_input ).val( target );
-
 		$('.arve-settings-tabs a').removeClass( 'nav-tab-active' );
-		$(this).addClass( 'nav-tab-active' );
+		$('.arve-settings-tabs a[data-target="' + target + '"]').addClass( 'nav-tab-active' );
+	}
+
+	if ( $( '#arve_options_main\\[last_settings_tab\\]' ).length && $( '#arve_options_main\\[last_settings_tab\\]' ).val().length ) {
+		show_tab( $( '#arve_options_main\\[last_settings_tab\\]' ).val() );
+	}
+
+	$('.arve-settings-tabs a').on( 'click', function(e) {
 
 		e.preventDefault();
+		var target = $(this).attr('data-target');
+		show_tab( target );
+		$( '#arve_options_main\\[last_settings_tab\\]' ).val( target );
 	} );
-
-	/*
-	if( last_tab_input.val() ) {
-
-		var last_tab = last_tab_input.val();
-
-		if( $( last_tab ).length === 0 ) {
-			last_tab = '#arve-settings-section-main';
-		}
-
-		$('.arve-settings-tabs a[data-target='+last_tab+']').addClass( 'nav-tab-active' );
-
-		$( last_tab ).prependTo( '.arve-options-form' );
-		$('.arve-settings-section').not( last_tab ).hide();
-	}
-	*/
 
 	$('[data-arve-image-upload]').click(function(e) {
 		e.preventDefault();
@@ -99,13 +85,15 @@
 		});
 	});
 
-	/*
-	$(window).on( 'keyup', function(e) {
-		if ( e.ctrlKey && e.shiftKey && 'v' === e.key ) {
-			open_arve_dialog();
-		}
-	} );
-	*/
+
+	function open_arve_dialog() {
+		var arve_shortcode = sui.utils.shortcodeViewConstructor.parseShortcodeString( '[arve]' );
+		wp.media({
+			frame : 'post',
+			state : 'shortcode-ui',
+			currentShortcode : arve_shortcode
+		}).open();
+	}
 
 	$( '#arve-btn' ).on( 'click', function(e) {
 		e.preventDefault();
@@ -116,13 +104,12 @@
 		}
 	} );
 
-	function open_arve_dialog() {
-		var arve_shortcode = sui.utils.shortcodeViewConstructor.parseShortcodeString( '[arve]' );
-		wp.media({
-			frame : 'post',
-			state : 'shortcode-ui',
-			currentShortcode : arve_shortcode
-		}).open();
-	}
+	/*
+	$(window).on( 'keyup', function(e) {
+		if ( e.ctrlKey && e.shiftKey && 'v' === e.key ) {
+			open_arve_dialog();
+		}
+	} );
+	*/
 
 }(jQuery));

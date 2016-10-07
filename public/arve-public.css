@@ -21,14 +21,13 @@
 .arve-embed-container {
 	position: relative;
 	display: block;
-	height: 0;
-	padding: 0 0 56.25%; /* 16/9 ratio */
+	padding: 0;
 	overflow: hidden;
 }
 
 .arve-thumbnail,
 .arve-play-btn,
-.arve-video {
+.arve-iframe {
 	position: absolute;
 	padding: 0 !important;
 	margin: 0 !important;
@@ -39,6 +38,12 @@
 	width: 100% !important;
 	border: 0 !important;
 	overflow: hidden !important;
+}
+
+.arve-video {
+	padding: 0;
+	margin: 0;
+	width: 100%;
 }
 
 .arve-promote-link {
