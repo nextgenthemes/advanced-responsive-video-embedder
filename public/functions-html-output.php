@@ -159,7 +159,7 @@ function arv3_video_or_iframe( $v ) {
 
 		return arv3_create_object( $v );
 
-	} elseif ( 'self_hosted' == $v['provider'] ) {
+	} elseif ( 'html5' == $v['provider'] ) {
 
 		return arv3_create_video_tag( $v );
 
@@ -252,9 +252,9 @@ function arv3_create_video_tag( $v ) {
 		'height'   => is_feed() ? 480 : false,
 	);
 
-	if ( isset( $v['sources'] ) ) {
+	if ( isset( $v['video_sources'] ) ) {
 
-		foreach ( $v['sources'] as $key => $value ) {
+		foreach ( $v['video_sources'] as $key => $value ) {
 			$soures_html .= sprintf( '<source type="%s" src="%s">', $key, $value );
 		}
 	}

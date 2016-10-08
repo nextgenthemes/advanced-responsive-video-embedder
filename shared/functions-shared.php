@@ -57,7 +57,7 @@ function arv3_get_settings_definitions() {
 			if( ! empty( $values['auto_title'] ) && $values['auto_title'] ) {
 				$auto_title[] = $values['name'];
 			}
-			if( empty( $values['embed_url'] ) || ! $values['embed_url'] ) {
+			if( ! empty( $values['embed_url'] ) ) {
 				$embed_code_only[] = $values['name'];
 			}
 		}
@@ -84,7 +84,7 @@ function arv3_get_settings_definitions() {
 				'description' => sprintf(
 					__('Post the URL of the video here. For %s and any unlisted <a href="%s">unlisted</a> video hosts paste their iframe embed codes in here (providers embeds need to be responsive).', ARVE_SLUG ),
 					$embed_code_only,
-					'https://nextgenthemes.com/advanced-responsive-video-embedder-pro/video-host-support'
+					'https://nextgenthemes.com/advanced-responsive-video-embedder-pro/#video-host-support'
 				)
 			),
 			array(
@@ -314,8 +314,8 @@ function arv3_get_host_properties() {
 		'archiveorg' => array(
 			'name'           => 'Archive.org',
 			'regex'          => 'https?://(?:www\.)?archive\.org/(?:details|embed)/([0-9a-z\-]+)',
-			'default_params' => '',
 			'embed_url'      => 'https://www.archive.org/embed/%s/',
+			'default_params' => '',
 			'auto_thumbnail' => false,
 		),
 		'break' => array(
@@ -581,7 +581,7 @@ function arv3_get_host_properties() {
 			'default_params' => 'wmode=transparent&player=full&f=1&disablebranding=1',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
-			'aspect_ratio'   => '650:408',
+			'aspect_ratio'   => '545:349',
 			'requires_flash' => true,
 		),
 		'vidspot' => array(
@@ -827,8 +827,8 @@ function arv3_get_host_properties() {
 			'embed_url'      => 'http://www.youtube.com/embed/videoseries?list=%s',
 			'auto_thumbnail' => true,
 		),
-		'self_hosted' => array(
-			'name' => 'Self Hosted Video (in testing)',
+		'html5' => array(
+			'name' => 'HTML5 Video (in testing)',
 		),
 		'iframe' => array(
 			'default_params'    => '',

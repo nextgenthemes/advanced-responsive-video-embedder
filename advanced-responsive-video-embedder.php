@@ -40,7 +40,7 @@ function arv3_init() {
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-enqueue.php';
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-html-output.php';
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-misc.php';
-	require_once plugin_dir_path( __FILE__ ) . 'public/functions-self-hosted.php';
+	require_once plugin_dir_path( __FILE__ ) . 'public/functions-html5.php';
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-shortcode-data.php';
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-shortcodes.php';
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-thumbnails.php';

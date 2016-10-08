@@ -53,8 +53,11 @@ function arv3_shortcode_arve( $atts ) {
     $v['url'] = $v['src'];
   }
 
-  if ( $self_hosted_detected = arv3_detect_self_hosted( $v['provider'], $v['url'] ) ) {
-    $v = $self_hosted_detected;
+  if ( $html5 = arv3_detect_html5( $v ) ) {
+
+    $v['provider']      = 'html5';
+    $v['video_src']     = $html5['video_src'];
+    $v['video_sources'] = $html5['video_sources'];
   }
 
   if ( empty( $v['provider'] ) ) {
@@ -278,7 +281,7 @@ function arv3_wp_video_shortcode_override( $out, $attr, $content, $instance ) {
     return $out;
   }
 
-  $attr[ 'provider' ] = 'self_hosted';
+  $attr[ 'provider' ] = 'html5';
 
   if( empty( $attr['poster'] ) ) {
     $attr['thumbnail'] = $attr['poster'];
