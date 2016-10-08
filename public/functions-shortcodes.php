@@ -45,6 +45,8 @@ function arv3_shortcode_arve( $atts ) {
     'link_text' => null,
   ) );
 
+  #d($pairs);
+
   $v = shortcode_atts( $pairs, $atts, 'arve' );
 
   if ( ! empty( $v['src'] ) ) {

@@ -136,7 +136,7 @@ function arv3_get_settings_definitions() {
 				'attr'  => 'title',
 				'label' => esc_html__('Title', ARVE_SLUG),
 				'type'  => 'text',
-				'description' => sprintf( esc_html__( 'Used for SEO, is visible on top of thumbnails in Lazyload modes, is used as link text in link-lightbox mode. The Pro Addon is able to get them from %s automatically. Accepts a ID of a image from your WP Media Gallery or URL (no UI) to a image.', ARVE_SLUG ), $auto_title ),
+				'description' => sprintf( esc_html__( 'Used for SEO, is visible on top of thumbnails in Lazyload modes, is used as link text in link-lightbox mode. The Pro Addon is able to get them from %s automatically.', ARVE_SLUG ), $auto_title ),
 			),
 			array(
 				'hide_from_settings' => true,
@@ -220,6 +220,7 @@ function arv3_get_settings_definitions() {
 				'description' => __( '(seconds) This plugin uses WordPress transients to cache video thumbnail URLS. This setting defines how long image URLs from the media Gallery are being stored before running WPs fuctions again to request them. For example: hour - 3600, day - 86400, week - 604800.', ARVE_SLUG),
 			),
 			array(
+				'hide_from_sc'   => true,
 				'attr'  => 'wp_video_override',
 				'label' => esc_html__('Take over [video]', ARVE_SLUG ),
 				'type'  => 'select',
@@ -228,6 +229,33 @@ function arv3_get_settings_definitions() {
 					'no'  => esc_html__( 'No', ARVE_SLUG ),
 				),
 				'description' => esc_html__( 'Take over [video] shortcode for html5 files.', ARVE_SLUG ),
+			),
+			array(
+				'hide_from_settings' => true,
+				'attr'  => 'mp4',
+				'label' => esc_html__('mp4', ARVE_SLUG),
+				'type'  => 'url',
+				'meta'  => array(
+					'placeholder' => __( '.mp4 file url for HTML5 video', ARVE_SLUG ),
+				),
+			),
+			array(
+				'hide_from_settings' => true,
+				'attr'  => 'webm',
+				'label' => esc_html__('webm', ARVE_SLUG),
+				'type'  => 'url',
+				'meta'  => array(
+					'placeholder' => __( '.webm file url for HTML5 video', ARVE_SLUG ),
+				),
+			),
+			array(
+				'hide_from_settings' => true,
+				'attr'  => 'ogv',
+				'label' => esc_html__('ogv', ARVE_SLUG),
+				'type'  => 'url',
+				'meta'  => array(
+					'placeholder' => __( '.ogv file for self hosted video', ARVE_SLUG ),
+				),
 			),
 		);
 	}

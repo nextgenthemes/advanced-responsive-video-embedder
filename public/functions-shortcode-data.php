@@ -207,9 +207,11 @@ function arv3_create_embed_id( $v ) {
 
 	foreach ( array( 'id', 'mp4', 'm4v', 'webm', 'ogv', 'url', 'webtorrent' ) as $attribute ) {
 
+		#d( $v[ $attribute ] );
+
 		if ( ! empty( $v[ $attribute ] ) ) {
-			$embed_id = $v[ $attribute ];
-			$embed_id = preg_replace( '/[^-a-zA-Z0-9]+/', '', $embed_id );
+
+			$embed_id = preg_replace( '/[^-a-zA-Z0-9]+/', '', $v[ $attribute ] );
 			$embed_id = str_replace(
 				array( 'https', 'http', 'wp-contentuploads' ),
 				'',
