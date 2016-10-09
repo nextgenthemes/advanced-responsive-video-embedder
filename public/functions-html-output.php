@@ -1,5 +1,11 @@
 <?php
 
+function arv3_get_var_dump( $var ) {
+	ob_start();
+	var_dump( $var );
+	return ob_get_clean();
+};
+
 function arv3_get_debug_info( $atts, $v ) {
 
 	$html = '';
@@ -13,7 +19,7 @@ function arv3_get_debug_info( $atts, $v ) {
 		$options['params']     = get_option( 'arve_options_params' );
 
 		if ( $show_options_debug ) {
-			$html .= sprintf( 'Options: <pre>%s</pre>', var_export( $options, true ) );
+			$html .= sprintf( 'Options: <pre>%s</pre>', arv3_get_var_dump( $options ) );
 		}
 		$show_options_debug = false;
 	}
@@ -22,13 +28,13 @@ function arv3_get_debug_info( $atts, $v ) {
 		$html .= sprintf(
 			'<pre>arg[%s]: %s</pre>',
 			esc_html( $_GET['arve-debug-arg'] ),
-			var_export( $v [ $_GET['arve-debug-arg'] ], true )
+			arv3_get_var_dump( $v[ $_GET['arve-debug-arg'] ] )
 		);
 	}
 
 	if ( isset( $_GET['arve-debug'] ) ) {
-		$html .= sprintf( '<pre>atts: %s</pre>', var_export( $atts, true ) );
-		$html .= sprintf( '<pre>args: %s</pre>', var_export( $v, true ) );
+		$html .= sprintf( '<pre>$atts: %s</pre>', arv3_get_var_dump( $atts ) );
+		$html .= sprintf( '<pre>$v: %s</pre>', arv3_get_var_dump( $v ) );
 	}
 
 	return $html;

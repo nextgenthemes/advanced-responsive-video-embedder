@@ -174,35 +174,6 @@ function arv3_add_query_args_to_iframe_src( $parameters, $src, $provider ) {
 	return $src;
 }
 
-function arv3_filter_atts_detect_provider_and_id_from_url( $atts ) {
-
-	$properties = arv3_get_host_properties();
-
-	if ( ! empty( $atts['provider'] ) || empty( $atts['url'] ) ) {
-		return $atts;
-	}
-
-	foreach ( $properties as $provider => $values ) :
-
-		if ( empty( $values['regex'] ) ) {
-			continue;
-		}
-
-		preg_match( '#' . $values['regex'] . '#i', $atts['url'], $matches );
-
-		if ( ! empty( $matches[1] ) ) {
-
-			$atts['id']       = $matches[1];
-			$atts['provider'] = $provider;
-
-			return $atts;
-		}
-
-	endforeach;
-
-	return $atts;
-}
-
 function arv3_create_embed_id( $v ) {
 
 	foreach ( array( 'id', 'mp4', 'm4v', 'webm', 'ogv', 'url', 'webtorrent' ) as $attribute ) {

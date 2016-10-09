@@ -2,24 +2,23 @@
 
 function arv3_shortcode_arve( $atts ) {
 
+  $errors  = '';
   $options = arv3_get_options();
   $atts    = (array) $atts;
 
   if ( array_key_exists( 0, $atts ) ) {
-    return arv3_error( __( 'Your shortcode is wrong, possibly a missing quotation mark.', ARVE_SLUG ) );
+    return arv3_error( __( 'Your shortcode is wrong, possibly a missing quotation mark. Or a attribute without a value.', ARVE_SLUG ) );
   }
 
-  $errors = '';
-
   $pairs = apply_filters( 'arve_shortcode_pairs', array(
-    'align'        => (string) $options['align'],
-    'arve_link'    => (string) $options['promote_link'],
+    'align'        => $options['align'],
+    'arve_link'    => arv3_bool_to_shortcode_string( $options['promote_link'] ),
     'aspect_ratio' => null,
-    'autoplay'     => $options['autoplay'],
+    'autoplay'     => arv3_bool_to_shortcode_string( $options['autoplay'] ),
     'description'  => null,
     'iframe_name'  => null,
-    'maxwidth'     => $options['video_maxwidth'],
-    'mode'         => (string) $options['mode'],
+    'maxwidth'     => (string) $options['video_maxwidth'],
+    'mode'         => $options['mode'],
     'parameters'   => null,
     'thumbnail'    => null,
     'title'        => null,
@@ -41,7 +40,7 @@ function arv3_shortcode_arve( $atts ) {
     # Old Shortcodes / URL embeds
     'id'       => null,
     'provider' => null,
-    # deprecated
+    # deprecated, title should be used
     'link_text' => null,
   ) );
 
@@ -49,15 +48,8 @@ function arv3_shortcode_arve( $atts ) {
 
   $v = shortcode_atts( $pairs, $atts, 'arve' );
 
-  if ( ! empty( $v['src'] ) ) {
-    $v['url'] = $v['src'];
-  }
-
-  if ( $html5 = arv3_detect_html5( $v ) ) {
-
-    $v['provider']      = 'html5';
-    $v['video_src']     = $html5['video_src'];
-    $v['video_sources'] = $html5['video_sources'];
+  if ( $errors = arv3_output_errors( $atts, $v ) ) {
+    return $errors;
   }
 
   if ( empty( $v['provider'] ) ) {
@@ -72,16 +64,18 @@ function arv3_shortcode_arve( $atts ) {
   }
 
   $v['align']        = arv3_validate_align( $v['align'], $v['provider'] );
-  $v['maxwidth']     = (int) $v['maxwidth'];
-  $v['maxwidth']     = (int) arv3_maxwidth_when_aligned( $v['maxwidth'], $v['align'] );
   $v['mode']         = arv3_validate_mode( $v['mode'], $v['provider'] );
   $v['autoplay']     = arv3_validate_bool( $v['autoplay'],  'autoplay' );
   $v['arve_link']    = arv3_validate_bool( $v['arve_link'], 'arve_link' );
   $v['loop']         = arv3_validate_bool( $v['loop'],      'loop' );
   $v['controls']     = arv3_validate_bool( $v['controls'],  'controls' );
+
+  $v['maxwidth']     = (int) $v['maxwidth'];
+  $v['maxwidth']     = (int) arv3_maxwidth_when_aligned( $v['maxwidth'], $v['align'] );
   $v['id']           = arv3_id_fixes( $v['id'], $v['provider'] );
   $v['aspect_ratio'] = arv3_get_default_aspect_ratio( $v['aspect_ratio'], $v['provider'], $v['mode'] );
-  $v['aspect_ratio'] = arv3_aspect_ratio_fixes( $v['aspect_ratio'], $v['provider'], $v['mode'] );
+  $v['aspect_ratio'] = arv3_aspect_ratio_fixes(       $v['aspect_ratio'], $v['provider'], $v['mode'] );
+
   $v['iframe_src']   = arv3_build_iframe_src( $v['provider'], $v['id'], $v['lang'] );
   $v['iframe_src']   = arv3_add_query_args_to_iframe_src( $v['parameters'], $v['iframe_src'], $v['provider'] );
   $v['iframe_src']   = arv3_autoplay_query_arg( $v['autoplay'], $v['iframe_src'], $v['provider'], $v['mode'] );
@@ -143,7 +137,6 @@ function arv3_create_shortcodes() {
   foreach( $options['shortcodes'] as $provider => $shortcode ) {
     /* Would require php 5.3.0
     $function = function( $atts ) use ( $provider ) {
-
       $atts['provider'] = $provider;
       return arv3_shortcode_arve( $atts );
     };

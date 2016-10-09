@@ -9,15 +9,6 @@ function arv3_load_plugin_textdomain() {
   );
 }
 
-function arv3_filter_atts_sanitise( $atts ) {
-
-  foreach ( $atts as $key => $value ) {
-    $atts[ $key ] = sanitize_text_field( (string) $value );
-  }
-
-  return $atts;
-}
-
 function arv3_get_first_array_value( $array ) {
   reset( $array );
   $key = key( $array );
@@ -32,6 +23,17 @@ function arv3_prefix_array_keys( $keyprefix, $array ) {
   }
 
   return $array;
+}
+
+function arv3_check_filetype( $url, $ext ) {
+
+	$check = wp_check_filetype( $url, wp_get_mime_types() );
+
+	if ( strtolower( $check['ext'] ) === $ext ) {
+		return $check['type'];
+	} else {
+		return false;
+	}
 }
 
 /**

@@ -10,12 +10,20 @@ function arv3_validate_url( $url ) {
   return false;
 }
 
+function arv3_bool_to_shortcode_string( $val ) {
+
+  if ( false === $val ) {
+    return 'n';
+  }
+
+  return (string) $val;
+}
+
+
 function arv3_validate_bool( $val, $name ) {
 
   switch ( $val ) {
-    case null:
-    case '':
-      break;
+    case '';
     case 'true':
     case '1':
     case 'y':
@@ -23,6 +31,7 @@ function arv3_validate_bool( $val, $name ) {
     case 'on':
       $val = true;
       break;
+    case null;
     case 'false':
     case '0':
     case 'n':

@@ -864,7 +864,7 @@ function arv3_attr( $attr = array(), $dailymotion_playlist_fix = false ) {
 			continue;
 		} elseif ( '' === $value || true === $value ) {
 			$out .= sprintf( ' %s', esc_html( $key ) );
-		} elseif ( in_array( $key, array( 'href', 'src', 'data-src' ) ) ) {
+		} elseif ( in_array( $key, array( 'href', 'data-href', 'src', 'data-src' ) ) ) {
 			$out .= sprintf( ' %s="%s"', esc_html( $key ), arv3_esc_url( $value ) );
 		} else {
 			$out .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );

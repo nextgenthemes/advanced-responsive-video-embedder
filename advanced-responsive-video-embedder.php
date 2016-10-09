@@ -8,7 +8,7 @@
  * Plugin Name:       ARVE Advanced Responsive Video Embedder
  * Plugin URI:        https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
  * Description:       Easy responsive video embeds via URL (like WordPress) or Shortcodes. Supports almost anything you can imagine.
- * Version:           7.8.6-beta
+ * Version:           7.8.7-beta
  * Author:            Nicolas Jonas
  * Author URI:        https://nextgenthemes.com
  * License:           GPL-3.0
@@ -23,7 +23,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 define( 'ARVE_SLUG',                 'advanced-responsive-video-embedder' );
-define( 'ARVE_VERSION',              '7.8.6-beta' );
+define( 'ARVE_VERSION',              '7.8.7-beta' );
 define( 'ARVE_PRO_VERSION_REQUIRED', '3.0.2-beta' );
 
 arv3_init();
@@ -40,8 +40,8 @@ function arv3_init() {
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-enqueue.php';
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-html-output.php';
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-misc.php';
-	require_once plugin_dir_path( __FILE__ ) . 'public/functions-html5.php';
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-shortcode-data.php';
+	require_once plugin_dir_path( __FILE__ ) . 'public/functions-shortcode-filters.php';
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-shortcodes.php';
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-thumbnails.php';
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-url-handlers.php';
@@ -58,9 +58,10 @@ function arv3_init() {
 	add_action( 'wp_enqueue_scripts',  'arv3_enqueue_styles' );
 	add_action( 'wp_enqueue_scripts',  'arv3_register_scripts', 0 );
 	add_action( 'wp_head',             'arv3_print_styles' );
-	add_filter( 'shortcode_atts_arve', 'arv3_filter_atts_get_media_gallery_thumbnail', 5 );
 	add_filter( 'shortcode_atts_arve', 'arv3_filter_atts_sanitise', 0 );
 	add_filter( 'shortcode_atts_arve', 'arv3_filter_atts_detect_provider_and_id_from_url', 1 );
+	add_filter( 'shortcode_atts_arve', 'arv3_filter_atts_detect_html5', 2 );
+	add_filter( 'shortcode_atts_arve', 'arv3_filter_atts_get_media_gallery_thumbnail', 5 );
 	add_filter( 'widget_text',         'do_shortcode' );
 
 	// Admin Hooks
