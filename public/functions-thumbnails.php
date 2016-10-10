@@ -1,8 +1,8 @@
 <?php
 
-function arv3_get_attachment_image_url_or_srcset( $url_or_srcset, $thumbnail ) {
+function arve_get_attachment_image_url_or_srcset( $url_or_srcset, $thumbnail ) {
 
-  if( $found = arv3_get_cached_attachment_image_url_or_srcset( $url_or_srcset, $thumbnail ) ) {
+  if( $found = arve_get_cached_attachment_image_url_or_srcset( $url_or_srcset, $thumbnail ) ) {
 
     return $found;
 
@@ -16,9 +16,9 @@ function arv3_get_attachment_image_url_or_srcset( $url_or_srcset, $thumbnail ) {
   }
 }
 
-function arv3_get_cached_attachment_image_url_or_srcset( $url_or_srcset, $attachment_id ) {
+function arve_get_cached_attachment_image_url_or_srcset( $url_or_srcset, $attachment_id ) {
 
-  $options        = arv3_get_options();
+  $options        = arve_get_options();
   $transient_name = "arve_attachment_image_{$url_or_srcset}_{$attachment_id}";
   $transient      = get_transient( $transient_name );
   $time           = (int) $options['wp_image_cache_time'];

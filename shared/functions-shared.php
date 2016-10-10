@@ -1,6 +1,6 @@
 <?php
 
-function arv3_get_options_defaults( $section ) {
+function arve_get_options_defaults( $section ) {
 
 	$options['main'] = array(
 		'align_maxwidth'      => 400,
@@ -15,7 +15,7 @@ function arv3_get_options_defaults( $section ) {
 		'wp_video_override'   => false,
 	);
 
-	$properties = arv3_get_host_properties();
+	$properties = arve_get_host_properties();
 	unset( $properties['video'] );
 
 	foreach ( $properties as $provider => $values ) {
@@ -34,20 +34,20 @@ function arv3_get_options_defaults( $section ) {
 /**
  * Get options by merging possibly existing options with defaults
  */
-function arv3_get_options() {
+function arve_get_options() {
 
-	$options               = wp_parse_args( get_option( 'arve_options_main',       array() ), arv3_get_options_defaults( 'main' ) );
-	$options['shortcodes'] = wp_parse_args( get_option( 'arve_options_shortcodes', array() ), arv3_get_options_defaults( 'shortcodes' ) );
-	$options['params']     = wp_parse_args( get_option( 'arve_options_params',     array() ), arv3_get_options_defaults( 'params' ) );
+	$options               = wp_parse_args( get_option( 'arve_options_main',       array() ), arve_get_options_defaults( 'main' ) );
+	$options['shortcodes'] = wp_parse_args( get_option( 'arve_options_shortcodes', array() ), arve_get_options_defaults( 'shortcodes' ) );
+	$options['params']     = wp_parse_args( get_option( 'arve_options_params',     array() ), arve_get_options_defaults( 'params' ) );
 
 	return $options;
 }
 
-function arv3_get_settings_definitions() {
+function arve_get_settings_definitions() {
 
-		$options         = arv3_get_options();
-		$supported_modes = arv3_get_supported_modes();
-		$properties      = arv3_get_host_properties();
+		$options         = arve_get_options();
+		$supported_modes = arve_get_supported_modes();
+		$properties      = arve_get_host_properties();
 
 		foreach ( $properties as $provider => $values ) {
 
@@ -93,7 +93,7 @@ function arv3_get_settings_definitions() {
 				'type'    => 'select',
 				'options' =>
 					array( '' => sprintf( esc_html__( 'Default (current setting: %s)', ARVE_SLUG ), $current_mode_name ) ) +
-					arv3_get_supported_modes(),
+					arve_get_supported_modes(),
 			),
 			array(
 				'attr'  => 'align',
@@ -265,9 +265,9 @@ function arv3_get_settings_definitions() {
 	 *
 	 * @since     5.4.0
 	 */
-function arv3_get_mode_options( $selected ) {
+function arve_get_mode_options( $selected ) {
 
-	$modes = arv3_get_supported_modes();
+	$modes = arve_get_supported_modes();
 
 	$out = '';
 
@@ -284,28 +284,32 @@ function arv3_get_mode_options( $selected ) {
 	return $out;
 }
 
-function arv3_get_supported_modes() {
+function arve_get_supported_modes() {
 	return apply_filters( 'arve_modes', array( 'normal' => __( 'Normal', ARVE_SLUG ) ) );
 }
 
-function arv3_get_iframe_providers() {
+function arve_get_iframe_providers() {
 
 }
 
-function arv3_get_host_properties() {
+function arve_get_host_properties() {
 
 	$properties = array(
 		'allmyvideos' => array(
 			'name'      => 'allmyvideos.net',
-			'regex'     => 'https?://(?:www\.)?allmyvideos.net/([a-z0-9]+)',
-			'embed_url' => 'https://allmyvideos.net/embed-otqf1jt18mif.html',
+			'regex'     => 'https?://(?:www\.)?allmyvideos.net/(?:embed-)?([a-z0-9]+)',
+			'embed_url' => 'https://allmyvideos.net/embed-%s.html',
+			'test_urls' => array(
+				array( 'https://allmyvideos.net/1bno5g9il7ha', '1bno5g9il7ha' ),
+				array( 'https://allmyvideos.net/embed-1bno5g9il7ha.html', '1bno5g9il7ha' ),
+			)
 		),
 		'alugha' => array(
 			'regex'     => 'https?://(?:www\.)?alugha.com/(?:1/)?videos/([a-z0-9_\-]+)',
 			'embed_url' => 'https://alugha.com/embed/polymer-live/?v=%s',
 			'default_params' => 'nologo=1',
 			'auto_thumbnail' => true,
-			'tests' => array(
+			'test_urls' => array(
 				'https://alugha.com/1/videos/youtube-54m1YfEuYU8',
 			 	__('New URLs with unique ids', ARVE_SLUG),
 				'https://alugha.com/videos/7cab9cd7-f64a-11e5-939b-c39074d29b86',
@@ -324,14 +328,17 @@ function arv3_get_host_properties() {
 			'default_params' => 'embed=1',
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
-			'tests' => array(
-				'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591',
+			'test_urls' => array(
+				array( 'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591', 2542591 ),
 			)
 		),
 		'brightcove'   => array(
 			'regex'          => 'https?://(?:players|link)\.brightcove\.net/([^" ]+)',
 			'embed_url'      => 'https://players.brightcove.net/%s',
 			'no_url_embeds'  => true,
+			'test_urls' => array(
+				'http://players.brightcove.net/1160438696001/default_default/index.html?videoId=4587535845001',
+			),
 		),
 		'collegehumor' => array(
 			'name'           => 'CollegeHumor',
@@ -348,8 +355,8 @@ function arv3_get_host_properties() {
 			'no_url_embeds'  => true,
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
-			'tests' => array(
-				'[comedycentral id="c80adf02-3e24-437a-8087-d6b77060571c"]',
+			'test_ids' => array(
+				'c80adf02-3e24-437a-8087-d6b77060571c',
 			)
 		),
 		'dailymotion' => array(
@@ -358,6 +365,10 @@ function arv3_get_host_properties() {
 			'default_params' => 'logo=0&hideInfos=1&related=0',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
+			'test_urls' => array(
+				array( 'http://www.dailymotion.com/video/x41ia79_mass-effect-andromeda-gameplay-alpha_videogames', 'x41ia79' ),
+				array( 'http://dai.ly/x3cwlqz', 'x3cwlqz' ),
+			),
 			'query_args'     => array(
 				'api' => array(
 					'name' => __( 'API', ARVE_SLUG ),
@@ -415,15 +426,15 @@ function arv3_get_host_properties() {
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'aspect_ratio'   => '640:400',
-			'tests' => array(
-				'http://www.funnyordie.com/videos/76585438d8/sarah-silverman-s-we-are-miracles-hbo-special',
+			'test_urls' => array(
+				array( 'http://www.funnyordie.com/videos/76585438d8/sarah-silverman-s-we-are-miracles-hbo-special', '76585438d8' ),
 			)
 		),
 		'gametrailers' => array(
 			'no_url_embeds'    => true,
 			'auto_thumbnail'   => false,
-			'tests' => array(
-				'[gametrailers id="797121a1-4685-4ecc-9388-72a88b0ef8da"]',
+			'test_ids' => array(
+				'797121a1-4685-4ecc-9388-72a88b0ef8da',
 			)
 		),
 		'ign' => array(
@@ -431,16 +442,18 @@ function arv3_get_host_properties() {
 			'regex'          => '(https?://(?:www\.)?ign\.com/videos/[0-9]{4}/[0-9]{2}/[0-9]{2}/[0-9a-z\-]+)',
 			'embed_url'      => 'http://widgets.ign.com/video/embed/content.html?url=%s',
 			'auto_thumbnail' => false,
-			'tests' => array(
+			'test_urls' => array(
 				'http://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
 			)
 		),
 		'kickstarter' => array(
-			'regex'          => 'https?://(?:www\.)?kickstarter\.com/projects/([0-9a-z\-]+/[0-9a-z\-]+)',
+			'regex'          => 'https?://(?:www\.)?kickstarter\.com/projects/([0-9a-z\-]+/[-0-9a-z\-]+)',
 			'embed_url'      => 'https://www.kickstarter.com/projects/%s/widget/video.html',
+			 #                   https://www.kickstarter.com/projects/trinandtonic/friendship-postcards/widget/video.html
 			'auto_thumbnail' => false,
-			'tests' => array(
-				'https://www.kickstarter.com/projects/obsidian/project-eternity?ref=discovery',
+			'test_urls' => array(
+				array( 'https://www.kickstarter.com/projects/obsidian/project-eternity?ref=discovery', 'obsidian/project-eternity' ),
+				array( 'https://www.kickstarter.com/projects/trinandtonic/friendship-postcards?ref=category_featured', 'trinandtonic/friendship-postcards' ),
 			)
 		),
 		'liveleak' => array(
@@ -450,12 +463,14 @@ function arv3_get_host_properties() {
 			'default_params' => 'wmode=transparent',
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
-			'tests' => array(
-				__('Page/item <code>i=</code> URL', ARVE_SLUG) ,
-				'http://www.liveleak.com/view?i=703_1385224413',
-				__('File <code>f=</code> URL', ARVE_SLUG) ,
-				'http://www.liveleak.com/view?f=c85bdf5e45b2',
-			)
+			'test_urls' => array(
+				array( 'http://www.liveleak.com/view?i=703_1385224413', 'i=703_1385224413' ), # Page/item 'i=' URL
+				array( 'http://www.liveleak.com/view?f=c85bdf5e45b2', 'f=c85bdf5e45b2' ),     #File f= URL
+			),
+			'test_ids' => array(
+				'f=c85bdf5e45b2',
+				'c85bdf5e45b2'
+			),
 		),
 		'livestream' => array(
 			# <iframe width="560" height="340" src="http://cdn.livestream.com/embed/telefuturohd?layout=4&amp;height=340&amp;width=560&amp;autoplay=false" style="border:0;outline:0" frameborder="0" scrolling="no"></iframe>
@@ -476,10 +491,10 @@ function arv3_get_host_properties() {
 			'regex'          => 'https?://(?:www\.)?metacafe\.com/(?:watch|fplayer)/([0-9]+)',
 			'embed_url'      => 'http://www.metacafe.com/embed/%s/',
 			'auto_thumbnail' => false,
-			'tests' => array(
-				'http://www.metacafe.com/watch/11159703/why_youre_fat/',
-				'http://www.metacafe.com/watch/11322264/everything_wrong_with_robocop_in_7_minutes/',
-			)
+			'test_urls' => array(
+				array( 'http://www.metacafe.com/watch/11433151/magical-handheld-fireballs/', 11433151 ),
+				array( 'http://www.metacafe.com/watch/11322264/everything_wrong_with_robocop_in_7_minutes/', 11322264 ),
+			),
 		),
 		'movieweb' => array(
 			'regex'          => 'https?://(?:www\.)?movieweb\.com/v/([a-z0-9]{14})',
@@ -492,9 +507,9 @@ function arv3_get_host_properties() {
 			'regex'          => 'https?://(?:www\.)?mpora\.(?:com|de)/videos/([a-z0-9]+)',
 			'embed_url'      => 'http://mpora.com/videos/%s/embed',
 			'auto_thumbnail' => true,
-			'tests' => array(
-				'http://mpora.com/videos/AAdphry14rkn',
-				'http://mpora.de/videos/AAdpxhiv6pqd',
+			'test_urls' => array(
+				array( 'http://mpora.com/videos/AAdphry14rkn', 'AAdphry14rkn' ),
+				array( 'http://mpora.de/videos/AAdpxhiv6pqd', 'AAdpxhiv6pqd' ),
 			)
 		),
 		'myspace' => array(
@@ -502,8 +517,8 @@ function arv3_get_host_properties() {
 			'regex'          => 'https?://(?:www\.)?myspace\.com/.+/([0-9]+)',
 			'embed_url'      => 'https://media.myspace.com/play/video/%s',
 			'auto_thumbnail' => false,
-			'tests' => array(
-				'https://myspace.com/myspace/video/dark-rooms-the-shadow-that-looms-o-er-my-heart-live-/109471212',
+			'test_urls' => array(
+				array( 'https://myspace.com/myspace/video/dark-rooms-the-shadow-that-looms-o-er-my-heart-live-/109471212', 109471212 ),
 			)
 		),
 		/*
@@ -512,7 +527,7 @@ function arv3_get_host_properties() {
 			'regex'          => 'https?://(?:www\.)?myvideo\.de/(?:watch|embed)/([0-9]+)',
 			'embed_url'      => 'http://www.myvideo.de/embedded/public/%s',
 			'auto_thumbnail' => false,
-			'tests' => array(
+			'test_urls' => array(
 				'http://www.myvideo.de/watch/8432624/Angeln_mal_anders',
 			)
 		),
@@ -522,8 +537,8 @@ function arv3_get_host_properties() {
 			'embed_url'      => 'http://www.snotr.com/embed/%s',
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
-			'tests' => array(
-				'http://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is',
+			'test_urls' => array(
+				array( 'http://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is', 12314 ),
 			)
 		),
 		'spike' => array(
@@ -533,8 +548,8 @@ function arv3_get_host_properties() {
 			'no_url_embeds'  => true,
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
-			'tests' => array(
-				'[spike id="5afddf30-31d8-40fb-81e6-bb5c6f45525f"]',
+			'test_ids' => array(
+				'5afddf30-31d8-40fb-81e6-bb5c6f45525f',
 			)
 		),
 		'ted' => array(
@@ -564,7 +579,7 @@ function arv3_get_host_properties() {
 			'default_params' => 'player=videodetailsembedded&id=anonymous',
 			'auto_thumbnail' => false,
 			#'aspect_ratio' => 60.257,
-			'tests' => array(
+			'test_urls' => array(
 				'http://www.veoh.com/watch/v19866882CAdjNF9b',
 			)
 		),
@@ -574,6 +589,11 @@ function arv3_get_host_properties() {
 			'default_params' => 'playlist=false&playerType=embedded&env=0',
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
+			'test_urls' => array(
+				array( 'https://www.vevo.com/watch/the-offspring/the-kids-arent-alright/USSM20100649', 'USSM20100649' ),
+				#array( '', '' ),
+				#array( '', '' ),
+			),
 		),
 		'viddler' => array(
 			'regex'          => 'https?://(?:www\.)?viddler\.com/(?:embed|v)/([a-z0-9]{8})',
@@ -586,9 +606,13 @@ function arv3_get_host_properties() {
 		),
 		'vidspot' => array(
 			'name'      => 'vidspot.net',
-			'regex'     => 'https?://(?:www\.)?vidspot.net/([a-z0-9]+)',
+			'regex'     => 'https?://(?:www\.)?vidspot.net/(?:embed-)?([a-z0-9]+)',
 			'embed_url' => 'http://vidspot.net/embed-%s.html',
 			'requires_flash' => true,
+			'test_urls' => array(
+				array( 'http://vidspot.net/285wf9uk3rry',            '285wf9uk3rry' ),
+				array( 'http://vidspot.net/embed-285wf9uk3rry.html', '285wf9uk3rry' ),
+			),
 		),
 		'vine' => array(
 			'regex'          => 'https?://(?:www\.)?vine\.co/v/([a-z0-9]+)',
@@ -596,12 +620,10 @@ function arv3_get_host_properties() {
 			'default_params' => '', //* audio=1 supported
 			'auto_thumbnail' => false,
 			'aspect_ratio'   => '1:1',
-			'tests' => array(
-				'[vine id="MbrreglaFrA"]',
-				'https://vine.co/v/bjAaLxQvOnQ',
-			),
-			'specific_tests' => array(
-				'https://vine.co/v/bjHh0zHdgZT/embed',
+			'test_urls' => array(
+				array( 'https://vine.co/v/bjAaLxQvOnQ', 'bjAaLxQvOnQ' ),
+				array( 'https://vine.co/v/MbrreglaFrA', 'MbrreglaFrA' ),
+				array( 'https://vine.co/v/bjHh0zHdgZT/embed', 'bjHh0zHdgZT' ),
 			),
 		),
 		'vimeo' => array(
@@ -610,6 +632,9 @@ function arv3_get_host_properties() {
 			'default_params' => 'html5=1&title=1&byline=0&portrait=0',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
+			'test_urls' => array(
+				array( 'https://vimeo.com/124400795', 124400795 ),
+			),
 			'query_argss' => array(
 				'autoplay'  => array( 'bool', __( 'Autoplay', ARVE_SLUG ) ),
 				'badge'     => array( 'bool', __( 'Badge', ARVE_SLUG ) ),
@@ -635,7 +660,7 @@ function arv3_get_host_properties() {
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'requires_flash' => true,
-			'tests' => array(
+			'test_urls' => array(
 				'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html?format=embed&player_autoplay=false',
 				'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html',
 				'https://www.yahoo.com/movies/sully-trailer-4-211012511.html?format=embed',
@@ -648,9 +673,9 @@ function arv3_get_host_properties() {
 			'aspect_ratio'   => '450:292.5',
 			'requires_flash' => true,
 			# <iframe height=498 width=510 src="http://player.youku.com/embed/XMTUyODYwOTc4OA==" frameborder=0 allowfullscreen></iframe>
-			'tests' => array(
-				'http://v.youku.com/v_show/id_XMTczMDAxMjIyNA==.html?f=27806190',
-				'http://player.youku.com/embed/XMTUyODYwOTc4OA=='
+			'test_urls' => array(
+				array( 'http://v.youku.com/v_show/id_XMTczMDAxMjIyNA==.html?f=27806190', 'XMTczMDAxMjIyNA' ),
+				array( 'http://player.youku.com/embed/XMTUyODYwOTc4OA==',                'XMTUyODYwOTc4OA' ),
 			),
 		),
 		'youtube' => array(
@@ -660,9 +685,9 @@ function arv3_get_host_properties() {
 			'default_params' => 'iv_load_policy=3&modestbranding=1&rel=0&autohide=1&playsinline=1',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
-			'tests' => array(
-				'[youtube id="XQEiv7t1xuQ"]',
-				'http://www.youtube.com/watch?v=vrXgLhkv21Y',
+			#'[youtube id="XQEiv7t1xuQ"]',
+			'test_urls' => array(
+				array( 'http://www.youtube.com/watch?v=vrXgLhkv21Y', 'vrXgLhkv21Y' ),
 			),
 			'specific_tests' => array(
 				__('URL from youtu.be shortener', ARVE_SLUG),
@@ -834,7 +859,7 @@ function arv3_get_host_properties() {
 			'default_params'    => '',
 			'auto_thumbnail'    => false,
 			'requires_flash'    => true,
-			'tests' => array(
+			'test_urls' => array(
 				__('This plugin allows iframe embeds for every URL by using this <code>[iframe]</code> shortcode. This should only be used for providers not supported by this via a named shortcode. The result is a 16:9 resonsive iframe by default, aspect ratio can be changed as usual.', ARVE_SLUG ),
 				'[iframe src="http://example.com/" aspect_ratio="1:1"]',
 			),
@@ -850,7 +875,7 @@ function arv3_get_host_properties() {
 	return $properties;
 }
 
-function arv3_attr( $attr = array(), $dailymotion_playlist_fix = false ) {
+function arve_attr( $attr = array(), $dailymotion_playlist_fix = false ) {
 
 	if ( empty( $attr ) ) {
 		return '';
@@ -865,7 +890,7 @@ function arv3_attr( $attr = array(), $dailymotion_playlist_fix = false ) {
 		} elseif ( '' === $value || true === $value ) {
 			$out .= sprintf( ' %s', esc_html( $key ) );
 		} elseif ( in_array( $key, array( 'href', 'data-href', 'src', 'data-src' ) ) ) {
-			$out .= sprintf( ' %s="%s"', esc_html( $key ), arv3_esc_url( $value ) );
+			$out .= sprintf( ' %s="%s"', esc_html( $key ), arve_esc_url( $value ) );
 		} else {
 			$out .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );
 		}
@@ -874,20 +899,20 @@ function arv3_attr( $attr = array(), $dailymotion_playlist_fix = false ) {
 	return $out;
 }
 
-function arv3_esc_url( $url ) {
+function arve_esc_url( $url ) {
 	return str_replace( 'jukebox?list%5B0%5D', 'jukebox?list[]', esc_url( $url ) );
 }
 
-function arv3_starts_with( $haystack, $needle ) {
+function arve_starts_with( $haystack, $needle ) {
 	// search backwards starting from haystack length characters from the end
 	return $needle === "" || strrpos( $haystack, $needle, -strlen( $haystack ) ) !== false;
 }
 
-function arv3_ends_with( $haystack, $needle ) {
+function arve_ends_with( $haystack, $needle ) {
 	// search forward starting from end minus needle length characters
 	return $needle === "" || ( ( $temp = strlen($haystack) - strlen( $needle ) ) >= 0 && strpos( $haystack, $needle, $temp ) !== false );
 }
 
-function arv3_contains( $haystack, $needle ) {
+function arve_contains( $haystack, $needle ) {
   return strpos( $haystack, $needle ) !== false;
 }

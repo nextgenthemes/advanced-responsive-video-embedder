@@ -1,8 +1,8 @@
 <?php
 
-function arv3_validate_url( $url ) {
+function arve_validate_url( $url ) {
 
-  if ( arv3_starts_with( $url, 'http' ) && filter_var( $url, FILTER_VALIDATE_URL ) !== false ) {
+  if ( arve_starts_with( $url, 'http' ) && filter_var( $url, FILTER_VALIDATE_URL ) !== false ) {
 
     return true;
   }
@@ -10,7 +10,7 @@ function arv3_validate_url( $url ) {
   return false;
 }
 
-function arv3_bool_to_shortcode_string( $val ) {
+function arve_bool_to_shortcode_string( $val ) {
 
   if ( false === $val ) {
     return 'n';
@@ -20,7 +20,7 @@ function arv3_bool_to_shortcode_string( $val ) {
 }
 
 
-function arv3_validate_bool( $val, $name ) {
+function arve_validate_bool( $val, $name ) {
 
   switch ( $val ) {
     case '';
@@ -49,7 +49,7 @@ function arv3_validate_bool( $val, $name ) {
   return $val;
 }
 
-function arv3_validate_align( $align ) {
+function arve_validate_align( $align ) {
 
   switch ( $align ) {
     case null:
@@ -67,7 +67,7 @@ function arv3_validate_align( $align ) {
   return $align;
 }
 
-function arv3_validate_mode( $mode, $provider ) {
+function arve_validate_mode( $mode, $provider ) {
 
   if ( 'thumbnail' == $mode ) {
     $mode = 'lazyload-lightbox';
@@ -77,7 +77,7 @@ function arv3_validate_mode( $mode, $provider ) {
     $mode = 'normal';
   }
 
-  $supported_modes = arv3_get_supported_modes();
+  $supported_modes = arve_get_supported_modes();
 
   if ( ! array_key_exists( $mode, $supported_modes ) ) {
 

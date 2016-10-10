@@ -12,8 +12,8 @@
  * @copyright 2013 Nicolas Jonas
  */
 
-$options = arv3_get_options();
-$ad      = arv3_get_pro_ad();
+$options = arve_get_options();
+$ad      = arve_get_pro_ad();
 ?>
 <div class="wrap arve-options-wrap">
 

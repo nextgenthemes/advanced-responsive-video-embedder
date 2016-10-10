@@ -1,8 +1,8 @@
 <?php
 
-function arv3_create_url_handlers() {
+function arve_create_url_handlers() {
 
-  $properties = arv3_get_host_properties();
+  $properties = arve_get_host_properties();
 
   $function_factory = new ARVE_URL_Function_Factory;
 
@@ -14,12 +14,12 @@ function arv3_create_url_handlers() {
   }
 }
 
-function arv3_url_detection_to_shortcode( $provider, $matches, $attr, $url, $rawattr ) {
+function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $rawattr ) {
 
   $id = $matches[1];
 
   if ( empty( $id ) ) {
-    return arv3_error( __( 'No ID, please report this bug', ARVE_SLUG ) );
+    return arve_error( __( 'No ID, please report this bug', ARVE_SLUG ) );
   }
 
   //* Fix 'Markdown on save enhanced' issue
@@ -39,7 +39,7 @@ function arv3_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
 
   foreach ( $url_query as $key => $value ) {
 
-    if ( arv3_starts_with( $key, 'arve-' ) ) {
+    if ( arve_starts_with( $key, 'arve-' ) ) {
 
       $key = substr( $key, 5 );
       $old_atts[ $key ] = $value;
@@ -53,23 +53,23 @@ function arv3_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
   }
 
   if ( isset( $url_query['t'] ) ) {
-    $url_query['start'] = arv3_youtube_time_to_seconds( $url_query['t'] );
+    $url_query['start'] = arve_youtube_time_to_seconds( $url_query['t'] );
   }
 
   unset( $url_query['arve'] );
-  unset( $url_query['t'] );
+
+  if ( 'youtube' == $provider ) {
+    unset( $url_query['v'] );
+    unset( $url_query['t'] );
+  }
 
   //* Pure awesomeness!
   $atts               = array_merge( (array) $old_atts, (array) $new_atts );
-  $atts['parameters'] = build_query( $url_query );
+  $atts['parameters'] = empty( $url_query ) ? null : build_query( $url_query );
   $atts['id']         = $id;
   $atts['provider']   = $provider;
 
-  if ( 'youtube' == $provider ) {
-    unset( $atts['parameters']['v'] );
-  }
-
-  return arv3_shortcode_arve( $atts );
+  return arve_shortcode_arve( $atts );
 }
 
 
@@ -79,7 +79,7 @@ function arv3_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
  * @since    5.9.9
  *
  */
-function arv3_oembed_remove_providers() {
+function arve_oembed_remove_providers() {
 
   $wp_core_oembed_shits = array(
     '#http://(www\.)?youtube\.com/watch.*#i'              => array( 'http://www.youtube.com/oembed',                      true  ),

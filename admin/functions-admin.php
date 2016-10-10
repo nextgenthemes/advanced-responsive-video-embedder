@@ -1,6 +1,6 @@
 <?php
 
-function arv3_action_admin_init_setup_messages() {
+function arve_action_admin_init_setup_messages() {
 
 	if( defined( 'ARVE_PRO_VERSION' ) && version_compare( ARVE_PRO_VERSION_REQUIRED, ARVE_PRO_VERSION, '>' ) ) {
 
@@ -22,14 +22,14 @@ function arv3_action_admin_init_setup_messages() {
 	);
 	new ARVE_Admin_Notice_Factory( 'version7', $msg, true );
 
-	$pro_ad_message = arv3_get_pro_ad();
+	$pro_ad_message = arve_get_pro_ad();
 
 	if( $pro_ad_message ) {
 		new ARVE_Admin_Notice_Factory( 'arve_dismiss_pro_notice', $pro_ad_message, true );
 	}
 }
 
-function arv3_get_pro_ad() {
+function arve_get_pro_ad() {
 
 	if ( ! current_user_can( 'update_plugins' ) || ! apply_filters( 'arve_pro_ad', true ) ) {
 		return false;
@@ -45,20 +45,20 @@ function arv3_get_pro_ad() {
 	return $pro_message;
 }
 
-function arv3_echo_pro_ad() {
-	echo arv3_get_pro_ad();
+function arve_echo_pro_ad() {
+	echo arve_get_pro_ad();
 }
 
-function arv3_add_dashboard_widget() {
+function arve_add_dashboard_widget() {
 
-	if( arv3_get_pro_ad() ) {
+	if( arve_get_pro_ad() ) {
 		return;
 	}
 
 	wp_add_dashboard_widget(
 		'arve_dashboard_widget',              // Widget slug.
 		'Advanced Responsive Video Embedder', // Title.
-		'arv3_echo_pro_ad'                    // Display function.
+		'arve_echo_pro_ad'                    // Display function.
 	);
 
 	// Globalize the metaboxes array, this holds all the widgets for wp-admin
@@ -87,7 +87,7 @@ function arv3_add_dashboard_widget() {
  *
  * @since    1.0.0
  */
-function arv3_add_plugin_admin_menu() {
+function arve_add_plugin_admin_menu() {
 
 	/*
 	 * Add a settings page for this plugin to the Settings menu.
@@ -102,11 +102,11 @@ function arv3_add_plugin_admin_menu() {
 		__( 'A.R. Video Embedder', ARVE_SLUG ),
 		'manage_options',
 		ARVE_SLUG,
-		'arv3_display_plugin_admin_page'
+		'arve_display_plugin_admin_page'
 	);
 }
 
-function arv3_display_plugin_admin_page() {
+function arve_display_plugin_admin_page() {
 	require_once plugin_dir_path( __FILE__ ) . 'html-settings-page.php';
 }
 
@@ -115,7 +115,7 @@ function arv3_display_plugin_admin_page() {
  *
  * @since    1.0.0
  */
-function arv3_add_action_links( $links ) {
+function arve_add_action_links( $links ) {
 
 	if( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
 
@@ -137,9 +137,9 @@ function arv3_add_action_links( $links ) {
  *
  * @since 4.3.0
  */
-function arv3_add_media_button() {
+function arve_add_media_button() {
 
-	$options = arv3_get_options();
+	$options = arve_get_options();
 
 	$sui = is_plugin_active( 'shortcode-ui/shortcode-ui.php' );
 
@@ -167,9 +167,9 @@ function arv3_add_media_button() {
 	);
 }
 
-function arv3_register_shortcode_ui() {
+function arve_register_shortcode_ui() {
 
-	$attrs = arv3_get_settings_definitions();
+	$attrs = arve_get_settings_definitions();
 
 	if( function_exists( 'arve_pro_get_settings_definitions' ) ) {
 		$attrs = array_merge( $attrs, arve_pro_get_settings_definitions() );
@@ -209,9 +209,9 @@ function arv3_register_shortcode_ui() {
 	*/
 }
 
-function arv3_input( $args ) {
+function arve_input( $args ) {
 
-	$out = sprintf( '<input %s>', arv3_attr( $args['input_attr'] ) );
+	$out = sprintf( '<input %s>', arve_attr( $args['input_attr'] ) );
 
 	if ( ! empty( $args['option_values']['attr'] ) && 'thumbnail_fallback' == $args['option_values']['attr'] ) {
 
@@ -222,7 +222,7 @@ function arv3_input( $args ) {
 
 		$out .= sprintf(
 			'<a %s>%s</a>',
-			arv3_attr(
+			arve_attr(
 				array(
 					'data-arve-image-upload' => '[name="' . $args['input_attr']['name'] . '"]',
 					'class' => 'button-secondary',
@@ -239,11 +239,11 @@ function arv3_input( $args ) {
 	echo $out;
 }
 
-function arv3_textarea( $args ) {
+function arve_textarea( $args ) {
 
 	unset( $args['input_attr']['type'] );
 
-	$out = sprintf( '<textarea %s></textarea>', arv3_attr( $args['input_attr'] ) );
+	$out = sprintf( '<textarea %s></textarea>', arve_attr( $args['input_attr'] ) );
 
 	if ( ! empty( $args['description'] ) ) {
 		$out = $out . '<p class="description">' . $args['description'] . '</p>';
@@ -252,7 +252,7 @@ function arv3_textarea( $args ) {
 	echo $out;
 }
 
-function arv3_select( $args ) {
+function arve_select( $args ) {
 
 	unset( $args['input_attr']['type'] );
 
@@ -279,7 +279,7 @@ function arv3_select( $args ) {
 	$select_attr = $args['input_attr'];
 	unset( $select_attr['value'] );
 
-	$out = sprintf( '<select %s>%s</select>', arv3_attr( $select_attr ), implode( '', $options ) );
+	$out = sprintf( '<select %s>%s</select>', arve_attr( $select_attr ), implode( '', $options ) );
 
 	if ( ! empty( $args['description'] ) ) {
 		$out = $out . '<p class="description">' . $args['description'] . '</p>';
@@ -293,9 +293,9 @@ function arv3_select( $args ) {
  *
  * @since    2.6.0
  */
-function arv3_register_settings() {
+function arve_register_settings() {
 
-	$options = arv3_get_options();
+	$options = arve_get_options();
 
 	// Main
 	$main_title = __( 'Main Options', ARVE_SLUG );
@@ -307,7 +307,7 @@ function arv3_register_settings() {
 		ARVE_SLUG
 	);
 
-	foreach( arv3_get_settings_definitions() as $k => $v ) {
+	foreach( arve_get_settings_definitions() as $k => $v ) {
 
 		if ( ! empty( $v['hide_from_settings'] ) ) {
 			continue;
@@ -322,9 +322,9 @@ function arv3_register_settings() {
 		}
 
 		if( in_array( $v['type'], array( 'text', 'number', 'url' ) ) ) {
-			$callback_function = 'arv3_input';
+			$callback_function = 'arve_input';
 		} else {
-			$callback_function = 'arv3_' . $v['type'];
+			$callback_function = 'arve_' . $v['type'];
 		}
 
 		add_settings_field(
@@ -350,7 +350,7 @@ function arv3_register_settings() {
 	add_settings_field(
 		'arve_options_main[reset]',
 		null,
-		"arv3_submit_reset",
+		"arve_submit_reset",
 		ARVE_SLUG,
 		'main_section',
 		array(
@@ -363,7 +363,7 @@ function arv3_register_settings() {
 	add_settings_section(
 		'params_section',
 		sprintf( '<span class="arve-settings-section" id="arve-settings-section-params" title="%s"></span>%s', esc_attr( $params_title ), esc_html( $params_title ) ),
-		'arv3_params_section_description',
+		'arve_params_section_description',
 		ARVE_SLUG
 	);
 
@@ -373,7 +373,7 @@ function arv3_register_settings() {
 		add_settings_field(
 			"arve_options_params[$provider]",
 			ucfirst ( $provider ),
-			'arv3_input',
+			'arve_input',
 			ARVE_SLUG,
 			'params_section',
 			array(
@@ -392,7 +392,7 @@ function arv3_register_settings() {
 	add_settings_field(
 		'arve_options_params[reset]',
 		null,
-		'arv3_submit_reset',
+		'arve_submit_reset',
 		ARVE_SLUG,
 		'params_section',
 		array(
@@ -406,7 +406,7 @@ function arv3_register_settings() {
 	add_settings_section(
 		'shortcodes_section',
 		sprintf( '<span class="arve-settings-section" id="arve-settings-section-shortcodes" title="%s"></span>%s', esc_attr( $shortcodes_title ), esc_html( $shortcodes_title ) ),
-		'arv3_shortcodes_section_description',
+		'arve_shortcodes_section_description',
 		ARVE_SLUG
 	);
 
@@ -415,7 +415,7 @@ function arv3_register_settings() {
 		add_settings_field(
 			"arve_options_shortcodes[$provider]",
 			ucfirst ( $provider ),
-			'arv3_input',
+			'arve_input',
 			ARVE_SLUG,
 			'shortcodes_section',
 			array(
@@ -434,7 +434,7 @@ function arv3_register_settings() {
 	add_settings_field(
 		'arve_options_shortcodes[reset]',
 		null,
-		'arv3_submit_reset',
+		'arve_submit_reset',
 		ARVE_SLUG,
 		'shortcodes_section',
 		array(
@@ -443,9 +443,9 @@ function arv3_register_settings() {
 	);
 
 	// register_setting( $option_group, $option_name, $sanitize_callback )
-	register_setting( 'arve-settings-group', 'arve_options_main',       'arv3_validate_options_main' );
-	register_setting( 'arve-settings-group', 'arve_options_params',     'arv3_validate_options_params' );
-	register_setting( 'arve-settings-group', 'arve_options_shortcodes', 'arv3_validate_options_shortcodes' );
+	register_setting( 'arve-settings-group', 'arve_options_main',       'arve_validate_options_main' );
+	register_setting( 'arve-settings-group', 'arve_options_params',     'arve_validate_options_params' );
+	register_setting( 'arve-settings-group', 'arve_options_shortcodes', 'arve_validate_options_shortcodes' );
 }
 
 /**
@@ -453,7 +453,7 @@ function arv3_register_settings() {
  *
  * @since    6.0.6
  */
-function arv3_register_settings_debug() {
+function arve_register_settings_debug() {
 
 	// Debug Information
 	$debug_title = __( 'Debug Info', ARVE_SLUG );
@@ -461,24 +461,24 @@ function arv3_register_settings_debug() {
 	add_settings_section(
 		'debug_section',
 		sprintf( '<span class="arve-settings-section" id="arve-settings-section-debug" title="%s"></span>%s', esc_attr( $debug_title ), esc_html( $debug_title ) ),
-		'arv3_debug_section_description',
+		'arve_debug_section_description',
 		ARVE_SLUG
 	);
 }
 
-function arv3_submit_reset( $args ) {
+function arve_submit_reset( $args ) {
 
 	submit_button( __('Save Changes' ), 'primary','submit', false );
 	echo '&nbsp;&nbsp;';
 	submit_button( __('Reset This Settings Section', 'advanced-responsive-video-embedder' ), 'secondary', $args['reset_name'], false );
 }
 
-function arv3_shortcodes_section_description() {
+function arve_shortcodes_section_description() {
 	$desc = __( 'This shortcodes exist for backwards compatiblity only. It is not recommended to use them at all, please use the <code>[arve]</code> shortcode. You can change the old shortcode tags here. You may need this to prevent conflicts with other plugins you want to use.', ARVE_SLUG );
 	echo "<p>$desc</p>";
 }
 
-function arv3_params_section_description() {
+function arve_params_section_description() {
 
 	$url  = 'https://nextgenthemes.com/advanced-responsive-video-embedder-pro/documentation';
 
@@ -501,7 +501,7 @@ function arv3_params_section_description() {
 	<?php
 }
 
-function arv3_debug_section_description() {
+function arve_debug_section_description() {
 
 	global $wp_version;
 
@@ -534,7 +534,7 @@ function arv3_debug_section_description() {
  *
  * @since    2.6.0
  */
-function arv3_validate_options_main( $input ) {
+function arve_validate_options_main( $input ) {
 
 	//* Storing the Options Section as a empty array will cause the plugin to use defaults
 	if( isset( $input['reset'] ) ) {
@@ -562,12 +562,12 @@ function arv3_validate_options_main( $input ) {
 		$output['align_maxwidth'] = (int) $input['align_maxwidth'];
 	}
 
-	$options_defaults = arv3_get_options_defaults( 'main' );
+	$options_defaults = arve_get_options_defaults( 'main' );
 	//* Store only the options in the database that are different from the defaults.
 	return array_diff_assoc( $output, $options_defaults );
 }
 
-function arv3_validate_options_params( $input ) {
+function arve_validate_options_params( $input ) {
 
 	//* Storing the Options Section as a empty array will cause the plugin to use defaults
 	if( isset( $input['reset'] ) ) {
@@ -581,12 +581,12 @@ function arv3_validate_options_params( $input ) {
 		$output[ $key ] = preg_replace( '!\s+!', '&', trim( $var ) );
 	}
 
-	$options_defaults = arv3_get_options_defaults( 'params' );
+	$options_defaults = arve_get_options_defaults( 'params' );
 	//* Store only the options in the database that are different from the defaults.
 	return array_diff_assoc( $output, $options_defaults );
 }
 
-function arv3_validate_options_shortcodes( $input ) {
+function arve_validate_options_shortcodes( $input ) {
 
 	$output = array();
 
@@ -607,17 +607,17 @@ function arv3_validate_options_shortcodes( $input ) {
 		$output[ $key ] = $var;
 	}
 
-	$options_defaults = arv3_get_options_defaults( 'shortcodes' );
+	$options_defaults = arve_get_options_defaults( 'shortcodes' );
 	//* Store only the options in the database that are different from the defaults.
 	return array_diff_assoc( $output, $options_defaults );
 }
 
 
-function arv3_admin_enqueue_styles() {
+function arve_admin_enqueue_styles() {
 	wp_enqueue_style( ARVE_SLUG, plugin_dir_url( __FILE__ ) . 'arve-admin.css', array(), ARVE_VERSION, 'all' );
 }
 
-function arv3_mce_css( $mce_css ) {
+function arve_mce_css( $mce_css ) {
 
 	if ( ! empty( $mce_css ) ) {
 		$mce_css .= ',';
@@ -635,7 +635,7 @@ function arv3_mce_css( $mce_css ) {
  *
  * @since    1.0.0
  */
-function arv3_admin_enqueue_scripts() {
+function arve_admin_enqueue_scripts() {
 	wp_enqueue_script( ARVE_SLUG,            plugin_dir_url( __FILE__ ) . 'arve-admin.js',        array( 'jquery' ), ARVE_VERSION, true );
 	wp_enqueue_script( ARVE_SLUG . '-sc-ui', plugin_dir_url( __FILE__ ) . 'arve-shortcode-ui.js', array(),           ARVE_VERSION );
 }

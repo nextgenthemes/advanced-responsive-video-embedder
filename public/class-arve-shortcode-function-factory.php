@@ -7,6 +7,6 @@ class ARVE_Shortcode_Function_Factory {
     $atts             = $params[0];
     $atts['provider'] = $function_name;
 
-    return arv3_shortcode_arve( $atts );
+    return arve_shortcode_arve( $atts );
   }
 }

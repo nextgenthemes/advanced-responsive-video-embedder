@@ -1,8 +1,8 @@
 <?php
 
-function arv3_build_iframe_src( $provider, $id, $lang ) {
+function arve_build_iframe_src( $provider, $id, $lang ) {
 
-	$properties = arv3_get_host_properties();
+	$properties = arve_get_host_properties();
 	$src = false;
 
 	if ( isset( $properties[ $provider ]['embed_url'] ) ) {
@@ -52,12 +52,12 @@ function arv3_build_iframe_src( $provider, $id, $lang ) {
 	return $src;
 }
 
-function arv3_id_fixes( $id, $provider ) {
+function arve_id_fixes( $id, $provider ) {
 
 	if (
 		'liveleak' == $provider &&
-		! arv3_starts_with( $id, 'i=' ) &&
-		! arv3_starts_with( $id, 'f=' )
+		! arve_starts_with( $id, 'i=' ) &&
+		! arve_starts_with( $id, 'f=' )
 	) {
 
 		$id = 'i=' . $id;
@@ -70,7 +70,7 @@ function arv3_id_fixes( $id, $provider ) {
 	return $id;
 }
 
-function arv3_aspect_ratio_fixes( $aspect_ratio, $provider, $mode) {
+function arve_aspect_ratio_fixes( $aspect_ratio, $provider, $mode) {
 
 	if ( 'dailymotionlist' === $provider ) {
 		switch ( $mode ) {
@@ -84,7 +84,7 @@ function arv3_aspect_ratio_fixes( $aspect_ratio, $provider, $mode) {
 	return $aspect_ratio;
 }
 
-function arv3_autoplay_query_arg( $autoplay, $src, $provider, $mode ) {
+function arve_autoplay_query_arg( $autoplay, $src, $provider, $mode ) {
 
 		switch ( $provider ) {
 			case 'archiveorg':
@@ -158,7 +158,7 @@ function arv3_autoplay_query_arg( $autoplay, $src, $provider, $mode ) {
 		}
 }
 
-function arv3_add_query_args_to_iframe_src( $parameters, $src, $provider ) {
+function arve_add_query_args_to_iframe_src( $parameters, $src, $provider ) {
 
 	$parameters        = wp_parse_args( preg_replace( '!\s+!', '&', trim( $parameters ) ) );
 	$option_parameters = array();
@@ -174,7 +174,7 @@ function arv3_add_query_args_to_iframe_src( $parameters, $src, $provider ) {
 	return $src;
 }
 
-function arv3_create_embed_id( $v ) {
+function arve_create_embed_id( $v ) {
 
 	foreach ( array( 'id', 'mp4', 'm4v', 'webm', 'ogv', 'url', 'webtorrent' ) as $attribute ) {
 
@@ -199,9 +199,9 @@ function arv3_create_embed_id( $v ) {
 	return $embed_id;
 }
 
-function arv3_maxwidth_when_aligned( $maxwidth, $align ) {
+function arve_maxwidth_when_aligned( $maxwidth, $align ) {
 
-	$options = arv3_get_options();
+	$options = arve_get_options();
 
 	if ( $maxwidth < 100 && in_array( $align, array( 'left', 'right', 'center' ) ) ) {
 		$maxwidth = (int) $options['align_maxwidth'];
@@ -210,7 +210,7 @@ function arv3_maxwidth_when_aligned( $maxwidth, $align ) {
 	return $maxwidth;
 }
 
-function arv3_get_default_aspect_ratio( $aspect_ratio, $provider, $mode ) {
+function arve_get_default_aspect_ratio( $aspect_ratio, $provider, $mode ) {
 
 	if ( empty( $aspect_ratio ) && isset( $properties[ $provider ]['aspect_ratio'] ) ) {
 		$aspect_ratio = $properties[ $provider ]['aspect_ratio'];
@@ -222,18 +222,18 @@ function arv3_get_default_aspect_ratio( $aspect_ratio, $provider, $mode ) {
 }
 
 
-function arv3_output_errors( $atts, $v ) {
+function arve_output_errors( $atts, $v ) {
 
 	$errors = '';
 
 	foreach ( $v as $key => $value ) {
 		if( is_wp_error( $value ) ) {
-			$errors .= arv3_error( $value->get_error_message() );
+			$errors .= arve_error( $value->get_error_message() );
 		}
 	}
 
 	if( ! empty( $errors ) ) {
-		$debug_info = arv3_get_debug_info( $atts, $v );
+		$debug_info = arve_get_debug_info( $atts, $v );
 		return $errors . $debug_info;
 	} else {
 		return false;

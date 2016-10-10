@@ -1,20 +1,20 @@
 <?php
 
-function arv3_shortcode_arve( $atts ) {
+function arve_shortcode_arve( $atts ) {
 
   $errors  = '';
-  $options = arv3_get_options();
+  $options = arve_get_options();
   $atts    = (array) $atts;
 
   if ( array_key_exists( 0, $atts ) ) {
-    return arv3_error( __( 'Your shortcode is wrong, possibly a missing quotation mark. Or a attribute without a value.', ARVE_SLUG ) );
+    return arve_error( __( 'Your shortcode is wrong, possibly a missing quotation mark. Or a attribute without a value.', ARVE_SLUG ) );
   }
 
   $pairs = apply_filters( 'arve_shortcode_pairs', array(
     'align'        => $options['align'],
-    'arve_link'    => arv3_bool_to_shortcode_string( $options['promote_link'] ),
+    'arve_link'    => arve_bool_to_shortcode_string( $options['promote_link'] ),
     'aspect_ratio' => null,
-    'autoplay'     => arv3_bool_to_shortcode_string( $options['autoplay'] ),
+    'autoplay'     => arve_bool_to_shortcode_string( $options['autoplay'] ),
     'description'  => null,
     'iframe_name'  => null,
     'maxwidth'     => (string) $options['video_maxwidth'],
@@ -48,7 +48,7 @@ function arv3_shortcode_arve( $atts ) {
 
   $v = shortcode_atts( $pairs, $atts, 'arve' );
 
-  if ( $errors = arv3_output_errors( $atts, $v ) ) {
+  if ( $errors = arve_output_errors( $atts, $v ) ) {
     return $errors;
   }
 
@@ -63,38 +63,38 @@ function arv3_shortcode_arve( $atts ) {
     }
   }
 
-  $v['align']        = arv3_validate_align( $v['align'], $v['provider'] );
-  $v['mode']         = arv3_validate_mode( $v['mode'], $v['provider'] );
-  $v['autoplay']     = arv3_validate_bool( $v['autoplay'],  'autoplay' );
-  $v['arve_link']    = arv3_validate_bool( $v['arve_link'], 'arve_link' );
-  $v['loop']         = arv3_validate_bool( $v['loop'],      'loop' );
-  $v['controls']     = arv3_validate_bool( $v['controls'],  'controls' );
+  $v['align']        = arve_validate_align( $v['align'], $v['provider'] );
+  $v['mode']         = arve_validate_mode( $v['mode'], $v['provider'] );
+  $v['autoplay']     = arve_validate_bool( $v['autoplay'],  'autoplay' );
+  $v['arve_link']    = arve_validate_bool( $v['arve_link'], 'arve_link' );
+  $v['loop']         = arve_validate_bool( $v['loop'],      'loop' );
+  $v['controls']     = arve_validate_bool( $v['controls'],  'controls' );
 
   $v['maxwidth']     = (int) $v['maxwidth'];
-  $v['maxwidth']     = (int) arv3_maxwidth_when_aligned( $v['maxwidth'], $v['align'] );
-  $v['id']           = arv3_id_fixes( $v['id'], $v['provider'] );
-  $v['aspect_ratio'] = arv3_get_default_aspect_ratio( $v['aspect_ratio'], $v['provider'], $v['mode'] );
-  $v['aspect_ratio'] = arv3_aspect_ratio_fixes(       $v['aspect_ratio'], $v['provider'], $v['mode'] );
+  $v['maxwidth']     = (int) arve_maxwidth_when_aligned( $v['maxwidth'], $v['align'] );
+  $v['id']           = arve_id_fixes( $v['id'], $v['provider'] );
+  $v['aspect_ratio'] = arve_get_default_aspect_ratio( $v['aspect_ratio'], $v['provider'], $v['mode'] );
+  $v['aspect_ratio'] = arve_aspect_ratio_fixes(       $v['aspect_ratio'], $v['provider'], $v['mode'] );
 
-  $v['iframe_src']   = arv3_build_iframe_src( $v['provider'], $v['id'], $v['lang'] );
-  $v['iframe_src']   = arv3_add_query_args_to_iframe_src( $v['parameters'], $v['iframe_src'], $v['provider'] );
-  $v['iframe_src']   = arv3_autoplay_query_arg( $v['autoplay'], $v['iframe_src'], $v['provider'], $v['mode'] );
+  $v['iframe_src']   = arve_build_iframe_src( $v['provider'], $v['id'], $v['lang'] );
+  $v['iframe_src']   = arve_add_query_args_to_iframe_src( $v['parameters'], $v['iframe_src'], $v['provider'] );
+  $v['iframe_src']   = arve_autoplay_query_arg( $v['autoplay'], $v['iframe_src'], $v['provider'], $v['mode'] );
 
   if ( 'vimeo' == $v['provider'] && ! empty( $v['start'] ) ) {
     $v['iframe_src'] .= '#t=' . (int) $v['start'];
     $v['iframe_src'] .= '#t=' . (int) $v['start'];
   }
 
-  $v['embed_id'] = arv3_create_embed_id( $v );
+  $v['embed_id'] = arve_create_embed_id( $v );
 
-  if ( $errors = arv3_output_errors( $atts, $v ) ) {
+  if ( $errors = arve_output_errors( $atts, $v ) ) {
     return $errors;
   }
 
-  $debug_info    = arv3_get_debug_info( $atts, $v );
-  $arve_video    = arv3_video_or_iframe( $v );
-  $meta_html     = arv3_build_meta_html( $v );
-  $arve_link     = arv3_build_promote_link_html( $v['arve_link'] );
+  $debug_info    = arve_get_debug_info( $atts, $v );
+  $arve_video    = arve_video_or_iframe( $v );
+  $meta_html     = arve_build_meta_html( $v );
+  $arve_link     = arve_build_promote_link_html( $v['arve_link'] );
   $arve_play_btn = function_exists( 'arve_pro_play_btn' ) ? arve_pro_play_btn( $v ) : '';
   $webtorrent_status = function_exists( 'arve_webtorrent_status' ) ? arve_webtorrent_status( $v['webtorrent'] ) : '';
 
@@ -102,19 +102,19 @@ function arv3_shortcode_arve( $atts ) {
     $containers  = arve_pro_lity_container( $meta_html . $arve_video, $v );
   } elseif ( 'lazyload-lightbox' == $v['mode'] ) {
     $containers  = arve_pro_lity_container( $arve_video, $v );
-    $containers .= arv3_arve_embed_container( $meta_html . $arve_play_btn, $v );
+    $containers .= arve_arve_embed_container( $meta_html . $arve_play_btn, $v );
   } else {
-    $containers = arv3_arve_embed_container( $meta_html . $arve_video . $arve_play_btn, $v );
+    $containers = arve_arve_embed_container( $meta_html . $arve_video . $arve_play_btn, $v );
   }
 
-  $final_embed = arv3_arve_wrapper( $containers . $arve_link . $webtorrent_status, $v );
+  $final_embed = arve_arve_wrapper( $containers . $arve_link . $webtorrent_status, $v );
 
   $output = apply_filters( 'arve_output', $debug_info . $final_embed, $v );
 
   if ( empty( $output ) ) {
-    return arv3_error( 'The output is empty, this should not happen' );
+    return arve_error( 'The output is empty, this should not happen' );
   } elseif ( is_wp_error( $output ) ) {
-    return arv3_error( $output->get_error_message() );
+    return arve_error( $output->get_error_message() );
   }
 
   wp_enqueue_script( 'advanced-responsive-video-embedder' );
@@ -129,31 +129,31 @@ function arv3_shortcode_arve( $atts ) {
  *
  * @uses Advanced_Responsive_Video_Embedder_Create_Shortcodes()
  */
-function arv3_create_shortcodes() {
+function arve_create_shortcodes() {
 
-  $options = arv3_get_options();
+  $options = arve_get_options();
   $function_factory = new ARVE_Shortcode_Function_Factory;
 
   foreach( $options['shortcodes'] as $provider => $shortcode ) {
     /* Would require php 5.3.0
     $function = function( $atts ) use ( $provider ) {
       $atts['provider'] = $provider;
-      return arv3_shortcode_arve( $atts );
+      return arve_shortcode_arve( $atts );
     };
     add_shortcode( $shortcode, $function );
     */
     add_shortcode( $shortcode, array( $function_factory, $provider ) );
   }
 
-  add_shortcode( 'arve',                'arv3_shortcode_arve' );
-  add_shortcode( 'arve-supported',      'arv3_shortcode_arve_supported' );
-  add_shortcode( 'arve-supported-list', 'arv3_shortcode_arve_supported_list' );
-  add_shortcode( 'arve-params',         'arv3_shortcode_arve_params' );
+  add_shortcode( 'arve',                'arve_shortcode_arve' );
+  add_shortcode( 'arve-supported',      'arve_shortcode_arve_supported' );
+  add_shortcode( 'arve-supported-list', 'arve_shortcode_arve_supported_list' );
+  add_shortcode( 'arve-params',         'arve_shortcode_arve_params' );
 }
 
-function arv3_shortcode_arve_supported() {
+function arve_shortcode_arve_supported() {
 
-  $providers = arv3_get_host_properties();
+  $providers = arve_get_host_properties();
   // unset deprecated and doubled
   unset( $providers['dailymotionlist'] );
   unset( $providers['iframe'] );
@@ -186,7 +186,7 @@ function arv3_shortcode_arve_supported() {
     $out .= sprintf( '<td>%d</td>', $count++ );
     $out .= sprintf( '<td>%s</td>', esc_html( $values['name'] ) );
     $out .= sprintf( '<td>%s</td>', ( isset( $values['no_url_embeds'] ) && $values['no_url_embeds'] ) ? '' : '&#x2713;' );
-    $out .= sprintf( '<td>%s</td>', ( isset( $values['embed_url'] ) && arv3_starts_with( $values['embed_url'], 'https' ) ) ? '&#x2713;' : '' );
+    $out .= sprintf( '<td>%s</td>', ( isset( $values['embed_url'] ) && arve_starts_with( $values['embed_url'], 'https' ) ) ? '&#x2713;' : '' );
     $out .= sprintf( '<td>%s</td>', ! empty( $values['requires_flash'] ) ? '&#x2713;' : '' );
     $out .= sprintf( '<td>%s</td>', ( isset( $values['auto_thumbnail'] ) && $values['auto_thumbnail'] ) ? '&#x2713;' : '' );
     $out .= sprintf( '<td>%s</td>', ( isset( $values['auto_title'] )     && $values['auto_title'] )     ? '&#x2713;' : '' );
@@ -202,9 +202,9 @@ function arv3_shortcode_arve_supported() {
   return $out;
 }
 
-function arv3_shortcode_arve_supported_list() {
+function arve_shortcode_arve_supported_list() {
 
-  $providers = arv3_get_host_properties();
+  $providers = arve_get_host_properties();
   // unset deprecated and doubled
   unset( $providers['dailymotionlist'] );
   unset( $providers['iframe'] );
@@ -218,9 +218,9 @@ function arv3_shortcode_arve_supported_list() {
   return '<ol>'. $lis . '<li><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/#general-iframe-embedding">All providers with responsive iframe embed codes</a></li></ol>';
 }
 
-function arv3_shortcode_arve_params() {
+function arve_shortcode_arve_params() {
 
-  $attrs = arv3_get_settings_definitions();
+  $attrs = arve_get_settings_definitions();
 
   if( function_exists( 'arve_pro_get_settings_definitions' ) ) {
     $attrs = array_merge( $attrs, arve_pro_get_settings_definitions() );
@@ -266,9 +266,9 @@ function arv3_shortcode_arve_params() {
   return $out;
 }
 
-function arv3_wp_video_shortcode_override( $out, $attr, $content, $instance ) {
+function arve_wp_video_shortcode_override( $out, $attr, $content, $instance ) {
 
-  $options = arv3_get_options();
+  $options = arve_get_options();
 
   if( empty( $options['wp_video_override'] ) && ! empty( $attr['wmv'] ) && ! empty( $attr['flv'] ) ) {
     return $out;
@@ -280,5 +280,5 @@ function arv3_wp_video_shortcode_override( $out, $attr, $content, $instance ) {
     $attr['thumbnail'] = $attr['poster'];
   }
 
-  return arv3_shortcode_arve( $attr );
+  return arve_shortcode_arve( $attr );
 }

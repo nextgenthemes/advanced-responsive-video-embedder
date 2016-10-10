@@ -1,6 +1,6 @@
 <?php
 
-function arv3_load_plugin_textdomain() {
+function arve_load_plugin_textdomain() {
 
   load_plugin_textdomain(
     ARVE_SLUG,
@@ -9,13 +9,13 @@ function arv3_load_plugin_textdomain() {
   );
 }
 
-function arv3_get_first_array_value( $array ) {
+function arve_get_first_array_value( $array ) {
   reset( $array );
   $key = key( $array );
   return $array[ $key ];
 }
 
-function arv3_prefix_array_keys( $keyprefix, $array ) {
+function arve_prefix_array_keys( $keyprefix, $array ) {
 
   foreach( $array as $k => $v ) {
       $array[ $keyprefix . $k ] = $v;
@@ -25,7 +25,7 @@ function arv3_prefix_array_keys( $keyprefix, $array ) {
   return $array;
 }
 
-function arv3_check_filetype( $url, $ext ) {
+function arve_check_filetype( $url, $ext ) {
 
 	$check = wp_check_filetype( $url, wp_get_mime_types() );
 
@@ -43,7 +43,7 @@ function arv3_check_filetype( $url, $ext ) {
  *
  * @return    int   Starttime in seconds
  */
-function arv3_youtube_time_to_seconds( $yttime ) {
+function arve_youtube_time_to_seconds( $yttime ) {
 
   $format = false;
   $hours  = $minutes = $seconds = 0;
@@ -99,7 +99,7 @@ function arv3_youtube_time_to_seconds( $yttime ) {
  *
  * @return    float
  */
-function arv3_aspect_ratio_to_padding( $aspect_ratio ) {
+function arve_aspect_ratio_to_padding( $aspect_ratio ) {
 
   $aspect_ratio = explode( ':', $aspect_ratio );
 
