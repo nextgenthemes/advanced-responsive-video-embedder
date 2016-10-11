@@ -31,16 +31,16 @@ function arve_action_admin_init_setup_messages() {
 
 function arve_get_pro_ad() {
 
-	if ( ! current_user_can( 'update_plugins' ) || ! apply_filters( 'arve_pro_ad', true ) ) {
+	$inst = (int) get_option( 'arve_install_date' );
+
+	if ( ! current_user_can( 'update_plugins' ) || ! apply_filters( 'arve_pro_ad', true ) || current_time( 'timestamp' ) < strtotime( '+1 week', $inst ) ) {
 		return false;
 	}
-
-	$inst = (int) get_option( 'arve_install_date' );
 
 	$pro_message = __( '<p>This is Nico the Author of the Advanced Responsive Video Embedder plugin. When you <strong><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/">buy the Pro Addon</a></strong> of this plugin you will get this:</p>', ARVE_SLUG );
 
 	$pro_message .= file_get_contents( plugin_dir_path( dirname( __FILE__ ) ) . 'readme/description-features-pro.html' );
-	$pro_message = str_replace( '<ul ', '<ul style="list-style: square; padding-left: 20px;" ', $pro_message );
+	$pro_message  = str_replace( '<ul ', '<ul style="list-style: square; padding-left: 20px;" ', $pro_message );
 
 	return $pro_message;
 }
@@ -51,8 +51,10 @@ function arve_echo_pro_ad() {
 
 function arve_add_dashboard_widget() {
 
-	if( arve_get_pro_ad() ) {
-		return;
+	$pro_ad_message = arve_get_pro_ad();
+
+	if( ! $pro_ad_message ) {
+		return false;
 	}
 
 	wp_add_dashboard_widget(

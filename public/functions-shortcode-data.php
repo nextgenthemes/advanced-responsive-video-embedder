@@ -17,7 +17,7 @@ function arve_build_iframe_src( $provider, $id, $lang ) {
 
 	} elseif ( 'twitch' == $provider && is_numeric( $id ) ) {
 
-		$pattern = 'http://player.twitch.tv/?video=v%s';
+		$pattern = 'https://player.twitch.tv/?video=v%s';
 
 	} elseif ( 'ted' == $provider && preg_match( "/^[a-z]{2}$/", $lang ) === 1 ) {
 
@@ -219,23 +219,4 @@ function arve_get_default_aspect_ratio( $aspect_ratio, $provider, $mode ) {
 	}
 
 	return $aspect_ratio;
-}
-
-
-function arve_output_errors( $atts, $v ) {
-
-	$errors = '';
-
-	foreach ( $v as $key => $value ) {
-		if( is_wp_error( $value ) ) {
-			$errors .= arve_error( $value->get_error_message() );
-		}
-	}
-
-	if( ! empty( $errors ) ) {
-		$debug_info = arve_get_debug_info( $atts, $v );
-		return $errors . $debug_info;
-	} else {
-		return false;
-	}
 }

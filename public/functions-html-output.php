@@ -271,3 +271,21 @@ function arve_create_video_tag( $v ) {
 		$soures_html
 	);
 }
+
+function arve_output_errors( $atts, $v ) {
+
+	$errors = '';
+
+	foreach ( $v as $key => $value ) {
+		if( is_wp_error( $value ) ) {
+			$errors .= arve_error( $value->get_error_message() );
+		}
+	}
+
+	if( ! empty( $errors ) ) {
+		$debug_info = arve_get_debug_info( $atts, $v );
+		return $errors . $debug_info;
+	} else {
+		return false;
+	}
+}

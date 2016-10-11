@@ -2,13 +2,13 @@
 
 function arve_shortcode_arve( $atts ) {
 
-  $errors  = '';
-  $options = arve_get_options();
-  $atts    = (array) $atts;
-
   if ( array_key_exists( 0, $atts ) ) {
     return arve_error( __( 'Your shortcode is wrong, possibly a missing quotation mark. Or a attribute without a value.', ARVE_SLUG ) );
   }
+
+  $errors  = '';
+  $options = arve_get_options();
+  $atts    = (array) $atts;
 
   $pairs = apply_filters( 'arve_shortcode_pairs', array(
     'align'        => $options['align'],
@@ -25,7 +25,7 @@ function arve_shortcode_arve( $atts ) {
     'upload_date'  => null,
     'url'          => null,
     'src'          => null, # Just a alias for url to make it simple
-    # self hosted
+    # <video>
     'm4v'      => null,
     'mp4'      => null,
     'ogv'      => null,

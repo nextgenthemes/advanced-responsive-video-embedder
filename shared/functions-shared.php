@@ -228,7 +228,7 @@ function arve_get_settings_definitions() {
 					'yes' => esc_html__( 'Yes', ARVE_SLUG ),
 					'no'  => esc_html__( 'No', ARVE_SLUG ),
 				),
-				'description' => esc_html__( 'Take over [video] shortcode for html5 files.', ARVE_SLUG ),
+				'description' => esc_html__( "Take over WP's default [video] shortcode for HTML5 files.", ARVE_SLUG ),
 			),
 			array(
 				'hide_from_settings' => true,
@@ -449,7 +449,6 @@ function arve_get_host_properties() {
 		'kickstarter' => array(
 			'regex'          => 'https?://(?:www\.)?kickstarter\.com/projects/([0-9a-z\-]+/[-0-9a-z\-]+)',
 			'embed_url'      => 'https://www.kickstarter.com/projects/%s/widget/video.html',
-			 #                   https://www.kickstarter.com/projects/trinandtonic/friendship-postcards/widget/video.html
 			'auto_thumbnail' => false,
 			'test_urls' => array(
 				array( 'https://www.kickstarter.com/projects/obsidian/project-eternity?ref=discovery', 'obsidian/project-eternity' ),
@@ -562,7 +561,7 @@ function arve_get_host_properties() {
 		),
 		'twitch' => array(
 			'regex'          => 'https?://(?:www\.)?twitch.tv/(?!directory)(?|[a-z0-9_]+/v/([0-9]+)|([a-z0-9_]+))',
-			'embed_url'      => 'https://player.twitch.tv/?channel=%s', # if numeric id http://player.twitch.tv/?video=v%s
+			'embed_url'      => 'https://player.twitch.tv/?channel=%s', # if numeric id https://player.twitch.tv/?video=v%s
 			'auto_thumbnail' => true,
 		),
 		'ustream' => array(
@@ -688,6 +687,8 @@ function arve_get_host_properties() {
 			#'[youtube id="XQEiv7t1xuQ"]',
 			'test_urls' => array(
 				array( 'http://www.youtube.com/watch?v=vrXgLhkv21Y', 'vrXgLhkv21Y' ),
+				array( 'http://www.youtube.com/watch?v=GjL82KUHVb0&list=PLI46g-I12_9qGBq-4epxOay0hotjys5iA&index=10', 'GjL82KUHVb0&list=PLI46g-I12_9qGBq-4epxOay0hotjys5iA' ), # The index part will be ignored
+				#array(  ),
 			),
 			'specific_tests' => array(
 				__('URL from youtu.be shortener', ARVE_SLUG),
