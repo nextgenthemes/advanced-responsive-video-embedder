@@ -23,7 +23,6 @@ function arve_bool_to_shortcode_string( $val ) {
 function arve_validate_bool( $val, $name ) {
 
   switch ( $val ) {
-    case '';
     case 'true':
     case '1':
     case 'y':

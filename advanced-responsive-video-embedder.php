@@ -24,7 +24,8 @@ if ( ! defined( 'WPINC' ) ) {
 
 define( 'ARVE_SLUG',                 'advanced-responsive-video-embedder' );
 define( 'ARVE_VERSION',              '7.8.12-beta' );
-define( 'ARVE_PRO_VERSION_REQUIRED', '3.0.4-beta' );
+define( 'ARVE_PRO_VERSION_REQUIRED', '3.1.0-beta' );
+define( 'ARVE_NUM_TRACKS', 10 );
 
 arve_init();
 #add_action( 'plugins_loaded', 'arve_init' ); # TODO ??
@@ -59,13 +60,18 @@ function arve_init() {
 	add_action( 'wp_enqueue_scripts',  'arve_register_scripts', 0 );
 	add_action( 'wp_head',             'arve_print_styles' );
 	add_action( 'wp_video_shortcode_override', 'arve_wp_video_shortcode_override', 10, 4 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_sanitise', 0 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_provider_and_id_from_url', 2 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_html5', 3 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_get_media_gallery_thumbnail', 5 );
 	add_filter( 'the_content',         'arve_shortcode_tests' );
 	add_filter( 'the_content',         'arve_regex_tests' );
 	add_filter( 'widget_text',         'do_shortcode' );
+
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_sanitise', -4 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_provider_and_id_from_url', -2 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_html5', 0 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_iframe_fallback', 2 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_validate', 4 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_get_media_gallery_thumbnail', 6 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_build_subtitles', 8 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_generate_embed_id', 20 );
 
 	// Admin Hooks
 	add_action( 'admin_enqueue_scripts', 'arve_admin_enqueue_scripts' );

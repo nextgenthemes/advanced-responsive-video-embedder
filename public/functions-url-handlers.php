@@ -69,7 +69,7 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
   $atts['id']         = $id;
   $atts['provider']   = $provider;
 
-  return arve_shortcode_arve( $atts );
+  return arve_shortcode_arve( $atts, null, false );
 }
 
 

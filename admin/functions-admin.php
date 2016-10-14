@@ -309,41 +309,41 @@ function arve_register_settings() {
 		ARVE_SLUG
 	);
 
-	foreach( arve_get_settings_definitions() as $k => $v ) {
+	foreach( arve_get_settings_definitions() as $key => $val ) {
 
-		if ( ! empty( $v['hide_from_settings'] ) ) {
+		if ( ! empty( $val['hide_from_settings'] ) ) {
 			continue;
 		};
 
-		if ( empty( $v['meta'] ) ) {
-			$v['meta'] = array();
+		if ( empty( $val['meta'] ) ) {
+			$val['meta'] = array();
 		};
 
-		if ( isset( $v['options'][''] ) ) {
-			unset( $v['options'][''] );
+		if ( isset( $val['options'][''] ) ) {
+			unset( $val['options'][''] );
 		}
 
-		if( in_array( $v['type'], array( 'text', 'number', 'url' ) ) ) {
+		if( in_array( $val['type'], array( 'text', 'number', 'url' ) ) ) {
 			$callback_function = 'arve_input';
 		} else {
-			$callback_function = 'arve_' . $v['type'];
+			$callback_function = 'arve_' . $val['type'];
 		}
 
 		add_settings_field(
-			"arve_options_main[{$v['attr']}]", // ID
-			$v['label'],                       // title
+			"arve_options_main[{$val['attr']}]", // ID
+			$val['label'],                       // title
 			$callback_function,                // callback
 			ARVE_SLUG,                         // page
 			'main_section',                    // section
 			array(                             // args
-				'label_for'   => ( 'radio' === $v['type'] ) ? null : "arve_options_main[{$v['attr']}]",
-				'input_attr'  => $v['meta'] + array(
-					'type'        => $v['type'],
-					'value'       => $options[ $v['attr'] ],
-					'id'          => "arve_options_main[{$v['attr']}]",
-					'name'        => "arve_options_main[{$v['attr']}]",
+				'label_for'   => ( 'radio' === $val['type'] ) ? null : "arve_options_main[{$val['attr']}]",
+				'input_attr'  => $val['meta'] + array(
+					'type'        => $val['type'],
+					'value'       => $options[ $val['attr'] ],
+					'id'          => "arve_options_main[{$val['attr']}]",
+					'name'        => "arve_options_main[{$val['attr']}]",
 				),
-				'description'   => ! empty( $v['description'] ) ? $v['description'] : null,
+				'description'   => ! empty( $val['description'] ) ? $val['description'] : null,
 				'option_values' => $v,
 			)
 		);

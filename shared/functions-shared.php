@@ -857,12 +857,12 @@ function arve_get_host_properties() {
 			'name' => 'HTML5 Video (in testing)',
 		),
 		'iframe' => array(
+			'embed_url'         => '%s',
 			'default_params'    => '',
 			'auto_thumbnail'    => false,
 			'requires_flash'    => true,
 			'test_urls' => array(
-				__('This plugin allows iframe embeds for every URL by using this <code>[iframe]</code> shortcode. This should only be used for providers not supported by this via a named shortcode. The result is a 16:9 resonsive iframe by default, aspect ratio can be changed as usual.', ARVE_SLUG ),
-				'[iframe src="http://example.com/" aspect_ratio="1:1"]',
+				array( 'http://example.com/', 'http://example.com/' ),
 			),
 		),
 	);
@@ -876,7 +876,11 @@ function arve_get_host_properties() {
 	return $properties;
 }
 
-function arve_attr( $attr = array(), $dailymotion_playlist_fix = false ) {
+function arve_attr( $attr = array(), $filter_name = false ) {
+
+	if ( $filter_name ) {
+		$attr = apply_filters( 'arve_attr_' . $filter_name, $attr );
+	}
 
 	if ( empty( $attr ) ) {
 		return '';

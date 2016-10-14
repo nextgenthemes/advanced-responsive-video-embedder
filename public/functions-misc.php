@@ -17,9 +17,9 @@ function arve_get_first_array_value( $array ) {
 
 function arve_prefix_array_keys( $keyprefix, $array ) {
 
-  foreach( $array as $k => $v ) {
-      $array[ $keyprefix . $k ] = $v;
-      unset( $array[ $k ] );
+  foreach( $array as $key => $value ) {
+      $array[ $keyprefix . $key ] = $value;
+      unset( $array[ $key ] );
   }
 
   return $array;
@@ -54,12 +54,12 @@ function arve_youtube_time_to_seconds( $yttime ) {
   $pattern['m']   = '/([0-9]+)m/';
   $pattern['s']   = '/([0-9]+)s/';
 
-  foreach ( $pattern as $k => $v ) {
+  foreach ( $pattern as $key => $value ) {
 
-    preg_match( $v, $yttime, $result );
+    preg_match( $value, $yttime, $result );
 
     if ( ! empty( $result ) ) {
-      $format = $k;
+      $format = $key;
       break;
     }
   }

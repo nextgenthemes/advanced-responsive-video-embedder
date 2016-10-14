@@ -1,14 +1,10 @@
 <?php
 
-function arve_shortcode_arve( $atts ) {
+function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = true ) {
 
-  if ( array_key_exists( 0, $atts ) ) {
-    return arve_error( __( 'Your shortcode is wrong, possibly a missing quotation mark. Or a attribute without a value.', ARVE_SLUG ) );
-  }
-
-  $errors  = '';
-  $options = arve_get_options();
-  $atts    = (array) $atts;
+  $errors     = '';
+  $options    = arve_get_options();
+  $input_atts = (array) $input_atts;
 
   $pairs = apply_filters( 'arve_shortcode_pairs', array(
     'align'        => $options['align'],
@@ -23,7 +19,6 @@ function arve_shortcode_arve( $atts ) {
     'thumbnail'    => null,
     'title'        => null,
     'upload_date'  => null,
-    'url'          => null,
     'src'          => null, # Just a alias for url to make it simple
     # <video>
     'm4v'      => null,
@@ -44,72 +39,45 @@ function arve_shortcode_arve( $atts ) {
     'link_text' => null,
   ) );
 
-  #d($pairs);
+  for ( $n = 1; $n <= ARVE_NUM_TRACKS; $n++ ) {
 
-  $v = shortcode_atts( $pairs, $atts, 'arve' );
+		$pairs["track_{$n}"]       = null;
+    $pairs["track_{$n}_label"] = null;
+	}
 
-  if ( $errors = arve_output_errors( $atts, $v ) ) {
-    return $errors;
-  }
-
-  if ( empty( $v['provider'] ) ) {
-
-    $v['provider'] = 'iframe';
-
-    if ( ! empty( $v['id'] ) && empty( $v['url'] ) ) {
-      $v['iframe_src'] = $v['id'];
-    } else {
-      $v['iframe_src'] = $v['url'];
-    }
-  }
-
-  $v['align']        = arve_validate_align( $v['align'], $v['provider'] );
-  $v['mode']         = arve_validate_mode( $v['mode'], $v['provider'] );
-  $v['autoplay']     = arve_validate_bool( $v['autoplay'],  'autoplay' );
-  $v['arve_link']    = arve_validate_bool( $v['arve_link'], 'arve_link' );
-  $v['loop']         = arve_validate_bool( $v['loop'],      'loop' );
-  $v['controls']     = arve_validate_bool( $v['controls'],  'controls' );
-
-  $v['maxwidth']     = (int) $v['maxwidth'];
-  $v['maxwidth']     = (int) arve_maxwidth_when_aligned( $v['maxwidth'], $v['align'] );
-  $v['id']           = arve_id_fixes( $v['id'], $v['provider'] );
-  $v['aspect_ratio'] = arve_get_default_aspect_ratio( $v['aspect_ratio'], $v['provider'], $v['mode'] );
-  $v['aspect_ratio'] = arve_aspect_ratio_fixes(       $v['aspect_ratio'], $v['provider'], $v['mode'] );
-
-  $v['iframe_src']   = arve_build_iframe_src( $v['provider'], $v['id'], $v['lang'] );
-  $v['iframe_src']   = arve_add_query_args_to_iframe_src( $v['parameters'], $v['iframe_src'], $v['provider'] );
-  $v['iframe_src']   = arve_autoplay_query_arg( $v['autoplay'], $v['iframe_src'], $v['provider'], $v['mode'] );
-
-  if ( 'vimeo' == $v['provider'] && ! empty( $v['start'] ) ) {
-    $v['iframe_src'] .= '#t=' . (int) $v['start'];
-    $v['iframe_src'] .= '#t=' . (int) $v['start'];
-  }
-
-  $v['embed_id'] = arve_create_embed_id( $v );
-
-  if ( $errors = arve_output_errors( $atts, $v ) ) {
-    return $errors;
-  }
-
-  $debug_info    = arve_get_debug_info( $atts, $v );
-  $arve_video    = arve_video_or_iframe( $v );
-  $meta_html     = arve_build_meta_html( $v );
-  $arve_link     = arve_build_promote_link_html( $v['arve_link'] );
-  $arve_play_btn = function_exists( 'arve_pro_play_btn' ) ? arve_pro_play_btn( $v ) : '';
-  $webtorrent_status = function_exists( 'arve_webtorrent_status' ) ? arve_webtorrent_status( $v['webtorrent'] ) : '';
-
-  if ( 'link-lightbox' == $v['mode'] ) {
-    $containers  = arve_pro_lity_container( $meta_html . $arve_video, $v );
-  } elseif ( 'lazyload-lightbox' == $v['mode'] ) {
-    $containers  = arve_pro_lity_container( $arve_video, $v );
-    $containers .= arve_arve_embed_container( $meta_html . $arve_play_btn, $v );
+  if ( $arve_shortcode ) {
+    $pairs['url'] = null;
   } else {
-    $containers = arve_arve_embed_container( $meta_html . $arve_video . $arve_play_btn, $v );
+    $pairs['provider'] = null;
+    $pairs['id']       = null;
   }
 
-  $final_embed = arve_arve_wrapper( $containers . $arve_link . $webtorrent_status, $v );
+  $arve = shortcode_atts( $pairs, $input_atts, 'arve' );
 
-  $output = apply_filters( 'arve_output', $debug_info . $final_embed, $v );
+  $debug_info = arve_get_debug_info( $arve, $input_atts );
+
+  if ( $errors = arve_output_errors( $arve ) ) {
+    return $debug_info . $errors;
+  }
+
+  $arve_video    = arve_video_or_iframe( $arve );
+  $meta_html     = arve_build_meta_html( $arve );
+  $arve_link     = arve_build_promote_link_html( $arve['arve_link'] );
+  $arve_play_btn = function_exists( 'arve_pro_play_btn' ) ? arve_pro_play_btn( $arve ) : '';
+  $webtorrent_status = function_exists( 'arve_webtorrent_status' ) ? arve_webtorrent_status( $arve['webtorrent'] ) : '';
+
+  if ( 'link-lightbox' == $arve['mode'] ) {
+    $containers  = arve_pro_lity_container( $meta_html . $arve_video, $arve );
+  } elseif ( 'lazyload-lightbox' == $arve['mode'] ) {
+    $containers  = arve_pro_lity_container( $arve_video, $arve );
+    $containers .= arve_arve_embed_container( $meta_html . $arve_play_btn, $arve );
+  } else {
+    $containers = arve_arve_embed_container( $meta_html . $arve_video . $arve_play_btn, $arve );
+  }
+
+  $final_embed = arve_arve_wrapper( $containers . $arve_link . $webtorrent_status, $arve );
+
+  $output = apply_filters( 'arve_output', $debug_info . $final_embed, $arve );
 
   if ( empty( $output ) ) {
     return arve_error( 'The output is empty, this should not happen' );
@@ -138,7 +106,7 @@ function arve_create_shortcodes() {
     /* Would require php 5.3.0
     $function = function( $atts ) use ( $provider ) {
       $atts['provider'] = $provider;
-      return arve_shortcode_arve( $atts );
+      return arve_shortcode_arve( $atts, null, false );
     };
     add_shortcode( $shortcode, $function );
     */
@@ -280,5 +248,5 @@ function arve_wp_video_shortcode_override( $out, $attr, $content, $instance ) {
     $attr['thumbnail'] = $attr['poster'];
   }
 
-  return arve_shortcode_arve( $attr );
+  return arve_shortcode_arve( $attr, null, false );
 }
