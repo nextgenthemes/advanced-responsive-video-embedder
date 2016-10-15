@@ -309,42 +309,42 @@ function arve_register_settings() {
 		ARVE_SLUG
 	);
 
-	foreach( arve_get_settings_definitions() as $key => $val ) {
+	foreach( arve_get_settings_definitions() as $key => $value ) {
 
-		if ( ! empty( $val['hide_from_settings'] ) ) {
+		if ( ! empty( $value['hide_from_settings'] ) ) {
 			continue;
 		};
 
-		if ( empty( $val['meta'] ) ) {
-			$val['meta'] = array();
+		if ( empty( $value['meta'] ) ) {
+			$value['meta'] = array();
 		};
 
-		if ( isset( $val['options'][''] ) ) {
-			unset( $val['options'][''] );
+		if ( isset( $value['options'][''] ) ) {
+			unset( $value['options'][''] );
 		}
 
-		if( in_array( $val['type'], array( 'text', 'number', 'url' ) ) ) {
+		if( in_array( $value['type'], array( 'text', 'number', 'url' ) ) ) {
 			$callback_function = 'arve_input';
 		} else {
-			$callback_function = 'arve_' . $val['type'];
+			$callback_function = 'arve_' . $value['type'];
 		}
 
 		add_settings_field(
-			"arve_options_main[{$val['attr']}]", // ID
-			$val['label'],                       // title
-			$callback_function,                // callback
-			ARVE_SLUG,                         // page
+			"arve_options_main[{$value['attr']}]", // ID
+			$value['label'],                       // title
+			$callback_function,                    // callback
+			ARVE_SLUG,                             // page
 			'main_section',                    // section
 			array(                             // args
-				'label_for'   => ( 'radio' === $val['type'] ) ? null : "arve_options_main[{$val['attr']}]",
-				'input_attr'  => $val['meta'] + array(
-					'type'        => $val['type'],
-					'value'       => $options[ $val['attr'] ],
-					'id'          => "arve_options_main[{$val['attr']}]",
-					'name'        => "arve_options_main[{$val['attr']}]",
+				'label_for'   => ( 'radio' === $value['type'] ) ? null : "arve_options_main[{$value['attr']}]",
+				'input_attr'  => $value['meta'] + array(
+					'type'        => $value['type'],
+					'value'       => $options[ $value['attr'] ],
+					'id'          => "arve_options_main[{$value['attr']}]",
+					'name'        => "arve_options_main[{$value['attr']}]",
 				),
-				'description'   => ! empty( $val['description'] ) ? $val['description'] : null,
-				'option_values' => $v,
+				'description'   => ! empty( $value['description'] ) ? $value['description'] : null,
+				'option_values' => $value,
 			)
 		);
 	}

@@ -57,7 +57,7 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
   $debug_info = arve_get_debug_info( $arve, $input_atts );
 
   if ( $errors = arve_output_errors( $arve ) ) {
-    return $debug_info . $errors;
+    return $errors . $debug_info;
   }
 
   $arve_video    = arve_video_or_iframe( $arve );
