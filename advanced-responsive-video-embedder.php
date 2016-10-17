@@ -23,8 +23,8 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 define( 'ARVE_SLUG',                 'advanced-responsive-video-embedder' );
-define( 'ARVE_VERSION',              '7.8.14-beta' );
-define( 'ARVE_PRO_VERSION_REQUIRED', '3.1.2-beta' );
+define( 'ARVE_VERSION',              '7.8.15-beta' );
+define( 'ARVE_PRO_VERSION_REQUIRED', '3.1.4-beta' );
 define( 'ARVE_NUM_TRACKS', 10 );
 
 arve_init();
