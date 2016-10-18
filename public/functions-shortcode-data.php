@@ -89,6 +89,10 @@ function arve_add_autoplay_query_arg( $atts ) {
 
 		$src = $atts['iframe_src'];
 
+		if ( in_array( $atts['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ) {
+			$atts['autoplay'] = true;
+		}
+
 		switch ( $atts['provider'] ) {
 			case 'alugha':
 			case 'archiveorg':
