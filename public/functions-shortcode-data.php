@@ -85,9 +85,11 @@ function arve_aspect_ratio_fixes( $aspect_ratio, $provider, $mode) {
 	return $aspect_ratio;
 }
 
-function arve_autoplay_query_arg( $autoplay, $src, $provider, $mode ) {
+function arve_add_autoplay_query_arg( $atts ) {
 
-		switch ( $provider ) {
+		$src = $atts['iframe_src'];
+
+		switch ( $atts['provider'] ) {
 			case 'alugha':
 			case 'archiveorg':
 			case 'dailymotion':
@@ -153,14 +155,19 @@ function arve_autoplay_query_arg( $autoplay, $src, $provider, $mode ) {
 				break;
 		}
 
-		if( $autoplay ) {
+		if( $atts['autoplay'] ) {
 			return $on;
 		} else {
 			return $off;
 		}
 }
 
-function arve_add_query_args_to_iframe_src( $parameters, $src, $provider ) {
+function arve_add_query_args_to_iframe_src( $atts ) {
+
+	$options = arve_get_options();
+
+	$parameters = $atts['parameters'];
+	$provider   = $atts['provider'];
 
 	$parameters        = wp_parse_args( preg_replace( '!\s+!', '&', trim( $parameters ) ) );
 	$option_parameters = array();
@@ -171,7 +178,7 @@ function arve_add_query_args_to_iframe_src( $parameters, $src, $provider ) {
 
 	$parameters = wp_parse_args( $parameters, $option_parameters );
 
-	$src = add_query_arg( $parameters, $src );
+	$src = add_query_arg( $parameters, $atts['iframe_src'] );
 
 	return $src;
 }

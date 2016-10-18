@@ -197,8 +197,7 @@ function arve_create_iframe_tag( $arve ) {
 		'name'        => $arve['iframe_name'],
 		'sandbox'     => empty( $arve['iframe_sandbox'] ) ? 'allow-scripts allow-same-origin allow-popups' : $arve['iframe_sandbox'],
 		'scrolling'   => 'no',
-		'src'         => arve_build_iframe_src( $arve ),
-
+		'src'         => $arve['iframe_src'],
 		'height'      => is_feed() ? 480 : false,
 		'width'       => is_feed() ? 853 : false,
 	);

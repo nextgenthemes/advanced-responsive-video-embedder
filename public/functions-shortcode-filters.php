@@ -168,18 +168,20 @@ function arve_filter_atts_iframe_fallback( $atts ) {
 
 function arve_filter_atts_build_iframe_src( $atts ) {
 
-  if ( ! in_array( $atts['provider'], array( 'html5', 'webtorrent' ) ) ) {
+  if ( in_array( $atts['provider'], array( 'html5', 'webtorrent' ) ) ) {
     return $atts;
   }
 
-  $atts['iframe_src'] = arve_build_iframe_src( $atts['provider'], $atts['id'], $atts['lang'] );
-  $atts['iframe_src'] = arve_add_query_args_to_iframe_src( $atts['parameters'], $atts['iframe_src'], $atts['provider'] );
-  $atts['iframe_src'] = arve_autoplay_query_arg( $atts['autoplay'], $atts['iframe_src'], $atts['provider'], $atts['mode'] );
+  $atts['iframe_src'] = arve_build_iframe_src( $atts );
+  $atts['iframe_src'] = arve_add_query_args_to_iframe_src( $atts );
+  $atts['iframe_src'] = arve_add_autoplay_query_arg( $atts );
 
   if ( 'vimeo' == $atts['provider'] && ! empty( $atts['start'] ) ) {
     $atts['iframe_src'] .= '#t=' . (int) $atts['start'];
     $atts['iframe_src'] .= '#t=' . (int) $atts['start'];
   }
+
+  return $atts;
 }
 
 function arve_filter_atts_build_subtitles( $atts ) {
