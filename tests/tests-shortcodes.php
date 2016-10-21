@@ -78,7 +78,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		foreach( $properties as $provider => $host_props ) :
 
-	    if ( empty( $host_props['test_urls'] ) ) {
+	    if ( empty( $host_props['test_urls'] ) || empty( $host_props['regex'] ) ) {
 	      continue;
 	    }
 
