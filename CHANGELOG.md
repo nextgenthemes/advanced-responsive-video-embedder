@@ -10,7 +10,7 @@
 * New: New Lazyload mode setting to prevent "two touched needed to play video on mobiles" issue. Its also
 * New: Facebook thumbnail detection.
 
-### 2016-10-21 - 7.9.0 ###
+### 2016-10-21 - 7.9.1 ###
 
 * Fix: Brightcove Autoplay issue.
 * Fix: Liveleak thumbnail detection issues.
