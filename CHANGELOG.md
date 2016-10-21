@@ -1,7 +1,14 @@
 ## Changelog ##
 
+### 2016-10-21 - Pro Addon 3.2.0 ###
 
-
+* Fix: Issue with lazyload and AJAX.
+* Fix: W3TC issue by using yet another lazyload method. Final this time?
+* Fix: YouTube Thumbnail detection when there are no HD images.
+* Improved: Code used to cache thumbnails, this may improve improve performance.
+* Improved: Lots code restructured and improved.
+* New: New Lazyload mode setting to prevent "two touched needed to play video on mobiles" issue. Its also
+* New: Facebook thumbnail detection.
 
 ### 2016-10-21 - 7.9.0 ###
 
@@ -18,7 +25,6 @@
 * Improved: Revive saving of last setting page tab.
 * New: "Image Cache Time" setting on the setting page. Thumbnail URLs form the media gallery can now be cached with transients, that may improve performance.
 * New: Support for self hosted videos (experimental)
-* New: New Lazyload mode setting to prevent "two touched needed to play video" issue.
 
 ### 2016-10-03 - Pro Addon 2.5.2 ###
 
