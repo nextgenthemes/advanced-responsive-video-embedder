@@ -1,5 +1,25 @@
 ## Changelog ##
 
+
+
+
+### 2016-10-21 - 7.9.0 ###
+
+* Fix: Brightcove Autoplay issue.
+* Fix: Liveleak thumbnail detection issues.
+* Fix: Parameters not beeing added.
+* Fix: Twitch single videos not using https
+* Fix: Vevo marked to require flash to make it work again.
+* Improved: Better dialog with better description and links about the shortcake UI plugin.
+* Improved: Facebook embed method.
+* Improved: Lots code restructured and improved.
+* Improved: Parameters are always possible no matter the provider.
+* Improved: Restructure of the plugin, abandon OOP mostly.
+* Improved: Revive saving of last setting page tab.
+* New: "Image Cache Time" setting on the setting page. Thumbnail URLs form the media gallery can now be cached with transients, that may improve performance.
+* New: Support for self hosted videos (experimental)
+* New: New Lazyload mode setting to prevent "two touched needed to play video" issue.
+
 ### 2016-10-03 - Pro Addon 2.5.2 ###
 
 * Fix: Force button styles to make sure themes styles get overwritten.

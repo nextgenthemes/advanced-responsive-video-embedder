@@ -23,6 +23,10 @@ function arve_filter_atts_sanitise( $atts ) {
 
 function arve_filter_atts_validate( $atts ) {
 
+  if ( ! empty( $atts['url'] ) && ! arve_validate_url( $atts['url'] ) ) {
+    $atts['url'] = new WP_Error( 'thumbnail', sprintf( __( '<code>%s</code> is not a valid url', ARVE_SLUG ), esc_html( $atts['url'] ) ) );
+  }
+
   $atts['align']        = arve_validate_align( $atts['align'], $atts['provider'] );
   $atts['mode']         = arve_validate_mode( $atts['mode'], $atts['provider'] );
   $atts['autoplay']     = arve_validate_bool( $atts['autoplay'],  'autoplay' );
