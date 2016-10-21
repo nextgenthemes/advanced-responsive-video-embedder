@@ -35,11 +35,11 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function test_arve_shortcode() {
 
-		$arve_shortcode = arve_shortcode( array(
+		$arve_shortcode = arve_shortcode_arve( array(
 			'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys'
 		) );
 
-		$old_shortcode = arve_shortcode( array(
+		$old_shortcode = arve_shortcode_arve( array(
 			'provider' => 'youtube',
 			'id'       => 'hRonZ4wP8Ys',
 		) );
