@@ -537,7 +537,7 @@ function arve_get_host_properties() {
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
 			'test_urls' => array(
-				array( 'http://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is', 12314 ),
+				array( 'http://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is', 123140 ),
 			)
 		),
 		'spike' => array(

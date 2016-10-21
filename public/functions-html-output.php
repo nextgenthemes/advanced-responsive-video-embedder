@@ -142,7 +142,7 @@ function arve_arve_wrapper( $output, $arve ) {
 			'class'                => $wrapper_class,
 			'data-arve-grow'       => ( 'lazyload' === $arve['mode'] && $arve['grow'] ) ? '' : null,
 			'data-arve-mode'       => $arve['mode'],
-			'data-arve-host'       => $arve['provider'],
+			'data-arve-provider'   => $arve['provider'],
 			'data-arve-webtorrent' => empty( $arve['webtorrent'] ) ? false : $arve['webtorrent'],
 			'data-arve-autoplay'   => ( 'webtorrent' == $arve['provider'] && $arve['autoplay'] ) ? true : false,
 			'data-arve-controls'   => ( 'webtorrent' == $arve['provider'] && $arve['controls'] ) ? true : false,
