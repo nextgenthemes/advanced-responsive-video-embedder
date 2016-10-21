@@ -49,20 +49,54 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function test_modes() {
 
-		$atts['url']  = 'https://www.youtube.com/watch?v=hRonZ4wP8Ys';
-		$atts['mode'] = 'normal';
-
-		$output = arve_shortcode_arve( $atts );
+		$output = arve_shortcode_arve( array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys' ) );
 
 		$this->assertNotContains( 'ARVE Error', $output, $output );
-		$this->assertContains( 'data-arve-mode="normal"', arve_shortcode_arve( $atts ) );
+		$this->assertContains( 'data-arve-mode="normal"', $output );
 
 		$modes = array( 'lazyload', 'lazyload-lightbox' );
 
 		foreach ( $modes as $key => $mode ) {
 
-			$this->assertContains( 'ARVE Error', $output );
+			$output = arve_shortcode_arve( array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys', 'mode' => $mode ) );
+			$this->assertContains( 'Error', $output );
 		}
+	}
+
+	public function test_html5() {
+
+		$output = arve_shortcode_arve( array( 'url' => 'https://example.com/video.mp4' ) );
+
+		$this->assertNotContains( 'Error', $output, $output );
+		$this->assertNotContains( '<iframe', $output, $output );
+		$this->assertContains( '<video', $output );
+	}
+
+	public function test_regex() {
+
+		$properties = arve_get_host_properties();
+
+		foreach( $properties as $provider => $host_props ) :
+
+	    if ( empty( $host_props['test_urls'] ) ) {
+	      continue;
+	    }
+
+	    foreach( $host_props['test_urls'] as $urltest ) {
+
+	      if ( ! is_array( $urltest ) ) {
+	        continue;
+	      }
+
+	      $url_to_test = $urltest[0];
+	      $expected_id = $urltest[1];
+
+	      preg_match( '#' . $host_props['regex'] . '#i', $url_to_test, $matches );
+
+	      $this->assertEquals( $matches[1], $expected_id );
+	    }
+
+	  endforeach;
 	}
 
 }
