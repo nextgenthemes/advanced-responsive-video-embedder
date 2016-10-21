@@ -44,10 +44,25 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'id'       => 'hRonZ4wP8Ys',
 		) );
 
-		$this->assertInternalType( 'string', $shortcode );
-		$this->assertContains( 'class="arve-wrapper ', $shortcode );
-
 		$this->assertEquals( $arve_shortcode, $old_shortcode );
+	}
+
+	public function test_modes() {
+
+		$atts['url']  = 'https://www.youtube.com/watch?v=hRonZ4wP8Ys';
+		$atts['mode'] = 'normal';
+
+		$output = arve_shortcode_arve( $atts );
+
+		$this->assertNotContains( 'ARVE Error', $output, $output );
+		$this->assertContains( 'data-arve-mode="normal"', arve_shortcode_arve( $atts ) );
+
+		$modes = array( 'lazyload', 'lazyload-lightbox' );
+
+		foreach ( $modes as $key => $mode ) {
+
+			$this->assertContains( 'ARVE Error', $output );
+		}
 	}
 
 }
