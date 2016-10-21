@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/nextgenthemes/advanced-responsive-video-embedder.svg?branch=beta)](https://travis-ci.org/nextgenthemes/advanced-responsive-video-embedder)
+
+
 ## Description ##
 
 
@@ -201,6 +204,32 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 3. Features
 
 ## Changelog ##
+
+### 2016-10-21 - Pro Addon 3.2.0 ###
+
+* Fix: Issue with lazyload and AJAX.
+* Fix: W3TC issue by using yet another lazyload method. Final this time?
+* Fix: YouTube Thumbnail detection when there are no HD images.
+* Improved: Code used to cache thumbnails, this may improve improve performance.
+* Improved: Lots code restructured and improved.
+* New: New Lazyload mode setting to prevent "two touched needed to play video on mobiles" issue. Its also
+* New: Facebook thumbnail detection.
+
+### 2016-10-21 - 7.9.0 ###
+
+* Fix: Brightcove Autoplay issue.
+* Fix: Liveleak thumbnail detection issues.
+* Fix: Parameters not beeing added.
+* Fix: Twitch single videos not using https
+* Fix: Vevo marked to require flash to make it work again.
+* Improved: Better dialog with better description and links about the shortcake UI plugin.
+* Improved: Facebook embed method.
+* Improved: Lots code restructured and improved.
+* Improved: Parameters are always possible no matter the provider.
+* Improved: Restructure of the plugin, abandon OOP mostly.
+* Improved: Revive saving of last setting page tab.
+* New: "Image Cache Time" setting on the setting page. Thumbnail URLs form the media gallery can now be cached with transients, that may improve performance.
+* New: Support for self hosted videos (experimental)
 
 ### 2016-10-03 - Pro Addon 2.5.2 ###
 
