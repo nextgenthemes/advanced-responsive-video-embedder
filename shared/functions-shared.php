@@ -294,36 +294,40 @@ function arve_get_iframe_providers() {
 
 function arve_get_host_properties() {
 
+	$s = 'https?://(?:www\.)?';
+
 	$properties = array(
 		'allmyvideos' => array(
 			'name'      => 'allmyvideos.net',
-			'regex'     => 'https?://(?:www\.)?allmyvideos.net/(?:embed-)?([a-z0-9]+)',
+			'regex'     => $s . 'allmyvideos.net/(?:embed-)?([a-z0-9]+)',
 			'embed_url' => 'https://allmyvideos.net/embed-%s.html',
 			'test_urls' => array(
-				array( 'https://allmyvideos.net/1bno5g9il7ha', '1bno5g9il7ha' ),
+				array( 'https://allmyvideos.net/1bno5g9il7ha',            '1bno5g9il7ha' ),
 				array( 'https://allmyvideos.net/embed-1bno5g9il7ha.html', '1bno5g9il7ha' ),
 			)
 		),
 		'alugha' => array(
-			'regex'     => 'https?://(?:www\.)?alugha.com/(?:1/)?videos/([a-z0-9_\-]+)',
+			'regex'     => $s . 'alugha.com/(?:1/)?videos/([a-z0-9_\-]+)',
 			'embed_url' => 'https://alugha.com/embed/polymer-live/?v=%s',
 			'default_params' => 'nologo=1',
 			'auto_thumbnail' => true,
 			'test_urls' => array(
-				'https://alugha.com/1/videos/youtube-54m1YfEuYU8',
-			 	__('New URLs with unique ids', ARVE_SLUG),
-				'https://alugha.com/videos/7cab9cd7-f64a-11e5-939b-c39074d29b86',
+				array( 'https://alugha.com/1/videos/youtube-54m1YfEuYU8',                'youtube-54m1YfEuYU8' ),
+				array( 'https://alugha.com/videos/7cab9cd7-f64a-11e5-939b-c39074d29b86', '7cab9cd7-f64a-11e5-939b-c39074d29b86' ),
 			)
 		),
 		'archiveorg' => array(
 			'name'           => 'Archive.org',
-			'regex'          => 'https?://(?:www\.)?archive\.org/(?:details|embed)/([0-9a-z\-]+)',
+			'regex'          => $s . 'archive\.org/(?:details|embed)/([0-9a-z\-]+)',
 			'embed_url'      => 'https://www.archive.org/embed/%s/',
 			'default_params' => '',
 			'auto_thumbnail' => false,
+			'test_urls' => array(
+				array( 'https://archive.org/details/arashyekt4_gmail_Cat', 'arashyekt4' ),
+			)
 		),
 		'break' => array(
-			'regex'          => 'https?://(?:www\.)?break\.com/video/(?:[a-z0-9/-]+)-([0-9]+)$',
+			'regex'          => $s . 'break\.com/video/(?:[a-z0-9/-]+)-([0-9]+)$',
 			'embed_url'      => 'http://break.com/embed/%s',
 			'default_params' => 'embed=1',
 			'auto_thumbnail' => false,
@@ -337,12 +341,12 @@ function arve_get_host_properties() {
 			'embed_url'      => 'https://players.brightcove.net/%s',
 			'no_url_embeds'  => true,
 			'test_urls' => array(
-				'http://players.brightcove.net/1160438696001/default_default/index.html?videoId=4587535845001',
+				array( 'http://players.brightcove.net/1160438696001/default_default/index.html?videoId=4587535845001', '1160438696001/default_default/index.html?videoId=4587535845001' ),
 			),
 		),
 		'collegehumor' => array(
 			'name'           => 'CollegeHumor',
-			'regex'          => 'https?://(?:www\.)?collegehumor\.com/video/([0-9]+)',
+			'regex'          => $s . 'collegehumor\.com/video/([0-9]+)',
 			'embed_url'      => 'http://www.collegehumor.com/e/%s',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
@@ -350,17 +354,17 @@ function arve_get_host_properties() {
 		),
 		'comedycentral' => array(
 			'name'           => 'Comedy Central',
-			'regex'          => 'https?://(?:www\.)?comedycentral\.com:([a-z0-9\-]{36})',
+			'regex'          => 'https?://media.mtvnservices.com/embed/mgid:arc:video:comedycentral\.com:([a-z0-9\-]{36})',
 			'embed_url'      => 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:%s',
 			'no_url_embeds'  => true,
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
-			'test_ids' => array(
-				'c80adf02-3e24-437a-8087-d6b77060571c',
+			'test_urls' => array(
+				array( 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:c3c1da76-96c2-48b4-b38d-8bb16fbf7a58', 'c80adf02-3e24-437a-8087-d6b77060571c' ),
 			)
 		),
 		'dailymotion' => array(
-			'regex'          => 'https?://(?:www\.)?(?:dai\.ly|dailymotion\.com/video)/([^_]+)',
+			'regex'          => $s . '(?:dai\.ly|dailymotion\.com/video)/([^_]+)',
 			'embed_url'      => 'https://www.dailymotion.com/embed/video/%s',
 			'default_params' => 'logo=0&hideInfos=1&related=0',
 			'auto_thumbnail' => true,
@@ -396,7 +400,7 @@ function arve_get_host_properties() {
 			),
 		),
 		'dailymotionlist' => array(
-			'regex'           => 'https?://(?:www\.)?dailymotion\.com/playlist/([a-z0-9]+)',
+			'regex'           => $s . 'dailymotion\.com/playlist/([a-z0-9]+)',
 			'embed_url'       => 'https://www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2F%s%2F1',
 			'auto_thumbnail'  => false,
 			'requires_flash'  => true,
@@ -405,23 +409,17 @@ function arve_get_host_properties() {
 			# https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/?type=2&theater
 			#<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FTheKillingsOfTonyBlair%2Fvideos%2Fvb.551089058285349%2F562955837098671%2F%3Ftype%3D2%26theater&width=500&show_text=false&height=280&appId" width="500" height="280" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
 			'regex'             => '(https?://(?:www\.)?facebook\.com/[-a-z0-9]+/videos/[/a-z0-9]+)',
-			'embed_url'         => 'https://www.facebook.com/plugins/video.php?href=%s',
 			'url_encode_id'     => true,
+			'embed_url'         => 'https://www.facebook.com/plugins/video.php?href=%s',
 			#'embed_url'         => 'https://www.facebook.com/video/embed?video_id=%s',
 			'auto_thumbnail'    => true,
+			'test_urls' => array(
+				'https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/?type=2&theater',
+			),
 		),
-		/*
-		'old_facebook' => array(
-			#<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10153231379946729%2F&width=500&show_text=false&height=281&appId" width="500" height="281" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-			'regex'             => 'https?://(?:www\.)?facebook\.com/(?:[^/]+)/videos/([0-9]+)',
-			'embed_url'         => 'https://www.facebook.com/plugins/video.php?href=https%%3A%%2F%%2Fwww.facebook.com%%2Ffacebook%%2Fvideos%%2F%s%%2F',
-			#'embed_url'         => 'https://www.facebook.com/video/embed?video_id=%s',
-			'auto_thumbnail'    => false,
-		),
-		*/
 		'funnyordie' => array(
 			'name'           => 'Funny or Die',
-			'regex'          => 'https?://(?:www\.)?funnyordie\.com/videos/([a-z0-9_]+)',
+			'regex'          => $s . 'funnyordie\.com/videos/([a-z0-9_]+)',
 			'embed_url'      => 'https://www.funnyordie.com/embed/%s',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
@@ -447,7 +445,7 @@ function arve_get_host_properties() {
 			)
 		),
 		'kickstarter' => array(
-			'regex'          => 'https?://(?:www\.)?kickstarter\.com/projects/([0-9a-z\-]+/[-0-9a-z\-]+)',
+			'regex'          => $s . 'kickstarter\.com/projects/([0-9a-z\-]+/[-0-9a-z\-]+)',
 			'embed_url'      => 'https://www.kickstarter.com/projects/%s/widget/video.html',
 			'auto_thumbnail' => false,
 			'test_urls' => array(
@@ -457,7 +455,7 @@ function arve_get_host_properties() {
 		),
 		'liveleak' => array(
 			'name'           => 'LiveLeak',
-		  'regex'          => 'https?://(?:www\.)?liveleak\.com/(?:view|ll_embed)\?((f|i)=[0-9a-z\_]+)',
+		  'regex'          => $s . 'liveleak\.com/(?:view|ll_embed)\?((f|i)=[0-9a-z\_]+)',
 			'embed_url'      => 'http://www.liveleak.com/ll_embed?%s',
 			'default_params' => 'wmode=transparent',
 			'auto_thumbnail' => false,
@@ -473,21 +471,25 @@ function arve_get_host_properties() {
 		),
 		'livestream' => array(
 			# <iframe width="560" height="340" src="http://cdn.livestream.com/embed/telefuturohd?layout=4&amp;height=340&amp;width=560&amp;autoplay=false" style="border:0;outline:0" frameborder="0" scrolling="no"></iframe>
-			'regex'          => 'https?://(?:www\.)?livestream\.com/accounts/([0-9]+/events/[0-9]+(?:/videos/[0-9]+)?)',
+			'regex'          => $s . 'livestream\.com/accounts/([0-9]+/events/[0-9]+(?:/videos/[0-9]+)?)',
 			'embed_url'      => 'https://livestream.com/accounts/%s/player',
 			'default_params' => 'utm_source=lsplayer&utm_medium=embed&height=720&width=1280',
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
 		),
 		'klatv' => array(
-			'regex'          => 'https?://(?:www\.)?kla(?:gemauer)?.tv/([0-9]+)',
+			'regex'          => $s . 'kla(?:gemauer)?.tv/([0-9]+)',
 			'embed_url'      => 'https://www.kla.tv/index.php?a=showembed&vidid=%s',
 			'name'           => 'kla.tv',
 			'url'            => true,
 			'auto_thumbnail' => false,
+			'test_urls' => array(
+				array( 'http://www.klagemauer.tv/9106', 9106 ),
+				array( 'http://www.kla.tv/9122', 9122 ),
+			),
 		),
 		'metacafe' => array(
-			'regex'          => 'https?://(?:www\.)?metacafe\.com/(?:watch|fplayer)/([0-9]+)',
+			'regex'          => $s . 'metacafe\.com/(?:watch|fplayer)/([0-9]+)',
 			'embed_url'      => 'http://www.metacafe.com/embed/%s/',
 			'auto_thumbnail' => false,
 			'test_urls' => array(
@@ -496,14 +498,14 @@ function arve_get_host_properties() {
 			),
 		),
 		'movieweb' => array(
-			'regex'          => 'https?://(?:www\.)?movieweb\.com/v/([a-z0-9]{14})',
+			'regex'          => $s . 'movieweb\.com/v/([a-z0-9]{14})',
 			'embed_url'      => 'http://movieweb.com/v/%s/embed',
 			'auto_thumbnail' => false,
 			'no_url_embeds'  => true,
 		),
 		'mpora' => array(
 			'name'           => 'MPORA',
-			'regex'          => 'https?://(?:www\.)?mpora\.(?:com|de)/videos/([a-z0-9]+)',
+			'regex'          => $s . 'mpora\.(?:com|de)/videos/([a-z0-9]+)',
 			'embed_url'      => 'http://mpora.com/videos/%s/embed',
 			'auto_thumbnail' => true,
 			'test_urls' => array(
@@ -513,7 +515,7 @@ function arve_get_host_properties() {
 		),
 		'myspace' => array(
 			#<iframe width="480" height="270" src="//media.myspace.com/play/video/house-of-lies-season-5-premiere-109903807-112606834" frameborder="0" allowtransparency="true" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe><p><a href="https://media.myspace.com/showtime/video/house-of-lies-season-5-premiere/109903807">House of Lies Season 5 Premiere</a> from <a href="https://media.myspace.com/Showtime">Showtime</a> on <a href="https://media.myspace.com">Myspace</a>.</p>
-			'regex'          => 'https?://(?:www\.)?myspace\.com/.+/([0-9]+)',
+			'regex'          => $s . 'myspace\.com/.+/([0-9]+)',
 			'embed_url'      => 'https://media.myspace.com/play/video/%s',
 			'auto_thumbnail' => false,
 			'test_urls' => array(
@@ -523,7 +525,7 @@ function arve_get_host_properties() {
 		/*
 		'myvideo' => array(
 			'name'           => 'MyVideo',
-			'regex'          => 'https?://(?:www\.)?myvideo\.de/(?:watch|embed)/([0-9]+)',
+			'regex'          => $s . 'myvideo\.de/(?:watch|embed)/([0-9]+)',
 			'embed_url'      => 'http://www.myvideo.de/embedded/public/%s',
 			'auto_thumbnail' => false,
 			'test_urls' => array(
@@ -532,7 +534,7 @@ function arve_get_host_properties() {
 		),
 		*/
 		'snotr' => array(
-			'regex'          => 'https?://(?:www\.)?snotr\.com/(?:video|embed)/([0-9]+)',
+			'regex'          => $s . 'snotr\.com/(?:video|embed)/([0-9]+)',
 			'embed_url'      => 'http://www.snotr.com/embed/%s',
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
@@ -553,19 +555,26 @@ function arve_get_host_properties() {
 		),
 		'ted' => array(
 			'name'           => 'TED Talks',
-			'regex'          => 'https?://(?:www\.)?ted\.com/talks/([a-z0-9_]+)',
+			'regex'          => $s . 'ted\.com/talks/([a-z0-9_]+)',
 			'embed_url'      => 'https://embed-ssl.ted.com/talks/%s.html',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'requires_flash' => true,
+			'test_urls' => array(
+				array( 'https://www.ted.com/talks/margaret_stewart_how_youtube_thinks_about_copyright', 'margaret_stewart_how_youtube_thinks_about_copyright' ),
+			),
 		),
 		'twitch' => array(
-			'regex'          => 'https?://(?:www\.)?twitch.tv/(?!directory)(?|[a-z0-9_]+/v/([0-9]+)|([a-z0-9_]+))',
+			'regex'          => $s . 'twitch.tv/(?!directory)(?|[a-z0-9_]+/v/([0-9]+)|([a-z0-9_]+))',
 			'embed_url'      => 'https://player.twitch.tv/?channel=%s', # if numeric id https://player.twitch.tv/?video=v%s
 			'auto_thumbnail' => true,
+			'test_urls' => array(
+				array( 'https://www.twitch.tv/imaqtpie', 'imaqtpie' ),
+				array( 'https://www.twitch.tv/imaqtpie/v/95318019', 95318019 ),
+			),
 		),
 		'ustream' => array(
-			'regex'          => 'https?://(?:www\.)?ustream\.tv/(?:channel/)?([0-9]{8}|recorded/[0-9]{8}(/highlight/[0-9]+)?)',
+			'regex'          => $s . 'ustream\.tv/(?:channel/)?([0-9]{8}|recorded/[0-9]{8}(/highlight/[0-9]+)?)',
 			'embed_url'      => 'http://www.ustream.tv/embed/%s',
 			'default_params' => 'html5ui',
 			'auto_thumbnail' => false,
@@ -573,17 +582,17 @@ function arve_get_host_properties() {
 			'requires_flash' => true,
 		),
 		'veoh' => array(
-			'regex'          => 'https?://(?:www\.)?veoh\.com/watch/([a-z0-9]+)',
+			'regex'          => $s . 'veoh\.com/watch/([a-z0-9]+)',
 			'embed_url'      => 'http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1396&permalinkId=%s',
 			'default_params' => 'player=videodetailsembedded&id=anonymous',
 			'auto_thumbnail' => false,
 			#'aspect_ratio' => 60.257,
 			'test_urls' => array(
-				'http://www.veoh.com/watch/v19866882CAdjNF9b',
+				array( 'http://www.veoh.com/watch/v19866882CAdjNF9b', 'v19866882CAdjNF9b' ),
 			)
 		),
 		'vevo' => array(
-			'regex'          => 'https?://(?:www\.)?vevo\.com/watch/(?:[^\/]+/[^\/]+/)?([a-z0-9]+)',
+			'regex'          => $s . 'vevo\.com/watch/(?:[^\/]+/[^\/]+/)?([a-z0-9]+)',
 			'embed_url'      => 'https://scache.vevo.com/assets/html/embed.html?video=%s',
 			'default_params' => 'playlist=false&playerType=embedded&env=0',
 			'auto_thumbnail' => false,
@@ -595,17 +604,20 @@ function arve_get_host_properties() {
 			),
 		),
 		'viddler' => array(
-			'regex'          => 'https?://(?:www\.)?viddler\.com/(?:embed|v)/([a-z0-9]{8})',
+			'regex'          => $s . 'viddler\.com/(?:embed|v)/([a-z0-9]{8})',
 			'embed_url'      => 'https://www.viddler.com/player/%s/',
 			'default_params' => 'wmode=transparent&player=full&f=1&disablebranding=1',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'aspect_ratio'   => '545:349',
 			'requires_flash' => true,
+			'test_urls' => array(
+				array( 'https://www.viddler.com/v/a695c468', 'a695c468' ),
+			),
 		),
 		'vidspot' => array(
 			'name'      => 'vidspot.net',
-			'regex'     => 'https?://(?:www\.)?vidspot.net/(?:embed-)?([a-z0-9]+)',
+			'regex'     => $s . 'vidspot.net/(?:embed-)?([a-z0-9]+)',
 			'embed_url' => 'http://vidspot.net/embed-%s.html',
 			'requires_flash' => true,
 			'test_urls' => array(
@@ -614,7 +626,7 @@ function arve_get_host_properties() {
 			),
 		),
 		'vine' => array(
-			'regex'          => 'https?://(?:www\.)?vine\.co/v/([a-z0-9]+)',
+			'regex'          => $s . 'vine\.co/v/([a-z0-9]+)',
 			'embed_url'      => 'https://vine.co/v/%s/embed/simple',
 			'default_params' => '', //* audio=1 supported
 			'auto_thumbnail' => false,
@@ -626,7 +638,7 @@ function arve_get_host_properties() {
 			),
 		),
 		'vimeo' => array(
-			'regex'          => 'https?://(?:www\.)?vimeo\.com/(?:(?:channels/[a-z]+/)|(?:groups/[a-z]+/videos/))?([0-9]+)',
+			'regex'          => $s . 'vimeo\.com/(?:(?:channels/[a-z]+/)|(?:groups/[a-z]+/videos/))?([0-9]+)',
 			'embed_url'      => 'https://player.vimeo.com/video/%s',
 			'default_params' => 'html5=1&title=1&byline=0&portrait=0',
 			'auto_thumbnail' => true,
@@ -647,7 +659,7 @@ function arve_get_host_properties() {
 		),
 		'xtube' => array(
 			'name'           => 'XTube',
-			'regex'          => 'https?://(?:www\.)?xtube\.com/watch\.php\?v=([a-z0-9_\-]+)',
+			'regex'          => $s . 'xtube\.com/watch\.php\?v=([a-z0-9_\-]+)',
 			'embed_url'      => 'http://www.xtube.com/embedded/user/play.php?v=%s',
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
@@ -679,7 +691,7 @@ function arve_get_host_properties() {
 		),
 		'youtube' => array(
 			'name'           => 'YouTube',
-			'regex'          => 'https?://(?:www\.)?(?:youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v\=))|youtu\.be\/)([a-zA-Z0-9_-]{6,11}((?:\?|&)list=[a-z0-9_\-]+)?)',
+			'regex'          => $s . '(?:youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v\=))|youtu\.be\/)([a-zA-Z0-9_-]{6,11}((?:\?|&)list=[a-z0-9_\-]+)?)',
 			'embed_url'      => 'https://www.youtube-nocookie.com/embed/%s',
 			'default_params' => 'iv_load_policy=3&modestbranding=1&rel=0&autohide=1&playsinline=1',
 			'auto_thumbnail' => true,
@@ -862,7 +874,7 @@ function arve_get_host_properties() {
 			'auto_thumbnail'    => false,
 			'requires_flash'    => true,
 			'test_urls' => array(
-				array( 'http://example.com/', 'http://example.com/' ),
+				'http://example.com/',
 			),
 		),
 	);

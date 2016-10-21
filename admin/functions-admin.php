@@ -213,7 +213,7 @@ function arve_register_shortcode_ui() {
 
 function arve_input( $args ) {
 
-	$out = sprintf( '<input %s>', arve_attr( $args['input_attr'] ) );
+	$out = sprintf( '<input%s>', arve_attr( $args['input_attr'] ) );
 
 	if ( ! empty( $args['option_values']['attr'] ) && 'thumbnail_fallback' == $args['option_values']['attr'] ) {
 
@@ -245,7 +245,7 @@ function arve_textarea( $args ) {
 
 	unset( $args['input_attr']['type'] );
 
-	$out = sprintf( '<textarea %s></textarea>', arve_attr( $args['input_attr'] ) );
+	$out = sprintf( '<textarea%s></textarea>', arve_attr( $args['input_attr'] ) );
 
 	if ( ! empty( $args['description'] ) ) {
 		$out = $out . '<p class="description">' . $args['description'] . '</p>';
@@ -281,7 +281,7 @@ function arve_select( $args ) {
 	$select_attr = $args['input_attr'];
 	unset( $select_attr['value'] );
 
-	$out = sprintf( '<select %s>%s</select>', arve_attr( $select_attr ), implode( '', $options ) );
+	$out = sprintf( '<select%s>%s</select>', arve_attr( $select_attr ), implode( '', $options ) );
 
 	if ( ! empty( $args['description'] ) ) {
 		$out = $out . '<p class="description">' . $args['description'] . '</p>';

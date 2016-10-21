@@ -11,9 +11,7 @@ function arve_filter_atts_sanitise( $atts ) {
       continue;
     }
 
-    if( is_string( $value ) ) {
-      $atts[ $key ] = sanitize_text_field( $value );
-    } else {
+    if( ! is_string( $value ) ) {
       $atts[ $key ] = arve_error( sprintf( __( '<code>%s</code> is not a string. Only Strings should be passed to the shortcode function' , ARVE_SLUG ), $key ) );
     }
   }

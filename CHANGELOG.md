@@ -1,6 +1,6 @@
 ## Changelog ##
 
-### 2016-10-21 - Pro Addon 3.2.0 ###
+### 2016-10-22 - Pro Addon 3.2.0 ###
 
 * Fix: Issue with lazyload and AJAX.
 * Fix: W3TC issue by using yet another lazyload method. Final this time?
@@ -10,7 +10,7 @@
 * New: New Lazyload mode setting to prevent "two touched needed to play video on mobiles" issue. Its also
 * New: Facebook thumbnail detection.
 
-### 2016-10-21 - 7.9.0 ###
+### 2016-10-22 - 7.9.2 ###
 
 * Fix: Brightcove Autoplay issue.
 * Fix: Liveleak thumbnail detection issues.

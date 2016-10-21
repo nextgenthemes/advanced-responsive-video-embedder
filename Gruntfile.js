@@ -10,7 +10,7 @@ module.exports = function (grunt) {
       options: {
         separator: '\n\n',
       },
-      readme_md: {
+      readme_tmp: {
         src: [
            'readme/description.md',
            'readme/description-lead.html',
@@ -28,12 +28,19 @@ module.exports = function (grunt) {
            'readme/screenshots.md',
            'CHANGELOG.md'
         ],
+        dest: 'readme.tmp'
+      },
+      readme_md: {
+        src: [
+          'readme/status.md',
+          'readme.tmp'
+        ],
         dest: 'README.md'
       },
       readme_txt: {
         src: [
           'readme/top.txt',
-          'README.md'
+          'readme.tmp'
         ],
         dest: 'README.txt'
       }

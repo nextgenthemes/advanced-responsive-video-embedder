@@ -3,7 +3,6 @@ language: php
 sudo: false
 
 php:
-- 5.2
 - 5.3
 - 5.4
 - 5.5
@@ -13,12 +12,8 @@ php:
 
 env:
 - WP_VERSION=latest WP_MULTISITE=0
+- WP_VERSION=4.5 WP_MULTISITE=0
 - WP_VERSION=4.4 WP_MULTISITE=0
-- WP_VERSION=4.3 WP_MULTISITE=0
-- WP_VERSION=4.2 WP_MULTISITE=0
-- WP_VERSION=4.1 WP_MULTISITE=0
-- WP_VERSION=4.0 WP_MULTISITE=0
-
 
 matrix:
   include:
