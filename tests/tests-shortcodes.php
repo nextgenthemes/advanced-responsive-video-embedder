@@ -65,11 +65,17 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function test_html5() {
 
-		$output = arve_shortcode_arve( array( 'url' => 'https://example.com/video.mp4' ) );
+		$html5_ext = array( 'mp4', 'm4v', 'webm', 'ogv' );
 
-		$this->assertNotContains( 'Error', $output, $output );
-		$this->assertNotContains( '<iframe', $output, $output );
-		$this->assertContains( '<video', $output );
+		foreach ( $html5_ext as $ext ) {
+
+			$output = arve_shortcode_arve( array( 'url' => 'https://example.com/video.' . $ext ) );
+
+			$this->assertNotContains( 'Error', $output, $output );
+			$this->assertNotContains( '<iframe', $output, $output );
+			$this->assertContains( 'data-arve-provider="html5"', $output );
+			$this->assertContains( '<video', $output );
+		}
 	}
 
 	public function test_regex() {
