@@ -360,7 +360,8 @@ function arve_get_host_properties() {
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
 			'test_urls' => array(
-				array( 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:c3c1da76-96c2-48b4-b38d-8bb16fbf7a58', 'c80adf02-3e24-437a-8087-d6b77060571c' ),
+				array( 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:c80adf02-3e24-437a-8087-d6b77060571c', 'c80adf02-3e24-437a-8087-d6b77060571c' ),
+				array( 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:c3c1da76-96c2-48b4-b38d-8bb16fbf7a58', 'c3c1da76-96c2-48b4-b38d-8bb16fbf7a58' ),
 			)
 		),
 		'dailymotion' => array(
