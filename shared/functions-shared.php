@@ -673,9 +673,8 @@ function arve_get_host_properties() {
 			'auto_title'     => true,
 			'requires_flash' => true,
 			'test_urls' => array(
-				'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html?format=embed&player_autoplay=false',
-				'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html',
-				'https://www.yahoo.com/movies/sully-trailer-4-211012511.html?format=embed',
+				array( 'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html?format=embed&player_autoplay=false', 'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html' ),
+				array( 'https://www.yahoo.com/movies/sully-trailer-4-211012511.html?format=embed', 'https://www.yahoo.com/movies/sully-trailer-4-211012511.html' ),
 			)
 		),
 		'youku' => array(
