@@ -881,8 +881,9 @@ function arve_get_host_properties() {
 
 	foreach ( $properties as $key => $value ) {
 
-		if( empty( $value['name'] ) )
+		if( empty( $value['name'] ) ) {
 			$properties[ $key ]['name'] = ucfirst( $key );
+		}
 	}
 
 	return $properties;
