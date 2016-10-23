@@ -16,7 +16,7 @@
  * Text Domain:       advanced-responsive-video-embedder
  * Domain Path:       /languages
  * GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-embedder
- * GitHub Branch:     beta
+ * GitHub Branch:     master
  */
 
 if ( ! defined( 'WPINC' ) ) {

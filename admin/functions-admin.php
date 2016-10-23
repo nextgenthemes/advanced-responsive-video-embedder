@@ -143,8 +143,6 @@ function arve_add_media_button() {
 
 	$options = arve_get_options();
 
-	$sui = is_plugin_active( 'shortcode-ui/shortcode-ui.php' );
-
 	add_thickbox();
 
 	$p1 = __( 'This button can open a optional ARVE a Shortcode creation dialog. ARVE needs the "Shortcake (Shortcode UI)" plugin active for this fuctionality, please download <a href="%s">version 0.7.0-alpha.zip</a> and install from zip. Current <a href="%s">wordpress.org version 0.6.2</a> has a issue that the button needs to be clicked twice.', ARVE_SLUG );
@@ -163,7 +161,7 @@ function arve_add_media_button() {
 	printf(
 		'<button id="arve-btn" title="%s" %s data-arve-mode="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
 		esc_attr__( 'ARVE Advanced Responsive Video Embedder', ARVE_SLUG ),
-		$sui ? 'data-arve-sui' : '',
+		is_plugin_active( 'shortcode-ui/shortcode-ui.php' ) ? 'data-arve-sui' : '',
 		esc_attr( $options['mode'] ),
 		esc_html__( '[arve] Embed Video', ARVE_SLUG )
 	);
@@ -639,6 +637,10 @@ function arve_mce_css( $mce_css ) {
  * @since    1.0.0
  */
 function arve_admin_enqueue_scripts() {
-	wp_enqueue_script( ARVE_SLUG,            plugin_dir_url( __FILE__ ) . 'arve-admin.js',        array( 'jquery' ), ARVE_VERSION, true );
-	wp_enqueue_script( ARVE_SLUG . '-sc-ui', plugin_dir_url( __FILE__ ) . 'arve-shortcode-ui.js', array(),           ARVE_VERSION );
+
+	wp_enqueue_script( ARVE_SLUG, plugin_dir_url( __FILE__ ) . 'arve-admin.js', array( 'jquery' ), ARVE_VERSION, true );
+
+	if ( is_plugin_active( 'shortcode-ui/shortcode-ui.php' ) ) {
+		wp_enqueue_script( ARVE_SLUG . '-sc-ui', plugin_dir_url( __FILE__ ) . 'arve-shortcode-ui.js', array(), ARVE_VERSION );
+	}
 }

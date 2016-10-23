@@ -102,6 +102,13 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			$this->assertNotContains( '<iframe', $output );
 			$this->assertContains( 'data-arve-provider="html5"', $output );
 			$this->assertContains( '<video', $output );
+
+			$output = arve_shortcode_arve( array( $ext => 'https://example.com/video.' . $ext ) );
+
+			$this->assertNotContains( 'Error', $output );
+			$this->assertNotContains( '<iframe', $output );
+			$this->assertContains( 'data-arve-provider="html5"', $output );
+			$this->assertContains( '<video', $output );
 		}
 
 		$output = arve_shortcode_arve( array(
