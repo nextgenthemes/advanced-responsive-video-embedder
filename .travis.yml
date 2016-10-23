@@ -1,7 +1,5 @@
 language: php
-
 sudo: false
-
 php:
 - 5.3
 - 5.4
@@ -9,29 +7,27 @@ php:
 - 5.6
 - 7.0
 - hhvm
-
 env:
-- WP_VERSION=latest WP_MULTISITE=0
-- WP_VERSION=4.5 WP_MULTISITE=0
-- WP_VERSION=4.4 WP_MULTISITE=0
-
+  matrix:
+  - WP_VERSION=latest WP_MULTISITE=0
+  - WP_VERSION=4.5 WP_MULTISITE=0
+  - WP_VERSION=4.4 WP_MULTISITE=0
+  global:
+  - secure: jBqtzKMmVRFvdCMDwPPyy1gFkiYngK//jKF1J5Op8AnHWM9otmCfZcUXPxZq7jjR/9Kn7UbQusMdLJbojO41xcrKBSR7MYk2dGTqpIl/LIjgv3zP2dS8zV/Mj6pTUtBTPj10F96WSvl9LxKhfLSZXz3ZestFyGNt4pLbsdPzUL3i7To7E03Gjb7TfsV1ffBfW/Dwa31oqgbDo25yNxBNQ3HNXZE9N0xnGQrjBp4ALxwHeIRQEi0ngEzswd2zUYJ+5d7TQu5IqQZ00qwH9h33EzGJNlXQjOuXAlZpZMKgsQm2+3tcj4tA4ZdDkM4nFJak29sh48HZjAy87OO98OQb9wBtLoScfMdvKUD7D+8JB1S1y8PaxPbylOFyG9Vpvaz2anFZPL2kYhK1mwrhkn1q5YnQMEPmDR/2VpLkiLjgzZkLDkM9XH+C6iG2x9yTespaKERnBeZBcpOQ/O59RVZlGAKR4Wpqgq4c3cpjVA8PmY6rGn/GsDlTY8mdatZ/jDIqhgODSQCZBgBIafoIkSgX+/3TmjiiPwroc1CtXa9Rxo3h2PASIB4qhRg+pVWO09u6tPj4VS+spDAMP4HMOXHkg1TufrERFAtibHVLDD54y6OfkH/Zyvd13HDSL8ytLFPSWrAd69ig4c3iKOUeKqm7qr/idvC7/VWWnOTttWLnnhc=
 matrix:
   include:
-    - php: 5.3
-      env: WP_VERSION=latest WP_MULTISITE=1
+  - php: 5.3
+    env: WP_VERSION=latest WP_MULTISITE=1
   exclude:
-    - php: hhvm
-      env: WP_VERSION=4.0 WP_MULTISITE=0
-
+  - php: hhvm
+    env: WP_VERSION=4.0 WP_MULTISITE=0
 before_script:
 - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-
 script:
-- if [[ $TRAVIS_PHP_VERSION != 'hhvm' && ( $TRAVIS_PHP_VERSION != '5.5'|| $WP_VERSION != 'latest'
-  || $WP_MULTISITE != '0' ) ]]; then phpenv config-rm xdebug.ini; fi
+- if [[ $TRAVIS_PHP_VERSION != 'hhvm' && ( $TRAVIS_PHP_VERSION != '5.5'|| $WP_VERSION
+  != 'latest' || $WP_MULTISITE != '0' ) ]]; then phpenv config-rm xdebug.ini; fi
 - if [[ $TRAVIS_PHP_VERSION = '5.5' && $WP_VERSION = 'latest' && $WP_MULTISITE = '0'
   ]]; then phpunit --coverage-clover=coverage.clover; else phpunit; fi
-
 after_script:
 - if [[ $TRAVIS_PHP_VERSION = '5.5' && $WP_VERSION = 'latest' && $WP_MULTISITE = '0'
   ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi

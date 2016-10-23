@@ -23,7 +23,7 @@ function arve_get_cached_attachment_image_url_or_srcset( $url_or_srcset, $attach
   $transient      = get_transient( $transient_name );
   $time           = (int) $options['wp_image_cache_time'];
 
-  if( false === $transient || $time <= 0  ) {
+  if( false === $transient || $time <= 0 ) {
 
     if ( 'srcset' == $url_or_srcset ) {
 

@@ -1,5 +1,18 @@
 <?php
 
+function arve_is_bool_option( $array ) {
+
+	$yes_no = array( '' => 1, 'yes' => 1, 'no' => 1 );
+
+	$check = array_diff_key( $array, $yes_no );
+
+	if( empty( $check ) ) {
+		return 'bool';
+	} else {
+		return $array;
+	}
+}
+
 function arve_load_plugin_textdomain() {
 
   load_plugin_textdomain(

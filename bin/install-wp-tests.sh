@@ -116,10 +116,17 @@ install_db() {
 		fi
 	fi
 
+
 	# create database
 	mysqladmin create $DB_NAME --user="$DB_USER" --password="$DB_PASS"$EXTRA
+}
+
+install_arve_pro() {
+	download "$ARVE_PRO_DL" /tmp/arve-pro-test.zip
+	unzip /tmp/arve-pro-test.zip -d /home/travis/build/nextgenthemes/
 }
 
 install_wp
 install_test_suite
 install_db
+install_arve_pro

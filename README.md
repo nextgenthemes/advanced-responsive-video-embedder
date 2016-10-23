@@ -205,7 +205,16 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
-### 2016-10-23 - 7.9.3 and Pro Addon 3.2.3 ###
+### 2016-10-24 - Pro Addon 3.2.4 ###
+
+* Fix: Custom Thumbnails not applied.
+
+### 2016-10-24 - 7.9.5 ###
+
+* Fix: Custom Thumbnails not applied.
+* Fix: Shortcode UI script only loaded if the plugin is active.
+
+### 2016-10-23 - 7.9.4 and Pro Addon 3.2.3 ###
 
 * Fix: Multiple issues about the new HTML5 video embedding (still experimental)
 

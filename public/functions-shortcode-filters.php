@@ -75,16 +75,19 @@ function arve_filter_atts_get_media_gallery_thumbnail( $atts ) {
 
   if( is_numeric( $atts['thumbnail'] ) ) {
 
-    $atts['thumbnail'] = arve_get_attachment_image_url_or_srcset( 'url',    $atts['thumbnail'] );
-    $atts['srcset']    = arve_get_attachment_image_url_or_srcset( 'srcset', $atts['thumbnail'] );
+    $attchment_id = $atts['thumbnail'];
+
+    $atts['img_src']    = arve_get_attachment_image_url_or_srcset( 'url',    $attchment_id );
+    $atts['img_srcset'] = arve_get_attachment_image_url_or_srcset( 'srcset', $attchment_id );
 
   } elseif ( arve_validate_url( $atts['thumbnail'] ) ) {
 
-    $atts['thumbnail_from_url'] = true;
+    $atts['img_src']    = $atts['thumbnail'];
+    $atts['img_srcset'] = false;
 
   } else {
 
-    $atts['thumbnail'] = new WP_Error( 'thumbnail', __( 'Not a valid thumbnail URL or Media ID given', ARVE_SLUG ) );
+    $atts['img_src'] = new WP_Error( 'thumbnail', __( 'Not a valid thumbnail URL or Media ID given', ARVE_SLUG ) );
   }
 
   return $atts;

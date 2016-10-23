@@ -52,32 +52,32 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
     $pairs['id']       = null;
   }
 
-  $arve = shortcode_atts( $pairs, $input_atts, 'arve' );
+  $atts = shortcode_atts( $pairs, $input_atts, 'arve' );
 
-  $debug_info = arve_get_debug_info( $arve, $input_atts );
+  $debug_info = arve_get_debug_info( $atts, $input_atts );
 
-  if ( $errors = arve_output_errors( $arve ) ) {
+  if ( $errors = arve_output_errors( $atts ) ) {
     return $errors . $debug_info;
   }
 
-  $arve_video    = arve_video_or_iframe( $arve );
-  $meta_html     = arve_build_meta_html( $arve );
-  $arve_link     = arve_build_promote_link_html( $arve['arve_link'] );
-  $arve_play_btn = function_exists( 'arve_pro_play_btn' ) ? arve_pro_play_btn( $arve ) : '';
-  $webtorrent_status = function_exists( 'arve_webtorrent_status' ) ? arve_webtorrent_status( $arve['webtorrent'] ) : '';
+  $arve_video    = arve_video_or_iframe( $atts );
+  $meta_html     = arve_build_meta_html( $atts );
+  $arve_link     = arve_build_promote_link_html( $atts['arve_link'] );
+  $arve_play_btn = function_exists( 'arve_pro_play_btn' ) ? arve_pro_play_btn( $atts ) : '';
+  $webtorrent_status = function_exists( 'arve_webtorrent_status' ) ? arve_webtorrent_status( $atts['webtorrent'] ) : '';
 
-  if ( 'link-lightbox' == $arve['mode'] ) {
-    $containers  = arve_pro_lity_container( $meta_html . $arve_video, $arve );
-  } elseif ( 'lazyload-lightbox' == $arve['mode'] ) {
-    $containers  = arve_pro_lity_container( $arve_video, $arve );
-    $containers .= arve_arve_embed_container( $meta_html . $arve_play_btn, $arve );
+  if ( 'link-lightbox' == $atts['mode'] ) {
+    $containers  = arve_pro_lity_container( $meta_html . $arve_video, $atts );
+  } elseif ( 'lazyload-lightbox' == $atts['mode'] ) {
+    $containers  = arve_pro_lity_container( $arve_video, $atts );
+    $containers .= arve_arve_embed_container( $meta_html . $arve_play_btn, $atts );
   } else {
-    $containers = arve_arve_embed_container( $meta_html . $arve_video . $arve_play_btn, $arve );
+    $containers = arve_arve_embed_container( $meta_html . $arve_video . $arve_play_btn, $atts );
   }
 
-  $final_embed = arve_arve_wrapper( $containers . $arve_link . $webtorrent_status, $arve );
+  $final_embed = arve_arve_wrapper( $containers . $arve_link . $webtorrent_status, $atts );
 
-  $output = apply_filters( 'arve_output', $debug_info . $final_embed, $arve );
+  $output = apply_filters( 'arve_output', $debug_info . $final_embed, $atts );
 
   if ( empty( $output ) ) {
     return arve_error( 'The output is empty, this should not happen' );

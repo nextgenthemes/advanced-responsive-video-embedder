@@ -54,6 +54,8 @@ function arve_validate_align( $align ) {
     case null:
     case '':
     case 'none':
+      $align = null;
+      break;
     case 'left':
     case 'right':
     case 'center':
