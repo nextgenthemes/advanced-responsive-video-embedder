@@ -2,10 +2,10 @@
 Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: video, responsive, embed, video-embedder, iframe, minimal, lightweight, simplicity, shortcodes, Youtube, Blip, Dailymotion, Videojug, Collegehumor, Veoh, Break, Movieweb, Snotr, Gametrailers, Vimeo, Viddler, Funnyordie, Myspace, Liveleak, Metacafe, Myvideo, Yahoo Screen, Spike
-Requires at least: 3.3.2
+Requires at least: 4.4.0
 Tested up to: 4.6.1
 Stable tag: trunk
-License: GPL 3.0
+License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement for WordPress' default embeds. Best plugin for videos?
@@ -215,7 +215,15 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
-### 2016-10-21 - Pro Addon 3.2.0 ###
+### 2016-10-23 - 7.9.3 and Pro Addon 3.2.3 ###
+
+* Fix: Multiple issues about the new HTML5 video embedding (still experimental)
+
+### 2016-10-23 - Pro Addon 3.2.2 ###
+
+* Fix: 'Disable Links' not working.
+
+### 2016-10-23 - Pro Addon 3.2.0 ###
 
 * Fix: Issue with lazyload and AJAX.
 * Fix: W3TC issue by using yet another lazyload method. Final this time?
@@ -225,11 +233,11 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * New: New Lazyload mode setting to prevent "two touched needed to play video on mobiles" issue. Its also
 * New: Facebook thumbnail detection.
 
-### 2016-10-21 - 7.9.0 ###
+### 2016-10-23 - 7.9.2 ###
 
 * Fix: Brightcove Autoplay issue.
 * Fix: Liveleak thumbnail detection issues.
-* Fix: Parameters not beeing added.
+* Fix: Parameters not being added.
 * Fix: Twitch single videos not using https
 * Fix: Vevo marked to require flash to make it work again.
 * Improved: Better dialog with better description and links about the shortcake UI plugin.
@@ -263,7 +271,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 * Fix: Youku URL detection and aspect ratio.
 * Improved: `.arve-inner` css class in favor of some more specific classes combining styles.
-* Improved: removed TGMPA class because it was causing horrible isses.
+* Improved: removed TGMPA class because it was causing horrible issues.
 
 ### Pro Addon 2.4.5 beta - 2016-09-19 ###
 
@@ -275,7 +283,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ### Pro Addon 2.4.0 beta - 2016-09-18 ###
 
-* New: Adds Yahoo auto thumnail and title support
+* New: Adds Yahoo auto thumbnail and title support
 
 ### 7.4.1 beta - 2016-09-18 ###
 
@@ -300,8 +308,8 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ### 7.2.13 beta - 2016-09-16 ###
 
-* Fix: Set fitvidsignore class and remove the fitvids container to prevent it from messing with ARVE embeds.
-* Fix: Remove possible width and height paramaeters on iframes to prevent scripts from messing with ARVE embeds.
+* Fix: Set fitvidsignore class and remove the Fitvids container to prevent it from messing with ARVE embeds.
+* Fix: Remove possible width and height parameters on iframes to prevent scripts from messing with ARVE embeds.
 
 ### 7.2.12 beta - 2016-09-16 ###
 

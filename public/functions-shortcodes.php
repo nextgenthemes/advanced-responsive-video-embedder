@@ -238,13 +238,13 @@ function arve_wp_video_shortcode_override( $out, $attr, $content, $instance ) {
 
   $options = arve_get_options();
 
-  if( empty( $options['wp_video_override'] ) && ! empty( $attr['wmv'] ) && ! empty( $attr['flv'] ) ) {
+  if( ! $options['wp_video_override'] && ! empty( $attr['wmv'] ) && ! empty( $attr['flv'] ) ) {
     return $out;
   }
 
   $attr[ 'provider' ] = 'html5';
 
-  if( empty( $attr['poster'] ) ) {
+  if( ! empty( $attr['poster'] ) ) {
     $attr['thumbnail'] = $attr['poster'];
   }
 

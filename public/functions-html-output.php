@@ -190,6 +190,8 @@ function arve_create_iframe_tag( $arve ) {
 	$options    = arve_get_options();
 	$properties = arve_get_host_properties();
 
+	#d($arve);
+
 	$iframe_attr = array(
 		'allowfullscreen' => '',
 		'class'       => 'arve-iframe fitvidsignore',

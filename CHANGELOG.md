@@ -1,5 +1,13 @@
 ## Changelog ##
 
+### 2016-10-23 - 7.9.4 and Pro Addon 3.2.3 ###
+
+* Fix: Multiple issues about the new HTML5 video embedding (still experimental)
+
+### 2016-10-23 - Pro Addon 3.2.2 ###
+
+* Fix: 'Disable Links' not working.
+
 ### 2016-10-23 - Pro Addon 3.2.0 ###
 
 * Fix: Issue with lazyload and AJAX.

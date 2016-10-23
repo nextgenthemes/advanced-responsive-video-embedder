@@ -121,7 +121,7 @@ function arve_filter_atts_detect_provider_and_id_from_url( $atts ) {
 
 function arve_filter_atts_detect_html5( $atts ) {
 
-  if( ! empty( $atts['provider'] ) ) {
+  if( ! empty( $atts['provider'] ) && 'html5' != $atts['provider'] ) {
     return $atts;
 	}
 
