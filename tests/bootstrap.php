@@ -13,6 +13,7 @@ require_once $_tests_dir . '/includes/functions.php';
 
 function _manually_load_plugin() {
 	require dirname( __FILE__ ) . '/../advanced-responsive-video-embedder.php';
+	global $_where;
 	$_where = dirname( __FILE__ );
 	#require '/tmp/wordpress/wp-content/wp-content/plugins/arve-pro/arve-pro.php';
 }
@@ -23,7 +24,7 @@ require $_tests_dir . '/includes/bootstrap.php';
 activate_plugin( 'advanced-responsive-video-embedder/advanced-responsive-video-embedder.php' );
 activate_plugin( 'arve-pro/arve-pro.php' );
 
-global $current_user, $edd_options, $_where;
+global $current_user, $edd_options;
 
 #$edd_options = get_option( 'edd_settings' );
 

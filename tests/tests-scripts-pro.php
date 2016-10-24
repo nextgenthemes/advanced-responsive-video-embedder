@@ -10,7 +10,7 @@ class Tests_Scripts_Pro extends WP_UnitTestCase {
 	 *
 	 * @since 2.3.6
 	 */
-	public function test_file_hooks() {
+	public function NO_test_file_hooks() {
 
 		$this->assertNotFalse( has_action( 'wp_enqueue_scripts', 'arve_pro_action_register_scripts' ) );
 	}
