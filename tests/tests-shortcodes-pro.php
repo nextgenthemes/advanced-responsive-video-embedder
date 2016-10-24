@@ -3,10 +3,12 @@
 class Tests_Shortcode_Pro extends WP_UnitTestCase {
 
 	public static function setUpBeforeClass() {
+		parent::setUpBeforeClass();
 		activate_plugin( 'arve-pro/arve-pro.php' );
 	}
 
 	public static function tearDownAfterClass() {
+		parent::tearDownAfterClass();
 		deactivate_plugins( 'arve-pro/arve-pro.php' );
 	}
 
