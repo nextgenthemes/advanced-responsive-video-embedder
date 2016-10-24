@@ -10,21 +10,17 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$upload = wp_upload_bits( basename( $filename ), null, $contents );
 		$this->assertTrue( empty( $upload['error'] ) );
 
-		$id = parent::_make_attachment( $upload );
+		$attachment_id = parent::_make_attachment( $upload );
 
-		$output = arve_shortcode_arve( array(
+		$attr = array(
 			'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
-			'thumbnail' => (string) $id,
-		) );
+			'thumbnail' => (string) $attachment_id,
+		);
 
-		$this->assertRegExp( '#<meta itemprop="thumbnailUrl" content=".*test-attachment\.jpg#', $output );
+		$this->assertRegExp( '#<meta itemprop="thumbnailUrl" content=".*test-attachment\.jpg#', arve_shortcode_arve( $attr ) );
 
-		$output = arve_shortcode_arve( array(
-			'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
-			'thumbnail' => 'https://example.com/image.jpg',
-		) );
-
-		$this->assertContains( '<meta itemprop="thumbnailUrl" content="https://example.com/image.jpg"', $output );
+		$attr['thumbnail'] = 'https://example.com/image.jpg';
+		$this->assertContains( '<meta itemprop="thumbnailUrl" content="https://example.com/image.jpg"', arve_shortcode_arve( $attr ) );
 	}
 
 	public function test_shortcodes_are_registered() {
