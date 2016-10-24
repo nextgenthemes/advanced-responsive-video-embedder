@@ -23,9 +23,11 @@ require $_tests_dir . '/includes/bootstrap.php';
 activate_plugin( 'advanced-responsive-video-embedder/advanced-responsive-video-embedder.php' );
 activate_plugin( 'arve-pro/arve-pro.php' );
 
-global $current_user, $edd_options;
+$options = get_option( 'arve_options_pro', array() );
+$options['key_status'] = 'valid';
+update_option( 'arve_options_pro', $options );
 
-#$edd_options = get_option( 'edd_settings' );
+global $current_user;
 
 $current_user = new WP_User(1);
 $current_user->set_role('administrator');

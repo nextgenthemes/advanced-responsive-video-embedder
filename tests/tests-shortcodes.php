@@ -117,9 +117,9 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertNotContains( '<iframe', $output );
 		$this->assertContains( 'data-arve-provider="html5"', $output );
 		$this->assertContains( '<video', $output );
-		$this->assertContains( '<source type="video/ogg"', $output );
-		$this->assertContains( '<source type="video/mp4"', $output );
-		$this->assertContains( '<source type="video/webm"', $output );
+		$this->assertContains( '<source type="video/ogg" src="https://example.com/video.ogv">', $output );
+		$this->assertContains( '<source type="video/mp4" src="https://example.com/video.mp4">', $output );
+		$this->assertContains( '<source type="video/webm" src="https://example.com/video.webm">', $output );
 	}
 
 	public function test_iframe() {

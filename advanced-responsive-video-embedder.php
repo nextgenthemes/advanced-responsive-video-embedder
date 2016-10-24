@@ -25,7 +25,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 define( 'ARVE_SLUG',                 'advanced-responsive-video-embedder' );
 define( 'ARVE_VERSION',              '7.9.5' );
-define( 'ARVE_PRO_VERSION_REQUIRED', '3.2.4' );
+define( 'ARVE_PRO_VERSION_REQUIRED', '3.2.5' );
 define( 'ARVE_NUM_TRACKS', 10 );
 
 arve_init();
