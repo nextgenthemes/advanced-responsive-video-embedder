@@ -13,8 +13,8 @@ require_once $_tests_dir . '/includes/functions.php';
 
 function _manually_load_plugin() {
 	require dirname( __FILE__ ) . '/../advanced-responsive-video-embedder.php';
-	echo dirname( __FILE__ );
-	#require getenv( 'WP_CORE_DIR' ) . '/wp-content/wp-content/plugins/arve-pro/arve-pro.php';
+	print_r( dirname( __FILE__ ) );
+	require '/tmp/wordpress/wp-content/wp-content/plugins/arve-pro/arve-pro.php';
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
