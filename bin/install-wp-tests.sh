@@ -129,4 +129,4 @@ install_arve_pro() {
 install_wp
 install_test_suite
 install_db
-install_arve_pro
+#install_arve_pro
