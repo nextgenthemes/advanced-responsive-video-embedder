@@ -12,7 +12,9 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 
 	public function test_thumbnails() {
 
-		$filename = dirname( __FILE__ ) . '/test-attachment.jpg';
+		$this->assertTrue( is_plugin_active( 'arve-pro/arve-pro.php' ) );
+
+		$filename = dirname( __FILE__ ) . '/test-attachment-2.jpg';
 		$contents = file_get_contents( $filename );
 
 		$upload = wp_upload_bits( basename( $filename ), null, $contents );
@@ -26,7 +28,7 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 			'mode'      => 'lazyload',
 		);
 
-		$this->assertRegExp( '#<img itemprop="thumbnailUrl" content=".*test-attachment\.jpg#', arve_shortcode_arve( $attr ) );
+		$this->assertRegExp( '#<img.*src=".*test-attachment-2\.jpg#', arve_shortcode_arve( $attr ) );
 
 		$attr['thumbnail'] = 'https://example.com/image.jpg';
 		$this->assertContains( '<meta itemprop="thumbnailUrl" content="https://example.com/image.jpg"', arve_shortcode_arve( $attr ) );
