@@ -4,7 +4,6 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 
 	public function test_thumbnails() {
 
-		activate_plugin( 'arve-pro/arve-pro.php' );
 		$this->assertTrue( is_plugin_active( 'arve-pro/arve-pro.php' ) );
 		$this->assertTrue( function_exists( 'arve_init' ) );
 		$this->assertTrue( function_exists( 'arve_pro_init' ) );

@@ -10,7 +10,7 @@ class Tests_Pro extends WP_UnitTestCase {
 	 *
 	 * @since 2.3.6
 	 */
-	public function test_install() {
+	public function NO_test_install() {
 
 		activate_plugin( 'arve-pro/arve-pro.php' );
 		$this->assertTrue( is_plugin_active( 'arve-pro/arve-pro.php' ) );
