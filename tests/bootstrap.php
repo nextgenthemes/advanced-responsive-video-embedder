@@ -12,10 +12,9 @@ if ( !$_tests_dir ) $_tests_dir = '/tmp/wordpress-tests-lib';
 require_once $_tests_dir . '/includes/functions.php';
 
 function _manually_load_plugin() {
+	# /home/travis/build/nextgenthemes/advanced-responsive-video-embedder
 	require dirname( __FILE__ ) . '/../advanced-responsive-video-embedder.php';
-	global $_where;
-	$_where = dirname( __FILE__ );
-	#require '/tmp/wordpress/wp-content/wp-content/plugins/arve-pro/arve-pro.php';
+	require dirname( __FILE__ ) . '/../../arve-pro/arve-pro.php';
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 

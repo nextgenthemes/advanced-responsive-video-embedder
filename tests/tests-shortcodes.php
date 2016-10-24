@@ -45,7 +45,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertEquals( $arve_shortcode, $old_shortcode );
 	}
 
-	public function test_modes() {
+	public function NO_test_modes() {
 
 		$output = arve_shortcode_arve( array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys' ) );
 

@@ -123,10 +123,10 @@ install_db() {
 
 install_arve_pro() {
 	download "$ARVE_PRO_DL" /tmp/arve-pro-test.zip
-	unzip /tmp/arve-pro-test.zip -d /tmp/wordpress/wp-content/plugins/
+	unzip /tmp/arve-pro-test.zip -d /home/travis/build/nextgenthemes/
 }
 
 install_wp
 install_test_suite
 install_db
-#install_arve_pro
+install_arve_pro

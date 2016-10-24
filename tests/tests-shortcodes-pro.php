@@ -34,7 +34,7 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 		#$this->assertContains( '<meta itemprop="thumbnailUrl" content="https://example.com/image.jpg"', arve_shortcode_arve( $attr ) );
 	}
 
-	public function NO_test_lazyload() {
+	public function test_lazyload() {
 
 		$attr = array(
 			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
@@ -47,7 +47,7 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 		$this->assertContains( 'data-arve-grow', arve_shortcode_arve( $attr ) );
 	}
 
-	public function NO_test_modes() {
+	public function test_modes() {
 
 		$modes = array( 'lazyload', 'lazyload-lightbox', 'link-lazyload' );
 		$atts  = array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys' );
