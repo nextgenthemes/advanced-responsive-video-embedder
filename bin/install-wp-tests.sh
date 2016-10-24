@@ -122,9 +122,10 @@ install_db() {
 
 install_arve_pro() {
 	download "$ARVE_PRO_DL" /tmp/arve-pro-latest.zip
-	unzip /tmp/arve-pro-latest.zip $WP_CORE_DIR/wp-content/plugins/
+	unzip /tmp/arve-pro-latest.zip -d $WP_CORE_DIR/wp-content/plugins/
 }
 
 install_wp
 install_test_suite
 install_db
+install_arve_pro
