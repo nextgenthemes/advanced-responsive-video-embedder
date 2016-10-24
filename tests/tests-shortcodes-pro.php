@@ -11,6 +11,8 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 		$this->assertTrue( function_exists( 'arve_pro_activation_hook' ) );
 		$this->assertTrue( function_exists( 'arve_pro_filter_modes' ) );
 
+		$this->assertTrue( defined( 'NICO' ) );
+
 		$filename = dirname( __FILE__ ) . '/test-attachment-2.jpg';
 		$contents = file_get_contents( $filename );
 
