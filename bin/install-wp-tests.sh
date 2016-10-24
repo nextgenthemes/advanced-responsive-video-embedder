@@ -120,6 +120,11 @@ install_db() {
 	mysqladmin create $DB_NAME --user="$DB_USER" --password="$DB_PASS"$EXTRA
 }
 
+install_arve_pro() {
+	download "$ARVE_PRO_DL" /tmp/arve-pro-latest.zip
+	unzip /tmp/arve-pro-latest.zip $WP_CORE_DIR/wp-content/plugins/
+}
+
 install_wp
 install_test_suite
 install_db
