@@ -40,7 +40,7 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 			'mode'      => 'lazyload',
 		);
 
-		$this->assertNotContains( 'ARVE Error', $output );
+		$this->assertNotContains( 'ARVE Error', arve_shortcode_arve( $attr ) );
 		$this->assertContains( 'data-arve-mode="lazyload"', arve_shortcode_arve( $attr ) );
 		$this->assertContains( 'data-arve-grow', arve_shortcode_arve( $attr ) );
 	}
