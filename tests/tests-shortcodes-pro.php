@@ -4,15 +4,6 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 
 	public function test_thumbnails() {
 
-		#$this->assertTrue( is_plugin_active( 'arve-pro/arve-pro.php' ) );
-		#$this->assertTrue( function_exists( 'arve_init' ) );
-		#$this->assertTrue( function_exists( 'arve_pro_init' ) );
-		#$this->assertTrue( function_exists( 'arve_pro_activation_hook' ) );
-		#$this->assertTrue( function_exists( 'arve_pro_filter_modes' ) );
-
-		global $_where;
-		$this->assertContains( 'blubber', $_where );
-
 		$filename = dirname( __FILE__ ) . '/test-attachment-2.jpg';
 		$contents = file_get_contents( $filename );
 
@@ -27,11 +18,12 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 			'mode'      => 'lazyload',
 		);
 
-		#$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
-		#$this->assertRegExp( '#<img.*src=".*test-attachment-2\.jpg#', arve_shortcode_arve( $attr ) );
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+		$this->assertRegExp( '#<img.*src=".*test-attachment-2\.jpg#', arve_shortcode_arve( $attr ) );
 
 		$attr['thumbnail'] = 'https://example.com/image.jpg';
-		#$this->assertContains( '<meta itemprop="thumbnailUrl" content="https://example.com/image.jpg"', arve_shortcode_arve( $attr ) );
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+		$this->assertRegExp( '#<img .*src="https://example.com/image.jpg"', arve_shortcode_arve( $attr ) );
 	}
 
 	public function test_lazyload() {
