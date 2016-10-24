@@ -2,18 +2,9 @@
 
 class Tests_Shortcode_Pro extends WP_UnitTestCase {
 
-	public function setUp() {
-		parent::setUp();
-		activate_plugin( 'arve-pro/arve-pro.php' );
-	}
-
-	public function tearDown() {
-		parent::tearDown();
-		deactivate_plugins( 'arve-pro/arve-pro.php' );
-	}
-
 	public function test_thumbnails() {
 
+		activate_plugin( 'arve-pro/arve-pro.php' );
 		$this->assertTrue( is_plugin_active( 'arve-pro/arve-pro.php' ) );
 
 		$filename = dirname( __FILE__ ) . '/test-attachment-2.jpg';
@@ -30,6 +21,7 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 			'mode'      => 'lazyload',
 		);
 
+		$this->assertNotContains( 'ARVE Error', arve_shortcode_arve( $attr ) );
 		$this->assertRegExp( '#<img.*src=".*test-attachment-2\.jpg#', arve_shortcode_arve( $attr ) );
 
 		$attr['thumbnail'] = 'https://example.com/image.jpg';
@@ -44,24 +36,24 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 			'mode'      => 'lazyload',
 		);
 
-		$this->assertNotContains( 'ARVE Error', arve_shortcode_arve( $attr ) );
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
 		$this->assertContains( 'data-arve-mode="lazyload"', arve_shortcode_arve( $attr ) );
 		$this->assertContains( 'data-arve-grow', arve_shortcode_arve( $attr ) );
 	}
 
 	public function test_modes() {
 
-		$output = arve_shortcode_arve( array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys' ) );
-
-		$this->assertNotContains( 'ARVE Error', $output );
-		$this->assertContains( 'data-arve-mode="normal"', $output );
-
-		$modes = array( 'lazyload', 'lazyload-lightbox' );
+		$modes = array( 'lazyload', 'lazyload-lightbox', 'link-lazyload' );
+		$atts  = array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys' );
 
 		foreach ( $modes as $key => $mode ) {
 
-			$output = arve_shortcode_arve( array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys', 'mode' => $mode ) );
-			$this->assertContains( 'Error', $output );
+			$attr['mode'] = $mode;
+
+			$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+			$this->assertContains( sprintf( 'data-arve-mode="%s"', $mode ), arve_shortcode_arve( $attr ) );
 		}
+
+		deactivate_plugins( 'arve-pro/arve-pro.php' );
 	}
 }

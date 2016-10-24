@@ -49,7 +49,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$output = arve_shortcode_arve( array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys' ) );
 
-		$this->assertNotContains( 'ARVE Error', $output );
+		$this->assertNotContains( 'Error', $output );
 		$this->assertContains( 'data-arve-mode="normal"', $output );
 
 		$modes = array( 'lazyload', 'lazyload-lightbox' );
@@ -75,7 +75,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$output = arve_shortcode_arve( $atts );
 
-		$this->assertNotContains( 'ARVE Error', $output );
+		$this->assertNotContains( 'Error', $output );
 
 		$this->assertContains( 'alignleft', $output );
 		$this->assertContains( 'autoplay=1', $output );
