@@ -294,12 +294,12 @@ function arve_get_iframe_providers() {
 
 function arve_get_host_properties() {
 
-	$s = 'https?://(?:www\.)?';
+	$s = 'https://(?:www\.)?';
 
 	$properties = array(
 		'allmyvideos' => array(
 			'name'      => 'allmyvideos.net',
-			'regex'     => $s . 'allmyvideos.net/(?:embed-)?([a-z0-9]+)',
+			'regex'     => $s . 'allmyvideos\.net/(?:embed-)?([a-z0-9]+)',
 			'embed_url' => 'https://allmyvideos.net/embed-%s.html',
 			'test_urls' => array(
 				array( 'https://allmyvideos.net/1bno5g9il7ha',            '1bno5g9il7ha' ),
@@ -307,7 +307,7 @@ function arve_get_host_properties() {
 			)
 		),
 		'alugha' => array(
-			'regex'     => $s . 'alugha.com/(?:1/)?videos/([a-z0-9_\-]+)',
+			'regex'     => $s . 'alugha\.com/(?:1/)?videos/([a-z0-9_\-]+)',
 			'embed_url' => 'https://alugha.com/embed/polymer-live/?v=%s',
 			'default_params' => 'nologo=1',
 			'auto_thumbnail' => true,
@@ -337,9 +337,9 @@ function arve_get_host_properties() {
 			)
 		),
 		'brightcove'   => array(
-			'regex'          => 'https?://(?:players|link)\.brightcove\.net/([^" ]+)',
+			'regex'          => $s . '(?:players|link)\.brightcove\.net/([^" ]+)',
 			'embed_url'      => 'https://players.brightcove.net/%s',
-			'no_url_embeds'  => true,
+			'requires_src'  => true,
 			'test_urls' => array(
 				array( 'http://players.brightcove.net/1160438696001/default_default/index.html?videoId=4587535845001', '1160438696001/default_default/index.html?videoId=4587535845001' ),
 			),
@@ -354,9 +354,9 @@ function arve_get_host_properties() {
 		),
 		'comedycentral' => array(
 			'name'           => 'Comedy Central',
-			'regex'          => 'https?://media.mtvnservices.com/embed/mgid:arc:video:comedycentral\.com:([a-z0-9\-]{36})',
+			'regex'          => '//media\.mtvnservices\.com/embed/mgid:arc:video:comedycentral\.com:([a-z0-9\-]{36})',
 			'embed_url'      => 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:%s',
-			'no_url_embeds'  => true,
+			'requires_src'  => true,
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
 			'test_urls' => array(
@@ -409,7 +409,7 @@ function arve_get_host_properties() {
 		'facebook' => array(
 			# https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/?type=2&theater
 			#<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FTheKillingsOfTonyBlair%2Fvideos%2Fvb.551089058285349%2F562955837098671%2F%3Ftype%3D2%26theater&width=500&show_text=false&height=280&appId" width="500" height="280" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-			'regex'             => '(https?://(?:www\.)?facebook\.com/[-a-z0-9]+/videos/[a-z.0-9/]+)',
+			'regex'             => '(' . $s . 'facebook\.com/[-a-z0-9]+/videos/[a-z.0-9/]+)',
 			'url_encode_id'     => true,
 			'embed_url'         => 'https://www.facebook.com/plugins/video.php?href=%s',
 			#'embed_url'         => 'https://www.facebook.com/video/embed?video_id=%s',
@@ -430,7 +430,7 @@ function arve_get_host_properties() {
 			)
 		),
 		'gametrailers' => array(
-			'no_url_embeds'    => true,
+			'requires_src'    => true,
 			'auto_thumbnail'   => false,
 			'test_ids' => array(
 				'797121a1-4685-4ecc-9388-72a88b0ef8da',
@@ -438,7 +438,7 @@ function arve_get_host_properties() {
 		),
 		'ign' => array(
 			'name'           => 'IGN',
-			'regex'          => '(https?://(?:www\.)?ign\.com/videos/[0-9]{4}/[0-9]{2}/[0-9]{2}/[0-9a-z\-]+)',
+			'regex'          => '(' . $s . 'ign\.com/videos/[0-9]{4}/[0-9]{2}/[0-9]{2}/[0-9a-z\-]+)',
 			'embed_url'      => 'http://widgets.ign.com/video/embed/content.html?url=%s',
 			'auto_thumbnail' => false,
 			'test_urls' => array(
@@ -463,7 +463,7 @@ function arve_get_host_properties() {
 			'requires_flash' => true,
 			'test_urls' => array(
 				array( 'http://www.liveleak.com/view?i=703_1385224413', 'i=703_1385224413' ), # Page/item 'i=' URL
-				array( 'http://www.liveleak.com/view?f=c85bdf5e45b2', 'f=c85bdf5e45b2' ),     #File f= URL
+				array( 'http://www.liveleak.com/view?f=c85bdf5e45b2',   'f=c85bdf5e45b2' ),     #File f= URL
 			),
 			'test_ids' => array(
 				'f=c85bdf5e45b2',
@@ -502,7 +502,7 @@ function arve_get_host_properties() {
 			'regex'          => $s . 'movieweb\.com/v/([a-z0-9]{14})',
 			'embed_url'      => 'http://movieweb.com/v/%s/embed',
 			'auto_thumbnail' => false,
-			'no_url_embeds'  => true,
+			'requires_src'  => true,
 		),
 		'mpora' => array(
 			'name'           => 'MPORA',
@@ -547,7 +547,7 @@ function arve_get_host_properties() {
 			# <iframe src="http://media.mtvnservices.com/embed/mgid:arc:video:spike.com:6a219882-c412-46ce-a8c9-32e043396621" width="512" height="288" frameborder="0"></iframe><p style="text-align:left;background-color:#FFFFFF;padding:4px;margin-top:4px;margin-bottom:0px;font-family:Arial, Helvetica, sans-serif;font-size:12px;"><b><a href="http://www.spike.com/shows/ink-master">Ink Master</a></b></p></div></div>
 			'regex'          => 'https?://media.mtvnservices.com/embed/mgid:arc:video:spike\.com:([a-z0-9\-]{36})',
 			'embed_url'      => 'http://media.mtvnservices.com/embed/mgid:arc:video:spike.com:%s',
-			'no_url_embeds'  => true,
+			'requires_src'  => true,
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
 			'test_ids' => array(
@@ -581,6 +581,15 @@ function arve_get_host_properties() {
 			'auto_thumbnail' => false,
 			'aspect_ratio'   => '480:270',
 			'requires_flash' => true,
+		),
+		'rutube' => array(
+			'name'           => 'RuTube.ru',
+			'regex'          => $s . 'rutube\.ru/play/embed/([0-9]+)',
+			'embed_url'      => 'https://rutube.ru/play/embed/%s',
+			'requires_flash' => true,
+			'test_urls'      => array(
+				array( '//rutube.ru/play/embed/9822149', 9822149 ),
+			),
 		),
 		'veoh' => array(
 			'regex'          => $s . 'veoh\.com/watch/([a-z0-9]+)',
@@ -618,7 +627,7 @@ function arve_get_host_properties() {
 		),
 		'vidspot' => array(
 			'name'      => 'vidspot.net',
-			'regex'     => $s . 'vidspot.net/(?:embed-)?([a-z0-9]+)',
+			'regex'     => $s . 'vidspot\.net/(?:embed-)?([a-z0-9]+)',
 			'embed_url' => 'http://vidspot.net/embed-%s.html',
 			'requires_flash' => true,
 			'test_urls' => array(
@@ -658,6 +667,18 @@ function arve_get_host_properties() {
 				'title'     => array( 0, 1 ),
 			),
 		),
+		'vk' => array(
+			'name' => 'VK',
+			#https://vk.com/video             162756656_171388096
+			#https://vk.com/video_ext.php?oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1
+			'regex'          => $s . 'vk\.com/video_ext\.php\?([^ ]+)',
+			'embed_url'      => 'https://vk.com/video_ext.php?%s',
+			'requires_src'   => true,
+			'auto_thumbnail' => false,
+			'test_urls' => array(
+				array( 'https://vk.com/video_ext.php?oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1', 'oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1' ),
+			),
+		),
 		'xtube' => array(
 			'name'           => 'XTube',
 			'regex'          => $s . 'xtube\.com/watch\.php\?v=([a-z0-9_\-]+)',
@@ -666,7 +687,7 @@ function arve_get_host_properties() {
 			'requires_flash' => true,
 		),
 		'yahoo' => array(
-			'regex'          => '(https?://(?:[a-z.]+)yahoo\.com/[/-a-z0-9öäü]+\.html)',
+			'regex'          => '(//(?:[a-z.]+)yahoo\.com/[/-a-z0-9öäü]+\.html)',
 			'embed_url'      => '%s',
 			'default_params' => 'format=embed',
 			'auto_thumbnail' => true,
@@ -678,7 +699,7 @@ function arve_get_host_properties() {
 			)
 		),
 		'youku' => array(
-			'regex'          => 'https?://(?:[a-z.]+)?.youku.com/(?:embed/|v_show/id_)([a-z0-9]+)',
+			'regex'          => '//(?:[a-z.]+)?\.youku.com/(?:embed/|v_show/id_)([a-z0-9]+)',
 			'embed_url'      => 'http://player.youku.com/embed/%s',
 			'auto_thumbnail' => false,
 			'aspect_ratio'   => '450:292.5',

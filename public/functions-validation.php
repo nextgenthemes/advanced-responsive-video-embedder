@@ -2,8 +2,11 @@
 
 function arve_validate_url( $url ) {
 
-  if ( arve_starts_with( $url, 'http' ) && filter_var( $url, FILTER_VALIDATE_URL ) !== false ) {
+  if ( arve_starts_with( $url, '//' ) ) {
+    $url = 'https:' . $url;
+  }
 
+  if ( arve_starts_with( $url, 'http' ) && filter_var( $url, FILTER_VALIDATE_URL ) !== false ) {
     return true;
   }
 

@@ -42,7 +42,7 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 	public function test_modes() {
 
 		$modes = array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' );
-		$atts  = array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys' );
+		$attr  = array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys' );
 
 		foreach ( $modes as $mode ) {
 

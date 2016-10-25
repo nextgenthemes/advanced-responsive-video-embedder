@@ -25,6 +25,7 @@ function arve_build_iframe_src( $atts ) {
 	} elseif ( 'ted' == $provider && preg_match( "/^[a-z]{2}$/", $lang ) === 1 ) {
 
 		$pattern = 'https://embed-ssl.ted.com/talks/lang/' . $lang . '/%s.html';
+
 	}
 
 	if ( isset( $properties[ $provider ]['url_encode_id'] ) && $properties[ $provider ]['url_encode_id'] ) {

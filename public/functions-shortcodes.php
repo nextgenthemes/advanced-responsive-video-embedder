@@ -153,7 +153,7 @@ function arve_shortcode_arve_supported() {
     $out .= '<tr>';
     $out .= sprintf( '<td>%d</td>', $count++ );
     $out .= sprintf( '<td>%s</td>', esc_html( $values['name'] ) );
-    $out .= sprintf( '<td>%s</td>', ( isset( $values['no_url_embeds'] ) && $values['no_url_embeds'] ) ? '' : '&#x2713;' );
+    $out .= sprintf( '<td>%s</td>', ( isset( $values['requires_src'] ) && $values['requires_src'] ) ? '' : '&#x2713;' );
     $out .= sprintf( '<td>%s</td>', ( isset( $values['embed_url'] ) && arve_starts_with( $values['embed_url'], 'https' ) ) ? '&#x2713;' : '' );
     $out .= sprintf( '<td>%s</td>', ! empty( $values['requires_flash'] ) ? '&#x2713;' : '' );
     $out .= sprintf( '<td>%s</td>', ( isset( $values['auto_thumbnail'] ) && $values['auto_thumbnail'] ) ? '&#x2713;' : '' );
