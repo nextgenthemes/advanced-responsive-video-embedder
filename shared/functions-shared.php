@@ -326,14 +326,16 @@ function arve_get_host_properties() {
 				array( 'https://archive.org/details/arashyekt4_gmail_Cat', 'arashyekt4' ),
 			)
 		),
+		#<iframe src="http://www.break.com/embed/2542591?embed=1" width="640" height="360" webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder="0"></iframe><div>- Watch More <a href="http://www.break.com">Funny Videos</a>&nbsp;<font size=1><a href="http://view.break.com/2542591" target="_blank">First Person POV of Tornado Strike</a></font></div>
 		'break' => array(
-			'regex'          => $s . 'break\.com/video/(?:[a-z0-9/-]+)-([0-9]+)$',
+			'regex'          => 'https://(?:(www|view)\.)?break\.com/video/(?:[-a-z0-9]+)([0-9]+)',
 			'embed_url'      => 'http://break.com/embed/%s',
 			'default_params' => 'embed=1',
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
 			'test_urls' => array(
-				array( 'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591', 2542591 ),
+				array( 'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591-test', 2542591 ),
+				array( 'http://view.break.com/2542591-test', 2542591 ),
 			)
 		),
 		'brightcove'   => array(
