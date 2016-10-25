@@ -70,7 +70,7 @@ function arve_build_meta_html( $atts ) {
 						'data-object-fit' => true,
 						'itemprop'        => 'thumbnailUrl',
 						'src'             => $atts['img_src'],
-						'srcset'          => $atts['img_srcset'],
+						'srcset'          => ! empty( $atts['img_srcset'] ) ? $atts['img_srcset'] : false,
 						#'sizes'    => '(max-width: 700px) 100vw, 1280px',
 						'alt'             => __( 'Video Thumbnail', 'advanced-responsive-video-embedder' ),
 					) )

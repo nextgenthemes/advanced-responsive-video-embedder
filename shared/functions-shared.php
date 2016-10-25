@@ -328,7 +328,7 @@ function arve_get_host_properties() {
 		),
 		#<iframe src="http://www.break.com/embed/2542591?embed=1" width="640" height="360" webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder="0"></iframe><div>- Watch More <a href="http://www.break.com">Funny Videos</a>&nbsp;<font size=1><a href="http://view.break.com/2542591" target="_blank">First Person POV of Tornado Strike</a></font></div>
 		'break' => array(
-			'regex'          => 'https://(?:(www|view)\.)?break\.com/video/(?:[-a-z0-9]+)([0-9]+)',
+			'regex'          => 'https?://(?:www\.|view\.)break\.com/(?:video/|embed/)?[-a-z0-9]*?([0-9]+)',
 			'embed_url'      => 'http://break.com/embed/%s',
 			'default_params' => 'embed=1',
 			'auto_thumbnail' => false,
