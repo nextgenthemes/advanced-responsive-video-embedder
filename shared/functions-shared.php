@@ -336,10 +336,11 @@ function arve_get_host_properties() {
 			'test_urls' => array(
 				array( 'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591-test', 2542591 ),
 				array( 'http://view.break.com/2542591-test', 2542591 ),
+				array( 'http://www.break.com/embed/2542591?embed=1', 2542591 ),
 			)
 		),
 		'brightcove'   => array(
-			'regex'          => $s . '(?:players|link)\.brightcove\.net/([^" ]+)',
+			'regex'          => 'https?://(?:players|link)\.brightcove\.net/([^" ]+)',
 			'embed_url'      => 'https://players.brightcove.net/%s',
 			'requires_src'  => true,
 			'test_urls' => array(
@@ -356,7 +357,7 @@ function arve_get_host_properties() {
 		),
 		'comedycentral' => array(
 			'name'           => 'Comedy Central',
-			'regex'          => '//media\.mtvnservices\.com/embed/mgid:arc:video:comedycentral\.com:([a-z0-9\-]{36})',
+			'regex'          => 'https?://media\.mtvnservices\.com/embed/mgid:arc:video:comedycentral\.com:([a-z0-9\-]{36})',
 			'embed_url'      => 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:%s',
 			'requires_src'  => true,
 			'auto_thumbnail' => false,
@@ -549,7 +550,7 @@ function arve_get_host_properties() {
 			# <iframe src="http://media.mtvnservices.com/embed/mgid:arc:video:spike.com:6a219882-c412-46ce-a8c9-32e043396621" width="512" height="288" frameborder="0"></iframe><p style="text-align:left;background-color:#FFFFFF;padding:4px;margin-top:4px;margin-bottom:0px;font-family:Arial, Helvetica, sans-serif;font-size:12px;"><b><a href="http://www.spike.com/shows/ink-master">Ink Master</a></b></p></div></div>
 			'regex'          => 'https?://media.mtvnservices.com/embed/mgid:arc:video:spike\.com:([a-z0-9\-]{36})',
 			'embed_url'      => 'http://media.mtvnservices.com/embed/mgid:arc:video:spike.com:%s',
-			'requires_src'  => true,
+			'requires_src'   => true,
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
 			'test_ids' => array(
