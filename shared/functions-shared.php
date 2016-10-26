@@ -368,14 +368,14 @@ function arve_get_host_properties() {
 			)
 		),
 		'dailymotion' => array(
-			'regex'          => $s . '(?:dai\.ly|dailymotion\.com/video)/([^_]+)',
+			'regex'          => $s . '(?:dai\.ly|dailymotion\.com/video)/([a-z0-9]+)',
 			'embed_url'      => 'https://www.dailymotion.com/embed/video/%s',
 			'default_params' => 'logo=0&hideInfos=1&related=0',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'test_urls' => array(
 				array( 'http://www.dailymotion.com/video/x41ia79_mass-effect-andromeda-gameplay-alpha_videogames', 'x41ia79' ),
-				array( 'http://dai.ly/x3cwlqz', 'x3cwlqz' ),
+				array( 'http://dai.ly/x3cwlqz',          'x3cwlqz' ),
 			),
 			'query_args'     => array(
 				'api' => array(
@@ -591,7 +591,7 @@ function arve_get_host_properties() {
 			'embed_url'      => 'https://rutube.ru/play/embed/%s',
 			'requires_flash' => true,
 			'test_urls'      => array(
-				array( '//rutube.ru/play/embed/9822149', 9822149 ),
+				array( 'https://rutube.ru/play/embed/9822149', 9822149 ),
 			),
 		),
 		'veoh' => array(
