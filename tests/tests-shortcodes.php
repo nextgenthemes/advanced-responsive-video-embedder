@@ -2,6 +2,8 @@
 
 class Tests_Shortcode extends WP_UnitTestCase {
 
+
+
 	public function test_thumbnails() {
 
 		$filename = dirname( __FILE__ ) . '/test-attachment.jpg';
@@ -13,8 +15,9 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$attachment_id = parent::_make_attachment( $upload );
 
 		$attr = array(
-			'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
+			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
 			'thumbnail' => (string) $attachment_id,
+			'title'     => 'Something',
 		);
 
 		$this->assertRegExp( '#<meta itemprop="thumbnailUrl" content=".*test-attachment\.jpg#', arve_shortcode_arve( $attr ) );
@@ -33,16 +36,30 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function test_compare_shortcodes() {
 
-		$arve_shortcode = arve_shortcode_arve( array(
-			'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys'
-		) );
+		$atts = array(
+			'id'        => 'hRonZ4wP8Ys',
+			'provider'  => 'youtube',
+			'thumbnail' => 'https://example.com/image.jpg',
+			'title'     => 'Something',
+			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
+		);
 
-		$old_shortcode = arve_shortcode_arve( array(
-			'provider' => 'youtube',
-			'id'       => 'hRonZ4wP8Ys',
-		) );
+		$new_atts = $old_atts = $atts;
 
-		$this->assertEquals( $arve_shortcode, $old_shortcode );
+		$this->assertEquals(
+			arve_shortcode_arve( $old_atts, null, false ),
+			arve_shortcode_arve( $new_atts )
+		);
+
+		unset( $old_atts['url'] );
+
+		unset( $new_atts['id'] );
+		unset( $new_atts['provider'] );
+
+		$this->assertEquals(
+			arve_shortcode_arve( $old_atts, null, false ),
+			arve_shortcode_arve( $new_atts )
+		);
 	}
 
 	public function NO_test_modes() {
@@ -68,6 +85,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'autoplay'    => 'y',
 			'description' => '    Description Test   ',
 			'maxwidth'    => '333',
+			'thumbnail'   => 'https://example.com/image.jpg',
 			'title'       => ' Test <title>  ',
 			'upload_date' => '2016-10-22',
 			'url'         => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
