@@ -294,7 +294,7 @@ function arve_get_iframe_providers() {
 
 function arve_get_host_properties() {
 
-	$s = 'https://(?:www\.)?';
+	$s = 'https?://(?:www\.)?';
 
 	$properties = array(
 		'allmyvideos' => array(
