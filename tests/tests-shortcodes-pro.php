@@ -31,6 +31,7 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 		$attr = array(
 			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
 			'thumbnail' => 'https://example.com/image.jpg',
+			'title'     => 'title test', # to prevent oembed call for title
 			'mode'      => 'lazyload',
 		);
 
