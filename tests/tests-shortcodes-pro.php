@@ -2,7 +2,43 @@
 
 class Tests_Shortcode_Pro extends WP_UnitTestCase {
 
-	public function test_thumbnails() {
+	public function NO_test_oembed_thumbnail_and_title() {
+
+		$properties = arve_get_host_properties();
+
+		remove_filter( 'shortcode_atts_arve',    'arve_pro_filter_atts_img_src', 8 );
+		remove_filter( 'shortcode_atts_arve',    'arve_pro_filter_atts_img_src_srcset', 9 );
+
+		foreach ( $properties as $provider => $props ) :
+
+			if ( empty( $values['tests'] ) ) {
+				continue;
+			}
+
+			foreach ( $values['tests'] as $key => $test ) {
+
+				$attr = array(
+					'url'  => $test['url'],
+					'mode' => 'lazyload',
+				);
+
+				$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+
+				#if( isset( $props['auto_title'] ) && $props['auto_title'] ) {
+				if( isset( $test['oembed_title'] ) ) {
+					$this->assertContains( '<h5 itemprop="name" class="arve-title">' . $test['title'] . '</h5>', arve_shortcode_arve( $attr ) );
+				}
+				if( isset( $test['oembed_img'] ) ) {
+					$this->assertRegex( '#<img [^>]*src="' . $test['oembed_img'] . '#', arve_shortcode_arve( $attr ) );
+				}
+			}
+		endforeach;
+
+		add_filter( 'shortcode_atts_arve',    'arve_pro_filter_atts_img_src', 8 );
+		add_filter( 'shortcode_atts_arve',    'arve_pro_filter_atts_img_src_srcset', 9 );
+	}
+
+	public function test_thumbnail_byattachment_and_url() {
 
 		$filename = dirname( __FILE__ ) . '/test-attachment-2.jpg';
 		$contents = file_get_contents( $filename );
@@ -15,6 +51,7 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 		$attr = array(
 			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
 			'thumbnail' => (string) $attachment_id,
+			'title'     => 'title test', # to prevent oembed call for title
 			'mode'      => 'lazyload',
 		);
 
@@ -43,7 +80,11 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 	public function test_modes() {
 
 		$modes = array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' );
-		$attr  = array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys' );
+		$attr  = array(
+			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
+			'title'     => 'something',
+			'thumbnail' => 'https://example.com/i.jpg',
+		 );
 
 		foreach ( $modes as $mode ) {
 

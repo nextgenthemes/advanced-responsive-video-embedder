@@ -135,25 +135,18 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$properties = arve_get_host_properties();
 
-		foreach( $properties as $provider => $host_props ) :
+		foreach( $properties as $provider => $props ) :
 
-	    if ( empty( $host_props['test_urls'] ) || empty( $host_props['regex'] ) ) {
+	    if ( empty( $props['regex'] ) ) {
 	      continue;
 	    }
 
-	    foreach( $host_props['test_urls'] as $urltest ) {
+	    foreach( $props['tests'] as $test ) {
 
-	      if ( is_array( $urltest ) ) {
-					$url_to_test = $urltest[0];
-		      $expected_id = $urltest[1];
-	      } else {
-					$expected_id = $url_to_test = $urltest;
-				}
-
-	      preg_match( '#' . $host_props['regex'] . '#i', $url_to_test, $matches );
+	      preg_match( '#' . $props['regex'] . '#i', $test['url'], $matches );
 
 				$this->assertArrayHasKey( 1, $matches, $provider );
-	      $this->assertEquals( $matches[1], $expected_id, $provider );
+	      $this->assertEquals( $matches[1], $test['id'], $provider );
 	    }
 
 	  endforeach;

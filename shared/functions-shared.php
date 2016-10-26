@@ -301,9 +301,9 @@ function arve_get_host_properties() {
 			'name'      => 'allmyvideos.net',
 			'regex'     => $s . 'allmyvideos\.net/(?:embed-)?([a-z0-9]+)',
 			'embed_url' => 'https://allmyvideos.net/embed-%s.html',
-			'test_urls' => array(
-				array( 'https://allmyvideos.net/1bno5g9il7ha',            '1bno5g9il7ha' ),
-				array( 'https://allmyvideos.net/embed-1bno5g9il7ha.html', '1bno5g9il7ha' ),
+			'tests' => array(
+				array( 'url' => 'https://allmyvideos.net/1bno5g9il7ha',            'id' => '1bno5g9il7ha' ),
+				array( 'url' => 'https://allmyvideos.net/embed-1bno5g9il7ha.html', 'id' => '1bno5g9il7ha' ),
 			)
 		),
 		'alugha' => array(
@@ -311,9 +311,9 @@ function arve_get_host_properties() {
 			'embed_url' => 'https://alugha.com/embed/polymer-live/?v=%s',
 			'default_params' => 'nologo=1',
 			'auto_thumbnail' => true,
-			'test_urls' => array(
-				array( 'https://alugha.com/1/videos/youtube-54m1YfEuYU8',                'youtube-54m1YfEuYU8' ),
-				array( 'https://alugha.com/videos/7cab9cd7-f64a-11e5-939b-c39074d29b86', '7cab9cd7-f64a-11e5-939b-c39074d29b86' ),
+			'tests' => array(
+				array( 'url' => 'https://alugha.com/1/videos/youtube-54m1YfEuYU8',                'id' =>  'youtube-54m1YfEuYU8' ),
+				array( 'url' => 'https://alugha.com/videos/7cab9cd7-f64a-11e5-939b-c39074d29b86', 'id' =>  '7cab9cd7-f64a-11e5-939b-c39074d29b86' ),
 			)
 		),
 		'archiveorg' => array(
@@ -322,8 +322,8 @@ function arve_get_host_properties() {
 			'embed_url'      => 'https://www.archive.org/embed/%s/',
 			'default_params' => '',
 			'auto_thumbnail' => false,
-			'test_urls' => array(
-				array( 'https://archive.org/details/arashyekt4_gmail_Cat', 'arashyekt4' ),
+			'tests' => array(
+				array( 'url' => 'https://archive.org/details/arashyekt4_gmail_Cat', 'id' => 'arashyekt4' ),
 			)
 		),
 		#<iframe src="http://www.break.com/embed/2542591?embed=1" width="640" height="360" webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder="0"></iframe><div>- Watch More <a href="http://www.break.com">Funny Videos</a>&nbsp;<font size=1><a href="http://view.break.com/2542591" target="_blank">First Person POV of Tornado Strike</a></font></div>
@@ -333,18 +333,30 @@ function arve_get_host_properties() {
 			'default_params' => 'embed=1',
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
-			'test_urls' => array(
-				array( 'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591-test', 2542591 ),
-				array( 'http://view.break.com/2542591-test', 2542591 ),
-				array( 'http://www.break.com/embed/2542591?embed=1', 2542591 ),
+			'tests' => array(
+				array(
+					'url' => 'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591-test',
+					'id'  =>                                                                2542591,
+				),
+				array(
+					'url' => 'http://view.break.com/2542591-test',
+					'id'  =>                        2542591,
+				),
+				array(
+					'url' => 'http://www.break.com/embed/2542591?embed=1',
+					'id'  =>                             2542591,
+				),
 			)
 		),
 		'brightcove'   => array(
 			'regex'          => 'https?://(?:players|link)\.brightcove\.net/([^" ]+)',
 			'embed_url'      => 'https://players.brightcove.net/%s',
 			'requires_src'  => true,
-			'test_urls' => array(
-				array( 'http://players.brightcove.net/1160438696001/default_default/index.html?videoId=4587535845001', '1160438696001/default_default/index.html?videoId=4587535845001' ),
+			'tests' => array(
+				array(
+					'url' => 'http://players.brightcove.net/1160438696001/default_default/index.html?videoId=4587535845001',
+					'id'  =>                               '1160438696001/default_default/index.html?videoId=4587535845001'
+				),
 			),
 		),
 		'collegehumor' => array(
@@ -354,17 +366,30 @@ function arve_get_host_properties() {
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'aspect_ratio'   => '600:369',
+			'tests' => array(
+				array(
+					'url'          => 'http://www.collegehumor.com/video/6854928/troopers-holopad',
+					'id'           => 6854928,
+					'oembed_title' => 'Troopers Holopad',
+				),
+			)
 		),
 		'comedycentral' => array(
 			'name'           => 'Comedy Central',
-			'regex'          => 'https?://media\.mtvnservices\.com/embed/mgid:arc:video:comedycentral\.com:([a-z0-9\-]{36})',
+			'regex'          => 'https?://media\.mtvnservices\.com/embed/mgid:arc:video:comedycentral\.com:([-a-z0-9]{36})',
 			'embed_url'      => 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:%s',
-			'requires_src'  => true,
+			'requires_src'   => true,
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
-			'test_urls' => array(
-				array( 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:c80adf02-3e24-437a-8087-d6b77060571c', 'c80adf02-3e24-437a-8087-d6b77060571c' ),
-				array( 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:c3c1da76-96c2-48b4-b38d-8bb16fbf7a58', 'c3c1da76-96c2-48b4-b38d-8bb16fbf7a58' ),
+			'tests' => array(
+				array(
+					'url' => 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:c80adf02-3e24-437a-8087-d6b77060571c',
+					'id'  =>                                                                      'c80adf02-3e24-437a-8087-d6b77060571c',
+				),
+				array(
+					'url' => 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:c3c1da76-96c2-48b4-b38d-8bb16fbf7a58',
+					'id'  =>                                                                      'c3c1da76-96c2-48b4-b38d-8bb16fbf7a58',
+				),
 			)
 		),
 		'dailymotion' => array(
@@ -373,9 +398,17 @@ function arve_get_host_properties() {
 			'default_params' => 'logo=0&hideInfos=1&related=0',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
-			'test_urls' => array(
-				array( 'http://www.dailymotion.com/video/x41ia79_mass-effect-andromeda-gameplay-alpha_videogames', 'x41ia79' ),
-				array( 'http://dai.ly/x3cwlqz',          'x3cwlqz' ),
+			'tests' => array(
+				array(
+					'url'          => 'http://www.dailymotion.com/video/x41ia79_mass-effect-andromeda-gameplay-alpha_videogames',
+					'id'           =>                                  'x41ia79',
+					'oembed_title' => 'Mass Effect Andromeda - Gameplay Alpha',
+				),
+				array(
+					'url'          => 'http://dai.ly/x3cwlqz',
+					'id'           =>               'x3cwlqz',
+					'oembed_title' => 'Mass Effect Andromeda',
+				),
 			),
 			'query_args'     => array(
 				'api' => array(
@@ -417,8 +450,12 @@ function arve_get_host_properties() {
 			'embed_url'         => 'https://www.facebook.com/plugins/video.php?href=%s',
 			#'embed_url'         => 'https://www.facebook.com/video/embed?video_id=%s',
 			'auto_thumbnail'    => true,
-			'test_urls' => array(
-				array( 'https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/?type=2&theater', 'https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/' ),
+			'tests' => array(
+				array(
+					'url'     => 'https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/?type=2&theater',
+					'id'      => 'https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/',
+					'img'     => '',
+				),
 			),
 		),
 		'funnyordie' => array(
@@ -428,8 +465,12 @@ function arve_get_host_properties() {
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'aspect_ratio'   => '640:400',
-			'test_urls' => array(
-				array( 'http://www.funnyordie.com/videos/76585438d8/sarah-silverman-s-we-are-miracles-hbo-special', '76585438d8' ),
+			'tests' => array(
+				array(
+					'url'          => 'http://www.funnyordie.com/videos/76585438d8/sarah-silverman-s-we-are-miracles-hbo-special',
+					'id'           =>                                  '76585438d8',
+					'oembed_title' => "Sarah Silverman's - We Are Miracles HBO Special",
+				),
 			)
 		),
 		'gametrailers' => array(
@@ -444,7 +485,7 @@ function arve_get_host_properties() {
 			'regex'          => '(' . $s . 'ign\.com/videos/[0-9]{4}/[0-9]{2}/[0-9]{2}/[0-9a-z\-]+)',
 			'embed_url'      => 'http://widgets.ign.com/video/embed/content.html?url=%s',
 			'auto_thumbnail' => false,
-			'test_urls' => array(
+			'tests' => array(
 				'http://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
 			)
 		),
@@ -452,9 +493,9 @@ function arve_get_host_properties() {
 			'regex'          => $s . 'kickstarter\.com/projects/([0-9a-z\-]+/[-0-9a-z\-]+)',
 			'embed_url'      => 'https://www.kickstarter.com/projects/%s/widget/video.html',
 			'auto_thumbnail' => false,
-			'test_urls' => array(
-				array( 'https://www.kickstarter.com/projects/obsidian/project-eternity?ref=discovery', 'obsidian/project-eternity' ),
-				array( 'https://www.kickstarter.com/projects/trinandtonic/friendship-postcards?ref=category_featured', 'trinandtonic/friendship-postcards' ),
+			'tests' => array(
+				array( 'url' => 'https://www.kickstarter.com/projects/obsidian/project-eternity?ref=discovery', 'id' => 'obsidian/project-eternity' ),
+				array( 'url' => 'https://www.kickstarter.com/projects/trinandtonic/friendship-postcards?ref=category_featured', 'id' => 'trinandtonic/friendship-postcards' ),
 			)
 		),
 		'liveleak' => array(
@@ -464,9 +505,9 @@ function arve_get_host_properties() {
 			'default_params' => 'wmode=transparent',
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
-			'test_urls' => array(
-				array( 'http://www.liveleak.com/view?i=703_1385224413', 'i=703_1385224413' ), # Page/item 'i=' URL
-				array( 'http://www.liveleak.com/view?f=c85bdf5e45b2',   'f=c85bdf5e45b2' ),     #File f= URL
+			'tests' => array(
+				array( 'url' => 'http://www.liveleak.com/view?i=703_1385224413', 'id' => 'i=703_1385224413' ), # Page/item 'i=' URL
+				array( 'url' => 'http://www.liveleak.com/view?f=c85bdf5e45b2',   'id' => 'f=c85bdf5e45b2' ),     #File f= URL
 			),
 			'test_ids' => array(
 				'f=c85bdf5e45b2',
@@ -487,18 +528,18 @@ function arve_get_host_properties() {
 			'name'           => 'kla.tv',
 			'url'            => true,
 			'auto_thumbnail' => false,
-			'test_urls' => array(
-				array( 'http://www.klagemauer.tv/9106', 9106 ),
-				array( 'http://www.kla.tv/9122', 9122 ),
+			'tests' => array(
+				array( 'url' => 'http://www.klagemauer.tv/9106', 'id' =>  9106 ),
+				array( 'url' => 'http://www.kla.tv/9122', 'id' =>  9122 ),
 			),
 		),
 		'metacafe' => array(
 			'regex'          => $s . 'metacafe\.com/(?:watch|fplayer)/([0-9]+)',
 			'embed_url'      => 'http://www.metacafe.com/embed/%s/',
 			'auto_thumbnail' => false,
-			'test_urls' => array(
-				array( 'http://www.metacafe.com/watch/11433151/magical-handheld-fireballs/', 11433151 ),
-				array( 'http://www.metacafe.com/watch/11322264/everything_wrong_with_robocop_in_7_minutes/', 11322264 ),
+			'tests' => array(
+				array( 'url' => 'http://www.metacafe.com/watch/11433151/magical-handheld-fireballs/', 'id' => 11433151 ),
+				array( 'url' => 'http://www.metacafe.com/watch/11322264/everything_wrong_with_robocop_in_7_minutes/', 'id' => 11322264 ),
 			),
 		),
 		'movieweb' => array(
@@ -512,9 +553,9 @@ function arve_get_host_properties() {
 			'regex'          => $s . 'mpora\.(?:com|de)/videos/([a-z0-9]+)',
 			'embed_url'      => 'http://mpora.com/videos/%s/embed',
 			'auto_thumbnail' => true,
-			'test_urls' => array(
-				array( 'http://mpora.com/videos/AAdphry14rkn', 'AAdphry14rkn' ),
-				array( 'http://mpora.de/videos/AAdpxhiv6pqd', 'AAdpxhiv6pqd' ),
+			'tests' => array(
+				array( 'url' => 'http://mpora.com/videos/AAdphry14rkn', 'id' => 'AAdphry14rkn' ),
+				array( 'url' => 'http://mpora.de/videos/AAdpxhiv6pqd', 'id' => 'AAdpxhiv6pqd' ),
 			)
 		),
 		'myspace' => array(
@@ -522,8 +563,8 @@ function arve_get_host_properties() {
 			'regex'          => $s . 'myspace\.com/.+/([0-9]+)',
 			'embed_url'      => 'https://media.myspace.com/play/video/%s',
 			'auto_thumbnail' => false,
-			'test_urls' => array(
-				array( 'https://myspace.com/myspace/video/dark-rooms-the-shadow-that-looms-o-er-my-heart-live-/109471212', 109471212 ),
+			'tests' => array(
+				array( 'url' => 'https://myspace.com/myspace/video/dark-rooms-the-shadow-that-looms-o-er-my-heart-live-/109471212', 'id' => 109471212 ),
 			)
 		),
 		/*
@@ -532,7 +573,7 @@ function arve_get_host_properties() {
 			'regex'          => $s . 'myvideo\.de/(?:watch|embed)/([0-9]+)',
 			'embed_url'      => 'http://www.myvideo.de/embedded/public/%s',
 			'auto_thumbnail' => false,
-			'test_urls' => array(
+			'tests' => array(
 				'http://www.myvideo.de/watch/8432624/Angeln_mal_anders',
 			)
 		),
@@ -542,8 +583,8 @@ function arve_get_host_properties() {
 			'embed_url'      => 'http://www.snotr.com/embed/%s',
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
-			'test_urls' => array(
-				array( 'http://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is', 12314 ),
+			'tests' => array(
+				array( 'url' => 'http://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is', 'id' => 12314 ),
 			)
 		),
 		'spike' => array(
@@ -564,17 +605,17 @@ function arve_get_host_properties() {
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'requires_flash' => true,
-			'test_urls' => array(
-				array( 'https://www.ted.com/talks/margaret_stewart_how_youtube_thinks_about_copyright', 'margaret_stewart_how_youtube_thinks_about_copyright' ),
+			'tests' => array(
+				array( 'url' => 'https://www.ted.com/talks/margaret_stewart_how_youtube_thinks_about_copyright', 'id' => 'margaret_stewart_how_youtube_thinks_about_copyright' ),
 			),
 		),
 		'twitch' => array(
 			'regex'          => $s . 'twitch.tv/(?!directory)(?|[a-z0-9_]+/v/([0-9]+)|([a-z0-9_]+))',
 			'embed_url'      => 'https://player.twitch.tv/?channel=%s', # if numeric id https://player.twitch.tv/?video=v%s
 			'auto_thumbnail' => true,
-			'test_urls' => array(
-				array( 'https://www.twitch.tv/imaqtpie', 'imaqtpie' ),
-				array( 'https://www.twitch.tv/imaqtpie/v/95318019', 95318019 ),
+			'tests' => array(
+				array( 'url' => 'https://www.twitch.tv/imaqtpie', 'id' => 'imaqtpie' ),
+				array( 'url' => 'https://www.twitch.tv/imaqtpie/v/95318019', 'id' => 95318019 ),
 			),
 		),
 		'ustream' => array(
@@ -590,8 +631,8 @@ function arve_get_host_properties() {
 			'regex'          => $s . 'rutube\.ru/play/embed/([0-9]+)',
 			'embed_url'      => 'https://rutube.ru/play/embed/%s',
 			'requires_flash' => true,
-			'test_urls'      => array(
-				array( 'https://rutube.ru/play/embed/9822149', 9822149 ),
+			'tests'      => array(
+				array( 'url' => 'https://rutube.ru/play/embed/9822149', 'id' => 9822149 ),
 			),
 		),
 		'veoh' => array(
@@ -600,8 +641,8 @@ function arve_get_host_properties() {
 			'default_params' => 'player=videodetailsembedded&id=anonymous',
 			'auto_thumbnail' => false,
 			#'aspect_ratio' => 60.257,
-			'test_urls' => array(
-				array( 'http://www.veoh.com/watch/v19866882CAdjNF9b', 'v19866882CAdjNF9b' ),
+			'tests' => array(
+				array( 'url' => 'http://www.veoh.com/watch/v19866882CAdjNF9b', 'id' => 'v19866882CAdjNF9b' ),
 			)
 		),
 		'vevo' => array(
@@ -610,8 +651,8 @@ function arve_get_host_properties() {
 			'default_params' => 'playlist=false&playerType=embedded&env=0',
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
-			'test_urls' => array(
-				array( 'https://www.vevo.com/watch/the-offspring/the-kids-arent-alright/USSM20100649', 'USSM20100649' ),
+			'tests' => array(
+				array( 'url' => 'https://www.vevo.com/watch/the-offspring/the-kids-arent-alright/USSM20100649', 'id' => 'USSM20100649' ),
 				#array( '', '' ),
 				#array( '', '' ),
 			),
@@ -624,8 +665,8 @@ function arve_get_host_properties() {
 			'auto_title'     => true,
 			'aspect_ratio'   => '545:349',
 			'requires_flash' => true,
-			'test_urls' => array(
-				array( 'https://www.viddler.com/v/a695c468', 'a695c468' ),
+			'tests' => array(
+				array( 'url' => 'https://www.viddler.com/v/a695c468', 'id' => 'a695c468' ),
 			),
 		),
 		'vidspot' => array(
@@ -633,9 +674,9 @@ function arve_get_host_properties() {
 			'regex'     => $s . 'vidspot\.net/(?:embed-)?([a-z0-9]+)',
 			'embed_url' => 'http://vidspot.net/embed-%s.html',
 			'requires_flash' => true,
-			'test_urls' => array(
-				array( 'http://vidspot.net/285wf9uk3rry',            '285wf9uk3rry' ),
-				array( 'http://vidspot.net/embed-285wf9uk3rry.html', '285wf9uk3rry' ),
+			'tests' => array(
+				array( 'url' => 'http://vidspot.net/285wf9uk3rry', 'id' => '285wf9uk3rry' ),
+				array( 'url' => 'http://vidspot.net/embed-285wf9uk3rry.html', 'id' => '285wf9uk3rry' ),
 			),
 		),
 		'vine' => array(
@@ -644,10 +685,10 @@ function arve_get_host_properties() {
 			'default_params' => '', //* audio=1 supported
 			'auto_thumbnail' => false,
 			'aspect_ratio'   => '1:1',
-			'test_urls' => array(
-				array( 'https://vine.co/v/bjAaLxQvOnQ', 'bjAaLxQvOnQ' ),
-				array( 'https://vine.co/v/MbrreglaFrA', 'MbrreglaFrA' ),
-				array( 'https://vine.co/v/bjHh0zHdgZT/embed', 'bjHh0zHdgZT' ),
+			'tests' => array(
+				array( 'url' => 'https://vine.co/v/bjAaLxQvOnQ',       'id' => 'bjAaLxQvOnQ' ),
+				array( 'url' => 'https://vine.co/v/MbrreglaFrA',       'id' => 'MbrreglaFrA' ),
+				array( 'url' => 'https://vine.co/v/bjHh0zHdgZT/embed', 'id' => 'bjHh0zHdgZT' ),
 			),
 		),
 		'vimeo' => array(
@@ -656,8 +697,8 @@ function arve_get_host_properties() {
 			'default_params' => 'html5=1&title=1&byline=0&portrait=0',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
-			'test_urls' => array(
-				array( 'https://vimeo.com/124400795', 124400795 ),
+			'tests' => array(
+				array( 'url' => 'https://vimeo.com/124400795', 'id' => 124400795 ),
 			),
 			'query_argss' => array(
 				'autoplay'  => array( 'bool', __( 'Autoplay', ARVE_SLUG ) ),
@@ -678,8 +719,8 @@ function arve_get_host_properties() {
 			'embed_url'      => 'https://vk.com/video_ext.php?%s',
 			'requires_src'   => true,
 			'auto_thumbnail' => false,
-			'test_urls' => array(
-				array( 'https://vk.com/video_ext.php?oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1', 'oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1' ),
+			'tests' => array(
+				array( 'url' => 'https://vk.com/video_ext.php?oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1', 'id' => 'oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1' ),
 			),
 		),
 		'xtube' => array(
@@ -696,9 +737,15 @@ function arve_get_host_properties() {
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'requires_flash' => true,
-			'test_urls' => array(
-				array( 'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html?format=embed&player_autoplay=false', 'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html' ),
-				array( 'https://www.yahoo.com/movies/sully-trailer-4-211012511.html?format=embed', 'https://www.yahoo.com/movies/sully-trailer-4-211012511.html' ),
+			'tests' => array(
+				array(
+					'url' => 'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html?format=embed&player_autoplay=false',
+					'id'  => 'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html'
+				),
+				array(
+					'url' => 'https://www.yahoo.com/movies/sully-trailer-4-211012511.html?format=embed',
+					'id' => 'https://www.yahoo.com/movies/sully-trailer-4-211012511.html'
+				),
 			)
 		),
 		'youku' => array(
@@ -708,9 +755,9 @@ function arve_get_host_properties() {
 			'aspect_ratio'   => '450:292.5',
 			'requires_flash' => true,
 			# <iframe height=498 width=510 src="http://player.youku.com/embed/XMTUyODYwOTc4OA==" frameborder=0 allowfullscreen></iframe>
-			'test_urls' => array(
-				array( 'http://v.youku.com/v_show/id_XMTczMDAxMjIyNA==.html?f=27806190', 'XMTczMDAxMjIyNA' ),
-				array( 'http://player.youku.com/embed/XMTUyODYwOTc4OA==',                'XMTUyODYwOTc4OA' ),
+			'tests' => array(
+				array( 'url' => 'http://v.youku.com/v_show/id_XMTczMDAxMjIyNA==.html?f=27806190', 'XMTczMDAxMjIyNA' ),
+				array( 'url' => 'http://player.youku.com/embed/XMTUyODYwOTc4OA==',                'XMTUyODYwOTc4OA' ),
 			),
 		),
 		'youtube' => array(
@@ -721,10 +768,20 @@ function arve_get_host_properties() {
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			#'[youtube id="XQEiv7t1xuQ"]',
-			'test_urls' => array(
-				array( 'http://www.youtube.com/watch?v=vrXgLhkv21Y', 'vrXgLhkv21Y' ),
-				array( 'http://www.youtube.com/watch?v=GjL82KUHVb0&list=PLI46g-I12_9qGBq-4epxOay0hotjys5iA&index=10', 'GjL82KUHVb0&list=PLI46g-I12_9qGBq-4epxOay0hotjys5iA' ), # The index part will be ignored
-				#array(  ),
+			'tests' => array(
+				array(
+					'url'          => 'http://www.youtube.com/watch?v=vrXgLhkv21Y',
+					'id'           => 'vrXgLhkv21Y',
+					'oembed_title' => 'TerrorStorm Full length version',
+				),
+				array(
+					'url'          => 'https://youtu.be/hRonZ4wP8Ys',
+					'id'           => 'hRonZ4wP8Ys',
+					'oembed_title' => 'One Bright Dot',
+				),
+				array(
+					'url' => 'http://www.youtube.com/watch?v=GjL82KUHVb0&list=PLI46g-I12_9qGBq-4epxOay0hotjys5iA&index=10', # The index part will be ignored
+					'id'  => 'GjL82KUHVb0&list=PLI46g-I12_9qGBq-4epxOay0hotjys5iA' ),
 			),
 			'specific_tests' => array(
 				__('URL from youtu.be shortener', ARVE_SLUG),
@@ -897,8 +954,11 @@ function arve_get_host_properties() {
 			'default_params'    => '',
 			'auto_thumbnail'    => false,
 			'requires_flash'    => true,
-			'test_urls' => array(
-				'http://example.com/',
+			'tests' => array(
+				array(
+					'url' => 'http://example.com/',
+					'id'  => 'http://example.com/',
+				),
 			),
 		),
 	);
