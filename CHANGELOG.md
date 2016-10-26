@@ -1,5 +1,10 @@
 ## Changelog ##
 
+### 2016-10-26 - Pro Addon 3.2.8 ###
+
+* Improved: oembed error message
+* Improved: Skip srcset function for PHP 5.3 and lower
+
 ### 2016-10-26 - 7.9.6 ###
 
 * Fix: Thumbnail not correctly applied to <video> tag for self hosted videos.

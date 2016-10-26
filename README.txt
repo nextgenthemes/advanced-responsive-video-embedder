@@ -215,6 +215,11 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
+### 2016-10-26 - 7.9.6 ###
+
+* Fix: Thumbnail not correctly applied to <video> tag for self hosted videos.
+* Improved: CSS for self hosted videos.
+
 ### 2016-10-25 - Pro Addon 3.2.7 ###
 
 * Fix: 2 clicks needed to play lazyloaded video on desktops
