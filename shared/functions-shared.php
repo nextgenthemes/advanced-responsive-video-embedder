@@ -631,8 +631,11 @@ function arve_get_host_properties() {
 			'regex'          => $s . 'rutube\.ru/play/embed/([0-9]+)',
 			'embed_url'      => 'https://rutube.ru/play/embed/%s',
 			'requires_flash' => true,
-			'tests'      => array(
-				array( 'url' => 'https://rutube.ru/play/embed/9822149', 'id' => 9822149 ),
+			'tests' => array(
+				array(
+					'url' => 'https://rutube.ru/play/embed/9822149',
+					'id'  =>                               9822149
+				),
 			),
 		),
 		'veoh' => array(
@@ -642,7 +645,10 @@ function arve_get_host_properties() {
 			'auto_thumbnail' => false,
 			#'aspect_ratio' => 60.257,
 			'tests' => array(
-				array( 'url' => 'http://www.veoh.com/watch/v19866882CAdjNF9b', 'id' => 'v19866882CAdjNF9b' ),
+				array(
+					'url' => 'http://www.veoh.com/watch/v19866882CAdjNF9b',
+					'id'  =>                           'v19866882CAdjNF9b'
+				),
 			)
 		),
 		'vevo' => array(
@@ -652,7 +658,10 @@ function arve_get_host_properties() {
 			'auto_thumbnail' => false,
 			'requires_flash' => true,
 			'tests' => array(
-				array( 'url' => 'https://www.vevo.com/watch/the-offspring/the-kids-arent-alright/USSM20100649', 'id' => 'USSM20100649' ),
+				array(
+					'url'  => 'https://www.vevo.com/watch/the-offspring/the-kids-arent-alright/USSM20100649',
+					'id'   =>                                                                 'USSM20100649'
+				),
 				#array( '', '' ),
 				#array( '', '' ),
 			),
@@ -666,7 +675,10 @@ function arve_get_host_properties() {
 			'aspect_ratio'   => '545:349',
 			'requires_flash' => true,
 			'tests' => array(
-				array( 'url' => 'https://www.viddler.com/v/a695c468', 'id' => 'a695c468' ),
+				array(
+					'url' => 'https://www.viddler.com/v/a695c468',
+					'id' =>                            'a695c468'
+				),
 			),
 		),
 		'vidspot' => array(
@@ -720,7 +732,10 @@ function arve_get_host_properties() {
 			'requires_src'   => true,
 			'auto_thumbnail' => false,
 			'tests' => array(
-				array( 'url' => 'https://vk.com/video_ext.php?oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1', 'id' => 'oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1' ),
+				array(
+					'url' => 'https://vk.com/video_ext.php?oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1',
+					'id' =>                               'oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1'
+				),
 			),
 		),
 		'xtube' => array(

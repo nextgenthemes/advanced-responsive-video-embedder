@@ -9,6 +9,7 @@
 
 * Fix: Thumbnail not correctly applied to <video> tag for self hosted videos.
 * Improved: CSS for self hosted videos.
+* Improved: Enabled detection for rubtube and VK and show them as supported providers, even they where supported as general iframe embeds before.
 
 ### 2016-10-25 - Pro Addon 3.2.7 ###
 
