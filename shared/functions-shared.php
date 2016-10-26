@@ -486,8 +486,10 @@ function arve_get_host_properties() {
 			'embed_url'      => 'http://widgets.ign.com/video/embed/content.html?url=%s',
 			'auto_thumbnail' => false,
 			'tests' => array(
+				array(
 				 'url' => 'http://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
 				 'id'  => 'http://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
+			 ),
 			)
 		),
 		'kickstarter' => array(
@@ -772,8 +774,14 @@ function arve_get_host_properties() {
 			'requires_flash' => true,
 			# <iframe height=498 width=510 src="http://player.youku.com/embed/XMTUyODYwOTc4OA==" frameborder=0 allowfullscreen></iframe>
 			'tests' => array(
-				array( 'url' => 'http://v.youku.com/v_show/id_XMTczMDAxMjIyNA==.html?f=27806190', 'XMTczMDAxMjIyNA' ),
-				array( 'url' => 'http://player.youku.com/embed/XMTUyODYwOTc4OA==',                'XMTUyODYwOTc4OA' ),
+				array(
+					'url' => 'http://v.youku.com/v_show/id_XMTczMDAxMjIyNA==.html?f=27806190',
+					'id'  =>                              'XMTczMDAxMjIyNA',
+				),
+				array(
+					'url' => 'http://player.youku.com/embed/XMTUyODYwOTc4OA==',
+					'id'  =>                               'XMTUyODYwOTc4OA',
+				),
 			),
 		),
 		'youtube' => array(
@@ -787,17 +795,17 @@ function arve_get_host_properties() {
 			'tests' => array(
 				array(
 					'url'          => 'http://www.youtube.com/watch?v=vrXgLhkv21Y',
-					'id'           => 'vrXgLhkv21Y',
+					'id'           =>                                'vrXgLhkv21Y',
 					'oembed_title' => 'TerrorStorm Full length version',
 				),
 				array(
 					'url'          => 'https://youtu.be/hRonZ4wP8Ys',
-					'id'           => 'hRonZ4wP8Ys',
+					'id'           =>                  'hRonZ4wP8Ys',
 					'oembed_title' => 'One Bright Dot',
 				),
 				array(
 					'url' => 'http://www.youtube.com/watch?v=GjL82KUHVb0&list=PLI46g-I12_9qGBq-4epxOay0hotjys5iA&index=10', # The index part will be ignored
-					'id'  => 'GjL82KUHVb0&list=PLI46g-I12_9qGBq-4epxOay0hotjys5iA' ),
+					'id'  =>                                'GjL82KUHVb0&list=PLI46g-I12_9qGBq-4epxOay0hotjys5iA' ),
 			),
 			'specific_tests' => array(
 				__('URL from youtu.be shortener', ARVE_SLUG),
