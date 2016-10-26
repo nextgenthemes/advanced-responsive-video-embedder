@@ -53,8 +53,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		unset( $old_atts['url'] );
 
-		unset( $old_atts['id'] );
-		unset( $old_atts['provider'] );
+		unset( $new_atts['id'] );
+		unset( $new_atts['provider'] );
 
 		$this->assertEquals(
 			arve_shortcode_arve( $old_atts, null, false ),

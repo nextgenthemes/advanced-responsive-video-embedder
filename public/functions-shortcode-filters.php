@@ -163,7 +163,7 @@ function arve_filter_atts_iframe_fallback( $atts ) {
 
     $atts['provider'] = 'iframe';
 
-    if ( empty( $atts['id'] ) ) {
+    if ( empty( $atts['id'] ) && ! empty( $atts['url'] ) ) {
       $atts['id'] = $atts['url'];
     }
   }
