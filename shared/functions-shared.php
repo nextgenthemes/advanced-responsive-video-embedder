@@ -486,7 +486,8 @@ function arve_get_host_properties() {
 			'embed_url'      => 'http://widgets.ign.com/video/embed/content.html?url=%s',
 			'auto_thumbnail' => false,
 			'tests' => array(
-				'http://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
+				 'url' => 'http://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
+				 'id'  => 'http://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
 			)
 		),
 		'kickstarter' => array(
