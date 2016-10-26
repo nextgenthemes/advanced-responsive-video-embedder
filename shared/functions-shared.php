@@ -690,7 +690,7 @@ function arve_get_host_properties() {
 			'requires_flash' => true,
 		),
 		'yahoo' => array(
-			'regex'          => '(//(?:[a-z.]+)yahoo\.com/[/-a-z0-9öäü]+\.html)',
+			'regex'          => '(https?://(?:[a-z.]+)yahoo\.com/[/-a-z0-9öäü]+\.html)',
 			'embed_url'      => '%s',
 			'default_params' => 'format=embed',
 			'auto_thumbnail' => true,
@@ -702,7 +702,7 @@ function arve_get_host_properties() {
 			)
 		),
 		'youku' => array(
-			'regex'          => '//(?:[a-z.]+)?\.youku.com/(?:embed/|v_show/id_)([a-z0-9]+)',
+			'regex'          => 'https?://(?:[a-z.]+)?\.youku.com/(?:embed/|v_show/id_)([a-z0-9]+)',
 			'embed_url'      => 'http://player.youku.com/embed/%s',
 			'auto_thumbnail' => false,
 			'aspect_ratio'   => '450:292.5',
