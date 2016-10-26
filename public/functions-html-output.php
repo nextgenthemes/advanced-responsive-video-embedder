@@ -252,7 +252,7 @@ function arve_create_video_tag( $atts ) {
 		'class'    => 'arve-video',
 		'controls' => $atts['controls'],
 		'loop'     => $atts['loop'],
-		'poster'   => $atts['thumbnail'],
+		'poster'   => isset( $atts['img_src'] ) ? $atts['img_src'] : false,
 		'preload'  => $atts['preload'],
 		'src'      => isset( $atts['video_src'] ) ? $atts['video_src'] : false,
 
