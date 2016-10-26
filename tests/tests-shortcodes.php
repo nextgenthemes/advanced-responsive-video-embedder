@@ -144,6 +144,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 	    foreach( $props['tests'] as $test ) {
 
 				$this->assertTrue( is_array( $test ), $provider );
+				$this->assertArrayHasKey( 'id',  $test, $provider );
+				$this->assertArrayHasKey( 'url', $test, $provider );
 
 	      preg_match( '#' . $props['regex'] . '#i', $test['url'], $matches );
 
