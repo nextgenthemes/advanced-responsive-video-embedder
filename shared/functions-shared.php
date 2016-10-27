@@ -828,9 +828,8 @@ function arve_get_host_properties() {
 			#'[youtube id="XQEiv7t1xuQ"]',
 			'tests' => array(
 				array(
-					'url'          => 'https:/youtu.be/dqLyB5srdGI',
+					'url'          => 'https://youtu.be/dqLyB5srdGI',
 					'id'           =>                 'dqLyB5srdGI',
-					'oembed_title' => '',
 					'oembed_img'   => 'https://i.ytimg.com/vi/dqLyB5srdGI/hqdefault.jpg'
 				),
 				array(
