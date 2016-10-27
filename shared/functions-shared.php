@@ -618,7 +618,7 @@ function arve_get_host_properties() {
 			'auto_thumbnail' => true,
 			'tests' => array(
 				array(
-					'url'     => '',
+					'url'     => 'https://www.twitch.tv/whiskeyexperts',
 					'id'      => 'whiskeyexperts',
 					'api_img' => 'https://static-cdn.jtvnw.net/jtv_user_pictures/whiskyexperts',
 				),
@@ -760,7 +760,7 @@ function arve_get_host_properties() {
 		),
 		'wistia' => array(
 			# fast.wistia.net/embed/iframe/g5pnf59ala?videoFoam=true
-			'regex'          => 'https?://fast\.wistia\.com/embed/iframe/([a-z0-9]+)',
+			'regex'          => 'https?://fast\.wistia\.net/embed/iframe/([a-z0-9]+)',
 			'embed_url'      => 'https://fast.wistia.net/embed/iframe/%s',
 			'default_params' => 'videoFoam=true',
 			'tests' => array(
