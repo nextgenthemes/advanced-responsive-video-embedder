@@ -110,6 +110,7 @@ function arve_add_autoplay_query_arg( $atts ) {
 				$off = add_query_arg( 'autoplay', 'false', $src );
 				break;
 			case 'livestream':
+			case 'Wistia':
 				$on  = add_query_arg( 'autoPlay', 'true',  $src );
 				$off = add_query_arg( 'autoPlay', 'false', $src );
 				break;

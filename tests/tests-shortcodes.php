@@ -126,15 +126,17 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		}
 
 		$output = arve_shortcode_arve( array(
-			'mp4'  => 'https://example.com/video.mp4',
-			'ogv'  => 'https://example.com/video.ogv',
-			'webm' => 'https://example.com/video.webm',
+			'mp4'       => 'https://example.com/video.mp4',
+			'ogv'       => 'https://example.com/video.ogv',
+			'webm'      => 'https://example.com/video.webm',
+			'thumbnail' => 'https://example.com/image.jpg',
 		) );
 
 		$this->assertNotContains( 'Error', $output );
 		$this->assertNotContains( '<iframe', $output );
 		$this->assertContains( 'data-arve-provider="html5"', $output );
 		$this->assertContains( '<video', $output );
+		$this->assertContains( 'poster="https://example.com/image.jpg"', $output );
 		$this->assertContains( '<source type="video/ogg" src="https://example.com/video.ogv">', $output );
 		$this->assertContains( '<source type="video/mp4" src="https://example.com/video.mp4">', $output );
 		$this->assertContains( '<source type="video/webm" src="https://example.com/video.webm">', $output );

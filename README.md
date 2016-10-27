@@ -205,10 +205,16 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
-### 2016-10-26 - 7.9.6 ###
+### 2016-10-27 - Pro Addon 3.2.8 ###
+
+* Improved: oembed error message
+* Improved: Skip srcset function for PHP 5.3 and lower
+
+### 2016-10-27 - 7.9.6 ###
 
 * Fix: Thumbnail not correctly applied to <video> tag for self hosted videos.
 * Improved: CSS for self hosted videos.
+* Improved: Enabled detection for rubtube and VK and show them as supported providers, even they where supported as general iframe embeds before.
 
 ### 2016-10-25 - Pro Addon 3.2.7 ###
 

@@ -617,8 +617,21 @@ function arve_get_host_properties() {
 			'embed_url'      => 'https://player.twitch.tv/?channel=%s', # if numeric id https://player.twitch.tv/?video=v%s
 			'auto_thumbnail' => true,
 			'tests' => array(
-				array( 'url' => 'https://www.twitch.tv/imaqtpie', 'id' => 'imaqtpie' ),
-				array( 'url' => 'https://www.twitch.tv/imaqtpie/v/95318019', 'id' => 95318019 ),
+				array(
+					'url'     => '',
+					'id'      => 'whiskeyexperts',
+					'api_img' => 'https://static-cdn.jtvnw.net/jtv_user_pictures/whiskyexperts',
+				),
+				array(
+					'url' => 'https://www.twitch.tv/imaqtpie',
+					'id'  =>                       'imaqtpie',
+					'api_img' => 'https://static-cdn.jtvnw.net/jtv_user_pictures/imaqtpie',
+				),
+				array(
+					'url' => 'https://www.twitch.tv/imaqtpie/v/95318019',
+					'id' =>                                    95318019,
+					'api_img' => 'https://static-cdn.jtvnw.net/jtv_user_pictures/imaqtpie',
+				),
 			),
 		),
 		'ustream' => array(
@@ -738,6 +751,22 @@ function arve_get_host_properties() {
 				array(
 					'url' => 'https://vk.com/video_ext.php?oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1',
 					'id' =>                               'oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1'
+				),
+			),
+		),
+		'vzaar' => array(
+			'regex'     => 'https?://view.vzaar.com/([0-9]+)',
+			'embed_url' => 'https://view.vzaar.com/%s/player',
+		),
+		'wistia' => array(
+			# fast.wistia.net/embed/iframe/g5pnf59ala?videoFoam=true
+			'regex'          => 'https?://fast\.wistia\.com/embed/iframe/([a-z0-9]+)',
+			'embed_url'      => 'https://fast.wistia.net/embed/iframe/%s',
+			'default_params' => 'videoFoam=true',
+			'tests' => array(
+				array(
+					'url' => 'https://fast.wistia.net/embed/iframe/g5pnf59ala?videoFoam=true',
+					'id' =>                                       'g5pnf59ala'
 				),
 			),
 		),
