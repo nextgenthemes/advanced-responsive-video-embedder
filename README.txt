@@ -215,6 +215,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
+### 2016-10-27 - Pro Addon 3.2.9 ###
+
+* Fix: Twitch API failing (needs Client-ID now)
+
 ### 2016-10-27 - Pro Addon 3.2.8 ###
 
 * Improved: oembed error message

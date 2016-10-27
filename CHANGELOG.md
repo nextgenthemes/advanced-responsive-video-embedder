@@ -1,10 +1,8 @@
 ## Changelog ##
 
-### 2016-10-30 - 7.9.7 ###
+### 2016-10-27 - Pro Addon 3.2.9 ###
 
-* Fix: Thumbnail not correctly applied to <video> tag for self hosted videos.
-* Improved: CSS for self hosted videos.
-* New: Wistia Support
+* Fix: Twitch API failing (needs Client-ID now)
 
 ### 2016-10-27 - Pro Addon 3.2.8 ###
 

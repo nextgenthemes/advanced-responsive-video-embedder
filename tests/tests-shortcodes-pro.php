@@ -2,7 +2,36 @@
 
 class Tests_Shortcode_Pro extends WP_UnitTestCase {
 
-	public function test_oembed_thumbnail_and_title() {
+	public function test_auto_thumb_and_title() {
+
+		$properties = arve_get_host_properties();
+
+		foreach ( $properties as $provider => $props ) :
+
+			if ( empty( $values['tests'] ) ) {
+				continue;
+			}
+
+			foreach ( $values['tests'] as $key => $test ) {
+
+				$attr = array(
+					'url'  => $test['url'],
+					'mode' => 'lazyload',
+				);
+
+				if( isset( $props['auto_title'] ) && $props['auto_title'] ) {
+					$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+					$this->assertContains( '<h5 itemprop="name" class="arve-title">', arve_shortcode_arve( $attr ) );
+				}
+				if( isset( $props['auto_thumbnail'] ) && $props['auto_thumbnail'] ) {
+					$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+					$this->assertContains( '<img class="arve-thumbnail" data-object-fit itemprop="thumbnailUrl" src="', arve_shortcode_arve( $attr ) );
+				}
+			}
+		endforeach;
+	}
+
+	public function NO_test_oembed_thumbnail_and_title() {
 
 		$properties = arve_get_host_properties();
 
@@ -29,7 +58,14 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 				}
 				if( isset( $test['oembed_img'] ) ) {
 					$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
-					$this->assertRegex( '#<img [^>]*src="' . $test['oembed_img'] . '#', arve_shortcode_arve( $attr ) );
+					$this->assertContains(
+						sprintf( '<img class="arve-thumbnail" data-object-fit itemprop="thumbnailUrl" src="%s" alt="Video Thumbnail">', $test['oembed_img'] ),
+						arve_shortcode_arve( $attr )
+					);
+				}
+				if( isset( $test['oembed_img_start'] ) ) {
+					$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+					$this->assertRegex( '#<img [^>]*src="' . $test['oembed_img_start'] . '#', arve_shortcode_arve( $attr ) );
 				}
 			}
 		endforeach;

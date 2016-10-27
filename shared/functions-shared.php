@@ -497,8 +497,13 @@ function arve_get_host_properties() {
 			'embed_url'      => 'https://www.kickstarter.com/projects/%s/widget/video.html',
 			'auto_thumbnail' => false,
 			'tests' => array(
-				array( 'url' => 'https://www.kickstarter.com/projects/obsidian/project-eternity?ref=discovery', 'id' => 'obsidian/project-eternity' ),
-				array( 'url' => 'https://www.kickstarter.com/projects/trinandtonic/friendship-postcards?ref=category_featured', 'id' => 'trinandtonic/friendship-postcards' ),
+				array(
+					'url' => 'https://www.kickstarter.com/projects/obsidian/project-eternity?ref=discovery',
+					'id'  =>                                      'obsidian/project-eternity' ),
+				array(
+					'url' => 'https://www.kickstarter.com/projects/trinandtonic/friendship-postcards?ref=category_featured',
+					'id'  =>                                      'trinandtonic/friendship-postcards'
+				),
 			)
 		),
 		'liveleak' => array(
@@ -618,9 +623,9 @@ function arve_get_host_properties() {
 			'auto_thumbnail' => true,
 			'tests' => array(
 				array(
-					'url'     => 'https://www.twitch.tv/whiskeyexperts',
-					'id'      => 'whiskeyexperts',
-					'api_img' => 'https://static-cdn.jtvnw.net/jtv_user_pictures/whiskyexperts',
+					'url'              => 'https://www.twitch.tv/whiskeyexperts',
+					'id'               => 'whiskeyexperts',
+					'api_img_contains' => 'https://static-cdn.jtvnw.net/jtv_user_pictures/whiskyexperts',
 				),
 				array(
 					'url' => 'https://www.twitch.tv/imaqtpie',
@@ -822,6 +827,12 @@ function arve_get_host_properties() {
 			'auto_title'     => true,
 			#'[youtube id="XQEiv7t1xuQ"]',
 			'tests' => array(
+				array(
+					'url'          => 'https:/youtu.be/dqLyB5srdGI',
+					'id'           =>                 'dqLyB5srdGI',
+					'oembed_title' => '',
+					'oembed_img'   => 'https://i.ytimg.com/vi/dqLyB5srdGI/hqdefault.jpg'
+				),
 				array(
 					'url'          => 'http://www.youtube.com/watch?v=vrXgLhkv21Y',
 					'id'           =>                                'vrXgLhkv21Y',
