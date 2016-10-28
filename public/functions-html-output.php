@@ -90,7 +90,7 @@ function arve_build_meta_html( $atts ) {
 		endif;
 
 		if ( ! empty( $atts['title'] ) && in_array( $atts['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) && empty( $atts['hide_title'] ) ) {
-			$meta .= '<h5 itemprop="name" class="arve-title">' . esc_html( trim( $atts['title'] ) ) . '</h5>';
+			$meta .= '<h5 itemprop="name" class="arve-title">' . trim( $atts['title'] ) . '</h5>';
 		} elseif( ! empty( $atts['title'] ) ) {
 			$meta .= sprintf( '<meta itemprop="name" content="%s">', esc_attr( trim( $atts['title'] ) ) );
 		}
@@ -122,7 +122,7 @@ function arve_arve_embed_container( $html, $atts ) {
 		$attr['class'] = 'arve-embed-container';
 
 		if( ! empty( $atts['aspect_ratio'] ) ) {
-			$attr['style'] = sprintf( 'height: 0; padding-bottom: %F%%;', arve_aspect_ratio_to_padding( $atts['aspect_ratio'] ) );
+			$attr['style'] = sprintf( 'height: 0 !important; padding-bottom: %F%% !important;', arve_aspect_ratio_to_padding( $atts['aspect_ratio'] ) );
 		}
 
 		return sprintf( '<div%s>%s</div>', arve_attr( $attr ), $html );

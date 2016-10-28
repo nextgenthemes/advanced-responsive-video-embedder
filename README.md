@@ -205,6 +205,16 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
+### 2016-10-28 - Pro Addon 3.3.0 ###
+
+* Fix: Restored broken update notifications and semi auto updates.
+
+### 2016-10-28 - 7.9.7 ###
+
+* New: Wistia Support.
+* Improved: Allow HTML in title attribute.
+* Improved: Force more CSS Styles.
+
 ### 2016-10-27 - Pro Addon 3.2.9 ###
 
 * Fix: Twitch API failing (needs Client-ID now)
