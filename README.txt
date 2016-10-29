@@ -215,6 +215,15 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
+### 2016-10-29 - 7.9.8 and Pro Addon 3.3.4 ###
+
+* Fix: Fix lightbox thumbnail
+* Improved: CSS
+
+### 2016-10-28 - Pro Addon 3.3.1 ###
+
+* Fix: Fix thumbnails being displayed wrong in IE.
+
 ### 2016-10-28 - Pro Addon 3.3.0 ###
 
 * Fix: Restored broken update notifications and semi auto updates.

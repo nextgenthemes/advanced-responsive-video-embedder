@@ -1,7 +1,7 @@
 .arve-wrapper {
+	display: block !important;
 	margin-bottom: 1.5em;
 	width: 100% !important;
-	overflow: hidden;
 }
 
 .arve-wrapper::after {
@@ -22,7 +22,9 @@
 	position: relative !important;
 	display: block !important;
 	padding: 0 !important;
+	padding-bottom: 56.25% !important;
 	margin: 0 !important;
+	height: 0 !important;
 	overflow: hidden !important;
 }
 
@@ -38,7 +40,6 @@
 	height: 100% !important;
 	width: 100% !important;
 	border: 0 !important;
-	overflow: hidden !important;
 }
 
 .arve-video {
@@ -54,5 +55,5 @@
 }
 
 .arve-hidden {
-	display: none;
+	display: none !important;
 }

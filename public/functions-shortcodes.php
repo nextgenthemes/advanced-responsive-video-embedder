@@ -67,9 +67,10 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
   $webtorrent_status = function_exists( 'arve_webtorrent_status' ) ? arve_webtorrent_status( $atts['webtorrent'] ) : '';
 
   if ( 'link-lightbox' == $atts['mode'] ) {
-    $containers  = arve_pro_lity_container( $meta_html . $arve_video, $atts );
+    $atts['embed_container_id'] =
+    $containers  = arve_arve_embed_container( $meta_html . $arve_video, $atts, 'lity-container' );
   } elseif ( 'lazyload-lightbox' == $atts['mode'] ) {
-    $containers  = arve_pro_lity_container( $arve_video, $atts );
+    $containers  = arve_arve_embed_container( $arve_video, $atts, 'lity-container' );
     $containers .= arve_arve_embed_container( $meta_html . $arve_play_btn, $atts );
   } else {
     $containers = arve_arve_embed_container( $meta_html . $arve_video . $arve_play_btn, $atts );

@@ -200,8 +200,6 @@ function arve_get_default_aspect_ratio( $aspect_ratio, $provider, $mode ) {
 
 	if ( empty( $aspect_ratio ) && isset( $properties[ $provider ]['aspect_ratio'] ) ) {
 		$aspect_ratio = $properties[ $provider ]['aspect_ratio'];
-	} elseif ( empty( $aspect_ratio ) && 'html5' != $provider ) {
-		$aspect_ratio = '16:9';
 	}
 
 	return $aspect_ratio;

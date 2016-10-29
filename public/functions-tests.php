@@ -17,8 +17,8 @@ function arve_shortcode_tests( $content ) {
   $properties = arve_get_host_properties();
   $out = '<h4>ARVE Shortcode Tests</h4>';
 
-  $url_to_test = $properties[ $host ]['test_urls'][ $n ][0];
-  $id_to_test  = $properties[ $host ]['test_urls'][ $n ][1];
+  $url_to_test = $properties[ $host ]['tests'][ $n ]['url'];
+  $id_to_test  = $properties[ $host ]['tests'][ $n ]['id'];
 
   #$scs[] = "\n$url_or_shortcode\n";
   $scs[] = sprintf( '[arve url="%s" mode="normal"]', $url_to_test );

@@ -1,5 +1,10 @@
 ## Changelog ##
 
+### 2016-10-29 - 7.9.8 and Pro Addon 3.3.4 ###
+
+* Fix: Fix lightbox thumbnail
+* Improved: CSS
+
 ### 2016-10-28 - Pro Addon 3.3.1 ###
 
 * Fix: Fix thumbnails being displayed wrong in IE.
