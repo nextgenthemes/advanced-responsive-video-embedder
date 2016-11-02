@@ -25,8 +25,12 @@ if ( ! defined( 'WPINC' ) ) {
 
 define( 'ARVE_SLUG',                 'advanced-responsive-video-embedder' );
 define( 'ARVE_VERSION',              '7.9.8' );
-define( 'ARVE_PRO_VERSION_REQUIRED', '3.3.4' );
+define( 'ARVE_PRO_VERSION_REQUIRED', '3.3.5' );
 define( 'ARVE_NUM_TRACKS', 10 );
+
+if( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
+	require_once plugin_dir_path( __FILE__ ) . 'admin/class-edd-sl-plugin-updater.php';
+}
 
 arve_init();
 #add_action( 'plugins_loaded', 'arve_init' ); # TODO ??
@@ -34,6 +38,10 @@ arve_init();
 function arve_init() {
 
 	add_option( 'arve_install_date', current_time( 'timestamp' ) );
+
+	if ( ! has_action( 'admin_menu', 'nextgenthemes_menus' ) ) {
+		require_once plugin_dir_path( __FILE__ ) . 'admin/functions-licensing.php';
+	}
 
 	require_once plugin_dir_path( __FILE__ ) . 'admin/class-arve-admin-notice-factory.php';
 	require_once plugin_dir_path( __FILE__ ) . 'admin/functions-admin.php';

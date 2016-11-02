@@ -23,9 +23,7 @@ require $_tests_dir . '/includes/bootstrap.php';
 activate_plugin( 'advanced-responsive-video-embedder/advanced-responsive-video-embedder.php' );
 activate_plugin( 'arve-pro/arve-pro.php' );
 
-$options = get_option( 'arve_options_pro', array() );
-$options['key_status'] = 'valid';
-update_option( 'arve_options_pro', $options );
+require dirname( __FILE__ ) . '/../../arve-pro/fake-activate.php';
 
 global $current_user;
 

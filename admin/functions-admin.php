@@ -5,22 +5,14 @@ function arve_action_admin_init_setup_messages() {
 	if( defined( 'ARVE_PRO_VERSION' ) && version_compare( ARVE_PRO_VERSION_REQUIRED, ARVE_PRO_VERSION, '>' ) ) {
 
 		$msg = sprintf(
-			__( 'Your ARVE Pro Addon is outdated, you need version %s or later. Please <a href="%s">look here</a> for manual updates if you run the beta version or your auto-updates do not work or are disabled.', ARVE_SLUG ),
+			__( 'Your ARVE Pro Addon is outdated, you need version %s or later. If you have setup your license <a href="%s">here</a> semi auto updates (Admin panel notice and auto install on confirmation) should work again. If not please <a href="%s">report it</a> and manually update as <a href="%s">described here.</a> I am sorry for the many manual updates with .zip file you had to do in the past. It came to my attention to late that this was actually not working, partly because customers bravely just did the manual update without saying a word.', ARVE_SLUG ),
 			ARVE_PRO_VERSION_REQUIRED,
+			get_admin_url() . 'admin.php?page=nextgenthemes-keys',
+			'https://nextgenthemes.com/support/',
 			'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/installing-and-license-management/'
 		);
-		new ARVE_Admin_Notice_Factory(	'arve-pro-outdated', "<p>$msg</p>", false );
+		new ARVE_Admin_Notice_Factory('arve-pro-outdated', "<p>$msg</p>", false );
 	}
-
-	$msg = sprintf(
-		__( '<p>Thanks for using and updating <abbr title="Advanced Responsive Video Embedder">ARVE</abbr>, this was a <strong>huge</strong> update please read about <a href="%s" target="_blank">what is new here</a>. You will see a message about a highly recommended plugin "Shortcode UI / Shortcake" that is bundled within ARVE its needed for the new shortcode dialog and and the new WYSIWYG feature for shortcodes inside the post editor. If you do not want that then you can dismiss the install and manually write shortcodes or use URLs. Many thanks to all the beta testers, I will send out free discounts soon.</p>
-		<p>There is no guarantee that it will work without new problems on all your themes and plugins combinations out there. I am afraid of bad rating and people flooding me with complaints that they don\'t like the changes, that I broke their sites or something. But at some point there has to be a release. Please download the <a href="%s" target="_blank">old version here now</a> and old pro addon in <a href="%s">from your account</a> if you own it. If you have big problems and need a quick fix please downgrade ARVE (delete the arve plugin/s and reinstall with the .zip file/s) and report any problems <a href="%s" target="_blank">here.</a> Please don\'t give negative reviews.</p>', ARVE_SLUG ),
-		'https://nextgenthemes.com/whats-new-in-arve-version-7/',
-		'https://nextgenthemes.com/arve-version-6.5.0.zip',
-		'https://nextgenthemes.com/my-account/',
-		'https://nextgenthemes.com/support/'
-	);
-	new ARVE_Admin_Notice_Factory( 'version7', $msg, true );
 
 	$pro_ad_message = arve_get_pro_ad();
 
@@ -91,25 +83,16 @@ function arve_add_dashboard_widget() {
  */
 function arve_add_plugin_admin_menu() {
 
-	/*
-	 * Add a settings page for this plugin to the Settings menu.
-	 *
-	 * NOTE:  Alternative menu locations are available via WordPress administration menu functions.
-	 *
-	 *        Administration Menus: http://codex.wordpress.org/Administration_Menus
-	 *
-	 */
-	$plugin_screen_hook_suffix = add_options_page(
-		__( 'Advanced Responsive Video Embedder Settings', ARVE_SLUG ),
-		__( 'A.R. Video Embedder', ARVE_SLUG ),
-		'manage_options',
-		ARVE_SLUG,
-		'arve_display_plugin_admin_page'
+	add_submenu_page(
+		'nextgenthemes',                        # parent_slug
+		__( 'Advanced Responsive Video Embedder Settings', ARVE_SLUG ), # Page Title
+		__( 'A.R. Video Embedder', ARVE_SLUG ), # Menu Tile
+		'manage_options',                       # capability
+		ARVE_SLUG,                              # menu-slug
+		function() {
+			require_once plugin_dir_path( __FILE__ ) . 'html-settings-page.php';
+		}
 	);
-}
-
-function arve_display_plugin_admin_page() {
-	require_once plugin_dir_path( __FILE__ ) . 'html-settings-page.php';
 }
 
 /**
@@ -128,8 +111,8 @@ function arve_add_action_links( $links ) {
 		);
 	}
 
-	$extra_links['donate']   = sprintf( '<a href="%s"><strong style="display: inline;">%s</strong></a>', 'https://nextgenthemes.com/donate/', __( 'Donate', ARVE_SLUG ) );
-	$extra_links['settings'] = sprintf( '<a href="%s">%s</a>', admin_url( "options-general.php?page={ARVE_SLUG}" ), __( 'Settings', ARVE_SLUG ) );
+	$extra_links['donate']   = sprintf( '<a href="https://nextgenthemes.com/donate/"><strong style="display: inline;">%s</strong></a>', __( 'Donate', ARVE_SLUG ) );
+	$extra_links['settings'] = sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=' . ARVE_SLUG ), __( 'Settings', ARVE_SLUG ) );
 
 	return array_merge( $extra_links, $links );
 }
