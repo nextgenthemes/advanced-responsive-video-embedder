@@ -216,7 +216,7 @@ function nextgenthemes_get_defined_key( $slug ) {
 
 	$constant_name = str_replace( '-', '_', strtoupper( $slug . '_KEY' ) );
 
-	if( defined( $constant_name ) && ! empty( constant( $constant_name ) ) ) {
+	if( defined( $constant_name ) && ! constant( $constant_name ) ) {
 		return constant( $constant_name );
 	} else {
 		return false;
