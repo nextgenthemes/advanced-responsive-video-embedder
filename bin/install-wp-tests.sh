@@ -122,7 +122,7 @@ install_db() {
 
 install_arve_pro() {
 	download https://nextgenthemes.com/travis-files/arve-pro-test.zip.enc /tmp/arve-pro-test.zip.enc
-	download https://nextgenthemes.com/travis-files/fake-activate.php.enc /tmp/fake-activate.php
+	download https://nextgenthemes.com/travis-files/fake-activate.php.enc /tmp/fake-activate.php.enc
 
 	openssl aes-256-cbc -k "$TRAVIS_FILES_PASS" -in /tmp/arve-pro-test.zip.enc -out /tmp/arve-pro-test.zip -d
 	openssl aes-256-cbc -k "$TRAVIS_FILES_PASS" -in /tmp/fake-activate.php.enc -out /tmp/fake-activate.php -d
