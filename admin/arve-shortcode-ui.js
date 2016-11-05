@@ -32,7 +32,6 @@ function arve_extract_url( changed, collection, shortcode ) {
 		input.val( only_url ).trigger( 'input' );
 	}
 }
-wp.shortcake.hooks.addAction( 'arve.url', arve_extract_url );
 
 function arve_mode_select_listener( changed, collection, shortcode ) {
 
@@ -77,4 +76,6 @@ function arve_mode_select_listener( changed, collection, shortcode ) {
 		hide_title.$el.hide();
 	}
 }
+
 wp.shortcake.hooks.addAction( 'arve.mode', arve_mode_select_listener );
+wp.shortcake.hooks.addAction( 'arve.url', arve_extract_url );

@@ -12,7 +12,7 @@
 
 	$('.arve-settings-section').each( function() {
 
-		var id	 = $(this).attr( 'id' );
+		var id	   = $(this).attr( 'id' );
 		var classs = $(this).attr( 'class' );
 		var title  = $(this).attr( 'title' );
 
@@ -36,7 +36,7 @@
 		show_tab( $( '#arve_options_main\\[last_settings_tab\\]' ).val() );
 	}
 
-	$('.arve-settings-tabs a').on( 'click', function(e) {
+	$(document).on( 'click', '.arve-settings-tabs a', function(e) {
 
 		e.preventDefault();
 		var target = $(this).attr('data-target');
@@ -44,7 +44,8 @@
 		$( '#arve_options_main\\[last_settings_tab\\]' ).val( target );
 	} );
 
-	$('[data-arve-image-upload]').click(function(e) {
+	$(document).on( 'click', '[data-arve-image-upload]', function(e) {
+
 		e.preventDefault();
 		var target = $( this ).attr('data-arve-image-upload'),
 		image = wp.media({
@@ -85,7 +86,6 @@
 		});
 	});
 
-
 	function open_arve_dialog() {
 		var arve_shortcode = sui.utils.shortcodeViewConstructor.parseShortcodeString( '[arve]' );
 		wp.media({
@@ -95,7 +95,7 @@
 		}).open();
 	}
 
-	$( '#arve-btn' ).on( 'click', function(e) {
+	$(document).on( 'click', '#arve-btn', function(e) {
 		e.preventDefault();
 		if( $( '#arve-btn[data-arve-sui]' ).length ) {
 			open_arve_dialog();

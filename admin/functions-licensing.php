@@ -1,28 +1,24 @@
 <?php
 
-define( 'NEXTGENTHEMES_API_URL', 'https://nextgenthemes.com' );
-
-add_action( 'admin_init', 'nextgenthemes_register_settings' );
-add_action( 'admin_menu', 'nextgenthemes_menus' );
-
 function nextgenthemes_get_products() {
 
-	$products['arve_pro'] = array(
-    'type'   => 'plugin',
-    'name'   => 'Advanced Responsive Video Embedder Pro',
-		'author' => 'Nicolas Jonas'
-	);
-
-	$products['arve_webtorrent'] = array(
-		'name'   => 'ARVE Webtorrent Addon',
-		'type'   => 'plugin',
-		'author' => 'Nicolas Jonas'
+	$products = array(
+		'arve_pro' => array(
+	    'type'    => 'plugin',
+	    'name'    => 'Advanced Responsive Video Embedder Pro',
+			'author'  => 'Nicolas Jonas'
+		),
+		'arve_webtorrent' => array(
+			'name'   => 'ARVE Webtorrent Addon',
+			'type'   => 'plugin',
+			'author' => 'Nicolas Jonas'
+		)
 	);
 
 	$products = apply_filters( 'nextgenthemes_products', $products );
 
 	foreach ( $products as $key => $value ) {
-		$product[ $key ]['slug'] = $key;
+		$products[ $key ]['slug'] = $key;
 	}
 
 	return $products;
@@ -77,132 +73,69 @@ function nextgenthemes_register_settings() {
 		'nextgenthemes-licenses'     # page
 	);
 
-	foreach ( nextgenthemes_get_products() as $product_slug => $product ) {
+	foreach ( nextgenthemes_get_products() as $product_slug => $product ) :
 
-		$field_id = "nextgenthemes_keys[$product_slug][key]";
+		$option_basename = "nextgenthemes_{$product_slug}_key";
+		$option_keyname  = $option_basename . '[key]';
 
 		add_settings_field(
-			$field_id,                 # id,
-			$product['name'],          # title,
-			'nextgenthemes_input_key', # callback,
-			'nextgenthemes-licenses',  # page,
-			'keys',                    # section
-			array(                     # args
-				'product_slug'    => $product_slug,
+			$option_keyname,              # id,
+			$product['name'],             # title,
+			'nextgenthemes_key_callback', # callback,
+			'nextgenthemes-licenses',     # page,
+			'keys',                       # section
+			array(                        # args
 				'product'         => $product,
-				'label_for'       => "nextgenthemes_keys[$product_slug][key]",
-				'option_basename' => "nextgenthemes_keys[$product_slug]",
+				'label_for'       => $option_keyname,
+				'option_basename' => $option_basename,
 				'attr'            => array(
-					'type'   => 'text',
-					'class'  => 'large-text',
-					'id'     => $field_id,
-					'name'   => $field_id,
-					'value'  => nextgenthemes_has_key_defined( $product_slug ) ? __( 'defined in wp-config.php', ARVE_SLUG ) : nextgenthemes_get_key( $product_slug ),
+					'type'  => 'text',
+					'id'    => $option_keyname,
+					'name'  => $option_keyname,
+					'class' => 'medium-text',
+					'value' => nextgenthemes_get_defined_key( $product_slug ) ? __( 'is defined (wp-config.php?)', ARVE_SLUG ) : nextgenthemes_get_key( $product_slug, 'option_only' ),
 				)
 			)
 		);
-	}
 
-	register_setting(
-		'nextgenthemes',      # option_group
-		'nextgenthemes_keys', # option_name
-		'nextgenthemes_validate_licenses'  # sanitize_callback
-	);
-}
-
-function nextgenthemes_licenses_page() {
-?>
-	<div class="wrap">
-
-		<h2><?php esc_html_e( get_admin_page_title() ); ?></h2>
-
-		<form method="post" action="options.php">
-
-			<?php do_settings_sections( 'nextgenthemes-licenses' ); ?>
-			<?php settings_fields( 'nextgenthemes' ); ?>
-
-			<?php submit_button( __( 'Save Changes' ), 'primary', 'submit', false ); ?>
-		</form>
-
-	</div>
-<?php
-}
-
-function nextgenthemes_validate_licenses( $input ) {
-
-	foreach ( $input as $product_slug => $values ) :
-
-		if ( nextgenthemes_has_key_defined( $product_slug ) ) {
-			$input_key = $option_key = constant( strtoupper( $product_slug . '_KEY' ) );
-		} else {
-			$input_key  = sanitize_text_field( $values['key'] );
-			$option_key = nextgenthemes_get_key( $product_slug );
-			nextgenthemes_update_key( $product_slug, $input_key );
-		}
-
-		if( ( $input_key !== $option_key ) || isset( $input[ $product_slug ]['activate_key'] ) ) {
-
-			nextgenthemes_api_update_key_status( $product_slug, $input_key, 'activate' );
-
-		} elseif ( isset( $input[ $product_slug ]['deactivate_key'] ) ) {
-
-			nextgenthemes_api_update_key_status( $product_slug, $input_key, 'deactivate' );
-
-		} elseif ( isset( $input[ $product_slug ]['check_key'] ) ) {
-
-			nextgenthemes_api_update_key_status( $product_slug, $input_key, 'check' );
-		}
+		register_setting(
+			'nextgenthemes',  # option_group
+			$option_basename, # option_name
+			'nextgenthemes_validate_license' # validation callback
+		);
 
 	endforeach;
 }
 
-function nextgenthemes_get_key( $product_slug ) {
-	return get_option( "nextgenthemes_{$product_slug}_key" );
-}
-function nextgenthemes_update_key( $product_slug, $key ) {
-	update_option( "nextgenthemes_{$product_slug}_key", $key );
-}
+function nextgenthemes_key_callback( $args ) {
 
-function nextgenthemes_get_key_status( $product_slug ) {
-	return get_option( "nextgenthemes_{$product_slug}_key_status" );
-}
-function nextgenthemes_update_key_status( $product_slug, $key ) {
-	update_option( "nextgenthemes_{$product_slug}_key_status", $key );
-}
+	$product = $args['product']['slug'];
 
-function nextgenthemes_api_update_key_status( $slug, $key, $action ) {
+	echo '<p>';
 
-	$products   = nextgenthemes_get_products();
-	$key_status = nextgenthemes_api_action( $products[ $slug ]['name'], $key, $action );
-
-	nextgenthemes_update_key_status( $slug, $key_status );
-}
-
-function nextgenthemes_has_key_defined( $slug ) {
-
-	$constant_name = strtoupper( $slug . '_KEY' );
-
-	return ( defined( $constant_name ) && ! empty( constant( $contant_name ) ) ) ? true : false;
-}
-
-function nextgenthemes_input_key( $args ) {
+	printf( '<input%s>', arve_attr( array(
+		'type'  => 'hidden',
+		'id'    => $args['option_basename'] . '[product]',
+		'name'  => $args['option_basename'] . '[product]',
+		'value' => $product
+	) ) );
 
 	printf(
-		'<p><input%s%s>',
+		'<input%s%s>',
 		arve_attr( $args['attr'] ),
-		nextgenthemes_has_key_defined( $args['product_slug'] ) ? ' disabled' : ''
+		nextgenthemes_get_defined_key( $product ) ? ' disabled' : ''
 	);
 
-	if( ! empty( nextgenthemes_get_key( $args['product_slug'] ) ) ) {
+	if( nextgenthemes_get_defined_key( $product ) || ! empty( nextgenthemes_get_key( $product ) ) ) {
 
 		submit_button( __('Activate License',   ARVE_SLUG ), 'primary',   $args['option_basename'] . '[activate_key]',   false );
 		submit_button( __('Deactivate License', ARVE_SLUG ), 'secondary', $args['option_basename'] . '[deactivate_key]', false );
-		submit_button( __('Check License',      ARVE_SLUG ), 'secondary', $args['option_basename'].  '[check_key]',      false );
+		submit_button( __('Check License',      ARVE_SLUG ), 'secondary', $args['option_basename'] . '[check_key]',      false );
   }
-
 	echo '</p>';
+
   echo '<p>';
-  echo __( 'License Status: ', ARVE_SLUG ) . nextgenthemes_get_key_status( $args['product_slug'] );
+  echo __( 'License Status: ', ARVE_SLUG ) . nextgenthemes_get_key_status( $product );
   echo '</p>';
 
   if ( 'plugin' == $args['product']['type'] ) {
@@ -219,39 +152,150 @@ function nextgenthemes_input_key( $args ) {
   }
 }
 
+function nextgenthemes_validate_license( $input ) {
+
+	if( ! is_array( $input ) ) {
+		return;
+	}
+
+	$product = $input['product'];
+
+	if ( $defined_key = nextgenthemes_get_defined_key( $product ) ) {
+		$option_key = $key = $defined_key;
+	} else {
+		$key        = sanitize_text_field( $input['key'] );
+		$option_key = nextgenthemes_get_key( $product );
+	}
+
+	if( ( $key != $option_key ) || isset( $input['activate_key'] ) ) {
+
+		nextgenthemes_api_update_key_status( $product, $key, 'activate' );
+
+	} elseif ( isset( $input['deactivate_key'] ) ) {
+
+		nextgenthemes_api_update_key_status( $product, $key, 'deactivate' );
+
+	} elseif ( isset( $input['check_key'] ) ) {
+
+		nextgenthemes_api_update_key_status( $product, $key, 'check' );
+	}
+
+	return $key;
+}
+
+function nextgenthemes_get_key( $product, $option_only = false ) {
+
+	if( ! $option_only && $defined_key = nextgenthemes_get_defined_key( $product ) ) {
+		return $defined_key;
+	}
+
+	return get_option( "nextgenthemes_{$product}_key" );
+}
+function nextgenthemes_get_key_status( $product ) {
+	return get_option( "nextgenthemes_{$product}_key_status" );
+}
+function nextgenthemes_update_key_status( $product, $key ) {
+	update_option( "nextgenthemes_{$product}_key_status", $key );
+}
+function nextgenthemes_has_valid_key( $product ) {
+	return ( 'valid' == nextgenthemes_get_key_status( $product ) ) ? true : false;
+}
+
+function nextgenthemes_api_update_key_status( $product, $key, $action ) {
+
+	$products   = nextgenthemes_get_products();
+	$key_status = nextgenthemes_api_action( $products[ $product ]['name'], $key, $action );
+
+	nextgenthemes_update_key_status( $product, $key_status );
+}
+
+function nextgenthemes_get_defined_key( $slug ) {
+
+	$constant_name = str_replace( '-', '_', strtoupper( $slug . '_KEY' ) );
+
+	return ( defined( $constant_name ) && ! empty( constant( $constant_name ) ) ) ? constant( $constant_name ) : false;
+}
+
+function nextgenthemes_licenses_page() {
+?>
+	<div class="wrap">
+
+		<h2><?php esc_html_e( get_admin_page_title() ); ?></h2>
+
+		<form method="post" action="options.php">
+
+			<?php do_settings_sections( 'nextgenthemes-licenses' ); ?>
+			<?php settings_fields( 'nextgenthemes' ); ?>
+			<?php submit_button( __( 'Save Changes' ), 'primary', 'submit', false ); ?>
+		</form>
+
+	</div>
+<?php
+}
+
 function nextgenthemes_init_edd_updater( $item_slug, $file ) {
 
 	foreach ( nextgenthemes_get_products() as $product ) {
 
 		if ( 'plugin' == $product['type'] && ! empty( $product['file'] ) ) {
 			nextgenthemes_init_plugin_updater( $product );
-		}
-		if ( 'theme' == $product['type'] ) {
-
+		} elseif ( 'theme' == $product['type'] ) {
+			nextgenthemes_init_theme_updater( $product );
 		}
 	}
 }
 
-function nextgenthemes_init_plugin_updater( $plugin ) {
-
-	$constant_name_base = str_replace( '-', '_', strtoupper( $plugin['slug'] ) );
-	$key_constant_name  = $constant_name_base . '_KEY';
-
-	if( defined( $key_constant_name ) && ! empty( constant( $key_constant_name ) ) ) {
-		$key = constant( $key_constant_name );
-	} else {
-		$key = get_option( 'nextgenthemes_' . $plugin['slug'] . '_key' );
-	}
+function nextgenthemes_init_plugin_updater( $product ) {
 
 	// setup the updater
-	$edd_updater = new EDD_SL_Plugin_Updater(
-		NEXTGENTHEMES_API_URL,
-		$plugin['file'],
+	new EDD_SL_Plugin_Updater(
+		'https://nextgenthemes.com',
+		$product['file'],
 		array(
-			'version' 	=> $plugin['version'],
-			'license' 	=> $key,
-			'item_name' => $plugin['name'],
-			'author' 	  => $plugin['author']
+			'version' 	=> $product['version'],
+			'license' 	=> nextgenthemes_get_key( $product['slug'] ),
+			'item_name' => $product['name'],
+			'author' 	  => $product['author']
+		)
+	);
+}
+
+function nextgenthemes_init_theme_updater( $product ) {
+
+	new EDD_Theme_Updater(
+		array(
+			'remote_api_url' 	=> 'https://nextgenthemes.com',
+			'version' 			  => $product['version'],
+			'license' 			  => nextgenthemes_get_key( $product['slug'] ),
+			'item_name' 		  => $product['name'],
+			'author'			    => $product['author'],
+			'theme_slug'      => $product['slug'],
+			'download_id'     => $product['download_id'], // Optional, used for generating a license renewal link
+			#'renew_url'       => $product['renew_link'], // Optional, allows for a custom license renewal link
+		),
+		array(
+			'theme-license'             => __( 'Theme License', 'edd-theme-updater' ),
+			'enter-key'                 => __( 'Enter your theme license key.', 'edd-theme-updater' ),
+			'license-key'               => __( 'License Key', 'edd-theme-updater' ),
+			'license-action'            => __( 'License Action', 'edd-theme-updater' ),
+			'deactivate-license'        => __( 'Deactivate License', 'edd-theme-updater' ),
+			'activate-license'          => __( 'Activate License', 'edd-theme-updater' ),
+			'status-unknown'            => __( 'License status is unknown.', 'edd-theme-updater' ),
+			'renew'                     => __( 'Renew?', 'edd-theme-updater' ),
+			'unlimited'                 => __( 'unlimited', 'edd-theme-updater' ),
+			'license-key-is-active'     => __( 'License key is active.', 'edd-theme-updater' ),
+			'expires%s'                 => __( 'Expires %s.', 'edd-theme-updater' ),
+			'expires-never'             => __( 'Lifetime License.', 'edd-theme-updater' ),
+			'%1$s/%2$-sites'            => __( 'You have %1$s / %2$s sites activated.', 'edd-theme-updater' ),
+			'license-key-expired-%s'    => __( 'License key expired %s.', 'edd-theme-updater' ),
+			'license-key-expired'       => __( 'License key has expired.', 'edd-theme-updater' ),
+			'license-keys-do-not-match' => __( 'License keys do not match.', 'edd-theme-updater' ),
+			'license-is-inactive'       => __( 'License is inactive.', 'edd-theme-updater' ),
+			'license-key-is-disabled'   => __( 'License key is disabled.', 'edd-theme-updater' ),
+			'site-is-inactive'          => __( 'Site is inactive.', 'edd-theme-updater' ),
+			'license-status-unknown'    => __( 'License status is unknown.', 'edd-theme-updater' ),
+			'update-notice'             => __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update.", 'edd-theme-updater' ),
+			'update-available'          => __('<strong>%1$s %2$s</strong> is available. <a href="%3$s" class="thickbox" title="%4s">Check out what\'s new</a> or <a href="%5$s"%6$s>update now</a>.', 'edd-theme-updater' ),
 		)
 	);
 }
@@ -270,7 +314,7 @@ function nextgenthemes_api_action( $item_name, $key, $action ) {
 		'url'        => home_url(),
 	);
 
-	$response = wp_remote_post( NEXTGENTHEMES_API_URL, array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params ) );
+	$response = wp_remote_post( 'https://nextgenthemes.com', array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params ) );
 
 	// Make sure there are no errors
 	if ( is_wp_error( $response ) ) {

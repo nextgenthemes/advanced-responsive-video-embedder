@@ -8,7 +8,7 @@
  * Plugin Name:       ARVE Advanced Responsive Video Embedder
  * Plugin URI:        https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
  * Description:       Easy responsive video embeds via URL (like WordPress) or Shortcodes. Supports almost anything you can imagine.
- * Version:           7.9.8
+ * Version:           7.9.9-beta
  * Author:            Nicolas Jonas
  * Author URI:        https://nextgenthemes.com
  * License:           GPL-3.0
@@ -24,16 +24,15 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 define( 'ARVE_SLUG',                 'advanced-responsive-video-embedder' );
-define( 'ARVE_VERSION',              '7.9.8' );
-define( 'ARVE_PRO_VERSION_REQUIRED', '3.3.5' );
+define( 'ARVE_VERSION',              '7.9.9-beta' );
+define( 'ARVE_PRO_VERSION_REQUIRED', '3.3.5-beta' );
 define( 'ARVE_NUM_TRACKS', 10 );
 
 if( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
 	require_once plugin_dir_path( __FILE__ ) . 'admin/class-edd-sl-plugin-updater.php';
 }
 
-arve_init();
-#add_action( 'plugins_loaded', 'arve_init' ); # TODO ??
+arve_init(); #add_action( 'plugins_loaded', 'arve_init' ); # TODO ??
 
 function arve_init() {
 
@@ -41,6 +40,9 @@ function arve_init() {
 
 	if ( ! has_action( 'admin_menu', 'nextgenthemes_menus' ) ) {
 		require_once plugin_dir_path( __FILE__ ) . 'admin/functions-licensing.php';
+
+		add_action( 'admin_init', 'nextgenthemes_register_settings' );
+		add_action( 'admin_menu', 'nextgenthemes_menus' );
 	}
 
 	require_once plugin_dir_path( __FILE__ ) . 'admin/class-arve-admin-notice-factory.php';
