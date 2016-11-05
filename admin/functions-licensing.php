@@ -126,7 +126,10 @@ function nextgenthemes_key_callback( $args ) {
 		nextgenthemes_get_defined_key( $product ) ? ' disabled' : ''
 	);
 
-	if( nextgenthemes_get_defined_key( $product ) || ! empty( nextgenthemes_get_key( $product ) ) ) {
+	$defined_key = nextgenthemes_get_defined_key( $product );
+	$key = nextgenthemes_get_key( $product );
+
+	if( $defined_key || ! empty( $key ) ) {
 
 		submit_button( __('Activate License',   ARVE_SLUG ), 'primary',   $args['option_basename'] . '[activate_key]',   false );
 		submit_button( __('Deactivate License', ARVE_SLUG ), 'secondary', $args['option_basename'] . '[deactivate_key]', false );
@@ -213,7 +216,11 @@ function nextgenthemes_get_defined_key( $slug ) {
 
 	$constant_name = str_replace( '-', '_', strtoupper( $slug . '_KEY' ) );
 
-	return ( defined( $constant_name ) && ! empty( constant( $constant_name ) ) ) ? constant( $constant_name ) : false;
+	if( defined( $constant_name ) && ! empty( constant( $constant_name ) ) ) {
+		return constant( $constant_name );
+	} else {
+		return false;
+	}
 }
 
 function nextgenthemes_licenses_page() {
