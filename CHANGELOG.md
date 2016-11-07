@@ -1,14 +1,16 @@
 ## Changelog ##
 
-### 2016-10-03 - Pro Addon 3.3.5-beta ###
+### 2016-10-07 - Pro Addon 3.3.5-beta ###
 
 * Improved: Licensing field removed from the pro options tab (now in main plugin). This enables resetting pro options settings without deleting license key.
+* Fix: HTML5 not autoplaying in lightbox.
 
-### 2016-11-03 - 7.9.9-beta
+### 2016-11-07 - 7.9.9-beta
 
 * New: License page, relocated options page
 * Improved: Error messages for missing mandatory attributes.
-* Fix: Button not working with Advanced Custom Fields (Possibly fixed other 3rd party editor plugins as well) Thanks to David Trenear!
+* Fix: Shortcode UI script enqueued to early causing JS erros on admin pages.
+* Fix: 'Embed Video' Button not working with Advanced Custom Fields (Possibly fixed other 3rd party editor plugins as well) Thanks to David Trenear!
 * Fix: Invisible HTML5 Lazyload-lightbox videos
 * Possible Fix: Videos displayed to small in some Browsers
 

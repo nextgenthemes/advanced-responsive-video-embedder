@@ -153,7 +153,7 @@ function arve_add_media_button() {
 		esc_attr__( 'ARVE Advanced Responsive Video Embedder', ARVE_SLUG ),
 		is_plugin_active( 'shortcode-ui/shortcode-ui.php' ) ? 'data-arve-sui' : '',
 		esc_attr( $options['mode'] ),
-		esc_html__( '[arve] Embed Video', ARVE_SLUG )
+		esc_html__( 'Embed Video (ARVE)', ARVE_SLUG )
 	);
 }
 
@@ -631,6 +631,6 @@ function arve_admin_enqueue_scripts() {
 	wp_enqueue_script( ARVE_SLUG, plugin_dir_url( __FILE__ ) . 'arve-admin.js', array( 'jquery' ), ARVE_VERSION, true );
 
 	if ( is_plugin_active( 'shortcode-ui/shortcode-ui.php' ) ) {
-		wp_enqueue_script( ARVE_SLUG . '-sc-ui', plugin_dir_url( __FILE__ ) . 'arve-shortcode-ui.js', array(), ARVE_VERSION );
+		wp_enqueue_script( ARVE_SLUG . '-sc-ui', plugin_dir_url( __FILE__ ) . 'arve-shortcode-ui.js', array( 'shortcode-ui' ), ARVE_VERSION, true );
 	}
 }

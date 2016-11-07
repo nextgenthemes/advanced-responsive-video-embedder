@@ -32,7 +32,8 @@ if( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
 	require_once plugin_dir_path( __FILE__ ) . 'admin/class-edd-sl-plugin-updater.php';
 }
 
-arve_init(); #add_action( 'plugins_loaded', 'arve_init' ); # TODO ??
+arve_init();
+#add_action( 'plugins_loaded', 'arve_init' ); # TODO ??
 
 function arve_init() {
 
@@ -63,7 +64,7 @@ function arve_init() {
 
 	add_action( 'plugins_loaded',     'arve_load_plugin_textdomain' );
 
-	// Public hooks
+	# Public hooks
 	add_action( 'plugins_loaded',      'arve_oembed_remove_providers', 998 );
 	add_action( 'plugins_loaded',      'arve_create_shortcodes', 999 );
 	add_action( 'plugins_loaded',      'arve_create_url_handlers', 999 );
@@ -86,7 +87,7 @@ function arve_init() {
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_build_iframe_src', 8 );
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_generate_embed_id', 20 );
 
-	// Admin Hooks
+	# Admin Hooks
 	add_action( 'admin_enqueue_scripts', 'arve_admin_enqueue_scripts' );
 	add_action( 'admin_enqueue_scripts', 'arve_admin_enqueue_styles', 99 );
 	add_action( 'admin_init',            'arve_action_admin_init_setup_messages' );
