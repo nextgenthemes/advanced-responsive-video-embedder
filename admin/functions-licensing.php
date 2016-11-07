@@ -4,14 +4,14 @@ function nextgenthemes_get_products() {
 
 	$products = array(
 		'arve_pro' => array(
+			'name'    => 'Advanced Responsive Video Embedder Pro',
 	    'type'    => 'plugin',
-	    'name'    => 'Advanced Responsive Video Embedder Pro',
-			'author'  => 'Nicolas Jonas'
+			'author'  => 'Nicolas Jonas',
 		),
 		'arve_webtorrent' => array(
 			'name'   => 'ARVE Webtorrent Addon',
 			'type'   => 'plugin',
-			'author' => 'Nicolas Jonas'
+			'author' => 'Nicolas Jonas',
 		)
 	);
 

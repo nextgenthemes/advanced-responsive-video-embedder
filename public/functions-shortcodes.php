@@ -47,17 +47,12 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 
   if ( $arve_shortcode ) {
     $pairs['url'] = null;
-
-    if ( empty( $input_atts['url'] ) ) {
-      return arve_error( __( 'the shortcode url attribute is mandatory', ARVE_SLUG ) );
-    }
-
   } else {
     $pairs['provider'] = null;
     $pairs['id']       = null;
 
     if ( empty( $input_atts['provider'] ) || empty( $input_atts['id'] ) ) {
-      return arve_error( __( 'the shortcode url attribute is mandatory', ARVE_SLUG ) );
+      return arve_error( __( 'id and provider shortcodes attributes are mandatory for old shortcodes. It is recommended to switch to new shortcodes that need only url', ARVE_SLUG ) );
     }
   }
 

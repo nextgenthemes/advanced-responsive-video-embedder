@@ -10,7 +10,7 @@
 * New: License page, relocated options page
 * Improved: Error messages for missing mandatory attributes.
 * Fix: Shortcode UI script enqueued to early causing JS erros on admin pages.
-* Fix: 'Embed Video' Button not working with Advanced Custom Fields (Possibly fixed other 3rd party editor plugins as well) Thanks to David Trenear!
+* Fix: 'Embed Video' Button not working with Advanced Custom Fields (Possibly fixed other 3rd party editor plugins compatibility issues as well) Thanks to David Trenear!
 * Fix: Invisible HTML5 Lazyload-lightbox videos
 * Possible Fix: Videos displayed to small in some Browsers
 

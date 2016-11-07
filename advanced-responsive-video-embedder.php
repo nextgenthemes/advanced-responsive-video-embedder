@@ -65,15 +65,15 @@ function arve_init() {
 	add_action( 'plugins_loaded',     'arve_load_plugin_textdomain' );
 
 	# Public hooks
-	add_action( 'plugins_loaded',      'arve_oembed_remove_providers', 998 );
 	add_action( 'plugins_loaded',      'arve_create_shortcodes', 999 );
 	add_action( 'plugins_loaded',      'arve_create_url_handlers', 999 );
+	add_action( 'plugins_loaded',      'arve_oembed_remove_providers', 998 );
 	add_action( 'wp_enqueue_scripts',  'arve_enqueue_styles' );
 	add_action( 'wp_enqueue_scripts',  'arve_register_scripts', 0 );
 	add_action( 'wp_head',             'arve_print_styles' );
 	add_action( 'wp_video_shortcode_override', 'arve_wp_video_shortcode_override', 10, 4 );
-	add_filter( 'the_content',         'arve_shortcode_tests' );
 	add_filter( 'the_content',         'arve_regex_tests' );
+	add_filter( 'the_content',         'arve_shortcode_tests' );
 	add_filter( 'widget_text',         'do_shortcode' );
 
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_sanitise', -4 );

@@ -2,14 +2,7 @@
 
 function arve_action_admin_init_setup_messages() {
 
-	$defined = defined( 'ARVE_PRO_VERSION' );
-	$requires_pro_update = false;
-
-	if( $defined  ) {
-		$requires_pro_update = version_compare( ARVE_PRO_VERSION_REQUIRED, ARVE_PRO_VERSION, '>' );
-	}
-
-	if( $requires_pro_update ) {
+	if( defined( 'ARVE_PRO_VERSION' ) && version_compare( ARVE_PRO_VERSION_REQUIRED, ARVE_PRO_VERSION, '>' ) ) {
 
 		$msg = sprintf(
 			__( 'Your ARVE Pro Addon is outdated, you need version %s or later. If you have setup your license <a href="%s">here</a> semi auto updates (Admin panel notice and auto install on confirmation) should work again. If not please <a href="%s">report it</a> and manually update as <a href="%s">described here.</a> I am sorry for the many manual updates with .zip file you had to do in the past. It came to my attention to late that this was actually not working, partly because customers bravely just did the manual update without saying a word. For beta versions the manual update is still needed but until this is supported by EDD (its in the works)', ARVE_SLUG ),

@@ -10,6 +10,7 @@ php:
 env:
   matrix:
   - WP_VERSION=latest WP_MULTISITE=0
+  - WP_VERSION=4.6 WP_MULTISITE=0
   - WP_VERSION=4.5 WP_MULTISITE=0
   - WP_VERSION=4.4 WP_MULTISITE=0
   global:

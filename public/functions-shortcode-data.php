@@ -1,5 +1,10 @@
 <?php
 
+function arve_get_html5_attributes() {
+
+	return array( 'mp4', 'm4v', 'webm', 'ogv' );
+}
+
 function arve_build_iframe_src( $atts ) {
 
 	$id       = $atts['id'];

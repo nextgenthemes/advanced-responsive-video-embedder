@@ -19,6 +19,28 @@ function arve_filter_atts_sanitise( $atts ) {
   return $atts;
 }
 
+function arve_filter_atts_missing_attribute_check( $atts ) {
+
+  # Old shortcodes
+  if ( ! array_key_exists( 'url' , $atts ) ) {
+    return $atts;
+  }
+
+  $required_attributes   = arve_get_html5_attributes();
+  $required_attributes[] = 'url';
+
+  $array = array_intersect_key( $atts, array_flip( $required_attributes ) );
+
+  if( count( array_filter( $array ) ) != count( $array ) ) {
+    $atts['missing_atts_error'] = arve_error( sprintf(
+      esc_html__( 'The [arve] shortcode needs one of this attributes %s', ARVE_SLUG ),
+      implode( $required_attributes ) )
+    );
+  }
+
+  return $atts;
+}
+
 function arve_filter_atts_validate( $atts ) {
 
   if ( ! empty( $atts['url'] ) && ! arve_validate_url( $atts['url'] ) ) {
@@ -155,7 +177,7 @@ function arve_filter_atts_detect_html5( $atts ) {
     return $atts;
 	}
 
-	$html5_extensions = array( 'm4v', 'mp4', 'ogv',	'webm' );
+	$html5_extensions = arve_get_html5_attributes();
 
 	foreach ( $html5_extensions as $ext ) :
 

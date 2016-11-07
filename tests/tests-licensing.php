@@ -9,19 +9,21 @@ class Tests_Licensing_Pro extends WP_UnitTestCase {
 	 */
 	public function test_key() {
 
-		apply_filters( 'nextgenthemes_products', function( $products ) {
+		add_filter( 'nextgenthemes_products', array( $this, 'add_product' ) );
 
-      $products['test'] = array();
+    update_option( 'nextgenthemes_example_product_key', 'key_in_option' );
 
-      return $products;
-    } );
+    $this->assertEquals( nextgenthemes_get_key( 'example_product' ), 'key_in_option' );
 
-    update_option( 'nextgenthemes_test_key', 'key_in_option' );
+    define( 'EXAMPLE_PRODUCT_KEY', 'defined_key' );
 
-    $this->assertEquals( nextgenthemes_get_key( 'test' ), 'key_in_option' );
+    $this->assertEquals( nextgenthemes_get_key( 'example_product' ), 'defined_key' );
+	}
 
-    define( 'TEST_KEY', 'defined_key' );
+	public function add_product( $products ) {
 
-    $this->assertEquals( nextgenthemes_get_key( 'test' ), 'defined_key' );
+		$products['example_product'] = array();
+
+		return $products;
 	}
 }
