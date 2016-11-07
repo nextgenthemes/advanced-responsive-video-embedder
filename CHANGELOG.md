@@ -7,8 +7,10 @@
 
 ### 2016-11-07 - 7.9.9-beta
 
+* New: Filters for new cool things coming up
 * New: License page, relocated options page
 * Improved: Error messages for missing mandatory attributes.
+* Improved: Moved some code logic of the pro addon out of the main plugin.
 * Fix: Shortcode UI script enqueued to early causing JS erros on admin pages.
 * Fix: 'Embed Video' Button not working with Advanced Custom Fields (Possibly fixed other 3rd party editor plugins compatibility issues as well) Thanks to David Trenear!
 * Fix: Invisible HTML5 Lazyload-lightbox videos

@@ -58,37 +58,20 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 
   $atts = shortcode_atts( $pairs, $input_atts, 'arve' );
 
-  $debug_info = arve_get_debug_info( $atts, $input_atts );
+  $html['debug_info'] = arve_get_debug_info( $atts, $input_atts );
 
   if ( $errors = arve_output_errors( $atts ) ) {
-    return $errors . $debug_info;
+    return $errors . $html['debug_info'];
   }
 
-  $arve_video    = arve_video_or_iframe( $atts );
-  $meta_html     = arve_build_meta_html( $atts );
-  $arve_link     = arve_build_promote_link_html( $atts['arve_link'] );
-  $arve_play_btn = function_exists( 'arve_pro_play_btn' ) ? arve_pro_play_btn( $atts ) : '';
-  $webtorrent_status = function_exists( 'arve_webtorrent_status' ) ? arve_webtorrent_status( $atts['webtorrent'] ) : '';
+  $html['video']           = arve_video_or_iframe( $atts );
+  $html['meta']            = arve_build_meta_html( $atts );
+  $html['ad_link']         = arve_build_promote_link_html( $atts['arve_link'] );
+  $html['embed_container'] = arve_arve_embed_container( $html['meta'] . $html['video'], $atts );
 
-  if ( 'link-lightbox' == $atts['mode'] ) {
-    $atts['embed_container_id'] =
-    $containers  = arve_arve_embed_container( $meta_html . $arve_video, $atts, 'lity-container' );
-  } elseif ( 'lazyload-lightbox' == $atts['mode'] ) {
+  $normal_embed = arve_arve_wrapper( $html['embed_container'] . $html['ad_link'], $atts );
 
-    $containers  = arve_arve_embed_container( $arve_video, $atts, 'lity-container' );
-
-    if ( empty( $atts['aspect_ratio'] ) ) {
-      $atts['aspect_ratio'] = '16:9';
-    }
-
-    $containers .= arve_arve_embed_container( $meta_html . $arve_play_btn, $atts );
-  } else {
-    $containers = arve_arve_embed_container( $meta_html . $arve_video . $arve_play_btn, $atts );
-  }
-
-  $final_embed = arve_arve_wrapper( $containers . $arve_link . $webtorrent_status, $atts );
-
-  $output = apply_filters( 'arve_output', $debug_info . $final_embed, $atts );
+  $output = apply_filters( 'arve_output', $html['debug_info'] . $normal_embed, $html, $atts );
 
   if ( empty( $output ) ) {
     return arve_error( 'The output is empty, this should not happen' );

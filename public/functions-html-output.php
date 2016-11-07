@@ -126,7 +126,7 @@ function arve_arve_embed_container( $html, $atts, $lity_container = false ) {
 	}
 
 	if( ! empty( $atts['aspect_ratio'] ) ) {
-		$attr['style'] = sprintf( 'padding-bottom: %F%% !important;', arve_aspect_ratio_to_padding( $atts['aspect_ratio'] ) );
+		$attr['style'] = sprintf( 'padding-bottom: %F%% !important;', arve_aspect_ratio_to_percentage( $atts['aspect_ratio'] ) );
 	} elseif ( 'html5' == $atts['provider'] ) {
 		$attr['style'] = 'height: auto !important; padding: 0 !important';
 	}
@@ -188,17 +188,15 @@ function arve_video_or_iframe( $atts ) {
 	}
 }
 
-	/**
-	 *
-	 *
-	 * @since    2.6.0
-	 */
+/**
+ *
+ *
+ * @since    2.6.0
+ */
 function arve_create_iframe_tag( $atts ) {
 
 	$options    = arve_get_options();
 	$properties = arve_get_host_properties();
-
-	#d($arve);
 
 	$iframe_attr = array(
 		'allowfullscreen' => '',
@@ -224,7 +222,7 @@ function arve_create_iframe_tag( $atts ) {
 		$iframe = sprintf( '<iframe%s></iframe>', arve_attr( $iframe_attr ) );
 	}
 
-	return $iframe;
+	return apply_filters( 'arve_iframe_tag', $iframe, $iframe_attr );
 }
 
 function arve_error( $message ) {
@@ -247,9 +245,24 @@ function arve_print_styles() {
   }
 }
 
+function arve_get_fixed_dimensions( $atts ) {
+
+	if( empty( $atts['aspect_ratio'] ) ) {
+		$ratio = 56.25;
+	} else {
+		$ratio = (float) arve_aspect_ratio_to_percentage( $ratio );
+	}
+
+	$out['width']  = 480;
+	$out['height'] = ( $out['width'] / 100 ) * $ratio;
+
+	return $out;
+}
+
 function arve_create_video_tag( $atts ) {
 
-	$soures_html = '';
+	$sources_html = '';
+	$fixed_dimensions = arve_get_fixed_dimensions( $atts );
 
 	if ( in_array( $atts['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ) {
 		$atts['autoplay'] = null;
@@ -264,23 +277,25 @@ function arve_create_video_tag( $atts ) {
 		'preload'  => $atts['preload'],
 		'src'      => isset( $atts['video_src'] ) ? $atts['video_src'] : false,
 
-		'width'    => is_feed() ? 853 : false,
-		'height'   => is_feed() ? 480 : false,
+		'width'    => is_feed() ? $fixed_dimensions['width']  : false,
+		'height'   => is_feed() ? $fixed_dimensions['height'] : false,
 	);
 
 	if ( isset( $atts['video_sources'] ) ) {
 
 		foreach ( $atts['video_sources'] as $key => $value ) {
-			$soures_html .= sprintf( '<source type="%s" src="%s">', $key, $value );
+			$sources_html .= sprintf( '<source type="%s" src="%s">', $key, $value );
 		}
 	}
 
-	return sprintf(
+	$video = sprintf(
 		'<video%s>%s%s</video>',
 		arve_attr( $video_attr, 'video' ),
-		$soures_html,
+		$sources_html,
 		$atts['video_tracks']
 	);
+
+	return apply_filters( 'arve_video_tag', $video, $video_attr, $sources_html, $fixed_dimensions );
 }
 
 function arve_output_errors( $atts ) {

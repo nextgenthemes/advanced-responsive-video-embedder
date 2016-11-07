@@ -112,7 +112,7 @@ function arve_youtube_time_to_seconds( $yttime ) {
  *
  * @return    float
  */
-function arve_aspect_ratio_to_padding( $aspect_ratio ) {
+function arve_aspect_ratio_to_percentage( $aspect_ratio ) {
 
   $aspect_ratio = explode( ':', $aspect_ratio );
 
