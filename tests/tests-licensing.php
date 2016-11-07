@@ -14,8 +14,8 @@ class Tests_Licensing_Pro extends WP_UnitTestCase {
     update_option( 'nextgenthemes_example_product_key', 'key_in_option' );
     $this->assertEquals( nextgenthemes_get_key( 'example_product' ), 'key_in_option' );
 
-    define( 'EXAMPLE_PRODUCT_TWO_KEY', 'defined_key' );
-    $this->assertEquals( nextgenthemes_get_key( 'example_product_two' ), 'defined_key' );
+    define( 'EXAMPLE_PRODUCT_KEY', 'defined_key' );
+    $this->assertEquals( nextgenthemes_get_key( 'example_product' ), 'defined_key' );
 	}
 
 	public function add_product( $products ) {
