@@ -17,5 +17,9 @@ class Tests_Pro extends WP_UnitTestCase {
 		$this->assertTrue( function_exists( 'arve_pro_init' ) );
 		$this->assertTrue( function_exists( 'arve_pro_activation_hook' ) );
 		$this->assertTrue( function_exists( 'arve_pro_filter_modes' ) );
+
+		$arve_up_to_date = version_compare( ARVE_PRO_VERSION, ARVE_PRO_VERSION_REQUIRED, '>=' );
+
+		$this->assertTrue( $arve_up_to_date );
 	}
 }
