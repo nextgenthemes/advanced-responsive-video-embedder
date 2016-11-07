@@ -1,4 +1,21 @@
 <?php
+
+function arve_filter_atts_set_fixed_dimensions( $atts ) {
+
+  $width = 480;
+
+	if( empty( $atts['aspect_ratio'] ) ) {
+		$ratio = 56.25;
+	} else {
+		$ratio = (float) arve_aspect_ratio_to_percentage( $ratio );
+	}
+
+	$atts['width']  = $width;
+	$atts['height'] = ( $width / 100 ) * $ratio;
+
+	return $atts;
+}
+
 function arve_filter_atts_sanitise( $atts ) {
 
   if ( ! empty( $atts['src'] ) ) {
@@ -203,6 +220,15 @@ function arve_filter_atts_detect_html5( $atts ) {
 	}
 
   $atts['provider'] = 'html5';
+  $atts['video_sources_html'] = '';
+
+  if ( isset( $atts['video_sources'] ) ) {
+
+		foreach ( $atts['video_sources'] as $key => $value ) {
+			$atts['video_sources_html'] .= sprintf( '<source type="%s" src="%s">', $key, $value );
+		}
+	}
+
 	return $atts;
 }
 

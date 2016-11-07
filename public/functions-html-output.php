@@ -206,8 +206,9 @@ function arve_create_iframe_tag( $atts ) {
 		'sandbox'     => empty( $atts['iframe_sandbox'] ) ? 'allow-scripts allow-same-origin allow-popups' : $atts['iframe_sandbox'],
 		'scrolling'   => 'no',
 		'src'         => $atts['iframe_src'],
-		'height'      => is_feed() ? 480 : false,
-		'width'       => is_feed() ? 853 : false,
+
+		'width'       => ! empty( $atts['width'] )  ? $atts['width'] :  false,
+		'height'      => ! empty( $atts['height'] ) ? $atts['height'] : false,
 	);
 
 	if ( ! empty( $properties[ $atts['provider'] ]['requires_flash'] ) ) {
@@ -222,7 +223,40 @@ function arve_create_iframe_tag( $atts ) {
 		$iframe = sprintf( '<iframe%s></iframe>', arve_attr( $iframe_attr ) );
 	}
 
-	return apply_filters( 'arve_iframe_tag', $iframe, $iframe_attr );
+	return apply_filters( 'arve_iframe_tag', $iframe, $atts, $iframe_attr );
+}
+
+function arve_create_video_tag( $atts ) {
+
+	$sources_html = '';
+
+	if ( in_array( $atts['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ) {
+		$atts['autoplay'] = null;
+	}
+
+	$video_attr = array(
+		'autoplay' => $atts['autoplay'],
+		'class'    => 'arve-video fitvidsignore',
+		'controls' => $atts['controls'],
+		'loop'     => $atts['loop'],
+		'poster'   => isset( $atts['img_src'] ) ? $atts['img_src'] : false,
+		'preload'  => $atts['preload'],
+		'src'      => isset( $atts['video_src'] ) ? $atts['video_src'] : false,
+
+		'width'    => ! empty( $atts['width'] )  ? $atts['width'] :  false,
+		'height'   => ! empty( $atts['height'] ) ? $atts['height'] : false,
+	);
+
+	d( $atts );
+
+	$video = sprintf(
+		'<video%s>%s%s</video>',
+		arve_attr( $video_attr, 'video' ),
+		$atts['video_sources_html'],
+		$atts['video_tracks']
+	);
+
+	return apply_filters( 'arve_video_tag', $video, $atts, $video_attr );
 }
 
 function arve_error( $message ) {
@@ -243,59 +277,6 @@ function arve_print_styles() {
 
     echo '<style type="text/css">' . $css . "</style>\n";
   }
-}
-
-function arve_get_fixed_dimensions( $atts ) {
-
-	if( empty( $atts['aspect_ratio'] ) ) {
-		$ratio = 56.25;
-	} else {
-		$ratio = (float) arve_aspect_ratio_to_percentage( $ratio );
-	}
-
-	$out['width']  = 480;
-	$out['height'] = ( $out['width'] / 100 ) * $ratio;
-
-	return $out;
-}
-
-function arve_create_video_tag( $atts ) {
-
-	$sources_html = '';
-	$fixed_dimensions = arve_get_fixed_dimensions( $atts );
-
-	if ( in_array( $atts['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ) {
-		$atts['autoplay'] = null;
-	}
-
-	$video_attr = array(
-		'autoplay' => $atts['autoplay'],
-		'class'    => 'arve-video',
-		'controls' => $atts['controls'],
-		'loop'     => $atts['loop'],
-		'poster'   => isset( $atts['img_src'] ) ? $atts['img_src'] : false,
-		'preload'  => $atts['preload'],
-		'src'      => isset( $atts['video_src'] ) ? $atts['video_src'] : false,
-
-		'width'    => is_feed() ? $fixed_dimensions['width']  : false,
-		'height'   => is_feed() ? $fixed_dimensions['height'] : false,
-	);
-
-	if ( isset( $atts['video_sources'] ) ) {
-
-		foreach ( $atts['video_sources'] as $key => $value ) {
-			$sources_html .= sprintf( '<source type="%s" src="%s">', $key, $value );
-		}
-	}
-
-	$video = sprintf(
-		'<video%s>%s%s</video>',
-		arve_attr( $video_attr, 'video' ),
-		$sources_html,
-		$atts['video_tracks']
-	);
-
-	return apply_filters( 'arve_video_tag', $video, $video_attr, $sources_html, $fixed_dimensions );
 }
 
 function arve_output_errors( $atts ) {
