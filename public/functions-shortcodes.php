@@ -47,9 +47,18 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 
   if ( $arve_shortcode ) {
     $pairs['url'] = null;
+
+    if ( empty( $input_atts['url'] ) ) {
+      return arve_error( __( 'the shortcode url attribute is mandatory', ARVE_SLUG ) );
+    }
+
   } else {
     $pairs['provider'] = null;
     $pairs['id']       = null;
+
+    if ( empty( $input_atts['provider'] ) || empty( $input_atts['id'] ) ) {
+      return arve_error( __( 'the shortcode url attribute is mandatory', ARVE_SLUG ) );
+    }
   }
 
   $atts = shortcode_atts( $pairs, $input_atts, 'arve' );
@@ -70,7 +79,13 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
     $atts['embed_container_id'] =
     $containers  = arve_arve_embed_container( $meta_html . $arve_video, $atts, 'lity-container' );
   } elseif ( 'lazyload-lightbox' == $atts['mode'] ) {
+
     $containers  = arve_arve_embed_container( $arve_video, $atts, 'lity-container' );
+
+    if ( empty( $atts['aspect_ratio'] ) ) {
+      $atts['aspect_ratio'] = '16:9';
+    }
+
     $containers .= arve_arve_embed_container( $meta_html . $arve_play_btn, $atts );
   } else {
     $containers = arve_arve_embed_container( $meta_html . $arve_video . $arve_play_btn, $atts );
@@ -104,7 +119,7 @@ function arve_create_shortcodes() {
   $function_factory = new ARVE_Shortcode_Function_Factory;
 
   foreach( $options['shortcodes'] as $provider => $shortcode ) {
-    /* Would require php 5.3.0
+    /* # Would require php 5.3.0
     $function = function( $atts ) use ( $provider ) {
       $atts['provider'] = $provider;
       return arve_shortcode_arve( $atts, null, false );

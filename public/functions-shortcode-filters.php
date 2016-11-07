@@ -122,6 +122,33 @@ function arve_filter_atts_detect_provider_and_id_from_url( $atts ) {
 	return $atts;
 }
 
+function arve_filter_atts_detect_youtube_playlist( $atts ) {
+
+  if( 'youtube' != $atts['provider'] || empty( $atts['url'] ) || empty( $atts['id'] ) ) {
+    return $atts;
+  }
+
+  if( empty( $atts['url'] ) ) {
+    $search = $atts['id'];
+  } else {
+    $search = $atts['url'];
+  }
+
+  parse_str( $search, $parsed );
+
+  if( empty( $parsed['list'] ) ) {
+    return $atts;
+  }
+
+  $atts['id'] = strtok( $atts['id'], '?' );
+  $atts['id'] = strtok( $atts['id'], '&' );
+
+  $atts['youtube_playlist_id'] = $parsed['list'];
+  $atts['parameters']         .= 'list=' . $parsed['list'];
+
+  return $atts;
+}
+
 function arve_filter_atts_detect_html5( $atts ) {
 
   if( ! empty( $atts['provider'] ) && 'html5' != $atts['provider'] ) {

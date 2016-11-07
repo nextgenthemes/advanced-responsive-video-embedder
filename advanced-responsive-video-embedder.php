@@ -77,6 +77,7 @@ function arve_init() {
 
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_sanitise', -4 );
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_provider_and_id_from_url', -2 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_youtube_playlist', -1 );
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_html5', 0 );
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_iframe_fallback', 2 );
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_validate', 4 );
