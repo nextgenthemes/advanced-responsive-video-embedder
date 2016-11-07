@@ -247,8 +247,6 @@ function arve_create_video_tag( $atts ) {
 		'height'   => ! empty( $atts['height'] ) ? $atts['height'] : false,
 	);
 
-	d( $atts );
-
 	$video = sprintf(
 		'<video%s>%s%s</video>',
 		arve_attr( $video_attr, 'video' ),
