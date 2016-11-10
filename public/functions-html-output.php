@@ -218,12 +218,12 @@ function arve_create_iframe_tag( $atts ) {
 	if ( in_array( $atts['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ) {
 		$lazyload_iframe_attr = arve_prefix_array_keys( 'data-', $iframe_attr );
 
-		$iframe = sprintf( '<span class="arve-lazyload"%s></span>', arve_attr( $lazyload_iframe_attr ) );
+		$output = sprintf( '<span class="arve-lazyload"%s></span>', arve_attr( $lazyload_iframe_attr ) );
 	} else {
-		$iframe = sprintf( '<iframe%s></iframe>', arve_attr( $iframe_attr ) );
+		$output = sprintf( '<iframe%s></iframe>', arve_attr( $iframe_attr ) );
 	}
 
-	return apply_filters( 'arve_iframe_tag', $iframe, $atts, $iframe_attr );
+	return apply_filters( 'arve_iframe_tag', $output, $atts, $iframe_attr );
 }
 
 function arve_create_video_tag( $atts ) {
@@ -247,14 +247,14 @@ function arve_create_video_tag( $atts ) {
 		'height'   => ! empty( $atts['height'] ) ? $atts['height'] : false,
 	);
 
-	$video = sprintf(
+	$output = sprintf(
 		'<video%s>%s%s</video>',
 		arve_attr( $video_attr, 'video' ),
 		$atts['video_sources_html'],
 		$atts['video_tracks']
 	);
 
-	return apply_filters( 'arve_video_tag', $video, $atts, $video_attr );
+	return apply_filters( 'arve_video_tag', $output, $atts, $video_attr );
 }
 
 function arve_error( $message ) {

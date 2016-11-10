@@ -7,11 +7,13 @@ function nextgenthemes_get_products() {
 			'name'    => 'Advanced Responsive Video Embedder Pro',
 	    'type'    => 'plugin',
 			'author'  => 'Nicolas Jonas',
+			'url'     => 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/',
 		),
-		'arve_webtorrent' => array(
-			'name'   => 'ARVE Webtorrent Addon',
+		'arve_amp' => array(
+			'name'   => 'ARVE Accelerated Mobile Pages Addon',
 			'type'   => 'plugin',
 			'author' => 'Nicolas Jonas',
+			'url'    => 'https://nextgenthemes.com/plugins/arve-accelerated-mobile-pages-addon/',
 		)
 	);
 
@@ -109,25 +111,23 @@ function nextgenthemes_register_settings() {
 
 function nextgenthemes_key_callback( $args ) {
 
-	$product = $args['product']['slug'];
-
 	echo '<p>';
 
 	printf( '<input%s>', arve_attr( array(
 		'type'  => 'hidden',
 		'id'    => $args['option_basename'] . '[product]',
 		'name'  => $args['option_basename'] . '[product]',
-		'value' => $product
+		'value' => $args['product']['slug'],
 	) ) );
 
 	printf(
 		'<input%s%s>',
 		arve_attr( $args['attr'] ),
-		nextgenthemes_get_defined_key( $product ) ? ' disabled' : ''
+		nextgenthemes_get_defined_key( $args['product']['slug'] ) ? ' disabled' : ''
 	);
 
-	$defined_key = nextgenthemes_get_defined_key( $product );
-	$key = nextgenthemes_get_key( $product );
+	$defined_key = nextgenthemes_get_defined_key( $args['product']['slug'] );
+	$key = nextgenthemes_get_key( $args['product']['slug'] );
 
 	if( $defined_key || ! empty( $key ) ) {
 
@@ -138,21 +138,52 @@ function nextgenthemes_key_callback( $args ) {
 	echo '</p>';
 
   echo '<p>';
-  echo __( 'License Status: ', ARVE_SLUG ) . nextgenthemes_get_key_status( $product );
+  echo __( 'License Status: ', ARVE_SLUG ) . nextgenthemes_get_key_status( $args['product']['slug'] );
   echo '</p>';
 
   if ( 'plugin' == $args['product']['type'] ) {
 
-    if ( ! empty( $args['product']['file'] ) ) {
-      $plugin_file = basename( dirname( $args['product']['file'] ) ) . DIRECTORY_SEPARATOR . basename( $args['product']['file'] );
-    }
-
-    if ( ! empty( $plugin_file ) && is_plugin_active( $plugin_file ) ) {
-      _e( 'Plugin is activated', ARVE_SLUG );
+    if ( empty( $args['product']['file'] ) ) {
+      $plugin_active = false;
     } else {
-      _e( 'Plugin not active', ARVE_SLUG );
+			$plugin_active = nextgenthemes_is_plugin_active( $args['product']['file'] );
+		}
+
+    if( ! $plugin_active && nextgenthemes_is_plugin_installed( $args['product']['slug'] ) ) {
+			_e( 'Plugin is installed but not activated', ARVE_SLUG );
+		} elseif( ! $plugin_active ) {
+      printf(
+				'<a%s>%s</a>',
+				arve_attr( array(
+					'href'  => $args['product']['url'],
+					'class' => 'button button-primary',
+				) ),
+				__( 'Not installed, check it out', ARVE_SLUG )
+			);
     }
   }
+}
+
+function nextgenthemes_is_plugin_active( $file ) {
+
+	$dir_file = basename( dirname( $file ) ) . DIRECTORY_SEPARATOR . basename( $file );
+
+	return is_plugin_active( $dir_file );
+}
+
+function nextgenthemes_is_plugin_installed( $slug ) {
+
+	$plugins = get_plugins();
+
+	$slug = str_replace( '_', '-', $slug );
+
+	$dir_file = $slug . DIRECTORY_SEPARATOR . $slug . '.php';
+
+	if( array_key_exists( $dir_file, $plugins ) ) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 function nextgenthemes_validate_license( $input ) {

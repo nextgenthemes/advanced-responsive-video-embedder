@@ -5,6 +5,19 @@ function arve_get_html5_attributes() {
 	return array( 'mp4', 'm4v', 'webm', 'ogv' );
 }
 
+function arve_url_query_array( $url ) {
+
+  $url = parse_url( $url );
+
+  if ( empty( $url['query'] ) ) {
+    return array();
+  }
+
+  parse_str( $url['query'], $url_params );
+
+  return $url_params;
+}
+
 function arve_build_iframe_src( $atts ) {
 
 	$id       = $atts['id'];
@@ -54,7 +67,11 @@ function arve_build_iframe_src( $atts ) {
 	#d($provider);
 	#d($pattern);
 
-	$src = sprintf( $pattern, $id );
+	if ( 'brightcove' == $provider ) {
+		$src = sprintf( $pattern, $atts['account_id'], $id );
+	} else {
+		$src = sprintf( $pattern, $id );
+	}
 
 	return $src;
 }
@@ -66,18 +83,13 @@ function arve_id_fixes( $id, $provider ) {
 		! arve_starts_with( $id, 'i=' ) &&
 		! arve_starts_with( $id, 'f=' )
 	) {
-
 		$id = 'i=' . $id;
-
-	} elseif ( 'youtube' == $provider ) {
-
-		$id = str_replace( array( '&list=', '&amp;list=' ), '?list=', $id );
 	}
 
 	return $id;
 }
 
-function arve_aspect_ratio_fixes( $aspect_ratio, $provider, $mode) {
+function arve_aspect_ratio_fixes( $aspect_ratio, $provider, $mode ) {
 
 	if ( 'dailymotionlist' === $provider ) {
 		switch ( $mode ) {

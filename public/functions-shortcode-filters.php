@@ -153,6 +153,11 @@ function arve_filter_atts_detect_provider_and_id_from_url( $atts ) {
 			$atts['id']       = $matches[1];
 			$atts['provider'] = $provider;
 
+      if ( ! empty( $matches['id'] ) && ! empty( $matches['account_id'] ) ) {
+        $atts['id']         = $matches['id'];
+        $atts['account_id'] = $matches['account_id'];
+      }
+
 			return $atts;
 		}
 
@@ -161,29 +166,66 @@ function arve_filter_atts_detect_provider_and_id_from_url( $atts ) {
 	return $atts;
 }
 
+function arve_filter_atts_detect_query_args( $atts ) {
+
+  if( empty( $atts['url'] ) ) {
+    return $atts;
+  }
+
+  $to_extract = array(
+    'brightcove' => array( 'videoId', 'something' ),
+  );
+
+  foreach ( $to_extract as $provider => $parameters ) {
+
+    if( $provider != $atts['provider'] ) {
+      return $atts;
+    }
+
+    $query_array = arve_url_query_array( $atts['url'] );
+
+    foreach ( $parameters as $key => $parameter ) {
+
+      $att_name = $atts['provider'] . "_$parameter";
+
+      if( empty( $query_array[ $parameter ] ) ) {
+        $atts[ $att_name ] = new WP_Error( $att_name, "$parameter not found in URL" );
+      } else {
+        $atts[ $att_name ] = $query_array[ $parameter ];
+      }
+    }
+  }
+
+  return $atts;
+}
+
 function arve_filter_atts_detect_youtube_playlist( $atts ) {
 
-  if( 'youtube' != $atts['provider'] || empty( $atts['url'] ) || empty( $atts['id'] ) ) {
+  if(
+    'youtube' != $atts['provider'] ||
+    ( empty( $atts['url'] ) && empty( $atts['id'] ) )
+  ) {
     return $atts;
   }
 
   if( empty( $atts['url'] ) ) {
-    $search = $atts['id'];
+    # Not a url but it will work
+    $url = str_replace( array( '&list=', '&amp;list=' ), '?list=', $atts['id'] );
   } else {
-    $search = $atts['url'];
+    $url = $atts['url'];
   }
 
-  parse_str( $search, $parsed );
+  $query_array = arve_url_query_array( $url );
 
-  if( empty( $parsed['list'] ) ) {
+  if( empty( $query_array['list'] ) ) {
     return $atts;
   }
 
   $atts['id'] = strtok( $atts['id'], '?' );
   $atts['id'] = strtok( $atts['id'], '&' );
 
-  $atts['youtube_playlist_id'] = $parsed['list'];
-  $atts['parameters']         .= 'list=' . $parsed['list'];
+  $atts['youtube_playlist_id'] = $query_array['list'];
+  $atts['parameters']         .= 'list=' . $query_array['list'];
 
   return $atts;
 }
