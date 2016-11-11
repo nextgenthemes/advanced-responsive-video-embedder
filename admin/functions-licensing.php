@@ -189,7 +189,7 @@ function nextgenthemes_is_plugin_installed( $slug ) {
 function nextgenthemes_validate_license( $input ) {
 
 	if( ! is_array( $input ) ) {
-		return;
+		return 'bug, report please';
 	}
 
 	$product = $input['product'];
@@ -271,9 +271,11 @@ function nextgenthemes_licenses_page() {
 <?php
 }
 
-function nextgenthemes_init_edd_updater( $item_slug, $file ) {
+function nextgenthemes_init_edd_updaters() {
 
-	foreach ( nextgenthemes_get_products() as $product ) {
+	$products = nextgenthemes_get_products();
+
+	foreach ( $products as $product ) {
 
 		if ( 'plugin' == $product['type'] && ! empty( $product['file'] ) ) {
 			nextgenthemes_init_plugin_updater( $product );

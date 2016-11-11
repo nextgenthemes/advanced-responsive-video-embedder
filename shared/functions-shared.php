@@ -51,13 +51,13 @@ function arve_get_settings_definitions() {
 
 	foreach ( $properties as $provider => $values ) {
 
-		if( ! empty( $values['auto_thumbnail'] ) && $values['auto_thumbnail'] ) {
+		if( ! empty( $values['auto_thumbnail'] ) ) {
 			$auto_thumbs[] = $values['name'];
 		}
-		if( ! empty( $values['auto_title'] ) && $values['auto_title'] ) {
+		if( ! empty( $values['auto_title'] ) ) {
 			$auto_title[] = $values['name'];
 		}
-		if( ! empty( $values['embed_url'] ) ) {
+		if( ! empty( $values['requires_src'] ) ) {
 			$embed_code_only[] = $values['name'];
 		}
 	}
@@ -312,8 +312,8 @@ function arve_get_host_properties() {
 			'default_params' => 'nologo=1',
 			'auto_thumbnail' => true,
 			'tests' => array(
-				array( 'url' => 'https://alugha.com/1/videos/youtube-54m1YfEuYU8',                'id' =>  'youtube-54m1YfEuYU8' ),
-				array( 'url' => 'https://alugha.com/videos/7cab9cd7-f64a-11e5-939b-c39074d29b86', 'id' =>  '7cab9cd7-f64a-11e5-939b-c39074d29b86' ),
+				array( 'url' => 'https://alugha.com/1/videos/youtube-54m1YfEuYU8',                'id' => 'youtube-54m1YfEuYU8' ),
+				array( 'url' => 'https://alugha.com/videos/7cab9cd7-f64a-11e5-939b-c39074d29b86', 'id' => '7cab9cd7-f64a-11e5-939b-c39074d29b86' ),
 			)
 		),
 		'archiveorg' => array(
@@ -355,7 +355,8 @@ function arve_get_host_properties() {
 			'tests' => array(
 				array(
 					'url' => 'http://players.brightcove.net/1160438696001/default_default/index.html?videoId=4587535845001',
-					'id'  =>                               '1160438696001/default_default/index.html?videoId=4587535845001'
+					'id'  =>                                                                                 4587535845001,
+					'account_id' =>                         1160438696001,
 				),
 			),
 		),
@@ -492,6 +493,7 @@ function arve_get_host_properties() {
 			 ),
 			)
 		),
+    #https://cdnapisec.kaltura.com/p/243342/sp/24334200/embedIframeJs/uiconf_id/20540612/partner_id/243342?iframeembed=true&playerId=kaltura_player&entry_id=1_sf5ovm7u&flashvars[streamerType]=auto" width="560" height="395" allowfullscreen webkitallowfullscreen mozAllowFullScreen frameborder="0"></iframe>
 		'kickstarter' => array(
 			'regex'          => $s . 'kickstarter\.com/projects/([0-9a-z\-]+/[-0-9a-z\-]+)',
 			'embed_url'      => 'https://www.kickstarter.com/projects/%s/widget/video.html',
