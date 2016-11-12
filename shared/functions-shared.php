@@ -1007,11 +1007,15 @@ function arve_get_host_properties() {
 			),
 		),
 		'youtubelist' => array(
-			'regex'          => $s . 'youtube\.com/playlist\?list=([-a-z0-9]+)',
+			'regex'          => $s . 'youtube\.com/(?:embed/videoseries|playlist)\?list=([-a-z0-9]+)',
 			'name'           => 'YouTube Playlist',
 			'embed_url'      => 'http://www.youtube.com/embed/videoseries?list=%s',
 			'auto_thumbnail' => true,
 			'tests' => array(
+				array(
+					'url' => 'https://www.youtube.com/playlist?list=PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7',
+					'id'  =>                                       'PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7'
+				),
 				array(
 					'url' => 'https://www.youtube.com/embed/videoseries?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
 					'id'  =>                                                'PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
