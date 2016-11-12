@@ -170,10 +170,10 @@ class Tests_Shortcode extends WP_UnitTestCase {
 	      preg_match( '#' . $props['regex'] . '#i', $test['url'], $matches );
 
 				if ( 'brightcove' == $provider ) {
-					$this->assertArrayHasKey( 'id', $matches, $provider );
 					$this->assertArrayHasKey( 'account_id', $matches, $provider );
-					$this->assertEquals( $matches['id'], $test['id'], $provider );
-					$this->assertEquals( $matches['id'], $test['account_id'], $provider );
+					$this->assertArrayHasKey( 'id',         $matches, $provider );
+					$this->assertEquals( $matches['account_id'], $test['account_id'], $provider );
+					$this->assertEquals( $matches['id'],         $test['id'],         $provider );
 				} else {
 					$this->assertArrayHasKey( 1, $matches, $provider );
 					$this->assertEquals( $matches[1], $test['id'], $provider );
