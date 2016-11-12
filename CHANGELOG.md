@@ -1,6 +1,10 @@
 ## Changelog ##
 
-### 2016-10-07 - Pro Addon 3.3.5-beta ###
+### 2016-11-12 - 7.9.13-beta
+
+* New: YouTube URL detection for playists without starting video `https://www.youtube.com/playlist?list=PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7`
+
+### 2016-11-07 - Pro Addon 3.3.5-beta ###
 
 * Improved: Licensing field removed from the pro options tab (now in main plugin). This enables resetting pro options settings without deleting license key.
 * Fix: HTML5 not autoplaying in lightbox.
