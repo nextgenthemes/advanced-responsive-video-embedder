@@ -3,6 +3,7 @@
 ### 2016-11-12 - 7.9.13-beta
 
 * New: YouTube URL detection for playists without starting video `https://www.youtube.com/playlist?list=PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7`
+* Fix: Facebook URL detection for usernames with dots in them.
 
 ### 2016-11-07 - Pro Addon 3.3.5-beta ###
 

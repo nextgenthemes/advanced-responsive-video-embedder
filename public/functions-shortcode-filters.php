@@ -7,7 +7,7 @@ function arve_filter_atts_set_fixed_dimensions( $atts ) {
 	if( empty( $atts['aspect_ratio'] ) ) {
 		$ratio = 56.25;
 	} else {
-		$ratio = (float) arve_aspect_ratio_to_percentage( $ratio );
+		$ratio = (float) arve_aspect_ratio_to_percentage( $atts['aspect_ratio'] );
 	}
 
 	$atts['width']  = $width;
