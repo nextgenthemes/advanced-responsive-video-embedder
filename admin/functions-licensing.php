@@ -6,28 +6,16 @@ function nextgenthemes_activation_notices() {
 
 	foreach ( $products as $key => $value ) {
 
-
-
-		if(  'valid' != nextgenthemes_get_key_status( $value['slug'] ) ) {
+		if( $value['active'] && $value['valid_key'] ) {
 
 			$msg = sprintf(
 				__( 'Hi there, thanks for your purchase. One last step, please activate your %s <a href="%s">here now</a>.', ARVE_SLUG ),
 				$value['name'],
 				get_admin_url() . 'admin.php?page=nextgenthemes-licenses'
 			);
-			new ARVE_Admin_Notice_Factory( 'arve-pro-not-activated', "<p>$msg</p>", false );
+			new ARVE_Admin_Notice_Factory( $key . '-not-activated', "<p>$msg</p>", false );
 		}
 	}
-
-	if( 'valid' != nextgenthemes_get_key_status( 'arve_pro' ) ) {
-
-		$msg = sprintf(
-			__( 'Hi there, thanks for your purchase. One last step, please activate your ARVE Pro Addon <a href="%s">here now</a>.', ARVE_SLUG ),
-			get_admin_url() . 'admin.php?page=nextgenthemes-licenses'
-		);
-		new ARVE_Admin_Notice_Factory( 'arve-pro-not-activated', "<p>$msg</p>", false );
-	}
-
 }
 
 function nextgenthemes_get_products() {
@@ -51,22 +39,42 @@ function nextgenthemes_get_products() {
 
 	foreach ( $products as $key => $value ) {
 
-		$products[ $key ]['slug'] = $key;
-		$products[ $key ]['slug_undescored'] = str_replace( '-', '_', $key );
+		$products[ $key ]['slug']      = $key;
+		$products[ $key ]['installed'] = false;
+		$products[ $key ]['active']    = false;
+		$products[ $key ]['valid_key'] = false;
 
-		if ( 'plugin' == $value['type'] ) {
+		$version_define = strtoupper( $key ) . '_VERSION';
+		$file_define    = strtoupper( $key ) . '_FILE';
 
-			if ( empty( $value['file'] ) ) {
-				$products[ $key ]['installed'] = false;
-			} else {
-				$products[ $key ]['installed'] = nextgenthemes_is_plugin_installed( $value['file'] );
-			}
+		if( defined( $version_define ) ) {
+			$products[ $key ]['version'] = constant( $version_define );
+		}
+		if( defined( $file_define ) ) {
+			$products[ $key ]['file'] = constant( $file_define );
+		}
 
-			$products[ $key ]['active'] = nextgenthemes_is_plugin_active( $value['slug'] );
+		if ( isset( $products[ $key ]['file'] ) && 'plugin' == $value['type'] ) {
+			$plugin_basename = plugin_basename( $products[ $key ]['file'] );
+
+			$products[ $key ]['installed'] = nextgenthemes_is_plugin_installed( $plugin_basename );
+			$products[ $key ]['active']    = is_plugin_active( $plugin_basename );
+			$products[ $key ]['valid_key'] = nextgenthemes_has_valid_key( $key );
 		}
 	}
 
 	return $products;
+}
+
+function nextgenthemes_is_plugin_installed( $plugin_basename ) {
+
+	$plugins = get_plugins();
+
+	if( array_key_exists( $plugin_basename, $plugins ) ) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 /**
@@ -184,47 +192,18 @@ function nextgenthemes_key_callback( $args ) {
   echo __( 'License Status: ', ARVE_SLUG ) . nextgenthemes_get_key_status( $args['product']['slug'] );
   echo '</p>';
 
-  if ( 'plugin' == $args['product']['type'] ) {
-
-    if ( empty( $args['product']['file'] ) ) {
-      $plugin_active = false;
-    } else {
-			$plugin_active = nextgenthemes_is_plugin_active( $args['product']['file'] );
-		}
-
-    if( ! $plugin_active && nextgenthemes_is_plugin_installed( $args['product']['slug'] ) ) {
-			printf( '<strong>%s</strong>', __( 'Plugin is installed but not activated', ARVE_SLUG ) );
-		} elseif( ! $plugin_active ) {
-      printf(
-				'<a%s>%s</a>',
-				arve_attr( array(
-					'href'  => $args['product']['url'],
-					'class' => 'button button-primary',
-				) ),
-				__( 'Not installed, check it out', ARVE_SLUG )
-			);
-    }
+  if( $args['product']['installed'] && ! $args['product']['active'] ) {
+		printf( '<strong>%s</strong>', __( 'Plugin is installed but not activated', ARVE_SLUG ) );
+	} elseif( ! $args['product']['active'] ) {
+    printf(
+			'<a%s>%s</a>',
+			arve_attr( array(
+				'href'  => $args['product']['url'],
+				'class' => 'button button-primary',
+			) ),
+			__( 'Not installed, check it out', ARVE_SLUG )
+		);
   }
-}
-
-function nextgenthemes_is_plugin_active( $slug ) {
-
-	$dir_file = $slug . DIRECTORY_SEPARATOR . $slug . '.php';
-
-	return is_plugin_active( $dir_file );
-}
-
-function nextgenthemes_is_plugin_installed( $slug ) {
-
-	$plugins = get_plugins();
-
-	$dir_file = $slug . DIRECTORY_SEPARATOR . $slug . '.php';
-
-	if( array_key_exists( $dir_file, $plugins ) ) {
-		return true;
-	} else {
-		return false;
-	}
 }
 
 function nextgenthemes_validate_license( $input ) {
