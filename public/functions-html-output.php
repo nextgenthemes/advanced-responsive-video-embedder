@@ -235,7 +235,7 @@ function arve_create_video_tag( $atts ) {
 	}
 
 	$video_attr = array(
-		'autoplay' => $atts['autoplay'],
+		'autoplay' => in_array( $atts['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ? false : $atts['autoplay'],
 		'class'    => 'arve-video fitvidsignore',
 		'controls' => $atts['controls'],
 		'loop'     => $atts['loop'],

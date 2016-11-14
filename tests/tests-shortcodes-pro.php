@@ -31,6 +31,23 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 		endforeach;
 	}
 
+	public function test_autoplay() {
+
+		$attr = array(
+			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
+			'thumbnail' => 'https://example.com/example.jpg',
+			'mode'      => 'lazyload',
+		);
+
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+		$this->assertContains( 'autoplay=1', arve_shortcode_arve( $attr ) );
+
+		unset( $attr['thumbnail'] );
+
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+		$this->assertContains( 'autoplay=0', arve_shortcode_arve( $attr ) );
+	}
+
 	public function NO_test_oembed_thumbnail_and_title() {
 
 		$properties = arve_get_host_properties();

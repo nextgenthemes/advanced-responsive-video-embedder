@@ -71,7 +71,7 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 
   $normal_embed = arve_arve_wrapper( $html['embed_container'] . $html['ad_link'], $atts );
 
-  $output = apply_filters( 'arve_output', $html['debug_info'] . $normal_embed, $html, $atts );
+  $output = apply_filters( 'arve_output', $normal_embed, $html, $atts );
 
   if ( empty( $output ) ) {
     return arve_error( 'The output is empty, this should not happen' );
@@ -80,7 +80,7 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
   }
 
   wp_enqueue_script( 'advanced-responsive-video-embedder' );
-  return $output;
+  return $html['debug_info'] . $output;
 }
 
 /**
