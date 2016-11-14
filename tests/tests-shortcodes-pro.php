@@ -34,7 +34,7 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 	public function test_autoplay() {
 
 		$attr = array(
-			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
+			'url'       => 'https://example.com',
 			'thumbnail' => 'https://example.com/example.jpg',
 			'mode'      => 'lazyload',
 		);
