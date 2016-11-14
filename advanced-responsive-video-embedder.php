@@ -8,7 +8,7 @@
  * Plugin Name:       ARVE Advanced Responsive Video Embedder
  * Plugin URI:        https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
  * Description:       Easy responsive video embeds via URL (like WordPress) or Shortcodes. Supports almost anything you can imagine.
- * Version:           7.9.15-beta
+ * Version:           7.9.16-beta
  * Author:            Nicolas Jonas
  * Author URI:        https://nextgenthemes.com
  * License:           GPL-3.0
@@ -24,8 +24,8 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 define( 'ARVE_SLUG',                 'advanced-responsive-video-embedder' );
-define( 'ARVE_VERSION',              '7.9.15-beta' );
-define( 'ARVE_PRO_VERSION_REQUIRED', '3.6.1-beta' );
+define( 'ARVE_VERSION',              '7.9.16-beta' );
+define( 'ARVE_PRO_VERSION_REQUIRED', '3.6.3-beta' );
 define( 'ARVE_NUM_TRACKS', 10 );
 
 if( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
@@ -77,16 +77,16 @@ function arve_init() {
 	add_filter( 'the_content',         'arve_shortcode_tests' );
 	add_filter( 'widget_text',         'do_shortcode' );
 
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_sanitise', -4 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_provider_and_id_from_url', -2 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_youtube_playlist', -1 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_html5', 0 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_iframe_fallback', 2 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_validate', 4 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_get_media_gallery_thumbnail', 6 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_build_subtitles', 8 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_build_iframe_src', 8 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_set_fixed_dimensions', 9 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_sanitise', -12 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_provider_and_id_from_url', -10 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_youtube_playlist', -8 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_html5', -6 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_iframe_fallback', -4 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_validate', -2 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_get_media_gallery_thumbnail', 0 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_build_subtitles' );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_build_iframe_src' );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_set_fixed_dimensions' );
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_generate_embed_id', 20 );
 
 	# Admin Hooks
