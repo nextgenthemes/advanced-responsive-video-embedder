@@ -1,5 +1,35 @@
 <?php
 
+function nextgenthemes_activation_notices() {
+
+	$products = nextgenthemes_get_products();
+
+	foreach ( $products as $key => $value ) {
+
+
+
+		if(  'valid' != nextgenthemes_get_key_status( $value['slug'] ) ) {
+
+			$msg = sprintf(
+				__( 'Hi there, thanks for your purchase. One last step, please activate your %s <a href="%s">here now</a>.', ARVE_SLUG ),
+				$value['name'],
+				get_admin_url() . 'admin.php?page=nextgenthemes-licenses'
+			);
+			new ARVE_Admin_Notice_Factory( 'arve-pro-not-activated', "<p>$msg</p>", false );
+		}
+	}
+
+	if( 'valid' != nextgenthemes_get_key_status( 'arve_pro' ) ) {
+
+		$msg = sprintf(
+			__( 'Hi there, thanks for your purchase. One last step, please activate your ARVE Pro Addon <a href="%s">here now</a>.', ARVE_SLUG ),
+			get_admin_url() . 'admin.php?page=nextgenthemes-licenses'
+		);
+		new ARVE_Admin_Notice_Factory( 'arve-pro-not-activated', "<p>$msg</p>", false );
+	}
+
+}
+
 function nextgenthemes_get_products() {
 
 	$products = array(
@@ -20,7 +50,20 @@ function nextgenthemes_get_products() {
 	$products = apply_filters( 'nextgenthemes_products', $products );
 
 	foreach ( $products as $key => $value ) {
+
 		$products[ $key ]['slug'] = $key;
+		$products[ $key ]['slug_undescored'] = str_replace( '-', '_', $key );
+
+		if ( 'plugin' == $value['type'] ) {
+
+			if ( empty( $value['file'] ) ) {
+				$products[ $key ]['installed'] = false;
+			} else {
+				$products[ $key ]['installed'] = nextgenthemes_is_plugin_installed( $value['file'] );
+			}
+
+			$products[ $key ]['active'] = nextgenthemes_is_plugin_active( $value['slug'] );
+		}
 	}
 
 	return $products;
@@ -150,7 +193,7 @@ function nextgenthemes_key_callback( $args ) {
 		}
 
     if( ! $plugin_active && nextgenthemes_is_plugin_installed( $args['product']['slug'] ) ) {
-			_e( 'Plugin is installed but not activated', ARVE_SLUG );
+			printf( '<strong>%s</strong>', __( 'Plugin is installed but not activated', ARVE_SLUG ) );
 		} elseif( ! $plugin_active ) {
       printf(
 				'<a%s>%s</a>',
@@ -164,9 +207,9 @@ function nextgenthemes_key_callback( $args ) {
   }
 }
 
-function nextgenthemes_is_plugin_active( $file ) {
+function nextgenthemes_is_plugin_active( $slug ) {
 
-	$dir_file = basename( dirname( $file ) ) . DIRECTORY_SEPARATOR . basename( $file );
+	$dir_file = $slug . DIRECTORY_SEPARATOR . $slug . '.php';
 
 	return is_plugin_active( $dir_file );
 }
@@ -174,8 +217,6 @@ function nextgenthemes_is_plugin_active( $file ) {
 function nextgenthemes_is_plugin_installed( $slug ) {
 
 	$plugins = get_plugins();
-
-	$slug = str_replace( '_', '-', $slug );
 
 	$dir_file = $slug . DIRECTORY_SEPARATOR . $slug . '.php';
 

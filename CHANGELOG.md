@@ -1,24 +1,23 @@
 ## Changelog ##
 
-### 2016-11-12 - 7.9.13-beta
-
-* New: YouTube URL detection for playists without starting video `https://www.youtube.com/playlist?list=PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7`
-* Fix: Facebook URL detection for usernames with dots in them.
-
-### 2016-11-07 - Pro Addon 3.3.5-beta ###
+### 2016-11-17 - Pro Addon 3.6.1 ###
 
 * Improved: Licensing field removed from the pro options tab (now in main plugin). This enables resetting pro options settings without deleting license key.
 * Fix: HTML5 not autoplaying in lightbox.
+* Improved: New default option for inview lazyload is 'On iOS, Android and Desktops when no thumbnail is found'.
+* Improved: New installations will show a message guiding users to activation screen.
 
-### 2016-11-07 - 7.9.9-beta
+### 2016-11-17 - 7.9.15
 
-* New: Filters for new cool things coming up
-* New: License page, relocated options page
+* Fix: 'Embed Video' Button not working with Advanced Custom Fields (Possibly fixed other 3rd party editor plugins compatibility issues as well) Thanks to David Trenear!
+* Fix: Facebook URL detection for usernames with dots in them.
+* Fix: Invisible HTML5 Lazyload-lightbox videos
+* Fix: Shortcode UI script enqueued to early causing JS erros on admin pages.
 * Improved: Error messages for missing mandatory attributes.
 * Improved: Moved some code logic of the pro addon out of the main plugin.
-* Fix: Shortcode UI script enqueued to early causing JS erros on admin pages.
-* Fix: 'Embed Video' Button not working with Advanced Custom Fields (Possibly fixed other 3rd party editor plugins compatibility issues as well) Thanks to David Trenear!
-* Fix: Invisible HTML5 Lazyload-lightbox videos
+* New: Filters for new cool things coming up
+* New: License page, relocated options page
+* New: YouTube URL detection for playists without starting video `https://www.youtube.com/playlist?list=PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7`
 * Possible Fix: Videos displayed to small in some Browsers
 
 ### 2016-10-29 - 7.9.8 and Pro Addon 3.3.4 ###
