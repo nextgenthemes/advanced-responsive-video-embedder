@@ -43,6 +43,7 @@ function arve_init() {
 		require_once plugin_dir_path( __FILE__ ) . 'admin/functions-licensing.php';
 
 		add_action( 'admin_init', 'nextgenthemes_init_edd_updaters', 0 );
+		add_action( 'admin_init', 'nextgenthemes_activation_notices' );
 		add_action( 'admin_init', 'nextgenthemes_register_settings' );
 		add_action( 'admin_menu', 'nextgenthemes_menus' );
 	}

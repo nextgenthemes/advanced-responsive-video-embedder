@@ -6,14 +6,14 @@ function nextgenthemes_activation_notices() {
 
 	foreach ( $products as $key => $value ) {
 
-		if( $value['active'] && $value['valid_key'] ) {
+		if( $value['active'] && ! $value['valid_key'] ) {
 
 			$msg = sprintf(
 				__( 'Hi there, thanks for your purchase. One last step, please activate your %s <a href="%s">here now</a>.', ARVE_SLUG ),
 				$value['name'],
 				get_admin_url() . 'admin.php?page=nextgenthemes-licenses'
 			);
-			new ARVE_Admin_Notice_Factory( $key . '-not-activated', "<p>$msg</p>", false );
+			new ARVE_Admin_Notice_Factory( $key . '-activation-notice', "<p>$msg</p>", false );
 		}
 	}
 }
@@ -42,7 +42,7 @@ function nextgenthemes_get_products() {
 		$products[ $key ]['slug']      = $key;
 		$products[ $key ]['installed'] = false;
 		$products[ $key ]['active']    = false;
-		$products[ $key ]['valid_key'] = false;
+		$products[ $key ]['valid_key'] = nextgenthemes_has_valid_key( $key );
 
 		$version_define = strtoupper( $key ) . '_VERSION';
 		$file_define    = strtoupper( $key ) . '_FILE';
@@ -54,12 +54,10 @@ function nextgenthemes_get_products() {
 			$products[ $key ]['file'] = constant( $file_define );
 		}
 
-		if ( isset( $products[ $key ]['file'] ) && 'plugin' == $value['type'] ) {
+		if ( ! empty( $products[ $key ]['file'] ) && 'plugin' == $value['type'] ) {
 			$plugin_basename = plugin_basename( $products[ $key ]['file'] );
-
 			$products[ $key ]['installed'] = nextgenthemes_is_plugin_installed( $plugin_basename );
 			$products[ $key ]['active']    = is_plugin_active( $plugin_basename );
-			$products[ $key ]['valid_key'] = nextgenthemes_has_valid_key( $key );
 		}
 	}
 
