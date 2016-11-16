@@ -1,8 +1,9 @@
 ## Changelog ##
 
-### 2016-11-17 - Pro Addon 3.6.1 ###
+### 2016-11-17 - Pro Addon 3.6.4 ###
 
 * Improved: Licensing field removed from the pro options tab (now in main plugin). This enables resetting pro options settings without deleting license key.
+* Fix: Autoplay not applied property.
 * Fix: HTML5 not autoplaying in lightbox.
 * Improved: New default option for inview lazyload is 'On iOS, Android and Desktops when no thumbnail is found'.
 * Improved: New installations will show a message guiding users to activation screen.

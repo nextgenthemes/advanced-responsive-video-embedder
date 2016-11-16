@@ -8,7 +8,7 @@
  * Plugin Name:       ARVE Advanced Responsive Video Embedder
  * Plugin URI:        https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
  * Description:       Easy responsive video embeds via URL (like WordPress) or Shortcodes. Supports almost anything you can imagine.
- * Version:           7.9.16-beta
+ * Version:           7.9.17-beta
  * Author:            Nicolas Jonas
  * Author URI:        https://nextgenthemes.com
  * License:           GPL-3.0
@@ -24,7 +24,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 define( 'ARVE_SLUG',                 'advanced-responsive-video-embedder' );
-define( 'ARVE_VERSION',              '7.9.16-beta' );
+define( 'ARVE_VERSION',              '7.9.17-beta' );
 define( 'ARVE_PRO_VERSION_REQUIRED', '3.6.3-beta' );
 define( 'ARVE_NUM_TRACKS', 10 );
 
@@ -85,9 +85,9 @@ function arve_init() {
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_iframe_fallback', -4 );
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_validate', -2 );
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_get_media_gallery_thumbnail', 0 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_build_subtitles' );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_build_iframe_src' );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_set_fixed_dimensions' );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_build_subtitles', 20 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_build_iframe_src', 20 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_set_fixed_dimensions', 20 );
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_generate_embed_id', 20 );
 
 	# Admin Hooks
