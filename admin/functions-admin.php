@@ -128,7 +128,7 @@ function arve_add_media_button() {
 
 	add_thickbox();
 
-	$p1 = __( 'This button can open a optional ARVE a Shortcode creation dialog. ARVE needs the "Shortcake (Shortcode UI)" plugin active for this fuctionality, please download <a href="%s">version 0.7.0-alpha2.zip</a> and install from zip. Current <a href="%s">wordpress.org version 0.6.2</a> has a issue that the button needs to be clicked twice.', ARVE_SLUG );
+	$p1 = __( 'This button can open a optional ARVE a Shortcode creation dialog. ARVE needs the "Shortcake (Shortcode UI)" plugin active for this fuctionality.', ARVE_SLUG );
 
 	$p2 = __( 'The "Shortcake (Shortcode UI)" plugin also adds What You See Is What You Get functionality to WordPress visual post editor.', ARVE_SLUG );
 
