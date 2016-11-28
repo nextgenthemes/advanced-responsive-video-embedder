@@ -182,4 +182,20 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 	  endforeach;
 	}
+
+	public function test_disable_flash() {
+
+		$attr = array( 'url' => 'https://example.com' );
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr) );
+		$this->assertRegExp( '#<iframe .*src="https://example\.com#', arve_shortcode_arve( $attr) );
+		$this->assertContains( 'data-arve-provider="iframe"', arve_shortcode_arve( $attr ) );
+		$this->assertContains( 'sandbox="', arve_shortcode_arve( $attr ) );
+
+		$attr['disable_flash'] = 'n';
+
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr) );
+		$this->assertRegExp( '#<iframe .*src="https://example\.com#', arve_shortcode_arve( $attr) );
+		$this->assertContains( 'data-arve-provider="iframe"', arve_shortcode_arve( $attr ) );
+		$this->assertNotContains( 'sandbox="', arve_shortcode_arve( $attr ) );
+	}
 }
