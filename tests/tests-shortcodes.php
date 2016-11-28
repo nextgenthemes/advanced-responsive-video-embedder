@@ -189,13 +189,13 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr) );
 		$this->assertRegExp( '#<iframe .*src="https://example\.com#', arve_shortcode_arve( $attr) );
 		$this->assertContains( 'data-arve-provider="iframe"', arve_shortcode_arve( $attr ) );
-		$this->assertContains( 'sandbox="', arve_shortcode_arve( $attr ) );
+		$this->assertNotContains( 'sandbox="', arve_shortcode_arve( $attr ) );
 
 		$attr['disable_flash'] = 'y';
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr) );
 		$this->assertRegExp( '#<iframe .*src="https://example\.com#', arve_shortcode_arve( $attr) );
 		$this->assertContains( 'data-arve-provider="iframe"', arve_shortcode_arve( $attr ) );
-		$this->assertNotContains( 'sandbox="', arve_shortcode_arve( $attr ) );
+		$this->assertContains( 'sandbox="', arve_shortcode_arve( $attr ) );
 	}
 }

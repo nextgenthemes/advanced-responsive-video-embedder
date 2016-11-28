@@ -1,6 +1,6 @@
 ## Changelog ##
 
-### 2016-11-26 - Pro Addon 3.6.4 ###
+### 2016-11-28 - Pro Addon 3.6.4 ###
 
 * Improved: Licensing field removed from the pro options tab (now in main plugin). This enables resetting pro options settings without deleting license key.
 * Fix: Autoplay not applied property.
@@ -8,7 +8,7 @@
 * Improved: New default option for inview lazyload is 'On iOS, Android and Desktops when no thumbnail is found'.
 * Improved: New installations will show a message guiding users to activation screen.
 
-### 2016-11-26 - 7.9.15
+### 2016-11-28 - 7.9.19
 
 * Fix: 'Embed Video' Button not working with Advanced Custom Fields (Possibly fixed other 3rd party editor plugins compatibility issues as well) Thanks to David Trenear!
 * Fix: Facebook URL detection for usernames with dots in them.
