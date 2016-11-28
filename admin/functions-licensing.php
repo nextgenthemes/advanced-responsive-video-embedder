@@ -68,6 +68,8 @@ function nextgenthemes_is_plugin_installed( $plugin_basename ) {
 
 	$plugins = get_plugins();
 
+	dd(get_plugins());
+
 	if( array_key_exists( $plugin_basename, $plugins ) ) {
 		return true;
 	} else {
