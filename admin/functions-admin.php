@@ -128,15 +128,12 @@ function arve_add_media_button() {
 
 	add_thickbox();
 
-	$p1 = __( 'This button can open a optional ARVE a Shortcode creation dialog. ARVE needs the "Shortcake (Shortcode UI)" plugin active for this fuctionality.', ARVE_SLUG );
-
+	$p1 = __( 'This button can open a optional ARVE a Shortcode creation dialog. ARVE needs the <a href="%s">Shortcode UI plugin</a> active for this fuctionality.', ARVE_SLUG );
 	$p2 = __( 'The "Shortcake (Shortcode UI)" plugin also adds What You See Is What You Get functionality to WordPress visual post editor.', ARVE_SLUG );
-
 	$p3 = __( 'It is perfectly fine to pass on this and <a href="%s">manually</a> write shortcodes or don\'t use shortcodes at all, but it makes things easier.', ARVE_SLUG );
 
 	printf(
 		"<div id='arve-thickbox' style='display:none;'><p>$p1</p><p>$p2</p><p>$p3</p></div>",
-		esc_url( 'https://nextgenthemes.com/shortcode-ui-0.7.0-alpha.zip' ),
 		esc_url( 'https://wordpress.org/plugins/shortcode-ui/' ),
 		esc_url( 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/' )
 	);

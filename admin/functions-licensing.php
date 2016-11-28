@@ -143,7 +143,7 @@ function nextgenthemes_register_settings() {
 					'type'  => 'text',
 					'id'    => $option_keyname,
 					'name'  => $option_keyname,
-					'class' => 'medium-text',
+					'class' => 'arve-license-input',
 					'value' => nextgenthemes_get_defined_key( $product_slug ) ? __( 'is defined (wp-config.php?)', ARVE_SLUG ) : nextgenthemes_get_key( $product_slug, 'option_only' ),
 				)
 			)
@@ -176,7 +176,7 @@ function nextgenthemes_key_callback( $args ) {
 	);
 
 	$defined_key = nextgenthemes_get_defined_key( $args['product']['slug'] );
-	$key = nextgenthemes_get_key( $args['product']['slug'] );
+	$key         = nextgenthemes_get_key(         $args['product']['slug'] );
 
 	if( $defined_key || ! empty( $key ) ) {
 
@@ -207,7 +207,7 @@ function nextgenthemes_key_callback( $args ) {
 function nextgenthemes_validate_license( $input ) {
 
 	if( ! is_array( $input ) ) {
-		return 'bug, report please';
+		return sanitize_text_field( $input );
 	}
 
 	$product = $input['product'];

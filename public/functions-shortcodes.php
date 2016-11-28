@@ -4,22 +4,24 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 
   $errors     = '';
   $options    = arve_get_options();
+  $properties = arve_get_host_properties();
   $input_atts = (array) $input_atts;
 
   $pairs = apply_filters( 'arve_shortcode_pairs', array(
-    'align'        => $options['align'],
-    'arve_link'    => arve_bool_to_shortcode_string( $options['promote_link'] ),
-    'aspect_ratio' => null,
-    'autoplay'     => arve_bool_to_shortcode_string( $options['autoplay'] ),
-    'description'  => null,
-    'iframe_name'  => null,
-    'maxwidth'     => (string) $options['video_maxwidth'],
-    'mode'         => $options['mode'],
-    'parameters'   => null,
-    'thumbnail'    => null,
-    'title'        => null,
-    'upload_date'  => null,
-    'src'          => null, # Just a alias for url to make it simple
+    'align'         => $options['align'],
+    'arve_link'     => arve_bool_to_shortcode_string( $options['promote_link'] ),
+    'aspect_ratio'  => null,
+    'autoplay'      => arve_bool_to_shortcode_string( $options['autoplay'] ),
+    'description'   => null,
+    'disable_flash' => null,
+    'iframe_name'   => null,
+    'maxwidth'      => (string) $options['video_maxwidth'],
+    'mode'          => $options['mode'],
+    'parameters'    => null,
+    'thumbnail'     => null,
+    'title'         => null,
+    'upload_date'   => null,
+    'src'           => null, # Just a alias for url to make it simple
     # <video>
     'm4v'      => null,
     'mp4'      => null,
@@ -57,6 +59,8 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
   }
 
   $atts = shortcode_atts( $pairs, $input_atts, 'arve' );
+
+  
 
   $html['debug_info'] = arve_get_debug_info( $atts, $input_atts );
 

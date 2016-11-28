@@ -203,16 +203,19 @@ function arve_create_iframe_tag( $atts ) {
 		'class'       => 'arve-iframe fitvidsignore',
 		'frameborder' => '0',
 		'name'        => $atts['iframe_name'],
-		'sandbox'     => empty( $atts['iframe_sandbox'] ) ? 'allow-scripts allow-same-origin allow-popups' : $atts['iframe_sandbox'],
 		'scrolling'   => 'no',
 		'src'         => $atts['iframe_src'],
 
-		'width'       => ! empty( $atts['width'] )  ? $atts['width'] :  false,
+		'width'       => ! empty( $atts['width'] )  ? $atts['width']  : false,
 		'height'      => ! empty( $atts['height'] ) ? $atts['height'] : false,
 	);
 
-	if ( ! empty( $properties[ $atts['provider'] ]['requires_flash'] ) ) {
-		$iframe_attr['sandbox'] = false;
+	if ( null === $atts['disable_flash'] ) {
+		$atts['disable_flash'] = ! empty( $properties[ $atts['provider'] ]['requires_flash'] ) ? true : false;
+	}
+
+	if ( $atts['disable_flash'] ) {
+		$iframe_attr['sandbox'] = empty( $atts['iframe_sandbox'] ) ? 'allow-scripts allow-same-origin allow-popups' : $atts['iframe_sandbox'];
 	}
 
 	if ( in_array( $atts['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ) {
