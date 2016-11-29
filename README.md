@@ -205,6 +205,27 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
+### 2016-11-29 - Pro Addon 3.6.4 ###
+
+* Improved: Licensing field removed from the pro options tab (now in main plugin). This enables resetting pro options settings without deleting license key.
+* Fix: Autoplay not applied property.
+* Fix: HTML5 not autoplaying in lightbox.
+* Improved: New default option for inview lazyload is 'On iOS, Android and Desktops when no thumbnail is found'.
+* Improved: New installations will show a message guiding users to activation screen.
+
+### 2016-11-29 - 7.9.19
+
+* Fix: 'Embed Video' Button not working with Advanced Custom Fields (Possibly fixed other 3rd party editor plugins compatibility issues as well) Thanks to David Trenear!
+* Fix: Facebook URL detection for usernames with dots in them.
+* Fix: Invisible HTML5 Lazyload-lightbox videos
+* Fix: Shortcode UI script enqueued to early causing JS erros on admin pages.
+* Improved: Error messages for missing mandatory attributes.
+* Improved: Moved some code logic of the pro addon out of the main plugin.
+* New: Filters for new cool things coming up
+* New: License page, relocated options page
+* New: YouTube URL detection for playists without starting video `https://www.youtube.com/playlist?list=PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7`
+* Possible Fix: Videos displayed to small in some Browsers
+
 ### 2016-10-29 - 7.9.8 and Pro Addon 3.3.4 ###
 
 * Fix: Fix lightbox thumbnail
