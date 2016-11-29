@@ -54,10 +54,16 @@ function nextgenthemes_get_products() {
 			$products[ $key ]['file'] = constant( $file_define );
 		}
 
-		if ( ! empty( $products[ $key ]['file'] ) && 'plugin' == $value['type'] ) {
-			$plugin_basename = plugin_basename( $products[ $key ]['file'] );
-			$products[ $key ]['installed'] = nextgenthemes_is_plugin_installed( $plugin_basename );
-			$products[ $key ]['active']    = is_plugin_active( $plugin_basename );
+		if ( 'plugin' == $value['type'] ) {
+
+			$file_slug = str_replace( '_', '-', $key );
+
+			$products[ $key ]['installed'] = nextgenthemes_is_plugin_installed( "$file_slug/$file_slug.php" );
+
+			if ( ! empty( $products[ $key ]['file'] ) ) {
+				$plugin_basename = plugin_basename( $products[ $key ]['file'] );
+				$products[ $key ]['active'] = is_plugin_active( $plugin_basename );
+			}
 		}
 	}
 
@@ -67,8 +73,6 @@ function nextgenthemes_get_products() {
 function nextgenthemes_is_plugin_installed( $plugin_basename ) {
 
 	$plugins = get_plugins();
-
-	dd(get_plugins());
 
 	if( array_key_exists( $plugin_basename, $plugins ) ) {
 		return true;

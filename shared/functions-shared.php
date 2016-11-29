@@ -82,7 +82,7 @@ function arve_get_settings_definitions() {
 				'placeholder' => esc_attr__( 'Video URL / iframe Embed Code', ARVE_SLUG ),
 			),
 			'description' => sprintf(
-				__( 'Post the URL of the video here. For %s and any unlisted <a href="%s">unlisted</a> video hosts paste their iframe embed codes in here (providers embeds need to be responsive).', ARVE_SLUG ),
+				__( 'Post the URL of the video here. For %s and any <a href="%s">unlisted</a> video hosts paste their iframe embed codes or its src URL in here (providers embeds need to be responsive).', ARVE_SLUG ),
 				$embed_code_only,
 				'https://nextgenthemes.com/advanced-responsive-video-embedder-pro/#video-host-support'
 			)
