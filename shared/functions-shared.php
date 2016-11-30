@@ -853,7 +853,7 @@ function arve_get_host_properties() {
 				),
 				array(
 					'url' => 'https://youtu.be/b8m9zhNAgKs?list=PLI_7Mg2Z_-4I-W_lI55D9lBUkC66ftHMg',
-					'id'  =>                                   'PLI_7Mg2Z_-4I-W_lI55D9lBUkC66ftHMg'
+					'id'  =>                  'b8m9zhNAgKs?list=PLI_7Mg2Z_-4I-W_lI55D9lBUkC66ftHMg'
 				),
 			),
 			'specific_tests' => array(
