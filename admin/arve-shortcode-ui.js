@@ -17,13 +17,6 @@ function arve_extract_url( changed, collection, shortcode ) {
 		return;
 	}
 
-	short_val =       val.replace( '://www.youtube.com/watch?v=', '://youtu.be/' );
-	short_val = short_val.replace( '://www.dailymotion.com/video/', '://dai.ly/' );
-
-	if( short_val !== val ) {
-		input.val( short_val ).trigger( 'input' );
-	}
-
 	if( val.match(/src="([^"]+)/) ) {
 
 		var test_url = val.match(/src="([^"]+)/),

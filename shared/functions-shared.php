@@ -849,7 +849,12 @@ function arve_get_host_properties() {
 				),
 				array(
 					'url' => 'http://www.youtube.com/watch?v=GjL82KUHVb0&list=PLI46g-I12_9qGBq-4epxOay0hotjys5iA&index=10', # The index part will be ignored
-					'id'  =>                                'GjL82KUHVb0&list=PLI46g-I12_9qGBq-4epxOay0hotjys5iA' ),
+					'id'  =>                                'GjL82KUHVb0&list=PLI46g-I12_9qGBq-4epxOay0hotjys5iA'
+				),
+				array(
+					'url' => 'https://youtu.be/b8m9zhNAgKs?list=PLI_7Mg2Z_-4I-W_lI55D9lBUkC66ftHMg',
+					'id'  =>                                   'PLI_7Mg2Z_-4I-W_lI55D9lBUkC66ftHMg'
+				),
 			),
 			'specific_tests' => array(
 				__('URL from youtu.be shortener', ARVE_SLUG),

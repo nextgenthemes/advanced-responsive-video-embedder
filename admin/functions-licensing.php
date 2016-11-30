@@ -1,10 +1,9 @@
 <?php
 
-add_action( 'admin_init',    'nextgenthemes_init_edd_updaters', 0 );
-add_action( 'admin_init',    'nextgenthemes_activation_notices' );
-add_action( 'admin_init',    'nextgenthemes_register_settings' );
-add_action( 'admin_menu',    'nextgenthemes_menus' );
-add_action( 'admin_notices', 'nextgenthemes_license_errors' );
+add_action( 'admin_init', 'nextgenthemes_init_edd_updaters', 0 );
+add_action( 'admin_init', 'nextgenthemes_activation_notices' );
+add_action( 'admin_init', 'nextgenthemes_register_settings' );
+add_action( 'admin_menu', 'nextgenthemes_menus' );
 
 function nextgenthemes_activation_notices() {
 
@@ -344,28 +343,28 @@ function nextgenthemes_init_theme_updater( $product ) {
 			#'renew_url'       => $product['renew_link'], // Optional, allows for a custom license renewal link
 		),
 		array(
-			'theme-license'             => __( 'Theme License', 'edd-theme-updater' ),
-			'enter-key'                 => __( 'Enter your theme license key.', 'edd-theme-updater' ),
-			'license-key'               => __( 'License Key', 'edd-theme-updater' ),
-			'license-action'            => __( 'License Action', 'edd-theme-updater' ),
-			'deactivate-license'        => __( 'Deactivate License', 'edd-theme-updater' ),
-			'activate-license'          => __( 'Activate License', 'edd-theme-updater' ),
-			'status-unknown'            => __( 'License status is unknown.', 'edd-theme-updater' ),
-			'renew'                     => __( 'Renew?', 'edd-theme-updater' ),
-			'unlimited'                 => __( 'unlimited', 'edd-theme-updater' ),
-			'license-key-is-active'     => __( 'License key is active.', 'edd-theme-updater' ),
-			'expires%s'                 => __( 'Expires %s.', 'edd-theme-updater' ),
-			'expires-never'             => __( 'Lifetime License.', 'edd-theme-updater' ),
-			'%1$s/%2$-sites'            => __( 'You have %1$s / %2$s sites activated.', 'edd-theme-updater' ),
-			'license-key-expired-%s'    => __( 'License key expired %s.', 'edd-theme-updater' ),
-			'license-key-expired'       => __( 'License key has expired.', 'edd-theme-updater' ),
-			'license-keys-do-not-match' => __( 'License keys do not match.', 'edd-theme-updater' ),
-			'license-is-inactive'       => __( 'License is inactive.', 'edd-theme-updater' ),
-			'license-key-is-disabled'   => __( 'License key is disabled.', 'edd-theme-updater' ),
-			'site-is-inactive'          => __( 'Site is inactive.', 'edd-theme-updater' ),
-			'license-status-unknown'    => __( 'License status is unknown.', 'edd-theme-updater' ),
-			'update-notice'             => __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update.", 'edd-theme-updater' ),
-			'update-available'          => __('<strong>%1$s %2$s</strong> is available. <a href="%3$s" class="thickbox" title="%4s">Check out what\'s new</a> or <a href="%5$s"%6$s>update now</a>.', 'edd-theme-updater' ),
+			'theme-license'             => __( 'Theme License', ARVE_SLUG ),
+			'enter-key'                 => __( 'Enter your theme license key.', ARVE_SLUG ),
+			'license-key'               => __( 'License Key', ARVE_SLUG ),
+			'license-action'            => __( 'License Action', ARVE_SLUG ),
+			'deactivate-license'        => __( 'Deactivate License', ARVE_SLUG ),
+			'activate-license'          => __( 'Activate License', ARVE_SLUG ),
+			'status-unknown'            => __( 'License status is unknown.', ARVE_SLUG ),
+			'renew'                     => __( 'Renew?', ARVE_SLUG ),
+			'unlimited'                 => __( 'unlimited', ARVE_SLUG ),
+			'license-key-is-active'     => __( 'License key is active.', ARVE_SLUG ),
+			'expires%s'                 => __( 'Expires %s.', ARVE_SLUG ),
+			'expires-never'             => __( 'Lifetime License.', ARVE_SLUG ),
+			'%1$s/%2$-sites'            => __( 'You have %1$s / %2$s sites activated.', ARVE_SLUG ),
+			'license-key-expired-%s'    => __( 'License key expired %s.', ARVE_SLUG ),
+			'license-key-expired'       => __( 'License key has expired.', ARVE_SLUG ),
+			'license-keys-do-not-match' => __( 'License keys do not match.', ARVE_SLUG ),
+			'license-is-inactive'       => __( 'License is inactive.', ARVE_SLUG ),
+			'license-key-is-disabled'   => __( 'License key is disabled.', ARVE_SLUG ),
+			'site-is-inactive'          => __( 'Site is inactive.', ARVE_SLUG ),
+			'license-status-unknown'    => __( 'License status is unknown.', ARVE_SLUG ),
+			'update-notice'             => __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update.", ARVE_SLUG ),
+			'update-available'          => __('<strong>%1$s %2$s</strong> is available. <a href="%3$s" class="thickbox" title="%4s">Check out what\'s new</a> or <a href="%5$s"%6$s>update now</a>.', ARVE_SLUG ),
 		)
 	);
 }
@@ -384,95 +383,71 @@ function nextgenthemes_api_action( $item_name, $key, $action ) {
 		'url'        => home_url(),
 	);
 
-	$response = wp_remote_post( 'https://nextgenthemes.com', array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params ) );
+	$response = wp_remote_post( 'https://nextgenthemes.com', array( 'timeout' => 15, 'sslverify' => true, 'body' => $api_params ) );
 
-	// Make sure there are no errors
-	if ( is_wp_error( $response ) ) {
-		return $response->get_error_message();
-	}
+	// make sure the response came back okay
+	if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
 
-	// Tell WordPress to look for updates
-	set_site_transient( 'update_plugins', null );
-
-	// Decode the license data
-	$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-
-	if( ! (bool) $license_data->success ) {
-		set_transient( 'arve_license_error', $license_data, 1000 );
-
-		if( empty( $license_data->error ) ) {
-			return var_export( $license_data, true );
+		if ( is_wp_error( $response ) ) {
+			$message = $response->get_error_message();
 		} else {
-			return $license_data->error;
+			$message = __( 'An error occurred, please try again.', ARVE_SLUG );
 		}
+
 	} else {
-		delete_transient( 'arve_license_error' );
 
-		if( empty( $license_data->license ) ) {
-			return 'API seems not to be accessible';
-		} else {
-			return $license_data->license;
-		}
-	}
-}
+		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
 
-function nextgenthemes_license_errors() {
+		if ( false === $license_data->success ) :
 
-	$license_error = get_transient( 'arve_license_error' );
+			switch( $license_data->error ) {
 
-	if( false === $license_error ) {
-		return;
-	}
+				case 'expired' :
 
-	if( ! empty( $license_error->error ) ) {
+					$message = sprintf(
+						__( 'Your license key expired on %s.', ARVE_SLUG ),
+						date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) )
+					);
+					break;
 
-		switch( $license_error->error ) {
+				case 'revoked' :
 
-			case 'expired' :
+					$message = __( 'Your license key has been disabled.', ARVE_SLUG );
+					break;
 
-				$message = __( 'Your license key expired' );
-				break;
+				case 'missing' :
 
-			case 'revoked' :
+					$message = __( 'Invalid license.', ARVE_SLUG );
+					break;
 
-				$message = __( 'Your license key has been disabled.' );
-				break;
+				case 'invalid' :
+				case 'site_inactive' :
 
-			case 'missing' :
+					$message = __( 'Your license is not active for this URL.', ARVE_SLUG );
+					break;
 
-				$message = __( 'Invalid license.' );
-				break;
+				case 'item_name_mismatch' :
 
-			case 'invalid' :
-			case 'site_inactive' :
+					$message = sprintf( __( 'This appears to be an invalid license key for %s.', ARVE_SLUG ), $item_name );
+					break;
 
-				$message = __( 'Your license is not active for this URL.' );
-				break;
+				case 'no_activations_left':
 
-			case 'item_name_mismatch' :
+					$message = __( 'Your license key has reached its activation limit.', ARVE_SLUG );
+					break;
 
-				$message = sprintf( __( 'This appears to be an invalid license key for %s.' ), EDD_SAMPLE_ITEM_NAME );
-				break;
+				default :
 
-			case 'no_activations_left':
+					$message = __( 'An error occurred, please try again.', ARVE_SLUG );
+					break;
+			}
 
-				$message = __( 'Your license key has reached its activation limit.' );
-				break;
-
-			default :
-
-				$message = __( 'An error occurred, please try again.' );
-				break;
-		}
+		endif; // false === $license_data->success
 	}
 
-	if( ! empty( $message ) ) {
-
-		echo '<div class="error">';
-			echo '<p>' . $message . '</p>';
-		echo '</div>';
-
+	if( empty( $message ) ) {
+		$message = $license_data->license;
 	}
 
-	delete_transient( 'edd_license_error' );
+	return $message;
 }
