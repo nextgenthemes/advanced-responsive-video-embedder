@@ -1,5 +1,9 @@
 ## Changelog ##
 
+### 2016-11-30 - 7.9.21
+
+* Fix: Fatal error.
+
 ### 2016-11-29 - Pro Addon 3.6.4 ###
 
 * Improved: Licensing field removed from the pro options tab (now in main plugin). This enables resetting pro options settings without deleting license key.

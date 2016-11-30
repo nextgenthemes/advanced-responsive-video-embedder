@@ -1,5 +1,11 @@
 <?php
 
+add_action( 'admin_init',    'nextgenthemes_init_edd_updaters', 0 );
+add_action( 'admin_init',    'nextgenthemes_activation_notices' );
+add_action( 'admin_init',    'nextgenthemes_register_settings' );
+add_action( 'admin_menu',    'nextgenthemes_menus' );
+add_action( 'admin_notices', 'nextgenthemes_license_errors' );
+
 function nextgenthemes_activation_notices() {
 
 	$products = nextgenthemes_get_products();
@@ -410,7 +416,7 @@ function nextgenthemes_api_action( $item_name, $key, $action ) {
 	}
 }
 
-function arve_pro_action_admin_notices() {
+function nextgenthemes_license_errors() {
 
 	$license_error = get_transient( 'arve_license_error' );
 
@@ -422,24 +428,40 @@ function arve_pro_action_admin_notices() {
 
 		switch( $license_error->error ) {
 
-			case 'item_name_mismatch':
+			case 'expired' :
 
-				$message = __( 'This license does not belong to the product you have entered it for.', 'arve-pro' );
+				$message = __( 'Your license key expired' );
+				break;
+
+			case 'revoked' :
+
+				$message = __( 'Your license key has been disabled.' );
+				break;
+
+			case 'missing' :
+
+				$message = __( 'Invalid license.' );
+				break;
+
+			case 'invalid' :
+			case 'site_inactive' :
+
+				$message = __( 'Your license is not active for this URL.' );
+				break;
+
+			case 'item_name_mismatch' :
+
+				$message = sprintf( __( 'This appears to be an invalid license key for %s.' ), EDD_SAMPLE_ITEM_NAME );
 				break;
 
 			case 'no_activations_left':
 
-				$message = __( 'This license does not have any activations left', 'arve-pro' );
+				$message = __( 'Your license key has reached its activation limit.' );
 				break;
 
-			case 'expired':
+			default :
 
-				$message = __( 'This license key is expired. Please renew it.', 'arve-pro' );
-				break;
-
-			default:
-
-				$message = sprintf( __( 'There was a problem activating your license key, please try again or contact support. Error code: %s', 'arve-pro' ), $license_error->error );
+				$message = __( 'An error occurred, please try again.' );
 				break;
 		}
 	}
