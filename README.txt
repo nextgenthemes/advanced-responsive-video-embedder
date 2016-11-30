@@ -215,6 +215,16 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
+### 2016-11-30 - 7.9.23
+
+* Fix: Ending up with wrong URLs by disabling auto shortening of URLs when pasting them into the shortcode-ui dialog.
+* Improved: Enable SSL verify for API calls.
+* Improved: License action return messages.
+
+### 2016-11-30 - Pro Addon 3.6.4 ###
+
+* Fix: Autoplay without setting
+
 ### 2016-11-30 - 7.9.21
 
 * Fix: Fatal error.
@@ -235,6 +245,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * Fix: Shortcode UI script enqueued to early causing JS erros on admin pages.
 * Improved: Error messages for missing mandatory attributes.
 * Improved: Moved some code logic of the pro addon out of the main plugin.
+* New: `disable_flash` parameter mainly for unlisted providers will be treated as general iframe embeds. With set to true this will enable you to use the 'disable_links' feature of the pro plugin.
 * New: Filters for new cool things coming up
 * New: License page, relocated options page
 * New: YouTube URL detection for playists without starting video `https://www.youtube.com/playlist?list=PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7`

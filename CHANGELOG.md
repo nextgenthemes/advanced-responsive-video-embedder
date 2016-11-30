@@ -1,6 +1,6 @@
 ## Changelog ##
 
-### 2016-11-30 - 7.9.22
+### 2016-11-30 - 7.9.23
 
 * Fix: Ending up with wrong URLs by disabling auto shortening of URLs when pasting them into the shortcode-ui dialog.
 * Improved: Enable SSL verify for API calls.
