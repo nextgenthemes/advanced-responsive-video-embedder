@@ -132,6 +132,18 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'thumbnail' => 'https://example.com/image.jpg',
 		) );
 
+		$options = get_option( 'arve_options_main', array() );
+		$options['wp_video_override'] = true;
+		update_option( 'arve_options_main', $options );
+
+		$output2 = wp_video_shortcode( array(
+			'mp4'       => 'https://example.com/video.mp4',
+			'ogv'       => 'https://example.com/video.ogv',
+			'webm'      => 'https://example.com/video.webm',
+			'poster'    => 'https://example.com/image.jpg',
+		) );
+		$this->assertEquals( $output, $output2 );
+
 		$this->assertNotContains( 'Error', $output );
 		$this->assertNotContains( '<iframe', $output );
 		$this->assertContains( 'data-arve-provider="html5"', $output );

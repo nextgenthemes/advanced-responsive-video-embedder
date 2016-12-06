@@ -60,8 +60,6 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 
   $atts = shortcode_atts( $pairs, $input_atts, 'arve' );
 
-  
-
   $html['debug_info'] = arve_get_debug_info( $atts, $input_atts );
 
   if ( $errors = arve_output_errors( $atts ) ) {
@@ -98,17 +96,15 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 function arve_create_shortcodes() {
 
   $options = arve_get_options();
-  $function_factory = new ARVE_Shortcode_Function_Factory;
 
   foreach( $options['shortcodes'] as $provider => $shortcode ) {
-    /* # Would require php 5.3.0
+
     $function = function( $atts ) use ( $provider ) {
       $atts['provider'] = $provider;
       return arve_shortcode_arve( $atts, null, false );
     };
+
     add_shortcode( $shortcode, $function );
-    */
-    add_shortcode( $shortcode, array( $function_factory, $provider ) );
   }
 
   add_shortcode( 'arve',                'arve_shortcode_arve' );
@@ -240,11 +236,9 @@ function arve_wp_video_shortcode_override( $out, $attr, $content, $instance ) {
     return $out;
   }
 
-  $attr[ 'provider' ] = 'html5';
-
   if( ! empty( $attr['poster'] ) ) {
     $attr['thumbnail'] = $attr['poster'];
   }
 
-  return arve_shortcode_arve( $attr, null, false );
+  return arve_shortcode_arve( $attr, null );
 }
