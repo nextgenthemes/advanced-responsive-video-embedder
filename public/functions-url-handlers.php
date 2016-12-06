@@ -4,12 +4,14 @@ function arve_create_url_handlers() {
 
   $properties = arve_get_host_properties();
 
-  $function_factory = new ARVE_URL_Function_Factory;
-
   foreach ( $properties as $provider => $values ) {
 
+    $function = function( $params ) use ( $provider ) {
+      return arve_url_detection_to_shortcode( $provider, $params[0], $params[1], $params[2], $params[3] );
+    };
+
     if ( ! empty( $values['regex'] ) ) {
-      wp_embed_register_handler( 'arve_' . $provider, '#' . $values['regex'] . '#i', array( $function_factory, $provider ) );
+      wp_embed_register_handler( 'arve_' . $provider, '#' . $values['regex'] . '#i', $function );
     }
   }
 }

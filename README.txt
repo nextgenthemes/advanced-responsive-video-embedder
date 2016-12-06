@@ -215,6 +215,11 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
+### 2016-12-07 - 8.0.0
+
+* Fix: [video] override putting out a error for not reason.
+* Improved code: Dropped 2 micro classes in favor for antonymous functions.
+
 ### 2016-11-30 - 7.9.23
 
 * Fix: Ending up with wrong URLs by disabling auto shortening of URLs when pasting them into the shortcode-ui dialog.
