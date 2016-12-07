@@ -142,6 +142,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'webm'      => 'https://example.com/video.webm',
 			'poster'    => 'https://example.com/image.jpg',
 		) );
+		
 		$this->assertEquals( $output, $output2 );
 
 		$this->assertNotContains( 'Error', $output );

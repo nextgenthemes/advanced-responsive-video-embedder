@@ -6,30 +6,21 @@ function arve_create_url_handlers() {
 
   foreach ( $properties as $provider => $values ) {
 
-    $function = function( $params ) use ( $provider ) {
-      return arve_url_detection_to_shortcode( $provider, $params[0], $params[1], $params[2], $params[3] );
+    $function = function( $matches, $attr, $url, $rawattr ) use ( $provider ) {
+      return arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $rawattr );
     };
 
     if ( ! empty( $values['regex'] ) ) {
-      wp_embed_register_handler( 'arve_' . $provider, '#' . $values['regex'] . '#i', $function );
+      wp_embed_register_handler( 'arve_' . $provider, '#' . $values['regex'] . '#i', $function, 99 );
     }
   }
 }
 
 function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $rawattr ) {
 
-  $id = $matches[1];
-
-  if ( empty( $id ) ) {
-    return arve_error( __( 'No ID, please report this bug', ARVE_SLUG ) );
-  }
-
   //* Fix 'Markdown on save enhanced' issue
   if ( substr( $url, -4 ) === '</p>' ) {
     $url = substr( $url, 0, -4 );
-  }
-  if ( substr( $id, -4 ) === '</p>' ) {
-    $id = substr( $id, 0, -4 );
   }
 
   $parsed_url = parse_url( $url );
@@ -68,10 +59,9 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
   //* Pure awesomeness!
   $atts               = array_merge( (array) $old_atts, (array) $new_atts );
   $atts['parameters'] = empty( $url_query ) ? null : build_query( $url_query );
-  $atts['id']         = $id;
-  $atts['provider']   = $provider;
+  $atts['url']        = $url;
 
-  return arve_shortcode_arve( $atts, null, false );
+  return arve_shortcode_arve( $atts, null );
 }
 
 
