@@ -85,7 +85,7 @@ function arve_filter_atts_generate_embed_id( $atts ) {
 
 	foreach ( array( 'id', 'mp4', 'm4v', 'webm', 'ogv', 'url', 'webtorrent' ) as $att ) {
 
-		if ( ! empty( $atts[ $att ] ) ) {
+		if ( ! empty( $atts[ $att ] ) && is_string( $atts[ $att ] ) ) {
 
 			$atts['embed_id'] = preg_replace( '/[^-a-zA-Z0-9]+/', '', $atts[ $att ] );
 			$atts['embed_id'] = str_replace(
