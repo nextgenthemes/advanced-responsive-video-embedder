@@ -217,8 +217,13 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ### 2016-12-07 - 8.0.0
 
+* Fix: 'Take over [video] shortcode' option not working. (Always acted as on, default is off)
 * Fix: [video] override putting out a error for not reason.
 * Improved code: Dropped 2 micro classes in favor for antonymous functions.
+
+### 2016-12-07 - Pro Addon 3.6.6
+
+* Improved: Load the CSS always in the `<head>`, this enables to change its CSS with the new CSS customizer in WP 3.7 and may also fix issues with caching plugins.
 
 ### 2016-11-30 - 7.9.23
 
@@ -253,7 +258,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * New: `disable_flash` parameter mainly for unlisted providers will be treated as general iframe embeds. With set to true this will enable you to use the 'disable_links' feature of the pro plugin.
 * New: Filters for new cool things coming up
 * New: License page, relocated options page
-* New: YouTube URL detection for playists without starting video `https://www.youtube.com/playlist?list=PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7`
+* New: YouTube URL detection for playlists without starting video `https://www.youtube.com/playlist?list=PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7`
 * Possible Fix: Videos displayed to small in some Browsers
 
 ### 2016-10-29 - 7.9.8 and Pro Addon 3.3.4 ###
