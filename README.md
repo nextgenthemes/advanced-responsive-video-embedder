@@ -207,8 +207,8 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ### 2016-12-17 - 8.0.1
 
-* Fix: `undefined function is_plugin_active()` error caused my some plugins
-* Improved: Show meaningful message if PHP is lower then the required 5.3
+* Fix: `undefined function is_plugin_active()` error caused by some plugins
+* Improved: Show actual meaningful message if PHP is lower then the required 5.3. Bluehost (oh proud wp.org recommended host) seems to show customers a **wrong** php version in the config and lets them hang on insecure end of life versions.
 
 ### 2016-12-09 - Pro Addon 3.6.8
 
