@@ -39,11 +39,17 @@ function arve_init() {
 
 	add_option( 'arve_install_date', current_time( 'timestamp' ) );
 
+	require_once plugin_dir_path( __FILE__ ) . 'admin/class-arve-admin-notice-factory.php';
+
+	if ( version_compare( PHP_VERSION, '5.3', '<' ) ) {
+		add_action( 'admin_init', 'arve_php_outdated_message' );
+		return;
+	}
+
 	if ( ! has_action( 'admin_menu', 'nextgenthemes_menus' ) ) {
 		require_once plugin_dir_path( __FILE__ ) . 'admin/functions-licensing.php';
 	}
 
-	require_once plugin_dir_path( __FILE__ ) . 'admin/class-arve-admin-notice-factory.php';
 	require_once plugin_dir_path( __FILE__ ) . 'admin/functions-admin.php';
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-enqueue.php';
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-html-output.php';
@@ -98,4 +104,14 @@ function arve_init() {
 
 	add_filter( 'plugin_action_links_' . $plugin_basename, 'arve_add_action_links' );
 	add_filter( 'mce_css',               'arve_mce_css' );
+}
+
+function arve_php_outdated_message() {
+
+	$msg = sprintf(
+		__( 'ARVE requres at least PHP version 5.3! Your PHP version is %s and has reached End Of Life (insecure and slow). You should ask your host to update it for you not only to make ARVE work but to make your site faster and more secure. I personally recommend PHP 7.0.', ARVE_SLUG ),
+		PHP_VERSION
+	);
+
+	new ARVE_Admin_Notice_Factory( 'arve-php-outdated', "<p>$msg</p>", false );
 }

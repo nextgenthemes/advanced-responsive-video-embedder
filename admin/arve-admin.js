@@ -86,30 +86,23 @@
 		});
 	});
 
-	function open_arve_dialog() {
-		var arve_shortcode = sui.utils.shortcodeViewConstructor.parseShortcodeString( '[arve]' );
-		wp.media({
-			frame : 'post',
-			state : 'shortcode-ui',
-			currentShortcode : arve_shortcode
-		}).open();
-	}
-
 	$(document).on( 'click', '#arve-btn', function(e) {
-		e.preventDefault();
-		if( $( '#arve-btn[data-arve-sui]' ).length ) {
-			open_arve_dialog();
+
+		if ( typeof( sui ) !== 'undefined' ) {
+
+			var arve_shortcode = sui.utils.shortcodeViewConstructor.parseShortcodeString( '[arve]' );
+
+			wp.media({
+				frame : 'post',
+				state : 'shortcode-ui',
+				currentShortcode : arve_shortcode
+			}).open();
+
 		} else {
+
 			tb_show( 'ARVE Optional Features', '#TB_inline?inlineId=arve-thickbox' );
 		}
-	} );
 
-	/*
-	$(window).on( 'keyup', function(e) {
-		if ( e.ctrlKey && e.shiftKey && 'v' === e.key ) {
-			open_arve_dialog();
-		}
 	} );
-	*/
 
 }(jQuery));

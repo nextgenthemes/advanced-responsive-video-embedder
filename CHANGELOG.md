@@ -1,6 +1,11 @@
 ## Changelog ##
 
-### 2016-12-07 - Pro Addon 3.6.8
+### 2016-12-17 - 8.0.1
+
+* Fix: `undefined function is_plugin_active()` error caused my some plugins
+* Improved: Show meaningful message if PHP is lower then the required 5.3
+
+### 2016-12-09 - Pro Addon 3.6.8
 
 * Fix: Wrongly tagged version.
 

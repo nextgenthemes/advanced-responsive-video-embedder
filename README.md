@@ -205,6 +205,14 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
+### 2016-12-09 - Pro Addon 3.6.8
+
+* Fix: Wrongly tagged version.
+
+### 2016-12-07 - Pro Addon 3.6.7
+
+* Fix: Some thumbnails not loading.
+
 ### 2016-12-07 - 8.0.0
 
 * Fix: 'Take over [video] shortcode' option not working. (Always acted as on, default is off)
@@ -213,7 +221,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ### 2016-12-07 - Pro Addon 3.6.6
 
-* Improved: Load the CSS always in the `<head>`, this enables to change its CSS with the new CSS customizer in WP 3.7 and may also fix issues with caching plugins.
+* Improved: Load the CSS always in the `<head>`, this enables to change its CSS with the new CSS customizer in WP 4.7 and may also fix issues with caching plugins.
 
 ### 2016-11-30 - 7.9.23
 

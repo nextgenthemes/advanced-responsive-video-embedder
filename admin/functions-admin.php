@@ -139,9 +139,8 @@ function arve_add_media_button() {
 	);
 
 	printf(
-		'<button id="arve-btn" title="%s" %s data-arve-mode="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
+		'<button id="arve-btn" title="%s" data-arve-mode="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
 		esc_attr__( 'ARVE Advanced Responsive Video Embedder', ARVE_SLUG ),
-		is_plugin_active( 'shortcode-ui/shortcode-ui.php' ) ? 'data-arve-sui' : '',
 		esc_attr( $options['mode'] ),
 		esc_html__( 'Embed Video (ARVE)', ARVE_SLUG )
 	);
