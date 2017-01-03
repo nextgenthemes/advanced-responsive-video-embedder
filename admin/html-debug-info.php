@@ -9,8 +9,8 @@ Detailed Description of the issue:
 
 What you are expecting and what you are seeing instead?
 
-ARVE Version:      <?php echo $plugin_version . "\n"; ?>
-ARVE-Pro Version:  <?php echo $pro_version . "\n"; ?>
+ARVE Version:      <?php echo $arve_version . "\n"; ?>
+ARVE-Pro Version:  <?php echo $arve_pro_version . "\n"; ?>
 WordPress Version: <?php echo $wp_version . "\n"; ?>
 PHP Version:       <?php echo phpversion() . "\n"; ?>
 

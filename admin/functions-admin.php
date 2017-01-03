@@ -480,22 +480,33 @@ function arve_params_section_description() {
 	<?php
 }
 
+function arve_get_plugin_version_and_status( $folder_and_filename ) {
+
+	$file = WP_PLUGIN_DIR . '/' . $folder_and_filename;
+
+	if( ! is_file( $file ) ) {
+		return 'NOT INSTALLED';
+	}
+
+	$data = get_plugin_data( $file );
+	$out  = $data['Version'];
+
+	if( ! is_plugin_active( $folder_and_filename ) ) {
+		$out .= ' INACTIVE';
+	}
+
+	return $out;
+}
+
+
 function arve_debug_section_description() {
 
 	global $wp_version;
 
-	$plugin_data    = get_plugin_data( WP_PLUGIN_DIR . '/advanced-responsive-video-embedder/advanced-responsive-video-embedder.php' );
-	$pro_data       = get_plugin_data( WP_PLUGIN_DIR . '/arve-pro/arve-pro.php' );
-
-	$plugin_version = $plugin_data['Version'];
-	$pro_version    = $pro_data['Version'];
-
-	if( ! is_plugin_active( 'advanced-responsive-video-embedder/advanced-responsive-video-embedder.php' ) ) {
-		$plugin_version .= ' INACTIVE';
-	}
+	$arve_version     = arve_get_plugin_version_and_status( 'advanced-responsive-video-embedder/advanced-responsive-video-embedder.php' );
+	$arve_pro_version = arve_get_plugin_version_and_status( 'arve-pro/arve-pro.php' );
 
 	if( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
-		$pro_version .= ' INACTIVE';
 		$pro_options_dump = '';
 	} else {
 		$pro_options = get_option( 'arve_options_pro' );

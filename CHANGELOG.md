@@ -1,5 +1,9 @@
 ## Changelog ##
 
+### 2017-01-03 - 8.0.2
+
+* Fix: Errors on settings page when Pro Addon is not installed.
+
 ### 2016-12-17 - 8.0.1
 
 * Fix: `undefined function is_plugin_active()` error caused by some plugins
