@@ -36,7 +36,23 @@ function arve_get_options_defaults( $section ) {
  */
 function arve_get_options() {
 
-	$options               = wp_parse_args( get_option( 'arve_options_main',       array() ), arve_get_options_defaults( 'main' ) );
+	$options = wp_parse_args( get_option( 'arve_options_main', array() ), arve_get_options_defaults( 'main' ) );
+
+	$supported_modes = arve_get_supported_modes();
+
+	# legacy mode name
+	if ( 'thumbnail' == $options['mode'] ) {
+
+		$options['mode'] = 'lazyload';
+		update_option( 'arve_options_main', $options );
+	}
+
+	if( ! in_array( $options['mode'], array( 'normal', 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ) {
+
+		$options['mode'] = 'lazyload';
+		update_option( 'arve_options_main', $options );
+	}
+
 	$options['shortcodes'] = wp_parse_args( get_option( 'arve_options_shortcodes', array() ), arve_get_options_defaults( 'shortcodes' ) );
 	$options['params']     = wp_parse_args( get_option( 'arve_options_params',     array() ), arve_get_options_defaults( 'params' ) );
 

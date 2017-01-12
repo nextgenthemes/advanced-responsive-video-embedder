@@ -31,6 +31,18 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 		endforeach;
 	}
 
+	public function test_latest_youtube() {
+
+		$attr = array(
+			'url'  => 'https://www.youtube.com/channel/UChwwoeOZ3EJPobW83dgQfAg',
+			'mode' => 'lazyload',
+		);
+
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+		$this->assertContains( '<h5 itemprop="name" class="arve-title">', arve_shortcode_arve( $attr ) );
+	}
+
+
 	public function test_autoplay() {
 
 		$options = arve_pro_get_options();
