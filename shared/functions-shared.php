@@ -743,13 +743,14 @@ function arve_get_host_properties() {
 			),
 		),
 		'vimeo' => array(
-			'regex'          => $s . 'vimeo\.com/(?:(?:channels/[a-z]+/)|(?:groups/[a-z]+/videos/))?([0-9]+)',
+			'regex'          => 'https?://(?:player\.)?vimeo\.com/(?:(?:video/)|(?:channels/[a-z]+/)|(?:groups/[a-z]+/videos/))?([0-9]+)',
 			'embed_url'      => 'https://player.vimeo.com/video/%s',
 			'default_params' => 'html5=1&title=1&byline=0&portrait=0',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'tests' => array(
-				array( 'url' => 'https://vimeo.com/124400795', 'id' => 124400795 ),
+				array( 'url' => 'https://vimeo.com/124400795',        'id' => 124400795 ),
+				array( 'url' => 'https://player.vimeo.com/124400795', 'id' => 124400795 ),
 			),
 			'query_argss' => array(
 				'autoplay'  => array( 'bool', __( 'Autoplay', ARVE_SLUG ) ),

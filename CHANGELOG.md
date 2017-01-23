@@ -1,5 +1,10 @@
 ## Changelog ##
 
+### 2017-01-18 - 8.0.3
+
+* CSS improved
+* Updated Licensing Class
+
 ### 2017-01-03 - 8.0.2
 
 * Fix: Errors on settings page when Pro Addon is not installed.

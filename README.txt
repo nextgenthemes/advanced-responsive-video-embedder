@@ -56,7 +56,7 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
 
 <ul class="list-checked">
 	<li><strong>Feel good about yourself</strong><br>
-		for supporting my long time work on this plugin. Tons of hours, weekends … always worked on <a href="https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/">improving it</a> 3+ years.</li>
+		for supporting my long time work on this plugin. Tons of hours, weekends … always worked on <a href="https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/">improving it</a> 4+ years.</li>
 
 	<li><strong>Disable links in embeds (killer feature!)</strong><br>
 		For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. <strong>Prevent video hosters to lead your visitors away from your site!</strong> Note this also breaks sharing functionality and is not possible when the provider requires flash. Try it on <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/">this page</a>. Right click on links still works.</li>
@@ -71,8 +71,9 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
 	<li><strong>Link -&gt; Lightbox</strong><br>
 		Use simple links as triggers for lightboxed videos</li>
 
-	<li>Custom thumbnail images</li>
-	<li>Custom titles on top of your thumbnails</li>
+  <li>Show the latest video of a youtube channel by using the channel URL </li>
+	<li>Automatic or custom thumbnail images</li>
+	<li>Automatic or custom titles on top of your thumbnails</li>
 	<li>'Grow on click' feature</li>
 	<li>3 hover styles</li>
 	<li>2 play icon styles to choose from</li>
@@ -214,6 +215,11 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 3. Features
 
 ## Changelog ##
+
+### 2017-01-18 - 8.0.3
+
+* CSS improved
+* Updated Licensing Class
 
 ### 2017-01-03 - 8.0.2
 

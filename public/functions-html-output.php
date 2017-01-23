@@ -126,9 +126,9 @@ function arve_arve_embed_container( $html, $atts, $lity_container = false ) {
 	}
 
 	if( ! empty( $atts['aspect_ratio'] ) ) {
-		$attr['style'] = sprintf( 'padding-bottom: %F%% !important;', arve_aspect_ratio_to_percentage( $atts['aspect_ratio'] ) );
+		$attr['style'] = sprintf( 'padding-bottom:%F%%', arve_aspect_ratio_to_percentage( $atts['aspect_ratio'] ) );
 	} elseif ( 'html5' == $atts['provider'] ) {
-		$attr['style'] = 'height: auto !important; padding: 0 !important';
+		$attr['style'] = 'height:auto;padding:0';
 	}
 
 	return sprintf( '<span%s>%s</span>', arve_attr( $attr ), $html );
@@ -274,7 +274,7 @@ function arve_print_styles() {
   $options = arve_get_options();
 
   if ( (int) $options["video_maxwidth"] > 0 ) {
-    $css = sprintf( '.arve-wrapper { max-width: %dpx; }', $options['video_maxwidth'] );
+    $css = sprintf( '.arve-wrapper{max-width:%dpx;}', $options['video_maxwidth'] );
 
     echo '<style type="text/css">' . $css . "</style>\n";
   }
