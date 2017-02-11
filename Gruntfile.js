@@ -18,6 +18,7 @@ module.exports = function (grunt) {
            'readme/description-features.html',
            'readme/blockquote-open.html',
            'readme/description-features-pro.html',
+           'readme/description-features-amp.html',
            'readme/blockquote-close.html',
            'readme/description-links.md',
            'readme/description-supported-providers.html',

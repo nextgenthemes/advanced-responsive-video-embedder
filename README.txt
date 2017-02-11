@@ -1,9 +1,9 @@
 === Advanced Responsive Video Embedder ===
 Contributors: nico23
-Donate link: https://nextgenthemes.com/donate/
-Tags: video, responsive, embed, video-embedder, iframe, minimal, lightweight, simplicity, shortcodes, Youtube, Blip, Dailymotion, Videojug, Collegehumor, Veoh, Break, Movieweb, Snotr, Gametrailers, Vimeo, Viddler, Funnyordie, Myspace, Liveleak, Metacafe, Myvideo, Yahoo Screen, Spike
+Donate link: https://www.paypal.me/nico23
+Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.4.0
-Tested up to: 4.7.0
+Tested up to: 4.7.2
 Stable tag: trunk
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -50,9 +50,9 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
 <blockquote>
 
 
-<h3>Additional Features with the Pro Addon</h3>
+<p>This plugin is financed by the awesome buyers of the <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">Pro Addon</a>. The development and support of this plugins has become a almost full time job for me so I hope you understand that I can not make all features gratis and that you <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">purchase it</a> to get extra features support the develoment.</p>
 
-<p>This plugin is financed by the awesome buyers of the <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">Pro Addon</a>. The development and support of this plugins has become a almost full time job for me so I hope you understand that I can not make all features gratis and that you <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">purchase it</a> to support the develoment.</p>
+<h3><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">Pro Addon</a></h3>
 
 <ul class="list-checked">
 	<li><strong>Feel good about yourself</strong><br>
@@ -71,14 +71,31 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
 	<li><strong>Link -&gt; Lightbox</strong><br>
 		Use simple links as triggers for lightboxed videos</li>
 
-  <li>Show the latest video of a youtube channel by using the channel URL </li>
+  <li>Show the latest video of a youtube channel by using the channel URL (updated/cached hourly)</li>
 	<li>Automatic or custom thumbnail images</li>
 	<li>Automatic or custom titles on top of your thumbnails</li>
 	<li>'Grow on click' feature</li>
 	<li>3 hover styles</li>
 	<li>2 play icon styles to choose from</li>
-	<li>Responsive Thumbnails using cutting edge HTML5 technology</li>
+	<li>Responsive thumbnails using cutting edge HTML5 technology</li>
 </ul>
+
+<strong><a [hidden] href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">Get the ARVE Pro Addon</a></strong>
+
+
+<h3><a href="https://nextgenthemes.com/plugins/arve-accelerated-mobile-pages-addon/" target="_blank">ARVE AMP Addon</a></h3>
+
+<p>Addon makes ARVE ready for Accelerated Mobile Pages (AMP). Requires the gratis plugins <a href="https://wordpress.org/plugins/advanced-responsive-video-embedder/" target="_blank">ARVE</a> and <a href="https://wordpress.org/plugins/amp/" target="_blank">AMP</a></p>
+
+<ul class="list-checked">
+	<li>It will display videos embedded with ARVE on AMP pages correctly</li>
+	<li>No options, just works</li>
+	<li>It creates &lt;amp-youtube&gt;, &lt;amp-vimeo&gt;, &lt;amp-dailymotion&gt; elements</li>
+	<li>For all other video hosts supported by ARVE &lt;amp-iframe&gt; element is used</li>
+	<li>Self hosted videos are also supported with &lt;amp-video&gt;</li>
+</ul>
+
+<strong><a href="https://nextgenthemes.com/plugins/arve-accelerated-mobile-pages-addon/">Check out the ARVE AMP Addon</a></strong>
 
 
 </blockquote>
@@ -216,10 +233,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
-### 2017-01-18 - 8.0.3
+### 2017-02-08 - 8.0.4
 
 * CSS improved
-* Updated Licensing Class
+* Updated Addon Updater Class
 
 ### 2017-01-03 - 8.0.2
 

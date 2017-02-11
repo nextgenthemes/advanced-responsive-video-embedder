@@ -1,9 +1,9 @@
 ## Changelog ##
 
-### 2017-01-18 - 8.0.3
+### 2017-02-08 - 8.0.4
 
 * CSS improved
-* Updated Licensing Class
+* Updated Addon Updater Class
 
 ### 2017-01-03 - 8.0.2
 
