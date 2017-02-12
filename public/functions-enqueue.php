@@ -7,7 +7,7 @@ function arve_enqueue_styles() {
 function arve_register_scripts() {
 
   wp_register_script(
-    'advanced-responsive-video-embedder',
+    ARVE_SLUG,
     plugin_dir_url( __FILE__ ) . 'arve-public.js',
     array( 'jquery' ),
     ARVE_VERSION,

@@ -18,37 +18,39 @@
 	margin-right: 1.5em;
 }
 
-.arve-embed-container {
-	position: relative !important;
-	display: block !important;
-	padding: 0 !important;
-	padding-bottom: 56.25% !important;
-	margin: 0 !important;
-	height: 0 !important;
-	overflow: hidden !important;
+.arve-wrapper .arve-embed-container,
+.lity-content .arve-embed-container {
+	position: relative;
+	display: block;
+	padding: 0;
+	padding-bottom: 56.25%;
+	margin: 0;
+	height: 0;
+	overflow: hidden;
 }
 
-.arve-thumbnail,
-.arve-play-btn,
-.arve-iframe {
-	position: absolute !important;
-	padding: 0 !important;
-	margin: 0 !important;
-	top: 0 !important;
-	left: 0 !important;
-	bottom: 0 !important;
-	height: 100% !important;
-	width: 100% !important;
-	border: 0 !important;
+.arve-wrapper .arve-thumbnail,
+.arve-wrapper .arve-play-btn,
+.arve-wrapper .arve-iframe,
+.lity-content .arve-iframe {
+	position: absolute;
+	padding: 0;
+	margin: 0;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	height: 100%;
+	width: 100%;
+	border: 0;
 }
 
-.arve-video {
-	padding: 0 !important;
-	margin: 0 !important;
-	width: 100% !important;
+.arve-wrapper .arve-video {
+	padding: 0;
+	margin: 0;
+	width: 100%;
 }
 
-.arve-promote-link {
+.arve-wrapper .arve-promote-link {
 	float: right;
 	font-family: "Open Sans", "Sagoe UI", "Arvo", "Lato", Arial, sans-serif;
 	font-size: .8em;
