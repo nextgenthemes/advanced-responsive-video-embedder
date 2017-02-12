@@ -18,7 +18,8 @@
 	margin-right: 1.5em;
 }
 
-.arve-wrapper .arve-embed-container {
+.arve-wrapper .arve-embed-container,
+.lity-content .arve-embed-container {
 	position: relative;
 	display: block;
 	padding: 0;
@@ -30,7 +31,8 @@
 
 .arve-wrapper .arve-thumbnail,
 .arve-wrapper .arve-play-btn,
-.arve-wrapper .arve-iframe {
+.arve-wrapper .arve-iframe,
+.lity-content .arve-iframe {
 	position: absolute;
 	padding: 0;
 	margin: 0;

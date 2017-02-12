@@ -1,6 +1,10 @@
 ## Changelog ##
 
-### 2017-02-08 - 8.0.4
+### 2017-02-12 - 8.0.5
+
+* Fix: Small size of lightbox when using the [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/).
+
+### 2017-02-11 - 8.0.4
 
 * CSS improved
 * Updated Addon Updater Class
