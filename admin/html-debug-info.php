@@ -52,13 +52,13 @@ foreach ( $plugins as $plugin_path ) {
 endif; ?>
 
 ARVE OPTIONS:
-<?php arve_get_var_dump( get_option( 'arve_options_main' ) ); ?>
-<?php arve_get_var_dump( get_option( 'arve_options_params' ) ); ?>
-<?php arve_get_var_dump( get_option( 'arve_options_shortcodes' ) ); ?>
+<?php var_dump( get_option( 'arve_options_main' ) ); ?>
+<?php var_dump( get_option( 'arve_options_params' ) ); ?>
+<?php var_dump( get_option( 'arve_options_shortcodes' ) ); ?>
 <?php if( is_plugin_active( 'arve-pro/arve-pro.php' ) ) : ?>
-ARVE Pro Options:
+ARVE PRO OPTIONS:
 <?php $pro_options = get_option( 'arve_options_pro' );
-unset($pro_options['key']);
-arve_get_var_dump( $pro_options ); ?>
+unset( $pro_options['key'] );
+var_dump( $pro_options ); ?>
 <?php endif; ?>
 </textarea>

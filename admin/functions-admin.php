@@ -462,20 +462,20 @@ function arve_params_section_description() {
 	$url  = 'https://nextgenthemes.com/advanced-responsive-video-embedder-pro/documentation';
 
 	$desc = sprintf(
-		__( 'Please read <a href="%s" target="_blank">the documentation</a> in how this settings work. Do not remove <code>wmode=transparent</code>, this will make some modes fail to work.',
+		__( 'This parameters will be added to the embeds iframe src urls, you can control the video players behavior with them. Please seread <a href="%s" target="_blank">the documentation</a> on.',
 		ARVE_SLUG ),
-		esc_url( $url )
+		esc_url( 'https://nextgenthemes.com/advanced-responsive-video-embedder-pro/documentation' )
 	);
 
 	echo "<p>$desc</p>";
 
 	?>
 	<p>
-		<?php _e("You may use spaces to seperate them instead of <code>&amp;</code>. They will be transformed to two spaces after save. Resources: ", ARVE_SLUG); ?>
+		See
 		<a target="_blank" href="https://developers.google.com/youtube/player_parameters">Youtube Parameters</a>,
 		<a target="_blank" href="http://www.dailymotion.com/doc/api/player.html#parameters">Dailymotion Parameters</a>,
-		<a target="_blank" href="https://developer.vimeo.com/player/embedding">Vimeo Parameters</a>.
-		<strong><?php _e("<code>wmode=transparent</code> should not be changed/removed", ARVE_SLUG); ?></strong>
+		<a target="_blank" href="https://developer.vimeo.com/player/embedding">Vimeo Parameters</a>,
+		<a target="_blank" href="https://nextgenthemes.com/advanced-responsive-video-embedder-pro/documentation">Vimeo Parameters</a>,
 	</p>
 	<?php
 }

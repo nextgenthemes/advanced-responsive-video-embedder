@@ -1,5 +1,10 @@
 ## Changelog ##
 
+### 2017-02-16 - 8.0.6
+
+* Fix: Options not correctly put in debug-info.
+* Improved: Make License input fields a bit wider.
+
 ### 2017-02-12 - 8.0.5
 
 * Fix: Small size of lightbox when using the [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/).

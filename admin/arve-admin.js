@@ -86,7 +86,7 @@
 		});
 	});
 
-	$(document).on( 'click', '#arve-btn', function(e) {
+	$(document).on( 'click', '#arve-btn', function() {
 
 		if ( typeof( sui ) !== 'undefined' ) {
 
