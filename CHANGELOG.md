@@ -1,9 +1,10 @@
 ## Changelog ##
 
-### 2017-02-16 - 8.0.6
+### 2017-02-23 - 8.0.6
 
 * Fix: Options not correctly put in debug-info.
 * Improved: Make License input fields a bit wider.
+* Improved: Some small code improvements.
 
 ### 2017-02-12 - 8.0.5
 

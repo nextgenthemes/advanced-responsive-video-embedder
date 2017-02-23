@@ -233,6 +233,12 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
+### 2017-02-23 - 8.0.6
+
+* Fix: Options not correctly put in debug-info.
+* Improved: Make License input fields a bit wider.
+* Improved: Some small code improvements.
+
 ### 2017-02-12 - 8.0.5
 
 * Fix: Small size of lightbox when using the [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/).
