@@ -17,16 +17,16 @@ Make sure to check out the [plugins page](https://nextgenthemes.com/plugins/adva
 <h3>Features</h3>
 <ul class="list-checked">
 	<li>ARVE is now SEO friendly. Letting you specify title, description, upload date to provide search engines with the schema.org data they like to have for better indexing.</li>
-	<li><abbr title="What You See Is What You Get">WYSIWYG</abbr> Editor. No more messing arround with shortcodes and previewing.</li>
+	<li><abbr title="What You See Is What You Get">WYSIWYG</abbr> Editor. No more messing around with shortcodes and previewing.</li>
 	<li>New improved dialog for embedding videos.</li>
 	<li>Embeds via pasting the URL in its own line just like WordPress!</li>
-	<li>Magigally makes those url embedded videos responsive</li>
+	<li>magically makes those url embedded videos responsive</li>
 	<li>No 'lock in' for the above' if you use providers WordPress already supports</li>
 	<li>Supports <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#video-host-support">almost every video hoster</a> that supports iframe embed codes.</li>
-	<li>Optionally use very powerfull Shortcodes instead</li>
+	<li>Optionally use very powerful Shortcodes instead</li>
 	<li>One single button for all providers (for most providers not required because of URL embeds, but allows to create custom shortcodes with advanced features within seconds)</li>
 	<li>Responsive embeds with CSS, much better then with Javascript</li>
-	<li>Tries to be as unobtrusive as possible, sets ‘hide brand’ variables if supported, disabled related videos at the end … to help keep people on your Site rather then going to YouTube or keep watching videos.</li>
+	<li>Tries to be as unobtrusive as possible, sets ‘hide brand’ variables if supported, disabled related videos at the end … to help keep people on your site rather then going to YouTube or keep watching videos.</li>
 	<li>Clean shortcode syntax <code>[arve url="https://youtu.be/yUCFRL43Zm4"]</code>, no unnecessary shortcode wrapping.</li>
 	<li>Autostart (for providers that support it, mobile browsers prevent this)</li>
 	<li>Custom URL parameters to use all options providers offer</li>
@@ -223,7 +223,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
-### 2017-02-23 - 8.0.6
+### 2017-02-24 - 8.0.7
 
 * Fix: Options not correctly put in debug-info.
 * Improved: Make License input fields a bit wider.
