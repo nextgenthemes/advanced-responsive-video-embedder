@@ -171,13 +171,10 @@ function arve_shortcode_arve_supported_list() {
   unset( $providers['dailymotionlist'] );
   unset( $providers['iframe'] );
 
-  $lis = '';
+  $list = '';
+  $list .= '*   ' . $values['name'];
 
-  foreach ( $providers as $key => $values ) {
-    $lis .= sprintf( '<li>%s</li>', esc_html( $values['name'] ) );
-  }
-
-  return '<ol>'. $lis . '<li><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/#general-iframe-embedding">All providers with responsive iframe embed codes</a></li></ol>';
+  return '<textarea style="width=100" rows="33">'. $lis . '</textarea>';
 }
 
 function arve_shortcode_arve_params() {

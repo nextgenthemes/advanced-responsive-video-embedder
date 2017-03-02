@@ -1,3 +1,7 @@
+## Installation ##
+
+Please refer to [codex.wordpress.org/Managing_Plugins#Automatic_Plugin_Installation](https://codex.wordpress.org/Managing_Plugins#Automatic_Plugin_Installation).
+
 ## Frequently Asked Questions ##
 
 ### I have a problem ... ###
@@ -19,10 +23,16 @@ I have no plans on implementing providers that include videos via JavaScript suc
 
 ### How do I embed videos from a unlisted providers / iframes? ###
 
-This plugin not changes anything to usual HTML `<iframe>` embed codes you have to use the shortcode creator dialog and paste iframe embed codes there or write them manually. They will become `[arve url="https://..."]`. The url represents what is the `src` in HTML embeds. It works as simple as this, if the [arve] shortcode does not detect a knows URL structure then it will treat the URL as a `src` for the iframe.
+This plugin not changes anything to usual HTML `<iframe>` embed codes you have to use the shortcode creator dialog and paste iframe embed codes there or write them manually. They will become `[arve url="https://..."]`. The url represents what is the `src` in HTML embeds. It works as simple as this, if the [arve] shortcode does not detect a known URL structure then it will treat the URL as a `src` for the iframe.
 
-### Why does my Youtube video not repeat/loop? ###
+### Why does my YouTube video not repeat/loop? ###
 
 This plugins embed is considered as 'custom player' by YouTube so you have to pass the video ID as playlist parameters to make the loop work.
 
 `[arve url="https://www.youtube.com/watch?v=pvRqvX413Ik" parameters="loop=1&playlist=pvRqvX413Ik"]`
+
+## Screenshots ##
+
+1. Main Options
+2. Pro Options
+3. Features
