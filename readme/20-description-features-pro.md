@@ -1,6 +1,6 @@
->  This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase). The development and support of this plugins has become a almost full time job for me so I hope you understand that I can not make all features gratis and that you [purchase it](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) to get extra features support the develoment.
+This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase). The development and support of this plugins has become a almost full time job for me so I hope you understand that I can not make all features gratis and that you [purchase it](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) to get extra features support the develoment.
 
->  ### [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase)
+### [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase)
 
 *   **Feel good about yourself**<br>
     for supporting my long time work on this plugin. Tons of hours, weekends … always worked on [improving it](https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/) 4+ years.
@@ -12,7 +12,7 @@
     Shows the Video in a Lightbox after clicking a preview image
 *   **Link -> Lightbox**<br>
     Use simple links as triggers for lightboxed videos
-*   Show the latest video of a youtube channel by using the channel URL (updated/cached hourly)
+*   Show the latest video of a YouTube channel by using the channel URL (updated/cached hourly)
 *   Automatic or custom thumbnail images
 *   Automatic or custom titles on top of your thumbnails
 *   'Grow on click' feature

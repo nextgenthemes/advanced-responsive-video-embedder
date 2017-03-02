@@ -1,10 +1,11 @@
+
 ### Features
 
 *   ARVE is now SEO friendly. Letting you specify title, description, upload date to provide search engines with the schema.org data they like to have for better indexing.
 *   <abbr title="What You See Is What You Get">WYSIWYG</abbr> Editor. No more messing around with shortcodes and previewing.
 *   New improved dialog for embedding videos.
 *   Embeds via pasting the URL in its own line just like WordPress!
-*   Magigally makes those url embedded videos responsive
+*   Magically makes those url embedded videos responsive
 *   No 'lock in' for the above' if you use providers WordPress already supports
 *   Supports [almost every video hoster](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#video-host-support) that supports iframe embed codes.
 *   Optionally use very powerful Shortcodes instead
