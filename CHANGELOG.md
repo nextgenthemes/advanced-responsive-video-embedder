@@ -1,4 +1,9 @@
+
 ## Changelog ##
+
+### 2017-03-02 - 8.0.8
+
+* Improved: Updated EDD Plugin Updater class
 
 ### 2017-02-24 - 8.0.7
 
