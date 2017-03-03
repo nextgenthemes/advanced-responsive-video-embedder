@@ -1,6 +1,10 @@
 
 ## Changelog ##
 
+### 2017-03-03 - 8.0.9
+
+* Fix: Admin page error for messing file.
+
 ### 2017-03-02 - 8.0.8
 
 * Improved: Updated EDD Plugin Updater class

@@ -31,7 +31,7 @@ function arve_get_pro_ad() {
 
 	$pro_message = __( '<p>This is Nico(las Jonas) the Author of the Advanced Responsive Video Embedder plugin. When you <strong><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/">buy the Pro Addon</a></strong> for this plugin you will get this:</p>', ARVE_SLUG );
 
-	$pro_message .= file_get_contents( plugin_dir_path( dirname( __FILE__ ) ) . 'readme/description-features-pro.html' );
+	$pro_message .= file_get_contents( plugin_dir_path( dirname( __FILE__ ) ) . 'readme/20-description-features-pro.html' );
 	$pro_message  = str_replace( '<ul ', '<ul style="list-style: square; padding-left: 20px;" ', $pro_message );
 
 	return $pro_message;
