@@ -8,7 +8,7 @@
  * Plugin Name:       ARVE Advanced Responsive Video Embedder
  * Plugin URI:        https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
  * Description:       Easy responsive video embeds via URL (like WordPress) or Shortcodes. Supports almost anything you can imagine.
- * Version:           8.0.9
+ * Version:           8.0.10
  * Author:            Nicolas Jonas
  * Author URI:        https://nextgenthemes.com
  * License:           GPL-3.0
@@ -24,7 +24,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 define( 'ARVE_SLUG',                 'advanced-responsive-video-embedder' );
-define( 'ARVE_VERSION',              '8.0.9' );
+define( 'ARVE_VERSION',              '8.0.10' );
 define( 'ARVE_PRO_VERSION_REQUIRED', '3.6.4' );
 define( 'ARVE_NUM_TRACKS', 10 );
 
@@ -54,7 +54,6 @@ function arve_init() {
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-enqueue.php';
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-html-output.php';
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-misc.php';
-	require_once plugin_dir_path( __FILE__ ) . 'public/functions-tests.php';
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-shortcode-data.php';
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-shortcode-filters.php';
 	require_once plugin_dir_path( __FILE__ ) . 'public/functions-shortcodes.php';
@@ -73,8 +72,8 @@ function arve_init() {
 	add_action( 'wp_enqueue_scripts',  'arve_register_scripts', 0 );
 	add_action( 'wp_head',             'arve_print_styles' );
 	add_action( 'wp_video_shortcode_override', 'arve_wp_video_shortcode_override', 10, 4 );
-	add_filter( 'the_content',         'arve_regex_tests' );
-	add_filter( 'the_content',         'arve_shortcode_tests' );
+	#add_filter( 'the_content',         'arve_regex_tests' );
+	#add_filter( 'the_content',         'arve_shortcode_tests' );
 	add_filter( 'widget_text',         'do_shortcode' );
 
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_sanitise', -12 );

@@ -166,15 +166,17 @@ function arve_shortcode_arve_supported() {
 
 function arve_shortcode_arve_supported_list() {
 
+  $list = '';
   $providers = arve_get_host_properties();
   // unset deprecated and doubled
   unset( $providers['dailymotionlist'] );
   unset( $providers['iframe'] );
 
-  $list = '';
-  $list .= '*   ' . $values['name'];
+  foreach ( $providers as $key => $values ) {
+    $list .= '*   ' . $values['name'] . PHP_EOL;
+  }
 
-  return '<textarea style="width=100" rows="33">'. $lis . '</textarea>';
+  return '<textarea style="width:100%" rows="15">'. $list . '</textarea>';
 }
 
 function arve_shortcode_arve_params() {
