@@ -22,7 +22,7 @@ Make sure to check out the [official page](https://nextgenthemes.com/plugins/adv
 *  [GitHub Page](https://github.com/nextgenthemes/advanced-responsive-video-embedder/)
 *  [Documentation](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/Documentation/)
 
-### Features
+### Features ###
 
 *   ARVE is now SEO friendly. Letting you specify title, description, upload date to provide search engines with the schema.org data they like to have for better indexing.
 *   <abbr title="What You See Is What You Get">WYSIWYG</abbr> Editor. No more messing around with shortcodes and previewing.
@@ -42,11 +42,51 @@ Make sure to check out the [official page](https://nextgenthemes.com/plugins/adv
 *   Video alignment
 *   Detailed description of options in-place.
 *   Custom aspect ratio
-### Supported Providers(https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#general-iframe-embedding) ###
 
+### [Supported Providers](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#general-iframe-embedding) ###
 
+*   allmyvideos.net
+*   Alugha
+*   Archive.org
+*   Break
+*   Brightcove
+*   CollegeHumor
+*   Comedy Central
+*   Dailymotion
+*   Facebook
+*   Funny or Die
+*   Gametrailers
+*   IGN
+*   Kickstarter
+*   LiveLeak
+*   Livestream
+*   kla.tv
+*   Metacafe
+*   Movieweb
+*   MPORA
+*   Myspace
+*   Snotr
+*   Spike
+*   TED Talks
+*   Twitch
+*   Ustream
+*   RuTube.ru
+*   Veoh
+*   Vevo
+*   Viddler
+*   vidspot.net
+*   Vine
+*   Vimeo
+*   VK
+*   Vzaar
+*   Wistia
+*   XTube
+*   Yahoo
+*   Youku
+*   YouTube
+*   YouTube Playlist
+*   HTML5 Video (in testing)
 *   [All providers with responsive iframe embed codes](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/#general-iframe-embedding)
-
 <h3>Reviews</h3>
 
 <div class="media">
@@ -70,23 +110,6 @@ Make sure to check out the [official page](https://nextgenthemes.com/plugins/adv
 		<a href="https://wordpress.org/support/view/plugin-reviews/advanced-responsive-video-embedder?filter=5">review by crconnell89</a>
 	</div>
 </div>
-<p>This plugin is financed by the awesome buyers of the <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">Pro Addon</a>. The development and support of this plugins has become a almost full time job for me so I hope you understand that I can not make all features gratis and that you <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">purchase it</a> to get extra features support the develoment.</p>
-<h3 id="-pro-addon-https-nextgenthemes-com-plugins-advanced-responsive-video-embedder-pro-purchase-"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">Pro Addon</a></h3>
-<ul>
-<li><strong>Feel good about yourself</strong><br>for supporting my long time work on this plugin. Tons of hours, weekends … always worked on <a href="https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/">improving it</a> 4+ years.</li>
-<li><strong>Disable links in embeds (killer feature!)</strong><br>For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. <strong>Prevent video hosters to lead your visitors away from your site!</strong> Note this also breaks sharing functionality and is not possible when the provider requires flash. Try it on <a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/">this page</a>. Right click on links still works.</li>
-<li><strong>Lazyload mode</strong><br>Make your site load <strong>faster</strong> by loading only a image instead of the entire video player on pageload.  </li>
-<li><strong>Lazyload -&gt; Lightbox</strong><br>Shows the Video in a Lightbox after clicking a preview image</li>
-<li><strong>Link -&gt; Lightbox</strong><br>Use simple links as triggers for lightboxed videos</li>
-<li>Show the latest video of a YouTube channel by using the channel URL (updated/cached hourly)</li>
-<li>Automatic or custom thumbnail images</li>
-<li>Automatic or custom titles on top of your thumbnails</li>
-<li>&#39;Grow on click&#39; feature</li>
-<li>3 hover styles</li>
-<li>2 play icon styles to choose from</li>
-<li>Responsive thumbnails using cutting edge HTML5 technology</li>
-</ul>
-<p><strong><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase">Get the ARVE Pro Addon</a></strong></p>
 This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase). The development and support of this plugins has become a almost full time job for me so I hope you understand that I can not make all features gratis and that you [purchase it](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) to get extra features support the develoment.
 
 ### [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase)
@@ -110,7 +133,8 @@ This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgen
 *   Responsive thumbnails using cutting edge HTML5 technology
 
 **[Get the ARVE Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase)**
-### [ARVE AMP Addon](https://nextgenthemes.com/plugins/arve-accelerated-mobile-pages-addon/)
+
+### [ARVE AMP Addon](https://nextgenthemes.com/plugins/arve-accelerated-mobile-pages-addon/) ###
 
 Addon makes ARVE ready for Accelerated Mobile Pages (AMP). Requires the gratis plugins [ARVE](https://wordpress.org/plugins/advanced-responsive-video-embedder/) and [AMP](https://wordpress.org/plugins/amp/)
 
@@ -121,6 +145,7 @@ Addon makes ARVE ready for Accelerated Mobile Pages (AMP). Requires the gratis p
 *   HTML5 video files are also supported with <amp-video>
 
 **[Check out the ARVE AMP Addon](https://nextgenthemes.com/plugins/arve-accelerated-mobile-pages-addon/)**
+
 ### Thanks ###
 
 *   Howard Iken of [myfloridalaw.com](https://www.myfloridalaw.com) top donor, super nice to me even if I was rude and not deserved it!
@@ -132,6 +157,7 @@ Thanks to the developers of the software used in ARVE
 
 *   [Shortcode UI](https://wordpress.org/plugins/shortcode-ui/)
 *   [Lity Lightbox](http://sorgalla.com/lity/)
+
 ## Installation ##
 
 Please refer to [codex.wordpress.org/Managing_Plugins#Automatic_Plugin_Installation](https://codex.wordpress.org/Managing_Plugins#Automatic_Plugin_Installation).
@@ -140,7 +166,7 @@ Please refer to [codex.wordpress.org/Managing_Plugins#Automatic_Plugin_Installat
 
 ### I have a problem ... ###
 
-Please report it on [nextgenthemes.com/support/](https://nextgenthemes.com/support/) **and plaese not on the wordpess.org forums, thanks.**
+Please report it on [nextgenthemes.com/support/](https://nextgenthemes.com/support/) **and please do not on the wordpess.org forums, thanks.**
 
 ### How to get the pro version working? ###
 
@@ -172,6 +198,11 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 3. Features
 
 ## Changelog ##
+
+### 2017-03-XX - 8.1.0
+
+* Improved: Used `wp_add_inline_style` function for inline styles.
+* Removed some code that not needed.
 
 ### 2017-03-03 - 8.0.9
 

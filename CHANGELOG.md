@@ -1,6 +1,11 @@
 
 ## Changelog ##
 
+### 2017-03-XX - 8.1.0
+
+* Improved: Used `wp_add_inline_style` function for inline styles.
+* Removed some code that not needed.
+
 ### 2017-03-03 - 8.0.9
 
 * Fix: Admin page error for messing file.
