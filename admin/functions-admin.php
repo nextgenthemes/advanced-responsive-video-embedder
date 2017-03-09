@@ -83,7 +83,15 @@ function arve_add_dashboard_widget() {
  */
 function arve_add_plugin_admin_menu() {
 
-	add_menu_page( 'ARVE', 'ARVE', 'manage_options', 'advanced-responsive-video-embedder', null, 'dashicons-video-alt3', 40 );
+	add_menu_page(
+ 		__( 'ARVE', ARVE_SLUG ),    # Page Title
+ 		__( 'ARVE', ARVE_SLUG ),    # Menu Tile
+ 		'manage_options',                     # capability
+ 		'advanced-responsive-video-embedder', # menu-slug
+ 		null,                                 # function
+		'dashicons-video-alt3',               # icon_url
+		null                                  # position
+ 	);
 
 	add_submenu_page(
 		'nextgenthemes',         # parent_slug

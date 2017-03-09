@@ -1,62 +1,63 @@
 
 ## Changelog ##
 
-### 2017-03-09 - 8.1.1
+### 2017-03-09 - 8.1.1 ###
 
+* Improved: Added ARVE to menu.
 * Improved: Used `wp_add_inline_style` function for inline styles.
-* Removed some code that not needed.
+* Removed some code that is not needed.
 
-### 2017-03-03 - 8.0.9
+### 2017-03-03 - 8.0.9 ###
 
 * Fix: Admin page error for messing file.
 
-### 2017-03-02 - 8.0.8
+### 2017-03-02 - 8.0.8 ###
 
 * Improved: Updated EDD Plugin Updater class
 
-### 2017-02-24 - 8.0.7
+### 2017-02-24 - 8.0.7 ###
 
 * Fix: Options not correctly put in debug-info.
 * Improved: Make License input fields a bit wider.
 * Improved: Some small code improvements.
 
-### 2017-02-12 - 8.0.5
+### 2017-02-12 - 8.0.5 ###
 
 * Fix: Small size of lightbox when using the [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/).
 
-### 2017-02-11 - 8.0.4
+### 2017-02-11 - 8.0.4 ###
 
 * CSS improved
 * Updated Addon Updater Class
 
-### 2017-01-03 - 8.0.2
+### 2017-01-03 - 8.0.2 ###
 
 * Fix: Errors on settings page when Pro Addon is not installed.
 
-### 2016-12-17 - 8.0.1
+### 2016-12-17 - 8.0.1 ###
 
 * Fix: `undefined function is_plugin_active()` error caused by some plugins
 * Improved: Show actual meaningful message if PHP is lower then the required 5.3. Bluehost (oh proud wp.org recommended host) seems to show customers a **wrong** php version in the config and lets them hang on insecure end of life versions.
 
-### 2016-12-09 - Pro Addon 3.6.8
+### 2016-12-09 - Pro Addon 3.6.8 ###
 
 * Fix: Wrongly tagged version.
 
-### 2016-12-07 - Pro Addon 3.6.7
+### 2016-12-07 - Pro Addon 3.6.7 ###
 
 * Fix: Some thumbnails not loading.
 
-### 2016-12-07 - 8.0.0
+### 2016-12-07 - 8.0.0 ###
 
 * Fix: 'Take over [video] shortcode' option not working. (Always acted as on, default is off)
 * Fix: [video] override putting out a error for not reason.
 * Improved code: Dropped 2 micro classes in favor for antonymous functions.
 
-### 2016-12-07 - Pro Addon 3.6.6
+### 2016-12-07 - Pro Addon 3.6.6 ###
 
 * Improved: Load the CSS always in the `<head>`, this enables to change its CSS with the new CSS customizer in WP 4.7 and may also fix issues with caching plugins.
 
-### 2016-11-30 - 7.9.23
+### 2016-11-30 - 7.9.23 ###
 
 * Fix: Ending up with wrong URLs by disabling auto shortening of URLs when pasting them into the shortcode-ui dialog.
 * Improved: Enable SSL verify for API calls.
@@ -66,7 +67,7 @@
 
 * Fix: Autoplay without setting
 
-### 2016-11-30 - 7.9.21
+### 2016-11-30 - 7.9.21 ###
 
 * Fix: Fatal error.
 

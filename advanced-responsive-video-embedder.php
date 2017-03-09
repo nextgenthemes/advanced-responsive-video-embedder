@@ -33,7 +33,7 @@ if( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
 }
 
 arve_init();
-#add_action( 'plugins_loaded', 'arve_init' ); # TODO ??
+#add_action( 'init', 'arve_init' ); # TODO ??
 
 function arve_init() {
 
