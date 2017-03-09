@@ -3,7 +3,7 @@ Contributors: nico23
 Donate link: https://www.paypal.me/nico23
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.4.0
-Tested up to: 4.7.2
+Tested up to: 4.7.3
 Stable tag: trunk
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -43,7 +43,7 @@ Make sure to check out the [official page](https://nextgenthemes.com/plugins/adv
 *   Detailed description of options in-place.
 *   Custom aspect ratio
 
-### [Supported Providers](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#general-iframe-embedding) ###
+### [Supported Providers](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#video-host-support) ###
 
 *   allmyvideos.net
 *   Alugha
@@ -110,9 +110,10 @@ Make sure to check out the [official page](https://nextgenthemes.com/plugins/adv
 		<a href="https://wordpress.org/support/view/plugin-reviews/advanced-responsive-video-embedder?filter=5">review by crconnell89</a>
 	</div>
 </div>
+
 This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase). The development and support of this plugins has become a almost full time job for me so I hope you understand that I can not make all features gratis and that you [purchase it](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) to get extra features support the develoment.
 
-### [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase)
+### [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) ###
 
 *   **Feel good about yourself**
     for supporting my long time work on this plugin. Tons of hours, weekends … always worked on [improving it](https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/) 4+ years.
@@ -199,7 +200,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
-### 2017-03-XX - 8.1.0
+### 2017-03-09 - 8.1.1
 
 * Improved: Used `wp_add_inline_style` function for inline styles.
 * Removed some code that not needed.

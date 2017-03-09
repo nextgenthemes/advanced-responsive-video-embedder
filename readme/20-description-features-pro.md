@@ -1,6 +1,7 @@
+
 This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase). The development and support of this plugins has become a almost full time job for me so I hope you understand that I can not make all features gratis and that you [purchase it](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) to get extra features support the develoment.
 
-### [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase)
+### [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) ###
 
 *   **Feel good about yourself**
     for supporting my long time work on this plugin. Tons of hours, weekends … always worked on [improving it](https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/) 4+ years.

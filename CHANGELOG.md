@@ -1,7 +1,7 @@
 
 ## Changelog ##
 
-### 2017-03-XX - 8.1.0
+### 2017-03-09 - 8.1.1
 
 * Improved: Used `wp_add_inline_style` function for inline styles.
 * Removed some code that not needed.

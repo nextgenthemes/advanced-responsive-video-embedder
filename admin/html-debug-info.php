@@ -1,5 +1,5 @@
 <textarea style="font-family: monospace; width: 100%" rows="25">
-Version of the browser you see the issue in (for example Firefox 52):
+Version of the browser you see the issue in (for example Firefox 52, do not say latest):
 
 Link to test page on live site with the issue (do not change after posting):
 

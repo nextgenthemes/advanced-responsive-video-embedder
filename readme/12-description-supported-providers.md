@@ -1,5 +1,5 @@
 
-### [Supported Providers](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#general-iframe-embedding) ###
+### [Supported Providers](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#video-host-support) ###
 
 *   allmyvideos.net
 *   Alugha

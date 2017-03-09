@@ -83,12 +83,14 @@ function arve_add_dashboard_widget() {
  */
 function arve_add_plugin_admin_menu() {
 
+	add_menu_page( 'ARVE', 'ARVE', 'manage_options', 'advanced-responsive-video-embedder', null, 'dashicons-video-alt3', 40 );
+
 	add_submenu_page(
-		'nextgenthemes',                        # parent_slug
+		'nextgenthemes',         # parent_slug
 		__( 'Advanced Responsive Video Embedder Settings', ARVE_SLUG ), # Page Title
-		__( 'A.R. Video Embedder', ARVE_SLUG ), # Menu Tile
-		'manage_options',                       # capability
-		ARVE_SLUG,                              # menu-slug
+		__( 'ARVE', ARVE_SLUG ), # Menu Tile
+		'manage_options',        # capability
+		ARVE_SLUG,               # menu-slug
 		function() {
 			require_once plugin_dir_path( __FILE__ ) . 'html-settings-page.php';
 		}
