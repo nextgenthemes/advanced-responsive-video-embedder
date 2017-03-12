@@ -1,9 +1,9 @@
 
 ## Changelog ##
 
-### 2017-03-09 - 8.1.1 ###
+### 2017-03-12 - 8.1.1 ###
 
-* Improved: Added ARVE to menu.
+* Improved: Added ARVE to menu below plugins so it can be easy found.
 * Improved: Used `wp_add_inline_style` function for inline styles.
 * Removed some code that is not needed.
 
