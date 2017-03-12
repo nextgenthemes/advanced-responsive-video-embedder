@@ -90,7 +90,7 @@ function arve_add_plugin_admin_menu() {
  		'advanced-responsive-video-embedder', # menu-slug
  		null,                                 # function
 		'dashicons-video-alt3',               # icon_url
-		null                                  # position
+		'65.1'                                # position
  	);
 
 	add_submenu_page(

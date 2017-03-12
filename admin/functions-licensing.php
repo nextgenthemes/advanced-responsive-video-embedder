@@ -100,7 +100,8 @@ function nextgenthemes_menus() {
  		'nextgenthemes',                  # menu-slug
  		'__return_empty_string',          # function
 		'dashicons-admin-settings',       # icon_url
-		null                              # position
+		'80.1'                            # position
+		#'80.5'                            # position
  	);
 
 	/*
