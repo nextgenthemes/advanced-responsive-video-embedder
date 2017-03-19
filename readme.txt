@@ -120,7 +120,7 @@ This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgen
 *   **Disable links in embeds (killer feature!)**
     For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. **Prevent video hosters to lead your visitors away from your site!** Note this also breaks sharing functionality and is not possible when the provider requires flash. Try it on [this page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/). Right click on links still works.
 *   **Lazyload mode**
-    Make your site load **faster** by loading only a image instead of the entire video player on pageload.  
+    Make your site load **faster** by loading only a image instead of the entire video player on pageload.
 *   **Lazyload -> Lightbox**
     Shows the Video in a Lightbox after clicking a preview image
 *   **Link -> Lightbox**
@@ -137,13 +137,13 @@ This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgen
 
 ### [ARVE AMP Addon](https://nextgenthemes.com/plugins/arve-accelerated-mobile-pages-addon/) ###
 
-Addon makes ARVE ready for Accelerated Mobile Pages (AMP). Requires the gratis plugins [ARVE](https://wordpress.org/plugins/advanced-responsive-video-embedder/) and [AMP](https://wordpress.org/plugins/amp/)
-
+*   Requires the gratis plugins [ARVE](https://wordpress.org/plugins/advanced-responsive-video-embedder/) and [AMP](https://wordpress.org/plugins/amp/)
+*   Makes ARVE ready for Accelerated Mobile Pages (AMP)
 *   It will display videos embedded with ARVE on AMP pages correctly
 *   No options, just works
 *   It creates &lt;amp-youtube&gt;, &lt;amp-vimeo&gt;, &lt;amp-dailymotion&gt; elements
 *   For all other video hosts supported by ARVE &lt;amp-iframe&gt; element is used
-*   HTML5 video files are also supported with <amp-video>
+*   HTML5 video files are also supported with &lt;amp-video&gt;
 
 **[Check out the ARVE AMP Addon](https://nextgenthemes.com/plugins/arve-accelerated-mobile-pages-addon/)**
 
@@ -154,10 +154,10 @@ Addon makes ARVE ready for Accelerated Mobile Pages (AMP). Requires the gratis p
 *   Anybody giving contructive feedback, testing beta versions.
 *   Anybody I forgot.
 
-Thanks to the developers of the software used in ARVE
+### Thanks to the developers of the software used in ARVE ###
 
-*   [Shortcode UI](https://wordpress.org/plugins/shortcode-ui/)
-*   [Lity Lightbox](http://sorgalla.com/lity/)
+*   [Shortcode UI](https://wordpress.org/plugins/shortcode-ui/), optional Plugin, utilized by ARVE
+*   [Lity Lightbox](http://sorgalla.com/lity/), used in [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase))
 
 ## Installation ##
 
@@ -200,9 +200,9 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
-### 2017-03-09 - 8.1.1 ###
+### 2017-03-12 - 8.1.1 ###
 
-* Improved: Added ARVE to menu.
+* Improved: Added ARVE to menu below plugins so it can be easy found.
 * Improved: Used `wp_add_inline_style` function for inline styles.
 * Removed some code that is not needed.
 

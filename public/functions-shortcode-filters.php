@@ -4,14 +4,8 @@ function arve_filter_atts_set_fixed_dimensions( $atts ) {
 
   $width = 480;
 
-	if( empty( $atts['aspect_ratio'] ) ) {
-		$ratio = 56.25;
-	} else {
-		$ratio = (float) arve_aspect_ratio_to_percentage( $atts['aspect_ratio'] );
-	}
-
 	$atts['width']  = $width;
-	$atts['height'] = ( $width / 100 ) * $ratio;
+	$atts['height'] = arve_calculate_height( $width, $atts['aspect_ratio'] );
 
 	return $atts;
 }
@@ -29,7 +23,7 @@ function arve_filter_atts_sanitise( $atts ) {
     }
 
     if( ! is_string( $value ) ) {
-      $atts[ $key ] = arve_error( sprintf( __( '<code>%s</code> is not a string. Only Strings should be passed to the shortcode function' , ARVE_SLUG ), $key ) );
+      $atts[ $key ] = arve_error( sprintf( __( '<code>%s</code> is not a string. Only Strings should be passed to the shortcode function', ARVE_SLUG ), $key ) );
     }
   }
 
@@ -75,8 +69,12 @@ function arve_filter_atts_validate( $atts ) {
   $atts['maxwidth']     = (int) $atts['maxwidth'];
   $atts['maxwidth']     = (int) arve_maxwidth_when_aligned( $atts['maxwidth'], $atts['align'] );
   $atts['id']           = arve_id_fixes( $atts['id'], $atts['provider'] );
-  $atts['aspect_ratio'] = arve_get_default_aspect_ratio( $atts['aspect_ratio'], $atts['provider'], $atts['mode'] );
-  $atts['aspect_ratio'] = arve_aspect_ratio_fixes(       $atts['aspect_ratio'], $atts['provider'], $atts['mode'] );
+  $atts['aspect_ratio'] = arve_validate_aspect_ratio( $atts['aspect_ratio'] );
+
+  if ( ! is_wp_error( $atts['aspect_ratio'] ) ) {
+    $atts['aspect_ratio'] = arve_get_default_aspect_ratio( $atts['aspect_ratio'], $atts['provider'] );
+    $atts['aspect_ratio'] = arve_aspect_ratio_fixes( $atts['aspect_ratio'], $atts['provider'], $atts['mode'] );
+  }
 
   return $atts;
 }

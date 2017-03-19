@@ -6,7 +6,7 @@
 *   Anybody giving contructive feedback, testing beta versions.
 *   Anybody I forgot.
 
-Thanks to the developers of the software used in ARVE
+### Thanks to the developers of the software used in ARVE ###
 
-*   [Shortcode UI](https://wordpress.org/plugins/shortcode-ui/)
-*   [Lity Lightbox](http://sorgalla.com/lity/)
+*   [Shortcode UI](https://wordpress.org/plugins/shortcode-ui/), optional Plugin, utilized by ARVE
+*   [Lity Lightbox](http://sorgalla.com/lity/), used in [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase))

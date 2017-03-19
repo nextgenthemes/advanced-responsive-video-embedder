@@ -14,4 +14,7 @@ class Tests_Scripts extends WP_UnitTestCase {
 
 		$this->assertNotFalse( has_action( 'wp_enqueue_scripts', 'arve_register_scripts' ) );
 	}
+
+
+
 }

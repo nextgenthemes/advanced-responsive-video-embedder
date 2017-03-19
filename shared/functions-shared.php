@@ -1048,7 +1048,7 @@ function arve_get_host_properties() {
 			)
 		),
 		'html5' => array(
-			'name' => 'HTML5 Video (in testing)',
+			'name' => 'HTML5 video files directly',
 		),
 		'iframe' => array(
 			'embed_url'         => '%s',
@@ -1068,6 +1068,9 @@ function arve_get_host_properties() {
 
 		if( empty( $value['name'] ) ) {
 			$properties[ $key ]['name'] = ucfirst( $key );
+		}
+		if( empty( $value['aspect_ratio'] ) ) {
+			$properties[ $key ]['aspect_ratio'] = '16:9';
 		}
 	}
 
@@ -1118,4 +1121,31 @@ function arve_ends_with( $haystack, $needle ) {
 
 function arve_contains( $haystack, $needle ) {
   return strpos( $haystack, $needle ) !== false;
+}
+
+function arve_register_asset( $args ) {
+
+	$defaults = array(
+		'handle'     => null,
+		'src'        => null,
+		'deps'       => array(),
+		'in_footer'  => true,
+		'media'      => null,
+		'ver'        => ARVE_VERSION,
+		'automin'    => false,
+	);
+
+	$args = wp_parse_args( $args, $defaults );
+
+	if ( $args['automin'] && ! defined( 'WP_DEBUG' ) && ! WP_DEBUG ) {
+
+		$args['src'] = str_replace( '.css', '.min.css', $args['src'] );
+		$args['src'] = str_replace( '.js',  '.min.js',  $args['src'] );
+	}
+
+	if ( arve_ends_with( $args['src'], '.css' ) ) {
+		wp_register_style( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['media'] );
+	} else {
+		wp_register_script( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['in_footer'] );
+	}
 }

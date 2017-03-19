@@ -81,7 +81,8 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
     return arve_error( $output->get_error_message() );
   }
 
-  wp_enqueue_script( 'advanced-responsive-video-embedder' );
+  wp_enqueue_style( ARVE_SLUG );
+  wp_enqueue_script( ARVE_SLUG );
   return $html['debug_info'] . $output;
 }
 

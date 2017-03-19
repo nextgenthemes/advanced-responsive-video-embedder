@@ -8,7 +8,7 @@
  * Plugin Name:       ARVE Advanced Responsive Video Embedder
  * Plugin URI:        https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
  * Description:       Easy responsive video embeds via URL (like WordPress) or Shortcodes. Supports almost anything you can imagine.
- * Version:           8.1.1
+ * Version:           8.2.0
  * Author:            Nicolas Jonas
  * Author URI:        https://nextgenthemes.com
  * License:           GPL-3.0
@@ -24,8 +24,8 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 define( 'ARVE_SLUG',                 'advanced-responsive-video-embedder' );
-define( 'ARVE_VERSION',              '8.1.1' );
-define( 'ARVE_PRO_VERSION_REQUIRED', '3.6.4' );
+define( 'ARVE_VERSION',              '8.2.0' );
+define( 'ARVE_PRO_VERSION_REQUIRED', '3.9.0' );
 define( 'ARVE_NUM_TRACKS', 10 );
 
 if( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
@@ -68,11 +68,13 @@ function arve_init() {
 	add_action( 'plugins_loaded',      'arve_create_shortcodes', 999 );
 	add_action( 'plugins_loaded',      'arve_create_url_handlers', 999 );
 	add_action( 'plugins_loaded',      'arve_oembed_remove_providers', 998 );
-	add_action( 'wp_enqueue_scripts',  'arve_enqueue_styles' );
+	add_action( 'wp_enqueue_scripts',  'arve_register_styles', 0 );
 	add_action( 'wp_enqueue_scripts',  'arve_register_scripts', 0 );
+	add_action( 'wp_enqueue_scripts',  'arve_print_maxwidth_style' );
 	add_action( 'wp_head',             'arve_print_styles' );
 	add_action( 'wp_video_shortcode_override', 'arve_wp_video_shortcode_override', 10, 4 );
 	add_filter( 'widget_text',         'do_shortcode' );
+	add_filter( 'language_attributes', 'arve_html_id' );
 
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_sanitise', -12 );
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_provider_and_id_from_url', -10 );
@@ -97,10 +99,9 @@ function arve_init() {
 	add_action( 'register_shortcode_ui', 'arve_register_shortcode_ui' );
 	add_action( 'wp_dashboard_setup',    'arve_add_dashboard_widget' );
 
-	$plugin_basename = plugin_basename( plugin_dir_path( realpath( dirname( __FILE__ ) ) ) . ARVE_SLUG . '.php' );
-
-	add_filter( 'plugin_action_links_' . $plugin_basename, 'arve_add_action_links' );
+	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'arve_add_action_links' );
 	add_filter( 'mce_css',               'arve_mce_css' );
+	#add_filter( 'mce_external_plugins',  'arve_add_tinymce_plugin' );
 }
 
 function arve_php_outdated_message() {

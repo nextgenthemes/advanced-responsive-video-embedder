@@ -21,6 +21,11 @@ function arve_action_admin_init_setup_messages() {
 	}
 }
 
+function arve_add_tinymce_plugin( $plugin_array ) {
+	$plugin_array['arve'] = plugin_dir_url( __FILE__ ) . 'tinymce.js';
+	return $plugin_array;
+}
+
 function arve_get_pro_ad() {
 
 	$inst = (int) get_option( 'arve_install_date' );
@@ -84,10 +89,10 @@ function arve_add_dashboard_widget() {
 function arve_add_plugin_admin_menu() {
 
 	add_menu_page(
- 		__( 'ARVE', ARVE_SLUG ),    # Page Title
+ 		__( 'Advanced Responsive Video Embedder Settings', ARVE_SLUG ), # Page Title
  		__( 'ARVE', ARVE_SLUG ),    # Menu Tile
  		'manage_options',                     # capability
- 		'advanced-responsive-video-embedder', # menu-slug
+ 		ARVE_SLUG,                            # menu-slug
  		null,                                 # function
 		'dashicons-video-alt3',               # icon_url
 		'65.892'                              # position
@@ -96,7 +101,7 @@ function arve_add_plugin_admin_menu() {
 	add_submenu_page(
 		'nextgenthemes',         # parent_slug
 		__( 'Advanced Responsive Video Embedder Settings', ARVE_SLUG ), # Page Title
-		__( 'ARVE', ARVE_SLUG ), # Menu Tile
+		__( 'ARVE', ARVE_SLUG ), # Menu Title
 		'manage_options',        # capability
 		ARVE_SLUG,               # menu-slug
 		function() {
@@ -144,7 +149,7 @@ function arve_add_media_button() {
 
 	printf(
 		"<div id='arve-thickbox' style='display:none;'><p>$p1</p><p>$p2</p><p>$p3</p></div>",
-		esc_url( 'https://wordpress.org/plugins/shortcode-ui/' ),
+		nextgenthemes_admin_install_search_url( 'Shortcode+UI' ),
 		esc_url( 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/' )
 	);
 
@@ -217,7 +222,7 @@ function arve_input( $args ) {
 					'class' => 'button-secondary',
 				)
 			),
-			__('Upload Image', 'advanced-responsive-video-embedder' )
+			__('Upload Image', ARVE_SLUG )
 		);
 	}
 
@@ -459,7 +464,7 @@ function arve_submit_reset( $args ) {
 
 	submit_button( __('Save Changes' ), 'primary','submit', false );
 	echo '&nbsp;&nbsp;';
-	submit_button( __('Reset This Settings Section', 'advanced-responsive-video-embedder' ), 'secondary', $args['reset_name'], false );
+	submit_button( __('Reset This Settings Section', ARVE_SLUG ), 'secondary', $args['reset_name'], false );
 }
 
 function arve_shortcodes_section_description() {
@@ -620,13 +625,12 @@ function arve_admin_enqueue_styles() {
 
 function arve_mce_css( $mce_css ) {
 
+	$min = ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? '' : '.min';
+
 	if ( ! empty( $mce_css ) ) {
 		$mce_css .= ',';
 	}
-
-	$css_file = plugin_dir_url( __DIR__ ) . 'public/arve-public.css';
-
-	$mce_css .= $css_file;
+	$mce_css .= plugin_dir_url( __DIR__ ) . "public/arve{$min}.css";
 
 	return $mce_css;
 }

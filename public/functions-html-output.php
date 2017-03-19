@@ -1,5 +1,14 @@
 <?php
 
+function arve_html_id( $html_attr ) {
+
+	if( false === strpos( $html_attr, 'id=' ) ) {
+		$html_attr .= ' id="arve"';
+	}
+
+	return $html_attr;
+}
+
 function arve_get_var_dump( $var ) {
 	ob_start();
 	var_dump( $var );
@@ -24,17 +33,20 @@ function arve_get_debug_info( $atts, $input_atts ) {
 		$show_options_debug = false;
 	}
 
+	$pre_style = 'style="color: #eee; background-color: #111; font-size: 14px;"';
+
 	if ( ! empty( $_GET['arve-debug-arg'] ) ) {
 		$html .= sprintf(
-			'<pre>arg[%s]: %s</pre>',
+			'<pre %s>arg[%s]: %s</pre>',
+			$pre_style,
 			esc_html( $_GET['arve-debug-arg'] ),
 			arve_get_var_dump( $atts[ $_GET['arve-debug-arg'] ] )
 		);
 	}
 
 	if ( isset( $_GET['arve-debug'] ) ) {
-		$html .= sprintf( '<pre>$atts: %s</pre>', arve_get_var_dump( $input_atts ) );
-		$html .= sprintf( '<pre>$arve: %s</pre>', arve_get_var_dump( $atts ) );
+		$html .= sprintf( '<pre %s>$atts: %s</pre>', $pre_style, arve_get_var_dump( $input_atts ) );
+		$html .= sprintf( '<pre %s>$arve: %s</pre>', $pre_style, arve_get_var_dump( $atts ) );
 	}
 
 	return $html;
@@ -72,7 +84,7 @@ function arve_build_meta_html( $atts ) {
 						'src'             => $atts['img_src'],
 						'srcset'          => ! empty( $atts['img_srcset'] ) ? $atts['img_srcset'] : false,
 						#'sizes'    => '(max-width: 700px) 100vw, 1280px',
-						'alt'             => __( 'Video Thumbnail', 'advanced-responsive-video-embedder' ),
+						'alt'             => __( 'Video Thumbnail', ARVE_SLUG ),
 					) )
 				);
 
@@ -108,22 +120,17 @@ function arve_build_promote_link_html( $arve_link ) {
 		return sprintf(
 			'<a href="%s" title="%s" class="arve-promote-link">%s</a>',
 			esc_url( 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/' ),
-			esc_attr( __('Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', 'advanced-responsive-video-embedder') ),
-			esc_html__( 'ARVE', 'advanced-responsive-video-embedder' )
+			esc_attr( __('Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', ARVE_SLUG) ),
+			esc_html__( 'ARVE', ARVE_SLUG )
 		);
 	}
 
 	return '';
 }
 
-function arve_arve_embed_container( $html, $atts, $lity_container = false ) {
+function arve_arve_embed_container( $html, $atts ) {
 
 	$attr['class'] = 'arve-embed-container';
-
-	if ( $lity_container ) {
-		$attr['id']     = 'lity-' . $atts['embed_id'];
-		$attr['class'] .= ' arve-lity-container lity-hide';
-	}
 
 	if( ! empty( $atts['aspect_ratio'] ) ) {
 		$attr['style'] = sprintf( 'padding-bottom:%F%%', arve_aspect_ratio_to_percentage( $atts['aspect_ratio'] ) );
@@ -131,7 +138,7 @@ function arve_arve_embed_container( $html, $atts, $lity_container = false ) {
 		$attr['style'] = 'height:auto;padding:0';
 	}
 
-	return sprintf( '<span%s>%s</span>', arve_attr( $attr ), $html );
+	return sprintf( '<div%s>%s</div>', arve_attr( $attr ), $html );
 }
 
 function arve_arve_wrapper( $output, $atts ) {

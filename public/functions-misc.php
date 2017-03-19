@@ -114,11 +114,28 @@ function arve_youtube_time_to_seconds( $yttime ) {
  */
 function arve_aspect_ratio_to_percentage( $aspect_ratio ) {
 
-  $aspect_ratio = explode( ':', $aspect_ratio );
+	if ( is_wp_error( $aspect_ratio ) ) {
+		return 52.25;
+	}
 
-  if ( is_numeric( $aspect_ratio[0] ) && is_numeric( $aspect_ratio[1] ) ) {
-    return ( ( $aspect_ratio[1] / $aspect_ratio[0] ) * 100 );
-  } else {
-    return false;
+  $a = explode( ':', $aspect_ratio );
+
+	return ( ( $a[1] / $a[0] ) * 100 );
+}
+
+/**
+ * Calculates
+ *
+ * @since     8.2.0
+ */
+function arve_calculate_height( $width, $aspect_ratio ) {
+
+	$width   = (int) $width;
+  $percent = arve_aspect_ratio_to_percentage( $aspect_ratio );
+
+  if ( $width > 100 && $percent ) {
+    return ( ( $width / 100 ) * $percent );
   }
+
+	return false;
 }

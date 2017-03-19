@@ -213,10 +213,12 @@ function arve_maxwidth_when_aligned( $maxwidth, $align ) {
 	return $maxwidth;
 }
 
-function arve_get_default_aspect_ratio( $aspect_ratio, $provider, $mode ) {
+function arve_get_default_aspect_ratio( $aspect_ratio, $provider ) {
 
-	if ( empty( $aspect_ratio ) && isset( $properties[ $provider ]['aspect_ratio'] ) ) {
-		$aspect_ratio = $properties[ $provider ]['aspect_ratio'];
+	$properties = arve_get_host_properties();
+
+	if ( empty( $aspect_ratio ) ) {
+		return $properties[ $provider ]['aspect_ratio'];
 	}
 
 	return $aspect_ratio;
