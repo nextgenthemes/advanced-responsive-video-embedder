@@ -1,7 +1,7 @@
 
 ## Changelog ##
 
-### 2017-03-19 - 8.2.0 ###
+### 2017-03-20 - 8.2.0 ###
 
 * Fixed: Plugin action links on installed plugin screen
 * Fixed: CSS specificity issues by adding a `id="arve"` to the entire document and based all the CSS on `#arve`. If you have custom styles overwriting ARVE CSS you need to use increase specificity (or use `!important`). This will end a long time battle with themes styles without using bad practices.

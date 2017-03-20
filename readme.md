@@ -200,6 +200,14 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
+### 2017-03-20 - 8.2.0 ###
+
+* Fixed: Plugin action links on installed plugin screen
+* Fixed: CSS specificity issues by adding a `id="arve"` to the entire document and based all the CSS on `#arve`. If you have custom styles overwriting ARVE CSS you need to use increase specificity (or use `!important`). This will end a long time battle with themes styles without using bad practices.
+* Improved: styles and scripts and now served minified unless `WP_DEBUG` is set.
+* Improved: styles are now only loaded (to the bottom) when there is a video on the page.
+* Improved: Settings title is now 'Advanced Responsive Video Embedder Settings' again rather then just ARVE.
+
 ### 2017-03-12 - 8.1.1 ###
 
 * Improved: Added ARVE to menu below plugins so it can be easy found.

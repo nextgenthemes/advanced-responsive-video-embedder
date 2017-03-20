@@ -764,6 +764,7 @@ function arve_get_host_properties() {
 				array( 'url' => 'https://vimeo.com/124400795',        'id' => 124400795 ),
 				array( 'url' => 'https://player.vimeo.com/124400795', 'id' => 124400795 ),
 			),
+			/*
 			'query_argss' => array(
 				'autoplay'  => array( 'bool', __( 'Autoplay', ARVE_SLUG ) ),
 				'badge'     => array( 'bool', __( 'Badge', ARVE_SLUG ) ),
@@ -774,6 +775,7 @@ function arve_get_host_properties() {
 				'portrait'  => array( 0, 1 ),
 				'title'     => array( 0, 1 ),
 			),
+			*/
 		),
 		'vk' => array(
 			'name' => 'VK',
@@ -903,6 +905,7 @@ function arve_get_host_properties() {
 				__( 'The Parameter start only takes values in seconds, this will start the video at 1 minute and 1 second', ARVE_SLUG ),
 				'[youtube id="uCQXKYPiz6M" parameters="start=61"]',
 			),
+			/*
 			'query_args' => array(
 				array(
 				  'attr' => 'autohide',
@@ -1042,6 +1045,7 @@ function arve_get_host_properties() {
 					'name' => __( 'Theme', ARVE_SLUG ),
 				),
 			),
+			*/
 		),
 		'youtubelist' => array(
 			'regex'          => $s . 'youtube\.com/(?:embed/videoseries|playlist)\?list=([-a-z0-9]+)',
