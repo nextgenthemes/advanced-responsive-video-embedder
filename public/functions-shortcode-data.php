@@ -1,5 +1,13 @@
 <?php
 
+function arve_get_default_aspect_ratio( $aspect_ratio, $provider ) {
+	$properties = arve_get_host_properties();
+	if ( empty( $aspect_ratio ) ) {
+		return $properties[ $provider ]['aspect_ratio'];
+	}
+	return $aspect_ratio;
+}
+
 function arve_get_html5_attributes() {
 
 	return array( 'mp4', 'm4v', 'webm', 'ogv' );
@@ -211,17 +219,6 @@ function arve_maxwidth_when_aligned( $maxwidth, $align ) {
 	}
 
 	return $maxwidth;
-}
-
-function arve_get_default_aspect_ratio( $aspect_ratio, $provider ) {
-
-	$properties = arve_get_host_properties();
-
-	if ( empty( $aspect_ratio ) ) {
-		return $properties[ $provider ]['aspect_ratio'];
-	}
-
-	return $aspect_ratio;
 }
 
 function arve_get_language_name_from_code( $lang_code ) {

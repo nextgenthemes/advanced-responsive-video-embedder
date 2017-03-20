@@ -9,15 +9,6 @@ function arve_register_styles() {
   ) );
 }
 
-function arve_print_maxwidth_style() {
-
-  $options = arve_get_options();
-
-  if ( (int) $options["video_maxwidth"] > 0 ) {
-    wp_add_inline_style( ARVE_SLUG, sprintf( '.arve-wrapper{max-width:%dpx;}', $options['video_maxwidth'] ) );
-  }
-}
-
 function arve_register_scripts() {
 
   arve_register_asset( array(

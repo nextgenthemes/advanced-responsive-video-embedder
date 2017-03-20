@@ -31,7 +31,7 @@ function nextgenthemes_ads_page() { ?>
 	}
 	#nextgenthemes-ads {
 		padding: 1.7rem;
-		column-width: 30rem;
+		column-width: 40rem;
 		column-gap: 1.7rem;
 	}
 	@media only screen and (max-device-width: 400px) {
@@ -74,7 +74,7 @@ function nextgenthemes_ads_page() { ?>
 		width: 100%;
 	  background-color: hsl(210, 13%, 13%);
 		border: 1px solid hsl(207, 48%, 30%);
-		transition: box-shadow .3s, background-color .3s;
+		transition: box-shadow .3s, background-color .3s, border-color .3s;
 		color: #eee;
 		font-size: 1.05rem;
 		margin-bottom: 2rem;
@@ -82,7 +82,8 @@ function nextgenthemes_ads_page() { ?>
 	}
 	#nextgenthemes-ads > a:hover {
 		background-color: hsl(210, 13%, 10%);
-		box-shadow: 0 0 10px hsla(207, 48%, 50%, 1);;
+		box-shadow: 0 0 10px hsla(207, 48%, 50%, 1);
+		border-color: hsl(207, 48%, 40%);
 	}
 	#nextgenthemes-ads p {
 		margin-left: 2rem;
@@ -133,14 +134,6 @@ function nextgenthemes_ads_page() { ?>
 		</a>
 	<?php endif; ?>
 
-	<?php if ( ! is_plugin_active( 'regenerate-thumbnails-reminder/regenerate-thumbnails-reminder.php' ) ) : ?>
-	<a href="<?php echo nextgenthemes_admin_install_search_url( 'Regenerate+Thumbnails+Reminder' ); ?>">
-	  <h1>Regenerate Thumbnails Reminder</h1>
-		<p>Get a reminder when you change your thumbnail sizes to regenerate them. Note Thumbnails sizes change automatically if you swtich themes.</p>
-		<span>Free</span>
-	</a>
-	<?php endif; ?>
-
 	<?php if ( ! defined( 'ARVE_AMP_VERSION' ) ) : ?>
 		<a href="https://nextgenthemes.com/plugins/arve-accelerated-mobile-pages-addon/">
 		  <figure><img src="<?php echo $img_dir; ?>arve.svg" alt"ARVE"></figure>
@@ -155,6 +148,14 @@ function nextgenthemes_ads_page() { ?>
 				<li>HTML5 video files are also supported with &lt;amp-video&gt;</li>
 			</ol>
 			<span>Paid</span>
+		</a>
+	<?php endif; ?>
+
+	<?php if ( ! is_plugin_active( 'regenerate-thumbnails-reminder/regenerate-thumbnails-reminder.php' ) ) : ?>
+		<a href="<?php echo nextgenthemes_admin_install_search_url( 'Regenerate+Thumbnails+Reminder' ); ?>">
+		  <h1>Regenerate Thumbnails Reminder</h1>
+			<p>Get a reminder when you change your thumbnail sizes to regenerate them. Note Thumbnails sizes change automatically if you swtich themes.</p>
+			<span>Free</span>
 		</a>
 	<?php endif; ?>
 

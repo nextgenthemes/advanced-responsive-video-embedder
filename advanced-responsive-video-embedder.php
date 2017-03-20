@@ -70,8 +70,6 @@ function arve_init() {
 	add_action( 'plugins_loaded',      'arve_oembed_remove_providers', 998 );
 	add_action( 'wp_enqueue_scripts',  'arve_register_styles', 0 );
 	add_action( 'wp_enqueue_scripts',  'arve_register_scripts', 0 );
-	add_action( 'wp_enqueue_scripts',  'arve_print_maxwidth_style' );
-	add_action( 'wp_head',             'arve_print_styles' );
 	add_action( 'wp_video_shortcode_override', 'arve_wp_video_shortcode_override', 10, 4 );
 	add_filter( 'widget_text',         'do_shortcode' );
 	add_filter( 'language_attributes', 'arve_html_id' );
@@ -79,6 +77,7 @@ function arve_init() {
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_sanitise', -12 );
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_provider_and_id_from_url', -10 );
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_youtube_playlist', -8 );
+	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_get_media_gallery_video', -7 );
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_html5', -6 );
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_iframe_fallback', -4 );
 	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_validate', -2 );

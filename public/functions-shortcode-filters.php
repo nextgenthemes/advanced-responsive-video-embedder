@@ -1,5 +1,30 @@
 <?php
 
+function arve_filter_atts_validate( $atts ) {
+
+  if ( ! empty( $atts['url'] ) && ! arve_validate_url( $atts['url'] ) ) {
+    $atts['url'] = new WP_Error( 'thumbnail', sprintf( __( '<code>%s</code> is not a valid url', ARVE_SLUG ), esc_html( $atts['url'] ) ) );
+  }
+
+  $atts['align']         = arve_validate_align( $atts['align'], $atts['provider'] );
+  $atts['mode']          = arve_validate_mode( $atts['mode'],   $atts['provider'] );
+  $atts['autoplay']      = arve_validate_bool( $atts['autoplay'],  'autoplay' );
+  $atts['arve_link']     = arve_validate_bool( $atts['arve_link'], 'arve_link' );
+  $atts['loop']          = arve_validate_bool( $atts['loop'],      'loop' );
+  $atts['controls']      = arve_validate_bool( $atts['controls'],  'controls' );
+  $atts['disable_flash'] = arve_validate_bool( $atts['disable_flash'], 'disable_flash' );
+
+  $atts['maxwidth']     = (int) $atts['maxwidth'];
+  $atts['maxwidth']     = (int) arve_maxwidth_when_aligned( $atts['maxwidth'], $atts['align'] );
+  $atts['id']           = arve_id_fixes( $atts['id'], $atts['provider'] );
+
+  $atts['aspect_ratio'] = arve_get_default_aspect_ratio( $atts['aspect_ratio'], $atts['provider'] );
+  $atts['aspect_ratio'] = arve_aspect_ratio_fixes( $atts['aspect_ratio'], $atts['provider'], $atts['mode'] );
+  $atts['aspect_ratio'] = arve_validate_aspect_ratio( $atts['aspect_ratio'] );
+
+  return $atts;
+}
+
 function arve_filter_atts_set_fixed_dimensions( $atts ) {
 
   $width = 480;
@@ -52,33 +77,6 @@ function arve_filter_atts_missing_attribute_check( $atts ) {
   return $atts;
 }
 
-function arve_filter_atts_validate( $atts ) {
-
-  if ( ! empty( $atts['url'] ) && ! arve_validate_url( $atts['url'] ) ) {
-    $atts['url'] = new WP_Error( 'thumbnail', sprintf( __( '<code>%s</code> is not a valid url', ARVE_SLUG ), esc_html( $atts['url'] ) ) );
-  }
-
-  $atts['align']         = arve_validate_align( $atts['align'], $atts['provider'] );
-  $atts['mode']          = arve_validate_mode( $atts['mode'],   $atts['provider'] );
-  $atts['autoplay']      = arve_validate_bool( $atts['autoplay'],  'autoplay' );
-  $atts['arve_link']     = arve_validate_bool( $atts['arve_link'], 'arve_link' );
-  $atts['loop']          = arve_validate_bool( $atts['loop'],      'loop' );
-  $atts['controls']      = arve_validate_bool( $atts['controls'],  'controls' );
-  $atts['disable_flash'] = arve_validate_bool( $atts['disable_flash'], 'disable_flash' );
-
-  $atts['maxwidth']     = (int) $atts['maxwidth'];
-  $atts['maxwidth']     = (int) arve_maxwidth_when_aligned( $atts['maxwidth'], $atts['align'] );
-  $atts['id']           = arve_id_fixes( $atts['id'], $atts['provider'] );
-  $atts['aspect_ratio'] = arve_validate_aspect_ratio( $atts['aspect_ratio'] );
-
-  if ( ! is_wp_error( $atts['aspect_ratio'] ) ) {
-    $atts['aspect_ratio'] = arve_get_default_aspect_ratio( $atts['aspect_ratio'], $atts['provider'] );
-    $atts['aspect_ratio'] = arve_aspect_ratio_fixes( $atts['aspect_ratio'], $atts['provider'], $atts['mode'] );
-  }
-
-  return $atts;
-}
-
 function arve_filter_atts_generate_embed_id( $atts ) {
 
 	foreach ( array( 'id', 'mp4', 'm4v', 'webm', 'ogv', 'url', 'webtorrent' ) as $att ) {
@@ -126,6 +124,20 @@ function arve_filter_atts_get_media_gallery_thumbnail( $atts ) {
   } else {
 
     $atts['img_src'] = new WP_Error( 'thumbnail', __( 'Not a valid thumbnail URL or Media ID given', ARVE_SLUG ) );
+  }
+
+  return $atts;
+}
+
+function arve_filter_atts_get_media_gallery_video( $atts ) {
+
+  $html5_ext = arve_get_html5_attributes();
+
+  foreach ( $html5_ext as $ext ) {
+
+    if( ! empty( $atts[ $ext ] ) && is_numeric( $atts[ $ext ] ) ) {
+      $atts[ $ext ] = wp_get_attachment_url( $atts[ $ext ] );
+    }
   }
 
   return $atts;
@@ -236,6 +248,7 @@ function arve_filter_atts_detect_html5( $atts ) {
 	}
 
 	$html5_extensions = arve_get_html5_attributes();
+  $html5_extensions[] = 'url';
 
 	foreach ( $html5_extensions as $ext ) :
 
@@ -298,7 +311,6 @@ function arve_filter_atts_build_iframe_src( $atts ) {
   $atts['iframe_src'] = arve_add_autoplay_query_arg( $atts );
 
   if ( 'vimeo' == $atts['provider'] && ! empty( $atts['start'] ) ) {
-    $atts['iframe_src'] .= '#t=' . (int) $atts['start'];
     $atts['iframe_src'] .= '#t=' . (int) $atts['start'];
   }
 

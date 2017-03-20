@@ -143,8 +143,8 @@ function arve_get_settings_definitions() {
 			'label' => esc_html__( 'Thumbnail', ARVE_SLUG ),
 			'type'  => 'attachment',
 			'libraryType' => array( 'image' ),
-			'addButton'   => esc_html__( 'Select Image', 'shortcode-ui' ),
-			'frameTitle'  => esc_html__( 'Select Image', 'shortcode-ui' ),
+			'addButton'   => esc_html__( 'Select Image', ARVE_SLUG ),
+			'frameTitle'  => esc_html__( 'Select Image', ARVE_SLUG ),
 			'description' => sprintf( esc_html__( 'Preview image for Lazyload modes, always used for SEO. The Pro Addon is able to get them from %s automatically.', ARVE_SLUG ), $auto_thumbs ),
 		),
 		array(
@@ -249,8 +249,12 @@ function arve_get_settings_definitions() {
 		array(
 			'hide_from_settings' => true,
 			'attr'  => 'mp4',
-			'label' => esc_html__('mp4', ARVE_SLUG),
+			'label' => esc_html__('mp4 file', ARVE_SLUG),
 			'type'  => 'url',
+			#'type'  => 'attachment',
+			#'libraryType' => array( 'video' ),
+			#'addButton'   => esc_html__( 'Select .mp4 file', ARVE_SLUG ),
+			#'frameTitle'  => esc_html__( 'Select .mp4 file', ARVE_SLUG ),
 			'meta'  => array(
 				'placeholder' => __( '.mp4 file url for HTML5 video', ARVE_SLUG ),
 			),
@@ -258,8 +262,12 @@ function arve_get_settings_definitions() {
 		array(
 			'hide_from_settings' => true,
 			'attr'  => 'webm',
-			'label' => esc_html__('webm', ARVE_SLUG),
+			'label' => esc_html__('webm file', ARVE_SLUG),
 			'type'  => 'url',
+			#'type'  => 'attachment',
+			#'libraryType' => array( 'video' ),
+			#'addButton'   => esc_html__( 'Select .webm file', ARVE_SLUG ),
+			#'frameTitle'  => esc_html__( 'Select .webm file', ARVE_SLUG ),
 			'meta'  => array(
 				'placeholder' => __( '.webm file url for HTML5 video', ARVE_SLUG ),
 			),
@@ -267,8 +275,12 @@ function arve_get_settings_definitions() {
 		array(
 			'hide_from_settings' => true,
 			'attr'  => 'ogv',
-			'label' => esc_html__('ogv', ARVE_SLUG),
+			'label' => esc_html__('ogv file', ARVE_SLUG),
 			'type'  => 'url',
+			#'type'  => 'attachment',
+			#'libraryType' => array( 'video' ),
+			#'addButton'   => esc_html__( 'Select .ogv file', ARVE_SLUG ),
+			#'frameTitle'  => esc_html__( 'Select .ogv file', ARVE_SLUG ),
 			'meta'  => array(
 				'placeholder' => __( '.ogv file for HTML5 video', ARVE_SLUG ),
 			),

@@ -132,10 +132,10 @@ function arve_arve_embed_container( $html, $atts ) {
 
 	$attr['class'] = 'arve-embed-container';
 
-	if( ! empty( $atts['aspect_ratio'] ) ) {
-		$attr['style'] = sprintf( 'padding-bottom:%F%%', arve_aspect_ratio_to_percentage( $atts['aspect_ratio'] ) );
-	} elseif ( 'html5' == $atts['provider'] ) {
+	if ( 'html5' == $atts['provider'] ) {
 		$attr['style'] = 'height:auto;padding:0';
+	} else {
+		$attr['style'] = sprintf( 'padding-bottom:%F%%', arve_aspect_ratio_to_percentage( $atts['aspect_ratio'] ) );
 	}
 
 	return sprintf( '<div%s>%s</div>', arve_attr( $attr ), $html );
@@ -160,7 +160,7 @@ function arve_arve_wrapper( $output, $atts ) {
 		'data-arve-autoplay'   => ( 'webtorrent' == $atts['provider'] && $atts['autoplay'] ) ? true : false,
 		'data-arve-controls'   => ( 'webtorrent' == $atts['provider'] && $atts['controls'] ) ? true : false,
 		#'data-arve-maxwidth'  => empty( $atts['maxwidth'] ) ? false : sprintf( '%dpx',             $atts['maxwidth'] ),
-		'style'                => empty( $atts['maxwidth'] ) ? false : sprintf( 'max-width: %dpx;', $atts['maxwidth'] ),
+		'style'                => empty( $atts['maxwidth'] ) ? false : sprintf( 'max-width:%dpx;', $atts['maxwidth'] ),
 		// Schema.org
 		'itemscope' => '',
 		'itemtype'  => 'http://schema.org/VideoObject',
@@ -274,17 +274,6 @@ function arve_error( $message ) {
 		__('<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error:', ARVE_SLUG ),
 		$message
 	);
-}
-
-function arve_print_styles() {
-
-  $options = arve_get_options();
-
-  if ( (int) $options["video_maxwidth"] > 0 ) {
-    $css = sprintf( '.arve-wrapper{max-width:%dpx;}', $options['video_maxwidth'] );
-
-    echo '<style type="text/css">' . $css . "</style>\n";
-  }
 }
 
 function arve_output_errors( $atts ) {
