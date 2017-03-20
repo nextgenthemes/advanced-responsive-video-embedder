@@ -98,7 +98,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( 'alignleft', $output );
 		$this->assertContains( 'autoplay=1', $output );
 		$this->assertContains( '<span itemprop="description" class="arve-description arve-hidden">Description Test</span>', $output );
-		$this->assertContains( 'style="max-width: 333px;"', $output );
+		$this->assertContains( 'style="max-width:333px;"', $output );
 		$this->assertContains( '<meta itemprop="name" content="Test &lt;title&gt;">', $output );
 		$this->assertContains( '<meta itemprop="uploadDate" content="2016-10-22">', $output );
 		$this->assertContains( 'src="https://www.youtube-nocookie.com/embed/hRonZ4wP8Ys', $output );
@@ -142,7 +142,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'webm'      => 'https://example.com/video.webm',
 			'poster'    => 'https://example.com/image.jpg',
 		) );
-		
+
 		$this->assertEquals( $output, $output2 );
 
 		$this->assertNotContains( 'Error', $output );
