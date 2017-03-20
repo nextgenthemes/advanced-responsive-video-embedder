@@ -3,7 +3,7 @@
 
 ### 2017-03-20 - 8.2.2 ###
 
-* Moved the ARVE Menu below the Settings menu (where must plugins are), sorry xberg. I got complaints about global menus and I like to keep the global Nextgenthemes menu but 2 global menus is a bit to much. I have given the Nextgenthemes menu a video icon now. I hope this is a good compromise.
+* Moved the ARVE menu below the settings menu (where most plugins are), sorry xberg. I got complaints about global menus and I like to keep the global Nextgenthemes menu but 2 global menus is a bit to much. I have given the Nextgenthemes menu a video icon now. I hope this is a good compromise.
 * Improved: Made the ARVE Pro promotion on the settings menu close-able, hopefully less people get offended.
 
 ### 2017-03-20 - 8.2.0 ###
