@@ -1,6 +1,5 @@
-todo.md
 dist
-tmp
+travis.log
 
 # Copy from bootstrap
 
@@ -45,4 +44,3 @@ validation-status.json
 
 # Folders to ignore
 bower_components
-node_modules

@@ -258,7 +258,7 @@ function nextgenthemes_menus() {
  		'manage_options',                 # capability
  		'nextgenthemes',                  # menu-slug
  		'nextgenthemes_ads_page',         # function
-		'dashicons-admin-settings',       # icon_url
+		'dashicons-video-alt3',           # icon_url
 		'80.892'                          # position
  	);
 

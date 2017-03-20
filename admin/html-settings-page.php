@@ -21,7 +21,7 @@ $ad      = arve_get_pro_ad();
 
 	<?php
 	if ( $ad ) {
-		echo '<div class="updated">' . $ad . '</div>';
+		echo '<div class="notice is-dismissible updated">' . $ad . '</div>';
 	} ?>
 
 	<h2 class="nav-tab-wrapper arve-settings-tabs"></h2>

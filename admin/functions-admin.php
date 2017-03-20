@@ -34,7 +34,7 @@ function arve_get_pro_ad() {
 		return false;
 	}
 
-	$pro_message = __( '<p>This is Nico(las Jonas) the Author of the Advanced Responsive Video Embedder plugin. When you <strong><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/">buy the Pro Addon</a></strong> for this plugin you will get this:</p>', ARVE_SLUG );
+	$pro_message = __( '<p>Hi, this is Nico(las Jonas) the author of the Advanced Responsive Video Embedder plugin. This plugin is my job, if you get easily offended by promotions on your admin please close this fast right now.</p>', ARVE_SLUG );
 
 	$pro_message .= file_get_contents( plugin_dir_path( dirname( __FILE__ ) ) . 'readme/html/20-description-features-pro.md.html' );
 	$pro_message  = str_replace( '<ul ', '<ul style="list-style: square; padding-left: 20px;" ', $pro_message );
@@ -88,6 +88,17 @@ function arve_add_dashboard_widget() {
  */
 function arve_add_plugin_admin_menu() {
 
+	$plugin_screen_hook_suffix = add_options_page(
+		__( 'Advanced Responsive Video Embedder Settings', ARVE_SLUG ),
+		__( 'ARVE', ARVE_SLUG ),
+		'manage_options',
+		ARVE_SLUG,               # menu-slug
+		function() {
+			require_once plugin_dir_path( __FILE__ ) . 'html-settings-page.php';
+		}
+	);
+
+	/*
 	add_menu_page(
  		__( 'Advanced Responsive Video Embedder Settings', ARVE_SLUG ), # Page Title
  		__( 'ARVE', ARVE_SLUG ),    # Menu Tile
@@ -97,16 +108,14 @@ function arve_add_plugin_admin_menu() {
 		'dashicons-video-alt3',               # icon_url
 		'65.892'                              # position
  	);
+	*/
 
 	add_submenu_page(
 		'nextgenthemes',         # parent_slug
 		__( 'Advanced Responsive Video Embedder Settings', ARVE_SLUG ), # Page Title
 		__( 'ARVE', ARVE_SLUG ), # Menu Title
 		'manage_options',        # capability
-		ARVE_SLUG,               # menu-slug
-		function() {
-			require_once plugin_dir_path( __FILE__ ) . 'html-settings-page.php';
-		}
+		ARVE_SLUG                # menu-slug
 	);
 }
 
