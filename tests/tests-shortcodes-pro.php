@@ -217,6 +217,6 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 		$attr['disable_flash'] = 'y';
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
-		$this->assertContains( ' sandbox="allow-scripts allow-same-origin">', arve_shortcode_arve( $attr ) );
+		$this->assertContains( ' sandbox="allow-scripts allow-same-origin"', arve_shortcode_arve( $attr ) );
 	}
 }
