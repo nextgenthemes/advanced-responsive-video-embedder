@@ -102,6 +102,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( '<meta itemprop="name" content="Test &lt;title&gt;">', $output );
 		$this->assertContains( '<meta itemprop="uploadDate" content="2016-10-22">', $output );
 		$this->assertContains( 'src="https://www.youtube-nocookie.com/embed/hRonZ4wP8Ys', $output );
+		$this->assertContains( ' sandbox="allow-scripts allow-same-origin allow-popups">', arve_shortcode_arve( $attr ) );
 	}
 
 	public function test_html5() {

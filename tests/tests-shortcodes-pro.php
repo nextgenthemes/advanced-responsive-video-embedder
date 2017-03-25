@@ -207,14 +207,7 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 		}
 	}
 
-	public function test_sandbox_and_disable_links() {
-
-		$attr = array(
-			'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
-		);
-
-		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
-		$this->assertContains( ' sandbox="allow-scripts allow-same-origin allow-popups">', arve_shortcode_arve( $attr ) );
+	public function test_disable_links() {
 
 		$attr['url'] = 'https://example.com';
 
