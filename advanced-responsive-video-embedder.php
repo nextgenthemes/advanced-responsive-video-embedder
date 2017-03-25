@@ -111,7 +111,7 @@ function arve_init() {
 function arve_php_outdated_message() {
 
 	$msg = sprintf(
-		__( 'ARVE requres at least PHP version 5.3! Your PHP version is %s and has reached End Of Life (insecure and slow). You should ask your host to update it for you not only to make ARVE work but to make your site faster and more secure. I personally recommend PHP 7.0.', ARVE_SLUG ),
+		__( 'ARVE requres at least PHP version 5.3! Your PHP version is %s and has reached End Of Life (insecure and slow). You should ask your host to update it for you not only to make ARVE work but to make your site faster and more secure. Wordpress.org recommends PHP 7.0, I use 7.1 at nextgenthemes.com', ARVE_SLUG ),
 		PHP_VERSION
 	);
 

@@ -209,12 +209,26 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 
 	public function test_disable_links() {
 
-		$attr['url'] = 'https://example.com';
+		$attr  = array(
+			'url'       => 'https://www.example.com'
+		 );
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
 		$this->assertNotContains( ' sandbox="', arve_shortcode_arve( $attr ) );
 
-		$attr['disable_flash'] = 'y';
+		$attr  = array(
+			'url'           => 'https://www.example.com',
+			'disable_flash' => 'y'
+		 );
+
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+		$this->assertContains( ' sandbox="allow-scripts allow-same-origin allow-popups"', arve_shortcode_arve( $attr ) );
+
+		$attr = array(
+			'url'           => 'https://www.example.com',
+			'disable_flash' => 'y',
+			'disable_links' => 'y'
+		 );
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
 		$this->assertContains( ' sandbox="allow-scripts allow-same-origin"', arve_shortcode_arve( $attr ) );
