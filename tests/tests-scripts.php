@@ -14,7 +14,6 @@ class Tests_Scripts_And_Styles extends WP_UnitTestCase {
 
 		$this->assertNotFalse( has_action( 'wp_enqueue_scripts', 'arve_register_scripts' ) );
 		$this->assertNotFalse( has_action( 'wp_enqueue_scripts', 'arve_register_styles' ) );
-
 	}
 
 	public function test_registered() {
@@ -25,17 +24,11 @@ class Tests_Scripts_And_Styles extends WP_UnitTestCase {
 	public function arve_test_registered() {
 
 		$wp_styles  = wp_styles();
+
+		$this->assertStringEndsWith( 'wp-content/plugins/advanced-responsive-video-embedder/public/arve.min.css', $wp_styles->registered['advanced-responsive-video-embedder']->src );
+
 		$wp_scripts = wp_scripts();
 
-		$this->assertStringEndsWith(
-			'wp-content/plugins/advanced-responsive-video-embedder/public/arve.min.css',
-			$wp_styles->registered['advanced-responsive-video-embedder']->src
-		);
-
-		$this->assertStringEndsWith(
-			'wp-content/plugins/advanced-responsive-video-embedder/public/arve.min.js',
-			$wp_scripts->registered['advanced-responsive-video-embedder']->src
-		);
-
+		$this->assertStringEndsWith( 'wp-content/plugins/advanced-responsive-video-embedder/public/arve.min.js', $wp_scripts->registered['advanced-responsive-video-embedder']->src );
 	}
 }
