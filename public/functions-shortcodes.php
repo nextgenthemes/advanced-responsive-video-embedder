@@ -18,10 +18,10 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
     'maxwidth'      => (string) $options['video_maxwidth'],
     'mode'          => $options['mode'],
     'parameters'    => null,
+    'src'           => null, # Just a alias for url to make it simple
     'thumbnail'     => null,
     'title'         => null,
     'upload_date'   => null,
-    'src'           => null, # Just a alias for url to make it simple
     # <video>
     'm4v'      => null,
     'mp4'      => null,
