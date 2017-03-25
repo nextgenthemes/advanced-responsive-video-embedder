@@ -22,7 +22,7 @@ function arve_action_admin_init_setup_messages() {
 }
 
 function arve_add_tinymce_plugin( $plugin_array ) {
-	$plugin_array['arve'] = plugin_dir_url( __FILE__ ) . 'tinymce.js';
+	$plugin_array['arve'] = ARVE_ADMIN_URL . 'tinymce.js';
 	return $plugin_array;
 }
 
@@ -629,17 +629,17 @@ function arve_validate_options_shortcodes( $input ) {
 
 
 function arve_admin_enqueue_styles() {
-	wp_enqueue_style( ARVE_SLUG, plugin_dir_url( __FILE__ ) . 'arve-admin.css', array(), ARVE_VERSION, 'all' );
+	wp_enqueue_style( ARVE_SLUG, ARVE_ADMIN_URL . 'arve-admin.css', array(), ARVE_VERSION, 'all' );
 }
 
 function arve_mce_css( $mce_css ) {
 
-	$min = ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? '' : '.min';
+	$min = arve_get_min_suffix();
 
 	if ( ! empty( $mce_css ) ) {
 		$mce_css .= ',';
 	}
-	$mce_css .= plugin_dir_url( __DIR__ ) . "public/arve{$min}.css";
+	$mce_css .= ARVE_PUBLIC_URL . "arve{$min}.css";
 
 	return $mce_css;
 }
@@ -651,9 +651,9 @@ function arve_mce_css( $mce_css ) {
  */
 function arve_admin_enqueue_scripts() {
 
-	wp_enqueue_script( ARVE_SLUG, plugin_dir_url( __FILE__ ) . 'arve-admin.js', array( 'jquery' ), ARVE_VERSION, true );
+	wp_enqueue_script( ARVE_SLUG, ARVE_ADMIN_URL . 'arve-admin.js', array( 'jquery' ), ARVE_VERSION, true );
 
 	if ( is_plugin_active( 'shortcode-ui/shortcode-ui.php' ) ) {
-		wp_enqueue_script( ARVE_SLUG . '-sc-ui', plugin_dir_url( __FILE__ ) . 'arve-shortcode-ui.js', array( 'shortcode-ui' ), ARVE_VERSION, true );
+		wp_enqueue_script( ARVE_SLUG . '-sc-ui', ARVE_ADMIN_URL . 'arve-shortcode-ui.js', array( 'shortcode-ui' ), ARVE_VERSION, true );
 	}
 }

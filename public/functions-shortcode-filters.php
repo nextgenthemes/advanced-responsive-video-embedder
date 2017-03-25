@@ -6,17 +6,23 @@ function arve_filter_atts_validate( $atts ) {
     $atts['url'] = new WP_Error( 'thumbnail', sprintf( __( '<code>%s</code> is not a valid url', ARVE_SLUG ), esc_html( $atts['url'] ) ) );
   }
 
-  $atts['align']         = arve_validate_align( $atts['align'], $atts['provider'] );
-  $atts['mode']          = arve_validate_mode( $atts['mode'],   $atts['provider'] );
+  $atts['align'] = arve_validate_align( $atts['align'], $atts['provider'] );
+
+  $atts['mode'] = arve_validate_mode( $atts['mode'], $atts['provider'] );
+
   $atts['autoplay']      = arve_validate_bool( $atts['autoplay'],  'autoplay' );
   $atts['arve_link']     = arve_validate_bool( $atts['arve_link'], 'arve_link' );
   $atts['loop']          = arve_validate_bool( $atts['loop'],      'loop' );
   $atts['controls']      = arve_validate_bool( $atts['controls'],  'controls' );
-  $atts['disable_flash'] = arve_validate_bool( $atts['disable_flash'], 'disable_flash' );
 
-  $atts['maxwidth']     = (int) $atts['maxwidth'];
-  $atts['maxwidth']     = (int) arve_maxwidth_when_aligned( $atts['maxwidth'], $atts['align'] );
-  $atts['id']           = arve_id_fixes( $atts['id'], $atts['provider'] );
+  if ( null !== $atts['disable_flash'] ) {
+    $atts['disable_flash'] = arve_validate_bool( $atts['disable_flash'], 'disable_flash' );
+  }
+
+  $atts['maxwidth']  = (int) $atts['maxwidth'];
+  $atts['maxwidth']  = (int) arve_maxwidth_when_aligned( $atts['maxwidth'], $atts['align'] );
+
+  $atts['id'] = arve_id_fixes( $atts['id'], $atts['provider'] );
 
   $atts['aspect_ratio'] = arve_get_default_aspect_ratio( $atts['aspect_ratio'], $atts['provider'] );
   $atts['aspect_ratio'] = arve_aspect_ratio_fixes( $atts['aspect_ratio'], $atts['provider'], $atts['mode'] );

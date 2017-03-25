@@ -218,7 +218,7 @@ function arve_create_iframe_tag( $atts ) {
 	);
 
 	if ( null === $atts['disable_flash'] ) {
-		$atts['disable_flash'] = ! empty( $properties[ $atts['provider'] ]['requires_flash'] ) ? true : false;
+		$atts['disable_flash'] = (bool) $properties[ $atts['provider'] ]['requires_flash'] ? false : true;
 	}
 
 	if ( $atts['disable_flash'] ) {

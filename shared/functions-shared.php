@@ -1088,6 +1088,10 @@ function arve_get_host_properties() {
 		if( empty( $value['aspect_ratio'] ) ) {
 			$properties[ $key ]['aspect_ratio'] = '16:9';
 		}
+		if( empty( $value['requires_flash'] ) ) {
+			$properties[ $key ]['requires_flash'] = false;
+		}
+
 	}
 
 	return $properties;
@@ -1164,4 +1168,8 @@ function arve_register_asset( $args ) {
 	} else {
 		wp_register_script( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['in_footer'] );
 	}
+}
+
+function arve_get_min_suffix() {
+	return ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? '' : '.min';
 }

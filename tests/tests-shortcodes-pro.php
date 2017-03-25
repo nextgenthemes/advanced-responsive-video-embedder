@@ -206,4 +206,24 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 			$this->assertContains( sprintf( 'data-arve-mode="%s"', $mode ), arve_shortcode_arve( $attr ), "mode: $mode" );
 		}
 	}
+
+	public function test_sandbox_and_disable_links() {
+
+		$attr = array(
+			'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
+		);
+
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+		$this->assertContains( ' sandbox="allow-scripts allow-same-origin allow-popups">', arve_shortcode_arve( $attr ) );
+
+		$attr['url'] = 'https://example.com';
+
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+		$this->assertNotContains( ' sandbox="', arve_shortcode_arve( $attr ) );
+
+		$attr['disable_flash'] = 'y';
+
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+		$this->assertContains( ' sandbox="allow-scripts allow-same-origin">', arve_shortcode_arve( $attr ) );
+	}
 }

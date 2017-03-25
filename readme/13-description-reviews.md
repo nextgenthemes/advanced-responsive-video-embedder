@@ -2,8 +2,7 @@
 ### Reviews ###
 
 > #### &#9733; &#9733; &#9733; &#9733; &#9733; Finally something that works ####
-So I have a responsive theme but on pages with you tube videos it wasn't making the you tube videos fit in the mobile screen. I have spent the last hour trying many plugins and researching on google and finally I installed this. And I didn't have to update any settings or anything just refreshed a post with videos and all the sudden it is beautiful and responsive on my mobile phone!!!!!! THANK YOU!!!! [review by happyecho](https://wordpress.org/support/view/plugin-reviews/advanced-responsive-video-embedder?filter=5)
-
+So I have a responsive theme but on pages with you tube videos it wasn't making the you tube videos fit in the mobile screen. I have spent the last hour trying many plugins and researching on google and finally I installed this. And I didn't have to update any settings or anything just refreshed a post with videos and all the sudden it is beautiful and responsive on my mobile phone!!!!!! THANK YOU!!!! [review by happyecho](https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/?filter=5)
 
 > #### &#9733; &#9733; &#9733; &#9733; &#9733; Only Plug-in that worked ####
-I used a lot of high ranking plug-ins but they still broke my design. Downloaded this and worked right away. Thanks! [review by crconnell89](https://wordpress.org/support/view/plugin-reviews/advanced-responsive-video-embedder?filter=5)
+I used a lot of high ranking plug-ins but they still broke my design. Downloaded this and worked right away. Thanks! [review by crconnell89](https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/?filter=5)

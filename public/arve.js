@@ -9,16 +9,20 @@
 
 	remove_unwanted_stuff();
 
-	$( document ).ready(function() {
+	$( document ).ready( function() {
 
 	  remove_unwanted_stuff();
 
 		if ( $( 'html[id="arve"]' ).length <= 0 ) {
+
 			if ( $( 'body[id]' ).length ) {
 				$( 'body' ).wrapInner( '<div id="arve">' );
 			} else {
 				$( 'body' ).attr( 'id', 'arve' );
 			}
+
 		}
+
 	} );
+
 }(jQuery));

@@ -2,19 +2,21 @@
 
 function arve_register_styles() {
 
+  $min = arve_get_min_suffix();
+
   arve_register_asset( array(
-    'automin' => true,
     'handle'  => ARVE_SLUG,
-    'src'     => plugin_dir_url( __FILE__ ) . 'arve.css'
+    'src'     => ARVE_PUBLIC_URL .  "arve$min.css",
   ) );
 }
 
 function arve_register_scripts() {
 
+  $min = arve_get_min_suffix();
+
   arve_register_asset( array(
-    'automin' => true,
     'handle'  => ARVE_SLUG,
-    'src'     => plugin_dir_url( __FILE__ ) . 'arve.js',
-    'deps'    => array( 'jquery' )
+    'src'     => ARVE_PUBLIC_URL . "arve$min.js",
+    'deps'    => array( 'jquery' ),
   ) );
 }
