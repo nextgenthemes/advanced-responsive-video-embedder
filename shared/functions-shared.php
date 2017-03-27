@@ -854,7 +854,7 @@ function arve_get_host_properties() {
 		'youtube' => array(
 			'name'           => 'YouTube',
 			'regex'          => $s . '(?:youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v\=))|youtu\.be\/)([a-zA-Z0-9_-]{6,11}((?:\?|&)list=[a-z0-9_\-]+)?)',
-			'embed_url'      => 'https://www.youtube-nocookie.com/embed/%s',
+			'embed_url'      => 'https://www.youtube.com/embed/%s',
 			'default_params' => 'iv_load_policy=3&modestbranding=1&rel=0&autohide=1&playsinline=1',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
