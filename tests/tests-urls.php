@@ -25,6 +25,6 @@ class Tests_URLs extends WP_UnitTestCase {
 		$this->assertContains( 'autoplay=1', $output );
 		$this->assertContains( 'style="max-width:333px;"', $output );
 		$this->assertContains( '<meta itemprop="name" content="title">', $output );
-		$this->assertContains( 'src="https://www.youtube-nocookie.com/embed/2an6-WVPuJU', $output );
+		$this->assertContains( 'src="https://www.youtube.com/embed/2an6-WVPuJU', $output );
   }
 }
