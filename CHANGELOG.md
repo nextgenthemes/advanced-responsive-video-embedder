@@ -1,10 +1,13 @@
-
 ## Changelog ##
 
-### 2017-04-04 - 8.2.5 ###
+* [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
+* [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### 2017-04-05 - 8.2.5 ###
 
 * Fix: Some Brightcove URLs were not correctly detected.
-* Improved: How aspect ratio is handled for HTML 5 video.
+* Improved: Some texts, new link to the settings page below parameter field.
+* Improved: How aspect ratio is handled for HTML 5 video. If not set (default) the browser will detect it based on the video file that is embedded.
 * Improved: Gives the aligned videos a top margin of 0.4em to try to align them better with text.
 * Improved: The 'by ARVE' promotion links do now open in a new tab/window.
 

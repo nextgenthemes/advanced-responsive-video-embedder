@@ -24,14 +24,14 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
     'title'         => null,
     'upload_date'   => null,
     # <video>
-    'm4v'      => null,
-    'mp4'      => null,
-    'ogv'      => null,
-    'webm'     => null,
-    'preload'  => 'metadata',
+    'm4v'         => null,
+    'mp4'         => null,
+    'ogv'         => null,
+    'webm'        => null,
+    'preload'     => 'metadata',
     'playsinline' => null,
-    'controls' => 'y',
-    'loop'     => 'n',
+    'controls'    => 'y',
+    'loop'        => 'n',
     # TED only
     'lang'     => null,
     # Vimeo only

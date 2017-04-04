@@ -33,8 +33,7 @@ function arve_filter_atts_validate( $atts ) {
 
 function arve_filter_atts_set_fixed_dimensions( $atts ) {
 
-  $width = 480;
-  
+  	$width = 480;
 
 	$atts['width']  = $width;
 	$atts['height'] = arve_calculate_height( $width, $atts['aspect_ratio'] );
@@ -158,25 +157,20 @@ function arve_filter_atts_detect_provider_and_id_from_url( $atts ) {
 		return $atts;
 	}
 
-	foreach ( $properties as $provider => $values ) :
+	foreach ( $properties as $host_id => $host ) :
 
-		if ( empty( $values['regex'] ) ) {
+		if ( empty( $host['regex'] ) ) {
 			continue;
 		}
 
-		preg_match( '#' . $values['regex'] . '#i', $atts['url'], $matches );
+		preg_match( '#' . $host['regex'] . '#i', $atts['url'], $matches );
 
-		if ( ! empty( $matches[1] ) ) {
+		foreach ( $matches as $key => $value ) {
 
-			$atts['id']       = $matches[1];
-			$atts['provider'] = $provider;
-
-      if ( ! empty( $matches['id'] ) && ! empty( $matches['account_id'] ) ) {
-        $atts['id']         = $matches['id'];
-        $atts['account_id'] = $matches['account_id'];
-      }
-
-			return $atts;
+			if ( is_string( $key ) ) {
+				$atts[ 'provider' ] = $host_id;
+				$atts[ $key ]       = $matches[ $key ];
+			}
 		}
 
 	endforeach;
@@ -219,47 +213,47 @@ function arve_filter_atts_detect_query_args( $atts ) {
 
 function arve_filter_atts_detect_youtube_playlist( $atts ) {
 
-  if(
-    'youtube' != $atts['provider'] ||
-    ( empty( $atts['url'] ) && empty( $atts['id'] ) )
-  ) {
-    return $atts;
-  }
+	if(
+		'youtube' != $atts['provider'] ||
+		( empty( $atts['url'] ) && empty( $atts['id'] ) )
+	) {
+		return $atts;
+	}
 
-  if( empty( $atts['url'] ) ) {
-    # Not a url but it will work
-    $url = str_replace( array( '&list=', '&amp;list=' ), '?list=', $atts['id'] );
-  } else {
-    $url = $atts['url'];
-  }
+	if( empty($atts['url']) ) {
+		# Not a url but it will work
+		$url = str_replace( array( '&list=', '&amp;list=' ), '?list=', $atts['id'] );
+	} else {
+		$url = $atts['url'];
+	}
 
-  $query_array = arve_url_query_array( $url );
+	$query_array = arve_url_query_array( $url );
 
-  if( empty( $query_array['list'] ) ) {
-    return $atts;
-  }
+	if( empty( $query_array['list'] ) ) {
+		return $atts;
+	}
 
-  $atts['id'] = strtok( $atts['id'], '?' );
-  $atts['id'] = strtok( $atts['id'], '&' );
+	$atts['id'] = strtok( $atts['id'], '?' );
+	$atts['id'] = strtok( $atts['id'], '&' );
 
-  $atts['youtube_playlist_id'] = $query_array['list'];
-  $atts['parameters']         .= 'list=' . $query_array['list'];
+	$atts['youtube_playlist_id'] = $query_array['list'];
+	$atts['parameters']         .= 'list=' . $query_array['list'];
 
-  return $atts;
+	return $atts;
 }
 
 function arve_filter_atts_detect_html5( $atts ) {
 
-  if( ! empty( $atts['provider'] ) && 'html5' != $atts['provider'] ) {
-    return $atts;
+	if( ! empty( $atts['provider'] ) && 'html5' != $atts['provider'] ) {
+		return $atts;
 	}
 
 	$html5_extensions = arve_get_html5_attributes();
-  $html5_extensions[] = 'url';
+	$html5_extensions[] = 'url';
 
 	foreach ( $html5_extensions as $ext ) :
 
-		if ( ! empty( $atts[ $ext ] ) && $type = arve_check_filetype( $atts[ $ext ], $ext ) ) {
+		if ( ! empty( $atts[ $ext ] ) && $type = arve_check_filetype( $atts[ $ext ], $ext) ) {
 			$atts['video_sources'][ $type ] = $atts[ $ext ];
 		}
 
@@ -277,13 +271,13 @@ function arve_filter_atts_detect_html5( $atts ) {
 	endforeach;
 
 	if( empty( $atts['video_src'] ) && empty( $atts['video_sources'] ) ) {
-    return $atts;
+    	return $atts;
 	}
 
-  $atts['provider'] = 'html5';
-  $atts['video_sources_html'] = '';
+	$atts['provider'] = 'html5';
+	$atts['video_sources_html'] = '';
 
-  if ( isset( $atts['video_sources'] ) ) {
+	if ( isset( $atts['video_sources'] ) ) {
 
 		foreach ( $atts['video_sources'] as $key => $value ) {
 			$atts['video_sources_html'] .= sprintf( '<source type="%s" src="%s">', $key, $value );

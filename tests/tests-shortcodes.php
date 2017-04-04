@@ -169,33 +169,85 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$properties = arve_get_host_properties();
 
-		foreach( $properties as $provider => $props ) :
+		$this->assertTrue( is_array( $properties ) );
+		$this->assertNotEmpty( $properties );
 
-	    if ( empty( $props['regex'] ) || empty( $props['tests'] ) ) {
-	      continue;
-	    }
+		foreach( $properties as $host_id => $host ) :
 
-	    foreach( $props['tests'] as $test ) {
+			$this->assertNotEmpty( $host, $host_id );
+			$this->assertTrue( is_array( $host ), $host_id );
 
-				$this->assertTrue( is_array( $test ), $provider );
-				$this->assertArrayHasKey( 'id',  $test, $provider );
-				$this->assertArrayHasKey( 'url', $test, $provider );
+		    if ( empty( $host['regex'] ) ) {
+				continue;
+		    }
 
-	      preg_match( '#' . $props['regex'] . '#i', $test['url'], $matches );
+			$this->assertArrayHasKey( 'tests', $host, $host_id );
+			$this->assertNotEmpty( $host['tests'], $host_id );
+			$this->assertTrue( is_array( $host['tests'] ), $host_id );
 
-				if ( 'brightcove' == $provider ) {
-					$this->assertArrayHasKey( 'account_id', $matches, $provider );
-					$this->assertArrayHasKey( 'id',         $matches, $provider );
-					$this->assertEquals( $matches['account_id'], $test['account_id'], $provider );
-					$this->assertEquals( $matches['id'],         $test['id'],         $provider );
-				} else {
-					$this->assertArrayHasKey( 1, $matches, $provider );
-					$this->assertEquals( $matches[1], $test['id'], $provider );
+		    foreach( $host['tests'] as $test ) {
+
+				$this->assertNotEmpty( $test, $host_id );
+				$this->assertTrue( is_array( $test ), $host_id );
+				$this->assertArrayHasKey( 'id',  $test, $host_id );
+				$this->assertArrayHasKey( 'url', $test, $host_id );
+
+				preg_match( '#' . $host['regex'] . '#i', $test['url'], $matches );
+
+				// fwrite( STDERR, 'Regex' . PHP_EOL );
+				// fwrite( STDERR, print_r( $host['regex'], true ) );
+				// fwrite( STDERR, PHP_EOL );
+				// fwrite( STDERR, 'URL from test' . PHP_EOL );
+				// fwrite( STDERR, print_r( $test['url'], true ) );
+				// fwrite( STDERR, PHP_EOL );
+				// fwrite( STDERR, 'Matches' . PHP_EOL );
+				// fwrite( STDERR, print_r( $matches, true ) );
+				// fwrite( STDERR, PHP_EOL );
+
+				$this->assertNotEmpty( $matches,         $test['url'] );
+				$this->assertTrue( is_array( $matches ), $test['url'] );
+				$this->assertArrayHasKey( 'id', $test,   $test['url'] );
+				$this->assertEquals( $matches['id'], $test['id'], $test['url'] );
+
+				if ( 'brightcove' == $host_id ) {
+					$this->assertEquals( $matches['brightcove_account'], $test['brightcove_account'] );
+					$this->assertEquals( $matches['brightcove_player'],  $test['brightcove_player'] );
+					$this->assertEquals( $matches['brightcove_embed'],   $test['brightcove_embed'] );
 				}
-	    }
+	    	}
 
-	  endforeach;
+		endforeach;
 	}
+
+	public function regex2() {
+
+		add_filter( 'shortcode_atts_arve', array( $this, 'check_regex_detection' ) );
+
+		$properties = arve_get_host_properties();
+
+		foreach( $properties as $host_id => $host ) :
+
+		    if ( empty( $host['regex'] ) ) {
+				continue;
+		    }
+
+		    foreach( $host['tests'] as $test ) {
+
+				$this->$current_test;
+
+				shortcode_arve( array(
+					'url' => $test['url']
+				) );
+	    	}
+
+		endforeach;
+	}
+
+	function check_regex_detection( $atts ) {
+
+		$this->assertEquals( $atts['id'] );
+	}
+
 
 	public function test_disable_flash() {
 

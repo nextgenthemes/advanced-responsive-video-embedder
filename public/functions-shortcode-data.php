@@ -51,7 +51,6 @@ function arve_build_iframe_src( $atts ) {
 	} elseif ( 'ted' == $provider && preg_match( "/^[a-z]{2}$/", $lang ) === 1 ) {
 
 		$pattern = 'https://embed-ssl.ted.com/talks/lang/' . $lang . '/%s.html';
-
 	}
 
 	if ( isset( $properties[ $provider ]['url_encode_id'] ) && $properties[ $provider ]['url_encode_id'] ) {
@@ -76,7 +75,7 @@ function arve_build_iframe_src( $atts ) {
 	#d($pattern);
 
 	if ( 'brightcove' == $provider ) {
-		$src = sprintf( $pattern, $atts['account_id'], $id );
+		$src = sprintf( $pattern, $atts['brightcove_account'], $atts['brightcove_player'], $atts['brightcove_embed'], $id );
 	} else {
 		$src = sprintf( $pattern, $id );
 	}
