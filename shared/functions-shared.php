@@ -282,7 +282,7 @@ function arve_get_settings_definitions() {
 			#'addButton'   => esc_html__( 'Select .ogv file', ARVE_SLUG ),
 			#'frameTitle'  => esc_html__( 'Select .ogv file', ARVE_SLUG ),
 			'meta'  => array(
-				'placeholder' => __( '.ogv file for HTML5 video', ARVE_SLUG ),
+				'placeholder' => __( '.ogv file url for HTML5 video', ARVE_SLUG ),
 			),
 		),
 	);
@@ -377,14 +377,23 @@ function arve_get_host_properties() {
 			)
 		),
 		'brightcove'   => array(
-			'regex'          => 'https?://(?:players|link)\.brightcove\.net/(?<account_id>[0-9]+)[.?/a-z_]+videoId=(?<id>[0-9]+)',
+			'regex'          => 'https?://(?:players|link)\.brightcove\.net/(?<account_id>[0-9]+)/(?<player>[a-z0-9]+)_(?<embed>[a-z0-9]+)/index\.html\?videoId=(?<id>[0-9]+)',
 			'embed_url'      => 'https://players.brightcove.net/%s/default_default/index.html?videoId=%s',
 			'requires_src'   => true,
 			'tests' => array(
 				array(
 					'url' => 'http://players.brightcove.net/1160438696001/default_default/index.html?videoId=4587535845001',
-					'id'  =>                                                                                 4587535845001,
 					'account_id' =>                         1160438696001,
+					'player'     =>                                      'default',
+					'embed'      =>                                              'default',
+					'id'  =>                                                                                 4587535845001,
+				),
+				array(
+					'url' => 'http://players.brightcove.net/5107476400001/B1xUkhW8i_default/index.html?videoId=5371391223001',
+					'id'  =>                                                                                   5371391223001,
+					'player'     =>                                      'B1xUkhW8i',
+					'embed'      =>                                                'default',
+					'account_id' =>                         5107476400001,
 				),
 			),
 		),
@@ -1064,7 +1073,8 @@ function arve_get_host_properties() {
 			)
 		),
 		'html5' => array(
-			'name' => 'HTML5 video files directly',
+			'name'         => 'HTML5 video files directly',
+			'aspect_ratio' => false,
 		),
 		'iframe' => array(
 			'embed_url'         => '%s',
@@ -1085,7 +1095,7 @@ function arve_get_host_properties() {
 		if( empty( $value['name'] ) ) {
 			$properties[ $key ]['name'] = ucfirst( $key );
 		}
-		if( empty( $value['aspect_ratio'] ) ) {
+		if( ! isset( $value['aspect_ratio'] ) ) {
 			$properties[ $key ]['aspect_ratio'] = '16:9';
 		}
 		if( empty( $value['requires_flash'] ) ) {

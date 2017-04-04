@@ -130,8 +130,9 @@ function arve_aspect_ratio_to_percentage( $aspect_ratio ) {
  */
 function arve_calculate_height( $width, $aspect_ratio ) {
 
-	$width   = (int) $width;
-  $percent = arve_aspect_ratio_to_percentage( $aspect_ratio );
+	$width        = (int) $width;
+	$aspect_ratio = empty( $aspect_ratio ) ? '16:9' : $aspect_ratio;
+  $percent      = arve_aspect_ratio_to_percentage( $aspect_ratio );
 
   if ( $width > 100 && $percent ) {
     return ( ( $width / 100 ) * $percent );

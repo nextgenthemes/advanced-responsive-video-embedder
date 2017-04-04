@@ -2,7 +2,7 @@
 
 function arve_html_id( $html_attr ) {
 
-	if( false === strpos( $html_attr, 'id=' ) ) {
+	if( arve_contains( $html_attr, 'id=' ) ) {
 		$html_attr .= ' id="arve"';
 	}
 
@@ -118,9 +118,9 @@ function arve_build_promote_link_html( $arve_link ) {
 
 	if ( $arve_link ) {
 		return sprintf(
-			'<a href="%s" title="%s" class="arve-promote-link">%s</a>',
+			'<a href="%s" title="%s" class="arve-promote-link" target="_blank">%s</a>',
 			esc_url( 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/' ),
-			esc_attr( __('Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', ARVE_SLUG) ),
+			esc_attr( __( 'Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', ARVE_SLUG) ),
 			esc_html__( 'ARVE', ARVE_SLUG )
 		);
 	}
@@ -132,7 +132,7 @@ function arve_arve_embed_container( $html, $atts ) {
 
 	$attr['class'] = 'arve-embed-container';
 
-	if ( 'html5' == $atts['provider'] ) {
+	if ( false === $atts['aspect_ratio'] ) {
 		$attr['style'] = 'height:auto;padding:0';
 	} else {
 		$attr['style'] = sprintf( 'padding-bottom:%F%%', arve_aspect_ratio_to_percentage( $atts['aspect_ratio'] ) );

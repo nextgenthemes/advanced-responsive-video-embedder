@@ -12,7 +12,7 @@
 *   One single button for all providers (for most providers not required because of URL embeds, but allows to create custom shortcodes with advanced features within seconds)
 *   Responsive embeds with CSS, much better then with Javascript
 *   Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disabled related videos at the end … to help keep people on your site rather then going to YouTube or keep watching videos.
-*   Clean shortcode syntax `[arve url="https://youtu.be/yUCFRL43Zm4"]`, no unnecessary shortcode wrapping.
+*   Clean shortcode syntax `[arve url="https://youtu.be/yUCFRL43Zm4" /]`, no unnecessary shortcode wrapping.
 *   Autostart (for providers that support it, mobile browsers prevent this)
 *   Custom URL parameters to use all options providers offer
 *   Optional maximal width

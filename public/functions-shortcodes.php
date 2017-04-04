@@ -6,6 +6,7 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
   $options    = arve_get_options();
   $properties = arve_get_host_properties();
   $input_atts = (array) $input_atts;
+  $f_atts = $input_atts;
 
   $pairs = array(
     'align'         => $options['align'],
@@ -28,6 +29,7 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
     'ogv'      => null,
     'webm'     => null,
     'preload'  => 'metadata',
+    'playsinline' => null,
     'controls' => 'y',
     'loop'     => 'n',
     # TED only
@@ -83,8 +85,16 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 
   wp_enqueue_style( ARVE_SLUG );
   wp_enqueue_script( ARVE_SLUG );
+
   return $html['debug_info'] . $output;
 }
+
+
+
+
+
+
+
 
 /**
  * Create all shortcodes at a late stage because people over and over again using this plugin toghter with jetback or

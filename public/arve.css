@@ -14,11 +14,13 @@
 
 #arve .arve-wrapper.alignright,
 #tinymce .arve-wrapper.alignright {
+	margin-top: .4em;
 	margin-left: 1.5em;
 }
 
 #arve .arve-wrapper.alignleft,
 #tinymce .arve-wrapper.alignleft {
+	margin-top: .4em;
 	margin-right: 1.5em;
 }
 

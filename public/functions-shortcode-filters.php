@@ -34,6 +34,7 @@ function arve_filter_atts_validate( $atts ) {
 function arve_filter_atts_set_fixed_dimensions( $atts ) {
 
   $width = 480;
+  
 
 	$atts['width']  = $width;
 	$atts['height'] = arve_calculate_height( $width, $atts['aspect_ratio'] );

@@ -1,6 +1,13 @@
 
 ## Changelog ##
 
+### 2017-04-04 - 8.2.5 ###
+
+* Fix: Some Brightcove URLs were not correctly detected.
+* Improved: How aspect ratio is handled for HTML 5 video.
+* Improved: Gives the aligned videos a top margin of 0.4em to try to align them better with text.
+* Improved: The 'by ARVE' promotion links do now open in a new tab/window.
+
 ### 2017-03-27 - 8.2.4 ###
 
 * Fixed: YouTube cards generate a youtube-nocookie.com url to a channel when the -nocookie.url is used to embedding. tltr; This is actually a YouTube bug but this is fixed in ARVE now by using the normal YouTube url for embeds. I like the additional 'privacy' it provides by not setting cookies as long as the user not plays a video. But considering this is not the first time YouTube has bugs related to this feature, I switched this back and forth in the past, I am considering just not using it anymore.

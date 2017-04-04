@@ -39,7 +39,6 @@ function arve_bool_to_shortcode_string( $val ) {
   return (string) $val;
 }
 
-
 function arve_validate_bool( $val, $name ) {
 
   switch ( $val ) {
@@ -48,24 +47,24 @@ function arve_validate_bool( $val, $name ) {
     case 'y':
     case 'yes':
     case 'on':
-      $val = true;
+      return true;
       break;
     case null;
+      return null;
+      break;
     case 'false':
     case '0':
     case 'n':
     case 'no':
     case 'off':
-      $val = false;
+      return false;
       break;
     default:
-      $val = new WP_Error( $name,
+      return new WP_Error( $name,
         sprintf( __( '%s <code>%s</code> not valid', ARVE_SLUG ), $name, $val )
       );
       break;
   }
-
-  return $val;
 }
 
 function arve_validate_align( $align ) {
