@@ -6,6 +6,7 @@
 ### 2017-04-05 - 8.2.5 ###
 
 * Fix: Some Brightcove URLs were not correctly detected.
+* Improved: Automated tests.
 * Improved: Some texts, new link to the settings page below parameter field.
 * Improved: How aspect ratio is handled for HTML 5 video. If not set (default) the browser will detect it based on the video file that is embedded.
 * Improved: Gives the aligned videos a top margin of 0.4em to try to align them better with text.
