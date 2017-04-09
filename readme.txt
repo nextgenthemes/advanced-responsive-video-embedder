@@ -30,12 +30,12 @@ Make sure to check out the [official page](https://nextgenthemes.com/plugins/adv
 *   <abbr title="What You See Is What You Get">WYSIWYG</abbr> Editor. No more messing around with shortcodes and previewing.
 *   New improved dialog for embedding videos.
 *   Embeds via pasting the URL in its own line just like WordPress!
-*   Magically makes those url embedded videos responsive
-*   No 'lock in' for the above' if you use providers WordPress already supports
+*   Magically makes those url embedded videos responsive.
+*   No 'lock in' for the above' if you use providers WordPress already supports.
 *   Supports [almost every video host](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#video-host-support) that supports iframe embed codes.
-*   Optionally use very powerful Shortcodes instead
-*   One single button for all providers (for most providers not required because of URL embeds, but allows to create custom shortcodes with advanced features within seconds)
-*   Responsive embeds with CSS, much better then with Javascript
+*   Optionally use very powerful Shortcodes instead.
+*   One single button for all providers. (for most providers not required because of URL embeds, but allows to create custom shortcodes with advanced features within seconds)
+*   Responsive embeds with CSS, much better then with Javascript.
 *   Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disabled related videos at the end … to help keep people on your site rather then going to YouTube or keep watching videos.
 *   Clean shortcode syntax `[arve url="https://youtu.be/yUCFRL43Zm4" /]`, no unnecessary shortcode wrapping.
 *   Autostart (for providers that support it, mobile browsers prevent this)
@@ -116,7 +116,7 @@ This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgen
 *   **Disable links in embeds (killer feature!)**
     For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. **Prevent video hosters to lead your visitors away from your site!** Note this also breaks sharing functionality and is not possible when the provider requires flash. Try it on [this page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/). Right click on links still works.
 *   **Lazyload mode**
-    Make your site load **faster** by loading only a image instead of the entire video player on pageload.
+    Make your site load **faster** by loading only a image instead of the entire video player on pageload.  
 *   **Lazyload -> Lightbox**
     Shows the Video in a Lightbox after clicking a preview image
 *   **Link -> Lightbox**
