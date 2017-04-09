@@ -41,5 +41,5 @@
 *   Youku
 *   YouTube
 *   YouTube Playlist
-*   HTML5 Video (in testing)
+*   HTML5 Video (.mp4 .webm file you upload or URL to a readable file on any site/server)
 *   [All providers with responsive iframe embed codes](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/#general-iframe-embedding)
