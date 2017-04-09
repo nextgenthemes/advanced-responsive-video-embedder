@@ -8,7 +8,7 @@
  * Plugin Name:       ARVE Advanced Responsive Video Embedder
  * Plugin URI:        https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
  * Description:       Easy responsive video embeds via URL (like WordPress) or Shortcodes. Supports almost anything you can imagine.
- * Version:           8.2.4
+ * Version:           8.2.5
  * Author:            Nicolas Jonas
  * Author URI:        https://nextgenthemes.com
  * License:           GPL-3.0
@@ -24,7 +24,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 define( 'ARVE_SLUG',                 'advanced-responsive-video-embedder' );
-define( 'ARVE_VERSION',              '8.2.4' );
+define( 'ARVE_VERSION',              '8.2.5' );
 define( 'ARVE_PRO_VERSION_REQUIRED', '3.9.0' );
 
 define( 'ARVE_URL', plugin_dir_url( __FILE__ ) );
@@ -52,22 +52,22 @@ function arve_init() {
 	}
 
 	if ( ! has_action( 'admin_menu', 'nextgenthemes_menus' ) ) {
-		require_once plugin_dir_path( __FILE__ ) . 'admin/functions-licensing.php';
+		require_once __DIR__ . '/admin/functions-licensing.php';
 	}
 
-	require_once plugin_dir_path( __FILE__ ) . 'admin/functions-admin.php';
-	require_once plugin_dir_path( __FILE__ ) . 'public/functions-enqueue.php';
-	require_once plugin_dir_path( __FILE__ ) . 'public/functions-html-output.php';
-	require_once plugin_dir_path( __FILE__ ) . 'public/functions-misc.php';
-	require_once plugin_dir_path( __FILE__ ) . 'public/functions-shortcode-data.php';
-	require_once plugin_dir_path( __FILE__ ) . 'public/functions-shortcode-filters.php';
-	require_once plugin_dir_path( __FILE__ ) . 'public/functions-shortcodes.php';
-	require_once plugin_dir_path( __FILE__ ) . 'public/functions-thumbnails.php';
-	require_once plugin_dir_path( __FILE__ ) . 'public/functions-url-handlers.php';
-	require_once plugin_dir_path( __FILE__ ) . 'public/functions-validation.php';
-	require_once plugin_dir_path( __FILE__ ) . 'shared/functions-shared.php';
+	require_once __DIR__ . '/admin/functions-admin.php';
+	require_once __DIR__ . '/public/functions-enqueue.php';
+	require_once __DIR__ . '/public/functions-html-output.php';
+	require_once __DIR__ . '/public/functions-misc.php';
+	require_once __DIR__ . '/public/functions-shortcode-data.php';
+	require_once __DIR__ . '/public/functions-shortcode-filters.php';
+	require_once __DIR__ . '/public/functions-shortcodes.php';
+	require_once __DIR__ . '/public/functions-thumbnails.php';
+	require_once __DIR__ . '/public/functions-url-handlers.php';
+	require_once __DIR__ . '/public/functions-validation.php';
+	require_once __DIR__ . '/shared/functions-shared.php';
 
-	add_action( 'plugins_loaded',     'arve_load_plugin_textdomain' );
+	add_action( 'plugins_loaded',      'arve_load_plugin_textdomain' );
 
 	# Public hooks
 	add_action( 'plugins_loaded',      'arve_create_shortcodes', 999 );
@@ -105,7 +105,6 @@ function arve_init() {
 
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'arve_add_action_links' );
 	add_filter( 'mce_css',               'arve_mce_css' );
-	#add_filter( 'mce_external_plugins',  'arve_add_tinymce_plugin' );
 }
 
 function arve_php_outdated_message() {

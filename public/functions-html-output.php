@@ -15,7 +15,7 @@ function arve_get_var_dump( $var ) {
 	return ob_get_clean();
 };
 
-function arve_get_debug_info( $atts, $input_atts ) {
+function arve_get_debug_info( $input_html, $atts, $input_atts ) {
 
 	$html = '';
 
@@ -33,20 +33,29 @@ function arve_get_debug_info( $atts, $input_atts ) {
 		$show_options_debug = false;
 	}
 
-	$pre_style = 'style="color: #eee; background-color: #111; font-size: 14px;"';
+	$pre_style = ''
+		. 'background-color: #111;'
+		. 'color: #eee;'
+		. 'font-size: 15px;'
+		. 'white-space: pre-wrap;'
+		. 'word-wrap: break-word;';
 
 	if ( ! empty( $_GET['arve-debug-arg'] ) ) {
 		$html .= sprintf(
-			'<pre %s>arg[%s]: %s</pre>',
-			$pre_style,
+			'<pre style="%s">arg[%s]: %s</pre>',
+			esc_attr( $pre_style ),
 			esc_html( $_GET['arve-debug-arg'] ),
 			arve_get_var_dump( $atts[ $_GET['arve-debug-arg'] ] )
 		);
 	}
 
-	if ( isset( $_GET['arve-debug'] ) ) {
-		$html .= sprintf( '<pre %s>$atts: %s</pre>', $pre_style, arve_get_var_dump( $input_atts ) );
-		$html .= sprintf( '<pre %s>$arve: %s</pre>', $pre_style, arve_get_var_dump( $atts ) );
+	if ( isset( $_GET['arve-debug-atts'] ) ) {
+		$html .= sprintf( '<pre style="%s">$atts: %s</pre>', esc_attr( $pre_style ), arve_get_var_dump( $input_atts ) );
+		$html .= sprintf( '<pre style="%s">$arve: %s</pre>', esc_attr( $pre_style ), arve_get_var_dump( $atts ) );
+	}
+
+	if ( isset( $_GET['arve-debug-html'] ) ) {
+		$html .= sprintf( '<pre style="%s"">%s</pre>', esc_attr( $pre_style ), esc_html( $input_html ) );
 	}
 
 	return $html;

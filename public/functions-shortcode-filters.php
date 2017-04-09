@@ -14,10 +14,7 @@ function arve_filter_atts_validate( $atts ) {
   $atts['arve_link']     = arve_validate_bool( $atts['arve_link'], 'arve_link' );
   $atts['loop']          = arve_validate_bool( $atts['loop'],      'loop' );
   $atts['controls']      = arve_validate_bool( $atts['controls'],  'controls' );
-
-  if ( null !== $atts['disable_flash'] ) {
-    $atts['disable_flash'] = arve_validate_bool( $atts['disable_flash'], 'disable_flash' );
-  }
+  $atts['disable_flash'] = arve_validate_bool( $atts['disable_flash'], 'disable_flash' );
 
   $atts['maxwidth']  = (int) $atts['maxwidth'];
   $atts['maxwidth']  = (int) arve_maxwidth_when_aligned( $atts['maxwidth'], $atts['align'] );
@@ -163,7 +160,11 @@ function arve_filter_atts_detect_provider_and_id_from_url( $atts ) {
 			continue;
 		}
 
-		preg_match( '#' . $host['regex'] . '#i', $atts['url'], $matches );
+		$preg_match = preg_match( '#' . $host['regex'] . '#i', $atts['url'], $matches );
+
+		if ( 1 !== $preg_match ) {
+			continue;
+		}
 
 		foreach ( $matches as $key => $value ) {
 

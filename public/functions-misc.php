@@ -13,29 +13,33 @@ function arve_is_bool_option( $array ) {
 	}
 }
 
+function arve_get_pre_style() {
+	return '';
+}
+
 function arve_load_plugin_textdomain() {
 
-  load_plugin_textdomain(
-    ARVE_SLUG,
-    false,
-    dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
-  );
+	load_plugin_textdomain(
+		ARVE_SLUG,
+		false,
+		dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
+	);
 }
 
 function arve_get_first_array_value( $array ) {
-  reset( $array );
-  $key = key( $array );
-  return $array[ $key ];
+	reset( $array );
+	$key = key( $array );
+	return $array[ $key ];
 }
 
 function arve_prefix_array_keys( $keyprefix, $array ) {
 
-  foreach( $array as $key => $value ) {
-      $array[ $keyprefix . $key ] = $value;
-      unset( $array[ $key ] );
-  }
+	foreach( $array as $key => $value ) {
+		$array[ $keyprefix . $key ] = $value;
+		unset( $array[ $key ] );
+	}
 
-  return $array;
+	return $array;
 }
 
 function arve_check_filetype( $url, $ext ) {
@@ -58,49 +62,49 @@ function arve_check_filetype( $url, $ext ) {
  */
 function arve_youtube_time_to_seconds( $yttime ) {
 
-  $format = false;
-  $hours  = $minutes = $seconds = 0;
+	$format = false;
+	$hours  = $minutes = $seconds = 0;
 
-  $pattern['hms'] = '/([0-9]+)h([0-9]+)m([0-9]+)s/'; // hours, minutes, seconds
-  $pattern['ms']  =          '/([0-9]+)m([0-9]+)s/'; // minutes, seconds
-  $pattern['h']   = '/([0-9]+)h/';
-  $pattern['m']   = '/([0-9]+)m/';
-  $pattern['s']   = '/([0-9]+)s/';
+	$pattern['hms'] = '/([0-9]+)h([0-9]+)m([0-9]+)s/'; // hours, minutes, seconds
+	$pattern['ms']  =          '/([0-9]+)m([0-9]+)s/'; // minutes, seconds
+	$pattern['h']   = '/([0-9]+)h/';
+	$pattern['m']   = '/([0-9]+)m/';
+	$pattern['s']   = '/([0-9]+)s/';
 
-  foreach ( $pattern as $key => $value ) {
+	foreach ( $pattern as $key => $value ) {
 
-    preg_match( $value, $yttime, $result );
+		preg_match( $value, $yttime, $result );
 
-    if ( ! empty( $result ) ) {
-      $format = $key;
-      break;
-    }
-  }
+		if ( ! empty( $result ) ) {
+			$format = $key;
+			break;
+		}
+	}
 
-  switch ( $format ) {
-    case 'hms':
-      $hours   = $result[1];
-      $minutes = $result[2];
-      $seconds = $result[3];
-      break;
-    case 'ms':
-      $minutes = $result[1];
-      $seconds = $result[2];
-      break;
-    case 'h':
-      $hours = $result[1];
-      break;
-    case 'm':
-      $minutes = $result[1];
-      break;
-    case 's':
-      $seconds = $result[1];
-      break;
-    default:
-      return false;
-  }
+	switch ( $format ) {
+		case 'hms':
+			$hours   = $result[1];
+			$minutes = $result[2];
+			$seconds = $result[3];
+			break;
+		case 'ms':
+			$minutes = $result[1];
+			$seconds = $result[2];
+			break;
+		case 'h':
+			$hours = $result[1];
+			break;
+		case 'm':
+			$minutes = $result[1];
+			break;
+		case 's':
+			$seconds = $result[1];
+			break;
+		default:
+			return false;
+	}
 
-  return ( $hours * 60 * 60 ) + ( $minutes * 60 ) + $seconds;
+	return ( $hours * 60 * 60 ) + ( $minutes * 60 ) + $seconds;
 }
 
 /**
@@ -118,7 +122,7 @@ function arve_aspect_ratio_to_percentage( $aspect_ratio ) {
 		return 52.25;
 	}
 
-  $a = explode( ':', $aspect_ratio );
+	$a = explode( ':', $aspect_ratio );
 
 	return ( ( $a[1] / $a[0] ) * 100 );
 }
@@ -132,11 +136,11 @@ function arve_calculate_height( $width, $aspect_ratio ) {
 
 	$width        = (int) $width;
 	$aspect_ratio = empty( $aspect_ratio ) ? '16:9' : $aspect_ratio;
-  $percent      = arve_aspect_ratio_to_percentage( $aspect_ratio );
+	$percent      = arve_aspect_ratio_to_percentage( $aspect_ratio );
 
-  if ( $width > 100 && $percent ) {
-    return ( ( $width / 100 ) * $percent );
-  }
+	if ( $width > 100 && $percent ) {
+		return ( ( $width / 100 ) * $percent );
+	}
 
 	return false;
 }

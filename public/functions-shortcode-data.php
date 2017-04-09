@@ -15,15 +15,15 @@ function arve_get_html5_attributes() {
 
 function arve_url_query_array( $url ) {
 
-  $url = parse_url( $url );
+	$url = parse_url( $url );
 
-  if ( empty( $url['query'] ) ) {
-    return array();
-  }
+	if ( empty( $url['query'] ) ) {
+		return array();
+	}
 
-  parse_str( $url['query'], $url_params );
+	parse_str( $url['query'], $url_params );
 
-  return $url_params;
+	return $url_params;
 }
 
 function arve_build_iframe_src( $atts ) {
@@ -112,80 +112,80 @@ function arve_aspect_ratio_fixes( $aspect_ratio, $provider, $mode ) {
 
 function arve_add_autoplay_query_arg( $atts ) {
 
-		$src = $atts['iframe_src'];
+	$src = $atts['iframe_src'];
 
-		switch ( $atts['provider'] ) {
-			case 'alugha':
-			case 'archiveorg':
-			case 'dailymotion':
-			case 'dailymotionlist':
-			#case 'facebook': # Causes automute FUCK NSABOOK
-			case 'vevo':
-			case 'viddler':
-			case 'vimeo':
-			case 'youtube':
-			case 'youtubelist':
-				$on  = add_query_arg( 'autoplay', 1, $src );
-				$off = add_query_arg( 'autoplay', 0, $src );
-				break;
-			case 'twitch':
-			case 'ustream':
-				$on  = add_query_arg( 'autoplay', 'true',  $src );
-				$off = add_query_arg( 'autoplay', 'false', $src );
-				break;
-			case 'livestream':
-			case 'Wistia':
-				$on  = add_query_arg( 'autoPlay', 'true',  $src );
-				$off = add_query_arg( 'autoPlay', 'false', $src );
-				break;
-			case 'metacafe':
-				$on  = add_query_arg( 'ap', 1, $src );
-				$off = remove_query_arg( 'ap', $src );
-				break;
-			case 'videojug':
-				$on  = add_query_arg( 'ap', 1, $src );
-				$off = add_query_arg( 'ap', 0, $src );
-				break;
-			case 'veoh':
-				$on  = add_query_arg( 'videoAutoPlay', 1, $src );
-				$off = add_query_arg( 'videoAutoPlay', 0, $src );
-				break;
-			case 'brightcove':
-			case 'snotr':
-				$on  = add_query_arg( 'autoplay', 1, $src );
-				$off = remove_query_arg( 'autoplay', $src );
-				break;
-			case 'yahoo':
-				$on  = add_query_arg( 'player_autoplay', 'true',  $src );
-				$off = add_query_arg( 'player_autoplay', 'false', $src );
-				break;
-			case 'iframe':
-				# We are spamming all kinds of autoplay parameters here in hope of a effect
-				$on = add_query_arg( array(
-					'ap'               => '1',
-					'autoplay'         => '1',
-					'autoStart'        => 'true',
-					'player_autoStart' => 'true',
-				), $src );
-				$off = add_query_arg( array(
-					'ap'               => '0',
-					'autoplay'         => '0',
-					'autoStart'        => 'false',
-					'player_autoStart' => 'false',
-				), $src );
-				break;
-			default:
-				# Do nothing for providers that to not support autoplay or fail with parameters
-				$on  = $src;
-				$off = $src;
-				break;
-		}
+	switch ( $atts['provider'] ) {
+		case 'alugha':
+		case 'archiveorg':
+		case 'dailymotion':
+		case 'dailymotionlist':
+		#case 'facebook': # Causes automute FUCK NSABOOK
+		case 'vevo':
+		case 'viddler':
+		case 'vimeo':
+		case 'youtube':
+		case 'youtubelist':
+			$on  = add_query_arg( 'autoplay', 1, $src );
+			$off = add_query_arg( 'autoplay', 0, $src );
+			break;
+		case 'twitch':
+		case 'ustream':
+			$on  = add_query_arg( 'autoplay', 'true',  $src );
+			$off = add_query_arg( 'autoplay', 'false', $src );
+			break;
+		case 'livestream':
+		case 'Wistia':
+			$on  = add_query_arg( 'autoPlay', 'true',  $src );
+			$off = add_query_arg( 'autoPlay', 'false', $src );
+			break;
+		case 'metacafe':
+			$on  = add_query_arg( 'ap', 1, $src );
+			$off = remove_query_arg( 'ap', $src );
+			break;
+		case 'videojug':
+			$on  = add_query_arg( 'ap', 1, $src );
+			$off = add_query_arg( 'ap', 0, $src );
+			break;
+		case 'veoh':
+			$on  = add_query_arg( 'videoAutoPlay', 1, $src );
+			$off = add_query_arg( 'videoAutoPlay', 0, $src );
+			break;
+		case 'brightcove':
+		case 'snotr':
+			$on  = add_query_arg( 'autoplay', 1, $src );
+			$off = remove_query_arg( 'autoplay', $src );
+			break;
+		case 'yahoo':
+			$on  = add_query_arg( 'player_autoplay', 'true',  $src );
+			$off = add_query_arg( 'player_autoplay', 'false', $src );
+			break;
+		case 'iframe':
+			# We are spamming all kinds of autoplay parameters here in hope of a effect
+			$on = add_query_arg( array(
+				'ap'               => '1',
+				'autoplay'         => '1',
+				'autoStart'        => 'true',
+				'player_autoStart' => 'true',
+			), $src );
+			$off = add_query_arg( array(
+				'ap'               => '0',
+				'autoplay'         => '0',
+				'autoStart'        => 'false',
+				'player_autoStart' => 'false',
+			), $src );
+			break;
+		default:
+			# Do nothing for providers that to not support autoplay or fail with parameters
+			$on  = $src;
+			$off = $src;
+			break;
+	}
 
-		if( $atts['autoplay'] ) {
-			return $on;
-		} else {
-			return $off;
-		}
+	if( $atts['autoplay'] ) {
+		return $on;
+	} else {
+		return $off;
+	}
 }
 
 function arve_add_query_args_to_iframe_src( $atts ) {
@@ -221,110 +221,110 @@ function arve_maxwidth_when_aligned( $maxwidth, $align ) {
 }
 
 function arve_get_language_name_from_code( $lang_code ) {
-  // This list is based on languages available from localize.drupal.org. See
-  // http://localize.drupal.org/issues for information on how to add languages
-  // there.
-  //
-  // The "Left-to-right marker" comments and the enclosed UTF-8 markers are to
-  // make otherwise strange looking PHP syntax natural (to not be displayed in
-  // right to left). See https://www.drupal.org/node/128866#comment-528929.
-  $lang = array(
-    'af' => array('Afrikaans', 'Afrikaans'),
-    'am' => array('Amharic', 'አማርኛ'),
-    'ar' => array('Arabic', /* Left-to-right marker "‭" */ 'العربية', 'RTL' ),
-    'ast' => array('Asturian', 'Asturianu'),
-    'az' => array('Azerbaijani', 'Azərbaycanca'),
-    'be' => array('Belarusian', 'Беларуская'),
-    'bg' => array('Bulgarian', 'Български'),
-    'bn' => array('Bengali', 'বাংলা'),
-    'bo' => array('Tibetan', 'བོད་སྐད་'),
-    'bs' => array('Bosnian', 'Bosanski'),
-    'ca' => array('Catalan', 'Català'),
-    'cs' => array('Czech', 'Čeština'),
-    'cy' => array('Welsh', 'Cymraeg'),
-    'da' => array('Danish', 'Dansk'),
-    'de' => array('German', 'Deutsch'),
-    'dz' => array('Dzongkha', 'རྫོང་ཁ'),
-    'el' => array('Greek', 'Ελληνικά'),
-    'en' => array('English', 'English'),
-    'en-x-simple' => array('Simple English', 'Simple English'),
-    'eo' => array('Esperanto', 'Esperanto'),
-    'es' => array('Spanish', 'Español'),
-    'et' => array('Estonian', 'Eesti'),
-    'eu' => array('Basque', 'Euskera'),
-    'fa' => array('Persian, Farsi', /* Left-to-right marker "‭" */ 'فارسی', 'RTL' ),
-    'fi' => array('Finnish', 'Suomi'),
-    'fil' => array('Filipino', 'Filipino'),
-    'fo' => array('Faeroese', 'Føroyskt'),
-    'fr' => array('French', 'Français'),
-    'fy' => array('Frisian, Western', 'Frysk'),
-    'ga' => array('Irish', 'Gaeilge'),
-    'gd' => array('Scots Gaelic', 'Gàidhlig'),
-    'gl' => array('Galician', 'Galego'),
-    'gsw-berne' => array('Swiss German', 'Schwyzerdütsch'),
-    'gu' => array('Gujarati', 'ગુજરાતી'),
-    'he' => array('Hebrew', /* Left-to-right marker "‭" */ 'עברית', 'RTL' ),
-    'hi' => array('Hindi', 'हिन्दी'),
-    'hr' => array('Croatian', 'Hrvatski'),
-    'ht' => array('Haitian Creole', 'Kreyòl ayisyen'),
-    'hu' => array('Hungarian', 'Magyar'),
-    'hy' => array('Armenian', 'Հայերեն'),
-    'id' => array('Indonesian', 'Bahasa Indonesia'),
-    'is' => array('Icelandic', 'Íslenska'),
-    'it' => array('Italian', 'Italiano'),
-    'ja' => array('Japanese', '日本語'),
-    'jv' => array('Javanese', 'Basa Java'),
-    'ka' => array('Georgian', 'ქართული ენა'),
-    'kk' => array('Kazakh', 'Қазақ'),
-    'km' => array('Khmer', 'ភាសាខ្មែរ'),
-    'kn' => array('Kannada', 'ಕನ್ನಡ'),
-    'ko' => array('Korean', '한국어'),
-    'ku' => array('Kurdish', 'Kurdî'),
-    'ky' => array('Kyrgyz', 'Кыргызча'),
-    'lo' => array('Lao', 'ພາສາລາວ'),
-    'lt' => array('Lithuanian', 'Lietuvių'),
-    'lv' => array('Latvian', 'Latviešu'),
-    'mg' => array('Malagasy', 'Malagasy'),
-    'mk' => array('Macedonian', 'Македонски'),
-    'ml' => array('Malayalam', 'മലയാളം'),
-    'mn' => array('Mongolian', 'монгол'),
-    'mr' => array('Marathi', 'मराठी'),
-    'ms' => array('Bahasa Malaysia', 'بهاس ملايو'),
-    'my' => array('Burmese', 'ဗမာစကား'),
-    'ne' => array('Nepali', 'नेपाली'),
-    'nl' => array('Dutch', 'Nederlands'),
-    'nb' => array('Norwegian Bokmål', 'Norsk, bokmål'),
-    'nn' => array('Norwegian Nynorsk', 'Norsk, nynorsk'),
-    'oc' => array('Occitan', 'Occitan'),
-    'pa' => array('Punjabi', 'ਪੰਜਾਬੀ'),
-    'pl' => array('Polish', 'Polski'),
-    'pt-pt' => array('Portuguese, Portugal', 'Português, Portugal'),
-    'pt-br' => array('Portuguese, Brazil', 'Português, Brasil'),
-    'ro' => array('Romanian', 'Română'),
-    'ru' => array('Russian', 'Русский'),
-    'sco' => array('Scots', 'Scots'),
-    'se' => array('Northern Sami', 'Sámi'),
-    'si' => array('Sinhala', 'සිංහල'),
-    'sk' => array('Slovak', 'Slovenčina'),
-    'sl' => array('Slovenian', 'Slovenščina'),
-    'sq' => array('Albanian', 'Shqip'),
-    'sr' => array('Serbian', 'Српски'),
-    'sv' => array('Swedish', 'Svenska'),
-    'sw' => array('Swahili', 'Kiswahili'),
-    'ta' => array('Tamil', 'தமிழ்'),
-    'ta-lk' => array('Tamil, Sri Lanka', 'தமிழ், இலங்கை'),
-    'te' => array('Telugu', 'తెలుగు'),
-    'th' => array('Thai', 'ภาษาไทย'),
-    'tr' => array('Turkish', 'Türkçe'),
-    'tyv' => array('Tuvan', 'Тыва дыл'),
-    'ug' => array('Uyghur', 'Уйғур'),
-    'uk' => array('Ukrainian', 'Українська'),
-    'ur' => array('Urdu', /* Left-to-right marker "‭" */ 'اردو', 'RTL' ),
-    'vi' => array('Vietnamese', 'Tiếng Việt'),
-    'xx-lolspeak' => array('Lolspeak', 'Lolspeak'),
-    'zh-hans' => array('Chinese, Simplified', '简体中文'),
-    'zh-hant' => array('Chinese, Traditional', '繁體中文'),
-  );
+	// This list is based on languages available from localize.drupal.org. See
+	// http://localize.drupal.org/issues for information on how to add languages
+	// there.
+	//
+	// The "Left-to-right marker" comments and the enclosed UTF-8 markers are to
+	// make otherwise strange looking PHP syntax natural (to not be displayed in
+	// right to left). See https://www.drupal.org/node/128866#comment-528929.
+	$lang = array(
+		'af' => array('Afrikaans', 'Afrikaans'),
+		'am' => array('Amharic', 'አማርኛ'),
+		'ar' => array('Arabic', /* Left-to-right marker "‭" */ 'العربية', 'RTL' ),
+		'ast' => array('Asturian', 'Asturianu'),
+		'az' => array('Azerbaijani', 'Azərbaycanca'),
+		'be' => array('Belarusian', 'Беларуская'),
+		'bg' => array('Bulgarian', 'Български'),
+		'bn' => array('Bengali', 'বাংলা'),
+		'bo' => array('Tibetan', 'བོད་སྐད་'),
+		'bs' => array('Bosnian', 'Bosanski'),
+		'ca' => array('Catalan', 'Català'),
+		'cs' => array('Czech', 'Čeština'),
+		'cy' => array('Welsh', 'Cymraeg'),
+		'da' => array('Danish', 'Dansk'),
+		'de' => array('German', 'Deutsch'),
+		'dz' => array('Dzongkha', 'རྫོང་ཁ'),
+		'el' => array('Greek', 'Ελληνικά'),
+		'en' => array('English', 'English'),
+		'en-x-simple' => array('Simple English', 'Simple English'),
+		'eo' => array('Esperanto', 'Esperanto'),
+		'es' => array('Spanish', 'Español'),
+		'et' => array('Estonian', 'Eesti'),
+		'eu' => array('Basque', 'Euskera'),
+		'fa' => array('Persian, Farsi', /* Left-to-right marker "‭" */ 'فارسی', 'RTL' ),
+		'fi' => array('Finnish', 'Suomi'),
+		'fil' => array('Filipino', 'Filipino'),
+		'fo' => array('Faeroese', 'Føroyskt'),
+		'fr' => array('French', 'Français'),
+		'fy' => array('Frisian, Western', 'Frysk'),
+		'ga' => array('Irish', 'Gaeilge'),
+		'gd' => array('Scots Gaelic', 'Gàidhlig'),
+		'gl' => array('Galician', 'Galego'),
+		'gsw-berne' => array('Swiss German', 'Schwyzerdütsch'),
+		'gu' => array('Gujarati', 'ગુજરાતી'),
+		'he' => array('Hebrew', /* Left-to-right marker "‭" */ 'עברית', 'RTL' ),
+		'hi' => array('Hindi', 'हिन्दी'),
+		'hr' => array('Croatian', 'Hrvatski'),
+		'ht' => array('Haitian Creole', 'Kreyòl ayisyen'),
+		'hu' => array('Hungarian', 'Magyar'),
+		'hy' => array('Armenian', 'Հայերեն'),
+		'id' => array('Indonesian', 'Bahasa Indonesia'),
+		'is' => array('Icelandic', 'Íslenska'),
+		'it' => array('Italian', 'Italiano'),
+		'ja' => array('Japanese', '日本語'),
+		'jv' => array('Javanese', 'Basa Java'),
+		'ka' => array('Georgian', 'ქართული ენა'),
+		'kk' => array('Kazakh', 'Қазақ'),
+		'km' => array('Khmer', 'ភាសាខ្មែរ'),
+		'kn' => array('Kannada', 'ಕನ್ನಡ'),
+		'ko' => array('Korean', '한국어'),
+		'ku' => array('Kurdish', 'Kurdî'),
+		'ky' => array('Kyrgyz', 'Кыргызча'),
+		'lo' => array('Lao', 'ພາສາລາວ'),
+		'lt' => array('Lithuanian', 'Lietuvių'),
+		'lv' => array('Latvian', 'Latviešu'),
+		'mg' => array('Malagasy', 'Malagasy'),
+		'mk' => array('Macedonian', 'Македонски'),
+		'ml' => array('Malayalam', 'മലയാളം'),
+		'mn' => array('Mongolian', 'монгол'),
+		'mr' => array('Marathi', 'मराठी'),
+		'ms' => array('Bahasa Malaysia', 'بهاس ملايو'),
+		'my' => array('Burmese', 'ဗမာစကား'),
+		'ne' => array('Nepali', 'नेपाली'),
+		'nl' => array('Dutch', 'Nederlands'),
+		'nb' => array('Norwegian Bokmål', 'Norsk, bokmål'),
+		'nn' => array('Norwegian Nynorsk', 'Norsk, nynorsk'),
+		'oc' => array('Occitan', 'Occitan'),
+		'pa' => array('Punjabi', 'ਪੰਜਾਬੀ'),
+		'pl' => array('Polish', 'Polski'),
+		'pt-pt' => array('Portuguese, Portugal', 'Português, Portugal'),
+		'pt-br' => array('Portuguese, Brazil', 'Português, Brasil'),
+		'ro' => array('Romanian', 'Română'),
+		'ru' => array('Russian', 'Русский'),
+		'sco' => array('Scots', 'Scots'),
+		'se' => array('Northern Sami', 'Sámi'),
+		'si' => array('Sinhala', 'සිංහල'),
+		'sk' => array('Slovak', 'Slovenčina'),
+		'sl' => array('Slovenian', 'Slovenščina'),
+		'sq' => array('Albanian', 'Shqip'),
+		'sr' => array('Serbian', 'Српски'),
+		'sv' => array('Swedish', 'Svenska'),
+		'sw' => array('Swahili', 'Kiswahili'),
+		'ta' => array('Tamil', 'தமிழ்'),
+		'ta-lk' => array('Tamil, Sri Lanka', 'தமிழ், இலங்கை'),
+		'te' => array('Telugu', 'తెలుగు'),
+		'th' => array('Thai', 'ภาษาไทย'),
+		'tr' => array('Turkish', 'Türkçe'),
+		'tyv' => array('Tuvan', 'Тыва дыл'),
+		'ug' => array('Uyghur', 'Уйғур'),
+		'uk' => array('Ukrainian', 'Українська'),
+		'ur' => array('Urdu', /* Left-to-right marker "‭" */ 'اردو', 'RTL' ),
+		'vi' => array('Vietnamese', 'Tiếng Việt'),
+		'xx-lolspeak' => array('Lolspeak', 'Lolspeak'),
+		'zh-hans' => array('Chinese, Simplified', '简体中文'),
+		'zh-hant' => array('Chinese, Traditional', '繁體中文'),
+	);
 
 	return $lang[ $lang_code ][1];
 }

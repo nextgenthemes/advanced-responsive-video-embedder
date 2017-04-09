@@ -23,5 +23,4 @@ function arve_register_scripts() {
 		ARVE_VERSION,
 		true
 	);
-
 }
