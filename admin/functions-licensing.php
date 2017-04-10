@@ -192,7 +192,7 @@ function nextgenthemes_get_products() {
 			'url'     => 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/',
 		),
 		'arve_amp' => array(
-			'name'   => 'ARVE AMP Addon',
+			'name'   => 'ARVE Accelerated Mobile Pages Addon',
 			'type'   => 'plugin',
 			'author' => 'Nicolas Jonas',
 			'url'    => 'https://nextgenthemes.com/plugins/arve-accelerated-mobile-pages-addon/',

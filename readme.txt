@@ -47,7 +47,6 @@ Make sure to check out the [official page](https://nextgenthemes.com/plugins/adv
 
 ### [Supported Providers](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#video-host-support) ###
 
-*   allmyvideos.net
 *   Alugha
 *   Archive.org
 *   Break
@@ -198,7 +197,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-### 2017-04-09 - 8.2.5 ###
+### 2017-04-10 - 8.2.5 ###
 
 * Fix: Some Brightcove URLs were not correctly detected.
 * Improved: Better automated tests and some minor code enhancements.
