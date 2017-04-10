@@ -187,12 +187,12 @@ function nextgenthemes_get_products() {
 	$products = array(
 		'arve_pro' => array(
 			'name'    => 'Advanced Responsive Video Embedder Pro',
-	    'type'    => 'plugin',
+			'type'    => 'plugin',
 			'author'  => 'Nicolas Jonas',
 			'url'     => 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/',
 		),
 		'arve_amp' => array(
-			'name'   => 'ARVE Accelerated Mobile Pages Addon',
+			'name'   => 'ARVE AMP Addon',
 			'type'   => 'plugin',
 			'author' => 'Nicolas Jonas',
 			'url'    => 'https://nextgenthemes.com/plugins/arve-accelerated-mobile-pages-addon/',
