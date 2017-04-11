@@ -2,7 +2,7 @@
 
 function arve_html_id( $html_attr ) {
 
-	if( arve_contains( $html_attr, 'id=' ) ) {
+	if( ! arve_contains( $html_attr, 'id=' ) ) {
 		$html_attr .= ' id="arve"';
 	}
 
