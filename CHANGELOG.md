@@ -3,7 +3,7 @@
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-### 2017-04-11 - 8.2.6 ###
+### 2017-04-11 - 8.3.1 ###
 
 * Fix: Global CSS id was not correctly added.
 
