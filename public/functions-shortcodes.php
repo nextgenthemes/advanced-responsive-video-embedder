@@ -235,11 +235,11 @@ function arve_wp_video_shortcode_override( $out, $attr, $content, $instance ) {
 	$options = arve_get_options();
 
 	if( ! $options['wp_video_override'] || ! empty( $attr['wmv'] ) || ! empty( $attr['flv'] ) ) {
-	  return $out;
+		return $out;
 	}
 
 	if( ! empty( $attr['poster'] ) ) {
-	  $attr['thumbnail'] = $attr['poster'];
+		$attr['thumbnail'] = $attr['poster'];
 	}
 
 	return arve_shortcode_arve( $attr, null );

@@ -12,7 +12,7 @@ function arve_get_options_defaults( $section ) {
 		'video_maxwidth'      => '',
 		'wp_image_cache_time' => 18000,
 		'last_settings_tab'   => '',
-		'wp_video_override'   => false,
+		'wp_video_override'   => true,
 	);
 
 	$properties = arve_get_host_properties();
@@ -254,7 +254,7 @@ function arve_get_settings_definitions() {
 				'yes' => esc_html__( 'Yes', ARVE_SLUG ),
 				'no'  => esc_html__( 'No', ARVE_SLUG ),
 			),
-			'description' => esc_html__( "Take over WP's default [video] shortcode for HTML5 files.", ARVE_SLUG ),
+			'description' => esc_html__( "Take over WP's default URL embedding feature and the [video] shortcode for HTML5 files. ARVE does not load any custom player but use browsers included players", ARVE_SLUG ),
 		),
 		array(
 			'hide_from_settings' => true,
@@ -1116,7 +1116,7 @@ function arve_get_host_properties() {
 		'youtubelist' => array(
 			'regex'          => $s . 'youtube\.com/(embed/videoseries|playlist)\?list=(?<id>[-a-z0-9]+)',
 			'name'           => 'YouTube Playlist',
-			'embed_url'      => 'http://www.youtube.com/embed/videoseries?list=%s',
+			'embed_url'      => 'https://www.youtube.com/embed/videoseries?list=%s',
 			'auto_thumbnail' => true,
 			'tests' => array(
 				array(
@@ -1131,15 +1131,16 @@ function arve_get_host_properties() {
 		),
 		'html5' => array(
 			'name'         => 'HTML5 video files directly',
+			#'regex'        => '(?<id>' . $s . 'dropbox.com/[^.]+\.(mp4|webm|ogv)$)', # URLs ending with .mp4, .webm ... are handled by word
 			'aspect_ratio' => false,
 		),
 		'iframe' => array(
-			'embed_url'         => '%s',
-			'default_params'    => '',
-			'auto_thumbnail'    => false,
-			'requires_flash'    => true,
+			'embed_url'      => '%s',
+			'default_params' => '',
+			'auto_thumbnail' => false,
+			'requires_flash' => true,
 			'tests' => array(
-				array( 'url' => 'https://example.com/', 'id'  => 'https://example.com/' ),
+				array( 'url' => 'https://example.com/', 'id' => 'https://example.com/' ),
 			),
 		),
 	);

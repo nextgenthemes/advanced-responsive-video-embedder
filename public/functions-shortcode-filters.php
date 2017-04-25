@@ -253,13 +253,23 @@ function arve_filter_atts_detect_html5( $atts ) {
 	$html5_extensions = arve_get_html5_attributes();
 	$html5_extensions[] = 'url';
 
-	foreach ( $html5_extensions as $ext ) :
+	foreach ( $html5_extensions as $ext ):
 
 		if ( ! empty( $atts[ $ext ] ) && $type = arve_check_filetype( $atts[ $ext ], $ext) ) {
+
+			if ( arve_starts_with( $atts[ $ext ], 'https://www.dropbox.com' ) ) {
+				$atts[ $ext ] = add_query_arg( 'dl', 1, $atts[ $ext ] );
+			}
+
 			$atts['video_sources'][ $type ] = $atts[ $ext ];
 		}
 
 		if ( ! empty( $atts['url'] ) && arve_ends_with( $atts['url'], ".$ext" ) ) {
+
+			if ( arve_starts_with( $atts['url'], 'https://www.dropbox.com' ) ) {
+				$atts['url'] = add_query_arg( 'dl', 1, $atts['url'] );
+			}
+
 			$atts['video_src'] = $atts['url'];
 			/*
 			$parse_url = parse_url( $atts['url'] );
@@ -273,7 +283,7 @@ function arve_filter_atts_detect_html5( $atts ) {
 	endforeach;
 
 	if( empty( $atts['video_src'] ) && empty( $atts['video_sources'] ) ) {
-			return $atts;
+		return $atts;
 	}
 
 	$atts['provider'] = 'html5';

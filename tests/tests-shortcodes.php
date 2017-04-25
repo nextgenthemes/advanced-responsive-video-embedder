@@ -133,10 +133,6 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'thumbnail' => 'https://example.com/image.jpg',
 		) );
 
-		$options = get_option( 'arve_options_main', array() );
-		$options['wp_video_override'] = true;
-		update_option( 'arve_options_main', $options );
-
 		$output2 = wp_video_shortcode( array(
 			'mp4'       => 'https://example.com/video.mp4',
 			'ogv'       => 'https://example.com/video.ogv',
@@ -263,5 +259,14 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertRegExp( '#<iframe .*src="https://example\.com#', arve_shortcode_arve( $attr) );
 		$this->assertContains( 'data-arve-provider="iframe"', arve_shortcode_arve( $attr ) );
 		$this->assertContains( 'sandbox="', arve_shortcode_arve( $attr ) );
+	}
+
+	public function test_dropbox_html5() {
+
+		$attr = array( 'url' => 'https://www.dropbox.com/s/ocqf9u5pn9b4ox0/Oops%20I%20dropped%20my%20Hoop.mp4' );
+
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr) );
+		$this->assertRegExp( '#<video .*src="https://www\.dropbox\.com/s/ocqf9u5pn9b4ox0/Oops%20I%20dropped%20my%20Hoop.mp4?dl=1#', arve_shortcode_arve( $attr) );
+		$this->assertContains( 'data-arve-provider="html5"', arve_shortcode_arve( $attr ) );
 	}
 }

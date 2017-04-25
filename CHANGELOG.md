@@ -3,6 +3,11 @@
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2017-04-25 - 8.4.0 ###
+
+* New: Support for embedding dropbox hosted HTML5 video files (mp4, webm, ogv). Needs the 'Take over HTML5 video' to be activated, its off by default.
+* Fix: YouTube only playlist URLs embedded without https.
+
 ### 2017-04-11 - 8.3.1 ###
 
 * Fix: Global CSS id was not correctly added.

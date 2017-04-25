@@ -40,12 +40,12 @@ function arve_get_debug_info( $input_html, $atts, $input_atts ) {
 		. 'white-space: pre-wrap;'
 		. 'word-wrap: break-word;';
 
-	if ( ! empty( $_GET['arve-debug-arg'] ) ) {
+	if ( ! empty( $_GET['arve-debug-attr'] ) ) {
 		$html .= sprintf(
-			'<pre style="%s">arg[%s]: %s</pre>',
+			'<pre style="%s">attr[%s]: %s</pre>',
 			esc_attr( $pre_style ),
-			esc_html( $_GET['arve-debug-arg'] ),
-			arve_get_var_dump( $atts[ $_GET['arve-debug-arg'] ] )
+			esc_html( $_GET['arve-debug-attr'] ),
+			arve_get_var_dump( $atts[ $_GET['arve-debug-attr'] ] )
 		);
 	}
 
