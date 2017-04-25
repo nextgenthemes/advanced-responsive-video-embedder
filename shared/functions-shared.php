@@ -1143,6 +1143,8 @@ function arve_get_host_properties() {
 				array( 'url' => 'https://example.com/', 'id' => 'https://example.com/' ),
 			),
 		),
+		'google_drive' => array( 'name', 'Google Drive' ),
+		'dropbox'      => null,
 	);
 
 	foreach ( $properties as $key => $value ) {

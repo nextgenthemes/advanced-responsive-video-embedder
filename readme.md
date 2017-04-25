@@ -197,6 +197,12 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2017-04-25 - 8.4.0 ###
+
+* Improved: The 'Take over [video]' option was renamed to 'Use ARVE for HTML5 video embeds' and is now enabled by default. (It never only was the shortcode by also HTML5 video file URLs on their own lines)
+* New: Support for embedding Dropbox hosted HTML5 video files (mp4, webm, ogv). Needs the 'Use ARVE for HTML5 video embeds' to be activated. (Beta Feature)
+* Fix: YouTube only playlist URLs embedded without https.
+
 ### 2017-04-11 - 8.3.1 ###
 
 * Fix: Global CSS id was not correctly added.
