@@ -244,7 +244,6 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertEquals( $atts['id'] );
 	}
 
-
 	public function test_disable_flash() {
 
 		$attr = array( 'url' => 'https://example.com' );
@@ -266,7 +265,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$attr = array( 'url' => 'https://www.dropbox.com/s/ocqf9u5pn9b4ox0/Oops%20I%20dropped%20my%20Hoop.mp4' );
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr) );
-		$this->assertRegExp( '#<video .*src="https://www\.dropbox\.com/s/ocqf9u5pn9b4ox0/Oops%20I%20dropped%20my%20Hoop.mp4?dl=1#', arve_shortcode_arve( $attr) );
+
+		$this->assertRegExp( '#<video .*src="https://www\.dropbox\.com/s/ocqf9u5pn9b4ox0/Oops%20I%20dropped%20my%20Hoop\.mp4\?dl=1#', arve_shortcode_arve( $attr) );
 		$this->assertContains( 'data-arve-provider="html5"', arve_shortcode_arve( $attr ) );
 	}
 }

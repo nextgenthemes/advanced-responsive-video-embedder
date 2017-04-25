@@ -248,13 +248,13 @@ function arve_get_settings_definitions() {
 		array(
 			'hide_from_sc' => true,
 			'attr'  => 'wp_video_override',
-			'label' => esc_html__('Take over [video]', ARVE_SLUG ),
+			'label' => esc_html__( 'Use ARVE for HTML5 video embeds', ARVE_SLUG ),
 			'type'  => 'select',
 			'options' => array(
 				'yes' => esc_html__( 'Yes', ARVE_SLUG ),
 				'no'  => esc_html__( 'No', ARVE_SLUG ),
 			),
-			'description' => esc_html__( "Take over WP's default URL embedding feature and the [video] shortcode for HTML5 files. ARVE does not load any custom player but use browsers included players", ARVE_SLUG ),
+			'description' => esc_html__( "Use ARVE to embed HTML5 video files. ARVE uses the browsers players instead of loading the mediaelement player that WP uses.", ARVE_SLUG ),
 		),
 		array(
 			'hide_from_settings' => true,

@@ -5,7 +5,8 @@
 
 ### 2017-04-25 - 8.4.0 ###
 
-* New: Support for embedding dropbox hosted HTML5 video files (mp4, webm, ogv). Needs the 'Take over HTML5 video' to be activated, its off by default.
+* New: Support for embedding dropbox hosted HTML5 video files (mp4, webm, ogv). Needs the 'Take over HTML5 video' to be activated.
+* Improved: The 'Take over [video]' option was renamed to 'Use ARVE for HTML5 video embeds' and is not enabled by default. (It never only was the shortcode by also HTML5 video file URLs on their own lines)
 * Fix: YouTube only playlist URLs embedded without https.
 
 ### 2017-04-11 - 8.3.1 ###
