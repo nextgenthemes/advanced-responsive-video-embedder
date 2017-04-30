@@ -3,10 +3,14 @@
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2017-04-25 - 8.4.1 ###
+
+* Fix password protected videos on vimeo (sandbox allow-forms)
+
 ### 2017-04-25 - 8.4.0 ###
 
-* Improved: The 'Take over [video]' option was renamed to 'Use ARVE for HTML5 video embeds' and is now enabled by default. (It never only was the shortcode by also HTML5 video file URLs on their own lines)
-* New: Support for embedding Dropbox hosted HTML5 video files (mp4, webm, ogv). Needs the 'Use ARVE for HTML5 video embeds' to be activated. (Beta Feature)
+* Improved: The 'Take over [video]' option was renamed to 'Use ARVE for HTML5 video embeds' and is now enabled by default. (It never only was the shortcode but also HTML5 video file URLs on their own lines)
+* New: Support for embedding Dropbox hosted HTML5 video files (mp4, webm, ogv). Needs the 'Use ARVE for HTML5 video embeds' to be activated. (Beta feature)
 * Fix: YouTube only playlist URLs embedded without https.
 
 ### 2017-04-11 - 8.3.1 ###

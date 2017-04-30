@@ -1,5 +1,27 @@
 <?php
 
+function arve_filter_atts_sandbox( $atts ) {
+
+	$properties = arve_get_host_properties();
+
+	$atts['iframe_sandbox'] = 'allow-scripts allow-same-origin allow-popups';
+
+	if ( 'vimeo' == $provider ) {
+		$atts['iframe_sandbox'] .= ' allow-forms';
+	}
+
+	if ( null === $atts['disable_flash'] ) {
+		$atts['disable_flash'] = (bool) $properties[ $atts['provider'] ]['requires_flash'];
+	}
+
+	if ( ! $atts['disable_flash'] ) {
+		unset( $iframe_attr['sandbox'] );
+	}
+
+	return $atts;
+}
+
+
 function arve_filter_atts_validate( $atts ) {
 
 	if ( ! empty( $atts['url'] ) && ! arve_validate_url( $atts['url'] ) ) {

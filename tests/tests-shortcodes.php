@@ -2,7 +2,21 @@
 
 class Tests_Shortcode extends WP_UnitTestCase {
 
+	public function test_sandbox() {
 
+		$attr = array(
+			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
+		);
+
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+		$this->assertContains( 'sandbox="allow-scripts allow-same-origin allow-popups"', arve_shortcode_arve( $attr ) );
+
+		$attr = array(
+			'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
+		);
+
+		$this->assertContains( 'sandbox="allow-scripts allow-same-origin allow-popups allow-forms"', arve_shortcode_arve( $attr ) );
+	}
 
 	public function test_thumbnails() {
 

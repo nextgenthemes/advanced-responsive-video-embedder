@@ -221,18 +221,10 @@ function arve_create_iframe_tag( $atts ) {
 		'name'        => $atts['iframe_name'],
 		'scrolling'   => 'no',
 		'src'         => $atts['iframe_src'],
-
+		'sandbox'     => $atts['iframe_sandbox'],
 		'width'       => ! empty( $atts['width'] )  ? $atts['width']  : false,
 		'height'      => ! empty( $atts['height'] ) ? $atts['height'] : false,
 	);
-
-	if ( null === $atts['disable_flash'] ) {
-		$atts['disable_flash'] = (bool) $properties[ $atts['provider'] ]['requires_flash'] ? false : true;
-	}
-
-	if ( $atts['disable_flash'] ) {
-		$iframe_attr['sandbox'] = empty( $atts['iframe_sandbox'] ) ? 'allow-scripts allow-same-origin allow-popups' : $atts['iframe_sandbox'];
-	}
 
 	if ( in_array( $atts['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ) {
 		$lazyload_iframe_attr = arve_prefix_array_keys( 'data-', $iframe_attr );
