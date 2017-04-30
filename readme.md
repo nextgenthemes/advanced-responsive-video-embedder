@@ -1,4 +1,4 @@
-=== ARVE Advanced Responsive Video Embedder ===
+=== ARVE Advanced Responsive Video Embedder (YouTube, Vimeo, HTML5 Video ...) ===
 Contributors: nico23
 Donate link: https://www.paypal.me/nico23
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
@@ -18,7 +18,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 
 [youtube https://www.youtube.com/watch?v=m6mkA6Zr1vY ]
 
-Make sure to check out the [official page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) for live examples of the plugin and everything about it.
+Make sure to check out the [official page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) for examples of the plugin and everything about it.
 
 *  [Official Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/)
 *  [GitHub Page](https://github.com/nextgenthemes/advanced-responsive-video-embedder/)
@@ -197,10 +197,14 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2017-04-25 - 8.4.1 ###
+
+* Fix password protected videos on vimeo (sandbox allow-forms)
+
 ### 2017-04-25 - 8.4.0 ###
 
-* Improved: The 'Take over [video]' option was renamed to 'Use ARVE for HTML5 video embeds' and is now enabled by default. (It never only was the shortcode by also HTML5 video file URLs on their own lines)
-* New: Support for embedding Dropbox hosted HTML5 video files (mp4, webm, ogv). Needs the 'Use ARVE for HTML5 video embeds' to be activated. (Beta Feature)
+* Improved: The 'Take over [video]' option was renamed to 'Use ARVE for HTML5 video embeds' and is now enabled by default. (It never only was the shortcode but also HTML5 video file URLs on their own lines)
+* New: Support for embedding Dropbox hosted HTML5 video files (mp4, webm, ogv). Needs the 'Use ARVE for HTML5 video embeds' to be activated. (Beta feature)
 * Fix: YouTube only playlist URLs embedded without https.
 
 ### 2017-04-11 - 8.3.1 ###

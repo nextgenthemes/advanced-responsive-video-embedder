@@ -18,7 +18,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 
 [youtube https://www.youtube.com/watch?v=m6mkA6Zr1vY ]
 
-Make sure to check out the [official page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) for live examples of the plugin and everything about it.
+Make sure to check out the [official page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) for examples of the plugin and everything about it.
 
 *  [Official Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/)
 *  [GitHub Page](https://github.com/nextgenthemes/advanced-responsive-video-embedder/)

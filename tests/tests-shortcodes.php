@@ -6,7 +6,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$attr = array(
 			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
-			'thumbnail' => 'https://example.com/image.jpg'
+			'thumbnail' => 'https://example.com/image.jpg',
+			'title'     => 'title'
 		);
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
@@ -19,7 +20,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$attr = array(
 			'url'       => 'https://vimeo.com/214300845',
-			'thumbnail' => 'https://example.com/image.jpg'
+			'thumbnail' => 'https://example.com/image.jpg',
+			'title'     => 'title'
 		);
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );

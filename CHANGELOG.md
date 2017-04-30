@@ -3,7 +3,7 @@
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-### 2017-04-25 - 8.4.1 ###
+### 2017-04-30 - 8.4.1 ###
 
 * Fix password protected videos on vimeo (sandbox allow-forms)
 
