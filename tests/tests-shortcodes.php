@@ -5,7 +5,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 	public function test_sandbox() {
 
 		$attr = array(
-			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
+			'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
 		);
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
