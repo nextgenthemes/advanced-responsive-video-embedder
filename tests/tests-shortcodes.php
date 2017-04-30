@@ -5,7 +5,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 	public function test_sandbox() {
 
 		$attr = array(
-			'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
+			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
+			'thumbnail' => 'https://example.com/image.jpg'
 		);
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
@@ -17,7 +18,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( 'sandbox="allow-scripts allow-same-origin"', arve_shortcode_arve( $attr ) );
 
 		$attr = array(
-			'url' => 'https://vimeo.com/214300845',
+			'url'       => 'https://vimeo.com/214300845',
+			'thumbnail' => 'https://example.com/image.jpg'
 		);
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
