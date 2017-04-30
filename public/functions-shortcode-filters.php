@@ -10,13 +10,11 @@ function arve_filter_atts_sandbox( $atts ) {
 		$atts['iframe_sandbox'] .= ' allow-forms';
 	}
 
-
-
 	if ( null === $atts['disable_flash'] ) {
 		$atts['disable_flash'] = ! $properties[ $atts['provider'] ]['requires_flash'];
 	}
 
-	if ( $atts['disable_flash'] ) {
+	if ( ! $atts['disable_flash'] ) {
 		$atts['iframe_sandbox'] = false;
 	}
 
