@@ -4,18 +4,18 @@ function arve_filter_atts_sandbox( $atts ) {
 
 	$properties = arve_get_host_properties();
 
-	$atts['iframe_sandbox'] = 'allow-scripts allow-same-origin allow-popups';
-
-	if ( 'vimeo' == $provider ) {
-		$atts['iframe_sandbox'] .= ' allow-forms';
-	}
-
 	if ( null === $atts['disable_flash'] ) {
-		$atts['disable_flash'] = (bool) $properties[ $atts['provider'] ]['requires_flash'];
+		$atts['disable_flash'] = $properties[ $atts['provider'] ]['requires_flash'];
 	}
 
 	if ( ! $atts['disable_flash'] ) {
-		unset( $iframe_attr['sandbox'] );
+		return $atts;
+	}
+
+	$atts['iframe_sandbox'] = 'allow-scripts allow-same-origin allow-popups';
+
+	if ( 'vimeo' == $atts['provider'] ) {
+		$atts['iframe_sandbox'] .= ' allow-forms';
 	}
 
 	return $atts;

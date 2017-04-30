@@ -12,10 +12,16 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( 'sandbox="allow-scripts allow-same-origin allow-popups"', arve_shortcode_arve( $attr ) );
 
 		$attr = array(
-			'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
+			'url' => 'https://vimeo.com/214300845',
 		);
 
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
 		$this->assertContains( 'sandbox="allow-scripts allow-same-origin allow-popups allow-forms"', arve_shortcode_arve( $attr ) );
+
+		$attr['disable_links'] = 'y';
+
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+		$this->assertContains( 'sandbox="allow-scripts allow-same-origin allow-forms"', arve_shortcode_arve( $attr ) );
 	}
 
 	public function test_thumbnails() {
