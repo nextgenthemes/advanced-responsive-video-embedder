@@ -11,6 +11,11 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
 		$this->assertContains( 'sandbox="allow-scripts allow-same-origin allow-popups"', arve_shortcode_arve( $attr ) );
 
+		$attr['disable_links'] = 'y';
+
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+		$this->assertContains( 'sandbox="allow-scripts allow-same-origin"', arve_shortcode_arve( $attr ) );
+
 		$attr = array(
 			'url' => 'https://vimeo.com/214300845',
 		);
@@ -122,7 +127,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( '<meta itemprop="name" content="Test &lt;title&gt;">', $output );
 		$this->assertContains( '<meta itemprop="uploadDate" content="2016-10-22">', $output );
 		$this->assertContains( 'src="https://www.youtube.com/embed/hRonZ4wP8Ys', $output );
-		$this->assertContains( ' sandbox="allow-scripts allow-same-origin allow-popups">', $output );
+		$this->assertContains( ' sandbox="allow-scripts allow-same-origin allow-popups"', $output );
 	}
 
 	public function test_html5() {
