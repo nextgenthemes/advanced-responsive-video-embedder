@@ -21,7 +21,6 @@ function arve_filter_atts_sandbox( $atts ) {
 	return $atts;
 }
 
-
 function arve_filter_atts_validate( $atts ) {
 
 	if ( ! empty( $atts['url'] ) && ! arve_validate_url( $atts['url'] ) ) {
