@@ -1145,6 +1145,7 @@ function arve_get_host_properties() {
 		),
 		'google_drive' => array( 'name', 'Google Drive' ),
 		'dropbox'      => null,
+		'ooyala'       => null,
 	);
 
 	foreach ( $properties as $key => $value ) {
@@ -1164,32 +1165,32 @@ function arve_get_host_properties() {
 	return $properties;
 }
 
-function arve_attr( $attr = array(), $filter_name = false ) {
+function arve_attr( $attr = array(), $filter_name = false, $atts = array() ) {
 
 	if ( $filter_name ) {
-		$attr = apply_filters( 'arve_attr_' . $filter_name, $attr );
+		$attr = apply_filters( 'arve_attr_' . $filter_name, $attr, $atts );
 	}
 
 	if ( empty( $attr ) ) {
 		return '';
 	}
 
-	$out = '';
+	$html = '';
 
 	foreach ( $attr as $key => $value ) {
 
 		if ( false === $value || null === $value ) {
 			continue;
 		} elseif ( '' === $value || true === $value ) {
-			$out .= sprintf( ' %s', esc_html( $key ) );
+			$html .= sprintf( ' %s', esc_html( $key ) );
 		} elseif ( in_array( $key, array( 'href', 'data-href', 'src', 'data-src' ) ) ) {
-			$out .= sprintf( ' %s="%s"', esc_html( $key ), arve_esc_url( $value ) );
+			$html .= sprintf( ' %s="%s"', esc_html( $key ), arve_esc_url( $value ) );
 		} else {
-			$out .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );
+			$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );
 		}
 	}
 
-	return $out;
+	return $html;
 }
 
 function arve_esc_url( $url ) {

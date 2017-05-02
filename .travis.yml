@@ -4,8 +4,6 @@ sudo: false
 
 php:
 - 5.3
-- 5.4
-- 5.5
 - 5.6
 - 7.0
 - 7.1
@@ -14,7 +12,6 @@ env:
   matrix:
   - WP_VERSION=latest WP_MULTISITE=0
   - WP_VERSION=4.6 WP_MULTISITE=0
-  - WP_VERSION=4.5 WP_MULTISITE=0
   global:
     secure: HiPTPBaYNi1WkOXiacGKtksl8OIrA3Ul0iM9rWwPFD+lwGrs0UPZqr7vVsrhWBrbiEEypYTceFcGiLtabUxSh77g37XjpcbOYQAfEOiaLHIQrrq+qtzi0P+YGeJmnCuJUtdCRIM2GzCdXtLojBIxresjkoX43bzYkc8EMPr2Yk14FKceh1sU4JCfu/gfvbm2UBjcEWWkhQhCwAapLjFxUbv5FzaSbRoYqztbmMxa2431B+iAeh7mANGl8MFvVxwnb3NsUhItOGd/jkh9oCSNzcWb8kZplsFAKfxDyKB+TUjf/YM1zuItyhgx1/bdz+BEQRiI6uPUSADzQrfoRvtERoeBtRlH/jtg9HzNBYpk3zXztvOQKmAvRc6V+vbIX1rEX7UL/4OhVmoUf+G6aNZ1BKVP7wdMUJXuj3gyI7TImxQkPJUrgtZekYwBlSNbnQQdlogntKJFcrd4mB2tjsn0HMp/Gqd8lQkbsU/JzidQ/zEG0qeGozq+Sk41ofRkS3XDQ5VZwckPrFXQoQq732jVnLu4Xazi1sZruw8n3BE7zcSAEPoyA4G1MtGwmeiflsWDRL7qU+RITe8pXUifFqsYFMnyCHScT3CNJnjODCBBtG3PWpFhlQ84SMZQvww0k459nhHnIcjXw0DvKTTg17nD0oDw3bnRwCwnojw1VFmFh3E=
 matrix:
@@ -24,12 +21,6 @@ matrix:
   exclude:
   - php: 7.1
     env: WP_VERSION=4.6 WP_MULTISITE=0
-  - php: 7.1
-    env: WP_VERSION=4.5 WP_MULTISITE=0
-  - php: 7.1
-    env: WP_VERSION=4.4 WP_MULTISITE=0
-  - php: hhvm
-    env: WP_VERSION=4.0 WP_MULTISITE=0
 
 before_script:
   - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION

@@ -150,37 +150,32 @@ function arve_arve_embed_container( $html, $atts ) {
 	return sprintf( '<div%s>%s</div>', arve_attr( $attr ), $html );
 }
 
-function arve_arve_wrapper( $output, $atts ) {
+function arve_arve_wrapper( $html, $atts ) {
 
-	$wrapper_class = sprintf(
-		'arve-wrapper%s%s%s',
-		empty( $atts['hover_effect'] ) ? '' : ' arve-hover-effect-' . $atts['hover_effect'],
-		empty( $atts['align'] )        ? '' : ' align' . $atts['align'],
-		( 'link-lightbox' == $atts['mode'] ) ? ' arve-hidden' : ''
-	);
+	$align_class = empty( $atts['align'] ) ? '' : ' align' . $atts['align'];
 
-	$attr = array(
-		'id'                   => $atts['embed_id'],
-		'class'                => $wrapper_class,
-		'data-arve-grow'       => ( 'lazyload' === $atts['mode'] && $atts['grow'] ) ? '' : null,
+	$wrapper_attr = array(
+		'class'                => "arve-wrapper$align_class",
+		#'data-arve-autoplay'   => ( 'webtorrent' == $atts['provider'] && $atts['autoplay'] ) ? true : false,
+		#'data-arve-controls'   => ( 'webtorrent' == $atts['provider'] && $atts['controls'] ) ? true : false,
+		#'data-arve-webtorrent' => empty( $atts['webtorrent'] ) ? false : $atts['webtorrent'],
 		'data-arve-mode'       => $atts['mode'],
 		'data-arve-provider'   => $atts['provider'],
-		'data-arve-webtorrent' => empty( $atts['webtorrent'] ) ? false : $atts['webtorrent'],
-		'data-arve-autoplay'   => ( 'webtorrent' == $atts['provider'] && $atts['autoplay'] ) ? true : false,
-		'data-arve-controls'   => ( 'webtorrent' == $atts['provider'] && $atts['controls'] ) ? true : false,
-		#'data-arve-maxwidth'  => empty( $atts['maxwidth'] ) ? false : sprintf( '%dpx',             $atts['maxwidth'] ),
+		'id'                   => $atts['embed_id'],
 		'style'                => empty( $atts['maxwidth'] ) ? false : sprintf( 'max-width:%dpx;', $atts['maxwidth'] ),
 		// Schema.org
 		'itemscope' => '',
 		'itemtype'  => 'http://schema.org/VideoObject',
 	);
 
+	$element = ( 'link-lightbox' == $atts['mode'] ) ? 'span' : 'div';
+
 	return sprintf(
 		'<%s%s>%s</%s>',
-		( 'link-lightbox' == $atts['mode'] ) ? 'span' : 'div',
-		arve_attr( $attr ),
-		$output,
-		( 'link-lightbox' == $atts['mode'] ) ? 'span' : 'div'
+		$element,
+		arve_attr( $wrapper_attr, 'arve-wrapper', $atts ),
+		$html,
+		$element
 	);
 }
 
