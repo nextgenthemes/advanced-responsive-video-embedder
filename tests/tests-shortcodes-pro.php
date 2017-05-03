@@ -59,9 +59,6 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 
 		$options = arve_pro_get_options();
 
-		$this->assertEquals( 'android-ios-nothumb', $options['inview_lazyload'] );
-		$this->assertTrue( ! arve_pro_is_ios_or_android(), 'not ios or android' );
-
 		$attr = array(
 			'url'       => 'https://example.com',
 			'thumbnail' => 'https://example.com/example.jpg',
