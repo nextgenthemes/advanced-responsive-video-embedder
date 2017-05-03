@@ -152,28 +152,12 @@ function arve_arve_embed_container( $html, $atts ) {
 
 function arve_arve_wrapper( $html, $atts ) {
 
-	$align_class = empty( $atts['align'] ) ? '' : ' align' . $atts['align'];
-
-	$wrapper_attr = array(
-		'class'                => "arve-wrapper$align_class",
-		#'data-arve-autoplay'   => ( 'webtorrent' == $atts['provider'] && $atts['autoplay'] ) ? true : false,
-		#'data-arve-controls'   => ( 'webtorrent' == $atts['provider'] && $atts['controls'] ) ? true : false,
-		#'data-arve-webtorrent' => empty( $atts['webtorrent'] ) ? false : $atts['webtorrent'],
-		'data-arve-mode'       => $atts['mode'],
-		'data-arve-provider'   => $atts['provider'],
-		'id'                   => $atts['embed_id'],
-		'style'                => empty( $atts['maxwidth'] ) ? false : sprintf( 'max-width:%dpx;', $atts['maxwidth'] ),
-		// Schema.org
-		'itemscope' => '',
-		'itemtype'  => 'http://schema.org/VideoObject',
-	);
-
 	$element = ( 'link-lightbox' == $atts['mode'] ) ? 'span' : 'div';
 
 	return sprintf(
 		'<%s%s>%s</%s>',
 		$element,
-		arve_attr( $wrapper_attr, 'arve-wrapper', $atts ),
+		arve_attr( $atts['wrapper_attr'] ),
 		$html,
 		$element
 	);
@@ -206,61 +190,27 @@ function arve_video_or_iframe( $atts ) {
  */
 function arve_create_iframe_tag( $atts ) {
 
-	$options    = arve_get_options();
-	$properties = arve_get_host_properties();
-
-	$iframe_attr = array(
-		'allowfullscreen' => '',
-		'class'       => 'arve-iframe fitvidsignore',
-		'frameborder' => '0',
-		'name'        => $atts['iframe_name'],
-		'scrolling'   => 'no',
-		'src'         => $atts['iframe_src'],
-		'sandbox'     => $atts['iframe_sandbox'],
-		'width'       => ! empty( $atts['width'] )  ? $atts['width']  : false,
-		'height'      => ! empty( $atts['height'] ) ? $atts['height'] : false,
-	);
-
 	if ( in_array( $atts['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ) {
-		$lazyload_iframe_attr = arve_prefix_array_keys( 'data-', $iframe_attr );
+		$lazyload_iframe_attr = arve_prefix_array_keys( 'data-', $atts['iframe_attr'] );
 
 		$output = sprintf( '<span class="arve-lazyload"%s></span>', arve_attr( $lazyload_iframe_attr ) );
 	} else {
-		$output = sprintf( '<iframe%s></iframe>', arve_attr( $iframe_attr ) );
+		$output = sprintf( '<iframe%s></iframe>', arve_attr( $atts['iframe_attr'] ) );
 	}
 
-	return apply_filters( 'arve_iframe_tag', $output, $atts, $iframe_attr );
+	return apply_filters( 'arve_iframe_tag', $output, $atts );
 }
 
-function arve_create_video_tag( $atts ) {
+function arve_create_video_tag( $a ) {
 
-	$sources_html = '';
-
-	if ( in_array( $atts['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ) {
-		$atts['autoplay'] = null;
-	}
-
-	$video_attr = array(
-		'autoplay' => in_array( $atts['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ? false : $atts['autoplay'],
-		'class'    => 'arve-video fitvidsignore',
-		'controls' => $atts['controls'],
-		'loop'     => $atts['loop'],
-		'poster'   => isset( $atts['img_src'] ) ? $atts['img_src'] : false,
-		'preload'  => $atts['preload'],
-		'src'      => isset( $atts['video_src'] ) ? $atts['video_src'] : false,
-
-		'width'    => ! empty( $atts['width'] )  ? $atts['width'] :  false,
-		'height'   => ! empty( $atts['height'] ) ? $atts['height'] : false,
-	);
-
-	$output = sprintf(
+	$html = sprintf(
 		'<video%s>%s%s</video>',
-		arve_attr( $video_attr, 'video' ),
-		$atts['video_sources_html'],
-		$atts['video_tracks']
+		arve_attr( $a['video_attr'] ),
+		$a['video_sources_html'],
+		$a['video_tracks']
 	);
 
-	return apply_filters( 'arve_video_tag', $output, $atts, $video_attr );
+	return apply_filters( 'arve_video_tag', $html, $a );
 }
 
 function arve_error( $message ) {

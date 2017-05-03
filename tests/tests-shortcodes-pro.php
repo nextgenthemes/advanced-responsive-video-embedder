@@ -81,8 +81,8 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 
 		$properties = arve_get_host_properties();
 
-		remove_filter( 'shortcode_atts_arve',    'arve_pro_filter_atts_img_src', 8 );
-		remove_filter( 'shortcode_atts_arve',    'arve_pro_filter_atts_img_src_srcset', 9 );
+		remove_filter( 'shortcode_atts_arve',    'arve_pro_sc_filter_img_src', 8 );
+		remove_filter( 'shortcode_atts_arve',    'arve_pro_sc_filter_img_src_srcset', 9 );
 
 		foreach ( $properties as $provider => $props ) :
 
@@ -116,8 +116,8 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 			}
 		endforeach;
 
-		add_filter( 'shortcode_atts_arve',    'arve_pro_filter_atts_img_src', 8 );
-		add_filter( 'shortcode_atts_arve',    'arve_pro_filter_atts_img_src_srcset', 9 );
+		add_filter( 'shortcode_atts_arve',    'arve_pro_sc_filter_img_src', 8 );
+		add_filter( 'shortcode_atts_arve',    'arve_pro_sc_filter_img_src_srcset', 9 );
 	}
 
 	public function test_api_calls() {

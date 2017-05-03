@@ -110,9 +110,7 @@ function arve_aspect_ratio_fixes( $aspect_ratio, $provider, $mode ) {
 	return $aspect_ratio;
 }
 
-function arve_add_autoplay_query_arg( $atts ) {
-
-	$src = $atts['iframe_src'];
+function arve_add_autoplay_query_arg( $src, $atts ) {
 
 	switch ( $atts['provider'] ) {
 		case 'alugha':
@@ -188,25 +186,22 @@ function arve_add_autoplay_query_arg( $atts ) {
 	}
 }
 
-function arve_add_query_args_to_iframe_src( $atts ) {
+function arve_add_query_args_to_iframe_src( $src, $atts ) {
 
 	$options = arve_get_options();
 
-	$parameters = $atts['parameters'];
-	$provider   = $atts['provider'];
+	$host = $atts['provider'];
 
-	$parameters        = wp_parse_args( preg_replace( '!\s+!', '&', trim( $parameters ) ) );
+	$parameters        = wp_parse_args( preg_replace( '!\s+!', '&', trim( $atts['parameters'] ) ) );
 	$option_parameters = array();
 
-	if ( isset( $options['params'][ $provider ] ) ) {
-		$option_parameters = wp_parse_args( preg_replace( '!\s+!', '&', trim( $options['params'][ $provider ] ) ) );
+	if ( isset( $options['params'][ $host ] ) ) {
+		$option_parameters = wp_parse_args( preg_replace( '!\s+!', '&', trim( $options['params'][ $host ] ) ) );
 	}
 
 	$parameters = wp_parse_args( $parameters, $option_parameters );
 
-	$src = add_query_arg( $parameters, $atts['iframe_src'] );
-
-	return $src;
+	return add_query_arg( $parameters, $src );
 }
 
 function arve_maxwidth_when_aligned( $maxwidth, $align ) {

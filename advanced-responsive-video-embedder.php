@@ -74,19 +74,17 @@ function arve_init() {
 	add_filter( 'widget_text',         'do_shortcode' );
 	add_filter( 'language_attributes', 'arve_html_id' );
 
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_sanitise', -12 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_provider_and_id_from_url', -10 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_youtube_playlist', -8 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_get_media_gallery_video', -7 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_detect_html5', -6 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_iframe_fallback', -4 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_validate', -2 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_get_media_gallery_thumbnail', 0 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_sandbox', 9 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_build_subtitles', 20 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_build_iframe_src', 20 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_set_fixed_dimensions', 20 );
-	add_filter( 'shortcode_atts_arve', 'arve_filter_atts_generate_embed_id', 20 );
+	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_sanitise', -12 );
+	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_detect_provider_and_id_from_url', -10 );
+	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_detect_youtube_playlist', -8 );
+	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_get_media_gallery_video', -7 );
+	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_detect_html5', -6 );
+	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_iframe_fallback', -4 );
+	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_validate', -2 );
+	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_get_media_gallery_thumbnail', 0 );
+	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_attr', 20 );
+	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_build_subtitles', 20 );
+	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_set_fixed_dimensions', 20 );
 
 	# Admin Hooks
 	add_action( 'admin_enqueue_scripts', 'arve_admin_enqueue_scripts' );
