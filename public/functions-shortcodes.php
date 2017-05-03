@@ -30,6 +30,7 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 		'webm'        => null,
 		'preload'     => 'metadata',
 		'playsinline' => null,
+		'muted'       => null,
 		'controls'    => 'y',
 		'loop'        => 'n',
 		# TED only

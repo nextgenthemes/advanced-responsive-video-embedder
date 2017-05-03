@@ -165,21 +165,17 @@ function arve_arve_wrapper( $html, $atts ) {
 
 function arve_video_or_iframe( $atts ) {
 
-	if ( 'veoh' == $atts['provider'] ) {
+	switch( $atts['provider'] ) {
 
-		return arve_create_object( $atts );
-
-	} elseif ( 'html5' == $atts['provider'] ) {
-
-		return arve_create_video_tag( $atts );
-
-	} elseif( 'webtorrent' == $atts['provider'] ) {
-
-		return '<div class="arve-webtorrent-progress-bar"></div>';
-
-	} else {
-
-		return arve_create_iframe_tag( $atts );
+		case 'veoh':
+			return arve_create_object( $atts );
+			break;
+		case 'html5':
+			return arve_create_video_tag( $atts );
+			break;
+		default:
+			return arve_create_iframe_tag( $atts );
+			break;
 	}
 }
 
@@ -188,29 +184,31 @@ function arve_video_or_iframe( $atts ) {
  *
  * @since    2.6.0
  */
-function arve_create_iframe_tag( $atts ) {
+function arve_create_iframe_tag( $a ) {
 
-	if ( in_array( $atts['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ) {
-		$lazyload_iframe_attr = arve_prefix_array_keys( 'data-', $atts['iframe_attr'] );
-
-		$output = sprintf( '<span class="arve-lazyload"%s></span>', arve_attr( $lazyload_iframe_attr ) );
+	if ( in_array( $a['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ) {
+		$html = sprintf(
+			'<span class="arve-lazyload"%s></span>',
+			arve_attr( arve_prefix_array_keys( 'data-', $a['iframe_attr'] ) )
+		);
 	} else {
-		$output = sprintf( '<iframe%s></iframe>', arve_attr( $atts['iframe_attr'] ) );
+		$html = sprintf( '<iframe%s></iframe>', arve_attr( $a['iframe_attr'] ) );
 	}
 
-	return apply_filters( 'arve_iframe_tag', $output, $atts );
+	return apply_filters( 'arve_iframe_tag', $html, $a, $a['iframe_attr'] );
 }
 
 function arve_create_video_tag( $a ) {
+
 
 	$html = sprintf(
 		'<video%s>%s%s</video>',
 		arve_attr( $a['video_attr'] ),
 		$a['video_sources_html'],
-		$a['video_tracks']
+		$a['video_tracks_html']
 	);
 
-	return apply_filters( 'arve_video_tag', $html, $a );
+	return apply_filters( 'arve_video_tag', $html, $a, $a['video_attr'] );
 }
 
 function arve_error( $message ) {

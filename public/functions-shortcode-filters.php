@@ -34,49 +34,57 @@ function arve_sc_filter_attr( $a ) {
 		'itemtype'  => 'http://schema.org/VideoObject',
 	);
 
-	$iframe_src = arve_build_iframe_src( $a );
-	$iframe_src = arve_add_query_args_to_iframe_src( $iframe_src, $a );
-	$iframe_src = arve_add_autoplay_query_arg( $iframe_src, $a );
+	if( 'html5' == $a['provider'] ) {
 
-	if ( 'vimeo' == $a['provider'] && ! empty( $a['start'] ) ) {
-		$iframe_src .= '#t=' . (int) $a['start'];
+		$a['video_attr'] = array(
+			'autoplay'    => in_array( $a['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ? false : $a['autoplay'],
+			'class'       => 'arve-video fitvidsignore',
+			'controls'    => $a['controls'],
+			'loop'        => $a['loop'],
+			'poster'      => isset( $a['img_src'] ) ? $a['img_src'] : false,
+			'preload'     => $a['preload'],
+			'src'         => isset( $a['video_src'] ) ? $a['video_src'] : false,
+			'muted'       => $a['muted'],
+			'width'       => ! empty( $a['width'] ) ? $a['width'] : false,
+			'height'      => ! empty( $a['height'] ) ? $a['height'] : false,
+			'playsinline' => $a['playsinline'],
+			'webkit-playsinline' => $a['playsinline'],
+		);
+
+	} else {
+
+		$properties = arve_get_host_properties();
+
+		$iframe_src = arve_build_iframe_src( $a );
+		$iframe_src = arve_add_query_args_to_iframe_src( $iframe_src, $a );
+		$iframe_src = arve_add_autoplay_query_arg( $iframe_src, $a );
+
+		if ( 'vimeo' == $a['provider'] && ! empty( $a['start'] ) ) {
+			$iframe_src .= '#t=' . (int) $a['start'];
+		}
+
+		$iframe_sandbox = 'allow-scripts allow-same-origin allow-popups';
+
+		if ( 'vimeo' == $a['provider'] ) {
+			$iframe_sandbox .= ' allow-forms';
+		}
+
+		if ( null === $a['disable_flash'] && $properties[ $a['provider'] ]['requires_flash'] ) {
+			$iframe_sandbox = false;
+		}
+
+		$a['iframe_attr'] = array(
+			'allowfullscreen' => '',
+			'class'       => 'arve-iframe fitvidsignore',
+			'frameborder' => '0',
+			'name'        => $a['iframe_name'],
+			'scrolling'   => 'no',
+			'src'         => $iframe_src,
+			'sandbox'     => $iframe_sandbox,
+			'width'       => ! empty( $a['width'] )  ? $a['width']  : false,
+			'height'      => ! empty( $a['height'] ) ? $a['height'] : false,
+		);
 	}
-
-	$properties = arve_get_host_properties();
-
-	$iframe_sandbox = 'allow-scripts allow-same-origin allow-popups';
-
-	if ( 'vimeo' == $a['provider'] ) {
-		$iframe_sandbox .= ' allow-forms';
-	}
-
-	if ( null === $a['disable_flash'] && $properties[ $a['provider'] ]['requires_flash'] ) {
-		$iframe_sandbox = false;
-	}
-
-	$a['iframe_attr'] = array(
-		'allowfullscreen' => '',
-		'class'       => 'arve-iframe fitvidsignore',
-		'frameborder' => '0',
-		'name'        => $a['iframe_name'],
-		'scrolling'   => 'no',
-		'src'         => $iframe_src,
-		'sandbox'     => $iframe_sandbox,
-		'width'       => ! empty( $a['width'] )  ? $a['width']  : false,
-		'height'      => ! empty( $a['height'] ) ? $a['height'] : false,
-	);
-
-	$a['video_attr'] = array(
-		'autoplay' => in_array( $a['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ? false : $a['autoplay'],
-		'class'    => 'arve-video fitvidsignore',
-		'controls' => $a['controls'],
-		'loop'     => $a['loop'],
-		'poster'   => isset( $a['img_src'] ) ? $a['img_src'] : false,
-		'preload'  => $a['preload'],
-		'src'      => isset( $a['video_src'] ) ? $a['video_src'] : false,
-		'width'    => ! empty( $a['width'] )  ? $a['width'] :  false,
-		'height'   => ! empty( $a['height'] ) ? $a['height'] : false,
-	);
 
 	return $a;
 }
@@ -91,11 +99,13 @@ function arve_sc_filter_validate( $atts ) {
 
 	$atts['mode'] = arve_validate_mode( $atts['mode'], $atts['provider'] );
 
-	$atts['autoplay']      = arve_validate_bool( $atts['autoplay'],  'autoplay' );
+	$atts['autoplay']      = arve_validate_bool( $atts['autoplay'], 'autoplay' );
 	$atts['arve_link']     = arve_validate_bool( $atts['arve_link'], 'arve_link' );
-	$atts['loop']          = arve_validate_bool( $atts['loop'],      'loop' );
-	$atts['controls']      = arve_validate_bool( $atts['controls'],  'controls' );
+	$atts['loop']          = arve_validate_bool( $atts['loop'], 'loop' );
+	$atts['controls']      = arve_validate_bool( $atts['controls'], 'controls' );
 	$atts['disable_flash'] = arve_validate_bool( $atts['disable_flash'], 'disable_flash' );
+	$atts['muted']         = arve_validate_bool( $atts['muted'], 'muted' );
+	$atts['playsinline']   = arve_validate_bool( $atts['playsinline'], 'playsinline' );
 
 	$atts['maxwidth']  = (int) $atts['maxwidth'];
 	$atts['maxwidth']  = (int) arve_maxwidth_when_aligned( $atts['maxwidth'], $atts['align'] );
@@ -368,30 +378,13 @@ function arve_sc_filter_iframe_fallback( $atts ) {
 	return $atts;
 }
 
-function arve_sc_filter_build_iframe_src( $atts ) {
-
-	if ( in_array( $atts['provider'], array( 'html5', 'webtorrent' ) ) ) {
-		return null;
-	}
-
-	$src = arve_build_iframe_src( $atts );
-	$src = arve_add_query_args_to_iframe_src( $src, $atts );
-	$src = arve_add_autoplay_query_arg( $src, $atts );
-
-	if ( 'vimeo' == $atts['provider'] && ! empty( $atts['start'] ) ) {
-		$src .= '#t=' . (int) $atts['start'];
-	}
-
-	return $src;
-}
-
-function arve_sc_filter_build_subtitles( $atts ) {
+function arve_sc_filter_build_tracks_html( $atts ) {
 
 	if ( 'html5' != $atts['provider'] ) {
 		return $atts;
 	}
 
-	$atts[ "video_tracks" ] = '';
+	$atts['video_tracks_html'] = '';
 
 	for ( $n = 1; $n <= ARVE_NUM_TRACKS; $n++ ) {
 
@@ -416,7 +409,7 @@ function arve_sc_filter_build_subtitles( $atts ) {
 			'srclang' => $matches[2],
 		);
 
-		$atts[ "video_tracks" ] .= sprintf( '<track%s>', arve_attr( $attr) );
+		$atts['video_tracks_html'] .= sprintf( '<track%s>', arve_attr( $attr) );
 	}
 
 	return $atts;

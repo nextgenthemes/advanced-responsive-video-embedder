@@ -20,7 +20,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 define( 'ARVE_SLUG',                 'advanced-responsive-video-embedder' );
 define( 'ARVE_VERSION',              '8.4.2' );
-define( 'ARVE_PRO_VERSION_REQUIRED', '3.9.0' );
+define( 'ARVE_PRO_VERSION_REQUIRED', '4.0.0' );
 
 define( 'ARVE_URL', plugin_dir_url( __FILE__ ) );
 define( 'ARVE_PUBLIC_URL', ARVE_URL . 'public/' );
@@ -62,7 +62,7 @@ function arve_init() {
 	require_once __DIR__ . '/public/functions-validation.php';
 	require_once __DIR__ . '/shared/functions-shared.php';
 
-	add_action( 'plugins_loaded',      'arve_load_plugin_textdomain' );
+	add_action( 'plugins_loaded', 'arve_load_plugin_textdomain' );
 
 	# Public hooks
 	add_action( 'plugins_loaded',      'arve_create_shortcodes', 999 );
@@ -83,8 +83,8 @@ function arve_init() {
 	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_validate', -2 );
 	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_get_media_gallery_thumbnail', 0 );
 	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_attr', 20 );
-	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_build_subtitles', 20 );
 	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_set_fixed_dimensions', 20 );
+	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_build_tracks_html', 20 );
 
 	# Admin Hooks
 	add_action( 'admin_enqueue_scripts', 'arve_admin_enqueue_scripts' );
