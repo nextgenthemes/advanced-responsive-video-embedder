@@ -24,11 +24,11 @@ function arve_sc_filter_attr( $a ) {
 	}
 
 	$a['wrapper_attr'] = array(
-		'class'     => "arve-wrapper$align_class",
-		'data-mode' => $a['mode'],
-		'data-host' => $a['provider'],
-		'id'        => $wrapper_id,
-		'style'     => empty( $a['maxwidth'] ) ? false : sprintf( 'max-width:%dpx;', $a['maxwidth'] ),
+		'class'         => "arve-wrapper$align_class",
+		'data-mode'     => $a['mode'],
+		'data-provider' => $a['provider'],
+		'id'            => $wrapper_id,
+		'style'         => empty( $a['maxwidth'] ) ? false : sprintf( 'max-width:%dpx;', $a['maxwidth'] ),
 		// Schema.org
 		'itemscope' => '',
 		'itemtype'  => 'http://schema.org/VideoObject',

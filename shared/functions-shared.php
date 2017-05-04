@@ -1159,17 +1159,12 @@ function arve_get_host_properties() {
 		if( empty( $value['requires_flash'] ) ) {
 			$properties[ $key ]['requires_flash'] = false;
 		}
-
 	}
 
 	return $properties;
 }
 
-function arve_attr( $attr = array(), $filter_name = false, $atts = array() ) {
-
-	if ( $filter_name ) {
-		$attr = apply_filters( 'arve_attr_' . $filter_name, $attr, $atts );
-	}
+function arve_attr( $attr = array() ) {
 
 	if ( empty( $attr ) ) {
 		return '';
