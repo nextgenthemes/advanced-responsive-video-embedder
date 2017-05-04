@@ -3,6 +3,11 @@
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2017-05-04 - 8.5.0 ###
+
+* New: playsinline, and muted attributes for HTML5 video.
+* Code improvements for addons.
+
 ### 2017-05-01 - 8.4.2 ###
 
 * Code improvements for addons.

@@ -197,6 +197,15 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2017-05-04 - 8.5.0 ###
+
+* New: playsinline, and muted attributes for HTML5 video.
+* Code improvements for addons.
+
+### 2017-05-01 - 8.4.2 ###
+
+* Code improvements for addons.
+
 ### 2017-04-30 - 8.4.1 ###
 
 * Fix password protected videos on vimeo (sandbox allow-forms)
