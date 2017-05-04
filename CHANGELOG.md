@@ -6,7 +6,7 @@
 ### 2017-05-04 - 8.5.0 ###
 
 * New: playsinline, and muted attributes for HTML5 video.
-* data attributes are no longer prefixed with -arve and various other code improvements.
+* Data attributes are no longer prefixed with -arve and various other code improvements.
 
 ### 2017-05-01 - 8.4.2 ###
 
