@@ -163,7 +163,7 @@ function arve_add_media_button() {
 	);
 
 	printf(
-		'<button id="arve-btn" title="%s" data-arve-mode="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
+		'<button id="arve-btn" title="%s" data-mode="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
 		esc_attr__( 'ARVE Advanced Responsive Video Embedder', ARVE_SLUG ),
 		esc_attr( $options['mode'] ),
 		esc_html__( 'Embed Video (ARVE)', ARVE_SLUG )
@@ -227,8 +227,8 @@ function arve_input( $args ) {
 			'<a %s>%s</a>',
 			arve_attr(
 				array(
-					'data-arve-image-upload' => '[name="' . $args['input_attr']['name'] . '"]',
-					'class' => 'button-secondary',
+					'data-image-upload' => sprintf( '[name="%s"]', $args['input_attr']['name'] ),
+					'class'             => 'button-secondary',
 				)
 			),
 			__('Upload Image', ARVE_SLUG )

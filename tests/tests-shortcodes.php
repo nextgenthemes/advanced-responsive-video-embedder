@@ -96,7 +96,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$output = arve_shortcode_arve( array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys' ) );
 
 		$this->assertNotContains( 'Error', $output );
-		$this->assertContains( 'data-arve-mode="normal"', $output );
+		$this->assertContains( 'data-mode="normal"', $output );
 
 		$modes = array( 'lazyload', 'lazyload-lightbox' );
 
@@ -144,14 +144,14 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 			$this->assertNotContains( 'Error', $output );
 			$this->assertNotContains( '<iframe', $output );
-			$this->assertContains( 'data-arve-provider="html5"', $output );
+			$this->assertContains( 'data-provider="html5"', $output );
 			$this->assertContains( '<video', $output );
 
 			$output = arve_shortcode_arve( array( $ext => 'https://example.com/video.' . $ext ) );
 
 			$this->assertNotContains( 'Error', $output );
 			$this->assertNotContains( '<iframe', $output );
-			$this->assertContains( 'data-arve-provider="html5"', $output );
+			$this->assertContains( 'data-provider="html5"', $output );
 			$this->assertContains( '<video', $output );
 		}
 
@@ -173,7 +173,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$this->assertNotContains( 'Error', $output );
 		$this->assertNotContains( '<iframe', $output );
-		$this->assertContains( 'data-arve-provider="html5"', $output );
+		$this->assertContains( 'data-provider="html5"', $output );
 		$this->assertContains( '<video', $output );
 		$this->assertContains( 'poster="https://example.com/image.jpg"', $output );
 		$this->assertContains( '<source type="video/ogg" src="https://example.com/video.ogv">', $output );
@@ -187,7 +187,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$this->assertNotContains( 'Error', $output );
 		$this->assertRegExp( '#<iframe .*src="https://example\.com#', $output );
-		$this->assertContains( 'data-arve-provider="iframe"', $output );
+		$this->assertContains( 'data-provider="iframe"', $output );
 	}
 
 	public function test_regex() {
@@ -278,14 +278,14 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$attr = array( 'url' => 'https://example.com' );
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr) );
 		$this->assertRegExp( '#<iframe .*src="https://example\.com#', arve_shortcode_arve( $attr) );
-		$this->assertContains( 'data-arve-provider="iframe"', arve_shortcode_arve( $attr ) );
+		$this->assertContains( 'data-provider="iframe"', arve_shortcode_arve( $attr ) );
 		$this->assertNotContains( 'sandbox="', arve_shortcode_arve( $attr ) );
 
 		$attr['disable_flash'] = 'y';
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr) );
 		$this->assertRegExp( '#<iframe .*src="https://example\.com#', arve_shortcode_arve( $attr) );
-		$this->assertContains( 'data-arve-provider="iframe"', arve_shortcode_arve( $attr ) );
+		$this->assertContains( 'data-provider="iframe"', arve_shortcode_arve( $attr ) );
 		$this->assertContains( 'sandbox="', arve_shortcode_arve( $attr ) );
 	}
 
@@ -296,6 +296,6 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr) );
 
 		$this->assertRegExp( '#<video .*src="https://www\.dropbox\.com/s/ocqf9u5pn9b4ox0/Oops%20I%20dropped%20my%20Hoop\.mp4\?dl=1#', arve_shortcode_arve( $attr) );
-		$this->assertContains( 'data-arve-provider="html5"', arve_shortcode_arve( $attr ) );
+		$this->assertContains( 'data-provider="html5"', arve_shortcode_arve( $attr ) );
 	}
 }

@@ -182,8 +182,8 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 		);
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
-		$this->assertContains( 'data-arve-mode="lazyload"', arve_shortcode_arve( $attr ) );
-		$this->assertContains( 'data-arve-grow', arve_shortcode_arve( $attr ) );
+		$this->assertContains( 'data-mode="lazyload"', arve_shortcode_arve( $attr ) );
+		$this->assertContains( 'data-grow', arve_shortcode_arve( $attr ) );
 	}
 
 	public function test_modes() {
@@ -200,7 +200,7 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 			$attr['mode'] = $mode;
 
 			$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
-			$this->assertContains( sprintf( 'data-arve-mode="%s"', $mode ), arve_shortcode_arve( $attr ), "mode: $mode" );
+			$this->assertContains( sprintf( 'data-mode="%s"', $mode ), arve_shortcode_arve( $attr ), "mode: $mode" );
 		}
 	}
 
