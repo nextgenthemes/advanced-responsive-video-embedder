@@ -3,6 +3,10 @@
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2017-05-05 - 8.5.2 ###
+
+* Improved: Embed Liveleak with https.
+
 ### 2017-05-05 - 8.5.1 ###
 
 * Improved: Mark Liveleak that it not requires flash anymore. This makes the 'disable links' option of the Pro Addon possible. Becomes very handy as Liveleak annoyingly opens new tabs when clicking outside the play button.

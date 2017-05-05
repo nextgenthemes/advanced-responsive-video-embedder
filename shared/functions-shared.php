@@ -572,7 +572,7 @@ function arve_get_host_properties() {
 		'liveleak' => array(
 			'name'           => 'LiveLeak',
 			'regex'          => $s . 'liveleak\.com/(view|ll_embed)\?(?<id>(f|i)=[0-9a-z\_]+)',
-			'embed_url'      => 'http://www.liveleak.com/ll_embed?%s',
+			'embed_url'      => 'https://www.liveleak.com/ll_embed?%s',
 			'default_params' => 'wmode=transparent',
 			'auto_thumbnail' => true,
 			'tests' => array(
