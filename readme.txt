@@ -199,7 +199,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ### 2017-05-05 - 8.5.2 ###
 
-* Improved: Embed Liveleak with https.
+* Improved: Embed Liveleak with https. Remove the default parameter.
 
 ### 2017-05-05 - 8.5.1 ###
 
