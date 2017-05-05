@@ -574,8 +574,7 @@ function arve_get_host_properties() {
 			'regex'          => $s . 'liveleak\.com/(view|ll_embed)\?(?<id>(f|i)=[0-9a-z\_]+)',
 			'embed_url'      => 'http://www.liveleak.com/ll_embed?%s',
 			'default_params' => 'wmode=transparent',
-			'auto_thumbnail' => false,
-			'requires_flash' => true,
+			'auto_thumbnail' => true,
 			'tests' => array(
 				array( 'url' => 'http://www.liveleak.com/view?i=703_1385224413', 'id' => 'i=703_1385224413' ), # Page/item 'i=' URL
 				array( 'url' => 'http://www.liveleak.com/view?f=c85bdf5e45b2',   'id' => 'f=c85bdf5e45b2' ),     #File f= URL
