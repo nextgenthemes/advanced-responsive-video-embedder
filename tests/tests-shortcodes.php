@@ -151,8 +151,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			$this->assertContains( 'data-provider="html5"', $with_ext );
 			$this->assertContains( '<video', $with_src );
 			$this->assertContains( '<video', $with_ext );
-			$this->assertContains( 'controllist="nodownload"', $with_src );
-			$this->assertContains( 'controllist="nodownload"', $with_ext );
+			$this->assertContains( 'controlslist="nodownload"', $with_src );
+			$this->assertContains( 'controlslist="nodownload"', $with_ext );
 		}
 
 		$attr = array(
