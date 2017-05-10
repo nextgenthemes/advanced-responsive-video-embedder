@@ -186,7 +186,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( '<source type="video/ogg" src="https://example.com/video.ogv">', $output );
 		$this->assertContains( '<source type="video/mp4" src="https://example.com/video.mp4">', $output );
 		$this->assertContains( '<source type="video/webm" src="https://example.com/video.webm">', $output );
-		$this->assertContains( 'controllist="nodownload"', $output );
+		$this->assertContains( 'controlslist="nodownload"', $output );
 	}
 
 	public function test_iframe() {
