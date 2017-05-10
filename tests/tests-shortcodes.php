@@ -160,7 +160,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'controlslist' => 'nofullscreen whatever',
 		 );
 
-		$this->assertContains( 'controllist="nofullscreen whatever"', arve_shortcode_arve( $attr ) );
+		$this->assertContains( 'controlslist="nofullscreen whatever"', arve_shortcode_arve( $attr ) );
 
 		$output = arve_shortcode_arve( array(
 			'mp4'       => 'https://example.com/video.mp4',
