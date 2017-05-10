@@ -109,13 +109,13 @@ This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgen
 
 ### [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) ###
 
-*   **Disable links in embeds (killer feature!)**
+*   **Disable links in embeds (killer feature!)**<br>
     For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. **Prevent video hosts to lead your visitors away from your site!** Note this also breaks sharing functionality and is not possible when the provider requires flash. Try it on [this page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/). Right click on links still works.
-*   **Lazyload mode**
+*   **Lazyload mode**<br>
     Make your site load **faster** by loading only a image instead of the entire video player on pageload.  
-*   **Lazyload -> Lightbox**
+*   **Lazyload -> Lightbox**<br>
     Shows the Video in a Lightbox after clicking a preview image
-*   **Link -> Lightbox**
+*   **Link -> Lightbox**<br>
     Use simple links as triggers for lightboxed videos
 *   Automatic or custom thumbnail images
 *   Automatic or custom titles on top of your thumbnails
@@ -123,7 +123,7 @@ This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgen
 *   3 hover styles
 *   2 play icon styles to choose from
 *   Responsive thumbnails using cutting edge HTML5 technology
-*   **Feel good about yourself**
+*   **Feel good about yourself**<br>
     for supporting my 5+ years work on this plugin. Tons of hours, weekends … always worked on improving it.
 *   Show the latest video of a YouTube channel by using the channel URL (updated/cached hourly)
 *   **[Get the ARVE Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase)**
@@ -191,10 +191,19 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 2. Main Options
 2. URL Parameter Options
 3. Pro Options
+dg
 ## Changelog ##
 
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### 2017-05-10 - 8.6.1 ###
+
+* Minor code change.
+
+### 2017-05-10 - 8.6.0 ###
+
+* New: `controlslist` shortcode attribute and option to control the Chrome HTML5 player `nodownload` is default, it hides the download button on the player.
 
 ### 2017-05-05 - 8.5.2 ###
 

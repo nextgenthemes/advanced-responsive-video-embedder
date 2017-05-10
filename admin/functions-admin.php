@@ -36,7 +36,7 @@ function arve_get_pro_ad() {
 
 	$pro_message = __( '<p>Hi, this is Nico(las Jonas) the author of the Advanced Responsive Video Embedder plugin. If you get easily offended by promotions on your admin please close this fast right now.</p>', ARVE_SLUG );
 
-	$pro_message .= file_get_contents( plugin_dir_path( dirname( __FILE__ ) ) . 'readme/html/20-description-features-pro.md.html' );
+	$pro_message .= file_get_contents( plugin_dir_path( dirname( __FILE__ ) ) . 'readme/html/20-description-features-pro.html' );
 	$pro_message  = str_replace( '<ul ', '<ul style="list-style: square; padding-left: 20px;" ', $pro_message );
 
 	return $pro_message;
