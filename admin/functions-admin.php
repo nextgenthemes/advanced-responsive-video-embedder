@@ -560,6 +560,7 @@ function arve_validate_options_main( $input ) {
 	$output['align']              = sanitize_text_field( $input['align'] );
 	$output['mode']               = sanitize_text_field( $input['mode'] );
 	$output['last_settings_tab']  = sanitize_text_field( $input['last_settings_tab'] );
+	$output['controlslist']       = sanitize_text_field( $input['controlslist'] );
 
 	$output['autoplay']          = ( 'yes' == $input['autoplay'] )          ? true : false;
 	$output['promote_link']      = ( 'yes' == $input['promote_link'] )      ? true : false;

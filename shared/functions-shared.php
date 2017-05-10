@@ -13,6 +13,7 @@ function arve_get_options_defaults( $section ) {
 		'wp_image_cache_time' => 18000,
 		'last_settings_tab'   => '',
 		'wp_video_override'   => true,
+		'controlslist'        => 'nodownload',
 	);
 
 	$properties = arve_get_host_properties();
@@ -255,6 +256,12 @@ function arve_get_settings_definitions() {
 				'no'  => esc_html__( 'No', ARVE_SLUG ),
 			),
 			'description' => esc_html__( "Use ARVE to embed HTML5 video files. ARVE uses the browsers players instead of loading the mediaelement player that WP uses.", ARVE_SLUG ),
+		),
+		array(
+			'attr'  => 'controlslist',
+			'label' => esc_html__( 'Chrom HTML5 Player controlls', ARVE_SLUG ),
+			'type'  => 'text',
+			'description' => __( "controlsList attribute on &lt;video&gt; for example use <code>nodownload nofullscreen noremoteplayback</code> to hide the download and the fullscreen button on the chrome HTML5 video player and disable remote playback.", ARVE_SLUG ),
 		),
 		array(
 			'hide_from_settings' => true,

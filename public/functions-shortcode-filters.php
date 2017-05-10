@@ -37,16 +37,19 @@ function arve_sc_filter_attr( $a ) {
 	if( 'html5' == $a['provider'] ) {
 
 		$a['video_attr'] = array(
-			'autoplay'    => in_array( $a['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ? false : $a['autoplay'],
+			# WP
+			'autoplay'     => in_array( $a['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ? false : $a['autoplay'],
+			'controls'     => $a['controls'],
+			'controlslist' => $a['controlslist'],
+			'loop'         => $a['loop'],
+			'preload'      => $a['preload'],
+			'width'        => empty( $a['width'] )     ? false : $a['width'],
+			'height'       => empty( $a['height'] )    ? false : $a['height'],
+			'poster'       => empty( $a['img_src'] )   ? false : $a['img_src'],
+			'src'          => empty( $a['video_src'] ) ? false : $a['video_src'],
+			# ARVE only
 			'class'       => 'arve-video fitvidsignore',
-			'controls'    => $a['controls'],
-			'loop'        => $a['loop'],
-			'poster'      => isset( $a['img_src'] ) ? $a['img_src'] : false,
-			'preload'     => $a['preload'],
-			'src'         => isset( $a['video_src'] ) ? $a['video_src'] : false,
 			'muted'       => $a['muted'],
-			'width'       => ! empty( $a['width'] ) ? $a['width'] : false,
-			'height'      => ! empty( $a['height'] ) ? $a['height'] : false,
 			'playsinline' => $a['playsinline'],
 			'webkit-playsinline' => $a['playsinline'],
 		);
@@ -89,34 +92,34 @@ function arve_sc_filter_attr( $a ) {
 	return $a;
 }
 
-function arve_sc_filter_validate( $atts ) {
+function arve_sc_filter_validate( $a ) {
 
-	if ( ! empty( $atts['url'] ) && ! arve_validate_url( $atts['url'] ) ) {
-		$atts['url'] = new WP_Error( 'thumbnail', sprintf( __( '<code>%s</code> is not a valid url', ARVE_SLUG ), esc_html( $atts['url'] ) ) );
+	if ( ! empty( $a['url'] ) && ! arve_validate_url( $a['url'] ) ) {
+		$a['url'] = new WP_Error( 'thumbnail', sprintf( __( '<code>%s</code> is not a valid url', ARVE_SLUG ), esc_html( $a['url'] ) ) );
 	}
 
-	$atts['align'] = arve_validate_align( $atts['align'], $atts['provider'] );
+	$a['align'] = arve_validate_align( $a['align'], $a['provider'] );
 
-	$atts['mode'] = arve_validate_mode( $atts['mode'], $atts['provider'] );
+	$a['mode'] = arve_validate_mode( $a['mode'], $a['provider'] );
 
-	$atts['autoplay']      = arve_validate_bool( $atts['autoplay'], 'autoplay' );
-	$atts['arve_link']     = arve_validate_bool( $atts['arve_link'], 'arve_link' );
-	$atts['loop']          = arve_validate_bool( $atts['loop'], 'loop' );
-	$atts['controls']      = arve_validate_bool( $atts['controls'], 'controls' );
-	$atts['disable_flash'] = arve_validate_bool( $atts['disable_flash'], 'disable_flash' );
-	$atts['muted']         = arve_validate_bool( $atts['muted'], 'muted' );
-	$atts['playsinline']   = arve_validate_bool( $atts['playsinline'], 'playsinline' );
+	$a['autoplay']      = arve_validate_bool( $a['autoplay'], 'autoplay' );
+	$a['arve_link']     = arve_validate_bool( $a['arve_link'], 'arve_link' );
+	$a['loop']          = arve_validate_bool( $a['loop'], 'loop' );
+	$a['controls']      = arve_validate_bool( $a['controls'], 'controls' );
+	$a['disable_flash'] = arve_validate_bool( $a['disable_flash'], 'disable_flash' );
+	$a['muted']         = arve_validate_bool( $a['muted'], 'muted' );
+	$a['playsinline']   = arve_validate_bool( $a['playsinline'], 'playsinline' );
 
-	$atts['maxwidth']  = (int) $atts['maxwidth'];
-	$atts['maxwidth']  = (int) arve_maxwidth_when_aligned( $atts['maxwidth'], $atts['align'] );
+	$a['maxwidth']  = (int) $a['maxwidth'];
+	$a['maxwidth']  = (int) arve_maxwidth_when_aligned( $a['maxwidth'], $a['align'] );
 
-	$atts['id'] = arve_id_fixes( $atts['id'], $atts['provider'] );
+	$a['id'] = arve_id_fixes( $a['id'], $a['provider'] );
 
-	$atts['aspect_ratio'] = arve_get_default_aspect_ratio( $atts['aspect_ratio'], $atts['provider'] );
-	$atts['aspect_ratio'] = arve_aspect_ratio_fixes( $atts['aspect_ratio'], $atts['provider'], $atts['mode'] );
-	$atts['aspect_ratio'] = arve_validate_aspect_ratio( $atts['aspect_ratio'] );
+	$a['aspect_ratio'] = arve_get_default_aspect_ratio( $a['aspect_ratio'], $a['provider'] );
+	$a['aspect_ratio'] = arve_aspect_ratio_fixes( $a['aspect_ratio'], $a['provider'], $a['mode'] );
+	$a['aspect_ratio'] = arve_validate_aspect_ratio( $a['aspect_ratio'] );
 
-	return $atts;
+	return $a;
 }
 
 function arve_sc_filter_set_fixed_dimensions( $atts ) {
@@ -315,8 +318,10 @@ function arve_sc_filter_detect_html5( $atts ) {
 		return $atts;
 	}
 
-	$html5_extensions = arve_get_html5_attributes();
+	$html5_extensions   = arve_get_html5_attributes();
 	$html5_extensions[] = 'url';
+
+	$atts['video_sources_html'] = '';
 
 	foreach ( $html5_extensions as $ext ):
 
@@ -326,7 +331,7 @@ function arve_sc_filter_detect_html5( $atts ) {
 				$atts[ $ext ] = add_query_arg( 'dl', 1, $atts[ $ext ] );
 			}
 
-			$atts['video_sources'][ $type ] = $atts[ $ext ];
+			$atts['video_sources_html'] .= sprintf( '<source type="%s" src="%s">', $type, $atts[ $ext ] );
 		}
 
 		if ( ! empty( $atts['url'] ) && arve_ends_with( $atts['url'], ".$ext" ) ) {
@@ -347,19 +352,12 @@ function arve_sc_filter_detect_html5( $atts ) {
 
 	endforeach;
 
-	if( empty( $atts['video_src'] ) && empty( $atts['video_sources'] ) ) {
+	if( empty( $atts['video_src'] ) && empty( $atts['video_sources_html'] ) ) {
+		unset( $atts['video_sources_html'] );
 		return $atts;
 	}
 
 	$atts['provider'] = 'html5';
-	$atts['video_sources_html'] = '';
-
-	if ( isset( $atts['video_sources'] ) ) {
-
-		foreach ( $atts['video_sources'] as $key => $value ) {
-			$atts['video_sources_html'] .= sprintf( '<source type="%s" src="%s">', $key, $value );
-		}
-	}
 
 	return $atts;
 }

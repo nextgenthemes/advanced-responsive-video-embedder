@@ -110,9 +110,9 @@ function arve_aspect_ratio_fixes( $aspect_ratio, $provider, $mode ) {
 	return $aspect_ratio;
 }
 
-function arve_add_autoplay_query_arg( $src, $atts ) {
+function arve_add_autoplay_query_arg( $src, $a ) {
 
-	switch ( $atts['provider'] ) {
+	switch ( $a['provider'] ) {
 		case 'alugha':
 		case 'archiveorg':
 		case 'dailymotion':
@@ -179,7 +179,7 @@ function arve_add_autoplay_query_arg( $src, $atts ) {
 			break;
 	}
 
-	if( $atts['autoplay'] ) {
+	if( $a['autoplay'] ) {
 		return $on;
 	} else {
 		return $off;

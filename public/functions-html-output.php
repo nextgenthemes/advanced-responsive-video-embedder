@@ -200,7 +200,6 @@ function arve_create_iframe_tag( $a ) {
 
 function arve_create_video_tag( $a ) {
 
-
 	$html = sprintf(
 		'<video%s>%s%s</video>',
 		arve_attr( $a['video_attr'] ),

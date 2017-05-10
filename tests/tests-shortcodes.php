@@ -140,20 +140,27 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		foreach ( $html5_ext as $ext ) {
 
-			$output = arve_shortcode_arve( array( 'url' => 'https://example.com/video.' . $ext ) );
+			$with_src = arve_shortcode_arve( array( 'url' => 'https://example.com/video.' . $ext ) );
+			$with_ext = arve_shortcode_arve( array( $ext => 'https://example.com/video.' . $ext ) );
 
-			$this->assertNotContains( 'Error', $output );
-			$this->assertNotContains( '<iframe', $output );
-			$this->assertContains( 'data-provider="html5"', $output );
-			$this->assertContains( '<video', $output );
-
-			$output = arve_shortcode_arve( array( $ext => 'https://example.com/video.' . $ext ) );
-
-			$this->assertNotContains( 'Error', $output );
-			$this->assertNotContains( '<iframe', $output );
-			$this->assertContains( 'data-provider="html5"', $output );
-			$this->assertContains( '<video', $output );
+			$this->assertNotContains( 'Error', $with_src );
+			$this->assertNotContains( 'Error', $with_ext );
+			$this->assertNotContains( '<iframe', $with_src );
+			$this->assertNotContains( '<iframe', $with_ext );
+			$this->assertContains( 'data-provider="html5"', $with_src );
+			$this->assertContains( 'data-provider="html5"', $with_ext );
+			$this->assertContains( '<video', $with_src );
+			$this->assertContains( '<video', $with_ext );
+			$this->assertContains( 'controllist="nodownload"', $with_src );
+			$this->assertContains( 'controllist="nodownload"', $with_ext );
 		}
+
+		$attr = array(
+			'url'          => 'https://example.com/video.mp4',
+			'controlslist' => 'nofullscreen whatever',
+		 );
+
+		$this->assertContains( 'controllist="nofullscreen whatever"', arve_shortcode_arve( $attr ) );
 
 		$output = arve_shortcode_arve( array(
 			'mp4'       => 'https://example.com/video.mp4',
@@ -179,6 +186,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( '<source type="video/ogg" src="https://example.com/video.ogv">', $output );
 		$this->assertContains( '<source type="video/mp4" src="https://example.com/video.mp4">', $output );
 		$this->assertContains( '<source type="video/webm" src="https://example.com/video.webm">', $output );
+		$this->assertContains( 'controllist="nodownload"', $output );
 	}
 
 	public function test_iframe() {

@@ -26,24 +26,24 @@ Make sure to check out the [official page](https://nextgenthemes.com/plugins/adv
 
 ### Features ###
 
-*   ARVE is now SEO friendly. Letting you specify title, description, upload date to provide search engines with the schema.org data they like to have for better indexing.
-*   <abbr title="What You See Is What You Get">WYSIWYG</abbr> Editor. No more messing around with shortcodes and previewing.
+*   SEO friendly, lets you specify title, description, upload date to provide search engines with the schema.org data they like to have for better indexing.
+*   <abbr title="What You See Is What You Get">WYSIWYG</abbr> support. No more messing around with shortcodes and previewing.
 *   New improved dialog for embedding videos.
-*   Embeds via pasting the URL in its own line just like WordPress!
 *   Magically makes those url embedded videos responsive.
-*   No 'lock in' for the above' if you use providers WordPress already supports.
+*   No 'lock in' if do not use shortcodes and use providers WordPress already supports.
 *   Supports [almost every video host](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#video-host-support) that supports iframe embed codes.
+*   Embeds via pasting the URL in its own line just like WordPress!
 *   Optionally use very powerful Shortcodes instead.
-*   One single button for all providers. (for most providers not required because of URL embeds, but allows to create custom shortcodes with advanced features within seconds)
-*   Responsive embeds with CSS, much better then with Javascript.
+*   Clean shortcode syntax `[arve url="https://youtu.be/yUCFRL43Zm4" align="left" parameters="start=30" ... /]`, no unnecessary shortcode wrapping.
+*   One single button for all providers.
+*   Responsive embeds with CSS, much better then with JavaScript.
 *   Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disabled related videos at the end … to help keep people on your site rather then going to YouTube or keep watching videos.
-*   Clean shortcode syntax `[arve url="https://youtu.be/yUCFRL43Zm4" /]`, no unnecessary shortcode wrapping.
 *   Autostart (for providers that support it, mobile browsers prevent this)
-*   Custom URL parameters to use all options providers offer
-*   Optional maximal width
-*   Video alignment
+*   Custom URL parameters to use all options providers offer.
+*   Optional maximal width.
+*   Video alignment.
 *   Detailed description of options in-place.
-*   Custom aspect ratio
+*   Custom aspect ratio.
 
 ### [Supported Providers](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#video-host-support) ###
 
@@ -105,28 +105,27 @@ So I have a responsive theme but on pages with you tube videos it wasn't making 
 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Only Plug-in that worked ####
 I used a lot of high ranking plug-ins but they still broke my design. Downloaded this and worked right away. Thanks! [review by crconnell89](https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/?filter=5)
-
 This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase). The development and support of this plugins has become a almost full time job for me so I hope you understand that I can not make all features gratis and that you [purchase it](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) to get extra features support the development.
 
 ### [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) ###
 
-*   **Feel good about yourself**
-    for supporting my long time work on this plugin. Tons of hours, weekends … always worked on [improving it](https://wordpress.org/plugins/advanced-responsive-video-embedder/changelog/) 5+ years.
 *   **Disable links in embeds (killer feature!)**
-    For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. **Prevent video hosters to lead your visitors away from your site!** Note this also breaks sharing functionality and is not possible when the provider requires flash. Try it on [this page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/). Right click on links still works.
+    For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. **Prevent video hosts to lead your visitors away from your site!** Note this also breaks sharing functionality and is not possible when the provider requires flash. Try it on [this page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/). Right click on links still works.
 *   **Lazyload mode**
     Make your site load **faster** by loading only a image instead of the entire video player on pageload.  
 *   **Lazyload -> Lightbox**
     Shows the Video in a Lightbox after clicking a preview image
 *   **Link -> Lightbox**
     Use simple links as triggers for lightboxed videos
-*   Show the latest video of a YouTube channel by using the channel URL (updated/cached hourly)
 *   Automatic or custom thumbnail images
 *   Automatic or custom titles on top of your thumbnails
-*   'Grow on click' feature
+*   'Expand on click' feature
 *   3 hover styles
 *   2 play icon styles to choose from
 *   Responsive thumbnails using cutting edge HTML5 technology
+*   **Feel good about yourself**
+    for supporting my 5+ years work on this plugin. Tons of hours, weekends … always worked on improving it.
+*   Show the latest video of a YouTube channel by using the channel URL (updated/cached hourly)
 *   **[Get the ARVE Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase)**
 
 ### ARVE AMP Addon ###
@@ -142,11 +141,11 @@ This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgen
 
 ### Thanks ###
 
+*   Of course all the customers who bought a addon.
 *   Howard Iken of [myfloridalaw.com](https://www.myfloridalaw.com) top donor, super nice to me even if I was rude and not deserved it!
 *   [Ilya Grishkov](https://www.ilyagrishkov.com) for bringing up the idea and the first code to cache thumbnail urls.
 *   Everybody giving constructive feedback, testing beta versions.
 *   Everybody who donated back in the days when this was donation based.
-*   Of course all the customers who bought a addon.
 
 ### Thanks to the developers of the software used in ARVE ###
 

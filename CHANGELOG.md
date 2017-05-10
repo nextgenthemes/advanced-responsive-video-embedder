@@ -1,7 +1,12 @@
+dg
 ## Changelog ##
 
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### 2017-05-05 - 8.6.0 ###
+
+* New: `controlslist` shortcode attribute and option to control the Chrome HTML5 player `nodownload` is default, it hides the download button on the player.
 
 ### 2017-05-05 - 8.5.2 ###
 
