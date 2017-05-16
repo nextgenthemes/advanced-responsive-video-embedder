@@ -191,11 +191,15 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 2. Main Options
 2. URL Parameter Options
 3. Pro Options
-dg
+
 ## Changelog ##
 
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### 2017-05-10 - 8.6.2 ###
+
+* Fixed license activation issues.
 
 ### 2017-05-10 - 8.6.1 ###
 
