@@ -419,7 +419,6 @@ class EDD_SL_Plugin_Updater {
 				$version_info = json_decode( wp_remote_retrieve_body( $request ) );
 			}
 
-
 			if ( ! empty( $version_info ) && isset( $version_info->sections ) ) {
 				$version_info->sections = maybe_unserialize( $version_info->sections );
 			} else {

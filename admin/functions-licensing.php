@@ -115,7 +115,7 @@ function nextgenthemes_ads_page() { ?>
 	<?php if ( ! defined( 'ARVE_PRO_VERSION' ) ) : ?>
 		<a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/">
 			<figure><img src="<?php echo $img_dir; ?>arve.svg" alt"ARVE"></figure>
-		  <h1>^ Pro Addon</h1>
+			<h1>^ Pro Addon</h1>
 			<ol>
 				<li><strong>Feel good about yourself</strong><br>for supporting my long time work on this plugin. Tons of hours, weekends … always worked on improving it 4+ years.</li>
 				<li><strong>Disable links in embeds (killer feature!)</strong><br>For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. <strong>Prevent video hosters to lead your visitors away from your site!</strong> Note this also breaks sharing functionality and is not possible when the provider requires flash. Right click on links still works.</li>
@@ -534,24 +534,36 @@ function nextgenthemes_api_action( $item_name, $key, $action ) {
 		wp_die( 'invalid action' );
 	}
 
-	// Data to send to the API
-	$api_params = array(
-		'edd_action' => $action . '_license',
-		'license'    => sanitize_text_field( $key ),
-		'item_name'  => urlencode( $item_name ),
-		'url'        => home_url(),
+	$wp_remote_args = array(
+		'timeout'   => 15,
+		'sslverify' => true,
+		'body'      => array(
+			'edd_action' => $action . '_license',
+			'license'    => sanitize_text_field( $key ),
+			'item_name'  => urlencode( $item_name ),
+			'url'        => home_url(),
+		)
 	);
 
-	$response = wp_remote_post( 'https://nextgenthemes.com', array( 'timeout' => 15, 'sslverify' => true, 'body' => $api_params ) );
+	$response = wp_remote_post( 'https://nextgenthemes.com', $wp_remote_args );
+	$response_code = wp_remote_retrieve_response_code( $response );
 
-	// make sure the response came back okay
-	if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+	# retry with wp_remote_GET
+	if ( 200 !== $response_code ) {
+		$response = wp_remote_get( 'https://nextgenthemes.com', $wp_remote_args );
+		$response_code = wp_remote_retrieve_response_code( $response );
+	}
 
-		if ( is_wp_error( $response ) ) {
-			$message = $response->get_error_message();
-		} else {
-			$message = __( 'An error occurred, please try again.', ARVE_SLUG );
-		}
+	if ( 200 !== $response_code ) {
+
+		$message = sprintf(
+			__( 'Error: Response code should be 200 but was: %s.', ARVE_SLUG ),
+			$response_code
+		);
+
+	} elseif ( is_wp_error( $response ) ) {
+
+		$message = $response->get_error_message();
 
 	} else {
 
@@ -590,14 +602,18 @@ function nextgenthemes_api_action( $item_name, $key, $action ) {
 					$message = sprintf( __( 'This appears to be an invalid license key for %s.', ARVE_SLUG ), $item_name );
 					break;
 
-				case 'no_activations_left':
+				case 'no_activations_left' :
 
 					$message = __( 'Your license key has reached its activation limit.', ARVE_SLUG );
 					break;
 
 				default :
 
-					$message = __( 'An error occurred, please try again.', ARVE_SLUG );
+					$message = sprintf(
+						__( 'Error: %s.', ARVE_SLUG ),
+						$license_data->error
+					);
+
 					break;
 			}
 
