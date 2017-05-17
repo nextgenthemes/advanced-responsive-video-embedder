@@ -197,7 +197,11 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-### 2017-05-10 - 8.6.2 ###
+### 2017-05-17 - 8.6.3 ###
+
+* Fixed issue with width and height attributes
+
+### 2017-05-17 - 8.6.2 ###
 
 * Fixed license activation issues.
 
