@@ -84,8 +84,8 @@ function arve_sc_filter_attr( $a ) {
 			'scrolling'   => 'no',
 			'src'         => $iframe_src,
 			'sandbox'     => $iframe_sandbox,
-			'width'       => ! empty( $a['width'] )  ? $a['width']  : false,
-			'height'      => ! empty( $a['height'] ) ? $a['height'] : false,
+			'width'       => empty( $a['width'] )  ? false : $a['width'],
+			'height'      => empty( $a['height'] ) ? false : $a['height'],
 		);
 	}
 
@@ -122,14 +122,14 @@ function arve_sc_filter_validate( $a ) {
 	return $a;
 }
 
-function arve_sc_filter_set_fixed_dimensions( $atts ) {
+function arve_sc_filter_set_fixed_dimensions( $a ) {
 
 	$width = 480;
 
-	$atts['width']  = $width;
-	$atts['height'] = arve_calculate_height( $width, $atts['aspect_ratio'] );
+	$a['width']  = $width;
+	$a['height'] = arve_calculate_height( $width, $a['aspect_ratio'] );
 
-	return $atts;
+	return $a;
 }
 
 function arve_sc_filter_sanitise( $atts ) {
