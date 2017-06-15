@@ -54,18 +54,18 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 	if ( $arve_shortcode ) {
 		$pairs['url'] = null;
 	} else {
-	  $pairs['provider'] = null;
-	  $pairs['id']       = null;
+		$pairs['provider'] = null;
+		$pairs['id']       = null;
 
-	  if ( empty( $input_atts['provider'] ) || empty( $input_atts['id'] ) ) {
-	    return arve_error( __( 'id and provider shortcodes attributes are mandatory for old shortcodes. It is recommended to switch to new shortcodes that need only url', ARVE_SLUG ) );
-	  }
+		if ( empty( $input_atts['provider'] ) || empty( $input_atts['id'] ) ) {
+			return arve_error( __( 'id and provider shortcodes attributes are mandatory for old shortcodes. It is recommended to switch to new shortcodes that need only url', ARVE_SLUG ) );
+		}
 	}
 
 	$atts = shortcode_atts( apply_filters( 'arve_shortcode_pairs', $pairs ), $input_atts, 'arve' );
 
 	if ( $errors = arve_output_errors( $atts ) ) {
-	  return $errors . arve_get_debug_info( '', $atts, $input_atts );
+		return $errors . arve_get_debug_info( '', $atts, $input_atts );
 	}
 
 	$html['video']           = arve_video_or_iframe( $atts );
@@ -104,12 +104,12 @@ function arve_create_shortcodes() {
 
 	foreach( $options['shortcodes'] as $provider => $shortcode ) {
 
-	  $function = function( $atts ) use ( $provider ) {
-	    $atts['provider'] = $provider;
-	    return arve_shortcode_arve( $atts, null, false );
-	  };
+		$function = function( $atts ) use ( $provider ) {
+			$atts['provider'] = $provider;
+			return arve_shortcode_arve( $atts, null, false );
+		};
 
-	  add_shortcode( $shortcode, $function );
+		add_shortcode( $shortcode, $function );
 	}
 
 	add_shortcode( 'arve',                'arve_shortcode_arve' );
@@ -146,18 +146,19 @@ function arve_shortcode_arve_supported() {
 
 	foreach ( $providers as $key => $values ) {
 
-	  if ( ! isset( $values['name'] ) )
-	    $values['name'] = $key;
+		if ( ! isset( $values['name'] ) ) {
+			$values['name'] = $key;
+		}
 
-	  $out .= '<tr>';
-	  $out .= sprintf( '<td>%d</td>', $count++ );
-	  $out .= sprintf( '<td>%s</td>', esc_html( $values['name'] ) );
-	  $out .= sprintf( '<td>%s</td>', ( isset( $values['requires_src'] ) && $values['requires_src'] ) ? '&#x2713;' : '' );
-	  $out .= sprintf( '<td>%s</td>', ( isset( $values['embed_url'] ) && arve_starts_with( $values['embed_url'], 'https' ) ) ? '&#x2713;' : '' );
-	  $out .= sprintf( '<td>%s</td>', ! empty( $values['requires_flash'] ) ? '&#x2713;' : '' );
-	  $out .= sprintf( '<td>%s</td>', ( isset( $values['auto_thumbnail'] ) && $values['auto_thumbnail'] ) ? '&#x2713;' : '' );
-	  $out .= sprintf( '<td>%s</td>', ( isset( $values['auto_title'] )     && $values['auto_title'] )     ? '&#x2713;' : '' );
-	  $out .= '</tr>';
+		$out .= '<tr>';
+		$out .= sprintf( '<td>%d</td>', $count++ );
+		$out .= sprintf( '<td>%s</td>', esc_html( $values['name'] ) );
+		$out .= sprintf( '<td>%s</td>', ( isset( $values['requires_src'] ) && $values['requires_src'] ) ? '&#x2713;' : '' );
+		$out .= sprintf( '<td>%s</td>', ( isset( $values['embed_url'] ) && arve_starts_with( $values['embed_url'], 'https' ) ) ? '&#x2713;' : '' );
+		$out .= sprintf( '<td>%s</td>', ! empty( $values['requires_flash'] ) ? '&#x2713;' : '' );
+		$out .= sprintf( '<td>%s</td>', ( isset( $values['auto_thumbnail'] ) && $values['auto_thumbnail'] ) ? '&#x2713;' : '' );
+		$out .= sprintf( '<td>%s</td>', ( isset( $values['auto_title'] )     && $values['auto_title'] )     ? '&#x2713;' : '' );
+		$out .= '</tr>';
 	}
 
 	$out .= '<tr>';
@@ -178,7 +179,7 @@ function arve_shortcode_arve_supported_list() {
 	unset( $providers['iframe'] );
 
 	foreach ( $providers as $key => $values ) {
-	  $list .= '*   ' . $values['name'] . PHP_EOL;
+		$list .= '*   ' . $values['name'] . PHP_EOL;
 	}
 
 	return '<textarea style="width:100%" rows="15">'. $list . '</textarea>';
@@ -189,7 +190,7 @@ function arve_shortcode_arve_params() {
 	$attrs = arve_get_settings_definitions();
 
 	if( function_exists( 'arve_pro_get_settings_definitions' ) ) {
-	  $attrs = array_merge( $attrs, arve_pro_get_settings_definitions() );
+		$attrs = array_merge( $attrs, arve_pro_get_settings_definitions() );
 	}
 
 	$out  = '<table class="table table-hover table-arve-params">';
@@ -200,31 +201,35 @@ function arve_shortcode_arve_params() {
 
 	foreach ( $attrs as $key => $values ) {
 
-	  if( isset( $values['hide_from_sc'] ) && $values['hide_from_sc'] ) {
-	    continue;
-	  }
+		if( isset( $values['hide_from_sc'] ) && $values['hide_from_sc'] ) {
+			continue;
+		}
 
-	  $desc = '';
-	  unset( $values['options'][''] );
-	  unset( $choices );
+		$desc = '';
+		unset( $values['options'][''] );
+		unset( $choices );
 
-	  if ( ! empty( $values['options'] ) ) {
-	    foreach ($values['options'] as $key => $value) {
-	      $choices[] = sprintf( '<code>%s</code>', $key );
-	    }
-	    $desc .= __('Options: ', ARVE_SLUG ) . implode( ', ', $choices ) . '<br>';
-	  }
+		if ( ! empty( $values['options'] ) ) {
 
-	  if ( ! empty( $values['description'] ) )
-	    $desc .= $values['description'];
+			foreach ( $values['options'] as $key => $value) {
+				$choices[] = sprintf( '<code>%s</code>', $key );
+			}
 
-	  if ( ! empty( $values['meta']['placeholder'] ) )
-	    $desc .= $values['meta']['placeholder'];
+			$desc .= __('Options: ', ARVE_SLUG ) . implode( ', ', $choices ) . '<br>';
+		}
 
-	  $out .= '<tr>';
-	  $out .= sprintf( '<td>%s</td>', $values['attr'] );
-	  $out .= sprintf( '<td>%s</td>', $desc );
-	  $out .= '</tr>';
+		if ( ! empty( $values['description'] ) ) {
+			$desc .= $values['description'];
+		}
+
+		if ( ! empty( $values['meta']['placeholder'] ) ) {
+			$desc .= $values['meta']['placeholder'];
+		}
+
+		$out .= '<tr>';
+		$out .= sprintf( '<td>%s</td>', $values['attr'] );
+		$out .= sprintf( '<td>%s</td>', $desc );
+		$out .= '</tr>';
 	}
 
 	$out .= '</table>';

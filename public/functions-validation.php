@@ -101,10 +101,12 @@ function arve_validate_mode( $mode, $provider ) {
 
 	if ( ! array_key_exists( $mode, $supported_modes ) ) {
 
-		$mode = new WP_Error( 'mode', sprintf(
-			__( 'Mode: <code>%s</code> is invalid or not supported. Note that you will need the Pro Addon activated for modes other than normal.', ARVE_SLUG ),
-			esc_html( $mode )
-		) );
+		#$mode = new WP_Error( 'mode', sprintf(
+		#	__( 'Mode: <code>%s</code> is invalid or not supported. Note that you will need the Pro Addon activated for modes other than normal.', ARVE_SLUG ),
+		#	esc_html( $mode )
+		#) );
+
+		$mode = 'normal';
 	}
 
 	return $mode;

@@ -2,6 +2,7 @@
 
 function arve_sc_filter_attr( $a ) {
 
+	$wrapper_id = null;
 	$align_class = empty( $a['align'] ) ? '' : ' align' . $a['align'];
 
 	foreach ( array( 'id', 'mp4', 'm4v', 'webm', 'ogv', 'url', 'webtorrent' ) as $att ) {

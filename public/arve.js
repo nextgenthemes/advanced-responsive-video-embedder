@@ -2,7 +2,7 @@
 	'use strict';
 
 	function remove_unwanted_stuff() {
-		$('.arve-wrapper').find('p, .fluid-width-video-wrapper, .fluid-vids').contents().unwrap();
+		$('.arve-wrapper').find('p, .video-wrap, .fluid-width-video-wrapper, .fluid-vids').contents().unwrap();
 		$('.arve-wrapper br').remove();
 		$('.arve-iframe, .arve-video').removeAttr('width height style');
 	};
@@ -31,7 +31,7 @@
 	global_id();
 
 	$( document ).ready( function() {
-	  remove_unwanted_stuff();
+		remove_unwanted_stuff();
 		global_id();
 	} );
 

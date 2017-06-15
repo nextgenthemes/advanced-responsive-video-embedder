@@ -306,4 +306,11 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertRegExp( '#<video .*src="https://www\.dropbox\.com/s/ocqf9u5pn9b4ox0/Oops%20I%20dropped%20my%20Hoop\.mp4\?dl=1#', arve_shortcode_arve( $attr) );
 		$this->assertContains( 'data-provider="html5"', arve_shortcode_arve( $attr ) );
 	}
+
+	public function test_no_wrapper_id() {
+
+		$attr = array();
+
+		$this->assertNotContains( 'Error: Element ID could not be build, please report this bug.', arve_shortcode_arve( $attr ) );
+	}
 }

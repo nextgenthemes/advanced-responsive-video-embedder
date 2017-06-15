@@ -528,40 +528,52 @@ function nextgenthemes_init_theme_updater( $product ) {
 	);
 }
 
+function nextgenthemes_remote_get( $url, $args ) {
+
+	$response      = wp_remote_post( 'https://nextgenthemes.com', $args );
+	$response_code = wp_remote_retrieve_response_code( $response );
+
+	# retry with wp_remote_GET
+	if ( 200 !== $response_code ) {
+		$response      = wp_remote_get( 'https://nextgenthemes.com', $args );
+		$response_code = wp_remote_retrieve_response_code( $response );
+	}
+
+	if ( 200 !== $response_code ) {
+
+		$response = new WP_Error(
+			'response_code',
+			sprintf(
+				__( 'Error: Response code should be 200 but was: %s.', ARVE_SLUG ),
+				$response_code
+			)
+		);
+	}
+
+	return $response;
+};
+
 function nextgenthemes_api_action( $item_name, $key, $action ) {
 
 	if ( ! in_array( $action, array( 'activate', 'deactivate', 'check' ) ) ) {
 		wp_die( 'invalid action' );
 	}
 
-	$wp_remote_args = array(
-		'timeout'   => 15,
-		'sslverify' => true,
-		'body'      => array(
-			'edd_action' => $action . '_license',
-			'license'    => sanitize_text_field( $key ),
-			'item_name'  => urlencode( $item_name ),
-			'url'        => home_url(),
+	$response = nextgenthemes_remote_get(
+		'https://nextgenthemes.com',
+		array(
+			'timeout'   => 15,
+			'sslverify' => true,
+			'body'      => array(
+				'edd_action' => $action . '_license',
+				'license'    => sanitize_text_field( $key ),
+				'item_name'  => urlencode( $item_name ),
+				'url'        => home_url(),
+			)
 		)
 	);
 
-	$response = wp_remote_post( 'https://nextgenthemes.com', $wp_remote_args );
-	$response_code = wp_remote_retrieve_response_code( $response );
-
-	# retry with wp_remote_GET
-	if ( 200 !== $response_code ) {
-		$response = wp_remote_get( 'https://nextgenthemes.com', $wp_remote_args );
-		$response_code = wp_remote_retrieve_response_code( $response );
-	}
-
-	if ( 200 !== $response_code ) {
-
-		$message = sprintf(
-			__( 'Error: Response code should be 200 but was: %s.', ARVE_SLUG ),
-			$response_code
-		);
-
-	} elseif ( is_wp_error( $response ) ) {
+	if ( is_wp_error( $response ) ) {
 
 		$message = $response->get_error_message();
 

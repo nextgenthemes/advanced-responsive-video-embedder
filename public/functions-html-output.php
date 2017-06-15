@@ -210,6 +210,18 @@ function arve_create_video_tag( $a ) {
 	return apply_filters( 'arve_video_tag', $html, $a, $a['video_attr'] );
 }
 
+function arve_create_object_tag( $a ) {
+
+	$html = sprintf(
+		'<video%s>%s%s</video>',
+		arve_attr( $a['video_attr'] ),
+		$a['video_sources_html'],
+		$a['video_tracks_html']
+	);
+
+	return apply_filters( 'arve_video_tag', $html, $a, $a['video_attr'] );
+}
+
 function arve_error( $message ) {
 
 	return sprintf(

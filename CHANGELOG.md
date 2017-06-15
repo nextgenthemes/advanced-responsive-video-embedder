@@ -4,6 +4,10 @@
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2017-06-15 - 8.6.4 ###
+
+* Removes a .video-wrap element from ARVE's HTML that is added by a theme and caused videos to be invisible.
+
 ### 2017-05-17 - 8.6.3 ###
 
 * Fixed issue with width and height attributes

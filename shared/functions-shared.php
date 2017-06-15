@@ -359,7 +359,7 @@ function arve_get_host_properties() {
 		),
 		'alugha' => array(
 			'regex'     => $s . 'alugha\.com/(1/)?videos/(?<id>[a-z0-9_\-]+)',
-			'embed_url' => 'https://alugha.com/embed/polymer-live/?v=%s',
+			'embed_url' => 'https://alugha.com/embed/web-player/?v=%s',
 			'default_params' => 'nologo=1',
 			'auto_thumbnail' => true,
 			'tests' => array(
