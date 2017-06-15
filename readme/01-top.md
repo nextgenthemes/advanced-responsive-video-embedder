@@ -3,7 +3,7 @@ Contributors: nico23
 Donate link: https://www.paypal.me/nico23
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.4.0
-Tested up to: 4.7.3
+Tested up to: 4.8
 Stable tag: trunk
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html

@@ -3,7 +3,7 @@ Contributors: nico23
 Donate link: https://www.paypal.me/nico23
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.4.0
-Tested up to: 4.7.3
+Tested up to: 4.8
 Stable tag: trunk
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -105,7 +105,7 @@ So I have a responsive theme but on pages with you tube videos it wasn't making 
 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Only Plug-in that worked ####
 I used a lot of high ranking plug-ins but they still broke my design. Downloaded this and worked right away. Thanks! [review by crconnell89](https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/?filter=5)
-This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase). The development and support of this plugins has become a almost full time job for me so I hope you understand that I can not make all features gratis and that you [purchase it](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) to get extra features support the development.
+This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase). The development and support of this plugins has become a almost full time job for me so I hope you understand that I can not make all features gratis and that you [purchase it](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) to get extra features and support the development.
 
 ### [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) ###
 
@@ -150,7 +150,7 @@ This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgen
 ### Thanks to the developers of the software used in ARVE ###
 
 *   [Shortcode UI](https://wordpress.org/plugins/shortcode-ui/), optional Plugin, utilized by ARVE
-*   [Lity Lightbox](http://sorgalla.com/lity/), used in [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase))
+*   [Lity Lightbox](http://sorgalla.com/lity/), used in [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase)
 
 ## Installation ##
 
@@ -196,6 +196,13 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### 2017-06-15 - 8.6.4 ###
+
+* Fix: Removes a .video-wrap element from ARVE's HTML that is added by a theme and caused videos to be invisible.
+* Fix: PHP error in some cases.
+* Improved: If mode is not supported fall back to normal without error message (for now).
+* Improved: Changed embed URL for Alugha
 
 ### 2017-05-17 - 8.6.3 ###
 

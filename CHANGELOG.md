@@ -6,7 +6,10 @@
 
 ### 2017-06-15 - 8.6.4 ###
 
-* Removes a .video-wrap element from ARVE's HTML that is added by a theme and caused videos to be invisible.
+* Fix: Removes a .video-wrap element from ARVE's HTML that is added by a theme and caused videos to be invisible.
+* Fix: PHP error in some cases.
+* Improved: If mode is not supported fall back to normal without error message (for now).
+* Improved: Changed embed URL for Alugha
 
 ### 2017-05-17 - 8.6.3 ###
 

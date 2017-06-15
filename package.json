@@ -6,8 +6,11 @@
   "scripts": {
     "readme-markdown": "mdown --input \"readme/*.md\" --output \"readme/html\"",
     "readme-concat": "cat readme/*.md CHANGELOG.md > readme.md; cp readme.md readme.txt",
-	"js": "uglifyjs --compress --mangle --comments '/^!/' --output public/arve.min.js public/arve.js",
+    "js": "uglifyjs --compress --mangle --comments '/^!/' --output public/arve.min.js public/arve.js",
     "css": "cleancss --level 1 --output public/arve.min.css public/arve.css",
     "build": "run-p css js readme-concat readme-markdown"
+  },
+  "devDependencies": {
+    "gh-markdown-cli": "^0.2.0"
   }
 }
