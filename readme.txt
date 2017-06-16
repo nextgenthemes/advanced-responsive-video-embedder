@@ -201,7 +201,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 ### 2017-06-17 - 8.6.5 ###
 
 * Fix: Added `allow-presentation` to iframe sandbox to fix Chrome 59 not loading iframes. Thanks njs
-* Improved: Admin message and dashboard ad size reduced, added links to dashboard widget, settings page is now a sidebar on big screens.
+* Improved: Admin message and dashboard ad size reduced, added links to dashboard widget, settings page ad is now sidebar-like on big screens.
 
 ### 2017-06-15 - 8.6.4 ###
 
