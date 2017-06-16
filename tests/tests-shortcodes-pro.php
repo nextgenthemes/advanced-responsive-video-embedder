@@ -206,8 +206,8 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 
 	public function test_disable_links() {
 
-		$attr  = array(
-			'url'       => 'https://www.example.com'
+		$attr = array(
+			'url' => 'https://www.example.com'
 		 );
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
@@ -219,7 +219,7 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 		 );
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
-		$this->assertContains( ' sandbox="allow-scripts allow-same-origin allow-popups"', arve_shortcode_arve( $attr ) );
+		$this->assertContains( ' sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"', arve_shortcode_arve( $attr ) );
 
 		$attr = array(
 			'url'           => 'https://www.example.com',
@@ -228,6 +228,6 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 		 );
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
-		$this->assertContains( ' sandbox="allow-scripts allow-same-origin"', arve_shortcode_arve( $attr ) );
+		$this->assertContains( ' sandbox="allow-scripts allow-same-origin allow-presentation"', arve_shortcode_arve( $attr ) );
 	}
 }
