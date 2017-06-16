@@ -14,9 +14,12 @@ function arve_action_admin_init_setup_messages() {
 		new ARVE_Admin_Notice_Factory( 'arve-pro-outdated', "<p>$msg</p>", false );
 	}
 
-	$pro_ad_message = arve_get_pro_ad();
+	if( arve_display_pro_ad() ) {
 
-	if( $pro_ad_message ) {
+		$pro_ad_message = __( '<p>Hi, this is Nico(las Jonas) the author of the ARVE - Advanced Responsive Video Embedder plugin. If you are interrested in additional features and/or want to support the work I do on this plugin please consider buying the Pro Addon. (This is a one time global admin message, there is also a widget on your dashboard you can hide if you want)</p>', ARVE_SLUG );
+
+		$pro_ad_message .= file_get_contents( ARVE_PATH . 'admin/pro-ad.html' );
+
 		new ARVE_Admin_Notice_Factory( 'arve_dismiss_pro_notice', $pro_ad_message, true );
 	}
 }
@@ -26,7 +29,7 @@ function arve_add_tinymce_plugin( $plugin_array ) {
 	return $plugin_array;
 }
 
-function arve_get_pro_ad() {
+function arve_display_pro_ad() {
 
 	$inst = (int) get_option( 'arve_install_date' );
 
@@ -34,30 +37,32 @@ function arve_get_pro_ad() {
 		return false;
 	}
 
-	$pro_message = __( '<p>Hi, this is Nico(las Jonas) the author of the Advanced Responsive Video Embedder plugin. If you get easily offended by promotions on your admin please close this fast right now.</p>', ARVE_SLUG );
-
-	$pro_message .= file_get_contents( plugin_dir_path( dirname( __FILE__ ) ) . 'readme/html/20-description-features-pro.html' );
-	$pro_message  = str_replace( '<ul ', '<ul style="list-style: square; padding-left: 20px;" ', $pro_message );
-
-	return $pro_message;
+	return true;
 }
 
-function arve_echo_pro_ad() {
-	echo arve_get_pro_ad();
+function arve_widget_text() {
+
+	echo '<p>';
+	printf( '<a href="%s">Documentation</a>, ', 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/' );
+	printf( '<a href="%s">Support</a>, ', 'https://nextgenthemes.com/support/' );
+	printf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=advanced-responsive-video-embedder' ), __( 'Settings', ARVE_SLUG ) );
+	echo '</p>';
+
+	printf( '<a href="%s">ARVE Pro Addon Features</a>:', 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/' );
+
+	echo file_get_contents( ARVE_PATH . 'admin/pro-ad.html' );
 }
 
 function arve_add_dashboard_widget() {
 
-	$pro_ad_message = arve_get_pro_ad();
-
-	if( ! $pro_ad_message ) {
+	if( ! arve_display_pro_ad() ) {
 		return false;
 	}
 
 	wp_add_dashboard_widget(
 		'arve_dashboard_widget',              // Widget slug.
 		'Advanced Responsive Video Embedder', // Title.
-		'arve_echo_pro_ad'                    // Display function.
+		'arve_widget_text'                    // Display function.
 	);
 
 	// Globalize the metaboxes array, this holds all the widgets for wp-admin

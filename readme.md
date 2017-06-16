@@ -105,6 +105,7 @@ So I have a responsive theme but on pages with you tube videos it wasn't making 
 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Only Plug-in that worked ####
 I used a lot of high ranking plug-ins but they still broke my design. Downloaded this and worked right away. Thanks! [review by crconnell89](https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/?filter=5)
+
 This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase). The development and support of this plugins has become a almost full time job for me so I hope you understand that I can not make all features gratis and that you [purchase it](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) to get extra features and support the development.
 
 ### [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) ###
@@ -196,6 +197,11 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### 2017-06-17 - 8.6.5 ###
+
+* Fix: Added `allow-presentation` to iframe sandbox to fix Chrome 59 not loading iframes. Thanks njs
+* Improved: Admin message and dashboard ad size reduced, added links to dashboard widget, settings page is now a sidebar on big screens.
 
 ### 2017-06-15 - 8.6.4 ###
 

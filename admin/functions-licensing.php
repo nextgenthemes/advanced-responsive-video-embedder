@@ -90,7 +90,8 @@ function nextgenthemes_ads_page() { ?>
 		margin-right: 1.7rem;
 		font-size: 1.2rem;
 	}
-	#nextgenthemes-ads ol {
+	#nextgenthemes-ads ul {
+		list-style: square;
 		margin-left: 2.5rem;
 		margin-right: .7rem;
 	}
@@ -115,21 +116,7 @@ function nextgenthemes_ads_page() { ?>
 	<?php if ( ! defined( 'ARVE_PRO_VERSION' ) ) : ?>
 		<a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/">
 			<figure><img src="<?php echo $img_dir; ?>arve.svg" alt"ARVE"></figure>
-			<h1>^ Pro Addon</h1>
-			<ol>
-				<li><strong>Feel good about yourself</strong><br>for supporting my long time work on this plugin. Tons of hours, weekends … always worked on improving it 4+ years.</li>
-				<li><strong>Disable links in embeds (killer feature!)</strong><br>For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. <strong>Prevent video hosters to lead your visitors away from your site!</strong> Note this also breaks sharing functionality and is not possible when the provider requires flash. Right click on links still works.</li>
-				<li><strong>Lazyload mode</strong><br>Make your site load <strong>faster</strong> by loading only a image instead of the entire video player on pageload.  </li>
-				<li><strong>Lazyload -&gt; Lightbox</strong><br>Shows the Video in a Lightbox after clicking a preview image</li>
-				<li><strong>Link -&gt; Lightbox</strong><br>Use simple links as triggers for lightboxed videos</li>
-				<li>Show the latest video of a YouTube channel by using the channel URL (updated/cached hourly)</li>
-				<li>Automatic or custom thumbnail images</li>
-				<li>Automatic or custom titles on top of your thumbnails</li>
-				<li>&#39;Grow on click&#39; feature</li>
-				<li>3 hover styles</li>
-				<li>2 play icon styles to choose from</li>
-				<li>Responsive thumbnails using cutting edge HTML5 technology</li>
-			</ol>
+			<?php nextgenthemes_feature_list_html( ARVE_PATH . 'readme/html/20-description-features-pro.html' ); ?>
 			<span>Paid</span>
 		</a>
 	<?php endif; ?>
@@ -137,16 +124,7 @@ function nextgenthemes_ads_page() { ?>
 	<?php if ( ! defined( 'ARVE_AMP_VERSION' ) ) : ?>
 		<a href="https://nextgenthemes.com/plugins/arve-accelerated-mobile-pages-addon/">
 		  <figure><img src="<?php echo $img_dir; ?>arve.svg" alt"ARVE"></figure>
-			<h3>^ AMP Addon</h3>
-			<ol>
-				<li>Requires the gratis plugins ARVE and AMP</li>
-				<li>Makes ARVE ready for Accelerated Mobile Pages (AMP)</li>
-				<li>It will display videos embedded with ARVE on AMP pages correctly</li>
-				<li>No options, just works</li>
-				<li>It creates &lt;amp-youtube&gt;, &lt;amp-vimeo&gt;, &lt;amp-dailymotion&gt; elements</li>
-				<li>For all other video hosts supported by ARVE &lt;amp-iframe&gt; element is used</li>
-				<li>HTML5 video files are also supported with &lt;amp-video&gt;</li>
-			</ol>
+			<?php nextgenthemes_feature_list_html( ARVE_PATH . 'readme/html/25-description-features-amp.html' ); ?>
 			<span>Paid</span>
 		</a>
 	<?php endif; ?>
@@ -162,6 +140,10 @@ function nextgenthemes_ads_page() { ?>
 </div>
 
 <?php
+}
+
+function nextgenthemes_feature_list_html( $filepath ) {
+	echo strip_tags( file_get_contents( $filepath ), '<ul></ul><li></li><h3></h3>' );
 }
 
 function nextgenthemes_activation_notices() {

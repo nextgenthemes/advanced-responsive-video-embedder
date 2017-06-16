@@ -4,6 +4,11 @@
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2017-06-17 - 8.6.5 ###
+
+* Fix: Added `allow-presentation` to iframe sandbox to fix Chrome 59 not loading iframes. Thanks njs
+* Improved: Admin message and dashboard ad size reduced, added links to dashboard widget, settings page ad is now sidebar-like on big screens.
+
 ### 2017-06-15 - 8.6.4 ###
 
 * Fix: Removes a .video-wrap element from ARVE's HTML that is added by a theme and caused videos to be invisible.

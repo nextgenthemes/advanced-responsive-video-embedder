@@ -13,18 +13,29 @@
  */
 
 $options = arve_get_options();
-$ad      = arve_get_pro_ad();
 ?>
+
 <div class="wrap arve-options-wrap">
+
+	<?php if ( arve_display_pro_ad() ) : ?>
+
+		<div class="arve-settings-page-ad notice is-dismissible updated">
+
+			<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
+
+			<div class="arve-corner-spacer"></div>
+
+			<?php echo file_get_contents( ARVE_PATH . 'readme/html/19-description-features-pro-intro.html' ); ?>
+			<?php echo file_get_contents( ARVE_PATH . 'readme/html/20-description-features-pro.html' ); ?>
+
+		</div>
+
+	<?php endif; ?>
 
 	<h2><?php esc_html_e( get_admin_page_title() ); ?></h2>
 
-	<?php
-	if ( $ad ) {
-		echo '<div class="notice is-dismissible updated">' . $ad . '</div>';
-	} ?>
-
 	<h2 class="nav-tab-wrapper arve-settings-tabs"></h2>
+
 	<form class="arve-options-form" method="post" action="options.php">
 
 		<?php do_settings_sections( ARVE_SLUG ); ?>

@@ -10,10 +10,6 @@
 	content: "\f236" !important; /* dashicon-video-alt */
 }
 
-.arve-options-wrap {
-	max-width: 1000px;
-}
-
 .edit-shortcode-form-fields.shortcode-ui-edit-arve .field-block {
   padding-top: .4em;
 	padding-bottom: .4em;
@@ -34,4 +30,38 @@
 .edit-shortcode-form-fields.shortcode-ui-edit-arve .shortcode-ui-attribute-title input,
 .edit-shortcode-form-fields.shortcode-ui-edit-arve .shortcode-ui-attribute-description input {
 	width: 700px;
+}
+
+.arve-list-small {
+	font-size: .85em;
+	list-style: square;
+	padding-left: 20px;
+}
+
+.arve-list-small li {
+	margin-bottom: 2px;
+}
+
+.arve-settings-page-ad {
+	margin: 0;
+	padding-right: .7rem !important;
+}
+
+.arve-corner-spacer {
+	float: right;
+	width: 20px;
+	height: 38px;
+}
+
+@media all and (min-width: 1024px) {
+	.arve-settings-page-ad {
+		position: absolute !important;
+		right: 0;
+		width: 320px;
+	}
+
+	.arve-options-wrap {
+		padding-right: 350px;
+		position: relative;
+	}
 }
