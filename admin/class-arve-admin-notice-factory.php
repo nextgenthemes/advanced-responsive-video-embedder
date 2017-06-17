@@ -25,7 +25,7 @@ class ARVE_Admin_Notice_Factory {
 	}
 
 	function action_admin_notices() {
-		delete_user_meta( get_current_user_id(), $this->notice_id );
+		#delete_user_meta( get_current_user_id(), $this->notice_id );
 		#delete_transient( $this->notice_id );
 
 		$user_id   = get_current_user_id();
