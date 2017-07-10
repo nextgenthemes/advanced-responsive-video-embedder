@@ -198,6 +198,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2017-06-17 - 8.7.0 ###
+
+* Fix: web.facebook.com/... video urls not getting detected
+
 ### 2017-06-17 - 8.6.6 ###
 
 * Fix: Message dismissal not working.
