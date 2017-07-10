@@ -531,6 +531,10 @@ function arve_get_host_properties() {
 					'url'     => 'https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/?type=2&theater',
 					'id'      => 'https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/',
 				),
+				array(
+					'url'     => 'https://web.facebook.com/XTvideo/videos/10153906059711871/',
+					'id'      => 'https://web.facebook.com/XTvideo/videos/10153906059711871/',
+				),
 			),
 		),
 		'funnyordie' => array(
