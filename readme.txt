@@ -198,6 +198,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2017-06-17 - 8.6.6 ###
+
+* Fix: Message dismissal not working.
+
 ### 2017-06-17 - 8.6.5 ###
 
 * Fix: Added `allow-presentation` to iframe sandbox to fix Chrome 59 not loading iframes. Thanks njs

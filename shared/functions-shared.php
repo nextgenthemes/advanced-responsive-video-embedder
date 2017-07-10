@@ -521,7 +521,7 @@ function arve_get_host_properties() {
 		'facebook' => array(
 			# https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/?type=2&theater
 			#<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FTheKillingsOfTonyBlair%2Fvideos%2Fvb.551089058285349%2F562955837098671%2F%3Ftype%3D2%26theater&width=500&show_text=false&height=280&appId" width="500" height="280" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-			'regex'             => '(?<id>' . $s . 'facebook\.com/[-.a-z0-9]+/videos/[a-z.0-9/]+)',
+			'regex'             => '(?<id>https?://([a-z]+\.)?facebook\.com/[-.a-z0-9]+/videos/[a-z.0-9/]+)',
 			'url_encode_id'     => true,
 			'embed_url'         => 'https://www.facebook.com/plugins/video.php?href=%s',
 			#'embed_url'         => 'https://www.facebook.com/video/embed?video_id=%s',
@@ -530,7 +530,6 @@ function arve_get_host_properties() {
 				array(
 					'url'     => 'https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/?type=2&theater',
 					'id'      => 'https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/',
-					'img'     => '',
 				),
 			),
 		),
@@ -784,8 +783,10 @@ function arve_get_host_properties() {
 		),
 		'viddler' => array(
 			'regex'          => $s . 'viddler\.com/(embed|v)/(?<id>[a-z0-9]{8})',
-			'embed_url'      => 'https://www.viddler.com/player/%s/',
-			'default_params' => 'wmode=transparent&player=full&f=1&disablebranding=1',
+			#'embed_url'      => 'https://www.viddler.com/player/%s/',
+			#'default_params' => 'wmode=transparent&player=full&f=1&disablebranding=1',
+			'embed_url'      => 'https://www.viddler.com/embed/%s/',
+			'default_params' => '?f=1&player=full&secret=59822701&disablebackwardseek=false&disableseek=false&disableforwardseek=false&make_responsive=false&loop=false&nologo=false&hd=false',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'aspect_ratio'   => '545:349',
