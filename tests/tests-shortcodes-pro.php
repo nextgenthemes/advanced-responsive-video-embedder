@@ -219,7 +219,7 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 		 );
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
-		$this->assertContains( ' sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"', arve_shortcode_arve( $attr ) );
+		$this->assertContains( ' sandbox="allow-scripts allow-same-origin allow-presentation allow-popups', arve_shortcode_arve( $attr ) );
 
 		$attr = array(
 			'url'           => 'https://www.example.com',
@@ -228,6 +228,6 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 		 );
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
-		$this->assertContains( ' sandbox="allow-scripts allow-same-origin allow-presentation"', arve_shortcode_arve( $attr ) );
+		$this->assertContains( ' sandbox="allow-scripts allow-same-origin allow-presentation', arve_shortcode_arve( $attr ) );
 	}
 }
