@@ -26,7 +26,7 @@ class ARVE_Admin_Notice_Factory {
 
 	function action_admin_notices() {
 
-		if ( defined( NJ_DEBUG_ADMIN_MESSAGE ) ) {
+		if ( apply_filters( 'nj_debug_admin_message', false ) ) {
 			delete_user_meta( get_current_user_id(), $this->notice_id );
 			delete_transient( $this->notice_id );
 		}

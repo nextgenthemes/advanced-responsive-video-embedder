@@ -4,6 +4,11 @@
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2017-07-12 - 8.7.1 ###
+
+* Fix: Throw no PHP notice on admin when WP_DEBUG is enabled.
+* Fix: Fix related to upcoming Pro Addon update and private vimeo videos.
+
 ### 2017-07-10 - 8.7.0 ###
 
 * Fix: web.facebook.com/... video urls not getting detected
