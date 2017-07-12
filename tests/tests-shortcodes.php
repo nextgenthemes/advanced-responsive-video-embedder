@@ -16,7 +16,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$attr['disable_links'] = 'y';
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
-		$this->assertContains( 'sandbox="allow-scripts allow-same-origin allow-presentation"', arve_shortcode_arve( $attr ) );
+		$this->assertContains( 'sandbox="allow-scripts allow-same-origin allow-presentation', arve_shortcode_arve( $attr ) );
 
 		$attr = array(
 			'url'       => 'https://vimeo.com/214300845',

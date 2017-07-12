@@ -228,6 +228,7 @@ class Tests_Shortcode_Pro extends WP_UnitTestCase {
 		 );
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+		$this->assertNotContains( 'allow-popups', arve_shortcode_arve( $attr ) );
 		$this->assertContains( ' sandbox="allow-scripts allow-same-origin allow-presentation', arve_shortcode_arve( $attr ) );
 	}
 }
