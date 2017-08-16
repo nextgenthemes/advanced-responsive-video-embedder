@@ -4,6 +4,10 @@
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2017-08-16 - 8.7.2 ###
+
+* Fix: Same Video with different start times in lightboxes.
+
 ### 2017-07-12 - 8.7.1 ###
 
 * Fix: Throw no PHP notice on admin when WP_DEBUG is enabled.

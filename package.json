@@ -11,6 +11,9 @@
     "build": "run-p css js readme-concat readme-markdown"
   },
   "devDependencies": {
-    "gh-markdown-cli": "^0.2.0"
+    "clean-css-cli": "^4.1.6",
+    "gh-markdown-cli": "^0.2.0",
+    "npm-run-all": "^4.0.2",
+    "uglify-js": "^3.0.27"
   }
 }
