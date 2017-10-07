@@ -179,10 +179,13 @@ function arve_shortcode_arve_supported_list() {
 	unset( $providers['iframe'] );
 
 	foreach ( $providers as $key => $values ) {
-		$list .= '*   ' . $values['name'] . PHP_EOL;
+		$provider_names[] = $values['name'];
 	}
 
-	return '<textarea style="width:100%" rows="15">'. $list . '</textarea>';
+	return
+		'<textarea style="width:100%" rows="15">'
+		. implode( ', ', $provider_names )
+		. '</textarea>';
 }
 
 function arve_shortcode_arve_params() {

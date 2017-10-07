@@ -1,8 +1,13 @@
 
 ## Changelog ##
 
-* [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
+* [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### 8.7.3 ###
+
+* Asking users about ad deal
+* Improved: Update plugin-updater-class
 
 ### 2017-08-16 - 8.7.2 ###
 

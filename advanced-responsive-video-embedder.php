@@ -30,12 +30,7 @@ define( 'ARVE_PATH', plugin_dir_path( __FILE__ ) );
 
 define( 'ARVE_NUM_TRACKS', 10 );
 
-if( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
-	require_once __DIR__ . '/admin/class-edd-sl-plugin-updater.php';
-}
-
-#add_action( 'init', 'arve_init' );
-arve_init();
+arve_init(); #add_action( 'init', 'arve_init' );
 
 function arve_init() {
 
@@ -48,9 +43,11 @@ function arve_init() {
 		return;
 	}
 
-	if ( ! has_action( 'admin_menu', 'nextgenthemes_menus' ) ) {
-		require_once __DIR__ . '/admin/functions-licensing.php';
+	if( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
+		require_once __DIR__ . '/admin/class-edd-sl-plugin-updater.php';
 	}
+
+	require_once __DIR__ . '/admin/licensing/functions-licensing.php';
 
 	require_once __DIR__ . '/admin/functions-admin.php';
 	require_once __DIR__ . '/public/functions-enqueue.php';
