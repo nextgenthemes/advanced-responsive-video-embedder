@@ -34,8 +34,3 @@ before_script:
 script:
 - phpenv config-rm xdebug.ini
 - phpunit
-
-branches:
-  only:
-    - master
-- /^release\/.*$/
