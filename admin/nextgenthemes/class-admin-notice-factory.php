@@ -1,6 +1,6 @@
 <?php
 
-class ARVE_Admin_Notice_Factory {
+class Nextgenthemes_Admin_Notice_Factory {
 
 	private $notice_id;
 	private $notice;
@@ -44,6 +44,13 @@ class ARVE_Admin_Notice_Factory {
 			'<div class="notice is-dismissible updated" data-nj-notice-id="%s">%s</div>',
 			esc_attr( $this->notice_id ),
 			$this->notice
+		);
+
+		wp_enqueue_script(
+			'nextgenthemes-admin-notice-factory',
+			NEXTGENTHEMES_ADMIN_URL . 'admin-notice-factory.js',
+			array( 'jquery' ),
+			filemtime( __DIR__ . '/admin-notice-factory.js' )
 		);
 	}
 

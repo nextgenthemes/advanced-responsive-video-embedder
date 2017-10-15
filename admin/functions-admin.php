@@ -9,9 +9,9 @@ function arve_action_admin_init_setup_messages() {
 			ARVE_PRO_VERSION_REQUIRED,
 			get_admin_url() . 'admin.php?page=nextgenthemes-licenses',
 			'https://nextgenthemes.com/support/',
-			'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/installing-and-license-management/'
+			'https://nextgenthemes.com/plugins/arve-pro/documentation/installing-and-license-management/'
 		);
-		new ARVE_Admin_Notice_Factory( 'arve-pro-outdated', "<p>$msg</p>", false );
+		new Nextgenthemes_Admin_Notice_Factory( 'arve-pro-outdated', "<p>$msg</p>", false );
 	}
 
 	if( arve_display_pro_ad() ) {
@@ -20,16 +20,16 @@ function arve_action_admin_init_setup_messages() {
 
 		$pro_ad_message .= file_get_contents( ARVE_PATH . 'admin/pro-ad.html' );
 
-		new ARVE_Admin_Notice_Factory( 'arve_dismiss_pro_notice', $pro_ad_message );
+		new Nextgenthemes_Admin_Notice_Factory( 'arve_dismiss_pro_notice', $pro_ad_message );
 	}
 
 	$survery_message = __( '<p>Hi, this is Nico(las Jonas) the author of the ARVE plugin. I am in a delemma because there was offered a advertising deal that is hard to resist but I am commited to this plugin and to not want to damage its reputation and annoy you. If you have a few minutes please <a href="https://nextgenthemes.com/advertising-offer/" target="_blank">share your opinion</a>.</p>', ARVE_SLUG );
 
-	#new ARVE_Admin_Notice_Factory( 'arve_dismiss_pro_notice', $survery_message );
+	#new Nextgenthemes_Admin_Notice_Factory( 'arve_dismiss_pro_notice', $survery_message );
 }
 
 function arve_add_tinymce_plugin( $plugin_array ) {
-	$plugin_array['arve'] = ARVE_ADMIN_URL . 'tinymce.js';
+	$plugin_array['arve'] = ARVE_URL . '/admin/tinymce.js';
 	return $plugin_array;
 }
 
@@ -637,9 +637,8 @@ function arve_validate_options_shortcodes( $input ) {
 	return array_diff_assoc( $output, $options_defaults );
 }
 
-
 function arve_admin_enqueue_styles() {
-	wp_enqueue_style( ARVE_SLUG, ARVE_ADMIN_URL . 'arve-admin.css', array(), ARVE_VERSION, 'all' );
+	wp_enqueue_style( ARVE_SLUG, ARVE_URL . '/admin/arve-admin.css', array(), ARVE_VERSION, 'all' );
 }
 
 function arve_mce_css( $mce_css ) {
@@ -649,7 +648,7 @@ function arve_mce_css( $mce_css ) {
 	if ( ! empty( $mce_css ) ) {
 		$mce_css .= ',';
 	}
-	$mce_css .= ARVE_PUBLIC_URL . "arve{$min}.css";
+	$mce_css .= ARVE_URL . "public/arve{$min}.css";
 
 	return $mce_css;
 }
@@ -661,9 +660,9 @@ function arve_mce_css( $mce_css ) {
  */
 function arve_admin_enqueue_scripts() {
 
-	wp_enqueue_script( ARVE_SLUG, ARVE_ADMIN_URL . 'arve-admin.js', array( 'jquery' ), ARVE_VERSION, true );
+	wp_enqueue_script( ARVE_SLUG, ARVE_URL . '/admin/arve-admin.js', array( 'jquery' ), ARVE_VERSION, true );
 
 	if ( is_plugin_active( 'shortcode-ui/shortcode-ui.php' ) ) {
-		wp_enqueue_script( ARVE_SLUG . '-sc-ui', ARVE_ADMIN_URL . 'arve-shortcode-ui.js', array( 'shortcode-ui' ), ARVE_VERSION, true );
+		wp_enqueue_script( ARVE_SLUG . '-sc-ui', ARVE_URL . '/admin/arve-shortcode-ui.js', array( 'shortcode-ui' ), ARVE_VERSION, true );
 	}
 }

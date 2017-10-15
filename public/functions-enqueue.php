@@ -6,7 +6,7 @@ function arve_register_styles() {
 
 	wp_register_style(
 		ARVE_SLUG,
-		ARVE_PUBLIC_URL . "arve$min.css",
+		ARVE_URL . "public/arve$min.css",
 		array(),
 		ARVE_VERSION
 	);
@@ -18,7 +18,7 @@ function arve_register_scripts() {
 
 	wp_register_script(
 		ARVE_SLUG,
-		ARVE_PUBLIC_URL . "arve$min.js",
+		ARVE_URL . "public/arve$min.js",
 		array( 'jquery' ),
 		ARVE_VERSION,
 		true

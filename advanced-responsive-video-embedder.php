@@ -18,14 +18,11 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'ARVE_SLUG',                 'advanced-responsive-video-embedder' );
+define( 'ARVE_SLUG', 'advanced-responsive-video-embedder' );
 define( 'ARVE_VERSION',              '8.7.2' );
 define( 'ARVE_PRO_VERSION_REQUIRED', '4.0.0' );
 
 define( 'ARVE_URL', plugin_dir_url( __FILE__ ) );
-define( 'ARVE_PUBLIC_URL', ARVE_URL . 'public/' );
-define( 'ARVE_ADMIN_URL',  ARVE_URL . 'admin/' );
-
 define( 'ARVE_PATH', plugin_dir_path( __FILE__ ) );
 
 define( 'ARVE_NUM_TRACKS', 10 );
@@ -36,18 +33,21 @@ function arve_init() {
 
 	add_option( 'arve_install_date', current_time( 'timestamp' ) );
 
-	require_once __DIR__ . '/admin/class-arve-admin-notice-factory.php';
-
+	if( ! class_exists( 'Nextgenthemes_Admin_Notice_Factory' ) ) {
+		require_once __DIR__ . '/admin/nextgenthemes/class-admin-notice-factory.php';
+	}
 	if ( version_compare( PHP_VERSION, '5.3', '<' ) ) {
 		add_action( 'admin_init', 'arve_php_outdated_message' );
 		return;
 	}
-
 	if( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
-		require_once __DIR__ . '/admin/class-edd-sl-plugin-updater.php';
+		require_once __DIR__ . '/admin/nextgenthemes/class-edd-sl-plugin-updater.php';
 	}
-
-	require_once __DIR__ . '/admin/licensing/functions-licensing.php';
+	if ( ! defined( 'NEXTGENTHEMES_ADMIN_VERSION' ) ) {
+		define( 'NEXTGENTHEMES_ADMIN_TEXT_DOMAIN', ARVE_SLUG );
+		require_once __DIR__ . '/admin/nextgenthemes/functions-admin.php';
+		require_once __DIR__ . '/admin/nextgenthemes/functions-deprecated.php';
+	}
 
 	require_once __DIR__ . '/admin/functions-admin.php';
 	require_once __DIR__ . '/public/functions-enqueue.php';
@@ -107,5 +107,5 @@ function arve_php_outdated_message() {
 		PHP_VERSION
 	);
 
-	new ARVE_Admin_Notice_Factory( 'arve-php-outdated', "<p>$msg</p>", false );
+	new Nextgenthemes_Admin_Notice_Factory( 'arve-php-outdated', "<p>$msg</p>", false );
 }

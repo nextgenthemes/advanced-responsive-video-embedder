@@ -222,12 +222,12 @@ function arve_sc_filter_get_media_gallery_video( $atts ) {
 	return $atts;
 }
 
-function arve_sc_filter_detect_provider_and_id_from_url( $atts ) {
+function arve_sc_filter_detect_provider_and_id_from_url( $a ) {
 
 	$properties = arve_get_host_properties();
 
-	if ( ! empty( $atts['provider'] ) || empty( $atts['url'] ) ) {
-		return $atts;
+	if ( ! empty( $a['provider'] ) || empty( $a['url'] ) ) {
+		return $a;
 	}
 
 	foreach ( $properties as $host_id => $host ) :
@@ -236,7 +236,7 @@ function arve_sc_filter_detect_provider_and_id_from_url( $atts ) {
 			continue;
 		}
 
-		$preg_match = preg_match( '#' . $host['regex'] . '#i', $atts['url'], $matches );
+		$preg_match = preg_match( '#' . $host['regex'] . '#i', $a['url'], $matches );
 
 		if ( 1 !== $preg_match ) {
 			continue;
@@ -245,14 +245,14 @@ function arve_sc_filter_detect_provider_and_id_from_url( $atts ) {
 		foreach ( $matches as $key => $value ) {
 
 			if ( is_string( $key ) ) {
-				$atts[ 'provider' ] = $host_id;
-				$atts[ $key ]       = $matches[ $key ];
+				$a[ 'provider' ] = $host_id;
+				$a[ $key ]       = $matches[ $key ];
 			}
 		}
 
 	endforeach;
 
-	return $atts;
+	return $a;
 }
 
 function arve_sc_filter_detect_query_args( $atts ) {

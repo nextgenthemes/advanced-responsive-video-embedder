@@ -13,11 +13,11 @@ class Tests_Licensing_Pro extends WP_UnitTestCase {
 
 	    update_option( 'nextgenthemes_test_key', 'key_in_option' );
 
-	    $this->assertEquals( nextgenthemes_get_key( 'test' ), 'key_in_option' );
+	    $this->assertEquals( \nextgenthemes\admin\get_key( 'test' ), 'key_in_option' );
 
 	    define( 'TEST_KEY', 'defined_key' );
 
-	    $this->assertEquals( nextgenthemes_get_key( 'test' ), 'defined_key' );
+	    $this->assertEquals( \nextgenthemes\admin\get_key( 'test' ), 'defined_key' );
 	}
 
 
