@@ -1,5 +1,4 @@
 <?php
-
 if ( ! class_exists( 'Nextgenthemes_Admin_Notice_Factory' ) ) {
 
 	final class Nextgenthemes_Admin_Notice_Factory {
