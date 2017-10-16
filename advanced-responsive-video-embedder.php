@@ -25,28 +25,20 @@ define( 'ARVE_PRO_VERSION_REQUIRED', '4.0.0' );
 define( 'ARVE_URL', plugin_dir_url( __FILE__ ) );
 define( 'ARVE_PATH', plugin_dir_path( __FILE__ ) );
 
-define( 'ARVE_NUM_TRACKS', 10 );
-
-arve_init(); #add_action( 'init', 'arve_init' );
+arve_init();
 
 function arve_init() {
 
 	add_option( 'arve_install_date', current_time( 'timestamp' ) );
 
-	if( ! class_exists( 'Nextgenthemes_Admin_Notice_Factory' ) ) {
-		require_once __DIR__ . '/admin/nextgenthemes/class-admin-notice-factory.php';
-	}
 	if ( version_compare( PHP_VERSION, '5.3', '<' ) ) {
-		add_action( 'admin_init', 'arve_php_outdated_message' );
+		add_action( 'admin_notices', 'arve_php_outdated_message' );
 		return;
 	}
-	if( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
-		require_once __DIR__ . '/admin/nextgenthemes/class-edd-sl-plugin-updater.php';
-	}
+
 	if ( ! defined( 'NEXTGENTHEMES_ADMIN_VERSION' ) ) {
-		define( 'NEXTGENTHEMES_ADMIN_TEXT_DOMAIN', ARVE_SLUG );
+		define( 'NEXTGENTHEMES_ADMIN_TEXTDOMAIN', ARVE_SLUG );
 		require_once __DIR__ . '/admin/nextgenthemes/functions-admin.php';
-		require_once __DIR__ . '/admin/nextgenthemes/functions-deprecated.php';
 	}
 
 	require_once __DIR__ . '/admin/functions-admin.php';
@@ -63,7 +55,7 @@ function arve_init() {
 
 	add_action( 'plugins_loaded', 'arve_load_plugin_textdomain' );
 
-	# Public hooks
+	// Public hooks.
 	add_action( 'plugins_loaded',      'arve_create_shortcodes', 999 );
 	add_action( 'plugins_loaded',      'arve_create_url_handlers', 999 );
 	add_action( 'plugins_loaded',      'arve_oembed_remove_providers', 998 );
@@ -85,7 +77,7 @@ function arve_init() {
 	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_attr', 20 );
 	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_build_tracks_html', 20 );
 
-	# Admin Hooks
+	// Admin Hooks.
 	add_action( 'admin_enqueue_scripts', 'arve_admin_enqueue_scripts' );
 	add_action( 'admin_enqueue_scripts', 'arve_admin_enqueue_styles', 99 );
 	add_action( 'admin_init',            'arve_action_admin_init_setup_messages' );
@@ -107,5 +99,5 @@ function arve_php_outdated_message() {
 		PHP_VERSION
 	);
 
-	new Nextgenthemes_Admin_Notice_Factory( 'arve-php-outdated', "<p>$msg</p>", false );
+	printf( '<div class="notice notice-warning notice-dismissable"><p>%s</p></div>', $msg );
 }
