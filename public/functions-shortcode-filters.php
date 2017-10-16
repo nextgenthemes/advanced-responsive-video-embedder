@@ -391,7 +391,7 @@ function arve_sc_filter_build_tracks_html( $atts ) {
 
 	$atts['video_tracks_html'] = '';
 
-	for ( $n = 1; $n <= ARVE_NUM_TRACKS; $n++ ) {
+	for ( $n = 1; $n <= 10; $n++ ) {
 
 		if ( empty( $atts[ "track_{$n}" ] ) ) {
 			return $atts;

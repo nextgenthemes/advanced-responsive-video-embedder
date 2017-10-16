@@ -45,7 +45,7 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 		'link_text' => null,
 	);
 
-	for ( $n = 1; $n <= ARVE_NUM_TRACKS; $n++ ) {
+	for ( $n = 1; $n <= 10; $n++ ) {
 		$pairs["track_{$n}"]       = null;
 		$pairs["track_{$n}_label"] = null;
 	}
