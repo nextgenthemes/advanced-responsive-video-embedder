@@ -22,10 +22,6 @@ function arve_action_admin_init_setup_messages() {
 
 		new Nextgenthemes_Admin_Notice_Factory( 'arve_dismiss_pro_notice', $pro_ad_message );
 	}
-
-	$survery_message = __( '<p>Hi, this is Nico(las Jonas) the author of the ARVE plugin. I am in a delemma because there was offered a advertising deal that is hard to resist but I am commited to this plugin and to not want to damage its reputation and annoy you. If you have a few minutes please <a href="https://nextgenthemes.com/advertising-offer/" target="_blank">share your opinion</a>.</p>', ARVE_SLUG );
-
-	#new Nextgenthemes_Admin_Notice_Factory( 'arve_dismiss_pro_notice', $survery_message );
 }
 
 function arve_add_tinymce_plugin( $plugin_array ) {
