@@ -6,7 +6,7 @@
 
 ### 8.7.3 ###
 
-* Improved: Admin code rework
+* Improved: Admin code reworked
 * Improved: Update plugin-updater-class
 
 ### 2017-08-16 - 8.7.2 ###
