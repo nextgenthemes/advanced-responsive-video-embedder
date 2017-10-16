@@ -6,7 +6,7 @@
 
 ### 8.7.3 ###
 
-* Asking users about ad deal
+* Improved: Admin code rework
 * Improved: Update plugin-updater-class
 
 ### 2017-08-16 - 8.7.2 ###
