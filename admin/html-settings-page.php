@@ -19,7 +19,7 @@ $options = arve_get_options();
 
 	<?php if ( ! defined( 'ARVE_PRO_VERSION' ) ) : ?>
 
-		<div class="no" what="arve-settings-page-ad notice is-dismissible updated">
+		<div class="arve-settings-page-ad notice is-dismissible updated">
 
 			<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
 
