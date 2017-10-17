@@ -11,7 +11,7 @@ function arve_action_admin_init_setup_messages() {
 			'https://nextgenthemes.com/support/',
 			'https://nextgenthemes.com/plugins/arve-pro/documentation/installing-and-license-management/'
 		);
-		new Nextgenthemes_Admin_Notice_Factory( 'arve-pro-outdated', "<p>$msg</p>", false );
+		new Nextgenthemes_Admin_Notice_Factory( 'arve-pro-outdated', "<p>$msg</p>", MINUTE_IN_SECONDS * 15 );
 	}
 
 	if( arve_display_pro_ad() ) {

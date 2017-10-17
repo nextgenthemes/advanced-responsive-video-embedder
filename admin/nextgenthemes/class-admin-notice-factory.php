@@ -3,19 +3,25 @@ if ( ! class_exists( 'Nextgenthemes_Admin_Notice_Factory' ) ) {
 
 	final class Nextgenthemes_Admin_Notice_Factory {
 
+		private $user_id;
 		private $notice_id;
-		private $notice;
+		private $notice_html;
 		private $dismiss_forever;
+		private $dismiss_time;
+		private $capabilities;
 
-		function __construct( $notice_id, $notice, $dismiss_forever = true, $capabilities = 'activate_plugins' ) {
+		function __construct( $notice_id, $notice_html, $dismiss_time = false, $capabilities = 'activate_plugins' ) {
 
 			if ( ! current_user_can( $capabilities ) ) {
 				return;
 			}
 
+			$this->user_id         = get_current_user_id();
 			$this->notice_id       = "admin-notice-factory-$notice_id";
-			$this->notice          = $notice;
-			$this->dismiss_forever = $dismiss_forever;
+			$this->transient_id    = "{$this->notice_id}-{$this->user_id}";
+			$this->notice_html     = (string) $notice_html;
+			$this->dismiss_forever = ( false === $dismiss_time ) ? true : false;
+			$this->dismiss_time    = (int) $dismiss_time;
 
 			if ( 'admin-notice-factory-arve_dismiss_pro_notice' == $this->notice_id ) {
 				$this->notice_id = 'arve_dismiss_pro_notice';
@@ -27,24 +33,20 @@ if ( ! class_exists( 'Nextgenthemes_Admin_Notice_Factory' ) ) {
 
 		function action_admin_notices() {
 
-			if ( apply_filters( 'nj_debug_admin_message', false ) ) {
-				delete_user_meta( get_current_user_id(), $this->notice_id );
-				delete_transient( $this->notice_id );
-			}
-
-			$user_id   = get_current_user_id();
-			$user_meta = get_user_meta( $user_id, $this->notice_id );
+			$user_meta = get_user_meta( $this->user_id, $this->notice_id );
 
 			if( $this->dismiss_forever && ! empty( $user_meta ) ) {
 				return;
 			} elseif( get_transient( $this->notice_id ) ) {
+				return;
+			} elseif( get_transient( $this->transient_id ) ) {
 				return;
 			}
 
 			printf(
 				'<div class="notice is-dismissible updated" data-nj-notice-id="%s">%s</div>',
 				esc_attr( $this->notice_id ),
-				$this->notice
+				$this->notice_html
 			);
 
 			wp_enqueue_script(
@@ -57,12 +59,10 @@ if ( ! class_exists( 'Nextgenthemes_Admin_Notice_Factory' ) ) {
 
 		function ajax_call() {
 
-			$user_id = get_current_user_id();
-
 			if( $this->dismiss_forever ) {
-				add_user_meta( $user_id, $this->notice_id, true );
+				add_user_meta( $this->user_id, $this->notice_id, true );
 			} else {
-				set_transient( $this->notice_id, true, HOUR_IN_SECONDS );
+				set_transient( $this->transient_id, true, $this->dismiss_time );
 			}
 			wp_die();
 		}
