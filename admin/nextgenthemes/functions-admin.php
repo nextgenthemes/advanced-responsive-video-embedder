@@ -14,7 +14,7 @@ if( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
 require_once __DIR__ . '/class-admin-notice-factory.php';
 require_once __DIR__ . '/functions-deprecated.php';
 
-if ( version_compare( PHP_VERSION, '8.6', '<' ) ) {
+if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
 	add_action( 'admin_init', __NAMESPACE__ . '\\php_below_56_notice' );
 }
 add_action( 'admin_init', __NAMESPACE__ . '\\init_edd_updaters', 0 );
