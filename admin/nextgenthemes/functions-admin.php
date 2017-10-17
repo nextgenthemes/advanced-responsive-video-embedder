@@ -134,9 +134,12 @@ function get_products_data( $url_query = array() ) {
 			return new WP_Error( 'edd-api', __( 'Empty body', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ) );
 		}
 
-		if ( ! empty( $cache = json_decode( $body, false ) ) ) {
+		$cache = json_decode( $body );
+
+		if ( empty( $cache ) ) {
+			$cache = false;
+		} else {
 			set_transient( $transient_name, $cache, 3600 );
-			return $cache;
 		}
 	}
 
