@@ -6,6 +6,7 @@
 
 ### 8.7.3 ###
 
+* Fix: TED embed url
 * Improved: Admin code reworked
 * Improved: Update plugin-updater-class
 
