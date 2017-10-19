@@ -42,6 +42,22 @@ function arve_display_pro_ad() {
 
 function arve_widget_text() {
 
+	$data = \nextgenthemes\admin\remote_get_cached( array(
+		'url' => 'https://nextgenthemes.com/wp-json/wp/v2/pages/30476',
+	) );
+
+	if( is_wp_error( $data ) ) {
+
+		printf(
+			'<div class="error"><p>%s</p></div>',
+			$data->get_error_message()
+		);
+
+	} else {
+
+		echo $data->content->rendered;
+	}
+
 	echo '<p>';
 	printf( '<a href="%s">Documentation</a>, ', 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/' );
 	printf( '<a href="%s">Support</a>, ', 'https://nextgenthemes.com/support/' );
@@ -219,7 +235,7 @@ function arve_register_shortcode_ui() {
 
 function arve_input( $args ) {
 
-	$out = sprintf( '<input%s>', arve_attr( $args['input_attr'] ) );
+	$out = sprintf( '<input%s>', \nextgenthemes\admin\html_attr( $args['input_attr'] ) );
 
 	if ( ! empty( $args['option_values']['attr'] ) && 'thumbnail_fallback' == $args['option_values']['attr'] ) {
 
@@ -230,7 +246,7 @@ function arve_input( $args ) {
 
 		$out .= sprintf(
 			'<a %s>%s</a>',
-			arve_attr(
+			\nextgenthemes\admin\html_attr(
 				array(
 					'data-image-upload' => sprintf( '[name="%s"]', $args['input_attr']['name'] ),
 					'class'             => 'button-secondary',
@@ -251,7 +267,7 @@ function arve_textarea( $args ) {
 
 	unset( $args['input_attr']['type'] );
 
-	$out = sprintf( '<textarea%s></textarea>', arve_attr( $args['input_attr'] ) );
+	$out = sprintf( '<textarea%s></textarea>', \nextgenthemes\admin\html_attr( $args['input_attr'] ) );
 
 	if ( ! empty( $args['description'] ) ) {
 		$out = $out . '<p class="description">' . $args['description'] . '</p>';
@@ -287,7 +303,7 @@ function arve_select( $args ) {
 	$select_attr = $args['input_attr'];
 	unset( $select_attr['value'] );
 
-	$out = sprintf( '<select%s>%s</select>', arve_attr( $select_attr ), implode( '', $options ) );
+	$out = sprintf( '<select%s>%s</select>', \nextgenthemes\admin\html_attr( $select_attr ), implode( '', $options ) );
 
 	if ( ! empty( $args['description'] ) ) {
 		$out = $out . '<p class="description">' . $args['description'] . '</p>';

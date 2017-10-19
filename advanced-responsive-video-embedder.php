@@ -36,8 +36,8 @@ function arve_init() {
 		return;
 	}
 
-	if ( ! defined( 'NEXTGENTHEMES_ADMIN_VERSION' ) ) {
-		define( 'NEXTGENTHEMES_ADMIN_TEXTDOMAIN', ARVE_SLUG );
+	if ( ! defined( 'nextgenthemes\admin\VERSION' ) ) {
+		define( 'nextgenthemes\admin\TEXTDOMAIN', ARVE_SLUG );
 		require_once __DIR__ . '/admin/nextgenthemes/functions-admin.php';
 	}
 

@@ -1,10 +1,10 @@
 <?php
 namespace nextgenthemes\admin;
 
-define( 'NEXTGENTHEMES_ADMIN_VERSION', '1.0' );
+const VERSION = '1.0.0';
 
-if ( ! defined( 'NEXTGENTHEMES_ADMIN_URL' ) ) {
-	define( 'NEXTGENTHEMES_ADMIN_URL', plugin_dir_url( __FILE__ ) );
+if ( ! defined( __NAMESPACE__ . '\URL' ) ) {
+	define( __NAMESPACE__ . '\URL', plugin_dir_url( __FILE__ ) );
 }
 
 if( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
@@ -13,6 +13,7 @@ if( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
 
 require_once __DIR__ . '/class-admin-notice-factory.php';
 require_once __DIR__ . '/functions-deprecated.php';
+require_once __DIR__ . '/functions-misc.php';
 
 if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
 	add_action( 'admin_init', __NAMESPACE__ . '\\php_below_56_notice' );
@@ -26,7 +27,7 @@ function ads_page() {
 
 	wp_enqueue_style(
 		'nextgenthemes-product-page',
-		NEXTGENTHEMES_ADMIN_URL . 'product-page.css',
+		URL . 'product-page.css',
 		array(),
 		filemtime( __DIR__ . '/product-page.css' )
 	);
@@ -38,14 +39,17 @@ function ads_page() {
 
 function products_html() {
 
-	$data = get_products_data();
+	$data = remote_get_cached( array(
+		'url' => 'https://nextgenthemes.com/edd-api/products/'
+	) );
 
 	if( is_wp_error( $data ) ) {
 
 		printf(
-			__( '<div class="error"><p>%s</p></div>', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
+			'<div class="error"><p>%s</p></div>',
 			$data->get_error_message()
 		);
+		return;
 	}
 
 	foreach( $data->products as $product ) :
@@ -66,7 +70,7 @@ function products_html() {
 				<figure><img src="<?php echo $product->info->thumbnail; ?>"></figure>
 			<?php endif; ?>
 			<?php echo "<h2>{$product->info->title}</h2>"; ?>
-			<?php echo filter_html( $product->info->content ); ?>
+			<?php echo filter_product_html( $product->info->content ); ?>
 			<?php if( ! empty( $product->pricing->amount ) && '0.00' == $product->pricing->amount ) : ?>
 				<span>Free</span>
 			<?php else : ?>
@@ -78,7 +82,7 @@ function products_html() {
 	endforeach;
 }
 
-function filter_html( $content ) {
+function filter_product_html( $content ) {
 
 	$allowed_tags = array(
 		#'a'       => array( 'href' => true, 'title' => true ),
@@ -112,40 +116,6 @@ function plugin_install_search_url( $search_term ) {
 	}
 }
 
-function get_products_data( $url_query = array() ) {
-
-	$transient_name = 'nextgenthemes_edd_api'; # json_encode( $url_query );
-
-	$cache = get_transient( $transient_name );
-
-	if ( false === $cache ) {
-
-		$url = 'https://nextgenthemes.com/edd-api/products/';
-
-		$response = wp_remote_get( $url );
-
-		if ( is_wp_error( $response ) ) {
-			return $response;
-		}
-
-		$body = wp_remote_retrieve_body( $response );
-
-		if ( '' === $body ) {
-			return new WP_Error( 'edd-api', __( 'Empty body', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ) );
-		}
-
-		$cache = json_decode( $body );
-
-		if ( empty( $cache ) ) {
-			$cache = false;
-		} else {
-			set_transient( $transient_name, $cache, 3600 );
-		}
-	}
-
-	return $cache;
-}
-
 function feature_list_html( $filepath ) {
 	echo strip_tags( file_get_contents( $filepath ), '<ul></ul><li></li><h3></h3>' );
 }
@@ -159,7 +129,7 @@ function activation_notices() {
 		if( $value['active'] && ! $value['valid_key'] ) {
 
 			$msg = sprintf(
-				__( 'Hi there, thanks for your purchase. One last step, please activate your %s <a href="%s">here now</a>.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
+				__( 'Hi there, thanks for your purchase. One last step, please activate your %s <a href="%s">here now</a>.', TEXTDOMAIN ),
 				$value['name'],
 				get_admin_url() . 'admin.php?page=nextgenthemes-licenses'
 			);
@@ -245,8 +215,8 @@ function is_plugin_installed( $plugin_basename ) {
 function add_menus() {
 
  	$plugin_screen_hook_suffix = add_menu_page(
- 		__( 'Nextgenthemes', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ), # Page Title
- 		__( 'Nextgenthemes', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ), # Menu Tile
+ 		__( 'Nextgenthemes', TEXTDOMAIN ), # Page Title
+ 		__( 'Nextgenthemes', TEXTDOMAIN ), # Menu Tile
  		'manage_options',                 # capability
  		'nextgenthemes',                  # menu-slug
  		__NAMESPACE__ . '\\ads_page',     # function
@@ -257,8 +227,8 @@ function add_menus() {
 	/*
   add_submenu_page(
     'nextgenthemes',                      # parent_slug
-    __( 'Addons and Themes', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ), # Page Title
-    __( 'Addons and Themes', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ), # Menu Tile
+    __( 'Addons and Themes', TEXTDOMAIN ), # Page Title
+    __( 'Addons and Themes', TEXTDOMAIN ), # Menu Tile
     'manage_options',                     # capability
     'nextgenthemes',                      # menu-slug
     function() {
@@ -269,8 +239,8 @@ function add_menus() {
 
 	add_submenu_page(
 		'nextgenthemes',              # parent_slug
-		__( 'Licenses', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),  # Page Title
-		__( 'Licenses', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),  # Menu Tile
+		__( 'Licenses', TEXTDOMAIN ),  # Page Title
+		__( 'Licenses', TEXTDOMAIN ),  # Menu Tile
 		'manage_options',             # capability
 		'nextgenthemes-licenses',     # menu-slug
 		__NAMESPACE__ . '\\licenses_page' # function
@@ -281,7 +251,7 @@ function register_settings() {
 
 	add_settings_section(
 		'keys',                      # id,
-		__( 'Licenses', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ), # title,
+		__( 'Licenses', TEXTDOMAIN ), # title,
 		'__return_empty_string',     # callback,
 		'nextgenthemes-licenses'     # page
 	);
@@ -306,7 +276,7 @@ function register_settings() {
 					'id'    => $option_keyname,
 					'name'  => $option_keyname,
 					'class' => 'arve-license-input',
-					'value' => get_defined_key( $product_slug ) ? __( 'is defined (wp-config.php?)', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ) : get_key( $product_slug, 'option_only' ),
+					'value' => get_defined_key( $product_slug ) ? __( 'is defined (wp-config.php?)', TEXTDOMAIN ) : get_key( $product_slug, 'option_only' ),
 				)
 			)
 		);
@@ -324,7 +294,7 @@ function key_callback( $args ) {
 
 	echo '<p>';
 
-	printf( '<input%s>', arve_attr( array(
+	printf( '<input%s>', html_attr( array(
 		'type'  => 'hidden',
 		'id'    => $args['option_basename'] . '[product]',
 		'name'  => $args['option_basename'] . '[product]',
@@ -333,7 +303,7 @@ function key_callback( $args ) {
 
 	printf(
 		'<input%s%s>',
-		arve_attr( $args['attr'] ),
+		html_attr( $args['attr'] ),
 		get_defined_key( $args['product']['slug'] ) ? ' disabled' : ''
 	);
 
@@ -342,26 +312,26 @@ function key_callback( $args ) {
 
 	if( $defined_key || ! empty( $key ) ) {
 
-		submit_button( __('Activate License',   NEXTGENTHEMES_ADMIN_TEXTDOMAIN ), 'primary',   $args['option_basename'] . '[activate_key]',   false );
-		submit_button( __('Deactivate License', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ), 'secondary', $args['option_basename'] . '[deactivate_key]', false );
-		submit_button( __('Check License',      NEXTGENTHEMES_ADMIN_TEXTDOMAIN ), 'secondary', $args['option_basename'] . '[check_key]',      false );
+		submit_button( __('Activate License',   TEXTDOMAIN ), 'primary',   $args['option_basename'] . '[activate_key]',   false );
+		submit_button( __('Deactivate License', TEXTDOMAIN ), 'secondary', $args['option_basename'] . '[deactivate_key]', false );
+		submit_button( __('Check License',      TEXTDOMAIN ), 'secondary', $args['option_basename'] . '[check_key]',      false );
   }
 	echo '</p>';
 
   echo '<p>';
-  echo __( 'License Status: ', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ) . get_key_status( $args['product']['slug'] );
+  echo __( 'License Status: ', TEXTDOMAIN ) . get_key_status( $args['product']['slug'] );
   echo '</p>';
 
   if( $args['product']['installed'] && ! $args['product']['active'] ) {
-		printf( '<strong>%s</strong>', __( 'Plugin is installed but not activated', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ) );
+		printf( '<strong>%s</strong>', __( 'Plugin is installed but not activated', TEXTDOMAIN ) );
 	} elseif( ! $args['product']['active'] ) {
     printf(
 			'<a%s>%s</a>',
-			arve_attr( array(
+			html_attr( array(
 				'href'  => $args['product']['url'],
 				'class' => 'button button-primary',
 			) ),
-			__( 'Not installed, check it out', NEXTGENTHEMES_ADMIN_TEXTDOMAIN )
+			__( 'Not installed, check it out', TEXTDOMAIN )
 		);
   }
 }
@@ -493,56 +463,33 @@ function init_theme_updater( $product ) {
 			#'renew_url'       => $product['renew_link'], // Optional, allows for a custom license renewal link
 		),
 		array(
-			'theme-license'             => __( 'Theme License', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'enter-key'                 => __( 'Enter your theme license key.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'license-key'               => __( 'License Key', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'license-action'            => __( 'License Action', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'deactivate-license'        => __( 'Deactivate License', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'activate-license'          => __( 'Activate License', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'status-unknown'            => __( 'License status is unknown.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'renew'                     => __( 'Renew?', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'unlimited'                 => __( 'unlimited', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'license-key-is-active'     => __( 'License key is active.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'expires%s'                 => __( 'Expires %s.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'expires-never'             => __( 'Lifetime License.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'%1$s/%2$-sites'            => __( 'You have %1$s / %2$s sites activated.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'license-key-expired-%s'    => __( 'License key expired %s.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'license-key-expired'       => __( 'License key has expired.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'license-keys-do-not-match' => __( 'License keys do not match.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'license-is-inactive'       => __( 'License is inactive.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'license-key-is-disabled'   => __( 'License key is disabled.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'site-is-inactive'          => __( 'Site is inactive.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'license-status-unknown'    => __( 'License status is unknown.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'update-notice'             => __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update.", NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-			'update-available'          => __('<strong>%1$s %2$s</strong> is available. <a href="%3$s" class="thickbox" title="%4s">Check out what\'s new</a> or <a href="%5$s"%6$s>update now</a>.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
+			'theme-license'             => __( 'Theme License', TEXTDOMAIN ),
+			'enter-key'                 => __( 'Enter your theme license key.', TEXTDOMAIN ),
+			'license-key'               => __( 'License Key', TEXTDOMAIN ),
+			'license-action'            => __( 'License Action', TEXTDOMAIN ),
+			'deactivate-license'        => __( 'Deactivate License', TEXTDOMAIN ),
+			'activate-license'          => __( 'Activate License', TEXTDOMAIN ),
+			'status-unknown'            => __( 'License status is unknown.', TEXTDOMAIN ),
+			'renew'                     => __( 'Renew?', TEXTDOMAIN ),
+			'unlimited'                 => __( 'unlimited', TEXTDOMAIN ),
+			'license-key-is-active'     => __( 'License key is active.', TEXTDOMAIN ),
+			'expires%s'                 => __( 'Expires %s.', TEXTDOMAIN ),
+			'expires-never'             => __( 'Lifetime License.', TEXTDOMAIN ),
+			'%1$s/%2$-sites'            => __( 'You have %1$s / %2$s sites activated.', TEXTDOMAIN ),
+			'license-key-expired-%s'    => __( 'License key expired %s.', TEXTDOMAIN ),
+			'license-key-expired'       => __( 'License key has expired.', TEXTDOMAIN ),
+			'license-keys-do-not-match' => __( 'License keys do not match.', TEXTDOMAIN ),
+			'license-is-inactive'       => __( 'License is inactive.', TEXTDOMAIN ),
+			'license-key-is-disabled'   => __( 'License key is disabled.', TEXTDOMAIN ),
+			'site-is-inactive'          => __( 'Site is inactive.', TEXTDOMAIN ),
+			'license-status-unknown'    => __( 'License status is unknown.', TEXTDOMAIN ),
+			'update-notice'             => __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update.", TEXTDOMAIN ),
+			'update-available'          => __('<strong>%1$s %2$s</strong> is available. <a href="%3$s" class="thickbox" title="%4s">Check out what\'s new</a> or <a href="%5$s"%6$s>update now</a>.', TEXTDOMAIN ),
 		)
 	);
 }
 
-function remote_get( $url, $args ) {
 
-	$response      = wp_remote_post( 'https://nextgenthemes.com', $args );
-	$response_code = wp_remote_retrieve_response_code( $response );
-
-	# retry with wp_remote_GET
-	if ( 200 !== $response_code ) {
-		$response      = wp_remote_get( 'https://nextgenthemes.com', $args );
-		$response_code = wp_remote_retrieve_response_code( $response );
-	}
-
-	if ( 200 !== $response_code ) {
-
-		$response = new WP_Error(
-			'response_code',
-			sprintf(
-				__( 'Error: Response code should be 200 but was: %s.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
-				$response_code
-			)
-		);
-	}
-
-	return $response;
-};
 
 function api_action( $item_name, $key, $action ) {
 
@@ -550,7 +497,7 @@ function api_action( $item_name, $key, $action ) {
 		wp_die( 'invalid action' );
 	}
 
-	$response = remote_get(
+	$license_data = remote_get(
 		'https://nextgenthemes.com',
 		array(
 			'timeout'   => 15,
@@ -570,53 +517,43 @@ function api_action( $item_name, $key, $action ) {
 
 	} else {
 
-		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-
 		if ( false === $license_data->success ) :
 
 			switch( $license_data->error ) {
 
 				case 'expired' :
-
 					$message = sprintf(
-						__( 'Your license key expired on %s.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
+						__( 'Your license key expired on %s.', TEXTDOMAIN ),
 						date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) )
 					);
 					break;
 
 				case 'revoked' :
-
-					$message = __( 'Your license key has been disabled.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN );
+					$message = __( 'Your license key has been disabled.', TEXTDOMAIN );
 					break;
 
 				case 'missing' :
-
-					$message = __( 'Invalid license.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN );
+					$message = __( 'Invalid license.', TEXTDOMAIN );
 					break;
 
 				case 'invalid' :
 				case 'site_inactive' :
-
-					$message = __( 'Your license is not active for this URL.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN );
+					$message = __( 'Your license is not active for this URL.', TEXTDOMAIN );
 					break;
 
 				case 'item_name_mismatch' :
-
-					$message = sprintf( __( 'This appears to be an invalid license key for %s.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ), $item_name );
+					$message = sprintf( __( 'This appears to be an invalid license key for %s.', TEXTDOMAIN ), $item_name );
 					break;
 
 				case 'no_activations_left' :
-
-					$message = __( 'Your license key has reached its activation limit.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN );
+					$message = __( 'Your license key has reached its activation limit.', TEXTDOMAIN );
 					break;
 
 				default :
-
 					$message = sprintf(
-						__( 'Error: %s.', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
+						__( 'Error: %s.', TEXTDOMAIN ),
 						$license_data->error
 					);
-
 					break;
 			}
 
@@ -633,7 +570,7 @@ function api_action( $item_name, $key, $action ) {
 function php_below_56_notice() {
 
 	$msg = sprintf(
-		__( 'You use a PHP version below 5.6 ', NEXTGENTHEMES_ADMIN_TEXTDOMAIN ),
+		__( 'You use a PHP version below 5.6 ', TEXTDOMAIN ),
 		PHP_VERSION
 	);
 
