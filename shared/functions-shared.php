@@ -700,7 +700,7 @@ function arve_get_host_properties() {
 		'ted' => array(
 			'name'           => 'TED Talks',
 			'regex'          => $s . 'ted\.com/talks/(?<id>[a-z0-9_]+)',
-			'embed_url'      => 'https://embed-ssl.ted.com/talks/%s.html',
+			'embed_url'      => 'https://embed.ted.com/talks/%s.html',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'requires_flash' => true,
