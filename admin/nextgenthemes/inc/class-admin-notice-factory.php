@@ -51,9 +51,9 @@ if ( ! class_exists( 'Nextgenthemes_Admin_Notice_Factory' ) ) {
 
 			wp_enqueue_script(
 				'nextgenthemes-admin-notice-factory',
-				NEXTGENTHEMES_ADMIN_URL . 'admin-notice-factory.js',
+				URL . 'js/admin-notice-factory.js',
 				array( 'jquery' ),
-				filemtime( __DIR__ . '/admin-notice-factory.js' )
+				filemtime( dirname( dirname(__FILE__) ) . '/js/admin-notice-factory.js' )
 			);
 		}
 

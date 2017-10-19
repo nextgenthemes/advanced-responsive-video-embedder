@@ -92,3 +92,14 @@ function remote_get_cached( $args ) {
 
 	return $cache;
 }
+
+function plugin_install_search_url( $search_term ) {
+
+	$path = "plugin-install.php?s={$search_term}&tab=search&type=term";
+
+	if ( is_multisite() ) {
+		return network_admin_url( $path );
+	} else {
+		return admin_url( $path );
+	}
+}

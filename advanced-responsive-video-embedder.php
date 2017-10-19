@@ -38,7 +38,7 @@ function arve_init() {
 
 	if ( ! defined( 'nextgenthemes\admin\VERSION' ) ) {
 		define( 'nextgenthemes\admin\TEXTDOMAIN', ARVE_SLUG );
-		require_once __DIR__ . '/admin/nextgenthemes/functions-admin.php';
+		require_once __DIR__ . '/admin/nextgenthemes/init.php';
 	}
 
 	require_once __DIR__ . '/admin/functions-admin.php';
