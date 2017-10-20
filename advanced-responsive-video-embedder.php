@@ -49,6 +49,7 @@ function arve_init() {
 	require_once __DIR__ . '/public/functions-shortcode-filters.php';
 	require_once __DIR__ . '/public/functions-shortcodes.php';
 	require_once __DIR__ . '/public/functions-thumbnails.php';
+	require_once __DIR__ . '/public/functions-facebook.php';
 	require_once __DIR__ . '/public/functions-url-handlers.php';
 	require_once __DIR__ . '/public/functions-validation.php';
 	require_once __DIR__ . '/shared/functions-shared.php';

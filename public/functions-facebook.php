@@ -8,56 +8,42 @@ function arve_facebook_dataparse( $result, $data, $url ) {
 		return $result;
 	}
 
-  if ( 'Facebook' == $data->provider_name ) {
-    preg_match( '/class="fb-video" data-href="([^"]+)"/', $result, $matches );
-  } else {
-    preg_match( '/src="([^"]+)"/', $result, $matches );
-  }
+	if ( 'Facebook' == $data->provider_name ) {
+		preg_match( '/class="fb-video" data-href="([^"]+)"/', $result, $matches );
 
-	if ( empty( $matches[1] ) ) {
-    return $result;
+		if ( empty( $matches[1] ) ) {
+			return $result;
+		}
+
+		return arve_shortcode_arve( array(
+			'provider' => strtolower( $data->provider_name ),
+			'id'       => $matches[1],
+			'oembed'   => $data,
+			'aspect_ratio' => $data->width . ':' . $data->height
+		) );
 	}
 
-  $iframe_src = $matches[1];
+	return $result;
+	/*
 
-  d($iframe_src);
+	preg_match( '/src="([^"]+)"/', $result, $matches );
 
-  return arve_shortcode_arve( array(
-    'provider' => strtolower( $data->provider_name ),
-    'src'      => $iframe_src,
-    'oembed'   => $data,
-    'aspect_ratio' => $data->width . ':' . $data->height
-  ) );
+	if ( empty( $matches[1] ) ) {
+		return $result;
+	}
+
+	return arve_shortcode_arve( array(
+		'provider' => strtolower( $data->provider_name ),
+		'src'      => $matches[1],
+		'oembed'   => $data,
+		'aspect_ratio' => $data->width . ':' . $data->height
+	) );
+	*/
 }
 
 #add_filter( 'oembed_result', 'arve_oembed_result', 10, 4 );
 
 function arve_oembed_result( $result, $url, $args ) {
 
-  dd($data);
-
-	if ( 'video' != $data->type ) {
-		return $result;
-	}
-
-  if ( 'FaceBook' != $data->provider_name ) {
-    return $result;
-  }
-
-	preg_match( '/src="([^"]+)"/', $result, $matches );
-
-	if ( empty( $matches[1] ) ) {
-    return $result;
-	}
-
-  $iframe_src = $matches[1];
-
-  d($data);
-
-  return $result;
-
-  return arve_shortcode_arve( array(
-    'provider' => strtolower( $data->provider_name ),
-    'src' => $iframe_src
-  ) );
+	return $result;
 }

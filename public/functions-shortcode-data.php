@@ -26,58 +26,37 @@ function arve_url_query_array( $url ) {
 	return $url_params;
 }
 
-function arve_build_iframe_src( $atts ) {
-
-	$id       = $atts['id'];
-	$lang     = $atts['lang'];
-	$provider = $atts['provider'];
+function arve_build_iframe_src( $a ) {
 
 	$properties = arve_get_host_properties();
 
-	if ( isset( $properties[ $provider ]['embed_url'] ) ) {
-		$pattern = $properties[ $provider ]['embed_url'];
+	if ( isset( $properties[ $a['provider'] ]['embed_url'] ) ) {
+		$pattern = $properties[ $a['provider'] ]['embed_url'];
 	} else {
 		$pattern = '%s';
 	}
 
-	if ( 'facebook' == $provider && is_numeric( $id ) ) {
+	if ( 'facebook' == $a['provider'] && is_numeric( $a['id'] ) ) {
 
-		$id = "https://www.facebook.com/facebook/videos/$id/";
+		$a['id'] = "https://www.facebook.com/facebook/videos/{$a['id']}/";
 
-	} elseif ( 'twitch' == $provider && is_numeric( $id ) ) {
+	} elseif ( 'twitch' == $a['provider'] && is_numeric( $a['id'] ) ) {
 
 		$pattern = 'https://player.twitch.tv/?video=v%s';
 
-	} elseif ( 'ted' == $provider && preg_match( "/^[a-z]{2}$/", $lang ) === 1 ) {
+	} elseif ( 'ted' == $a['provider'] && preg_match( "/^[a-z]{2}$/", $a['lang'] ) === 1 ) {
 
 		$pattern = 'https://embed-ssl.ted.com/talks/lang/' . $lang . '/%s.html';
 	}
 
-	if ( isset( $properties[ $provider ]['url_encode_id'] ) && $properties[ $provider ]['url_encode_id'] ) {
-		$id = urlencode( $id );
+	if ( isset( $properties[ $a['provider'] ]['url_encode_id'] ) && $properties[ $a['provider'] ]['url_encode_id'] ) {
+		$a['id'] = urlencode( $a['id'] );
 	}
 
-	#$test = 'https://www.dailymotion.com/widget/jukebox?list[]=/playlist/xr8ts/1&&autoplay=0&mute=0';
-
-	#
-	#$org = 'http://www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2Fxr2rp_RTnews_exclusive-interveiws%2F1&&autoplay=0&mute=0';
-
-	#$esc_url = esc_url( $test );
-
-	#d( $provider );
-	#d( ( $esc_url === $org ) );
-	#d( $esc_url );
-	#printf( '<iframe src="%s" width="600" height="500"></iframe>', $org );
-
-	#dd("end");
-
-	#d($provider);
-	#d($pattern);
-
-	if ( 'brightcove' == $provider ) {
-		$src = sprintf( $pattern, $atts['brightcove_account'], $atts['brightcove_player'], $atts['brightcove_embed'], $id );
+	if ( 'brightcove' == $a['provider'] ) {
+		$src = sprintf( $pattern, $a['brightcove_account'], $a['brightcove_player'], $a['brightcove_embed'], $a['id'] );
 	} else {
-		$src = sprintf( $pattern, $id );
+		$src = sprintf( $pattern, $a['id'] );
 	}
 
 	return $src;
