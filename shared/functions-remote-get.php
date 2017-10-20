@@ -26,21 +26,21 @@ function arve_remote_get( $url, $args = array(), $json = true ) {
 		);
 	}
 
-	$body = wp_remote_retrieve_body( $response );
+	$out = wp_remote_retrieve_body( $response );
 
-	if ( '' === $body ) {
+	if ( '' === $out ) {
 		return new WP_Error( 'remote_get', __( 'Empty body', ARVE_SLUG ) );
 	}
 
 	if( $json ) {
-		$response = json_decode( $body );
+		$out = json_decode( $out );
 
-		if ( null == $response ) {
+		if ( null == $out ) {
 			return new WP_Error( 'remote_get', __( 'json_decode returned null', ARVE_SLUG ) );
 		}
 	}
 
-	return $response;
+	return $out;
 };
 
 function arve_remote_get_cached( $args ) {
