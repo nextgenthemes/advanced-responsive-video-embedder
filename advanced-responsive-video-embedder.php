@@ -60,7 +60,7 @@ function arve_init() {
 	// Public hooks.
 	add_action( 'plugins_loaded',      'arve_create_shortcodes', 999 );
 	add_action( 'plugins_loaded',      'arve_create_url_handlers', 999 );
-	add_action( 'plugins_loaded',      'arve_oembed_remove_providers', 998 );
+	// add_action( 'plugins_loaded',      'arve_oembed_remove_providers', 998 );
 	add_action( 'wp_enqueue_scripts',  'arve_register_styles', 0 );
 	add_action( 'wp_enqueue_scripts',  'arve_register_scripts', 0 );
 	add_action( 'wp_video_shortcode_override', 'arve_wp_video_shortcode_override', 10, 4 );
