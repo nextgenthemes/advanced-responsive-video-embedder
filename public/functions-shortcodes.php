@@ -1,6 +1,6 @@
 <?php
 
-function arve_new_shortcode( $a, $content = null ) {
+function arve_shortcode( $a, $content = null ) {
 
 	if ( empty( $a['url'] )
 		#|| ( ! arve_contains( $a['url'], 'facebook.com' ) && ! arve_contains( $a['url'], 'vimeo.com' ) )

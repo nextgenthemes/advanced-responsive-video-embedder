@@ -10,8 +10,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'title'     => 'title'
 		);
 
-		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
-		$this->assertContains( 'sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"', arve_shortcode_arve( $attr ) );
+		$this->assertNotContains( 'Error', arve_shortcode( $attr ) );
+		$this->assertContains( 'sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"', arve_shortcode( $attr ) );
 
 		$attr = array(
 			'url'       => 'https://vimeo.com/214300845',
@@ -19,8 +19,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'title'     => 'title'
 		);
 
-		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
-		$this->assertContains( 'sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-forms"', arve_shortcode_arve( $attr ) );
+		$this->assertNotContains( 'Error', arve_shortcode( $attr ) );
+		$this->assertContains( 'sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-forms"', arve_shortcode( $attr ) );
 	}
 
 	public function test_thumbnails() {
@@ -39,10 +39,10 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'title'     => 'Something',
 		);
 
-		$this->assertRegExp( '#<meta itemprop="thumbnailUrl" content=".*test-attachment\.jpg#', arve_shortcode_arve( $attr ) );
+		$this->assertRegExp( '#<meta itemprop="thumbnailUrl" content=".*test-attachment\.jpg#', arve_shortcode( $attr ) );
 
 		$attr['thumbnail'] = 'https://example.com/image.jpg';
-		$this->assertContains( '<meta itemprop="thumbnailUrl" content="https://example.com/image.jpg"', arve_shortcode_arve( $attr ) );
+		$this->assertContains( '<meta itemprop="thumbnailUrl" content="https://example.com/image.jpg"', arve_shortcode( $attr ) );
 	}
 
 	public function test_shortcodes_are_registered() {
@@ -66,8 +66,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$new_atts = $old_atts = $atts;
 
 		$this->assertEquals(
-			arve_shortcode_arve( $old_atts, null, false ),
-			arve_shortcode_arve( $new_atts )
+			arve_shortcode( $old_atts, null, false ),
+			arve_shortcode( $new_atts )
 		);
 
 		unset( $old_atts['url'] );
@@ -76,14 +76,14 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		unset( $new_atts['provider'] );
 
 		$this->assertEquals(
-			arve_shortcode_arve( $old_atts, null, false ),
-			arve_shortcode_arve( $new_atts )
+			arve_shortcode( $old_atts, null, false ),
+			arve_shortcode( $new_atts )
 		);
 	}
 
 	public function NO_test_modes() {
 
-		$output = arve_shortcode_arve( array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys' ) );
+		$output = arve_shortcode( array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys' ) );
 
 		$this->assertNotContains( 'Error', $output );
 		$this->assertContains( 'data-mode="normal"', $output );
@@ -92,7 +92,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		foreach ( $modes as $key => $mode ) {
 
-			$output = arve_shortcode_arve( array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys', 'mode' => $mode ) );
+			$output = arve_shortcode( array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys', 'mode' => $mode ) );
 			$this->assertContains( 'Error', $output );
 		}
 	}
@@ -110,7 +110,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'url'         => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
 		);
 
-		$output = arve_shortcode_arve( $atts );
+		$output = arve_shortcode( $atts );
 
 		$this->assertNotContains( 'Error', $output );
 
@@ -130,8 +130,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		foreach ( $html5_ext as $ext ) {
 
-			$with_src = arve_shortcode_arve( array( 'url' => 'https://example.com/video.' . $ext ) );
-			$with_ext = arve_shortcode_arve( array( $ext => 'https://example.com/video.' . $ext ) );
+			$with_src = arve_shortcode( array( 'url' => 'https://example.com/video.' . $ext ) );
+			$with_ext = arve_shortcode( array( $ext => 'https://example.com/video.' . $ext ) );
 
 			$this->assertNotContains( 'Error', $with_src );
 			$this->assertNotContains( 'Error', $with_ext );
@@ -150,9 +150,9 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'controlslist' => 'nofullscreen whatever',
 		 );
 
-		$this->assertContains( 'controlslist="nofullscreen whatever"', arve_shortcode_arve( $attr ) );
+		$this->assertContains( 'controlslist="nofullscreen whatever"', arve_shortcode( $attr ) );
 
-		$output = arve_shortcode_arve( array(
+		$output = arve_shortcode( array(
 			'mp4'       => 'https://example.com/video.mp4',
 			'ogv'       => 'https://example.com/video.ogv',
 			'webm'      => 'https://example.com/video.webm',
@@ -181,7 +181,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function test_iframe() {
 
-		$output = arve_shortcode_arve( array( 'url' => 'https://example.com' ) );
+		$output = arve_shortcode( array( 'url' => 'https://example.com' ) );
 
 		$this->assertNotContains( 'Error', $output );
 		$this->assertRegExp( '#<iframe .*src="https://example\.com#', $output );
@@ -274,33 +274,33 @@ class Tests_Shortcode extends WP_UnitTestCase {
 	public function test_disable_flash() {
 
 		$attr = array( 'url' => 'https://example.com' );
-		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr) );
-		$this->assertRegExp( '#<iframe .*src="https://example\.com#', arve_shortcode_arve( $attr) );
-		$this->assertContains( 'data-provider="iframe"', arve_shortcode_arve( $attr ) );
-		$this->assertNotContains( 'sandbox="', arve_shortcode_arve( $attr ) );
+		$this->assertNotContains( 'Error', arve_shortcode( $attr) );
+		$this->assertRegExp( '#<iframe .*src="https://example\.com#', arve_shortcode( $attr) );
+		$this->assertContains( 'data-provider="iframe"', arve_shortcode( $attr ) );
+		$this->assertNotContains( 'sandbox="', arve_shortcode( $attr ) );
 
 		$attr['disable_flash'] = 'y';
 
-		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr) );
-		$this->assertRegExp( '#<iframe .*src="https://example\.com#', arve_shortcode_arve( $attr) );
-		$this->assertContains( 'data-provider="iframe"', arve_shortcode_arve( $attr ) );
-		$this->assertContains( 'sandbox="', arve_shortcode_arve( $attr ) );
+		$this->assertNotContains( 'Error', arve_shortcode( $attr) );
+		$this->assertRegExp( '#<iframe .*src="https://example\.com#', arve_shortcode( $attr) );
+		$this->assertContains( 'data-provider="iframe"', arve_shortcode( $attr ) );
+		$this->assertContains( 'sandbox="', arve_shortcode( $attr ) );
 	}
 
 	public function test_dropbox_html5() {
 
 		$attr = array( 'url' => 'https://www.dropbox.com/s/ocqf9u5pn9b4ox0/Oops%20I%20dropped%20my%20Hoop.mp4' );
 
-		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr) );
+		$this->assertNotContains( 'Error', arve_shortcode( $attr) );
 
-		$this->assertRegExp( '#<video .*src="https://www\.dropbox\.com/s/ocqf9u5pn9b4ox0/Oops%20I%20dropped%20my%20Hoop\.mp4\?dl=1#', arve_shortcode_arve( $attr) );
-		$this->assertContains( 'data-provider="html5"', arve_shortcode_arve( $attr ) );
+		$this->assertRegExp( '#<video .*src="https://www\.dropbox\.com/s/ocqf9u5pn9b4ox0/Oops%20I%20dropped%20my%20Hoop\.mp4\?dl=1#', arve_shortcode( $attr) );
+		$this->assertContains( 'data-provider="html5"', arve_shortcode( $attr ) );
 	}
 
 	public function test_no_wrapper_id() {
 
 		$attr = array();
 
-		$this->assertNotContains( 'Error: Element ID could not be build, please report this bug.', arve_shortcode_arve( $attr ) );
+		$this->assertNotContains( 'Error: Element ID could not be build, please report this bug.', arve_shortcode( $attr ) );
 	}
 }
