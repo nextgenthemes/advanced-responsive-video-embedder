@@ -3,9 +3,8 @@
 function arve_sc_filter_attr( $a ) {
 
 	$wrapper_id = null;
-	$align_class = empty( $a['align'] ) ? '' : ' align' . $a['align'];
 
-	foreach ( array( 'id', 'mp4', 'm4v', 'webm', 'ogv', 'url', 'webtorrent' ) as $att ) {
+	foreach ( array( 'id', 'mp4', 'm4v', 'webm', 'ogv', 'url', 'src', 'webtorrent' ) as $att ) {
 
 		if ( ! empty( $a[ $att ] ) && is_string( $a[ $att ] ) ) {
 
@@ -24,9 +23,8 @@ function arve_sc_filter_attr( $a ) {
 		$a['wrapper_id_error'] = new WP_Error( 'embed_id', __( 'Element ID could not be build, please report this bug.', ARVE_SLUG ) );
 	}
 
-	static $wrapper_id = 0;
-
-	$wrapper_id++;
+	static $i = 0;
+	$i++;
 
 	$align_class = empty( $a['align'] ) ? '' : ' align' . $a['align'];
 
@@ -34,7 +32,7 @@ function arve_sc_filter_attr( $a ) {
 		'class'         => "arve-wrapper$align_class",
 		'data-mode'     => $a['mode'],
 		'data-provider' => $a['provider'],
-		'id'            => "arve-video-$wrapper_id",
+		'id'            => "arve-video-{$wrapper_id}-{$i}",
 		'style'         => empty( $a['maxwidth'] ) ? false : sprintf( 'max-width:%dpx;', $a['maxwidth'] ),
 		// Schema.org
 		'itemscope' => '',
@@ -65,12 +63,14 @@ function arve_sc_filter_attr( $a ) {
 
 		$properties = arve_get_host_properties();
 
-		$iframe_src = arve_build_iframe_src( $a );
-		$iframe_src = arve_add_query_args_to_iframe_src( $iframe_src, $a );
-		$iframe_src = arve_add_autoplay_query_arg( $iframe_src, $a );
+		if ( empty( $a['src'] ) ) {
+			$a['src'] = arve_build_iframe_src( $a );
+		}
+		$a['src'] = arve_add_query_args_to_iframe_src( $a['src'], $a );
+		$a['src'] = arve_add_autoplay_query_arg( $a['src'], $a );
 
 		if ( 'vimeo' == $a['provider'] && ! empty( $a['start'] ) ) {
-			$iframe_src .= '#t=' . (int) $a['start'];
+			$a['src'] .= '#t=' . (int) $a['start'];
 		}
 
 		$iframe_sandbox = 'allow-scripts allow-same-origin allow-presentation allow-popups';
@@ -89,7 +89,7 @@ function arve_sc_filter_attr( $a ) {
 			'frameborder' => '0',
 			'name'        => $a['iframe_name'],
 			'scrolling'   => 'no',
-			'src'         => $iframe_src,
+			'src'         => $a['src'],
 			'sandbox'     => $iframe_sandbox,
 			'width'       => empty( $a['width'] )  ? false : $a['width'],
 			'height'      => empty( $a['height'] ) ? false : $a['height'],
@@ -141,13 +141,9 @@ function arve_sc_filter_set_fixed_dimensions( $a ) {
 
 function arve_sc_filter_sanitise( $atts ) {
 
-	if ( ! empty( $atts['src'] ) ) {
-		$atts['url'] = $atts['src'];
-	}
-
 	foreach ( $atts as $key => $value ) {
 
-		if ( null === $value ) {
+		if ( 'oembed_data' == $key || null === $value ) {
 			continue;
 		}
 

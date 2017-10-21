@@ -1,6 +1,28 @@
 <?php
 
-function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = true ) {
+function arve_shortcode( $a, $content = null ) {
+
+	if ( empty( $a['url'] ) ) {
+		return arve_shortcode_arve( $a, $content = null );
+	}
+
+	$url = $a['url'];
+	unset( $a['url'] );
+
+	foreach ( $a as $key => $value ) {
+		$url = add_query_arg( "arve[$key]", $value, $url );
+	}
+
+	if ( $oembed_html = wp_oembed_get( $url ) ) {
+		return $oembed_html;
+	}
+
+	$a['src'] = $url;
+
+	return arve_shortcode_arve( $a, $content = null );
+}
+
+function arve_shortcode_arve( $input_atts, $content = null ) {
 
 	$errors     = '';
 	$options    = arve_get_options();
@@ -15,32 +37,33 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 		'autoplay'      => arve_bool_to_shortcode_string( $options['autoplay'] ),
 		'description'   => null,
 		'disable_flash' => null,
+		'id'            => null,
 		'iframe_name'   => null,
 		'maxwidth'      => (string) $options['video_maxwidth'],
 		'mode'          => $options['mode'],
+		'oembed_data'   => null,
 		'parameters'    => null,
-		'src'           => null, # Just a alias for url to make it simple
+		'provider'      => null,
+		'src'           => null,
 		'thumbnail'     => null,
 		'title'         => null,
 		'upload_date'   => null,
+		'url'           => null,
 		# <video>
-		'm4v'          => null,
-		'mp4'          => null,
-		'ogv'          => null,
-		'webm'         => null,
-		'preload'      => 'metadata',
-		'playsinline'  => null,
-		'muted'        => null,
 		'controls'     => 'y',
 		'controlslist' => empty( $options['controlslist'] ) ? null : (string) $options['controlslist'],
 		'loop'         => 'n',
+		'm4v'          => null,
+		'mp4'          => null,
+		'muted'        => null,
+		'ogv'          => null,
+		'playsinline'  => null,
+		'preload'      => 'metadata',
+		'webm'         => null,
 		# TED only
 		'lang'     => null,
 		# Vimeo only
 		'start'    => null,
-		# Old Shortcodes / URL embeds
-		'id'       => null,
-		'provider' => null,
 		# deprecated, title should be used
 		'link_text' => null,
 	);
@@ -48,17 +71,6 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 	for ( $n = 1; $n <= 10; $n++ ) {
 		$pairs["track_{$n}"]       = null;
 		$pairs["track_{$n}_label"] = null;
-	}
-
-	if ( $arve_shortcode ) {
-		$pairs['url'] = null;
-	} else {
-		$pairs['provider'] = null;
-		$pairs['id']       = null;
-
-		if ( empty( $input_atts['provider'] ) || empty( $input_atts['id'] ) ) {
-			return arve_error( __( 'id and provider shortcodes attributes are mandatory for old shortcodes. It is recommended to switch to new shortcodes that need only url', ARVE_SLUG ) );
-		}
 	}
 
 	$atts = shortcode_atts( apply_filters( 'arve_shortcode_pairs', $pairs ), $input_atts, 'arve' );
@@ -105,12 +117,13 @@ function arve_create_shortcodes() {
 
 		$function = function( $atts ) use ( $provider ) {
 			$atts['provider'] = $provider;
-			return arve_shortcode_arve( $atts, null, false );
+			return arve_shortcode_arve( $atts, null );
 		};
 
 		add_shortcode( $shortcode, $function );
 	}
 
+	add_shortcode( 'arve-new',            'arve_shortcode' );
 	add_shortcode( 'arve',                'arve_shortcode_arve' );
 	add_shortcode( 'arve-supported',      'arve_shortcode_arve_supported' );
 	add_shortcode( 'arve-supported-list', 'arve_shortcode_arve_supported_list' );

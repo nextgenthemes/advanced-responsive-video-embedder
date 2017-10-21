@@ -261,7 +261,7 @@ function arve_get_settings_definitions() {
 			'attr'  => 'controlslist',
 			'label' => esc_html__( 'Chrom HTML5 Player controlls', ARVE_SLUG ),
 			'type'  => 'text',
-			'description' => __( "controlsList attribute on &lt;video&gt; for example use <code>nodownload nofullscreen noremoteplayback</code> to hide the download and the fullscreen button on the chrome HTML5 video player and disable remote playback.", ARVE_SLUG ),
+			'description' => __( "controlsList attribute on &lt;video&gt; for example use <code>nodownload nofullscreen noremoteplayback</code> to hide the download and the fullscreen button on the Chrome HTML5 video player and disable remote playback.", ARVE_SLUG ),
 		),
 		array(
 			'hide_from_settings' => true,
@@ -823,7 +823,7 @@ function arve_get_host_properties() {
 			),
 		),
 		'vimeo' => array(
-			'regex'          => 'https?://(player\.)?vimeo\.com/((video/)|(channels/[a-z]+/)|(groups/[a-z]+/videos/))?(?<id>[0-9]+)(?<vimeo_secret>/[0-9a-z]+)?',
+			// 'OLDregex'       => 'https?://(player\.)?vimeo\.com/((video/)|(channels/[a-z]+/)|(groups/[a-z]+/videos/))?(?<id>[0-9]+)(?<vimeo_secret>/[0-9a-z]+)?',
 			'embed_url'      => 'https://player.vimeo.com/video/%s',
 			'default_params' => 'html5=1&title=1&byline=0&portrait=0',
 			'auto_thumbnail' => true,
