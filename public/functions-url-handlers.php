@@ -10,7 +10,7 @@ function arve_create_url_handlers() {
 			return arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $rawattr );
 		};
 
-		if ( ! empty( $values['regex'] ) ) {
+		if ( ! empty( $values['regex'] ) && empty( $values['use_wp_oembed'] ) ) {
 			wp_embed_register_handler( 'arve_' . $provider, '#' . $values['regex'] . '#i', $function );
 		}
 	}

@@ -200,9 +200,9 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			$this->assertNotEmpty( $host, $host_id );
 			$this->assertTrue( is_array( $host ), $host_id );
 
-		    if ( empty( $host['regex'] ) ) {
+			if ( empty( $host['regex'] ) ) {
 				continue;
-		    }
+			}
 
 			$this->assertArrayHasKey( 'tests', $host, $host_id );
 			$this->assertNotEmpty( $host['tests'], $host_id );
