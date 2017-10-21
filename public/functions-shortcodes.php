@@ -5,13 +5,14 @@ function arve_shortcode( $a, $content = null ) {
 	if ( empty( $a['url'] )
 		#|| ( ! arve_contains( $a['url'], 'facebook.com' ) && ! arve_contains( $a['url'], 'vimeo.com' ) )
 	) {
+		$a['append_text'] = 'no url skip';
 		return arve_shortcode_arve( $a, $content );
 	}
 
 	foreach ( $a as $key => $value ) {
 		if( 'url' == $key )
 			continue;
-		$a['url'] = add_query_arg( "arve[$key]", rawurlencode( $value ), $a['url'] );
+		$a['url'] = add_query_arg( "arve[$key]", $value, $a['url'] );
 	}
 	$a['url'] = add_query_arg( "arve[append_text]", 'new_shortcode_oembed_pass', $a['url'] );
 
@@ -29,6 +30,16 @@ function arve_shortcode( $a, $content = null ) {
 
 	return arve_shortcode_arve( $a, $content );
 }
+
+function arve_shortcode_maybe( $a, $content = null ) {
+
+	$oembed   = _wp_oembed_get_object();
+	$provider = $oembed->get_provider( $url, $args );
+	$data     = $oembed->fetch( $provider, $url, $args );
+
+	return arve_shortcode_arve( $a, $content );
+}
+
 
 function arve_shortcode_arve( $input_atts, $content = null ) {
 
@@ -92,7 +103,7 @@ function arve_shortcode_arve( $input_atts, $content = null ) {
 	$html_parts['arve_link']       = arve_build_promote_link_html( $atts['arve_link'] );
 	$html_parts['embed_container'] = arve_arve_embed_container( $html_parts['meta'] . $html_parts['video'], $atts );
 
-	$normal_embed = arve_arve_wrapper( $html_parts['embed_container'] . $html_parts['arve_link'], $atts ) . $atts['append_text'];
+	$normal_embed = arve_arve_wrapper( $html_parts['embed_container'] . $html_parts['arve_link'], $atts );
 
 	$output = apply_filters( 'arve_output', $normal_embed, $html_parts, $atts );
 
@@ -101,6 +112,8 @@ function arve_shortcode_arve( $input_atts, $content = null ) {
 	} elseif ( is_wp_error( $output ) ) {
 		return arve_error( $output->get_error_message() );
 	}
+
+	$output .= $atts['append_text'];
 
 	wp_enqueue_style( ARVE_SLUG );
 	wp_enqueue_script( ARVE_SLUG );
@@ -131,7 +144,7 @@ function arve_create_shortcodes() {
 		add_shortcode( $shortcode, $function );
 	}
 
-	add_shortcode( 'arve',                'arve_new_shortcode' );
+	add_shortcode( 'arve',                'arve_shortcode' );
 	add_shortcode( 'arve-old',            'arve_shortcode_arve' );
 	add_shortcode( 'arve-supported',      'arve_shortcode_arve_supported' );
 	add_shortcode( 'arve-supported-list', 'arve_shortcode_arve_supported_list' );

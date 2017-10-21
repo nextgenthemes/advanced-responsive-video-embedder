@@ -519,7 +519,7 @@ function arve_get_host_properties() {
 			)
 		),
 		'facebook' => array(
-			'use_wp_oembed'     => true,
+			'use_oembed'        => true,
 			'regex'             => '(?<id>https?://([a-z]+\.)?facebook\.com/[-.a-z0-9]+/videos/[a-z.0-9/]+)',
 			'url_encode_id'     => true,
 			'embed_url'         => 'https://www.facebook.com/plugins/video.php?href=%s',
@@ -697,6 +697,7 @@ function arve_get_host_properties() {
 			)
 		),
 		'ted' => array(
+			'use_oembed'     => true,
 			'name'           => 'TED Talks',
 			'regex'          => $s . 'ted\.com/talks/(?<id>[a-z0-9_]+)',
 			'embed_url'      => 'https://embed.ted.com/talks/%s.html',
@@ -824,7 +825,7 @@ function arve_get_host_properties() {
 			),
 		),
 		'vimeo' => array(
-			'use_wp_oembed'  => true,
+			'use_oembed'     => true,
 			'regex'          => 'https?://(player\.)?vimeo\.com/((video/)|(channels/[a-z]+/)|(groups/[a-z]+/videos/))?(?<id>[0-9]+)(?<vimeo_secret>/[0-9a-z]+)?',
 			'embed_url'      => 'https://player.vimeo.com/video/%s',
 			'default_params' => 'html5=1&title=1&byline=0&portrait=0',
@@ -929,6 +930,7 @@ function arve_get_host_properties() {
 			),
 		),
 		'youtube' => array(
+			'use_oembed'     => true,
 			'name'           => 'YouTube',
 			'regex'          => $s . '(youtube\.com\/\S*((\/e(mbed))?\/|watch\?(\S*?&?v\=))|youtu\.be\/)(?<id>[a-zA-Z0-9_-]{6,11}((\?|&)list=[a-z0-9_\-]+)?)',
 			'embed_url'      => 'https://www.youtube.com/embed/%s',
