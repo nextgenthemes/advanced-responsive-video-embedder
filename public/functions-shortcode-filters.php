@@ -32,7 +32,7 @@ function arve_sc_filter_attr( $a ) {
 		'class'         => "arve-wrapper$align_class",
 		'data-mode'     => $a['mode'],
 		'data-provider' => $a['provider'],
-		'id'            => "arve-video-{$wrapper_id}-{$i}",
+		'id'            => "arve-video-{$wrapper_id}",
 		'style'         => empty( $a['maxwidth'] ) ? false : sprintf( 'max-width:%dpx;', $a['maxwidth'] ),
 		// Schema.org
 		'itemscope' => '',

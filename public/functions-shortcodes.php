@@ -1,25 +1,75 @@
 <?php
 
-function arve_shortcode( $a, $content = null ) {
+add_filter( 'oembed_dataparse', 'arve_dataparse', 10, 3 );
+
+function arve_dataparse( $result, $data, $url ) {
+
+	if ( 'video' != $data->type ) {
+		return '<meta arve-skip>' . $result;
+	}
+
+	if ( 'Facebook' == $data->provider_name ) {
+		preg_match( '/class="fb-video" data-href="([^"]+)"/', $result, $matches );
+	} elseif ( 'Vimeo' == $data->provider_name ) {
+		preg_match( '/src="([^"]+)"/', $result, $matches );
+	} else {
+		return '<meta arve-skip>' . $result;
+	}
+
+	if ( empty( $matches[1] ) ) {
+		return '<meta arve-skip>' . $result;
+	}
+
+	$parameters = $url_query = arve_extract_url_query( $url );
+	unset( $parameters['arve'] );
+
+	$a = array(
+		'provider'     => strtolower( $data->provider_name ),
+		'src'          => $matches[1],
+		'oembed_data'  => $data,
+		'aspect_ratio' => $data->width . ':' . $data->height,
+		'paramaters'   => $parameters,
+		'append_text' => 'oembed processing'
+	);
+
+	if ( 'Facebook' == $data->provider_name ) {
+		$a['src'] = 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $matches[1] );
+	}
+
+	if ( isset( $url_query['arve'] ) ) {
+		$a = array_merge( $url_query['arve'], $a );
+	}
+
+	return arve_shortcode_arve( $a );
+}
+
+function arve_new_shortcode( $a, $content = null ) {
 
 	if ( empty( $a['url'] ) ) {
-		return arve_shortcode_arve( $a, $content = null );
+		return arve_shortcode_arve( $a, $content );
 	}
-
-	$url = $a['url'];
-	unset( $a['url'] );
 
 	foreach ( $a as $key => $value ) {
-		$url = add_query_arg( "arve[$key]", $value, $url );
+
+		if( 'url' == $key )
+			continue;
+
+		$a['url'] = add_query_arg( "arve[$key]", $value, $a['url'] );
 	}
 
-	if ( $oembed_html = wp_oembed_get( $url ) ) {
+	if ( $oembed_html = wp_oembed_get( $a['url'] ) ) {
+
+		if ( arve_starts_with( $oembed_html, '<meta arve-skip>' ) ) {
+			$a['prepent_html'] = 'oembed skip';
+			return arve_shortcode_arve( $a, $content );
+		}
+
 		return $oembed_html;
 	}
 
-	$a['src'] = $url;
+	$a['prepend_html'] = 'new shortcode without a url';
 
-	return arve_shortcode_arve( $a, $content = null );
+	return arve_shortcode_arve( $a, $content );
 }
 
 function arve_shortcode_arve( $input_atts, $content = null ) {
@@ -28,7 +78,6 @@ function arve_shortcode_arve( $input_atts, $content = null ) {
 	$options    = arve_get_options();
 	$properties = arve_get_host_properties();
 	$input_atts = (array) $input_atts;
-	$f_atts = $input_atts;
 
 	$pairs = array(
 		'align'         => $options['align'],
@@ -49,6 +98,7 @@ function arve_shortcode_arve( $input_atts, $content = null ) {
 		'title'         => null,
 		'upload_date'   => null,
 		'url'           => null,
+		'append_text'   => 'default append text',
 		# <video>
 		'controls'     => 'y',
 		'controlslist' => empty( $options['controlslist'] ) ? null : (string) $options['controlslist'],
@@ -79,14 +129,14 @@ function arve_shortcode_arve( $input_atts, $content = null ) {
 		return $errors . arve_get_debug_info( '', $atts, $input_atts );
 	}
 
-	$html['video']           = arve_video_or_iframe( $atts );
-	$html['meta']            = arve_build_meta_html( $atts );
-	$html['ad_link']         = arve_build_promote_link_html( $atts['arve_link'] );
-	$html['embed_container'] = arve_arve_embed_container( $html['meta'] . $html['video'], $atts );
+	$html_parts['video']           = arve_video_or_iframe( $atts );
+	$html_parts['meta']            = arve_build_meta_html( $atts );
+	$html_parts['arve_link']       = arve_build_promote_link_html( $atts['arve_link'] );
+	$html_parts['embed_container'] = arve_arve_embed_container( $html_parts['meta'] . $html_parts['video'], $atts );
 
-	$normal_embed = arve_arve_wrapper( $html['embed_container'] . $html['ad_link'], $atts );
+	$normal_embed = arve_arve_wrapper( $html_parts['embed_container'] . $html_parts['arve_link'], $atts ) . $atts['append_text'];
 
-	$output = apply_filters( 'arve_output', $normal_embed, $html, $atts );
+	$output = apply_filters( 'arve_output', $normal_embed, $html_parts, $atts );
 
 	if ( empty( $output ) ) {
 		return arve_error( 'The output is empty, this should not happen' );
@@ -123,7 +173,7 @@ function arve_create_shortcodes() {
 		add_shortcode( $shortcode, $function );
 	}
 
-	add_shortcode( 'arve-new',            'arve_shortcode' );
+	add_shortcode( 'arve-new',            'arve_new_shortcode' );
 	add_shortcode( 'arve',                'arve_shortcode_arve' );
 	add_shortcode( 'arve-supported',      'arve_shortcode_arve_supported' );
 	add_shortcode( 'arve-supported-list', 'arve_shortcode_arve_supported_list' );
