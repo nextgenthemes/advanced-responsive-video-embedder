@@ -8,7 +8,7 @@ function arve_shortcode( $a, $content = null ) {
 
 	$oembed = _wp_oembed_get_object();
 	$data   = $oembed->get_data( $a['url'] );
-	$detected_args = arve_oembed2html( $data );
+	$detected_args = arve_oembed2args( $data );
 
 	if(	$detected_args ) {
 		$a = array_merge( $detected_args, $a );
