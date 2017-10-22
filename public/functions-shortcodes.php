@@ -2,44 +2,41 @@
 
 function arve_shortcode( $a, $content = null ) {
 
-	if ( empty( $a['url'] )
-		#|| ( ! arve_contains( $a['url'], 'facebook.com' ) && ! arve_contains( $a['url'], 'vimeo.com' ) )
-	) {
-		$a['append_text'] = 'no url skip';
+	if ( empty( $a['url'] ) ) {
 		return arve_shortcode_arve( $a, $content );
 	}
 
-	foreach ( $a as $key => $value ) {
-		if( 'url' == $key )
-			continue;
-		$a['url'] = add_query_arg( "arve[$key]", $value, $a['url'] );
-	}
-	$a['url'] = add_query_arg( "arve[append_text]", 'new_shortcode_oembed_pass', $a['url'] );
+	$oembed = _wp_oembed_get_object();
+	$data   = $oembed->get_data( $a['url'] );
+	$detected_args = arve_oembed2html( $data );
 
-	if ( $oembed_html = wp_oembed_get( $a['url'] ) ) {
-
-		if ( arve_starts_with( $oembed_html, '<span data-arve-skip' ) ) {
-			$a['append_text'] = 'oembed skip';
-			return arve_shortcode_arve( $a, $content );
-		}
-
-		return $oembed_html;
-	}
-
-	$a['append_text'] = 'no oembed match';
+	if(	$detected_args ) {
+		$a = array_merge( $detected_args, $a );
+		$a['oembed_data'] = $data;
+		arve_shortcode_arve( $a, $content );
+	};
 
 	return arve_shortcode_arve( $a, $content );
 }
 
-function arve_shortcode_maybe( $a, $content = null ) {
+function arve_shortcode_way( $a, $content = null ) {
 
-	$oembed   = _wp_oembed_get_object();
-	$provider = $oembed->get_provider( $url, $args );
-	$data     = $oembed->fetch( $provider, $url, $args );
+	if ( empty( $a['url'] ) ) {
+		return arve_shortcode_arve( $a, $content );
+	}
+
+	$oembed = _wp_oembed_get_object();
+	$data   = $oembed->get_data( $a['url'] );
+	$detected_args = arve_oembed2html( $data );
+
+	if(	$detected_args ) {
+		$a = array_merge( $detected_args, $a );
+		$a['oembed_data'] = $data;
+		arve_shortcode_arve( $a, $content );
+	};
 
 	return arve_shortcode_arve( $a, $content );
 }
-
 
 function arve_shortcode_arve( $input_atts, $content = null ) {
 
@@ -67,7 +64,7 @@ function arve_shortcode_arve( $input_atts, $content = null ) {
 		'title'         => null,
 		'upload_date'   => null,
 		'url'           => null,
-		'append_text'   => null,
+		'append_text'   => 'append_text default test',
 		# <video>
 		'controls'     => 'y',
 		'controlslist' => empty( $options['controlslist'] ) ? null : (string) $options['controlslist'],
@@ -80,9 +77,9 @@ function arve_shortcode_arve( $input_atts, $content = null ) {
 		'preload'      => 'metadata',
 		'webm'         => null,
 		# TED only
-		'lang'     => null,
+		'lang'      => null,
 		# Vimeo only
-		'start'    => null,
+		'start'     => null,
 		# deprecated, title should be used
 		'link_text' => null,
 	);
@@ -113,10 +110,10 @@ function arve_shortcode_arve( $input_atts, $content = null ) {
 		return arve_error( $output->get_error_message() );
 	}
 
-	$output .= $atts['append_text'];
-
 	wp_enqueue_style( ARVE_SLUG );
 	wp_enqueue_script( ARVE_SLUG );
+
+	$output .= $atts['append_text'];
 
 	return arve_get_debug_info( $output, $atts, $input_atts ) . $output;
 }

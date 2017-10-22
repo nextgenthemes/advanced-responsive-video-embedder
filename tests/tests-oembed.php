@@ -1,8 +1,6 @@
 <?php
 
-
-
-class Tests_Licensing_Pro extends WP_UnitTestCase {
+class Tests_Oembed extends WP_UnitTestCase {
 
 	/**
 	 * Test if all the file hooks are working.
@@ -11,7 +9,7 @@ class Tests_Licensing_Pro extends WP_UnitTestCase {
 	 */
 	public function test_check_for_wp_proveders() {
 
-		add_filters( 'oembed_providers', 'filter_wp_providers' );
+		add_filter( 'oembed_providers', 'filter_wp_providers' );
 	}
 
 	public function filter_wp_providers( $providers ) {

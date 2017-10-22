@@ -460,6 +460,7 @@ function arve_get_host_properties() {
 			)
 		),
 		'dailymotion' => array(
+			'use_oembed'     => true,
 			'regex'          => $s . '(dai\.ly|dailymotion\.com/video)/(?<id>[a-z0-9]+)',
 			'embed_url'      => 'https://www.dailymotion.com/embed/video/%s',
 			'default_params' => 'logo=0&hideInfos=1&related=0',
@@ -537,6 +538,7 @@ function arve_get_host_properties() {
 			),
 		),
 		'funnyordie' => array(
+			'use_oembed'     => true,
 			'name'           => 'Funny or Die',
 			'regex'          => $s . 'funnyordie\.com/videos/(?<id>[a-z0-9_]+)',
 			'embed_url'      => 'https://www.funnyordie.com/embed/%s',
@@ -565,6 +567,7 @@ function arve_get_host_properties() {
 		),
     #https://cdnapisec.kaltura.com/p/243342/sp/24334200/embedIframeJs/uiconf_id/20540612/partner_id/243342?iframeembed=true&playerId=kaltura_player&entry_id=1_sf5ovm7u&flashvars[streamerType]=auto" width="560" height="395" allowfullscreen webkitallowfullscreen mozAllowFullScreen frameborder="0"></iframe>
 		'kickstarter' => array(
+			'use_oembed'     => true,
 			'regex'          => $s . 'kickstarter\.com/projects/(?<id>[0-9a-z\-]+/[-0-9a-z\-]+)',
 			'embed_url'      => 'https://www.kickstarter.com/projects/%s/widget/video.html',
 			'auto_thumbnail' => false,
