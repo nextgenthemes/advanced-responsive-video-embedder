@@ -427,6 +427,7 @@ function arve_get_host_properties() {
 			),
 		),
 		'collegehumor' => array(
+			'use_oembed'     => true,
 			'name'           => 'CollegeHumor',
 			'regex'          => $s . 'collegehumor\.com/video/(?<id>[0-9]+)',
 			'embed_url'      => 'http://www.collegehumor.com/e/%s',
@@ -813,18 +814,6 @@ function arve_get_host_properties() {
 			'tests' => array(
 				array( 'url' => 'http://vidspot.net/285wf9uk3rry', 'id' => '285wf9uk3rry' ),
 				array( 'url' => 'http://vidspot.net/embed-285wf9uk3rry.html', 'id' => '285wf9uk3rry' ),
-			),
-		),
-		'vine' => array(
-			'regex'          => $s . 'vine\.co/v/(?<id>[a-z0-9]+)',
-			'embed_url'      => 'https://vine.co/v/%s/embed/simple',
-			'default_params' => '', //* audio=1 supported
-			'auto_thumbnail' => false,
-			'aspect_ratio'   => '1:1',
-			'tests' => array(
-				array( 'url' => 'https://vine.co/v/bjAaLxQvOnQ',       'id' => 'bjAaLxQvOnQ' ),
-				array( 'url' => 'https://vine.co/v/MbrreglaFrA',       'id' => 'MbrreglaFrA' ),
-				array( 'url' => 'https://vine.co/v/bjHh0zHdgZT/embed', 'id' => 'bjHh0zHdgZT' ),
 			),
 		),
 		'vimeo' => array(
