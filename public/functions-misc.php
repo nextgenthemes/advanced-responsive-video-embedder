@@ -144,3 +144,23 @@ function arve_calculate_height( $width, $aspect_ratio ) {
 
 	return false;
 }
+
+function arve_oembed_provider_check() {
+
+	$return = false;
+	$props = arve_get_host_properties();
+	$oembed = _wp_oembed_get_object();
+
+	foreach ( $props as $provider => $provider_properties ) :
+
+		foreach ( $oembed->providers as $regex => $url_and_data  ) {
+
+			if ( ( arve_contains( $regex, $provider ) || arve_contains( $url_and_data[0], $provider ) ) && empty( $provider_properties['use_oembed'] ) ) {
+				$return[] = $provider;
+			}
+		}
+
+	endforeach;
+
+	return $return;
+}
