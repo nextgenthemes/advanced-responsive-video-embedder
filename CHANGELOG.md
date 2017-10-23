@@ -4,11 +4,14 @@
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-### 8.7.3 ###
+### 9.0.0 ###
 
-* Fix: TED embed url
+* Fix: TED embed url.
+* Fix: Facebook embeds.
+* Improved: Complete new way ARVE handles embeds utilizing WP Oembed functionality. This means easier more reliable embeds detection, automatic aspect ratio detection.
 * Improved: Admin code reworked
 * Improved: Update plugin-updater-class
+
 
 ### 2017-08-16 - 8.7.2 ###
 
