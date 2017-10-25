@@ -1,25 +1,26 @@
 <?php
 
-function arve_maybe_enqueue( $content ) {
+function arve_filter_oembed_fetch_url( $provider, $url, $args ) {
 
-	if ( arve_contains( $content, 'class="arve-wrapper' ) ) {
-		wp_enqueue_style( ARVE_SLUG );
-		wp_enqueue_script( ARVE_SLUG );
-	}
+	$url = arve_remove_query_array( $url, 'arve' );
+	$url = arve_remove_query_array( $url, 'arve-ifp' );
 
-	return $content;
+	$provider = add_query_arg( 'url', urlencode( $url ), $provider );
+
+	return $provider;
 }
 
 function arve_filter_oembed_dataparse( $result, $data, $url ) {
 
 	if( $a = arve_oembed2args( $data ) ) {
 
-		$parsed_url = parse_url( $url );
-		if( ! empty( $parsed_url['query'] ) ) {
-			$a['parameters'] = $parsed_url['query'];
-			$a['append_text'] = 'oembed_dataparse test';
-		}
+		$arve_url_query = arve_extract_query_array( $url, 'arve' );
+		$a = array_merge( $a, $arve_url_query );
+
+		$a['parameters']  = arve_extract_query_array( $url, 'arve-ifp' );
 		$a['oembed_data'] = $data;
+		$a['append_text'] = json_encode( $a['parameters'] );
+
 		return arve_shortcode_arve( $a );
 	}
 
@@ -32,7 +33,9 @@ function arve_oembed2args( $data ) {
 		return false;
 	}
 
-	if ( 'Facebook' == $data->provider_name ) {
+	$provider = strtolower( $data->provider_name );
+
+	if ( 'facebook' == $provider ) {
 		preg_match( '/class="fb-video" data-href="([^"]+)"/', $data->html, $matches );
 	} else {
 		preg_match( '/<iframe [^>]*src="([^"]+)"/', $data->html, $matches );
@@ -43,21 +46,37 @@ function arve_oembed2args( $data ) {
 	}
 
 	$a = array(
-		'provider'     => strtolower( $data->provider_name ),
+		'provider'     => $provider,
 		'src'          => $matches[1],
 		'oembed_data'  => $data,
-		'aspect_ratio' => ( empty( $data->width ) || empty( $data->height ) ) ? '16:9' : "{$data->width}:{$data->height}",
-		'parameters'   => empty( $parsed_url['query'] ) ? '' : $parsed_url['query']
+		'aspect_ratio' => ( empty( $data->width ) || empty( $data->height ) ) ? null : "{$data->width}:{$data->height}",
 	);
 
-	if ( 'Facebook' == $data->provider_name ) {
+	if ( 'facebook' == $provider ) {
 		$a['src'] = 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $matches[1] );
 	}
 
 	return $a;
 }
 
-function arve_extract_url_query_array( $url, $extract_array_name ) {
+function arve_extract_query_array( $url, $key ) {
+
+	$parsed_url = wp_parse_url( $url );
+
+  if ( empty( $parsed_url['query'] ) ) {
+		return array();
+	}
+
+  wp_parse_str( $parsed_url['query'], $url_query );
+
+	if ( ! empty( $url_query[ $key ] ) && is_array( $url_query[ $key ] ) ) {
+		return $url_query[ $key ];
+	}
+
+  return array();
+}
+
+function arve_get_url_( $url, $extract_array_name ) {
 
 	$parsed_url = parse_url( $url );
 
@@ -65,11 +84,31 @@ function arve_extract_url_query_array( $url, $extract_array_name ) {
 		return array();
 	}
 
-  parse_str( $parsed_url['query'], $url_query );
+  return parse_str( $parsed_url['query'], $url_query );
+}
 
-	if ( ! empty( $url_query[ $extract_array_name ] ) && is_array( $url_query[ $extract_array_name ] ) ) {
-		return $url_query[ $extract_array_name ];
+function arve_remove_query_array( $url, $key ) {
+
+	$parsed_url = wp_parse_url( $url );
+
+	if ( empty( $parsed_url['query'] ) ) {
+		return $url;
 	}
 
-  return array();
+	wp_parse_str( $parsed_url['query'], $query_array );
+	$url = str_replace( $parsed_url['query'], '', $url );
+	unset( $query_array[ $key ] );
+	$url = add_query_arg( $query_array, $url );
+
+	return $url;
+}
+
+
+
+function arve_get_query_str_without_args( $url, $key ) {
+
+	$url = arve_remove_query_array( $url, 'arve' );
+	$parsed_url = wp_parse_url( $url );
+
+	return $parsed_url['query'];
 }

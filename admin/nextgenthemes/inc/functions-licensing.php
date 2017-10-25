@@ -312,8 +312,6 @@ function init_theme_updater( $product ) {
 	);
 }
 
-
-
 function api_action( $item_name, $key, $action ) {
 
 	if ( ! in_array( $action, array( 'activate', 'deactivate', 'check' ) ) ) {

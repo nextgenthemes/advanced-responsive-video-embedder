@@ -1,6 +1,6 @@
 <?php
 
-function arve_shortcode( $a, $content = null ) {
+function arve_shortcode_old( $a, $content = null ) {
 
 	if ( empty( $a['url'] ) ) {
 		return arve_shortcode_arve( $a, $content );
@@ -19,23 +19,38 @@ function arve_shortcode( $a, $content = null ) {
 	return arve_shortcode_arve( $a, $content );
 }
 
-function arve_shortcode_way( $a, $content = null ) {
+function arve_shortcode( $a, $content = null ) {
 
-	if ( empty( $a['url'] ) ) {
-		return arve_shortcode_arve( $a, $content );
+	if ( ! empty( $a['url'] ) && $mayme_arve_html = arve_check_for_embed( $a ) ) {
+		return $mayme_arve_html;
 	}
 
-	$oembed = _wp_oembed_get_object();
-	$data   = $oembed->get_data( $a['url'] );
-	$detected_args = arve_oembed2html( $data );
+	return arve_shortcode_arve( $a, $content );
+}
 
-	if(	$detected_args ) {
-		$a = array_merge( $detected_args, $a );
-		$a['oembed_data'] = $data;
-		arve_shortcode_arve( $a, $content );
+function arve_check_for_embed( $a ) {
+
+	$url = $a['url'];
+
+	$iframe_paramaters = empty( $a['paramaters'] ) ? array() : $a['paramaters'];
+	foreach ( $iframe_paramaters as $key => $value ) {
+		$url = add_query_arg( "arve-iframe-param[{$key}]", $value, $url );
+	}
+
+	foreach ( $a as $key => $value ) {
+		if( 'url' == $key ) {
+			continue;
+		}
+		$url = add_query_arg( "arve[{$key}]", $value, $url );
+	}
+
+	$maybe_arve_html = do_shortcode( "[embed]{$url}[/embed]" );
+
+	if(	arve_contains( $maybe_arve_html, 'data-arve' ) ) {
+		return $maybe_arve_html;
 	};
 
-	return arve_shortcode_arve( $a, $content );
+	return false;
 }
 
 function arve_shortcode_arve( $input_atts, $content = null ) {
