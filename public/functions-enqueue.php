@@ -24,3 +24,13 @@ function arve_register_scripts() {
 		true
 	);
 }
+
+function arve_maybe_enqueue( $content ) {
+
+	if ( arve_contains( $content, 'class="arve-wrapper' ) ) {
+		wp_enqueue_style( ARVE_SLUG );
+		wp_enqueue_script( ARVE_SLUG );
+	}
+
+	return $content;
+}
