@@ -10,8 +10,6 @@
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain:       advanced-responsive-video-embedder
  * Domain Path:       /languages
- * GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-embedder
- * GitHub Branch:     master
  */
 
 if ( ! defined( 'WPINC' ) ) {
@@ -58,16 +56,16 @@ function arve_init() {
 	add_action( 'plugins_loaded', 'arve_load_plugin_textdomain' );
 
 	// Public hooks.
-	add_action( 'plugins_loaded',      'arve_create_shortcodes', 999 );
-	add_action( 'plugins_loaded',      'arve_create_url_handlers', 999 );
 	add_action( 'plugins_loaded',      'arve_remove_unwanted_shortcodes', 998 );
+	add_action( 'plugins_loaded',      'arve_create_url_handlers', 999 );
+	add_action( 'plugins_loaded',      'arve_create_shortcodes', 999 );
 	add_action( 'wp_enqueue_scripts',  'arve_register_styles', 0 );
 	add_action( 'wp_enqueue_scripts',  'arve_register_scripts', 0 );
 	add_action( 'wp_video_shortcode_override', 'arve_wp_video_shortcode_override', 10, 4 );
 
 	add_filter( 'oembed_dataparse',    'arve_filter_oembed_dataparse', 11, 3 );
-	add_filter( 'oembed_fetch_url',    'arve_filter_oembed_fetch_url', 99, 3 );
-	add_filter( 'the_content',         'arve_maybe_enqueue' );
+	add_filter( 'oembed_fetch_url',    'arve_filter_oembed_fetch_url', 999, 3 );
+	add_filter( 'the_content',         'arve_maybe_enqueue', 999 );
 
 	add_filter( 'widget_text',         'do_shortcode' );
 	add_filter( 'language_attributes', 'arve_html_id' );

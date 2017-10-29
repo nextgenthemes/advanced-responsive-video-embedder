@@ -1,24 +1,5 @@
 <?php
 
-function arve_shortcode_old( $a, $content = null ) {
-
-	if ( empty( $a['url'] ) ) {
-		return arve_shortcode_arve( $a, $content );
-	}
-
-	$oembed = _wp_oembed_get_object();
-	$data   = $oembed->get_data( $a['url'] );
-	$detected_args = arve_oembed2args( $data );
-
-	if(	$detected_args ) {
-		$a = array_merge( $detected_args, $a );
-		$a['oembed_data'] = $data;
-		arve_shortcode_arve( $a, $content );
-	};
-
-	return arve_shortcode_arve( $a, $content );
-}
-
 function arve_shortcode( $a, $content = null ) {
 
 	if ( ! empty( $a['url'] ) && $mayme_arve_html = arve_check_for_embed( $a ) ) {
@@ -31,11 +12,7 @@ function arve_shortcode( $a, $content = null ) {
 function arve_check_for_embed( $a ) {
 
 	$url = $a['url'];
-
-	$iframe_paramaters = empty( $a['paramaters'] ) ? array() : $a['paramaters'];
-	foreach ( $iframe_paramaters as $key => $value ) {
-		$url = add_query_arg( "arve-iframe-param[{$key}]", $value, $url );
-	}
+	unset( $a['url'] );
 
 	foreach ( $a as $key => $value ) {
 		if( 'url' == $key ) {
@@ -44,14 +21,31 @@ function arve_check_for_embed( $a ) {
 		$url = add_query_arg( "arve[{$key}]", $value, $url );
 	}
 
-	$maybe_arve_html = do_shortcode( "[embed]{$url}[/embed]" );
+	$wp_embed = new WP_Embed;
+	$maybe_arve_html = $wp_embed->shortcode( array(), $url );
 
-	if(	arve_contains( $maybe_arve_html, 'data-arve' ) ) {
+	if(	arve_contains( $maybe_arve_html, 'class="arve-wrapper' ) ) {
 		return $maybe_arve_html;
 	};
 
 	return false;
 }
+
+function arve_add_iframe_parameters_to_url( $a ) {
+
+	$iframe_parameters = array();
+
+	if ( ! empty( $a['parameters'] ) && is_string( $a['parameters'] ) ) {
+		wp_parse_str( $a['parameters'], $iframe_parameters );
+	}
+
+	foreach ( $iframe_parameters as $key => $value ) {
+		$a['url'] = add_query_arg( "arve-ifp[{$key}]", $value, $url );
+	}
+
+	return $a;
+}
+
 
 function arve_shortcode_arve( $input_atts, $content = null ) {
 
@@ -79,7 +73,7 @@ function arve_shortcode_arve( $input_atts, $content = null ) {
 		'title'         => null,
 		'upload_date'   => null,
 		'url'           => null,
-		'append_text'   => 'append_text default test',
+		'append_text'   => null,
 		# <video>
 		'controls'     => 'y',
 		'controlslist' => empty( $options['controlslist'] ) ? null : (string) $options['controlslist'],
@@ -157,7 +151,6 @@ function arve_create_shortcodes() {
 	}
 
 	add_shortcode( 'arve',                'arve_shortcode' );
-	add_shortcode( 'arve-old',            'arve_shortcode_arve' );
 	add_shortcode( 'arve-supported',      'arve_shortcode_arve_supported' );
 	add_shortcode( 'arve-supported-list', 'arve_shortcode_arve_supported_list' );
 	add_shortcode( 'arve-params',         'arve_shortcode_arve_params' );

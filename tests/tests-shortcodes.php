@@ -208,7 +208,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			$this->assertNotEmpty( $host['tests'], $host_id );
 			$this->assertTrue( is_array( $host['tests'] ), $host_id );
 
-		    foreach( $host['tests'] as $test ) {
+			foreach( $host['tests'] as $test ) :
 
 				$this->assertNotEmpty( $test, $host_id );
 				$this->assertTrue( is_array( $test ), $host_id );
@@ -237,7 +237,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 					$this->assertEquals( $matches['brightcove_player'],  $test['brightcove_player'] );
 					$this->assertEquals( $matches['brightcove_embed'],   $test['brightcove_embed'] );
 				}
-	    	}
+
+			endforeach;
 
 		endforeach;
 	}

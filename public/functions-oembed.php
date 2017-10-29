@@ -19,7 +19,7 @@ function arve_filter_oembed_dataparse( $result, $data, $url ) {
 
 		$a['parameters']  = arve_extract_query_array( $url, 'arve-ifp' );
 		$a['oembed_data'] = $data;
-		$a['append_text'] = json_encode( $a['parameters'] );
+		$a['append_text'] = is_defined( 'ARVE_DEBUG' ) ? json_encode( $a['parameters'] ) : null;
 
 		return arve_shortcode_arve( $a );
 	}
