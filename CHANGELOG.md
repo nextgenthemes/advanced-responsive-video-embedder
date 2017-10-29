@@ -378,7 +378,7 @@
 * Improved: Thumbnail handling.
 * Improved: Removed the 'Lazyload Maximal Width' setting to simplify things (there still is 'Maximal Width' and 'Aligned Maximal Width').
 * Improved: Removed the 'Fake Thumbnail' feature because the entire idea was bad and real thumbnails should be used.
-* Improved: Updated EDD_SL_Plugin_Updater Class
+* Improved: Updated and security enhanced Plugin_Updater Class
 * Dropped PHP Class.
 
 ### 7.2.9 beta - 2016-09-15 ###

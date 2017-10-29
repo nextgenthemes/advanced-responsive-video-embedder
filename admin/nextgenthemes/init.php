@@ -7,10 +7,7 @@ if ( ! defined( __NAMESPACE__ . '\URL' ) ) {
 	define( __NAMESPACE__ . '\URL', plugin_dir_url( __FILE__ ) );
 }
 
-if( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
-	require_once __DIR__ . '/inc/class-edd-sl-plugin-updater.php';
-}
-
+require_once __DIR__ . '/inc/class-plugin-updater.php';
 require_once __DIR__ . '/inc/class-admin-notice-factory.php';
 require_once __DIR__ . '/inc/functions-deprecated.php';
 require_once __DIR__ . '/inc/functions-licensing.php';
