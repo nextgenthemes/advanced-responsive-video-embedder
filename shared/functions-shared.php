@@ -474,7 +474,7 @@ function arve_get_host_properties() {
 					'oembed_title' => 'Mass Effect Andromeda - Gameplay Alpha',
 				),
 				array(
-					'url'          => 'http://dai.ly/x3cwlqz',
+					'url'          => 'https://dai.ly/x3cwlqz',
 					'id'           =>               'x3cwlqz',
 					'oembed_title' => 'Mass Effect Andromeda',
 				),
