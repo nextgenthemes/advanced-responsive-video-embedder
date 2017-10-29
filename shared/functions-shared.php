@@ -469,14 +469,12 @@ function arve_get_host_properties() {
 			'auto_title'     => true,
 			'tests' => array(
 				array(
-					'url'          => 'http://www.dailymotion.com/video/x41ia79_mass-effect-andromeda-gameplay-alpha_videogames',
-					'id'           =>                                  'x41ia79',
-					'oembed_title' => 'Mass Effect Andromeda - Gameplay Alpha',
+					'url'          => 'https://www.dailymotion.com/video/x41ia79_mass-effect-andromeda-gameplay-alpha_videogames',
+					'id'           =>                                   'x41ia79',
 				),
 				array(
 					'url'          => 'https://dai.ly/x3cwlqz',
 					'id'           =>               'x3cwlqz',
-					'oembed_title' => 'Mass Effect Andromeda',
 				),
 			),
 			'query_args'     => array(
