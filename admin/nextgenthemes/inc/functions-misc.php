@@ -1,38 +1,14 @@
 <?php
 namespace nextgenthemes\admin;
 
-function html_attr( $attr = array() ) {
-
-	if ( empty( $attr ) || ! is_array( $attr ) ) {
-		return '';
-	}
-
-	$html = '';
-
-	foreach ( $attr as $key => $value ) {
-
-		if ( false === $value || null === $value ) {
-			continue;
-		} elseif ( '' === $value || true === $value ) {
-			$html .= sprintf( ' %s', esc_html( $key ) );
-		} elseif ( in_array( $key, array( 'href', 'data-href', 'src', 'data-src' ) ) ) {
-			$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_url( $value ) );
-		} else {
-			$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );
-		}
-	}
-
-	return $html;
-}
-
 function remote_get( $url, $args = array(), $json = true ) {
 
-	$response      = wp_remote_post( $url, $args );
+	$response      = wp_safe_remote_post( $url, $args );
 	$response_code = wp_remote_retrieve_response_code( $response );
 
-	// retry with wp_remote_GET
+	// retry with wp_safe_remote_get
 	if ( is_wp_error( $response ) || 200 !== $response_code ) {
-		$response      = wp_remote_get( $url, $args );
+		$response      = wp_safe_remote_get( $url, $args );
 		$response_code = wp_remote_retrieve_response_code( $response );
 	}
 
@@ -91,6 +67,30 @@ function remote_get_cached( $args ) {
 	}
 
 	return $cache;
+}
+
+function html_attr( $attr = array() ) {
+
+	if ( empty( $attr ) || ! is_array( $attr ) ) {
+		return '';
+	}
+
+	$html = '';
+
+	foreach ( $attr as $key => $value ) {
+
+		if ( false === $value || null === $value ) {
+			continue;
+		} elseif ( '' === $value || true === $value ) {
+			$html .= sprintf( ' %s', esc_html( $key ) );
+		} elseif ( in_array( $key, array( 'href', 'data-href', 'src', 'data-src' ) ) ) {
+			$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_url( $value ) );
+		} else {
+			$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );
+		}
+	}
+
+	return $html;
 }
 
 function plugin_install_search_url( $search_term ) {

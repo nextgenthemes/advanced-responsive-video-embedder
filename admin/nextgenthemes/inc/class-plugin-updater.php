@@ -320,7 +320,7 @@ class Nextgenthemes_Plugin_Updater {
 	 * Calls the API and, if successfull, returns the object delivered by the API.
 	 *
 	 * @uses get_bloginfo()
-	 * @uses wp_save_remote_post()
+	 * @uses wp_safe_remote_post()
 	 * @uses is_wp_error()
 	 *
 	 * @param string  $_action The requested action.
@@ -354,7 +354,7 @@ class Nextgenthemes_Plugin_Updater {
 		);
 
 		$verify_ssl = $this->verify_ssl();
-		$request    = wp_save_remote_post( $this->api_url, array( 'timeout' => 15, 'sslverify' => $verify_ssl, 'body' => $api_params ) );
+		$request    = wp_safe_remote_post( $this->api_url, array( 'timeout' => 15, 'sslverify' => $verify_ssl, 'body' => $api_params ) );
 
 		if ( ! is_wp_error( $request ) ) {
 			$request = json_decode( wp_remote_retrieve_body( $request ) );
@@ -417,7 +417,7 @@ class Nextgenthemes_Plugin_Updater {
 			);
 
 			$verify_ssl = $this->verify_ssl();
-			$request    = wp_save_remote_post( $this->api_url, array( 'timeout' => 15, 'sslverify' => $verify_ssl, 'body' => $api_params ) );
+			$request    = wp_safe_remote_post( $this->api_url, array( 'timeout' => 15, 'sslverify' => $verify_ssl, 'body' => $api_params ) );
 
 			if ( ! is_wp_error( $request ) ) {
 				$version_info = json_decode( wp_remote_retrieve_body( $request ) );

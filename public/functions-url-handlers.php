@@ -60,7 +60,7 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
 	$atts['parameters'] = empty( $url_query ) ? null : build_query( $url_query );
 	$atts['url']        = $url;
 
-	return arve_shortcode_arve( $atts, null );
+	return arve_shortcode_arve( $atts );
 }
 
 

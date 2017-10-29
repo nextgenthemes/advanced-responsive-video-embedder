@@ -260,7 +260,7 @@ function init_edd_updaters() {
 function init_plugin_updater( $product ) {
 
 	// setup the updater
-	new \EDD_SL_Plugin_Updater(
+	new \Nextgenthemes_Plugin_Updater(
 		'https://nextgenthemes.com',
 		$product['file'],
 		array(
