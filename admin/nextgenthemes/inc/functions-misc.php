@@ -3,12 +3,12 @@ namespace nextgenthemes\admin;
 
 function remote_get( $url, $args = array(), $json = true ) {
 
-	$response      = wp_safe_remote_post( $url, $args );
+	$response      = wp_remote_post( $url, $args );
 	$response_code = wp_remote_retrieve_response_code( $response );
 
-	// retry with wp_safe_remote_get
+	// retry with wp_remote_get
 	if ( is_wp_error( $response ) || 200 !== $response_code ) {
-		$response      = wp_safe_remote_get( $url, $args );
+		$response      = wp_remote_get( $url, $args );
 		$response_code = wp_remote_retrieve_response_code( $response );
 	}
 

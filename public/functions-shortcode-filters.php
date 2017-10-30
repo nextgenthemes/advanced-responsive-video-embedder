@@ -66,7 +66,7 @@ function arve_sc_filter_attr( $a ) {
 		if ( empty( $a['src'] ) ) {
 			$a['src'] = arve_build_iframe_src( $a );
 		}
-		
+
 		$a['src'] = arve_add_query_args_to_iframe_src( $a['src'], $a );
 		$a['src'] = arve_add_autoplay_query_arg( $a['src'], $a );
 

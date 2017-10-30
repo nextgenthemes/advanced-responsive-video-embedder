@@ -6,6 +6,10 @@ function arve_shortcode( $a, $content = null ) {
 		return $mayme_arve_html;
 	}
 
+	if( defined('ARVE_DEBUG') ) {
+		$a['append_text'] = 'No wp embed match';
+	}
+
 	return arve_shortcode_arve( $a, $content );
 }
 
@@ -23,6 +27,8 @@ function arve_check_for_embed( $a ) {
 
 	$wp_embed = new WP_Embed;
 	$maybe_arve_html = $wp_embed->shortcode( array(), $url );
+
+	#d($maybe_arve_html);
 
 	if(	arve_contains( $maybe_arve_html, 'class="arve-wrapper' ) ) {
 		return $maybe_arve_html;

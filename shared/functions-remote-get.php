@@ -2,12 +2,19 @@
 
 function arve_remote_get( $url, $args = array(), $json = true ) {
 
-	$response      = wp_safe_remote_post( $url, $args );
+	// Lets not tell them we are WordPress.
+	$default_args = array(
+		'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'
+	);
+
+	$args = wp_parse_args( $args, $default_args );
+
+	$response      = wp_safe_remote_get( $url, $args );
 	$response_code = wp_remote_retrieve_response_code( $response );
 
 	// retry with wp_safe_remote_get
 	if ( is_wp_error( $response ) || 200 !== $response_code ) {
-		$response      = wp_safe_remote_get( $url, $args );
+		$response      = wp_remote_post( $url, $args );
 		$response_code = wp_remote_retrieve_response_code( $response );
 	}
 
@@ -43,26 +50,28 @@ function arve_remote_get( $url, $args = array(), $json = true ) {
 	return $out;
 };
 
-function arve_remote_get_cached( $args ) {
+function arve_remote_get_cached( $url, $args ) {
 
 	$defaults = array(
 		'args' => array(),
 		'json' => true,
-		'cache_time' => 3600,
+		'cache_time' => HOUR_IN_SECONDS,
 	);
 
 	$args = wp_parse_args( $args, $defaults );
 
-	$transient_name = 'arve_remote_get_' . $args['url'];
+	$transient_name = 'arve_remote_get_' . $url;
 	$cache = get_transient( $transient_name );
 
 	if ( false === $cache || defined( 'ARVE_DEBUG' ) ) {
 
-		$cache = arve_remote_get( $args['url'], $args['args'], $args['json'] );
+		$cache = arve_remote_get( $url, $args['args'], $args['json'] );
 
-		if ( ! is_wp_error( $cache ) ) {
-			set_transient( $transient_name, $cache, $args['cache_time'] );
+		if ( is_wp_error( $cache ) ) {
+			$args['cache_time'] = HOUR_IN_SECONDS / 4;
 		}
+
+		set_transient( $transient_name, $cache, $args['cache_time'] );
 	}
 
 	return $cache;
