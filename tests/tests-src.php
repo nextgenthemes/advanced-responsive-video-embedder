@@ -1,8 +1,8 @@
 <?php
 
-class Tests_Src extends WP_UnitTestCase {
+class Tests_Iframe_Src extends WP_UnitTestCase {
 
-	public function test_src_exists() {
+	public function test_iframe_src_exists() {
 
 		$properties = arve_get_host_properties();
 
@@ -29,10 +29,10 @@ class Tests_Src extends WP_UnitTestCase {
 				$this->assertArrayHasKey( 'id',  $test, $provider );
 				$this->assertArrayHasKey( 'url', $test, $provider );
 
-				$output = apply_filters( 'the_content', $url['url'] );
+				$args  = array( 'url' => $test['url'] );
 
-				$this->assertNotContains( 'Error', $output );
-				$this->assertRegExp( '#<iframe[^>]+src="http#i', $output );
+				$this->assertNotContains( 'Error', arve_shortcode( $args ) );
+				$this->assertRegExp( '#<iframe[^>]+src="http#i', arve_shortcode( $args ) );
 
 			endforeach;
 
