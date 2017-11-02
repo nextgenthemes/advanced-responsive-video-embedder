@@ -10,7 +10,6 @@ function arve_get_options_defaults( $section ) {
 		'promote_link'        => false,
 		'sandbox'             => false,
 		'video_maxwidth'      => '',
-		'wp_image_cache_time' => 18000,
 		'last_settings_tab'   => '',
 		'wp_video_override'   => true,
 		'controlslist'        => 'nodownload',
@@ -238,13 +237,6 @@ function arve_get_settings_definitions() {
 				'https://developer.vimeo.com/player/embedding',
 				'TODO settings page link'
 			),
-		),
-		array(
-			'hide_from_sc' => true,
-			'attr'  => 'wp_image_cache_time',
-			'label' => esc_html__('Image Cache Time', ARVE_SLUG),
-			'type'  => 'number',
-			'description' => __( '(seconds) This plugin uses WordPress transients to cache video thumbnail URLS. This setting defines how long image URLs from the media Gallery are being stored before running WPs fuctions again to request them. For example: hour - 3600, day - 86400, week - 604800.', ARVE_SLUG ),
 		),
 		array(
 			'hide_from_sc' => true,

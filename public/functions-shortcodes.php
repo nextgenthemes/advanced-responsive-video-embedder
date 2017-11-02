@@ -10,6 +10,11 @@ function arve_shortcode( $a, $content = null ) {
 		$a['append_text'] = 'No wp embed match';
 	}
 
+
+
+	$a['src'] = $a['url'];
+	$a['provider'] = 'iframe';
+
 	return arve_shortcode_arve( $a, $content );
 }
 
@@ -27,8 +32,6 @@ function arve_check_for_embed( $a ) {
 
 	$wp_embed = new WP_Embed;
 	$maybe_arve_html = $wp_embed->shortcode( array(), $url );
-
-	#d($maybe_arve_html);
 
 	if(	arve_contains( $maybe_arve_html, 'class="arve-wrapper' ) ) {
 		return $maybe_arve_html;
@@ -51,7 +54,6 @@ function arve_add_iframe_parameters_to_url( $a ) {
 
 	return $a;
 }
-
 
 function arve_shortcode_arve( $input_atts, $content = null ) {
 
@@ -78,7 +80,6 @@ function arve_shortcode_arve( $input_atts, $content = null ) {
 		'thumbnail'     => null,
 		'title'         => null,
 		'upload_date'   => null,
-		'url'           => null,
 		'append_text'   => null,
 		# <video>
 		'controls'     => 'y',

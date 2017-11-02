@@ -102,8 +102,8 @@ function arve_sc_filter_attr( $a ) {
 
 function arve_sc_filter_validate( $a ) {
 
-	if ( ! empty( $a['url'] ) && ! arve_validate_url( $a['url'] ) ) {
-		$a['url'] = new WP_Error( 'thumbnail', sprintf( __( '<code>%s</code> is not a valid url', ARVE_SLUG ), esc_html( $a['url'] ) ) );
+	if ( ! empty( $a['src'] ) && ! arve_validate_url( $a['src'] ) ) {
+		$a['src'] = new WP_Error( 'thumbnail', sprintf( __( '<code>%s</code> is not a valid url', ARVE_SLUG ), esc_html( $a['src'] ) ) );
 	}
 
 	$a['align'] = arve_validate_align( $a['align'], $a['provider'] );
@@ -187,10 +187,17 @@ function arve_sc_filter_get_media_gallery_thumbnail( $atts ) {
 
 	if( is_numeric( $atts['thumbnail'] ) ) {
 
-		$attchment_id = $atts['thumbnail'];
+		if( $found_url = wp_get_attachment_image_url( $atts['thumbnail'], 'small' ) ) {
+			$atts['img_src'] = $found_url;
+		} else {
+			$atts['img_src'] = new WP_Error( 'wp thumbnail', __( 'No attachment with that ID', ARVE_SLUG ) );
+		}
 
-		$atts['img_src']    = arve_get_attachment_image_url_or_srcset( 'url',    $attchment_id );
-		$atts['img_srcset'] = arve_get_attachment_image_url_or_srcset( 'srcset', $attchment_id );
+		if( $found_srcset = wp_get_attachment_image_srcset( $atts['thumbnail'], 'small' ) ) {
+			$atts['img_srcset'] = $found_srcset;
+		} else {
+			$atts['img_srcset'] = new WP_Error( 'wp thumbnail', __( 'No attachment with that ID', ARVE_SLUG ) );
+		}
 
 	} elseif ( arve_validate_url( $atts['thumbnail'] ) ) {
 
@@ -323,7 +330,7 @@ function arve_sc_filter_detect_html5( $atts ) {
 	}
 
 	$html5_extensions   = arve_get_html5_attributes();
-	$html5_extensions[] = 'url';
+	$html5_extensions[] = 'src';
 
 	$atts['video_sources_html'] = '';
 
@@ -338,13 +345,13 @@ function arve_sc_filter_detect_html5( $atts ) {
 			$atts['video_sources_html'] .= sprintf( '<source type="%s" src="%s">', $type, $atts[ $ext ] );
 		}
 
-		if ( ! empty( $atts['url'] ) && arve_ends_with( $atts['url'], ".$ext" ) ) {
+		if ( ! empty( $atts['src'] ) && arve_ends_with( $atts['src'], ".$ext" ) ) {
 
-			if ( arve_starts_with( $atts['url'], 'https://www.dropbox.com' ) ) {
-				$atts['url'] = add_query_arg( 'dl', 1, $atts['url'] );
+			if ( arve_starts_with( $atts['src'], 'https://www.dropbox.com' ) ) {
+				$atts['src'] = add_query_arg( 'dl', 1, $atts['src'] );
 			}
 
-			$atts['video_src'] = $atts['url'];
+			$atts['video_src'] = $atts['src'];
 			/*
 			$parse_url = parse_url( $atts['url'] );
 			$pathinfo  = pathinfo( $parse_url['path'] );
