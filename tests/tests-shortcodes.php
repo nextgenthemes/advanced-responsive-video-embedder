@@ -122,7 +122,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( 'style="max-width:333px;"', $output );
 		$this->assertContains( '<meta itemprop="name" content="Test &lt;title&gt;">', $output );
 		$this->assertContains( '<meta itemprop="uploadDate" content="2016-10-22">', $output );
-		$this->assertContains( 'src="https://www.youtube.com/embed/hRonZ4wP8Ys', $output );
+		$this->assertContains( 'src="https://example.com', $output );
 		$this->assertContains( ' sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"', $output );
 	}
 
