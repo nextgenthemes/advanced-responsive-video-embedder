@@ -291,10 +291,6 @@ function arve_sc_filter_detect_youtube_playlist( $atts ) {
 
 function arve_sc_filter_detect_html5( $atts ) {
 
-	if( ! empty( $atts['provider'] ) && 'html5' != $atts['provider'] ) {
-		return $atts;
-	}
-
 	$html5_extensions   = arve_get_html5_attributes();
 	$html5_extensions[] = 'src';
 
