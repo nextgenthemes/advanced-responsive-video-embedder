@@ -251,7 +251,7 @@ function arve_get_settings_definitions() {
 		),
 		array(
 			'attr'  => 'controlslist',
-			'label' => esc_html__( 'Chrom HTML5 Player controlls', ARVE_SLUG ),
+			'label' => esc_html__( 'Chrome HTML5 Player controlls', ARVE_SLUG ),
 			'type'  => 'text',
 			'description' => __( "controlsList attribute on &lt;video&gt; for example use <code>nodownload nofullscreen noremoteplayback</code> to hide the download and the fullscreen button on the Chrome HTML5 video player and disable remote playback.", ARVE_SLUG ),
 		),
