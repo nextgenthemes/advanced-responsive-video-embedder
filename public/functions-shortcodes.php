@@ -10,7 +10,10 @@ function arve_shortcode( $a, $content = null ) {
 		$a['append_text'] = 'No wp embed match';
 	}
 
-	$a['src'] = $a['url'];
+	if( ! empty( $a['url'] ) && empty( $a['src'] ) ) {
+		$a['src'] = $a['url'];
+	}
+
 	unset( $a['url'] );
 	$a['provider'] = 'iframe';
 
