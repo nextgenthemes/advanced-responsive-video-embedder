@@ -147,23 +147,23 @@ function arve_get_host_properties() {
 				),
 			),
 			'query_argss' => array(
-		        'api'                => array( 0, 1 ),
-		        'autoplay'           => array( 0, 1 ),
-		        'chromeless'         => array( 0, 1 ),
-		        'highlight'          => array( 0, 1 ),
-		        'html'               => array( 0, 1 ),
-		        'id'                 => 'int',
-		        'info'               => array( 0, 1 ),
-		        'logo'               => array( 0, 1 ),
-		        'network'            => array( 'dsl', 'cellular' ),
-		        'origin'             => array( 0, 1 ),
-		        'quality'            => array( 240, 380, 480, 720, 1080, 1440, 2160 ),
-		        'related'            => array( 0, 1 ),
-		        'start'              => 'int',
-		        'startscreen'        => array( 0, 1 ),
-		        'syndication'        => 'int',
-		        'webkit-playsinline' => array( 0, 1 ),
-		        'wmode'              => array( 'direct', 'opaque' ),
+				'api'                => array( 0, 1 ),
+				'autoplay'           => array( 0, 1 ),
+				'chromeless'         => array( 0, 1 ),
+				'highlight'          => array( 0, 1 ),
+				'html'               => array( 0, 1 ),
+				'id'                 => 'int',
+				'info'               => array( 0, 1 ),
+				'logo'               => array( 0, 1 ),
+				'network'            => array( 'dsl', 'cellular' ),
+				'origin'             => array( 0, 1 ),
+				'quality'            => array( 240, 380, 480, 720, 1080, 1440, 2160 ),
+				'related'            => array( 0, 1 ),
+				'start'              => 'int',
+				'startscreen'        => array( 0, 1 ),
+				'syndication'        => 'int',
+				'webkit-playsinline' => array( 0, 1 ),
+				'wmode'              => array( 'direct', 'opaque' ),
 			),
 		),
 		'dailymotionlist' => array(
@@ -446,16 +446,14 @@ function arve_get_host_properties() {
 					'url'  => 'https://www.vevo.com/watch/the-offspring/the-kids-arent-alright/USSM20100649',
 					'id'   =>                                                                 'USSM20100649'
 				),
-				#array( '', '' ),
-				#array( '', '' ),
 			),
 		),
 		'viddler' => array(
 			'regex'          => $s . 'viddler\.com/(embed|v)/(?<id>[a-z0-9]{8})',
-			#'embed_url'      => 'https://www.viddler.com/player/%s/',
-			#'default_params' => 'wmode=transparent&player=full&f=1&disablebranding=1',
 			'embed_url'      => 'https://www.viddler.com/embed/%s/',
+			#'embed_url'      => 'https://www.viddler.com/player/%s/',
 			'default_params' => '?f=1&player=full&secret=59822701&disablebackwardseek=false&disableseek=false&disableforwardseek=false&make_responsive=false&loop=false&nologo=false&hd=false',
+			#'default_params' => 'wmode=transparent&player=full&f=1&disablebranding=1',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'aspect_ratio'   => '545:349',
@@ -779,6 +777,7 @@ function arve_get_host_properties() {
 			),
 			*/
 		),
+		/*
 		'youtubelist' => array(
 			'regex'          => $s . 'youtube\.com/(embed/videoseries|playlist)\?list=(?<id>[-a-z0-9]+)',
 			'name'           => 'YouTube Playlist',
@@ -795,6 +794,7 @@ function arve_get_host_properties() {
 				)
 			)
 		),
+		*/
 		'html5' => array(
 			'name'         => 'HTML5 video files directly',
 			#'regex'        => '(?<id>' . $s . 'dropbox.com/[^.]+\.(mp4|webm|ogv)$)', # URLs ending with .mp4, .webm ... are handled by word
