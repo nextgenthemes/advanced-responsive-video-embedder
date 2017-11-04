@@ -83,7 +83,7 @@ function arve_shortcode_arve( $input_atts, $content = null ) {
 		'title'         => null,
 		'upload_date'   => null,
 		'append_text'   => null,
-		# <video>
+		// <video>
 		'controls'     => 'y',
 		'controlslist' => empty( $options['controlslist'] ) ? null : (string) $options['controlslist'],
 		'loop'         => 'n',
@@ -94,11 +94,11 @@ function arve_shortcode_arve( $input_atts, $content = null ) {
 		'playsinline'  => null,
 		'preload'      => 'metadata',
 		'webm'         => null,
-		# TED only
+		// TED only
 		'lang'      => null,
-		# Vimeo only
+		// Vimeo only
 		'start'     => null,
-		# deprecated, title should be used
+		// deprecated, title should be used
 		'link_text' => null,
 	);
 

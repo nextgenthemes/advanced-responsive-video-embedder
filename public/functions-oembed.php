@@ -105,8 +105,6 @@ function arve_remove_query_array( $url, $key ) {
 	return $url;
 }
 
-
-
 function arve_get_query_str_without_args( $url, $key ) {
 
 	$url = arve_remove_query_array( $url, 'arve' );
