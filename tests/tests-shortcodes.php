@@ -4,7 +4,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function test_sandbox() {
 
-		$attr = array( 'url' => 'https://www.dailymotion.com/video/x5tgfjh' );
+		$attr = array( 'url' => 'https://example.com', 'disable_flash' => 'n' );
 
 		$this->assertNotContains( 'Error', arve_shortcode( $attr ) );
 		$this->assertContains(
@@ -13,6 +13,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			$attr['url']
 		);
 
+		/*
 		$attr = array( 'url' => 'https://vimeo.com/214300845' );
 
 		$this->assertNotContains( 'Error', arve_shortcode( $attr ) );
@@ -21,6 +22,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			arve_shortcode( $attr ),
 			$attr['url']
 		);
+		*/
 	}
 
 	public function test_thumbnails() {
@@ -107,7 +109,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'thumbnail'   => 'https://example.com/image.jpg',
 			'title'       => ' Test <title>  ',
 			'upload_date' => '2016-10-22',
-			'url'         => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
+			'url'         => 'https://example.com',
 		);
 
 		$output = arve_shortcode( $atts );

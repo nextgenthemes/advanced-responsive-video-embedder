@@ -6,7 +6,7 @@ function arve_shortcode( $a, $content = null ) {
 		return $mayme_arve_html;
 	}
 
-	if( defined('ARVE_DEBUG') ) {
+	if( defined( 'ARVE_DEBUG' ) ) {
 		$a['append_text'] = 'No wp embed match';
 	}
 
