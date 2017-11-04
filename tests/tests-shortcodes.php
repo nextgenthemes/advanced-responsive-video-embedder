@@ -11,7 +11,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		);
 
 		$this->assertNotContains( 'Error', arve_shortcode( $attr ) );
-		$this->assertContains( 'sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"', arve_shortcode( $attr ) );
+		$this->assertContains( 'sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"', arve_shortcode( $attr ), $attr['url'] );
 
 		$attr = array(
 			'url'       => 'https://vimeo.com/214300845',
@@ -20,7 +20,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		);
 
 		$this->assertNotContains( 'Error', arve_shortcode( $attr ) );
-		$this->assertContains( 'sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-forms"', arve_shortcode( $attr ) );
+		$this->assertContains( 'sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-forms"', arve_shortcode( $attr ), $attr['url'] );
 	}
 
 	public function test_thumbnails() {
