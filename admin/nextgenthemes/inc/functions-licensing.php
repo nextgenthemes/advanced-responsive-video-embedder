@@ -5,19 +5,22 @@ function get_products() {
 
 	$products = array(
 		'arve_pro' => array(
-			'name'    => 'Advanced Responsive Video Embedder Pro',
+			'name'    => 'ARVE Pro Addon',
+			'id'      => 1253,
 			'type'    => 'plugin',
 			'author'  => 'Nicolas Jonas',
 			'url'     => 'https://nextgenthemes.com/plugins/arve-pro/',
 		),
 		'arve_amp' => array(
-			'name'   => 'ARVE Accelerated Mobile Pages Addon',
+			'name'   => 'ARVE AMP Addon',
+			'id'     => 16941,
 			'type'   => 'plugin',
 			'author' => 'Nicolas Jonas',
 			'url'    => 'https://nextgenthemes.com/plugins/arve-amp/',
 		),
 		'edd_mycelium_gear_gateway' => array(
 			'name'   => 'EDD MyCelium Gear Gateway',
+			'id'     => 30261,
 			'type'   => 'plugin',
 			'author' => 'Nicolas Jonas',
 			'url'    => 'https://nextgenthemes.com/plugins/edd-mycelium-gear-gateway/',
@@ -264,10 +267,12 @@ function init_plugin_updater( $product ) {
 		'https://nextgenthemes.com',
 		$product['file'],
 		array(
-			'version' 	=> $product['version'],
-			'license' 	=> get_key( $product['slug'] ),
-			'item_name' => $product['name'],
-			'author' 	  => $product['author']
+			'version' => $product['version'],
+			'license' => get_key( $product['slug'] ),
+			'item_id' => $product['id'],
+			'author'  => $product['author'],
+			'url'     => home_url(),
+			'beta'    => false // set to true if you wish customers to receive update notifications of beta releases
 		)
 	);
 }
