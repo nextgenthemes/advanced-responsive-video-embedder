@@ -4,7 +4,7 @@ function arve_sc_filter_attr( $a ) {
 
 	$wrapper_id = null;
 
-	foreach ( array( 'id', 'mp4', 'm4v', 'webm', 'ogv', 'url', 'src', 'webtorrent' ) as $att ) {
+	foreach ( array( 'id', 'mp4', 'm4v', 'webm', 'ogv', 'src', 'webtorrent' ) as $att ) {
 
 		if ( ! empty( $a[ $att ] ) && is_string( $a[ $att ] ) ) {
 
@@ -158,21 +158,20 @@ function arve_sc_filter_sanitise( $atts ) {
 
 function arve_sc_filter_missing_attribute_check( $atts ) {
 
-	# Old shortcodes
-	if ( ! array_key_exists( 'url' , $atts ) ) {
-		return $atts;
-	}
-
 	$required_attributes   = arve_get_html5_attributes();
-	$required_attributes[] = 'url';
+	$required_attributes[] = 'src';
+	$required_attributes[] = 'id';
+	$required_attributes[] = 'provider';
 
 	$array = array_intersect_key( $atts, array_flip( $required_attributes ) );
 
 	if( count( array_filter( $array ) ) != count( $array ) ) {
 
-		$atts['missing_atts_error'] = arve_error( sprintf(
-			esc_html__( 'The [arve] shortcode needs one of this attributes %s', ARVE_SLUG ),
-			implode( $required_attributes ) )
+		$atts['missing_atts_error'] = arve_error(
+			sprintf(
+				esc_html__( 'The [arve] shortcode needs one of this attributes %s', ARVE_SLUG ),
+				implode( $required_attributes )
+			)
 		);
 	}
 
@@ -224,39 +223,6 @@ function arve_sc_filter_get_media_gallery_video( $atts ) {
 	}
 
 	return $atts;
-}
-
-function arve_sc_filter_detect_provider_and_id_from_url( $a ) {
-
-	$properties = arve_get_host_properties();
-
-	if ( ! empty( $a['provider'] ) || empty( $a['url'] ) ) {
-		return $a;
-	}
-
-	foreach ( $properties as $host_id => $host ) :
-
-		if ( empty( $host['regex'] ) ) {
-			continue;
-		}
-
-		$preg_match = preg_match( '#' . $host['regex'] . '#i', $a['url'], $matches );
-
-		if ( 1 !== $preg_match ) {
-			continue;
-		}
-
-		foreach ( $matches as $key => $value ) {
-
-			if ( is_string( $key ) ) {
-				$a[ 'provider' ] = $host_id;
-				$a[ $key ]       = $matches[ $key ];
-			}
-		}
-
-	endforeach;
-
-	return $a;
 }
 
 function arve_sc_filter_detect_query_args( $atts ) {

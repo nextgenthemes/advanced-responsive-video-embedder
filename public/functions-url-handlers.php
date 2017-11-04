@@ -18,7 +18,7 @@ function arve_create_url_handlers() {
 
 function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $rawattr ) {
 
-	//* Fix 'Markdown on save enhanced' issue
+	// Fix 'Markdown on save enhanced' issue
 	if ( substr( $url, -4 ) === '</p>' ) {
 		$url = substr( $url, 0, -4 );
 	}
@@ -50,12 +50,6 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
 
 	unset( $url_query['arve'] );
 
-	if ( 'youtube' == $provider ) {
-		unset( $url_query['v'] );
-		unset( $url_query['t'] );
-	}
-
-	//* Pure awesomeness!
 	$atts               = array_merge( (array) $old_atts, (array) $new_atts );
 	$atts['parameters'] = empty( $url_query ) ? null : build_query( $url_query );
 	$atts['url']        = $url;
