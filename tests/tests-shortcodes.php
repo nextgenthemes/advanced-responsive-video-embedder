@@ -5,7 +5,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 	public function test_sandbox() {
 
 		$attr = array(
-			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
+			'url'       => 'https://www.dailymotion.com/video/x5tgfjh',
 			'thumbnail' => 'https://example.com/image.jpg',
 			'title'     => 'title'
 		);
@@ -296,12 +296,5 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$this->assertRegExp( '#<video .*src="https://www\.dropbox\.com/s/ocqf9u5pn9b4ox0/Oops%20I%20dropped%20my%20Hoop\.mp4\?dl=1#', arve_shortcode( $attr) );
 		$this->assertContains( 'data-provider="html5"', arve_shortcode( $attr ) );
-	}
-
-	public function test_no_wrapper_id() {
-
-		$attr = array();
-
-		$this->assertNotContains( 'Error: Element ID could not be build, please report this bug.', arve_shortcode( $attr ) );
 	}
 }
