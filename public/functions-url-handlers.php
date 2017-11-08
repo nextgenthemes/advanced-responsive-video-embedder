@@ -44,19 +44,15 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
 		$new_atts = $url_query['arve'];
 	}
 
-	if ( isset( $url_query['t'] ) ) {
-		$url_query['start'] = arve_youtube_time_to_seconds( $url_query['t'] );
-	}
-
 	unset( $url_query['arve'] );
 
 	$atts               = array_merge( (array) $old_atts, (array) $new_atts );
 	$atts['parameters'] = empty( $url_query ) ? null : build_query( $url_query );
-	$atts['url']        = $url;
+	$atts['id']         = $matches['id'];
+	$atts['provider']   = $provider;
 
 	return arve_shortcode_arve( $atts );
 }
-
 
 /**
  * Remove the Wordpress default Oembed support for video providers that ARVE Supports. Array taken from wp-includes/class-oembed.php __construct

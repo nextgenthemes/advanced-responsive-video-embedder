@@ -25,12 +25,12 @@ function arve_register_scripts() {
 	);
 }
 
-function arve_maybe_enqueue( $content ) {
+function arve_maybe_enqueue( $html ) {
 
-	if ( arve_contains( $content, 'class="arve-wrapper' ) ) {
+	if ( arve_contains( $html, 'id="arve-video' ) ) {
 		wp_enqueue_style( ARVE_SLUG );
 		wp_enqueue_script( ARVE_SLUG );
 	}
 
-	return $content;
+	return $html;
 }

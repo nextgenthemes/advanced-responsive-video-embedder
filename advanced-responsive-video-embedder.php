@@ -65,7 +65,8 @@ function arve_init() {
 
 	add_filter( 'oembed_dataparse',    'arve_filter_oembed_dataparse', 11, 3 );
 	add_filter( 'oembed_fetch_url',    'arve_filter_oembed_fetch_url', 999, 3 );
-	add_filter( 'the_content',         'arve_maybe_enqueue', 999 );
+	add_filter( 'embed_oembed_html',   'arve_maybe_enqueue' );
+	add_filter( 'embed_handler_html',  'arve_maybe_enqueue' );
 
 	add_filter( 'widget_text',         'do_shortcode' );
 	add_filter( 'language_attributes', 'arve_html_id' );

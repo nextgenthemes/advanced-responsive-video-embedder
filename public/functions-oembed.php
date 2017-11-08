@@ -7,7 +7,7 @@ function arve_filter_oembed_fetch_url( $provider, $url, $args ) {
 
 	$provider = add_query_arg( 'url', urlencode( $url ), $provider );
 
-	d($provider);
+	d("fetch".$provider);
 
 	return $provider;
 }

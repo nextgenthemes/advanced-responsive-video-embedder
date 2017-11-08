@@ -1,10 +1,13 @@
 <?php
 
 function arve_get_default_aspect_ratio( $aspect_ratio, $provider ) {
+
 	$properties = arve_get_host_properties();
+
 	if ( empty( $aspect_ratio ) ) {
 		return $properties[ $provider ]['aspect_ratio'];
 	}
+
 	return $aspect_ratio;
 }
 
