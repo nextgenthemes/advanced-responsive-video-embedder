@@ -1,38 +1,74 @@
-(function ($) {
+(function () {
 	'use strict';
 
+	var qs    = document.querySelector.bind(document);
+	var qsa   = document.querySelectorAll.bind(document);
+	var $body = document.body;
+
+	if (window.NodeList && !NodeList.prototype.forEach) {
+		NodeList.prototype.forEach = function (callback, thisArg) {
+			thisArg = thisArg || window;
+			for (var i = 0; i < this.length; i++) {
+				callback.call(thisArg, this[i], i, this);
+			}
+		};
+	}
+
+	function unwrap( selector ) {
+		qsa( selector ).forEach(
+			function( el ) {
+				el.outerHTML = el.innerHTML;
+			}
+		);
+	}
+
 	function remove_unwanted_stuff() {
-		$('.arve-wrapper').find('p, .video-wrap, .fluid-width-video-wrapper, .fluid-vids').contents().unwrap();
-		$('.arve-wrapper br').remove();
-		$('.arve-iframe, .arve-video').removeAttr('width height style');
+		unwrap( '.arve-wrapper p' );
+		unwrap( '.arve-wrapper .video-wrap' );
+		unwrap( '.arve-wrapper .fluid-width-video-wrapper' );
+		unwrap( '.arve-wrapper .fluid-vids' );
+
+		qsa( '.arve-wrapper br' ).forEach(
+			function( el ) {
+				el.remove();
+			}
+		);
+
+		qsa( '.arve-iframe, .arve-video' ).forEach(
+			function( el ) {
+				el.removeAttribute( 'width' );
+				el.removeAttribute( 'height' );
+				el.removeAttribute( 'style' );
+			}
+		);
 	};
 
 	function global_id() {
 
-		if ( $( 'html[id="arve"]' ).length ) {
+		if ( qs( 'html[id="arve"]' ) ) {
 			return;
 		}
 
-		if ( $( 'html[id]' ).length <= 0 ) {
+		if ( ! qs( 'html[id]' ) ) {
 
-			$( 'html' ).attr( 'id', 'arve' );
+			qs( 'html' ).addAttribute( 'id', 'arve' );
 
-		} else if ( $( 'body[id]' ).length <= 0 ) {
+		} else if ( ! qs( 'body[id]' ) ) {
 
-			$( 'body' ).attr( 'id', 'arve' );
+			$body.addAttribute( 'id', 'arve' );
 
 		} else {
 
-			$( 'body' ).wrapInner( '<div id="arve">' );
+			$body.innerHTML = '<div id="arve">' + $body.innerHTML + '</div>';
 		}
 	}
 
 	remove_unwanted_stuff();
 	global_id();
 
-	$( document ).ready( function() {
+	window.addEventListener( 'load', function() {
 		remove_unwanted_stuff();
 		global_id();
 	} );
 
-}(jQuery));
+}());
