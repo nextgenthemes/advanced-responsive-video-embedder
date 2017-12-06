@@ -21,6 +21,7 @@ function remote_get( $url, $args = array(), $json = true ) {
 		return new WP_Error(
 			'remote_get',
 			sprintf(
+				// Translators: %s is HTTP presponse code.
 				__( 'remote_get error: Status code was expected to be 200 but was %s.', TEXTDOMAIN ),
 				$response_code
 			)
@@ -33,10 +34,10 @@ function remote_get( $url, $args = array(), $json = true ) {
 		return new WP_Error( 'remote_get', __( 'Empty body', TEXTDOMAIN ) );
 	}
 
-	if( $json ) {
+	if ( $json ) {
 		$response = json_decode( $body );
 
-		if ( null == $response ) {
+		if ( null === $response ) {
 			return new WP_Error( 'remote_get', __( 'json_decode returned null', TEXTDOMAIN ) );
 		}
 	}
@@ -47,15 +48,15 @@ function remote_get( $url, $args = array(), $json = true ) {
 function remote_get_cached( $args ) {
 
 	$defaults = array(
-		'args' => array(),
-		'json' => true,
+		'args'       => array(),
+		'json'       => true,
 		'cache_time' => 3600,
 	);
 
 	$args = wp_parse_args( $args, $defaults );
 
 	$transient_name = 'nextgenthemes_remote_get_' . $args['url'];
-	$cache = get_transient( $transient_name );
+	$cache          = get_transient( $transient_name );
 
 	if ( false === $cache || defined( 'ARVE_DEBUG' ) ) {
 
@@ -83,7 +84,7 @@ function html_attr( $attr = array() ) {
 			continue;
 		} elseif ( '' === $value || true === $value ) {
 			$html .= sprintf( ' %s', esc_html( $key ) );
-		} elseif ( in_array( $key, array( 'href', 'data-href', 'src', 'data-src' ) ) ) {
+		} elseif ( in_array( $key, array( 'href', 'data-href', 'src', 'data-src' ), true ) ) {
 			$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_url( $value ) );
 		} else {
 			$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );

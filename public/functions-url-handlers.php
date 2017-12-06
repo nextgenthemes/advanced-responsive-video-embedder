@@ -23,8 +23,8 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
 		$url = substr( $url, 0, -4 );
 	}
 
-	$parsed_url = parse_url( $url );
-	$url_query = $old_atts = $new_atts = array();
+	$parsed_url = wp_parse_url( $url );
+	$url_query  = $old_atts = $new_atts = array();
 
 	if ( ! empty( $parsed_url['query'] ) ) {
 		parse_str( $parsed_url['query'], $url_query );
@@ -33,7 +33,7 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
 	foreach ( $url_query as $key => $value ) {
 
 		if ( arve_starts_with( $key, 'arve-' ) ) {
-			$key = substr( $key, 5 );
+			$key              = substr( $key, 5 );
 			$old_atts[ $key ] = $value;
 		}
 	}
@@ -55,7 +55,7 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
 }
 
 /**
- * Remove the Wordpress default Oembed support for video providers that ARVE Supports. Array taken from wp-includes/class-oembed.php __construct
+ * Remove the WordPress default Oembed support for video providers that ARVE Supports. Array taken from wp-includes/class-oembed.php __construct
  *
  * @since    5.9.9
  *
@@ -73,7 +73,7 @@ function arve_remove_unwanted_shortcodes() {
 	wp_embed_unregister_handler( 'jetpack_vine' );
 	remove_shortcode( 'vine', 'vine_shortcode' );
 
-	remove_filter('pre_kses', 'youtube_embed_to_short_code');
+	remove_filter( 'pre_kses', 'youtube_embed_to_short_code' );
 	remove_shortcode( 'youtube', 'youtube_shortcode' );
 
 	remove_shortcode( 'ted', 'shortcode_ted' );

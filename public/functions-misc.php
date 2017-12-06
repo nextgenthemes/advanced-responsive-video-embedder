@@ -20,7 +20,7 @@ function arve_get_pre_style() {
 function arve_load_plugin_textdomain() {
 
 	load_plugin_textdomain(
-		ARVE_SLUG,
+		'advanced-responsive-video-embedder',
 		false,
 		dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 	);

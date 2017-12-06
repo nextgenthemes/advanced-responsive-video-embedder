@@ -7,10 +7,11 @@ function activation_notices() {
 
 	foreach ( $products as $key => $value ) {
 
-		if( $value['active'] && ! $value['valid_key'] ) {
+		if ( $value['active'] && ! $value['valid_key'] ) {
 
 			$msg = sprintf(
-				__( 'Hi there, thanks for your purchase. One last step, please activate your %s <a href="%s">here now</a>.', TEXTDOMAIN ),
+				// Translators: First %1$s is product name.
+				__( 'Hi there, thanks for your purchase. One last step, please activate your %1$s <a href="%2$s">here now</a>.', TEXTDOMAIN ),
 				$value['name'],
 				get_admin_url() . 'admin.php?page=nextgenthemes-licenses'
 			);

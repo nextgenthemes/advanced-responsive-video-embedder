@@ -16,7 +16,6 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'ARVE_SLUG', 'advanced-responsive-video-embedder' );
 define( 'ARVE_VERSION',              '9.0.0' );
 define( 'ARVE_PRO_VERSION_REQUIRED', '4.1.0' );
 
@@ -35,7 +34,7 @@ function arve_init() {
 	}
 
 	if ( ! defined( 'nextgenthemes\admin\VERSION' ) ) {
-		define( 'nextgenthemes\admin\TEXTDOMAIN', ARVE_SLUG );
+		define( 'nextgenthemes\admin\TEXTDOMAIN', 'advanced-responsive-video-embedder' );
 		require_once __DIR__ . '/admin/nextgenthemes/init.php';
 	}
 
@@ -101,9 +100,10 @@ function arve_init() {
 function arve_php_outdated_message() {
 
 	$msg = sprintf(
-		__( 'ARVE requres at least PHP version 5.3! Your PHP version is %s and has reached End Of Life (insecure and slow). You should ask your host to update it for you not only to make ARVE work but to make your site faster and more secure. Wordpress.org recommends PHP 7.0, I use 7.1 at nextgenthemes.com. If you do not want to upgrade PHP you can uninstall or deactivate ARVE to get rid of this message.', ARVE_SLUG ),
+		// Translators: %s is the PHP version.
+		__( 'ARVE requres at least PHP version 5.3! Your PHP version is %s and has reached End Of Life (insecure and slow). You should ask your host to update it for you not only to make ARVE work but to make your site faster and more secure. Wordpress.org recommends PHP 7.0, I use 7.1 at nextgenthemes.com. If you do not want to upgrade PHP you can uninstall or deactivate ARVE to get rid of this message.', 'advanced-responsive-video-embedder' ),
 		PHP_VERSION
 	);
-
+	// @codingStandardsIgnoreLine
 	printf( '<div class="notice notice-warning notice-dismissable"><p>%s</p></div>', $msg );
 }

@@ -18,38 +18,41 @@ function ads_page() {
 function products_html() {
 
 	$data = remote_get_cached( array(
-		'url' => 'https://nextgenthemes.com/edd-api/products/'
+		'url' => 'https://nextgenthemes.com/edd-api/products/',
 	) );
 
-	if( is_wp_error( $data ) ) {
+	if ( is_wp_error( $data ) ) {
 
 		printf(
 			'<div class="error"><p>%s</p></div>',
+			// @codingStandardsIgnoreLine
 			$data->get_error_message()
 		);
 		return;
 	}
 
-	foreach( $data->products as $product ) :
+	foreach ( $data->products as $product ) :
 
-		if( defined( 'ARVE_VERSION' ) && 'arve' == $product->info->slug ) {
+		if ( defined( 'ARVE_VERSION' ) && 'arve' === $product->info->slug ) {
 			continue;
 		}
-		if( defined( 'ARVE_PRO_VERSION' ) && 'arve-pro' == $product->info->slug ) {
+		if ( defined( 'ARVE_PRO_VERSION' ) && 'arve-pro' === $product->info->slug ) {
 			continue;
 		}
-		if( defined( 'ARVE_AMP_VERSION' ) && 'arve-amp' == $product->info->slug ) {
+		if ( defined( 'ARVE_AMP_VERSION' ) && 'arve-amp' === $product->info->slug ) {
 			continue;
 		}
-
 		?>
 		<a href="<?php product_link( $product ); ?>">
-			<?php if( ! empty( $product->info->thumbnail ) ) : ?>
-				<figure><img src="<?php echo $product->info->thumbnail; ?>"></figure>
+			<?php if ( ! empty( $product->info->thumbnail ) ) : ?>
+				<figure><img src="<?php echo esc_attr( $product->info->thumbnail ); ?>"></figure>
 			<?php endif; ?>
-			<?php echo "<h2>{$product->info->title}</h2>"; ?>
-			<?php echo filter_product_html( $product->info->content ); ?>
-			<?php if( ! empty( $product->pricing->amount ) && '0.00' == $product->pricing->amount ) : ?>
+			<h2><?php echo esc_html( $product->info->title ); ?></h2>
+			<?php
+			// @codingStandardsIgnoreLine
+			echo filter_product_html( $product->info->content );
+			?>
+			<?php if ( ! empty( $product->pricing->amount ) && '0.00' === $product->pricing->amount ) : ?>
 				<span>Free</span>
 			<?php else : ?>
 				<span>More Info</span>
@@ -80,5 +83,5 @@ function filter_product_html( $content ) {
 }
 
 function product_link( $product ) {
-	printf( 'https://nextgenthemes.com/%s/%s/', $product->info->category[0]->slug, $product->info->slug );
+	echo esc_url( sprintf( 'https://nextgenthemes.com/%s/%s/', $product->info->category[0]->slug, $product->info->slug ) );
 }

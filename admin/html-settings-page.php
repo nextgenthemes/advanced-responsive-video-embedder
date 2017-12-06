@@ -25,23 +25,27 @@ $options = arve_get_options();
 
 			<div class="arve-corner-spacer"></div>
 
-			<?php echo file_get_contents( ARVE_PATH . 'readme/html/19-description-features-pro-intro.html' ); ?>
-			<?php echo file_get_contents( ARVE_PATH . 'readme/html/20-description-features-pro.html' ); ?>
+			<?php
+			// @codingStandardsIgnoreLine
+			echo file_get_contents( ARVE_PATH . 'readme/html/19-description-features-pro-intro.html' );
+			// @codingStandardsIgnoreLine
+			echo file_get_contents( ARVE_PATH . 'readme/html/20-description-features-pro.html' );
+			?>
 
 		</div>
 
 	<?php endif; ?>
 
-	<h2><?php esc_html_e( get_admin_page_title() ); ?></h2>
+	<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 
 	<h2 class="nav-tab-wrapper arve-settings-tabs"></h2>
 
 	<form class="arve-options-form" method="post" action="options.php">
 
-		<?php do_settings_sections( ARVE_SLUG ); ?>
+		<?php do_settings_sections( 'advanced-responsive-video-embedder' ); ?>
 		<?php settings_fields( 'arve-settings-group' ); ?>
 
-		<input type="hidden" id="arve_options_main[last_settings_tab]" name="arve_options_main[last_settings_tab]" value="<?php esc_attr_e( $options['last_settings_tab'] ); ?>">
+		<input type="hidden" id="arve_options_main[last_settings_tab]" name="arve_options_main[last_settings_tab]" value="<?php echo esc_attr( $options['last_settings_tab'] ); ?>">
 
 	</form>
 

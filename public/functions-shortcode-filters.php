@@ -20,7 +20,7 @@ function arve_sc_filter_attr( $a ) {
 	}
 
 	if ( empty( $wrapper_id ) ) {
-		$a['wrapper_id_error'] = new WP_Error( 'embed_id', __( 'Element ID could not be build, please report this bug.', ARVE_SLUG ) );
+		$a['wrapper_id_error'] = new WP_Error( 'embed_id', __( 'Element ID could not be build, please report this bug.', 'advanced-responsive-video-embedder' ) );
 	}
 
 	static $i = 0;
@@ -103,7 +103,7 @@ function arve_sc_filter_attr( $a ) {
 function arve_sc_filter_validate( $a ) {
 
 	if ( ! empty( $a['src'] ) && ! arve_validate_url( $a['src'] ) ) {
-		$a['src'] = new WP_Error( 'thumbnail', sprintf( __( '<code>%s</code> is not a valid url', ARVE_SLUG ), esc_html( $a['src'] ) ) );
+		$a['src'] = new WP_Error( 'thumbnail', sprintf( __( '<code>%s</code> is not a valid url', 'advanced-responsive-video-embedder' ), esc_html( $a['src'] ) ) );
 	}
 
 	$a['align'] = arve_validate_align( $a['align'], $a['provider'] );
@@ -118,8 +118,8 @@ function arve_sc_filter_validate( $a ) {
 	$a['muted']         = arve_validate_bool( $a['muted'], 'muted' );
 	$a['playsinline']   = arve_validate_bool( $a['playsinline'], 'playsinline' );
 
-	$a['maxwidth']  = (int) $a['maxwidth'];
-	$a['maxwidth']  = (int) arve_maxwidth_when_aligned( $a['maxwidth'], $a['align'] );
+	$a['maxwidth'] = (int) $a['maxwidth'];
+	$a['maxwidth'] = (int) arve_maxwidth_when_aligned( $a['maxwidth'], $a['align'] );
 
 	$a['id'] = arve_id_fixes( $a['id'], $a['provider'] );
 
@@ -149,7 +149,7 @@ function arve_sc_filter_sanitise( $atts ) {
 		}
 
 		if( ! is_string( $value ) ) {
-			$atts[ $key ] = arve_error( sprintf( __( '<code>%s</code> is not a string. Only Strings should be passed to the shortcode function', ARVE_SLUG ), $key ) );
+			$atts[ $key ] = arve_error( sprintf( __( '<code>%s</code> is not a string. Only Strings should be passed to the shortcode function', 'advanced-responsive-video-embedder' ), $key ) );
 		}
 	}
 
@@ -169,7 +169,7 @@ function arve_sc_filter_missing_attribute_check( $atts ) {
 
 		$atts['missing_atts_error'] = arve_error(
 			sprintf(
-				esc_html__( 'The [arve] shortcode needs one of this attributes %s', ARVE_SLUG ),
+				esc_html__( 'The [arve] shortcode needs one of this attributes %s', 'advanced-responsive-video-embedder' ),
 				implode( $required_attributes )
 			)
 		);
@@ -189,13 +189,13 @@ function arve_sc_filter_get_media_gallery_thumbnail( $atts ) {
 		if( $found_url = wp_get_attachment_image_url( $atts['thumbnail'], 'small' ) ) {
 			$atts['img_src'] = $found_url;
 		} else {
-			$atts['img_src'] = new WP_Error( 'wp thumbnail', __( 'No attachment with that ID', ARVE_SLUG ) );
+			$atts['img_src'] = new WP_Error( 'wp thumbnail', __( 'No attachment with that ID', 'advanced-responsive-video-embedder' ) );
 		}
 
 		if( $found_srcset = wp_get_attachment_image_srcset( $atts['thumbnail'], 'small' ) ) {
 			$atts['img_srcset'] = $found_srcset;
 		} else {
-			$atts['img_srcset'] = new WP_Error( 'wp thumbnail', __( 'No attachment with that ID', ARVE_SLUG ) );
+			$atts['img_srcset'] = new WP_Error( 'wp thumbnail', __( 'No attachment with that ID', 'advanced-responsive-video-embedder' ) );
 		}
 
 	} elseif ( arve_validate_url( $atts['thumbnail'] ) ) {
@@ -205,7 +205,7 @@ function arve_sc_filter_get_media_gallery_thumbnail( $atts ) {
 
 	} else {
 
-		$atts['img_src'] = new WP_Error( 'thumbnail', __( 'Not a valid thumbnail URL or Media ID given', ARVE_SLUG ) );
+		$atts['img_src'] = new WP_Error( 'thumbnail', __( 'Not a valid thumbnail URL or Media ID given', 'advanced-responsive-video-embedder' ) );
 	}
 
 	return $atts;
@@ -366,7 +366,7 @@ function arve_sc_filter_build_tracks_html( $atts ) {
 		preg_match( '#-(captions|chapters|descriptions|metadata|subtitles)-([a-z]{2}).vtt$#i', $atts[ "track_{$n}" ], $matches );
 
 		if ( empty( $matches[1] ) ) {
-			$atts[ "track_{$n}" ] = new WP_Error( 'track', __( 'Track kind or language code could not detected from filename', ARVE_SLUG ) );
+			$atts[ "track_{$n}" ] = new WP_Error( 'track', __( 'Track kind or language code could not detected from filename', 'advanced-responsive-video-embedder' ) );
 			return $atts;
 		}
 

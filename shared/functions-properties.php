@@ -5,21 +5,6 @@ function arve_get_host_properties() {
 	$s = 'https?://(www\.)?';
 
 	$properties = array(
-		'allmyvideos' => array(
-			'name'      => 'allmyvideos.net',
-			'regex'     => $s . 'allmyvideos\.net/(embed-)?(?<id>[a-z0-9]+)',
-			'embed_url' => 'https://allmyvideos.net/embed-%s.html',
-			'tests' => array(
-				array(
-					'url' => 'https://allmyvideos.net/1bno5g9il7ha',
-					'id' =>                          '1bno5g9il7ha',
-				),
-				array(
-					'url' => 'https://allmyvideos.net/embed-1bno5g9il7ha.html',
-					'id'  =>                               '1bno5g9il7ha',
-				),
-			)
-		),
 		'alugha' => array(
 			'regex'     => $s . 'alugha\.com/(1/)?videos/(?<id>[a-z0-9_\-]+)',
 			'embed_url' => 'https://alugha.com/embed/web-player/?v=%s',
@@ -142,7 +127,7 @@ function arve_get_host_properties() {
 			),
 			'query_args'     => array(
 				'api' => array(
-					'name' => __( 'API', ARVE_SLUG ),
+					'name' => __( 'API', 'advanced-responsive-video-embedder' ),
 					'type' => 'bool',
 				),
 			),
@@ -488,9 +473,9 @@ function arve_get_host_properties() {
 			),
 			/*
 			'query_argss' => array(
-				'autoplay'  => array( 'bool', __( 'Autoplay', ARVE_SLUG ) ),
-				'badge'     => array( 'bool', __( 'Badge', ARVE_SLUG ) ),
-				'byline'    => array( 'bool', __( 'Byline', ARVE_SLUG ) ),
+				'autoplay'  => array( 'bool', __( 'Autoplay', 'advanced-responsive-video-embedder' ) ),
+				'badge'     => array( 'bool', __( 'Badge', 'advanced-responsive-video-embedder' ) ),
+				'byline'    => array( 'bool', __( 'Byline', 'advanced-responsive-video-embedder' ) ),
 				'color'     => 'string',
 				'loop'      => array( 0, 1 ),
 				'player_id' => 'int',
@@ -618,21 +603,21 @@ function arve_get_host_properties() {
 				),
 			),
 			'specific_tests' => array(
-				__('URL from youtu.be shortener', ARVE_SLUG),
+				__('URL from youtu.be shortener', 'advanced-responsive-video-embedder'),
 				'http://youtu.be/3Y8B93r2gKg',
-				__('Youtube playlist URL inlusive the video to start at. The index part will be ignored and is not needed', ARVE_SLUG) ,
+				__('Youtube playlist URL inlusive the video to start at. The index part will be ignored and is not needed', 'advanced-responsive-video-embedder') ,
 				'http://www.youtube.com/watch?v=GjL82KUHVb0&list=PLI46g-I12_9qGBq-4epxOay0hotjys5iA&index=10',
-				__('Loop a YouTube video', ARVE_SLUG),
+				__('Loop a YouTube video', 'advanced-responsive-video-embedder'),
 				'[youtube id="FKkejo2dMV4" parameters="playlist=FKkejo2dMV4&loop=1"]',
-				__('Enable annotations and related video at the end (disable by default with this plugin)', ARVE_SLUG),
+				__('Enable annotations and related video at the end (disable by default with this plugin)', 'advanced-responsive-video-embedder'),
 				'[youtube id="uCQXKYPiz6M" parameters="iv_load_policy=1"]',
-				__('Testing Youtube Starttimes', ARVE_SLUG),
+				__('Testing Youtube Starttimes', 'advanced-responsive-video-embedder'),
 				'http://youtu.be/vrXgLhkv21Y?t=1h19m14s',
 				'http://youtu.be/vrXgLhkv21Y?t=19m14s',
 				'http://youtu.be/vrXgLhkv21Y?t=1h',
 				'http://youtu.be/vrXgLhkv21Y?t=5m',
 				'http://youtu.be/vrXgLhkv21Y?t=30s',
-				__( 'The Parameter start only takes values in seconds, this will start the video at 1 minute and 1 second', ARVE_SLUG ),
+				__( 'The Parameter start only takes values in seconds, this will start the video at 1 minute and 1 second', 'advanced-responsive-video-embedder' ),
 				'[youtube id="uCQXKYPiz6M" parameters="start=61"]',
 			),
 			/*
@@ -640,139 +625,139 @@ function arve_get_host_properties() {
 				array(
 				  'attr' => 'autohide',
 					'type' => 'bool',
-					'name' => __( 'Autohide', ARVE_SLUG )
+					'name' => __( 'Autohide', 'advanced-responsive-video-embedder' )
 				),
 				array(
 				  'attr' => 'autoplay',
 					'type' => 'bool',
-					'name' => __( 'Autoplay', ARVE_SLUG )
+					'name' => __( 'Autoplay', 'advanced-responsive-video-embedder' )
 				),
 				array(
 				  'attr' => 'cc_load_policy',
 					'type' => 'bool',
-					'name' => __( 'cc_load_policy', ARVE_SLUG )
+					'name' => __( 'cc_load_policy', 'advanced-responsive-video-embedder' )
 				),
 				array(
 				  'attr' => 'color',
 					'type' => array(
-						''      => __( 'Default', ARVE_SLUG ),
-						'red'   => __( 'Red', ARVE_SLUG ),
-						'white' => __( 'White', ARVE_SLUG ),
+						''      => __( 'Default', 'advanced-responsive-video-embedder' ),
+						'red'   => __( 'Red', 'advanced-responsive-video-embedder' ),
+						'white' => __( 'White', 'advanced-responsive-video-embedder' ),
 					),
-					'name' => __( 'Color', ARVE_SLUG )
+					'name' => __( 'Color', 'advanced-responsive-video-embedder' )
 				),
 				array(
 				  'attr' => 'controls',
 					'type' => array(
-						'' => __( 'Default', ARVE_SLUG ),
-						0  => __( 'None', ARVE_SLUG ),
-						1  => __( 'Yes', ARVE_SLUG ),
-						2  => __( 'Yes load after click', ARVE_SLUG ),
+						'' => __( 'Default', 'advanced-responsive-video-embedder' ),
+						0  => __( 'None', 'advanced-responsive-video-embedder' ),
+						1  => __( 'Yes', 'advanced-responsive-video-embedder' ),
+						2  => __( 'Yes load after click', 'advanced-responsive-video-embedder' ),
 					),
-					'name' => __( 'Controls', ARVE_SLUG )
+					'name' => __( 'Controls', 'advanced-responsive-video-embedder' )
 				),
 				array(
 				  'attr' => 'disablekb',
 					'type' => 'bool',
-					'name' => __( 'disablekb', ARVE_SLUG )
+					'name' => __( 'disablekb', 'advanced-responsive-video-embedder' )
 				),
 				array(
 				  'attr' => 'enablejsapi',
 					'type' => 'bool',
-					'name' => __( 'JavaScript API', ARVE_SLUG )
+					'name' => __( 'JavaScript API', 'advanced-responsive-video-embedder' )
 				),
 				array(
 				  'attr' => 'end',
 					'type' => 'number',
-					'name' => __( 'End', ARVE_SLUG )
+					'name' => __( 'End', 'advanced-responsive-video-embedder' )
 				),
 				array(
 				  'attr' => 'fs',
 					'type' => 'bool',
-					'name' => __( 'Fullscreen', ARVE_SLUG )
+					'name' => __( 'Fullscreen', 'advanced-responsive-video-embedder' )
 				),
 				array(
 				  'attr' => 'hl',
 					'type' => 'text',
-					'name' => __( 'Language???', ARVE_SLUG )
+					'name' => __( 'Language???', 'advanced-responsive-video-embedder' )
 				),
 				array(
 				  'attr' => 'iv_load_policy',
 					'type' => array(
-						'' => __( 'Default', ARVE_SLUG ),
-						1  => __( 'Show annotations', ARVE_SLUG ),
-						3  => __( 'Do not show annotations', ARVE_SLUG ),
+						'' => __( 'Default', 'advanced-responsive-video-embedder' ),
+						1  => __( 'Show annotations', 'advanced-responsive-video-embedder' ),
+						3  => __( 'Do not show annotations', 'advanced-responsive-video-embedder' ),
 					),
-					'name' => __( 'iv_load_policy', ARVE_SLUG ),
+					'name' => __( 'iv_load_policy', 'advanced-responsive-video-embedder' ),
 				),
 				array(
 				  'attr' => 'list',
 					'type' => 'medium-text',
-					'name' => __( 'Language???', ARVE_SLUG )
+					'name' => __( 'Language???', 'advanced-responsive-video-embedder' )
 				),
 				array(
 				  'attr' => 'listType',
 					'type' => array(
-						''             => __( 'Default', ARVE_SLUG ),
-						'playlist'     => __( 'Playlist', ARVE_SLUG ),
-						'search'       => __( 'Search', ARVE_SLUG ),
-						'user_uploads' => __( 'User Uploads', ARVE_SLUG ),
+						''             => __( 'Default', 'advanced-responsive-video-embedder' ),
+						'playlist'     => __( 'Playlist', 'advanced-responsive-video-embedder' ),
+						'search'       => __( 'Search', 'advanced-responsive-video-embedder' ),
+						'user_uploads' => __( 'User Uploads', 'advanced-responsive-video-embedder' ),
 					),
-					'name' => __( 'List Type', ARVE_SLUG ),
+					'name' => __( 'List Type', 'advanced-responsive-video-embedder' ),
 				),
 				array(
 				  'attr' => 'loop',
 					'type' => 'bool',
-					'name' => __( 'Loop', ARVE_SLUG ),
+					'name' => __( 'Loop', 'advanced-responsive-video-embedder' ),
 				),
 				array(
 				  'attr' => 'modestbranding',
 					'type' => 'bool',
-					'name' => __( 'Modestbranding', ARVE_SLUG ),
+					'name' => __( 'Modestbranding', 'advanced-responsive-video-embedder' ),
 				),
 				array(
 				  'attr' => 'origin',
 					'type' => 'bool',
-					'name' => __( 'Origin', ARVE_SLUG ),
+					'name' => __( 'Origin', 'advanced-responsive-video-embedder' ),
 				),
 				array(
 				  'attr' => 'playerapiid',
 					'type' => 'bool',
-					'name' => __( 'playerapiid', ARVE_SLUG ),
+					'name' => __( 'playerapiid', 'advanced-responsive-video-embedder' ),
 				),
 				array(
 				  'attr' => 'playlist',
 					'type' => 'bool',
-					'name' => __( 'Playlist', ARVE_SLUG ),
+					'name' => __( 'Playlist', 'advanced-responsive-video-embedder' ),
 				),
 				array(
 				  'attr' => 'playsinline',
 					'type' => 'bool',
-					'name' => __( 'playsinline', ARVE_SLUG ),
+					'name' => __( 'playsinline', 'advanced-responsive-video-embedder' ),
 				),
 				array(
 				  'attr' => 'rel',
 					'type' => 'bool',
-					'name' => __( 'Related Videos at End', ARVE_SLUG ),
+					'name' => __( 'Related Videos at End', 'advanced-responsive-video-embedder' ),
 				),
 				array(
 				  'attr' => 'showinfo',
 					'type' => 'bool',
-					'name' => __( 'Show Info', ARVE_SLUG ),
+					'name' => __( 'Show Info', 'advanced-responsive-video-embedder' ),
 				),
 				array(
 				  'attr' => 'start',
 					'type' => 'number',
-					'name' => __( 'Start', ARVE_SLUG ),
+					'name' => __( 'Start', 'advanced-responsive-video-embedder' ),
 				),
 				array(
 				  'attr' => 'theme',
 					'type' => array(
-						''      => __( 'Default', ARVE_SLUG ),
-						'dark'  => __( 'Dark', ARVE_SLUG ),
-						'light' => __( 'Light', ARVE_SLUG ),
+						''      => __( 'Default', 'advanced-responsive-video-embedder' ),
+						'dark'  => __( 'Dark', 'advanced-responsive-video-embedder' ),
+						'light' => __( 'Light', 'advanced-responsive-video-embedder' ),
 					),
-					'name' => __( 'Theme', ARVE_SLUG ),
+					'name' => __( 'Theme', 'advanced-responsive-video-embedder' ),
 				),
 			),
 			*/

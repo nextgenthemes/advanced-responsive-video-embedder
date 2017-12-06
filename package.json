@@ -8,12 +8,12 @@
     "readme-concat": "cat readme/*.md CHANGELOG.md > readme.md; cp readme.md readme.txt",
     "js": "uglifyjs --compress typeofs=false --mangle --comments \"/^!/\" --output public/arve.min.js public/arve.js",
     "css": "cleancss --level 1 --output public/arve.min.css public/arve.css",
-    "build": "run-p css js readme-concat readme-markdown"
+    "build": "run-p css js readme-concat readme-markdown",
+    "meld-updater": "meld /home/user23/dev/easy-digital-downloads/includes/EDD_SL_Plugin_Updater.php admin/nextgenthemes/inc/class-plugin-updater.php"
   },
   "devDependencies": {
     "clean-css-cli": "^4.1.6",
-    "gh-markdown-cli": "^0.2.0",
-    "npm-run-all": "^4.0.2",
+    "markdown-it": "^8.4.0",
     "uglify-js": "^3.0.27"
   }
 }

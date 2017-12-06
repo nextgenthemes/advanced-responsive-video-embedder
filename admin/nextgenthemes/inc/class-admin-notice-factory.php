@@ -10,7 +10,7 @@ if ( ! class_exists( 'Nextgenthemes_Admin_Notice_Factory' ) ) {
 		private $dismiss_time;
 		private $capabilities;
 
-		function __construct( $notice_id, $notice_html, $dismiss_time = false, $capabilities = 'activate_plugins' ) {
+		public function __construct( $notice_id, $notice_html, $dismiss_time = false, $capabilities = 'activate_plugins' ) {
 
 			if ( ! current_user_can( $capabilities ) ) {
 				return;
@@ -23,7 +23,7 @@ if ( ! class_exists( 'Nextgenthemes_Admin_Notice_Factory' ) ) {
 			$this->dismiss_forever = ( false === $dismiss_time ) ? true : false;
 			$this->dismiss_time    = (int) $dismiss_time;
 
-			if ( 'admin-notice-factory-arve_dismiss_pro_notice' == $this->notice_id ) {
+			if ( 'admin-notice-factory-arve_dismiss_pro_notice' === $this->notice_id ) {
 				$this->notice_id = 'arve_dismiss_pro_notice';
 			}
 
@@ -31,35 +31,37 @@ if ( ! class_exists( 'Nextgenthemes_Admin_Notice_Factory' ) ) {
 			add_action( 'wp_ajax_' . $this->notice_id, array( $this, 'ajax_call' ) );
 		}
 
-		function action_admin_notices() {
+		public function action_admin_notices() {
 
 			$user_meta = get_user_meta( $this->user_id, $this->notice_id );
 
-			if( $this->dismiss_forever && ! empty( $user_meta ) ) {
+			if ( $this->dismiss_forever && ! empty( $user_meta ) ) {
 				return;
-			} elseif( get_transient( $this->notice_id ) ) {
+			} elseif ( get_transient( $this->notice_id ) ) {
 				return;
-			} elseif( get_transient( $this->transient_id ) ) {
+			} elseif ( get_transient( $this->transient_id ) ) {
 				return;
 			}
 
 			printf(
 				'<div class="notice is-dismissible updated" data-nj-notice-id="%s">%s</div>',
 				esc_attr( $this->notice_id ),
+				// @codingStandardsIgnoreLine
 				$this->notice_html
 			);
 
 			wp_enqueue_script(
 				'nextgenthemes-admin-notice-factory',
-				URL . 'js/admin-notice-factory.js',
+				plugins_url( 'js/admin-notice-factory.js', __DIR__ ),
 				array( 'jquery' ),
-				filemtime( dirname( dirname(__FILE__) ) . '/js/admin-notice-factory.js' )
+				filemtime( dirname( __DIR__ ) . '/js/admin-notice-factory.js' ),
+				true
 			);
 		}
 
-		function ajax_call() {
+		public function ajax_call() {
 
-			if( $this->dismiss_forever ) {
+			if ( $this->dismiss_forever ) {
 				add_user_meta( $this->user_id, $this->notice_id, true );
 			} else {
 				set_transient( $this->transient_id, true, $this->dismiss_time );

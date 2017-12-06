@@ -12,7 +12,7 @@ function arve_remote_get( $url, $args = array(), $json = true ) {
 	$response      = wp_safe_remote_get( $url, $args );
 	$response_code = wp_remote_retrieve_response_code( $response );
 
-	// retry with wp_safe_remote_get
+	// retry with wp_safe_remote_get.
 	if ( is_wp_error( $response ) || 200 !== $response_code ) {
 		$response      = wp_remote_post( $url, $args );
 		$response_code = wp_remote_retrieve_response_code( $response );
@@ -27,7 +27,8 @@ function arve_remote_get( $url, $args = array(), $json = true ) {
 		return new WP_Error(
 			'remote_get',
 			sprintf(
-				__( 'remote_get error: Status code was expected to be 200 but was %s.', ARVE_SLUG ),
+				// translators: %s is error code.
+				__( 'remote_get error: Status code was expected to be 200 but was %s.', 'advanced-responsive-video-embedder' ),
 				$response_code
 			)
 		);
@@ -36,14 +37,14 @@ function arve_remote_get( $url, $args = array(), $json = true ) {
 	$out = wp_remote_retrieve_body( $response );
 
 	if ( '' === $out ) {
-		return new WP_Error( 'remote_get', __( 'Empty body', ARVE_SLUG ) );
+		return new WP_Error( 'remote_get', __( 'Empty body', 'advanced-responsive-video-embedder' ) );
 	}
 
-	if( $json ) {
+	if ( $json ) {
 		$out = json_decode( $out );
 
-		if ( null == $out ) {
-			return new WP_Error( 'remote_get', __( 'json_decode returned null', ARVE_SLUG ) );
+		if ( null === $out ) {
+			return new WP_Error( 'remote_get', __( 'json_decode returned null', 'advanced-responsive-video-embedder' ) );
 		}
 	}
 
@@ -53,15 +54,15 @@ function arve_remote_get( $url, $args = array(), $json = true ) {
 function arve_remote_get_cached( $url, $args ) {
 
 	$defaults = array(
-		'args' => array(),
-		'json' => true,
+		'args'       => array(),
+		'json'       => true,
 		'cache_time' => HOUR_IN_SECONDS,
 	);
 
 	$args = wp_parse_args( $args, $defaults );
 
 	$transient_name = 'arve_remote_get_' . $url;
-	$cache = get_transient( $transient_name );
+	$cache          = get_transient( $transient_name );
 
 	if ( false === $cache || defined( 'ARVE_DEBUG' ) ) {
 

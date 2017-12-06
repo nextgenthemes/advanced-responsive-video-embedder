@@ -93,7 +93,7 @@ function arve_build_meta_html( $atts ) {
 						'src'             => $atts['img_src'],
 						'srcset'          => ! empty( $atts['img_srcset'] ) ? $atts['img_srcset'] : false,
 						#'sizes'    => '(max-width: 700px) 100vw, 1280px',
-						'alt'             => __( 'Video Thumbnail', ARVE_SLUG ),
+						'alt'             => __( 'Video Thumbnail', 'advanced-responsive-video-embedder' ),
 					) )
 				);
 
@@ -129,8 +129,8 @@ function arve_build_promote_link_html( $arve_link ) {
 		return sprintf(
 			'<a href="%s" title="%s" class="arve-promote-link" target="_blank">%s</a>',
 			esc_url( 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/' ),
-			esc_attr( __( 'Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', ARVE_SLUG) ),
-			esc_html__( 'ARVE', ARVE_SLUG )
+			esc_attr( __( 'Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', 'advanced-responsive-video-embedder') ),
+			esc_html__( 'ARVE', 'advanced-responsive-video-embedder' )
 		);
 	}
 
@@ -226,7 +226,7 @@ function arve_error( $message ) {
 
 	return sprintf(
 		'<p><strong>%s</strong> %s</p>',
-		__('<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error:', ARVE_SLUG ),
+		__('<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error:', 'advanced-responsive-video-embedder' ),
 		$message
 	);
 }

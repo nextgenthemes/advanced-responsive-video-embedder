@@ -8,10 +8,10 @@
 
 * Fix: TED embed url.
 * Fix: Facebook embeds.
-* Improved: Complete new way ARVE handles embeds utilizing WP Oembed functionality. This means easier more reliable embeds detection, automatic aspect ratio detection.
-* Improved: Admin code reworked
-* Improved: Update plugin-updater-class
-
+* Improved: Complete new way ARVE handles embeds utilizing WP Oembed functionality. This means easier more reliable, more native WP embeds detection, automatic aspect ratio detection ...
+* Improved: Admin code reworked.
+* Improved: Update plugin-updater-class.
+* Improved: Removed jQuery dependency.
 
 ### 2017-08-16 - 8.7.2 ###
 

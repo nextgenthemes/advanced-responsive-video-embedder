@@ -92,144 +92,144 @@ function arve_get_settings_definitions() {
 		array(
 			'hide_from_settings' => true,
 			'attr'  => 'url',
-			'label' => esc_html__( 'URL / Embed Code', ARVE_SLUG ),
+			'label' => esc_html__( 'URL / Embed Code', 'advanced-responsive-video-embedder' ),
 			'type'  => 'text',
 			'meta'  => array(
-				'placeholder' => esc_attr__( 'Video URL / iframe Embed Code', ARVE_SLUG ),
+				'placeholder' => esc_attr__( 'Video URL / iframe Embed Code', 'advanced-responsive-video-embedder' ),
 			),
 			'description' => sprintf(
-				__( 'Post the URL of the video here. For %s and any <a href="%s">unlisted</a> video hosts paste their iframe embed codes or its src URL in here (providers embeds need to be responsive).', ARVE_SLUG ),
+				__( 'Post the URL of the video here. For %s and any <a href="%s">unlisted</a> video hosts paste their iframe embed codes or its src URL in here (providers embeds need to be responsive).', 'advanced-responsive-video-embedder' ),
 				$embed_code_only,
 				'https://nextgenthemes.com/advanced-responsive-video-embedder-pro/#video-host-support'
 			)
 		),
 		array(
 			'attr'    => 'mode',
-			'label'   => esc_html__( 'Mode', ARVE_SLUG ),
+			'label'   => esc_html__( 'Mode', 'advanced-responsive-video-embedder' ),
 			'type'    => 'select',
 			'options' =>
-				array( '' => sprintf( esc_html__( 'Default (current setting: %s)', ARVE_SLUG ), $current_mode_name ) ) +
+				array( '' => sprintf( esc_html__( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $current_mode_name ) ) +
 				arve_get_supported_modes(),
 		),
 		array(
 			'attr'  => 'align',
-			'label' => esc_html__('Alignment', ARVE_SLUG ),
+			'label' => esc_html__('Alignment', 'advanced-responsive-video-embedder' ),
 			'type'  => 'select',
 			'options' => array(
-				'' => sprintf( esc_html__( 'Default (current setting: %s)', ARVE_SLUG ), $options['align'] ),
-				'none'   => esc_html__( 'None', ARVE_SLUG ),
-				'left'   => esc_html__( 'Left', ARVE_SLUG ),
-				'right'  => esc_html__( 'Right', ARVE_SLUG ),
-				'center' => esc_html__( 'center', ARVE_SLUG ),
+				'' => sprintf( esc_html__( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $options['align'] ),
+				'none'   => esc_html__( 'None', 'advanced-responsive-video-embedder' ),
+				'left'   => esc_html__( 'Left', 'advanced-responsive-video-embedder' ),
+				'right'  => esc_html__( 'Right', 'advanced-responsive-video-embedder' ),
+				'center' => esc_html__( 'center', 'advanced-responsive-video-embedder' ),
 			),
 		),
 		array(
 			'attr'  => 'promote_link',
-			'label' => esc_html__( 'ARVE Link', ARVE_SLUG ),
+			'label' => esc_html__( 'ARVE Link', 'advanced-responsive-video-embedder' ),
 			'type'  => 'select',
 			'options' => array(
 				'' => sprintf(
-					__( 'Default (current setting: %s)', ARVE_SLUG ),
-					( $options['promote_link'] ) ? esc_html__( 'Yes', ARVE_SLUG ) : esc_html__( 'No', ARVE_SLUG )
+					__( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ),
+					( $options['promote_link'] ) ? esc_html__( 'Yes', 'advanced-responsive-video-embedder' ) : esc_html__( 'No', 'advanced-responsive-video-embedder' )
 				),
-				'yes' => esc_html__( 'Yes', ARVE_SLUG ),
-				'no'  => esc_html__( 'No', ARVE_SLUG ),
+				'yes' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
+				'no'  => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
 			),
-			'description'  => esc_html__( "Shows a small 'ARVE' link below the videos. Be the most awesome person and help promoting this plugin.", ARVE_SLUG ),
+			'description'  => esc_html__( "Shows a small 'ARVE' link below the videos. Be the most awesome person and help promoting this plugin.", 'advanced-responsive-video-embedder' ),
 		),
 		array(
 			'hide_from_settings' => true,
 			'attr'  => 'thumbnail',
-			'label' => esc_html__( 'Thumbnail', ARVE_SLUG ),
+			'label' => esc_html__( 'Thumbnail', 'advanced-responsive-video-embedder' ),
 			'type'  => 'attachment',
 			'libraryType' => array( 'image' ),
-			'addButton'   => esc_html__( 'Select Image', ARVE_SLUG ),
-			'frameTitle'  => esc_html__( 'Select Image', ARVE_SLUG ),
-			'description' => sprintf( esc_html__( 'Preview image for Lazyload modes, always used for SEO. The Pro Addon is able to get them from %s automatically.', ARVE_SLUG ), $auto_thumbs ),
+			'addButton'   => esc_html__( 'Select Image', 'advanced-responsive-video-embedder' ),
+			'frameTitle'  => esc_html__( 'Select Image', 'advanced-responsive-video-embedder' ),
+			'description' => sprintf( esc_html__( 'Preview image for Lazyload modes, always used for SEO. The Pro Addon is able to get them from %s automatically.', 'advanced-responsive-video-embedder' ), $auto_thumbs ),
 		),
 		array(
 			'hide_from_settings' => true,
 			'attr'  => 'title',
-			'label' => esc_html__('Title', ARVE_SLUG),
+			'label' => esc_html__('Title', 'advanced-responsive-video-embedder'),
 			'type'  => 'text',
-			'description' => sprintf( esc_html__( 'Used for SEO, is visible on top of thumbnails in Lazyload modes, is used as link text in link-lightbox mode. The Pro Addon is able to get them from %s automatically.', ARVE_SLUG ), $auto_title ),
+			'description' => sprintf( esc_html__( 'Used for SEO, is visible on top of thumbnails in Lazyload modes, is used as link text in link-lightbox mode. The Pro Addon is able to get them from %s automatically.', 'advanced-responsive-video-embedder' ), $auto_title ),
 		),
 		array(
 			'hide_from_settings' => true,
 			'attr'  => 'description',
-			'label' => esc_html__('Description', ARVE_SLUG),
+			'label' => esc_html__('Description', 'advanced-responsive-video-embedder'),
 			'type'  => 'text',
 			'meta'  => array(
-				'placeholder' => __( 'Description for SEO', ARVE_SLUG ),
+				'placeholder' => __( 'Description for SEO', 'advanced-responsive-video-embedder' ),
 			)
 		),
 		array(
 			'hide_from_settings' => true,
 			'attr'  => 'upload_date',
-			'label' => esc_html__( 'Upload Date', ARVE_SLUG ),
+			'label' => esc_html__( 'Upload Date', 'advanced-responsive-video-embedder' ),
 			'type'  => 'text',
 			'meta'  => array(
-				'placeholder' => __( 'Upload Date for SEO, ISO 8601 format', ARVE_SLUG ),
+				'placeholder' => __( 'Upload Date for SEO, ISO 8601 format', 'advanced-responsive-video-embedder' ),
 			)
 		),
 		array(
 			'attr'  => 'autoplay',
-			'label' => esc_html__('Autoplay', ARVE_SLUG ),
+			'label' => esc_html__('Autoplay', 'advanced-responsive-video-embedder' ),
 			'type'  => 'select',
 			'options' => array(
 				'' => sprintf(
-					__( 'Default (current setting: %s)', ARVE_SLUG ),
-					( $options['autoplay'] ) ? esc_html__( 'Yes', ARVE_SLUG ) : esc_html__( 'No', ARVE_SLUG )
+					__( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ),
+					( $options['autoplay'] ) ? esc_html__( 'Yes', 'advanced-responsive-video-embedder' ) : esc_html__( 'No', 'advanced-responsive-video-embedder' )
 				),
-				'yes' => esc_html__( 'Yes', ARVE_SLUG ),
-				'no'  => esc_html__( 'No', ARVE_SLUG ),
+				'yes' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
+				'no'  => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
 			),
-			'description' => esc_html__( 'Autoplay videos in normal mode, has no effect on lazyload modes.', ARVE_SLUG ),
+			'description' => esc_html__( 'Autoplay videos in normal mode, has no effect on lazyload modes.', 'advanced-responsive-video-embedder' ),
 		),
 		array(
 			'hide_from_sc'   => true,
 			'attr'  => 'video_maxwidth',
-			'label'       => esc_html__('Maximal Width', ARVE_SLUG),
+			'label'       => esc_html__('Maximal Width', 'advanced-responsive-video-embedder'),
 			'type'        =>  'number',
-			'description' => esc_html__( 'Optional, if not set your videos will be the maximum size of the container they are in. If your content area has a big width you might want to set this. Must be 100+ to work.', ARVE_SLUG ),
+			'description' => esc_html__( 'Optional, if not set your videos will be the maximum size of the container they are in. If your content area has a big width you might want to set this. Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
 		),
 		array(
 			'hide_from_settings' => true,
 			'attr'  => 'maxwidth',
-			'label' => esc_html__('Maximal Width', ARVE_SLUG),
+			'label' => esc_html__('Maximal Width', 'advanced-responsive-video-embedder'),
 			'type'  =>  'number',
 			'meta'  => array(
-				'placeholder' => esc_attr__( 'in px - leave empty to use settings', ARVE_SLUG),
+				'placeholder' => esc_attr__( 'in px - leave empty to use settings', 'advanced-responsive-video-embedder'),
 			),
 		),
 		array(
 			'hide_from_sc'   => true,
 			'attr'  => 'align_maxwidth',
-			'label' => esc_html__('Align Maximal Width', ARVE_SLUG),
+			'label' => esc_html__('Align Maximal Width', 'advanced-responsive-video-embedder'),
 			'type'  => 'number',
-			'description' => esc_attr__( 'In px, Needed! Must be 100+ to work.', ARVE_SLUG ),
+			'description' => esc_attr__( 'In px, Needed! Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
 		),
 		array(
 			'hide_from_settings' => true,
 			'attr'  => 'aspect_ratio',
-			'label' => __('Aspect Ratio', ARVE_SLUG),
+			'label' => __('Aspect Ratio', 'advanced-responsive-video-embedder'),
 			'type'  => 'text',
 			'meta'  => array(
-				'placeholder' => __( 'Custom aspect ratio like 4:3, 21:9 ... Leave empty for default.', ARVE_SLUG),
+				'placeholder' => __( 'Custom aspect ratio like 4:3, 21:9 ... Leave empty for default.', 'advanced-responsive-video-embedder'),
 			),
 		),
 		array(
 			'hide_from_settings' => true,
 			'attr'  => 'parameters',
-			'label' => esc_html__('Parameters', ARVE_SLUG ),
+			'label' => esc_html__('Parameters', 'advanced-responsive-video-embedder' ),
 			'type'  => 'text',
 			'meta'  => array(
-				'placeholder' => __( 'provider specific parameters', ARVE_SLUG ),
+				'placeholder' => __( 'provider specific parameters', 'advanced-responsive-video-embedder' ),
 			),
 			'description' => sprintf(
 				__(
 					'Note this values get merged with values set on the <a target="_blank" href="%s">ARVE setting page</a>. Example for YouTube <code>fs=0&start=30</code>. For reference: <a target="_blank" href="%s">Youtube Parameters</a>, <a target="_blank" href="%s">Dailymotion Parameters</a>, <a target="_blank" href="%s">Vimeo Parameters</a>.',
-					ARVE_SLUG
+					'advanced-responsive-video-embedder'
 				),
 				admin_url( 'admin.php?page=advanced-responsive-video-embedder' ),
 				'https://developers.google.com/youtube/player_parameters',
@@ -241,57 +241,57 @@ function arve_get_settings_definitions() {
 		array(
 			'hide_from_sc' => true,
 			'attr'  => 'wp_video_override',
-			'label' => esc_html__( 'Use ARVE for HTML5 video embeds', ARVE_SLUG ),
+			'label' => esc_html__( 'Use ARVE for HTML5 video embeds', 'advanced-responsive-video-embedder' ),
 			'type'  => 'select',
 			'options' => array(
-				'yes' => esc_html__( 'Yes', ARVE_SLUG ),
-				'no'  => esc_html__( 'No', ARVE_SLUG ),
+				'yes' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
+				'no'  => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
 			),
-			'description' => esc_html__( "Use ARVE to embed HTML5 video files. ARVE uses the browsers players instead of loading the mediaelement player that WP uses.", ARVE_SLUG ),
+			'description' => esc_html__( "Use ARVE to embed HTML5 video files. ARVE uses the browsers players instead of loading the mediaelement player that WP uses.", 'advanced-responsive-video-embedder' ),
 		),
 		array(
 			'attr'  => 'controlslist',
-			'label' => esc_html__( 'Chrome HTML5 Player controlls', ARVE_SLUG ),
+			'label' => esc_html__( 'Chrome HTML5 Player controlls', 'advanced-responsive-video-embedder' ),
 			'type'  => 'text',
-			'description' => __( "controlsList attribute on &lt;video&gt; for example use <code>nodownload nofullscreen noremoteplayback</code> to hide the download and the fullscreen button on the Chrome HTML5 video player and disable remote playback.", ARVE_SLUG ),
+			'description' => __( "controlsList attribute on &lt;video&gt; for example use <code>nodownload nofullscreen noremoteplayback</code> to hide the download and the fullscreen button on the Chrome HTML5 video player and disable remote playback.", 'advanced-responsive-video-embedder' ),
 		),
 		array(
 			'hide_from_settings' => true,
 			'attr'  => 'mp4',
-			'label' => esc_html__('mp4 file', ARVE_SLUG),
+			'label' => esc_html__('mp4 file', 'advanced-responsive-video-embedder'),
 			'type'  => 'url',
 			#'type'  => 'attachment',
 			#'libraryType' => array( 'video' ),
-			#'addButton'   => esc_html__( 'Select .mp4 file', ARVE_SLUG ),
-			#'frameTitle'  => esc_html__( 'Select .mp4 file', ARVE_SLUG ),
+			#'addButton'   => esc_html__( 'Select .mp4 file', 'advanced-responsive-video-embedder' ),
+			#'frameTitle'  => esc_html__( 'Select .mp4 file', 'advanced-responsive-video-embedder' ),
 			'meta'  => array(
-				'placeholder' => __( '.mp4 file url for HTML5 video', ARVE_SLUG ),
+				'placeholder' => __( '.mp4 file url for HTML5 video', 'advanced-responsive-video-embedder' ),
 			),
 		),
 		array(
 			'hide_from_settings' => true,
 			'attr'  => 'webm',
-			'label' => esc_html__('webm file', ARVE_SLUG),
+			'label' => esc_html__('webm file', 'advanced-responsive-video-embedder'),
 			'type'  => 'url',
 			#'type'  => 'attachment',
 			#'libraryType' => array( 'video' ),
-			#'addButton'   => esc_html__( 'Select .webm file', ARVE_SLUG ),
-			#'frameTitle'  => esc_html__( 'Select .webm file', ARVE_SLUG ),
+			#'addButton'   => esc_html__( 'Select .webm file', 'advanced-responsive-video-embedder' ),
+			#'frameTitle'  => esc_html__( 'Select .webm file', 'advanced-responsive-video-embedder' ),
 			'meta'  => array(
-				'placeholder' => __( '.webm file url for HTML5 video', ARVE_SLUG ),
+				'placeholder' => __( '.webm file url for HTML5 video', 'advanced-responsive-video-embedder' ),
 			),
 		),
 		array(
 			'hide_from_settings' => true,
 			'attr'  => 'ogv',
-			'label' => esc_html__('ogv file', ARVE_SLUG),
+			'label' => esc_html__('ogv file', 'advanced-responsive-video-embedder'),
 			'type'  => 'url',
 			#'type'  => 'attachment',
 			#'libraryType' => array( 'video' ),
-			#'addButton'   => esc_html__( 'Select .ogv file', ARVE_SLUG ),
-			#'frameTitle'  => esc_html__( 'Select .ogv file', ARVE_SLUG ),
+			#'addButton'   => esc_html__( 'Select .ogv file', 'advanced-responsive-video-embedder' ),
+			#'frameTitle'  => esc_html__( 'Select .ogv file', 'advanced-responsive-video-embedder' ),
 			'meta'  => array(
-				'placeholder' => __( '.ogv file url for HTML5 video', ARVE_SLUG ),
+				'placeholder' => __( '.ogv file url for HTML5 video', 'advanced-responsive-video-embedder' ),
 			),
 		),
 	);
@@ -322,7 +322,7 @@ function arve_get_mode_options( $selected ) {
 }
 
 function arve_get_supported_modes() {
-	return apply_filters( 'arve_modes', array( 'normal' => __( 'Normal', ARVE_SLUG ) ) );
+	return apply_filters( 'arve_modes', array( 'normal' => __( 'Normal', 'advanced-responsive-video-embedder' ) ) );
 }
 
 function arve_get_iframe_providers() {

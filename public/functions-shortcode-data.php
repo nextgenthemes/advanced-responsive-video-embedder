@@ -155,7 +155,7 @@ function arve_add_autoplay_query_arg( $src, $a ) {
 			), $src );
 			break;
 		default:
-			# Do nothing for providers that to not support autoplay or fail with parameters
+			// Do nothing for providers that to not support autoplay or fail with parameters.
 			$on  = $src;
 			$off = $src;
 			break;
