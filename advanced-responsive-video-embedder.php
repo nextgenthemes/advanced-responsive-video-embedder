@@ -10,6 +10,8 @@
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain:       advanced-responsive-video-embedder
  * Domain Path:       /languages
+ * GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-embedder
+ * GitHub Branch:     dev
  */
 
 if ( ! defined( 'WPINC' ) ) {
