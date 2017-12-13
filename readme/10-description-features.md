@@ -12,10 +12,10 @@
 *   Clean shortcode syntax `[arve url="https://youtu.be/yUCFRL43Zm4" align="left" parameters="start=30" ... /]`, no unnecessary shortcode wrapping.
 *   One single button for all providers.
 *   Responsive embeds with CSS, much better then with JavaScript.
-*   Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disabled related videos at the end … to help keep people on your site rather then going to YouTube or keep watching videos.
+*   Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disables related videos at the end … to help keep people on your site rather then going to YouTube or keep watching videos.
 *   Autostart (for providers that support it, mobile browsers prevent this)
 *   Custom URL parameters to use all options providers offer.
 *   Optional maximal width.
 *   Video alignment.
 *   Detailed description of options in-place.
-*   Custom aspect ratio.
+*   Automatic detected and custom aspect ratio.

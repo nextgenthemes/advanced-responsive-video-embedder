@@ -3,7 +3,7 @@ Contributors: nico23
 Donate link: https://www.paypal.me/nico23
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.4.0
-Tested up to: 4.8
+Tested up to: 4.9.2
 Stable tag: trunk
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -18,11 +18,11 @@ It is very likely the one and only plugin you will ever need to handle video emb
 
 [youtube https://www.youtube.com/watch?v=m6mkA6Zr1vY ]
 
-Make sure to check out the [official page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) for examples of the plugin and everything about it.
+Make sure to check out the [official page](https://nextgenthemes.com/plugins/arve-pro/) for examples of the plugin and everything about it.
 
-*  [Official Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/)
-*  [GitHub Page](https://github.com/nextgenthemes/advanced-responsive-video-embedder/)
-*  [Documentation](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/Documentation/)
+*  [Official Page](https://nextgenthemes.com/plugins/arve-pro/)
+*  [GitHub Page](https://github.com/nextgenthemes/arve/)
+*  [Documentation](https://nextgenthemes.com/plugins/arve/documentation/)
 
 ### Features ###
 
@@ -37,13 +37,13 @@ Make sure to check out the [official page](https://nextgenthemes.com/plugins/adv
 *   Clean shortcode syntax `[arve url="https://youtu.be/yUCFRL43Zm4" align="left" parameters="start=30" ... /]`, no unnecessary shortcode wrapping.
 *   One single button for all providers.
 *   Responsive embeds with CSS, much better then with JavaScript.
-*   Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disabled related videos at the end … to help keep people on your site rather then going to YouTube or keep watching videos.
+*   Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disables related videos at the end … to help keep people on your site rather then going to YouTube or keep watching videos.
 *   Autostart (for providers that support it, mobile browsers prevent this)
 *   Custom URL parameters to use all options providers offer.
 *   Optional maximal width.
 *   Video alignment.
 *   Detailed description of options in-place.
-*   Custom aspect ratio.
+*   Automatic detected and custom aspect ratio.
 
 ### [Supported Providers](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#video-host-support) ###
 
@@ -106,9 +106,9 @@ So I have a responsive theme but on pages with you tube videos it wasn't making 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Only Plug-in that worked ####
 I used a lot of high ranking plug-ins but they still broke my design. Downloaded this and worked right away. Thanks! [review by crconnell89](https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/?filter=5)
 
-This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase). The development and support of this plugins has become a almost full time job for me so I hope you understand that I can not make all features gratis and that you [purchase it](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) to get extra features and support the development.
+This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgenthemes.com/plugins/arve-pro/). The development and support of this plugins has become a job for me so I hope you understand that I can not make all features gratis and that you [purchase it](https://nextgenthemes.com/plugins/arve-pro/) to get extra features and support the development.
 
-### [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) ###
+### [Pro Addon](https://nextgenthemes.com/plugins/arve-pro/) ###
 
 *   **Disable links in embeds (killer feature!)**<br>
     For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. **Prevent video hosts to lead your visitors away from your site!** Note this also breaks sharing functionality and is not possible when the provider requires flash. Try it on [this page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/). Right click on links still works.
@@ -127,7 +127,7 @@ This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgen
 *   **Feel good about yourself**<br>
     for supporting my 5+ years work on this plugin. Tons of hours, weekends … always worked on improving it.
 *   Show the latest video of a YouTube channel by using the channel URL (updated/cached hourly)
-*   **[Get the ARVE Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase)**
+*   **[Get the ARVE Pro Addon](https://nextgenthemes.com/plugins/arve-pro/)**
 
 ### ARVE AMP Addon ###
 
@@ -151,7 +151,7 @@ This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgen
 ### Thanks to the developers of the software used in ARVE ###
 
 *   [Shortcode UI](https://wordpress.org/plugins/shortcode-ui/), optional Plugin, utilized by ARVE
-*   [Lity Lightbox](http://sorgalla.com/lity/), used in [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase)
+*   [Lity Lightbox](http://sorgalla.com/lity/), used in [Pro Addon](https://nextgenthemes.com/plugins/arve-pro/)
 
 ## Installation ##
 
@@ -197,6 +197,8 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### 2017-12-13 - 8.7.3 ###
 
 ### 2017-08-16 - 8.7.2 ###
 

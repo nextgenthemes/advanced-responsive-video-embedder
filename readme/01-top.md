@@ -3,7 +3,8 @@ Contributors: nico23
 Donate link: https://www.paypal.me/nico23
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.4.0
-Tested up to: 4.8
+Tested up to: 4.9.2
+Requires PHP: 5.3
 Stable tag: trunk
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -18,8 +19,8 @@ It is very likely the one and only plugin you will ever need to handle video emb
 
 [youtube https://www.youtube.com/watch?v=m6mkA6Zr1vY ]
 
-Make sure to check out the [official page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) for examples of the plugin and everything about it.
+Make sure to check out the [official page](https://nextgenthemes.com/plugins/arve-pro/) for examples of the plugin and everything about it.
 
-*  [Official Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/)
-*  [GitHub Page](https://github.com/nextgenthemes/advanced-responsive-video-embedder/)
-*  [Documentation](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/Documentation/)
+*  [Official Page](https://nextgenthemes.com/plugins/arve-pro/)
+*  [GitHub Page](https://github.com/nextgenthemes/arve/)
+*  [Documentation](https://nextgenthemes.com/plugins/arve/documentation/)

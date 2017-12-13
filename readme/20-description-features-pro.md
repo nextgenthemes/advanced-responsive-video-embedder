@@ -1,5 +1,5 @@
 
-### [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) ###
+### [Pro Addon](https://nextgenthemes.com/plugins/arve-pro/) ###
 
 *   **Disable links in embeds (killer feature!)**<br>
     For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. **Prevent video hosts to lead your visitors away from your site!** Note this also breaks sharing functionality and is not possible when the provider requires flash. Try it on [this page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/). Right click on links still works.
@@ -18,4 +18,4 @@
 *   **Feel good about yourself**<br>
     for supporting my 5+ years work on this plugin. Tons of hours, weekends … always worked on improving it.
 *   Show the latest video of a YouTube channel by using the channel URL (updated/cached hourly)
-*   **[Get the ARVE Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase)**
+*   **[Get the ARVE Pro Addon](https://nextgenthemes.com/plugins/arve-pro/)**
