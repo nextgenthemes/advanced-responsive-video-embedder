@@ -1,9 +1,9 @@
 language: php
 
 sudo: false
-dist: trusty
 
 php:
+- 5.3
 - 5.6
 - 7.0
 - 7.1
@@ -12,16 +12,12 @@ env:
   matrix:
   - WP_VERSION=latest WP_MULTISITE=0
   - WP_VERSION=4.7 WP_MULTISITE=0
+  global:
+    secure: HiPTPBaYNi1WkOXiacGKtksl8OIrA3Ul0iM9rWwPFD+lwGrs0UPZqr7vVsrhWBrbiEEypYTceFcGiLtabUxSh77g37XjpcbOYQAfEOiaLHIQrrq+qtzi0P+YGeJmnCuJUtdCRIM2GzCdXtLojBIxresjkoX43bzYkc8EMPr2Yk14FKceh1sU4JCfu/gfvbm2UBjcEWWkhQhCwAapLjFxUbv5FzaSbRoYqztbmMxa2431B+iAeh7mANGl8MFvVxwnb3NsUhItOGd/jkh9oCSNzcWb8kZplsFAKfxDyKB+TUjf/YM1zuItyhgx1/bdz+BEQRiI6uPUSADzQrfoRvtERoeBtRlH/jtg9HzNBYpk3zXztvOQKmAvRc6V+vbIX1rEX7UL/4OhVmoUf+G6aNZ1BKVP7wdMUJXuj3gyI7TImxQkPJUrgtZekYwBlSNbnQQdlogntKJFcrd4mB2tjsn0HMp/Gqd8lQkbsU/JzidQ/zEG0qeGozq+Sk41ofRkS3XDQ5VZwckPrFXQoQq732jVnLu4Xazi1sZruw8n3BE7zcSAEPoyA4G1MtGwmeiflsWDRL7qU+RITe8pXUifFqsYFMnyCHScT3CNJnjODCBBtG3PWpFhlQ84SMZQvww0k459nhHnIcjXw0DvKTTg17nD0oDw3bnRwCwnojw1VFmFh3E=
 matrix:
   include:
   - php: 7.0
     env: WP_VERSION=latest WP_MULTISITE=1
-  - php: 5.3
-    env: WP_VERSION=latest WP_MULTISITE=0
-    dist: precise
-  - php: 5.3
-    env: WP_VERSION=4.7 WP_MULTISITE=0
-    dist: precise
   exclude:
   - php: 5.3
     env: WP_VERSION=4.7 WP_MULTISITE=0
@@ -37,5 +33,14 @@ before_script:
     fi
 
 script:
-- phpenv config-rm xdebug.ini
-- phpunit
+- if [[ $TRAVIS_PHP_VERSION != 'hhvm' && ( $TRAVIS_PHP_VERSION != '5.5'|| $WP_VERSION != 'latest'
+  || $WP_MULTISITE != '0' ) ]]; then phpenv config-rm xdebug.ini; fi
+- if [[ $TRAVIS_PHP_VERSION = '5.5' && $WP_VERSION = 'latest' && $WP_MULTISITE = '0'
+  ]]; then phpunit --coverage-clover=coverage.clover; else phpunit; fi
+
+after_script:
+- if [[ $TRAVIS_PHP_VERSION = '5.5' && $WP_VERSION = 'latest' && $WP_MULTISITE = '0'
+  ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+- if [[ $TRAVIS_PHP_VERSION = '5.5' && $WP_VERSION = 'latest' && $WP_MULTISITE = '0'
+  ]]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover;
+  fi

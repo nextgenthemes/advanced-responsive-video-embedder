@@ -26,7 +26,7 @@ function arve_validate_aspect_ratio( $aspect_ratio ) {
 	}
 
 	return new WP_Error( 'Aspect ratio',
-		sprintf( __( 'Aspect ratio <code>%s</code> is not valid', 'advanced-responsive-video-embedder' ), $aspect_ratio )
+		sprintf( __( 'Aspect ratio <code>%s</code> is not valid', ARVE_SLUG ), $aspect_ratio )
 	);
 }
 
@@ -61,7 +61,7 @@ function arve_validate_bool( $val, $name ) {
 			break;
 		default:
 			return new WP_Error( $name,
-				sprintf( __( '%s <code>%s</code> not valid', 'advanced-responsive-video-embedder' ), $name, $val )
+				sprintf( __( '%s <code>%s</code> not valid', ARVE_SLUG ), $name, $val )
 			);
 			break;
 	}
@@ -80,7 +80,7 @@ function arve_validate_align( $align ) {
 		case 'center':
 			break;
 		default:
-			$align = new WP_Error( 'align', sprintf( __( 'Align <code>%s</code> not valid', 'advanced-responsive-video-embedder' ), esc_html( $align ) ) );
+			$align = new WP_Error( 'align', sprintf( __( 'Align <code>%s</code> not valid', ARVE_SLUG ), esc_html( $align ) ) );
 			break;
 	}
 
@@ -102,7 +102,7 @@ function arve_validate_mode( $mode, $provider ) {
 	if ( ! array_key_exists( $mode, $supported_modes ) ) {
 
 		#$mode = new WP_Error( 'mode', sprintf(
-		#	__( 'Mode: <code>%s</code> is invalid or not supported. Note that you will need the Pro Addon activated for modes other than normal.', 'advanced-responsive-video-embedder' ),
+		#	__( 'Mode: <code>%s</code> is invalid or not supported. Note that you will need the Pro Addon activated for modes other than normal.', ARVE_SLUG ),
 		#	esc_html( $mode )
 		#) );
 

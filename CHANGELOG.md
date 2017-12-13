@@ -1,17 +1,8 @@
 
 ## Changelog ##
 
-* [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
+* [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
-
-### 9.0.0 ###
-
-* Fix: TED embed url.
-* Fix: Facebook embeds.
-* Improved: Complete new way ARVE handles embeds utilizing WP Oembed functionality. This means easier more reliable, more native WP embeds detection, automatic aspect ratio detection ...
-* Improved: Admin code reworked.
-* Improved: Update plugin-updater-class.
-* Improved: Removed jQuery dependency.
 
 ### 2017-08-16 - 8.7.2 ###
 
@@ -378,7 +369,7 @@
 * Improved: Thumbnail handling.
 * Improved: Removed the 'Lazyload Maximal Width' setting to simplify things (there still is 'Maximal Width' and 'Aligned Maximal Width').
 * Improved: Removed the 'Fake Thumbnail' feature because the entire idea was bad and real thumbnails should be used.
-* Improved: Updated and security enhanced Plugin_Updater Class
+* Improved: Updated EDD_SL_Plugin_Updater Class
 * Dropped PHP Class.
 
 ### 7.2.9 beta - 2016-09-15 ###

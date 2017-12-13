@@ -17,14 +17,7 @@ class Tests_URLs extends WP_UnitTestCase {
 			);
 		}
 
-		$this->markTestSkipped(
-			'This text works when manually tesing URLs in content, this way it fails for some reason WP escapes the [spare-brackets].'
-		);
-
-    $output = apply_filters(
-			'the_content',
-			'https://www.youtube.com/watch?v=2an6-WVPuJU&arve[align]=left&arve[autoplay]=1&arve[maxwidth]=333&arve[title]=title&arve-ifp[fs]=88'
-		);
+    $output = apply_filters( 'the_content', 'https://www.youtube.com/watch?v=2an6-WVPuJU&arve[align]=left&arve[autoplay]=1&arve[maxwidth]=333&arve[title]=title' );
 
 		$this->assertNotContains( 'Error', $output );
 

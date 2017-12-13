@@ -7,9 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Allows plugins to use their own update API.
  *
  * @author Easy Digital Downloads
- * @version 1.6.14
+ * @version 1.6.12
  */
-class Nextgenthemes_Plugin_Updater {
+class EDD_SL_Plugin_Updater {
 
 	private $api_url     = '';
 	private $api_data    = array();
@@ -307,20 +307,18 @@ class Nextgenthemes_Plugin_Updater {
 	 * @return object $array
 	 */
 	public function http_request_args( $args, $url ) {
-
-		$verify_ssl = $this->verify_ssl();
+		// If it is an https request and we are performing a package download, disable ssl verification
 		if ( strpos( $url, 'https://' ) !== false && strpos( $url, 'edd_action=package_download' ) ) {
-			$args['sslverify'] = $verify_ssl;
+			$args['sslverify'] = true;
 		}
 		return $args;
-
 	}
 
 	/**
 	 * Calls the API and, if successfull, returns the object delivered by the API.
 	 *
 	 * @uses get_bloginfo()
-	 * @uses wp_remote_post()
+	 * @uses wp_remote_get()
 	 * @uses is_wp_error()
 	 *
 	 * @param string  $_action The requested action.
@@ -353,8 +351,7 @@ class Nextgenthemes_Plugin_Updater {
 			'beta'       => ! empty( $data['beta'] ),
 		);
 
-		$verify_ssl = $this->verify_ssl();
-		$request    = wp_remote_post( $this->api_url, array( 'timeout' => 15, 'sslverify' => $verify_ssl, 'body' => $api_params ) );
+		$request = wp_remote_get( $this->api_url, array( 'timeout' => 15, 'sslverify' => true, 'body' => $api_params ) );
 
 		if ( ! is_wp_error( $request ) ) {
 			$request = json_decode( wp_remote_retrieve_body( $request ) );
@@ -416,13 +413,11 @@ class Nextgenthemes_Plugin_Updater {
 				'beta'       => ! empty( $data['beta'] )
 			);
 
-			$verify_ssl = $this->verify_ssl();
-			$request    = wp_remote_post( $this->api_url, array( 'timeout' => 15, 'sslverify' => $verify_ssl, 'body' => $api_params ) );
+			$request = wp_remote_get( $this->api_url, array( 'timeout' => 15, 'sslverify' => true, 'body' => $api_params ) );
 
 			if ( ! is_wp_error( $request ) ) {
 				$version_info = json_decode( wp_remote_retrieve_body( $request ) );
 			}
-
 
 			if ( ! empty( $version_info ) && isset( $version_info->sections ) ) {
 				$version_info->sections = maybe_unserialize( $version_info->sections );
@@ -474,18 +469,8 @@ class Nextgenthemes_Plugin_Updater {
 			'value'   => json_encode( $value )
 		);
 
-		update_option( $cache_key, $data, 'no' );
+		update_option( $cache_key, $data );
 
-	}
-
-	/**
-	 * Returns if the SSL of the store should be verified.
-	 *
-	 * @since  1.6.13
-	 * @return bool
-	 */
-	private function verify_ssl() {
-		return (bool) apply_filters( 'edd_sl_api_request_verify_ssl', true, $this );
 	}
 
 }

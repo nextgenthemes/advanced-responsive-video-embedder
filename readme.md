@@ -3,7 +3,6 @@ Contributors: nico23
 Donate link: https://www.paypal.me/nico23
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.4.0
-Requires PHP: 5.3
 Tested up to: 4.8
 Stable tag: trunk
 License: GPL-3.0
@@ -13,15 +12,17 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 
 ## Description ##
 
-This is likely the one and only plugin you will ever need to handle video embeds on your WordPress site(s). It goes far beyond just making your videos responsive! Supports close to everything you can imagine, still keeping it easy & simple.
+The best WordPress plugin for videos? Supports close to everything you can imagine, still keeping it easy & simple.
+
+It is very likely the one and only plugin you will ever need to handle video embeds on your WordPress site(s). It goes far beyond just making your videos responsive!
 
 [youtube https://www.youtube.com/watch?v=m6mkA6Zr1vY ]
 
-*  [Official Page](https://nextgenthemes.com/plugins/arve-pro/)
-*  [GitHub Page](https://github.com/nextgenthemes/advanced-responsive-video-embedder/)
-*  [Documentation](https://nextgenthemes.com/plugins/arve/documentation/)
+Make sure to check out the [official page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) for examples of the plugin and everything about it.
 
-If you find this plugin useful please [give it a 5 star review](https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/#new-post). It has 60000+ installs but only 100 reviews after over 5 years!
+*  [Official Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/)
+*  [GitHub Page](https://github.com/nextgenthemes/advanced-responsive-video-embedder/)
+*  [Documentation](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/Documentation/)
 
 ### Features ###
 
@@ -30,7 +31,7 @@ If you find this plugin useful please [give it a 5 star review](https://wordpres
 *   New improved dialog for embedding videos.
 *   Magically makes those url embedded videos responsive.
 *   No 'lock in' if do not use shortcodes and use providers WordPress already supports.
-*   Supports [almost every video host](https://nextgenthemes.com/plugins/arve/#video-host-support) that supports iframe embed codes.
+*   Supports [almost every video host](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#video-host-support) that supports iframe embed codes.
 *   Embeds via pasting the URL in its own line just like WordPress!
 *   Optionally use very powerful Shortcodes instead.
 *   Clean shortcode syntax `[arve url="https://youtu.be/yUCFRL43Zm4" align="left" parameters="start=30" ... /]`, no unnecessary shortcode wrapping.
@@ -44,32 +45,91 @@ If you find this plugin useful please [give it a 5 star review](https://wordpres
 *   Detailed description of options in-place.
 *   Custom aspect ratio.
 
-### [Supported Providers](https://nextgenthemes.com/plugins/arve/#video-host-support) ###
+### [Supported Providers](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#video-host-support) ###
 
-allmyvideos.net, Alugha, Archive.org, Break, Brightcove, CollegeHumor, Comedy Central, Dailymotion, Facebook, Funny or Die, IGN, Kickstarter, LiveLeak, Livestream, kla.tv, Metacafe, Movieweb, MPORA, Myspace, Snotr, Spike, TED Talks, Twitch, Ustream, RuTube.ru, Veoh, Vevo, Viddler, vidspot.net, Vine, Vimeo, VK, Vzaar, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist, HTML5 video files directly, Google_drive, Dropbox, Ooyala, [Almost all hosts with iframe embed codes](https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding)
+*   Alugha
+*   Archive.org
+*   Break
+*   Brightcove
+*   CollegeHumor
+*   Comedy Central
+*   Dailymotion
+*   Facebook
+*   Funny or Die
+*   Gametrailers
+*   IGN
+*   Kickstarter
+*   LiveLeak
+*   Livestream
+*   kla.tv
+*   Metacafe
+*   Movieweb
+*   MPORA
+*   Myspace
+*   Snotr
+*   Spike
+*   TED Talks
+*   Twitch
+*   Ustream
+*   RuTube.ru
+*   Veoh
+*   Vevo
+*   Viddler
+*   vidspot.net
+*   Vine
+*   Vimeo
+*   VK
+*   Vzaar
+*   Wistia
+*   XTube
+*   Yahoo
+*   Youku
+*   YouTube
+*   YouTube Playlist
+*   HTML5 Video (.mp4 .webm file you upload or URL to a readable file on any site/server)
+*   [All providers with responsive iframe embed codes](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/#general-iframe-embedding)
 
-This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgenthemes.com/plugins/arve-pro). The development and support of this plugins has become a almost full time job for me so I hope you understand that I can not make all features gratis and that you [purchase it](https://nextgenthemes.com/plugins/arve-pro/) to get extra features and support the development.
+### Reviews ###
 
-### [Pro Addon Features](https://nextgenthemes.com/plugins/arve-pro/) ###
+If you find this plugin useful please [give it a 5 star review](https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/#new-post). It has 60000+ installs but only 100 reviews after over 5 years!
 
-*   **Disable links in embeds**<br>
-    Clicking on a title in a embed will not open a new popup/tab/window. **Prevents video hosts to lead your visitors away from your site!** <small>Note that right click on links still works and this also breaks sharing functionality and is not possible when the provider requires flash.</small>
-*   [**Lazyload mode**](https://nextgenthemes.com/plugins/arve-pro/#lazyload)<br>
-    Make your site load **faster** by loading only a image instead of the entire video player on page-load.
+#### &#9733; &#9733; &#9733; &#9733; &#9733; The best there is – I have tried many…  ####
+Have downloaded and paid for at least 4 other video players that use lightbox. Each one has major flaws. This products works perfectly. If you use the OnSite Editor, then just copy the short code and it works great.
+
+[arve url="https://www.youtube.com/watch?v=Z7g8-GxLTSc"]
+
+For speed, the product uses the thumbnails from the server. So many of the other products do NOT do this and it slows the page rendering. This product should appear first on the WordPress search. Spent 3 days of my life wasted on other products, only to delete each one. [review by jodani](https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/?filter=5)
+
+#### &#9733; &#9733; &#9733; &#9733; &#9733; Finally something that works ####
+So I have a responsive theme but on pages with you tube videos it wasn't making the you tube videos fit in the mobile screen. I have spent the last hour trying many plugins and researching on google and finally I installed this. And I didn't have to update any settings or anything just refreshed a post with videos and all the sudden it is beautiful and responsive on my mobile phone!!!!!! THANK YOU!!!! [review by happyecho](https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/?filter=5)
+
+#### &#9733; &#9733; &#9733; &#9733; &#9733; Only Plug-in that worked ####
+I used a lot of high ranking plug-ins but they still broke my design. Downloaded this and worked right away. Thanks! [review by crconnell89](https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/?filter=5)
+
+This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase). The development and support of this plugins has become a almost full time job for me so I hope you understand that I can not make all features gratis and that you [purchase it](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) to get extra features and support the development.
+
+### [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase) ###
+
+*   **Disable links in embeds (killer feature!)**<br>
+    For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. **Prevent video hosts to lead your visitors away from your site!** Note this also breaks sharing functionality and is not possible when the provider requires flash. Try it on [this page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/). Right click on links still works.
+*   **Lazyload mode**<br>
+    Make your site load **faster** by loading only a image instead of the entire video player on pageload.  
 *   **Lazyload -> Lightbox**<br>
     Shows the Video in a Lightbox after clicking a preview image
 *   **Link -> Lightbox**<br>
     Use simple links as triggers for lightboxed videos
 *   Automatic or custom thumbnail images
 *   Automatic or custom titles on top of your thumbnails
-*   ['Expand on click'](https://nextgenthemes.com/plugins/arve-pro/#expand-on-click) feature
-*   [3 hover styles and 2 play icon styles to choose from](https://nextgenthemes.com/plugins/arve-pro/#lazyload)
+*   'Expand on click' feature
+*   3 hover styles
+*   2 play icon styles to choose from
 *   Responsive thumbnails using cutting edge HTML5 technology
 *   **Feel good about yourself**<br>
     for supporting my 5+ years work on this plugin. Tons of hours, weekends … always worked on improving it.
 *   Show the latest video of a YouTube channel by using the channel URL (updated/cached hourly)
+*   **[Get the ARVE Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase)**
 
-### [ARVE AMP Addon](https://nextgenthemes.com/plugins/arve-amp/) ###
+### ARVE AMP Addon ###
 
 *   Requires the gratis plugins [ARVE](https://wordpress.org/plugins/advanced-responsive-video-embedder/) and [AMP](https://wordpress.org/plugins/amp/)
 *   Makes ARVE ready for Accelerated Mobile Pages (AMP)
@@ -135,7 +195,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ## Changelog ##
 
-* [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
+* [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
 ### 2017-08-16 - 8.7.2 ###
