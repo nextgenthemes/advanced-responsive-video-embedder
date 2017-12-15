@@ -20,6 +20,6 @@ It is very likely the one and only plugin you will ever need to handle video emb
 
 Make sure to check out the [official page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/) for examples of the plugin and everything about it.
 
-*  [Official Page](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/)
+*  [Official Page](https://nextgenthemes.com/plugins/arve-pro/)
 *  [GitHub Page](https://github.com/nextgenthemes/advanced-responsive-video-embedder/)
-*  [Documentation](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/Documentation/)
+*  [Documentation](https://nextgenthemes.com/plugins/arve/documentation/)
