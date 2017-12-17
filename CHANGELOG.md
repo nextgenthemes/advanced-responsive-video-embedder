@@ -4,6 +4,10 @@
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2017-12-17 - 8.7.4 ###
+
+* Fix: Removed URL validation because it fails with some weird URLs.
+
 ### 2017-12-13 - 8.7.3 ###
 
 * Updated EDD Plugin Updater class.

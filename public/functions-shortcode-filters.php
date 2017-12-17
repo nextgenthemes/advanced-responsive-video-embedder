@@ -101,10 +101,6 @@ function arve_sc_filter_attr( $a ) {
 
 function arve_sc_filter_validate( $a ) {
 
-	if ( ! empty( $a['url'] ) && ! arve_validate_url( $a['url'] ) ) {
-		$a['url'] = new WP_Error( 'thumbnail', sprintf( __( '<code>%s</code> is not a valid url', ARVE_SLUG ), esc_html( $a['url'] ) ) );
-	}
-
 	$a['align'] = arve_validate_align( $a['align'], $a['provider'] );
 
 	$a['mode'] = arve_validate_mode( $a['mode'], $a['provider'] );
