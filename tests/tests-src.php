@@ -31,9 +31,9 @@ class Tests_Iframe_Src extends WP_UnitTestCase {
 
 				$args  = array( 'url' => $test['url'] );
 
-				$this->assertNotContains( 'Error', arve_shortcode( $args ) );
-				$this->assertRegExp( '#<iframe[^>]+src="http#i', arve_shortcode( $args ) );
-				$this->assertContains( sprintf( 'data-provider="%s"', $provider ), arve_shortcode( $args ) );
+				$this->assertNotContains( 'Error', arve_shortcode_arve( $args ) );
+				$this->assertRegExp( '#<iframe[^>]+src="http#i', arve_shortcode_arve( $args ) );
+				$this->assertContains( sprintf( 'data-provider="%s"', $provider ), arve_shortcode_arve( $args ) );
 
 			endforeach;
 
