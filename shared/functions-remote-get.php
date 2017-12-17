@@ -4,7 +4,7 @@ function arve_remote_get( $url, $args = array(), $json = true ) {
 
 	// Lets not tell them we are WordPress.
 	$default_args = array(
-		'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'
+		'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
 	);
 
 	$args = wp_parse_args( $args, $default_args );
