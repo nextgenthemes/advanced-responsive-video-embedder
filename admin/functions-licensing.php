@@ -512,12 +512,12 @@ function nextgenthemes_init_theme_updater( $product ) {
 
 function nextgenthemes_remote_get( $url, $args ) {
 
-	$response      = wp_remote_post( 'https://nextgenthemes.com', $args );
+	$response      = wp_remote_post( $url, $args );
 	$response_code = wp_remote_retrieve_response_code( $response );
 
 	# retry with wp_remote_GET
 	if ( 200 !== $response_code ) {
-		$response      = wp_remote_get( 'https://nextgenthemes.com', $args );
+		$response      = wp_remote_get( $url, $args );
 		$response_code = wp_remote_retrieve_response_code( $response );
 	}
 
@@ -545,7 +545,7 @@ function nextgenthemes_api_action( $item_name, $key, $action ) {
 		'https://nextgenthemes.com',
 		array(
 			'timeout'   => 15,
-			'sslverify' => true,
+			'sslverify' => false,
 			'body'      => array(
 				'edd_action' => $action . '_license',
 				'license'    => sanitize_text_field( $key ),
