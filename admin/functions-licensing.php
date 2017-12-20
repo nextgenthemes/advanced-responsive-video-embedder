@@ -510,67 +510,49 @@ function nextgenthemes_init_theme_updater( $product ) {
 	);
 }
 
-function nextgenthemes_remote_get( $url, $args ) {
-
-	$response      = wp_remote_post( $url, $args );
-	$response_code = wp_remote_retrieve_response_code( $response );
-
-	# retry with wp_remote_GET
-	if ( 200 !== $response_code ) {
-		$response      = wp_remote_get( $url, $args );
-		$response_code = wp_remote_retrieve_response_code( $response );
-	}
-
-	if ( 200 !== $response_code ) {
-
-		$response = new WP_Error(
-			'response_code',
-			sprintf(
-				__( 'Error: Response code should be 200 but was: %s.', ARVE_SLUG ),
-				$response_code
-			)
-		);
-	}
-
-	return $response;
-};
-
 function nextgenthemes_api_action( $item_name, $key, $action ) {
 
 	if ( ! in_array( $action, array( 'activate', 'deactivate', 'check' ) ) ) {
 		wp_die( 'invalid action' );
 	}
 
-	$response = nextgenthemes_remote_get(
-		'https://nextgenthemes.com',
-		array(
-			'timeout'   => 15,
-			'sslverify' => false,
-			'body'      => array(
-				'edd_action' => $action . '_license',
-				'license'    => sanitize_text_field( $key ),
-				'item_name'  => urlencode( $item_name ),
-				'url'        => home_url(),
-			)
-		)
+	$message = 'Unknown';
+
+	// data to send in our API request
+	$api_params = array(
+		'edd_action' => 'activate_license',
+		'license'    => sanitize_text_field( $key ),
+		'item_name'  => urlencode( $item_name ), // the name of our product in EDD
+		'url'        => home_url()
 	);
 
-	if ( is_wp_error( $response ) ) {
+	// Call the custom API.
+	$response = wp_remote_post(
+		'https://nextgenthemes.com',
+		array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params )
+	);
 
-		$message = $response->get_error_message();
+	// make sure the response came back okay
+	if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+
+		if ( is_wp_error( $response ) ) {
+			$message = $response->get_error_message();
+		} else {
+			$message = __( 'An error occurred, please try again.', ARVE_SLUG );
+		}
 
 	} else {
 
 		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
 
-		if ( false === $license_data->success ) :
+		if ( false === $license_data->success ) {
 
 			switch( $license_data->error ) {
 
 				case 'expired' :
 
 					$message = sprintf(
-						__( 'Your license key expired on %s.', ARVE_SLUG ),
+						__( 'Your license key expired on %s.' ),
 						date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) )
 					);
 					break;
@@ -593,28 +575,23 @@ function nextgenthemes_api_action( $item_name, $key, $action ) {
 
 				case 'item_name_mismatch' :
 
-					$message = sprintf( __( 'This appears to be an invalid license key for %s.', ARVE_SLUG ), $item_name );
+					$message = sprintf( __( 'This appears to be an invalid license key for %s.' ), ARVE_SLUG );
 					break;
 
-				case 'no_activations_left' :
+				case 'no_activations_left':
 
 					$message = __( 'Your license key has reached its activation limit.', ARVE_SLUG );
 					break;
 
 				default :
 
-					$message = sprintf(
-						__( 'Error: %s.', ARVE_SLUG ),
-						$license_data->error
-					);
-
+					$message = __( 'An error occurred, please try again.', ARVE_SLUG );
 					break;
 			}
-
-		endif; // false === $license_data->success
+		}
 	}
 
-	if( empty( $message ) ) {
+	if ( empty( $message ) && ! empty( $license_data->license ) ) {
 		$message = $license_data->license;
 	}
 
