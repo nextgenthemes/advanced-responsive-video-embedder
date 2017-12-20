@@ -114,7 +114,7 @@ This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgen
 *   **Disable links in embeds (killer feature!)**<br>
     For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. **Prevent video hosts to lead your visitors away from your site!** Note this also breaks sharing functionality and is not possible when the provider requires flash. Try it on [this page](https://nextgenthemes.com/plugins/arve-pro/). Right click on links still works.
 *   **Lazyload mode**<br>
-    Make your site load **faster** by loading only a image instead of the entire video player on pageload.
+    Make your site load **faster** by loading only a image instead of the entire video player on pageload.  
 *   **Lazyload -> Lightbox**<br>
     Shows the Video in a Lightbox after clicking a preview image
 *   **Link -> Lightbox**<br>
@@ -198,6 +198,11 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### 2017-12-20 - 8.7.6 ###
+
+* Fix license activation now working correctly.
+* Corrected link in readme.
 
 ### 2017-12-19 - 8.7.5 ###
 

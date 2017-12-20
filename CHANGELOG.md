@@ -7,6 +7,7 @@
 ### 2017-12-20 - 8.7.6 ###
 
 * Fix license activation now working correctly.
+* Corrected link in readme.
 
 ### 2017-12-19 - 8.7.5 ###
 
