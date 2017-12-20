@@ -516,8 +516,6 @@ function nextgenthemes_api_action( $item_name, $key, $action ) {
 		wp_die( 'invalid action' );
 	}
 
-	$message = 'Unknown';
-
 	// data to send in our API request
 	$api_params = array(
 		'edd_action' => 'activate_license',
@@ -591,8 +589,13 @@ function nextgenthemes_api_action( $item_name, $key, $action ) {
 		}
 	}
 
-	if ( empty( $message ) && ! empty( $license_data->license ) ) {
-		$message = $license_data->license;
+	if ( empty( $message ) ) {
+
+		if ( empty( $license_data->license ) ) {
+			$message = __( 'Could not read license status.', ARVE_SLUG );
+		} else {
+			$message = $license_data->license;
+		}
 	}
 
 	return $message;
