@@ -77,7 +77,7 @@ function register_settings() {
 
 	add_settings_section(
 		'keys',                      # id,
-		__( 'Licenses', TEXTDOMAIN ), # title,
+		__( 'Licenses', 'advanced-responsive-video-embedder' ), # title,
 		'__return_empty_string',     # callback,
 		'nextgenthemes-licenses'     # page
 	);
@@ -102,7 +102,7 @@ function register_settings() {
 					'id'    => $option_keyname,
 					'name'  => $option_keyname,
 					'class' => 'arve-license-input',
-					'value' => get_defined_key( $product_slug ) ? __( 'is defined (wp-config.php?)', TEXTDOMAIN ) : get_key( $product_slug, 'option_only' ),
+					'value' => get_defined_key( $product_slug ) ? __( 'is defined (wp-config.php?)', 'advanced-responsive-video-embedder' ) : get_key( $product_slug, 'option_only' ),
 				)
 			)
 		);
@@ -138,18 +138,18 @@ function key_callback( $args ) {
 
 	if( $defined_key || ! empty( $key ) ) {
 
-		submit_button( __('Activate License',   TEXTDOMAIN ), 'primary',   $args['option_basename'] . '[activate_key]',   false );
-		submit_button( __('Deactivate License', TEXTDOMAIN ), 'secondary', $args['option_basename'] . '[deactivate_key]', false );
-		submit_button( __('Check License',      TEXTDOMAIN ), 'secondary', $args['option_basename'] . '[check_key]',      false );
+		submit_button( __('Activate License',   'advanced-responsive-video-embedder' ), 'primary',   $args['option_basename'] . '[activate_key]',   false );
+		submit_button( __('Deactivate License', 'advanced-responsive-video-embedder' ), 'secondary', $args['option_basename'] . '[deactivate_key]', false );
+		submit_button( __('Check License',      'advanced-responsive-video-embedder' ), 'secondary', $args['option_basename'] . '[check_key]',      false );
   }
 	echo '</p>';
 
   echo '<p>';
-  echo __( 'License Status: ', TEXTDOMAIN ) . get_key_status( $args['product']['slug'] );
+  echo __( 'License Status: ', 'advanced-responsive-video-embedder' ) . get_key_status( $args['product']['slug'] );
   echo '</p>';
 
   if( $args['product']['installed'] && ! $args['product']['active'] ) {
-		printf( '<strong>%s</strong>', __( 'Plugin is installed but not activated', TEXTDOMAIN ) );
+		printf( '<strong>%s</strong>', __( 'Plugin is installed but not activated', 'advanced-responsive-video-embedder' ) );
 	} elseif( ! $args['product']['active'] ) {
     printf(
 			'<a%s>%s</a>',
@@ -157,7 +157,7 @@ function key_callback( $args ) {
 				'href'  => $args['product']['url'],
 				'class' => 'button button-primary',
 			) ),
-			__( 'Not installed, check it out', TEXTDOMAIN )
+			__( 'Not installed, check it out', 'advanced-responsive-video-embedder' )
 		);
   }
 }
@@ -291,28 +291,28 @@ function init_theme_updater( $product ) {
 			#'renew_url'       => $product['renew_link'], // Optional, allows for a custom license renewal link
 		),
 		array(
-			'theme-license'             => __( 'Theme License', TEXTDOMAIN ),
-			'enter-key'                 => __( 'Enter your theme license key.', TEXTDOMAIN ),
-			'license-key'               => __( 'License Key', TEXTDOMAIN ),
-			'license-action'            => __( 'License Action', TEXTDOMAIN ),
-			'deactivate-license'        => __( 'Deactivate License', TEXTDOMAIN ),
-			'activate-license'          => __( 'Activate License', TEXTDOMAIN ),
-			'status-unknown'            => __( 'License status is unknown.', TEXTDOMAIN ),
-			'renew'                     => __( 'Renew?', TEXTDOMAIN ),
-			'unlimited'                 => __( 'unlimited', TEXTDOMAIN ),
-			'license-key-is-active'     => __( 'License key is active.', TEXTDOMAIN ),
-			'expires%s'                 => __( 'Expires %s.', TEXTDOMAIN ),
-			'expires-never'             => __( 'Lifetime License.', TEXTDOMAIN ),
-			'%1$s/%2$-sites'            => __( 'You have %1$s / %2$s sites activated.', TEXTDOMAIN ),
-			'license-key-expired-%s'    => __( 'License key expired %s.', TEXTDOMAIN ),
-			'license-key-expired'       => __( 'License key has expired.', TEXTDOMAIN ),
-			'license-keys-do-not-match' => __( 'License keys do not match.', TEXTDOMAIN ),
-			'license-is-inactive'       => __( 'License is inactive.', TEXTDOMAIN ),
-			'license-key-is-disabled'   => __( 'License key is disabled.', TEXTDOMAIN ),
-			'site-is-inactive'          => __( 'Site is inactive.', TEXTDOMAIN ),
-			'license-status-unknown'    => __( 'License status is unknown.', TEXTDOMAIN ),
-			'update-notice'             => __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update.", TEXTDOMAIN ),
-			'update-available'          => __('<strong>%1$s %2$s</strong> is available. <a href="%3$s" class="thickbox" title="%4s">Check out what\'s new</a> or <a href="%5$s"%6$s>update now</a>.', TEXTDOMAIN ),
+			'theme-license'             => __( 'Theme License', 'advanced-responsive-video-embedder' ),
+			'enter-key'                 => __( 'Enter your theme license key.', 'advanced-responsive-video-embedder' ),
+			'license-key'               => __( 'License Key', 'advanced-responsive-video-embedder' ),
+			'license-action'            => __( 'License Action', 'advanced-responsive-video-embedder' ),
+			'deactivate-license'        => __( 'Deactivate License', 'advanced-responsive-video-embedder' ),
+			'activate-license'          => __( 'Activate License', 'advanced-responsive-video-embedder' ),
+			'status-unknown'            => __( 'License status is unknown.', 'advanced-responsive-video-embedder' ),
+			'renew'                     => __( 'Renew?', 'advanced-responsive-video-embedder' ),
+			'unlimited'                 => __( 'unlimited', 'advanced-responsive-video-embedder' ),
+			'license-key-is-active'     => __( 'License key is active.', 'advanced-responsive-video-embedder' ),
+			'expires%s'                 => __( 'Expires %s.', 'advanced-responsive-video-embedder' ),
+			'expires-never'             => __( 'Lifetime License.', 'advanced-responsive-video-embedder' ),
+			'%1$s/%2$-sites'            => __( 'You have %1$s / %2$s sites activated.', 'advanced-responsive-video-embedder' ),
+			'license-key-expired-%s'    => __( 'License key expired %s.', 'advanced-responsive-video-embedder' ),
+			'license-key-expired'       => __( 'License key has expired.', 'advanced-responsive-video-embedder' ),
+			'license-keys-do-not-match' => __( 'License keys do not match.', 'advanced-responsive-video-embedder' ),
+			'license-is-inactive'       => __( 'License is inactive.', 'advanced-responsive-video-embedder' ),
+			'license-key-is-disabled'   => __( 'License key is disabled.', 'advanced-responsive-video-embedder' ),
+			'site-is-inactive'          => __( 'Site is inactive.', 'advanced-responsive-video-embedder' ),
+			'license-status-unknown'    => __( 'License status is unknown.', 'advanced-responsive-video-embedder' ),
+			'update-notice'             => __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update.", 'advanced-responsive-video-embedder' ),
+			'update-available'          => __('<strong>%1$s %2$s</strong> is available. <a href="%3$s" class="thickbox" title="%4s">Check out what\'s new</a> or <a href="%5$s"%6$s>update now</a>.', 'advanced-responsive-video-embedder' ),
 		)
 	);
 }
@@ -323,71 +323,86 @@ function api_action( $item_name, $key, $action ) {
 		wp_die( 'invalid action' );
 	}
 
-	$license_data = remote_get(
-		'https://nextgenthemes.com',
-		array(
-			'timeout'   => 15,
-			'sslverify' => true,
-			'body'      => array(
-				'edd_action' => $action . '_license',
-				'license'    => sanitize_text_field( $key ),
-				'item_name'  => urlencode( $item_name ),
-				'url'        => home_url(),
-			)
-		)
+	// data to send in our API request
+	$api_params = array(
+		'edd_action' => 'activate_license',
+		'license'    => sanitize_text_field( $key ),
+		'item_name'  => urlencode( $item_name ), // the name of our product in EDD
+		'url'        => home_url()
 	);
 
-	if ( is_wp_error( $response ) ) {
+	// Call the custom API.
+	$response = wp_remote_post(
+		'https://nextgenthemes.com',
+		array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params )
+	);
 
-		$message = $response->get_error_message();
+	// make sure the response came back okay
+	if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+
+		if ( is_wp_error( $response ) ) {
+			$message = $response->get_error_message();
+		} else {
+			$message = __( 'An error occurred, please try again.', 'advanced-responsive-video-embedder' );
+		}
 
 	} else {
 
-		if ( false === $license_data->success ) :
+		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
+
+		if ( false === $license_data->success ) {
 
 			switch( $license_data->error ) {
 
 				case 'expired' :
+
 					$message = sprintf(
-						__( 'Your license key expired on %s.', TEXTDOMAIN ),
+						__( 'Your license key expired on %s.', 'advanced-responsive-video-embedder' ),
 						date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) )
 					);
 					break;
 
 				case 'revoked' :
-					$message = __( 'Your license key has been disabled.', TEXTDOMAIN );
+
+					$message = __( 'Your license key has been disabled.', 'advanced-responsive-video-embedder' );
 					break;
 
 				case 'missing' :
-					$message = __( 'Invalid license.', TEXTDOMAIN );
+
+					$message = __( 'Invalid license.', 'advanced-responsive-video-embedder' );
 					break;
 
 				case 'invalid' :
 				case 'site_inactive' :
-					$message = __( 'Your license is not active for this URL.', TEXTDOMAIN );
+
+					$message = __( 'Your license is not active for this URL.', 'advanced-responsive-video-embedder' );
 					break;
 
 				case 'item_name_mismatch' :
-					$message = sprintf( __( 'This appears to be an invalid license key for %s.', TEXTDOMAIN ), $item_name );
+
+					$message = sprintf( __( 'This appears to be an invalid license key for %s.' ), 'advanced-responsive-video-embedder' );
 					break;
 
-				case 'no_activations_left' :
-					$message = __( 'Your license key has reached its activation limit.', TEXTDOMAIN );
+				case 'no_activations_left':
+
+					$message = __( 'Your license key has reached its activation limit.', 'advanced-responsive-video-embedder' );
 					break;
 
 				default :
-					$message = sprintf(
-						__( 'Error: %s.', TEXTDOMAIN ),
-						$license_data->error
-					);
+
+					$message = __( 'An error occurred, please try again.', 'advanced-responsive-video-embedder' );
 					break;
 			}
-
-		endif; // false === $license_data->success
+		}
 	}
 
-	if( empty( $message ) ) {
-		$message = $license_data->license;
+	if ( empty( $message ) ) {
+
+		if ( empty( $license_data->license ) ) {
+			$message = __( 'Could not read license status.', 'advanced-responsive-video-embedder' );
+		} else {
+			$message = $license_data->license;
+		}
 	}
 
 	return $message;

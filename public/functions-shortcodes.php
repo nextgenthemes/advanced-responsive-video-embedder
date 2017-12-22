@@ -32,8 +32,7 @@ function arve_check_for_embed( $a ) {
 		$url = add_query_arg( "arve[{$key}]", $value, $url );
 	}
 
-	$wp_embed        = new WP_Embed();
-	$maybe_arve_html = $wp_embed->shortcode( array(), $url );
+	$maybe_arve_html = $GLOBALS['wp_embed']->shortcode( array(), $url );
 
 	if ( arve_contains( $maybe_arve_html, 'class="arve-wrapper' ) ) {
 		return $maybe_arve_html;

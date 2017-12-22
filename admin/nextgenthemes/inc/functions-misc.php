@@ -22,7 +22,7 @@ function remote_get( $url, $args = array(), $json = true ) {
 			'remote_get',
 			sprintf(
 				// Translators: %s is HTTP presponse code.
-				__( 'remote_get error: Status code was expected to be 200 but was %s.', TEXTDOMAIN ),
+				__( 'remote_get error: Status code was expected to be 200 but was %s.', 'advanced-responsive-video-embedder' ),
 				$response_code
 			)
 		);
@@ -31,14 +31,14 @@ function remote_get( $url, $args = array(), $json = true ) {
 	$body = wp_remote_retrieve_body( $response );
 
 	if ( '' === $body ) {
-		return new WP_Error( 'remote_get', __( 'Empty body', TEXTDOMAIN ) );
+		return new WP_Error( 'remote_get', __( 'Empty body', 'advanced-responsive-video-embedder' ) );
 	}
 
 	if ( $json ) {
 		$response = json_decode( $body );
 
 		if ( null === $response ) {
-			return new WP_Error( 'remote_get', __( 'json_decode returned null', TEXTDOMAIN ) );
+			return new WP_Error( 'remote_get', __( 'json_decode returned null', 'advanced-responsive-video-embedder' ) );
 		}
 	}
 

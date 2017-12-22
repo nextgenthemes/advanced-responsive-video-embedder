@@ -36,7 +36,6 @@ function arve_init() {
 	}
 
 	if ( ! defined( 'nextgenthemes\admin\VERSION' ) ) {
-		define( 'nextgenthemes\admin\TEXTDOMAIN', 'advanced-responsive-video-embedder' );
 		require_once __DIR__ . '/admin/nextgenthemes/init.php';
 	}
 
