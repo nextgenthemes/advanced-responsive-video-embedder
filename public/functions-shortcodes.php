@@ -14,6 +14,7 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 		'aspect_ratio'  => null,
 		'autoplay'      => arve_bool_to_shortcode_string( $options['autoplay'] ),
 		'description'   => null,
+		'duration'      => null,
 		'disable_flash' => null,
 		'iframe_name'   => null,
 		'maxwidth'      => (string) $options['video_maxwidth'],

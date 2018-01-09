@@ -459,13 +459,13 @@ function nextgenthemes_init_plugin_updater( $product ) {
 
 	// setup the updater
 	new EDD_SL_Plugin_Updater(
-		'https://nextgenthemes.com',
+		apply_filters( 'nextgenthemes_api_url', 'https://nextgenthemes.com' ),
 		$product['file'],
 		array(
 			'version' 	=> $product['version'],
 			'license' 	=> nextgenthemes_get_key( $product['slug'] ),
 			'item_name' => $product['name'],
-			'author' 	  => $product['author']
+			'author' 	=> $product['author']
 		)
 	);
 }

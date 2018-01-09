@@ -10,7 +10,7 @@ function arve_get_default_aspect_ratio( $aspect_ratio, $provider ) {
 
 function arve_get_html5_attributes() {
 
-	return array( 'mp4', 'm4v', 'webm', 'ogv' );
+	return array( 'mp4', 'm4v', 'webm', 'ogv', 'ogg', 'ogm' );
 }
 
 function arve_url_query_array( $url ) {

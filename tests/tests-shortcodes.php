@@ -109,6 +109,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'thumbnail'   => 'https://example.com/image.jpg',
 			'title'       => ' Test <title>  ',
 			'upload_date' => '2016-10-22',
+			'duration'    => '1H2M3S',
 			'url'         => 'https://example.com',
 		);
 
@@ -122,6 +123,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( 'style="max-width:333px;"', $output );
 		$this->assertContains( '<meta itemprop="name" content="Test &lt;title&gt;">', $output );
 		$this->assertContains( '<meta itemprop="uploadDate" content="2016-10-22">', $output );
+		$this->assertContains( '<meta itemprop="duration" content="PT1H2M3S">', $output );
 		$this->assertContains( 'src="https://example.com', $output );
 	}
 

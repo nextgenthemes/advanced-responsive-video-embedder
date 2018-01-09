@@ -315,26 +315,36 @@ function arve_sc_filter_detect_youtube_playlist( $atts ) {
 	return $atts;
 }
 
+function arve_get_video_type( $ext ) {
+
+	switch( $ext ) {
+		case 'ogv':
+		case 'ogm':
+			return 'video/ogg';
+			break;
+		default:
+			return 'video/' . $ext;
+	}
+}
+
 function arve_sc_filter_detect_html5( $atts ) {
 
 	if( ! empty( $atts['provider'] ) && 'html5' != $atts['provider'] ) {
 		return $atts;
 	}
 
-	$html5_extensions   = arve_get_html5_attributes();
-	$html5_extensions[] = 'url';
-
+	$html5_extensions           = arve_get_html5_attributes();
 	$atts['video_sources_html'] = '';
 
-	foreach ( $html5_extensions as $ext ):
+	foreach ( $html5_extensions as $ext ) :
 
-		if ( ! empty( $atts[ $ext ] ) && $type = arve_check_filetype( $atts[ $ext ], $ext) ) {
+		if ( ! empty( $atts[ $ext ] ) ) {
 
 			if ( arve_starts_with( $atts[ $ext ], 'https://www.dropbox.com' ) ) {
 				$atts[ $ext ] = add_query_arg( 'dl', 1, $atts[ $ext ] );
 			}
 
-			$atts['video_sources_html'] .= sprintf( '<source type="%s" src="%s">', $type, $atts[ $ext ] );
+			$atts['video_sources_html'] .= sprintf( '<source type="%s" src="%s">', arve_get_video_type( $ext ), $atts[ $ext ] );
 		}
 
 		if ( ! empty( $atts['url'] ) && arve_ends_with( $atts['url'], ".$ext" ) ) {
@@ -356,7 +366,6 @@ function arve_sc_filter_detect_html5( $atts ) {
 	endforeach;
 
 	if( empty( $atts['video_src'] ) && empty( $atts['video_sources_html'] ) ) {
-		unset( $atts['video_sources_html'] );
 		return $atts;
 	}
 

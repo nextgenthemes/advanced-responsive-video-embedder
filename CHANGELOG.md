@@ -4,6 +4,12 @@
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2018-01-09 - 8.7.7 ###
+
+* New: `duration` shortcode attribute and dialog entry.
+* Improved: Added muted, controls and loop to shortcode UI dialog for HTML5 videos.
+* Improved: Removed video file extension check so any file can be used `[arve mp4="http://example.com/somefile" webm="http://example.com/something_else" /]`. Useful for example to embed files hosted on IPFS that do not have a hash instead of a human readable filename.
+
 ### 2017-12-20 - 8.7.6 ###
 
 * Fix license activation now working correctly.

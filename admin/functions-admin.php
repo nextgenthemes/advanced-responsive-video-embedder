@@ -16,7 +16,7 @@ function arve_action_admin_init_setup_messages() {
 
 	if( arve_display_pro_ad() ) {
 
-		$pro_ad_message = __( '<p>Hi, this is Nico(las Jonas) the author of the ARVE - Advanced Responsive Video Embedder plugin. If you are interrested in additional features and/or want to support the work I do on this plugin please consider buying the Pro Addon. (This is a one time global admin message, there is also a widget on your dashboard you can hide if you want)</p>', ARVE_SLUG );
+		$pro_ad_message = __( '<p>Hi, this is Nico(las Jonas) the author of the ARVE - Advanced Responsive Video Embedder plugin. If you are interrested in additional features and/or want to support the work I do on this plugin please consider buying the Pro Addon.</p>', ARVE_SLUG );
 
 		$pro_ad_message .= file_get_contents( ARVE_PATH . 'admin/pro-ad.html' );
 
@@ -43,7 +43,7 @@ function arve_display_pro_ad() {
 function arve_widget_text() {
 
 	echo '<p>';
-	printf( '<a href="%s">Documentation</a>, ', 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/' );
+	printf( '<a href="%s">Documentation</a>, ', 'https://nextgenthemes.com/plugins/arve/documentation/' );
 	printf( '<a href="%s">Support</a>, ', 'https://nextgenthemes.com/support/' );
 	printf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=advanced-responsive-video-embedder' ), __( 'Settings', ARVE_SLUG ) );
 	echo '</p>';
@@ -65,23 +65,22 @@ function arve_add_dashboard_widget() {
 		'arve_widget_text'                    // Display function.
 	);
 
-	// Globalize the metaboxes array, this holds all the widgets for wp-admin
+	// Globalize the metaboxes array, this holds all the widgets for wp-admin.
 	global $wp_meta_boxes, $pagenow;
 
 	if( 'index.php' == $pagenow ) {
-
-		// Get the regular dashboard widgets array
-		// (which has our new widget already but at the end)
+		// Get the regular dashboard widgets array.
+		// (which has our new widget already but at the end).
 		$normal_dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
 
-		// Backup and delete our new dashboard widget from the end of the array
+		// Backup and delete our new dashboard widget from the end of the array.
 		$arve_widget_backup = array( 'arve_dashboard_widget' => $normal_dashboard['arve_dashboard_widget'] );
 		unset( $normal_dashboard['arve_dashboard_widget'] );
 
-		// Merge the two arrays together so our widget is at the beginning
+		// Merge the two arrays together so our widget is at the beginning.
 		$sorted_dashboard = array_merge( $arve_widget_backup, $normal_dashboard );
 
-		// Save the sorted array back into the original metaboxes
+		// Save the sorted array back into the original metaboxes.
 		$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
 	}
 }
@@ -493,7 +492,7 @@ function arve_params_section_description() {
 	$desc = sprintf(
 		__( 'This parameters will be added to the <code>iframe src</code> urls, you can control the video players behavior with them. Please read <a href="%s" target="_blank">the documentation</a> on.',
 		ARVE_SLUG ),
-		esc_url( 'https://nextgenthemes.com/advanced-responsive-video-embedder-pro/documentation' )
+		esc_url( 'https://nextgenthemes.com/arve/documentation' )
 	);
 
 	echo "<p>$desc</p>";

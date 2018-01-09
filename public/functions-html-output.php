@@ -80,6 +80,10 @@ function arve_build_meta_html( $atts ) {
 			$meta .= sprintf( '<meta itemprop="uploadDate" content="%s">', esc_attr( $atts['upload_date'] ) );
 		}
 
+		if ( ! empty( $atts['duration'] ) ) {
+			$meta .= sprintf( '<meta itemprop="duration" content="PT%s">', esc_attr( $atts['duration'] ) );
+		}
+
 		if( ! empty( $atts['img_src'] ) ) :
 
 			if( in_array( $atts['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ) {
