@@ -25,6 +25,8 @@ $options = arve_get_options();
 
 			<div class="arve-corner-spacer"></div>
 
+			<?php printf( '<p><big><strong><a href="%s">Hiring a Marketing Person</a></strong></big></p>', 'https://nextgenthemes.com/hiring-a-marketing-person/' ); ?>
+
 			<?php echo file_get_contents( ARVE_PATH . 'readme/html/19-description-features-pro-intro.html' ); ?>
 			<?php echo file_get_contents( ARVE_PATH . 'readme/html/20-description-features-pro.html' ); ?>
 
