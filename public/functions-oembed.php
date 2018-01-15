@@ -5,7 +5,7 @@ function arve_filter_oembed_fetch_url( $provider, $url, $args ) {
 	$url = arve_remove_query_array( $url, 'arve' );
 	$url = arve_remove_query_array( $url, 'arve-ifp' );
 
-	$provider = add_query_arg( 'url', urlencode( $url ), $provider );
+	$provider = add_query_arg( 'url', rawurlencode( $url ), $provider );
 
 	#d( "fetch" . $provider );
 
@@ -16,10 +16,10 @@ function arve_filter_oembed_dataparse( $result, $data, $url ) {
 
 	if ( $a = arve_oembed2args( $data ) ) {
 
-		$arve_url_query   = arve_extract_query_array( $url, 'arve' );
-		$a                = array_merge( $a, $arve_url_query );
-		$a['parameters']  = arve_extract_query_array( $url, 'arve-ifp' );
-		$a['oembed_data'] = $data;
+		$arve_url_query  = arve_extract_query_array( $url, 'arve' );
+		$a               = array_merge( $a, $arve_url_query );
+		$a['parameters'] = arve_extract_query_array( $url, 'arve-ifp' );
+		#$a['oembed_data'] = $data;
 		#$a['append_text'] = defined( 'ARVE_DEBUG' ) ? esc_html( wp_json_encode( $data ) ) : null;
 
 		return arve_shortcode_arve( $a );

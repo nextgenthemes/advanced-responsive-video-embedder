@@ -50,7 +50,7 @@ function arve_init() {
 	require_once __DIR__ . '/public/functions-url-handlers.php';
 	require_once __DIR__ . '/public/functions-validation.php';
 	require_once __DIR__ . '/shared/functions-misc.php';
-	require_once __DIR__ . '/shared/functions-remote-get.php';
+	require_once __DIR__ . '/shared/functions-remote-data.php';
 	require_once __DIR__ . '/shared/functions-properties.php';
 
 	add_action( 'plugins_loaded', 'arve_load_plugin_textdomain' );
