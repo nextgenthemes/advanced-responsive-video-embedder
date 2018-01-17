@@ -1,11 +1,14 @@
 <?php
 
-function arve_get_default_aspect_ratio( $aspect_ratio, $provider ) {
+function arve_get_default_aspect_ratio( $aspect_ratio, $a ) {
 
-	$properties = arve_get_host_properties();
+	if ( empty( $aspect_ratio ) && ! empty( $a['oembed_data']->width ) && ! empty( $a['oembed_data']->height ) ) {
+		return "{$a['oembed_data']->width}:{$a['oembed_data']->height}";
+	}
 
 	if ( empty( $aspect_ratio ) ) {
-		return $properties[ $provider ]['aspect_ratio'];
+		$properties = arve_get_host_properties();
+		return $properties[ $a['provider'] ]['aspect_ratio'];
 	}
 
 	return $aspect_ratio;

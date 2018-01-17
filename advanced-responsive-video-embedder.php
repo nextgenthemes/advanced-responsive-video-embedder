@@ -79,6 +79,7 @@ function arve_init() {
 	#add_filter( 'shortcode_atts_arve', 'arve_sc_filter_iframe_fallback', -4 );
 	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_validate', -2 );
 	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_get_media_gallery_thumbnail', 0 );
+	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_autoplay_off_after_ran_once' );
 	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_set_fixed_dimensions', 15 );
 	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_attr', 20 );
 	add_filter( 'shortcode_atts_arve', 'arve_sc_filter_build_tracks_html', 20 );

@@ -123,7 +123,7 @@ function arve_sc_filter_validate( $a ) {
 
 	$a['id'] = arve_id_fixes( $a['id'], $a['provider'] );
 
-	$a['aspect_ratio'] = arve_get_default_aspect_ratio( $a['aspect_ratio'], $a['provider'] );
+	$a['aspect_ratio'] = arve_get_default_aspect_ratio( $a['aspect_ratio'], $a );
 	$a['aspect_ratio'] = arve_aspect_ratio_fixes( $a['aspect_ratio'], $a['provider'], $a['mode'] );
 	$a['aspect_ratio'] = arve_validate_aspect_ratio( $a['aspect_ratio'] );
 
@@ -140,11 +140,30 @@ function arve_sc_filter_set_fixed_dimensions( $a ) {
 	return $a;
 }
 
+function arve_sc_filter_autoplay_off_after_ran_once( $a ) {
+
+	if ( 'normal' !== $a['mode'] ) {
+		return $a;
+	}
+
+	static $did_run = false;
+
+	if ( $did_run ) {
+		$a['autoplay'] = false;
+	}
+
+	if ( ! $did_run && $a['autoplay'] ) {
+		$did_run = true;
+	}
+
+	return $a;
+}
+
 function arve_sc_filter_sanitise( $atts ) {
 
 	foreach ( $atts as $key => $value ) {
 
-		if ( 'oembed_data' == $key || null === $value ) {
+		if ( 'oembed_data' === $key || null === $value ) {
 			continue;
 		}
 
