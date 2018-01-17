@@ -48,10 +48,9 @@ function arve_oembed2args( $data ) {
 	}
 
 	$a = array(
-		'provider'     => $provider,
-		'src'          => $matches[1],
-		'oembed_data'  => $data,
-		'aspect_ratio' => ( empty( $data->width ) || empty( $data->height ) ) ? null : "{$data->width}:{$data->height}",
+		'provider'    => $provider,
+		'src'         => $matches[1],
+		'oembed_data' => $data,
 	);
 
 	if ( 'facebook' === $provider ) {

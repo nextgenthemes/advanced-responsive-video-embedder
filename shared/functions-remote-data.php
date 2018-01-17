@@ -2,19 +2,19 @@
 
 function arve_remote_data( $args ) {
 
-	$defaults = array(
+	$default_args = array(
 		'method'         => 'get',
 		'url'            => '',
 		'json'           => true,
-		'wp_remote_args' => array(),
+		'wp_remote_args' => array(
+			'timeout'    => 5,
+			// Lets not tell them we are WordPress.
+			'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+		)
 	);
 
-	// Lets not tell them we are WordPress.
-	$default_args = array(
-		'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
-	);
-
-	$args = wp_parse_args( $args, $default_args );
+	$args                   = wp_parse_args( $args, $default_args );
+	$args['wp_remote_args'] = wp_parse_args( $args['wp_remote_args'], $default_args['wp_remote_args'] );
 
 	// retry with wp_safe_remote_get.
 	if ( 'post' === $args['method'] ) {
@@ -64,7 +64,6 @@ function arve_remote_data_cached( $args ) {
 		$args['cache_time'] = HOUR_IN_SECONDS;
 	}
 
-	$args           = wp_parse_args( $args, $defaults );
 	$transient_name = 'arve_remote_data_' . $args['url'];
 	$cache          = get_transient( $transient_name );
 

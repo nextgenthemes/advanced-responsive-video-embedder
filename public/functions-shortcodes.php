@@ -69,7 +69,6 @@ function arve_shortcode_arve( $input_atts, $content = null ) {
 		'aspect_ratio'  => null,
 		'autoplay'      => arve_bool_to_shortcode_string( $options['autoplay'] ),
 		'description'   => null,
-		'duration'      => null,
 		'disable_flash' => null,
 		'id'            => null,
 		'iframe_name'   => null,
@@ -78,11 +77,14 @@ function arve_shortcode_arve( $input_atts, $content = null ) {
 		'oembed_data'   => null,
 		'parameters'    => null,
 		'provider'      => null,
+		'append_text'   => null,
+		// Essential + schema
 		'src'           => null,
 		'thumbnail'     => null,
+		// schema
+		'duration'      => null,
 		'title'         => null,
 		'upload_date'   => null,
-		'append_text'   => null,
 		// <video>
 		'controls'      => 'y',
 		'controlslist'  => empty( $options['controlslist'] ) ? null : (string) $options['controlslist'],

@@ -3,6 +3,7 @@
 function arve_get_default_aspect_ratio( $aspect_ratio, $a ) {
 
 	if ( empty( $aspect_ratio ) && ! empty( $a['oembed_data']->width ) && ! empty( $a['oembed_data']->height ) ) {
+		d("{$a['oembed_data']->width}:{$a['oembed_data']->height}");
 		return "{$a['oembed_data']->width}:{$a['oembed_data']->height}";
 	}
 

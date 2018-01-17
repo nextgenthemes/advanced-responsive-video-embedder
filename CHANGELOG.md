@@ -12,6 +12,7 @@
 * Improved: Admin code reworked.
 * Improved: Update plugin-updater-class.
 * Improved: Removed jQuery dependency.
+* Improved: Prevent autoplay of multiple videos, only the first video on pageload will be autoplayed.
 
 ### 2017-08-16 - 8.7.2 ###
 
