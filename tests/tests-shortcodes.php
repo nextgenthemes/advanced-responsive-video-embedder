@@ -216,7 +216,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 				$this->assertArrayHasKey( 'id',  $test, $host_id );
 				$this->assertArrayHasKey( 'url', $test, $host_id );
 
-				preg_match( '#' . $host['regex'] . '#i', $test['url'], $matches );
+				preg_match( $host['regex'], $test['url'], $matches );
 
 				// fwrite( STDERR, 'Regex' . PHP_EOL );
 				// fwrite( STDERR, print_r( $host['regex'], true ) );
