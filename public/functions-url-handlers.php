@@ -11,7 +11,7 @@ function arve_create_url_handlers() {
 		};
 
 		if ( ! empty( $values['regex'] ) && empty( $values['use_oembed'] ) ) {
-			wp_embed_register_handler( 'arve_' . $provider, '#' . $values['regex'] . '#i', $function );
+			wp_embed_register_handler( 'arve_' . $provider, $values['regex'], $function );
 		}
 	}
 }

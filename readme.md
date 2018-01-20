@@ -18,7 +18,7 @@ This is likely the one and only plugin you will ever need to handle video embeds
 [youtube https://www.youtube.com/watch?v=m6mkA6Zr1vY ]
 
 *  [Official Page](https://nextgenthemes.com/plugins/arve-pro/)
-*  [GitHub Page](https://github.com/nextgenthemes/advanced-responsive-video-embedder/)
+*  [GitHub Page](https://github.com/nextgenthemes/arve/)
 *  [Documentation](https://nextgenthemes.com/plugins/arve/documentation/)
 
 If you find this plugin useful please [give it a 5 star review](https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/#new-post). It has 60000+ installs but only 100 reviews after over 5 years!
@@ -91,7 +91,7 @@ This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgen
 ### Thanks to the developers of the software used in ARVE ###
 
 *   [Shortcode UI](https://wordpress.org/plugins/shortcode-ui/), optional Plugin, utilized by ARVE
-*   [Lity Lightbox](http://sorgalla.com/lity/), used in [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#purchase)
+*   [Lity Lightbox](http://sorgalla.com/lity/), used in [Pro Addon](https://nextgenthemes.com/plugins/arve-pro/)
 
 ## Installation ##
 
