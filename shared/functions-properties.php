@@ -54,20 +54,20 @@ function arve_get_host_properties() {
 			)
 		),
 		'brightcove'   => array(
-			'regex'          => '#https?://(players|link)\.brightcove\.net/(?<brightcove_account>[0-9]+)/(?<brightcove_player>[a-z0-9]+)_(?<brightcove_embed>[a-z0-9]+)/index\.html\?videoId=(?<id>[0-9]+)#i',
+			'regex'          => '#https?://(players|link)\.brightcove\.net/(?<account_id>[0-9]+)/(?<brightcove_player>[a-z0-9]+)_(?<brightcove_embed>[a-z0-9]+)/index\.html\?videoId=(?<id>[0-9]+)#i',
 			'embed_url'      => 'https://players.brightcove.net/%s/%s_%s/index.html?videoId=%s',
 			'requires_src'   => true,
 			'tests' => array(
 				array(
 					'url' => 'http://players.brightcove.net/1160438696001/default_default/index.html?videoId=4587535845001',
-					'brightcove_account' =>                 1160438696001,
+					'account_id' =>                         1160438696001,
 					'brightcove_player'  =>                              'default',
 					'brightcove_embed'   =>                                      'default',
 					'id'                 =>                                                                  4587535845001,
 				),
 				array(
 					'url' => 'http://players.brightcove.net/5107476400001/B1xUkhW8i_default/index.html?videoId=5371391223001',
-					'brightcove_account' =>                 5107476400001,
+					'account_id' =>                         5107476400001,
 					'brightcove_player'  =>                              'B1xUkhW8i',
 					'brightcove_embed'   =>                                        'default',
 					'id'                 =>                                                                    5371391223001,

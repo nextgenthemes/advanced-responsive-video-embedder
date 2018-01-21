@@ -61,7 +61,7 @@ function arve_build_iframe_src( $a ) {
 	}
 
 	if ( 'brightcove' == $a['provider'] ) {
-		$src = sprintf( $pattern, $a['brightcove_account'], $a['brightcove_player'], $a['brightcove_embed'], $a['id'] );
+		$src = sprintf( $pattern, $a['account_id'], $a['brightcove_player'], $a['brightcove_embed'], $a['id'] );
 	} else {
 		$src = sprintf( $pattern, $a['id'] );
 	}

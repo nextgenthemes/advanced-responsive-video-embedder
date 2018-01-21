@@ -234,7 +234,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 				$this->assertEquals( $matches['id'], $test['id'], $test['url'] );
 
 				if ( 'brightcove' == $host_id ) {
-					$this->assertEquals( $matches['brightcove_account'], $test['brightcove_account'] );
+					$this->assertEquals( $matches['account_id'], $test['account_id'] );
 					$this->assertEquals( $matches['brightcove_player'],  $test['brightcove_player'] );
 					$this->assertEquals( $matches['brightcove_embed'],   $test['brightcove_embed'] );
 				}

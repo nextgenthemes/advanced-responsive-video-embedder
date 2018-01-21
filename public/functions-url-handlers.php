@@ -48,8 +48,14 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
 
 	$atts               = array_merge( (array) $old_atts, (array) $new_atts );
 	$atts['parameters'] = empty( $url_query ) ? null : build_query( $url_query );
-	$atts['id']         = $matches['id'];
 	$atts['provider']   = $provider;
+
+	foreach( $matches as $k => $v ) {
+
+		if ( ! is_numeric ( $k ) ) {
+			$atts[ $k ] = $matches[ $k ];
+		}
+	}
 
 	return arve_shortcode_arve( $atts );
 }
