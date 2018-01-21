@@ -164,12 +164,18 @@ function arve_get_host_properties() {
 					'url' => 'http://www.dailymotion.com/playlist/x3yk8p_PHIL-MDS_nature-et-environnement-2011/1#video=xm3x45',
 					'id'  =>                                     'x3yk8p',
 				)
-			)
+			),
 		),
 		'dtube' => array(
 			'use_oembed'        => false,
-			'regex'             => '%https?://d\.tube/#!/v/(?<id>[^*]+)%i',
+			'regex'             => '%https?://d\.tube/#!/v/(?<id>[^"]+)%i',
 			'embed_url'         => 'https://emb.d.tube/#!/%s',
+			'tests' => array(
+				array(
+					'url' => 'https://d.tube/#!/v/exyle/bgc244pb',
+					'id'  =>                     'exyle/bgc244pb',
+				)
+			),
 		),
 		'facebook' => array(
 			'use_oembed'        => true,
