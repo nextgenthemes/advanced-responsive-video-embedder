@@ -64,44 +64,52 @@ function arve_shortcode_arve( $input_atts, $content = null ) {
 	$input_atts = (array) $input_atts;
 
 	$pairs = array(
-		'align'         => $options['align'],
-		'arve_link'     => arve_bool_to_shortcode_string( $options['promote_link'] ),
-		'aspect_ratio'  => null,
-		'autoplay'      => arve_bool_to_shortcode_string( $options['autoplay'] ),
-		'description'   => null,
-		'disable_flash' => null,
-		'id'            => null,
-		'iframe_name'   => null,
-		'maxwidth'      => (string) $options['video_maxwidth'],
-		'mode'          => $options['mode'],
-		'oembed_data'   => null,
-		'parameters'    => null,
-		'provider'      => null,
-		'append_text'   => null,
+		// arve visual options
+		'align'             => $options['align'],
+		'aspect_ratio'      => null,
+		'arve_link'         => arve_bool_to_shortcode_string( $options['promote_link'] ),
+		'disable_flash'     => null,
+		'maxwidth'          => (string) $options['video_maxwidth'],
+		'mode'              => $options['mode'],
+		// url query
+		'autoplay'          => arve_bool_to_shortcode_string( $options['autoplay'] ),
+		'parameters'        => null,
+		// old shortcodes, manual, no oembed
+		'provider'          => null,
+		'id'                => null,
+		'account_id'        => null,
+		'brightcove_player' => 'default',
+		'brightcove_embed'  => 'default',
 		// Essential + schema
-		'src'           => null,
-		'thumbnail'     => null,
+		'src'               => null,
+		'thumbnail'         => null,
 		// schema
-		'duration'      => null,
-		'title'         => null,
-		'upload_date'   => null,
+		'description'       => null,
+		'duration'          => null,
+		'title'             => null,
+		'upload_date'       => null,
 		// <video>
-		'controls'      => 'y',
-		'controlslist'  => empty( $options['controlslist'] ) ? null : (string) $options['controlslist'],
-		'loop'          => 'n',
-		'm4v'           => null,
-		'mp4'           => null,
-		'muted'         => null,
-		'ogv'           => null,
-		'playsinline'   => null,
-		'preload'       => 'metadata',
-		'webm'          => null,
+		'controls'          => 'y',
+		'controlslist'      => empty( $options['controlslist'] ) ? null : (string) $options['controlslist'],
+		'loop'              => 'n',
+		'm4v'               => null,
+		'mp4'               => null,
+		'muted'             => null,
+		'ogv'               => null,
+		'playsinline'       => null,
+		'preload'           => 'metadata',
+		'webm'              => null,
 		// TED only
-		'lang'          => null,
+		'lang'              => null,
 		// Vimeo only
-		'start'         => null,
+		'start'             => null,
 		// deprecated, title should be used
-		'link_text'     => null,
+		'link_text'         => null,
+		// misc
+		'oembed_data'       => null,
+		'iframe_name'       => null,
+		// debug
+		'append_text'       => null,
 	);
 
 	for ( $n = 1; $n <= 10; $n++ ) {
