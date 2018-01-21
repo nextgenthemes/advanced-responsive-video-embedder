@@ -163,7 +163,7 @@ function arve_sc_filter_sanitise( $atts ) {
 
 	foreach ( $atts as $key => $value ) {
 
-		if ( 'oembed_data' === $key || null === $value ) {
+		if ( 'oembed_data' === $key || 'parameters' === $key || null === $value ) {
 			continue;
 		}
 
