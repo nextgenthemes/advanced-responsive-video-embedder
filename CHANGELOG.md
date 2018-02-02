@@ -4,6 +4,11 @@
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2018-02-02 - 8.7.8 ###
+
+* No longer try to guess and spam autoplay parameters for general iframe embeds.
+* Fix: Google drive embeds not working.
+
 ### 2018-01-09 - 8.7.7 ###
 
 * New: `duration` shortcode attribute and dialog entry.
