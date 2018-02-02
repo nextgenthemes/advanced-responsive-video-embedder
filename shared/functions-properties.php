@@ -167,8 +167,9 @@ function arve_get_host_properties() {
 			),
 		),
 		'dtube' => array(
+			'name'              => 'd.tube',
 			'use_oembed'        => false,
-			'regex'             => '%https?://d\.tube/#!/v/(?<id>[^"]+)%i',
+			'regex'             => '%https?://d\.tube(/#!)?/v/(?<id>[^"]+)%i',
 			'embed_url'         => 'https://emb.d.tube/#!/%s',
 			'tests' => array(
 				array(
