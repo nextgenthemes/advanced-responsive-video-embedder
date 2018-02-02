@@ -172,17 +172,15 @@ function arve_add_autoplay_query_arg( $src, $a ) {
 	}
 }
 
-function arve_add_query_args_to_iframe_src( $src, $atts ) {
+function arve_add_query_args_to_iframe_src( $src, $a ) {
 
 	$options = arve_get_options();
 
-	$host = $atts['provider'];
-
-	$parameters        = wp_parse_args( preg_replace( '!\s+!', '&', trim( $atts['parameters'] ) ) );
+	$parameters        = wp_parse_args( preg_replace( '!\s+!', '&', $a['parameters'] ) );
 	$option_parameters = array();
 
-	if ( isset( $options['params'][ $host ] ) ) {
-		$option_parameters = wp_parse_args( preg_replace( '!\s+!', '&', trim( $options['params'][ $host ] ) ) );
+	if ( isset( $options['params'][ $a['provider'] ] ) ) {
+		$option_parameters = wp_parse_args( preg_replace( '!\s+!', '&', $options['params'][ $a['provider'] ] ) );
 	}
 
 	$parameters = wp_parse_args( $parameters, $option_parameters );

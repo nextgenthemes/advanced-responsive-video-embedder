@@ -132,7 +132,11 @@ function arve_sc_filter_validate( $a ) {
 
 function arve_sc_filter_set_fixed_dimensions( $a ) {
 
-	$width = 480;
+	if ( ! empty( $a['oembed_data']->width ) ) {
+		$width = $a['oembed_data']->width;
+	} else {
+		$width = 640;
+	}
 
 	$a['width']  = $width;
 	$a['height'] = arve_calculate_height( $width, $a['aspect_ratio'] );

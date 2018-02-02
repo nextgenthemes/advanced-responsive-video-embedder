@@ -216,7 +216,7 @@ function arve_create_video_tag( $a ) {
 	$html = sprintf(
 		'<video%s>%s%s</video>',
 		arve_attr( $a['video_attr'] ),
-		$a['video_sources_html'],
+		empty( $a['video_sources_html'] ) ? '' : $a['video_sources_html'],
 		$a['video_tracks_html']
 	);
 

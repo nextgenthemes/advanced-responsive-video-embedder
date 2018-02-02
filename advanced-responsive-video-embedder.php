@@ -64,7 +64,6 @@ function arve_init() {
 	add_action( 'wp_video_shortcode_override', 'arve_wp_video_shortcode_override', 10, 4 );
 
 	add_filter( 'oembed_dataparse',    'arve_filter_oembed_dataparse', 11, 3 );
-	add_filter( 'oembed_fetch_url',    'arve_filter_oembed_fetch_url', 999, 3 );
 	add_filter( 'embed_oembed_html',   'arve_maybe_enqueue' );
 	add_filter( 'embed_handler_html',  'arve_maybe_enqueue' );
 

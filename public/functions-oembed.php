@@ -1,24 +1,31 @@
 <?php
+/*
+add_filter( 'oembed_fetch_url',    'arve_filter_oembed_fetch_url', 999, 3 );
 
 function arve_filter_oembed_fetch_url( $provider, $url, $args ) {
+
+	d($url);
 
 	$url = arve_remove_query_array( $url, 'arve' );
 	$url = arve_remove_query_array( $url, 'arve-ifp' );
 
-	$provider = add_query_arg( 'url', rawurlencode( $url ), $provider );
+	$provider = add_query_arg( 'url', urlencode( $url ), $provider );
 
-	#d( "fetch" . $provider );
+	dd($url);
 
 	return $provider;
 }
+*/
 
 function arve_filter_oembed_dataparse( $result, $data, $url ) {
 
-	if ( $a = arve_oembed2args( $data ) ) {
+	if ( $a = arve_oembed2args( $data, $url ) ) {
 
+		/*
 		$arve_url_query  = arve_extract_query_array( $url, 'arve' );
 		$a               = array_merge( $a, $arve_url_query );
 		$a['parameters'] = arve_extract_query_array( $url, 'arve-ifp' );
+		*/
 
 		return arve_shortcode_arve( $a );
 	}
@@ -27,7 +34,7 @@ function arve_filter_oembed_dataparse( $result, $data, $url ) {
 }
 
 
-function arve_oembed2args( $data ) {
+function arve_oembed2args( $data, $url ) {
 
 	if ( false === $data || 'video' !== $data->type ) {
 		return false;
@@ -46,6 +53,7 @@ function arve_oembed2args( $data ) {
 	}
 
 	$a = array(
+		'url'         => $url,
 		'provider'    => $provider,
 		'src'         => $matches[1],
 		'oembed_data' => $data,
@@ -55,7 +63,7 @@ function arve_oembed2args( $data ) {
 		$a['src'] = 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $matches[1] );
 	}
 
-	return $a;
+	return apply_filters( 'arve_oembed2args', $a );
 }
 
 function arve_extract_query_array( $url, $key ) {

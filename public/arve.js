@@ -36,8 +36,6 @@
 
 		qsa( '.arve-iframe, .arve-video' ).forEach(
 			function( el ) {
-				el.removeAttribute( 'width' );
-				el.removeAttribute( 'height' );
 				el.removeAttribute( 'style' );
 			}
 		);

@@ -2,7 +2,15 @@
 
 function arve_shortcode( $a, $content = null ) {
 
+	/*
 	if ( ! empty( $a['url'] ) && $mayme_arve_html = arve_check_for_embed( $a ) ) {
+		return $mayme_arve_html;
+	}
+	*/
+
+	$embed_check = new ARVE_Embed_Checker( $a );
+
+	if ( ! empty( $a['url'] ) && $mayme_arve_html = $embed_check->check() ) {
 		return $mayme_arve_html;
 	}
 
@@ -20,7 +28,33 @@ function arve_shortcode( $a, $content = null ) {
 	return arve_shortcode_arve( $a, $content );
 }
 
-function arve_check_for_embed( $a ) {
+class ARVE_Embed_Checker {
+
+	public $shortcode_args = array();
+
+	public function __construct( $shortcode_args ) {
+		$this->shortcode_args = $shortcode_args;
+	}
+
+	public function check() {
+		add_filter( 'arve_oembed2args', array( $this, 'oembed2args' ) );
+		$maybe_arve_html = $GLOBALS['wp_embed']->shortcode( array(), $this->shortcode_args['url'] );
+		remove_filter( 'arve_oembed2args', array( $this, 'oembed2args' ) );
+
+		if ( arve_contains( $maybe_arve_html, 'class="arve-wrapper' ) ) {
+			return $maybe_arve_html;
+		};
+
+		return false;
+	}
+
+	public function oembed2args( $shortcode_args ) {
+		$shortcode_args = array_merge( $shortcode_args, $this->shortcode_args );
+		return $shortcode_args;
+	}
+}
+
+function aarve_check_for_embed( $a ) {
 
 	$url = $a['url'];
 	unset( $a['url'] );
@@ -146,7 +180,6 @@ function arve_shortcode_arve( $input_atts, $content = null ) {
 	return arve_get_debug_info( $output, $atts, $input_atts ) . $output;
 }
 
-
 /**
  * Create all shortcodes at a late stage because people over and over again using this plugin toghter with jetback or
  * other plugins that handle shortcodes we will now overwrite all this suckers.
@@ -169,7 +202,7 @@ function arve_create_shortcodes() {
 		add_shortcode( $shortcode, $function );
 	}
 
-	add_shortcode( 'arve',                'arve_shortcode' );
+	add_shortcode( 'arve', 'arve_shortcode' );
 }
 
 function arve_wp_video_shortcode_override( $out, $attr, $content, $instance ) {
