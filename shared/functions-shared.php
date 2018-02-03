@@ -14,6 +14,9 @@ function arve_get_options_defaults( $section ) {
 		'last_settings_tab'   => '',
 		'wp_video_override'   => true,
 		'controlslist'        => 'nodownload',
+		'vimeo_client_identifier' => '',
+		'vimeo_client_secret' => '',
+		'vimeo_oauth_token'   => '',
 	);
 
 	$properties = arve_get_host_properties();
@@ -341,6 +344,20 @@ function arve_get_settings_definitions() {
 				'yes' => esc_html__( 'Yes', ARVE_SLUG ),
 			),
 			'description' => esc_html__( 'Mute HTML5 video.', ARVE_SLUG ),
+		),
+		array(
+			'hide_from_sc' => true,
+			'attr'  => 'vimeo_client_identifier',
+			'label' => esc_html__( 'Video Client Identifier', ARVE_SLUG ),
+			'type'  => 'text',
+			'description' => esc_html__( 'Can be used by addons.', ARVE_SLUG ),
+		),
+		array(
+			'hide_from_sc' => true,
+			'attr'  => 'vimeo_client_secret',
+			'label' => esc_html__( 'Video Client Secret', ARVE_SLUG ),
+			'type'  => 'text',
+			'description' => esc_html__( 'Can be used by addons.', ARVE_SLUG ),
 		),
 	);
 }

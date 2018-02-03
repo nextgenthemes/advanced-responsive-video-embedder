@@ -346,7 +346,7 @@ function arve_register_settings() {
 				'label_for'   => ( 'radio' === $value['type'] ) ? null : "arve_options_main[{$value['attr']}]",
 				'input_attr'  => $value['meta'] + array(
 					'type'        => $value['type'],
-					'value'       => $options[ $value['attr'] ],
+					'value'       => $options[ $value['attr'] ], d($value['attr']),
 					'id'          => "arve_options_main[{$value['attr']}]",
 					'name'        => "arve_options_main[{$value['attr']}]",
 				),
@@ -549,6 +549,30 @@ function arve_debug_section_description() {
 	include_once( plugin_dir_path( __FILE__ ) . 'html-debug-info.php' );
 }
 
+function arve_get_vimeo_oauth_token( $identifier, $secret ) {
+
+	if( empty( $identifier ) || empty( $secret ) ) {
+		return false;
+	}
+
+	$options = arve_get_options();
+	$vimeo   = new ARVE_Vimeo();
+
+	if(
+		$options[ 'vimeo_client_identifier' ] !== $identifier ||
+		$options[ 'vimeo_client_secret' ] !== $secret ||
+		empty( $options[ 'oauth_token' ] )
+	) {
+		$token = $vimeo->get_unauth_token();
+		if( ! is_wp_error( $token ) ) {
+			return $token;
+		} else {
+			set_transient( 'arve_vimeo_api_error', $token->get_error_message(), $expiration = 60 );
+			return false;
+		}
+	}
+}
+
 /**
  *
  *
@@ -556,17 +580,21 @@ function arve_debug_section_description() {
  */
 function arve_validate_options_main( $input ) {
 
-	//* Storing the Options Section as a empty array will cause the plugin to use defaults
+	// Storing the Options Section as a empty array will cause the plugin to use defaults
 	if( isset( $input['reset'] ) ) {
 		return array();
 	}
 
 	$output = array();
 
-	$output['align']              = sanitize_text_field( $input['align'] );
-	$output['mode']               = sanitize_text_field( $input['mode'] );
-	$output['last_settings_tab']  = sanitize_text_field( $input['last_settings_tab'] );
-	$output['controlslist']       = sanitize_text_field( $input['controlslist'] );
+	$output['align']                   = sanitize_text_field( $input['align'] );
+	$output['mode']                    = sanitize_text_field( $input['mode'] );
+	$output['last_settings_tab']       = sanitize_text_field( $input['last_settings_tab'] );
+	$output['controlslist']            = sanitize_text_field( $input['controlslist'] );
+	$output['vimeo_client_identifier'] = sanitize_text_field( $input['vimeo_client_identifier'] );
+	$output['vimeo_client_secret']     = sanitize_text_field( $input['vimeo_client_secret'] );
+
+	$output['vimeo_oauth_token'] = arve_get_vimeo_oauth_token( $output['vimeo_client_identifier'], $output['vimeo_client_secret'] );
 
 	$output['autoplay']          = ( 'yes' == $input['autoplay'] )          ? true : false;
 	$output['promote_link']      = ( 'yes' == $input['promote_link'] )      ? true : false;
@@ -585,13 +613,13 @@ function arve_validate_options_main( $input ) {
 	}
 
 	$options_defaults = arve_get_options_defaults( 'main' );
-	//* Store only the options in the database that are different from the defaults.
+	// Store only the options in the database that are different from the defaults.
 	return array_diff_assoc( $output, $options_defaults );
 }
 
 function arve_validate_options_params( $input ) {
 
-	//* Storing the Options Section as a empty array will cause the plugin to use defaults
+	// Storing the Options Section as a empty array will cause the plugin to use defaults
 	if( isset( $input['reset'] ) ) {
 		return array();
 	}

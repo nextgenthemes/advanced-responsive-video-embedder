@@ -63,6 +63,7 @@ function arve_init() {
 	require_once __DIR__ . '/public/functions-url-handlers.php';
 	require_once __DIR__ . '/public/functions-validation.php';
 	require_once __DIR__ . '/shared/functions-shared.php';
+	require_once __DIR__ . '/shared/class-arve-vimeo.php';
 
 	add_action( 'plugins_loaded', 'arve_load_plugin_textdomain' );
 
