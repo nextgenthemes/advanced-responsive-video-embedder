@@ -104,7 +104,7 @@ abstract class ARVE_Vimeo_Base{
 		}
 
 		$redirect = self::ENDPOINT . self::AUTH_REDIRECT;
-		if( !$state ){
+		if( !$state ) {
 			$state = time();
 		}
 
@@ -190,34 +190,39 @@ class ARVE_Vimeo extends ARVE_Vimeo_Base{
 	 * Constructor, fires up the parent by providing it with
 	 * client ID, secret and token, if any
 	 */
-	public function __construct( $args = array() ){
+	public function __construct( $args = array() ) {
 		// set plugin settings
-		$this->settings = cvm_get_settings();
+		$this->settings = arve_get_options();
 		// set the token
 		$token = null;
-		if( !empty( $this->settings['oauth_secret'] ) ){
+		if( ! empty( $this->settings['oauth_secret'] ) ) {
 			$token = $this->settings['oauth_secret'];
-		}else if( !empty( $this->settings['oauth_token'] ) ){
-			$token = $this->settings['oauth_token'];
+		} elseif ( ! empty( $option_token = get_option( 'arve_vimeo_oauth_token' ) ) ) {
+			$token = $option_token;
 		}
 		// set up redirect URL
-		$redirect_url = admin_url( 'edit.php?post_type=' . cvm_get_post_type() . '&page=cvm_settings' );
+		$redirect_url = admin_url( 'options-general.php?page=advanced-responsive-video-embedder' );
 		// start the parent
-		parent::__construct( $this->settings['vimeo_consumer_key'], $this->settings['vimeo_secret_key'], $token, $redirect_url );
+		parent::__construct(
+			$this->settings['vimeo_client_identifier'],
+			$this->settings['vimeo_client_secret'],
+			$token,
+			$redirect_url
+		);
 
 		if( !$args ){
 			return;
 		}
 
 		$default = array(
-			'feed' 		=> '', 			// feed type; can be album, channel, user or video
+			'feed' 		=> 'video', 	// feed type; can be album, channel, user or video
 			'feed_id'	=> false, 		// vimeo ID for feed
 			'feed_type' => 'videos', 	// vimeo method to query for ( videos, likes, all, appears )
 			'sort'		=> 'new',		// video sorting
 			'page'		=> 1,			// current page number
-			'per_page'	=> 20,			// items per page
+			'per_page'	=> 999,			// items per page
 			// these shouldn't need to be changed
-			'response'		=> 'json'
+			'response'  => 'json'
 		);
 
 		$this->params = wp_parse_args( $args, $default );
@@ -245,7 +250,7 @@ class ARVE_Vimeo extends ARVE_Vimeo_Base{
 		$endpoint = $this->_get_endpoint( $this->params['feed'] , $this->params['feed_id'], $this->params['page'], $args );
 
 		// send a debug message for any client listening to plugin messages
-		_cvm_debug_message( sprintf( __( 'Making remote request to: %s.', 'codeflavors-vimeo-video-post-lite' ), $endpoint ) );
+		#_cvm_debug_message( sprintf( __( 'Making remote request to: %s.', 'codeflavors-vimeo-video-post-lite' ), $endpoint ) );
 
 		$request = wp_remote_get( $endpoint, array(
 			'headers' => array(
@@ -257,6 +262,7 @@ class ARVE_Vimeo extends ARVE_Vimeo_Base{
 		$rate_limit = wp_remote_retrieve_header( $request, 'x-ratelimit-limit' );
 		if( $rate_limit ){
 			// send a debug message for any client listening to plugin messages
+			/*
 			_cvm_debug_message(
 				sprintf(
 					__( 'Current rate limit: %s (%s remaining). Limit reset time set at %s.', 'codeflavors-vimeo-video-post-lite' ),
@@ -265,6 +271,7 @@ class ARVE_Vimeo extends ARVE_Vimeo_Base{
 					wp_remote_retrieve_header( $request , 'x-ratelimit-reset' )
 				)
 			);
+			*/
 		}
 
 		// get request data

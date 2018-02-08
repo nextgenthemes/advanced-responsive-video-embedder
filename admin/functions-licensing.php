@@ -171,13 +171,19 @@ function nextgenthemes_get_products() {
 			'name'    => 'Advanced Responsive Video Embedder Pro',
 			'type'    => 'plugin',
 			'author'  => 'Nicolas Jonas',
-			'url'     => 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/',
+			'url'     => 'https://nextgenthemes.com/plugins/arve-pro/',
 		),
 		'arve_amp' => array(
 			'name'   => 'ARVE Accelerated Mobile Pages Addon',
 			'type'   => 'plugin',
 			'author' => 'Nicolas Jonas',
-			'url'    => 'https://nextgenthemes.com/plugins/arve-accelerated-mobile-pages-addon/',
+			'url'    => 'https://nextgenthemes.com/plugins/arve-amp/',
+		),
+		'arve_random_video' => array(
+			'name'   => 'ARVE Random Video',
+			'type'   => 'plugin',
+			'author' => 'Nicolas Jonas',
+			'url'    => 'https://nextgenthemes.com/plugins/arve-random-video/',
 		)
 	);
 
@@ -192,6 +198,16 @@ function nextgenthemes_get_products() {
 
 		$version_define = strtoupper( $key ) . '_VERSION';
 		$file_define    = strtoupper( $key ) . '_FILE';
+
+		if( defined( $version_define ) ) {
+			$products[ $key ]['version'] = constant( $version_define );
+		}
+		if( defined( $file_define ) ) {
+			$products[ $key ]['file'] = constant( $file_define );
+		}
+
+		$version_define = "\\nextgenthemes\\$key\\VERSION";
+		$file_define    = "\\nextgenthemes\\$key\\FILE";
 
 		if( defined( $version_define ) ) {
 			$products[ $key ]['version'] = constant( $version_define );

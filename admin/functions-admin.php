@@ -341,12 +341,12 @@ function arve_register_settings() {
 			$value['label'],                       // title
 			$callback_function,                    // callback
 			ARVE_SLUG,                             // page
-			'main_section',                    // section
-			array(                             // args
+			'main_section',                        // section
+			array(                                 // args
 				'label_for'   => ( 'radio' === $value['type'] ) ? null : "arve_options_main[{$value['attr']}]",
 				'input_attr'  => $value['meta'] + array(
 					'type'        => $value['type'],
-					'value'       => $options[ $value['attr'] ], d($value['attr']),
+					'value'       => $options[ $value['attr'] ],
 					'id'          => "arve_options_main[{$value['attr']}]",
 					'name'        => "arve_options_main[{$value['attr']}]",
 				),
@@ -549,27 +549,40 @@ function arve_debug_section_description() {
 	include_once( plugin_dir_path( __FILE__ ) . 'html-debug-info.php' );
 }
 
-function arve_get_vimeo_oauth_token( $identifier, $secret ) {
+function arve_maybe_vimeo_oauth_update_trigger( $identifier, $secret ) {
 
 	if( empty( $identifier ) || empty( $secret ) ) {
-		return false;
+		return;
 	}
 
 	$options = arve_get_options();
-	$vimeo   = new ARVE_Vimeo();
 
-	if(
+	if (
 		$options[ 'vimeo_client_identifier' ] !== $identifier ||
-		$options[ 'vimeo_client_secret' ] !== $secret ||
-		empty( $options[ 'oauth_token' ] )
+		$options[ 'vimeo_client_secret' ]     !== $secret ||
+		empty( get_option( 'arve_vimeo_oauth_token' ) )
 	) {
-		$token = $vimeo->get_unauth_token();
-		if( ! is_wp_error( $token ) ) {
-			return $token;
-		} else {
-			set_transient( 'arve_vimeo_api_error', $token->get_error_message(), $expiration = 60 );
-			return false;
-		}
+		set_transient( 'arve_update_oauth_token', 'update_needed' );
+	}
+}
+
+function arve_update_vimeo_oauth_token() {
+
+	if ( ! get_transient( 'arve_update_oauth_token' ) ) {
+		delete_transient( 'arve_update_oauth_token' );
+		return;
+	}
+	delete_transient( 'arve_update_oauth_token' );
+
+	$vimeo = new ARVE_Vimeo;
+	$token = $vimeo->get_unauth_token();
+
+	if( ! is_wp_error( $token ) ) {
+		d( $token );
+		update_option( 'arve_vimeo_oauth_token', $token );
+		return __( 'Successfully set Vimeo oauth token', 'advanced-responsive-video-embedder' );
+	} else {
+		return $token->get_error_message();
 	}
 }
 
@@ -594,7 +607,7 @@ function arve_validate_options_main( $input ) {
 	$output['vimeo_client_identifier'] = sanitize_text_field( $input['vimeo_client_identifier'] );
 	$output['vimeo_client_secret']     = sanitize_text_field( $input['vimeo_client_secret'] );
 
-	$output['vimeo_oauth_token'] = arve_get_vimeo_oauth_token( $output['vimeo_client_identifier'], $output['vimeo_client_secret'] );
+	arve_maybe_vimeo_oauth_update_trigger( $output['vimeo_client_identifier'], $output['vimeo_client_secret'] );
 
 	$output['autoplay']          = ( 'yes' == $input['autoplay'] )          ? true : false;
 	$output['promote_link']      = ( 'yes' == $input['promote_link'] )      ? true : false;
