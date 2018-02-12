@@ -19,8 +19,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 
 [youtube https://www.youtube.com/watch?v=m6mkA6Zr1vY ]
 
-Make sure to check out the [official page](https://nextgenthemes.com/plugins/arve-pro/) for examples of the plugin and everything about it.
+**I could really use some positive reviews. It has been over 6 month without a positive review.** The top level menu that was complained about a lot has been removed. I am working on a big update that will make ARVE even better with automatic detection of aspect ratios, better caching and lots of improved code.
 
-*  [Official Page](https://nextgenthemes.com/plugins/arve-pro/)
 *  [GitHub Page](https://github.com/nextgenthemes/arve/)
 *  [Documentation](https://nextgenthemes.com/plugins/arve/documentation/)

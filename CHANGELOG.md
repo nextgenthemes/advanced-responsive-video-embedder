@@ -4,11 +4,13 @@
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+**I could really use some positive reviews. It has been over 6 month without a positive review.** The top level menu that was complained about a lot has been removed. I am working on a big update that will make ARVE even better with automatic detection of aspect ratios, better caching and lots of improved code.
+
 ### 2018-02-12 - 8.8.0 ###
 
-* Added options fields for Vimeo API used in upcoming addons.
-* Removed NextGenThemes top level menu and ads page because to many complaints.
-* Moved licensing settings page to 'settings' menu.
+* New: Added options fields for Vimeo API used in upcoming addons.
+* Improved: Removed NextGenThemes top level menu and ads page because to many complaints.
+* Improved: Moved licensing settings page to 'settings' menu.
 
 ### 2018-02-02 - 8.7.8 ###
 
