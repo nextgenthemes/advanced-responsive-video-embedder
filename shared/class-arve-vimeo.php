@@ -194,10 +194,12 @@ class ARVE_Vimeo extends ARVE_Vimeo_Base{
 		// set plugin settings
 		$this->settings = arve_get_options();
 		// set the token
-		$token = null;
-		if( ! empty( $this->settings['oauth_secret'] ) ) {
-			$token = $this->settings['oauth_secret'];
-		} elseif ( ! empty( $option_token = get_option( 'arve_vimeo_oauth_token' ) ) ) {
+		$token        = null;
+		$option_token = get_option( 'arve_vimeo_oauth_token' );
+
+		if ( ! empty( $this->settings['vimeo_client_secret'] ) ) {
+			$token = $this->settings['vimeo_client_secret'];
+		} elseif ( ! empty( $option_token ) ) {
 			$token = $option_token;
 		}
 		// set up redirect URL
@@ -210,7 +212,7 @@ class ARVE_Vimeo extends ARVE_Vimeo_Base{
 			$redirect_url
 		);
 
-		if( !$args ){
+		if( ! $args ){
 			return;
 		}
 

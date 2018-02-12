@@ -579,7 +579,6 @@ function arve_update_vimeo_oauth_token() {
 	$token = $vimeo->get_unauth_token();
 
 	if( ! is_wp_error( $token ) ) {
-		d( $token );
 		update_option( 'arve_vimeo_oauth_token', $token );
 		return __( 'Successfully set Vimeo oauth token', 'advanced-responsive-video-embedder' );
 	} else {
