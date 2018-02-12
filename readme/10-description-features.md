@@ -6,7 +6,7 @@
 *   New improved dialog for embedding videos.
 *   Magically makes those url embedded videos responsive.
 *   No 'lock in' if do not use shortcodes and use providers WordPress already supports.
-*   Supports [almost every video host](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#video-host-support) that supports iframe embed codes.
+*   Supports [almost every video host](https://nextgenthemes.com/plugins/arve-pro/#support-table) that supports iframe embed codes.
 *   Embeds via pasting the URL in its own line just like WordPress!
 *   Optionally use very powerful Shortcodes instead.
 *   Clean shortcode syntax `[arve url="https://youtu.be/yUCFRL43Zm4" align="left" parameters="start=30" ... /]`, no unnecessary shortcode wrapping.
