@@ -200,6 +200,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 **I could really use some positive reviews. It has been over 6 month without a positive review.** The top level menu that was complained about a lot has been removed. I am working on a big update that will make ARVE even better with automatic detection of aspect ratios, better caching and lots of improved code.
 
+### 2018-02-12 - 8.8.1 ###
+
+* Fix: `Can’t use function return value in write context`, white screen of deaths type error from the last update.
+
 ### 2018-02-12 - 8.8.0 ###
 
 * New: Added options fields for Vimeo API used in upcoming addons.

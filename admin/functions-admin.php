@@ -555,12 +555,13 @@ function arve_maybe_vimeo_oauth_update_trigger( $identifier, $secret ) {
 		return;
 	}
 
-	$options = arve_get_options();
+	$options           = arve_get_options();
+	$vimeo_oauth_token = get_option( 'arve_vimeo_oauth_token' );
 
 	if (
 		$options[ 'vimeo_client_identifier' ] !== $identifier ||
 		$options[ 'vimeo_client_secret' ]     !== $secret ||
-		empty( get_option( 'arve_vimeo_oauth_token' ) )
+		empty( $vimeo_oauth_token )
 	) {
 		set_transient( 'arve_update_oauth_token', 'update_needed' );
 	}
