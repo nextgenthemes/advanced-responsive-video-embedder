@@ -350,14 +350,14 @@ function arve_get_settings_definitions() {
 			'attr'  => 'vimeo_client_identifier',
 			'label' => esc_html__( 'Video Client Identifier', ARVE_SLUG ),
 			'type'  => 'text',
-			'description' => esc_html__( 'Can be used by addons.', ARVE_SLUG ),
+			'description' => esc_html__( 'Leave blank until asked, can be used by addons.', ARVE_SLUG ),
 		),
 		array(
 			'hide_from_sc' => true,
 			'attr'  => 'vimeo_client_secret',
 			'label' => esc_html__( 'Video Client Secret', ARVE_SLUG ),
 			'type'  => 'text',
-			'description' => esc_html__( 'Can be used by addons.', ARVE_SLUG ),
+			'description' => esc_html__( 'Leave blank until asked, can be used by addons.', ARVE_SLUG ),
 		),
 	);
 }

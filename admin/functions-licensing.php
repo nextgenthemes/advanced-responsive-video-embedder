@@ -250,36 +250,12 @@ function nextgenthemes_is_plugin_installed( $plugin_basename ) {
  */
 function nextgenthemes_menus() {
 
- 	$plugin_screen_hook_suffix = add_menu_page(
- 		__( 'Nextgenthemes', ARVE_SLUG ), # Page Title
- 		__( 'Nextgenthemes', ARVE_SLUG ), # Menu Tile
- 		'manage_options',                 # capability
- 		'nextgenthemes',                  # menu-slug
- 		'nextgenthemes_ads_page',         # function
-		'dashicons-video-alt3',           # icon_url
-		'80.892'                          # position
- 	);
-
-	/*
-  add_submenu_page(
-    'nextgenthemes',                      # parent_slug
-    __( 'Addons and Themes', ARVE_SLUG ), # Page Title
-    __( 'Addons and Themes', ARVE_SLUG ), # Menu Tile
-    'manage_options',                     # capability
-    'nextgenthemes',                      # menu-slug
-    function() {
-      require_once plugin_dir_path( __FILE__ ) . 'html-ad-page.php';
-    }
-  );
-	*/
-
-	add_submenu_page(
-		'nextgenthemes',              # parent_slug
-		__( 'Licenses', ARVE_SLUG ),  # Page Title
-		__( 'Licenses', ARVE_SLUG ),  # Menu Tile
-		'manage_options',             # capability
-		'nextgenthemes-licenses',     # menu-slug
-		'nextgenthemes_licenses_page' # function
+	$plugin_screen_hook_suffix = add_options_page(
+		__( 'ARVE Licenses', ARVE_SLUG ),
+		__( 'ARVE Licenses', ARVE_SLUG ),
+		'manage_options',
+		'nextgenthemes-licenses',
+		'nextgenthemes_licenses_page'
 	);
 }
 

@@ -4,6 +4,12 @@
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2018-02-12 - 8.8.0 ###
+
+* Added options fields for Vimeo API used in upcoming addons.
+* Removed NextGenThemes top level menu and ads page because to many complaints.
+* Moved licensing settings page to 'settings' menu.
+
 ### 2018-02-02 - 8.7.8 ###
 
 * No longer try to guess and spam autoplay parameters for general iframe embeds.
