@@ -132,7 +132,7 @@ function arve_build_promote_link_html( $arve_link ) {
 	if ( $arve_link ) {
 		return sprintf(
 			'<a href="%s" title="%s" class="arve-promote-link" target="_blank">%s</a>',
-			esc_url( 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/' ),
+			esc_url( 'https://nextgenthemes.com/plugins/arve-pro/' ),
 			esc_attr( __( 'Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', ARVE_SLUG) ),
 			esc_html__( 'ARVE', ARVE_SLUG )
 		);

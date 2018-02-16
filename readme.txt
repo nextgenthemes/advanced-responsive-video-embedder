@@ -45,49 +45,11 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *   Detailed description of options in-place.
 *   Automatic detected and custom aspect ratio.
 
-### [Supported Providers](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/#video-host-support) ###
+### [Supported Providers](https://nextgenthemes.com/plugins/arve-pro/#support-table) ###
 
-*   Alugha
-*   Archive.org
-*   Break
-*   Brightcove
-*   CollegeHumor
-*   Comedy Central
-*   Dailymotion
-*   Facebook
-*   Funny or Die
-*   Gametrailers
-*   IGN
-*   Kickstarter
-*   LiveLeak
-*   Livestream
-*   kla.tv
-*   Metacafe
-*   Movieweb
-*   MPORA
-*   Myspace
-*   Snotr
-*   Spike
-*   TED Talks
-*   Twitch
-*   Ustream
-*   RuTube.ru
-*   Veoh
-*   Vevo
-*   Viddler
-*   vidspot.net
-*   Vine
-*   Vimeo
-*   VK
-*   Vzaar
-*   Wistia
-*   XTube
-*   Yahoo
-*   Youku
-*   YouTube
-*   YouTube Playlist
-*   HTML5 Video (.mp4 .webm file you upload or URL to a readable file on any site/server)
-*   [All providers with responsive iframe embed codes](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/#general-iframe-embedding)
+allmyvideos.net, Alugha, Archive.org, Break, Brightcove, CollegeHumor, Comedy Central, Dailymotion, Facebook, Funny or Die, IGN, Kickstarter, LiveLeak, Livestream, kla.tv, Metacafe, Movieweb, MPORA, Myspace, Snotr, Spike, TED Talks, Twitch, Ustream, RuTube.ru, Veoh, Vevo, Viddler, vidspot.net, Vine, Vimeo, VK, Vzaar, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist, HTML5 video files directly, Google_drive, Dropbox, Ooyala
+
+[All providers with responsive iframe embed codes](https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding)
 
 ### Reviews ###
 
@@ -198,7 +160,11 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-**I could really use some positive reviews. It has been over 6 month without a positive review.** The top level menu that was complained about a lot has been removed. I am working on a big update that will make ARVE even better with automatic detection of aspect ratios, better caching and lots of improved code.
+### 2018-02-16 - 8.8.3 ###
+
+* Fix: Licensing deactivation did not work.
+* Fixed some links throughout the plugin and readme.
+* Some minor code improvements.
 
 ### 2018-02-12 - 8.8.2 ###
 
@@ -209,6 +175,8 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * Fix: `Can’t use function return value in write context`, white screen of deaths type error from the last update.
 
 ### 2018-02-12 - 8.8.0 ###
+
+**I could really use some positive reviews. It has been over 6 month without a positive review.** The top level menu that was complained about a lot has been removed. I am working on a big update that will make ARVE even better with automatic detection of aspect ratios, better caching and lots of improved code.
 
 * New: Added options fields for Vimeo API used in upcoming addons.
 * Improved: Removed NextGenThemes top level menu and ads page because to many complaints.
@@ -374,7 +342,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ### 2017-02-12 - 8.0.5 ###
 
-* Fix: Small size of lightbox when using the [Pro Addon](https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/).
+* Fix: Small size of lightbox when using the [Pro Addon](https://nextgenthemes.com/plugins/arve-pro/).
 
 ### 2017-02-11 - 8.0.4 ###
 

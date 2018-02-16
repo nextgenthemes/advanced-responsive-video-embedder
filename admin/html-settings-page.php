@@ -17,15 +17,6 @@ $options = arve_get_options();
 
 <div class="wrap arve-options-wrap">
 
-	<?php if ( $token_msg = arve_update_vimeo_oauth_token() ) : ?>
-
-		<div class="notice is-dismissible updated">
-			<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
-			<?php printf( '<p>%s</p>', $token_msg ); ?>
-		</div>
-
-	<?php endif; ?>
-
 	<?php if ( arve_display_pro_ad() ) : ?>
 
 		<div class="arve-settings-page-ad notice is-dismissible updated">

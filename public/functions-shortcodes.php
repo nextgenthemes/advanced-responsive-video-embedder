@@ -140,7 +140,7 @@ function arve_shortcode_arve_supported() {
 	$out .= '</tr>';
 	$out .= '<tr>';
 	$out .= '<td></td>';
-	$out .= '<td colspan="6"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/#general-iframe-embedding">All providers with responsive iframe embed codes</a></td>';
+	$out .= '<td colspan="6"><a href="https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding">All providers with responsive iframe embed codes</a></td>';
 	$out .= '</tr>';
 
 	$count = 1;
@@ -164,7 +164,7 @@ function arve_shortcode_arve_supported() {
 
 	$out .= '<tr>';
 	$out .= '<td></td>';
-	$out .= '<td colspan="6"><a href="https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/#general-iframe-embedding">All providers with responsive iframe embed codes</a></td>';
+	$out .= '<td colspan="6"><a href="https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding">All providers with responsive iframe embed codes</a></td>';
 	$out .= '</tr>';
 	$out .= '</table>';
 

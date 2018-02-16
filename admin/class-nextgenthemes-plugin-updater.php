@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @author Easy Digital Downloads
  * @version 1.6.14
  */
-class EDD_SL_Plugin_Updater {
+class Nextgenthemes_Plugin_Updater {
 
 	private $api_url     = '';
 	private $api_data    = array();

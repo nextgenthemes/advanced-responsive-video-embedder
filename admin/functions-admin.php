@@ -2,6 +2,22 @@
 
 function arve_action_admin_init_setup_messages() {
 
+	/*
+	if( defined( 'ARVE_PRO_VERSION' ) || defined( 'ARVE_PRO_VERSION' ) ) {
+
+		$msg = sprintf(
+			__( 'ARVE addon price change. Please read <a href="%s">Taking Business to a Serious Level - The Future NextGenThemes and ARVE.</a>.', ARVE_SLUG ),
+			'https://nextgenthemes.com/taking-business-to-a-serious-level-the-future-nextgenthemes-and-arve/'
+		);
+
+		new ARVE_Admin_Notice_Factory(
+			'price_change',
+			$msg,
+			true
+		);
+	}
+	*/
+
 	if( defined( 'ARVE_PRO_VERSION' ) && version_compare( ARVE_PRO_VERSION_REQUIRED, ARVE_PRO_VERSION, '>' ) ) {
 
 		$msg = sprintf(
@@ -9,7 +25,7 @@ function arve_action_admin_init_setup_messages() {
 			ARVE_PRO_VERSION_REQUIRED,
 			get_admin_url() . 'admin.php?page=nextgenthemes-licenses',
 			'https://nextgenthemes.com/support/',
-			'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/installing-and-license-management/'
+			'https://nextgenthemes.com/plugins/arve/documentation/installing-and-license-management/'
 		);
 		new ARVE_Admin_Notice_Factory( 'arve-pro-outdated', "<p>$msg</p>", false );
 	}
@@ -165,7 +181,7 @@ function arve_add_media_button() {
 	printf(
 		"<div id='arve-thickbox' style='display:none;'><p>$p1</p><p>$p2</p><p>$p3</p></div>",
 		nextgenthemes_admin_install_search_url( 'Shortcode+UI' ),
-		esc_url( 'https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/documentation/' )
+		esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/' )
 	);
 
 	printf(
@@ -547,43 +563,6 @@ function arve_debug_section_description() {
 	}
 
 	include_once( plugin_dir_path( __FILE__ ) . 'html-debug-info.php' );
-}
-
-function arve_maybe_vimeo_oauth_update_trigger( $identifier, $secret ) {
-
-	if( empty( $identifier ) || empty( $secret ) ) {
-		return;
-	}
-
-	$options           = arve_get_options();
-	$vimeo_oauth_token = get_option( 'arve_vimeo_oauth_token' );
-
-	if (
-		$options[ 'vimeo_client_identifier' ] !== $identifier ||
-		$options[ 'vimeo_client_secret' ]     !== $secret ||
-		empty( $vimeo_oauth_token )
-	) {
-		set_transient( 'arve_update_oauth_token', 'update_needed' );
-	}
-}
-
-function arve_update_vimeo_oauth_token() {
-
-	if ( ! get_transient( 'arve_update_oauth_token' ) ) {
-		delete_transient( 'arve_update_oauth_token' );
-		return;
-	}
-	delete_transient( 'arve_update_oauth_token' );
-
-	$vimeo = new ARVE_Vimeo;
-	$token = $vimeo->get_unauth_token();
-
-	if( ! is_wp_error( $token ) ) {
-		update_option( 'arve_vimeo_oauth_token', $token );
-		return __( 'Successfully set Vimeo oauth token', 'advanced-responsive-video-embedder' );
-	} else {
-		return $token->get_error_message();
-	}
 }
 
 /**

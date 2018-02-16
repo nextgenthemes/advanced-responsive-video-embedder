@@ -1,8 +1,17 @@
 <?php
 
+function arve_load_vimeo_api( $a ) {
+
+	if ( true ) {
+		require_once ARVE_PATH . '/vendor/autoload.php';
+	}
+
+	return $a;
+}
+
 function arve_sc_filter_attr( $a ) {
 
-	$wrapper_id = null;
+	$wrapper_id  = null;
 	$align_class = empty( $a['align'] ) ? '' : ' align' . $a['align'];
 
 	foreach ( array( 'id', 'mp4', 'm4v', 'webm', 'ogv', 'url', 'webtorrent' ) as $att ) {
