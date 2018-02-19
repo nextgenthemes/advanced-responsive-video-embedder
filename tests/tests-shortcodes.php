@@ -2,8 +2,8 @@
 
 class Tests_Shortcode extends WP_UnitTestCase {
 
-	public function change_option($key, $val) {
-		$options         = get_options( 'arve_options_main' );
+	public function change_option( $key, $val ) {
+		$options         = get_option( 'arve_options_main' );
 		$options[ $key ] = $val;
 		update_option( 'arve_options_main', $options );
 	}
