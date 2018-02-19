@@ -32,7 +32,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 	}
 
 	public function test_sandbox3() {
-		$this->change_option( 'iframe_flash', true );
+		$this->change_option( 'iframe_flash', false );
 
 		$attr = array( 'url' => 'https://example.com' );
 
