@@ -93,22 +93,6 @@ function arve_sc_filter_attr( $a ) {
 			$iframe_src .= '#t=' . (int) $a['start'];
 		}
 
-		$iframe_sandbox = 'allow-scripts allow-same-origin allow-presentation allow-popups';
-
-		if ( 'vimeo' == $a['provider'] ) {
-			$iframe_sandbox .= ' allow-forms';
-		}
-
-		if ( null === $a['disable_flash'] ) {
-
-			if (
-				$properties[ $a['provider'] ]['requires_flash']
-				|| ( 'iframe' === $a['provider'] && $options['iframe_flash'] )
-			) {
-				$iframe_sandbox = false;
-			}
-		}
-
 		$a['iframe_attr'] = array(
 			'allowfullscreen' => '',
 			'class'           => 'arve-iframe fitvidsignore',
@@ -116,10 +100,20 @@ function arve_sc_filter_attr( $a ) {
 			'name'            => $a['iframe_name'],
 			'scrolling'       => 'no',
 			'src'             => $iframe_src,
-			'sandbox'         => $iframe_sandbox,
+			'sandbox'         => 'allow-scripts allow-same-origin allow-presentation allow-popups',
 			'width'           => empty( $a['width'] )  ? false : $a['width'],
 			'height'          => empty( $a['height'] ) ? false : $a['height'],
 		);
+
+		if ( 'vimeo' == $a['provider'] ) {
+			$a['iframe_attr']['sandbox'] .= ' allow-forms';
+		}
+
+		$properties['iframe']['requires_flash'] = $options['iframe_flash'];
+
+		if ( null === $a['disable_flash'] && $properties[ $a['provider'] ]['requires_flash'] ) {
+			$a['iframe_attr']['sandbox'] = false;
+		}
 	}
 
 	return $a;
