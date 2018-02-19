@@ -29,8 +29,8 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *   SEO friendly, lets you specify title, description, upload date to provide search engines with the schema.org data they like to have for better indexing.
 *   <abbr title="What You See Is What You Get">WYSIWYG</abbr> support. No more messing around with shortcodes and previewing.
 *   New improved dialog for embedding videos.
-*   Magically makes those url embedded videos responsive.
-*   No 'lock in' if do not use shortcodes and use providers WordPress already supports.
+*   Makes those url embedded videos responsive, it just works by enabling the plugins.
+*   No 'lock in' if you do not use shortcodes and use providers WordPress already supports.
 *   Supports [almost every video host](https://nextgenthemes.com/plugins/arve-pro/#support-table) that supports iframe embed codes.
 *   Embeds via pasting the URL in its own line just like WordPress!
 *   Optionally use very powerful Shortcodes instead.
@@ -44,6 +44,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *   Video alignment.
 *   Detailed description of options in-place.
 *   Automatic detected and custom aspect ratio.
+*   More secure embeds by sandboxing them, this prevents evil providers from being able to to redirect your page from within the embed (break out). Among other inwanted things 
 
 ### [Supported Providers](https://nextgenthemes.com/plugins/arve-pro/#support-table) ###
 
@@ -126,7 +127,7 @@ Please report it on [nextgenthemes.com/support/](https://nextgenthemes.com/suppo
 
 ### How to get the pro version working? ###
 
-1. Go though the purchase process on [nextgenthemes.com/advanced-responsive-video-embedder-pro/](https://nextgenthemes.com/advanced-responsive-video-embedder-pro/)
+1. Go though the purchase process on [nextgenthemes.com/arve-pro/](https://nextgenthemes.com/arve-pro/)
 1. Follow the 3 easy steps you get with the purchase receipt. It is basically downloading a arve-pro.zip and installing it through your WordPress Admin panel.
 
 ### Why are my videos not filling their container? ###

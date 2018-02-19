@@ -8,13 +8,13 @@ function arve_get_options_defaults( $section ) {
 		'autoplay'            => false,
 		'mode'                => 'normal',
 		'promote_link'        => false,
-		'sandbox'             => false,
 		'video_maxwidth'      => '',
 		'wp_image_cache_time' => 18000,
 		'last_settings_tab'   => '',
 		'wp_video_override'   => true,
 		'controlslist'        => 'nodownload',
 		'vimeo_api_token'     => '',
+		'iframe_flash'        => true,
 	);
 
 	$properties = arve_get_host_properties();
@@ -102,7 +102,7 @@ function arve_get_settings_definitions() {
 			'description' => sprintf(
 				__( 'Post the URL of the video here. For %s and any <a href="%s">unlisted</a> video hosts paste their iframe embed codes or its src URL in here (providers embeds need to be responsive).', ARVE_SLUG ),
 				$embed_code_only,
-				'https://nextgenthemes.com/advanced-responsive-video-embedder-pro/#video-host-support'
+				'https://nextgenthemes.com/arve-pro/#video-host-support'
 			)
 		),
 		array(
@@ -334,21 +334,35 @@ function arve_get_settings_definitions() {
 		),
 		array(
 			'hide_from_settings' => true,
-			'attr'  => 'muted',
-			'label' => esc_html__( 'Mute?', ARVE_SLUG ),
-			'type'  => 'select',
-			'options' => array(
-				''    => esc_html__( 'No', ARVE_SLUG ),
-				'yes' => esc_html__( 'Yes', ARVE_SLUG ),
+			'attr'               => 'muted',
+			'label'              => esc_html__( 'Mute?', ARVE_SLUG ),
+			'type'               => 'select',
+			'options'            => array(
+				''               => esc_html__( 'No', ARVE_SLUG ),
+				'yes'            => esc_html__( 'Yes', ARVE_SLUG ),
 			),
-			'description' => esc_html__( 'Mute HTML5 video.', ARVE_SLUG ),
+			'description'        => esc_html__( 'Mute HTML5 video.', ARVE_SLUG ),
 		),
 		array(
 			'hide_from_sc' => true,
-			'attr'  => 'vimeo_api_token',
-			'label' => esc_html__( 'Video API Token', ARVE_SLUG ),
-			'type'  => 'text',
-			'description' => esc_html__( 'Leave blank for now.', ARVE_SLUG ),
+			'attr'               => 'iframe_flash',
+			'label'              => esc_html__( 'Enable Flash support for general iframe?', ARVE_SLUG ),
+			'type'               => 'select',
+			'options'            => array(
+				'yes'             => esc_html__( 'Yes', ARVE_SLUG ),
+				'no'              => esc_html__( 'No', ARVE_SLUG ),
+			),
+			'description'        => sprintf(
+				__( 'It is recommented to have this disabled if you not embed videos from a <a href="%s">not listed provider</a> that still requires flash and is not listed here. Disable flash will make general iframe embeds more secure, prevents evil redirection from within the iframe. This also makes the Pro Addon\'s \'Disable Links\' feature possible for unlisted providers. Note you can still put <code>disable_flash="yes"</code> on indevidual.', ARVE_SLUG ),
+				'https://nextgenthemes.com/plugins/arve-pro/#support-table'
+			),
+		),
+		array(
+			'hide_from_sc'       => true,
+			'attr'               => 'vimeo_api_token',
+			'label'              => esc_html__( 'Video API Token', ARVE_SLUG ),
+			'type'               => 'text',
+			'description'        => esc_html__( 'Leave blank for now.', ARVE_SLUG ),
 		),
 	);
 }
@@ -431,7 +445,6 @@ function arve_get_host_properties() {
 				array( 'url' => 'https://archive.org/details/arashyekt4_gmail_Cat', 'id' => 'arashyekt4' ),
 			)
 		),
-		#<iframe src="http://www.break.com/embed/2542591?embed=1" width="640" height="360" webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder="0"></iframe><div>- Watch More <a href="http://www.break.com">Funny Videos</a>&nbsp;<font size=1><a href="http://view.break.com/2542591" target="_blank">First Person POV of Tornado Strike</a></font></div>
 		'break' => array(
 			'regex'          => 'https?://(www\.|view\.)break\.com/(video/|embed/)?[-a-z0-9]*?(?<id>[0-9]+)',
 			'embed_url'      => 'http://break.com/embed/%s',
@@ -495,7 +508,6 @@ function arve_get_host_properties() {
 			'embed_url'      => 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:%s',
 			'requires_src'   => true,
 			'auto_thumbnail' => false,
-			'requires_flash' => true,
 			'tests' => array(
 				array(
 					'url' => 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:c80adf02-3e24-437a-8087-d6b77060571c',
@@ -558,7 +570,6 @@ function arve_get_host_properties() {
 			'regex'           => $s . 'dailymotion\.com/playlist/(?<id>[a-z0-9]+)',
 			'embed_url'       => 'https://www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2F%s%2F1&',
 			'auto_thumbnail'  => false,
-			'requires_flash'  => true,
 			'tests' => array(
 				array(
 					'url' => 'http://www.dailymotion.com/playlist/x3yk8p_PHIL-MDS_nature-et-environnement-2011/1#video=xm3x45',
@@ -645,9 +656,8 @@ function arve_get_host_properties() {
 		'livestream' => array(
 			'regex'          => $s . 'livestream\.com/accounts/(?<id>[0-9]+/events/[0-9]+(/videos/[0-9]+)?)',
 			'embed_url'      => 'https://livestream.com/accounts/%s/player',
-			'default_params' => 'width=1280&height=720&enableInfoAndActivity=true&defaultDrawer=&autoPlay=true&mute=false',
+			'default_params' => 'width=1280&height=720&enableInfoAndActivity=true&defaultDrawer=&mute=false',
 			'auto_thumbnail' => false,
-			'requires_flash' => true,
 			'tests' => array(
 				# https://livestream.com/accounts/23470201/events/7021166
 				# <iframe id="ls_embed_1491401341" src="https://livestream.com/accounts/4683311/events/3747538/player?width=640&height=360&enableInfoAndActivity=true&defaultDrawer=&autoPlay=true&mute=false" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen> </iframe>
@@ -720,7 +730,6 @@ function arve_get_host_properties() {
 			'regex'          => $s . 'snotr\.com/(video|embed)/(?<id>[0-9]+)',
 			'embed_url'      => 'http://www.snotr.com/embed/%s',
 			'auto_thumbnail' => false,
-			'requires_flash' => true,
 			'tests' => array(
 				array(
 					'url' => 'http://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is',
@@ -733,17 +742,12 @@ function arve_get_host_properties() {
 			'embed_url'      => 'http://media.mtvnservices.com/embed/mgid:arc:video:spike.com:%s',
 			'requires_src'   => true,
 			'auto_thumbnail' => false,
-			'requires_flash' => true,
 			'tests' => array(
-				# <iframe src="http://media.mtvnservices.com/embed/mgid:arc:video:spike.com:6a219882-c412-46ce-a8c9-32e043396621" width="512" height="288" frameborder="0"></iframe><p style="text-align:left;background-color:#FFFFFF;padding:4px;margin-top:4px;margin-bottom:0px;font-family:Arial, Helvetica, sans-serif;font-size:12px;"><b><a href="http://www.spike.com/shows/ink-master">Ink Master</a></b></p></div></div>
 				array(
 					'url' => 'http://media.mtvnservices.com/embed/mgid:arc:video:spike.com:6a219882-c412-46ce-a8c9-32e043396621',
 					'id'  =>                                                              '6a219882-c412-46ce-a8c9-32e043396621',
 				),
 			),
-			'test_ids' => array(
-				'5afddf30-31d8-40fb-81e6-bb5c6f45525f',
-			)
 		),
 		'ted' => array(
 			'name'           => 'TED Talks',
@@ -751,7 +755,6 @@ function arve_get_host_properties() {
 			'embed_url'      => 'https://embed-ssl.ted.com/talks/%s.html',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
-			'requires_flash' => true,
 			'tests' => array(
 				array(
 					'url' => 'https://www.ted.com/talks/margaret_stewart_how_youtube_thinks_about_copyright',
@@ -787,7 +790,6 @@ function arve_get_host_properties() {
 			'default_params' => 'html5ui',
 			'auto_thumbnail' => false,
 			'aspect_ratio'   => '480:270',
-			'requires_flash' => true,
 			'tests' => array(
 				array( 'url' => 'http://www.ustream.tv/recorded/59999872?utm_campaign=ustre.am&utm_source=ustre.am/:43KHS&utm_medium=social&utm_content=20170405204127', 'id' => 'recorded/59999872' ),
 			),
@@ -842,7 +844,6 @@ function arve_get_host_properties() {
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'aspect_ratio'   => '545:349',
-			'requires_flash' => true,
 			'tests' => array(
 				array(
 					'url' => 'https://www.viddler.com/v/a695c468',

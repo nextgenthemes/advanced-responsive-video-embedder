@@ -2,8 +2,25 @@
 
 class Tests_Shortcode extends WP_UnitTestCase {
 
+	public function change_option($key, $val) {
+		$options         = get_options( 'arve_options_main' );
+		$options[ $key ] = $val;
+		update_option( 'arve_options_main', $options );
+	}
+
 	public function test_sandbox() {
 
+		$attr = array( 'url' => 'https://example.com' );
+
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+		$this->assertNotContains(
+			'sandbox="',
+			arve_shortcode_arve( $attr ),
+			$attr['url']
+		);
+	}
+
+	public function test_sandbox2() {
 		$attr = array( 'url' => 'https://example.com', 'disable_flash' => 'n' );
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
@@ -12,7 +29,22 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			arve_shortcode_arve( $attr ),
 			$attr['url']
 		);
+	}
 
+	public function test_sandbox3() {
+		$this->change_option( 'iframe_flash', true );
+
+		$attr = array( 'url' => 'https://example.com' );
+
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+		$this->assertContains(
+			'sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"',
+			arve_shortcode_arve( $attr ),
+			$attr['url']
+		);
+	}
+
+	public function test_sandbox_vimeo() {
 		/*
 		$attr = array( 'url' => 'https://vimeo.com/214300845' );
 
