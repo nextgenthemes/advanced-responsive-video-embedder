@@ -29,8 +29,8 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *   SEO friendly, lets you specify title, description, upload date to provide search engines with the schema.org data they like to have for better indexing.
 *   <abbr title="What You See Is What You Get">WYSIWYG</abbr> support. No more messing around with shortcodes and previewing.
 *   New improved dialog for embedding videos.
-*   Makes those url embedded videos responsive, it just works by enabling the plugins.
-*   No 'lock in' if you do not use shortcodes and use providers WordPress already supports.
+*   Magically makes those url embedded videos responsive.
+*   No 'lock in' if do not use shortcodes and use providers WordPress already supports.
 *   Supports [almost every video host](https://nextgenthemes.com/plugins/arve-pro/#support-table) that supports iframe embed codes.
 *   Embeds via pasting the URL in its own line just like WordPress!
 *   Optionally use very powerful Shortcodes instead.
@@ -44,7 +44,6 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *   Video alignment.
 *   Detailed description of options in-place.
 *   Automatic detected and custom aspect ratio.
-*   More secure embeds by sandboxing them, this prevents evil providers from being able to to redirect your page from within the embed (break out). Among other inwanted things 
 
 ### [Supported Providers](https://nextgenthemes.com/plugins/arve-pro/#support-table) ###
 
@@ -162,9 +161,11 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ### 2018-02-16 - 8.8.3 ###
 
+* New: Option to disable flash for not listed providers for more secure embeds and make the 'disable links' Pro Addon feature possible for those. See the description on the options page.
 * Fix: Licensing deactivation did not work.
-* Fixed some links throughout the plugin and readme.
-* Some minor code improvements.
+* Improved: Marked some providers as not requiring flash anymore.
+* Improved: Fixed some links throughout the plugin and readme.
+* Improved: Some minor code improvements.
 
 ### 2018-02-12 - 8.8.2 ###
 
@@ -176,7 +177,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 ### 2018-02-12 - 8.8.0 ###
 
-**I could really use some positive reviews. It has been over 6 month without a positive review.** The top level menu that was complained about a lot has been removed. I am working on a big update that will make ARVE even better with automatic detection of aspect ratios, better caching and lots of improved code.
+**I could really use some positive reviews. It has been over 7 months without a 5 star review.** The top level menu that was complained about a lot has been removed. I am working on a big update that will make ARVE even better with automatic detection of aspect ratios, better caching and lots of improved code.
 
 * New: Added options fields for Vimeo API used in upcoming addons.
 * Improved: Removed NextGenThemes top level menu and ads page because to many complaints.
