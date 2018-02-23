@@ -346,14 +346,14 @@ function arve_get_settings_definitions() {
 		array(
 			'hide_from_sc' => true,
 			'attr'               => 'iframe_flash',
-			'label'              => esc_html__( 'Enable Flash support for general iframe?', ARVE_SLUG ),
+			'label'              => esc_html__( 'Allow Flash for general iframe?', ARVE_SLUG ),
 			'type'               => 'select',
 			'options'            => array(
-				'yes'             => esc_html__( 'Yes', ARVE_SLUG ),
-				'no'              => esc_html__( 'No', ARVE_SLUG ),
+				'yes'             => esc_html__( 'Allow Flash', ARVE_SLUG ),
+				'no'              => esc_html__( 'Do not allow Flash', ARVE_SLUG ),
 			),
 			'description'        => sprintf(
-				__( 'It is recommented to have this disabled if you not embed videos from a <a href="%s">not listed provider</a> that still requires flash and is not listed here. Disable flash will make general iframe embeds more secure, prevents evil redirection from within the iframe. This also makes the Pro Addon\'s \'Disable Links\' feature possible for unlisted providers. Note you can still put <code>disable_flash="yes"</code> on indevidual.', ARVE_SLUG ),
+				__( 'It is recommented to have this disabled if you not embed videos from a <a href="%s">not listed provider</a> that still requires flash and is not listed here. Disable flash will make general iframe embeds more secure, prevents evil redirection from within the iframe. This also makes the Pro Addon\'s \'Disable Links\' feature possible for unlisted providers. Note you can still put <code>disable_flash="yes/no"</code> on individual shortcodes to overwrite this if needed.', ARVE_SLUG ),
 				'https://nextgenthemes.com/plugins/arve-pro/#support-table'
 			),
 		),
@@ -1174,7 +1174,7 @@ function arve_get_host_properties() {
 			*/
 		),
 		'youtubelist' => array(
-			'regex'          => $s . 'youtube\.com/(embed/videoseries|playlist)\?list=(?<id>[-a-z0-9]+)',
+			'regex'          => $s . 'youtube\.com/(embed/videoseries|playlist)\?list=(?<id>[-a-z0-9_]+)',
 			'name'           => 'YouTube Playlist',
 			'embed_url'      => 'https://www.youtube.com/embed/videoseries?list=%s',
 			'auto_thumbnail' => true,

@@ -19,10 +19,9 @@ It is very likely the one and only plugin you will ever need to handle video emb
 
 [youtube https://www.youtube.com/watch?v=m6mkA6Zr1vY ]
 
-**I could really use some positive reviews. It has been over 6 month without a positive review.** The top level menu that was complained about a lot has been removed. I am working on a big update that will make ARVE even better with automatic detection of aspect ratios, better caching and lots of improved code.
-
-*  [GitHub Page](https://github.com/nextgenthemes/arve/)
 *  [Documentation](https://nextgenthemes.com/plugins/arve/documentation/)
+*  [GitHub Page](https://github.com/nextgenthemes/advanced-responsive-video-embedder)
+*  [Pro Addon](https://nextgenthemes.com/plugins/arve-pro/)
 
 ### Features ###
 
@@ -52,12 +51,10 @@ allmyvideos.net, Alugha, Archive.org, Break, Brightcove, CollegeHumor, Comedy Ce
 
 ### Reviews ###
 
-If you find this plugin useful please [give it a 5 star review](https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/#new-post). It has 60000+ installs but only 100 reviews after over 5 years!
-
 #### &#9733; &#9733; &#9733; &#9733; &#9733; The best there is – I have tried many…  ####
 Have downloaded and paid for at least 4 other video players that use lightbox. Each one has major flaws. This products works perfectly. If you use the OnSite Editor, then just copy the short code and it works great.
 
-[arve url="https://www.youtube.com/watch?v=Z7g8-GxLTSc"]
+[arve url="https://www.youtube.com/watch?v=Z7g8-GxLTSc" /]
 
 For speed, the product uses the thumbnails from the server. So many of the other products do NOT do this and it slows the page rendering. This product should appear first on the WordPress search. Spent 3 days of my life wasted on other products, only to delete each one. [review by jodani](https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/?filter=5)
 
@@ -67,14 +64,14 @@ So I have a responsive theme but on pages with you tube videos it wasn't making 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Only Plug-in that worked ####
 I used a lot of high ranking plug-ins but they still broke my design. Downloaded this and worked right away. Thanks! [review by crconnell89](https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/?filter=5)
 
-This plugin is financed by the awesome buyers of the [Pro Addon](https://nextgenthemes.com/plugins/arve-pro/). The development and support of this plugins has become a job for me so I hope you understand that I can not make all features gratis and that you [purchase it](https://nextgenthemes.com/plugins/arve-pro/) to get extra features and support the development.
+This plugin is financed by sales of the [Pro Addon](https://nextgenthemes.com/plugins/arve-pro/). The development and support of this plugins has become a job for me so I hope you understand that I can not make all features gratis and that you [purchase it](https://nextgenthemes.com/plugins/arve-pro/) to get extra features and support the development.
 
 ### [Pro Addon](https://nextgenthemes.com/plugins/arve-pro/) ###
 
 *   **Disable links in embeds (killer feature!)**<br>
     For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. **Prevent video hosts to lead your visitors away from your site!** Note this also breaks sharing functionality and is not possible when the provider requires flash. Try it on [this page](https://nextgenthemes.com/plugins/arve-pro/). Right click on links still works.
 *   **Lazyload mode**<br>
-    Make your site load **faster** by loading only a image instead of the entire video player on pageload.  
+    Make your site load **faster** by loading only a image instead of the entire video player on pageload.
 *   **Lazyload -> Lightbox**<br>
     Shows the Video in a Lightbox after clicking a preview image
 *   **Link -> Lightbox**<br>
@@ -158,6 +155,11 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### 2018-02-23 - 8.8.4 ###
+
+* Fix: YouTube playlists where not correctly detected when having a underscore in the id.
+* Improved: Better explanation of the new disable flash for general iframe option on the settings page.
 
 ### 2018-02-16 - 8.8.3 ###
 
