@@ -3,7 +3,7 @@ Contributors: nico23
 Donate link: https://www.paypal.me/nico23
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.4.0
-Tested up to: 4.9.2
+Tested up to: 4.9.5
 Requires PHP: 5.3
 Stable tag: trunk
 License: GPL-3.0
@@ -155,6 +155,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### 2018-02-25 - 8.8.5 ###
+
+* Fix: Add default url parameters to youtube playlists. Note they will effect playlist urls like `https://www.youtube.com/playlist?list=PLXYApifkdCACM_ykvnCHeth-vIB6v1XE3` only and not those who also reference the starting video. There is currently a separate parameters option for this but it will be removed in version 9.0.
 
 ### 2018-02-23 - 8.8.4 ###
 
