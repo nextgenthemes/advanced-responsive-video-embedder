@@ -3,7 +3,7 @@ Contributors: nico23
 Donate link: https://www.paypal.me/nico23
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.4.0
-Tested up to: 4.9.5
+Tested up to: 4.9.4
 Requires PHP: 5.3
 Stable tag: trunk
 License: GPL-3.0
@@ -155,6 +155,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### 2018-02-25 - 8.8.6 ###
+
+* Fix: HTML5 videos where not working with lightbox in [ARVE PRO](https://nextgenthemes.com/plugins/arve-pro/)
 
 ### 2018-02-25 - 8.8.5 ###
 

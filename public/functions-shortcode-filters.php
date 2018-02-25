@@ -18,6 +18,7 @@ function arve_get_wrapper_id( $a ) {
 
 		if ( ! empty( $a[ $att ] ) && is_string( $a[ $att ] ) ) {
 			$wrapper_id = 'arve-' . $a[ $att ];
+			$wrapper_id = preg_replace( '/[^a-zA-Z0-9-]/', '', $wrapper_id );
 			break;
 		}
 	}
