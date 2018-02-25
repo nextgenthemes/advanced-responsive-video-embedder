@@ -12,7 +12,6 @@ Gruntfile.js export-ignore
 package.json export-ignore
 phpci.yml export-ignore
 phpunit.xml export-ignore
-readme.txt export-ignore
 /tests/ export-ignore
 # Enforce Unix newlines
 *.css   text eol=lf
