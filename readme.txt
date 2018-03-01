@@ -9,13 +9,11 @@ Stable tag: trunk
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement for WordPress' default embeds. Best plugin for videos?
+The only video plugin you'll ever need.
 
 ## Description ##
 
-The best WordPress plugin for videos? Supports close to everything you can imagine, still keeping it easy & simple.
-
-It is very likely the one and only plugin you will ever need to handle video embeds on your WordPress site(s). It goes far beyond just making your videos responsive!
+Why can’t your video plug-in do everything? I couldn’t find one, so that’s I built ARVE, the one and only plugin you will ever need. Supports everything you can imagine, while keeping it easy & simple. It goes far beyond just making your videos responsive!
 
 [youtube https://www.youtube.com/watch?v=m6mkA6Zr1vY ]
 
