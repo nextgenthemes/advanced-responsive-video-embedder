@@ -150,7 +150,7 @@ function arve_add_action_links( $links ) {
 
 		$extra_links['buy_pro_addon'] = sprintf(
 			'<a href="%s"><strong style="display: inline;">%s</strong></a>',
-			'http://nextgenthemes.com/downloads/advanced-responsive-video-embedder',
+			'https://nextgenthemes.com/plugins/arve-pro/',
 			__( 'Buy Pro Addon', ARVE_SLUG )
 		);
 	}

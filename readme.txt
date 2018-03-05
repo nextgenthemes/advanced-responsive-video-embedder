@@ -156,9 +156,13 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2018-03-05 - 8.8.7 ###
+
+* Fixed a link on the plugins screen (Thanks Hans).
+
 ### 2018-02-25 - 8.8.6 ###
 
-* Fix: HTML5 videos where not working with lightbox in [ARVE PRO](https://nextgenthemes.com/plugins/arve-pro/)
+* Fix: HTML5 videos not working with lightbox in [ARVE PRO](https://nextgenthemes.com/plugins/arve-pro/)
 
 ### 2018-02-25 - 8.8.5 ###
 
