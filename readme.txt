@@ -156,6 +156,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2018-03-05 - 8.8.8 ###
+
+* Added code to debug issues with license activations.
+
 ### 2018-03-05 - 8.8.7 ###
 
 * Fixed a link on the plugins screen (Thanks Hans).

@@ -523,7 +523,7 @@ function nextgenthemes_api_action( $item_id, $key, $action ) {
 	// Call the custom API.
 	$response = wp_remote_post(
 		'https://nextgenthemes.com',
-		array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params )
+		array( 'timeout' => 15, 'sslverify' => true, 'body' => $api_params )
 	);
 
 	// make sure the response came back okay
@@ -588,7 +588,10 @@ function nextgenthemes_api_action( $item_id, $key, $action ) {
 	if ( empty( $message ) ) {
 
 		if ( empty( $license_data->license ) ) {
-			$message = __( 'Could not read license status.', ARVE_SLUG );
+			$message = sprintf(
+				__( 'Could not read license status. HTTP response code: %s', ARVE_SLUG ),
+				wp_remote_retrieve_response_code( $response )
+			);
 		} else {
 			$message = $license_data->license;
 		}
