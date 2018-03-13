@@ -588,9 +588,12 @@ function nextgenthemes_api_action( $item_id, $key, $action ) {
 	if ( empty( $message ) ) {
 
 		if ( empty( $license_data->license ) ) {
+
+			$response_dump = arve_dump( $response );
+
 			$message = sprintf(
-				__( 'Could not read license status. HTTP response code: %s', ARVE_SLUG ),
-				wp_remote_retrieve_response_code( $response )
+				__( 'Error. Please report the following: %s', ARVE_SLUG ),
+				$response_dump
 			);
 		} else {
 			$message = $license_data->license;
@@ -598,4 +601,12 @@ function nextgenthemes_api_action( $item_id, $key, $action ) {
 	}
 
 	return $message;
+}
+
+function arve_dump( $var ) {
+	ob_start();
+	echo '<pre>';
+	var_dump( $var );
+	echo '</pre>';
+	return ob_get_clean();
 }

@@ -156,7 +156,12 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-### 2018-03-05 - 8.8.8 ###
+### 2018-03-13 - 8.8.9 ###
+
+* Improved licensing debug code.
+* Added Vimeo PHP API class for upcoming versions and addons.
+
+### 2018-03-13 - 8.8.8 ###
 
 * Added code to debug issues with license activations.
 
