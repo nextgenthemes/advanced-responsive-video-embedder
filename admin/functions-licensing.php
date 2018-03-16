@@ -593,7 +593,7 @@ function nextgenthemes_api_action( $item_id, $key, $action ) {
 
 			$message = sprintf(
 				__( 'Error. Please report the following:<br> %s', ARVE_SLUG ),
-				$response_dump
+				$textarea_dump
 			);
 		} else {
 			$message = $license_data->license;
@@ -610,5 +610,5 @@ function arve_dump( $var ) {
 }
 
 function arve_textarea_dump( $var ) {
-	return sprintf( '<textarea style="width: 100%; height: 70vh;">%s</textarea>', arve_dump( $var ) );
+	return sprintf( '<textarea style="width: 100%; height: 70vh;">%s</textarea>', esc_textarea( arve_dump( $var ) ) );
 }
