@@ -589,10 +589,10 @@ function nextgenthemes_api_action( $item_id, $key, $action ) {
 
 		if ( empty( $license_data->license ) ) {
 
-			$response_dump = arve_dump( $response );
+			$textarea_dump = arve_textarea_dump( $response );
 
 			$message = sprintf(
-				__( 'Error. Please report the following: %s', ARVE_SLUG ),
+				__( 'Error. Please report the following:<br> %s', ARVE_SLUG ),
 				$response_dump
 			);
 		} else {
@@ -605,8 +605,10 @@ function nextgenthemes_api_action( $item_id, $key, $action ) {
 
 function arve_dump( $var ) {
 	ob_start();
-	echo '<pre>';
 	var_dump( $var );
-	echo '</pre>';
 	return ob_get_clean();
+}
+
+function arve_textarea_dump( $var ) {
+	return sprintf( '<textarea style="width: 100%; height: 70vh;">%s</textarea>', arve_dump( $var ) );
 }

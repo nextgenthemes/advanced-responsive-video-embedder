@@ -785,15 +785,21 @@ function arve_get_host_properties() {
 			),
 		),
 		'ustream' => array(
-			'regex'          => $s . 'ustream\.tv/(channel/)?(?<id>[0-9]{8}|recorded/[0-9]{8}(/highlight/[0-9]+)?)',
+			'regex'          => $s . 'ustream\.tv/(embed/)?(channel/)?(?<id>[0-9]+|recorded/[0-9]+(/highlight/[0-9]+)?)',
 			'embed_url'      => 'http://www.ustream.tv/embed/%s',
 			'default_params' => 'html5ui',
 			'auto_thumbnail' => false,
 			'aspect_ratio'   => '480:270',
 			'tests' => array(
-				array( 'url' => 'http://www.ustream.tv/recorded/59999872?utm_campaign=ustre.am&utm_source=ustre.am/:43KHS&utm_medium=social&utm_content=20170405204127', 'id' => 'recorded/59999872' ),
+				array(
+					'url' => 'http://www.ustream.tv/recorded/59999872?utm_campaign=ustre.am&utm_source=ustre.am/:43KHS&utm_medium=social&utm_content=20170405204127',
+					'id' =>                        'recorded/59999872'
+				),
+				array(
+					'url' => 'http://www.ustream.tv/embed/17074538?wmode=transparent&v=3&autoplay=false',
+					'id' =>                              '17074538'
+				),
 			),
-
 		),
 		'rutube' => array(
 			'name'           => 'RuTube.ru',
@@ -803,7 +809,7 @@ function arve_get_host_properties() {
 			'tests' => array(
 				array(
 					'url' => 'https://rutube.ru/play/embed/9822149',
-					'id'  =>                               9822149
+					'id'  =>                              '9822149'
 				),
 			),
 		),
