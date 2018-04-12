@@ -24,3 +24,16 @@ function arve_register_scripts() {
 		true
 	);
 }
+
+function maybe_enqueue_assets() {
+
+	$options = arve_get_options();
+
+	if ( $options['always_load_assets'] ) {
+		wp_enqueue_style( ARVE_SLUG );
+		wp_enqueue_script( ARVE_SLUG );
+
+		wp_enqueue_style( 'arve-pro' );
+		wp_enqueue_script( 'arve-pro' );
+	}
+}

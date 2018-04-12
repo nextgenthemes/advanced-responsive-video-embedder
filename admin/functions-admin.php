@@ -579,10 +579,11 @@ function arve_validate_options_main( $input ) {
 	$output['controlslist']      = sanitize_text_field( $input['controlslist'] );
 	$output['vimeo_api_token']   = sanitize_text_field( $input['vimeo_api_token'] );
 
-	$output['autoplay']          = ( 'yes' == $input['autoplay'] ) ? true : false;
-	$output['promote_link']      = ( 'yes' == $input['promote_link'] ) ? true : false;
-	$output['wp_video_override'] = ( 'yes' == $input['wp_video_override'] ) ? true : false;
-	$output['iframe_flash']      = ( 'yes' == $input['iframe_flash'] ) ? true : false;
+	$output['always_enqueue_assets'] = ( 'yes' == $input['always_enqueue_assets'] ) ? true : false;
+	$output['autoplay']              = ( 'yes' == $input['autoplay'] ) ? true : false;
+	$output['iframe_flash']          = ( 'yes' == $input['iframe_flash'] ) ? true : false;
+	$output['promote_link']          = ( 'yes' == $input['promote_link'] ) ? true : false;
+	$output['wp_video_override']     = ( 'yes' == $input['wp_video_override'] ) ? true : false;
 
 	$output['wp_image_cache_time'] = (int) $input['wp_image_cache_time'];
 

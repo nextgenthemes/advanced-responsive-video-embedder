@@ -156,6 +156,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2018-04-12 - 8.9.1 ###
+
+* New: Option to always load assets. Needed when dealing with AJAX and other special cases.
+
 ### 2018-03-16 - 8.9.0 ###
 
 * Fixed/improved Ustream url detection. Make sure you remove `wmode=transparent` if present and include `html5ui=1` for ustream on the ARVE URL parameters settings tab.
