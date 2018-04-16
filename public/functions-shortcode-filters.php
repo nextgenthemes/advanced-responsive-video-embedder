@@ -164,12 +164,10 @@ function arve_sc_filter_sanitise( $atts ) {
 
 	foreach ( $atts as $key => $value ) {
 
-		if ( null === $value ) {
-			continue;
-		}
+		$atts[ $key ] = (string) $value;
 
-		if( ! is_string( $value ) ) {
-			$atts[ $key ] = arve_error( sprintf( __( '<code>%s</code> is not a string. Only Strings should be passed to the shortcode function', ARVE_SLUG ), $key ) );
+		if ( '' === $value ) {
+			unset( $atts[ $key ] );
 		}
 	}
 
