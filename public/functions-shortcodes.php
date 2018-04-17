@@ -19,11 +19,11 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 		'maxwidth'      => (string) $options['video_maxwidth'],
 		'mode'          => $options['mode'],
 		'parameters'    => null,
-		'src'           => null, # Just a alias for url to make it simple
+		'src'           => null, // Just a alias for url to make it simple
 		'thumbnail'     => null,
 		'title'         => null,
 		'upload_date'   => null,
-		# <video>
+		// <video>
 		'm4v'           => null,
 		'mp4'           => null,
 		'ogv'           => null,
@@ -34,19 +34,18 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 		'controls'      => 'y',
 		'controlslist'  => empty( $options['controlslist'] ) ? null : (string) $options['controlslist'],
 		'loop'          => 'n',
-		# TED only
+		// TED only
 		'lang'          => null,
-		# Vimeo only
+		// Vimeo only
 		'start'         => null,
-		# Old Shortcodes / URL embeds
+		// Old Shortcodes / URL embeds
 		'id'            => null,
 		'provider'      => null,
-		# deprecated, title should be used
+		// deprecated, title should be used
 		'link_text'     => null,
 	);
 
 	for ( $n = 1; $n <= ARVE_NUM_TRACKS; $n++ ) {
-
 		$pairs["track_{$n}"]       = null;
 		$pairs["track_{$n}_label"] = null;
 	}

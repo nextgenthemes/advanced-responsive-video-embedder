@@ -167,7 +167,7 @@ function arve_sc_filter_sanitise( $atts ) {
 		$atts[ $key ] = (string) $value;
 
 		if ( '' === $value ) {
-			unset( $atts[ $key ] );
+			$atts[ $key ] = null;
 		}
 	}
 
