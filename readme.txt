@@ -1,4 +1,3 @@
-<<<<<<< current
 === ARVE Advanced Responsive Video Embedder (YouTube, Vimeo, HTML5 Video ...) ===
 Contributors: nico23
 Donate link: https://www.paypal.me/nico23
@@ -1142,5 +1141,3 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 ### 0.1 ###
 
 * Started by improving the Wordpress 'Video Embedder Plugin' but now complete new code
-=======
->>>>>>> before discard
