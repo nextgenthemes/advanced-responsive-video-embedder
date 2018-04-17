@@ -1,3 +1,4 @@
+<<<<<<< current
 === ARVE Advanced Responsive Video Embedder (YouTube, Vimeo, HTML5 Video ...) ===
 Contributors: nico23
 Donate link: https://www.paypal.me/nico23
@@ -155,6 +156,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### 2018-04-16 - 8.9.2 ###
+
+* Fix possible "not a string" errors.
 
 ### 2018-04-12 - 8.9.1 ###
 
@@ -1137,3 +1142,5 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 ### 0.1 ###
 
 * Started by improving the Wordpress 'Video Embedder Plugin' but now complete new code
+=======
+>>>>>>> before discard

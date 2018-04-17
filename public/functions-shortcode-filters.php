@@ -421,21 +421,21 @@ function arve_sc_filter_build_tracks_html( $atts ) {
 			return $atts;
 		}
 
-		preg_match( '#-(captions|chapters|descriptions|metadata|subtitles)-([a-z]{2}).vtt$#i', $atts[ "track_{$n}" ], $matches );
+		preg_match( '#-(?<type>captions|chapters|descriptions|metadata|subtitles)-(?<lang>[a-z]{2}).vtt$#i', $atts[ "track_{$n}" ], $matches );
 
 		if ( empty( $matches[1] ) ) {
 			$atts[ "track_{$n}" ] = new WP_Error( 'track', __( 'Track kind or language code could not detected from filename', ARVE_SLUG ) );
 			return $atts;
 		}
 
-		$label = empty( $atts[ "track_{$n}_label" ] ) ? arve_get_language_name_from_code( $matches[2] ) : $atts[ "track_{$n}_label" ];
+		$label = empty( $atts[ "track_{$n}_label" ] ) ? arve_get_language_name_from_code( $matches['lang'] ) : $atts[ "track_{$n}_label" ];
 
 		$attr = array(
 			'default' => ( 1 === $n ) ? true : false,
-			'kind'    => $matches[1],
+			'kind'    => $matches['type'],
 			'label'   => $label,
 			'src'     => $atts[ "track_{$n}" ],
-			'srclang' => $matches[2],
+			'srclang' => $matches['lang'],
 		);
 
 		$atts['video_tracks_html'] .= sprintf( '<track%s>', arve_attr( $attr) );
