@@ -216,9 +216,9 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( '<source type="video/webm" src="https://example.com/video.webm">', $output );
 		$this->assertContains( 'controlslist="nodownload"', $output );
 
-		$this->assertContains( '<track kind="subtitles" label="English" src="https://example.com/v-subtitles-en.vtt" srclang="en">', $output );
+		$this->assertContains( '<track default kind="subtitles" label="English" src="https://example.com/v-subtitles-en.vtt" srclang="en">', $output );
 		$this->assertContains( '<track kind="subtitles" label="Deutsch" src="https://example.com/v-subtitles-de.vtt" srclang="de">', $output );
-		$this->assertContains( '<track kind="subtitles" label="Espaniol" src="https://example.com/v-subtitles-es.vtt" srclang="es">', $output );
+		$this->assertContains( '<track kind="subtitles" label="Español" src="https://example.com/v-subtitles-es.vtt" srclang="es">', $output );
 	}
 
 	public function test_iframe() {
