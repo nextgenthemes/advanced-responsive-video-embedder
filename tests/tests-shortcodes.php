@@ -192,6 +192,9 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'ogv'       => 'https://example.com/video.ogv',
 			'webm'      => 'https://example.com/video.webm',
 			'thumbnail' => 'https://example.com/image.jpg',
+			'track_1'   => 'https://example.com/v-subtitles-en.vtt',
+			'track_2'   => 'https://example.com/v-subtitles-de.vtt',
+			'track_3'   => 'https://example.com/v-subtitles-es.vtt',
 		) );
 
 		// $output2 = wp_video_shortcode( array(
@@ -212,6 +215,10 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( '<source type="video/mp4" src="https://example.com/video.mp4">', $output );
 		$this->assertContains( '<source type="video/webm" src="https://example.com/video.webm">', $output );
 		$this->assertContains( 'controlslist="nodownload"', $output );
+
+		$this->assertContains( '<track kind="subtitles" label="English" src="https://example.com/v-subtitles-en.vtt" srclang="en">', $output );
+		$this->assertContains( '<track kind="subtitles" label="Deutsch" src="https://example.com/v-subtitles-de.vtt" srclang="de">', $output );
+		$this->assertContains( '<track kind="subtitles" label="Espaniol" src="https://example.com/v-subtitles-es.vtt" srclang="es">', $output );
 	}
 
 	public function test_iframe() {
