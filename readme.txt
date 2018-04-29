@@ -156,6 +156,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2018-04-29 - 8.9.3 ###
+
+* Improved: Make overwrite of shortcode possible. Used in new [Random Video Addon]()
+
 ### 2018-04-18 - 8.9.2 ###
 
 * Fix possible "not a string" errors.

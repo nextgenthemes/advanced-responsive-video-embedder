@@ -14,7 +14,7 @@ function arve_get_wrapper_id( $a ) {
 	static $wrapper_ids = array();
 	$wrapper_id = null;
 
-	foreach ( array( 'id', 'mp4', 'm4v', 'webm', 'ogv', 'url', 'webtorrent' ) as $att ) {
+	foreach ( array( 'id', 'mp4', 'm4v', 'webm', 'ogv', 'url', 'random_video_url', 'webtorrent' ) as $att ) {
 
 		if ( ! empty( $a[ $att ] ) && is_string( $a[ $att ] ) ) {
 			$wrapper_id = 'arve-' . $a[ $att ];

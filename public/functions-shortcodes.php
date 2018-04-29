@@ -1,5 +1,27 @@
 <?php
 
+function arve_shortcode( $input_atts, $content = null ) {
+
+	/**
+	 * Filters the default arve shortcode output.
+	 *
+	 * If the filtered output isn't empty, it will be used instead of generating
+	 * the default video template.
+	 *
+	 * @since 8.8.2
+	 *
+	 * @param string $html     Empty variable to be replaced with shortcode markup.
+	 * @param array  $atts     Attributes of the shortcode.
+	 * @param string $content  Video shortcode content.
+	 */
+	$override = apply_filters( 'arve_shortcode_overwride', '', $input_atts, $content );
+	if ( '' !== $override ) {
+		return $override;
+	}
+
+	return arve_shortcode_arve( $input_atts, $content );
+}
+
 function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = true ) {
 
 	$errors     = '';
@@ -8,41 +30,41 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 	$input_atts = (array) $input_atts;
 
 	$pairs = array(
-		'align'         => $options['align'],
-		'arve_link'     => arve_bool_to_shortcode_string( $options['promote_link'] ),
-		'aspect_ratio'  => null,
-		'autoplay'      => arve_bool_to_shortcode_string( $options['autoplay'] ),
-		'description'   => null,
-		'duration'      => null,
-		'disable_flash' => null,
-		'iframe_name'   => null,
-		'maxwidth'      => (string) $options['video_maxwidth'],
-		'mode'          => $options['mode'],
-		'parameters'    => null,
-		'src'           => null, // Just a alias for url to make it simple
-		'thumbnail'     => null,
-		'title'         => null,
-		'upload_date'   => null,
+		'align'            => $options['align'],
+		'arve_link'        => arve_bool_to_shortcode_string( $options['promote_link'] ),
+		'aspect_ratio'     => null,
+		'autoplay'         => arve_bool_to_shortcode_string( $options['autoplay'] ),
+		'description'      => null,
+		'duration'         => null,
+		'disable_flash'    => null,
+		'iframe_name'      => null,
+		'maxwidth'         => (string) $options['video_maxwidth'],
+		'mode'             => $options['mode'],
+		'parameters'       => null,
+		'src'              => null, // Just a alias for url to make it simple
+		'thumbnail'        => null,
+		'title'            => null,
+		'upload_date'      => null,
 		// <video>
-		'm4v'           => null,
-		'mp4'           => null,
-		'ogv'           => null,
-		'webm'          => null,
-		'preload'       => 'metadata',
-		'playsinline'   => null,
-		'muted'         => null,
-		'controls'      => 'y',
-		'controlslist'  => empty( $options['controlslist'] ) ? null : (string) $options['controlslist'],
-		'loop'          => 'n',
+		'm4v'              => null,
+		'mp4'              => null,
+		'ogv'              => null,
+		'webm'             => null,
+		'preload'          => 'metadata',
+		'playsinline'      => null,
+		'muted'            => null,
+		'controls'         => 'y',
+		'controlslist'     => empty( $options['controlslist'] ) ? null : (string) $options['controlslist'],
+		'loop'             => 'n',
 		// TED only
-		'lang'          => null,
+		'lang'             => null,
 		// Vimeo only
-		'start'         => null,
+		'start'            => null,
 		// Old Shortcodes / URL embeds
-		'id'            => null,
-		'provider'      => null,
+		'id'               => null,
+		'provider'         => null,
 		// deprecated, title should be used
-		'link_text'     => null,
+		'link_text'        => null,
 	);
 
 	for ( $n = 1; $n <= ARVE_NUM_TRACKS; $n++ ) {
@@ -77,7 +99,7 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 	$output = apply_filters( 'arve_output', $normal_embed, $html, $atts );
 
 	if ( empty( $output ) ) {
-		return arve_error( 'The output is empty, this should not happen' );
+		return arve_error( 'The output is empty, this should not happen', ARVE_SLUG );
 	} elseif ( is_wp_error( $output ) ) {
 		return arve_error( $output->get_error_message() );
 	}
@@ -111,7 +133,7 @@ function arve_create_shortcodes() {
 		add_shortcode( $shortcode, $function );
 	}
 
-	add_shortcode( 'arve',                'arve_shortcode_arve' );
+	add_shortcode( 'arve',                'arve_shortcode' );
 	add_shortcode( 'arve-supported',      'arve_shortcode_arve_supported' );
 	add_shortcode( 'arve-supported-list', 'arve_shortcode_arve_supported_list' );
 	add_shortcode( 'arve-params',         'arve_shortcode_arve_params' );

@@ -91,7 +91,7 @@ function arve_get_settings_definitions() {
 		$current_mode_name = $options['mode'];
 	}
 
-	return array(
+	$definitions = array(
 		array(
 			'hide_from_settings' => true,
 			'attr'  => 'url',
@@ -377,9 +377,16 @@ function arve_get_settings_definitions() {
 			'attr'               => 'vimeo_api_token',
 			'label'              => esc_html__( 'Video API Token', ARVE_SLUG ),
 			'type'               => 'text',
-			'description'        => esc_html__( 'Leave blank for now.', ARVE_SLUG ),
+			'description'        => sprintf(
+				__( 'Needed for <a href="%s">Random Video Addon</a>.', ARVE_SLUG ),
+				'https://nextgenthemes.local/plugins/arve-random-video/'
+			),
 		),
 	);
+
+	$definitions = apply_filters( 'arve_settings_definitions', $definitions );
+
+	return $definitions;
 }
 
 	/**
