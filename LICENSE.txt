@@ -1,8 +1,3 @@
-class-arve-vimeo.php
-Vimeo Video Post Lite
-https://wordpress.org/plugins/codeflavors-vimeo-video-post-lite/
-GPL 2.0 or later
-
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 

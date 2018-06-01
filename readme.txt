@@ -156,9 +156,13 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2018-06-02 - 8.9.4 ###
+
+* Improved: Try to make autoplay in Chrome possible again. See [New Chrome Autoplay behavior](https://developers.google.com/web/updates/2017/09/autoplay-policy-changes). At the point of writing its not clear if the new iframe attribute makes them just autoplay no matter what. Please report your experiences.
+
 ### 2018-04-29 - 8.9.3 ###
 
-* Improved: Make overwrite of shortcode possible. Used in new [Random Video Addon]()
+* Improved: Make overwrite of shortcode possible. Used in new [Random Video Addon](https://nextgenthemes.com/plugins/arve-random-video/)
 
 ### 2018-04-18 - 8.9.2 ###
 

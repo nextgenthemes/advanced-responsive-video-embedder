@@ -95,13 +95,14 @@ function arve_sc_filter_attr( $a ) {
 		}
 
 		$a['iframe_attr'] = array(
+			'allow'           => 'autoplay; fullscreen',
 			'allowfullscreen' => '',
 			'class'           => 'arve-iframe fitvidsignore',
 			'frameborder'     => '0',
 			'name'            => $a['iframe_name'],
+			'sandbox'         => 'allow-scripts allow-same-origin allow-presentation allow-popups',
 			'scrolling'       => 'no',
 			'src'             => $iframe_src,
-			'sandbox'         => 'allow-scripts allow-same-origin allow-presentation allow-popups',
 			'width'           => empty( $a['width'] )  ? false : $a['width'],
 			'height'          => empty( $a['height'] ) ? false : $a['height'],
 		);
