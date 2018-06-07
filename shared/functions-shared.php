@@ -1213,7 +1213,7 @@ function arve_get_host_properties() {
 					'id'  =>                                       'PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7'
 				),
 				array(
-					'url' => 'https://www.youtube-nocookie.com/embed/videoseries?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
+					'url' => 'https://www.youtube.com/embed/videoseries?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
 					'id'  =>                                                'PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
 				)
 			)
