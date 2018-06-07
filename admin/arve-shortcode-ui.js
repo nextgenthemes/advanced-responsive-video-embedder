@@ -17,9 +17,9 @@ function arve_extract_url( changed, collection, shortcode ) {
 		return;
 	}
 
-	if( val.match(/src="([^"]+)/) ) {
+	if( val.match(/src="?([^\s"]+)/) ) {
 
-		var test_url = val.match(/src="([^"]+)/),
+		var test_url = val.match(/src="?([^\s"]+)/),
 			only_url = test_url && test_url[1];
 
 		input.val( only_url ).trigger( 'input' );

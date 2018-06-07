@@ -156,6 +156,11 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2018-06-07 - 8.9.5 ###
+
+* Fixed: When pasting embed codes into the Shortcode UI dialog the `src=` will be extracted even when no quotes are used.
+* Improved: Use youtube-nocookie.com domain again it is GPRP/Privacy friendly. Note the name is confusing as it sets cookies, but only when the user plays the video rather then just when loading the iframe. So its not "no cookies". But you can mention this into your cookie notices when dealing with GPRP.
+
 ### 2018-06-02 - 8.9.4 ###
 
 * Improved: Try to make autoplay in Chrome possible again. See [New Chrome Autoplay behavior](https://developers.google.com/web/updates/2017/09/autoplay-policy-changes). At the point of writing its not clear if the new iframe attribute makes them just autoplay no matter what. Please report your experiences.

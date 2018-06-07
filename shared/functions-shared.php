@@ -1008,7 +1008,7 @@ function arve_get_host_properties() {
 		'youtube' => array(
 			'name'           => 'YouTube',
 			'regex'          => $s . '(youtube\.com\/\S*((\/e(mbed))?\/|watch\?(\S*?&?v\=))|youtu\.be\/)(?<id>[a-zA-Z0-9_-]{6,11}((\?|&)list=[a-z0-9_\-]+)?)',
-			'embed_url'      => 'https://www.youtube.com/embed/%s',
+			'embed_url'      => 'https://www.youtube-nocookie.com/embed/%s',
 			'default_params' => 'iv_load_policy=3&modestbranding=1&rel=0&autohide=1&playsinline=1',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
@@ -1204,7 +1204,7 @@ function arve_get_host_properties() {
 		'youtubelist' => array(
 			'regex'          => $s . 'youtube\.com/(embed/videoseries|playlist)\?list=(?<id>[-a-z0-9_]+)',
 			'name'           => 'YouTube Playlist',
-			'embed_url'      => 'https://www.youtube.com/embed/videoseries?list=%s',
+			'embed_url'      => 'https://www.youtube-nocookie.com/embed/videoseries?list=%s',
 			'default_params' => 'iv_load_policy=3&modestbranding=1&rel=0&autohide=1&playsinline=1',
 			'auto_thumbnail' => true,
 			'tests' => array(
@@ -1213,7 +1213,7 @@ function arve_get_host_properties() {
 					'id'  =>                                       'PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7'
 				),
 				array(
-					'url' => 'https://www.youtube.com/embed/videoseries?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
+					'url' => 'https://www.youtube-nocookie.com/embed/videoseries?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
 					'id'  =>                                                'PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
 				)
 			)
