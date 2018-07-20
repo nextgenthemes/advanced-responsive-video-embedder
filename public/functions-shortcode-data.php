@@ -28,11 +28,16 @@ function arve_url_query_array( $url ) {
 
 function arve_build_iframe_src( $atts ) {
 
-	$id       = $atts['id'];
-	$lang     = $atts['lang'];
-	$provider = $atts['provider'];
-
+	$id         = $atts['id'];
+	$lang       = $atts['lang'];
+	$provider   = $atts['provider'];
+    $options    = arve_get_options();
 	$properties = arve_get_host_properties();
+
+	if ( $options['youtube_nocookie'] ) {
+		$properties['youtube']['embed_url']     = 'https://www.youtube-nocookie.com/embed/%s';
+		$properties['youtubelist']['embed_url'] = 'https://www.youtube-nocookie.com/embed/videoseries?list=%s';
+	}
 
 	if ( isset( $properties[ $provider ]['embed_url'] ) ) {
 		$pattern = $properties[ $provider ]['embed_url'];

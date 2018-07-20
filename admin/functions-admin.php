@@ -584,6 +584,7 @@ function arve_validate_options_main( $input ) {
 	$output['iframe_flash']          = ( 'yes' == $input['iframe_flash'] ) ? true : false;
 	$output['promote_link']          = ( 'yes' == $input['promote_link'] ) ? true : false;
 	$output['wp_video_override']     = ( 'yes' == $input['wp_video_override'] ) ? true : false;
+	$output['youtube_nocookie']      = ( 'yes' == $input['youtube_nocookie'] ) ? true : false;
 
 	$output['wp_image_cache_time'] = (int) $input['wp_image_cache_time'];
 

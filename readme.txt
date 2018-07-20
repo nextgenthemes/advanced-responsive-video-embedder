@@ -156,6 +156,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2018-07-22 - 8.9.6 ###
+
+* New: Option to enable or disable youtube-nocookie.com embeds. It a privacy enhanced feature but it has at least one bug when setting highlighted video boxes they will open the wrong url so in case you need them you have to disable this.
+
 ### 2018-06-07 - 8.9.5 ###
 
 * Fixed: When pasting embed codes into the Shortcode UI dialog the `src=` will be extracted even when no quotes are used.

@@ -16,6 +16,7 @@ function arve_get_options_defaults( $section ) {
 		'controlslist'          => 'nodownload',
 		'vimeo_api_token'       => '',
 		'iframe_flash'          => true,
+		'youtube_nocookie'      => true,
 	);
 
 	$properties = arve_get_host_properties();
@@ -371,6 +372,17 @@ function arve_get_settings_definitions() {
 				__( 'Usually ARVE will loads its scripts and styles only on pages what need them. In case your content is loaded via AJAX or the styles are not loaded for another reason you may have to enable this option', ARVE_SLUG ),
 				'https://nextgenthemes.com/plugins/arve-pro/#support-table'
 			),
+		),
+		array(
+			'hide_from_sc' => true,
+			'attr'               => 'youtube_nocookie',
+			'label'              => esc_html__( 'Use youtube-nocookie.com url?', ARVE_SLUG ),
+			'type'               => 'select',
+			'options'            => array(
+				'yes'             => esc_html__( 'Yes', ARVE_SLUG ),
+				'no'              => esc_html__( 'No', ARVE_SLUG ),
+			),
+			'description'        => esc_html__( 'Privacy enhanced mode, will NOT disable cookies but only sets them when a user starts to play a video. There is currently a youtube bug that opens highlighed video boxes with a wrong -nocookie.com url so you need to disble this if you need those.' ),
 		),
 		array(
 			'hide_from_sc'       => true,
@@ -1008,7 +1020,7 @@ function arve_get_host_properties() {
 		'youtube' => array(
 			'name'           => 'YouTube',
 			'regex'          => $s . '(youtube\.com\/\S*((\/e(mbed))?\/|watch\?(\S*?&?v\=))|youtu\.be\/)(?<id>[a-zA-Z0-9_-]{6,11}((\?|&)list=[a-z0-9_\-]+)?)',
-			'embed_url'      => 'https://www.youtube-nocookie.com/embed/%s',
+			'embed_url'      => 'https://www.youtube.com/embed/%s',
 			'default_params' => 'iv_load_policy=3&modestbranding=1&rel=0&autohide=1&playsinline=1',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
@@ -1204,7 +1216,7 @@ function arve_get_host_properties() {
 		'youtubelist' => array(
 			'regex'          => $s . 'youtube\.com/(embed/videoseries|playlist)\?list=(?<id>[-a-z0-9_]+)',
 			'name'           => 'YouTube Playlist',
-			'embed_url'      => 'https://www.youtube-nocookie.com/embed/videoseries?list=%s',
+			'embed_url'      => 'https://www.youtube.com/embed/videoseries?list=%s',
 			'default_params' => 'iv_load_policy=3&modestbranding=1&rel=0&autohide=1&playsinline=1',
 			'auto_thumbnail' => true,
 			'tests' => array(
