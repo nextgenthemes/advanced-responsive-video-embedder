@@ -28,9 +28,11 @@ $options = arve_get_options();
 			<h3>Please rate</h3>
 			It would really help to get a <a href="https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/#new-post">5 star rating from you.</a>
 
-			<p>This plugin is financed by purchases of the <a href="https://nextgenthemes.com/plugins/arve-pro/">Pro Addon</a>. The development and support of this plugins has become a job for me so I hope you understand that I can not make all features gratis and that you <a href="https://nextgenthemes.com/plugins/arve-pro/">purchase it</a> to get extra features and support the development.</p>
-
 			<h3><a href="https://nextgenthemes.com/plugins/arve-pro/">Pro Addon</a></h3>
+
+			<p>Limited time price experiment: <strong><big>44% off</big></strong> first year with discount code <code>settingspage</code></p>
+
+			<p>This plugin is financed by purchases of the <a href="https://nextgenthemes.com/plugins/arve-pro/">Pro Addon</a>. The development and support of this plugins has become a job for me so I hope you understand that I can not make all features gratis and that you <a href="https://nextgenthemes.com/plugins/arve-pro/">purchase it</a> to get extra features and support the development.</p>
 
 			<ul>
 				<li><strong>Disable links in embeds (killer feature!)</strong><br>

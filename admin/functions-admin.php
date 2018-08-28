@@ -2,20 +2,6 @@
 
 function arve_action_admin_init_setup_messages() {
 
-	if( defined( 'ARVE_PRO_VERSION' ) || defined( 'ARVE_AMP_VERSION' ) ) {
-
-		$msg = sprintf(
-			__( 'ARVE addons price change. Please read <a href="%s">Taking Business to a Serious Level - The Future NextGenThemes and ARVE.</a>.', ARVE_SLUG ),
-			'https://nextgenthemes.com/taking-business-to-a-serious-level-the-future-nextgenthemes-and-arve/'
-		);
-
-		new ARVE_Admin_Notice_Factory(
-			'price_change',
-			"<p>$msg</p>",
-			true
-		);
-	}
-
 	if( defined( 'ARVE_PRO_VERSION' ) && version_compare( ARVE_PRO_VERSION_REQUIRED, ARVE_PRO_VERSION, '>' ) ) {
 
 		$msg = sprintf(
@@ -25,6 +11,7 @@ function arve_action_admin_init_setup_messages() {
 			'https://nextgenthemes.com/support/',
 			'https://nextgenthemes.com/plugins/arve/documentation/installing-and-license-management/'
 		);
+
 		new ARVE_Admin_Notice_Factory( 'arve-pro-outdated', "<p>$msg</p>", false );
 	}
 
