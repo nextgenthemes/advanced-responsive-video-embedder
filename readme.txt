@@ -1,11 +1,11 @@
-=== ARVE Advanced Responsive Video Embedder (YouTube, Vimeo, HTML5 Video ...) ===
+wp=== ARVE Advanced Responsive Video Embedder (YouTube, Vimeo, HTML5 Video ...) ===
 Contributors: nico23
 Donate link: https://www.paypal.me/nico23
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.4.0
 Tested up to: 4.9.4
 Requires PHP: 5.3
-Stable tag: trunk
+Stable tag: 8.9.8
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -158,7 +158,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-### 2018-08-18 - 8.9.8 ###
+### 2018-10-02 - 8.9.8 ###
 
 * Updated EDD Plugin update class, this may fix some people having trouble auto updating ARVE Pro
 * Fix: Licensing page no longer shows plugins wrongly as not installed.
