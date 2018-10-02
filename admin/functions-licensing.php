@@ -219,16 +219,12 @@ function nextgenthemes_get_products() {
 			$products[ $key ]['file'] = constant( $file_define );
 		}
 
-		if ( 'plugin' == $value['type'] ) {
+		if ( 'plugin' === $value['type'] ) {
 
 			$file_slug = str_replace( '_', '-', $key );
 
 			$products[ $key ]['installed'] = nextgenthemes_is_plugin_installed( "$file_slug/$file_slug.php" );
-
-			if ( ! empty( $products[ $key ]['file'] ) ) {
-				$plugin_basename = plugin_basename( $products[ $key ]['file'] );
-				$products[ $key ]['active'] = is_plugin_active( $plugin_basename );
-			}
+			$products[ $key ]['active']    = is_plugin_active( "$file_slug/$file_slug.php" );
 		}
 	}
 

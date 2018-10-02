@@ -665,7 +665,8 @@ function arve_get_host_properties() {
 			'tests' => array(
 				array(
 					'url' => 'https://www.kickstarter.com/projects/obsidian/project-eternity?ref=discovery',
-					'id'  =>                                      'obsidian/project-eternity' ),
+					'id'  =>                                      'obsidian/project-eternity'
+				),
 				array(
 					'url' => 'https://www.kickstarter.com/projects/trinandtonic/friendship-postcards?ref=category_featured',
 					'id'  =>                                      'trinandtonic/friendship-postcards'
@@ -708,8 +709,8 @@ function arve_get_host_properties() {
 			'url'            => true,
 			'auto_thumbnail' => false,
 			'tests' => array(
-				array( 'url' => 'http://www.klagemauer.tv/9106', 'id' =>  9106 ),
-				array( 'url' => 'http://www.kla.tv/9122',        'id' =>  9122 ),
+				array( 'url' => 'http://www.klagemauer.tv/9106', 'id' => 9106 ),
+				array( 'url' => 'http://www.kla.tv/9122', 'id' => 9122 ),
 			),
 		),
 		'metacafe' => array(
@@ -737,7 +738,7 @@ function arve_get_host_properties() {
 			'auto_thumbnail' => true,
 			'tests' => array(
 				array( 'url' => 'http://mpora.com/videos/AAdphry14rkn', 'id' => 'AAdphry14rkn' ),
-				array( 'url' => 'http://mpora.de/videos/AAdpxhiv6pqd',  'id' => 'AAdpxhiv6pqd' ),
+				array( 'url' => 'http://mpora.de/videos/AAdpxhiv6pqd', 'id' => 'AAdpxhiv6pqd' ),
 			)
 		),
 		'myspace' => array(
