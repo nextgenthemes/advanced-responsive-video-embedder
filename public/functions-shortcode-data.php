@@ -33,19 +33,28 @@ function arve_url_query_array( $url ) {
 	return $url_params;
 }
 
-function arve_build_iframe_src( $a ) {
+function arve_build_iframe_src( $atts ) {
 
+	$id         = $atts['id'];
+	$lang       = $atts['lang'];
+	$provider   = $atts['provider'];
+    $options    = arve_get_options();
 	$properties = arve_get_host_properties();
 
-	if ( isset( $properties[ $a['provider'] ]['embed_url'] ) ) {
-		$pattern = $properties[ $a['provider'] ]['embed_url'];
+	if ( $options['youtube_nocookie'] ) {
+		$properties['youtube']['embed_url']     = 'https://www.youtube-nocookie.com/embed/%s';
+		$properties['youtubelist']['embed_url'] = 'https://www.youtube-nocookie.com/embed/videoseries?list=%s';
+	}
+
+	if ( isset( $properties[ $provider ]['embed_url'] ) ) {
+		$pattern = $properties[ $provider ]['embed_url'];
 	} else {
 		$pattern = '%s';
 	}
 
 	if ( 'facebook' === $a['provider'] && is_numeric( $a['id'] ) ) {
 
-		$a['id'] = "https://www.facebook.com/facebook/videos/{$a['id']}/";
+		$id = "https://www.facebook.com/facebook/videos/$id/";
 
 	} elseif ( 'twitch' === $a['provider'] && is_numeric( $a['id'] ) ) {
 
@@ -56,14 +65,14 @@ function arve_build_iframe_src( $a ) {
 		$pattern = 'https://embed-ssl.ted.com/talks/lang/' . $lang . '/%s.html';
 	}
 
-	if ( isset( $properties[ $a['provider'] ]['url_encode_id'] ) && $properties[ $a['provider'] ]['url_encode_id'] ) {
-		$a['id'] = urlencode( $a['id'] );
+	if ( isset( $properties[ $provider ]['url_encode_id'] ) && $properties[ $provider ]['url_encode_id'] ) {
+		$id = urlencode( $id );
 	}
 
 	if ( 'brightcove' === $a['provider'] ) {
 		$src = sprintf( $pattern, $a['account_id'], $a['brightcove_player'], $a['brightcove_embed'], $a['id'] );
 	} else {
-		$src = sprintf( $pattern, $a['id'] );
+		$src = sprintf( $pattern, $id );
 	}
 
 	return $src;
@@ -143,6 +152,7 @@ function arve_add_autoplay_query_arg( $src, $a ) {
 			$on  = add_query_arg( 'player_autoplay', 'true',  $src );
 			$off = add_query_arg( 'player_autoplay', 'false', $src );
 			break;
+		/*
 		case 'iframe':
 			# We are spamming all kinds of autoplay parameters here in hope of a effect
 			$on  = add_query_arg( array(
@@ -158,8 +168,9 @@ function arve_add_autoplay_query_arg( $src, $a ) {
 				'player_autoStart' => 'false',
 			), $src );
 			break;
+		*/
 		default:
-			// Do nothing for providers that to not support autoplay or fail with parameters.
+			# Do nothing for providers that to not support autoplay or fail with parameters
 			$on  = $src;
 			$off = $src;
 			break;

@@ -22,10 +22,7 @@ function arve_shortcode( $a, $content = null ) {
 		$a['src'] = $a['url'];
 	}
 
-	unset( $a['url'] );
-	$a['provider'] = 'iframe';
-
-	return arve_shortcode_arve( $a, $content );
+	return arve_shortcode_arve( $input_atts, $content );
 }
 
 class ARVE_Embed_Checker {
@@ -146,9 +143,20 @@ function arve_shortcode_arve( $input_atts, $content = null ) {
 		'append_text'       => null,
 	);
 
-	for ( $n = 1; $n <= 10; $n++ ) {
-		$pairs[ "track_{$n}" ]       = null;
-		$pairs[ "track_{$n}_label" ] = null;
+	for ( $n = 1; $n <= ARVE_NUM_TRACKS; $n++ ) {
+		$pairs["track_{$n}"]       = null;
+		$pairs["track_{$n}_label"] = null;
+	}
+
+	if ( $arve_shortcode ) {
+		$pairs['url'] = null;
+	} else {
+		$pairs['provider'] = null;
+		$pairs['id']       = null;
+
+		if ( empty( $input_atts['provider'] ) || empty( $input_atts['id'] ) ) {
+			return arve_error( __( 'id and provider shortcodes attributes are mandatory for old shortcodes. It is recommended to switch to new shortcodes that need only url', ARVE_SLUG ) );
+		}
 	}
 
 	$atts = shortcode_atts( apply_filters( 'arve_shortcode_pairs', $pairs ), $input_atts, 'arve' );
@@ -157,25 +165,23 @@ function arve_shortcode_arve( $input_atts, $content = null ) {
 		return $errors . arve_get_debug_info( '', $atts, $input_atts );
 	}
 
-	$html_parts['video']           = arve_video_or_iframe( $atts );
-	$html_parts['meta']            = arve_build_meta_html( $atts );
-	$html_parts['arve_link']       = arve_build_promote_link_html( $atts['arve_link'] );
-	$html_parts['embed_container'] = arve_arve_embed_container( $html_parts['meta'] . $html_parts['video'], $atts );
+	$html['video']           = arve_video_or_iframe( $atts );
+	$html['meta']            = arve_build_meta_html( $atts );
+	$html['ad_link']         = arve_build_promote_link_html( $atts['arve_link'] );
+	$html['embed_container'] = arve_arve_embed_container( $html['meta'] . $html['video'], $atts );
 
-	$normal_embed = arve_arve_wrapper( $html_parts['embed_container'] . $html_parts['arve_link'], $atts );
+	$normal_embed = arve_arve_wrapper( $html['embed_container'] . $html['ad_link'], $atts );
 
-	$output = apply_filters( 'arve_output', $normal_embed, $html_parts, $atts );
+	$output = apply_filters( 'arve_output', $normal_embed, $html, $atts );
 
 	if ( empty( $output ) ) {
-		return arve_error( 'The output is empty, this should not happen' );
+		return arve_error( 'The output is empty, this should not happen', ARVE_SLUG );
 	} elseif ( is_wp_error( $output ) ) {
 		return arve_error( $output->get_error_message() );
 	}
 
-	wp_enqueue_style( 'advanced-responsive-video-embedder' );
-	wp_enqueue_script( 'advanced-responsive-video-embedder' );
-
-	$output .= $atts['append_text'];
+	wp_enqueue_style( ARVE_SLUG );
+	wp_enqueue_script( ARVE_SLUG );
 
 	return arve_get_debug_info( $output, $atts, $input_atts ) . $output;
 }
@@ -192,11 +198,11 @@ function arve_create_shortcodes() {
 
 	$options = arve_get_options();
 
-	foreach ( $options['shortcodes'] as $provider => $shortcode ) {
+	foreach( $options['shortcodes'] as $provider => $shortcode ) {
 
 		$function = function( $atts ) use ( $provider ) {
 			$atts['provider'] = $provider;
-			return arve_shortcode_arve( $atts, null );
+			return arve_shortcode_arve( $atts, null, false );
 		};
 
 		add_shortcode( $shortcode, $function );
@@ -209,11 +215,11 @@ function arve_wp_video_shortcode_override( $out, $attr, $content, $instance ) {
 
 	$options = arve_get_options();
 
-	if ( ! $options['wp_video_override'] || ! empty( $attr['wmv'] ) || ! empty( $attr['flv'] ) ) {
+	if( ! $options['wp_video_override'] || ! empty( $attr['wmv'] ) || ! empty( $attr['flv'] ) ) {
 		return $out;
 	}
 
-	if ( ! empty( $attr['poster'] ) ) {
+	if( ! empty( $attr['poster'] ) ) {
 		$attr['thumbnail'] = $attr['poster'];
 	}
 
