@@ -1,13 +1,3 @@
-dist
-travis.log
-
-# Copy from bootstrap
-
-# Ignore docs files
-_gh_pages
-_site
-.ruby-version
-
 # Numerous always-ignore extensions
 *.diff
 *.err
@@ -38,10 +28,6 @@ Thumbs.db
 .komodotools
 *.komodoproject
 
-# grunt-html-validation
-validation-report.json
-validation-status.json
-
 # Folders to ignore
-bower_components
 node_modules
+js/coverage
