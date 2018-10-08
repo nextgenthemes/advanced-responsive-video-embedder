@@ -13,11 +13,11 @@ function arve_extract_url( changed, collection, shortcode ) {
 		short_val = changed.value,
 		input     = attr_by_name( 'url' ).$el.find( 'input' );
 
-	if( typeof val === 'undefined' ) {
+	if ( typeof val === 'undefined' ) {
 		return;
 	}
 
-	if( val.match(/src="?([^\s"]+)/) ) {
+	if ( val.match(/src="?([^\s"]+)/) ) {
 
 		var test_url = val.match(/src="?([^\s"]+)/),
 			only_url = test_url && test_url[1];
@@ -43,7 +43,7 @@ function arve_mode_select_listener( changed, collection, shortcode ) {
 		align      = attr_by_name( 'align' ),
 		hide_title = attr_by_name( 'hide_title' );
 
-	if( typeof val === 'undefined' ) {
+	if ( typeof val === 'undefined' ) {
 		return;
 	}
 

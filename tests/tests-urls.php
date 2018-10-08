@@ -7,7 +7,7 @@ class Tests_URLs extends WP_UnitTestCase {
 
 		global $wp_version;
 
-		if(
+		if (
 			5 == PHP_MAJOR_VERSION &&
 			3 == PHP_MINOR_VERSION &&
 			version_compare( $wp_version, '4.6', '<' )

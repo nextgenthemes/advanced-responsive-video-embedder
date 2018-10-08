@@ -20,6 +20,10 @@ class ComposerStaticInitfb499b858061dcbc3a5ecc8995cf88b8
             'Nextgenthemes\\ARVE\\' => 19,
             'Nextgenthemes\\' => 14,
         ),
+        'D' => 
+        array (
+            'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 55,
+        ),
         'C' => 
         array (
             'Composer\\Installers\\' => 20,
@@ -38,6 +42,10 @@ class ComposerStaticInitfb499b858061dcbc3a5ecc8995cf88b8
         'Nextgenthemes\\' => 
         array (
             0 => __DIR__ . '/..' . '/nextgenthemes/common/src',
+        ),
+        'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dealerdirect/phpcodesniffer-composer-installer/src',
         ),
         'Composer\\Installers\\' => 
         array (

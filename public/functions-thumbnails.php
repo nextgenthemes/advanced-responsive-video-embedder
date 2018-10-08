@@ -3,13 +3,13 @@ namespace Nextgenthemes\ARVE;
 
 function get_attachment_image_url_or_srcset( $url_or_srcset, $thumbnail ) {
 
-	if( $found = get_cached_attachment_image_url_or_srcset( $url_or_srcset, $thumbnail ) ) {
+	if ( $found = get_cached_attachment_image_url_or_srcset( $url_or_srcset, $thumbnail ) ) {
 
 		return $found;
 
 	} elseif ( 'url' === $url_or_srcset ) {
 
-		return new WP_Error( 'wp thumbnail', __( 'No attachment with that ID', TEXTDOMAIN ) );
+		return new WP_Error( 'wp thumbnail', __( 'No attachment with that ID', 'advanced-responsive-video-embedder' ) );
 
 	} else {
 
@@ -24,13 +24,13 @@ function get_cached_attachment_image_url_or_srcset( $url_or_srcset, $attachment_
 	$transient      = get_transient( $transient_name );
 	$time           = (int) $options['wp_image_cache_time'];
 
-	if( false === $transient || $time <= 0 ) {
+	if ( false === $transient || $time <= 0 ) {
 
-		if( 'srcset' === $url_or_srcset ) {
+		if ( 'srcset' === $url_or_srcset ) {
 
 			$out = wp_get_attachment_image_srcset( $attachment_id, 'small' );
 
-		} elseif( 'url' === $url_or_srcset ) {
+		} elseif ( 'url' === $url_or_srcset ) {
 
 			$out = wp_get_attachment_image_url( $attachment_id, 'small' );
 		}

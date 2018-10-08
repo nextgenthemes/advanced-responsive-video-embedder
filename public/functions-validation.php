@@ -27,7 +27,8 @@ function validate_aspect_ratio( $aspect_ratio ) {
 	}
 
 	return new WP_Error( 'Aspect ratio',
-		sprintf( __( 'Aspect ratio <code>%s</code> is not valid', TEXTDOMAIN ), $aspect_ratio )
+		// Transltors: Aspect Ratio
+		sprintf( __( 'Aspect ratio <code>%s</code> is not valid', 'advanced-responsive-video-embedder' ), $aspect_ratio )
 	);
 }
 
@@ -62,7 +63,7 @@ function validate_bool( $val, $name ) {
 			break;
 		default:
 			return new WP_Error( $name,
-				sprintf( __( '%s <code>%s</code> not valid', TEXTDOMAIN ), $name, $val )
+				sprintf( __( '%s <code>%s</code> not valid', 'advanced-responsive-video-embedder' ), $name, $val )
 			);
 			break;
 	}
@@ -81,7 +82,7 @@ function validate_align( $align ) {
 		case 'center':
 			break;
 		default:
-			$align = new WP_Error( 'align', sprintf( __( 'Align <code>%s</code> not valid', TEXTDOMAIN ), esc_html( $align ) ) );
+			$align = new WP_Error( 'align', sprintf( __( 'Align <code>%s</code> not valid', 'advanced-responsive-video-embedder' ), esc_html( $align ) ) );
 			break;
 	}
 
@@ -103,7 +104,7 @@ function validate_mode( $mode, $provider ) {
 	if ( ! array_key_exists( $mode, $supported_modes ) ) {
 
 		#$mode = new WP_Error( 'mode', sprintf(
-		#	__( 'Mode: <code>%s</code> is invalid or not supported. Note that you will need the Pro Addon activated for modes other than normal.', TEXTDOMAIN ),
+		#	__( 'Mode: <code>%s</code> is invalid or not supported. Note that you will need the Pro Addon activated for modes other than normal.', 'advanced-responsive-video-embedder' ),
 		#	esc_html( $mode )
 		#) );
 

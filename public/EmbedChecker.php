@@ -14,7 +14,7 @@ class EmbedChecker {
 		$maybe_arve_html = $GLOBALS['wp_embed']->shortcode( [], $this->shortcode_args['url'] );
 		remove_filter( 'arve_oembed2args', [ $this, 'oembed2args' ] );
 
-		if ( \Nextgenthemes\Utils\contains( $maybe_arve_html, 'class="arve-wrapper' ) ) {
+		if ( false !== strpos( $maybe_arve_html, 'class="arve-wrapper' ) ) {
 			return $maybe_arve_html;
 		};
 

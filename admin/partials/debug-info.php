@@ -55,7 +55,7 @@ ARVE OPTIONS:
 <?php var_dump( get_option( 'arve_options_main' ) ); ?>
 <?php var_dump( get_option( 'arve_options_params' ) ); ?>
 <?php var_dump( get_option( 'arve_options_shortcodes' ) ); ?>
-<?php if( is_plugin_active( 'arve-pro/arve-pro.php' ) ) : ?>
+<?php if ( is_plugin_active( 'arve-pro/arve-pro.php' ) ) : ?>
 ARVE PRO OPTIONS:
 <?php $pro_options = get_option( 'arve_options_pro' );
 unset( $pro_options['key'] );

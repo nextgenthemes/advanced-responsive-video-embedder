@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<ruleset name="PHPCompatibilityParagonieRandomCompat">
+    <description>PHPCompatibility ruleset for PHP_CodeSniffer which accounts for polyfills provided by the Paragonie random_compat library.</description>
+
+    <rule ref="PHPCompatibility">
+        <!-- https://github.com/paragonie/random_compat/blob/master/lib/random.php -->
+        <exclude name="PHPCompatibility.Constants.NewConstants.php_version_idFound"/>
+
+        <!-- https://github.com/paragonie/random_compat/blob/master/lib/random_bytes_*.php -->
+        <exclude name="PHPCompatibility.FunctionUse.NewFunctions.random_bytesFound"/>
+
+        <!-- https://github.com/paragonie/random_compat/blob/master/lib/random_int.php -->
+        <exclude name="PHPCompatibility.FunctionUse.NewFunctions.random_intFound"/>
+
+        <!-- https://github.com/paragonie/random_compat/blob/master/lib/error_polyfill.php -->
+        <exclude name="PHPCompatibility.Classes.NewClasses.errorFound"/>
+        <exclude name="PHPCompatibility.Classes.NewClasses.typeerrorFound"/>
+    </rule>
+
+</ruleset>

@@ -26,7 +26,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="symbiosis"/>
+				<element value="advanced-responsive-video-embedder"/>
 			</property>
 		</properties>
 	</rule>
@@ -104,17 +104,27 @@
 		<exclude name="Squiz.Commenting.InlineComment.WrongStyle"/>
 		<exclude name="Squiz.Commenting.PostStatementComment.Found"/>
 		<exclude name="Squiz.ControlStructures.ElseIfDeclaration.NotAllowed"/>
+		<exclude name="Squiz.ControlStructures.ForEachLoopDeclaration.SpaceAfterOpen"/>
+		<exclude name="Squiz.ControlStructures.ForEachLoopDeclaration.SpaceBeforeClose"/>
+		<exclude name="Squiz.ControlStructures.ForLoopDeclaration.SpacingAfterOpen"/>
+		<exclude name="Squiz.ControlStructures.ForLoopDeclaration.SpacingBeforeClose"/>
 		<exclude name="Squiz.ControlStructures.InlineIfDeclaration.NoBrackets"/>
+		<exclude name="Squiz.ControlStructures.SwitchDeclaration.BreakIndent"/>
 		<exclude name="Squiz.Files.FileExtension.ClassFound"/>
 		<exclude name="Squiz.Formatting.OperatorBracket.MissingBrackets"/>
 		<exclude name="Squiz.Functions.GlobalFunction.Found"/>
 		<exclude name="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine"/>
 		<exclude name="Squiz.Functions.MultiLineFunctionDeclaration.SpaceAfterFunction"/>
 		<exclude name="Squiz.NamingConventions.ValidFunctionName.NotCamelCaps"/>
+		<exclude name="Squiz.NamingConventions.ValidFunctionName.ScopeNotCamelCaps"/>
 		<exclude name="Squiz.NamingConventions.ValidVariableName.NotCamelCaps"/>
+		<exclude name="Squiz.NamingConventions.ValidVariableName.StringNotCamelCaps"/>
 		<exclude name="Squiz.Operators.ComparisonOperatorUsage.ImplicitTrue"/>
 		<exclude name="Squiz.Operators.ComparisonOperatorUsage.NotAllowed"/>
 		<exclude name="Squiz.PHP.CommentedOutCode.Found" /><!-- Allows commented out code -->
+		<exclude name="Squiz.PHP.DisallowBooleanStatement.Found"/>
+		<exclude name="Squiz.PHP.DisallowComparisonAssignment.AssignedBool"/>
+		<exclude name="Squiz.PHP.DisallowComparisonAssignment.AssignedComparison"/>
 		<exclude name="Squiz.PHP.DisallowInlineIf.Found"/>
 		<exclude name="Squiz.PHP.EmbeddedPhp.NoSemicolon"/>
 		<exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpaceBeforeCloseBrace"/>
@@ -129,14 +139,9 @@
 		<exclude name="Squiz.WhiteSpace.FunctionSpacing.Before"/>
 		<exclude name="Squiz.WhiteSpace.FunctionSpacing.BeforeFirst"/>
 		<exclude name="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore"/>
-		<exclude name="Squiz.ControlStructures.ForEachLoopDeclaration.SpaceAfterOpen"/>
-		<exclude name="Squiz.ControlStructures.ForEachLoopDeclaration.SpaceBeforeClose"/>
-		<exclude name="Squiz.NamingConventions.ValidVariableName.StringNotCamelCaps"/>
-		<exclude name="Squiz.PHP.DisallowComparisonAssignment.AssignedComparison"/>
-		<exclude name="Squiz.PHP.DisallowComparisonAssignment.AssignedBool"/>
-		<exclude name="Squiz.PHP.DisallowBooleanStatement.Found"/>
-		<exclude name="Squiz.ControlStructures.SwitchDeclaration.BreakIndent"/>
-		<exclude name="Squiz.NamingConventions.ValidFunctionName.ScopeNotCamelCaps"/>
+		<exclude name="Squiz.ControlStructures.SwitchDeclaration.SpacingAfterBreak"/>
+		<exclude name="Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed"/>
+		<exclude name="Squiz.Commenting.BlockComment.NoCapital"/>
 	</rule>
 
 	<!-- Exclude WordPress rules. -->

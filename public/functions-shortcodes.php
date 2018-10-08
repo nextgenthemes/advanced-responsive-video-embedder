@@ -3,16 +3,14 @@ namespace Nextgenthemes\ARVE;
 
 function shortcode( array $a, $content = null ) {
 
-	/*
-	if ( ! empty( $a['url'] ) && $mayme_arve_html = check_for_embed( $a ) ) {
-		return $mayme_arve_html;
-	}
-	*/
+	if ( ! empty( $a['url'] ) ) {
 
-	$embed_check = new \Nextgenthemes\ARVE\EmbedChecker( $a );
+		$embed_check     = new \Nextgenthemes\ARVE\EmbedChecker( $a );
+		$mayme_arve_html = $embed_check->check();
 
-	if ( ! empty( $a['url'] ) && $mayme_arve_html = $embed_check->check() ) {
-		return $mayme_arve_html;
+		if ( $mayme_arve_html ) {
+			return $mayme_arve_html;
+		}
 	}
 
 	if ( defined( 'ARVE_DEBUG' ) ) {
@@ -23,29 +21,9 @@ function shortcode( array $a, $content = null ) {
 		$a['src'] = $a['url'];
 	}
 
-	return shortcode_arve( $a, $content );
+	return build_video( $a, $content );
 }
 
-function aarve_check_for_embed( array $a ) {
-
-	$url = $a['url'];
-	unset( $a['url'] );
-
-	foreach ( $a as $key => $value ) {
-		if ( 'url' === $key ) {
-			continue;
-		}
-		$url = add_query_arg( "arve[{$key}]", $value, $url );
-	}
-
-	$maybe_arve_html = $GLOBALS['wp_embed']->shortcode( array(), $url );
-
-	if ( \Nextgenthemes\Utils\contains( $maybe_arve_html, 'class="arve-wrapper' ) ) {
-		return $maybe_arve_html;
-	};
-
-	return false;
-}
 
 function add_iframe_parameters_to_url( array $a ) {
 
@@ -62,7 +40,7 @@ function add_iframe_parameters_to_url( array $a ) {
 	return $a;
 }
 
-function shortcode_arve( array $input_atts, $content = null ) {
+function build_video( array $input_atts, $content = null ) {
 
 	$errors     = '';
 	$options    = get_options();
@@ -118,8 +96,8 @@ function shortcode_arve( array $input_atts, $content = null ) {
 	);
 
 	for ( $n = 1; $n <= NUM_TRACKS; $n++ ) {
-		$pairs["track_{$n}"]       = null;
-		$pairs["track_{$n}_label"] = null;
+		$pairs[ "track_{$n}" ]       = null;
+		$pairs[ "track_{$n}_label" ] = null;
 	}
 
 	$atts = shortcode_atts(
@@ -128,7 +106,9 @@ function shortcode_arve( array $input_atts, $content = null ) {
 		'arve'
 	);
 
-	if ( $errors = output_errors( $atts ) ) {
+	$errors = output_errors( $atts );
+
+	if ( $errors ) {
 		return $errors . get_debug_info( '', $atts, $input_atts );
 	}
 
@@ -142,53 +122,45 @@ function shortcode_arve( array $input_atts, $content = null ) {
 	$output = apply_filters( 'arve_output', $normal_embed, $html, $atts );
 
 	if ( empty( $output ) ) {
-		return error( 'The output is empty, this should not happen', TEXTDOMAIN );
+		return error( 'The output is empty, this should not happen', 'advanced-responsive-video-embedder' );
 	} elseif ( is_wp_error( $output ) ) {
 		return error( $output->get_error_message() );
 	}
 
-	wp_enqueue_style( TEXTDOMAIN );
-	wp_enqueue_script( TEXTDOMAIN );
+	wp_enqueue_style( 'advanced-responsive-video-embedder' );
+	wp_enqueue_script( 'advanced-responsive-video-embedder' );
 
 	return get_debug_info( $output, $atts, $input_atts ) . $output;
 }
 
-/**
- * Create all shortcodes at a late stage because people over and over again using this plugin toghter with jetback or
- * other plugins that handle shortcodes we will now overwrite all this suckers.
- *
- * @since    2.6.2
- *
- * @uses Advanced_Responsive_Video_Embedder_Create_Shortcodes()
- */
 function create_shortcodes() {
 
 	$options = get_options();
 
-	foreach( $options['shortcodes'] as $provider => $shortcode ) {
+	foreach ( $options['shortcodes'] as $provider => $shortcode ) {
 
 		$function = function( $atts ) use ( $provider ) {
 			$atts['provider'] = $provider;
-			return shortcode_arve( $atts, null, false );
+			return build_video( $atts );
 		};
 
 		add_shortcode( $shortcode, $function );
 	}
 
-	add_shortcode( 'arve', 'arve_shortcode' );
+	add_shortcode( 'arve', __NAMESPACE__ . '\shortcode' );
 }
 
 function wp_video_shortcode_override( $out, $attr, $content, $instance ) {
 
 	$options = get_options();
 
-	if( ! $options['wp_video_override'] || ! empty( $attr['wmv'] ) || ! empty( $attr['flv'] ) ) {
+	if ( ! $options['wp_video_override'] || ! empty( $attr['wmv'] ) || ! empty( $attr['flv'] ) ) {
 		return $out;
 	}
 
-	if( ! empty( $attr['poster'] ) ) {
+	if ( ! empty( $attr['poster'] ) ) {
 		$attr['thumbnail'] = $attr['poster'];
 	}
 
-	return shortcode_arve( $attr, null );
+	return build_video( $attr );
 }

@@ -3,7 +3,7 @@ namespace Nextgenthemes\ARVE;
 
 function html_id( $html_attr ) {
 
-	if( ! \Nextgenthemes\Utils\contains( $html_attr, 'id=' ) ) {
+	if ( false !== strpos( $html_attr, 'id=' ) ) {
 		$html_attr .= ' id="arve"';
 	}
 
@@ -46,7 +46,7 @@ function get_debug_info( $input_html, $atts, $input_atts ) {
 			'<pre style="%s">attr[%s]: %s</pre>',
 			esc_attr( $pre_style ),
 			esc_html( $_GET['arve-debug-attr'] ),
-			arve_get_var_dump( $atts[ $_GET['arve-debug-attr'] ] )
+			get_var_dump( $atts[ $_GET['arve-debug-attr'] ] )
 		);
 	}
 
@@ -64,78 +64,82 @@ function get_debug_info( $input_html, $atts, $input_atts ) {
 
 function build_meta_html( array $a ) {
 
-		$meta = '';
+	$meta = '';
 
-		if ( ! empty( $a['sources'] ) ) {
+	if ( ! empty( $a['sources'] ) ) {
 
-			$first_source = get_first_array_value( $a['sources'] );
+		$first_source = get_first_array_value( $a['sources'] );
 
-			$meta .= sprintf( '<meta itemprop="contentURL" content="%s">', esc_attr( $first_source['src'] ) );
-		}
-
-		if ( ! empty( $a['iframe_src'] ) ) {
-			$meta .= sprintf( '<meta itemprop="embedURL" content="%s">', esc_attr( $a['iframe_src'] ) );
-		}
-
-		if ( ! empty( $a['upload_date'] ) ) {
-			$meta .= sprintf( '<meta itemprop="uploadDate" content="%s">', esc_attr( $a['upload_date'] ) );
-		}
-
-		if ( ! empty( $a['duration'] ) ) {
-			$meta .= sprintf( '<meta itemprop="duration" content="PT%s">', esc_attr( $a['duration'] ) );
-		}
-
-		if ( ! empty( $a['rating'] ) ) {
-			$meta .= '<span itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">';
-			$meta .= sprintf( '<meta itemprop="ratingValue" content="%s">', esc_attr( $a['rating'] ) );
-			if ( ! empty( $a['review_count'] ) ) {
-				$meta .= sprintf( '<meta itemprop="reviewCount" content="%s">', esc_attr( $a['review_count'] ) );
-			}
-			$meta .= '</span>';
-		}
-
-		if( ! empty( $a['img_src'] ) ) :
-
-			if( in_array( $a['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) ) {
-
-				$meta .= sprintf(
-					'<img%s>',
-					\Nextgenthemes\Utils\attr( array(
-						'class'           => 'arve-thumbnail',
-						'data-object-fit' => true,
-						'itemprop'        => 'thumbnailUrl',
-						'src'             => $a['img_src'],
-						'srcset'          => ! empty( $a['img_srcset'] ) ? $a['img_srcset'] : false,
-						#'sizes'    => '(max-width: 700px) 100vw, 1280px',
-						'alt'             => __( 'Video Thumbnail', TEXTDOMAIN ),
-					) )
-				);
-
-			} else {
-
-				$meta .= sprintf(
-					'<meta%s>',
-					\Nextgenthemes\Utils\attr( array(
-						'itemprop' => 'thumbnailUrl',
-						'content'  => $a['img_src'],
-					) )
-				);
-			}
-
-		endif;
-
-		if ( ! empty( $a['title'] ) && in_array( $a['mode'], array( 'lazyload', 'lazyload-lightbox' ) ) && empty( $a['hide_title'] ) ) {
-			$meta .= '<h5 itemprop="name" class="arve-title">' . trim( $a['title'] ) . '</h5>';
-		} elseif( ! empty( $a['title'] ) ) {
-			$meta .= sprintf( '<meta itemprop="name" content="%s">', esc_attr( trim( $a['title'] ) ) );
-		}
-
-		if ( ! empty( $a['description'] ) ) {
-			$meta .= sprintf( '<div itemprop="description" class="arve-description arve-hidden">%s</div>', esc_attr( trim( $a['description'] ) ) );
-		}
-
-		return $meta;
+		$meta .= sprintf( '<meta itemprop="contentURL" content="%s">', esc_attr( $first_source['src'] ) );
 	}
+
+	if ( ! empty( $a['iframe_src'] ) ) {
+		$meta .= sprintf( '<meta itemprop="embedURL" content="%s">', esc_attr( $a['iframe_src'] ) );
+	}
+
+	if ( ! empty( $a['upload_date'] ) ) {
+		$meta .= sprintf( '<meta itemprop="uploadDate" content="%s">', esc_attr( $a['upload_date'] ) );
+	}
+
+	if ( ! empty( $a['duration'] ) ) {
+		$meta .= sprintf( '<meta itemprop="duration" content="PT%s">', esc_attr( $a['duration'] ) );
+	}
+
+	if ( ! empty( $a['rating'] ) ) {
+		$meta .= '<span itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">';
+		$meta .= sprintf( '<meta itemprop="ratingValue" content="%s">', esc_attr( $a['rating'] ) );
+
+		if ( ! empty( $a['review_count'] ) ) {
+			$meta .= sprintf( '<meta itemprop="reviewCount" content="%s">', esc_attr( $a['review_count'] ) );
+		}
+
+		$meta .= '</span>';
+	}
+
+	if ( ! empty( $a['img_src'] ) ) :
+
+		if ( in_array( $a['mode'], [ 'lazyload', 'lazyload-lightbox' ], true ) ) {
+
+			$meta .= sprintf(
+				'<img%s>',
+				\Nextgenthemes\Utils\attr( array(
+					'class'           => 'arve-thumbnail',
+					'data-object-fit' => true,
+					'itemprop'        => 'thumbnailUrl',
+					'src'             => $a['img_src'],
+					'srcset'          => ! empty( $a['img_srcset'] ) ? $a['img_srcset'] : false,
+					#'sizes'    => '(max-width: 700px) 100vw, 1280px',
+					'alt'             => __( 'Video Thumbnail', 'advanced-responsive-video-embedder' ),
+				) )
+			);
+
+		} else {
+
+			$meta .= sprintf(
+				'<meta%s>',
+				\Nextgenthemes\Utils\attr( array(
+					'itemprop' => 'thumbnailUrl',
+					'content'  => $a['img_src'],
+				) )
+			);
+		}//end if
+	endif;
+
+	if ( ! empty( $a['title'] )
+		&& in_array( $a['mode'], [ 'lazyload', 'lazyload-lightbox' ], true )
+		&& empty( $a['hide_title'] )
+	) {
+		$meta .= '<h5 itemprop="name" class="arve-title">' . trim( $a['title'] ) . '</h5>';
+	} elseif ( ! empty( $a['title'] ) ) {
+		$meta .= sprintf( '<meta itemprop="name" content="%s">', esc_attr( trim( $a['title'] ) ) );
+	}
+
+	if ( ! empty( $a['description'] ) ) {
+		$meta .= sprintf( '<div itemprop="description" class="arve-description arve-hidden">%s</div>', esc_attr( trim( $a['description'] ) ) );
+	}
+
+	return $meta;
+}
 
 function build_promote_link_html( $arve_link ) {
 
@@ -143,8 +147,8 @@ function build_promote_link_html( $arve_link ) {
 		return sprintf(
 			'<a href="%s" title="%s" class="arve-promote-link" target="_blank">%s</a>',
 			esc_url( 'https://nextgenthemes.com/plugins/arve-pro/' ),
-			esc_attr( __( 'Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', TEXTDOMAIN) ),
-			esc_html__( 'ARVE', TEXTDOMAIN )
+			esc_attr( __( 'Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', 'advanced-responsive-video-embedder') ),
+			esc_html__( 'ARVE', 'advanced-responsive-video-embedder' )
 		);
 	}
 
@@ -179,32 +183,20 @@ function wrapper( $html, $atts ) {
 
 function video_or_iframe( $atts ) {
 
-	switch( $atts['provider'] ) {
+	switch ( $atts['provider'] ) {
 
 		case 'veoh':
 			return create_object( $atts );
-			break;
 		case 'html5':
 			return create_video_tag( $atts );
-			break;
 		default:
 			return create_iframe_tag( $atts );
-			break;
 	}
 }
 
-/**
- *
- *
- * @since    2.6.0
- */
 function create_iframe_tag( array $a ) {
 
-	if ( in_array( $a['mode'], [
-		'lazyload',
-		'lazyload-lightbox',
-		'link-lightbox'
-	] ) ) {
+	if ( in_array( $a['mode'], [ 'lazyload', 'lazyload-lightbox', 'link-lightbox' ], true ) ) {
 		$lazy_attr          = prefix_array_keys( 'data-', $a['iframe_attr'] );
 		$lazy_attr['class'] = 'arve-lazyload';
 		$html               = sprintf( '<span%s></span>', \Nextgenthemes\Utils\attr( $lazy_attr, 'dailymotion' ) );
@@ -231,7 +223,7 @@ function error( $message ) {
 
 	return sprintf(
 		'<p><strong>%s</strong> %s</p>',
-		__('<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error:', TEXTDOMAIN ),
+		__( '<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error:', 'advanced-responsive-video-embedder' ),
 		$message
 	);
 }
@@ -241,7 +233,7 @@ function output_errors( $atts ) {
 	$errors = '';
 
 	foreach ( $atts as $key => $value ) {
-		if( is_wp_error( $value ) ) {
+		if ( is_wp_error( $value ) ) {
 			$errors .= error( $value->get_error_message() );
 		}
 	}

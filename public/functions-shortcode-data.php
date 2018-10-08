@@ -18,12 +18,12 @@ function get_default_aspect_ratio( $aspect_ratio, array $a ) {
 
 function get_html5_attributes() {
 
-	return array( 'mp4', 'm4v', 'webm', 'ogv', 'ogg', 'ogm' );
+	return [ 'mp4', 'm4v', 'webm', 'ogv', 'ogg', 'ogm' ];
 }
 
 function url_query_array( $url ) {
 
-	$url = parse_url( $url );
+	$url = wp_parse_url( $url );
 
 	if ( empty( $url['query'] ) ) {
 		return array();
@@ -39,7 +39,7 @@ function build_iframe_src( array $a ) {
 	$id         = $a['id'];
 	$lang       = $a['lang'];
 	$provider   = $a['provider'];
-    $options    = get_options();
+	$options    = get_options();
 	$properties = get_host_properties();
 
 	if ( $options['youtube_nocookie'] ) {
@@ -67,7 +67,7 @@ function build_iframe_src( array $a ) {
 	}
 
 	if ( isset( $properties[ $provider ]['url_encode_id'] ) && $properties[ $provider ]['url_encode_id'] ) {
-		$id = urlencode( $id );
+		$id = rawurlencode( $id );
 	}
 
 	if ( 'brightcove' === $a['provider'] ) {
@@ -81,10 +81,9 @@ function build_iframe_src( array $a ) {
 
 function id_fixes( $id, $provider ) {
 
-	if (
-		'liveleak' === $provider &&
-		! \Nextgenthemes\Utils\starts_with( $id, 'i=' ) &&
-		! \Nextgenthemes\Utils\starts_with( $id, 'f=' )
+	if ( 'liveleak' === $provider
+		&& ! \Nextgenthemes\Utils\starts_with( $id, 'i=' )
+		&& ! \Nextgenthemes\Utils\starts_with( $id, 'f=' )
 	) {
 		$id = 'i=' . $id;
 	}
@@ -100,13 +99,17 @@ function aspect_ratio_fixes( $aspect_ratio, $provider, $mode ) {
 			case 'lazyload':
 				$aspect_ratio = '640:370';
 				break;
+			default:
+				$aspect_ratio = $aspect_ratio;
+				break;
 		}
 	}
 
 	return $aspect_ratio;
 }
 
-function add_autoplay_query_arg( $src, $a ) {
+// phpcs:disable Generic.Metrics.CyclomaticComplexity.MaxExceeded
+function add_autoplay_query_arg( $src, array $a ) {
 
 	switch ( $a['provider'] ) {
 		case 'alugha':
@@ -153,6 +156,7 @@ function add_autoplay_query_arg( $src, $a ) {
 			$on  = add_query_arg( 'player_autoplay', 'true',  $src );
 			$off = add_query_arg( 'player_autoplay', 'false', $src );
 			break;
+
 		/*
 		case 'iframe':
 			# We are spamming all kinds of autoplay parameters here in hope of a effect
@@ -170,12 +174,13 @@ function add_autoplay_query_arg( $src, $a ) {
 			), $src );
 			break;
 		*/
+
 		default:
-			# Do nothing for providers that to not support autoplay or fail with parameters
+			// Do nothing for providers that to not support autoplay or fail with parameters
 			$on  = $src;
 			$off = $src;
 			break;
-	}
+	}//end switch
 
 	if ( $a['autoplay'] ) {
 		return $on;
@@ -183,6 +188,7 @@ function add_autoplay_query_arg( $src, $a ) {
 		return $off;
 	}
 }
+// phpcs:enable
 
 function add_query_args_to_iframe_src( $src, $a ) {
 
@@ -211,6 +217,7 @@ function maxwidth_when_aligned( $maxwidth, $align ) {
 	return $maxwidth;
 }
 
+// phpcs:disable
 function get_language_name_from_code( $lang_code ) {
 	// This list is based on languages available from localize.drupal.org. See
 	// http://localize.drupal.org/issues for information on how to add languages
@@ -319,3 +326,4 @@ function get_language_name_from_code( $lang_code ) {
 
 	return $lang[ $lang_code ][1];
 }
+// phpcs:enable

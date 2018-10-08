@@ -10,7 +10,6 @@
 * Fix: Facebook embeds.
 * Improved: Complete new way ARVE handles embeds utilizing WP Oembed functionality. This means easier more reliable, more native WP embeds detection, automatic aspect ratio detection ...
 * Improved: Admin code reworked.
-* Improved: Update plugin-updater-class.
 * Improved: Removed jQuery dependency.
 * Improved: Prevent autoplay of multiple videos, only the first video on pageload will be autoplayed.
 

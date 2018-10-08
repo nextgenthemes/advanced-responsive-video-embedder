@@ -29,7 +29,7 @@ function filter_oembed_dataparse( $result, $data, $url ) {
 		$a['parameters'] = extract_query_array( $url, 'arve-ifp' );
 		*/
 
-		return shortcode_arve( $a );
+		return build_video( $a );
 	}
 
 	return $result;
