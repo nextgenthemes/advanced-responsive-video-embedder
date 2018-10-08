@@ -1,13 +1,14 @@
 <?php
+namespace Nextgenthemes\ARVE;
 
-function arve_create_url_handlers() {
+function create_url_handlers() {
 
-	$properties = arve_get_host_properties();
+	$properties = get_host_properties();
 
 	foreach ( $properties as $provider => $values ) {
 
 		$function = function( $matches, $attr, $url, $rawattr ) use ( $provider ) {
-			return arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $rawattr );
+			return url_detection_to_shortcode( $provider, $matches, $attr, $url, $rawattr );
 		};
 
 		if ( ! empty( $values['regex'] ) && empty( $values['use_oembed'] ) ) {
@@ -16,7 +17,7 @@ function arve_create_url_handlers() {
 	}
 }
 
-function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $rawattr ) {
+function url_detection_to_shortcode( $provider, array $matches, $attr, $url, $rawattr ) {
 
 	//* Fix 'Markdown on save enhanced' issue
 	if ( substr( $url, -4 ) === '</p>' ) {
@@ -32,7 +33,7 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
 
 	foreach ( $url_query as $key => $value ) {
 
-		if ( arve_starts_with( $key, 'arve-' ) ) {
+		if ( \Nextgenthemes\Utils\starts_with( $key, 'arve-' ) ) {
 			$key = substr( $key, 5 );
 			$old_atts[ $key ] = $value;
 		}
@@ -45,12 +46,12 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
 	}
 
 	if ( isset( $url_query['t'] ) ) {
-		$url_query['start'] = arve_youtube_time_to_seconds( $url_query['t'] );
+		$url_query['start'] = youtube_time_to_seconds( $url_query['t'] );
 	}
 
 	unset( $url_query['arve'] );
 
-	if ( 'youtube' == $provider ) {
+	if ( 'youtube' === $provider ) {
 		unset( $url_query['v'] );
 		unset( $url_query['t'] );
 	}
@@ -67,7 +68,7 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
 		}
 	}
 
-	return arve_shortcode_arve( $atts );
+	return shortcode_arve( $atts );
 }
 
 
@@ -77,7 +78,7 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
  * @since    5.9.9
  *
  */
-function arve_oembed_remove_providers() {
+function oembed_remove_providers() {
 
 	$wp_core_oembed_shits = array(
 		'#http://(www\.)?youtube\.com/watch.*#i'              => array( 'http://www.youtube.com/oembed',                      true  ),

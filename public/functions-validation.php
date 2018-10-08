@@ -1,19 +1,20 @@
 <?php
+namespace Nextgenthemes\ARVE;
 
-function arve_validate_url( $url ) {
+function validate_url( $url ) {
 
-	if ( arve_starts_with( $url, '//' ) ) {
+	if ( \Nextgenthemes\Utils\starts_with( $url, '//' ) ) {
 		$url = 'https:' . $url;
 	}
 
-	if ( arve_starts_with( $url, 'http' ) && filter_var( $url, FILTER_VALIDATE_URL ) !== false ) {
+	if ( \Nextgenthemes\Utils\starts_with( $url, 'http' ) && filter_var( $url, FILTER_VALIDATE_URL ) !== false ) {
 		return true;
 	}
 
 	return false;
 }
 
-function arve_validate_aspect_ratio( $aspect_ratio ) {
+function validate_aspect_ratio( $aspect_ratio ) {
 
 	if ( empty( $aspect_ratio ) ) {
 		return $aspect_ratio;
@@ -26,11 +27,11 @@ function arve_validate_aspect_ratio( $aspect_ratio ) {
 	}
 
 	return new WP_Error( 'Aspect ratio',
-		sprintf( __( 'Aspect ratio <code>%s</code> is not valid', ARVE_SLUG ), $aspect_ratio )
+		sprintf( __( 'Aspect ratio <code>%s</code> is not valid', TEXTDOMAIN ), $aspect_ratio )
 	);
 }
 
-function arve_bool_to_shortcode_string( $val ) {
+function bool_to_shortcode_string( $val ) {
 
 	if ( false === $val ) {
 		return 'n';
@@ -39,7 +40,7 @@ function arve_bool_to_shortcode_string( $val ) {
 	return (string) $val;
 }
 
-function arve_validate_bool( $val, $name ) {
+function validate_bool( $val, $name ) {
 
 	switch ( $val ) {
 		case 'true':
@@ -61,13 +62,13 @@ function arve_validate_bool( $val, $name ) {
 			break;
 		default:
 			return new WP_Error( $name,
-				sprintf( __( '%s <code>%s</code> not valid', ARVE_SLUG ), $name, $val )
+				sprintf( __( '%s <code>%s</code> not valid', TEXTDOMAIN ), $name, $val )
 			);
 			break;
 	}
 }
 
-function arve_validate_align( $align ) {
+function validate_align( $align ) {
 
 	switch ( $align ) {
 		case null:
@@ -80,29 +81,29 @@ function arve_validate_align( $align ) {
 		case 'center':
 			break;
 		default:
-			$align = new WP_Error( 'align', sprintf( __( 'Align <code>%s</code> not valid', ARVE_SLUG ), esc_html( $align ) ) );
+			$align = new WP_Error( 'align', sprintf( __( 'Align <code>%s</code> not valid', TEXTDOMAIN ), esc_html( $align ) ) );
 			break;
 	}
 
 	return $align;
 }
 
-function arve_validate_mode( $mode, $provider ) {
+function validate_mode( $mode, $provider ) {
 
-	if ( 'thumbnail' == $mode ) {
+	if ( 'thumbnail' === $mode ) {
 		$mode = 'lazyload-lightbox';
 	}
 
-	if ( 'veoh' == $mode ) {
+	if ( 'veoh' === $mode ) {
 		$mode = 'normal';
 	}
 
-	$supported_modes = arve_get_supported_modes();
+	$supported_modes = get_supported_modes();
 
 	if ( ! array_key_exists( $mode, $supported_modes ) ) {
 
 		#$mode = new WP_Error( 'mode', sprintf(
-		#	__( 'Mode: <code>%s</code> is invalid or not supported. Note that you will need the Pro Addon activated for modes other than normal.', ARVE_SLUG ),
+		#	__( 'Mode: <code>%s</code> is invalid or not supported. Note that you will need the Pro Addon activated for modes other than normal.', TEXTDOMAIN ),
 		#	esc_html( $mode )
 		#) );
 

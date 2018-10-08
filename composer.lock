@@ -1,23 +1,23 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7a1fe94550ac8f3eaab0f9ae184b859e",
+    "content-hash": "d9a858df09388ca0f80dcf23b592b090",
     "packages": [
         {
             "name": "composer/installers",
-            "version": "v1.5.0",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "049797d727261bf27f2690430d935067710049c2"
+                "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/049797d727261bf27f2690430d935067710049c2",
-                "reference": "049797d727261bf27f2690430d935067710049c2",
+                "url": "https://api.github.com/repos/composer/installers/zipball/cfcca6b1b60bc4974324efb5783c13dca6932b5b",
+                "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b",
                 "shasum": ""
             },
             "require": {
@@ -124,20 +124,64 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2017-12-29T09:13:20+00:00"
+            "time": "2018-08-27T06:10:37+00:00"
+        },
+        {
+            "name": "nextgenthemes/common",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "/media/unencrypted/websites/symbiosistheme.com/web/app/plugins/composer-local/nextgenthemes/common",
+                "reference": "a9e452a6849f8edaba5d2abe2627a5e3b7cd7e55",
+                "shasum": null
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nextgenthemes\\": "src/"
+                },
+                "files": [
+                    "src/bootstrap.php"
+                ]
+            },
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Jonas",
+                    "homepage": "https://nextgenthemes.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "w",
+            "homepage": "https://nextgenthemes.com",
+            "keywords": [
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/",
+                "forum": "https://nextgenthemes.com/support"
+            },
+            "transport-options": {
+                "symlink": true
+            }
         },
         {
             "name": "vimeo/vimeo-api",
-            "version": "2.0.0",
+            "version": "2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/vimeo.php.git",
-                "reference": "9fbf705cf4885282183744c04f3fb10793768911"
+                "reference": "fe9b1aa22036da8768111cfda1902b23e516460e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/vimeo.php/zipball/9fbf705cf4885282183744c04f3fb10793768911",
-                "reference": "9fbf705cf4885282183744c04f3fb10793768911",
+                "url": "https://api.github.com/repos/vimeo/vimeo.php/zipball/fe9b1aa22036da8768111cfda1902b23e516460e",
+                "reference": "fe9b1aa22036da8768111cfda1902b23e516460e",
                 "shasum": ""
             },
             "require": {
@@ -146,7 +190,8 @@
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.8"
+                "php-coveralls/php-coveralls": "^1.0",
+                "phpunit/phpunit": "^4.8 || ^6.5"
             },
             "type": "library",
             "autoload": {
@@ -170,15 +215,19 @@
                 "video",
                 "vimeo"
             ],
-            "time": "2018-02-06T19:06:58+00:00"
+            "time": "2018-08-27T13:36:11+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "nextgenthemes/common": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=5.3.0"
+    },
     "platform-dev": []
 }

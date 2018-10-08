@@ -1,6 +1,7 @@
 <?php
+namespace Nextgenthemes\ARVE;
 
-function arve_get_default_aspect_ratio( $aspect_ratio, $a ) {
+function get_default_aspect_ratio( $aspect_ratio, array $a ) {
 
 	if ( ! empty( $aspect_ratio ) ) {
 		return $aspect_ratio;
@@ -10,17 +11,17 @@ function arve_get_default_aspect_ratio( $aspect_ratio, $a ) {
 		return $a['oembed_data']->width . ':' . $a['oembed_data']->height;
 	}
 
-	$properties = arve_get_host_properties();
+	$properties = get_host_properties();
 
 	return $properties[ $a['provider'] ]['aspect_ratio'];
 }
 
-function arve_get_html5_attributes() {
+function get_html5_attributes() {
 
 	return array( 'mp4', 'm4v', 'webm', 'ogv', 'ogg', 'ogm' );
 }
 
-function arve_url_query_array( $url ) {
+function url_query_array( $url ) {
 
 	$url = parse_url( $url );
 
@@ -33,13 +34,13 @@ function arve_url_query_array( $url ) {
 	return $url_params;
 }
 
-function arve_build_iframe_src( $atts ) {
+function build_iframe_src( array $a ) {
 
-	$id         = $atts['id'];
-	$lang       = $atts['lang'];
-	$provider   = $atts['provider'];
-    $options    = arve_get_options();
-	$properties = arve_get_host_properties();
+	$id         = $a['id'];
+	$lang       = $a['lang'];
+	$provider   = $a['provider'];
+    $options    = get_options();
+	$properties = get_host_properties();
 
 	if ( $options['youtube_nocookie'] ) {
 		$properties['youtube']['embed_url']     = 'https://www.youtube-nocookie.com/embed/%s';
@@ -78,12 +79,12 @@ function arve_build_iframe_src( $atts ) {
 	return $src;
 }
 
-function arve_id_fixes( $id, $provider ) {
+function id_fixes( $id, $provider ) {
 
 	if (
-		'liveleak' == $provider &&
-		! arve_starts_with( $id, 'i=' ) &&
-		! arve_starts_with( $id, 'f=' )
+		'liveleak' === $provider &&
+		! \Nextgenthemes\Utils\starts_with( $id, 'i=' ) &&
+		! \Nextgenthemes\Utils\starts_with( $id, 'f=' )
 	) {
 		$id = 'i=' . $id;
 	}
@@ -91,7 +92,7 @@ function arve_id_fixes( $id, $provider ) {
 	return $id;
 }
 
-function arve_aspect_ratio_fixes( $aspect_ratio, $provider, $mode ) {
+function aspect_ratio_fixes( $aspect_ratio, $provider, $mode ) {
 
 	if ( 'dailymotionlist' === $provider ) {
 		switch ( $mode ) {
@@ -105,7 +106,7 @@ function arve_aspect_ratio_fixes( $aspect_ratio, $provider, $mode ) {
 	return $aspect_ratio;
 }
 
-function arve_add_autoplay_query_arg( $src, $a ) {
+function add_autoplay_query_arg( $src, $a ) {
 
 	switch ( $a['provider'] ) {
 		case 'alugha':
@@ -183,9 +184,9 @@ function arve_add_autoplay_query_arg( $src, $a ) {
 	}
 }
 
-function arve_add_query_args_to_iframe_src( $src, $a ) {
+function add_query_args_to_iframe_src( $src, $a ) {
 
-	$options = arve_get_options();
+	$options = get_options();
 
 	$parameters        = wp_parse_args( preg_replace( '!\s+!', '&', $a['parameters'] ) );
 	$option_parameters = array();
@@ -199,9 +200,9 @@ function arve_add_query_args_to_iframe_src( $src, $a ) {
 	return add_query_arg( $parameters, $src );
 }
 
-function arve_maxwidth_when_aligned( $maxwidth, $align ) {
+function maxwidth_when_aligned( $maxwidth, $align ) {
 
-	$options = arve_get_options();
+	$options = get_options();
 
 	if ( $maxwidth < 100 && in_array( $align, array( 'left', 'right', 'center' ), true ) ) {
 		$maxwidth = (int) $options['align_maxwidth'];
@@ -210,7 +211,7 @@ function arve_maxwidth_when_aligned( $maxwidth, $align ) {
 	return $maxwidth;
 }
 
-function arve_get_language_name_from_code( $lang_code ) {
+function get_language_name_from_code( $lang_code ) {
 	// This list is based on languages available from localize.drupal.org. See
 	// http://localize.drupal.org/issues for information on how to add languages
 	// there.

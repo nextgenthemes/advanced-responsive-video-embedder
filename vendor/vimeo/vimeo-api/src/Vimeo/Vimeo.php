@@ -32,7 +32,7 @@ class Vimeo
     const CLIENT_CREDENTIALS_TOKEN_ENDPOINT = '/oauth/authorize/client';
     const VERSIONS_ENDPOINT = '/versions';
     const VERSION_STRING = 'application/vnd.vimeo.*+json; version=3.4';
-    const USER_AGENT = 'vimeo.php 2.0.0; (http://developer.vimeo.com/api/docs)';
+    const USER_AGENT = 'vimeo.php 2.0.5; (http://developer.vimeo.com/api/docs)';
     const CERTIFICATE_PATH = '/certificates/vimeo-api.pem';
 
     protected $_curl_opts = array();
@@ -47,7 +47,7 @@ class Vimeo
      *
      * @param string $client_id Your applications client id. Can be found on developer.vimeo.com/apps
      * @param string $client_secret Your applications client secret. Can be found on developer.vimeo.com/apps
-     * @param string $access_token Your applications client id. Can be found on developer.vimeo.com/apps or generated using OAuth 2.
+     * @param string $access_token Your access token. Can be found on developer.vimeo.com/apps or generated using OAuth 2.
      */
     public function __construct($client_id, $client_secret, $access_token = null)
     {
@@ -74,6 +74,7 @@ class Vimeo
      * @param bool $json_body
      * @param array $headers An array of HTTP headers to pass along with the request.
      * @return array This array contains three keys, 'status' is the status code, 'body' is an object representation of the json response body, and headers are an associated array of response headers
+     * @throws VimeoRequestException
      */
     public function request($url, $params = array(), $method = 'GET', $json_body = true, array $headers = array())
     {
@@ -84,18 +85,21 @@ class Vimeo
 
         $method = strtoupper($method);
 
-        // add bearer token, or client information
-        if (!empty($this->_access_token)) {
-            $headers['Authorization'] = 'Bearer ' . $this->_access_token;
-        } else {
-            //  this may be a call to get the tokens, so we add the client info.
-            $headers['Authorization'] = 'Basic ' . $this->_authHeader();
+        // If a pre-defined `Authorization` header isn't present, then add a bearer token or client information.
+        if (!isset($headers['Authorization'])) {
+            if (!empty($this->_access_token)) {
+                $headers['Authorization'] = 'Bearer ' . $this->_access_token;
+            } else {
+                // this may be a call to get the tokens, so we add the client info.
+                $headers['Authorization'] = 'Basic ' . $this->_authHeader();
+            }
         }
 
         //  Set the methods, determine the URL that we should actually request and prep the body.
         $curl_opts = array();
         switch ($method) {
             case 'GET':
+            case 'HEAD':
                 if (!empty($params)) {
                     $query_component = '?' . http_build_query($params, '', '&');
                 } else {
@@ -158,6 +162,16 @@ class Vimeo
     }
 
     /**
+     * Gets custom cURL options.
+     *
+     * @return string
+     */
+    public function getCURLOptions()
+    {
+        return $this->_curl_opts;
+    }
+
+    /**
      * Sets custom cURL options.
      *
      * @param array $curl_opts An associative array of cURL options.
@@ -165,6 +179,25 @@ class Vimeo
     public function setCURLOptions($curl_opts = array())
     {
         $this->_curl_opts = $curl_opts;
+    }
+
+    /**
+     * Set a proxy to pass all API requests through.
+     *
+     * @param string $proxy_address Mandatory address of proxy.
+     * @param string|null $proxy_port Optional number of port.
+     * @param string|null $proxy_userpwd Optional `user:password` authentication.
+     */
+    public function setProxy($proxy_address, $proxy_port = null, $proxy_userpwd = null)
+    {
+        $this->CURL_DEFAULTS[CURLOPT_PROXY] = $proxy_address;
+        if ($proxy_port) {
+            $this->CURL_DEFAULTS[CURLOPT_PROXYPORT] = $proxy_port;
+        }
+
+        if ($proxy_userpwd) {
+            $this->CURL_DEFAULTS[CURLOPT_PROXYUSERPWD] = $proxy_userpwd;
+        }
     }
 
     /**
@@ -264,8 +297,9 @@ class Vimeo
      * @link https://developer.vimeo.com/api/endpoints/videos#POST/users/{user_id}/videos
      * @param string $file_path Path to the video file to upload.
      * @param array $params Parameters to send when creating a new video (name, privacy restrictions, etc.).
-     * @throws VimeoUploadException
      * @return string Video URI
+     * @throws VimeoRequestException
+     * @throws VimeoUploadException
      */
     public function upload($file_path, array $params = array())
     {
@@ -275,15 +309,6 @@ class Vimeo
         }
 
         $file_size = filesize($file_path);
-
-        // If the user does not have enough free space in their quota to upload this, then don't.
-        $response = $this->request('/me', array('fields' => 'upload_quota.space.free'), 'GET');
-        if ($response['status'] !== 200) {
-            $error = !empty($response['body']['error']) ? ' [' . $response['body']['error'] . ']' : '';
-            throw new VimeoUploadException('Unable to pull the users upload quota.' . $error);
-        } elseif ($file_size > $response['body']['upload_quota']['space']['free']) {
-            throw new VimeoUploadException('User does not have any more free space to upload this video.');
-        }
 
         // Ignore any specified upload approach and size.
         $params['upload']['approach'] = 'tus';
@@ -307,8 +332,9 @@ class Vimeo
      * @link https://developer.vimeo.com/api/endpoints/videos#POST/videos/{video_id}/versions
      * @param string $video_uri Video uri of the video file to replace.
      * @param string $file_path Path to the video file to upload.
-     * @throws VimeoUploadException
      * @return string Video URI
+     * @throws VimeoRequestException
+     * @throws VimeoUploadException
      */
     public function replace($video_uri, $file_path, array $params = array())
     {
@@ -346,8 +372,9 @@ class Vimeo
      * @param string $pictures_uri The pictures endpoint for a resource that allows picture uploads (eg videos and users)
      * @param string $file_path The path to your image file
      * @param boolean $activate Activate image after upload
-     * @throws VimeoUploadException
      * @return string The URI of the uploaded image.
+     * @throws VimeoRequestException
+     * @throws VimeoUploadException
      */
     public function uploadImage($pictures_uri, $file_path, $activate = false)
     {
@@ -405,8 +432,9 @@ class Vimeo
      * @param string $file_path The path to your text track file
      * @param string $track_type The type of your text track
      * @param string $language The language of your text track
-     * @throws VimeoUploadException
      * @return string The URI of the uploaded text track.
+     * @throws VimeoRequestException
+     * @throws VimeoUploadException
      */
     public function uploadTexttrack($texttracks_uri, $file_path, $track_type, $language)
     {
@@ -462,6 +490,7 @@ class Vimeo
      * @param string $url
      * @param array $curl_opts
      * @return array
+     * @throws VimeoRequestException
      */
     private function _request($url, $curl_opts = array())
     {

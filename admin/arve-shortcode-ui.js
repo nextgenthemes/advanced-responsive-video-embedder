@@ -70,5 +70,5 @@ function arve_mode_select_listener( changed, collection, shortcode ) {
 	}
 }
 
-wp.shortcake.hooks.addAction( 'arve.mode', arve_mode_select_listener );
-wp.shortcake.hooks.addAction( 'arve.url', arve_extract_url );
+wp.shortcake.hooks.addAction( 'arve.mode', mode_select_listener );
+wp.shortcake.hooks.addAction( 'arve.url', extract_url );

@@ -1,13 +1,15 @@
 <?php
+namespace Nextgenthemes\ARVE;
+
 /*
 add_filter( 'oembed_fetch_url',    'arve_filter_oembed_fetch_url', 999, 3 );
 
-function arve_filter_oembed_fetch_url( $provider, $url, $args ) {
+function filter_oembed_fetch_url( $provider, $url, $args ) {
 
 	d($url);
 
-	$url = arve_remove_query_array( $url, 'arve' );
-	$url = arve_remove_query_array( $url, 'arve-ifp' );
+	$url = remove_query_array( $url, 'arve' );
+	$url = remove_query_array( $url, 'arve-ifp' );
 
 	$provider = add_query_arg( 'url', urlencode( $url ), $provider );
 
@@ -17,24 +19,23 @@ function arve_filter_oembed_fetch_url( $provider, $url, $args ) {
 }
 */
 
-function arve_filter_oembed_dataparse( $result, $data, $url ) {
+function filter_oembed_dataparse( $result, $data, $url ) {
 
-	if ( $a = arve_oembed2args( $data, $url ) ) {
+	if ( $a = oembed2args( $data, $url ) ) {
 
 		/*
-		$arve_url_query  = arve_extract_query_array( $url, 'arve' );
+		$arve_url_query  = extract_query_array( $url, 'arve' );
 		$a               = array_merge( $a, $arve_url_query );
-		$a['parameters'] = arve_extract_query_array( $url, 'arve-ifp' );
+		$a['parameters'] = extract_query_array( $url, 'arve-ifp' );
 		*/
 
-		return arve_shortcode_arve( $a );
+		return shortcode_arve( $a );
 	}
 
 	return $result;
 }
 
-
-function arve_oembed2args( $data, $url ) {
+function oembed2args( $data, $url ) {
 
 	if ( false === $data || 'video' !== $data->type ) {
 		return false;
@@ -66,7 +67,7 @@ function arve_oembed2args( $data, $url ) {
 	return apply_filters( 'arve_oembed2args', $a );
 }
 
-function arve_extract_query_array( $url, $key ) {
+function extract_query_array( $url, $key ) {
 
 	$parsed_url = wp_parse_url( $url );
 
@@ -83,7 +84,7 @@ function arve_extract_query_array( $url, $key ) {
 	return array();
 }
 
-function arve_get_url_( $url, $extract_array_name ) {
+function get_url_( $url, $extract_array_name ) {
 
 	$parsed_url = wp_parse_url( $url );
 
@@ -94,7 +95,7 @@ function arve_get_url_( $url, $extract_array_name ) {
 	return parse_str( $parsed_url['query'], $url_query );
 }
 
-function arve_remove_query_array( $url, $key ) {
+function remove_query_array( $url, $key ) {
 
 	$parsed_url = wp_parse_url( $url );
 
@@ -110,9 +111,9 @@ function arve_remove_query_array( $url, $key ) {
 	return $url;
 }
 
-function arve_get_query_str_without_args( $url, $key ) {
+function get_query_str_without_args( $url, $key ) {
 
-	$url        = arve_remove_query_array( $url, 'arve' );
+	$url        = remove_query_array( $url, 'arve' );
 	$parsed_url = wp_parse_url( $url );
 
 	return $parsed_url['query'];

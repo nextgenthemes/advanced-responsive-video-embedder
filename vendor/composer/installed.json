@@ -1,17 +1,17 @@
 [
     {
         "name": "composer/installers",
-        "version": "v1.5.0",
-        "version_normalized": "1.5.0.0",
+        "version": "v1.6.0",
+        "version_normalized": "1.6.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/composer/installers.git",
-            "reference": "049797d727261bf27f2690430d935067710049c2"
+            "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/composer/installers/zipball/049797d727261bf27f2690430d935067710049c2",
-            "reference": "049797d727261bf27f2690430d935067710049c2",
+            "url": "https://api.github.com/repos/composer/installers/zipball/cfcca6b1b60bc4974324efb5783c13dca6932b5b",
+            "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b",
             "shasum": ""
         },
         "require": {
@@ -25,7 +25,7 @@
             "composer/composer": "1.0.*@dev",
             "phpunit/phpunit": "^4.8.36"
         },
-        "time": "2017-12-29T09:13:20+00:00",
+        "time": "2018-08-27T06:10:37+00:00",
         "type": "composer-plugin",
         "extra": {
             "class": "Composer\\Installers\\Plugin",
@@ -122,18 +122,117 @@
         ]
     },
     {
-        "name": "vimeo/vimeo-api",
-        "version": "2.0.0",
-        "version_normalized": "2.0.0.0",
+        "name": "nextgenthemes/common",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "dist": {
+            "type": "path",
+            "url": "/media/unencrypted/websites/symbiosistheme.com/web/app/plugins/composer-local/nextgenthemes/common",
+            "reference": "a9e452a6849f8edaba5d2abe2627a5e3b7cd7e55",
+            "shasum": null
+        },
+        "require": {
+            "php": ">=5.6"
+        },
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Nextgenthemes\\": "src/"
+            },
+            "files": [
+                "src/bootstrap.php"
+            ]
+        },
+        "license": [
+            "GPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Jonas",
+                "homepage": "https://nextgenthemes.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "w",
+        "homepage": "https://nextgenthemes.com",
+        "keywords": [
+            "wordpress"
+        ],
+        "support": {
+            "issues": "https://github.com/",
+            "forum": "https://nextgenthemes.com/support"
+        },
+        "transport-options": {
+            "symlink": true
+        }
+    },
+    {
+        "name": "squizlabs/php_codesniffer",
+        "version": "3.3.2",
+        "version_normalized": "3.3.2.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/vimeo/vimeo.php.git",
-            "reference": "9fbf705cf4885282183744c04f3fb10793768911"
+            "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+            "reference": "6ad28354c04b364c3c71a34e4a18b629cc3b231e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/vimeo/vimeo.php/zipball/9fbf705cf4885282183744c04f3fb10793768911",
-            "reference": "9fbf705cf4885282183744c04f3fb10793768911",
+            "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/6ad28354c04b364c3c71a34e4a18b629cc3b231e",
+            "reference": "6ad28354c04b364c3c71a34e4a18b629cc3b231e",
+            "shasum": ""
+        },
+        "require": {
+            "ext-simplexml": "*",
+            "ext-tokenizer": "*",
+            "ext-xmlwriter": "*",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
+        },
+        "time": "2018-09-23T23:08:17+00:00",
+        "bin": [
+            "bin/phpcs",
+            "bin/phpcbf"
+        ],
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Greg Sherwood",
+                "role": "lead"
+            }
+        ],
+        "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+        "homepage": "http://www.squizlabs.com/php-codesniffer",
+        "keywords": [
+            "phpcs",
+            "standards"
+        ]
+    },
+    {
+        "name": "vimeo/vimeo-api",
+        "version": "2.0.5",
+        "version_normalized": "2.0.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vimeo/vimeo.php.git",
+            "reference": "fe9b1aa22036da8768111cfda1902b23e516460e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/vimeo/vimeo.php/zipball/fe9b1aa22036da8768111cfda1902b23e516460e",
+            "reference": "fe9b1aa22036da8768111cfda1902b23e516460e",
             "shasum": ""
         },
         "require": {
@@ -142,9 +241,10 @@
             "php": ">=5.3.0"
         },
         "require-dev": {
-            "phpunit/phpunit": "^4.8"
+            "php-coveralls/php-coveralls": "^1.0",
+            "phpunit/phpunit": "^4.8 || ^6.5"
         },
-        "time": "2018-02-06T19:06:58+00:00",
+        "time": "2018-08-27T13:36:11+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

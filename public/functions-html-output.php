@@ -1,21 +1,22 @@
 <?php
+namespace Nextgenthemes\ARVE;
 
-function arve_html_id( $html_attr ) {
+function html_id( $html_attr ) {
 
-	if( ! arve_contains( $html_attr, 'id=' ) ) {
+	if( ! \Nextgenthemes\Utils\contains( $html_attr, 'id=' ) ) {
 		$html_attr .= ' id="arve"';
 	}
 
 	return $html_attr;
 }
 
-function arve_get_var_dump( $var ) {
+function get_var_dump( $var ) {
 	ob_start();
 	var_dump( $var );
 	return ob_get_clean();
 };
 
-function arve_get_debug_info( $input_html, $atts, $input_atts ) {
+function get_debug_info( $input_html, $atts, $input_atts ) {
 
 	$html = '';
 
@@ -28,7 +29,7 @@ function arve_get_debug_info( $input_html, $atts, $input_atts ) {
 		$options['params']     = get_option( 'arve_options_params' );
 
 		if ( $show_options_debug ) {
-			$html .= sprintf( 'Options: <pre>%s</pre>', arve_get_var_dump( $options ) );
+			$html .= sprintf( 'Options: <pre>%s</pre>', get_var_dump( $options ) );
 		}
 		$show_options_debug = false;
 	}
@@ -50,8 +51,8 @@ function arve_get_debug_info( $input_html, $atts, $input_atts ) {
 	}
 
 	if ( isset( $_GET['arve-debug-atts'] ) ) {
-		$html .= sprintf( '<pre style="%s">$atts: %s</pre>', esc_attr( $pre_style ), arve_get_var_dump( $input_atts ) );
-		$html .= sprintf( '<pre style="%s">$arve: %s</pre>', esc_attr( $pre_style ), arve_get_var_dump( $atts ) );
+		$html .= sprintf( '<pre style="%s">$atts: %s</pre>', esc_attr( $pre_style ), get_var_dump( $input_atts ) );
+		$html .= sprintf( '<pre style="%s">$arve: %s</pre>', esc_attr( $pre_style ), get_var_dump( $atts ) );
 	}
 
 	if ( isset( $_GET['arve-debug-html'] ) ) {
@@ -61,13 +62,13 @@ function arve_get_debug_info( $input_html, $atts, $input_atts ) {
 	return $html;
 }
 
-function arve_build_meta_html( $a ) {
+function build_meta_html( array $a ) {
 
 		$meta = '';
 
 		if ( ! empty( $a['sources'] ) ) {
 
-			$first_source = arve_get_first_array_value( $a['sources'] );
+			$first_source = get_first_array_value( $a['sources'] );
 
 			$meta .= sprintf( '<meta itemprop="contentURL" content="%s">', esc_attr( $first_source['src'] ) );
 		}
@@ -99,14 +100,14 @@ function arve_build_meta_html( $a ) {
 
 				$meta .= sprintf(
 					'<img%s>',
-					arve_attr( array(
+					\Nextgenthemes\Utils\attr( array(
 						'class'           => 'arve-thumbnail',
 						'data-object-fit' => true,
 						'itemprop'        => 'thumbnailUrl',
 						'src'             => $a['img_src'],
 						'srcset'          => ! empty( $a['img_srcset'] ) ? $a['img_srcset'] : false,
 						#'sizes'    => '(max-width: 700px) 100vw, 1280px',
-						'alt'             => __( 'Video Thumbnail', ARVE_SLUG ),
+						'alt'             => __( 'Video Thumbnail', TEXTDOMAIN ),
 					) )
 				);
 
@@ -114,7 +115,7 @@ function arve_build_meta_html( $a ) {
 
 				$meta .= sprintf(
 					'<meta%s>',
-					arve_attr( array(
+					\Nextgenthemes\Utils\attr( array(
 						'itemprop' => 'thumbnailUrl',
 						'content'  => $a['img_src'],
 					) )
@@ -136,58 +137,58 @@ function arve_build_meta_html( $a ) {
 		return $meta;
 	}
 
-function arve_build_promote_link_html( $arve_link ) {
+function build_promote_link_html( $arve_link ) {
 
 	if ( $arve_link ) {
 		return sprintf(
 			'<a href="%s" title="%s" class="arve-promote-link" target="_blank">%s</a>',
 			esc_url( 'https://nextgenthemes.com/plugins/arve-pro/' ),
-			esc_attr( __( 'Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', ARVE_SLUG) ),
-			esc_html__( 'ARVE', ARVE_SLUG )
+			esc_attr( __( 'Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', TEXTDOMAIN) ),
+			esc_html__( 'ARVE', TEXTDOMAIN )
 		);
 	}
 
 	return '';
 }
 
-function arve_arve_embed_container( $html, $atts ) {
+function embed_container( $html, $atts ) {
 
 	$attr['class'] = 'arve-embed-container';
 
 	if ( false === $atts['aspect_ratio'] ) {
 		$attr['style'] = 'height:auto;padding:0';
 	} else {
-		$attr['style'] = sprintf( 'padding-bottom:%F%%', arve_aspect_ratio_to_percentage( $atts['aspect_ratio'] ) );
+		$attr['style'] = sprintf( 'padding-bottom:%F%%', aspect_ratio_to_percentage( $atts['aspect_ratio'] ) );
 	}
 
-	return sprintf( '<div%s>%s</div>', arve_attr( $attr ), $html );
+	return sprintf( '<div%s>%s</div>', \Nextgenthemes\Utils\attr( $attr ), $html );
 }
 
-function arve_arve_wrapper( $html, $atts ) {
+function wrapper( $html, $atts ) {
 
-	$element = ( 'link-lightbox' == $atts['mode'] ) ? 'span' : 'div';
+	$element = ( 'link-lightbox' === $atts['mode'] ) ? 'span' : 'div';
 
 	return sprintf(
 		'<%s%s>%s</%s>',
 		$element,
-		arve_attr( $atts['wrapper_attr'] ),
+		\Nextgenthemes\Utils\attr( $atts['wrapper_attr'] ),
 		$html,
 		$element
 	);
 }
 
-function arve_video_or_iframe( $atts ) {
+function video_or_iframe( $atts ) {
 
 	switch( $atts['provider'] ) {
 
 		case 'veoh':
-			return arve_create_object( $atts );
+			return create_object( $atts );
 			break;
 		case 'html5':
-			return arve_create_video_tag( $atts );
+			return create_video_tag( $atts );
 			break;
 		default:
-			return arve_create_iframe_tag( $atts );
+			return create_iframe_tag( $atts );
 			break;
 	}
 }
@@ -197,25 +198,28 @@ function arve_video_or_iframe( $atts ) {
  *
  * @since    2.6.0
  */
-function arve_create_iframe_tag( $a ) {
+function create_iframe_tag( array $a ) {
 
-	if ( in_array( $a['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ) {
-		$html = sprintf(
-			'<span class="arve-lazyload"%s></span>',
-			arve_attr( arve_prefix_array_keys( 'data-', $a['iframe_attr'] ) )
-		);
+	if ( in_array( $a['mode'], [
+		'lazyload',
+		'lazyload-lightbox',
+		'link-lightbox'
+	] ) ) {
+		$lazy_attr          = prefix_array_keys( 'data-', $a['iframe_attr'] );
+		$lazy_attr['class'] = 'arve-lazyload';
+		$html               = sprintf( '<span%s></span>', \Nextgenthemes\Utils\attr( $lazy_attr, 'dailymotion' ) );
 	} else {
-		$html = sprintf( '<iframe%s></iframe>', arve_attr( $a['iframe_attr'] ) );
+		$html = sprintf( '<iframe%s></iframe>', \Nextgenthemes\Utils\attr( $a['iframe_attr'], 'dailymotion' ) );
 	}
 
 	return apply_filters( 'arve_iframe_tag', $html, $a, $a['iframe_attr'] );
 }
 
-function arve_create_video_tag( $a ) {
+function create_video_tag( array $a ) {
 
 	$html = sprintf(
 		'<video%s>%s%s</video>',
-		arve_attr( $a['video_attr'] ),
+		\Nextgenthemes\Utils\attr( $a['video_attr'] ),
 		empty( $a['video_sources_html'] ) ? '' : $a['video_sources_html'],
 		$a['video_tracks_html']
 	);
@@ -223,34 +227,22 @@ function arve_create_video_tag( $a ) {
 	return apply_filters( 'arve_video_tag', $html, $a, $a['video_attr'] );
 }
 
-function arve_create_object_tag( $a ) {
-
-	$html = sprintf(
-		'<video%s>%s%s</video>',
-		arve_attr( $a['video_attr'] ),
-		$a['video_sources_html'],
-		$a['video_tracks_html']
-	);
-
-	return apply_filters( 'arve_video_tag', $html, $a, $a['video_attr'] );
-}
-
-function arve_error( $message ) {
+function error( $message ) {
 
 	return sprintf(
 		'<p><strong>%s</strong> %s</p>',
-		__('<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error:', ARVE_SLUG ),
+		__('<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error:', TEXTDOMAIN ),
 		$message
 	);
 }
 
-function arve_output_errors( $atts ) {
+function output_errors( $atts ) {
 
 	$errors = '';
 
 	foreach ( $atts as $key => $value ) {
 		if( is_wp_error( $value ) ) {
-			$errors .= arve_error( $value->get_error_message() );
+			$errors .= error( $value->get_error_message() );
 		}
 	}
 

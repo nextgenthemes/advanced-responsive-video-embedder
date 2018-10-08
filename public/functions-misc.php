@@ -1,6 +1,7 @@
 <?php
+namespace Nextgenthemes\ARVE;
 
-function arve_is_bool_option( $array ) {
+function is_bool_option( $array ) {
 
 	$yes_no = array( '' => 1, 'yes' => 1, 'no' => 1 );
 
@@ -13,26 +14,26 @@ function arve_is_bool_option( $array ) {
 	}
 }
 
-function arve_get_pre_style() {
+function get_pre_style() {
 	return '';
 }
 
-function arve_load_plugin_textdomain() {
+function load_plugin_textdomain() {
 
 	load_plugin_textdomain(
-		ARVE_SLUG,
+		TEXTDOMAIN,
 		false,
 		dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 	);
 }
 
-function arve_get_first_array_value( $array ) {
+function get_first_array_value( $array ) {
 	reset( $array );
 	$key = key( $array );
 	return $array[ $key ];
 }
 
-function arve_prefix_array_keys( $keyprefix, $array ) {
+function prefix_array_keys( $keyprefix, $array ) {
 
 	foreach( $array as $key => $value ) {
 		$array[ $keyprefix . $key ] = $value;
@@ -42,7 +43,7 @@ function arve_prefix_array_keys( $keyprefix, $array ) {
 	return $array;
 }
 
-function arve_check_filetype( $url, $ext ) {
+function check_filetype( $url, $ext ) {
 
 	$check = wp_check_filetype( $url, wp_get_mime_types() );
 
@@ -60,7 +61,7 @@ function arve_check_filetype( $url, $ext ) {
  *
  * @return    int   Starttime in seconds
  */
-function arve_youtube_time_to_seconds( $yttime ) {
+function youtube_time_to_seconds( $yttime ) {
 
 	$format = false;
 	$hours  = $minutes = $seconds = 0;
@@ -116,7 +117,7 @@ function arve_youtube_time_to_seconds( $yttime ) {
  *
  * @return    float
  */
-function arve_aspect_ratio_to_percentage( $aspect_ratio ) {
+function aspect_ratio_to_percentage( $aspect_ratio ) {
 
 	if ( is_wp_error( $aspect_ratio ) ) {
 		return 52.25;
@@ -132,11 +133,11 @@ function arve_aspect_ratio_to_percentage( $aspect_ratio ) {
  *
  * @since     8.2.0
  */
-function arve_calculate_height( $width, $aspect_ratio ) {
+function calculate_height( $width, $aspect_ratio ) {
 
 	$width        = (int) $width;
 	$aspect_ratio = empty( $aspect_ratio ) ? '16:9' : $aspect_ratio;
-	$percent      = arve_aspect_ratio_to_percentage( $aspect_ratio );
+	$percent      = aspect_ratio_to_percentage( $aspect_ratio );
 
 	if ( $width > 100 && $percent ) {
 		return ( ( $width / 100 ) * $percent );

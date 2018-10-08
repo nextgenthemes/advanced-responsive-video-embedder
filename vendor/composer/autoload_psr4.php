@@ -7,5 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Vimeo\\' => array($vendorDir . '/vimeo/vimeo-api/src/Vimeo'),
+    'Nextgenthemes\\ARVE\\' => array($baseDir . '/public'),
+    'Nextgenthemes\\' => array($vendorDir . '/nextgenthemes/common/src'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
 );

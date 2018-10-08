@@ -21,7 +21,7 @@ class Tests_Scripts_And_Styles extends WP_UnitTestCase {
 		add_action( 'wp_head', array( __CLASS__, 'arve_test_registered' ) );
 	}
 
-	public function arve_test_registered() {
+	public function test_registered() {
 
 		$wp_styles = wp_styles();
 

@@ -2,7 +2,7 @@
 	'use strict';
 	/*global ajaxurl */
 	/*global sui */
-  /*global tb_show */
+	/*global tb_show */
 
 	// Options Page
 	$('.arve-settings-section').each( function() {
