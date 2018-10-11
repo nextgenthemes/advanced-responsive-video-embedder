@@ -405,12 +405,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/samikeijonen/phpcs-composer.git",
-            "reference": "e683d0b08bcf0cb24835904c1e2c603993ab33c2"
+            "reference": "9fa0b24dc2636680acc2b73bfb22ef825a83e72e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/samikeijonen/phpcs-composer/zipball/e683d0b08bcf0cb24835904c1e2c603993ab33c2",
-            "reference": "e683d0b08bcf0cb24835904c1e2c603993ab33c2",
+            "url": "https://api.github.com/repos/samikeijonen/phpcs-composer/zipball/9fa0b24dc2636680acc2b73bfb22ef825a83e72e",
+            "reference": "9fa0b24dc2636680acc2b73bfb22ef825a83e72e",
             "shasum": ""
         },
         "require": {
@@ -419,9 +419,9 @@
             "phpcompatibility/phpcompatibility-wp": "^2",
             "wp-coding-standards/wpcs": "^1"
         },
-        "time": "2018-10-08T06:21:20+00:00",
+        "time": "2018-10-09T19:46:55+00:00",
         "type": "phpcodesniffer-standard",
-        "installation-source": "source",
+        "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",
         "license": [
             "GPL-2.0-or-later"

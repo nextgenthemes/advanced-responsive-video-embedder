@@ -43,7 +43,7 @@ function add_iframe_parameters_to_url( array $a ) {
 function build_video( array $input_atts, $content = null ) {
 
 	$errors     = '';
-	$options    = get_options();
+	$options    = options();
 	$properties = get_host_properties();
 
 	$pairs = array(
@@ -135,7 +135,7 @@ function build_video( array $input_atts, $content = null ) {
 
 function create_shortcodes() {
 
-	$options = get_options();
+	$options = options();
 
 	foreach ( $options['shortcodes'] as $provider => $shortcode ) {
 
@@ -152,7 +152,7 @@ function create_shortcodes() {
 
 function wp_video_shortcode_override( $out, $attr, $content, $instance ) {
 
-	$options = get_options();
+	$options = options();
 
 	if ( ! $options['wp_video_override'] || ! empty( $attr['wmv'] ) || ! empty( $attr['flv'] ) ) {
 		return $out;

@@ -1,0 +1,65 @@
+#arve,
+#tinymce {
+
+  .arve-wrapper {
+    display: block;
+    margin-bottom: 1.5em;
+    width: 100%;
+
+    &::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    &.alignleft {
+      margin-top: .4em;
+      margin-right: 1.5em;
+    }
+
+    &.alignright {
+      margin-top: .4em;
+      margin-left: 1.5em;
+    }
+  }
+
+  .arve-embed-container {
+    position: relative;
+    display: block;
+    padding: 0;
+    padding-bottom: 56.25%;
+    margin: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  .arve-thumbnail,
+  .arve-play-btn,
+  .arve-iframe {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    border: 0;
+  }
+
+  .arve-video {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  .arve-promote-link {
+    float: right;
+    font-family: "Open Sans", "Sagoe UI", "Arvo", "Lato", arial, sans-serif;
+    font-size: .8em;
+  }
+}
+
+.arve-hidden {
+  display: none !important;
+}

@@ -3,7 +3,9 @@ namespace Nextgenthemes\ARVE;
 
 function get_attachment_image_url_or_srcset( $url_or_srcset, $thumbnail ) {
 
-	if ( $found = get_cached_attachment_image_url_or_srcset( $url_or_srcset, $thumbnail ) ) {
+	$found = get_cached_attachment_image_url_or_srcset( $url_or_srcset, $thumbnail );
+
+	if ( $found ) {
 
 		return $found;
 
@@ -19,7 +21,7 @@ function get_attachment_image_url_or_srcset( $url_or_srcset, $thumbnail ) {
 
 function get_cached_attachment_image_url_or_srcset( $url_or_srcset, $attachment_id ) {
 
-	$options        = get_options();
+	$options        = options();
 	$transient_name = "arve_attachment_image_{$url_or_srcset}_{$attachment_id}";
 	$transient      = get_transient( $transient_name );
 	$time           = (int) $options['wp_image_cache_time'];

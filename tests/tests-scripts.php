@@ -1,15 +1,8 @@
 <?php
-
-/**
- * @group scripts
- */
+// phpcs:disable Squiz.Classes.ClassFileName.NoMatch
+// phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
 class Tests_Scripts_And_Styles extends WP_UnitTestCase {
 
-	/**
-	 * Test if all the file hooks are working.
-	 *
-	 * @since 2.3.6
-	 */
 	public function test_hooks() {
 
 		$this->assertNotFalse( has_action( 'wp_enqueue_scripts', 'arve_register_scripts' ) );

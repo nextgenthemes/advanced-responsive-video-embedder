@@ -77,7 +77,7 @@ function sc_filter_attr( array $a ) {
 	} else {
 
 		$properties = get_host_properties();
-		$options    = get_options();
+		$options    = options();
 		$iframe_src = build_iframe_src( $a );
 		$iframe_src = add_query_args_to_iframe_src( $iframe_src, $a );
 		$iframe_src = add_autoplay_query_arg( $iframe_src, $a );
@@ -87,7 +87,7 @@ function sc_filter_attr( array $a ) {
 		}
 
 		$a['iframe_attr'] = [
-			'allow'           => 'autoplay; fullscreen',
+			'allow'           => 'autoplay; encrypted-media; fullscreen',
 			'allowfullscreen' => '',
 			'class'           => 'arve-iframe fitvidsignore',
 			'frameborder'     => '0',
@@ -189,75 +189,75 @@ function sc_filter_sanitise( array $a ) {
 	return $a;
 }
 
-function sc_filter_missing_attribute_check( $atts ) {
+function sc_filter_missing_attribute_check( array $a ) {
 
 	// Old shortcodes
-	if ( ! array_key_exists( 'url', $atts ) ) {
-		return $atts;
+	if ( ! array_key_exists( 'url', $a ) ) {
+		return $a;
 	}
 
 	$required_attributes   = get_html5_attributes();
 	$required_attributes[] = 'url';
 
-	$array = array_intersect_key( $atts, array_flip( $required_attributes ) );
+	$array = array_intersect_key( $a, array_flip( $required_attributes ) );
 
 	if ( count( array_filter( $array ) ) !== count( $array ) ) {
 
-		$atts['missing_atts_error'] = error( sprintf(
+		$a['missing_atts_error'] = error( sprintf(
 			// Translators: Attributes.
 			esc_html__( 'The [arve] shortcode needs one of this attributes %s', 'advanced-responsive-video-embedder' ),
 			implode( $required_attributes ) )
 		);
 	}
 
-	return $atts;
+	return $a;
 }
 
-function sc_filter_get_media_gallery_thumbnail( $atts ) {
+function sc_filter_get_media_gallery_thumbnail( array $a ) {
 
-	if ( empty( $atts['thumbnail'] ) ) {
-		return $atts;
+	if ( empty( $a['thumbnail'] ) ) {
+		return $a;
 	}
 
-	if ( is_numeric( $atts['thumbnail'] ) ) {
+	if ( is_numeric( $a['thumbnail'] ) ) {
 
-		$attchment_id       = $atts['thumbnail'];
-		$atts['img_src']    = get_attachment_image_url_or_srcset( 'url', $attchment_id );
-		$atts['img_srcset'] = get_attachment_image_url_or_srcset( 'srcset', $attchment_id );
+		$attchment_id    = $a['thumbnail'];
+		$a['img_src']    = get_attachment_image_url_or_srcset( 'url', $attchment_id );
+		$a['img_srcset'] = get_attachment_image_url_or_srcset( 'srcset', $attchment_id );
 
-	} elseif ( arve_validate_url( $atts['thumbnail'] ) ) {
+	} elseif ( arve_validate_url( $a['thumbnail'] ) ) {
 
-		$atts['img_src']    = $atts['thumbnail'];
-		$atts['img_srcset'] = false;
+		$a['img_src']    = $a['thumbnail'];
+		$a['img_srcset'] = false;
 
 	} else {
 
-		$atts['img_src'] = new WP_Error( 'thumbnail', __( 'Not a valid thumbnail URL or Media ID given', 'advanced-responsive-video-embedder' ) );
+		$a['img_src'] = new WP_Error( 'thumbnail', __( 'Not a valid thumbnail URL or Media ID given', 'advanced-responsive-video-embedder' ) );
 	}
 
-	return $atts;
+	return $a;
 }
 
-function sc_filter_get_media_gallery_video( $atts ) {
+function sc_filter_get_media_gallery_video( array $a ) {
 
 	$html5_ext = get_html5_attributes();
 
 	foreach ( $html5_ext as $ext ) {
 
-		if ( ! empty( $atts[ $ext ] ) && is_numeric( $atts[ $ext ] ) ) {
-			$atts[ $ext ] = wp_get_attachment_url( $atts[ $ext ] );
+		if ( ! empty( $a[ $ext ] ) && is_numeric( $a[ $ext ] ) ) {
+			$a[ $ext ] = wp_get_attachment_url( $a[ $ext ] );
 		}
 	}
 
-	return $atts;
+	return $a;
 }
 
-function sc_filter_detect_provider_and_id_from_url( $atts ) {
+function sc_filter_detect_provider_and_id_from_url( array $a ) {
 
 	$properties = get_host_properties();
 
-	if ( ! empty( $atts['provider'] ) || empty( $atts['url'] ) ) {
-		return $atts;
+	if ( ! empty( $a['provider'] ) || empty( $a['url'] ) ) {
+		return $a;
 	}
 
 	foreach ( $properties as $host_id => $host ) :
@@ -266,7 +266,7 @@ function sc_filter_detect_provider_and_id_from_url( $atts ) {
 			continue;
 		}
 
-		$preg_match = preg_match( $host['regex'], $atts['url'], $matches );
+		$preg_match = preg_match( $host['regex'], $a['url'], $matches );
 
 		if ( 1 !== $preg_match ) {
 			continue;
@@ -275,19 +275,19 @@ function sc_filter_detect_provider_and_id_from_url( $atts ) {
 		foreach ( $matches as $key => $value ) {
 
 			if ( is_string( $key ) ) {
-				$atts['provider'] = $host_id;
-				$atts[ $key ]     = $matches[ $key ];
+				$a['provider'] = $host_id;
+				$a[ $key ]     = $matches[ $key ];
 			}
 		}
 	endforeach;
 
-	return $atts;
+	return $a;
 }
 
-function sc_filter_detect_query_args( $atts ) {
+function sc_filter_detect_query_args( array $a ) {
 
-	if ( empty( $atts['url'] ) ) {
-		return $atts;
+	if ( empty( $a['url'] ) ) {
+		return $a;
 	}
 
 	$to_extract = array(
@@ -296,55 +296,55 @@ function sc_filter_detect_query_args( $atts ) {
 
 	foreach ( $to_extract as $provider => $parameters ) {
 
-		if ( $provider !== $atts['provider'] ) {
-			return $atts;
+		if ( $provider !== $a['provider'] ) {
+			return $a;
 		}
 
-		$query_array = url_query_array( $atts['url'] );
+		$query_array = url_query_array( $a['url'] );
 
 		foreach ( $parameters as $key => $parameter ) {
 
-			$att_name = $atts['provider'] . "_$parameter";
+			$att_name = $a['provider'] . "_$parameter";
 
 			if ( empty( $query_array[ $parameter ] ) ) {
-				$atts[ $att_name ] = new WP_Error( $att_name, "$parameter not found in URL" );
+				$a[ $att_name ] = new WP_Error( $att_name, "$parameter not found in URL" );
 			} else {
-				$atts[ $att_name ] = $query_array[ $parameter ];
+				$a[ $att_name ] = $query_array[ $parameter ];
 			}
 		}
 	}
 
-	return $atts;
+	return $a;
 }
 
-function sc_filter_detect_youtube_playlist( $atts ) {
+function sc_filter_detect_youtube_playlist( array $a ) {
 
-	if ( 'youtube' !== $atts['provider']
-		|| ( empty( $atts['url'] ) && empty( $atts['id'] ) )
+	if ( 'youtube' !== $a['provider']
+		|| ( empty( $a['url'] ) && empty( $a['id'] ) )
 	) {
-		return $atts;
+		return $a;
 	}
 
-	if ( empty( $atts['url'] ) ) {
+	if ( empty( $a['url'] ) ) {
 		// Not a url but it will work
-		$url = str_replace( array( '&list=', '&amp;list=' ), '?list=', $atts['id'] );
+		$url = str_replace( array( '&list=', '&amp;list=' ), '?list=', $a['id'] );
 	} else {
-		$url = $atts['url'];
+		$url = $a['url'];
 	}
 
 	$query_array = url_query_array( $url );
 
 	if ( empty( $query_array['list'] ) ) {
-		return $atts;
+		return $a;
 	}
 
-	$atts['id'] = strtok( $atts['id'], '?' );
-	$atts['id'] = strtok( $atts['id'], '&' );
+	$a['id'] = strtok( $a['id'], '?' );
+	$a['id'] = strtok( $a['id'], '&' );
 
-	$atts['youtube_playlist_id'] = $query_array['list'];
-	$atts['parameters']         .= 'list=' . $query_array['list'];
+	$a['youtube_playlist_id'] = $query_array['list'];
+	$a['parameters']         .= 'list=' . $query_array['list'];
 
-	return $atts;
+	return $a;
 }
 
 function get_video_type( $ext ) {
@@ -358,36 +358,36 @@ function get_video_type( $ext ) {
 	}
 }
 
-function sc_filter_detect_html5( $atts ) {
+function sc_filter_detect_html5( array $a ) {
 
-	if ( ! empty( $atts['provider'] ) && 'html5' !== $atts['provider'] ) {
-		return $atts;
+	if ( ! empty( $a['provider'] ) && 'html5' !== $a['provider'] ) {
+		return $a;
 	}
 
-	$html5_extensions           = get_html5_attributes();
-	$atts['video_sources_html'] = '';
+	$html5_extensions        = get_html5_attributes();
+	$a['video_sources_html'] = '';
 
 	foreach ( $html5_extensions as $ext ) :
 
-		if ( ! empty( $atts[ $ext ] ) ) {
+		if ( ! empty( $a[ $ext ] ) ) {
 
-			if ( \Nextgenthemes\Utils\starts_with( $atts[ $ext ], 'https://www.dropbox.com' ) ) {
-				$atts[ $ext ] = add_query_arg( 'dl', 1, $atts[ $ext ] );
+			if ( \Nextgenthemes\Utils\starts_with( $a[ $ext ], 'https://www.dropbox.com' ) ) {
+				$a[ $ext ] = add_query_arg( 'dl', 1, $a[ $ext ] );
 			}
 
-			$atts['video_sources_html'] .= sprintf( '<source type="%s" src="%s">', get_video_type( $ext ), $atts[ $ext ] );
+			$a['video_sources_html'] .= sprintf( '<source type="%s" src="%s">', get_video_type( $ext ), $a[ $ext ] );
 		}
 
-		if ( ! empty( $atts['url'] ) && arve_ends_with( $atts['url'], ".$ext" ) ) {
+		if ( ! empty( $a['url'] ) && arve_ends_with( $a['url'], ".$ext" ) ) {
 
-			if ( \Nextgenthemes\Utils\starts_with( $atts['url'], 'https://www.dropbox.com' ) ) {
-				$atts['url'] = add_query_arg( 'dl', 1, $atts['url'] );
+			if ( \Nextgenthemes\Utils\starts_with( $a['url'], 'https://www.dropbox.com' ) ) {
+				$a['url'] = add_query_arg( 'dl', 1, $a['url'] );
 			}
 
-			$atts['video_src'] = $atts['url'];
+			$a['video_src'] = $a['url'];
 
 			/*
-			$parse_url = parse_url( $atts['url'] );
+			$parse_url = parse_url( $a['url'] );
 			$pathinfo  = pathinfo( $parse_url['path'] );
 
 			$url_ext         = $pathinfo['extension'];
@@ -396,62 +396,62 @@ function sc_filter_detect_html5( $atts ) {
 		}
 	endforeach;
 
-	if ( empty( $atts['video_src'] ) && empty( $atts['video_sources_html'] ) ) {
-		return $atts;
+	if ( empty( $a['video_src'] ) && empty( $a['video_sources_html'] ) ) {
+		return $a;
 	}
 
-	$atts['provider'] = 'html5';
+	$a['provider'] = 'html5';
 
-	return $atts;
+	return $a;
 }
 
-function sc_filter_iframe_fallback( $atts ) {
+function sc_filter_iframe_fallback( array $a ) {
 
-	if ( empty( $atts['provider'] ) ) {
+	if ( empty( $a['provider'] ) ) {
 
-		$atts['provider'] = 'iframe';
+		$a['provider'] = 'iframe';
 
-		if ( empty( $atts['id'] ) && ! empty( $atts['url'] ) ) {
-			$atts['id'] = $atts['url'];
+		if ( empty( $a['id'] ) && ! empty( $a['url'] ) ) {
+			$a['id'] = $a['url'];
 		}
 	}
 
-	return $atts;
+	return $a;
 }
 
-function sc_filter_build_tracks_html( $atts ) {
+function sc_filter_build_tracks_html( array $a ) {
 
-	if ( 'html5' !== $atts['provider'] ) {
-		return $atts;
+	if ( 'html5' !== $a['provider'] ) {
+		return $a;
 	}
 
-	$atts['video_tracks_html'] = '';
+	$a['video_tracks_html'] = '';
 
 	for ( $n = 1; $n <= ARVE_NUM_TRACKS; $n++ ) {
 
-		if ( empty( $atts[ "track_{$n}" ] ) ) {
-			return $atts;
+		if ( empty( $a[ "track_{$n}" ] ) ) {
+			return $a;
 		}
 
-		preg_match( '#-(?<type>captions|chapters|descriptions|metadata|subtitles)-(?<lang>[a-z]{2}).vtt$#i', $atts[ "track_{$n}" ], $matches );
+		preg_match( '#-(?<type>captions|chapters|descriptions|metadata|subtitles)-(?<lang>[a-z]{2}).vtt$#i', $a[ "track_{$n}" ], $matches );
 
 		if ( empty( $matches[1] ) ) {
-			$atts[ "track_{$n}" ] = new WP_Error( 'track', __( 'Track kind or language code could not detected from filename', 'advanced-responsive-video-embedder' ) );
-			return $atts;
+			$a[ "track_{$n}" ] = new WP_Error( 'track', __( 'Track kind or language code could not detected from filename', 'advanced-responsive-video-embedder' ) );
+			return $a;
 		}
 
-		$label = empty( $atts[ "track_{$n}_label" ] ) ? arve_get_language_name_from_code( $matches['lang'] ) : $atts[ "track_{$n}_label" ];
+		$label = empty( $a[ "track_{$n}_label" ] ) ? get_language_name_from_code( $matches['lang'] ) : $a[ "track_{$n}_label" ];
 
 		$attr = array(
 			'default' => ( 1 === $n ) ? true : false,
 			'kind'    => $matches['type'],
 			'label'   => $label,
-			'src'     => $atts[ "track_{$n}" ],
+			'src'     => $a[ "track_{$n}" ],
 			'srclang' => $matches['lang'],
 		);
 
-		$atts['video_tracks_html'] .= sprintf( '<track%s>', \Nextgenthemes\Utils\attr( $attr) );
+		$a['video_tracks_html'] .= sprintf( '<track%s>', \Nextgenthemes\Utils\attr( $attr ) );
 	}//end for
 
-	return $atts;
+	return $a;
 }

@@ -1,10 +1,12 @@
 <?php
-$options = get_options();
+namespace Nextgenthemes\ARVE;
+
+$options = options();
 ?>
 
 <div class="wrap arve-options-wrap">
 
-	<?php if ( arve_display_pro_ad() ) : ?>
+	<?php if ( display_pro_ad() ) : ?>
 
 		<div class="arve-settings-page-ad notice is-dismissible updated">
 
@@ -46,7 +48,7 @@ $options = get_options();
 
 	<?php endif; ?>
 
-	<h2><?php esc_html_e( get_admin_page_title() ); ?></h2>
+	<h2><?php esc_html( get_admin_page_title() ); ?></h2>
 
 	<h2 class="nav-tab-wrapper arve-settings-tabs"></h2>
 
@@ -55,7 +57,7 @@ $options = get_options();
 		<?php do_settings_sections( 'advanced-responsive-video-embedder' ); ?>
 		<?php settings_fields( 'arve-settings-group' ); ?>
 
-		<input type="hidden" id="arve_options_main[last_settings_tab]" name="arve_options_main[last_settings_tab]" value="<?php esc_attr_e( $options['last_settings_tab'] ); ?>">
+		<input type="hidden" id="arve_options_main[last_settings_tab]" name="arve_options_main[last_settings_tab]" value="<?php esc_attr( $options['last_settings_tab'] ); ?>">
 
 	</form>
 

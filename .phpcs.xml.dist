@@ -1,22 +1,11 @@
 <?xml version="1.0"?>
 <ruleset name="Mythic Theme Coding Standards">
 
+	<file>.</file>
 	<!--
 	 * Exclude any template files because we tend to use a different coding
 	 * style for them.
  	-->
-	<exclude-pattern>/app/bootstrap-compat.php</exclude-pattern>
-	<exclude-pattern>/app/class-edd-theme-updater-admin.php</exclude-pattern>
-	<exclude-pattern>/app/class-edd-theme-updater.php</exclude-pattern>
-	<exclude-pattern>/app/providers/class-app-service-provider.php</exclude-pattern>
-	<exclude-pattern>/app/theme-updater.php</exclude-pattern>
-	<exclude-pattern>/app/unused/*</exclude-pattern>
-	<exclude-pattern>/app/Edd/*</exclude-pattern>
-	<exclude-pattern>/hybrid-lo/*</exclude-pattern>
-	<exclude-pattern>*/node_modules/*</exclude-pattern>
-	<exclude-pattern>*/resources/views/*</exclude-pattern>
-	<exclude-pattern>*/template-parts/*</exclude-pattern>
-	<exclude-pattern>/index.php</exclude-pattern>
   	<exclude-pattern>*/vendor/*</exclude-pattern>
 
 	<!-- Use the Foxland-Default rules. -->
@@ -57,11 +46,13 @@
 	<!-- Exclude PEAR rules. -->
 	<rule ref="PEAR">
 		<exclude name="PEAR.Classes.ClassDeclaration.OpenBraceNewLine"/>
+		<exclude name="PEAR.Commenting.ClassComment.Missing"/>
 		<exclude name="PEAR.Commenting.ClassComment.MissingAuthorTag"/>
 		<exclude name="PEAR.Commenting.ClassComment.MissingCategoryTag"/>
 		<exclude name="PEAR.Commenting.ClassComment.MissingLicenseTag"/>
 		<exclude name="PEAR.Commenting.ClassComment.MissingLinkTag"/>
 		<exclude name="PEAR.Commenting.ClassComment.MissingPackageTag"/>
+		<exclude name="PEAR.Commenting.FileComment.InvalidAuthors"/><!-- Not want to disclose and email -->
 		<exclude name="PEAR.Commenting.FileComment.Missing"/>
 		<exclude name="PEAR.Commenting.FileComment.MissingCategoryTag"/>
 		<exclude name="PEAR.Commenting.FileComment.MissingVersion"/>
@@ -81,14 +72,17 @@
 		<exclude name="PEAR.Functions.FunctionDeclaration.SpaceAfterFunction"/>
 		<exclude name="PEAR.NamingConventions.ValidFunctionName.FunctionNameInvalid"/>
 		<exclude name="PEAR.NamingConventions.ValidFunctionName.FunctionNoCapital"/>
-		<exclude name="PEAR.WhiteSpace.ScopeClosingBrace.Line"/>
-		<exclude name="PEAR.Commenting.FileComment.InvalidAuthors"/><!-- Not want to disclose and email -->
-		<exclude name="PEAR.WhiteSpace.ScopeIndent.IncorrectExact"/>
 		<exclude name="PEAR.NamingConventions.ValidFunctionName.ScopeNotCamelCaps"/>
+		<exclude name="PEAR.WhiteSpace.ScopeClosingBrace.Line"/>
+		<exclude name="PEAR.WhiteSpace.ScopeIndent.IncorrectExact"/>
+		<exclude name="PEAR.NamingConventions.ValidVariableName.PrivateNoUnderscore"/>
+		<exclude name="PEAR.NamingConventions.ValidFunctionName.PrivateNoUnderscore"/>
 	</rule>
 
 	<!-- Exclude Squiz rules. -->
 	<rule ref="Squiz">
+		<exclude name="Squiz.WhiteSpace.MemberVarSpacing.Incorrect"/>
+		<exclude name="Squiz.Objects.ObjectInstantiation.NotAssigned"/>
 		<exclude name="Squiz.Arrays.ArrayBracketSpacing.SpaceAfterBracket"/>
 		<exclude name="Squiz.Arrays.ArrayBracketSpacing.SpaceBeforeBracket"/>
 		<exclude name="Squiz.Arrays.ArrayDeclaration.NoComma"/>
@@ -99,7 +93,9 @@
 		<exclude name="Squiz.Commenting.FileComment.MissingPackageTag" />
 		<exclude name="Squiz.Commenting.FileComment.WrongStyle" />
 		<exclude name="Squiz.Commenting.FunctionComment.Missing" />
+		<exclude name="Squiz.Commenting.VariableComment.Missing" />
 		<exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamType"/>
+		<exclude name="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps"/>
 		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" /><!-- What is the point of this? Super annoying, especially when commenting a url or code -->
 		<exclude name="Squiz.Commenting.InlineComment.WrongStyle"/>
 		<exclude name="Squiz.Commenting.PostStatementComment.Found"/>
@@ -142,6 +138,7 @@
 		<exclude name="Squiz.ControlStructures.SwitchDeclaration.SpacingAfterBreak"/>
 		<exclude name="Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed"/>
 		<exclude name="Squiz.Commenting.BlockComment.NoCapital"/>
+		<exclude name="Squiz.Arrays.ArrayDeclaration.DoubleArrowNotAligned"/>
 	</rule>
 
 	<!-- Exclude WordPress rules. -->
@@ -152,6 +149,7 @@
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
 		<exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores"/>
+		<exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents"/>
 	</rule>
 
 </ruleset>

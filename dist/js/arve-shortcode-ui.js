@@ -9,7 +9,7 @@ function arve_extract_url( changed, collection, shortcode ) {
 		);
 	}
 
-	var val     = changed.value,
+	var val       = changed.value,
 		short_val = changed.value,
 		input     = attr_by_name( 'url' ).$el.find( 'input' );
 
@@ -17,9 +17,9 @@ function arve_extract_url( changed, collection, shortcode ) {
 		return;
 	}
 
-	if ( val.match(/src="?([^\s"]+)/) ) {
+	if ( val.match( /src="?([^\s"]+)/) ) {
 
-		var test_url = val.match(/src="?([^\s"]+)/),
+		var test_url = val.match( /src="?([^\s"]+)/),
 			only_url = test_url && test_url[1];
 
 		input.val( only_url ).trigger( 'input' );
@@ -32,12 +32,12 @@ function arve_mode_select_listener( changed, collection, shortcode ) {
 		return _.find(
 			collection,
 			function( viewModel ) {
-				return name === viewModel.model.get('attr');
+				return name === viewModel.model.get( 'attr');
 			}
 		);
 	}
 
-	var val = changed.value,
+	var val        = changed.value,
 		autoplay   = attr_by_name( 'autoplay' ),
 		grow       = attr_by_name( 'grow' ),
 		align      = attr_by_name( 'align' ),
@@ -67,8 +67,8 @@ function arve_mode_select_listener( changed, collection, shortcode ) {
 		autoplay.$el.show();
 		grow.$el.hide();
 		hide_title.$el.hide();
-	}
+	}//end if
 }
 
-wp.shortcake.hooks.addAction( 'arve.mode', mode_select_listener );
-wp.shortcake.hooks.addAction( 'arve.url', extract_url );
+wp.shortcake.hooks.addAction( 'arve.mode', arve_mode_select_listener );
+wp.shortcake.hooks.addAction( 'arve.url', arve_extract_url );

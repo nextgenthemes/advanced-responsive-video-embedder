@@ -27,7 +27,7 @@ function validate_aspect_ratio( $aspect_ratio ) {
 	}
 
 	return new WP_Error( 'Aspect ratio',
-		// Transltors: Aspect Ratio
+		// Translators: Aspect Ratio
 		sprintf( __( 'Aspect ratio <code>%s</code> is not valid', 'advanced-responsive-video-embedder' ), $aspect_ratio )
 	);
 }
@@ -41,6 +41,7 @@ function bool_to_shortcode_string( $val ) {
 	return (string) $val;
 }
 
+// phpcs:disable Generic.Metrics.CyclomaticComplexity.TooHigh
 function validate_bool( $val, $name ) {
 
 	switch ( $val ) {
@@ -50,24 +51,23 @@ function validate_bool( $val, $name ) {
 		case 'yes':
 		case 'on':
 			return true;
-			break;
-		case null;
+		case null:
 			return null;
-			break;
 		case 'false':
 		case '0':
 		case 'n':
 		case 'no':
 		case 'off':
 			return false;
-			break;
 		default:
-			return new WP_Error( $name,
-				sprintf( __( '%s <code>%s</code> not valid', 'advanced-responsive-video-embedder' ), $name, $val )
+			return new WP_Error(
+				$name,
+				// Translators: 1 Name, 2 Value
+				sprintf( __( '%1$s <code>%2$s</code> not valid', 'advanced-responsive-video-embedder' ), $name, $val )
 			);
-			break;
-	}
+	}//end switch
 }
+// phpcs:enable
 
 function validate_align( $align ) {
 
@@ -80,9 +80,14 @@ function validate_align( $align ) {
 		case 'left':
 		case 'right':
 		case 'center':
+			$align = $align;
 			break;
 		default:
-			$align = new WP_Error( 'align', sprintf( __( 'Align <code>%s</code> not valid', 'advanced-responsive-video-embedder' ), esc_html( $align ) ) );
+			$align = new WP_Error(
+				'align',
+				// Translators: Alignment
+				sprintf( __( 'Align <code>%s</code> not valid', 'advanced-responsive-video-embedder' ), esc_html( $align ) )
+			);
 			break;
 	}
 

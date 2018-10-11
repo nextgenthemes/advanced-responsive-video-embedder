@@ -1,5 +1,6 @@
 <?php
-
+// phpcs:disable Squiz.Classes.ClassFileName.NoMatch
+// phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
 class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function change_option( $key, $val ) {
@@ -21,7 +22,10 @@ class Tests_Shortcode extends WP_UnitTestCase {
 	}
 
 	public function test_sandbox2() {
-		$attr = array( 'url' => 'https://example.com', 'disable_flash' => 'n' );
+		$attr = array(
+			'url'           => 'https://example.com',
+			'disable_flash' => 'n'
+		);
 
 		$this->assertNotContains( 'Error', shortcode_arve( $attr ) );
 		$this->assertContains(
@@ -60,6 +64,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 	public function test_thumbnails() {
 
 		$filename = dirname( __FILE__ ) . '/test-attachment.jpg';
+		// phpcs:disable WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$contents = file_get_contents( $filename );
 
 		$upload = wp_upload_bits( basename( $filename ), null, $contents );
@@ -80,11 +85,9 @@ class Tests_Shortcode extends WP_UnitTestCase {
 	}
 
 	public function test_shortcodes_are_registered() {
-		global $shortcode_tags;
-
-		$this->assertArrayHasKey( 'arve', $shortcode_tags );
-		$this->assertArrayHasKey( 'youtube', $shortcode_tags );
-		$this->assertArrayHasKey( 'vimeo', $shortcode_tags );
+		$this->assertArrayHasKey( 'arve', $GLOBALS['shortcode_tags'] );
+		$this->assertArrayHasKey( 'youtube', $GLOBALS['shortcode_tags'] );
+		$this->assertArrayHasKey( 'vimeo', $GLOBALS['shortcode_tags'] );
 	}
 
 	public function old_test_compare_shortcodes() {
@@ -97,7 +100,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
 		);
 
-		$new_atts = $old_atts = $atts;
+		$new_atts = $atts;
+		$old_atts = $atts;
 
 		$this->assertEquals(
 			arve_shortcode_arve( $old_atts, null, false ),
@@ -126,7 +130,10 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		foreach ( $modes as $key => $mode ) {
 
-			$output = shortcode_arve( array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys', 'mode' => $mode ) );
+			$output = shortcode_arve( array(
+				'url'  => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
+				'mode' => $mode
+			) );
 			$this->assertContains( 'Error', $output );
 		}
 	}
@@ -183,7 +190,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$attr = array(
 			'url'          => 'https://example.com/video.mp4',
 			'controlslist' => 'nofullscreen whatever',
-		 );
+		);
 
 		$this->assertContains( 'controlslist="nofullscreen whatever"', shortcode_arve( $attr ) );
 
@@ -198,14 +205,13 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		) );
 
 		// $output2 = wp_video_shortcode( array(
-		// 	'mp4'       => 'https://example.com/video.mp4',
-		// 	'ogv'       => 'https://example.com/video.ogv',
-		// 	'webm'      => 'https://example.com/video.webm',
-		// 	'poster'    => 'https://example.com/image.jpg',
+		// 'mp4'       => 'https://example.com/video.mp4',
+		// 'ogv'       => 'https://example.com/video.ogv',
+		// 'webm'      => 'https://example.com/video.webm',
+		// 'poster'    => 'https://example.com/image.jpg',
 		// ) );
 		//
 		// $this->assertEquals( $output, $output2 );
-
 		$this->assertNotContains( 'Error', $output );
 		$this->assertNotContains( '<iframe', $output );
 		$this->assertContains( 'data-provider="html5"', $output );
@@ -237,7 +243,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertTrue( is_array( $properties ) );
 		$this->assertNotEmpty( $properties );
 
-		foreach( $properties as $host_id => $host ) :
+		foreach ( $properties as $host_id => $host ) :
 
 			$this->assertNotEmpty( $host, $host_id );
 			$this->assertTrue( is_array( $host ), $host_id );
@@ -250,7 +256,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			$this->assertNotEmpty( $host['tests'], $host_id );
 			$this->assertTrue( is_array( $host['tests'] ), $host_id );
 
-			foreach( $host['tests'] as $test ) :
+			foreach ( $host['tests'] as $test ) :
 
 				$this->assertNotEmpty( $test, $host_id );
 				$this->assertTrue( is_array( $test ), $host_id );
@@ -268,18 +274,16 @@ class Tests_Shortcode extends WP_UnitTestCase {
 				// fwrite( STDERR, 'Matches' . PHP_EOL );
 				// fwrite( STDERR, print_r( $matches, true ) );
 				// fwrite( STDERR, PHP_EOL );
-
 				$this->assertNotEmpty( $matches,         $test['url'] );
 				$this->assertTrue( is_array( $matches ), $test['url'] );
 				$this->assertArrayHasKey( 'id', $test,   $test['url'] );
 				$this->assertEquals( $matches['id'], $test['id'], $test['url'] );
 
-				if ( 'brightcove' == $host_id ) {
+				if ( 'brightcove' === $host_id ) {
 					$this->assertEquals( $matches['account_id'], $test['account_id'] );
-					$this->assertEquals( $matches['brightcove_player'],  $test['brightcove_player'] );
-					$this->assertEquals( $matches['brightcove_embed'],   $test['brightcove_embed'] );
+					$this->assertEquals( $matches['brightcove_player'], $test['brightcove_player'] );
+					$this->assertEquals( $matches['brightcove_embed'], $test['brightcove_embed'] );
 				}
-
 			endforeach;
 
 		endforeach;
@@ -291,25 +295,24 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$properties = get_host_properties();
 
-		foreach( $properties as $host_id => $host ) :
+		foreach ( $properties as $host_id => $host ) :
 
-		    if ( empty( $host['regex'] ) ) {
+			if ( empty( $host['regex'] ) ) {
 				continue;
-		    }
+			}
 
-		    foreach( $host['tests'] as $test ) {
+			foreach ( $host['tests'] as $test ) {
 
 				$this->$current_test;
 
 				shortcode_arve( array(
 					'url' => $test['url']
 				) );
-	    	}
-
+			}
 		endforeach;
 	}
 
-	function check_regex_detection( $atts ) {
+	public function check_regex_detection( $atts ) {
 
 		$this->assertEquals( $atts['id'] );
 	}

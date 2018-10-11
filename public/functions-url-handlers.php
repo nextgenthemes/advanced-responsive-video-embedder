@@ -19,13 +19,15 @@ function create_url_handlers() {
 
 function url_detection_to_shortcode( $provider, array $matches, $attr, $url, $rawattr ) {
 
-	//* Fix 'Markdown on save enhanced' issue
+	// * Fix 'Markdown on save enhanced' issue
 	if ( substr( $url, -4 ) === '</p>' ) {
 		$url = substr( $url, 0, -4 );
 	}
 
-	$parsed_url = parse_url( $url );
-	$url_query = $old_atts = $new_atts = array();
+	$parsed_url = wp_parse_url( $url );
+	$url_query  = array();
+	$old_atts   = array();
+	$new_atts   = array();
 
 	if ( ! empty( $parsed_url['query'] ) ) {
 		parse_str( $parsed_url['query'], $url_query );
@@ -34,7 +36,7 @@ function url_detection_to_shortcode( $provider, array $matches, $attr, $url, $ra
 	foreach ( $url_query as $key => $value ) {
 
 		if ( \Nextgenthemes\Utils\starts_with( $key, 'arve-' ) ) {
-			$key = substr( $key, 5 );
+			$key              = substr( $key, 5 );
 			$old_atts[ $key ] = $value;
 		}
 	}
@@ -56,14 +58,13 @@ function url_detection_to_shortcode( $provider, array $matches, $attr, $url, $ra
 		unset( $url_query['t'] );
 	}
 
-	//* Pure awesomeness!
 	$atts               = array_merge( (array) $old_atts, (array) $new_atts );
 	$atts['parameters'] = empty( $url_query ) ? null : build_query( $url_query );
 	$atts['provider']   = $provider;
 
-	foreach( $matches as $k => $v ) {
+	foreach ( $matches as $k => $v ) {
 
-		if ( ! is_numeric ( $k ) ) {
+		if ( ! is_numeric( $k ) ) {
 			$atts[ $k ] = $matches[ $k ];
 		}
 	}

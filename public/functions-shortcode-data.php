@@ -39,7 +39,7 @@ function build_iframe_src( array $a ) {
 	$id         = $a['id'];
 	$lang       = $a['lang'];
 	$provider   = $a['provider'];
-	$options    = get_options();
+	$options    = options();
 	$properties = get_host_properties();
 
 	if ( $options['youtube_nocookie'] ) {
@@ -192,7 +192,7 @@ function add_autoplay_query_arg( $src, array $a ) {
 
 function add_query_args_to_iframe_src( $src, $a ) {
 
-	$options = get_options();
+	$options = options();
 
 	$parameters        = wp_parse_args( preg_replace( '!\s+!', '&', $a['parameters'] ) );
 	$option_parameters = array();
@@ -208,7 +208,7 @@ function add_query_args_to_iframe_src( $src, $a ) {
 
 function maxwidth_when_aligned( $maxwidth, $align ) {
 
-	$options = get_options();
+	$options = options();
 
 	if ( $maxwidth < 100 && in_array( $align, array( 'left', 'right', 'center' ), true ) ) {
 		$maxwidth = (int) $options['align_maxwidth'];

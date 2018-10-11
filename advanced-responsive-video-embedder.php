@@ -12,16 +12,28 @@
  * Domain Path:       /languages
  * GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-embedder
  * GitHub Branch:     dev
+ *
+ * @package Nextgenthemes/ARVE
+ * @author  Nicolas Jonas
+ * @license GPL 3.0
+ * @link    https://nextgenthemes.com
  */
 
 namespace Nextgenthemes\ARVE;
 
 const VERSION              = '9.0.0';
-const PRO_VERSION_REQUIRED = '4.0.0';
+const PRO_VERSION_REQUIRED = '5.0.0';
 const NUM_TRACKS           = 10;
+const PLUGIN_FILE          = __FILE__;
 
-define( __NAMESPACE__ . '\URL', plugin_dir_url( __FILE__ ) );
+// define( __NAMESPACE__ . '\URL', plugin_dir_url( __FILE__ ) );
 define( 'Nextgenthemes\TEXTDOMAIN', 'advanced-responsive-video-embedder' );
+define( 'Nextgenthemes\Admin\TEXTDOMAIN', 'advanced-responsive-video-embedder' );
+define( 'Nextgenthemes\Utils\TEXTDOMAIN', 'advanced-responsive-video-embedder' );
+
+function url( $path ) {
+	return plugins_url( $path, __FILE__ );
+}
 
 init();
 
@@ -29,14 +41,19 @@ function init() {
 
 	add_option( __NAMESPACE__ . '\install_date', current_time( 'timestamp' ) );
 
+	if ( ! defined( 'Nextgenthemes\VERSION' ) ) {
+		define( 'Nextgenthemes\PLUGIN_FILE', __FILE__ );
+	}
+
 	require_once __DIR__ . '/vendor/autoload.php';
 
 	array_map( function( $file ) {
 		require_once( "public/functions-{$file}.php" );
 	}, [
-		'enqueue',
+		'assets',
 		'html-output',
 		'misc',
+		'oembed',
 		'shortcode-data',
 		'shortcode-filters',
 		'shortcodes',
@@ -54,12 +71,11 @@ function init() {
 	add_action( 'plugins_loaded',      __NAMESPACE__ . '\create_shortcodes', 999 );
 	add_action( 'plugins_loaded',      __NAMESPACE__ . '\create_url_handlers', 999 );
 	add_action( 'wp_enqueue_scripts',  __NAMESPACE__ . '\register_assets', 0 );
-	add_action( 'wp_enqueue_scripts',  __NAMESPACE__ . '\maybe_enqueue_assets' );
 	add_action( 'wp_video_shortcode_override', __NAMESPACE__ . '\wp_video_shortcode_override', 10, 4 );
 
 	add_filter( 'oembed_dataparse',    __NAMESPACE__ . '\filter_oembed_dataparse', 11, 3 );
-	add_filter( 'embed_oembed_html',   __NAMESPACE__ . '\maybe_enqueue' );
-	add_filter( 'embed_handler_html',  __NAMESPACE__ . '\maybe_enqueue' );
+	add_filter( 'embed_oembed_html',   __NAMESPACE__ . '\maybe_enqueue_assets' );
+	add_filter( 'embed_handler_html',  __NAMESPACE__ . '\maybe_enqueue_assets' );
 
 	add_filter( 'language_attributes', __NAMESPACE__ . '\html_id' );
 

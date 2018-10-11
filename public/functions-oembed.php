@@ -1,34 +1,16 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-/*
-add_filter( 'oembed_fetch_url',    'arve_filter_oembed_fetch_url', 999, 3 );
-
-function filter_oembed_fetch_url( $provider, $url, $args ) {
-
-	d($url);
-
-	$url = remove_query_array( $url, 'arve' );
-	$url = remove_query_array( $url, 'arve-ifp' );
-
-	$provider = add_query_arg( 'url', urlencode( $url ), $provider );
-
-	dd($url);
-
-	return $provider;
-}
-*/
-
 function filter_oembed_dataparse( $result, $data, $url ) {
 
-	if ( $a = oembed2args( $data, $url ) ) {
+	$a = oembed2args( $data, $url );
 
+	if ( $a ) {
 		/*
 		$arve_url_query  = extract_query_array( $url, 'arve' );
 		$a               = array_merge( $a, $arve_url_query );
 		$a['parameters'] = extract_query_array( $url, 'arve-ifp' );
 		*/
-
 		return build_video( $a );
 	}
 
@@ -84,7 +66,7 @@ function extract_query_array( $url, $key ) {
 	return array();
 }
 
-function get_url_( $url, $extract_array_name ) {
+function get_url_kp( $url, $extract_array_name ) {
 
 	$parsed_url = wp_parse_url( $url );
 
@@ -118,3 +100,21 @@ function get_query_str_without_args( $url, $key ) {
 
 	return $parsed_url['query'];
 }
+
+/*
+add_filter( 'oembed_fetch_url',    'arve_filter_oembed_fetch_url', 999, 3 );
+
+function filter_oembed_fetch_url( $provider, $url, $args ) {
+
+	d($url);
+
+	$url = remove_query_array( $url, 'arve' );
+	$url = remove_query_array( $url, 'arve-ifp' );
+
+	$provider = add_query_arg( 'url', urlencode( $url ), $provider );
+
+	dd($url);
+
+	return $provider;
+}
+*/
