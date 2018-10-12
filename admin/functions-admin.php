@@ -629,8 +629,6 @@ function validate_options_shortcodes( $input ) {
 
 function mce_css( $mce_css ) {
 
-	$min = get_min_suffix();
-
 	if ( ! empty( $mce_css ) ) {
 		$mce_css .= ',';
 	}

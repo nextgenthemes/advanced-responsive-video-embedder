@@ -10,6 +10,7 @@
 /vendor/phpcompatibility    export-ignore
 /vendor/samikeijonen        export-ignore
 /vendor/squizlabs           export-ignore
+/vendor/symfony             export-ignore
 /vendor/wp-coding-standards export-ignore
 
 * text eol=lf

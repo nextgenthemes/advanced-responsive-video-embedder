@@ -25,9 +25,9 @@ function url_detection_to_shortcode( $provider, array $matches, $attr, $url, $ra
 	}
 
 	$parsed_url = wp_parse_url( $url );
-	$url_query  = array();
-	$old_atts   = array();
-	$new_atts   = array();
+	$url_query  = [];
+	$old_atts   = [];
+	$new_atts   = [];
 
 	if ( ! empty( $parsed_url['query'] ) ) {
 		parse_str( $parsed_url['query'], $url_query );

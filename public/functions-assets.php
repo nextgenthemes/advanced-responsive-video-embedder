@@ -16,7 +16,7 @@ function register_assets() {
 	] );
 }
 
-function maybe_enqueue_assets() {
+function maybe_enqueue_assets( $content ) {
 
 	$options = options();
 
@@ -27,4 +27,6 @@ function maybe_enqueue_assets() {
 		wp_enqueue_style( 'arve-pro' );
 		wp_enqueue_script( 'arve-pro' );
 	}
+
+	return $content;
 }

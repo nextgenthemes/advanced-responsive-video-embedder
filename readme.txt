@@ -158,6 +158,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2018-10-02 - 9.0.0 ###
+
+* Added Bitchute
+
 ### 2018-10-02 - 8.9.8 ###
 
 * Updated EDD Plugin update class, this may fix some people having trouble auto updating ARVE Pro

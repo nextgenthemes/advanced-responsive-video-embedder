@@ -1,9 +1,116 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+// phpcs:disable Generic.Metrics.CyclomaticComplexity.MaxExceeded
+function sc_filter_iframe_src_autoplay_query( array $a ) {
+
+	switch ( $a['provider'] ) {
+		case 'alugha':
+		case 'archiveorg':
+		case 'dailymotion':
+		case 'dailymotionlist':
+		case 'facebook':
+		case 'vevo':
+		case 'viddler':
+		case 'vimeo':
+		case 'youtube':
+		case 'youtubelist':
+			$on  = add_query_arg( 'autoplay', 1, $a['src'] );
+			$off = add_query_arg( 'autoplay', 0, $a['src'] );
+			break;
+		case 'twitch':
+		case 'ustream':
+			$on  = add_query_arg( 'autoplay', 'true',  $a['src'] );
+			$off = add_query_arg( 'autoplay', 'false', $a['src'] );
+			break;
+		case 'livestream':
+		case 'Wistia':
+			$on  = add_query_arg( 'autoPlay', 'true',  $a['src'] );
+			$off = add_query_arg( 'autoPlay', 'false', $a['src'] );
+			break;
+		case 'metacafe':
+			$on  = add_query_arg( 'ap', 1, $a['src'] );
+			$off = remove_query_arg( 'ap', $a['src'] );
+			break;
+		case 'videojug':
+			$on  = add_query_arg( 'ap', 1, $a['src'] );
+			$off = add_query_arg( 'ap', 0, $a['src'] );
+			break;
+		case 'veoh':
+			$on  = add_query_arg( 'videoAutoPlay', 1, $a['src'] );
+			$off = add_query_arg( 'videoAutoPlay', 0, $a['src'] );
+			break;
+		case 'brightcove':
+		case 'snotr':
+			$on  = add_query_arg( 'autoplay', 1, $a['src'] );
+			$off = remove_query_arg( 'autoplay', $a['src'] );
+			break;
+		case 'yahoo':
+			$on  = add_query_arg( 'player_autoplay', 'true',  $a['src'] );
+			$off = add_query_arg( 'player_autoplay', 'false', $a['src'] );
+			break;
+
+		/*
+		case 'iframe':
+			# We are spamming all kinds of autoplay parameters here in hope of a effect
+			$on  = add_query_arg( array(
+				'ap'               => '1',
+				'autoplay'         => '1',
+				'autoStart'        => 'true',
+				'player_autoStart' => 'true',
+			), $a['src'] );
+			$off = add_query_arg( array(
+				'ap'               => '0',
+				'autoplay'         => '0',
+				'autoStart'        => 'false',
+				'player_autoStart' => 'false',
+			), $a['src'] );
+			break;
+		*/
+
+		default:
+			// Do nothing for providers that to not support autoplay or fail with parameters
+			$a['src'] = $a['src'];
+			break;
+	}//end switch
+
+	if ( $a['autoplay'] ) {
+		$a['src'] = $on;
+	} else {
+		$a['src'] = $off;
+	}
+
+	return $a;
+}
+// phpcs:enable
+
+function sc_filter_iframe_src_query( array $a ) {
+
+	$options = options();
+
+	$parameters        = wp_parse_args( preg_replace( '!\s+!', '&', $a['parameters'] ) );
+	$option_parameters = [];
+
+	if ( isset( $options['params'][ $a['provider'] ] ) ) {
+		$option_parameters = wp_parse_args( preg_replace( '!\s+!', '&', $options['params'][ $a['provider'] ] ) );
+	}
+
+	$parameters = wp_parse_args( $parameters, $option_parameters );
+
+	$a['src'] = add_query_arg( $parameters, $a['src'] );
+
+	/*
+	if ( 'vimeo' === $a['provider'] && ! empty( $a['start'] ) ) {
+		$a['src'] .= '#t=' . (int) $a['start'];
+	}
+	*/
+
+	return $a;
+}
+
 function get_wrapper_id( array $a ) {
 
-	static $wrapper_ids = array();
+	static $wrapper_ids = [];
 	$wrapper_id         = null;
 
 	foreach ( [ 'id', 'mp4', 'm4v', 'webm', 'ogv', 'url', 'random_video_url', 'webtorrent' ] as $att ) {
@@ -43,7 +150,7 @@ function sc_filter_attr( array $a ) {
 
 	$align_class = empty( $a['align'] ) ? '' : ' align' . $a['align'];
 
-	$a['wrapper_attr'] = array(
+	$a['wrapper_attr'] = [
 		'class'         => "arve-wrapper$align_class",
 		'data-mode'     => $a['mode'],
 		'data-provider' => $a['provider'],
@@ -52,11 +159,11 @@ function sc_filter_attr( array $a ) {
 		// Schema.org
 		'itemscope'     => '',
 		'itemtype'      => 'http://schema.org/VideoObject',
-	);
+	];
 
 	if ( 'html5' === $a['provider'] ) {
 
-		$a['video_attr'] = array(
+		$a['video_attr'] = [
 			// WP
 			'autoplay'           => in_array( $a['mode'], [ 'lazyload', 'lazyload-lightbox', 'link-lightbox' ], true ) ? false : $a['autoplay'],
 			'controls'           => $a['controls'],
@@ -72,19 +179,12 @@ function sc_filter_attr( array $a ) {
 			'muted'              => $a['muted'],
 			'playsinline'        => $a['playsinline'],
 			'webkit-playsinline' => $a['playsinline'],
-		);
+		];
 
 	} else {
 
 		$properties = get_host_properties();
 		$options    = options();
-		$iframe_src = build_iframe_src( $a );
-		$iframe_src = add_query_args_to_iframe_src( $iframe_src, $a );
-		$iframe_src = add_autoplay_query_arg( $iframe_src, $a );
-
-		if ( 'vimeo' === $a['provider'] && ! empty( $a['start'] ) ) {
-			$iframe_src .= '#t=' . (int) $a['start'];
-		}
 
 		$a['iframe_attr'] = [
 			'allow'           => 'autoplay; encrypted-media; fullscreen',
@@ -94,7 +194,7 @@ function sc_filter_attr( array $a ) {
 			'name'            => $a['iframe_name'],
 			'sandbox'         => 'allow-scripts allow-same-origin allow-presentation allow-popups',
 			'scrolling'       => 'no',
-			'src'             => $iframe_src,
+			'src'             => $a['src'],
 			'width'           => empty( $a['width'] ) ? false : $a['width'],
 			'height'          => empty( $a['height'] ) ? false : $a['height'],
 		];
@@ -254,11 +354,22 @@ function sc_filter_get_media_gallery_video( array $a ) {
 
 function sc_filter_detect_provider_and_id_from_url( array $a ) {
 
-	$properties = get_host_properties();
-
-	if ( ! empty( $a['provider'] ) || empty( $a['url'] ) ) {
+	if ( ! empty( $a['src'] ) ) {
 		return $a;
 	}
+
+	if ( empty( $a['url'] )
+		|| ( ! empty( $a['id'] ) && ! empty( $a['provider'] ) )
+	) {
+		$a['provider'] = new WP_Error(
+			'missing_args',
+			__( 'Need <code>url</code> or <code>provider</code> and <code>id</code>.', 'advanced-responsive-video-embedder' )
+		);
+		return $a;
+	}
+
+	$options    = options();
+	$properties = get_host_properties();
 
 	foreach ( $properties as $host_id => $host ) :
 
@@ -284,15 +395,60 @@ function sc_filter_detect_provider_and_id_from_url( array $a ) {
 	return $a;
 }
 
+function sc_filter_build_iframe_src( array $a ) {
+
+	if ( ! empty( $a['id'] ) || ! empty( $a['provider'] ) ) {
+		return $a;
+	}
+
+	$options    = options();
+	$properties = get_host_properties();
+
+	if ( isset( $properties[ $a['provider'] ]['embed_url'] ) ) {
+		$pattern = $properties[ $a['provider'] ]['embed_url'];
+	} else {
+		$pattern = '%s';
+	}
+
+	if ( 'facebook' === $a['provider'] && is_numeric( $a['id'] ) ) {
+
+		$a['id'] = "https://www.facebook.com/facebook/videos/{$a['id']}/";
+
+	} elseif ( 'twitch' === $a['provider'] && is_numeric( $a['id'] ) ) {
+
+		$pattern = 'https://player.twitch.tv/?video=v%s';
+
+	} elseif ( 'ted' === $a['provider'] && preg_match( '/^[a-z]{2}$/', $a['lang'] ) === 1 ) {
+
+		$pattern = 'https://embed-ssl.ted.com/talks/lang/' . $a['lang'] . '/%s.html';
+	}
+
+	if ( isset( $properties[ $a['provider'] ]['url_encode_id'] ) && $properties[ $a['provider'] ]['url_encode_id'] ) {
+		$a['id'] = rawurlencode( $a['id'] );
+	}
+
+	if ( 'brightcove' === $a['provider'] ) {
+		$a['src'] = sprintf( $pattern, $a['account_id'], $a['brightcove_player'], $a['brightcove_embed'], $a['id'] );
+	} else {
+		$a['src'] = sprintf( $pattern, $a['id'] );
+	}
+
+	if ( $options['youtube_nocookie'] ) {
+		$a['src'] = str_replace( 'https://www.youtube.com', 'https://www.youtube-nocookie.com', $a['src'] );
+	}
+
+	return $a;
+}
+
 function sc_filter_detect_query_args( array $a ) {
 
 	if ( empty( $a['url'] ) ) {
 		return $a;
 	}
 
-	$to_extract = array(
-		'brightcove' => array( 'videoId', 'something' ),
-	);
+	$to_extract = [
+		'brightcove' => [ 'videoId', 'something' ],
+	];
 
 	foreach ( $to_extract as $provider => $parameters ) {
 
@@ -327,7 +483,7 @@ function sc_filter_detect_youtube_playlist( array $a ) {
 
 	if ( empty( $a['url'] ) ) {
 		// Not a url but it will work
-		$url = str_replace( array( '&list=', '&amp;list=' ), '?list=', $a['id'] );
+		$url = str_replace( [ '&list=', '&amp;list=' ], '?list=', $a['id'] );
 	} else {
 		$url = $a['url'];
 	}
@@ -442,13 +598,13 @@ function sc_filter_build_tracks_html( array $a ) {
 
 		$label = empty( $a[ "track_{$n}_label" ] ) ? get_language_name_from_code( $matches['lang'] ) : $a[ "track_{$n}_label" ];
 
-		$attr = array(
+		$attr = [
 			'default' => ( 1 === $n ) ? true : false,
 			'kind'    => $matches['type'],
 			'label'   => $label,
 			'src'     => $a[ "track_{$n}" ],
 			'srclang' => $matches['lang'],
-		);
+		];
 
 		$a['video_tracks_html'] .= sprintf( '<track%s>', \Nextgenthemes\Utils\attr( $attr ) );
 	}//end for

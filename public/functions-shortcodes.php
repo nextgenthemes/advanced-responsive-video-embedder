@@ -13,21 +13,13 @@ function shortcode( array $a, $content = null ) {
 		}
 	}
 
-	if ( defined( 'ARVE_DEBUG' ) ) {
-		$a['append_text'] = 'No wp embed match';
-	}
-
-	if ( ! empty( $a['url'] ) && empty( $a['src'] ) ) {
-		$a['src'] = $a['url'];
-	}
-
 	return build_video( $a, $content );
 }
 
 
 function add_iframe_parameters_to_url( array $a ) {
 
-	$iframe_parameters = array();
+	$iframe_parameters = [];
 
 	if ( ! empty( $a['parameters'] ) && is_string( $a['parameters'] ) ) {
 		wp_parse_str( $a['parameters'], $iframe_parameters );
@@ -46,7 +38,7 @@ function build_video( array $input_atts, $content = null ) {
 	$options    = options();
 	$properties = get_host_properties();
 
-	$pairs = array(
+	$pairs = [
 		// arve visual options
 		'align'             => $options['align'],
 		'aspect_ratio'      => null,
@@ -64,6 +56,7 @@ function build_video( array $input_atts, $content = null ) {
 		'brightcove_player' => 'default',
 		'brightcove_embed'  => 'default',
 		// Essential + schema
+		'url'               => null,
 		'src'               => null,
 		'thumbnail'         => null,
 		// schema
@@ -93,7 +86,7 @@ function build_video( array $input_atts, $content = null ) {
 		'iframe_name'       => null,
 		// debug
 		'append_text'       => null,
-	);
+	];
 
 	for ( $n = 1; $n <= NUM_TRACKS; $n++ ) {
 		$pairs[ "track_{$n}" ]       = null;

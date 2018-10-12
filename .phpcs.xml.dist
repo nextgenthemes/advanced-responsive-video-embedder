@@ -143,8 +143,8 @@
 
 	<!-- Exclude WordPress rules. -->
 	<rule ref="WordPress">
-		<exclude name="WordPress.Arrays.ArrayDeclarationSpacing.NoSpaceBeforeArrayCloser"/>
-		<exclude name="WordPress.Arrays.ArrayDeclarationSpacing.SpaceBeforeArrayCloser"/>
+		<!-- <exclude name="WordPress.Arrays.ArrayDeclarationSpacing.NoSpaceBeforeArrayCloser"/> -->
+		<!-- <exclude name="WordPress.Arrays.ArrayDeclarationSpacing.SpaceBeforeArrayCloser"/> -->
 		<exclude name="WordPress.Arrays.CommaAfterArrayItem.NoComma"/>
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>

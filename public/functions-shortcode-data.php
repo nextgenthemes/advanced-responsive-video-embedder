@@ -26,7 +26,7 @@ function url_query_array( $url ) {
 	$url = wp_parse_url( $url );
 
 	if ( empty( $url['query'] ) ) {
-		return array();
+		return [];
 	}
 
 	parse_str( $url['query'], $url_params );
@@ -34,50 +34,6 @@ function url_query_array( $url ) {
 	return $url_params;
 }
 
-function build_iframe_src( array $a ) {
-
-	$id         = $a['id'];
-	$lang       = $a['lang'];
-	$provider   = $a['provider'];
-	$options    = options();
-	$properties = get_host_properties();
-
-	if ( $options['youtube_nocookie'] ) {
-		$properties['youtube']['embed_url']     = 'https://www.youtube-nocookie.com/embed/%s';
-		$properties['youtubelist']['embed_url'] = 'https://www.youtube-nocookie.com/embed/videoseries?list=%s';
-	}
-
-	if ( isset( $properties[ $provider ]['embed_url'] ) ) {
-		$pattern = $properties[ $provider ]['embed_url'];
-	} else {
-		$pattern = '%s';
-	}
-
-	if ( 'facebook' === $a['provider'] && is_numeric( $a['id'] ) ) {
-
-		$id = "https://www.facebook.com/facebook/videos/$id/";
-
-	} elseif ( 'twitch' === $a['provider'] && is_numeric( $a['id'] ) ) {
-
-		$pattern = 'https://player.twitch.tv/?video=v%s';
-
-	} elseif ( 'ted' === $a['provider'] && preg_match( '/^[a-z]{2}$/', $a['lang'] ) === 1 ) {
-
-		$pattern = 'https://embed-ssl.ted.com/talks/lang/' . $lang . '/%s.html';
-	}
-
-	if ( isset( $properties[ $provider ]['url_encode_id'] ) && $properties[ $provider ]['url_encode_id'] ) {
-		$id = rawurlencode( $id );
-	}
-
-	if ( 'brightcove' === $a['provider'] ) {
-		$src = sprintf( $pattern, $a['account_id'], $a['brightcove_player'], $a['brightcove_embed'], $a['id'] );
-	} else {
-		$src = sprintf( $pattern, $id );
-	}
-
-	return $src;
-}
 
 function id_fixes( $id, $provider ) {
 
@@ -108,109 +64,12 @@ function aspect_ratio_fixes( $aspect_ratio, $provider, $mode ) {
 	return $aspect_ratio;
 }
 
-// phpcs:disable Generic.Metrics.CyclomaticComplexity.MaxExceeded
-function add_autoplay_query_arg( $src, array $a ) {
-
-	switch ( $a['provider'] ) {
-		case 'alugha':
-		case 'archiveorg':
-		case 'dailymotion':
-		case 'dailymotionlist':
-		case 'facebook':
-		case 'vevo':
-		case 'viddler':
-		case 'vimeo':
-		case 'youtube':
-		case 'youtubelist':
-			$on  = add_query_arg( 'autoplay', 1, $src );
-			$off = add_query_arg( 'autoplay', 0, $src );
-			break;
-		case 'twitch':
-		case 'ustream':
-			$on  = add_query_arg( 'autoplay', 'true',  $src );
-			$off = add_query_arg( 'autoplay', 'false', $src );
-			break;
-		case 'livestream':
-		case 'Wistia':
-			$on  = add_query_arg( 'autoPlay', 'true',  $src );
-			$off = add_query_arg( 'autoPlay', 'false', $src );
-			break;
-		case 'metacafe':
-			$on  = add_query_arg( 'ap', 1, $src );
-			$off = remove_query_arg( 'ap', $src );
-			break;
-		case 'videojug':
-			$on  = add_query_arg( 'ap', 1, $src );
-			$off = add_query_arg( 'ap', 0, $src );
-			break;
-		case 'veoh':
-			$on  = add_query_arg( 'videoAutoPlay', 1, $src );
-			$off = add_query_arg( 'videoAutoPlay', 0, $src );
-			break;
-		case 'brightcove':
-		case 'snotr':
-			$on  = add_query_arg( 'autoplay', 1, $src );
-			$off = remove_query_arg( 'autoplay', $src );
-			break;
-		case 'yahoo':
-			$on  = add_query_arg( 'player_autoplay', 'true',  $src );
-			$off = add_query_arg( 'player_autoplay', 'false', $src );
-			break;
-
-		/*
-		case 'iframe':
-			# We are spamming all kinds of autoplay parameters here in hope of a effect
-			$on  = add_query_arg( array(
-				'ap'               => '1',
-				'autoplay'         => '1',
-				'autoStart'        => 'true',
-				'player_autoStart' => 'true',
-			), $src );
-			$off = add_query_arg( array(
-				'ap'               => '0',
-				'autoplay'         => '0',
-				'autoStart'        => 'false',
-				'player_autoStart' => 'false',
-			), $src );
-			break;
-		*/
-
-		default:
-			// Do nothing for providers that to not support autoplay or fail with parameters
-			$on  = $src;
-			$off = $src;
-			break;
-	}//end switch
-
-	if ( $a['autoplay'] ) {
-		return $on;
-	} else {
-		return $off;
-	}
-}
-// phpcs:enable
-
-function add_query_args_to_iframe_src( $src, $a ) {
-
-	$options = options();
-
-	$parameters        = wp_parse_args( preg_replace( '!\s+!', '&', $a['parameters'] ) );
-	$option_parameters = array();
-
-	if ( isset( $options['params'][ $a['provider'] ] ) ) {
-		$option_parameters = wp_parse_args( preg_replace( '!\s+!', '&', $options['params'][ $a['provider'] ] ) );
-	}
-
-	$parameters = wp_parse_args( $parameters, $option_parameters );
-
-	return add_query_arg( $parameters, $src );
-}
 
 function maxwidth_when_aligned( $maxwidth, $align ) {
 
 	$options = options();
 
-	if ( $maxwidth < 100 && in_array( $align, array( 'left', 'right', 'center' ), true ) ) {
+	if ( $maxwidth < 100 && in_array( $align, [ 'left', 'right', 'center' ], true ) ) {
 		$maxwidth = (int) $options['align_maxwidth'];
 	}
 
@@ -226,103 +85,103 @@ function get_language_name_from_code( $lang_code ) {
 	// The "Left-to-right marker" comments and the enclosed UTF-8 markers are to
 	// make otherwise strange looking PHP syntax natural (to not be displayed in
 	// right to left). See https://www.drupal.org/node/128866#comment-528929.
-	$lang = array(
-		'af' => array( 'Afrikaans', 'Afrikaans' ),
-		'am' => array( 'Amharic', 'አማርኛ' ),
-		'ar' => array( 'Arabic', /* Left-to-right marker "‭" */ 'العربية', 'RTL' ),
-		'ast' => array( 'Asturian', 'Asturianu' ),
-		'az' => array( 'Azerbaijani', 'Azərbaycanca' ),
-		'be' => array( 'Belarusian', 'Беларуская' ),
-		'bg' => array( 'Bulgarian', 'Български' ),
-		'bn' => array( 'Bengali', 'বাংলা' ),
-		'bo' => array( 'Tibetan', 'བོད་སྐད་' ),
-		'bs' => array( 'Bosnian', 'Bosanski' ),
-		'ca' => array( 'Catalan', 'Català' ),
-		'cs' => array( 'Czech', 'Čeština' ),
-		'cy' => array( 'Welsh', 'Cymraeg' ),
-		'da' => array( 'Danish', 'Dansk' ),
-		'de' => array( 'German', 'Deutsch' ),
-		'dz' => array( 'Dzongkha', 'རྫོང་ཁ' ),
-		'el' => array( 'Greek', 'Ελληνικά' ),
-		'en' => array( 'English', 'English' ),
-		'en-x-simple' => array( 'Simple English', 'Simple English' ),
-		'eo' => array( 'Esperanto', 'Esperanto' ),
-		'es' => array( 'Spanish', 'Español' ),
-		'et' => array( 'Estonian', 'Eesti' ),
-		'eu' => array( 'Basque', 'Euskera' ),
-		'fa' => array( 'Persian, Farsi', /* Left-to-right marker "‭" */ 'فارسی', 'RTL' ),
-		'fi' => array( 'Finnish', 'Suomi' ),
-		'fil' => array( 'Filipino', 'Filipino' ),
-		'fo' => array( 'Faeroese', 'Føroyskt' ),
-		'fr' => array( 'French', 'Français' ),
-		'fy' => array( 'Frisian, Western', 'Frysk' ),
-		'ga' => array( 'Irish', 'Gaeilge' ),
-		'gd' => array( 'Scots Gaelic', 'Gàidhlig' ),
-		'gl' => array( 'Galician', 'Galego' ),
-		'gsw-berne' => array( 'Swiss German', 'Schwyzerdütsch' ),
-		'gu' => array( 'Gujarati', 'ગુજરાતી' ),
-		'he' => array( 'Hebrew', /* Left-to-right marker "‭" */ 'עברית', 'RTL' ),
-		'hi' => array( 'Hindi', 'हिन्दी' ),
-		'hr' => array( 'Croatian', 'Hrvatski' ),
-		'ht' => array( 'Haitian Creole', 'Kreyòl ayisyen' ),
-		'hu' => array( 'Hungarian', 'Magyar' ),
-		'hy' => array( 'Armenian', 'Հայերեն' ),
-		'id' => array( 'Indonesian', 'Bahasa Indonesia' ),
-		'is' => array( 'Icelandic', 'Íslenska' ),
-		'it' => array( 'Italian', 'Italiano' ),
-		'ja' => array( 'Japanese', '日本語' ),
-		'jv' => array( 'Javanese', 'Basa Java' ),
-		'ka' => array( 'Georgian', 'ქართული ენა' ),
-		'kk' => array( 'Kazakh', 'Қазақ' ),
-		'km' => array( 'Khmer', 'ភាសាខ្មែរ' ),
-		'kn' => array( 'Kannada', 'ಕನ್ನಡ' ),
-		'ko' => array( 'Korean', '한국어' ),
-		'ku' => array( 'Kurdish', 'Kurdî' ),
-		'ky' => array( 'Kyrgyz', 'Кыргызча' ),
-		'lo' => array( 'Lao', 'ພາສາລາວ' ),
-		'lt' => array( 'Lithuanian', 'Lietuvių' ),
-		'lv' => array( 'Latvian', 'Latviešu' ),
-		'mg' => array( 'Malagasy', 'Malagasy' ),
-		'mk' => array( 'Macedonian', 'Македонски' ),
-		'ml' => array( 'Malayalam', 'മലയാളം' ),
-		'mn' => array( 'Mongolian', 'монгол' ),
-		'mr' => array( 'Marathi', 'मराठी' ),
-		'ms' => array( 'Bahasa Malaysia', 'بهاس ملايو' ),
-		'my' => array( 'Burmese', 'ဗမာစကား' ),
-		'ne' => array( 'Nepali', 'नेपाली' ),
-		'nl' => array( 'Dutch', 'Nederlands' ),
-		'nb' => array( 'Norwegian Bokmål', 'Norsk, bokmål' ),
-		'nn' => array( 'Norwegian Nynorsk', 'Norsk, nynorsk' ),
-		'oc' => array( 'Occitan', 'Occitan' ),
-		'pa' => array( 'Punjabi', 'ਪੰਜਾਬੀ' ),
-		'pl' => array( 'Polish', 'Polski' ),
-		'pt-pt' => array( 'Portuguese, Portugal', 'Português, Portugal' ),
-		'pt-br' => array( 'Portuguese, Brazil', 'Português, Brasil' ),
-		'ro' => array( 'Romanian', 'Română' ),
-		'ru' => array( 'Russian', 'Русский' ),
-		'sco' => array( 'Scots', 'Scots' ),
-		'se' => array( 'Northern Sami', 'Sámi' ),
-		'si' => array( 'Sinhala', 'සිංහල' ),
-		'sk' => array( 'Slovak', 'Slovenčina' ),
-		'sl' => array( 'Slovenian', 'Slovenščina' ),
-		'sq' => array( 'Albanian', 'Shqip' ),
-		'sr' => array( 'Serbian', 'Српски' ),
-		'sv' => array( 'Swedish', 'Svenska' ),
-		'sw' => array( 'Swahili', 'Kiswahili' ),
-		'ta' => array( 'Tamil', 'தமிழ்' ),
-		'ta-lk' => array( 'Tamil, Sri Lanka', 'தமிழ், இலங்கை' ),
-		'te' => array( 'Telugu', 'తెలుగు' ),
-		'th' => array( 'Thai', 'ภาษาไทย' ),
-		'tr' => array( 'Turkish', 'Türkçe' ),
-		'tyv' => array( 'Tuvan', 'Тыва дыл' ),
-		'ug' => array( 'Uyghur', 'Уйғур' ),
-		'uk' => array( 'Ukrainian', 'Українська' ),
-		'ur' => array( 'Urdu', /* Left-to-right marker "‭" */ 'اردو', 'RTL' ),
-		'vi' => array( 'Vietnamese', 'Tiếng Việt' ),
-		'xx-lolspeak' => array( 'Lolspeak', 'Lolspeak' ),
-		'zh-hans' => array( 'Chinese, Simplified', '简体中文' ),
-		'zh-hant' => array( 'Chinese, Traditional', '繁體中文' ),
-	);
+	$lang = [
+		'af' => [ 'Afrikaans', 'Afrikaans' ],
+		'am' => [ 'Amharic', 'አማርኛ' ],
+		'ar' => [ 'Arabic', /* Left-to-right marker "‭" */ 'العربية', 'RTL' ],
+		'ast' => [ 'Asturian', 'Asturianu' ],
+		'az' => [ 'Azerbaijani', 'Azərbaycanca' ],
+		'be' => [ 'Belarusian', 'Беларуская' ],
+		'bg' => [ 'Bulgarian', 'Български' ],
+		'bn' => [ 'Bengali', 'বাংলা' ],
+		'bo' => [ 'Tibetan', 'བོད་སྐད་' ],
+		'bs' => [ 'Bosnian', 'Bosanski' ],
+		'ca' => [ 'Catalan', 'Català' ],
+		'cs' => [ 'Czech', 'Čeština' ],
+		'cy' => [ 'Welsh', 'Cymraeg' ],
+		'da' => [ 'Danish', 'Dansk' ],
+		'de' => [ 'German', 'Deutsch' ],
+		'dz' => [ 'Dzongkha', 'རྫོང་ཁ' ],
+		'el' => [ 'Greek', 'Ελληνικά' ],
+		'en' => [ 'English', 'English' ],
+		'en-x-simple' => [ 'Simple English', 'Simple English' ],
+		'eo' => [ 'Esperanto', 'Esperanto' ],
+		'es' => [ 'Spanish', 'Español' ],
+		'et' => [ 'Estonian', 'Eesti' ],
+		'eu' => [ 'Basque', 'Euskera' ],
+		'fa' => [ 'Persian, Farsi', /* Left-to-right marker "‭" */ 'فارسی', 'RTL' ],
+		'fi' => [ 'Finnish', 'Suomi' ],
+		'fil' => [ 'Filipino', 'Filipino' ],
+		'fo' => [ 'Faeroese', 'Føroyskt' ],
+		'fr' => [ 'French', 'Français' ],
+		'fy' => [ 'Frisian, Western', 'Frysk' ],
+		'ga' => [ 'Irish', 'Gaeilge' ],
+		'gd' => [ 'Scots Gaelic', 'Gàidhlig' ],
+		'gl' => [ 'Galician', 'Galego' ],
+		'gsw-berne' => [ 'Swiss German', 'Schwyzerdütsch' ],
+		'gu' => [ 'Gujarati', 'ગુજરાતી' ],
+		'he' => [ 'Hebrew', /* Left-to-right marker "‭" */ 'עברית', 'RTL' ],
+		'hi' => [ 'Hindi', 'हिन्दी' ],
+		'hr' => [ 'Croatian', 'Hrvatski' ],
+		'ht' => [ 'Haitian Creole', 'Kreyòl ayisyen' ],
+		'hu' => [ 'Hungarian', 'Magyar' ],
+		'hy' => [ 'Armenian', 'Հայերեն' ],
+		'id' => [ 'Indonesian', 'Bahasa Indonesia' ],
+		'is' => [ 'Icelandic', 'Íslenska' ],
+		'it' => [ 'Italian', 'Italiano' ],
+		'ja' => [ 'Japanese', '日本語' ],
+		'jv' => [ 'Javanese', 'Basa Java' ],
+		'ka' => [ 'Georgian', 'ქართული ენა' ],
+		'kk' => [ 'Kazakh', 'Қазақ' ],
+		'km' => [ 'Khmer', 'ភាសាខ្មែរ' ],
+		'kn' => [ 'Kannada', 'ಕನ್ನಡ' ],
+		'ko' => [ 'Korean', '한국어' ],
+		'ku' => [ 'Kurdish', 'Kurdî' ],
+		'ky' => [ 'Kyrgyz', 'Кыргызча' ],
+		'lo' => [ 'Lao', 'ພາສາລາວ' ],
+		'lt' => [ 'Lithuanian', 'Lietuvių' ],
+		'lv' => [ 'Latvian', 'Latviešu' ],
+		'mg' => [ 'Malagasy', 'Malagasy' ],
+		'mk' => [ 'Macedonian', 'Македонски' ],
+		'ml' => [ 'Malayalam', 'മലയാളം' ],
+		'mn' => [ 'Mongolian', 'монгол' ],
+		'mr' => [ 'Marathi', 'मराठी' ],
+		'ms' => [ 'Bahasa Malaysia', 'بهاس ملايو' ],
+		'my' => [ 'Burmese', 'ဗမာစကား' ],
+		'ne' => [ 'Nepali', 'नेपाली' ],
+		'nl' => [ 'Dutch', 'Nederlands' ],
+		'nb' => [ 'Norwegian Bokmål', 'Norsk, bokmål' ],
+		'nn' => [ 'Norwegian Nynorsk', 'Norsk, nynorsk' ],
+		'oc' => [ 'Occitan', 'Occitan' ],
+		'pa' => [ 'Punjabi', 'ਪੰਜਾਬੀ' ],
+		'pl' => [ 'Polish', 'Polski' ],
+		'pt-pt' => [ 'Portuguese, Portugal', 'Português, Portugal' ],
+		'pt-br' => [ 'Portuguese, Brazil', 'Português, Brasil' ],
+		'ro' => [ 'Romanian', 'Română' ],
+		'ru' => [ 'Russian', 'Русский' ],
+		'sco' => [ 'Scots', 'Scots' ],
+		'se' => [ 'Northern Sami', 'Sámi' ],
+		'si' => [ 'Sinhala', 'සිංහල' ],
+		'sk' => [ 'Slovak', 'Slovenčina' ],
+		'sl' => [ 'Slovenian', 'Slovenščina' ],
+		'sq' => [ 'Albanian', 'Shqip' ],
+		'sr' => [ 'Serbian', 'Српски' ],
+		'sv' => [ 'Swedish', 'Svenska' ],
+		'sw' => [ 'Swahili', 'Kiswahili' ],
+		'ta' => [ 'Tamil', 'தமிழ்' ],
+		'ta-lk' => [ 'Tamil, Sri Lanka', 'தமிழ், இலங்கை' ],
+		'te' => [ 'Telugu', 'తెలుగు' ],
+		'th' => [ 'Thai', 'ภาษาไทย' ],
+		'tr' => [ 'Turkish', 'Türkçe' ],
+		'tyv' => [ 'Tuvan', 'Тыва дыл' ],
+		'ug' => [ 'Uyghur', 'Уйғур' ],
+		'uk' => [ 'Ukrainian', 'Українська' ],
+		'ur' => [ 'Urdu', /* Left-to-right marker "‭" */ 'اردو', 'RTL' ],
+		'vi' => [ 'Vietnamese', 'Tiếng Việt' ],
+		'xx-lolspeak' => [ 'Lolspeak', 'Lolspeak' ],
+		'zh-hans' => [ 'Chinese, Simplified', '简体中文' ],
+		'zh-hant' => [ 'Chinese, Traditional', '繁體中文' ],
+	];
 
 	return $lang[ $lang_code ][1];
 }

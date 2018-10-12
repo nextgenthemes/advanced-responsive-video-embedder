@@ -141,7 +141,7 @@ function build_thumbnail( array $a ) {
 
 		return sprintf(
 			'<img%s>',
-			\Nextgenthemes\Utils\attr( array(
+			\Nextgenthemes\Utils\attr( [
 				'class'           => 'arve-thumbnail',
 				'data-object-fit' => true,
 				'itemprop'        => 'thumbnailUrl',
@@ -149,17 +149,17 @@ function build_thumbnail( array $a ) {
 				'srcset'          => ! empty( $a['img_srcset'] ) ? $a['img_srcset'] : false,
 				#'sizes'    => '(max-width: 700px) 100vw, 1280px',
 				'alt'             => __( 'Video Thumbnail', 'advanced-responsive-video-embedder' ),
-			) )
+			] )
 		);
 
 	} else {
 
 		return sprintf(
 			'<meta%s>',
-			\Nextgenthemes\Utils\attr( array(
+			\Nextgenthemes\Utils\attr( [
 				'itemprop' => 'thumbnailUrl',
 				'content'  => $a['img_src'],
-			) )
+			] )
 		);
 	}//end if
 }

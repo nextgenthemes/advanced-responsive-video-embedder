@@ -3,7 +3,7 @@ namespace Nextgenthemes\ARVE;
 
 class EmbedChecker {
 
-	public $shortcode_args = array();
+	public $shortcode_args = [];
 
 	public function __construct( array $shortcode_args ) {
 		$this->shortcode_args = $shortcode_args;

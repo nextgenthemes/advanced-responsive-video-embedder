@@ -20,7 +20,8 @@
 		"nextgenthemes/common": "dev-master"
 	},
 	"require-dev": {
-		"samikeijonen/phpcs-composer": "dev-master"
+		"samikeijonen/phpcs-composer": "dev-master",
+		"symfony/yaml": "^4.1"
 	},
 	"repositories": [{
 	    "type": "path",

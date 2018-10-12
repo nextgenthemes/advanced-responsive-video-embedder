@@ -53,6 +53,7 @@ function validate_bool( $val, $name ) {
 			return true;
 		case null:
 			return null;
+		case '':
 		case 'false':
 		case '0':
 		case 'n':
