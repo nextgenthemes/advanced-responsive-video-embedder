@@ -16,6 +16,23 @@ function get_default_aspect_ratio( $aspect_ratio, array $a ) {
 	return $properties[ $a['provider'] ]['aspect_ratio'];
 }
 
+function aspect_ratio_fixes( $aspect_ratio, $provider, $mode ) {
+
+	if ( 'dailymotionlist' === $provider ) {
+		switch ( $mode ) {
+			case 'normal':
+			case 'lazyload':
+				$aspect_ratio = '640:370';
+				break;
+			default:
+				$aspect_ratio = $aspect_ratio;
+				break;
+		}
+	}
+
+	return $aspect_ratio;
+}
+
 function get_html5_attributes() {
 
 	return [ 'mp4', 'm4v', 'webm', 'ogv', 'ogg', 'ogm' ];
@@ -34,7 +51,6 @@ function url_query_array( $url ) {
 	return $url_params;
 }
 
-
 function id_fixes( $id, $provider ) {
 
 	if ( 'liveleak' === $provider
@@ -46,24 +62,6 @@ function id_fixes( $id, $provider ) {
 
 	return $id;
 }
-
-function aspect_ratio_fixes( $aspect_ratio, $provider, $mode ) {
-
-	if ( 'dailymotionlist' === $provider ) {
-		switch ( $mode ) {
-			case 'normal':
-			case 'lazyload':
-				$aspect_ratio = '640:370';
-				break;
-			default:
-				$aspect_ratio = $aspect_ratio;
-				break;
-		}
-	}
-
-	return $aspect_ratio;
-}
-
 
 function maxwidth_when_aligned( $maxwidth, $align ) {
 

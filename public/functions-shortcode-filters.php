@@ -215,10 +215,8 @@ function sc_filter_attr( array $a ) {
 
 function sc_filter_validate( array $a ) {
 
-	$a['align'] = validate_align( $a['align'], $a['provider'] );
-
-	$a['mode'] = validate_mode( $a['mode'], $a['provider'] );
-
+	$a['align']         = validate_align( $a['align'], $a['provider'] );
+	$a['mode']          = validate_mode( $a['mode'], $a['provider'] );
 	$a['autoplay']      = validate_bool( $a['autoplay'], 'autoplay' );
 	$a['arve_link']     = validate_bool( $a['arve_link'], 'arve_link' );
 	$a['loop']          = validate_bool( $a['loop'], 'loop' );
@@ -270,10 +268,6 @@ function sc_filter_autoplay_off_after_ran_once( array $a ) {
 }
 
 function sc_filter_sanitise( array $a ) {
-
-	if ( ! empty( $a['src'] ) ) {
-		$a['url'] = $a['src'];
-	}
 
 	foreach ( $a as $key => $value ) {
 
@@ -589,7 +583,11 @@ function sc_filter_build_tracks_html( array $a ) {
 			return $a;
 		}
 
-		preg_match( '#-(?<type>captions|chapters|descriptions|metadata|subtitles)-(?<lang>[a-z]{2}).vtt$#i', $a[ "track_{$n}" ], $matches );
+		preg_match(
+			'#-(?<type>captions|chapters|descriptions|metadata|subtitles)-(?<lang>[a-z]{2}).vtt$#i',
+			$a[ "track_{$n}" ],
+			$matches
+		);
 
 		if ( empty( $matches[1] ) ) {
 			$a[ "track_{$n}" ] = new WP_Error( 'track', __( 'Track kind or language code could not detected from filename', 'advanced-responsive-video-embedder' ) );
