@@ -1,6 +1,8 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+use Nextgenthemes\Admin\NoticeFactory;
+
 function action_admin_init_setup_messages() {
 
 	$pro_version = false;
@@ -22,7 +24,7 @@ function action_admin_init_setup_messages() {
 			'https://nextgenthemes.com/plugins/arve/documentation/installing-and-license-management/'
 		);
 
-		new \Nextgenthemes\Admin\NoticeFactory( 'arve-pro-outdated', "<p>$msg</p>", false );
+		new NoticeFactory( 'arve-pro-outdated', "<p>$msg</p>", false );
 	}
 
 	if ( display_pro_ad() ) {
@@ -33,7 +35,7 @@ function action_admin_init_setup_messages() {
 		$pro_ad_message .= file_get_contents( __DIR__ . '/partials/pro-ad.html' );
 		// phpcs:enable
 
-		new \Nextgenthemes\Admin\NoticeFactory( 'arve_dismiss_pro_notice', $pro_ad_message, true );
+		new NoticeFactory( 'arve_dismiss_pro_notice', $pro_ad_message, true );
 	}
 }
 

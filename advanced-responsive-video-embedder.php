@@ -26,10 +26,6 @@ const PRO_VERSION_REQUIRED = '5.0.0';
 const NUM_TRACKS           = 10;
 const PLUGIN_FILE          = __FILE__;
 
-function url( $path ) {
-	return plugins_url( $path, __FILE__ );
-}
-
 init();
 
 function init() {
@@ -77,27 +73,26 @@ function init() {
 
 	foreach ( [
 		'validate'                         => -99,
-		// -30
-		'default_aspect_ratio'             => -30,
-		'maxwidth_when_aligned'            => -30,
-		'get_media_gallery_video'          => -30,
-		'get_media_gallery_thumbnail'      => -30,
-		'autoplay_off_after_ran_once'      => -30,
-		// -20
-		'detect_youtube_playlist'          => -20,
-		'detect_html5'                     => -20,
-		'detect_provider_and_id_from_url'  => -20,
-		// -10
-		'liveleak_id_fix'                  => -10,
-		'dailymotion_jukebox_aspect_ratio' => -10,
 		// 0
-		'mode_fallback'                    => 0,
+		'detect_provider_and_id_from_url'  => -10,
+		'detect_html5'                     => -10,
+		'detect_youtube_playlist'          => -10,
+		// 0
 		'iframe_fallback'                  => 0,
-		// 10-20
-		'build_tracks_html'                => 10,
-		'build_iframe_src'                 => 10,
-		'iframe_src_query'                 => 15,
-		'iframe_src_autoplay_query'        => 20,
+		// 10
+		'autoplay_off_after_ran_once'      => 10,
+		'default_aspect_ratio'             => 10,
+		'get_media_gallery_thumbnail'      => 10,
+		'get_media_gallery_video'          => 10,
+		'liveleak_id_fix'                  => 10,
+		'maxwidth_when_aligned'            => 10,
+		'mode_fallback'                    => 10,
+		// 20-30
+		'dailymotion_jukebox_aspect_ratio' => 20,
+		'build_tracks_html'                => 20,
+		'build_iframe_src'                 => 20,
+		'iframe_src_query'                 => 25,
+		'iframe_src_autoplay_query'        => 30,
 		// 90
 		'validate_again'                   => 80,
 		'set_fixed_dimensions'             => 90,
@@ -120,4 +115,8 @@ function init() {
 	add_action( 'wp_dashboard_setup',    __NAMESPACE__ . '\add_dashboard_widget' );
 	add_filter( 'mce_css',               __NAMESPACE__ . '\mce_css' );
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), __NAMESPACE__ . '\add_action_links' );
+}
+
+function url( $path ) {
+	return plugins_url( $path, __FILE__ );
 }

@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) || defined( __NAMESPACE__ . '\VERSION' ) ) {
 const VERSION = '1.0.0';
 
 require_once __DIR__ . '/Admin/EDD/PluginUpdater.php';
+require_once __DIR__ . '/Admin/NoticeFactory.php';
 require_once __DIR__ . '/Admin/functions-licensing.php';
 require_once __DIR__ . '/Admin/functions-menus.php';
 require_once __DIR__ . '/Admin/functions-notices.php';

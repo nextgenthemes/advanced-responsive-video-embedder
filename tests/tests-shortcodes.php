@@ -16,11 +16,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$attr = array( 'url' => 'https://example.com' );
 
 		$this->assertNotContains( 'Error', shortcode( $attr ) );
-		$this->assertNotContains(
-			'sandbox="',
-			shortcode( $attr ),
-			$attr['url']
-		);
+		$this->assertNotContains( 'sandbox="', shortcode( $attr ), $attr['url'] );
 	}
 
 	public function test_sandbox2() {

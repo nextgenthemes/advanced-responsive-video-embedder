@@ -53,27 +53,10 @@ function sc_filter_iframe_src_autoplay_query( array $a ) {
 			$on  = add_query_arg( 'player_autoplay', 'true',  $a['src'] );
 			$off = add_query_arg( 'player_autoplay', 'false', $a['src'] );
 			break;
-
-		/*
-		case 'iframe':
-			# We are spamming all kinds of autoplay parameters here in hope of a effect
-			$on  = add_query_arg( array(
-				'ap'               => '1',
-				'autoplay'         => '1',
-				'autoStart'        => 'true',
-				'player_autoStart' => 'true',
-			), $a['src'] );
-			$off = add_query_arg( array(
-				'ap'               => '0',
-				'autoplay'         => '0',
-				'autoStart'        => 'false',
-				'player_autoStart' => 'false',
-			), $a['src'] );
-			break;
-		*/
 		default:
 			// Do nothing for providers that to not support autoplay or fail with parameters
-			$a['src'] = $a['src'];
+			$on  = $a['src'];
+			$off = $a['src'];
 			break;
 	}//end switch
 
@@ -84,6 +67,24 @@ function sc_filter_iframe_src_autoplay_query( array $a ) {
 	}
 
 	return $a;
+
+	/*
+	case 'iframe':
+		# We are spamming all kinds of autoplay parameters here in hope of a effect
+		$on  = add_query_arg( [
+			'ap'               => '1',
+			'autoplay'         => '1',
+			'autoStart'        => 'true',
+			'player_autoStart' => 'true',
+		], $a['src'] );
+		$off = add_query_arg( [
+			'ap'               => '0',
+			'autoplay'         => '0',
+			'autoStart'        => 'false',
+			'player_autoStart' => 'false',
+		], $a['src'] );
+		break;
+	*/
 }
 // phpcs:enable
 
@@ -742,13 +743,9 @@ function sc_filter_detect_html5( array $a ) {
 
 function sc_filter_iframe_fallback( array $a ) {
 
-	if ( empty( $a['provider'] ) ) {
-
+	if ( empty( $a['provider'] ) && empty( $a['src'] ) && ! empty( $a['url'] ) ) {
 		$a['provider'] = 'iframe';
-
-		if ( empty( $a['src'] ) && ! empty( $a['url'] ) ) {
-			$a['id'] = $a['url'];
-		}
+		$a['src']      = $a['url'];
 	}
 
 	return $a;
