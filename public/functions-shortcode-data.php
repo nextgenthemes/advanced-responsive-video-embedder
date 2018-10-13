@@ -1,38 +1,6 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-function get_default_aspect_ratio( $aspect_ratio, array $a ) {
-
-	if ( ! empty( $aspect_ratio ) ) {
-		return $aspect_ratio;
-	}
-
-	if ( ! empty( $a['oembed_data']->width ) && ! empty( $a['oembed_data']->height ) ) {
-		return $a['oembed_data']->width . ':' . $a['oembed_data']->height;
-	}
-
-	$properties = get_host_properties();
-
-	return $properties[ $a['provider'] ]['aspect_ratio'];
-}
-
-function aspect_ratio_fixes( $aspect_ratio, $provider, $mode ) {
-
-	if ( 'dailymotionlist' === $provider ) {
-		switch ( $mode ) {
-			case 'normal':
-			case 'lazyload':
-				$aspect_ratio = '640:370';
-				break;
-			default:
-				$aspect_ratio = $aspect_ratio;
-				break;
-		}
-	}
-
-	return $aspect_ratio;
-}
-
 function get_html5_attributes() {
 
 	return [ 'mp4', 'm4v', 'webm', 'ogv', 'ogg', 'ogm' ];
@@ -49,29 +17,6 @@ function url_query_array( $url ) {
 	parse_str( $url['query'], $url_params );
 
 	return $url_params;
-}
-
-function id_fixes( $id, $provider ) {
-
-	if ( 'liveleak' === $provider
-		&& ! \Nextgenthemes\Utils\starts_with( $id, 'i=' )
-		&& ! \Nextgenthemes\Utils\starts_with( $id, 'f=' )
-	) {
-		$id = 'i=' . $id;
-	}
-
-	return $id;
-}
-
-function maxwidth_when_aligned( $maxwidth, $align ) {
-
-	$options = options();
-
-	if ( $maxwidth < 100 && in_array( $align, [ 'left', 'right', 'center' ], true ) ) {
-		$maxwidth = (int) $options['align_maxwidth'];
-	}
-
-	return $maxwidth;
 }
 
 // phpcs:disable

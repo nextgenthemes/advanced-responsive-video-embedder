@@ -6,8 +6,8 @@ require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 // phpcs:disable Squiz.PHP.DiscouragedFunctions.Discouraged
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_dump
-function provider( $provider ) {
 
+function provider( $provider ) {
 	$data      = Yaml::parseFile( getenv( 'HOME' ) . "/dev/oembed/providers/$provider.yml" );
 	$endpoints = $data[0]['endpoints'][0];
 

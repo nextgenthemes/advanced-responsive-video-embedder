@@ -1,6 +1,10 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+use function Nextgenthemes\Utils\attr;
+use function Nextgenthemes\Utils\starts_with;
+use function Nextgenthemes\Utils\ends_with;
+
 // phpcs:disable Generic.Metrics.CyclomaticComplexity.MaxExceeded
 function sc_filter_iframe_src_autoplay_query( array $a ) {
 
@@ -67,7 +71,6 @@ function sc_filter_iframe_src_autoplay_query( array $a ) {
 			), $a['src'] );
 			break;
 		*/
-
 		default:
 			// Do nothing for providers that to not support autoplay or fail with parameters
 			$a['src'] = $a['src'];
@@ -96,14 +99,11 @@ function sc_filter_iframe_src_query( array $a ) {
 	}
 
 	$parameters = wp_parse_args( $parameters, $option_parameters );
+	$a['src']   = add_query_arg( $parameters, $a['src'] );
 
-	$a['src'] = add_query_arg( $parameters, $a['src'] );
-
-	/*
 	if ( 'vimeo' === $a['provider'] && ! empty( $a['start'] ) ) {
 		$a['src'] .= '#t=' . (int) $a['start'];
 	}
-	*/
 
 	return $a;
 }
@@ -113,7 +113,17 @@ function get_wrapper_id( array $a ) {
 	static $wrapper_ids = [];
 	$wrapper_id         = null;
 
-	foreach ( [ 'id', 'mp4', 'm4v', 'webm', 'ogv', 'url', 'random_video_url', 'webtorrent' ] as $att ) {
+	foreach ( [
+		'id',
+		'm4v',
+		'mp4',
+		'ogv',
+		'random_video_url',
+		'src',
+		'url',
+		'webm',
+		'webtorrent'
+	] as $att ) {
 
 		if ( ! empty( $a[ $att ] ) && is_string( $a[ $att ] ) ) {
 			$wrapper_id = 'arve-' . $a[ $att ];
@@ -145,7 +155,7 @@ function sc_filter_attr( array $a ) {
 	$wrapper_id = get_wrapper_id( $a );
 
 	if ( empty( $wrapper_id ) ) {
-		$a['wrapper_id_error'] = new WP_Error( 'wrapper_id', __( 'Wrapper ID could not be build, please report this bug.', 'advanced-responsive-video-embedder' ) );
+		$a['wrapper_id_error'] = new \WP_Error( 'wrapper_id', __( 'Wrapper ID could not be build, please report this bug.', 'advanced-responsive-video-embedder' ) );
 	}
 
 	$align_class = empty( $a['align'] ) ? '' : ' align' . $a['align'];
@@ -213,25 +223,216 @@ function sc_filter_attr( array $a ) {
 	return $a;
 }
 
-function sc_filter_validate( array $a ) {
+function sc_filter_default_aspect_ratio( array $a ) {
 
-	$a['align']         = validate_align( $a['align'], $a['provider'] );
-	$a['mode']          = validate_mode( $a['mode'], $a['provider'] );
-	$a['autoplay']      = validate_bool( $a['autoplay'], 'autoplay' );
-	$a['arve_link']     = validate_bool( $a['arve_link'], 'arve_link' );
-	$a['loop']          = validate_bool( $a['loop'], 'loop' );
-	$a['controls']      = validate_bool( $a['controls'], 'controls' );
-	$a['disable_flash'] = validate_bool( $a['disable_flash'], 'disable_flash' );
-	$a['muted']         = validate_bool( $a['muted'], 'muted' );
-	$a['playsinline']   = validate_bool( $a['playsinline'], 'playsinline' );
-	$a['maxwidth']      = (int) $a['maxwidth'];
-	$a['maxwidth']      = (int) maxwidth_when_aligned( $a['maxwidth'], $a['align'] );
-	$a['id']            = id_fixes( $a['id'], $a['provider'] );
-	$a['aspect_ratio']  = get_default_aspect_ratio( $a['aspect_ratio'], $a );
-	$a['aspect_ratio']  = aspect_ratio_fixes( $a['aspect_ratio'], $a['provider'], $a['mode'] );
-	$a['aspect_ratio']  = validate_aspect_ratio( $a['aspect_ratio'] );
+	if ( ! empty( $a['aspect_ratio'] ) ) {
+		return $a;
+	}
+
+	$properties = get_host_properties();
+
+	if ( ! empty( $a['oembed_data']->width ) && ! empty( $a['oembed_data']->height ) ) {
+		$a['aspect_ratio'] = $a['oembed_data']->width . ':' . $a['oembed_data']->height;
+	} else {
+		$a['aspect_ratio'] = $properties[ $a['provider'] ]['aspect_ratio'];
+	}
 
 	return $a;
+}
+
+function sc_filter_dailymotion_jukebox_aspect_ratio( array $a ) {
+
+	if ( 'dailymotionlist' === $a['provider'] ) {
+		switch ( $a['mode'] ) {
+			case 'normal':
+			case 'lazyload':
+				$a['aspect_ratio'] = '640:370';
+				break;
+			default:
+				$a['aspect_ratio'] = $a['aspect_ratio'];
+				break;
+		}
+	}
+
+	return $a;
+}
+
+function sc_filter_maxwidth_when_aligned( array $a ) {
+
+	$options = options();
+
+	if ( $a['maxwidth'] < 100 && in_array( $a['align'], [ 'left', 'right', 'center' ], true ) ) {
+		$a['maxwidth'] = (int) $options['align_maxwidth'];
+	}
+
+	return $a;
+}
+
+function sc_filter_liveleak_id_fix( array $a ) {
+
+	if ( 'liveleak' === $a['provider']
+		&& ! starts_with( $a['id'], 'i=' )
+		&& ! starts_with( $a['id'], 'f=' )
+	) {
+		$a['id'] = 'i=' . $a['id'];
+	}
+
+	return $a;
+}
+
+function shortcode_attribute() {
+	// phpcs:disable WordPress.Arrays.ArrayDeclarationSpacing.AssociativeArrayFound
+	$pairs = [
+		// arve visual options
+		'align'             => [
+			'default'       => $options['align'],
+			'validate_func' => 'align'
+		],
+		'aspect_ratio'      => [
+			'default'       => null,
+			'validate_func' => 'aspect_ratio'
+		],
+		'arve_link'         => [
+			'default'       => bool_to_shortcode_string( $options['promote_link'] ),
+			'validate_func' => 'bool'
+		],
+		'disable_flash'     => [ 'validate_func' => 'bool' ],
+		'maxwidth'          => [ 'default' => (string) $options['video_maxwidth'] ],
+		'mode'              => [
+			'default'       => $options['mode'],
+			'validate_func' => 'mode',
+		],
+		// url query
+		'autoplay'          => bool_to_shortcode_string( $options['autoplay'] ),
+		'parameters'        => null,
+		// old shortcodes, manual, no oembed
+		'provider'          => null,
+		'id'                => null,
+		'account_id'        => null,
+		'brightcove_player' => 'default',
+		'brightcove_embed'  => 'default',
+		// Essential + schema
+		'url'               => null,
+		'src'               => null,
+		'thumbnail'         => null,
+		// schema
+		'description'       => null,
+		'duration'          => null,
+		'title'             => null,
+		'upload_date'       => null,
+		// <video>
+		'controls'          => 'y',
+		'controlslist'      => empty( $options['controlslist'] ) ? null : (string) $options['controlslist'],
+		'loop'              => 'n',
+		'm4v'               => null,
+		'mp4'               => null,
+		'muted'             => null,
+		'ogv'               => null,
+		'playsinline'       => null,
+		'preload'           => 'metadata',
+		'webm'              => null,
+		// TED only
+		'lang'              => null,
+		// Vimeo only
+		'start'             => null,
+		// deprecated, title should be used
+		'link_text'         => null,
+		// misc
+		'oembed_data'       => null,
+		'iframe_name'       => null,
+		// debug
+		'append_text'       => null,
+	];
+}
+
+function shortcode_pairs() {
+
+	$attr = shortcode_attributes();
+
+	foreach ( $attr as $key => $value ) {
+
+		if ( ! isset( $value['default'] ) ) {
+			$value['default'] = null;
+		}
+
+		$pairs[ $key ] = $value['default'];
+	}
+
+	return $pairs;
+}
+
+function sc_filter_mode_fallback( array $a ) {
+
+	if ( 'thumbnail' === $a['mode'] ) {
+		$a['mode'] = 'lazyload-lightbox';
+	}
+
+	$supported_modes = get_supported_modes();
+
+	if ( ! array_key_exists( $a['mode'], $supported_modes ) ) {
+		$a['mode'] = 'normal';
+	}
+
+	return $a;
+}
+
+function sc_filter_validate( array $a ) {
+
+	foreach ( $a as $key => $value ) {
+
+		if ( null === $value || 'oembed_data' === $key || 'parameters' === $key ) {
+			continue;
+		}
+
+		if ( ! is_string( $value ) ) {
+			$a[ $key ] = new \WP_Error( 'input-type-error', "Attribute <code>$key</code> must be a string" );
+		}
+	}
+
+	if ( null !== $a['oembed_data'] && ! is_object( $a['oembed_data'] ) ) {
+		$a['oembed_data'] = new \WP_Error( 'oembed_data', 'oembed_data needs to be null or a object' );
+	}
+
+	if ( null !== $a['parameters'] && ! is_string( $a['parameters'] ) && ! is_array( $a['parameters'] ) ) {
+		$a['parameters'] = new \WP_Error( 'oembed_data', 'parameters needs to be null, array or string' );
+	}
+
+	foreach ( [
+		'arve_link',
+		'autoplay',
+		'controls',
+		'disable_flash',
+		'muted',
+		'playsinline',
+		'loop',
+	] as $attr ) {
+		$a[ $attr ] = validate_bool( $a[ $attr ], $attr );
+	};
+	unset( $attr );
+
+	foreach ( [ 'url', 'src', 'mp4', 'm4v', 'ogv', 'webm' ] as $attr ) {
+		$a[ $attr ] = validate_url( $a[ $attr ], $attr );
+	};
+	unset( $attr );
+
+	$a['align']        = validate_align( $a['align'], $a['provider'] );
+	$a['aspect_ratio'] = validate_aspect_ratio( $a['aspect_ratio'] );
+
+	return $a;
+}
+
+function sc_filter_validate_again( array $a ) {
+
+	foreach ( $a as $key => $value ) {
+
+		if ( true === $value ) {
+			$a[ $key ] = 'y';
+		} elseif ( false === $value ) {
+			$a[ $key ] = 'n';
+		}
+	}
+
+	return sc_filter_validate( $a );
 }
 
 function sc_filter_set_fixed_dimensions( array $a ) {
@@ -262,22 +463,6 @@ function sc_filter_autoplay_off_after_ran_once( array $a ) {
 
 	if ( ! $did_run && $a['autoplay'] ) {
 		$did_run = true;
-	}
-
-	return $a;
-}
-
-function sc_filter_sanitise( array $a ) {
-
-	foreach ( $a as $key => $value ) {
-
-		if ( 'oembed_data' === $key || 'parameters' === $key || null === $value ) {
-			continue;
-		}
-
-		if ( '' === $value ) {
-			$a[ $key ] = null;
-		}
 	}
 
 	return $a;
@@ -319,14 +504,14 @@ function sc_filter_get_media_gallery_thumbnail( array $a ) {
 		$a['img_src']    = get_attachment_image_url_or_srcset( 'url', $attchment_id );
 		$a['img_srcset'] = get_attachment_image_url_or_srcset( 'srcset', $attchment_id );
 
-	} elseif ( arve_validate_url( $a['thumbnail'] ) ) {
+	} elseif ( valid_url( $a['thumbnail'] ) ) {
 
 		$a['img_src']    = $a['thumbnail'];
 		$a['img_srcset'] = false;
 
 	} else {
 
-		$a['img_src'] = new WP_Error( 'thumbnail', __( 'Not a valid thumbnail URL or Media ID given', 'advanced-responsive-video-embedder' ) );
+		$a['img_src'] = new \WP_Error( 'thumbnail', __( 'Not a valid thumbnail URL or Media ID given', 'advanced-responsive-video-embedder' ) );
 	}
 
 	return $a;
@@ -348,14 +533,14 @@ function sc_filter_get_media_gallery_video( array $a ) {
 
 function sc_filter_detect_provider_and_id_from_url( array $a ) {
 
-	if ( ! empty( $a['src'] ) ) {
+	if ( ! empty( $a['src'] )
+		|| ( ! empty( $a['id'] ) && ! empty( $a['provider'] ) )
+	) {
 		return $a;
 	}
 
-	if ( empty( $a['url'] )
-		|| ( ! empty( $a['id'] ) && ! empty( $a['provider'] ) )
-	) {
-		$a['provider'] = new WP_Error(
+	if ( empty( $a['url'] ) ) {
+		$a['provider'] = new \WP_Error(
 			'missing_args',
 			__( 'Need <code>url</code> or <code>provider</code> and <code>id</code>.', 'advanced-responsive-video-embedder' )
 		);
@@ -457,7 +642,7 @@ function sc_filter_detect_query_args( array $a ) {
 			$att_name = $a['provider'] . "_$parameter";
 
 			if ( empty( $query_array[ $parameter ] ) ) {
-				$a[ $att_name ] = new WP_Error( $att_name, "$parameter not found in URL" );
+				$a[ $att_name ] = new \WP_Error( $att_name, "$parameter not found in URL" );
 			} else {
 				$a[ $att_name ] = $query_array[ $parameter ];
 			}
@@ -521,16 +706,16 @@ function sc_filter_detect_html5( array $a ) {
 
 		if ( ! empty( $a[ $ext ] ) ) {
 
-			if ( \Nextgenthemes\Utils\starts_with( $a[ $ext ], 'https://www.dropbox.com' ) ) {
+			if ( starts_with( $a[ $ext ], 'https://www.dropbox.com' ) ) {
 				$a[ $ext ] = add_query_arg( 'dl', 1, $a[ $ext ] );
 			}
 
 			$a['video_sources_html'] .= sprintf( '<source type="%s" src="%s">', get_video_type( $ext ), $a[ $ext ] );
 		}
 
-		if ( ! empty( $a['url'] ) && arve_ends_with( $a['url'], ".$ext" ) ) {
+		if ( ! empty( $a['url'] ) && ends_with( $a['url'], ".$ext" ) ) {
 
-			if ( \Nextgenthemes\Utils\starts_with( $a['url'], 'https://www.dropbox.com' ) ) {
+			if ( starts_with( $a['url'], 'https://www.dropbox.com' ) ) {
 				$a['url'] = add_query_arg( 'dl', 1, $a['url'] );
 			}
 
@@ -561,7 +746,7 @@ function sc_filter_iframe_fallback( array $a ) {
 
 		$a['provider'] = 'iframe';
 
-		if ( empty( $a['id'] ) && ! empty( $a['url'] ) ) {
+		if ( empty( $a['src'] ) && ! empty( $a['url'] ) ) {
 			$a['id'] = $a['url'];
 		}
 	}
@@ -577,7 +762,7 @@ function sc_filter_build_tracks_html( array $a ) {
 
 	$a['video_tracks_html'] = '';
 
-	for ( $n = 1; $n <= ARVE_NUM_TRACKS; $n++ ) {
+	for ( $n = 1; $n <= NUM_TRACKS; $n++ ) {
 
 		if ( empty( $a[ "track_{$n}" ] ) ) {
 			return $a;
@@ -590,7 +775,7 @@ function sc_filter_build_tracks_html( array $a ) {
 		);
 
 		if ( empty( $matches[1] ) ) {
-			$a[ "track_{$n}" ] = new WP_Error( 'track', __( 'Track kind or language code could not detected from filename', 'advanced-responsive-video-embedder' ) );
+			$a[ "track_{$n}" ] = new \WP_Error( 'track', __( 'Track kind or language code could not detected from filename', 'advanced-responsive-video-embedder' ) );
 			return $a;
 		}
 
@@ -604,7 +789,7 @@ function sc_filter_build_tracks_html( array $a ) {
 			'srclang' => $matches['lang'],
 		];
 
-		$a['video_tracks_html'] .= sprintf( '<track%s>', \Nextgenthemes\Utils\attr( $attr ) );
+		$a['video_tracks_html'] .= sprintf( '<track%s>', attr( $attr ) );
 	}//end for
 
 	return $a;

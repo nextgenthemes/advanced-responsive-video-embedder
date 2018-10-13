@@ -1,17 +1,19 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+use function Nextgenthemes\Asset\register;
+
 function register_assets() {
 
-	\Nextgenthemes\Asset\register( [
+	register( [
 		'handle' => 'advanced-responsive-video-embedder',
-		'src'    => \Nextgenthemes\Asset\plugin_asset_url( 'css/arve.css', PLUGIN_FILE ),
+		'src'    => url( 'dist/css/arve.css' ),
 		'deps'   => [],
 	] );
 
-	\Nextgenthemes\Asset\register( [
+	register( [
 		'handle' => 'advanced-responsive-video-embedder',
-		'src'    => \Nextgenthemes\Asset\plugin_asset_url( 'js/arve.js', PLUGIN_FILE ),
+		'src'    => url( 'dist/js/arve.js' ),
 		'deps'   => [ 'jquery' ],
 	] );
 }
@@ -20,7 +22,7 @@ function maybe_enqueue_assets( $content ) {
 
 	$options = options();
 
-	if ( $options['always_enqueue_assets'] ) {
+	if ( strpos( $content, 'class="arve-wrapper' ) !== false || $options['always_enqueue_assets'] ) {
 		wp_enqueue_style( 'advanced-responsive-video-embedder' );
 		wp_enqueue_script( 'advanced-responsive-video-embedder' );
 

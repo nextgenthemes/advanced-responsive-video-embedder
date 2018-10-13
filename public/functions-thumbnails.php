@@ -11,7 +11,7 @@ function get_attachment_image_url_or_srcset( $url_or_srcset, $thumbnail ) {
 
 	} elseif ( 'url' === $url_or_srcset ) {
 
-		return new WP_Error( 'wp thumbnail', __( 'No attachment with that ID', 'advanced-responsive-video-embedder' ) );
+		return new \WP_Error( 'wp thumbnail', __( 'No attachment with that ID', 'advanced-responsive-video-embedder' ) );
 
 	} else {
 

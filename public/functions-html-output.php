@@ -1,6 +1,8 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+use function Nextgenthemes\Utils\attr;
+
 function html_id( $html_attr ) {
 
 	if ( false !== strpos( $html_attr, 'id=' ) ) {
@@ -141,7 +143,7 @@ function build_thumbnail( array $a ) {
 
 		return sprintf(
 			'<img%s>',
-			\Nextgenthemes\Utils\attr( [
+			attr( [
 				'class'           => 'arve-thumbnail',
 				'data-object-fit' => true,
 				'itemprop'        => 'thumbnailUrl',
@@ -156,7 +158,7 @@ function build_thumbnail( array $a ) {
 
 		return sprintf(
 			'<meta%s>',
-			\Nextgenthemes\Utils\attr( [
+			attr( [
 				'itemprop' => 'thumbnailUrl',
 				'content'  => $a['img_src'],
 			] )
@@ -178,17 +180,17 @@ function build_promote_link_html( $arve_link ) {
 	return '';
 }
 
-function embed_container( $html, $atts ) {
+function embed_container( $html, $a ) {
 
 	$attr['class'] = 'arve-embed-container';
 
-	if ( false === $atts['aspect_ratio'] ) {
+	if ( false === $a['aspect_ratio'] ) {
 		$attr['style'] = 'height:auto;padding:0';
 	} else {
-		$attr['style'] = sprintf( 'padding-bottom:%F%%', aspect_ratio_to_percentage( $atts['aspect_ratio'] ) );
+		$attr['style'] = sprintf( 'padding-bottom:%F%%', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
 	}
 
-	return sprintf( '<div%s>%s</div>', \Nextgenthemes\Utils\attr( $attr ), $html );
+	return sprintf( '<div%s>%s</div>', attr( $attr ), $html );
 }
 
 function wrapper( $html, $atts ) {
@@ -198,7 +200,7 @@ function wrapper( $html, $atts ) {
 	return sprintf(
 		'<%s%s>%s</%s>',
 		$element,
-		\Nextgenthemes\Utils\attr( $atts['wrapper_attr'] ),
+		attr( $atts['wrapper_attr'] ),
 		$html,
 		$element
 	);
@@ -220,9 +222,9 @@ function create_iframe_tag( array $a ) {
 	if ( in_array( $a['mode'], [ 'lazyload', 'lazyload-lightbox', 'link-lightbox' ], true ) ) {
 		$lazy_attr          = prefix_array_keys( 'data-', $a['iframe_attr'] );
 		$lazy_attr['class'] = 'arve-lazyload';
-		$html               = sprintf( '<span%s></span>', \Nextgenthemes\Utils\attr( $lazy_attr, 'dailymotion' ) );
+		$html               = sprintf( '<span%s></span>', attr( $lazy_attr, 'dailymotion' ) );
 	} else {
-		$html = sprintf( '<iframe%s></iframe>', \Nextgenthemes\Utils\attr( $a['iframe_attr'], 'dailymotion' ) );
+		$html = sprintf( '<iframe%s></iframe>', attr( $a['iframe_attr'], 'dailymotion' ) );
 	}
 
 	return apply_filters( 'arve_iframe_tag', $html, $a, $a['iframe_attr'] );
@@ -232,7 +234,7 @@ function create_video_tag( array $a ) {
 
 	$html = sprintf(
 		'<video%s>%s%s</video>',
-		\Nextgenthemes\Utils\attr( $a['video_attr'] ),
+		attr( $a['video_attr'] ),
 		empty( $a['video_sources_html'] ) ? '' : $a['video_sources_html'],
 		$a['video_tracks_html']
 	);

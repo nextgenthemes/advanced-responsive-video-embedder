@@ -111,21 +111,3 @@ function get_query_str_without_args( $url, $key ) {
 
 	return $parsed_url['query'];
 }
-
-/*
-add_filter( 'oembed_fetch_url',    'arve_filter_oembed_fetch_url', 999, 3 );
-
-function filter_oembed_fetch_url( $provider, $url, $args ) {
-
-	d($url);
-
-	$url = remove_query_array( $url, 'arve' );
-	$url = remove_query_array( $url, 'arve-ifp' );
-
-	$provider = add_query_arg( 'url', urlencode( $url ), $provider );
-
-	dd($url);
-
-	return $provider;
-}
-*/

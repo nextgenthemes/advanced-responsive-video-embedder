@@ -1,17 +1,36 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-function validate_url( $url ) {
+use function Nextgenthemes\Utils\starts_with;
+use function Nextgenthemes\Utils\ends_with;
 
-	if ( \Nextgenthemes\Utils\starts_with( $url, '//' ) ) {
+function valid_url( $url ) {
+
+	if ( starts_with( $url, '//' ) ) {
 		$url = 'https:' . $url;
 	}
 
-	if ( \Nextgenthemes\Utils\starts_with( $url, 'http' ) && filter_var( $url, FILTER_VALIDATE_URL ) !== false ) {
+	if ( filter_var( $url, FILTER_VALIDATE_URL ) !== false ) {
 		return true;
 	}
 
 	return false;
+}
+
+function validate_url( $url, $attr_name ) {
+
+	if ( ! empty( $url ) && ! valid_url( $url ) ) {
+		return new \WP_Error( "invalid url $attr_name",
+			sprintf(
+				// Translators: 1 URL 2 Attr name
+				__( 'Invalid URL <code>%1$s</code> in <code>%2$s</code>', 'advanced-responsive-video-embedder' ),
+				esc_html( $url ),
+				esc_html( $attr_name )
+			)
+		);
+	}
+
+	return $url;
 }
 
 function validate_aspect_ratio( $aspect_ratio ) {
@@ -22,11 +41,15 @@ function validate_aspect_ratio( $aspect_ratio ) {
 
 	$a = explode( ':', $aspect_ratio );
 
-	if ( ! empty( $a[0] ) && is_numeric( $a[0] ) && ! empty( $a[1] ) && is_numeric( $a[1] ) ) {
+	if ( ! empty( $a[0] )
+		&& is_numeric( $a[0] )
+		&& ! empty( $a[1] )
+		&& is_numeric( $a[1] )
+	) {
 		return $aspect_ratio;
 	}
 
-	return new WP_Error( 'Aspect ratio',
+	return new \WP_Error( 'Aspect ratio',
 		// Translators: Aspect Ratio
 		sprintf( __( 'Aspect ratio <code>%s</code> is not valid', 'advanced-responsive-video-embedder' ), $aspect_ratio )
 	);
@@ -51,9 +74,9 @@ function validate_bool( $val, $name ) {
 		case 'yes':
 		case 'on':
 			return true;
+		case '':
 		case null:
 			return null;
-		case '':
 		case 'false':
 		case '0':
 		case 'n':
@@ -61,9 +84,9 @@ function validate_bool( $val, $name ) {
 		case 'off':
 			return false;
 		default:
-			return new WP_Error(
+			return new \WP_Error(
 				$name,
-				// Translators: 1 Name, 2 Value
+				// Translators: 1 Shortcode attr name, 2 Value
 				sprintf( __( '%1$s <code>%2$s</code> not valid', 'advanced-responsive-video-embedder' ), $name, $val )
 			);
 	}//end switch
@@ -84,7 +107,7 @@ function validate_align( $align ) {
 			$align = $align;
 			break;
 		default:
-			$align = new WP_Error(
+			$align = new \WP_Error(
 				'align',
 				// Translators: Alignment
 				sprintf( __( 'Align <code>%s</code> not valid', 'advanced-responsive-video-embedder' ), esc_html( $align ) )
@@ -93,29 +116,4 @@ function validate_align( $align ) {
 	}
 
 	return $align;
-}
-
-function validate_mode( $mode, $provider ) {
-
-	if ( 'thumbnail' === $mode ) {
-		$mode = 'lazyload-lightbox';
-	}
-
-	if ( 'veoh' === $mode ) {
-		$mode = 'normal';
-	}
-
-	$supported_modes = get_supported_modes();
-
-	if ( ! array_key_exists( $mode, $supported_modes ) ) {
-
-		#$mode = new WP_Error( 'mode', sprintf(
-		#	__( 'Mode: <code>%s</code> is invalid or not supported. Note that you will need the Pro Addon activated for modes other than normal.', 'advanced-responsive-video-embedder' ),
-		#	esc_html( $mode )
-		#) );
-
-		$mode = 'normal';
-	}
-
-	return $mode;
 }

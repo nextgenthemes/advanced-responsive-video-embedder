@@ -131,13 +131,10 @@ function youtube_time_to_seconds( $yttime ) {
  */
 function aspect_ratio_to_percentage( $aspect_ratio ) {
 
-	if ( is_wp_error( $aspect_ratio ) ) {
-		return 52.25;
-	}
+	$a          = explode( ':', $aspect_ratio );
+	$percentage = ( $a[1] / $a[0] ) * 100;
 
-	$a = explode( ':', $aspect_ratio );
-
-	return ( ( $a[1] / $a[0] ) * 100 );
+	return $percentage;
 }
 
 function calculate_height( $width, $aspect_ratio ) {

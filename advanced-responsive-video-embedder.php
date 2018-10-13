@@ -45,7 +45,9 @@ function init() {
 
 	require_once __DIR__ . '/vendor/autoload.php';
 
-	foreach ( [
+	array_map( function( $file ) {
+		require_once( "public/functions-{$file}.php" );
+	}, [
 		'assets',
 		'html-output',
 		'misc',
@@ -58,9 +60,7 @@ function init() {
 		'url-handlers',
 		'validation',
 		'host-properties'
-	] as $file ) {
-		require_once( "public/functions-{$file}.php" );
-	}
+	] );
 
 	require_once __DIR__ . '/admin/functions-admin.php';
 
@@ -76,24 +76,37 @@ function init() {
 	add_filter( 'the_content',                 __NAMESPACE__ . '\maybe_enqueue_assets', 99 );
 
 	foreach ( [
-		'sanitise'                        => -99,
-		'detect_provider_and_id_from_url' => -10,
-		'detect_youtube_playlist'         => -35,
-		'get_media_gallery_video'         => -30,
-		'detect_html5'                    => -25,
-		'iframe_fallback'                 => -20,
-		'validate'                        => -15,
-		'get_media_gallery_thumbnail'     => -10,
-		'build_iframe_src'                => -5,
-		'iframe_src_query'                => 0,
-		'iframe_src_autoplay_query'       => 5,
-		'autoplay_off_after_ran_once'     => 10,
-		'set_fixed_dimensions'            => 15,
-		'attr'                            => 20,
-		'build_tracks_html'               => 20,
+		'validate'                         => -99,
+		// -30
+		'default_aspect_ratio'             => -30,
+		'maxwidth_when_aligned'            => -30,
+		'get_media_gallery_video'          => -30,
+		'get_media_gallery_thumbnail'      => -30,
+		'autoplay_off_after_ran_once'      => -30,
+		// -20
+		'detect_youtube_playlist'          => -20,
+		'detect_html5'                     => -20,
+		'detect_provider_and_id_from_url'  => -20,
+		// -10
+		'liveleak_id_fix'                  => -10,
+		'dailymotion_jukebox_aspect_ratio' => -10,
+		// 0
+		'mode_fallback'                    => 0,
+		'iframe_fallback'                  => 0,
+		// 10-20
+		'build_tracks_html'                => 10,
+		'build_iframe_src'                 => 10,
+		'iframe_src_query'                 => 15,
+		'iframe_src_autoplay_query'        => 20,
+		// 90
+		'validate_again'                   => 80,
+		'set_fixed_dimensions'             => 90,
+		'attr'                             => 99,
 	] as $filter => $priority ) {
 		add_filter( 'shortcode_atts_arve', __NAMESPACE__ . "\sc_filter_$filter", $priority );
 	};
+	unset( $filter );
+	unset( $priority );
 
 	// Admin Hooks
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\admin_enqueue_scripts' );

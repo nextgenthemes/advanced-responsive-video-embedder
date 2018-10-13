@@ -5,7 +5,7 @@ function shortcode( array $a, $content = null ) {
 
 	if ( ! empty( $a['url'] ) ) {
 
-		$embed_check     = new \Nextgenthemes\ARVE\EmbedChecker( $a );
+		$embed_check     = new EmbedChecker( $a );
 		$mayme_arve_html = $embed_check->check();
 
 		if ( $mayme_arve_html ) {
@@ -14,22 +14,6 @@ function shortcode( array $a, $content = null ) {
 	}
 
 	return build_video( $a, $content );
-}
-
-
-function add_iframe_parameters_to_url( array $a ) {
-
-	$iframe_parameters = [];
-
-	if ( ! empty( $a['parameters'] ) && is_string( $a['parameters'] ) ) {
-		wp_parse_str( $a['parameters'], $iframe_parameters );
-	}
-
-	foreach ( $iframe_parameters as $key => $value ) {
-		$a['url'] = add_query_arg( "arve-ifp[{$key}]", $value, $url );
-	}
-
-	return $a;
 }
 
 function build_video( array $input_atts, $content = null ) {
@@ -119,9 +103,6 @@ function build_video( array $input_atts, $content = null ) {
 	} elseif ( is_wp_error( $output ) ) {
 		return error( $output->get_error_message() );
 	}
-
-	wp_enqueue_style( 'advanced-responsive-video-embedder' );
-	wp_enqueue_script( 'advanced-responsive-video-embedder' );
 
 	return get_debug_info( $output, $atts, $input_atts ) . $output;
 }
