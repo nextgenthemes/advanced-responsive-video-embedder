@@ -25,6 +25,9 @@
 	},
 	"repositories": [{
 	    "type": "path",
-	    "url": "/media/unencrypted/websites/symbiosistheme.com/web/app/plugins/composer-local/nextgenthemes/common"
+	    "url": "/media/unencrypted/websites/symbiosistheme.com/web/app/plugins/composer-local/nextgenthemes/common",
+		"options": {
+			"symlink": false
+		}
 	}]
 }

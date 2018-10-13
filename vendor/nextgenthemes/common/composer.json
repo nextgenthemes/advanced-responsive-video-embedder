@@ -1,0 +1,26 @@
+{
+	"name"        : "nextgenthemes/common",
+	"description" : "w",
+	"keywords"    : [ "wordpress" ],
+	"homepage"    : "https://nextgenthemes.com",
+	"license"     : "GPL-3.0",
+	"authors"     : [
+		{
+			"name"     : "Nicolas Jonas",
+			"homepage" : "https://nextgenthemes.com",
+			"role"     : "Developer"
+		}
+	],
+	"support"     : {
+		"issues" : "https://github.com/",
+		"forum"  : "https://nextgenthemes.com/support"
+	},
+	"autoload"    : {
+		"files" : [
+			"src/bootstrap.php"
+		]
+	},
+	"require"     : {
+		"php" : ">=5.6"
+	}
+}

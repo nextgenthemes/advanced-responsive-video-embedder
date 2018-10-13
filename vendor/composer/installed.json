@@ -198,7 +198,7 @@
         "dist": {
             "type": "path",
             "url": "/media/unencrypted/websites/symbiosistheme.com/web/app/plugins/composer-local/nextgenthemes/common",
-            "reference": "fb931de7a8b8c1244666552ecde5edf45c60acef",
+            "reference": "e6f73c56c69ef20200cb6e83c49436bc6a845404",
             "shasum": null
         },
         "require": {
@@ -207,9 +207,6 @@
         "type": "library",
         "installation-source": "dist",
         "autoload": {
-            "psr-4": {
-                "Nextgenthemes\\": "src/"
-            },
             "files": [
                 "src/bootstrap.php"
             ]
@@ -232,6 +229,9 @@
         "support": {
             "issues": "https://github.com/",
             "forum": "https://nextgenthemes.com/support"
+        },
+        "transport-options": {
+            "symlink": false
         }
     },
     {

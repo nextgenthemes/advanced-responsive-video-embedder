@@ -24,7 +24,6 @@ class ComposerStaticInitfb499b858061dcbc3a5ecc8995cf88b8
         'N' => 
         array (
             'Nextgenthemes\\ARVE\\' => 19,
-            'Nextgenthemes\\' => 14,
         ),
         'D' => 
         array (
@@ -52,10 +51,6 @@ class ComposerStaticInitfb499b858061dcbc3a5ecc8995cf88b8
         'Nextgenthemes\\ARVE\\' => 
         array (
             0 => __DIR__ . '/../..' . '/public',
-        ),
-        'Nextgenthemes\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/nextgenthemes/common/src',
         ),
         'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 
         array (
