@@ -19,11 +19,9 @@ function provider( $provider ) {
 	// var_dump( json_decode( $example_data, true ) );
 }
 
-$providers = [
+foreach ( [
 	'twitch',
 	'ustream',
-];
-
-foreach ( $providers as $key => $provider ) {
+] as $key => $provider ) {
 	provider( $provider );
 }
