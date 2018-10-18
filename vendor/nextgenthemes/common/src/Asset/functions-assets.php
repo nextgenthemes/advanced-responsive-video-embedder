@@ -52,7 +52,8 @@ function register( array $args ) {
 		wp_register_style( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['media'] );
 
 		if ( $args['integrity'] ) {
-			add_interity_to_script( $args['handle'], $args['integrity'] );
+			// TODO
+			add_interity_to_style( $args['handle'], $args['integrity'] );
 		}
 	}
 }
@@ -118,7 +119,7 @@ function mix_version( $path ) {
 	return $query['id'];
 }
 
-function module_url( $path ) {
+function plugin_or_theme_uri( $path ) {
 
 	if ( defined( 'Nextgenthemes\PLUGIN_FILE' ) ) {
 		return plugins_url( $path, \Nextgenthemes\PLUGIN_FILE );

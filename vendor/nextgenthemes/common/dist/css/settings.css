@@ -1,0 +1,14 @@
+.wp-tweak-wrap label > span {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.wp-tweak-wrap [type="checkbox"] + span {
+  display: inline;
+}
+
+.wp-tweak-loading-indicator {
+  height: 16px;
+  width: 16px;
+}

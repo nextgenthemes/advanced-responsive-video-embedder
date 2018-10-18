@@ -17,9 +17,9 @@ function create_url_handlers() {
 	}
 }
 
-function url_detection_to_shortcode( $provider, array $matches, $attr, $url, $rawattr ) {
+function url_detection_to_shortcode( $provider, array $matches, array $attr, $url, array $rawattr ) {
 
-	// * Fix 'Markdown on save enhanced' issue
+	// Fix 'Markdown on save enhanced' issue
 	if ( substr( $url, -4 ) === '</p>' ) {
 		$url = substr( $url, 0, -4 );
 	}
@@ -58,16 +58,16 @@ function url_detection_to_shortcode( $provider, array $matches, $attr, $url, $ra
 		unset( $url_query['t'] );
 	}
 
-	$atts               = array_merge( (array) $old_atts, (array) $new_atts );
-	$atts['parameters'] = empty( $url_query ) ? null : build_query( $url_query );
-	$atts['provider']   = $provider;
+	$a               = array_merge( (array) $old_atts, (array) $new_atts );
+	$a['parameters'] = empty( $url_query ) ? null : build_query( $url_query );
+	$a['provider']   = $provider;
 
 	foreach ( $matches as $k => $v ) {
 
 		if ( ! is_numeric( $k ) ) {
-			$atts[ $k ] = $matches[ $k ];
+			$a[ $k ] = $matches[ $k ];
 		}
 	}
 
-	return build_video( $atts );
+	return build_video( $a );
 }

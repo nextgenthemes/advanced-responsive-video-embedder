@@ -112,17 +112,17 @@ function sc_filter_iframe_src_query( array $a ) {
 function get_wrapper_id( array $a ) {
 
 	static $wrapper_ids = [];
-	$wrapper_id         = null;
+	$wrapper_id         = false;
 
 	foreach ( [
+		'url',
+		'src',
 		'id',
-		'm4v',
+		'webm',
 		'mp4',
 		'ogv',
+		'm4v',
 		'random_video_url',
-		'src',
-		'url',
-		'webm',
 		'webtorrent'
 	] as $att ) {
 
@@ -134,7 +134,7 @@ function get_wrapper_id( array $a ) {
 	}
 
 	if ( empty( $wrapper_id ) ) {
-		return null;
+		return false;
 	} else {
 		$wrapper_ids[] = $wrapper_id;
 	}
@@ -151,15 +151,43 @@ function get_wrapper_id( array $a ) {
 	return $wrapper_id;
 }
 
-function sc_filter_attr( array $a ) {
+function add_error( array $a, $code, $msg, $remove_filters = false ) {
 
-	$wrapper_id = get_wrapper_id( $a );
-
-	if ( empty( $wrapper_id ) ) {
-		$a['wrapper_id_error'] = new \WP_Error( 'wrapper_id', __( 'Wrapper ID could not be build, please report this bug.', 'advanced-responsive-video-embedder' ) );
+	if ( isset( $a['errors'] ) && is_wp_error( $a['errors'] ) ) {
+		$a['errors']->add( $code, $msg );
+	} else {
+		$a['errors'] = new \WP_Error( $code, $msg );
 	}
 
+	if ( $remove_filters ) {
+		remove_all_filters( 'shortcode_atts_arve' );
+	}
+
+	return $a;
+}
+
+function sc_filter_attr( array $a ) {
+
+	if ( ! empty( $a['oembed_data']->width ) ) {
+		$width = $a['oembed_data']->width;
+	} else {
+		$width = 640;
+	}
+
+	$wrapper_id  = get_wrapper_id( $a );
 	$align_class = empty( $a['align'] ) ? '' : ' align' . $a['align'];
+	$height      = calculate_height( $width, $a['aspect_ratio'] );
+
+	#$wrapper_id = false;
+
+	if ( ! $wrapper_id ) {
+		return add_error(
+			$a,
+			'wrapper_attr',
+			__( 'Wrapper ID could not be build, please report this bug.', 'advanced-responsive-video-embedder' ),
+			'remove-all-filters'
+		);
+	}
 
 	$a['wrapper_attr'] = [
 		'class'         => "arve-wrapper$align_class",
@@ -230,11 +258,10 @@ function sc_filter_default_aspect_ratio( array $a ) {
 		return $a;
 	}
 
-	$properties = get_host_properties();
-
 	if ( ! empty( $a['oembed_data']->width ) && ! empty( $a['oembed_data']->height ) ) {
 		$a['aspect_ratio'] = $a['oembed_data']->width . ':' . $a['oembed_data']->height;
 	} else {
+		$properties        = get_host_properties();
 		$a['aspect_ratio'] = $properties[ $a['provider'] ]['aspect_ratio'];
 	}
 
@@ -281,21 +308,23 @@ function sc_filter_liveleak_id_fix( array $a ) {
 	return $a;
 }
 
-function shortcode_attribute() {
+function shortcode_attributes() {
+	$options = options();
+
 	// phpcs:disable WordPress.Arrays.ArrayDeclarationSpacing.AssociativeArrayFound
 	$pairs = [
 		// arve visual options
 		'align'             => [
 			'default'       => $options['align'],
-			'validate_func' => 'align'
+			'validate_func' => __NAMESPACE__ . '\validate_align'
 		],
 		'aspect_ratio'      => [
 			'default'       => null,
-			'validate_func' => 'aspect_ratio'
+			'validate_func' => __NAMESPACE__ . '\validate_aspect_ratio'
 		],
 		'arve_link'         => [
 			'default'       => bool_to_shortcode_string( $options['promote_link'] ),
-			'validate_func' => 'bool'
+			'validate_func' => __NAMESPACE__ . '\validate_bool'
 		],
 		'disable_flash'     => [ 'validate_func' => 'bool' ],
 		'maxwidth'          => [ 'default' => (string) $options['video_maxwidth'] ],
@@ -377,6 +406,18 @@ function sc_filter_mode_fallback( array $a ) {
 	return $a;
 }
 
+function bool_shortcode_args() {
+	return [
+		'arve_link',
+		'autoplay',
+		'controls',
+		'disable_flash',
+		'muted',
+		'playsinline',
+		'loop',
+	];
+}
+
 function sc_filter_validate( array $a ) {
 
 	foreach ( $a as $key => $value ) {
@@ -398,15 +439,7 @@ function sc_filter_validate( array $a ) {
 		$a['parameters'] = new \WP_Error( 'oembed_data', 'parameters needs to be null, array or string' );
 	}
 
-	foreach ( [
-		'arve_link',
-		'autoplay',
-		'controls',
-		'disable_flash',
-		'muted',
-		'playsinline',
-		'loop',
-	] as $attr ) {
+	foreach ( bool_shortcode_args() as $attr ) {
 		$a[ $attr ] = validate_bool( $a[ $attr ], $attr );
 	};
 	unset( $attr );
@@ -416,7 +449,7 @@ function sc_filter_validate( array $a ) {
 	};
 	unset( $attr );
 
-	$a['align']        = validate_align( $a['align'], $a['provider'] );
+	$a['align']        = validate_align( $a['align'] );
 	$a['aspect_ratio'] = validate_aspect_ratio( $a['aspect_ratio'] );
 
 	return $a;
@@ -424,14 +457,22 @@ function sc_filter_validate( array $a ) {
 
 function sc_filter_validate_again( array $a ) {
 
-	foreach ( $a as $key => $value ) {
+	if ( 'html5' !== $a['provider'] ) {
 
-		if ( true === $value ) {
-			$a[ $key ] = 'y';
-		} elseif ( false === $value ) {
-			$a[ $key ] = 'n';
+		if ( ! is_int( $a['width'] ) ) {
+			$a['width'] = new \WP_Error( 'width', '<code>width</code> must be int' );
+		}
+
+		if ( ! is_int( $a['height'] ) ) {
+			$a['height'] = new \WP_Error( 'height', '<code>height</code> must be int' );
 		}
 	}
+
+	foreach ( bool_shortcode_args() as $attr ) {
+		$a[ $attr ] = bool_to_shortcode_string( $a[ $attr ] );
+	}
+
+	unset( $attr );
 
 	return sc_filter_validate( $a );
 }
@@ -476,7 +517,7 @@ function sc_filter_missing_attribute_check( array $a ) {
 		return $a;
 	}
 
-	$required_attributes   = get_html5_attributes();
+	$required_attributes   = VIDEO_FILE_EXTENSIONS;
 	$required_attributes[] = 'url';
 
 	$array = array_intersect_key( $a, array_flip( $required_attributes ) );
@@ -520,9 +561,7 @@ function sc_filter_get_media_gallery_thumbnail( array $a ) {
 
 function sc_filter_get_media_gallery_video( array $a ) {
 
-	$html5_ext = get_html5_attributes();
-
-	foreach ( $html5_ext as $ext ) {
+	foreach ( VIDEO_FILE_EXTENSIONS as $ext ) {
 
 		if ( ! empty( $a[ $ext ] ) && is_numeric( $a[ $ext ] ) ) {
 			$a[ $ext ] = wp_get_attachment_url( $a[ $ext ] );
@@ -700,10 +739,9 @@ function sc_filter_detect_html5( array $a ) {
 		return $a;
 	}
 
-	$html5_extensions        = get_html5_attributes();
 	$a['video_sources_html'] = '';
 
-	foreach ( $html5_extensions as $ext ) :
+	foreach ( VIDEO_FILE_EXTENSIONS as $ext ) :
 
 		if ( ! empty( $a[ $ext ] ) ) {
 

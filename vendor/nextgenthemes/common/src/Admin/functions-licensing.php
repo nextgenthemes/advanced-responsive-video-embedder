@@ -1,6 +1,10 @@
 <?php
 namespace Nextgenthemes\Admin;
 
+use Nextgenthemes;
+use Nextgenthemes\Utils;
+use Nextgenthemes\License;
+
 // phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain
 
 function plugin_install_search_url( $search_term ) {
@@ -48,7 +52,7 @@ function get_products() {
 		$products[ $key ]['slug']      = $key;
 		$products[ $key ]['installed'] = false;
 		$products[ $key ]['active']    = false;
-		$products[ $key ]['valid_key'] = \Nextgenthemes\License\has_valid_key( $key );
+		$products[ $key ]['valid_key'] = License\has_valid_key( $key );
 
 		$version_define = strtoupper( $key ) . '_VERSION';
 		$file_define    = strtoupper( $key ) . '_FILE';
@@ -87,8 +91,8 @@ function get_products() {
 function menus() {
 
 	$plugin_screen_hook_suffix = add_options_page(
-		__( 'ARVE Licenses', TEXTDOMAIN ),
-		__( 'ARVE Licenses', TEXTDOMAIN ),
+		__( 'ARVE Licenses', \Nextgenthemes\TEXTDOMAIN ),
+		__( 'ARVE Licenses', \Nextgenthemes\TEXTDOMAIN ),
 		'manage_options',
 		'nextgenthemes-licenses',
 		'nextgenthemes_licenses_page'
@@ -99,7 +103,7 @@ function register_settings() {
 
 	add_settings_section(
 		'keys',                      # id,
-		__( 'Licenses', TEXTDOMAIN ), # title,
+		__( 'Licenses', \Nextgenthemes\TEXTDOMAIN ), # title,
 		'__return_empty_string',     # callback,
 		'nextgenthemes-licenses'     # page
 	);
@@ -108,6 +112,8 @@ function register_settings() {
 
 		$option_basename = "nextgenthemes_{$product_slug}_key";
 		$option_keyname  = $option_basename . '[key]';
+		$key             = License\get_key( $product_slug, 'option_only' );
+		$key             = is_array( $key ) ? 'error should not be array' : (string) $key;
 
 		add_settings_field(
 			$option_keyname,                 // id,
@@ -115,18 +121,18 @@ function register_settings() {
 			__NAMESPACE__ . '\key_callback', // callback,
 			'nextgenthemes-licenses',        // page,
 			'keys',                          // section
-			array(                           // args
+			[                                // args
 				'product'         => $product,
 				'label_for'       => $option_keyname,
 				'option_basename' => $option_basename,
-				'attr'            => array(
+				'attr'            => [
 					'type'  => 'text',
 					'id'    => $option_keyname,
 					'name'  => $option_keyname,
 					'class' => 'arve-license-input',
-					'value' => \Nextgenthemes\License\get_defined_key( $product_slug ) ? __( 'is defined (wp-config.php)', TEXTDOMAIN ) : \Nextgenthemes\License\get_key( $product_slug, 'option_only' ),
-				)
-			)
+					'value' => License\get_defined_key( $product_slug ) ? __( 'is defined (wp-config.php)', \Nextgenthemes\TEXTDOMAIN ) : $key,
+				]
+			]
 		);
 
 		register_setting(
@@ -145,7 +151,7 @@ function key_callback( $args ) {
 	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	printf(
 		'<input%s>',
-		\Nextgenthemes\Utils\attr( [
+		Utils\attr( [
 			'type'  => 'hidden',
 			'id'    => $args['option_basename'] . '[product]',
 			'name'  => $args['option_basename'] . '[product]',
@@ -156,39 +162,39 @@ function key_callback( $args ) {
 
 	printf(
 		'<input%s%s>',
-		\Nextgenthemes\Utils\attr( $args['attr'] ),
-		\Nextgenthemes\License\get_defined_key( $args['product']['slug'] ) ? ' disabled' : ''
+		Utils\attr( $args['attr'] ),
+		License\get_defined_key( $args['product']['slug'] ) ? ' disabled' : ''
 	);
 
-	$defined_key = \Nextgenthemes\License\get_defined_key( $args['product']['slug'] );
-	$key         = \Nextgenthemes\License\get_key( $args['product']['slug'] );
+	$defined_key = License\get_defined_key( $args['product']['slug'] );
+	$key         = License\get_key( $args['product']['slug'] );
 
 	if ( $defined_key || ! empty( $key ) ) {
-		submit_button( __( 'Activate License',   TEXTDOMAIN ), 'primary',   $args['option_basename'] . '[activate_key]',   false );
-		submit_button( __( 'Deactivate License', TEXTDOMAIN ), 'secondary', $args['option_basename'] . '[deactivate_key]', false );
-		submit_button( __( 'Check License',      TEXTDOMAIN ), 'secondary', $args['option_basename'] . '[check_key]',      false );
+		submit_button( __( 'Activate License',   \Nextgenthemes\TEXTDOMAIN ), 'primary',   $args['option_basename'] . '[activate_key]',   false );
+		submit_button( __( 'Deactivate License', \Nextgenthemes\TEXTDOMAIN ), 'secondary', $args['option_basename'] . '[deactivate_key]', false );
+		submit_button( __( 'Check License',      \Nextgenthemes\TEXTDOMAIN ), 'secondary', $args['option_basename'] . '[check_key]',      false );
 	}
 
 	echo '</p>';
 
 	echo '<p>';
 	// Translators: License Status
-	echo esc_html( sprintf( __( 'License Status: %s', TEXTDOMAIN ), \Nextgenthemes\License\get_key_status( $args['product']['slug'] ) ) );
+	echo esc_html( sprintf( __( 'License Status: %s', \Nextgenthemes\TEXTDOMAIN ), License\get_key_status( $args['product']['slug'] ) ) );
 	echo '</p>';
 
 	if ( $args['product']['installed'] && ! $args['product']['active'] ) {
 
-		printf( '<strong>%s</strong>', esc_html__( 'Plugin is installed but not activated', TEXTDOMAIN ) );
+		printf( '<strong>%s</strong>', esc_html__( 'Plugin is installed but not activated', \Nextgenthemes\TEXTDOMAIN ) );
 
 	} elseif ( ! $args['product']['active'] ) {
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		printf(
 			'<a%s>%s</a>',
-			\Nextgenthemes\Utils\attr( array(
+			Utils\attr( array(
 				'href'  => $args['product']['url'],
 				'class' => 'button button-primary',
 			) ),
-			__( 'Not installed, check it out', TEXTDOMAIN )
+			__( 'Not installed, check it out', \Nextgenthemes\TEXTDOMAIN )
 		);
 		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
@@ -201,14 +207,14 @@ function validate_license( $input ) {
 	}
 
 	$product     = $input['product'];
-	$defined_key = \Nextgenthemes\License\get_defined_key( $product );
+	$defined_key = License\get_defined_key( $product );
 
 	if ( $defined_key ) {
 		$option_key = $defined_key;
 		$key        = $defined_key;
 	} else {
 		$key        = sanitize_text_field( $input['key'] );
-		$option_key = \Nextgenthemes\License\get_key( $product );
+		$option_key = License\get_key( $product );
 	}
 
 	if ( ( $key !== $option_key ) || isset( $input['activate_key'] ) ) {
@@ -232,7 +238,7 @@ function api_update_key_status( $product, $key, $action ) {
 	$products   = get_products();
 	$key_status = api_action( $products[ $product ]['id'], $key, $action );
 
-	\Nextgenthemes\License\update_key_status( $product, $key_status );
+	License\update_key_status( $product, $key_status );
 }
 
 function licenses_page() {
@@ -245,7 +251,7 @@ function licenses_page() {
 
 			<?php do_settings_sections( 'nextgenthemes-licenses' ); ?>
 			<?php settings_fields( 'nextgenthemes' ); ?>
-			<?php submit_button( __( 'Save Changes', TEXTDOMAIN ), 'primary', 'submit', false ); ?>
+			<?php submit_button( __( 'Save Changes', \Nextgenthemes\TEXTDOMAIN ), 'primary', 'submit', false ); ?>
 		</form>
 
 	</div>
@@ -274,7 +280,7 @@ function init_plugin_updater( $product ) {
 		$product['file'],
 		array(
 			'version' => $product['version'],
-			'license' => \Nextgenthemes\License\get_key( $product['slug'] ),
+			'license' => License\get_key( $product['slug'] ),
 			'item_id' => $product['id'],
 			'author'  => $product['author']
 			// 'item_name' => $product['name'],
@@ -288,7 +294,7 @@ function init_theme_updater( $product ) {
 		array(
 			'remote_api_url' => 'https://nextgenthemes.com',
 			'version'        => $product['version'],
-			'license'        => \Nextgenthemes\License\get_key( $product['slug'] ),
+			'license'        => License\get_key( $product['slug'] ),
 			'item_id'        => $product['name'],
 			'author'         => $product['id'],
 			'theme_slug'     => $product['slug'],
@@ -296,33 +302,33 @@ function init_theme_updater( $product ) {
 			#'renew_url'     => $product['renew_link'], // Optional, allows for a custom license renewal link
 		),
 		array(
-			'theme-license'             => __( 'Theme License', TEXTDOMAIN ),
-			'enter-key'                 => __( 'Enter your theme license key.', TEXTDOMAIN ),
-			'license-key'               => __( 'License Key', TEXTDOMAIN ),
-			'license-action'            => __( 'License Action', TEXTDOMAIN ),
-			'deactivate-license'        => __( 'Deactivate License', TEXTDOMAIN ),
-			'activate-license'          => __( 'Activate License', TEXTDOMAIN ),
-			'status-unknown'            => __( 'License status is unknown.', TEXTDOMAIN ),
-			'renew'                     => __( 'Renew?', TEXTDOMAIN ),
-			'unlimited'                 => __( 'unlimited', TEXTDOMAIN ),
-			'license-key-is-active'     => __( 'License key is active.', TEXTDOMAIN ),
+			'theme-license'             => __( 'Theme License', \Nextgenthemes\TEXTDOMAIN ),
+			'enter-key'                 => __( 'Enter your theme license key.', \Nextgenthemes\TEXTDOMAIN ),
+			'license-key'               => __( 'License Key', \Nextgenthemes\TEXTDOMAIN ),
+			'license-action'            => __( 'License Action', \Nextgenthemes\TEXTDOMAIN ),
+			'deactivate-license'        => __( 'Deactivate License', \Nextgenthemes\TEXTDOMAIN ),
+			'activate-license'          => __( 'Activate License', \Nextgenthemes\TEXTDOMAIN ),
+			'status-unknown'            => __( 'License status is unknown.', \Nextgenthemes\TEXTDOMAIN ),
+			'renew'                     => __( 'Renew?', \Nextgenthemes\TEXTDOMAIN ),
+			'unlimited'                 => __( 'unlimited', \Nextgenthemes\TEXTDOMAIN ),
+			'license-key-is-active'     => __( 'License key is active.', \Nextgenthemes\TEXTDOMAIN ),
 			// Translators: Date
-			'expires%s'                 => __( 'Expires %s.', TEXTDOMAIN ),
-			'expires-never'             => __( 'Lifetime License.', TEXTDOMAIN ),
+			'expires%s'                 => __( 'Expires %s.', \Nextgenthemes\TEXTDOMAIN ),
+			'expires-never'             => __( 'Lifetime License.', \Nextgenthemes\TEXTDOMAIN ),
 			// Translators: x of x sites activated
-			'%1$s/%2$-sites'            => __( 'You have %1$s / %2$s sites activated.', TEXTDOMAIN ),
+			'%1$s/%2$-sites'            => __( 'You have %1$s / %2$s sites activated.', \Nextgenthemes\TEXTDOMAIN ),
 			// Translators: Date
-			'license-key-expired-%s'    => __( 'License key expired %s.', TEXTDOMAIN ),
-			'license-key-expired'       => __( 'License key has expired.', TEXTDOMAIN ),
-			'license-keys-do-not-match' => __( 'License keys do not match.', TEXTDOMAIN ),
-			'license-is-inactive'       => __( 'License is inactive.', TEXTDOMAIN ),
-			'license-key-is-disabled'   => __( 'License key is disabled.', TEXTDOMAIN ),
-			'site-is-inactive'          => __( 'Site is inactive.', TEXTDOMAIN ),
-			'license-status-unknown'    => __( 'License status is unknown.', TEXTDOMAIN ),
-			'update-notice'             => __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update.", TEXTDOMAIN ),
+			'license-key-expired-%s'    => __( 'License key expired %s.', \Nextgenthemes\TEXTDOMAIN ),
+			'license-key-expired'       => __( 'License key has expired.', \Nextgenthemes\TEXTDOMAIN ),
+			'license-keys-do-not-match' => __( 'License keys do not match.', \Nextgenthemes\TEXTDOMAIN ),
+			'license-is-inactive'       => __( 'License is inactive.', \Nextgenthemes\TEXTDOMAIN ),
+			'license-key-is-disabled'   => __( 'License key is disabled.', \Nextgenthemes\TEXTDOMAIN ),
+			'site-is-inactive'          => __( 'Site is inactive.', \Nextgenthemes\TEXTDOMAIN ),
+			'license-status-unknown'    => __( 'License status is unknown.', \Nextgenthemes\TEXTDOMAIN ),
+			'update-notice'             => __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update.", \Nextgenthemes\TEXTDOMAIN ),
 			// phpcs:disable WordPress.WP.I18n.MixedOrderedPlaceholdersText
 			// phpcs:disable WordPress.WP.I18n.MissingTranslatorsComment
-			'update-available'          => __( '<strong>%1$s %2$s</strong> is available. <a href="%3$s" class="thickbox" title="%4s">Check out what\'s new</a> or <a href="%5$s"%6$s>update now</a>.', TEXTDOMAIN ),
+			'update-available'          => __( '<strong>%1$s %2$s</strong> is available. <a href="%3$s" class="thickbox" title="%4s">Check out what\'s new</a> or <a href="%5$s"%6$s>update now</a>.', \Nextgenthemes\TEXTDOMAIN ),
 			// phpcs:disable WordPress.WP.I18n.MixedOrderedPlaceholdersText
 			// phpcs:enable WordPress.WP.I18n.MissingTranslatorsComment
 		)
@@ -359,7 +365,7 @@ function api_action( $item_id, $key, $action ) {
 		if ( is_wp_error( $response ) ) {
 			$message = $response->get_error_message();
 		} else {
-			$message = __( 'An error occurred, please try again.', TEXTDOMAIN );
+			$message = __( 'An error occurred, please try again.', \Nextgenthemes\TEXTDOMAIN );
 		}
 	} else {
 		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
@@ -374,7 +380,7 @@ function api_action( $item_id, $key, $action ) {
 
 			$message = sprintf(
 				// Translators: Error message
-				__( 'Error. Please report the following:<br> %s', TEXTDOMAIN ),
+				__( 'Error. Please report the following:<br> %s', \Nextgenthemes\TEXTDOMAIN ),
 				$textarea_dump
 			);
 		} else {
@@ -395,35 +401,35 @@ function get_api_error_message() {
 		case 'expired':
 			$message = sprintf(
 				// Translators: Date
-				__( 'Your license key expired on %s.', TEXTDOMAIN ),
+				__( 'Your license key expired on %s.', \Nextgenthemes\TEXTDOMAIN ),
 				date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) )
 			);
 			break;
 
 		case 'revoked':
-			$message = __( 'Your license key has been disabled.', TEXTDOMAIN );
+			$message = __( 'Your license key has been disabled.', \Nextgenthemes\TEXTDOMAIN );
 			break;
 
 		case 'missing':
-			$message = __( 'Invalid license.', TEXTDOMAIN );
+			$message = __( 'Invalid license.', \Nextgenthemes\TEXTDOMAIN );
 			break;
 
 		case 'invalid':
 		case 'site_inactive':
-			$message = __( 'Your license is not active for this URL.', TEXTDOMAIN );
+			$message = __( 'Your license is not active for this URL.', \Nextgenthemes\TEXTDOMAIN );
 			break;
 
 		case 'item_name_mismatch':
 			// Translators: Product Name
-			$message = sprintf( __( 'This appears to be an invalid license key for %s.', TEXTDOMAIN ), TEXTDOMAIN );
+			$message = sprintf( __( 'This appears to be an invalid license key for %s.', \Nextgenthemes\TEXTDOMAIN ), \Nextgenthemes\TEXTDOMAIN );
 			break;
 
 		case 'no_activations_left':
-			$message = __( 'Your license key has reached its activation limit.', TEXTDOMAIN );
+			$message = __( 'Your license key has reached its activation limit.', \Nextgenthemes\TEXTDOMAIN );
 			break;
 
 		default:
-			$message = __( 'An error occurred, please try again.', TEXTDOMAIN );
+			$message = __( 'An error occurred, please try again.', \Nextgenthemes\TEXTDOMAIN );
 			break;
 	}//end switch
 }
@@ -439,5 +445,5 @@ function dump( $var ) {
 }
 
 function textarea_dump( $var ) {
-	return sprintf( '<textarea style="width: 100%; height: 70vh;">%s</textarea>', esc_textarea( arve_dump( $var ) ) );
+	return sprintf( '<textarea style="width: 100%; height: 70vh;">%s</textarea>', esc_textarea( dump( $var ) ) );
 }

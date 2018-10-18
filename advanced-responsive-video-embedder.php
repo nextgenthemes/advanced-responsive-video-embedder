@@ -21,10 +21,11 @@
 
 namespace Nextgenthemes\ARVE;
 
-const VERSION              = '9.0.0';
-const PRO_VERSION_REQUIRED = '5.0.0';
-const NUM_TRACKS           = 10;
-const PLUGIN_FILE          = __FILE__;
+const VERSION               = '9.0.0';
+const PRO_VERSION_REQUIRED  = '5.0.0';
+const NUM_TRACKS            = 10;
+const PLUGIN_FILE           = __FILE__;
+const VIDEO_FILE_EXTENSIONS = [ 'mp4', 'm4v', 'webm', 'ogv', 'ogg', 'ogm' ];
 
 init();
 
@@ -80,13 +81,14 @@ function init() {
 		// 0
 		'iframe_fallback'                  => 0,
 		// 10
-		'autoplay_off_after_ran_once'      => 10,
 		'default_aspect_ratio'             => 10,
 		'get_media_gallery_thumbnail'      => 10,
 		'get_media_gallery_video'          => 10,
 		'liveleak_id_fix'                  => 10,
 		'maxwidth_when_aligned'            => 10,
 		'mode_fallback'                    => 10,
+		// 15
+		'autoplay_off_after_ran_once'      => 15,
 		// 20-30
 		'dailymotion_jukebox_aspect_ratio' => 20,
 		'build_tracks_html'                => 20,
@@ -94,7 +96,7 @@ function init() {
 		'iframe_src_query'                 => 25,
 		'iframe_src_autoplay_query'        => 30,
 		// 90
-		'validate_again'                   => 80,
+		// 'validate_again'                   => 80,
 		'set_fixed_dimensions'             => 90,
 		'attr'                             => 99,
 	] as $filter => $priority ) {

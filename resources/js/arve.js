@@ -1,8 +1,8 @@
 (function () {
 	'use strict';
 
-	const qs  = document.querySelector.bind( document);
-	const qsa = document.querySelectorAll.bind( document);
+	const qs  = document.querySelector.bind( document );
+	const qsa = document.querySelectorAll.bind( document );
 
 	function remove_unwanted_stuff() {
 

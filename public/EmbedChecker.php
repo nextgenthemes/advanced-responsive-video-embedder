@@ -10,9 +10,9 @@ class EmbedChecker {
 	}
 
 	public function check() {
-		add_filter( 'arve_oembed2args', [ $this, 'oembed2args' ] );
+		add_filter( 'nextgenthemes/arve/oembed2args', [ $this, 'oembed2args' ] );
 		$maybe_arve_html = $GLOBALS['wp_embed']->shortcode( [], $this->shortcode_args['url'] );
-		remove_filter( 'arve_oembed2args', [ $this, 'oembed2args' ] );
+		remove_filter( 'nextgenthemes/arve/oembed2args', [ $this, 'oembed2args' ] );
 
 		if ( false !== strpos( $maybe_arve_html, 'class="arve-wrapper' ) ) {
 			return $maybe_arve_html;

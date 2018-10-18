@@ -1,17 +1,10 @@
-/.*                         export-ignore
-/*.json                     export-ignore
-/*.lock                     export-ignore
-/*.xml                      export-ignore
-/*.yml                      export-ignore
-/bin                        export-ignore
-/tests                      export-ignore
-/vendor/bin                 export-ignore
-/vendor/dealerdirect        export-ignore
-/vendor/phpcompatibility    export-ignore
-/vendor/samikeijonen        export-ignore
-/vendor/squizlabs           export-ignore
-/vendor/symfony             export-ignore
-/vendor/wp-coding-standards export-ignore
+/.*     export-ignore
+/*.json export-ignore
+/*.lock export-ignore
+/*.xml  export-ignore
+/*.yml  export-ignore
+/bin    export-ignore
+/tests  export-ignore
 
 * text eol=lf
 *.gif binary

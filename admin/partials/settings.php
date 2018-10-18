@@ -48,7 +48,7 @@ $options = options();
 
 	<?php endif; ?>
 
-	<h2><?php esc_html( get_admin_page_title() ); ?></h2>
+	<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 
 	<h2 class="nav-tab-wrapper arve-settings-tabs"></h2>
 

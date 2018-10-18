@@ -5,7 +5,7 @@ const devPath = 'resources';
 mix.setPublicPath( 'dist' );
 mix.sourceMaps();
 mix.version();
-mix.js(  `${devPath}/js/arve.js`, 'js' );
+mix.js( `${devPath}/js/arve.js`, 'js' );
 
 // Sass configuration.
 var sassConfig = {

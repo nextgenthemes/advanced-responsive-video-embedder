@@ -104,7 +104,7 @@ function get_settings_definitions() {
 			],
 			'description'        => sprintf(
 				// Translators: %1$s Providers
-				esc_html__( 'Post the URL of the video here. For %1$s and any <a href               ="%2$s">unlisted</a> video hosts paste their iframe embed codes or its src URL in here (providers embeds need to be responsive).', 'advanced-responsive-video-embedder' ),
+				esc_html__( 'Post the URL of the video here. For %1$s and any <a href="%2$s">unlisted</a> video hosts paste their iframe embed codes or its src URL in here (providers embeds need to be responsive).', 'advanced-responsive-video-embedder' ),
 				esc_html( $embed_code_only ),
 				esc_url( 'https://nextgenthemes.com/arve-pro/#video-host-support' )
 			)
@@ -408,13 +408,13 @@ function get_settings_definitions() {
 			'type'         => 'text',
 			'description'  => sprintf(
 				// Translators: URL
-				__( 'Needed for <a href                                                             ="%s">Random Video Addon</a>.', 'advanced-responsive-video-embedder' ),
+				__( 'Needed for <a href="%s">Random Video Addon</a>.', 'advanced-responsive-video-embedder' ),
 				esc_url( 'https://nextgenthemes.local/plugins/arve-random-video/' )
 			),
 		],
 	];
 
-	$definitions = apply_filters( 'arve_settings_definitions', $definitions );
+	$definitions = apply_filters( 'nextgenthemes/arve/settings', $definitions );
 
 	return $definitions;
 }
@@ -439,5 +439,5 @@ function get_mode_options( $selected ) {
 }
 
 function get_supported_modes() {
-	return apply_filters( 'arve_modes', [ 'normal' => __( 'Normal', 'advanced-responsive-video-embedder' ) ] );
+	return apply_filters( 'nextgenthemes/arve/modes', [ 'normal' => __( 'Normal', 'advanced-responsive-video-embedder' ) ] );
 }

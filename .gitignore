@@ -1,3 +1,9 @@
+/vendor/*
+!vendor/autoload.php
+!vendor/composer
+!vendor/nextgenthemes
+!vendor/vimeo
+
 node_modules
 
 # Numerous always-ignore extensions
@@ -25,11 +31,3 @@ node_modules
 *.sublime-workspace
 nbproject
 Thumbs.db
-
-# Komodo
-.komodotools
-*.komodoproject
-
-# Folders to ignore
-node_modules
-js/coverage

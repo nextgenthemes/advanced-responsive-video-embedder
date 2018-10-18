@@ -57,7 +57,7 @@ function oembed2args( $data, $url ) {
 		$a['src'] = 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $matches[1] );
 	}
 
-	return apply_filters( 'arve_oembed2args', $a );
+	return apply_filters( 'nextgenthemes/arve/oembed2args', $a );
 }
 
 function extract_query_array( $url, $key ) {

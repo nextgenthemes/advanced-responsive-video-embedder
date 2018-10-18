@@ -1,11 +1,6 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-function get_html5_attributes() {
-
-	return [ 'mp4', 'm4v', 'webm', 'ogv', 'ogg', 'ogm' ];
-}
-
 function url_query_array( $url ) {
 
 	$url = wp_parse_url( $url );

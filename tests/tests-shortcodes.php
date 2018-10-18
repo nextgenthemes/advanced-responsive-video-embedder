@@ -13,17 +13,17 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function test_sandbox() {
 
-		$attr = array( 'url' => 'https://example.com' );
+		$attr = [ 'url' => 'https://example.com' ];
 
 		$this->assertNotContains( 'Error', shortcode( $attr ) );
 		$this->assertNotContains( 'sandbox="', shortcode( $attr ), $attr['url'] );
 	}
 
 	public function test_sandbox2() {
-		$attr = array(
+		$attr = [
 			'url'           => 'https://example.com',
 			'disable_flash' => 'n'
-		);
+		];
 
 		$this->assertNotContains( 'Error', shortcode( $attr ) );
 		$this->assertContains(
@@ -36,7 +36,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 	public function test_sandbox3() {
 		$this->change_option( 'iframe_flash', false );
 
-		$attr = array( 'url' => 'https://example.com' );
+		$attr = [ 'url' => 'https://example.com' ];
 
 		$this->assertNotContains( 'Error', shortcode( $attr ) );
 		$this->assertContains(
@@ -70,11 +70,11 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$attachment_id = parent::_make_attachment( $upload );
 
-		$attr = array(
+		$attr = [
 			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
 			'thumbnail' => (string) $attachment_id,
 			'title'     => 'Something',
-		);
+		];
 
 		$this->assertRegExp( '#<meta itemprop="thumbnailUrl" content=".*test-attachment\.jpg#', shortcode( $attr ) );
 
@@ -90,13 +90,13 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function old_test_compare_shortcodes() {
 
-		$atts = array(
+		$atts = [
 			'id'        => 'hRonZ4wP8Ys',
 			'provider'  => 'youtube',
 			'thumbnail' => 'https://example.com/image.jpg',
 			'title'     => 'Something',
 			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
-		);
+		];
 
 		$new_atts = $atts;
 		$old_atts = $atts;
@@ -119,26 +119,26 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function NO_test_modes() {
 
-		$output = shortcode( array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys' ) );
+		$output = shortcode( [ 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys' ] );
 
 		$this->assertNotContains( 'Error', $output );
 		$this->assertContains( 'data-mode="normal"', $output );
 
-		$modes = array( 'lazyload', 'lazyload-lightbox' );
+		$modes = [ 'lazyload', 'lazyload-lightbox' ];
 
 		foreach ( $modes as $key => $mode ) {
 
-			$output = shortcode( array(
+			$output = shortcode( [
 				'url'  => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
 				'mode' => $mode
-			) );
+			] );
 			$this->assertContains( 'Error', $output );
 		}
 	}
 
 	public function test_attr() {
 
-		$atts = array(
+		$output = shortcode( [
 			'align'       => 'left',
 			'autoplay'    => 'y',
 			'description' => '    Description Test   ',
@@ -148,9 +148,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'upload_date' => '2016-10-22',
 			'duration'    => '1H2M3S',
 			'url'         => 'https://example.com',
-		);
-
-		$output = shortcode( $atts );
+		] );
 
 		$this->assertNotContains( 'Error', $output );
 
@@ -166,12 +164,12 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function test_html5() {
 
-		$html5_ext = array( 'mp4', 'm4v', 'webm', 'ogv' );
+		$html5_ext = [ 'mp4', 'm4v', 'webm', 'ogv' ];
 
 		foreach ( $html5_ext as $ext ) {
 
-			$with_src = shortcode( array( 'url' => 'https://example.com/video.' . $ext ) );
-			$with_ext = shortcode( array( $ext => 'https://example.com/video.' . $ext ) );
+			$with_src = shortcode( [ 'url' => 'https://example.com/video.' . $ext ] );
+			$with_ext = shortcode( [ $ext => 'https://example.com/video.' . $ext ] );
 
 			$this->assertNotContains( 'Error', $with_src );
 			$this->assertNotContains( 'Error', $with_ext );
@@ -185,14 +183,14 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			$this->assertContains( 'controlslist="nodownload"', $with_ext );
 		}
 
-		$attr = array(
+		$attr = [
 			'url'          => 'https://example.com/video.mp4',
 			'controlslist' => 'nofullscreen whatever',
-		);
+		];
 
 		$this->assertContains( 'controlslist="nofullscreen whatever"', shortcode( $attr ) );
 
-		$output = shortcode( array(
+		$output = shortcode( [
 			'mp4'       => 'https://example.com/video.mp4',
 			'ogv'       => 'https://example.com/video.ogv',
 			'webm'      => 'https://example.com/video.webm',
@@ -200,7 +198,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'track_1'   => 'https://example.com/v-subtitles-en.vtt',
 			'track_2'   => 'https://example.com/v-subtitles-de.vtt',
 			'track_3'   => 'https://example.com/v-subtitles-es.vtt',
-		) );
+		] );
 
 		// $output2 = wp_video_shortcode( array(
 		// 'mp4'       => 'https://example.com/video.mp4',
@@ -227,7 +225,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function test_iframe() {
 
-		$output = shortcode( array( 'url' => 'https://example.com' ) );
+		$output = shortcode( [ 'url' => 'https://example.com' ] );
 
 		$this->assertNotContains( 'Error', $output );
 		$this->assertRegExp( '#<iframe .*src="https://example\.com#', $output );
@@ -289,7 +287,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function regex2() {
 
-		add_filter( 'shortcode_atts_arve', array( $this, 'check_regex_detection' ) );
+		add_filter( 'shortcode_atts_arve', [ $this, 'check_regex_detection' ] );
 
 		$properties = get_host_properties();
 
@@ -303,9 +301,9 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 				$this->$current_test;
 
-				shortcode( array(
+				shortcode( [
 					'url' => $test['url']
-				) );
+				] );
 			}
 		endforeach;
 	}
@@ -317,7 +315,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function test_disable_flash() {
 
-		$attr = array( 'url' => 'https://example.com' );
+		$attr = [ 'url' => 'https://example.com' ];
 		$this->assertNotContains( 'Error', shortcode( $attr) );
 		$this->assertRegExp( '#<iframe .*src="https://example\.com#', shortcode( $attr) );
 		$this->assertContains( 'data-provider="iframe"', shortcode( $attr ) );
@@ -333,7 +331,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function test_dropbox_html5() {
 
-		$attr = array( 'url' => 'https://www.dropbox.com/s/ocqf9u5pn9b4ox0/Oops%20I%20dropped%20my%20Hoop.mp4' );
+		$attr = [ 'url' => 'https://www.dropbox.com/s/ocqf9u5pn9b4ox0/Oops%20I%20dropped%20my%20Hoop.mp4' ];
 
 		$this->assertNotContains( 'Error', shortcode( $attr) );
 

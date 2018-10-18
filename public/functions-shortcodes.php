@@ -77,34 +77,38 @@ function build_video( array $input_atts, $content = null ) {
 		$pairs[ "track_{$n}_label" ] = null;
 	}
 
-	$atts = shortcode_atts(
-		apply_filters( 'arve_shortcode_pairs', $pairs ),
+	$a = shortcode_atts(
+		apply_filters( 'nextgenthemes/arve/shortcode_pairs', $pairs ),
 		$input_atts,
 		'arve'
 	);
 
-	$errors = output_errors( $atts );
+	$errors = output_errors( $a );
 
 	if ( $errors ) {
-		return $errors . get_debug_info( '', $atts, $input_atts );
+		return $errors . get_debug_info( '', $a, $input_atts );
 	}
 
-	$html['video']           = video_or_iframe( $atts );
-	$html['meta']            = build_meta_html( $atts );
-	$html['ad_link']         = build_promote_link_html( $atts['arve_link'] );
-	$html['embed_container'] = embed_container( $html['meta'] . $html['video'], $atts );
+	$output = build_video_html( $a );
 
-	$normal_embed = wrapper( $html['embed_container'] . $html['ad_link'], $atts );
-
-	$output = apply_filters( 'arve_output', $normal_embed, $html, $atts );
-
-	if ( empty( $output ) ) {
-		return error( 'The output is empty, this should not happen', 'advanced-responsive-video-embedder' );
-	} elseif ( is_wp_error( $output ) ) {
+	if ( is_wp_error( $output ) ) {
 		return error( $output->get_error_message() );
 	}
 
-	return get_debug_info( $output, $atts, $input_atts ) . $output;
+	return $output . get_debug_info( $output, $a, $input_atts );
+}
+
+function build_video_html( array $a ) {
+
+	$pieces                         = (object) array();
+	$pieces->meta                   = build_meta_html( $a );
+	$pieces->video                  = video_or_iframe( $a );
+	$pieces->arve__embed_inner_html = $pieces->meta . $pieces->video;
+	$pieces->arve__embed            = arve__embed( $pieces->arve__embed_inner_html, $a );
+	$pieces->arve_inner_html        = $pieces->arve__embed . build_promote_link_html( $a['arve_link'] );
+	$pieces->arve                   = wrapper( $pieces->arve_inner_html, $a );
+
+	return apply_filters( 'nextgenthemes/arve/video_html', $pieces->arve, $pieces, $a );
 }
 
 function create_shortcodes() {
@@ -114,8 +118,8 @@ function create_shortcodes() {
 	foreach ( $options['shortcodes'] as $provider => $shortcode ) {
 
 		$function = function( $atts ) use ( $provider ) {
-			$atts['provider'] = $provider;
-			return build_video( $atts );
+			$a['provider'] = $provider;
+			return shortcode( $a );
 		};
 
 		add_shortcode( $shortcode, $function );
@@ -128,7 +132,10 @@ function wp_video_shortcode_override( $out, $attr, $content, $instance ) {
 
 	$options = options();
 
-	if ( ! $options['wp_video_override'] || ! empty( $attr['wmv'] ) || ! empty( $attr['flv'] ) ) {
+	if ( ! $options['wp_video_override']
+		|| ! empty( $attr['wmv'] )
+		|| ! empty( $attr['flv'] )
+	) {
 		return $out;
 	}
 

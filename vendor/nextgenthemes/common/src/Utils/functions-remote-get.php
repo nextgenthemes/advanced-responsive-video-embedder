@@ -1,6 +1,8 @@
 <?php
 namespace Nextgenthemes\Utils;
 
+// phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain
+
 function remote_get( $url, array $args = [], $json = true ) {
 
 	$response      = wp_remote_post( $url, $args );
@@ -22,7 +24,7 @@ function remote_get( $url, array $args = [], $json = true ) {
 			'remote_get',
 			sprintf(
 				// Translators: %s is HTTP presponse code.
-				__( 'remote_get error: Status code was expected to be 200 but was %s.', 'advanced-responsive-video-embedder' ),
+				__( 'remote_get error: Status code was expected to be 200 but was %s.', \Nextgenthemes\TEXTDOMAIN ),
 				$response_code
 			)
 		);
@@ -31,14 +33,14 @@ function remote_get( $url, array $args = [], $json = true ) {
 	$body = wp_remote_retrieve_body( $response );
 
 	if ( '' === $body ) {
-		return new \WP_Error( 'remote_get', __( 'Empty body', 'advanced-responsive-video-embedder' ) );
+		return new \WP_Error( 'remote_get', __( 'Empty body', \Nextgenthemes\TEXTDOMAIN ) );
 	}
 
 	if ( $json ) {
 		$response = json_decode( $body );
 
 		if ( null === $response ) {
-			return new \WP_Error( 'remote_get', __( 'json_decode returned null', 'advanced-responsive-video-embedder' ) );
+			return new \WP_Error( 'remote_get', __( 'json_decode returned null', \Nextgenthemes\TEXTDOMAIN ) );
 		}
 	}
 

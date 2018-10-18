@@ -21,7 +21,7 @@ function get_var_dump( $var ) {
 	return ob_get_clean();
 };
 
-function get_debug_info( $input_html, $atts, $input_atts ) {
+function get_debug_info( $input_html, array $a, array $input_atts ) {
 
 	$html = '';
 
@@ -50,17 +50,23 @@ function get_debug_info( $input_html, $atts, $input_atts ) {
 
 	if ( ! empty( $_GET['arve-debug-attr'] ) ) {
 		$debug_attr = sanitize_text_field( wp_unslash( $_GET['arve-debug-attr'] ) );
+		// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
+		// phpcs:disable Squiz.PHP.DiscouragedFunctions.Discouraged
+		$input_attr = isset( $input_atts[ $debug_attr ] ) ? print_r( $input_atts[ $debug_attr ] ) : 'not set';
 		$html      .= sprintf(
-			'<pre style="%s">attr[%s]: %s</pre>',
+			'<pre style="%1$s">a[%2$s]: %3$sa[%2$s]: %4$s</pre>',
 			esc_attr( $pre_style ),
 			esc_html( $debug_attr ),
-			get_var_dump( $atts[ $debug_attr ] )
+			esc_html( $input_attr ) . PHP_EOL,
+			esc_html( print_r( $a[ $debug_attr ] ) )
+			// phpcs:enable WordPress.PHP.DevelopmentFunctions.error_log_print_r
+			// phpcs:enable Squiz.PHP.DiscouragedFunctions.Discouraged
 		);
 	}
 
 	if ( isset( $_GET['arve-debug-atts'] ) ) {
-		$html .= sprintf( '<pre style="%s">$atts: %s</pre>', esc_attr( $pre_style ), get_var_dump( $input_atts ) );
-		$html .= sprintf( '<pre style="%s">$arve: %s</pre>', esc_attr( $pre_style ), get_var_dump( $atts ) );
+		$html .= sprintf( '<pre style="%s">$a: %s</pre>', esc_attr( $pre_style ), get_var_dump( $input_atts ) );
+		$html .= sprintf( '<pre style="%s">$arve: %s</pre>', esc_attr( $pre_style ), get_var_dump( $a ) );
 	}
 
 	if ( isset( $_GET['arve-debug-html'] ) ) {
@@ -180,40 +186,54 @@ function build_promote_link_html( $arve_link ) {
 	return '';
 }
 
-function embed_container( $html, $a ) {
+function arve__embed( $html, array $a ) {
 
-	$attr['class'] = 'arve-embed-container';
+	$style           = '';
+	$arve_embed_attr = [ 'class' => 'arve-embed arve-embed--responsive' ];
 
-	if ( false === $a['aspect_ratio'] ) {
-		$attr['style'] = 'height:auto;padding:0';
-	} else {
-		$attr['style'] = sprintf( 'padding-bottom:%F%%', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
+	if ( false !== $a['aspect_ratio'] && '16:9' !== $a['aspect_ratio'] ) {
+		$id        = $a['wrapper_attr']['id'];
+		$selector  = "#arve #$id .arve-embed--responsive::before,";
+		$selector .= "#tinymce #$id .arve-embed--responsive::before";
+
+		$style = sprintf(
+			'<style>%s{padding-top:%F%%}</style>',
+			esc_html( $selector ),
+			aspect_ratio_to_percentage( $a['aspect_ratio'] )
+		);
 	}
 
-	return sprintf( '<div%s>%s</div>', attr( $attr ), $html );
+	$html = sprintf(
+		'<div%s>%s</div>%s',
+		attr( $arve_embed_attr ),
+		apply_filters( 'nextgenthemes/arve/embed_inner_html', $html, $a ),
+		$style
+	);
+
+	return apply_filters( 'nextgenthemes/arve/embed', $html );
 }
 
-function wrapper( $html, $atts ) {
+function wrapper( $html, array $a ) {
 
-	$element = ( 'link-lightbox' === $atts['mode'] ) ? 'span' : 'div';
+	$element = ( 'link-lightbox' === $a['mode'] ) ? 'span' : 'div';
 
 	return sprintf(
 		'<%s%s>%s</%s>',
 		$element,
-		attr( $atts['wrapper_attr'] ),
+		attr( $a['wrapper_attr'] ),
 		$html,
 		$element
 	);
 }
 
-function video_or_iframe( $atts ) {
+function video_or_iframe( $a ) {
 
-	switch ( $atts['provider'] ) {
+	switch ( $a['provider'] ) {
 
 		case 'html5':
-			return create_video_tag( $atts );
+			return create_video_tag( $a );
 		default:
-			return create_iframe_tag( $atts );
+			return create_iframe_tag( $a );
 	}
 }
 
@@ -227,7 +247,7 @@ function create_iframe_tag( array $a ) {
 		$html = sprintf( '<iframe%s></iframe>', attr( $a['iframe_attr'], 'dailymotion' ) );
 	}
 
-	return apply_filters( 'arve_iframe_tag', $html, $a, $a['iframe_attr'] );
+	return apply_filters( 'nextgenthemes/arve/iframe', $html, $a, $a['iframe_attr'] );
 }
 
 function create_video_tag( array $a ) {
@@ -239,7 +259,7 @@ function create_video_tag( array $a ) {
 		$a['video_tracks_html']
 	);
 
-	return apply_filters( 'arve_video_tag', $html, $a, $a['video_attr'] );
+	return apply_filters( 'nextgenthemes/arve/video', $html, $a, $a['video_attr'] );
 }
 
 function error( $message ) {

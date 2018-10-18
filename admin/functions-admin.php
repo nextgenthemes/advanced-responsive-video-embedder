@@ -2,6 +2,8 @@
 namespace Nextgenthemes\ARVE;
 
 use Nextgenthemes\Admin\NoticeFactory;
+use Nextgenthemes\Asset;
+use Nextgenthemes\Utils;
 
 function action_admin_init_setup_messages() {
 
@@ -13,7 +15,7 @@ function action_admin_init_setup_messages() {
 		$pro_version = \Nextgenthemes\ARVE\pro\VERSION;
 	}
 
-	if ( $pro_version && version_compare( PRO_VERSION_REQUIRED, ARVE_PRO_VERSION, '>' ) ) {
+	if ( $pro_version && version_compare( PRO_VERSION_REQUIRED, $pro_version, '>' ) ) {
 
 		$msg = sprintf(
 			// Translators: %1$s Version
@@ -87,14 +89,11 @@ function add_dashboard_widget() {
 		// Get the regular dashboard widgets array.
 		// (which has our new widget already but at the end).
 		$normal_dashboard = $GLOBALS['wp_meta_boxes']['dashboard']['normal']['core'];
-
 		// Backup and delete our new dashboard widget from the end of the array.
 		$arve_widget_backup = array( 'arve_dashboard_widget' => $normal_dashboard['arve_dashboard_widget'] );
 		unset( $normal_dashboard['arve_dashboard_widget'] );
-
 		// Merge the two arrays together so our widget is at the beginning.
 		$sorted_dashboard = array_merge( $arve_widget_backup, $normal_dashboard );
-
 		// Save the sorted array back into the original metaboxes.
 		// phpcs:disable WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 		$GLOBALS['wp_meta_boxes']['dashboard']['normal']['core'] = $sorted_dashboard;
@@ -146,7 +145,11 @@ function add_action_links( $links ) {
 		);
 	}
 
-	$extra_links['donate']   = sprintf( '<a href="https://nextgenthemes.com/donate/"><strong style="display: inline;">%s</strong></a>', esc_html__( 'Donate', 'advanced-responsive-video-embedder' ) );
+	$extra_links['donate'] = sprintf(
+		'<a href="https://nextgenthemes.com/donate/"><strong style="display: inline;">%s</strong></a>',
+		esc_html__( 'Donate', 'advanced-responsive-video-embedder' )
+	);
+
 	$extra_links['settings'] = sprintf(
 		'<a href="%s">%s</a>',
 		esc_url( admin_url( 'options-general.php?page=advanced-responsive-video-embedder' ) ),
@@ -224,7 +227,7 @@ function register_shortcode_ui() {
 
 function input( $args ) {
 
-	$out = sprintf( '<input%s>', \Nextgenthemes\Utils\attr( $args['input_attr'] ) );
+	$out = sprintf( '<input%s>', Utils\attr( $args['input_attr'] ) );
 
 	if ( ! empty( $args['option_values']['attr'] ) && 'thumbnail_fallback' === $args['option_values']['attr'] ) {
 
@@ -235,7 +238,7 @@ function input( $args ) {
 
 		$out .= sprintf(
 			'<a %s>%s</a>',
-			\Nextgenthemes\Utils\attr(
+			Utils\attr(
 				array(
 					'data-image-upload' => sprintf( '[name="%s"]', $args['input_attr']['name'] ),
 					'class'             => 'button-secondary',
@@ -256,7 +259,7 @@ function textarea( $args ) {
 
 	unset( $args['input_attr']['type'] );
 
-	$out = sprintf( '<textarea%s></textarea>', \Nextgenthemes\Utils\attr( $args['input_attr'] ) );
+	$out = sprintf( '<textarea%s></textarea>', Utils\attr( $args['input_attr'] ) );
 
 	if ( ! empty( $args['description'] ) ) {
 		$out = $out . '<p class="description">' . $args['description'] . '</p>';
@@ -291,7 +294,7 @@ function select( $args ) {
 	$select_attr = $args['input_attr'];
 	unset( $select_attr['value'] );
 
-	$out = sprintf( '<select%s>%s</select>', \Nextgenthemes\Utils\attr( $select_attr ), implode( '', $options ) );
+	$out = sprintf( '<select%s>%s</select>', Utils\attr( $select_attr ), implode( '', $options ) );
 
 	if ( ! empty( $args['description'] ) ) {
 		$out = $out . '<p class="description">' . $args['description'] . '</p>';
@@ -343,7 +346,7 @@ function register_settings() {
 			"arve_options_main[{$value['attr']}]", // ID
 			$value['label'],                       // title
 			$callback_function,                    // callback
-			'advanced-responsive-video-embedder',                             // page
+			'advanced-responsive-video-embedder',  // page
 			'main_section',                        // section
 			array(                                 // args
 				'label_for'     => ( 'radio' === $value['type'] ) ? null : "arve_options_main[{$value['attr']}]",
@@ -402,7 +405,7 @@ function register_settings() {
 	add_settings_field(
 		'arve_options_params[reset]',
 		null,
-		'arve_submit_reset',
+		__NAMESPACE__ . '\submit_reset',
 		'advanced-responsive-video-embedder',
 		'params_section',
 		array( 'reset_name' => 'arve_options_params[reset]')
@@ -414,7 +417,10 @@ function register_settings() {
 	add_settings_section(
 		'shortcodes_section',
 		sprintf( '<span class="arve-settings-section" id="arve-settings-section-shortcodes" title="%s"></span>%s', esc_attr( $shortcodes_title ), esc_html( $shortcodes_title ) ),
-		'arve_shortcodes_section_description',
+		function() {
+			$desc = _e( 'This shortcodes exist for backwards compatiblity only. It is not recommended to use them at all, please use the <code>[arve]</code> shortcode. You can change the old shortcode tags here. You may need this to prevent conflicts with other plugins you want to use.', 'advanced-responsive-video-embedder' );
+			echo "<p>$desc</p>";
+		},
 		'advanced-responsive-video-embedder'
 	);
 
@@ -423,7 +429,7 @@ function register_settings() {
 		add_settings_field(
 			"arve_options_shortcodes[$provider]",
 			ucfirst( $provider ),
-			'arve_input',
+			__NAMESPACE__ . '\input',
 			'advanced-responsive-video-embedder',
 			'shortcodes_section',
 			array(
@@ -442,7 +448,7 @@ function register_settings() {
 	add_settings_field(
 		'arve_options_shortcodes[reset]',
 		null,
-		'arve_submit_reset',
+		__NAMESPACE__ . '\submit_reset',
 		'advanced-responsive-video-embedder',
 		'shortcodes_section',
 		array( 'reset_name' => 'arve_options_shortcodes[reset]')
@@ -466,8 +472,12 @@ function register_settings_debug() {
 
 	add_settings_section(
 		'debug_section',
-		sprintf( '<span class="arve-settings-section" id="arve-settings-section-debug" title="%s"></span>%s', esc_attr( $debug_title ), esc_html( $debug_title ) ),
-		'arve_debug_section_description',
+		sprintf(
+			'<span class="arve-settings-section" id="arve-settings-section-debug" title="%s"></span>%s',
+			esc_attr( $debug_title ),
+			esc_html( $debug_title )
+		),
+		__NAMESPACE__ . '\debug_section_description',
 		'advanced-responsive-video-embedder'
 	);
 }
@@ -477,11 +487,6 @@ function submit_reset( $args ) {
 	submit_button( __( 'Save Changes' ), 'primary', 'submit', false );
 	echo '&nbsp;&nbsp;';
 	submit_button( __( 'Reset This Settings Section', 'advanced-responsive-video-embedder' ), 'secondary', $args['reset_name'], false );
-}
-
-function shortcodes_section_description() {
-	$desc = __( 'This shortcodes exist for backwards compatiblity only. It is not recommended to use them at all, please use the <code>[arve]</code> shortcode. You can change the old shortcode tags here. You may need this to prevent conflicts with other plugins you want to use.', 'advanced-responsive-video-embedder' );
-	echo "<p>$desc</p>";
 }
 
 function params_section_description() {
@@ -635,14 +640,14 @@ function mce_css( $mce_css ) {
 		$mce_css .= ',';
 	}
 
-	$mce_css .= \Nextgenthemes\Asset\plugin_asset_url( 'css/arve.css', PLUGIN_FILE );
+	$mce_css .= plugin_asset_url( 'css/arve.css', PLUGIN_FILE );
 
 	return $mce_css;
 }
 
 function admin_enqueue_styles() {
 
-	\Nextgenthemes\Asset\enqueue( [
+	enqueue( [
 		'handle' => 'advanced-responsive-video-embedder',
 		'src'    => url( 'dist/css/arve-admin.css' ),
 		'ver'    => VERSION
@@ -651,9 +656,7 @@ function admin_enqueue_styles() {
 
 function admin_enqueue_scripts() {
 
-	//dd( url( 'dist/js/arve-admin.js' ) );
-
-	\Nextgenthemes\Asset\enqueue( [
+	enqueue( [
 		'handle' => 'arve-admin',
 		'src'    => url( 'dist/js/arve-admin.js' ),
 		'deps'   => [ 'jquery' ],
@@ -661,7 +664,7 @@ function admin_enqueue_scripts() {
 	] );
 
 	if ( is_plugin_active( 'shortcode-ui/shortcode-ui.php' ) ) {
-		\Nextgenthemes\Asset\enqueue( [
+		enqueue( [
 			'handle' => 'arve-admin-sc-ui',
 			'src'    => url( 'dist/js/arve-shortcode-ui.js' ),
 			'deps'   => [ 'shortcode-ui' ],
