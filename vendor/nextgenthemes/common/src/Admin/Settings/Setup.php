@@ -99,8 +99,10 @@ class Setup {
 
 		Asset\enqueue( [
 			'handle' => 'nextgenthemes-settings',
-			'src'    => Asset\plugin_or_theme_uri( 'vendor/nextgenthemes/common/dist/js/settings.css' ),
+			'src'    => Asset\plugin_or_theme_uri( 'vendor/nextgenthemes/common/dist/css/settings.css' ),
 		] );
+
+		d(Asset\plugin_or_theme_uri( 'vendor/nextgenthemes/common/dist/css/settings.css' ));
 	}
 
 	public function print_admin_page() {
@@ -132,7 +134,7 @@ class Setup {
 					<img
 						v-if='isSaving == true'
 						id='loading-indicator'
-						class="wp-tweak-loading-indicator"
+						class="wrap--nextgenthemes__loading-indicator"
 						src='<?php echo esc_url( get_admin_url() ); ?>/images/wpspin_light-2x.gif'
 						alt='Loading indicator' />
 				</p>

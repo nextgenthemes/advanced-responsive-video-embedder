@@ -462,7 +462,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * Improved: New default option for inview lazyload is 'On iOS, Android and Desktops when no thumbnail is found'.
 * Improved: New installations will show a message guiding users to activation screen.
 
-### 2016-11-29 - 7.9.19
+### 2016-11-29 - 7.9.19 ###
 
 * Fix: 'Embed Video' Button not working with Advanced Custom Fields (Possibly fixed other 3rd party editor plugins compatibility issues as well) Thanks to David Trenear!
 * Fix: Facebook URL detection for usernames with dots in them.

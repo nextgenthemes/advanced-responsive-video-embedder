@@ -1,14 +1,20 @@
-.wp-tweak-wrap label > span {
+.wrap--nextgenthemes {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 700px;
+}
+
+.wrap--nextgenthemes label > span {
   font-weight: bold;
   display: block;
   margin-bottom: 3px;
 }
 
-.wp-tweak-wrap [type="checkbox"] + span {
+.wrap--nextgenthemes [type="checkbox"] + span {
   display: inline;
 }
 
-.wp-tweak-loading-indicator {
+.wrap--nextgenthemes__loading-indicator {
   height: 16px;
   width: 16px;
 }
