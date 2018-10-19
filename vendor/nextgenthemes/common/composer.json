@@ -13,7 +13,7 @@
 	],
 	"support"     : {
 		"issues" : "https://github.com/",
-		"forum"  : "https://nextgenthemes.com/support"
+		"forum"  : "https://nextgenthemes.com/support/"
 	},
 	"autoload"    : {
 		"files" : [
