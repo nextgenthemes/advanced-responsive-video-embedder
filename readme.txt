@@ -29,7 +29,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *   <abbr title="What You See Is What You Get">WYSIWYG</abbr> support. No more messing around with shortcodes and previewing.
 *   New improved dialog for embedding videos.
 *   Magically makes those url embedded videos responsive.
-*   No 'lock in' if do not use shortcodes and use providers WordPress already supports.
+*   No 'lock in' if you do not use shortcodes and use providers WordPress already supports.
 *   Supports [almost every video host](https://nextgenthemes.com/plugins/arve-pro/#support-table) that supports iframe embed codes.
 *   Embeds via pasting the URL in its own line just like WordPress!
 *   Optionally use very powerful Shortcodes instead.
