@@ -5,7 +5,7 @@ Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embe
 Requires at least: 4.4.0
 Tested up to: 4.9.4
 Requires PHP: 5.3
-Stable tag: 8.9.9
+Stable tag: 8.9.10
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -158,7 +158,11 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-### 2018-10-02 - 8.9.9 ###
+### 2018-10-19 - 8.9.10 ###
+
+* Fix: The Gutenberg fix of the last version was not correct in the minified JS.
+
+### 2018-10-19 - 8.9.9 ###
 
 * Fix: White space above video in Gutenberg blocks.
 
