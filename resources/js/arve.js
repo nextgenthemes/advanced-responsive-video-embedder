@@ -21,6 +21,18 @@
 			el.removeAttribute( 'height' );
 			el.removeAttribute( 'style' );
 		} );
+
+		qsa('.wp-block-embed').forEach( el => {
+
+			if ( $(this).has('.arve-wrapper') ) {
+
+				$(this).removeClass( 'wp-embed-aspect-16-9 wp-has-aspect-ratio' );
+
+				if ( $(this).has('.wp-block-embed__wrapper') ) {
+					$(this).find('.wp-block-embed__wrapper').contents().unwrap();
+				}
+			}
+		} );
 	};
 
 	function global_id() {
