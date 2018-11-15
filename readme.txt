@@ -158,6 +158,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2018-11-16 - 8.9.10 ###
+
+* Fix: Wistia autoplay (mobile browsers sill prevent it, also effects single click lazyload in Pro)
+
 ### 2018-10-02 - 8.9.9 ###
 
 * Fix: White space above video in Gutenberg blocks.
