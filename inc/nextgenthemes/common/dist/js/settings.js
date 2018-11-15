@@ -25,6 +25,9 @@
 		// Data that will be proxied by Vue.js to provide reactivity to our template
 		data: {
 			isSaving: false,
+			show_pro: false,
+			show_main: true,
+			show_debug: false,
 			message: '',
 			vm: data.options,
 		},
@@ -54,6 +57,15 @@
 					complete: () => this.isSaving = false,
 				});
 			}, // end: saveOptions
+			toggleMainOptions: function() {
+				this.show_main = ! this.show_main;
+			},
+			toggleProOptions: function() {
+				this.show_pro = ! this.show_pro;
+			},
+			toggleDebugInfo: function() {
+				this.show_debug = ! this.show_debug;
+			}
 		}, // end: methods
 	}); // end: Vue()
 

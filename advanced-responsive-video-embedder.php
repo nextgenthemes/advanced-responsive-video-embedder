@@ -43,7 +43,7 @@ function init() {
 	require_once __DIR__ . '/vendor/autoload.php';
 
 	array_map( function( $file ) {
-		require_once( "public/functions-{$file}.php" );
+		require_once( "inc/functions-{$file}.php" );
 	}, [
 		'assets',
 		'html-output',
@@ -52,14 +52,15 @@ function init() {
 		'shortcode-data',
 		'shortcode-filters',
 		'shortcodes',
-		'shared',
+		#'shared',
 		'thumbnails',
 		'url-handlers',
 		'validation',
-		'host-properties'
+		'host-properties',
+		'settings',
 	] );
 
-	require_once __DIR__ . '/admin/functions-admin.php';
+	require_once __DIR__ . '/inc/Admin/functions-admin.php';
 
 	# Public hooks
 	add_action( 'init',                        __NAMESPACE__ . '\add_oembed_providers' );
@@ -109,9 +110,6 @@ function init() {
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\admin_enqueue_scripts' );
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\admin_enqueue_styles', 99 );
 	add_action( 'admin_init',            __NAMESPACE__ . '\action_admin_init_setup_messages' );
-	add_action( 'admin_init',            __NAMESPACE__ . '\register_settings_debug', 99 );
-	add_action( 'admin_init',            __NAMESPACE__ . '\register_settings' );
-	add_action( 'admin_menu',            __NAMESPACE__ . '\add_plugin_admin_menu' );
 	add_action( 'media_buttons',         __NAMESPACE__ . '\add_media_button', 11 );
 	add_action( 'register_shortcode_ui', __NAMESPACE__ . '\register_shortcode_ui' );
 	add_action( 'wp_dashboard_setup',    __NAMESPACE__ . '\add_dashboard_widget' );

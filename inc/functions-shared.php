@@ -37,26 +37,27 @@ function options_defaults( $section ) {
 	return $options[ $section ];
 }
 
-function options() {
+function legacy_shortcode_option_defaults() {
 
-	$options = wp_parse_args( get_option( 'arve_options_main', [] ), options_defaults( 'main' ) );
+	$properties = get_host_properties();
+	unset( $properties['video'] );
 
-	$supported_modes = get_supported_modes();
+	foreach ( $properties as $provider => $values ) {
 
-	// legacy mode name
-	if ( 'thumbnail' === $options['mode'] ) {
-
-		$options['mode'] = 'lazyload';
-		update_option( 'arve_options_main', $options );
+		if ( ! empty( $values['embed_url'] ) ) {
+			$shortcode_option_defaults[ $provider ] = $provider;
+		}
 	}
 
-	if ( ! in_array( $options['mode'], [ 'normal', 'lazyload', 'lazyload-lightbox', 'link-lightbox' ], true ) ) {
+	return $shortcode_option_defaults;
+}
 
-		$options['mode'] = 'lazyload';
-		update_option( 'arve_options_main', $options );
-	}
+function old_options() {
 
-	$options['shortcodes'] = wp_parse_args( get_option( 'arve_options_shortcodes', [] ), options_defaults( 'shortcodes' ) );
+
+
+	$options               = wp_parse_args( get_option( 'arve_options_main', [] ),       options_defaults( 'main' ) );
+	$options['shortcodes'] = wp_parse_args( get_option( 'arve_options_shortcodes', [] ), legacy_shortcode_option_defaults() );
 	$options['params']     = wp_parse_args( get_option( 'arve_options_params',     [] ), options_defaults( 'params' ) );
 
 	return $options;
@@ -64,7 +65,6 @@ function options() {
 
 function get_settings_definitions() {
 
-	$options         = options();
 	$supported_modes = get_supported_modes();
 	$properties      = get_host_properties();
 
@@ -87,12 +87,6 @@ function get_settings_definitions() {
 	$auto_title      = implode( ', ', $auto_title );
 	$embed_code_only = implode( ', ', $embed_code_only );
 
-	if ( in_array( $options['mode'], $supported_modes, true ) ) {
-		$current_mode_name = $supported_modes[ $options['mode'] ];
-	} else {
-		$current_mode_name = $options['mode'];
-	}
-
 	$definitions = [
 		[
 			'hide_from_settings' => true,
@@ -113,22 +107,14 @@ function get_settings_definitions() {
 			'attr'    => 'mode',
 			'label'   => esc_html__( 'Mode', 'advanced-responsive-video-embedder' ),
 			'type'    => 'select',
-			'options' => [
-				'' => sprintf(
-					// Translators: current setting value
-					esc_html__( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $current_mode_name
-				)
-			] + get_supported_modes(),
+			'options' => [ '' => esc_html__( 'Default (settings page)', 'advanced-responsive-video-embedder' ) ] + get_supported_modes(),
 		],
 		[
 			'attr'    => 'align',
 			'label'   => esc_html__( 'Alignment', 'advanced-responsive-video-embedder' ),
 			'type'    => 'select',
 			'options' => [
-				''       => sprintf(
-					// Translators: current setting value
-					esc_html__( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ), $options['align']
-				),
+				''       => esc_html__( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
 				'none'   => esc_html__( 'None', 'advanced-responsive-video-embedder' ),
 				'left'   => esc_html__( 'Left', 'advanced-responsive-video-embedder' ),
 				'right'  => esc_html__( 'Right', 'advanced-responsive-video-embedder' ),
@@ -140,11 +126,7 @@ function get_settings_definitions() {
 			'label'       => esc_html__( 'ARVE Link', 'advanced-responsive-video-embedder' ),
 			'type'        => 'select',
 			'options'     => [
-				''    => sprintf(
-					// Translators: current setting value
-					esc_html__( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ),
-					( $options['promote_link'] ) ? esc_html__( 'Yes', 'advanced-responsive-video-embedder' ) : esc_html__( 'No', 'advanced-responsive-video-embedder' )
-				),
+				''    => esc_html__( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
 				'yes' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
 				'no'  => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
 			],
@@ -205,11 +187,7 @@ function get_settings_definitions() {
 			'label'       => esc_html__( 'Autoplay', 'advanced-responsive-video-embedder' ),
 			'type'        => 'select',
 			'options'     => [
-				''    => sprintf(
-					// Translators: current setting value
-					__( 'Default (current setting: %s)', 'advanced-responsive-video-embedder' ),
-					( $options['autoplay'] ) ? esc_html__( 'Yes', 'advanced-responsive-video-embedder' ) : esc_html__( 'No', 'advanced-responsive-video-embedder' )
-				),
+				''    => esc_html__( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
 				'yes' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
 				'no'  => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
 			],
@@ -421,9 +399,8 @@ function get_settings_definitions() {
 
 function get_mode_options( $selected ) {
 
+	$out   = '';
 	$modes = get_supported_modes();
-
-	$out = '';
 
 	foreach ( $modes as $mode => $desc ) {
 
@@ -436,8 +413,4 @@ function get_mode_options( $selected ) {
 	}
 
 	return $out;
-}
-
-function get_supported_modes() {
-	return apply_filters( 'nextgenthemes/arve/modes', [ 'normal' => __( 'Normal', 'advanced-responsive-video-embedder' ) ] );
 }

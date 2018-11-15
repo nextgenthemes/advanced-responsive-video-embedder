@@ -115,14 +115,19 @@ function create_shortcodes() {
 
 	$options = options();
 
-	foreach ( $options['shortcodes'] as $provider => $shortcode ) {
+	if ( $options['legacy_shortcodes'] ) {
 
-		$function = function( $atts ) use ( $provider ) {
-			$a['provider'] = $provider;
-			return shortcode( $a );
-		};
+		$options['shortcodes'] = wp_parse_args( get_option( 'arve_options_shortcodes', [] ), old_options_defaults( 'shortcodes' ) );
 
-		add_shortcode( $shortcode, $function );
+		foreach ( $options['shortcodes'] as $provider => $shortcode ) {
+
+			$function = function( $atts ) use ( $provider ) {
+				$a['provider'] = $provider;
+				return shortcode( $a );
+			};
+
+			add_shortcode( $shortcode, $function );
+		}
 	}
 
 	add_shortcode( 'arve', __NAMESPACE__ . '\shortcode' );

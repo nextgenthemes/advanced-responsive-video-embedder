@@ -14,13 +14,14 @@ function enqueue_when_content_contains( array $args ) {
 }
 
 function enqueue( array $args ) {
+	$args['enqueue'] = true;
 	register( $args );
-	wp_enqueue_script( $args['handle'] );
 }
 
 function register( array $args ) {
 
 	$defaults = array(
+		'enqueue'   => false,
 		'handle'    => null,
 		'src'       => null,
 		'cdn_src'   => null,
@@ -48,12 +49,21 @@ function register( array $args ) {
 		if ( $args['integrity'] ) {
 			add_interity_to_script( $args['handle'], $args['integrity'] );
 		}
+
+		if ( $args['enqueue'] ) {
+			wp_enqueue_script( $args['handle'] );
+		}
+
 	} else {
 		wp_register_style( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['media'] );
 
 		if ( $args['integrity'] ) {
 			// TODO
 			add_interity_to_style( $args['handle'], $args['integrity'] );
+		}
+
+		if ( $args['enqueue'] ) {
+			wp_enqueue_style( $args['handle'] );
 		}
 	}
 }
