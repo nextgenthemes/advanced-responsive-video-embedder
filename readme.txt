@@ -5,7 +5,7 @@ Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embe
 Requires at least: 4.4.0
 Tested up to: 4.9.4
 Requires PHP: 5.3
-Stable tag: 8.9.11
+Stable tag: 8.10.0
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -157,6 +157,11 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### 2018-11-27 - 8.10.0 ###
+
+* Improved: Video max width setting now defaults (if empty) to your themes `$content_width` variable to optimize thumbnail loading in Pro Addon.
+* Improved: Removed code what should be in the Pro Addon instead. Make sure to update the Pro Addon as well!
 
 ### 2018-11-16 - 8.9.11 ###
 
