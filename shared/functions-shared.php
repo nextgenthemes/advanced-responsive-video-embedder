@@ -9,7 +9,7 @@ function arve_get_options_defaults( $section ) {
 		'autoplay'              => false,
 		'mode'                  => 'normal',
 		'promote_link'          => false,
-		'video_maxwidth'        => '',
+		'video_maxwidth'        => empty( $GLOBALS['content_width'] ) ? 900 : $GLOBALS['content_width'],
 		'wp_image_cache_time'   => 18000,
 		'last_settings_tab'     => '',
 		'wp_video_override'     => true,
@@ -202,7 +202,7 @@ function arve_get_settings_definitions() {
 			'attr'  => 'video_maxwidth',
 			'label'       => esc_html__('Maximal Width', ARVE_SLUG),
 			'type'        =>  'number',
-			'description' => esc_html__( 'Optional, if not set your videos will be the maximum size of the container they are in. If your content area has a big width you might want to set this. Must be 100+ to work.', ARVE_SLUG ),
+			'description' => __( 'Maximal size your videos can be displayed, if set to 0 it will default to your themes <code>$content_width</code>.', ARVE_SLUG ),
 		),
 		array(
 			'hide_from_settings' => true,
@@ -989,6 +989,7 @@ function arve_get_host_properties() {
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'requires_flash' => true,
+			/*
 			'tests' => array(
 				array(
 					'url' => 'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html?format=embed&player_autoplay=false',
@@ -999,6 +1000,7 @@ function arve_get_host_properties() {
 					'id' => 'https://www.yahoo.com/movies/sully-trailer-4-211012511.html'
 				),
 			)
+			*/
 		),
 		'youku' => array(
 			'regex'          => 'https?://([a-z.]+)?\.youku.com/(embed/|v_show/id_)(?<id>[a-z0-9]+)',
