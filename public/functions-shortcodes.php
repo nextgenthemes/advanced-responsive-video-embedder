@@ -22,6 +22,17 @@ function arve_shortcode( $input_atts, $content = null ) {
 	return arve_shortcode_arve( $input_atts, $content );
 }
 
+function arve_default_maxwidth() {
+
+	$options = arve_get_options();
+
+	if ( empty( $options['video_maxwidth'] ) ) {
+		return empty( $GLOBALS['content_width'] ) ? 900 : $GLOBALS['content_width'];
+	}
+
+	return $options['video_maxwidth'];
+}
+
 function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = true ) {
 
 	$errors     = '';
@@ -38,7 +49,7 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 		'duration'         => null,
 		'disable_flash'    => null,
 		'iframe_name'      => null,
-		'maxwidth'         => (string) $options['video_maxwidth'],
+		'maxwidth'         => (string) arve_default_maxwidth(),
 		'mode'             => $options['mode'],
 		'parameters'       => null,
 		'src'              => null, // Just a alias for url to make it simple

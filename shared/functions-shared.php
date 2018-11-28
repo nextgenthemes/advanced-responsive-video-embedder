@@ -9,7 +9,7 @@ function arve_get_options_defaults( $section ) {
 		'autoplay'              => false,
 		'mode'                  => 'normal',
 		'promote_link'          => false,
-		'video_maxwidth'        => empty( $GLOBALS['content_width'] ) ? 900 : $GLOBALS['content_width'],
+		'video_maxwidth'        => 0,
 		'wp_image_cache_time'   => 18000,
 		'last_settings_tab'     => '',
 		'wp_video_override'     => true,
@@ -989,9 +989,7 @@ function arve_get_host_properties() {
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'requires_flash' => true,
-			/*
 			'tests' => array(
-				/*
 				array(
 					'url' => 'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html?format=embed&player_autoplay=false',
 					'id'  => 'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html'
@@ -1001,7 +999,6 @@ function arve_get_host_properties() {
 					'id' => 'https://www.yahoo.com/movies/sully-trailer-4-211012511.html'
 				),
 			)
-			*/
 		),
 		'youku' => array(
 			'regex'          => 'https?://([a-z.]+)?\.youku.com/(embed/|v_show/id_)(?<id>[a-z0-9]+)',
