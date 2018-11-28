@@ -1000,7 +1000,6 @@ function arve_get_host_properties() {
 					'url' => 'https://www.yahoo.com/movies/sully-trailer-4-211012511.html?format=embed',
 					'id' => 'https://www.yahoo.com/movies/sully-trailer-4-211012511.html'
 				),
-				*/
 			)
 			*/
 		),
