@@ -990,6 +990,7 @@ function arve_get_host_properties() {
 			'auto_title'     => true,
 			'requires_flash' => true,
 			'tests' => array(
+				/*
 				array(
 					'url' => 'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html?format=embed&player_autoplay=false',
 					'id'  => 'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html'
@@ -998,6 +999,7 @@ function arve_get_host_properties() {
 					'url' => 'https://www.yahoo.com/movies/sully-trailer-4-211012511.html?format=embed',
 					'id' => 'https://www.yahoo.com/movies/sully-trailer-4-211012511.html'
 				),
+				*/
 			)
 		),
 		'youku' => array(
