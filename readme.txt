@@ -1,11 +1,11 @@
-wp=== ARVE Advanced Responsive Video Embedder (YouTube, Vimeo, HTML5 Video ...) ===
+=== ARVE Advanced Responsive Video Embedder (YouTube, Vimeo, HTML5 Video ...) ===
 Contributors: nico23
 Donate link: https://www.paypal.me/nico23
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.4.0
 Tested up to: 4.9.4
 Requires PHP: 5.3
-Stable tag: 8.9.8
+Stable tag: 8.10.1
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -29,7 +29,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *   <abbr title="What You See Is What You Get">WYSIWYG</abbr> support. No more messing around with shortcodes and previewing.
 *   New improved dialog for embedding videos.
 *   Magically makes those url embedded videos responsive.
-*   No 'lock in' if do not use shortcodes and use providers WordPress already supports.
+*   No 'lock in' if you do not use shortcodes and use providers WordPress already supports.
 *   Supports [almost every video host](https://nextgenthemes.com/plugins/arve-pro/#support-table) that supports iframe embed codes.
 *   Embeds via pasting the URL in its own line just like WordPress!
 *   Optionally use very powerful Shortcodes instead.
@@ -158,9 +158,30 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-### 2018-10-02 - 9.0.0 ###
+### 9.0.0 ###
 
 * Added Bitchute
+
+### 2018-11-29 - 8.10.1 ###
+
+* Improved: Display message to remind customers to update ARVE Pro 4.2.0. Auto updates seem to not work again ...
+
+### 2018-11-27 - 8.10.0 ###
+
+* Improved: Video max width setting now defaults (if empty) to your themes `$content_width` variable to optimize thumbnail loading in Pro Addon.
+* Improved: Removed code what should be in the Pro Addon instead. Make sure to update the Pro Addon as well!
+
+### 2018-11-16 - 8.9.11 ###
+
+* Fix: Wistia autoplay (mobile browsers sill prevent it, also effects single click lazyload in Pro)
+
+### 2018-10-19 - 8.9.10 ###
+
+* Fix: The Gutenberg fix of the last version was not correct in the minified JS.
+
+### 2018-10-19 - 8.9.9 ###
+
+* Fix: White space above video in Gutenberg blocks.
 
 ### 2018-10-02 - 8.9.8 ###
 

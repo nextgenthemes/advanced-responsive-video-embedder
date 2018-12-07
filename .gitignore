@@ -1,10 +1,9 @@
-/vendor/*
-!vendor/autoload.php
-!vendor/composer
-!vendor/nextgenthemes
-!vendor/vimeo
+/dist/zip
 
-node_modules
+/vendor/*
+!/vendor/autoload.php
+!/vendor/composer
+!/vendor/vimeo
 
 # Numerous always-ignore extensions
 *.diff
