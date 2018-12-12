@@ -1,5 +1,4 @@
 <?php
-
 add_action( 'admin_init', 'nextgenthemes_init_edd_updaters', 0 );
 add_action( 'admin_init', 'nextgenthemes_activation_notices' );
 add_action( 'admin_init', 'nextgenthemes_register_settings' );
@@ -15,6 +14,7 @@ function nextgenthemes_admin_install_search_url( $search_term ) {
 		return admin_url( $path );
 	}
 }
+
 function nextgenthemes_ads_page() { ?>
 <style>
 	body {
@@ -455,7 +455,6 @@ function nextgenthemes_init_plugin_updater( $product ) {
 		array(
 			'version'   => $product['version'],
 			'license'   => nextgenthemes_get_key( $product['slug'] ),
-			#'item_name' => $product['name'],
 			'item_id'   => $product['id'],
 			'author'    => $product['author']
 		)
