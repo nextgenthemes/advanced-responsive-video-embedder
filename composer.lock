@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad6dcaf32e97365def8142ba21465fd4",
+    "content-hash": "b6fdce9a05b77b6a789ec5335ab2cfee",
     "packages": [
         {
             "name": "composer/installers",
@@ -125,47 +125,6 @@
                 "zikula"
             ],
             "time": "2018-08-27T06:10:37+00:00"
-        },
-        {
-            "name": "nextgenthemes/common",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "/media/unencrypted/websites/symbiosistheme.com/web/app/plugins/composer-local/nextgenthemes/common",
-                "reference": "e6f73c56c69ef20200cb6e83c49436bc6a845404",
-                "shasum": null
-            },
-            "require": {
-                "php": ">=5.6"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/bootstrap.php"
-                ]
-            },
-            "license": [
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Jonas",
-                    "homepage": "https://nextgenthemes.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "w",
-            "homepage": "https://nextgenthemes.com",
-            "keywords": [
-                "wordpress"
-            ],
-            "support": {
-                "issues": "https://github.com/",
-                "forum": "https://nextgenthemes.com/support"
-            },
-            "transport-options": {
-                "symlink": false
-            }
         },
         {
             "name": "vimeo/vimeo-api",
@@ -448,12 +407,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/samikeijonen/phpcs-composer.git",
-                "reference": "9fa0b24dc2636680acc2b73bfb22ef825a83e72e"
+                "reference": "b26c65d61b98b2e9c31f58fcbaaf24f1a0448b85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/samikeijonen/phpcs-composer/zipball/9fa0b24dc2636680acc2b73bfb22ef825a83e72e",
-                "reference": "9fa0b24dc2636680acc2b73bfb22ef825a83e72e",
+                "url": "https://api.github.com/repos/samikeijonen/phpcs-composer/zipball/b26c65d61b98b2e9c31f58fcbaaf24f1a0448b85",
+                "reference": "b26c65d61b98b2e9c31f58fcbaaf24f1a0448b85",
                 "shasum": ""
             },
             "require": {
@@ -482,7 +441,7 @@
                 "standards",
                 "wordpress"
             ],
-            "time": "2018-10-09T19:46:55+00:00"
+            "time": "2018-11-16T11:58:43+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -537,7 +496,7 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.9.0",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
@@ -595,16 +554,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v4.1.6",
+            "version": "v4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "367e689b2fdc19965be435337b50bc8adf2746c9"
+                "reference": "c41175c801e3edfda90f32e292619d10c27103d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/367e689b2fdc19965be435337b50bc8adf2746c9",
-                "reference": "367e689b2fdc19965be435337b50bc8adf2746c9",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/c41175c801e3edfda90f32e292619d10c27103d7",
+                "reference": "c41175c801e3edfda90f32e292619d10c27103d7",
                 "shasum": ""
             },
             "require": {
@@ -623,7 +582,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.1-dev"
+                    "dev-master": "4.2-dev"
                 }
             },
             "autoload": {
@@ -650,20 +609,20 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2018-10-02T16:36:10+00:00"
+            "time": "2018-11-11T19:52:12+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git",
-                "reference": "46d42828ce7355d8b3776e3171f2bda892d179b4"
+                "reference": "7aa217ab38156c5cb4eae0f04ae376027c407a9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress-Coding-Standards/WordPress-Coding-Standards/zipball/46d42828ce7355d8b3776e3171f2bda892d179b4",
-                "reference": "46d42828ce7355d8b3776e3171f2bda892d179b4",
+                "url": "https://api.github.com/repos/WordPress-Coding-Standards/WordPress-Coding-Standards/zipball/7aa217ab38156c5cb4eae0f04ae376027c407a9b",
+                "reference": "7aa217ab38156c5cb4eae0f04ae376027c407a9b",
                 "shasum": ""
             },
             "require": {
@@ -671,7 +630,7 @@
                 "squizlabs/php_codesniffer": "^2.9.0 || ^3.0.2"
             },
             "require-dev": {
-                "phpcompatibility/php-compatibility": "*"
+                "phpcompatibility/php-compatibility": "^9.0"
             },
             "suggest": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3 || This Composer plugin will sort out the PHPCS 'installed_paths' automatically."
@@ -693,13 +652,12 @@
                 "standards",
                 "wordpress"
             ],
-            "time": "2018-09-10T17:04:05+00:00"
+            "time": "2018-11-12T10:13:12+00:00"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "nextgenthemes/common": 20,
         "samikeijonen/phpcs-composer": 20
     },
     "prefer-stable": false,

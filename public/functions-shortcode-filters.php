@@ -151,6 +151,11 @@ function get_wrapper_id( array $a ) {
 	return $wrapper_id;
 }
 
+function sc_filter_init_error( array $a ) {
+	$a['errors'] = new \WP_Error();
+	return $a;
+}
+
 function add_error( array $a, $code, $msg, $remove_filters = false ) {
 
 	if ( isset( $a['errors'] ) && is_wp_error( $a['errors'] ) ) {
@@ -542,10 +547,12 @@ function sc_filter_get_media_gallery_thumbnail( array $a ) {
 
 	if ( is_numeric( $a['thumbnail'] ) ) {
 
-		$attchment_id    = $a['thumbnail'];
-		$a['img_src']    = get_attachment_image_url_or_srcset( 'url', $attchment_id );
-		$a['img_srcset'] = get_attachment_image_url_or_srcset( 'srcset', $attchment_id );
+		$a['img_src']    = wp_get_attachment_image_url( $a['thumbnail'], 'small' );
+		$a['img_srcset'] = wp_get_attachment_image_srcset( $a['thumbnail'], 'small' );
 
+		if ( ! $a['img_src'] ) {
+			$a['errors']->add( 'wp thumbnail', __( 'No attachment with that ID', 'advanced-responsive-video-embedder' ) );
+		}
 	} elseif ( valid_url( $a['thumbnail'] ) ) {
 
 		$a['img_src']    = $a['thumbnail'];
@@ -553,7 +560,7 @@ function sc_filter_get_media_gallery_thumbnail( array $a ) {
 
 	} else {
 
-		$a['img_src'] = new \WP_Error( 'thumbnail', __( 'Not a valid thumbnail URL or Media ID given', 'advanced-responsive-video-embedder' ) );
+		$a['errors']->add( 'thumbnail', __( 'Not a valid thumbnail URL or Media ID given', 'advanced-responsive-video-embedder' ) );
 	}
 
 	return $a;

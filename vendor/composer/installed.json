@@ -192,49 +192,6 @@
         ]
     },
     {
-        "name": "nextgenthemes/common",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "dist": {
-            "type": "path",
-            "url": "/media/unencrypted/websites/symbiosistheme.com/web/app/plugins/composer-local/nextgenthemes/common",
-            "reference": "e6f73c56c69ef20200cb6e83c49436bc6a845404",
-            "shasum": null
-        },
-        "require": {
-            "php": ">=5.6"
-        },
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "src/bootstrap.php"
-            ]
-        },
-        "license": [
-            "GPL-3.0"
-        ],
-        "authors": [
-            {
-                "name": "Nicolas Jonas",
-                "homepage": "https://nextgenthemes.com",
-                "role": "Developer"
-            }
-        ],
-        "description": "w",
-        "homepage": "https://nextgenthemes.com",
-        "keywords": [
-            "wordpress"
-        ],
-        "support": {
-            "issues": "https://github.com/",
-            "forum": "https://nextgenthemes.com/support"
-        },
-        "transport-options": {
-            "symlink": false
-        }
-    },
-    {
         "name": "phpcompatibility/php-compatibility",
         "version": "9.0.0",
         "version_normalized": "9.0.0.0",
@@ -405,12 +362,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/samikeijonen/phpcs-composer.git",
-            "reference": "9fa0b24dc2636680acc2b73bfb22ef825a83e72e"
+            "reference": "b26c65d61b98b2e9c31f58fcbaaf24f1a0448b85"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/samikeijonen/phpcs-composer/zipball/9fa0b24dc2636680acc2b73bfb22ef825a83e72e",
-            "reference": "9fa0b24dc2636680acc2b73bfb22ef825a83e72e",
+            "url": "https://api.github.com/repos/samikeijonen/phpcs-composer/zipball/b26c65d61b98b2e9c31f58fcbaaf24f1a0448b85",
+            "reference": "b26c65d61b98b2e9c31f58fcbaaf24f1a0448b85",
             "shasum": ""
         },
         "require": {
@@ -419,9 +376,9 @@
             "phpcompatibility/phpcompatibility-wp": "^2",
             "wp-coding-standards/wpcs": "^1"
         },
-        "time": "2018-10-09T19:46:55+00:00",
+        "time": "2018-11-16T11:58:43+00:00",
         "type": "phpcodesniffer-standard",
-        "installation-source": "dist",
+        "installation-source": "source",
         "notification-url": "https://packagist.org/downloads/",
         "license": [
             "GPL-2.0-or-later"
@@ -497,8 +454,8 @@
     },
     {
         "name": "symfony/polyfill-ctype",
-        "version": "v1.9.0",
-        "version_normalized": "1.9.0.0",
+        "version": "v1.10.0",
+        "version_normalized": "1.10.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-ctype.git",
@@ -557,17 +514,17 @@
     },
     {
         "name": "symfony/yaml",
-        "version": "v4.1.6",
-        "version_normalized": "4.1.6.0",
+        "version": "v4.2.1",
+        "version_normalized": "4.2.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/yaml.git",
-            "reference": "367e689b2fdc19965be435337b50bc8adf2746c9"
+            "reference": "c41175c801e3edfda90f32e292619d10c27103d7"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/yaml/zipball/367e689b2fdc19965be435337b50bc8adf2746c9",
-            "reference": "367e689b2fdc19965be435337b50bc8adf2746c9",
+            "url": "https://api.github.com/repos/symfony/yaml/zipball/c41175c801e3edfda90f32e292619d10c27103d7",
+            "reference": "c41175c801e3edfda90f32e292619d10c27103d7",
             "shasum": ""
         },
         "require": {
@@ -583,11 +540,11 @@
         "suggest": {
             "symfony/console": "For validating YAML files using the lint command"
         },
-        "time": "2018-10-02T16:36:10+00:00",
+        "time": "2018-11-11T19:52:12+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "4.1-dev"
+                "dev-master": "4.2-dev"
             }
         },
         "installation-source": "dist",
@@ -667,17 +624,17 @@
     },
     {
         "name": "wp-coding-standards/wpcs",
-        "version": "1.1.0",
-        "version_normalized": "1.1.0.0",
+        "version": "1.2.0",
+        "version_normalized": "1.2.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git",
-            "reference": "46d42828ce7355d8b3776e3171f2bda892d179b4"
+            "reference": "7aa217ab38156c5cb4eae0f04ae376027c407a9b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/WordPress-Coding-Standards/WordPress-Coding-Standards/zipball/46d42828ce7355d8b3776e3171f2bda892d179b4",
-            "reference": "46d42828ce7355d8b3776e3171f2bda892d179b4",
+            "url": "https://api.github.com/repos/WordPress-Coding-Standards/WordPress-Coding-Standards/zipball/7aa217ab38156c5cb4eae0f04ae376027c407a9b",
+            "reference": "7aa217ab38156c5cb4eae0f04ae376027c407a9b",
             "shasum": ""
         },
         "require": {
@@ -685,12 +642,12 @@
             "squizlabs/php_codesniffer": "^2.9.0 || ^3.0.2"
         },
         "require-dev": {
-            "phpcompatibility/php-compatibility": "*"
+            "phpcompatibility/php-compatibility": "^9.0"
         },
         "suggest": {
             "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3 || This Composer plugin will sort out the PHPCS 'installed_paths' automatically."
         },
-        "time": "2018-09-10T17:04:05+00:00",
+        "time": "2018-11-12T10:13:12+00:00",
         "type": "phpcodesniffer-standard",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",

@@ -40,10 +40,11 @@ function init() {
 		define( 'Nextgenthemes\Utils\TEXTDOMAIN', 'advanced-responsive-video-embedder' );
 	}
 
+	require_once __DIR__ . '/nextgenthemes/init.php';
 	require_once __DIR__ . '/vendor/autoload.php';
 
 	array_map( function( $file ) {
-		require_once( "inc/functions-{$file}.php" );
+		require_once( "public/functions-{$file}.php" );
 	}, [
 		'assets',
 		'html-output',
@@ -53,14 +54,13 @@ function init() {
 		'shortcode-filters',
 		'shortcodes',
 		#'shared',
-		'thumbnails',
 		'url-handlers',
 		'validation',
 		'host-properties',
 		'settings',
 	] );
 
-	require_once __DIR__ . '/inc/Admin/functions-admin.php';
+	require_once __DIR__ . '/public/Admin/functions-admin.php';
 
 	# Public hooks
 	add_action( 'init',                        __NAMESPACE__ . '\add_oembed_providers' );
@@ -75,6 +75,7 @@ function init() {
 
 	foreach ( [
 		'validate'                         => -99,
+		'init_error'                       => -98,
 		// 0
 		'detect_provider_and_id_from_url'  => -10,
 		'detect_html5'                     => -10,

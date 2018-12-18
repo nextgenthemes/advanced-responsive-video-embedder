@@ -83,10 +83,12 @@ function build_video( array $input_atts, $content = null ) {
 		'arve'
 	);
 
-	$errors = output_errors( $a );
+	if ( $a['errors']->get_error_code() ) {
+		$error_html  = __( 'ARVE Error(s):', 'advanced-responsive-video-embedder' );
+		$error_html .= get_error_messages();
+		$error_html .= get_debug_info( '', $a, $input_atts );
 
-	if ( $errors ) {
-		return $errors . get_debug_info( '', $a, $input_atts );
+		return $error_html;
 	}
 
 	$output = build_video_html( $a );
