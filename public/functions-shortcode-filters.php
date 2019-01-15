@@ -95,7 +95,7 @@ function arve_sc_filter_attr( $a ) {
 		}
 
 		$a['iframe_attr'] = array(
-			'allow'           => 'autoplay; fullscreen',
+			'allow'           => 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture',
 			'allowfullscreen' => '',
 			'class'           => 'arve-iframe fitvidsignore',
 			'frameborder'     => '0',

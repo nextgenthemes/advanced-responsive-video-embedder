@@ -61,55 +61,89 @@ function arve_get_debug_info( $input_html, $atts, $input_atts ) {
 	return $html;
 }
 
-function arve_build_meta_html( $atts ) {
+function arve_build_meta_html( $a ) {
 
 	$meta = '';
 
-	if ( ! empty( $atts['sources'] ) ) {
+	if ( ! empty( $a['sources'] ) ) {
 
-		$first_source = arve_get_first_array_value( $atts['sources'] );
+		$first_source = arve_get_first_array_value( $a['sources'] );
 
 		$meta .= sprintf( '<meta itemprop="contentURL" content="%s">', esc_attr( $first_source['src'] ) );
 	}
 
-	if ( ! empty( $atts['iframe_src'] ) ) {
-		$meta .= sprintf( '<meta itemprop="embedURL" content="%s">', esc_attr( $atts['iframe_src'] ) );
+	if ( ! empty( $a['iframe_src'] ) ) {
+		$meta .= sprintf( '<meta itemprop="embedURL" content="%s">', esc_attr( $a['iframe_src'] ) );
 	}
 
-	if ( ! empty( $atts['upload_date'] ) ) {
-		$meta .= sprintf( '<meta itemprop="uploadDate" content="%s">', esc_attr( $atts['upload_date'] ) );
+	if ( ! empty( $a['upload_date'] ) ) {
+		$meta .= sprintf( '<meta itemprop="uploadDate" content="%s">', esc_attr( $a['upload_date'] ) );
 	}
 
-	if ( ! empty( $atts['duration'] ) ) {
-		$meta .= sprintf( '<meta itemprop="duration" content="PT%s">', esc_attr( $atts['duration'] ) );
+	if ( ! empty( $a['duration'] ) ) {
+		$meta .= sprintf( '<meta itemprop="duration" content="PT%s">', esc_attr( $a['duration'] ) );
 	}
 
-	if( ! empty( $atts['img_src'] ) ) :
+	if( ! empty( $a['img_src'] ) ) :
 
-		$meta .= sprintf(
-			'<meta%s>',
-			arve_attr( array(
-				'itemprop' => 'thumbnailUrl',
-				'content'  => $atts['img_src'],
-			) )
+		$thumbnail = sprintf( '<meta itemprop="thumbnailUrl" content="%s">', esc_attr( $a['img_src'] ) );
+
+		$meta .= arve_build_tag(
+			[
+				'name' => 'thumbnail',
+				'tag'  => 'meta',
+				'attr' => [
+					'itemprop' => 'thumbnailUrl',
+					'content'  => $a['img_src'],
+				],
+			],
+			$a
 		);
 
 	endif;
 
-	if ( ! empty( $atts['title'] )
-		&& in_array( $atts['mode'], array( 'lazyload', 'lazyload-lightbox' ) )
-		&& empty( $atts['hide_title'] )
-	) {
-		$meta .= '<h5 itemprop="name" class="arve-title">' . trim( $atts['title'] ) . '</h5>';
-	} elseif( ! empty( $atts['title'] ) ) {
-		$meta .= sprintf( '<meta itemprop="name" content="%s">', esc_attr( trim( $atts['title'] ) ) );
+	if ( ! empty( $a['title'] ) ) {
+
+		$meta .= arve_build_tag(
+			[
+				'name' => 'title',
+				'tag'  => 'meta',
+				'attr' => [
+					'itemprop' => 'name',
+					'content'  => trim( $a['title'] ),
+				]
+			],
+			$a
+		);
 	}
 
-	if ( ! empty( $atts['description'] ) ) {
-		$meta .= '<span itemprop="description" class="arve-description arve-hidden">' . esc_html( trim( $atts['description'] ) ) . '</span>';
+	if ( ! empty( $a['description'] ) ) {
+		$meta .=  sprintf( '<span itemprop="description" class="arve-description arve-hidden">%s</span>', esc_html( trim( $a['description'] ) ) );
 	}
 
 	return $meta;
+}
+
+function arve_build_tag( $args, $a ) {
+
+	$args = apply_filters( "nextgenthemes/arve/{$args['name']}", $args, $a );
+
+	if ( ! empty( $args['content'] ) ) {
+		$out = sprintf(
+			'<%1$s%2$s>%3$s</%1$s>',
+			esc_html( $args['tag'] ),
+			arve_attr( $args['attr'] ),
+			$args['content']
+		);
+	} else {
+		$out = sprintf(
+			'<%s%s>',
+			esc_html( $args['tag'] ),
+			arve_attr( $args['attr'] )
+		);
+	}
+
+	return $out;
 }
 
 function arve_build_promote_link_html( $arve_link ) {

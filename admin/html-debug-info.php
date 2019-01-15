@@ -1,14 +1,4 @@
 <textarea style="font-family: monospace; width: 100%" rows="25">
-Version of the browser you see the issue in (for example Firefox 52, do not say latest):
-
-Link to test page on live site with the issue (do not change after posting):
-
-Shortcode(s) or URL(s) you used for embedding and have problems with:
-
-Detailed Description of the issue:
-
-What you are expecting and what you are seeing instead?
-
 ARVE Version:      <?php echo $arve_version . "\n"; ?>
 ARVE-Pro Version:  <?php echo $arve_pro_version . "\n"; ?>
 WordPress Version: <?php echo $wp_version . "\n"; ?>

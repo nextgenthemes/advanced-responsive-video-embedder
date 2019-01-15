@@ -158,6 +158,11 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2019-01-16 - 8.10.2 ###
+
+* Fix: Base code to fix titles not showing over thumbnails in recent Pro Addon version.
+* Improved: Added `allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"` to iframe as per official YouTube embed code.
+
 ### 2018-11-29 - 8.10.1 ###
 
 * Improved: Display message to remind customers to update ARVE Pro 4.2.0. Auto updates seem to not work again ...
