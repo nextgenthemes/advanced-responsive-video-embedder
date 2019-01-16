@@ -20,7 +20,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 define( 'ARVE_SLUG',                 'advanced-responsive-video-embedder' );
 define( 'ARVE_VERSION',              '8.10.2' );
-define( 'ARVE_PRO_VERSION_REQUIRED', '4.2.4' );
+define( 'ARVE_PRO_VERSION_REQUIRED', '4.2.5' );
 
 define( 'ARVE_URL', plugin_dir_url( __FILE__ ) );
 define( 'ARVE_PUBLIC_URL', ARVE_URL . 'public/' );

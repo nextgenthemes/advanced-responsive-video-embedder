@@ -153,7 +153,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 2. URL Parameter Options
 3. Pro Options
 
-## Changelog ##
+## Changelog #
 
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
