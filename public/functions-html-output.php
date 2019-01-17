@@ -89,14 +89,14 @@ function arve_build_meta_html( $a ) {
 		$thumbnail = sprintf( '<meta itemprop="thumbnailUrl" content="%s">', esc_attr( $a['img_src'] ) );
 
 		$meta .= arve_build_tag(
-			[
+			array(
 				'name' => 'thumbnail',
 				'tag'  => 'meta',
 				'attr' => [
 					'itemprop' => 'thumbnailUrl',
 					'content'  => $a['img_src'],
 				],
-			],
+			),
 			$a
 		);
 
@@ -105,14 +105,14 @@ function arve_build_meta_html( $a ) {
 	if ( ! empty( $a['title'] ) ) {
 
 		$meta .= arve_build_tag(
-			[
+			array(
 				'name' => 'title',
 				'tag'  => 'meta',
 				'attr' => [
 					'itemprop' => 'name',
 					'content'  => trim( $a['title'] ),
 				]
-			],
+			),
 			$a
 		);
 	}
