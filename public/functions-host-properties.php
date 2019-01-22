@@ -5,6 +5,7 @@ function get_host_properties() {
 
 	$properties = [
 		'alugha'          => [
+			'name'           => 'Alugha',
 			'regex'          => '#https?://(www\.)?alugha\.com/(1/)?videos/(?<id>[a-z0-9_\-]+)#i',
 			'use_oembed'     => false,
 			'embed_url'      => 'https://alugha.com/embed/web-player/?v=%s',
@@ -36,6 +37,7 @@ function get_host_properties() {
 			]
 		],
 		'bitchute'        => [
+			'name'           => 'Bitchute',
 			'use_oembed'     => false,
 			'regex'          => '#https?://www\.bitchute\.com/(video|embed)/(?<id>[0-9a-z\-]+)#i',
 			'embed_url'      => 'http://www.bitchute.com/embed/%s/',
@@ -43,12 +45,12 @@ function get_host_properties() {
 			'auto_thumbnail' => false,
 		],
 		'break'           => [
+			'name'           => 'Break',
 			'regex'          => '#https?://(www\.|view\.)break\.com/(video/|embed/)?[-a-z0-9]*?(?<id>[0-9]+)#i',
 			'use_oembed'     => false,
 			'embed_url'      => 'http://break.com/embed/%s',
 			'default_params' => 'embed=1',
 			'auto_thumbnail' => false,
-			'requires_flash' => true,
 			'tests'          => [
 				[
 					'url' => 'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591-test',
@@ -65,6 +67,7 @@ function get_host_properties() {
 			]
 		],
 		'brightcove'      => [
+			'name'         => 'Brightcove',
 			'regex'        => '#https?://(players|link)\.brightcove\.net/(?<account_id>[0-9]+)/(?<brightcove_player>[a-z0-9]+)_(?<brightcove_embed>[a-z0-9]+)/index\.html\?videoId=(?<id>[0-9]+)#i',
 			'use_oembed'   => false,
 			'embed_url'    => 'https://players.brightcove.net/%s/%s_%s/index.html?videoId=%s',
@@ -120,6 +123,7 @@ function get_host_properties() {
 			]
 		],
 		'dailymotion'     => [
+			'name'           => 'Dailymotion',
 			'use_oembed'     => true,
 			'regex'          => '#https?://(www\.)?(dai\.ly|dailymotion\.com/video)/(?<id>[a-z0-9]+)#i',
 			'embed_url'      => 'https://www.dailymotion.com/embed/video/%s',
@@ -140,6 +144,7 @@ function get_host_properties() {
 			],
 		],
 		'dailymotionlist' => [
+			'name'           => 'Dailymotion Jukebox',
 			'regex'          => '#https?://(www\.)?dailymotion\.com/playlist/(?<id>[a-z0-9]+)#i',
 			'embed_url'      => 'https://www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2F%s%2F1&',
 			'auto_thumbnail' => false,
@@ -163,6 +168,7 @@ function get_host_properties() {
 			],
 		],
 		'facebook'        => [
+			'name'           => 'Facebook',
 			'use_oembed'     => true,
 			'regex'          => '#(?<id>https?://([a-z]+\.)?facebook\.com/[-.a-z0-9]+/videos/[a-z.0-9/]+)#i',
 			'url_encode_id'  => true,
@@ -208,6 +214,7 @@ function get_host_properties() {
 			]
 		],
 		'kickstarter'     => [
+			'name'           => 'Kickstarter',
 			'use_oembed'     => true,
 			'regex'          => '#https?://(www\.)?kickstarter\.com/projects/(?<id>[0-9a-z\-]+/[-0-9a-z\-]+)#i',
 			'embed_url'      => 'https://www.kickstarter.com/projects/%s/widget/video.html',
@@ -245,6 +252,7 @@ function get_host_properties() {
 			],
 		],
 		'livestream'      => [
+			'name'           => 'Livestream.com',
 			'regex'          => '#https?://(www\.)?livestream\.com/accounts/(?<id>[0-9]+/events/[0-9]+(/videos/[0-9]+)?)#i',
 			'embed_url'      => 'https://livestream.com/accounts/%s/player',
 			'default_params' => 'width=1280&height=720&enableInfoAndActivity=true&defaultDrawer=&mute=false',
@@ -261,6 +269,7 @@ function get_host_properties() {
 			],
 		],
 		'klatv'           => [
+			'name'           => 'Klagemauer TV',
 			'regex'          => '#https?://(www\.)?kla(gemauer)?.tv/(?<id>[0-9]+)#i',
 			'embed_url'      => 'https://www.kla.tv/index.php?a=showembed&vidid=%s',
 			'name'           => 'kla.tv',
@@ -278,6 +287,7 @@ function get_host_properties() {
 			],
 		],
 		'metacafe'        => [
+			'name'           => 'Metacafe',
 			'regex'          => '#https?://(www\.)?metacafe\.com/(watch|fplayer)/(?<id>[0-9]+)#i',
 			'embed_url'      => 'http://www.metacafe.com/embed/%s/',
 			'auto_thumbnail' => false,
@@ -289,18 +299,6 @@ function get_host_properties() {
 				[
 					'url' => 'http://www.metacafe.com/watch/11322264/everything_wrong_with_robocop_in_7_minutes/',
 					'id'  => 11322264
-				],
-			],
-		],
-		'movieweb'        => [
-			'regex'          => '#https?://(www\.)?movieweb\.com/v/(?<id>[a-z0-9]{14})#i',
-			'embed_url'      => 'http://movieweb.com/v/%s/embed',
-			'auto_thumbnail' => false,
-			'requires_src'   => true,
-			'tests'          => [
-				[
-					'url' => 'http://movieweb.com/v/VIOF6ytkiMEMSR/embed',
-					'id'  => 'VIOF6ytkiMEMSR'
 				],
 			],
 		],
@@ -321,6 +319,7 @@ function get_host_properties() {
 			]
 		],
 		'myspace'         => [
+			'name'           => 'myspace',
 			'regex'          => '#https?://(www\.)?myspace\.com/.+/(?<id>[0-9]+)#i',
 			'embed_url'      => 'https://media.myspace.com/play/video/%s',
 			'auto_thumbnail' => false,
@@ -332,6 +331,7 @@ function get_host_properties() {
 			]
 		],
 		'snotr'           => [
+			'name'           => 'Snotr',
 			'regex'          => '#https?://(www\.)?snotr\.com/(video|embed)/(?<id>[0-9]+)#i',
 			'embed_url'      => 'http://www.snotr.com/embed/%s',
 			'auto_thumbnail' => false,
@@ -343,6 +343,7 @@ function get_host_properties() {
 			]
 		],
 		'spike'           => [
+			'name'           => 'Spike',
 			'regex'          => '#https?://media.mtvnservices.com/embed/mgid:arc:video:spike\.com:(?<id>[a-z0-9\-]{36})#i',
 			'embed_url'      => 'http://media.mtvnservices.com/embed/mgid:arc:video:spike.com:%s',
 			'requires_src'   => true,
@@ -369,6 +370,7 @@ function get_host_properties() {
 			],
 		],
 		'twitch'          => [
+			'name'           => 'Twitch',
 			'use_oembed'     => true,
 			'regex'          => '#https?://(www\.)?twitch.tv/(?!directory)(?|[a-z0-9_]+/v/(?<id>[0-9]+)|(?<id>[a-z0-9_]+))#i',
 			'embed_url'      => 'https://player.twitch.tv/?channel=%s', # if numeric id https://player.twitch.tv/?video=v%s
@@ -392,6 +394,7 @@ function get_host_properties() {
 			],
 		],
 		'ustream'         => [
+			'name'           => 'Ustream',
 			'regex'          => '#https?://(www\.)?ustream\.tv/(channel/)?(?<id>[0-9]{8}|recorded/[0-9]{8}(/highlight/[0-9]+)?)#i',
 			'embed_url'      => 'http://www.ustream.tv/embed/%s',
 			'default_params' => 'html5ui',
@@ -409,43 +412,18 @@ function get_host_properties() {
 			],
 		],
 		'rutube'          => [
-			'name'           => 'RuTube.ru',
-			'regex'          => '#https?://(www\.)?rutube\.ru/play/embed/(?<id>[0-9]+)#i',
-			'embed_url'      => 'https://rutube.ru/play/embed/%s',
-			'requires_flash' => true,
-			'tests'          => [
+			'name'      => 'RuTube.ru',
+			'regex'     => '#https?://(www\.)?rutube\.ru/play/embed/(?<id>[0-9]+)#i',
+			'embed_url' => 'https://rutube.ru/play/embed/%s',
+			'tests'     => [
 				[
 					'url' => 'https://rutube.ru/play/embed/9822149',
 					'id'  => '9822149'
 				],
 			],
 		],
-		'veoh'            => [
-			'regex'          => '#https?://(www\.)?veoh\.com/watch/(?<id>[a-z0-9]+)#i',
-			'embed_url'      => 'http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1396&permalinkId=%s',
-			'default_params' => 'player=videodetailsembedded&id=anonymous',
-			'auto_thumbnail' => false,
-			'tests'          => [
-				[
-					'url' => 'http://www.veoh.com/watch/v19866882CAdjNF9b',
-					'id'  => 'v19866882CAdjNF9b'
-				],
-			]
-		],
-		'vevo'            => [
-			'regex'          => '#https?://(www\.)?vevo\.com/watch/([^\/]+/[^\/]+/)?(?<id>[a-z0-9]+)#i',
-			'embed_url'      => 'https://scache.vevo.com/assets/html/embed.html?video=%s',
-			'default_params' => 'playlist=false&playerType=embedded&env=0',
-			'auto_thumbnail' => false,
-			'requires_flash' => true,
-			'tests'          => [
-				[
-					'url' => 'https://www.vevo.com/watch/the-offspring/the-kids-arent-alright/USSM20100649',
-					'id'  => 'USSM20100649'
-				],
-			],
-		],
 		'viddler'         => [
+			'name'           => 'Viddler',
 			'regex'          => '#https?://(www\.)?viddler\.com/(embed|v)/(?<id>[a-z0-9]{8})#i',
 			'embed_url'      => 'https://www.viddler.com/embed/%s/',
 			// 'embed_url'     => 'https://www.viddler.com/player/%s/',
@@ -462,11 +440,10 @@ function get_host_properties() {
 			],
 		],
 		'vidspot'         => [
-			'name'           => 'vidspot.net',
-			'regex'          => '#https?://(www\.)?vidspot\.net/(embed-)?(?<id>[a-z0-9]+)#i',
-			'embed_url'      => 'http://vidspot.net/embed-%s.html',
-			'requires_flash' => true,
-			'tests'          => [
+			'name'      => 'vidspot.net',
+			'regex'     => '#https?://(www\.)?vidspot\.net/(embed-)?(?<id>[a-z0-9]+)#i',
+			'embed_url' => 'http://vidspot.net/embed-%s.html',
+			'tests'     => [
 				[
 					'url' => 'http://vidspot.net/285wf9uk3rry',
 					'id'  => '285wf9uk3rry'
@@ -478,6 +455,7 @@ function get_host_properties() {
 			],
 		],
 		'vine'            => [
+			'name'           => 'Vevo',
 			'regex'          => '#https?://(www\.)?vine\.co/v/(?<id>[a-z0-9]+)#i',
 			'embed_url'      => 'https://vine.co/v/%s/embed/simple',
 			'default_params' => '', // * audio=1 supported
@@ -499,6 +477,7 @@ function get_host_properties() {
 			],
 		],
 		'vimeo'           => [
+			'name'           => 'Vimeo',
 			'use_oembed'     => true,
 			'regex'          => '#https?://(player\.)?vimeo\.com/((video/)|(channels/[a-z]+/)|(groups/[a-z]+/videos/))?(?<id>[0-9]+)(?<vimeo_secret>/[0-9a-z]+)?#i',
 			'embed_url'      => 'https://player.vimeo.com/video/%s',
@@ -532,6 +511,7 @@ function get_host_properties() {
 			],
 		],
 		'vzaar'           => [
+			'name'      => 'vzaar',
 			'regex'     => '#https?://(www\.)?vzaar.(com|tv)/(videos/)?(?<id>[0-9]+)#i',
 			'embed_url' => 'https://view.vzaar.com/%s/player',
 			'tests'     => [
@@ -546,6 +526,7 @@ function get_host_properties() {
 			],
 		],
 		'wistia'          => [
+			'name'           => 'Wistia',
 			# fast.wistia.net/embed/iframe/g5pnf59ala?videoFoam=true
 			'regex'          => '#https?://fast\.wistia\.net/embed/iframe/(?<id>[a-z0-9]+)#i',
 			'embed_url'      => 'https://fast.wistia.net/embed/iframe/%s',
@@ -563,7 +544,6 @@ function get_host_properties() {
 			'regex'          => '#https?://(www\.)?xtube\.com/watch\.php\?v=(?<id>[a-z0-9_\-]+)#i',
 			'embed_url'      => 'http://www.xtube.com/embedded/user/play.php?v=%s',
 			'auto_thumbnail' => false,
-			'requires_flash' => true,
 			'tests'          => [
 				[
 					'url' => 'http://www.xtube.com/watch.php?v=1234',
@@ -572,12 +552,12 @@ function get_host_properties() {
 			],
 		],
 		'yahoo'           => [
+			'name'           => 'Yahoo',
 			'regex'          => '#(?<id>https?://([a-z.]+)yahoo\.com/[/-a-z0-9öäü]+\.html)#i',
 			'embed_url'      => '%s',
 			'default_params' => 'format=embed',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
-			'requires_flash' => true,
 			'tests'          => [
 				[
 					'url' => 'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html?format=embed&player_autoplay=false',
@@ -590,12 +570,12 @@ function get_host_properties() {
 			]
 		],
 		'youku'           => [
+			'name'           => 'Youku',
 			'regex'          => '#https?://([a-z.]+)?\.youku.com/(embed/|v_show/id_)(?<id>[a-z0-9]+)#i',
 			'use_oembed'     => false,
 			'embed_url'      => 'http://player.youku.com/embed/%s',
 			'auto_thumbnail' => false,
 			'aspect_ratio'   => '450:292.5',
-			'requires_flash' => true,
 			'tests'          => [
 				[
 					'url' => 'http://v.youku.com/v_show/id_XMTczMDAxMjIyNA==.html?f=27806190',
@@ -685,10 +665,10 @@ function get_host_properties() {
 			'aspect_ratio' => false,
 		],
 		'iframe'          => [
+			'name'           => 'ARVE general iframe embed',
 			'embed_url'      => '%s',
 			'default_params' => '',
 			'auto_thumbnail' => false,
-			'requires_flash' => true,
 			'tests'          => [
 				[
 					'url' => 'https://example.com/',
@@ -697,28 +677,9 @@ function get_host_properties() {
 			],
 		],
 		'google_drive'    => [ 'name', 'Google Drive' ],
-		'dropbox'         => null,
-		'ooyala'          => null,
+		'dropbox'         => [ 'name', 'Dropbox' ],
+		'ooyala'          => [ 'name', 'ooyala' ],
 	];
-
-	foreach ( $properties as $key => $value ) {
-
-		if ( empty( $value['name'] ) ) {
-			$properties[ $key ]['name'] = ucfirst( $key );
-		}
-
-		if ( ! isset( $value['aspect_ratio'] ) ) {
-			$properties[ $key ]['aspect_ratio'] = '16:9';
-		}
-
-		if ( empty( $value['use_oembed'] ) ) {
-			$properties[ $key ]['use_oembed'] = false;
-		}
-
-		if ( empty( $value['requires_flash'] ) ) {
-			$properties[ $key ]['requires_flash'] = false;
-		}
-	}
 
 	return $properties;
 }

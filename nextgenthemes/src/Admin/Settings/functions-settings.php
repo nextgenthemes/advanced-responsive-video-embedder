@@ -7,7 +7,7 @@ function label_text( $option ) {
 	?>
 	<span class="nextgenthemes-label-text">
 		<?= esc_html( $option['label'] ); ?>
-		<?php if( 'main' !== $option['tag'] ) : ?>
+		<?php if ( 'main' !== $option['tag'] ) : ?>
 			&nbsp;<span class="button-primary button-primary--ngt-small"><?= esc_html( $option['tag'] ) ?></span>
 		<?php endif; ?>
 	</span>
@@ -68,7 +68,7 @@ function print_select_field( $key, $option ) {
 			<?php label_text( $option ); ?>
 			<select v-model="<?= esc_attr( "vm.$key" ); ?>">
 				<option disabled value="">Please select one</option>
-				<?php foreach( $option['options'] as $k => $v ) : ?>
+				<?php foreach ( $option['options'] as $k => $v ) : ?>
 					<option value="<?= esc_attr( $k ); ?>"><?= esc_html( $v ); ?></option>
 				<?php endforeach; ?>
 			</select>

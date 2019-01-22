@@ -86,7 +86,7 @@ class Setup {
 		// Vue.js
 		Asset\enqueue( [
 			'handle'    => 'nextgenthemes-vue',
-			'src'       => Asset\plugin_or_theme_uri( 'vendor/nextgenthemes/common/dist/js/vue.min.js' ),
+			'src'       => Asset\plugin_or_theme_uri( 'nextgenthemes/dist/js/vue.min.js' ),
 			'cdn_src'   => 'https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js',
 			'ver'       => '2.5.17',
 			'integrity' => 'sha256-FtWfRI+thWlNz2sB3SJbwKx5PgMyKIVgwHCTwa3biXc='
@@ -94,9 +94,10 @@ class Setup {
 
 		Asset\enqueue( [
 			'handle' => 'nextgenthemes-settings',
-			'src'    => Asset\plugin_or_theme_uri( 'vendor/nextgenthemes/common/dist/js/settings.js' ),
+			'src'    => Asset\plugin_or_theme_uri( 'nextgenthemes/dist/js/settings.js' ),
 			'deps'   => [ 'nextgenthemes-vue', 'jquery' ]
 		] );
+
 		// Sending data to our plugin settings JS file
 		wp_localize_script( 'nextgenthemes-settings', $this->slugged_namespace, [
 			'nonce'    => wp_create_nonce( 'wp_rest' ),
@@ -106,12 +107,13 @@ class Setup {
 
 		Asset\enqueue( [
 			'handle' => 'nextgenthemes-settings',
-			'src'    => Asset\plugin_or_theme_uri( 'vendor/nextgenthemes/common/dist/css/settings.css' ),
+			'src'    => Asset\plugin_or_theme_uri( 'nextgenthemes/dist/css/settings.css' ),
 		] );
 	}
 
 	public function print_settings_blocks() {
 
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		foreach ( $this->settings as $key => $option ) {
 			?>
 			<div <?php echo block_attr( $key, $option ); ?>>
@@ -128,6 +130,7 @@ class Setup {
 			<?php
 		}
 
+		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	public function print_admin_page() {
@@ -168,7 +171,7 @@ class Setup {
 						$function = $this->sidebar_content_function;
 						$function();
 					}
-	 				?>
+					?>
 				</div>
 			</div>
 		</div>

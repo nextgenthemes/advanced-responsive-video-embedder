@@ -1,16 +1,16 @@
-(function ( $ ) {
+( function( $ ) {
 	'use strict';
 	/*global ajaxurl */
 	/*global sui */
 	/*global tb_show */
 
 	// Options Page
-	$( '.arve-settings-section').each( function() {
+	$( '.arve-settings-section' ).each( function() {
 
-		$( this).insertBefore( $( this).parent() );
+		$( this).insertBefore( $( this ).parent() );
 	});
 
-	$( '.arve-settings-section').each( function() {
+	$( '.arve-settings-section' ).each( function() {
 
 		var id	   = $( this).attr( 'id' );
 		var classs = $( this).attr( 'class' );

@@ -54,6 +54,7 @@ function init() {
 		'shortcode-filters',
 		'shortcodes',
 		#'shared',
+		'gutenberg',
 		'url-handlers',
 		'validation',
 		'host-properties',

@@ -9,12 +9,14 @@ function register_assets() {
 		'handle' => 'advanced-responsive-video-embedder',
 		'src'    => url( 'dist/css/arve.css' ),
 		'deps'   => [],
+		'ver'    => VERSION,
 	] );
 
 	register( [
 		'handle' => 'advanced-responsive-video-embedder',
 		'src'    => url( 'dist/js/arve.js' ),
 		'deps'   => [ 'jquery' ],
+		'ver'    => VERSION,
 	] );
 }
 

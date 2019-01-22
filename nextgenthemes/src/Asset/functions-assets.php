@@ -53,7 +53,6 @@ function register( array $args ) {
 		if ( $args['enqueue'] ) {
 			wp_enqueue_script( $args['handle'] );
 		}
-
 	} else {
 		wp_register_style( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['media'] );
 
@@ -65,7 +64,7 @@ function register( array $args ) {
 		if ( $args['enqueue'] ) {
 			wp_enqueue_style( $args['handle'] );
 		}
-	}
+	}//end if
 }
 
 function add_interity_to_script( $handle, $integrity ) {

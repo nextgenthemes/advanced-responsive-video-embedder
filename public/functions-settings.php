@@ -145,6 +145,32 @@ function all_settings() {
 				esc_url( 'https://nextgenthemes.com/arve-pro/#video-host-support' )
 			)
 		],
+		'title'                 => [
+			'hide_from_settings' => true,
+			'label'              => esc_html__( 'Title', 'advanced-responsive-video-embedder'),
+			'type'               => 'string',
+			'description'        => sprintf(
+				// Translators: Provider list
+				esc_html__( 'Used for SEO, is visible on top of thumbnails in Lazyload modes, is used as link text in link-lightbox mode. The Pro Addon is able to get them from %s automatically.', 'advanced-responsive-video-embedder' ),
+				$auto_title
+			),
+		],
+		'description'           => [
+			'hide_from_settings' => true,
+			'label'              => esc_html__( 'Description', 'advanced-responsive-video-embedder'),
+			'type'               => 'string',
+			'meta'               => [
+				'placeholder' => __( 'Description for SEO', 'advanced-responsive-video-embedder' ),
+			]
+		],
+		'upload_date'           => [
+			'hide_from_settings' => true,
+			'label'              => esc_html__( 'Upload Date', 'advanced-responsive-video-embedder' ),
+			'type'               => 'string',
+			'meta'               => [
+				'placeholder' => __( 'Upload Date for SEO, ISO 8601 format', 'advanced-responsive-video-embedder' ),
+			]
+		],
 		'mode'                  => [
 			'tag'         => 'pro',
 			'default'     => 'normal',
@@ -254,32 +280,6 @@ function all_settings() {
 				esc_html__( 'Preview image for Lazyload modes, always used for SEO. The Pro Addon is able to get them from %s automatically.', 'advanced-responsive-video-embedder' ),
 				$auto_thumbs
 			),
-		],
-		'title'                 => [
-			'hide_from_settings' => true,
-			'label'              => esc_html__( 'Title', 'advanced-responsive-video-embedder'),
-			'type'               => 'string',
-			'description'        => sprintf(
-				// Translators: Provider list
-				esc_html__( 'Used for SEO, is visible on top of thumbnails in Lazyload modes, is used as link text in link-lightbox mode. The Pro Addon is able to get them from %s automatically.', 'advanced-responsive-video-embedder' ),
-				$auto_title
-			),
-		],
-		'description'           => [
-			'hide_from_settings' => true,
-			'label'              => esc_html__( 'Description', 'advanced-responsive-video-embedder'),
-			'type'               => 'string',
-			'meta'               => [
-				'placeholder' => __( 'Description for SEO', 'advanced-responsive-video-embedder' ),
-			]
-		],
-		'upload_date'           => [
-			'hide_from_settings' => true,
-			'label'              => esc_html__( 'Upload Date', 'advanced-responsive-video-embedder' ),
-			'type'               => 'string',
-			'meta'               => [
-				'placeholder' => __( 'Upload Date for SEO, ISO 8601 format', 'advanced-responsive-video-embedder' ),
-			]
 		],
 		'duration'              => [
 			'hide_from_settings' => true,
@@ -459,6 +459,13 @@ function all_settings() {
 			'type'         => 'boolean',
 			'description'  => __( 'Enable the old and deprected <code>[youtube id="abcde" /]</code> or <code>[vimeo id="abcde" /]</code> ... style shortcodes. Select <code>No</code> unless you have them in your content.', 'advanced-responsive-video-embedder' ),
 		],
+		'disable_sandbox'       => [
+			'default'            => false,
+			'hide_from_settings' => true,
+			'label'              => esc_html__( 'Disable Sandbox', 'advanced-responsive-video-embedder' ),
+			'type'               => 'boolean',
+			'description'        => __( 'Needed when embeds need browser plugins to work, almost all use HTML5 video and do not need any.', 'advanced-responsive-video-embedder' ),
+		],
 	];
 
 	$settings = apply_filters( 'nextgenthemes/arve/settings', $settings );
@@ -508,15 +515,24 @@ function missing_settings_defaults( $settings ) {
 	return $settings;
 }
 
-function shortcode_ui_settings() {
+function shortcode_settings() {
 
 	$settings = all_settings();
 
-	foreach ( $settings as $key => $v ) :
-
+	foreach ( $settings as $key => $v ) {
 		if ( isset( $v['hide_from_sc'] ) && $v['hide_from_sc'] ) {
-			continue;
+			unset( $settings[ $key ] );
 		}
+	}
+
+	return $settings;
+}
+
+function shortcode_ui_settings() {
+
+	$settings = shortcode_settings();
+
+	foreach ( $settings as $key => $v ) :
 
 		if ( 'string' === $v['type'] ) {
 			$v['type'] = 'text';

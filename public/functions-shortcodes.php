@@ -27,7 +27,7 @@ function build_video( array $input_atts, $content = null ) {
 		'align'             => $options['align'],
 		'aspect_ratio'      => null,
 		'arve_link'         => bool_to_shortcode_string( $options['promote_link'] ),
-		'disable_flash'     => null,
+		'disable_sandbox'   => 'n',
 		'maxwidth'          => (string) $options['video_maxwidth'],
 		'mode'              => $options['mode'],
 		// url query

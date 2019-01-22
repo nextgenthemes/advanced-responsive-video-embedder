@@ -1,8 +1,6 @@
 <?php
 namespace Nextgenthemes\Admin;
 
-// phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain
-
 function add_menus() {
 
 	$page_title = 'Nextgenthemes';
@@ -15,6 +13,7 @@ function add_menus() {
 
 	$plugin_screen_hook_suffix = add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
 
+	// phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain
 	add_submenu_page(
 		$menu_slug,                                  // parent_slug
 		__( 'Licenses', \Nextgenthemes\TEXTDOMAIN ), // Page Title
@@ -23,4 +22,5 @@ function add_menus() {
 		'nextgenthemes-licenses',                    // menu-slug
 		__NAMESPACE__ . '\\licenses_page'            // function
 	);
+	// phpcs:enable WordPress.WP.I18n.NonSingularStringLiteralDomain
 }

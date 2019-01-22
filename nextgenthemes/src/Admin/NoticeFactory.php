@@ -56,7 +56,7 @@ class NoticeFactory {
 		\Nextgenthemes\Asset\enqueue( [
 			'handle' => 'nextgenthemes-notice-ajax',
 			'deps'   => [ 'jquery' ],
-			'src'    => \Nextgenthemes\Asset\plugin_or_theme_uri( 'vendor/nextgenthemes/common/dist/js/notice-ajax.js' ),
+			'src'    => \Nextgenthemes\Asset\plugin_or_theme_uri( 'nextgenthemes/dist/js/notice-ajax.js' ),
 		] );
 	}
 

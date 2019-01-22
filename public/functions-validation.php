@@ -87,7 +87,7 @@ function validate_bool( $val, $name ) {
 			return new \WP_Error(
 				$name,
 				// Translators: 1 Shortcode attr name, 2 Value
-				sprintf( __( '%1$s <code>%2$s</code> not valid', 'advanced-responsive-video-embedder' ), $name, $val )
+				sprintf( __( '%1$s <code>%2$s</code> not valid', 'advanced-responsive-video-embedder' ), $name, print_r( $val ) )
 			);
 	}//end switch
 }

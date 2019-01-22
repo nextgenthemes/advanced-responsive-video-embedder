@@ -247,9 +247,7 @@ function sc_filter_attr( array $a ) {
 			$a['iframe_attr']['sandbox'] .= ' allow-forms';
 		}
 
-		$properties['iframe']['requires_flash'] = $options['iframe_flash'];
-
-		if ( null === $a['disable_flash'] && $properties[ $a['provider'] ]['requires_flash'] ) {
+		if ( $a['disable_sandbox'] ) {
 			$a['iframe_attr']['sandbox'] = false;
 		}
 	}//end if
@@ -266,8 +264,12 @@ function sc_filter_default_aspect_ratio( array $a ) {
 	if ( ! empty( $a['oembed_data']->width ) && ! empty( $a['oembed_data']->height ) ) {
 		$a['aspect_ratio'] = $a['oembed_data']->width . ':' . $a['oembed_data']->height;
 	} else {
-		$properties        = get_host_properties();
-		$a['aspect_ratio'] = $properties[ $a['provider'] ]['aspect_ratio'];
+		$properties = get_host_properties();
+		if ( ! empty( $properties[ $a['provider'] ]['aspect_ratio'] ) ) {
+			$a['aspect_ratio'] = $properties[ $a['provider'] ]['aspect_ratio'];
+		} else {
+			$a['aspect_ratio'] = '16:9';
+		}
 	}
 
 	return $a;
@@ -331,7 +333,7 @@ function shortcode_attributes() {
 			'default'       => bool_to_shortcode_string( $options['promote_link'] ),
 			'validate_func' => __NAMESPACE__ . '\validate_bool'
 		],
-		'disable_flash'     => [ 'validate_func' => 'bool' ],
+		'disable_sandbox'   => [ 'validate_func' => 'bool' ],
 		'maxwidth'          => [ 'default' => (string) $options['video_maxwidth'] ],
 		'mode'              => [
 			'default'       => $options['mode'],
@@ -416,7 +418,6 @@ function bool_shortcode_args() {
 		'arve_link',
 		'autoplay',
 		'controls',
-		'disable_flash',
 		'muted',
 		'playsinline',
 		'loop',
@@ -444,15 +445,15 @@ function sc_filter_validate( array $a ) {
 		$a['parameters'] = new \WP_Error( 'oembed_data', 'parameters needs to be null, array or string' );
 	}
 
-	foreach ( bool_shortcode_args() as $attr ) {
-		$a[ $attr ] = validate_bool( $a[ $attr ], $attr );
+	foreach ( bool_shortcode_args() as $boolattr ) {
+		$a[ $boolattr ] = validate_bool( $a[ $boolattr ], $boolattr );
 	};
-	unset( $attr );
+	unset( $bool_attr );
 
-	foreach ( [ 'url', 'src', 'mp4', 'm4v', 'ogv', 'webm' ] as $attr ) {
-		$a[ $attr ] = validate_url( $a[ $attr ], $attr );
+	foreach ( [ 'url', 'src', 'mp4', 'm4v', 'ogv', 'webm' ] as $urlattr ) {
+		$a[ $urlattr ] = validate_url( $a[ $urlattr ], $urlattr );
 	};
-	unset( $attr );
+	unset( $urlattr );
 
 	$a['align']        = validate_align( $a['align'] );
 	$a['aspect_ratio'] = validate_aspect_ratio( $a['aspect_ratio'] );
