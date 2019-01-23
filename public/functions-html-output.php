@@ -92,10 +92,10 @@ function arve_build_meta_html( $a ) {
 			array(
 				'name' => 'thumbnail',
 				'tag'  => 'meta',
-				'attr' => [
+				'attr' => array(
 					'itemprop' => 'thumbnailUrl',
 					'content'  => $a['img_src'],
-				],
+				),
 			),
 			$a
 		);
@@ -108,10 +108,10 @@ function arve_build_meta_html( $a ) {
 			array(
 				'name' => 'title',
 				'tag'  => 'meta',
-				'attr' => [
+				'attr' => array(
 					'itemprop' => 'name',
 					'content'  => trim( $a['title'] ),
-				]
+				)
 			),
 			$a
 		);
