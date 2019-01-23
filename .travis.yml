@@ -8,7 +8,6 @@ php:
 - 7.0
 - 7.1
 - 7.2
-- 7.3
 
 env:
   matrix:
@@ -34,5 +33,5 @@ before_script:
     fi
 
 script:
-- phpenv config-rm xdebug.ini
-- phpunit
+  - phpenv config-rm xdebug.ini
+  - phpunit
