@@ -57,8 +57,6 @@ $options = options();
 		<?php do_settings_sections( 'advanced-responsive-video-embedder' ); ?>
 		<?php settings_fields( 'arve-settings-group' ); ?>
 
-		<input type="hidden" id="arve_options_main[last_settings_tab]" name="arve_options_main[last_settings_tab]" value="<?php esc_attr( $options['last_settings_tab'] ); ?>">
-
 	</form>
 
 </div>

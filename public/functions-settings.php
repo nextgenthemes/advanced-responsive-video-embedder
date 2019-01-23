@@ -26,11 +26,11 @@ function get_settings_instance() {
 
 function settings_page_content() {
 	?>
-	<button @click='toggleMainOptions()'><span v-if="show_main">Hide </span>Main Options</button>
-	<button @click='toggleProOptions()' class="button-primary"><span v-if="show_pro">Hide </span>Pro Options</button>
-	<button @click='toggleDebugInfo()'><span v-if="show_debug">Hide </span>Debug Info</button>
+	<button @click='toggleMainOptions()'>Main Options</button>
+	<button @click='toggleProOptions()' class="button-primary">Pro Options</button>
+	<button @click='toggleDebugInfo()'>Debug Info</button>
 
-	<div class="ngt-block" v-if="show_debug">
+	<div class="ngt-block" v-if="showDebug">
 		<?php include_once( __DIR__ . '/Admin/partials/debug-info.php' ); ?>
 	</div>
 	<?php

@@ -81,7 +81,7 @@ function block_attr( $key, $option ) {
 
 	$block_attr = [
 		'class' => block_class( $key, $option ),
-		'v-if'  => 'show_' . $option['tag'],
+		'v-if'  => 'show' . ucfirst( $option['tag'] ),
 	];
 
 	return Utils\Attr( $block_attr );

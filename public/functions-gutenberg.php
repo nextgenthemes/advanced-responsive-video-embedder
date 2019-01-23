@@ -16,7 +16,7 @@ function register_gb_block() {
 
 	$sc_settings = shortcode_settings();
 
-	wp_localize_script( 'arve-block', 'arve_settings', $sc_settings );
+	wp_localize_script( 'arve-block', 'ARVEsettings', $sc_settings );
 
 	foreach ( $sc_settings as $key => $v ) {
 		$attributes[ $key ] = [ 'type' => 'string' ];
@@ -37,5 +37,5 @@ function php_block_render( $attributes ) {
 		<?php var_dump( $attributes ); ?>
 	</pre>
 	<?php
-	return ob_get_clean();
+	return ob_get_clean() . build_video( $attributes );
 }

@@ -1,6 +1,6 @@
 // License: GPLv2+
-//console.log( arve_settings );
-( function( wp ) {
+//console.log( ARVEsettings );
+( function() {
 
 	var el = wp.element.createElement,
 		registerBlockType = wp.blocks.registerBlockType,
@@ -13,45 +13,45 @@
 	/*
 	 * Keypair to gutenberg component
 	 */
-	function prepare_options( options ) {
+	function PrepareOptions( options ) {
 
-		var options = [];
+		var gboptions = [];
 
-		Object.keys( arve_settings[key].options ).forEach( function( key ) {
-			options.push( {
-				label: arve_settings[key].options[k],
-				value: k
-			} );
-		} );
+		Object.keys( options ).forEach( function( key ) {
+			gboptions.push({
+				label: options[key],
+				value: key
+			});
+		});
 
-		return options;
+		return gboptions;
 	}
 
-	function build_controls( props ) {
+	function BuildControls( props ) {
 
 		var controls = [];
 
-		Object.keys( arve_settings ).forEach( function( key ) {
+		Object.keys( ARVEsettings ).forEach( function( key ) {
 
-			var opt = arve_settings[key];
+			var opt = ARVEsettings[key];
 
 			if ( 'select' === opt.type ) {
 				controls.push( el( SelectControl, {
 					label: opt.label,
 					selected: props.attributes[key],
-					options: prepare_options( opt.options ),
-					onChange: ( value ) => { props.setAttributes( { [key]: value } ); }
-				} ) );
-		   } else if ( 'string' === opt.type ) {
+					options: PrepareOptions( opt.options ),
+					onChange: ( value ) => {
+						props.setAttributes({ [key]: value });
+					}
+				}) );
+			} else if ( 'string' === opt.type ) {
 				controls.push( el( TextControl, {
 					label: opt.label,
 					value: props.attributes[key],
 					onChange: ( value ) => {
-						var attr = {};
-						attr[key] = value;
-						props.setAttributes( attr );
+						props.setAttributes({ [key]: value });
 					}
-				} ) );
+				}) );
 			} else if ( 'boolean' === opt.type ) {
 				controls.push( el( SelectControl, {
 					label: opt.label,
@@ -61,10 +61,12 @@
 						{ label: 'Yes', value: 'y' },
 						{ label: 'No', value: 'n' }
 					],
-					onChange: ( value ) => { props.setAttributes( { [key]: value } ); }
-				} ) );
+					onChange: ( value ) => {
+						props.setAttributes({ [key]: value });
+					}
+				}) );
 			}
-		} );
+		});
 
 		return controls;
 	}
@@ -90,9 +92,10 @@
 
 		edit: function( props ) {
 
-			var controls = build_controls( props );
+			var controls = BuildControls( props );
 
 			return [
+
 				/*
 				 * The ServerSideRender element uses the REST API to automatically call
 				 * php_block_render() in your PHP code whenever it needs to get an updated
@@ -100,8 +103,9 @@
 				 */
 				el( ServerSideRender, {
 					block: 'nextgenthemes/arve-block',
-					attributes: props.attributes,
-				} ),
+					attributes: props.attributes
+				}),
+
 				/*
 				 * InspectorControls lets you add controls to the Block sidebar. In this case,
 				 * we're adding a TextControl, which lets us edit the 'foo' attribute (which
@@ -116,7 +120,7 @@
 		// We're going to be rendering in PHP, so save() can just return null.
 		save: function() {
 			return null;
-		},
-	} );
+		}
+	});
 
-})();
+}() );

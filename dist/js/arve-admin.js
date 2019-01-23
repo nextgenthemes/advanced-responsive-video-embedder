@@ -7,66 +7,70 @@
 	// Options Page
 	$( '.arve-settings-section' ).each( function() {
 
-		$( this).insertBefore( $( this ).parent() );
+		$( this ).insertBefore( $( this ).parent() );
 	});
 
 	$( '.arve-settings-section' ).each( function() {
 
-		var id	   = $( this).attr( 'id' );
-		var classs = $( this).attr( 'class' );
-		var title  = $( this).attr( 'title' );
+		var id	   = $( this ).attr( 'id' );
+		var classs = $( this ).attr( 'class' );
+		var title  = $( this ).attr( 'title' );
 
-		$( this).nextUntil( '.arve-settings-section' ).wrapAll( '<section id="' + id + '" class="' + classs + '" />' );
+		$( this ).nextUntil( '.arve-settings-section' ).wrapAll( '<section id="' + id + '" class="' + classs + '" />' );
 
 		$( '<a href="#" data-target="#' + id + '" class="nav-tab">' + title + '</a>' ).appendTo( '.arve-settings-tabs' );
 
-		$( this).remove();
+		$( this ).remove();
 	});
 
 	function show_tab( target ) {
 
-		$( '.arve-settings-section').show();
+		$( '.arve-settings-section' ).show();
 		$( target ).prependTo( '.arve-options-form' );
-		$( '.arve-settings-section').not( target ).hide();
-		$( '.arve-settings-tabs a').removeClass( 'nav-tab-active' );
-		$( '.arve-settings-tabs a[data-target="' + target + '"]').addClass( 'nav-tab-active' );
+		$( '.arve-settings-section' ).not( target ).hide();
+		$( '.arve-settings-tabs a' ).removeClass( 'nav-tab-active' );
+		$( '.arve-settings-tabs a[data-target="' + target + '"]' ).addClass( 'nav-tab-active' );
 	}
 
 	if ( $( '#arve_options_main\\[last_settings_tab\\]' ).length && $( '#arve_options_main\\[last_settings_tab\\]' ).val().length ) {
 		show_tab( $( '#arve_options_main\\[last_settings_tab\\]' ).val() );
 	}
 
-	$( document).on( 'click', '.arve-settings-tabs a', function(e) {
+	$( document ).on( 'click', '.arve-settings-tabs a', function( e ) {
 
 		e.preventDefault();
-		var target = $( this).attr( 'data-target');
+		var target = $( this ).attr( 'data-target' );
 		show_tab( target );
 		$( '#arve_options_main\\[last_settings_tab\\]' ).val( target );
-	} );
+	});
 
-	$( document).on( 'click', '[data-image-upload]', function(e) {
+	$( document ).on( 'click', '[data-image-upload]', function( e ) {
 
 		e.preventDefault();
-		var target = $( this ).attr( 'data-image-upload');
+		var target = $( this ).attr( 'data-image-upload' );
 		var image  = wp.media({
 			title: 'Upload Image',
+
 			// mutiple: true if you want to upload multiple files at once
 			multiple: false
 		}).open()
-		.on('select', function() {
+		.on( 'select', function() {
+
 			// This will return the selected image from the Media Uploader, the result is an object
-			var uploaded_image = image.state().get( 'selection').first();
+			var uploaded_image = image.state().get( 'selection' ).first();
+
 			// We convert uploaded_image to a JSON object to make accessing it easier
 			// Output to the console uploaded_image
 			var attachment_id = uploaded_image.toJSON().id;
+
 			// Let's assign the url value to the input field
-			$( target ).val( attachment_id);
+			$( target ).val( attachment_id );
 		});
 	});
 
-	$( document).on( 'click', '#arve-btn', function() {
+	$( document ).on( 'click', '#arve-btn', function() {
 
-		if ( typeof( sui ) !== 'undefined' ) {
+		if ( 'undefined' !== typeof( sui ) ) {
 
 			var arve_shortcode = sui.utils.shortcodeViewConstructor.parseShortcodeString( '[arve]' );
 
@@ -81,6 +85,6 @@
 			tb_show( 'ARVE Optional Features', '#TB_inline?inlineId=arve-thickbox' );
 		}
 
-	} );
+	});
 
-}(jQuery));
+}( jQuery ) );
