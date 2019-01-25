@@ -12,6 +12,7 @@
 namespace PHPCompatibility\Sniffs\FunctionNameRestrictions;
 
 use PHPCompatibility\Sniff;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\FunctionNameRestrictions\RemovedMagicAutoloadSniff.
@@ -43,7 +44,7 @@ class RemovedMagicAutoloadSniff extends Sniff
     public function register()
     {
         return array(T_FUNCTION);
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -54,7 +55,7 @@ class RemovedMagicAutoloadSniff extends Sniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         if ($this->supportsAbove('7.2') === false) {
             return;
@@ -66,7 +67,7 @@ class RemovedMagicAutoloadSniff extends Sniff
             return;
         }
 
-        if ($this->validDirectScope($phpcsFile, $stackPtr, $this->checkForScopes) === true) {
+        if ($this->validDirectScope($phpcsFile, $stackPtr, $this->checkForScopes) !== false) {
             return;
         }
 
@@ -75,6 +76,5 @@ class RemovedMagicAutoloadSniff extends Sniff
         }
 
         $phpcsFile->addWarning('Use of __autoload() function is deprecated since PHP 7.2', $stackPtr, 'Found');
-    }//end process()
-
-}//end class
+    }
+}

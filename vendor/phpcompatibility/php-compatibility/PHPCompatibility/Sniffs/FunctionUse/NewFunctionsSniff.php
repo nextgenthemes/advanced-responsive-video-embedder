@@ -10,6 +10,7 @@
 namespace PHPCompatibility\Sniffs\FunctionUse;
 
 use PHPCompatibility\AbstractNewFeatureSniff;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\FunctionUse\newFunctionsSniff.
@@ -1786,7 +1787,35 @@ class NewFunctionsSniff extends AbstractNewFeatureSniff
             '7.2' => false,
             '7.3' => true,
         ),
+        'ldap_add_ext' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'ldap_bind_ext' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'ldap_delete_ext' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
         'ldap_exop_refresh' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'ldap_mod_add_ext' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'ldap_mod_replace_ext' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'ldap_mod_del_ext' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'ldap_rename_ext' => array(
             '7.2' => false,
             '7.3' => true,
         ),
@@ -1795,10 +1824,6 @@ class NewFunctionsSniff extends AbstractNewFeatureSniff
             '7.3' => true,
         ),
         'openssl_pkey_derive' => array(
-            '7.2' => false,
-            '7.3' => true,
-        ),
-        'sapi_add_request_header' => array(
             '7.2' => false,
             '7.3' => true,
         ),
@@ -1828,8 +1853,7 @@ class NewFunctionsSniff extends AbstractNewFeatureSniff
         $this->newFunctions = $this->arrayKeysToLowercase($this->newFunctions);
 
         return array(T_STRING);
-
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -1840,7 +1864,7 @@ class NewFunctionsSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -1873,8 +1897,7 @@ class NewFunctionsSniff extends AbstractNewFeatureSniff
             'nameLc' => $functionLc,
         );
         $this->handleFeature($phpcsFile, $stackPtr, $itemInfo);
-
-    }//end process()
+    }
 
 
     /**
@@ -1899,6 +1922,4 @@ class NewFunctionsSniff extends AbstractNewFeatureSniff
     {
         return 'The function %s() is not present in PHP version %s or earlier';
     }
-
-
-}//end class
+}

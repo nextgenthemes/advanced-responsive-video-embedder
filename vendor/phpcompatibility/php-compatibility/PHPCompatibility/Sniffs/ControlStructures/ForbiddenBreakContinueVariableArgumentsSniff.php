@@ -13,6 +13,8 @@
 namespace PHPCompatibility\Sniffs\ControlStructures;
 
 use PHPCompatibility\Sniff;
+use PHP_CodeSniffer_File as File;
+use PHP_CodeSniffer_Tokens as Tokens;
 
 /**
  * \PHPCompatibility\Sniffs\ControlStructures\ForbiddenBreakContinueVariableArguments.
@@ -48,8 +50,7 @@ class ForbiddenBreakContinueVariableArgumentsSniff extends Sniff
     public function register()
     {
         return array(T_BREAK, T_CONTINUE);
-
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -60,7 +61,7 @@ class ForbiddenBreakContinueVariableArgumentsSniff extends Sniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         if ($this->supportsAbove('5.4') === false) {
             return;
@@ -73,7 +74,7 @@ class ForbiddenBreakContinueVariableArgumentsSniff extends Sniff
             if ($tokens[$curToken]['type'] === 'T_STRING') {
                 // If the next non-whitespace token after the string
                 // is an opening parenthesis then it's a function call.
-                $openBracket = $phpcsFile->findNext(\PHP_CodeSniffer_Tokens::$emptyTokens, $curToken + 1, null, true);
+                $openBracket = $phpcsFile->findNext(Tokens::$emptyTokens, $curToken + 1, null, true);
                 if ($tokens[$openBracket]['code'] === T_OPEN_PARENTHESIS) {
                     $errorType = 'variableArgument';
                     break;
@@ -96,7 +97,5 @@ class ForbiddenBreakContinueVariableArgumentsSniff extends Sniff
 
             $phpcsFile->addError($error, $stackPtr, $errorCode, $data);
         }
-
-    }//end process()
-
-}//end class
+    }
+}

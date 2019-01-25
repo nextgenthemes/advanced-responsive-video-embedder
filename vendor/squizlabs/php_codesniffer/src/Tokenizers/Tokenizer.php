@@ -87,7 +87,7 @@ abstract class Tokenizer
     /**
      * Checks the content to see if it looks minified.
      *
-     * @param string $content The content to tokenize,
+     * @param string $content The content to tokenize.
      * @param string $eolChar The EOL char used in the content.
      *
      * @return boolean
@@ -1078,6 +1078,30 @@ abstract class Tokenizer
                         continue;
                     }//end if
 
+                    if ($tokenType === T_CLASS) {
+                        // Probably an anonymous class inside another anonymous class,
+                        // so process it manually.
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $type = $this->tokens[$stackPtr]['type'];
+                            echo str_repeat("\t", $depth);
+                            echo "=> Found class before scope opener for $stackPtr:$type, processing manually".PHP_EOL;
+                        }
+
+                        if (isset($this->tokens[$i]['scope_closer']) === true) {
+                            // We've already processed this anon class.
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                echo str_repeat("\t", $depth);
+                                echo '* already processed, skipping *'.PHP_EOL;
+                            }
+
+                            $i = $this->tokens[$i]['scope_closer'];
+                            continue;
+                        }
+
+                        $i = self::recurseScopeMap($i, ($depth + 1), $ignore);
+                        continue;
+                    }//end if
+
                     // Found another opening condition but still haven't
                     // found our opener, so we are never going to find one.
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -1348,7 +1372,7 @@ abstract class Tokenizer
      *
      * The level map adds a 'level' index to each token which indicates the
      * depth that a token within a set of scope blocks. It also adds a
-     * 'condition' index which is an array of the scope conditions that opened
+     * 'conditions' index which is an array of the scope conditions that opened
      * each of the scopes - position 0 being the first scope opener.
      *
      * @return void

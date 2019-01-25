@@ -9,7 +9,10 @@
 
 namespace PHPCompatibility\Sniffs\FunctionNameRestrictions;
 
-use PHPCompatibility\PHPCSHelper;
+use Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff as PHPCS_CamelCapsFunctionNameSniff;
+use PHP_CodeSniffer_File as File;
+use PHP_CodeSniffer_Standards_AbstractScopeSniff as PHPCS_AbstractScopeSniff;
+use PHP_CodeSniffer_Tokens as Tokens;
 
 /**
  * \PHPCompatibility\Sniffs\FunctionNameRestrictions\ReservedFunctionNamesSniff.
@@ -31,7 +34,7 @@ use PHPCompatibility\PHPCSHelper;
  * @package  PHPCompatibility
  * @author   Juliette Reinders Folmer <phpcompatibility_nospam@adviesenzo.nl>
  */
-class ReservedFunctionNamesSniff extends \Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff
+class ReservedFunctionNamesSniff extends PHPCS_CamelCapsFunctionNameSniff
 {
 
     /**
@@ -45,7 +48,7 @@ class ReservedFunctionNamesSniff extends \Generic_Sniffs_NamingConventions_Camel
         }
 
         // Call the grand-parent constructor directly.
-        \PHP_CodeSniffer_Standards_AbstractScopeSniff::__construct($scopeTokens, array(T_FUNCTION), true);
+        PHPCS_AbstractScopeSniff::__construct($scopeTokens, array(T_FUNCTION), true);
 
         // Make sure debuginfo is included in the array. Upstream only includes it since 2.5.1.
         $this->magicMethods['debuginfo'] = true;
@@ -62,9 +65,22 @@ class ReservedFunctionNamesSniff extends \Generic_Sniffs_NamingConventions_Camel
      *
      * @return void
      */
-    protected function processTokenWithinScope(\PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
+    protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope)
     {
         $tokens = $phpcsFile->getTokens();
+
+        /*
+         * Determine if this is a function which needs to be examined.
+         * The `processTokenWithinScope()` is called for each valid scope a method is in,
+         * so for nested classes, we need to make sure we only examine the token for
+         * the lowest level valid scope.
+         */
+        $conditions = $tokens[$stackPtr]['conditions'];
+        end($conditions);
+        $deepestScope = key($conditions);
+        if ($deepestScope !== $currScope) {
+            return;
+        }
 
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
         if ($methodName === null) {
@@ -78,9 +94,10 @@ class ReservedFunctionNamesSniff extends \Generic_Sniffs_NamingConventions_Camel
             if (isset($this->magicMethods[$magicPart]) === false
                 && isset($this->methodsDoubleUnderscore[$magicPart]) === false
             ) {
-                $className = '[anonymous class]';
-                if (defined('T_ANON_CLASS') === false || $tokens[$currScope]['type'] !== 'T_ANON_CLASS') {
-                    $className = $phpcsFile->getDeclarationName($currScope);
+                $className         = '[anonymous class]';
+                $scopeNextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($currScope + 1), null, true);
+                if ($scopeNextNonEmpty !== false && $tokens[$scopeNextNonEmpty]['code'] === T_STRING) {
+                    $className = $tokens[$scopeNextNonEmpty]['content'];
                 }
 
                 $phpcsFile->addWarning(
@@ -103,7 +120,7 @@ class ReservedFunctionNamesSniff extends \Generic_Sniffs_NamingConventions_Camel
      *
      * @return void
      */
-    protected function processTokenOutsideScope(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
     {
         $functionName = $phpcsFile->getDeclarationName($stackPtr);
         if ($functionName === null) {
@@ -124,5 +141,4 @@ class ReservedFunctionNamesSniff extends \Generic_Sniffs_NamingConventions_Camel
             }
         }
     }
-
-}//end class
+}

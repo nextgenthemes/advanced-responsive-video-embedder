@@ -10,6 +10,8 @@
 namespace PHPCompatibility\Sniffs\FunctionUse;
 
 use PHPCompatibility\AbstractNewFeatureSniff;
+use PHP_CodeSniffer_File as File;
+use PHP_CodeSniffer_Tokens as Tokens;
 
 /**
  * \PHPCompatibility\Sniffs\FunctionUse\newFunctionParametersSniff.
@@ -398,6 +400,90 @@ class NewFunctionParametersSniff extends AbstractNewFeatureSniff
                 'name' => 'depth',
                 '5.4'  => false,
                 '5.5'  => true,
+            ),
+        ),
+        'ldap_add' => array(
+            3 => array(
+                'name' => 'serverctrls',
+                '7.2'  => false,
+                '7.3'  => true,
+            ),
+        ),
+        'ldap_compare' => array(
+            4 => array(
+                'name' => 'serverctrls',
+                '7.2'  => false,
+                '7.3'  => true,
+            ),
+        ),
+        'ldap_delete' => array(
+            2 => array(
+                'name' => 'serverctrls',
+                '7.2'  => false,
+                '7.3'  => true,
+            ),
+        ),
+        'ldap_list' => array(
+            8 => array(
+                'name' => 'serverctrls',
+                '7.2'  => false,
+                '7.3'  => true,
+            ),
+        ),
+        'ldap_mod_add' => array(
+            3 => array(
+                'name' => 'serverctrls',
+                '7.2'  => false,
+                '7.3'  => true,
+            ),
+        ),
+        'ldap_mod_del' => array(
+            3 => array(
+                'name' => 'serverctrls',
+                '7.2'  => false,
+                '7.3'  => true,
+            ),
+        ),
+        'ldap_mod_replace' => array(
+            3 => array(
+                'name' => 'serverctrls',
+                '7.2'  => false,
+                '7.3'  => true,
+            ),
+        ),
+        'ldap_modify_batch' => array(
+            3 => array(
+                'name' => 'serverctrls',
+                '7.2'  => false,
+                '7.3'  => true,
+            ),
+        ),
+        'ldap_parse_result' => array(
+            6 => array(
+                'name' => 'serverctrls',
+                '7.2'  => false,
+                '7.3'  => true,
+            ),
+        ),
+        'ldap_read' => array(
+            8 => array(
+                'name' => 'serverctrls',
+                '7.2'  => false,
+                '7.3'  => true,
+            ),
+        ),
+        'ldap_rename' => array(
+            5 => array(
+                'name' => 'serverctrls',
+                '7.2'  => false,
+                '7.3'  => true,
+            ),
+        ),
+        'ldap_search' => array(
+            8 => array(
+                'name' => 'serverctrls',
+                '7.2'  => false,
+                '7.3'  => true,
             ),
         ),
         'memory_get_peak_usage' => array(
@@ -847,7 +933,7 @@ class NewFunctionParametersSniff extends AbstractNewFeatureSniff
         $this->newFunctionParameters = $this->arrayKeysToLowercase($this->newFunctionParameters);
 
         return array(T_STRING);
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -858,7 +944,7 @@ class NewFunctionParametersSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -888,7 +974,7 @@ class NewFunctionParametersSniff extends AbstractNewFeatureSniff
         }
 
         // If the parameter count returned > 0, we know there will be valid open parenthesis.
-        $openParenthesis      = $phpcsFile->findNext(\PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr + 1, null, true, null, true);
+        $openParenthesis      = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPtr + 1, null, true, null, true);
         $parameterOffsetFound = $parameterCount - 1;
 
         foreach ($this->newFunctionParameters[$functionLc] as $offset => $parameterDetails) {
@@ -901,8 +987,7 @@ class NewFunctionParametersSniff extends AbstractNewFeatureSniff
                 $this->handleFeature($phpcsFile, $openParenthesis, $itemInfo);
             }
         }
-
-    }//end process()
+    }
 
 
     /**
@@ -986,6 +1071,4 @@ class NewFunctionParametersSniff extends AbstractNewFeatureSniff
         array_unshift($data, $itemInfo['name'], $errorInfo['paramName']);
         return $data;
     }
-
-
-}//end class
+}

@@ -13,6 +13,7 @@
 namespace PHPCompatibility\Sniffs\ParameterValues;
 
 use PHPCompatibility\AbstractRemovedFeatureSniff;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\ParameterValues\RemovedHashAlgorithmsSniff.
@@ -54,8 +55,7 @@ class RemovedHashAlgorithmsSniff extends AbstractRemovedFeatureSniff
     public function register()
     {
         return array(T_STRING);
-
-    }//end register()
+    }
 
 
     /**
@@ -67,7 +67,7 @@ class RemovedHashAlgorithmsSniff extends AbstractRemovedFeatureSniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $algo = $this->getHashAlgorithmParameter($phpcsFile, $stackPtr);
         if (empty($algo) || is_string($algo) === false) {
@@ -83,8 +83,7 @@ class RemovedHashAlgorithmsSniff extends AbstractRemovedFeatureSniff
             'name' => $algo,
         );
         $this->handleFeature($phpcsFile, $stackPtr, $itemInfo);
-
-    }//end process()
+    }
 
 
     /**
@@ -109,6 +108,4 @@ class RemovedHashAlgorithmsSniff extends AbstractRemovedFeatureSniff
     {
         return 'The %s hash algorithm is ';
     }
-
-
-}//end class
+}

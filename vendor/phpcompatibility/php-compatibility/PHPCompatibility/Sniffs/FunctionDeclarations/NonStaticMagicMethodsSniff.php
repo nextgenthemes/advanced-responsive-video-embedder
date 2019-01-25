@@ -13,6 +13,7 @@
 namespace PHPCompatibility\Sniffs\FunctionDeclarations;
 
 use PHPCompatibility\Sniff;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\FunctionDeclarations\NonStaticMagicMethodsSniff.
@@ -93,8 +94,7 @@ class NonStaticMagicMethodsSniff extends Sniff
         }
 
         return $targets;
-
-    }//end register()
+    }
 
 
     /**
@@ -106,7 +106,7 @@ class NonStaticMagicMethodsSniff extends Sniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         // Should be removed, the requirement was previously also there, 5.3 just started throwing a warning about it.
         if ($this->supportsAbove('5.3') === false) {
@@ -174,8 +174,5 @@ class NonStaticMagicMethodsSniff extends Sniff
             // Advance to next function.
             $functionPtr = $scopeCloser;
         }
-
-    }//end process()
-
-
-}//end class
+    }
+}

@@ -10,6 +10,7 @@
 namespace PHPCompatibility\Sniffs\ParameterValues;
 
 use PHPCompatibility\AbstractNewFeatureSniff;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\ParameterValues\NewHashAlgorithmsSniff.
@@ -109,8 +110,7 @@ class NewHashAlgorithmsSniff extends AbstractNewFeatureSniff
     public function register()
     {
         return array(T_STRING);
-
-    }//end register()
+    }
 
 
     /**
@@ -122,7 +122,7 @@ class NewHashAlgorithmsSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $algo = $this->getHashAlgorithmParameter($phpcsFile, $stackPtr);
         if (empty($algo) || is_string($algo) === false) {
@@ -139,8 +139,7 @@ class NewHashAlgorithmsSniff extends AbstractNewFeatureSniff
             'name'   => $algo,
         );
         $this->handleFeature($phpcsFile, $stackPtr, $itemInfo);
-
-    }//end process()
+    }
 
 
     /**
@@ -165,6 +164,4 @@ class NewHashAlgorithmsSniff extends AbstractNewFeatureSniff
     {
         return 'The %s hash algorithm is not present in PHP version %s or earlier';
     }
-
-
-}//end class
+}

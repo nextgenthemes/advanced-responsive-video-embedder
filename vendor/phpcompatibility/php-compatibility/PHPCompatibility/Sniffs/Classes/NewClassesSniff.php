@@ -11,6 +11,7 @@
 namespace PHPCompatibility\Sniffs\Classes;
 
 use PHPCompatibility\AbstractNewFeatureSniff;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\Classes\NewClassesSniff.
@@ -397,15 +398,38 @@ class NewClassesSniff extends AbstractNewFeatureSniff
      *            This list is automatically added to the $newClasses property
      *            in the `register()` method.}}
      *
+     * {@internal Helper to update this list: https://3v4l.org/MhlUp}}
+     *
      * @var array(string => array(string => bool))
      */
     protected $newExceptions = array(
+        'com_exception' => array(
+            '4.4' => false,
+            '5.0' => true,
+        ),
+        'DOMException' => array(
+            '4.4' => false,
+            '5.0' => true,
+        ),
         'Exception' => array(
             // According to the docs introduced in PHP 5.1, but this appears to be.
             // an error.  Class was introduced with try/catch keywords in PHP 5.0.
             '4.4' => false,
             '5.0' => true,
         ),
+        'ReflectionException' => array(
+            '4.4' => false,
+            '5.0' => true,
+        ),
+        'SoapFault' => array(
+            '4.4' => false,
+            '5.0' => true,
+        ),
+        'SQLiteException' => array(
+            '4.4' => false,
+            '5.0' => true,
+        ),
+
         'ErrorException' => array(
             '5.0' => false,
             '5.1' => true,
@@ -434,6 +458,10 @@ class NewClassesSniff extends AbstractNewFeatureSniff
             '5.0' => false,
             '5.1' => true,
         ),
+        'mysqli_sql_exception' => array(
+            '5.0' => false,
+            '5.1' => true,
+        ),
         'OutOfBoundsException' => array(
             '5.0' => false,
             '5.1' => true,
@@ -443,6 +471,10 @@ class NewClassesSniff extends AbstractNewFeatureSniff
             '5.1' => true,
         ),
         'OverflowException' => array(
+            '5.0' => false,
+            '5.1' => true,
+        ),
+        'PDOException' => array(
             '5.0' => false,
             '5.1' => true,
         ),
@@ -462,26 +494,6 @@ class NewClassesSniff extends AbstractNewFeatureSniff
             '5.0' => false,
             '5.1' => true,
         ),
-        'DOMException' => array(
-            '4.4' => false,
-            '5.0' => true,
-        ),
-        'mysqli_sql_exception' => array(
-            '4.4' => false,
-            '5.0' => true,
-        ),
-        'PDOException' => array(
-            '5.0' => false,
-            '5.1' => true,
-        ),
-        'ReflectionException' => array(
-            '4.4' => false,
-            '5.0' => true,
-        ),
-        'SoapFault' => array(
-            '4.4' => false,
-            '5.0' => true,
-        ),
 
         'PharException' => array(
             '5.2' => false,
@@ -494,8 +506,8 @@ class NewClassesSniff extends AbstractNewFeatureSniff
         ),
 
         'IntlException' => array(
-            '5.5.0' => false,
-            '5.5.1' => true,
+            '5.4' => false,
+            '5.5' => true,
         ),
 
         'Error' => array(
@@ -522,6 +534,10 @@ class NewClassesSniff extends AbstractNewFeatureSniff
             '5.6' => false,
             '7.0' => true,
         ),
+        'ClosedGeneratorException' => array(
+            '5.6' => false,
+            '7.0' => true,
+        ),
         'UI\Exception\InvalidArgumentException' => array(
             '5.6' => false,
             '7.0' => true,
@@ -534,6 +550,11 @@ class NewClassesSniff extends AbstractNewFeatureSniff
         'ArgumentCountError' => array(
             '7.0' => false,
             '7.1' => true,
+        ),
+
+        'SodiumException' => array(
+            '7.1' => false,
+            '7.2' => true,
         ),
 
         'CompileError' => array(
@@ -579,8 +600,7 @@ class NewClassesSniff extends AbstractNewFeatureSniff
         }
 
         return $targets;
-
-    }//end register()
+    }
 
 
     /**
@@ -592,7 +612,7 @@ class NewClassesSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -621,8 +641,7 @@ class NewClassesSniff extends AbstractNewFeatureSniff
                 $this->processSingularToken($phpcsFile, $stackPtr);
                 break;
         }
-
-    }//end process()
+    }
 
 
     /**
@@ -634,7 +653,7 @@ class NewClassesSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    private function processSingularToken(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    private function processSingularToken(File $phpcsFile, $stackPtr)
     {
         $tokens      = $phpcsFile->getTokens();
         $FQClassName = '';
@@ -665,8 +684,7 @@ class NewClassesSniff extends AbstractNewFeatureSniff
             'nameLc' => $classNameLc,
         );
         $this->handleFeature($phpcsFile, $stackPtr, $itemInfo);
-
-    }//end processSingularToken()
+    }
 
 
     /**
@@ -680,7 +698,7 @@ class NewClassesSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    private function processFunctionToken(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    private function processFunctionToken(File $phpcsFile, $stackPtr)
     {
         // Retrieve typehints stripped of global NS indicator and/or nullable indicator.
         $typeHints = $this->getTypeHintsFromFunctionDeclaration($phpcsFile, $stackPtr);
@@ -714,7 +732,7 @@ class NewClassesSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    private function processCatchToken(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    private function processCatchToken(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -780,7 +798,7 @@ class NewClassesSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    private function processReturnTypeToken(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    private function processReturnTypeToken(File $phpcsFile, $stackPtr)
     {
         $returnTypeHint   = $this->getReturnTypeHintName($phpcsFile, $stackPtr);
         $returnTypeHint   = ltrim($returnTypeHint, '\\');
@@ -821,6 +839,4 @@ class NewClassesSniff extends AbstractNewFeatureSniff
     {
         return 'The built-in class ' . parent::getErrorMsgTemplate();
     }
-
-
-}//end class
+}

@@ -9,6 +9,10 @@
 
 namespace PHPCompatibility;
 
+use PHP_CodeSniffer_Exception as PHPCS_Exception;
+use PHP_CodeSniffer_File as File;
+use PHP_CodeSniffer_Tokens as Tokens;
+
 /**
  * \PHPCompatibility\PHPCSHelper
  *
@@ -98,7 +102,7 @@ class PHPCSHelper
      *
      * @return string|null
      */
-    public static function getCommandLineData($phpcsFile, $key)
+    public static function getCommandLineData(File $phpcsFile, $key)
     {
         if (class_exists('\PHP_CodeSniffer\Config')) {
             // PHPCS 3.x.
@@ -119,10 +123,89 @@ class PHPCSHelper
 
 
     /**
+     * Returns the position of the first non-whitespace token in a statement.
+     *
+     * {@internal Duplicate of same method as contained in the `\PHP_CodeSniffer_File`
+     * class and introduced in PHPCS 2.1.0 and improved in PHPCS 2.7.1.
+     *
+     * Once the minimum supported PHPCS version for this standard goes beyond
+     * that, this method can be removed and calls to it replaced with
+     * `$phpcsFile->findStartOfStatement($start, $ignore)` calls.
+     *
+     * Last synced with PHPCS version: PHPCS 3.3.2 at commit 6ad28354c04b364c3c71a34e4a18b629cc3b231e}}
+     *
+     * @param \PHP_CodeSniffer_File $phpcsFile Instance of phpcsFile.
+     * @param int                   $start     The position to start searching from in the token stack.
+     * @param int|array             $ignore    Token types that should not be considered stop points.
+     *
+     * @return int
+     */
+    public static function findStartOfStatement(File $phpcsFile, $start, $ignore = null)
+    {
+        if (version_compare(self::getVersion(), '2.7.1', '>=') === true) {
+            return $phpcsFile->findStartOfStatement($start, $ignore);
+        }
+
+        $tokens    = $phpcsFile->getTokens();
+        $endTokens = Tokens::$blockOpeners;
+
+        $endTokens[T_COLON]            = true;
+        $endTokens[T_COMMA]            = true;
+        $endTokens[T_DOUBLE_ARROW]     = true;
+        $endTokens[T_SEMICOLON]        = true;
+        $endTokens[T_OPEN_TAG]         = true;
+        $endTokens[T_CLOSE_TAG]        = true;
+        $endTokens[T_OPEN_SHORT_ARRAY] = true;
+
+        if ($ignore !== null) {
+            $ignore = (array) $ignore;
+            foreach ($ignore as $code) {
+                if (isset($endTokens[$code]) === true) {
+                    unset($endTokens[$code]);
+                }
+            }
+        }
+
+        $lastNotEmpty = $start;
+
+        for ($i = $start; $i >= 0; $i--) {
+            if (isset($endTokens[$tokens[$i]['code']]) === true) {
+                // Found the end of the previous statement.
+                return $lastNotEmpty;
+            }
+
+            if (isset($tokens[$i]['scope_opener']) === true
+                && $i === $tokens[$i]['scope_closer']
+            ) {
+                // Found the end of the previous scope block.
+                return $lastNotEmpty;
+            }
+
+            // Skip nested statements.
+            if (isset($tokens[$i]['bracket_opener']) === true
+                && $i === $tokens[$i]['bracket_closer']
+            ) {
+                $i = $tokens[$i]['bracket_opener'];
+            } elseif (isset($tokens[$i]['parenthesis_opener']) === true
+                && $i === $tokens[$i]['parenthesis_closer']
+            ) {
+                $i = $tokens[$i]['parenthesis_opener'];
+            }
+
+            if (isset(Tokens::$emptyTokens[$tokens[$i]['code']]) === false) {
+                $lastNotEmpty = $i;
+            }
+        }//end for
+
+        return 0;
+    }
+
+
+    /**
      * Returns the position of the last non-whitespace token in a statement.
      *
      * {@internal Duplicate of same method as contained in the `\PHP_CodeSniffer_File`
-     * class and introduced in PHPCS 2.1.0.
+     * class and introduced in PHPCS 2.1.0 and improved in PHPCS 2.7.1 and 3.3.0.
      *
      * Once the minimum supported PHPCS version for this standard goes beyond
      * that, this method can be removed and calls to it replaced with
@@ -136,7 +219,7 @@ class PHPCSHelper
      *
      * @return int
      */
-    public static function findEndOfStatement(\PHP_CodeSniffer_File $phpcsFile, $start, $ignore = null)
+    public static function findEndOfStatement(File $phpcsFile, $start, $ignore = null)
     {
         if (version_compare(self::getVersion(), '3.3.0', '>=') === true) {
             return $phpcsFile->findEndOfStatement($start, $ignore);
@@ -188,7 +271,7 @@ class PHPCSHelper
                 && ($i === $tokens[$i]['scope_opener']
                 || $i === $tokens[$i]['scope_condition'])
             ) {
-                if ($i === $start && isset(Util\Tokens::$scopeOpeners[$tokens[$i]['code']]) === true) {
+                if ($i === $start && isset(Tokens::$scopeOpeners[$tokens[$i]['code']]) === true) {
                     return $tokens[$i]['scope_closer'];
                 }
 
@@ -203,14 +286,13 @@ class PHPCSHelper
                 $i = $tokens[$i]['parenthesis_closer'];
             }
 
-            if (isset(\PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$i]['code']]) === false) {
+            if (isset(Tokens::$emptyTokens[$tokens[$i]['code']]) === false) {
                 $lastNotEmpty = $i;
             }
         }//end for
 
         return ($phpcsFile->numTokens - 1);
-
-    }//end findEndOfStatement()
+    }
 
 
     /**
@@ -235,7 +317,7 @@ class PHPCSHelper
      *
      * @return string|false
      */
-    public static function findExtendedClassName(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public static function findExtendedClassName(File $phpcsFile, $stackPtr)
     {
         if (version_compare(self::getVersion(), '3.1.0', '>=') === true) {
             return $phpcsFile->findExtendedClassName($stackPtr);
@@ -280,8 +362,7 @@ class PHPCSHelper
         }
 
         return $name;
-
-    }//end findExtendedClassName()
+    }
 
 
     /**
@@ -301,7 +382,7 @@ class PHPCSHelper
      *
      * @return array|false
      */
-    public static function findImplementedInterfaceNames(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public static function findImplementedInterfaceNames(File $phpcsFile, $stackPtr)
     {
         if (version_compare(self::getVersion(), '2.7.1', '>') === true) {
             return $phpcsFile->findImplementedInterfaceNames($stackPtr);
@@ -348,8 +429,7 @@ class PHPCSHelper
             $names = array_map('trim', $names);
             return $names;
         }
-
-    }//end findImplementedInterfaceNames()
+    }
 
 
     /**
@@ -388,7 +468,7 @@ class PHPCSHelper
      * @throws \PHP_CodeSniffer_Exception If the specified $stackPtr is not of
      *                                    type T_FUNCTION or T_CLOSURE.
      */
-    public static function getMethodParameters(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public static function getMethodParameters(File $phpcsFile, $stackPtr)
     {
         if (version_compare(self::getVersion(), '3.3.0', '>=') === true) {
             return $phpcsFile->getMethodParameters($stackPtr);
@@ -404,7 +484,7 @@ class PHPCSHelper
         if ($tokens[$stackPtr]['code'] !== T_FUNCTION
             && $tokens[$stackPtr]['code'] !== T_CLOSURE
         ) {
-            throw new \PHP_CodeSniffer_Exception('$stackPtr must be of type T_FUNCTION or T_CLOSURE');
+            throw new PHPCS_Exception('$stackPtr must be of type T_FUNCTION or T_CLOSURE');
         }
 
         $opener = $tokens[$stackPtr]['parenthesis_opener'];
@@ -568,6 +648,5 @@ class PHPCSHelper
         }//end for
 
         return $vars;
-
-    }//end getMethodParameters()
+    }
 }

@@ -12,6 +12,7 @@
 namespace PHPCompatibility\Sniffs\ControlStructures;
 
 use PHPCompatibility\Sniff;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\ControlStructures\ForbiddenSwitchWithMultipleDefaultBlocksSniff.
@@ -35,8 +36,7 @@ class ForbiddenSwitchWithMultipleDefaultBlocksSniff extends Sniff
     public function register()
     {
         return array(T_SWITCH);
-
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -47,7 +47,7 @@ class ForbiddenSwitchWithMultipleDefaultBlocksSniff extends Sniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         if ($this->supportsAbove('7.0') === false) {
             return;
@@ -75,6 +75,5 @@ class ForbiddenSwitchWithMultipleDefaultBlocksSniff extends Sniff
                 'Found'
             );
         }
-    }//end process()
-
-}//end class
+    }
+}

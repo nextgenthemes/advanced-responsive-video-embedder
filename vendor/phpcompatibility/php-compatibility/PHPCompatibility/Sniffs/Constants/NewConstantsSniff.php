@@ -10,6 +10,7 @@
 namespace PHPCompatibility\Sniffs\Constants;
 
 use PHPCompatibility\AbstractNewFeatureSniff;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\Constants\NewConstantsSniff.
@@ -2148,10 +2149,19 @@ class NewConstantsSniff extends AbstractNewFeatureSniff
             '7.0' => true,
         ),
         // Tokenizer:
+        'T_COALESCE' => array(
+            '5.6' => false,
+            '7.0' => true,
+        ),
         'T_SPACESHIP' => array(
             '5.6' => false,
             '7.0' => true,
         ),
+        'T_YIELD_FROM' => array(
+            '5.6' => false,
+            '7.0' => true,
+        ),
+
         // Zlib:
         // The first three are in the PHP 5.4 changelog, but the Extension constant page says 7.0.
         'ZLIB_ENCODING_RAW' => array(
@@ -2942,7 +2952,319 @@ class NewConstantsSniff extends AbstractNewFeatureSniff
             '7.2' => true,
         ),
 
+        'CURLAUTH_BEARER' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLAUTH_GSSAPI' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLE_WEIRD_SERVER_REPLY' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLINFO_APPCONNECT_TIME_T' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLINFO_CONNECT_TIME_T' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLINFO_CONTENT_LENGTH_DOWNLOAD_T' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLINFO_CONTENT_LENGTH_UPLOAD_T' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLINFO_FILETIME_T' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLINFO_HTTP_VERSION' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLINFO_NAMELOOKUP_TIME_T' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLINFO_PRETRANSFER_TIME_T' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLINFO_PROTOCOL' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLINFO_PROXY_SSL_VERIFYRESULT' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLINFO_REDIRECT_TIME_T' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLINFO_SCHEME' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLINFO_SIZE_DOWNLOAD_T' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLINFO_SIZE_UPLOAD_T' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLINFO_SPEED_DOWNLOAD_T' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLINFO_SPEED_UPLOAD_T' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLINFO_STARTTRANSFER_TIME_T' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLINFO_TOTAL_TIME_T' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_LOCK_DATA_CONNECT' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_LOCK_DATA_PSL' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_MAX_READ_SIZE' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_ABSTRACT_UNIX_SOCKET' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_DISALLOW_USERNAME_IN_URL' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_DNS_SHUFFLE_ADDRESSES' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_HAPPY_EYEBALLS_TIMEOUT_MS' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_HAPROXYPROTOCOL' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_KEEP_SENDING_ON_ERROR' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PRE_PROXY' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PROXY_CAINFO' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PROXY_CAPATH' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PROXY_CRLFILE' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PROXY_KEYPASSWD' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PROXY_PINNEDPUBLICKEY' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PROXY_SSLCERT' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PROXY_SSLCERTTYPE' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PROXY_SSL_CIPHER_LIST' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PROXY_SSLKEY' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PROXY_SSLKEYTYPE' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PROXY_SSL_OPTIONS' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PROXY_SSL_VERIFYHOST' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PROXY_SSL_VERIFYPEER' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PROXY_SSLVERSION' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PROXY_TLS13_CIPHERS' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PROXY_TLSAUTH_PASSWORD' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PROXY_TLSAUTH_TYPE' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_PROXY_TLSAUTH_USERNAME' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
         'CURLOPT_REQUEST_TARGET' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_SOCKS5_AUTH' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_SSH_COMPRESSION' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_SUPPRESS_CONNECT_HEADERS' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_TIMEVALUE_LARGE' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLOPT_TLS13_CIPHERS' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLPROXY_HTTPS' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURLSSH_AUTH_GSSAPI' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_SSLVERSION_MAX_DEFAULT' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_SSLVERSION_MAX_NONE' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_SSLVERSION_MAX_TLSv1_0' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_SSLVERSION_MAX_TLSv1_1' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_SSLVERSION_MAX_TLSv1_2' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_SSLVERSION_MAX_TLSv1_3' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_SSLVERSION_TLSv1_3' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_VERSION_ASYNCHDNS' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_VERSION_BROTLI' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_VERSION_CONV' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_VERSION_DEBUG' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_VERSION_GSSAPI' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_VERSION_GSSNEGOTIATE' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_VERSION_HTTPS_PROXY' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_VERSION_IDN' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_VERSION_LARGEFILE' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_VERSION_MULTI_SSL' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_VERSION_NTLM' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_VERSION_NTLM_WB' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_VERSION_SPNEGO' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_VERSION_SSPI' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'CURL_VERSION_TLSAUTH_SRP' => array(
             '7.2' => false,
             '7.3' => true,
         ),
@@ -2951,6 +3273,110 @@ class NewConstantsSniff extends AbstractNewFeatureSniff
             '7.3' => true,
         ),
         'JSON_THROW_ON_ERROR' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_MANAGEDSAIT' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_PROXY_AUTHZ' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_SUBENTRIES' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_VALUESRETURNFILTER' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_ASSERT' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_PRE_READ' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_POST_READ' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_SORTREQUEST' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_SORTRESPONSE' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_PAGEDRESULTS' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_AUTHZID_REQUEST' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_AUTHZID_RESPONSE' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_SYNC' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_SYNC_STATE' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_SYNC_DONE' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_DONTUSECOPY' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_PASSWORDPOLICYREQUEST' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_PASSWORDPOLICYRESPONSE' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_X_INCREMENTAL_VALUES' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_X_DOMAIN_SCOPE' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_X_PERMISSIVE_MODIFY' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_X_SEARCH_OPTIONS' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_X_TREE_DELETE' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_X_EXTENDED_DN' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_VLVREQUEST' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'LDAP_CONTROL_VLVRESPONSE' => array(
             '7.2' => false,
             '7.3' => true,
         ),
@@ -3002,6 +3428,22 @@ class NewConstantsSniff extends AbstractNewFeatureSniff
             '7.2' => false,
             '7.3' => true,
         ),
+        'STREAM_CRYPTO_PROTO_SSLv3' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'STREAM_CRYPTO_PROTO_TLSv1_0' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'STREAM_CRYPTO_PROTO_TLSv1_1' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
+        'STREAM_CRYPTO_PROTO_TLSv1_2' => array(
+            '7.2' => false,
+            '7.3' => true,
+        ),
     );
 
 
@@ -3013,8 +3455,7 @@ class NewConstantsSniff extends AbstractNewFeatureSniff
     public function register()
     {
         return array(T_STRING);
-
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -3025,7 +3466,7 @@ class NewConstantsSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens       = $phpcsFile->getTokens();
         $constantName = $tokens[$stackPtr]['content'];
@@ -3042,8 +3483,7 @@ class NewConstantsSniff extends AbstractNewFeatureSniff
             'name' => $constantName,
         );
         $this->handleFeature($phpcsFile, $stackPtr, $itemInfo);
-
-    }//end process()
+    }
 
 
     /**
@@ -3068,6 +3508,4 @@ class NewConstantsSniff extends AbstractNewFeatureSniff
     {
         return 'The constant "%s" is not present in PHP version %s or earlier';
     }
-
-
-}//end class
+}

@@ -12,6 +12,8 @@
 namespace PHPCompatibility\Sniffs\FunctionNameRestrictions;
 
 use PHPCompatibility\Sniff;
+use PHP_CodeSniffer_File as File;
+use PHP_CodeSniffer_Tokens as Tokens;
 
 /**
  * \PHPCompatibility\Sniffs\FunctionNameRestrictions\RemovedPHP4StyleConstructorsSniff.
@@ -32,8 +34,10 @@ class RemovedPHP4StyleConstructorsSniff extends Sniff
      */
     public function register()
     {
-        return array(T_CLASS);
-
+        return array(
+            T_CLASS,
+            T_INTERFACE,
+        );
     }
 
     /**
@@ -45,7 +49,7 @@ class RemovedPHP4StyleConstructorsSniff extends Sniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         if ($this->supportsAbove('7.0') === false) {
             return;
@@ -70,8 +74,14 @@ class RemovedPHP4StyleConstructorsSniff extends Sniff
             return;
         }
 
+        $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+        if ($nextNonEmpty === false || $tokens[$nextNonEmpty]['code'] !== T_STRING) {
+            // Anonymous class in combination with PHPCS 2.3.x.
+            return;
+        }
+
         $scopeCloser = $class['scope_closer'];
-        $className   = $phpcsFile->getDeclarationName($stackPtr);
+        $className   = $tokens[$nextNonEmpty]['content'];
 
         if (empty($className) || is_string($className) === false) {
             return;
@@ -83,8 +93,15 @@ class RemovedPHP4StyleConstructorsSniff extends Sniff
         $oldConstructorFound = false;
         $oldConstructorPos   = -1;
         while (($nextFunc = $phpcsFile->findNext(T_FUNCTION, ($nextFunc + 1), $scopeCloser)) !== false) {
+            $functionScopeCloser = $nextFunc;
+            if (isset($tokens[$nextFunc]['scope_closer'])) {
+                // Normal (non-interface, non-abstract) method.
+                $functionScopeCloser = $tokens[$nextFunc]['scope_closer'];
+            }
+
             $funcName = $phpcsFile->getDeclarationName($nextFunc);
             if (empty($funcName) || is_string($funcName) === false) {
+                $nextFunc = $functionScopeCloser;
                 continue;
             }
 
@@ -103,6 +120,8 @@ class RemovedPHP4StyleConstructorsSniff extends Sniff
             if ($newConstructorFound === true && $oldConstructorFound === true) {
                 break;
             }
+
+            $nextFunc = $functionScopeCloser;
         }
 
         if ($newConstructorFound === false && $oldConstructorFound === true) {

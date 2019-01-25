@@ -10,6 +10,7 @@
 namespace PHPCompatibility\Sniffs\FunctionNameRestrictions;
 
 use PHPCompatibility\AbstractNewFeatureSniff;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\FunctionNameRestrictions\NewMagicMethodsSniff.
@@ -83,8 +84,7 @@ class NewMagicMethodsSniff extends AbstractNewFeatureSniff
     public function register()
     {
         return array(T_FUNCTION);
-
-    }//end register()
+    }
 
 
     /**
@@ -96,7 +96,7 @@ class NewMagicMethodsSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $functionName   = $phpcsFile->getDeclarationName($stackPtr);
         $functionNameLc = strtolower($functionName);
@@ -114,8 +114,7 @@ class NewMagicMethodsSniff extends AbstractNewFeatureSniff
             'nameLc' => $functionNameLc,
         );
         $this->handleFeature($phpcsFile, $stackPtr, $itemInfo);
-
-    }//end process()
+    }
 
 
     /**
@@ -192,6 +191,4 @@ class NewMagicMethodsSniff extends AbstractNewFeatureSniff
 
         return $error;
     }
-
-
-}//end class
+}

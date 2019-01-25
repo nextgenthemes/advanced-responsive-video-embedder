@@ -11,6 +11,7 @@ namespace PHPCompatibility\Sniffs\FunctionDeclarations;
 
 use PHPCompatibility\AbstractNewFeatureSniff;
 use PHPCompatibility\PHPCSHelper;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\FunctionDeclarations\NewParamTypeDeclarationsSniff.
@@ -99,7 +100,7 @@ class NewParamTypeDeclarationsSniff extends AbstractNewFeatureSniff
             T_FUNCTION,
             T_CLOSURE,
         );
-    }//end register()
+    }
 
 
     /**
@@ -111,7 +112,7 @@ class NewParamTypeDeclarationsSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         // Get all parameters from method signature.
         $paramNames = PHPCSHelper::getMethodParameters($phpcsFile, $stackPtr);
@@ -166,7 +167,7 @@ class NewParamTypeDeclarationsSniff extends AbstractNewFeatureSniff
                 $phpcsFile->addError($error, $param['token'], 'InvalidTypeHintFound', $data);
             }
         }
-    }//end process()
+    }
 
 
     /**
@@ -191,6 +192,4 @@ class NewParamTypeDeclarationsSniff extends AbstractNewFeatureSniff
     {
         return "'%s' type declaration is not present in PHP version %s or earlier";
     }
-
-
-}//end class
+}

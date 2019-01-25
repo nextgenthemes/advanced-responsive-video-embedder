@@ -1,13 +1,12 @@
 # PHP_CodeSniffer Standards Composer Installer Plugin
 
 ![Project Stage][project-stage-shield]
-![Maintenance][maintenance-shield]
+![Last Commit][last-updated-shield]
 ![Awesome][awesome-shield]
 [![License][license-shield]](LICENSE.md)
 
 [![Travis][travis-shield]][travis]
 [![Scrutinizer][scrutinizer-shield]][scrutinizer]
-[![Dependency Status][versioneye-shield]][versioneye]
 [![Latest Version on Packagist][packagist-version-shield]][packagist-version]
 [![Packagist][packagist-shield]][packagist]
 
@@ -50,7 +49,7 @@ multiple `phpcodesniffer-standard` packages.
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "*",
         "object-calisthenics/phpcs-calisthenics-rules": "*",
-        "wimg/php-compatibility": "*",
+        "phpcompatibility/php-compatibility": "*",
         "wp-coding-standards/wpcs": "*"
     }
 }
@@ -106,12 +105,26 @@ referenced from other script configurations, as follows:
 For more details about Composer scripts, please refer to [the section on scripts
 in the Composer manual][composer-manual-scripts].
 
+### Changing the Coding Standards search depth
+
+By default, this plugin searches up for Coding Standards up to three directories
+deep. In most cases, this should be sufficient. However, this plugin allows
+you to customize the search depth setting if needed.
+
+```json
+{
+    "extra": {
+        "phpcodesniffer-search-depth": 5
+    }
+}
+```
+
 ### Caveats
 
 When this plugin is installed globally, composer will load the _global_ plugin rather
 than the one from the local repository. Despite [this behavior being documented
 in the composer manual][using-composer-plugins], it could potentially confuse
-as an other version of the plugin could be run and not the one specified by the project.
+as another version of the plugin could be run and not the one specified by the project.
 
 ## Developing Coding Standards
 
@@ -125,7 +138,7 @@ Create a composer package of your coding standard by adding a `composer.json` fi
   "description" : "Package contains all coding standards of the Acme company",
   "require" : {
     "php" : ">=5.4.0,<8.0.0-dev",
-    "squizlabs/php_codesniffer" : "^2.0"
+    "squizlabs/php_codesniffer" : "^3.0"
   },
   "type" : "phpcodesniffer-standard"
 }
@@ -154,25 +167,13 @@ Thank you for being involved! :heart_eyes:
 
 The original idea and setup of this repository is by [Franck Nijhof][frenck], employee @ Dealerdirect.
 
-For a full list off all author and/or contributors, check [the contributors page][contributors].
-
-## Working @ Dealerdirect
-
-Dealerdirect is always on the looking for energetic and hard working developers
-and devops engineers.
-
-Interested in working at Dealerdirect?
-Then please be sure to check out [our vacancies][vacancies].
-
-Did not find a matching vacancy? Just [get in touch][get-in-touch]!
-
-[dealerdirect.com][dealerdirectcom]
+For a full list of all author and/or contributors, check [the contributors page][contributors].
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2016-2017 Dealerdirect B.V.
+Copyright (c) 2016-2018 Dealerdirect B.V.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -204,7 +205,7 @@ THE SOFTWARE.
 [frenck]: https://github.com/frenck
 [get-in-touch]: https://www.dealerdirect.com/en/contact
 [license-shield]: https://img.shields.io/github/license/dealerdirect/phpcodesniffer-composer-installer.svg
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2017.svg
+[last-updated-shield]: https://img.shields.io/github/last-commit/Dealerdirect/phpcodesniffer-composer-installer.svg
 [packagist-shield]: https://img.shields.io/packagist/dt/dealerdirect/phpcodesniffer-composer-installer.svg
 [packagist-version-shield]: https://img.shields.io/packagist/v/dealerdirect/phpcodesniffer-composer-installer.svg
 [packagist-version]: https://packagist.org/packages/dealerdirect/phpcodesniffer-composer-installer
@@ -217,5 +218,3 @@ THE SOFTWARE.
 [tutorial]: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Coding-Standard-Tutorial
 [using-composer-plugins]: https://getcomposer.org/doc/articles/plugins.md#using-plugins
 [vacancies]: https://www.dealerdirect.com/en/vacancies
-[versioneye-shield]: https://www.versioneye.com/user/projects/580be0d1d65a7716b613a790/badge.svg
-[versioneye]: https://www.versioneye.com/user/projects/580be0d1d65a7716b613a790

@@ -7,5 +7,4 @@ $baseDir = dirname($vendorDir);
 
 return array(
     '320cde22f66dd4f5d3fd621d3e88b98f' => $vendorDir . '/symfony/polyfill-ctype/bootstrap.php',
-    '9850173c4c17b4fb1128dd022c1f7eb5' => $baseDir . '/nextgenthemes/init.php',
 );

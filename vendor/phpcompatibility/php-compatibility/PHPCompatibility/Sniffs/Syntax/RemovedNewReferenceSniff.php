@@ -13,6 +13,8 @@
 namespace PHPCompatibility\Sniffs\Syntax;
 
 use PHPCompatibility\Sniff;
+use PHP_CodeSniffer_File as File;
+use PHP_CodeSniffer_Tokens as Tokens;
 
 /**
  * \PHPCompatibility\Sniffs\Syntax\RemovedNewReferenceSniff.
@@ -37,8 +39,7 @@ class RemovedNewReferenceSniff extends Sniff
     public function register()
     {
         return array(T_NEW);
-
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -49,14 +50,14 @@ class RemovedNewReferenceSniff extends Sniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         if ($this->supportsAbove('5.3') === false) {
             return;
         }
 
         $tokens       = $phpcsFile->getTokens();
-        $prevNonEmpty = $phpcsFile->findPrevious(\PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+        $prevNonEmpty = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         if ($prevNonEmpty === false || $tokens[$prevNonEmpty]['type'] !== 'T_BITWISE_AND') {
             return;
         }
@@ -72,7 +73,5 @@ class RemovedNewReferenceSniff extends Sniff
         }
 
         $this->addMessage($phpcsFile, $error, $stackPtr, $isError, $errorCode);
-
-    }//end process()
-
-}//end class
+    }
+}

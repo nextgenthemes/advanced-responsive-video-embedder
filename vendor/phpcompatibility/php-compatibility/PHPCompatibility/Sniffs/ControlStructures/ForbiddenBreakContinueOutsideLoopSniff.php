@@ -12,6 +12,7 @@
 namespace PHPCompatibility\Sniffs\ControlStructures;
 
 use PHPCompatibility\Sniff;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\ControlStructures\ForbiddenBreakContinueOutsideLoop.
@@ -61,8 +62,7 @@ class ForbiddenBreakContinueOutsideLoopSniff extends Sniff
             T_BREAK,
             T_CONTINUE,
         );
-
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -73,7 +73,7 @@ class ForbiddenBreakContinueOutsideLoopSniff extends Sniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         $token  = $tokens[$stackPtr];
@@ -105,7 +105,5 @@ class ForbiddenBreakContinueOutsideLoopSniff extends Sniff
         }
 
         $this->addMessage($phpcsFile, $error, $stackPtr, $isError, $errorCode, $data);
-
-    }//end process()
-
-}//end class
+    }
+}

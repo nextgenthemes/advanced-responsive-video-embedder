@@ -12,7 +12,8 @@
 namespace PHPCompatibility\Sniffs\Lists;
 
 use PHPCompatibility\Sniff;
-use PHPCompatibility\PHPCSHelper;
+use PHP_CodeSniffer_File as File;
+use PHP_CodeSniffer_Tokens as Tokens;
 
 /**
  * \PHPCompatibility\Sniffs\Lists\ForbiddenEmptyListAssignmentSniff.
@@ -44,7 +45,7 @@ class ForbiddenEmptyListAssignmentSniff extends Sniff
     {
         // Set up a list of tokens to disregard when determining whether the list() is empty.
         // Only needs to be set up once.
-        $this->ignoreTokens                      = \PHP_CodeSniffer_Tokens::$emptyTokens;
+        $this->ignoreTokens                      = Tokens::$emptyTokens;
         $this->ignoreTokens[T_COMMA]             = T_COMMA;
         $this->ignoreTokens[T_OPEN_PARENTHESIS]  = T_OPEN_PARENTHESIS;
         $this->ignoreTokens[T_CLOSE_PARENTHESIS] = T_CLOSE_PARENTHESIS;
@@ -64,7 +65,7 @@ class ForbiddenEmptyListAssignmentSniff extends Sniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         if ($this->supportsAbove('7.0') === false) {
             return;

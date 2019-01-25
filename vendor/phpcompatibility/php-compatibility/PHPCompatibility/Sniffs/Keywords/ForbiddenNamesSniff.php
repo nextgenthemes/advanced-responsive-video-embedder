@@ -11,7 +11,8 @@
 namespace PHPCompatibility\Sniffs\Keywords;
 
 use PHPCompatibility\Sniff;
-use PHPCompatibility\PHPCSHelper;
+use PHP_CodeSniffer_File as File;
+use PHP_CodeSniffer_Tokens as Tokens;
 
 /**
  * \PHPCompatibility\Sniffs\Keywords\ForbiddenNamesSniff.
@@ -134,7 +135,7 @@ class ForbiddenNamesSniff extends Sniff
      */
     public function register()
     {
-        $this->allowedModifiers          = \PHP_CodeSniffer_Tokens::$scopeModifiers;
+        $this->allowedModifiers          = Tokens::$scopeModifiers;
         $this->allowedModifiers[T_FINAL] = T_FINAL;
 
         $tokens = $this->targetedTokens;
@@ -144,7 +145,7 @@ class ForbiddenNamesSniff extends Sniff
         }
 
         return $tokens;
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -155,7 +156,7 @@ class ForbiddenNamesSniff extends Sniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -180,9 +181,9 @@ class ForbiddenNamesSniff extends Sniff
      *
      * @return void
      */
-    public function processNonString(\PHP_CodeSniffer_File $phpcsFile, $stackPtr, $tokens)
+    public function processNonString(File $phpcsFile, $stackPtr, $tokens)
     {
-        $nextNonEmpty = $phpcsFile->findNext(\PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+        $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
         if ($nextNonEmpty === false) {
             return;
         }
@@ -193,7 +194,7 @@ class ForbiddenNamesSniff extends Sniff
          * In PHPCS < 2.3.4 these were tokenized as T_CLASS no matter what.
          */
         if ($tokens[$stackPtr]['type'] === 'T_ANON_CLASS' || $tokens[$stackPtr]['type'] === 'T_CLASS') {
-            $prevNonEmpty = $phpcsFile->findPrevious(\PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+            $prevNonEmpty = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
             if ($prevNonEmpty !== false && $tokens[$prevNonEmpty]['type'] === 'T_NEW') {
                 return;
             }
@@ -207,7 +208,7 @@ class ForbiddenNamesSniff extends Sniff
         elseif ($tokens[$stackPtr]['type'] === 'T_USE'
             && isset($this->validUseNames[strtolower($tokens[$nextNonEmpty]['content'])]) === true
         ) {
-            $maybeUseNext = $phpcsFile->findNext(\PHP_CodeSniffer_Tokens::$emptyTokens, ($nextNonEmpty + 1), null, true, null, true);
+            $maybeUseNext = $phpcsFile->findNext(Tokens::$emptyTokens, ($nextNonEmpty + 1), null, true, null, true);
             if ($maybeUseNext !== false && $this->isEndOfUseStatement($tokens[$maybeUseNext]) === false) {
                 $nextNonEmpty = $maybeUseNext;
             }
@@ -222,7 +223,7 @@ class ForbiddenNamesSniff extends Sniff
             && isset($this->allowedModifiers[$tokens[$nextNonEmpty]['code']]) === true
             && $phpcsFile->hasCondition($stackPtr, T_USE) === true
         ) {
-            $maybeUseNext = $phpcsFile->findNext(\PHP_CodeSniffer_Tokens::$emptyTokens, ($nextNonEmpty + 1), null, true, null, true);
+            $maybeUseNext = $phpcsFile->findNext(Tokens::$emptyTokens, ($nextNonEmpty + 1), null, true, null, true);
             if ($maybeUseNext === false || $this->isEndOfUseStatement($tokens[$maybeUseNext]) === true) {
                 return;
             }
@@ -236,7 +237,7 @@ class ForbiddenNamesSniff extends Sniff
         elseif ($tokens[$stackPtr]['type'] === 'T_FUNCTION'
             && $tokens[$nextNonEmpty]['type'] === 'T_BITWISE_AND'
         ) {
-            $maybeUseNext = $phpcsFile->findNext(\PHP_CodeSniffer_Tokens::$emptyTokens, ($nextNonEmpty + 1), null, true, null, true);
+            $maybeUseNext = $phpcsFile->findNext(Tokens::$emptyTokens, ($nextNonEmpty + 1), null, true, null, true);
             if ($maybeUseNext === false) {
                 // Live coding.
                 return;
@@ -305,8 +306,7 @@ class ForbiddenNamesSniff extends Sniff
             );
             $this->addError($phpcsFile, $stackPtr, $tokens[$nextNonEmpty]['content'], $data);
         }
-
-    }//end processNonString()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -319,7 +319,7 @@ class ForbiddenNamesSniff extends Sniff
      *
      * @return void
      */
-    public function processString(\PHP_CodeSniffer_File $phpcsFile, $stackPtr, $tokens)
+    public function processString(File $phpcsFile, $stackPtr, $tokens)
     {
         $tokenContentLc = strtolower($tokens[$stackPtr]['content']);
 
@@ -354,7 +354,7 @@ class ForbiddenNamesSniff extends Sniff
             );
             $this->addError($phpcsFile, $stackPtr, $defineNameLc, $data);
         }
-    }//end processString()
+    }
 
 
     /**
@@ -368,7 +368,7 @@ class ForbiddenNamesSniff extends Sniff
      *
      * @return void
      */
-    protected function addError($phpcsFile, $stackPtr, $content, $data)
+    protected function addError(File $phpcsFile, $stackPtr, $content, $data)
     {
         $error     = "Function name, class name, namespace name or constant name can not be reserved keyword '%s' (since version %s)";
         $errorCode = $this->stringToErrorCode($content) . 'Found';
@@ -388,4 +388,4 @@ class ForbiddenNamesSniff extends Sniff
     {
         return in_array($token['code'], array(T_CLOSE_CURLY_BRACKET, T_SEMICOLON, T_COMMA), true);
     }
-}//end class
+}

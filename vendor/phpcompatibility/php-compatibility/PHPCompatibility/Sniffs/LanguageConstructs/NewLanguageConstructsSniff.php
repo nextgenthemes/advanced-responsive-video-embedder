@@ -11,6 +11,7 @@
 namespace PHPCompatibility\Sniffs\LanguageConstructs;
 
 use PHPCompatibility\AbstractNewFeatureSniff;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\LanguageConstructs\NewLanguageConstructsSniff.
@@ -57,7 +58,7 @@ class NewLanguageConstructsSniff extends AbstractNewFeatureSniff
             $tokens[] = constant($token);
         }
         return $tokens;
-    }//end register()
+    }
 
 
     /**
@@ -69,7 +70,7 @@ class NewLanguageConstructsSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens    = $phpcsFile->getTokens();
         $tokenType = $tokens[$stackPtr]['type'];
@@ -78,8 +79,7 @@ class NewLanguageConstructsSniff extends AbstractNewFeatureSniff
             'name' => $tokenType,
         );
         $this->handleFeature($phpcsFile, $stackPtr, $itemInfo);
-
-    }//end process()
+    }
 
 
     /**
@@ -120,7 +120,6 @@ class NewLanguageConstructsSniff extends AbstractNewFeatureSniff
         $errorInfo['description'] = $itemArray['description'];
 
         return $errorInfo;
-
     }
 
 
@@ -138,5 +137,4 @@ class NewLanguageConstructsSniff extends AbstractNewFeatureSniff
         $data[0] = $errorInfo['description'];
         return $data;
     }
-
-}//end class
+}

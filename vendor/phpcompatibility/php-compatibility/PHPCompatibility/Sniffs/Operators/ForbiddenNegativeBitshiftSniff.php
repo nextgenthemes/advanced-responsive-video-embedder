@@ -13,6 +13,8 @@ namespace PHPCompatibility\Sniffs\Operators;
 
 use PHPCompatibility\Sniff;
 use PHPCompatibility\PHPCSHelper;
+use PHP_CodeSniffer_File as File;
+use PHP_CodeSniffer_Tokens as Tokens;
 
 /**
  * \PHPCompatibility\Sniffs\Operators\ForbiddenNegativeBitshift.
@@ -56,8 +58,7 @@ class ForbiddenNegativeBitshiftSniff extends Sniff
             T_SR,
             T_SR_EQUAL,
         );
-
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -68,7 +69,7 @@ class ForbiddenNegativeBitshiftSniff extends Sniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         if ($this->supportsAbove('7.0') === false) {
             return;
@@ -78,7 +79,7 @@ class ForbiddenNegativeBitshiftSniff extends Sniff
 
         // Determine the start and end of the part of the statement we need to examine.
         $start = ($stackPtr + 1);
-        $next  = $phpcsFile->findNext(\PHP_CodeSniffer_Tokens::$emptyTokens, $start, null, true);
+        $next  = $phpcsFile->findNext(Tokens::$emptyTokens, $start, null, true);
         if ($next !== false && $tokens[$next]['code'] === T_OPEN_PARENTHESIS) {
             $start = ($next + 1);
         }
@@ -99,7 +100,5 @@ class ForbiddenNegativeBitshiftSniff extends Sniff
             'Found',
             array($phpcsFile->getTokensAsString($start, ($end - $start + 1)))
         );
-
-    }//end process()
-
-}//end class
+    }
+}

@@ -12,6 +12,8 @@
 namespace PHPCompatibility\Sniffs\Syntax;
 
 use PHPCompatibility\Sniff;
+use PHP_CodeSniffer_File as File;
+use PHP_CodeSniffer_Tokens as Tokens;
 
 /**
  * \PHPCompatibility\Sniffs\Syntax\NewArrayStringDereferencingSniff.
@@ -38,7 +40,7 @@ class NewArrayStringDereferencingSniff extends Sniff
             T_OPEN_SHORT_ARRAY,
             T_CONSTANT_ENCAPSED_STRING,
         );
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -49,7 +51,7 @@ class NewArrayStringDereferencingSniff extends Sniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         if ($this->supportsBelow('5.4') === false) {
             return;
@@ -89,7 +91,7 @@ class NewArrayStringDereferencingSniff extends Sniff
             return;
         }
 
-        $nextNonEmpty = $phpcsFile->findNext(\PHP_CodeSniffer_Tokens::$emptyTokens, ($end + 1), null, true, null, true);
+        $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), null, true, null, true);
 
         if ($nextNonEmpty !== false
             && ($tokens[$nextNonEmpty]['type'] === 'T_OPEN_SQUARE_BRACKET'
@@ -102,7 +104,5 @@ class NewArrayStringDereferencingSniff extends Sniff
                 array($type)
             );
         }
-
-    }//end process()
-
-}//end class
+    }
+}

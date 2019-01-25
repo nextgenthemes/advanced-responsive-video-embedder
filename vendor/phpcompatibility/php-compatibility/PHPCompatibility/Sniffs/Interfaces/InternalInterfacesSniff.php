@@ -11,6 +11,7 @@ namespace PHPCompatibility\Sniffs\Interfaces;
 
 use PHPCompatibility\Sniff;
 use PHPCompatibility\PHPCSHelper;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\Interfaces\InternalInterfacesSniff.
@@ -53,8 +54,7 @@ class InternalInterfacesSniff extends Sniff
         }
 
         return $targets;
-
-    }//end register()
+    }
 
 
     /**
@@ -66,7 +66,7 @@ class InternalInterfacesSniff extends Sniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $interfaces = PHPCSHelper::findImplementedInterfaceNames($phpcsFile, $stackPtr);
 
@@ -75,6 +75,7 @@ class InternalInterfacesSniff extends Sniff
         }
 
         foreach ($interfaces as $interface) {
+            $interface   = ltrim($interface, '\\');
             $interfaceLc = strtolower($interface);
             if (isset($this->internalInterfaces[$interfaceLc]) === true) {
                 $error     = 'The interface %s %s';
@@ -87,8 +88,5 @@ class InternalInterfacesSniff extends Sniff
                 $phpcsFile->addError($error, $stackPtr, $errorCode, $data);
             }
         }
-
-    }//end process()
-
-
-}//end class
+    }
+}

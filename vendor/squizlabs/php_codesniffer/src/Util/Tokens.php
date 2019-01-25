@@ -34,6 +34,7 @@ define('T_MODULUS', 'PHPCS_T_MODULUS');
 define('T_BITWISE_AND', 'PHPCS_T_BITWISE_AND');
 define('T_BITWISE_OR', 'PHPCS_T_BITWISE_OR');
 define('T_BITWISE_XOR', 'PHPCS_T_BITWISE_XOR');
+define('T_BITWISE_NOT', 'PHPCS_T_BITWISE_NOT');
 define('T_ARRAY_HINT', 'PHPCS_T_ARRAY_HINT');
 define('T_GREATER_THAN', 'PHPCS_T_GREATER_THAN');
 define('T_LESS_THAN', 'PHPCS_T_LESS_THAN');
@@ -144,9 +145,9 @@ final class Tokens
         T_FUNCTION            => 100,
         T_CLOSURE             => 100,
 
-                                 /*
-                                     Conditions.
-                                 */
+        /*
+         * Conditions.
+         */
 
         T_WHILE               => 50,
         T_FOR                 => 50,
@@ -163,9 +164,9 @@ final class Tokens
         T_SELF                => 25,
         T_PARENT              => 25,
 
-                                 /*
-                                     Operators and arithmetic.
-                                 */
+        /*
+         * Operators and arithmetic.
+         */
 
         T_BITWISE_AND         => 8,
         T_BITWISE_OR          => 8,
@@ -200,9 +201,9 @@ final class Tokens
         T_BOOLEAN_AND         => 5,
         T_BOOLEAN_OR          => 5,
 
-                                 /*
-                                     Equality.
-                                 */
+        /*
+         * Equality.
+         */
 
         T_IS_EQUAL            => 5,
         T_IS_NOT_EQUAL        => 5,
@@ -565,7 +566,7 @@ final class Tokens
     ];
 
     /**
-     * Tokens that are open class and object scopes.
+     * Tokens that open class and object scopes.
      *
      * @var array<int, int>
      */

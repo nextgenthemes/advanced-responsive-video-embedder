@@ -12,6 +12,7 @@
 namespace PHPCompatibility\Sniffs\FunctionDeclarations;
 
 use PHPCompatibility\AbstractNewFeatureSniff;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\FunctionDeclarations\NewReturnTypeDeclarationsSniff.
@@ -104,7 +105,7 @@ class NewReturnTypeDeclarationsSniff extends AbstractNewFeatureSniff
         }
 
         return $tokens;
-    }//end register()
+    }
 
 
     /**
@@ -116,7 +117,7 @@ class NewReturnTypeDeclarationsSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -144,7 +145,7 @@ class NewReturnTypeDeclarationsSniff extends AbstractNewFeatureSniff
             );
             $this->handleFeature($phpcsFile, $stackPtr, $itemInfo);
         }
-    }//end process()
+    }
 
 
     /**
@@ -169,6 +170,4 @@ class NewReturnTypeDeclarationsSniff extends AbstractNewFeatureSniff
     {
         return '%s return type is not present in PHP version %s or earlier';
     }
-
-
-}//end class
+}

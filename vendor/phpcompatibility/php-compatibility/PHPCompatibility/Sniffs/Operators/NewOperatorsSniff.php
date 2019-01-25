@@ -11,6 +11,7 @@
 namespace PHPCompatibility\Sniffs\Operators;
 
 use PHPCompatibility\AbstractNewFeatureSniff;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\Operators\NewOperatorsSniff.
@@ -57,8 +58,8 @@ class NewOperatorsSniff extends AbstractNewFeatureSniff
          * @link https://wiki.php.net/rfc/null_coalesce_equal_operator
          */
         'T_COALESCE_EQUAL' => array(
-            '7.2' => false,
-            '7.3' => true,
+            '7.3' => false,
+            '7.4' => true,
             'description' => 'null coalesce equal operator (??=)',
         ), // Identified in PHP < 7.0 icw PHPCS < 2.6.2 as T_INLINE_THEN + T_INLINE_THEN + T_EQUAL and between PHPCS 2.6.2 and PHPCS 2.8.1 as T_COALESCE + T_EQUAL.
     );
@@ -135,7 +136,7 @@ class NewOperatorsSniff extends AbstractNewFeatureSniff
             }
         }
         return $tokens;
-    }//end register()
+    }
 
 
     /**
@@ -147,7 +148,7 @@ class NewOperatorsSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens    = $phpcsFile->getTokens();
         $tokenType = $tokens[$stackPtr]['type'];
@@ -179,8 +180,7 @@ class NewOperatorsSniff extends AbstractNewFeatureSniff
             'name' => $tokenType,
         );
         $this->handleFeature($phpcsFile, $stackPtr, $itemInfo);
-
-    }//end process()
+    }
 
 
     /**
@@ -221,7 +221,6 @@ class NewOperatorsSniff extends AbstractNewFeatureSniff
         $errorInfo['description'] = $itemArray['description'];
 
         return $errorInfo;
-
     }
 
 
@@ -292,5 +291,4 @@ class NewOperatorsSniff extends AbstractNewFeatureSniff
 
         return false;
     }
-
-}//end class
+}

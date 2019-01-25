@@ -10,6 +10,8 @@
 namespace PHPCompatibility\Sniffs\TypeCasts;
 
 use PHPCompatibility\AbstractNewFeatureSniff;
+use PHPCompatibility\PHPCSHelper;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\TypeCasts\NewTypeCastsSniff.
@@ -62,14 +64,17 @@ class NewTypeCastsSniff extends AbstractNewFeatureSniff
          *
          * - (binary) cast is incorrectly tokenized as T_STRING_CAST by PHP and PHPCS.
          * - b"something" binary cast is incorrectly tokenized as T_CONSTANT_ENCAPSED_STRING by PHP and PHPCS.
+         * - Since PHPCS 3.4.0, PHPCS *will* tokenize these correctly.
          *
          * @link https://github.com/squizlabs/PHP_CodeSniffer/issues/1574
          */
-        $tokens[] = T_STRING_CAST;
-        $tokens[] = T_CONSTANT_ENCAPSED_STRING;
+        if (version_compare(PHPCSHelper::getVersion(), '3.4.0', '<') === true) {
+            $tokens[] = T_STRING_CAST;
+            $tokens[] = T_CONSTANT_ENCAPSED_STRING;
+        }
 
         return $tokens;
-    }//end register()
+    }
 
 
     /**
@@ -81,7 +86,7 @@ class NewTypeCastsSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens    = $phpcsFile->getTokens();
         $tokenType = $tokens[$stackPtr]['type'];
@@ -99,7 +104,9 @@ class NewTypeCastsSniff extends AbstractNewFeatureSniff
                     break;
 
                 case 'T_CONSTANT_ENCAPSED_STRING':
-                    if (strpos($tokenContent, 'b"') === 0 && substr($tokenContent, -1) === '"') {
+                    if ((strpos($tokenContent, 'b"') === 0 && substr($tokenContent, -1) === '"')
+                        || (strpos($tokenContent, "b'") === 0 && substr($tokenContent, -1) === "'")
+                    ) {
                         $tokenType = 'T_BINARY_CAST';
                     } else {
                         return;
@@ -119,8 +126,7 @@ class NewTypeCastsSniff extends AbstractNewFeatureSniff
             'content' => $tokens[$stackPtr]['content'],
         );
         $this->handleFeature($phpcsFile, $stackPtr, $itemInfo);
-
-    }//end process()
+    }
 
 
     /**
@@ -194,6 +200,4 @@ class NewTypeCastsSniff extends AbstractNewFeatureSniff
         $data[]  = $itemInfo['content'];
         return $data;
     }
-
-
-}//end class
+}

@@ -11,6 +11,7 @@ namespace PHPCompatibility\Sniffs\Interfaces;
 
 use PHPCompatibility\AbstractNewFeatureSniff;
 use PHPCompatibility\PHPCSHelper;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\Interfaces\NewInterfacesSniff.
@@ -83,11 +84,19 @@ class NewInterfacesSniff extends AbstractNewFeatureSniff
             '5.5' => true,
         ),
 
+        'SessionIdInterface' => array(
+            '5.5.0' => false,
+            '5.5.1' => true,
+        ),
+
         'Throwable' => array(
             '5.6' => false,
             '7.0' => true,
         ),
-
+        'SessionUpdateTimestampHandlerInterface' => array(
+            '5.6' => false,
+            '7.0' => true,
+        ),
     );
 
     /**
@@ -128,8 +137,7 @@ class NewInterfacesSniff extends AbstractNewFeatureSniff
         }
 
         return $targets;
-
-    }//end register()
+    }
 
 
     /**
@@ -141,7 +149,7 @@ class NewInterfacesSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -171,8 +179,7 @@ class NewInterfacesSniff extends AbstractNewFeatureSniff
                 // Deliberately left empty.
                 break;
         }
-
-    }//end process()
+    }
 
 
     /**
@@ -187,7 +194,7 @@ class NewInterfacesSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    private function processClassToken(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    private function processClassToken(File $phpcsFile, $stackPtr)
     {
         $interfaces = PHPCSHelper::findImplementedInterfaceNames($phpcsFile, $stackPtr);
 
@@ -204,6 +211,7 @@ class NewInterfacesSniff extends AbstractNewFeatureSniff
         }
 
         foreach ($interfaces as $interface) {
+            $interface   = ltrim($interface, '\\');
             $interfaceLc = strtolower($interface);
 
             if (isset($this->newInterfaces[$interfaceLc]) === true) {
@@ -237,7 +245,7 @@ class NewInterfacesSniff extends AbstractNewFeatureSniff
                 }
             }
         }
-    }//end processClassToken()
+    }
 
 
     /**
@@ -251,7 +259,7 @@ class NewInterfacesSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    private function processFunctionToken(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    private function processFunctionToken(File $phpcsFile, $stackPtr)
     {
         $typeHints = $this->getTypeHintsFromFunctionDeclaration($phpcsFile, $stackPtr);
         if (empty($typeHints) || is_array($typeHints) === false) {
@@ -284,7 +292,7 @@ class NewInterfacesSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    private function processReturnTypeToken(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    private function processReturnTypeToken(File $phpcsFile, $stackPtr)
     {
         $returnTypeHint   = $this->getReturnTypeHintName($phpcsFile, $stackPtr);
         $returnTypeHint   = ltrim($returnTypeHint, '\\');
@@ -325,6 +333,4 @@ class NewInterfacesSniff extends AbstractNewFeatureSniff
     {
         return 'The built-in interface ' . parent::getErrorMsgTemplate();
     }
-
-
-}//end class
+}

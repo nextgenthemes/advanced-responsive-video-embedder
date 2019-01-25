@@ -321,6 +321,11 @@ class File
 
         $this->parse();
 
+        // Check if tokenizer errors cause this file to be ignored.
+        if ($this->ignored === true) {
+            return;
+        }
+
         $this->fixer->startFile($this);
 
         if (PHP_CODESNIFFER_VERBOSITY > 2) {
@@ -564,6 +569,7 @@ class File
             $this->tokenizer = new $tokenizerClass($this->content, $this->config, $this->eolChar);
             $this->tokens    = $this->tokenizer->getTokens();
         } catch (TokenizerException $e) {
+            $this->ignored = true;
             $this->addWarning($e->getMessage(), null, 'Internal.Tokenizer.Exception');
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
                 echo "[$this->tokenizerType => tokenizer error]... ";
@@ -964,6 +970,7 @@ class File
         }
 
         // Make sure we are not ignoring this file.
+        $included = null;
         foreach ($checkCodes as $checkCode) {
             $patterns = null;
 
@@ -996,15 +1003,33 @@ class File
 
                 $pattern = '`'.strtr($pattern, $replacements).'`i';
                 $matched = preg_match($pattern, $this->path);
-                if (($matched === 1 && $excluding === true)
-                    || ($matched === 0 && $excluding === false)
-                ) {
-                    // This file path is being excluded, or not included.
+
+                if ($matched === 0) {
+                    if ($excluding === false && $included === null) {
+                        // This file path is not being included.
+                        $included = false;
+                    }
+
+                    continue;
+                }
+
+                if ($excluding === true) {
+                    // This file path is being excluded.
                     $this->ignoredCodes[$checkCode] = true;
                     return false;
                 }
+
+                // This file path is being included.
+                $included = true;
+                break;
             }//end foreach
         }//end foreach
+
+        if ($included === false) {
+            // There were include rules set, but this file
+            // path didn't match any of them.
+            return false;
+        }
 
         $messageCount++;
         if ($fixable === true) {
@@ -1345,7 +1370,7 @@ class File
             case T_SELF:
             case T_PARENT:
             case T_STATIC:
-                // Self is valid, the others invalid, but were probably intended as type hints.
+                // Self and parent are valid, static invalid, but was probably intended as type hint.
                 if (isset($defaultStart) === false) {
                     if ($typeHintToken === false) {
                         $typeHintToken = $i;
@@ -1463,6 +1488,7 @@ class File
      *    'is_abstract'          => false,    // true if the abstract keyword was found.
      *    'is_final'             => false,    // true if the final keyword was found.
      *    'is_static'            => false,    // true if the static keyword was found.
+     *    'has_body'             => false,    // true if the method has a body
      *   );
      * </code>
      *
@@ -1541,6 +1567,7 @@ class File
         $returnType         = '';
         $returnTypeToken    = false;
         $nullableReturnType = false;
+        $hasBody            = true;
 
         if (isset($this->tokens[$stackPtr]['parenthesis_closer']) === true) {
             $scopeOpener = null;
@@ -1576,6 +1603,9 @@ class File
                     $returnType .= $this->tokens[$i]['content'];
                 }
             }
+
+            $end     = $this->findNext([T_OPEN_CURLY_BRACKET, T_SEMICOLON], $this->tokens[$stackPtr]['parenthesis_closer']);
+            $hasBody = $this->tokens[$end]['code'] === T_OPEN_CURLY_BRACKET;
         }//end if
 
         if ($returnType !== '' && $nullableReturnType === true) {
@@ -1591,6 +1621,7 @@ class File
             'is_abstract'          => $isAbstract,
             'is_final'             => $isFinal,
             'is_static'            => $isStatic,
+            'has_body'             => $hasBody,
         ];
 
     }//end getMethodProperties()
@@ -1646,6 +1677,18 @@ class File
                     return [];
                 }
             } else {
+                throw new TokenizerException('$stackPtr is not a class member var');
+            }
+        }
+
+        // Make sure it's not a method parameter.
+        if (empty($this->tokens[$stackPtr]['nested_parenthesis']) === false) {
+            $parenthesis = array_keys($this->tokens[$stackPtr]['nested_parenthesis']);
+            $deepestOpen = array_pop($parenthesis);
+            if ($deepestOpen > $ptr
+                && isset($this->tokens[$deepestOpen]['parenthesis_owner']) === true
+                && $this->tokens[$this->tokens[$deepestOpen]['parenthesis_owner']]['code'] === T_FUNCTION
+            ) {
                 throw new TokenizerException('$stackPtr is not a class member var');
             }
         }
@@ -1902,15 +1945,23 @@ class File
      * Returns the content of the tokens from the specified start position in
      * the token stack for the specified length.
      *
-     * @param int $start       The position to start from in the token stack.
-     * @param int $length      The length of tokens to traverse from the start pos.
-     * @param int $origContent Whether the original content or the tab replaced
-     *                         content should be used.
+     * @param int  $start       The position to start from in the token stack.
+     * @param int  $length      The length of tokens to traverse from the start pos.
+     * @param bool $origContent Whether the original content or the tab replaced
+     *                          content should be used.
      *
      * @return string The token contents.
      */
     public function getTokensAsString($start, $length, $origContent=false)
     {
+        if (is_int($start) === false || isset($this->tokens[$start]) === false) {
+            throw new RuntimeException('The $start position for getTokensAsString() must exist in the token stack');
+        }
+
+        if (is_int($length) === false || $length <= 0) {
+            return '';
+        }
+
         $str = '';
         $end = ($start + $length);
         if ($end > $this->numTokens) {

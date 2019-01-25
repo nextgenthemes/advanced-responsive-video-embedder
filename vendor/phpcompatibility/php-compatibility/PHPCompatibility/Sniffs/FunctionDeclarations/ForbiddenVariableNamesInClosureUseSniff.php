@@ -13,6 +13,8 @@ namespace PHPCompatibility\Sniffs\FunctionDeclarations;
 
 use PHPCompatibility\Sniff;
 use PHPCompatibility\PHPCSHelper;
+use PHP_CodeSniffer_File as File;
+use PHP_CodeSniffer_Tokens as Tokens;
 
 /**
  * PHP 7.1 Forbidden variable names in closure use statements.
@@ -37,8 +39,7 @@ class ForbiddenVariableNamesInClosureUseSniff extends Sniff
     public function register()
     {
         return array(T_USE);
-
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -49,7 +50,7 @@ class ForbiddenVariableNamesInClosureUseSniff extends Sniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         if ($this->supportsAbove('7.1') === false) {
             return;
@@ -58,7 +59,7 @@ class ForbiddenVariableNamesInClosureUseSniff extends Sniff
         $tokens = $phpcsFile->getTokens();
 
         // Verify this use statement is used with a closure - if so, it has to have parenthesis before it.
-        $previousNonEmpty = $phpcsFile->findPrevious(\PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true, null, true);
+        $previousNonEmpty = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true, null, true);
         if ($previousNonEmpty === false || $tokens[$previousNonEmpty]['code'] !== T_CLOSE_PARENTHESIS
             || isset($tokens[$previousNonEmpty]['parenthesis_opener']) === false
         ) {
@@ -66,7 +67,7 @@ class ForbiddenVariableNamesInClosureUseSniff extends Sniff
         }
 
         // ... and (a variable within) parenthesis after it.
-        $nextNonEmpty = $phpcsFile->findNext(\PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true, null, true);
+        $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true, null, true);
         if ($nextNonEmpty === false || $tokens[$nextNonEmpty]['code'] !== T_OPEN_PARENTHESIS) {
             return;
         }
@@ -76,7 +77,7 @@ class ForbiddenVariableNamesInClosureUseSniff extends Sniff
             return;
         }
 
-        $closurePtr = $phpcsFile->findPrevious(\PHP_CodeSniffer_Tokens::$emptyTokens, ($tokens[$previousNonEmpty]['parenthesis_opener'] - 1), null, true);
+        $closurePtr = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($tokens[$previousNonEmpty]['parenthesis_opener'] - 1), null, true);
         if ($closurePtr === false || $tokens[$closurePtr]['code'] !== T_CLOSURE) {
             return;
         }
@@ -113,7 +114,5 @@ class ForbiddenVariableNamesInClosureUseSniff extends Sniff
                 }
             }
         }
-
-    }//end process()
-
-}//end class
+    }
+}

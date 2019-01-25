@@ -11,6 +11,7 @@
 namespace PHPCompatibility\Sniffs\IniDirectives;
 
 use PHPCompatibility\AbstractNewFeatureSniff;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\IniDirectives\NewIniDirectivesSniff.
@@ -479,6 +480,12 @@ class NewIniDirectivesSniff extends AbstractNewFeatureSniff
             '7.1' => true,
         ),
 
+        // Introduced in PHP 7.1.25, 7.2.13, 7.3.0.
+        'imap.enable_insecure_rsh' => array(
+            '7.1.24' => false,
+            '7.1.25' => true,
+        ),
+
         'syslog.facility' => array(
             '7.2' => false,
             '7.3' => true,
@@ -505,8 +512,7 @@ class NewIniDirectivesSniff extends AbstractNewFeatureSniff
     public function register()
     {
         return array(T_STRING);
-
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -517,7 +523,7 @@ class NewIniDirectivesSniff extends AbstractNewFeatureSniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -554,8 +560,7 @@ class NewIniDirectivesSniff extends AbstractNewFeatureSniff
             'functionLc' => $functionLc,
         );
         $this->handleFeature($phpcsFile, $iniToken['end'], $itemInfo);
-
-    }//end process()
+    }
 
 
     /**
@@ -655,6 +660,4 @@ class NewIniDirectivesSniff extends AbstractNewFeatureSniff
 
         return $data;
     }
-
-
-}//end class
+}

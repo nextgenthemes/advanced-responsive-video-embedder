@@ -20,6 +20,17 @@
 		</properties>
 	</rule>
 
+	<!-- Exclude WordPress rules. -->
+	<rule ref="WordPress">
+		<!-- <exclude name="WordPress.Arrays.ArrayDeclarationSpacing.NoSpaceBeforeArrayCloser"/> -->
+		<!-- <exclude name="WordPress.Arrays.ArrayDeclarationSpacing.SpaceBeforeArrayCloser"/> -->
+		<exclude name="WordPress.Arrays.CommaAfterArrayItem.NoComma"/>
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+		<exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores"/>
+		<exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents"/>
+	</rule>
+
 	<!-- Exclude Generic rules. -->
 	<rule ref="Generic">
 		<exclude name="Generic.Arrays.ArrayIndent.KeyIncorrect"/>
@@ -64,9 +75,9 @@
 		<exclude name="PEAR.ControlStructures.MultiLineCondition.SpacingAfterOpenBrace"/>
 		<exclude name="PEAR.Files.IncludingFile.BracketsNotRequired"/>
 		<exclude name="PEAR.Functions.FunctionCallSignature.CloseBracketLine"/>
-		<exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket"/>
 		<exclude name="PEAR.Functions.FunctionCallSignature.Indent"/>
 		<exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments"/>
+		<exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket"/>
 		<exclude name="PEAR.Functions.FunctionCallSignature.SpaceBeforeCloseBracket"/>
 		<exclude name="PEAR.Functions.FunctionDeclaration.BraceOnSameLine"/>
 		<exclude name="PEAR.Functions.FunctionDeclaration.SpaceAfterFunction"/>
@@ -90,6 +101,7 @@
 		<exclude name="Squiz.Classes.ClassDeclaration.OpenBraceNewLine"/>
 		<exclude name="Squiz.Commenting.ClassComment.Missing" />
 		<exclude name="Squiz.Commenting.FileComment.Missing"/>
+		<exclude name="Squiz.Commenting.InlineComment.WrongStyle"/>
 		<exclude name="Squiz.Commenting.FileComment.MissingPackageTag" />
 		<exclude name="Squiz.Commenting.FileComment.WrongStyle" />
 		<exclude name="Squiz.Commenting.FunctionComment.Missing" />
@@ -123,10 +135,10 @@
 		<exclude name="Squiz.PHP.DisallowComparisonAssignment.AssignedComparison"/>
 		<exclude name="Squiz.PHP.DisallowInlineIf.Found"/>
 		<exclude name="Squiz.PHP.EmbeddedPhp.NoSemicolon"/>
-		<exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpaceBeforeCloseBrace"/>
 		<exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen"/>
 		<exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpenBrace"/>
 		<exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose"/>
+		<exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpaceBeforeCloseBrace"/>
 		<exclude name="Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeClose"/>
 		<exclude name="Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeNestedClose"/>
 		<exclude name="Squiz.WhiteSpace.FunctionOpeningBraceSpace.SpacingAfter"/>
@@ -139,17 +151,6 @@
 		<exclude name="Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed"/>
 		<exclude name="Squiz.Commenting.BlockComment.NoCapital"/>
 		<exclude name="Squiz.Arrays.ArrayDeclaration.DoubleArrowNotAligned"/>
-	</rule>
-
-	<!-- Exclude WordPress rules. -->
-	<rule ref="WordPress">
-		<!-- <exclude name="WordPress.Arrays.ArrayDeclarationSpacing.NoSpaceBeforeArrayCloser"/> -->
-		<!-- <exclude name="WordPress.Arrays.ArrayDeclarationSpacing.SpaceBeforeArrayCloser"/> -->
-		<exclude name="WordPress.Arrays.CommaAfterArrayItem.NoComma"/>
-		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
-		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
-		<exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores"/>
-		<exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents"/>
 	</rule>
 
 </ruleset>

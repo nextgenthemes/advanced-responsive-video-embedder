@@ -11,6 +11,7 @@
 namespace PHPCompatibility\Sniffs\IniDirectives;
 
 use PHPCompatibility\AbstractRemovedFeatureSniff;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\IniDirectives\RemovedIniDirectivesSniff.
@@ -237,8 +238,7 @@ class RemovedIniDirectivesSniff extends AbstractRemovedFeatureSniff
     public function register()
     {
         return array(T_STRING);
-
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -249,7 +249,7 @@ class RemovedIniDirectivesSniff extends AbstractRemovedFeatureSniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -286,8 +286,7 @@ class RemovedIniDirectivesSniff extends AbstractRemovedFeatureSniff
             'functionLc' => $functionLc,
         );
         $this->handleFeature($phpcsFile, $iniToken['end'], $itemInfo);
-
-    }//end process()
+    }
 
 
     /**
@@ -344,6 +343,4 @@ class RemovedIniDirectivesSniff extends AbstractRemovedFeatureSniff
     {
         return str_replace("%s", "'%s'", parent::getAlternativeOptionTemplate());
     }
-
-
-}//end class
+}

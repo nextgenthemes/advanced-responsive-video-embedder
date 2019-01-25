@@ -12,6 +12,7 @@
 namespace PHPCompatibility\Sniffs\Miscellaneous;
 
 use PHPCompatibility\Sniff;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\Miscellaneous\RemovedAlternativePHPTags.
@@ -54,8 +55,7 @@ class RemovedAlternativePHPTagsSniff extends Sniff
             T_OPEN_TAG_WITH_ECHO,
             T_INLINE_HTML,
         );
-
-    }//end register()
+    }
 
 
     /**
@@ -67,7 +67,7 @@ class RemovedAlternativePHPTagsSniff extends Sniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         if ($this->supportsAbove('7.0') === false) {
             return;
@@ -133,8 +133,7 @@ class RemovedAlternativePHPTagsSniff extends Sniff
                 $phpcsFile->addWarning($error, $stackPtr, 'MaybeASPOpenTagFound', $data);
             }
         }
-
-    }//end process()
+    }
 
 
     /**
@@ -163,7 +162,5 @@ class RemovedAlternativePHPTagsSniff extends Sniff
         }
 
         return $snippet;
-
-    }//end getSnippet()
-
-}//end class
+    }
+}

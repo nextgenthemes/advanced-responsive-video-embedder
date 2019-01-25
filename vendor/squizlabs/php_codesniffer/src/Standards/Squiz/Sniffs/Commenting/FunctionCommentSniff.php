@@ -38,12 +38,8 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
     protected function processReturn(File $phpcsFile, $stackPtr, $commentStart)
     {
         $tokens = $phpcsFile->getTokens();
-
-        // Skip constructor and destructor.
-        $methodName      = $phpcsFile->getDeclarationName($stackPtr);
-        $isSpecialMethod = ($methodName === '__construct' || $methodName === '__destruct');
-
         $return = null;
+
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
             if ($tokens[$tag]['content'] === '@return') {
                 if ($return !== null) {
@@ -56,6 +52,9 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
             }
         }
 
+        // Skip constructor and destructor.
+        $methodName      = $phpcsFile->getDeclarationName($stackPtr);
+        $isSpecialMethod = ($methodName === '__construct' || $methodName === '__destruct');
         if ($isSpecialMethod === true) {
             return;
         }

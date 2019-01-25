@@ -13,6 +13,7 @@ namespace PHPCompatibility\Sniffs\FunctionDeclarations;
 
 use PHPCompatibility\Sniff;
 use PHPCompatibility\PHPCSHelper;
+use PHP_CodeSniffer_File as File;
 
 /**
  * \PHPCompatibility\Sniffs\FunctionDeclarations\ForbiddenParametersWithSameName.
@@ -39,8 +40,7 @@ class ForbiddenParametersWithSameNameSniff extends Sniff
             T_FUNCTION,
             T_CLOSURE,
         );
-
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -51,7 +51,7 @@ class ForbiddenParametersWithSameNameSniff extends Sniff
      *
      * @return void
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         if ($this->supportsAbove('7.0') === false) {
             return;
@@ -82,7 +82,5 @@ class ForbiddenParametersWithSameNameSniff extends Sniff
                 'Found'
             );
         }
-
-    }//end process()
-
-}//end class
+    }
+}
