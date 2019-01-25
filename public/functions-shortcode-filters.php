@@ -230,8 +230,12 @@ function sc_filter_attr( array $a ) {
 		$properties = get_host_properties();
 		$options    = options();
 
-		$a['iframe_attr'] = [
-			'allow'           => 'autoplay; encrypted-media; fullscreen',
+		if ( 'vimeo' === $a['provider'] && ! empty( $a['start'] ) ) {
+			$a['src'] .= '#t=' . (int) $a['start'];
+		}
+
+		$a['iframe_attr'] = array(
+			'allow'           => 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture',
 			'allowfullscreen' => '',
 			'class'           => 'arve-iframe fitvidsignore',
 			'frameborder'     => '0',
@@ -240,8 +244,8 @@ function sc_filter_attr( array $a ) {
 			'scrolling'       => 'no',
 			'src'             => $a['src'],
 			'width'           => empty( $a['width'] ) ? false : $a['width'],
-			'height'          => empty( $a['height'] ) ? false : $a['height'],
-		];
+			'height'          => empty( $a['height'] ) ? false : $a['height']
+		);
 
 		if ( 'vimeo' === $a['provider'] ) {
 			$a['iframe_attr']['sandbox'] .= ' allow-forms';

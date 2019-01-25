@@ -113,6 +113,18 @@ function build_video_html( array $a ) {
 	return apply_filters( 'nextgenthemes/arve/video_html', $pieces->arve, $pieces, $a );
 }
 
+function wrapper_args() {
+
+	return array(
+
+
+
+	);
+
+
+}
+
+
 function shortcode_option_defaults() {
 
 	$properties = get_host_properties();

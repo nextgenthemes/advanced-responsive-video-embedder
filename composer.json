@@ -20,6 +20,9 @@
 	},
 	"require-dev": {
 		"samikeijonen/phpcs-composer": "dev-master",
-		"symfony/yaml": "^4.1"
+		"symfony/yaml": "^4.1",
+		"satooshi/php-coveralls": "dev-master",
+		"phpunit/phpunit": "3.7.*",
+		"phpunit/php-invoker": "1.1.3"
 	}
 }

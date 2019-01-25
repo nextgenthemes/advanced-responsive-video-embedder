@@ -96,6 +96,38 @@ function shortcode_settings() {
 	return $settings;
 }
 
+function shortcode_pairs() {
+
+	$options  = options();
+	$settings = shortcode_settings();
+
+	foreach ( $settings as $k => $v ) :
+
+		if ( 'bool+default' === $v['type'] ) {
+			$pairs[ $k ] = bool_to_shortcode_string( $options[ $k ] );
+		} elseif ( ! empty( $v['not_a_setting'] ) ) {
+			$pairs[ $k ] = (string) $options[ $k ];
+		} else {
+			$pairs[ $k ] = (string) $v['default'];
+		}
+	endforeach;
+
+	$pairs['maxwidth'] = (string) default_maxwidth();
+
+	return $pairs;
+}
+
+function default_maxwidth() {
+
+	$options = options();
+
+	if ( empty( $options['video_maxwidth'] ) ) {
+		return empty( $GLOBALS['content_width'] ) ? 900 : $GLOBALS['content_width'];
+	}
+
+	return $options['video_maxwidth'];
+}
+
 function shortcode_ui_settings() {
 
 	$settings = shortcode_settings();
@@ -174,6 +206,7 @@ function all_settings() {
 
 	$settings = [
 		'url'                   => [
+			'default'       => null,
 			'not_a_setting' => true,
 			'label'         => esc_html__( 'URL / Embed Code', 'advanced-responsive-video-embedder' ),
 			'type'          => 'string',
@@ -188,6 +221,7 @@ function all_settings() {
 			)
 		],
 		'title'                 => [
+			'default'       => null,
 			'not_a_setting' => true,
 			'label'         => esc_html__( 'Title', 'advanced-responsive-video-embedder'),
 			'type'          => 'string',
@@ -198,6 +232,7 @@ function all_settings() {
 			),
 		],
 		'description'           => [
+			'default'       => null,
 			'not_a_setting' => true,
 			'label'         => esc_html__( 'Description', 'advanced-responsive-video-embedder'),
 			'type'          => 'string',
@@ -206,6 +241,7 @@ function all_settings() {
 			]
 		],
 		'upload_date'           => [
+			'default'       => null,
 			'not_a_setting' => true,
 			'label'         => esc_html__( 'Upload Date', 'advanced-responsive-video-embedder' ),
 			'type'          => 'string',
@@ -311,6 +347,7 @@ function all_settings() {
 			'description' => esc_html__( "Shows a small 'ARVE' link below the videos. Be the most awesome person and help promoting this plugin.", 'advanced-responsive-video-embedder' ),
 		],
 		'thumbnail'             => [
+			'default'       => null,
 			'not_a_setting' => true,
 			'label'         => esc_html__( 'Thumbnail', 'advanced-responsive-video-embedder' ),
 			'type'          => 'attachment',
@@ -324,6 +361,7 @@ function all_settings() {
 			),
 		],
 		'duration'              => [
+			'default'       => null,
 			'not_a_setting' => true,
 			'label'         => esc_html__( 'Duration', 'advanced-responsive-video-embedder' ),
 			'type'          => 'string',
@@ -362,6 +400,7 @@ function all_settings() {
 			'description'   => esc_attr__( 'In px, Needed! Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
 		],
 		'aspect_ratio'          => [
+			'default'       => null,
 			'not_a_setting' => true,
 			'label'         => __( 'Aspect Ratio', 'advanced-responsive-video-embedder'),
 			'type'          => 'string',
@@ -371,6 +410,7 @@ function all_settings() {
 			],
 		],
 		'parameters'            => [
+			'default'       => null,
 			'not_a_setting' => true,
 			'label'         => esc_html__( 'Parameters', 'advanced-responsive-video-embedder' ),
 			'type'          => 'string',
@@ -404,6 +444,7 @@ function all_settings() {
 		],
 		'mp4'                   => [
 			'tag'           => 'html5',
+			'default'       => null,
 			'not_a_setting' => true,
 			'label'         => esc_html__( 'mp4 file', 'advanced-responsive-video-embedder'),
 			'type'          => 'url',
@@ -417,6 +458,7 @@ function all_settings() {
 		],
 		'webm'                  => [
 			'tag'           => 'html5',
+			'default'       => null,
 			'not_a_setting' => true,
 			'label'         => esc_html__( 'webm file', 'advanced-responsive-video-embedder'),
 			'type'          => 'url',
@@ -443,6 +485,7 @@ function all_settings() {
 		],
 		'controls'              => [
 			'tag'           => 'html5',
+			'default'       => 'y',
 			'not_a_setting' => true,
 			'label'         => esc_html__( 'Show Controls?', 'advanced-responsive-video-embedder' ),
 			'type'          => 'select',
@@ -454,6 +497,7 @@ function all_settings() {
 		],
 		'loop'                  => [
 			'tag'           => 'html5',
+			'default'       => 'n',
 			'not_a_setting' => true,
 			'label'         => esc_html__( 'Loop?', 'advanced-responsive-video-embedder' ),
 			'type'          => 'select',
@@ -465,6 +509,7 @@ function all_settings() {
 		],
 		'muted'                 => [
 			'tag'           => 'html5',
+			'default'       => 'n',
 			'not_a_setting' => true,
 			'label'         => esc_html__( 'Mute?', 'advanced-responsive-video-embedder' ),
 			'type'          => 'select',
@@ -507,11 +552,11 @@ function all_settings() {
 			'description'   => __( 'Enable the old and deprected <code>[youtube id="abcde" /]</code> or <code>[vimeo id="abcde" /]</code> ... style shortcodes. Select <code>No</code> unless you have them in your content.', 'advanced-responsive-video-embedder' ),
 		],
 		'disable_sandbox'       => [
-			'default'       => false,
+			'default'       => 'n',
 			'not_a_setting' => true,
 			'label'         => esc_html__( 'Disable Sandbox', 'advanced-responsive-video-embedder' ),
 			'type'          => 'boolean',
-			'description'   => __( 'Needed when embeds need browser plugins to work, almost all use HTML5 video and do not need any.', 'advanced-responsive-video-embedder' ),
+			'description'   => __( "Only disable if you have to. 'Disable Links' feature from ARVE Pro will not work when without sandbox.", 'advanced-responsive-video-embedder' ),
 		],
 	];
 

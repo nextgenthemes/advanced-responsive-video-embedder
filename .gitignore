@@ -1,3 +1,5 @@
+/dist/zip
+
 /vendor/*
 !vendor/autoload.php
 !vendor/composer

@@ -81,10 +81,8 @@ function build_meta_html( array $a ) {
 	$meta = '';
 
 	if ( ! empty( $a['sources'] ) ) {
-
 		$first_source = get_first_array_value( $a['sources'] );
-
-		$meta .= sprintf( '<meta itemprop="contentURL" content="%s">', esc_attr( $first_source['src'] ) );
+		$meta        .= sprintf( '<meta itemprop="contentURL" content="%s">', esc_attr( $first_source['src'] ) );
 	}
 
 	if ( ! empty( $a['iframe_src'] ) ) {
@@ -100,21 +98,46 @@ function build_meta_html( array $a ) {
 	}
 
 	$meta .= build_rating_meta( $a );
-	$meta .= build_thumbnail( $a );
 
-	if ( ! empty( $a['title'] )
-		&& in_array( $a['mode'], [ 'lazyload', 'lazyload-lightbox' ], true )
-		&& empty( $a['hide_title'] )
-	) {
-		$meta .= '<h5 itemprop="name" class="arve-title">' . trim( $a['title'] ) . '</h5>';
-	} elseif ( ! empty( $a['title'] ) ) {
-		$meta .= sprintf( '<meta itemprop="name" content="%s">', esc_attr( trim( $a['title'] ) ) );
+	if ( ! empty( $a['img_src'] ) ) {
+		$meta .= arve_build_tag(
+			array(
+				'name' => 'thumbnail',
+				'tag'  => 'meta',
+				'attr' => array(
+					'itemprop' => 'thumbnailUrl',
+					'content'  => $a['img_src'],
+				),
+			),
+			$a
+		);
+	}
+
+	if ( ! empty( $a['title'] ) ) {
+		$meta .= arve_build_tag(
+			array(
+				'name' => 'title',
+				'tag'  => 'meta',
+				'attr' => array(
+					'itemprop' => 'name',
+					'content'  => trim( $a['title'] ),
+				)
+			),
+			$a
+		);
 	}
 
 	if ( ! empty( $a['description'] ) ) {
-		$meta .= sprintf(
-			'<div itemprop="description" class="arve-description arve-hidden">%s</div>',
-			esc_attr( trim( $a['description'] ) )
+		$meta .= arve_build_tag(
+			array(
+				'name' => 'description',
+				'tag'  => 'meta',
+				'attr' => array(
+					'itemprop' => 'description',
+					'content'  => trim( $a['description'] ),
+				)
+			),
+			$a
 		);
 	}
 
@@ -127,52 +150,41 @@ function build_rating_meta( array $a ) {
 		return '';
 	}
 
-	$meta .= '<span itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">';
-	$meta .= sprintf( '<meta itemprop="ratingValue" content="%s">', esc_attr( $a['rating'] ) );
+	$html .= '<span itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">';
+	$html .= sprintf( '<meta itemprop="ratingValue" content="%s">', esc_attr( $a['rating'] ) );
 
 	if ( ! empty( $a['review_count'] ) ) {
-		$meta .= sprintf( '<meta itemprop="reviewCount" content="%s">', esc_attr( $a['review_count'] ) );
+		$html .= sprintf( '<meta itemprop="reviewCount" content="%s">', esc_attr( $a['review_count'] ) );
 	}
 
-	$meta .= '</span>';
+	$html .= '</span>';
 
-	return $meta;
+	return $html;
 }
 
-function build_thumbnail( array $a ) {
+function arve_build_tag( $args, $a ) {
 
-	if ( empty( $a['img_src'] ) ) {
+	$args = apply_filters( "nextgenthemes/arve/{$args['name']}", $args, $a );
 
-		return '';
-
-	} elseif ( in_array( $a['mode'], [ 'lazyload', 'lazyload-lightbox' ], true ) ) {
-
-		return sprintf(
-			'<img%s>',
-			attr( [
-				'class'           => 'arve-thumbnail',
-				'data-object-fit' => true,
-				'itemprop'        => 'thumbnailUrl',
-				'src'             => $a['img_src'],
-				'srcset'          => ! empty( $a['img_srcset'] ) ? $a['img_srcset'] : false,
-				#'sizes'    => '(max-width: 700px) 100vw, 1280px',
-				'alt'             => __( 'Video Thumbnail', 'advanced-responsive-video-embedder' ),
-			] )
+	if ( ! empty( $args['content'] ) ) {
+		$out = sprintf(
+			'<%1$s%2$s>%3$s</%1$s>',
+			esc_html( $args['tag'] ),
+			arve_attr( $args['attr'] ),
+			$args['content']
 		);
-
 	} else {
-
-		return sprintf(
-			'<meta%s>',
-			attr( [
-				'itemprop' => 'thumbnailUrl',
-				'content'  => $a['img_src'],
-			] )
+		$out = sprintf(
+			'<%s%s>',
+			esc_html( $args['tag'] ),
+			arve_attr( $args['attr'] )
 		);
-	}//end if
+	}
+
+	return $out;
 }
 
-function build_promote_link_html( $arve_link ) {
+function arve_build_promote_link_html( $arve_link ) {
 
 	if ( $arve_link ) {
 		return sprintf(
