@@ -1,8 +1,6 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-add_action( 'init', __NAMESPACE__ . '\register_gb_block' );
-
 function register_gb_block() {
 
 	// Register our block editor script.
@@ -37,5 +35,5 @@ function php_block_render( $attributes ) {
 		<?php var_dump( $attributes ); ?>
 	</pre>
 	<?php
-	return ob_get_clean() . build_video( $attributes );
+	return ob_get_clean();
 }

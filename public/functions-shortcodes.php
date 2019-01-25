@@ -113,15 +113,30 @@ function build_video_html( array $a ) {
 	return apply_filters( 'nextgenthemes/arve/video_html', $pieces->arve, $pieces, $a );
 }
 
+function shortcode_option_defaults() {
+
+	$properties = get_host_properties();
+	unset( $properties['video'] );
+
+	foreach ( $properties as $provider => $values ) {
+
+		if ( ! empty( $values['embed_url'] ) ) {
+			$shortcodes[ $provider ] = $provider;
+		}
+	}
+
+	return $shortcodes;
+}
+
 function create_shortcodes() {
 
 	$options = options();
 
 	if ( $options['legacy_shortcodes'] ) {
 
-		$options['shortcodes'] = wp_parse_args( get_option( 'arve_options_shortcodes', [] ), old_options_defaults( 'shortcodes' ) );
+		$shortcode_options = wp_parse_args( get_option( 'arve_options_shortcodes', [] ), shortcode_option_defaults() );
 
-		foreach ( $options['shortcodes'] as $provider => $shortcode ) {
+		foreach ( $shortcode_options as $provider => $shortcode ) {
 
 			$function = function( $atts ) use ( $provider ) {
 				$a['provider'] = $provider;

@@ -7,7 +7,7 @@ function label_text( $option ) {
 	?>
 	<span class="nextgenthemes-label-text">
 		<?= esc_html( $option['label'] ); ?>
-		<?php if ( 'main' !== $option['tag'] ) : ?>
+		<?php if ( 'not' === $option['tag'] ) : ?>
 			&nbsp;<span class="button-primary button-primary--ngt-small"><?= esc_html( $option['tag'] ) ?></span>
 		<?php endif; ?>
 	</span>

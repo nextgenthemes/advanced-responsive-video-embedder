@@ -53,7 +53,6 @@ function init() {
 		'shortcode-data',
 		'shortcode-filters',
 		'shortcodes',
-		#'shared',
 		'gutenberg',
 		'url-handlers',
 		'validation',
@@ -65,6 +64,7 @@ function init() {
 
 	# Public hooks
 	add_action( 'init',                        __NAMESPACE__ . '\add_oembed_providers' );
+	add_action( 'init',                        __NAMESPACE__ . '\register_gb_block' );
 	add_action( 'plugins_loaded',              __NAMESPACE__ . '\create_shortcodes', 999 );
 	add_action( 'plugins_loaded',              __NAMESPACE__ . '\create_url_handlers', 999 );
 	add_action( 'plugins_loaded',              __NAMESPACE__ . '\load_textdomain' );

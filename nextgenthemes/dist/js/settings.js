@@ -6,8 +6,8 @@
 
 ( function() {
 
-	var page_query_arg = GetUrlParam( 'page' );
-	var data           = window[ page_query_arg ];
+	var queryArgs = GetUrlParam( 'page' );
+	var data      = window[ queryArgs ];
 
 	function GetUrlParam( name, url ) {
 		var regex, results;
@@ -15,6 +15,7 @@
 		if ( ! url ) {
 			url = window.location.href;
 		}
+
 		name    = name.replace( /[\[\]]/g, '\\$&' );
 		regex   = new RegExp( '[?&]' + name + '(=([^&#]*)|&|#|$)' ),
 		results = regex.exec( url );
@@ -41,8 +42,9 @@
 			showPro: false,
 			showMain: true,
 			showDebug: false,
+			showHtml5: false,
 			message: '',
-			vm: data.options,
+			vm: data.options
 		},
 
 		// Methods that can be invoked from within our template
@@ -75,23 +77,32 @@
 					error: ( data ) => this.message = data.responseText,
 
 					// when our request is complete (successful or not), reset the state to indicate we are no longer saving
-					complete: () => this.isSaving = false,
+					complete: () => this.isSaving = false
 				});
 			}, // end: saveOptions
-			toggleMainOptions: function() {
+			showMainOptions: function() {
 				this.showMain  = true;
 				this.showPro   = false;
 				this.showDebug = false;
+				this.showHtml5 = false;
 			},
-			toggleProOptions: function() {
+			showProOptions: function() {
 				this.showMain  = false;
 				this.showPro   = true;
 				this.showDebug = false;
+				this.showHtml5 = false;
 			},
-			toggleDebugInfo: function() {
+			showHtml5Options: function() {
+				this.showMain  = false;
+				this.showPro   = false;
+				this.showDebug = false;
+				this.showHtml5 = true;
+			},
+			showDebugInfo: function() {
 				this.showMain  = false;
 				this.showPro   = false;
 				this.showDebug = true;
+				this.showHtml5 = false;
 			}
 		} // end: methods
 	}); // end: Vue()

@@ -35,9 +35,15 @@
 
 			var opt = ARVEsettings[key];
 
+			if ( 'bool+default' === opt.type ) {
+				console.log( opt.options );
+				opt.type = 'select';
+			}
+
 			if ( 'select' === opt.type ) {
 				controls.push( el( SelectControl, {
 					label: opt.label,
+					help: opt.description,
 					selected: props.attributes[key],
 					options: PrepareOptions( opt.options ),
 					onChange: ( value ) => {
@@ -47,20 +53,8 @@
 			} else if ( 'string' === opt.type ) {
 				controls.push( el( TextControl, {
 					label: opt.label,
+					help: opt.description,
 					value: props.attributes[key],
-					onChange: ( value ) => {
-						props.setAttributes({ [key]: value });
-					}
-				}) );
-			} else if ( 'boolean' === opt.type ) {
-				controls.push( el( SelectControl, {
-					label: opt.label,
-					selected: props.attributes[key],
-					options: [
-						{ label: 'Default', value: null },
-						{ label: 'Yes', value: 'y' },
-						{ label: 'No', value: 'n' }
-					],
 					onChange: ( value ) => {
 						props.setAttributes({ [key]: value });
 					}
