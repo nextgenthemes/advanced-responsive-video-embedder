@@ -44,7 +44,11 @@
 			showDebug: false,
 			showHtml5: false,
 			message: '',
-			vm: data.options
+			vm: data.options,
+			tabs: {
+				one: true,
+				two: false
+			}
 		},
 
 		// Methods that can be invoked from within our template

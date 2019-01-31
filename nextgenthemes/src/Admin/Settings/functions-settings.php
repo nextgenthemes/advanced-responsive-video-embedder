@@ -50,6 +50,24 @@ function print_string_field( $key, $option ) {
 	<?php
 }
 
+function print_attachment_field( $key, $option ) {
+	// jQuery
+	wp_enqueue_script( 'jquery' );
+	// This will enqueue the Media Uploader script
+	wp_enqueue_media();
+	?>
+	<p>
+		<label>
+			<?php label_text( $option ); ?>
+			<input v-model="<?= esc_attr( "vm.$key" ); ?>" type="text" class="large-text" />
+			<a class="button-secondary" data-attachment-upload='[v-model="<?= esc_attr( "vm.$key" ) ?>"]'>
+				<?= esc_html( 'Upload Image', TEXTDOMAIN ); ?>
+			</a>
+		</label>
+	</p>
+	<?php
+}
+
 function print_integer_field( $key, $option ) {
 	?>
 	<p>

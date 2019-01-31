@@ -23,7 +23,7 @@ namespace Nextgenthemes\ARVE;
 
 const VERSION               = '9.0.0';
 const PRO_VERSION_REQUIRED  = '5.0.0';
-const NUM_TRACKS            = 10;
+const NUM_TRACKS            = 3;
 const PLUGIN_FILE           = __FILE__;
 const VIDEO_FILE_EXTENSIONS = [ 'mp4', 'm4v', 'webm', 'ogv', 'ogg', 'ogm' ];
 
@@ -100,8 +100,8 @@ function init() {
 		'iframe_src_autoplay_query'        => 30,
 		// 90
 		// 'validate_again'                   => 80,
+		'set_wrapper_id'                   => 90,
 		'set_fixed_dimensions'             => 90,
-		'attr'                             => 99,
 	] as $filter => $priority ) {
 		add_filter( 'shortcode_atts_arve', __NAMESPACE__ . "\sc_filter_$filter", $priority );
 	};

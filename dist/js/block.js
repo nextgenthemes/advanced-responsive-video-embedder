@@ -2,13 +2,7 @@
 //console.log( ARVEsettings );
 ( function() {
 
-	var el = wp.element.createElement,
-		registerBlockType = wp.blocks.registerBlockType,
-		ServerSideRender = wp.components.ServerSideRender,
-		TextControl = wp.components.TextControl,
-		RadioControl = wp.components.RadioControl,
-		SelectControl = wp.components.SelectControl,
-		InspectorControls = wp.editor.InspectorControls;
+	var el = wp.element.createElement;
 
 	/*
 	 * Keypair to gutenberg component
@@ -34,31 +28,42 @@
 		Object.keys( ARVEsettings ).forEach( function( key ) {
 
 			var opt = ARVEsettings[key];
+			var cArgs = {
+				label: opt.label,
+
+				//help: opt.description,
+				onChange: ( value ) => {
+					props.setAttributes({ [key]: value });
+				}
+			};
 
 			if ( 'bool+default' === opt.type ) {
 				console.log( opt.options );
 				opt.type = 'select';
 			}
 
-			if ( 'select' === opt.type ) {
-				controls.push( el( SelectControl, {
-					label: opt.label,
-					help: opt.description,
-					selected: props.attributes[key],
-					options: PrepareOptions( opt.options ),
-					onChange: ( value ) => {
+			switch ( opt.type ) {
+
+				case 'boolean':
+					cArgs.onChange = ( value ) => {
 						props.setAttributes({ [key]: value });
-					}
-				}) );
-			} else if ( 'string' === opt.type ) {
-				controls.push( el( TextControl, {
-					label: opt.label,
-					help: opt.description,
-					value: props.attributes[key],
-					onChange: ( value ) => {
-						props.setAttributes({ [key]: value });
-					}
-				}) );
+					};
+
+					controls.push( el( wp.components.CheckboxControl, cArgs ) );
+					break;
+
+				case 'select':
+					cArgs.options  = PrepareOptions( opt.options );
+					cArgs.selected = props.attributes[key];
+
+					controls.push( el( wp.components.SelectControl, cArgs ) );
+					break;
+
+				case 'string':
+					cArgs.value = props.attributes[key];
+
+					controls.push( el( wp.components.TextControl, cArgs ) );
+					break;
 			}
 		});
 
@@ -73,7 +78,7 @@
 	 * of registering the block, and giving the basic ability to edit the block
 	 * attributes. (In this case, there's only one attribute, 'foo'.)
 	 */
-	registerBlockType( 'nextgenthemes/arve-block', {
+	wp.blocks.registerBlockType( 'nextgenthemes/arve-block', {
 		title: 'Video Embed (ARVE)',
 		icon: 'video-alt3',
 		category: 'embed',
@@ -95,7 +100,7 @@
 				 * php_block_render() in your PHP code whenever it needs to get an updated
 				 * view of the block.
 				 */
-				el( ServerSideRender, {
+				el( wp.components.ServerSideRender, {
 					block: 'nextgenthemes/arve-block',
 					attributes: props.attributes
 				}),
@@ -107,7 +112,7 @@
 				 * the block editor to update the value of our 'foo' property, and to re-render
 				 * the block.
 				 */
-				el( InspectorControls, {}, ...controls )
+				el( wp.editor.InspectorControls, {}, ...controls )
 			];
 		},
 

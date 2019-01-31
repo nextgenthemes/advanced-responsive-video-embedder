@@ -28,7 +28,7 @@ function filter_oembed_dataparse( $result, $data, $url ) {
 	return $result;
 }
 
-function oembed2args( $data, $url ) {
+function oembed2args( $data ) {
 
 	if ( false === $data || 'video' !== $data->type ) {
 		return false;
@@ -77,16 +77,7 @@ function extract_query_array( $url, $key ) {
 	return [];
 }
 
-function get_url_kp( $url, $extract_array_name ) {
 
-	$parsed_url = wp_parse_url( $url );
-
-	if ( empty( $parsed_url['query'] ) ) {
-		return [];
-	}
-
-	return parse_str( $parsed_url['query'], $url_query );
-}
 
 function remove_query_array( $url, $key ) {
 
@@ -104,6 +95,18 @@ function remove_query_array( $url, $key ) {
 	return $url;
 }
 
+/*
+function get_url_kp( $url, $extract_array_name ) {
+
+	$parsed_url = wp_parse_url( $url );
+
+	if ( empty( $parsed_url['query'] ) ) {
+		return [];
+	}
+
+	return parse_str( $parsed_url['query'], $url_query );
+}
+
 function get_query_str_without_args( $url, $key ) {
 
 	$url        = remove_query_array( $url, 'arve' );
@@ -111,3 +114,4 @@ function get_query_str_without_args( $url, $key ) {
 
 	return $parsed_url['query'];
 }
+*/

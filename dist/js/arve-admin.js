@@ -23,7 +23,7 @@
 		$( this ).remove();
 	});
 
-	function show_tab( target ) {
+	function showTab( target ) {
 
 		$( '.arve-settings-section' ).show();
 		$( target ).prependTo( '.arve-options-form' );
@@ -33,51 +33,53 @@
 	}
 
 	if ( $( '#arve_options_main\\[last_settings_tab\\]' ).length && $( '#arve_options_main\\[last_settings_tab\\]' ).val().length ) {
-		show_tab( $( '#arve_options_main\\[last_settings_tab\\]' ).val() );
+		showTab( $( '#arve_options_main\\[last_settings_tab\\]' ).val() );
 	}
 
 	$( document ).on( 'click', '.arve-settings-tabs a', function( e ) {
 
-		e.preventDefault();
 		var target = $( this ).attr( 'data-target' );
-		show_tab( target );
+		showTab( target );
 		$( '#arve_options_main\\[last_settings_tab\\]' ).val( target );
+		e.preventDefault();
 	});
 
 	$( document ).on( 'click', '[data-image-upload]', function( e ) {
-
-		e.preventDefault();
 		var target = $( this ).attr( 'data-image-upload' );
 		var image  = wp.media({
 			title: 'Upload Image',
 
 			// mutiple: true if you want to upload multiple files at once
 			multiple: false
-		}).open()
+		})
+		.open()
 		.on( 'select', function() {
 
 			// This will return the selected image from the Media Uploader, the result is an object
-			var uploaded_image = image.state().get( 'selection' ).first();
+			var uploadedImage = image.state().get( 'selection' ).first();
 
-			// We convert uploaded_image to a JSON object to make accessing it easier
-			// Output to the console uploaded_image
-			var attachment_id = uploaded_image.toJSON().id;
+			// We convert uploadedImage to a JSON object to make accessing it easier
+			// Output to the console uploadedImage
+			var attachmentID = uploadedImage.toJSON().id;
 
 			// Let's assign the url value to the input field
-			$( target ).val( attachment_id );
+			$( target ).val( attachmentID );
 		});
+		e.preventDefault();
 	});
 
 	$( document ).on( 'click', '#arve-btn', function() {
 
+		var arveShortcode;
+
 		if ( 'undefined' !== typeof( sui ) ) {
 
-			var arve_shortcode = sui.utils.shortcodeViewConstructor.parseShortcodeString( '[arve]' );
+			arveShortcode = sui.utils.shortcodeViewConstructor.parseShortcodeString( '[arve]' );
 
 			wp.media({
 				frame: 'post',
 				state: 'shortcode-ui',
-				currentShortcode: arve_shortcode
+				currentShortcode: sui.utils.shortcodeViewConstructor.parseShortcodeString( '[arve]' )
 			}).open();
 
 		} else {

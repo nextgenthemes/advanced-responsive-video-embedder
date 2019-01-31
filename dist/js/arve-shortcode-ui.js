@@ -28,7 +28,7 @@ function arve_extract_url( changed, collection, shortcode ) {
 
 function arve_mode_select_listener( changed, collection, shortcode ) {
 
-	function attr_by_name(name) {
+	function attr_by_name( name ) {
 		return _.find(
 			collection,
 			function( viewModel ) {

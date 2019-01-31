@@ -16,13 +16,11 @@ function shortcode( array $a, $content = null ) {
 	return build_video( $a, $content );
 }
 
-function build_video( array $input_atts, $content = null ) {
+function old_pairs_for_test() {
 
-	$errors     = '';
-	$options    = options();
-	$properties = get_host_properties();
+	$options = options();
 
-	$pairs = [
+	return [
 		// arve visual options
 		'align'             => $options['align'],
 		'aspect_ratio'      => null,
@@ -71,17 +69,16 @@ function build_video( array $input_atts, $content = null ) {
 		// debug
 		'append_text'       => null,
 	];
+}
+
+function build_video( array $input_atts ) {
 
 	for ( $n = 1; $n <= NUM_TRACKS; $n++ ) {
 		$pairs[ "track_{$n}" ]       = null;
 		$pairs[ "track_{$n}_label" ] = null;
 	}
 
-	$a = shortcode_atts(
-		apply_filters( 'nextgenthemes/arve/shortcode_pairs', $pairs ),
-		$input_atts,
-		'arve'
-	);
+	$a = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
 
 	if ( $a['errors']->get_error_code() ) {
 		$error_html  = __( 'ARVE Error(s):', 'advanced-responsive-video-embedder' );
@@ -102,28 +99,31 @@ function build_video( array $input_atts, $content = null ) {
 
 function build_video_html( array $a ) {
 
-	$pieces                         = (object) array();
-	$pieces->meta                   = build_meta_html( $a );
-	$pieces->video                  = video_or_iframe( $a );
-	$pieces->arve__embed_inner_html = $pieces->meta . $pieces->video;
-	$pieces->arve__embed            = arve__embed( $pieces->arve__embed_inner_html, $a );
-	$pieces->arve_inner_html        = $pieces->arve__embed . build_promote_link_html( $a['arve_link'] );
-	$pieces->arve                   = wrapper( $pieces->arve_inner_html, $a );
+	$pieces                  = (object) array();
+	$pieces->arve__embed     = arve__embed( build_inner_html( $a ), $a );
+	$pieces->arve_inner_html = $pieces->arve__embed . build_promote_link_html( $a['arve_link'] );
+
+	$pieces->arve = build_tag(
+		array(
+			'name'    => 'arve',
+			'tag'     => 'div',
+			'content' => $pieces->arve_inner_html,
+			'attr'    => array(
+				'class'         => empty( $a['align'] ) ? 'arve-wrapper' : 'arve-wrapper align' . $a['align'],
+				'data-mode'     => $a['mode'],
+				'data-provider' => $a['provider'],
+				'id'            => $a['wrapper_id'],
+				'style'         => empty( $a['maxwidth'] ) ? false : sprintf( 'max-width:%dpx;', $a['maxwidth'] ),
+				// Schema.org
+				'itemscope'     => '',
+				'itemtype'      => 'http://schema.org/VideoObject'
+			)
+		),
+		$a
+	);
 
 	return apply_filters( 'nextgenthemes/arve/video_html', $pieces->arve, $pieces, $a );
 }
-
-function wrapper_args() {
-
-	return array(
-
-
-
-	);
-
-
-}
-
 
 function shortcode_option_defaults() {
 
@@ -162,7 +162,7 @@ function create_shortcodes() {
 	add_shortcode( 'arve', __NAMESPACE__ . '\shortcode' );
 }
 
-function wp_video_shortcode_override( $out, $attr, $content, $instance ) {
+function wp_video_shortcode_override( $out, $attr ) {
 
 	$options = options();
 

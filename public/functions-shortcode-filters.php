@@ -109,10 +109,9 @@ function sc_filter_iframe_src_query( array $a ) {
 	return $a;
 }
 
-function get_wrapper_id( array $a ) {
+function sc_filter_set_wrapper_id( array $a ) {
 
 	static $wrapper_ids = [];
-	$wrapper_id         = false;
 
 	foreach ( [
 		'url',
@@ -127,28 +126,33 @@ function get_wrapper_id( array $a ) {
 	] as $att ) {
 
 		if ( ! empty( $a[ $att ] ) && is_string( $a[ $att ] ) ) {
-			$wrapper_id = 'arve-' . $a[ $att ];
-			$wrapper_id = preg_replace( '/[^a-zA-Z0-9-]/', '', $wrapper_id );
+			$a['wrapper_id'] = 'arve-' . $a[ $att ];
+			$a['wrapper_id'] = preg_replace( '/[^a-zA-Z0-9-]/', '', $a['wrapper_id'] );
 			break;
 		}
 	}
 
-	if ( empty( $wrapper_id ) ) {
-		return false;
-	} else {
-		$wrapper_ids[] = $wrapper_id;
-	}
+	$wrapper_ids[] = $a['wrapper_id'];
 
-	if ( in_array( $wrapper_id, $wrapper_ids, true ) ) {
+	if ( in_array( $a['wrapper_id'], $wrapper_ids, true ) ) {
 		$id_counts = array_count_values( $wrapper_ids );
-		$id_count  = $id_counts[ $wrapper_id ];
+		$id_count  = $id_counts[ $a['wrapper_id'] ];
 
 		if ( $id_count >= 2 ) {
-			$wrapper_id .= '-' . $id_count;
+			$a['wrapper_id'] .= '-' . $id_count;
 		}
 	}
 
-	return $wrapper_id;
+	if ( ! $a['wrapper_id'] ) {
+		$a['errors'] = add_error(
+			$a,
+			'wrapper_attr',
+			__( 'Wrapper ID could not be build, this means ARVE did not get one of the essential inputs like URL.', 'advanced-responsive-video-embedder' ),
+			'remove-all-filters'
+		);
+	}
+
+	return $a;
 }
 
 function sc_filter_init_error( array $a ) {
@@ -171,93 +175,6 @@ function add_error( array $a, $code, $msg, $remove_filters = false ) {
 	return $a;
 }
 
-function sc_filter_attr( array $a ) {
-
-	if ( ! empty( $a['oembed_data']->width ) ) {
-		$width = $a['oembed_data']->width;
-	} else {
-		$width = 640;
-	}
-
-	$wrapper_id  = get_wrapper_id( $a );
-	$align_class = empty( $a['align'] ) ? '' : ' align' . $a['align'];
-	$height      = calculate_height( $width, $a['aspect_ratio'] );
-
-	#$wrapper_id = false;
-
-	if ( ! $wrapper_id ) {
-		return add_error(
-			$a,
-			'wrapper_attr',
-			__( 'Wrapper ID could not be build, please report this bug.', 'advanced-responsive-video-embedder' ),
-			'remove-all-filters'
-		);
-	}
-
-	$a['wrapper_attr'] = [
-		'class'         => "arve-wrapper$align_class",
-		'data-mode'     => $a['mode'],
-		'data-provider' => $a['provider'],
-		'id'            => $wrapper_id,
-		'style'         => empty( $a['maxwidth'] ) ? false : sprintf( 'max-width:%dpx;', $a['maxwidth'] ),
-		// Schema.org
-		'itemscope'     => '',
-		'itemtype'      => 'http://schema.org/VideoObject',
-	];
-
-	if ( 'html5' === $a['provider'] ) {
-
-		$a['video_attr'] = [
-			// WP
-			'autoplay'           => in_array( $a['mode'], [ 'lazyload', 'lazyload-lightbox', 'link-lightbox' ], true ) ? false : $a['autoplay'],
-			'controls'           => $a['controls'],
-			'controlslist'       => $a['controlslist'],
-			'loop'               => $a['loop'],
-			'preload'            => $a['preload'],
-			'width'              => empty( $a['width'] ) ? false : $a['width'],
-			'height'             => empty( $a['height'] ) ? false : $a['height'],
-			'poster'             => empty( $a['img_src'] ) ? false : $a['img_src'],
-			'src'                => empty( $a['video_src'] ) ? false : $a['video_src'],
-			// ARVE only
-			'class'              => 'arve-video fitvidsignore',
-			'muted'              => $a['muted'],
-			'playsinline'        => $a['playsinline'],
-			'webkit-playsinline' => $a['playsinline'],
-		];
-
-	} else {
-
-		$properties = get_host_properties();
-		$options    = options();
-
-		if ( 'vimeo' === $a['provider'] && ! empty( $a['start'] ) ) {
-			$a['src'] .= '#t=' . (int) $a['start'];
-		}
-
-		$a['iframe_attr'] = array(
-			'allow'           => 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture',
-			'allowfullscreen' => '',
-			'class'           => 'arve-iframe fitvidsignore',
-			'frameborder'     => '0',
-			'name'            => $a['iframe_name'],
-			'sandbox'         => 'allow-scripts allow-same-origin allow-presentation allow-popups',
-			'scrolling'       => 'no',
-			'src'             => $a['src'],
-			'width'           => empty( $a['width'] ) ? false : $a['width'],
-			'height'          => empty( $a['height'] ) ? false : $a['height']
-		);
-
-		if ( 'vimeo' === $a['provider'] ) {
-			$a['iframe_attr']['sandbox'] .= ' allow-forms';
-		}
-
-		if ( $a['disable_sandbox'] ) {
-			$a['iframe_attr']['sandbox'] = false;
-		}
-	}//end if
-
-	return $a;
-}
 
 function sc_filter_default_aspect_ratio( array $a ) {
 
@@ -386,22 +303,6 @@ function shortcode_attributes() {
 	];
 }
 
-function shortcode_pairs() {
-
-	$attr = shortcode_attributes();
-
-	foreach ( $attr as $key => $value ) {
-
-		if ( ! isset( $value['default'] ) ) {
-			$value['default'] = null;
-		}
-
-		$pairs[ $key ] = $value['default'];
-	}
-
-	return $pairs;
-}
-
 function sc_filter_mode_fallback( array $a ) {
 
 	if ( 'thumbnail' === $a['mode'] ) {
@@ -415,17 +316,6 @@ function sc_filter_mode_fallback( array $a ) {
 	}
 
 	return $a;
-}
-
-function bool_shortcode_args() {
-	return [
-		'arve_link',
-		'autoplay',
-		'controls',
-		'muted',
-		'playsinline',
-		'loop',
-	];
 }
 
 function sc_filter_validate( array $a ) {
