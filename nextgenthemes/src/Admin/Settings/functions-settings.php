@@ -17,6 +17,21 @@ function label_text( $option ) {
 function print_boolean_field( $key, $option ) {
 	?>
 	<p>
+		<label>
+			<input
+				type="checkbox"
+				v-model="<?= esc_attr( "vm.$key" ); ?>"
+				name="<?= esc_attr( "vm.$key" ); ?>"
+			>
+			{{ vm.$key }} <?php label_text( $option ); ?>
+		</label>
+	</p>
+	<?php
+}
+
+function print_boolean_radio_field( $key, $option ) {
+	?>
+	<p>
 		<?php label_text( $option ); ?>
 		<label>
 			<input
@@ -61,7 +76,7 @@ function print_attachment_field( $key, $option ) {
 			<?php label_text( $option ); ?>
 			<input v-model="<?= esc_attr( "vm.$key" ); ?>" type="text" class="large-text" />
 			<a class="button-secondary" data-attachment-upload='[v-model="<?= esc_attr( "vm.$key" ) ?>"]'>
-				<?= esc_html( 'Upload Image', TEXTDOMAIN ); ?>
+				<?= esc_html( 'Upload Image', \Nextgenthemes\TEXTDOMAIN ); ?>
 			</a>
 		</label>
 	</p>

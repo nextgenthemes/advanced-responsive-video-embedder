@@ -62,7 +62,7 @@ function settings() {
 
 	foreach ( $settings as $k => $v ) {
 
-		if ( ! empty( $v['not_a_setting'] ) ) {
+		if ( isset( $v['option'] ) && ! $v['option'] ) {
 			unset( $settings[ $k ] );
 		}
 
@@ -583,7 +583,7 @@ function all_settings() {
 			'shortcode'   => false,
 			'label'       => esc_html__( 'Enable lagacy shortcodes', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
-			'description' => __( 'Enable the old and deprected <code>[youtube id="abcde" /]</code> or <code>[vimeo id="abcde" /]</code> ... style shortcodes. Select <code>No</code> unless you have them in your content.', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'Enable the old and deprected <code>[youtube id="abcde" /]</code> or <code>[vimeo id="abcde" /]</code> ... style shortcodes. Only enable if you have them in your content.', 'advanced-responsive-video-embedder' ),
 		],
 		'disable_sandbox'       => [
 			'default'     => 'n',
@@ -635,19 +635,18 @@ function missing_settings_defaults( $settings ) {
 			$settings[ $key ]['tag'] = 'main';
 		}
 
-		if ( ! empty( $settings[ $key ]['sanitze_callback'] ) ) {
-			continue;
-		}
+		if ( empty( $settings[ $key ]['sanitze_callback'] ) ) {
 
-		switch ( $value['type'] ) {
-			case 'integer':
-				$settings[ $key ]['sanitze_callback'] = 'absint';
-				break;
+			switch ( $value['type'] ) {
+				case 'integer':
+					$settings[ $key ]['sanitze_callback'] = 'absint';
+					break;
 
-			case 'string':
-			default:
-				$settings[ $key ]['sanitze_callback'] = 'sanitize_text_field';
-				break;
+				case 'string':
+				default:
+					$settings[ $key ]['sanitze_callback'] = 'sanitize_text_field';
+					break;
+			}
 		}
 	endforeach;
 
