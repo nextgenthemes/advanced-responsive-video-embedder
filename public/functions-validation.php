@@ -93,21 +93,21 @@ function validate_bool( $val, $name ) {
 }
 // phpcs:enable
 
-function validate_align( $align ) {
+function validate_align( $a ) {
 
-	switch ( $align ) {
+	switch ( $a['align'] ) {
 		case null:
 		case '':
 		case 'none':
-			$align = null;
+			$a['align'] = null;
 			break;
 		case 'left':
 		case 'right':
 		case 'center':
-			$align = $align;
 			break;
 		default:
-			$align = new \WP_Error(
+			$a = add_error(
+				$a,
 				'align',
 				// Translators: Alignment
 				sprintf( __( 'Align <code>%s</code> not valid', 'advanced-responsive-video-embedder' ), esc_html( $align ) )
@@ -115,5 +115,5 @@ function validate_align( $align ) {
 			break;
 	}
 
-	return $align;
+	return $a;
 }

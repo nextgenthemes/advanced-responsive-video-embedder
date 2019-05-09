@@ -155,11 +155,6 @@ function sc_filter_set_wrapper_id( array $a ) {
 	return $a;
 }
 
-function sc_filter_init_error( array $a ) {
-	$a['errors'] = new \WP_Error();
-	return $a;
-}
-
 function add_error( array $a, $code, $msg, $remove_filters = false ) {
 
 	if ( isset( $a['errors'] ) && is_wp_error( $a['errors'] ) ) {
@@ -174,7 +169,6 @@ function add_error( array $a, $code, $msg, $remove_filters = false ) {
 
 	return $a;
 }
-
 
 function sc_filter_default_aspect_ratio( array $a ) {
 
@@ -327,16 +321,16 @@ function sc_filter_validate( array $a ) {
 		}
 
 		if ( ! is_string( $value ) ) {
-			$a[ $key ] = new \WP_Error( 'input-type-error', "Attribute <code>$key</code> must be a string" );
+			//$a = add_error( $a, 'input-type-error', "Attribute <code>$key</code> must be a string" );
 		}
 	}
 
 	if ( null !== $a['oembed_data'] && ! is_object( $a['oembed_data'] ) ) {
-		$a['oembed_data'] = new \WP_Error( 'oembed_data', 'oembed_data needs to be null or a object' );
+		$a = add_error( $a, 'oembed_data', 'oembed_data needs to be null or a object' );
 	}
 
 	if ( null !== $a['parameters'] && ! is_string( $a['parameters'] ) && ! is_array( $a['parameters'] ) ) {
-		$a['parameters'] = new \WP_Error( 'oembed_data', 'parameters needs to be null, array or string' );
+		$a = add_error( $a, 'parameters', 'parameters needs to be null, array or string' );
 	}
 
 	foreach ( bool_shortcode_args() as $boolattr ) {
@@ -349,7 +343,7 @@ function sc_filter_validate( array $a ) {
 	};
 	unset( $urlattr );
 
-	$a['align']        = validate_align( $a['align'] );
+	$a = validate_align( $a );
 	$a['aspect_ratio'] = validate_aspect_ratio( $a['aspect_ratio'] );
 
 	return $a;

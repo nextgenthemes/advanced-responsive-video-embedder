@@ -80,9 +80,18 @@ function build_video( array $input_atts ) {
 
 	$a = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
 
-	if ( $a['errors']->get_error_code() ) {
-		$error_html  = __( 'ARVE Error(s):', 'advanced-responsive-video-embedder' );
-		$error_html .= get_error_messages();
+	if ( ! empty( $a['errors'] ) && $a['errors']->get_error_code() ) {
+
+		$error_html = sprintf(
+			'<p><strong>%s</strong><br>',
+			__( '<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error(s):', 'advanced-responsive-video-embedder' )
+		);
+
+		foreach ( $a['errors']->get_error_messages() as $key => $value ) {
+			$error_html .= "$value<br>";
+		}
+
+		$error_html .= '</p>';
 		$error_html .= get_debug_info( '', $a, $input_atts );
 
 		return $error_html;

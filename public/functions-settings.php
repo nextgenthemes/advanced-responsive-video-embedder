@@ -138,7 +138,7 @@ function shortcode_pairs() {
 	foreach ( $settings as $k => $v ) :
 		if ( 'bool+default' === $v['type'] ) {
 			$pairs[ $k ] = bool_to_shortcode_string( $options[ $k ] );
-		} elseif ( isset( $v['option'] ) && ! $v['option'] ) {
+		} elseif ( ! empty( $v['option'] ) ) {
 			$pairs[ $k ] = (string) $options[ $k ];
 		} else {
 			$pairs[ $k ] = $v['default'];

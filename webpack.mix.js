@@ -1,21 +1,19 @@
-let mix = require('laravel-mix');
+let mix = require( 'laravel-mix' );
 
-const devPath = 'resources';
+// Sass configuration.
+var sassConfig = {
+	outputStyle: 'expanded',
+	indentType: 'tab',
+	indentWidth: 1
+};
 
 mix.setPublicPath( 'dist' );
 mix.sourceMaps();
 mix.version();
-mix.js( `${devPath}/js/arve.js`, 'js' );
+mix.js( 'resources/js/arve.js', 'js' );
 
-// Sass configuration.
-var sassConfig = {
-	outputStyle : 'expanded',
-	indentType  : 'tab',
-	indentWidth : 1
-};
-
-mix.sass(  `${devPath}/scss/arve.scss`,       'css', sassConfig )
-	.sass( `${devPath}/scss/arve-admin.scss`, 'css', sassConfig );
+mix.sass(  'resources/scss/arve.scss',       'css', sassConfig )
+	.sass( 'resources/scss/arve-admin.scss', 'css', sassConfig );
 
 // Full API
 // mix.js(src, output);

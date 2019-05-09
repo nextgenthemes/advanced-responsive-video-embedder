@@ -76,7 +76,6 @@ function init() {
 
 	foreach ( [
 		'validate'                         => -99,
-		'init_error'                       => -98,
 		// 0
 		'detect_provider_and_id_from_url'  => -10,
 		'detect_html5'                     => -10,

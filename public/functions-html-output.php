@@ -89,12 +89,12 @@ function get_var_dump( $var ) {
 
 function get_debug_info( $input_html, array $a, array $input_atts ) {
 
-	$html = '';
+	$html  = '';
+	$debug = ( defined( 'ARVE_DEBUG' ) && ARVE_DEBUG );
 
 	// phpcs:disable WordPress.Security.NonceVerification.NoNonceVerification
 	// phpcs:disable WordPress.Security.NonceVerification.Recommended
 	if ( isset( $_GET['arve-debug-options'] ) ) {
-
 		static $show_options_debug = true;
 
 		$options               = get_option( 'arve_options_main' );
@@ -131,7 +131,7 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 		);
 	}
 
-	if ( isset( $_GET['arve-debug-atts'] ) ) {
+	if ( $debug || isset( $_GET['arve-debug-atts'] ) ) {
 		$html .= sprintf( '<pre style="%s">$a: %s</pre>', esc_attr( $pre_style ), get_var_dump( $input_atts ) );
 		$html .= sprintf( '<pre style="%s">$arve: %s</pre>', esc_attr( $pre_style ), get_var_dump( $a ) );
 	}
@@ -237,7 +237,7 @@ function build_tag( $args, $a ) {
 
 	$is_dailymotion = ( 'dailymotion' === $a['provider'] );
 
-	if ( ! empty( $args['content'] ) || '' === $args['content'] ) {
+	if ( ! empty( $args['content'] ) || ( ! empty( $args['content'] ) && '' === $args['content'] ) ) {
 		$out = sprintf(
 			'<%1$s%2$s>%3$s</%1$s>',
 			esc_html( $args['tag'] ),
@@ -329,17 +329,4 @@ function error( $message ) {
 		__( '<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error:', 'advanced-responsive-video-embedder' ),
 		$message
 	);
-}
-
-function output_errors( array $a ) {
-
-	$errors = '';
-
-	foreach ( $a as $key => $value ) {
-		if ( is_wp_error( $value ) ) {
-			$errors .= error( $value->get_error_message() );
-		}
-	}
-
-	return $errors;
 }
