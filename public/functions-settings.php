@@ -118,13 +118,9 @@ function bool_shortcode_args() {
 
 	foreach ( $settings as $k => $v ) {
 
-		if ( ( isset( $v['shortcode'] ) && ! $v['shortcode'] )
-			|| ! in_array( $v['type'], [ 'bool', 'boolean', 'bool+default' ], true )
-		) {
-			continue;
+		if ( $v['shortcode'] && in_array( $v['type'], [ 'bool', 'boolean', 'bool+default' ], true ) ) {
+			$bool_attr[] = $k;
 		}
-
-		$bool_attr[] = $k;
 	}
 
 	return $bool_attr;
@@ -238,7 +234,7 @@ function upgrade_options() {
 			$old_options['maxwidth'] = $old_options['video_maxwidth'];
 		}
 
-		$new_options = array_diff_assoc( $old_options, default_options() );
+		$new_options                         = array_diff_assoc( $old_options, default_options() );
 		$new_options['old_options_imported'] = get_the_time( 'c' );
 		update_option( 'nextgenthemes_arve', $new_options );
 	}
@@ -332,6 +328,7 @@ function all_settings() {
 		],
 		'hide_title'            => [
 			'default'     => false,
+			'shortcode'   => true,
 			'tag'         => 'pro',
 			'label'       => esc_html__( 'Hide Title', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
@@ -345,11 +342,12 @@ function all_settings() {
 			'description' => __( 'Expands video size after clicking the thumbnail (Lazyload Mode)', 'advanced-responsive-video-embedder' ),
 		],
 		'play_icon_style'       => [
-			'tag'     => 'pro',
-			'default' => false,
-			'label'   => __( 'Play Button', 'advanced-responsive-video-embedder' ),
-			'type'    => 'select',
-			'options' => [
+			'tag'       => 'pro',
+			'default'   => false,
+			'shortcode' => true,
+			'label'     => __( 'Play Button', 'advanced-responsive-video-embedder' ),
+			'type'      => 'select',
+			'options'   => [
 				// Translators: 1 %s is play icon style.
 				''        => esc_html__( 'Default (setting page)', 'advanced-responsive-video-embedder' ),
 				'youtube' => __( 'Youtube style', 'advanced-responsive-video-embedder' ),
@@ -386,10 +384,11 @@ function all_settings() {
 			'description' => __( 'The inview lazyload mode videos as they come into the screen as a workarround for the problem that it otherwise needs two touches to play a lazyloaded video because mobile browsers prevent autoplay. Note that this will prevent users to see your custom thumbnails or titles!', 'advanced-responsive-video-embedder' ),
 		],
 		'align'                 => [
-			'default' => 'none',
-			'label'   => esc_html__( 'Alignment', 'advanced-responsive-video-embedder' ),
-			'type'    => 'select',
-			'options' => [
+			'default'   => 'none',
+			'shortcode' => true,
+			'label'     => esc_html__( 'Alignment', 'advanced-responsive-video-embedder' ),
+			'type'      => 'select',
+			'options'   => [
 				''       => esc_html__( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
 				'none'   => esc_html__( 'None', 'advanced-responsive-video-embedder' ),
 				'left'   => esc_html__( 'Left', 'advanced-responsive-video-embedder' ),
@@ -405,6 +404,7 @@ function all_settings() {
 		],
 		'thumbnail'             => [
 			'default'     => null,
+			'shortcode'   => true,
 			'option'      => false,
 			'label'       => esc_html__( 'Thumbnail', 'advanced-responsive-video-embedder' ),
 			'type'        => 'attachment',
@@ -426,6 +426,7 @@ function all_settings() {
 		],
 		'autoplay'              => [
 			'default'     => false,
+			'shortcode'   => true,
 			'label'       => esc_html__( 'Autoplay', 'advanced-responsive-video-embedder' ),
 			'type'        => 'bool+default',
 			'description' => esc_html__( 'Do not expect this to always work! Mobile browsers prevent this, some video hosts do not support it at all. Only used in normal mode.', 'advanced-responsive-video-embedder' ),
@@ -489,47 +490,6 @@ function all_settings() {
 			'type'        => 'string',
 			'description' => __( 'controlsList attribute on &lt;video&gt; for example use <code>nodownload nofullscreen noremoteplayback</code> to hide the download and the fullscreen button on the chrome HTML5 video player and disable remote playback.', 'advanced-responsive-video-embedder' ),
 		],
-
-		/*
-		'mp4'                   => [
-			'tag'           => 'html5',
-			'default'       => null,
-			'option' => false,
-			'label'         => esc_html__( 'mp4 file', 'advanced-responsive-video-embedder'),
-			'type'          => 'url',
-			#'libraryType' => array( 'video' ),
-			#'addButton'   => esc_html__( 'Select .mp4 file', 'advanced-responsive-video-embedder' ),
-			#'frameTitle'  => esc_html__( 'Select .mp4 file', 'advanced-responsive-video-embedder' ),
-			'meta'          => [ 'placeholder' => __( '.mp4 file url for HTML5 video', 'advanced-responsive-video-embedder' ) ],
-		],
-		'webm'                  => [
-			'tag'           => 'html5',
-			'default'       => null,
-			'option' => false,
-			'label'         => esc_html__( 'webm file', 'advanced-responsive-video-embedder'),
-			'type'          => 'url',
-			#'libraryType' => array( 'video' ),
-			#'addButton'   => esc_html__( 'Select .webm file', 'advanced-responsive-video-embedder' ),
-			#'frameTitle'  => esc_html__( 'Select .webm file', 'advanced-responsive-video-embedder' ),
-			'meta'          => [
-				'placeholder' => __( '.webm file url for HTML5 video', 'advanced-responsive-video-embedder' ),
-			],
-		],
-		'ogv'                   => [
-			'tag'           => 'html5',
-			'default'       => null,
-			'option' => false,
-			'label'         => esc_html__( 'ogv file', 'advanced-responsive-video-embedder'),
-			'type'          => 'url',
-			#'type'        => 'attachment',
-			#'libraryType' => array( 'video' ),
-			#'addButton'   => esc_html__( 'Select .ogv file', 'advanced-responsive-video-embedder' ),
-			#'frameTitle'  => esc_html__( 'Select .ogv file', 'advanced-responsive-video-embedder' ),
-			'meta'          => [
-				'placeholder' => __( '.ogv file url for HTML5 video', 'advanced-responsive-video-embedder' ),
-			],
-		],
-		*/
 		'controls'              => [
 			'tag'         => 'html5',
 			'default'     => true,
@@ -540,6 +500,7 @@ function all_settings() {
 		'loop'                  => [
 			'tag'         => 'html5',
 			'default'     => 'n',
+			'shortcode'   => true,
 			'option'      => false,
 			'label'       => esc_html__( 'Loop?', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
@@ -548,6 +509,7 @@ function all_settings() {
 		'muted'                 => [
 			'tag'         => 'html5',
 			'default'     => 'n',
+			'shortcode'   => true,
 			'option'      => false,
 			'label'       => esc_html__( 'Mute?', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
@@ -587,33 +549,36 @@ function all_settings() {
 		],
 		'disable_sandbox'       => [
 			'default'     => 'n',
+			'shortcode'   => true,
 			'option'      => false,
 			'label'       => esc_html__( 'Disable Sandbox', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
 			'description' => __( "Only disable if you have to. 'Disable Links' feature from ARVE Pro will not work when without sandbox.", 'advanced-responsive-video-embedder' ),
 		],
 		'lang'                  => [
-			'default' => null,
-			'label'   => __( '2 letter language (TED talks only)', 'advanced-responsive-video-embedder' ),
-			'option'  => false,
-			'type'    => 'string',
+			'default'   => null,
+			'shortcode' => true,
+			'label'     => __( '2 letter language (TED talks only)', 'advanced-responsive-video-embedder' ),
+			'option'    => false,
+			'type'      => 'string',
 		],
 		'start'                 => [
-			'default' => null,
-			'option'  => false,
-			'label'   => __( 'Starttime in seconds (Vimeo only)', 'advanced-responsive-video-embedder' ),
-			'type'    => 'string',
+			'shortcode' => true,
+			'default'   => null,
+			'option'    => false,
+			'label'     => __( 'Starttime in seconds (Vimeo only)', 'advanced-responsive-video-embedder' ),
+			'type'      => 'string',
 		],
 	];
 
 	$settings = apply_filters( 'nextgenthemes/arve/settings', $settings );
 
-	foreach ( $properties as $provider => $values ) {
+	foreach ( $settings as $provider => $v ) {
 
-		if ( isset( $values['default_params'] ) ) {
+		if ( isset( $v['default_params'] ) ) {
 
 			$settings[ 'url_params_' . $provider ] = [
-				'default'   => $values['default_params'],
+				'default'   => $v['default_params'],
 				'shortcode' => false,
 				// Translators: %s is Provider
 				'label'     => sprintf( esc_html__( '%s url parameters', 'advanced-responsive-video-embedder' ), $provider ),
@@ -630,6 +595,13 @@ function all_settings() {
 function missing_settings_defaults( $settings ) {
 
 	foreach ( $settings as $key => $value ) :
+
+		if ( ! isset( $value['shortcode'] ) ) {
+			$settings[ $key ]['shortcode'] = true;
+		}
+		if ( ! isset( $value['has_option'] ) ) {
+			$settings[ $key ]['has_option'] = true;
+		}
 
 		if ( empty( $settings[ $key ]['tag'] ) ) {
 			$settings[ $key ]['tag'] = 'main';

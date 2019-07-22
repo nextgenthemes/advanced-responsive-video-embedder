@@ -12,7 +12,6 @@ namespace PHP_CodeSniffer\Tests\Core\File;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Files\DummyFile;
-use PHP_CodeSniffer\Exceptions\TokenizerException;
 use PHPUnit\Framework\TestCase;
 
 class GetMemberPropertiesTest extends TestCase
@@ -63,7 +62,7 @@ class GetMemberPropertiesTest extends TestCase
     /**
      * Test the getMemberProperties() method.
      *
-     * @param string $identifier Comment which preceeds the test case.
+     * @param string $identifier Comment which precedes the test case.
      * @param bool   $expected   Expected function output.
      *
      * @dataProvider dataGetMemberProperties
@@ -326,7 +325,7 @@ class GetMemberPropertiesTest extends TestCase
     /**
      * Test receiving an expected exception when a non property is passed.
      *
-     * @param string $identifier Comment which preceeds the test case.
+     * @param string $identifier Comment which precedes the test case.
      *
      * @expectedException        PHP_CodeSniffer\Exceptions\TokenizerException
      * @expectedExceptionMessage $stackPtr is not a class member var

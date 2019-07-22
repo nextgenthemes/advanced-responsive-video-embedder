@@ -514,7 +514,7 @@ class ArrayDeclarationSniff implements Sniff
             }//end if
         }//end for
 
-        // Check for mutli-line arrays that should be single-line.
+        // Check for multi-line arrays that should be single-line.
         $singleValue = false;
 
         if (empty($indices) === true) {
@@ -681,6 +681,11 @@ class ArrayDeclarationSniff implements Sniff
         $indexLine     = $tokens[$stackPtr]['line'];
         $lastIndexLine = null;
         foreach ($indices as $index) {
+            if ($index['value'] === false) {
+                // Syntax error or live coding.
+                continue;
+            }
+
             if (isset($index['index']) === false) {
                 // Array value only.
                 if ($tokens[$index['value']]['line'] === $tokens[$stackPtr]['line'] && $numValues > 1) {

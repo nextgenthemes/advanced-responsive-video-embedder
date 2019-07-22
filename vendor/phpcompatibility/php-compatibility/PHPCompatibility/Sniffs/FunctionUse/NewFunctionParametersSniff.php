@@ -709,6 +709,18 @@ class NewFunctionParametersSniff extends AbstractNewFeatureSniff
                 '5.0'  => false,
                 '5.1'  => true,
             ),
+            5 => array(
+                'name' => 'flags',
+                '7.3'  => false,
+                '7.4'  => true,
+            ),
+        ),
+        'preg_replace_callback_array' => array(
+            4 => array(
+                'name' => 'flags',
+                '7.3'  => false,
+                '7.4'  => true,
+            ),
         ),
         'round' => array(
             2 => array(
@@ -932,7 +944,7 @@ class NewFunctionParametersSniff extends AbstractNewFeatureSniff
         // Handle case-insensitivity of function names.
         $this->newFunctionParameters = $this->arrayKeysToLowercase($this->newFunctionParameters);
 
-        return array(T_STRING);
+        return array(\T_STRING);
     }
 
     /**
@@ -949,13 +961,13 @@ class NewFunctionParametersSniff extends AbstractNewFeatureSniff
         $tokens = $phpcsFile->getTokens();
 
         $ignore = array(
-            T_DOUBLE_COLON    => true,
-            T_OBJECT_OPERATOR => true,
-            T_FUNCTION        => true,
-            T_CONST           => true,
+            \T_DOUBLE_COLON    => true,
+            \T_OBJECT_OPERATOR => true,
+            \T_FUNCTION        => true,
+            \T_CONST           => true,
         );
 
-        $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+        $prevToken = $phpcsFile->findPrevious(\T_WHITESPACE, ($stackPtr - 1), null, true);
         if (isset($ignore[$tokens[$prevToken]['code']]) === true) {
             // Not a call to a PHP function.
             return;

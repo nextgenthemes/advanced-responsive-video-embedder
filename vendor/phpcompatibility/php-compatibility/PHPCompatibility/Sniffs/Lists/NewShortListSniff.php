@@ -37,7 +37,7 @@ class NewShortListSniff extends Sniff
      */
     public function register()
     {
-        return array(T_OPEN_SHORT_ARRAY);
+        return array(\T_OPEN_SHORT_ARRAY);
     }
 
     /**
@@ -47,7 +47,8 @@ class NewShortListSniff extends Sniff
      * @param int                   $stackPtr  The position of the current token in the
      *                                         stack passed in $tokens.
      *
-     * @return void
+     * @return int|void Integer stack pointer to skip forward or void to continue
+     *                  normal file processing.
      */
     public function process(File $phpcsFile, $stackPtr)
     {
@@ -62,7 +63,7 @@ class NewShortListSniff extends Sniff
         $tokens = $phpcsFile->getTokens();
         $closer = $tokens[$stackPtr]['bracket_closer'];
 
-        $hasVariable = $phpcsFile->findNext(T_VARIABLE, ($stackPtr + 1), $closer);
+        $hasVariable = $phpcsFile->findNext(\T_VARIABLE, ($stackPtr + 1), $closer);
         if ($hasVariable === false) {
             // List syntax is only valid if there are variables in it.
             return;

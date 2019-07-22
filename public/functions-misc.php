@@ -1,6 +1,10 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+function gcd( $a, $b ) {
+	return $b ? gcd( $b, $a % $b) : $a;
+}
+
 function is_bool_option( $array ) {
 
 	$yes_no = [
@@ -61,9 +65,9 @@ function check_filetype( $url, $ext ) {
 /**
  * Calculates seconds based on youtube times
  *
- * @param     string $yttime   The '1h25m13s' part of youtube URLs.
+ * @param string $yttime   The '1h25m13s' part of youtube URLs.
  *
- * @return    int   Starttime in seconds.
+ * @return int Starttime in seconds.
  */
 function youtube_time_to_seconds( $yttime ) {
 
@@ -123,11 +127,11 @@ function youtube_time_to_seconds( $yttime ) {
 /**
  * Calculates padding percentage value for a particular aspect ratio
  *
- * @since     4.2.0
+ * @param string $aspect_ratio '4:3' or percentage value with percent sign.
  *
- * @param     string $aspect_ratio '4:3' or percentage value with percent sign.
+ * @since 4.2.0
  *
- * @return    float
+ * @return float
  */
 function aspect_ratio_to_percentage( $aspect_ratio ) {
 

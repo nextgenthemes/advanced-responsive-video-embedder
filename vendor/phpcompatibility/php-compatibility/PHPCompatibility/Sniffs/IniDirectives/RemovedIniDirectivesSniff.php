@@ -38,6 +38,27 @@ class RemovedIniDirectivesSniff extends AbstractRemovedFeatureSniff
             '5.1'         => true,
             'alternative' => 'fbsql.batchsize',
         ),
+        'pfpro.defaulthost' => array(
+            '5.1' => true,
+        ),
+        'pfpro.defaultport' => array(
+            '5.1' => true,
+        ),
+        'pfpro.defaulttimeout' => array(
+            '5.1' => true,
+        ),
+        'pfpro.proxyaddress' => array(
+            '5.1' => true,
+        ),
+        'pfpro.proxyport' => array(
+            '5.1' => true,
+        ),
+        'pfpro.proxylogon' => array(
+            '5.1' => true,
+        ),
+        'pfpro.proxypassword' => array(
+            '5.1' => true,
+        ),
 
         'ifx.allow_persistent' => array(
             '5.2.1' => true,
@@ -228,6 +249,37 @@ class RemovedIniDirectivesSniff extends AbstractRemovedFeatureSniff
         'pdo_odbc.db2_instance_name' => array(
             '7.3' => false, // Has been marked as deprecated in the manual from before this time. Now hard-deprecated.
         ),
+
+        'ibase.allow_persistent' => array(
+            '7.4' => true,
+        ),
+        'ibase.max_persistent' => array(
+            '7.4' => true,
+        ),
+        'ibase.max_links' => array(
+            '7.4' => true,
+        ),
+        'ibase.default_db' => array(
+            '7.4' => true,
+        ),
+        'ibase.default_user' => array(
+            '7.4' => true,
+        ),
+        'ibase.default_password' => array(
+            '7.4' => true,
+        ),
+        'ibase.default_charset' => array(
+            '7.4' => true,
+        ),
+        'ibase.timestampformat' => array(
+            '7.4' => true,
+        ),
+        'ibase.dateformat' => array(
+            '7.4' => true,
+        ),
+        'ibase.timeformat' => array(
+            '7.4' => true,
+        ),
     );
 
     /**
@@ -237,7 +289,7 @@ class RemovedIniDirectivesSniff extends AbstractRemovedFeatureSniff
      */
     public function register()
     {
-        return array(T_STRING);
+        return array(\T_STRING);
     }
 
     /**
@@ -254,13 +306,13 @@ class RemovedIniDirectivesSniff extends AbstractRemovedFeatureSniff
         $tokens = $phpcsFile->getTokens();
 
         $ignore = array(
-            T_DOUBLE_COLON    => true,
-            T_OBJECT_OPERATOR => true,
-            T_FUNCTION        => true,
-            T_CONST           => true,
+            \T_DOUBLE_COLON    => true,
+            \T_OBJECT_OPERATOR => true,
+            \T_FUNCTION        => true,
+            \T_CONST           => true,
         );
 
-        $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+        $prevToken = $phpcsFile->findPrevious(\T_WHITESPACE, ($stackPtr - 1), null, true);
         if (isset($ignore[$tokens[$prevToken]['code']]) === true) {
             // Not a call to a PHP function.
             return;

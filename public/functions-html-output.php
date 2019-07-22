@@ -209,6 +209,7 @@ function build_inner_html( array $a ) {
 	}
 
 	$html .= build_iframe_video( $a );
+	$html .= build_tag( [ 'name' => 'button' ], $a );
 
 	return $html;
 }
@@ -231,24 +232,28 @@ function build_rating_meta( array $a ) {
 	return $html;
 }
 
-function build_tag( $args, $a ) {
+function build_tag( array $tag, array $a ) {
 
-	$args = apply_filters( "nextgenthemes/arve/{$args['name']}", $args, $a );
+	$tag = apply_filters( "nextgenthemes/arve/{$tag['name']}", $tag, $a );
+
+	if ( empty( $tag['tag'] ) ) {
+		return '';
+	}
 
 	$is_dailymotion = ( 'dailymotion' === $a['provider'] );
 
-	if ( ! empty( $args['content'] ) || ( ! empty( $args['content'] ) && '' === $args['content'] ) ) {
+	if ( ! empty( $tag['content'] ) || ( isset( $tag['content'] ) && '' === $tag['content'] ) ) {
 		$out = sprintf(
 			'<%1$s%2$s>%3$s</%1$s>',
-			esc_html( $args['tag'] ),
-			attr( $args['attr'], $is_dailymotion ),
-			$args['content']
+			esc_html( $tag['tag'] ),
+			attr( $tag['attr'], $is_dailymotion ),
+			$tag['content']
 		);
 	} else {
 		$out = sprintf(
 			'<%s%s>',
-			esc_html( $args['tag'] ),
-			attr( $args['attr'], $is_dailymotion )
+			esc_html( $tag['tag'] ),
+			attr( $tag['attr'], $is_dailymotion )
 		);
 	}
 
@@ -271,55 +276,32 @@ function build_promote_link_html( $arve_link ) {
 
 function arve__embed( $html, array $a ) {
 
-	$style = '';
+	$class     = 'arve-embed';
+	$ratio_div = '';
 
 	if ( false !== $a['aspect_ratio'] && '16:9' !== $a['aspect_ratio'] ) {
-		$selector  = "#arve #{$a['id']} .arve-embed--responsive::before,";
-		$selector .= "#tinymce #{$a['id']} .arve-embed--responsive::before";
+		$ratio_div = sprintf( '<div class="padding-top:%F%%"></div>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
+	}
 
-		$style = sprintf(
-			'<style>%s{padding-top:%F%%}</style>',
-			esc_html( $selector ),
-			aspect_ratio_to_percentage( $a['aspect_ratio'] )
-		);
+	if ( false !== $a['aspect_ratio'] ) {
+		$class .= ' arve-embed--responsive';
+	}
+
+	if ( '16:9' === $a['aspect_ratio'] ) {
+		$class .= ' arve-embed--16by9';
 	}
 
 	$html = build_tag(
 		array(
 			'name'    => 'arve__embed',
 			'tag'     => 'div',
-			'content' => $style . $html,
-			'attr'    => [ 'class' => 'arve-embed arve-embed--responsive' ],
+			'content' => $ratio_div . $html,
+			'attr'    => [ 'class' => $class ],
 		),
 		$a
 	);
 
 	return apply_filters( 'nextgenthemes/arve/embed', $html );
-}
-
-function create_iframe_tag( array $a ) {
-
-	if ( in_array( $a['mode'], [ 'lazyload', 'lazyload-lightbox', 'link-lightbox' ], true ) ) {
-		$lazy_attr          = prefix_array_keys( 'data-', $a['iframe_attr'] );
-		$lazy_attr['class'] = 'arve-lazyload';
-		$html               = sprintf( '<span%s></span>', attr( $lazy_attr, 'dailymotion' ) );
-	} else {
-		$html = sprintf( '<iframe%s></iframe>', attr( $a['iframe_attr'], 'dailymotion' ) );
-	}
-
-	return apply_filters( 'nextgenthemes/arve/iframe', $html, $a, $a['iframe_attr'] );
-}
-
-function create_video_tag( array $a ) {
-
-	$html = sprintf(
-		'<video%s>%s%s</video>',
-		attr( $a['video_attr'] ),
-		empty( $a['video_sources_html'] ) ? '' : $a['video_sources_html'],
-		$a['video_tracks_html']
-	);
-
-	return apply_filters( 'nextgenthemes/arve/video', $html, $a, $a['video_attr'] );
 }
 
 function error( $message ) {

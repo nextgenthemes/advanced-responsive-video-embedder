@@ -14,7 +14,7 @@ PHP Compatibility Coding Standard for PHP CodeSniffer
 [![Tested on PHP 5.3 to nightly](https://img.shields.io/badge/tested%20on-PHP%205.3%20|%205.4%20|%205.5%20|%205.6%20|%207.0%20|%207.1%20|%207.2%20|%207.3%20|%20nightly-brightgreen.svg?maxAge=2419200)](https://travis-ci.org/PHPCompatibility/PHPCompatibility)
 
 
-This is a set of sniffs for [PHP CodeSniffer](http://pear.php.net/PHP_CodeSniffer) that checks for PHP cross-version compatibility.
+This is a set of sniffs for [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) that checks for PHP cross-version compatibility.
 It will allow you to analyse your code for compatibility with higher and lower versions of PHP. 
 
 
@@ -89,7 +89,7 @@ Installation in a Composer project (method 1)
 
        Just add the Composer plugin you prefer to the `require-dev` section of your `composer.json` file.
 
-       * [DealerDirect/phpcodesniffer-composer-installer](https://github.com/DealerDirect/phpcodesniffer-composer-installer):"^0.4.3"
+       * [DealerDirect/phpcodesniffer-composer-installer](https://github.com/DealerDirect/phpcodesniffer-composer-installer):"^0.5.0"
        * [higidi/composer-phpcodesniffer-standards-plugin](https://github.com/higidi/composer-phpcodesniffer-standards-plugin)
        * [SimplyAdmire/ComposerPlugins](https://github.com/SimplyAdmire/ComposerPlugins). This plugin *might* still work, but appears to be abandoned.
     - As a last alternative in case you use a custom ruleset, _and only if you use PHP CodeSniffer version 2.6.0 or higher_, you can tell PHP CodeSniffer the path to the PHPCompatibility standard by adding the following snippet to your custom ruleset:

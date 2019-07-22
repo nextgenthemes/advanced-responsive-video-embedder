@@ -68,10 +68,10 @@ class NewExecutionDirectivesSniff extends AbstractNewFeatureSniff
      */
     public function register()
     {
-        $this->ignoreTokens          = Tokens::$emptyTokens;
-        $this->ignoreTokens[T_EQUAL] = T_EQUAL;
+        $this->ignoreTokens           = Tokens::$emptyTokens;
+        $this->ignoreTokens[\T_EQUAL] = \T_EQUAL;
 
-        return array(T_DECLARE);
+        return array(\T_DECLARE);
     }
 
 
@@ -97,14 +97,14 @@ class NewExecutionDirectivesSniff extends AbstractNewFeatureSniff
             }
 
             // Deal with PHPCS 2.3.0-2.3.3 which do not yet set the parenthesis properly for declare statements.
-            $openParenthesis = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($stackPtr + 1), null, false, null, true);
+            $openParenthesis = $phpcsFile->findNext(\T_OPEN_PARENTHESIS, ($stackPtr + 1), null, false, null, true);
             if ($openParenthesis === false || isset($tokens[$openParenthesis]['parenthesis_closer']) === false) {
                 return;
             }
             $closeParenthesis = $tokens[$openParenthesis]['parenthesis_closer'];
         }
 
-        $directivePtr = $phpcsFile->findNext(T_STRING, ($openParenthesis + 1), $closeParenthesis, false);
+        $directivePtr = $phpcsFile->findNext(\T_STRING, ($openParenthesis + 1), $closeParenthesis, false);
         if ($directivePtr === false) {
             return;
         }
@@ -188,7 +188,7 @@ class NewExecutionDirectivesSniff extends AbstractNewFeatureSniff
      */
     public function getErrorInfo(array $itemArray, array $itemInfo)
     {
-        $errorInfo = parent::getErrorInfo($itemArray, $itemInfo);
+        $errorInfo                        = parent::getErrorInfo($itemArray, $itemInfo);
         $errorInfo['conditional_version'] = '';
         $errorInfo['condition']           = '';
 
@@ -196,7 +196,7 @@ class NewExecutionDirectivesSniff extends AbstractNewFeatureSniff
 
         if (empty($versionArray) === false) {
             foreach ($versionArray as $version => $present) {
-                if (is_string($present) === true && $this->supportsBelow($version) === true) {
+                if (\is_string($present) === true && $this->supportsBelow($version) === true) {
                     // We cannot test for compilation option (ok, except by scraping the output of phpinfo...).
                     $errorInfo['conditional_version'] = $version;
                     $errorInfo['condition']           = $present;
@@ -270,11 +270,11 @@ class NewExecutionDirectivesSniff extends AbstractNewFeatureSniff
 
         $isError = false;
         if (isset($this->newDirectives[$directive]['valid_values'])) {
-            if (in_array($value, $this->newDirectives[$directive]['valid_values']) === false) {
+            if (\in_array($value, $this->newDirectives[$directive]['valid_values']) === false) {
                 $isError = true;
             }
         } elseif (isset($this->newDirectives[$directive]['valid_value_callback'])) {
-            $valid = call_user_func(array($this, $this->newDirectives[$directive]['valid_value_callback']), $value);
+            $valid = \call_user_func(array($this, $this->newDirectives[$directive]['valid_value_callback']), $value);
             if ($valid === false) {
                 $isError = true;
             }
@@ -324,11 +324,11 @@ class NewExecutionDirectivesSniff extends AbstractNewFeatureSniff
             $encodings = mb_list_encodings();
         }
 
-        if (empty($encodings) || is_array($encodings) === false) {
+        if (empty($encodings) || \is_array($encodings) === false) {
             // If we can't test the encoding, let it pass through.
             return true;
         }
 
-        return in_array($value, $encodings, true);
+        return \in_array($value, $encodings, true);
     }
 }

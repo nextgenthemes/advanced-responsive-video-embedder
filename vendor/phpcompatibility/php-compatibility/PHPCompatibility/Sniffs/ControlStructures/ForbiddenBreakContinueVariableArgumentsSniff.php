@@ -49,7 +49,7 @@ class ForbiddenBreakContinueVariableArgumentsSniff extends Sniff
      */
     public function register()
     {
-        return array(T_BREAK, T_CONTINUE);
+        return array(\T_BREAK, \T_CONTINUE);
     }
 
     /**
@@ -68,19 +68,19 @@ class ForbiddenBreakContinueVariableArgumentsSniff extends Sniff
         }
 
         $tokens             = $phpcsFile->getTokens();
-        $nextSemicolonToken = $phpcsFile->findNext(array(T_SEMICOLON, T_CLOSE_TAG), ($stackPtr), null, false);
+        $nextSemicolonToken = $phpcsFile->findNext(array(\T_SEMICOLON, \T_CLOSE_TAG), ($stackPtr), null, false);
         $errorType          = '';
         for ($curToken = $stackPtr + 1; $curToken < $nextSemicolonToken; $curToken++) {
             if ($tokens[$curToken]['type'] === 'T_STRING') {
                 // If the next non-whitespace token after the string
                 // is an opening parenthesis then it's a function call.
                 $openBracket = $phpcsFile->findNext(Tokens::$emptyTokens, $curToken + 1, null, true);
-                if ($tokens[$openBracket]['code'] === T_OPEN_PARENTHESIS) {
+                if ($tokens[$openBracket]['code'] === \T_OPEN_PARENTHESIS) {
                     $errorType = 'variableArgument';
                     break;
                 }
 
-            } elseif (in_array($tokens[$curToken]['type'], array('T_VARIABLE', 'T_FUNCTION', 'T_CLOSURE'), true)) {
+            } elseif (\in_array($tokens[$curToken]['type'], array('T_VARIABLE', 'T_FUNCTION', 'T_CLOSURE'), true)) {
                 $errorType = 'variableArgument';
                 break;
 

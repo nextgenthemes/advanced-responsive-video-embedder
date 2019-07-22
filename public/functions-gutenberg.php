@@ -24,7 +24,8 @@ function register_gb_block() {
 	register_block_type( 'nextgenthemes/arve-block', [
 		'attributes'      => $attributes,
 		'editor_script'   => 'arve-block', // The script name we gave in the wp_register_script() call.
-		'render_callback' => __NAMESPACE__ . '\shortcode',
+		#'render_callback' => __NAMESPACE__ . '\php_block_render'
+		'render_callback' => __NAMESPACE__ . '\shortcode'
 	] );
 }
 
@@ -33,6 +34,7 @@ function php_block_render( $attributes ) {
 	ob_start(); ?>
 	<pre>
 		<?php var_dump( $attributes ); ?>
+		<?php var_dump( shortcode( $attributes ) ); ?>
 	</pre>
 	<?php
 	return ob_get_clean();

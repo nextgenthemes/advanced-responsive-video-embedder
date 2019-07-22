@@ -8,7 +8,7 @@ require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_dump
 
 function provider( $provider ) {
-	$data      = Yaml::parseFile( getenv( 'HOME' ) . "/dev/oembed/providers/$provider.yml" );
+	$data      = Yaml::parseFile( getenv( 'HOME' ) . "/dev/build/oembed/providers/$provider.yml" );
 	$endpoints = $data[0]['endpoints'][0];
 
 	foreach ( $endpoints['schemes'] as $key => $value ) {

@@ -97,6 +97,10 @@ class RemovedExtensionsSniff extends AbstractRemovedFeatureSniff
             '5.2' => true,
             'alternative' => null,
         ),
+        'ibase' => array(
+            '7.4' => true,
+            'alternative' => 'pecl/ibase',
+        ),
         'ingres' => array(
             '5.1' => true,
             'alternative' => 'pecl/ingres',
@@ -112,7 +116,7 @@ class RemovedExtensionsSniff extends AbstractRemovedFeatureSniff
         ),
         'mcve' => array(
             '5.1' => true,
-            'alternative' => 'pecl/mvce',
+            'alternative' => 'pecl/mcve',
         ),
         'ming' => array(
             '5.3' => true,
@@ -147,8 +151,8 @@ class RemovedExtensionsSniff extends AbstractRemovedFeatureSniff
             '5.1' => true,
             'alternative' => null,
         ),
-        'pfpro' => array(
-            '5.3' => true,
+        'pfpro_' => array(
+            '5.1' => true,
             'alternative' => null,
         ),
         'sqlite' => array(
@@ -168,6 +172,10 @@ class RemovedExtensionsSniff extends AbstractRemovedFeatureSniff
             '5.1' => true,
             'alternative' => 'pecl/ffi',
         ),
+        'wddx' => array(
+            '7.4' => true,
+            'alternative' => 'pecl/wddx',
+        ),
         'yp' => array(
             '5.1' => true,
             'alternative' => null,
@@ -184,7 +192,7 @@ class RemovedExtensionsSniff extends AbstractRemovedFeatureSniff
         // Handle case-insensitivity of function names.
         $this->removedExtensions = $this->arrayKeysToLowercase($this->removedExtensions);
 
-        return array(T_STRING);
+        return array(\T_STRING);
     }
 
     /**
@@ -203,7 +211,7 @@ class RemovedExtensionsSniff extends AbstractRemovedFeatureSniff
         // Find the next non-empty token.
         $openBracket = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
 
-        if ($tokens[$openBracket]['code'] !== T_OPEN_PARENTHESIS) {
+        if ($tokens[$openBracket]['code'] !== \T_OPEN_PARENTHESIS) {
             // Not a function call.
             return;
         }
@@ -215,19 +223,19 @@ class RemovedExtensionsSniff extends AbstractRemovedFeatureSniff
 
         // Find the previous non-empty token.
         $search   = Tokens::$emptyTokens;
-        $search[] = T_BITWISE_AND;
+        $search[] = \T_BITWISE_AND;
         $previous = $phpcsFile->findPrevious($search, ($stackPtr - 1), null, true);
-        if ($tokens[$previous]['code'] === T_FUNCTION) {
+        if ($tokens[$previous]['code'] === \T_FUNCTION) {
             // It's a function definition, not a function call.
             return;
         }
 
-        if ($tokens[$previous]['code'] === T_NEW) {
+        if ($tokens[$previous]['code'] === \T_NEW) {
             // We are creating an object, not calling a function.
             return;
         }
 
-        if ($tokens[$previous]['code'] === T_OBJECT_OPERATOR) {
+        if ($tokens[$previous]['code'] === \T_OBJECT_OPERATOR) {
             // We are calling a method of an object.
             return;
         }
@@ -267,7 +275,7 @@ class RemovedExtensionsSniff extends AbstractRemovedFeatureSniff
             return false;
         }
 
-        if (is_string($this->functionWhitelist) === true) {
+        if (\is_string($this->functionWhitelist) === true) {
             if (strpos($this->functionWhitelist, ',') !== false) {
                 $this->functionWhitelist = explode(',', $this->functionWhitelist);
             } else {
@@ -275,9 +283,9 @@ class RemovedExtensionsSniff extends AbstractRemovedFeatureSniff
             }
         }
 
-        if (is_array($this->functionWhitelist) === true) {
+        if (\is_array($this->functionWhitelist) === true) {
             $this->functionWhitelist = array_map('strtolower', $this->functionWhitelist);
-            return in_array($content, $this->functionWhitelist, true);
+            return \in_array($content, $this->functionWhitelist, true);
         }
 
         return false;

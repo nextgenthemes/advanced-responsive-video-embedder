@@ -32,12 +32,13 @@
     padding: 0;
     margin: 0;
     overflow: hidden;
+    max-height: 100vh;
+  }
 
-    &::before {
-      display: block;
-      padding-top: percentage(9 / 16);
-      content: "";
-    }
+  .arve-embed--16by9::before {
+    display: block;
+    padding-top: percentage(9 / 16);
+    content: "";
   }
 
   .arve-thumbnail,

@@ -73,11 +73,11 @@ class NewOperatorsSniff extends AbstractNewFeatureSniff
      * @var array(string => int)
      */
     protected $newOperatorsPHPCSCompat = array(
-        'T_POW'            => T_MULTIPLY,
-        'T_POW_EQUAL'      => T_MUL_EQUAL,
-        'T_SPACESHIP'      => T_GREATER_THAN,
-        'T_COALESCE'       => T_INLINE_THEN,
-        'T_COALESCE_EQUAL' => T_EQUAL,
+        'T_POW'            => \T_MULTIPLY,
+        'T_POW_EQUAL'      => \T_MUL_EQUAL,
+        'T_SPACESHIP'      => \T_GREATER_THAN,
+        'T_COALESCE'       => \T_INLINE_THEN,
+        'T_COALESCE_EQUAL' => \T_EQUAL,
     );
 
     /**
@@ -129,7 +129,7 @@ class NewOperatorsSniff extends AbstractNewFeatureSniff
     {
         $tokens = array();
         foreach ($this->newOperators as $token => $versions) {
-            if (defined($token)) {
+            if (\defined($token)) {
                 $tokens[] = constant($token);
             } elseif (isset($this->newOperatorsPHPCSCompat[$token])) {
                 $tokens[] = $this->newOperatorsPHPCSCompat[$token];
@@ -159,13 +159,13 @@ class NewOperatorsSniff extends AbstractNewFeatureSniff
                 && ((isset($this->PHPCSCompatTranslate[$tokenType]['before'], $tokens[$stackPtr - 1]) === true
                     && $tokens[$stackPtr - 1]['type'] === $this->PHPCSCompatTranslate[$tokenType]['before'])
                 || (isset($this->PHPCSCompatTranslate[$tokenType]['callback']) === true
-                    && call_user_func(array($this, $this->PHPCSCompatTranslate[$tokenType]['callback']), $tokens, $stackPtr) === true))
+                    && \call_user_func(array($this, $this->PHPCSCompatTranslate[$tokenType]['callback']), $tokens, $stackPtr) === true))
             ) {
                 $tokenType = $this->PHPCSCompatTranslate[$tokenType]['real_token'];
             }
         } elseif ($tokenType === 'T_COALESCE') {
             // Make sure that T_COALESCE is not confused with T_COALESCE_EQUAL.
-            if (isset($tokens[($stackPtr + 1)]) !== false && $tokens[($stackPtr + 1)]['code'] === T_EQUAL) {
+            if (isset($tokens[($stackPtr + 1)]) !== false && $tokens[($stackPtr + 1)]['code'] === \T_EQUAL) {
                 // Ignore as will be dealt with via the T_EQUAL token.
                 return;
             }
@@ -250,7 +250,7 @@ class NewOperatorsSniff extends AbstractNewFeatureSniff
      */
     private function isTCoalesceEqual($tokens, $stackPtr)
     {
-        if ($tokens[$stackPtr]['code'] !== T_EQUAL || isset($tokens[($stackPtr - 1)]) === false) {
+        if ($tokens[$stackPtr]['code'] !== \T_EQUAL || isset($tokens[($stackPtr - 1)]) === false) {
             // Function called for wrong token or token has no predecesor.
             return false;
         }
@@ -277,14 +277,14 @@ class NewOperatorsSniff extends AbstractNewFeatureSniff
      */
     private function isTCoalesce($tokens, $stackPtr)
     {
-        if ($tokens[$stackPtr]['code'] !== T_INLINE_THEN || isset($tokens[($stackPtr - 1)]) === false) {
+        if ($tokens[$stackPtr]['code'] !== \T_INLINE_THEN || isset($tokens[($stackPtr - 1)]) === false) {
             // Function called for wrong token or token has no predecesor.
             return false;
         }
 
-        if ($tokens[($stackPtr - 1)]['code'] === T_INLINE_THEN) {
+        if ($tokens[($stackPtr - 1)]['code'] === \T_INLINE_THEN) {
             // Make sure not to confuse it with the T_COALESCE_EQUAL token.
-            if (isset($tokens[($stackPtr + 1)]) === false || $tokens[($stackPtr + 1)]['code'] !== T_EQUAL) {
+            if (isset($tokens[($stackPtr + 1)]) === false || $tokens[($stackPtr + 1)]['code'] !== \T_EQUAL) {
                 return true;
             }
         }

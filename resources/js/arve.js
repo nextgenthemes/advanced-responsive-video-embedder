@@ -21,6 +21,7 @@
 		qsa( '.arve-wrapper br' ).forEach( el => {
 			el.remove();
 		});
+
 		qsa( '.arve-iframe, .arve-video' ).forEach( el => {
 			el.removeAttribute( 'width' );
 			el.removeAttribute( 'height' );
@@ -64,7 +65,7 @@
 	globalID();
 
 	document.addEventListener( 'DOMContentLoaded', function( event ) {
-		remove_unwanted_stuff();
-		global_id();
+		removeUnwantedStuff();
+		globalID();
 	});
 }() );

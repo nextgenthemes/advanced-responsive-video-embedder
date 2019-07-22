@@ -29,13 +29,12 @@ function register( array $args ) {
 		'in_footer' => true,
 		'media'     => 'all',
 		'ver'       => null,
-		'cdn'       => apply_filters( 'nextgenthemes_use_cdn', true ),
 		'integrity' => null
 	);
 
 	$args = wp_parse_args( $args, $defaults );
 
-	if ( $args['cdn'] && ! empty( $args['cdn_src'] ) ) {
+	if ( apply_filters( 'nextgenthemes/use_cdn', true ) && ! empty( $args['cdn_src'] ) ) {
 		$args['src'] = $args['cdn_src'];
 		$args['ver'] = null;
 	}
@@ -47,7 +46,7 @@ function register( array $args ) {
 		wp_register_script( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['in_footer'] );
 
 		if ( $args['integrity'] ) {
-			add_interity_to_script( $args['handle'], $args['integrity'] );
+			add_interity_to_asset( 'script', $args['handle'], $args['integrity'] );
 		}
 
 		if ( $args['enqueue'] ) {
@@ -57,8 +56,7 @@ function register( array $args ) {
 		wp_register_style( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['media'] );
 
 		if ( $args['integrity'] ) {
-			// TODO
-			add_interity_to_style( $args['handle'], $args['integrity'] );
+			add_interity_to_asset( 'style', $args['handle'], $args['integrity'] );
 		}
 
 		if ( $args['enqueue'] ) {
@@ -67,15 +65,20 @@ function register( array $args ) {
 	}//end if
 }
 
-function add_interity_to_script( $handle, $integrity ) {
+function add_interity_to_asset( $type, $handle, $integrity ) {
 
-	add_filter( 'script_loader_tag', function( $html, $loader_handle ) use ( $handle, $integrity ) {
+	if ( ! in_array( $type, [ 'script', 'style' ], true ) ) {
+		wp_die( 'first arg needs to be scipts or style' );
+	}
+
+	add_filter( "{$type}_loader_tag", function( $html, $loader_handle ) use ( $type, $handle, $integrity ) {
 
 		if ( $handle === $loader_handle ) {
 
+			$tag  = ( 'style' === $type ) ? 'link' : $type;
 			$html = str_replace(
-				'<script',
-				sprintf( '<script integrity="%s" crossorigin="anonymous"', esc_attr( $integrity ) ),
+				sprintf( '<%s ', esc_html( $tag ) ),
+				sprintf( '<%s integrity="%s" crossorigin="anonymous" ', esc_html( $tag ), esc_attr( $integrity ) ),
 				$html
 			);
 		}

@@ -4,11 +4,15 @@
   "author": "Nicolas Jonas",
   "license": "GPL-3.0",
   "devDependencies": {
-    "json": "^9.0.6",
-    "laravel-mix": "^2.1.14",
-    "webpack-dev-server": ">=3.1.11",
-    "eslint-config-wordpress": "^2.0.0",
-    "eslint": "latest"
+    "@wordpress/eslint-plugin": "latest",
+    "eslint": "latest",
+    "json": "latest",
+    "laravel-mix": "latest",
+    "resolve-url-loader": "^3.1.0",
+    "sass": "^1.22.7",
+    "sass-loader": "^7.1.0",
+    "stylelint-config-twbs-bootstrap": "latest",
+    "vue-template-compiler": "^2.6.10"
   },
   "scripts": {
     "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",

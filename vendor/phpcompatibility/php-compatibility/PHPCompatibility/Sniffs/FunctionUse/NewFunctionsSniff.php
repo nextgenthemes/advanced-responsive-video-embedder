@@ -1746,6 +1746,16 @@ class NewFunctionsSniff extends AbstractNewFeatureSniff
             '7.1' => false,
             '7.2' => true,
         ),
+        // Introduced in 7.2.14 and 7.3.1 similtanously.
+        'oci_set_call_timeout' => array(
+            '7.2.13' => false,
+            '7.2.14' => true,
+        ),
+        // Introduced in 7.2.14 and 7.3.1 similtanously.
+        'oci_set_db_operation' => array(
+            '7.2.13' => false,
+            '7.2.14' => true,
+        ),
 
         'hrtime' => array(
             '7.2' => false,
@@ -1839,6 +1849,35 @@ class NewFunctionsSniff extends AbstractNewFeatureSniff
             '7.2' => false,
             '7.3' => true,
         ),
+
+        'get_mangled_object_vars' => array(
+            '7.3' => false,
+            '7.4' => true,
+        ),
+        'mb_str_split' => array(
+            '7.3' => false,
+            '7.4' => true,
+        ),
+        'openssl_x509_verify' => array(
+            '7.3' => false,
+            '7.4' => true,
+        ),
+        'password_algos' => array(
+            '7.3' => false,
+            '7.4' => true,
+        ),
+        'pcntl_unshare' => array(
+            '7.3' => false,
+            '7.4' => true,
+        ),
+        'sapi_windows_set_ctrl_handler' => array(
+            '7.3' => false,
+            '7.4' => true,
+        ),
+        'sapi_windows_generate_ctrl_event' => array(
+            '7.3' => false,
+            '7.4' => true,
+        ),
     );
 
 
@@ -1852,7 +1891,7 @@ class NewFunctionsSniff extends AbstractNewFeatureSniff
         // Handle case-insensitivity of function names.
         $this->newFunctions = $this->arrayKeysToLowercase($this->newFunctions);
 
-        return array(T_STRING);
+        return array(\T_STRING);
     }
 
     /**
@@ -1869,18 +1908,18 @@ class NewFunctionsSniff extends AbstractNewFeatureSniff
         $tokens = $phpcsFile->getTokens();
 
         $ignore = array(
-            T_DOUBLE_COLON    => true,
-            T_OBJECT_OPERATOR => true,
-            T_FUNCTION        => true,
-            T_CONST           => true,
+            \T_DOUBLE_COLON    => true,
+            \T_OBJECT_OPERATOR => true,
+            \T_FUNCTION        => true,
+            \T_CONST           => true,
         );
 
-        $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+        $prevToken = $phpcsFile->findPrevious(\T_WHITESPACE, ($stackPtr - 1), null, true);
         if (isset($ignore[$tokens[$prevToken]['code']]) === true) {
             // Not a call to a PHP function.
             return;
 
-        } elseif ($tokens[$prevToken]['code'] === T_NS_SEPARATOR && $tokens[$prevToken - 1]['code'] === T_STRING) {
+        } elseif ($tokens[$prevToken]['code'] === \T_NS_SEPARATOR && $tokens[$prevToken - 1]['code'] === \T_STRING) {
             // Namespaced function.
             return;
         }

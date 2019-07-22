@@ -1,6 +1,6 @@
 <?php
-//phpcs:disable WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 
+// phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
 $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
 $_SERVER['SERVER_NAME']     = '';
 $PHP_SELF                   = '/index.php';

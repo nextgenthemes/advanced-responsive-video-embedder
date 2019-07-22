@@ -86,7 +86,7 @@ class InlineCommentSniff implements Sniff
                 T_REQUIRE_ONCE,
             ];
 
-            if (in_array($tokens[$nextToken]['code'], $ignore) === true) {
+            if (in_array($tokens[$nextToken]['code'], $ignore, true) === true) {
                 return;
             }
 
@@ -133,8 +133,8 @@ class InlineCommentSniff implements Sniff
             }
         }
 
-        // We don't want end of block comments. If the last comment is a closing
-        // curly brace.
+        // We don't want end of block comments. Check if the last token before the
+        // comment is a closing curly brace.
         $previousContent = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
         if ($tokens[$previousContent]['line'] === $tokens[$stackPtr]['line']) {
             if ($tokens[$previousContent]['code'] === T_CLOSE_CURLY_BRACKET) {
@@ -266,7 +266,7 @@ class InlineCommentSniff implements Sniff
                 'or question marks' => '?',
             ];
 
-            if (in_array($commentCloser, $acceptedClosers) === false) {
+            if (in_array($commentCloser, $acceptedClosers, true) === false) {
                 $error = 'Inline comments must end in %s';
                 $ender = '';
                 foreach ($acceptedClosers as $closerName => $symbol) {

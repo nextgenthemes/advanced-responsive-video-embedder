@@ -94,7 +94,7 @@ function arve_get_settings_definitions() {
 
 	$definitions = array(
 		array(
-			'hide_from_settings' => true,
+			'has_option' => false,
 			'attr'  => 'url',
 			'label' => esc_html__( 'URL / Embed Code', ARVE_SLUG ),
 			'type'  => 'text',
@@ -142,7 +142,7 @@ function arve_get_settings_definitions() {
 			'description'  => esc_html__( "Shows a small 'ARVE' link below the videos. Be the most awesome person and help promoting this plugin.", ARVE_SLUG ),
 		),
 		array(
-			'hide_from_settings' => true,
+			'has_option' => false,
 			'attr'  => 'thumbnail',
 			'label' => esc_html__( 'Thumbnail', ARVE_SLUG ),
 			'type'  => 'attachment',
@@ -152,14 +152,14 @@ function arve_get_settings_definitions() {
 			'description' => sprintf( esc_html__( 'Preview image for Lazyload modes, always used for SEO. The Pro Addon is able to get them from %s automatically.', ARVE_SLUG ), $auto_thumbs ),
 		),
 		array(
-			'hide_from_settings' => true,
+			'has_option' => false,
 			'attr'  => 'title',
 			'label' => esc_html__('Title', ARVE_SLUG),
 			'type'  => 'text',
 			'description' => sprintf( esc_html__( 'Used for SEO, is visible on top of thumbnails in Lazyload modes, is used as link text in link-lightbox mode. The Pro Addon is able to get them from %s automatically.', ARVE_SLUG ), $auto_title ),
 		),
 		array(
-			'hide_from_settings' => true,
+			'has_option' => false,
 			'attr'  => 'description',
 			'label' => esc_html__('Description', ARVE_SLUG),
 			'type'  => 'text',
@@ -168,7 +168,7 @@ function arve_get_settings_definitions() {
 			)
 		),
 		array(
-			'hide_from_settings' => true,
+			'has_option' => false,
 			'attr'  => 'upload_date',
 			'label' => esc_html__( 'Upload Date', ARVE_SLUG ),
 			'type'  => 'text',
@@ -177,7 +177,7 @@ function arve_get_settings_definitions() {
 			)
 		),
 		array(
-			'hide_from_settings' => true,
+			'has_option' => false,
 			'attr'  => 'duration',
 			'label' => esc_html__( 'Duration', ARVE_SLUG ),
 			'type'  => 'text',
@@ -198,14 +198,14 @@ function arve_get_settings_definitions() {
 			'description' => esc_html__( 'Autoplay videos in normal mode, has no effect on lazyload modes.', ARVE_SLUG ),
 		),
 		array(
-			'hide_from_sc'   => true,
+			'shortcode' => false,
 			'attr'  => 'video_maxwidth',
 			'label'       => esc_html__('Maximal Width', ARVE_SLUG),
 			'type'        =>  'number',
 			'description' => __( 'Maximal size your videos can be displayed, if set to 0 it will default to your themes <code>$content_width</code>.', ARVE_SLUG ),
 		),
 		array(
-			'hide_from_settings' => true,
+			'has_option' => false,
 			'attr'  => 'maxwidth',
 			'label' => esc_html__('Maximal Width', ARVE_SLUG),
 			'type'  =>  'number',
@@ -214,14 +214,14 @@ function arve_get_settings_definitions() {
 			),
 		),
 		array(
-			'hide_from_sc'   => true,
+			'shortcode' => false,
 			'attr'  => 'align_maxwidth',
 			'label' => esc_html__('Align Maximal Width', ARVE_SLUG),
 			'type'  => 'number',
 			'description' => esc_attr__( 'In px, Needed! Must be 100+ to work.', ARVE_SLUG ),
 		),
 		array(
-			'hide_from_settings' => true,
+			'has_option' => false,
 			'attr'  => 'aspect_ratio',
 			'label' => __('Aspect Ratio', ARVE_SLUG),
 			'type'  => 'text',
@@ -230,7 +230,7 @@ function arve_get_settings_definitions() {
 			),
 		),
 		array(
-			'hide_from_settings' => true,
+			'has_option' => false,
 			'attr'  => 'parameters',
 			'label' => esc_html__('Parameters', ARVE_SLUG ),
 			'type'  => 'text',
@@ -250,14 +250,14 @@ function arve_get_settings_definitions() {
 			),
 		),
 		array(
-			'hide_from_sc' => true,
+			'shortcode'       => false,
 			'attr'  => 'wp_image_cache_time',
 			'label' => esc_html__('Image Cache Time', ARVE_SLUG),
 			'type'  => 'number',
 			'description' => __( '(seconds) This plugin uses WordPress transients to cache video thumbnail URLS. This setting defines how long image URLs from the media Gallery are being stored before running WPs fuctions again to request them. For example: hour - 3600, day - 86400, week - 604800.', ARVE_SLUG ),
 		),
 		array(
-			'hide_from_sc' => true,
+			'shortcode'       => false,
 			'attr'  => 'wp_video_override',
 			'label' => esc_html__( 'Use ARVE for HTML5 video embeds', ARVE_SLUG ),
 			'type'  => 'select',
@@ -274,7 +274,7 @@ function arve_get_settings_definitions() {
 			'description' => __( "controlsList attribute on &lt;video&gt; for example use <code>nodownload nofullscreen noremoteplayback</code> to hide the download and the fullscreen button on the chrome HTML5 video player and disable remote playback.", ARVE_SLUG ),
 		),
 		array(
-			'hide_from_settings' => true,
+			'has_option' => false,
 			'attr'  => 'mp4',
 			'label' => esc_html__('mp4 file', ARVE_SLUG),
 			'type'  => 'url',
@@ -287,7 +287,7 @@ function arve_get_settings_definitions() {
 			),
 		),
 		array(
-			'hide_from_settings' => true,
+			'has_option' => false,
 			'attr'  => 'webm',
 			'label' => esc_html__('webm file', ARVE_SLUG),
 			'type'  => 'url',
@@ -300,7 +300,7 @@ function arve_get_settings_definitions() {
 			),
 		),
 		array(
-			'hide_from_settings' => true,
+			'has_option' => false,
 			'attr'  => 'ogv',
 			'label' => esc_html__('ogv file', ARVE_SLUG),
 			'type'  => 'url',
@@ -313,7 +313,7 @@ function arve_get_settings_definitions() {
 			),
 		),
 		array(
-			'hide_from_settings' => true,
+			'has_option' => false,
 			'attr'  => 'controls',
 			'label' => esc_html__( 'Show Controls?', ARVE_SLUG ),
 			'type'  => 'select',
@@ -324,7 +324,7 @@ function arve_get_settings_definitions() {
 			'description' => esc_html__( 'Show controls on HTML5 video.', ARVE_SLUG ),
 		),
 		array(
-			'hide_from_settings' => true,
+			'has_option' => false,
 			'attr'  => 'loop',
 			'label' => esc_html__( 'Loop?', ARVE_SLUG ),
 			'type'  => 'select',
@@ -335,7 +335,7 @@ function arve_get_settings_definitions() {
 			'description' => esc_html__( 'Loop HTML5 video.', ARVE_SLUG ),
 		),
 		array(
-			'hide_from_settings' => true,
+			'has_option' => false,
 			'attr'               => 'muted',
 			'label'              => esc_html__( 'Mute?', ARVE_SLUG ),
 			'type'               => 'select',
@@ -346,7 +346,7 @@ function arve_get_settings_definitions() {
 			'description'        => esc_html__( 'Mute HTML5 video.', ARVE_SLUG ),
 		),
 		array(
-			'hide_from_sc' => true,
+			'shortcode'       => false,
 			'attr'               => 'iframe_flash',
 			'label'              => esc_html__( 'Allow Flash for general iframe?', ARVE_SLUG ),
 			'type'               => 'select',
@@ -360,7 +360,7 @@ function arve_get_settings_definitions() {
 			),
 		),
 		array(
-			'hide_from_sc' => true,
+			'shortcode'       => false,
 			'attr'               => 'always_enqueue_assets',
 			'label'              => esc_html__( 'Assent loading', ARVE_SLUG ),
 			'type'               => 'select',
@@ -374,7 +374,7 @@ function arve_get_settings_definitions() {
 			),
 		),
 		array(
-			'hide_from_sc' => true,
+			'shortcode'       => false,
 			'attr'               => 'youtube_nocookie',
 			'label'              => esc_html__( 'Use youtube-nocookie.com url?', ARVE_SLUG ),
 			'type'               => 'select',
@@ -385,7 +385,7 @@ function arve_get_settings_definitions() {
 			'description'        => esc_html__( 'Privacy enhanced mode, will NOT disable cookies but only sets them when a user starts to play a video. There is currently a youtube bug that opens highlighed video boxes with a wrong -nocookie.com url so you need to disble this if you need those.' ),
 		),
 		array(
-			'hide_from_sc'       => true,
+			'shortcode'       => false,
 			'attr'               => 'vimeo_api_token',
 			'label'              => esc_html__( 'Video API Token', ARVE_SLUG ),
 			'type'               => 'text',
@@ -396,7 +396,15 @@ function arve_get_settings_definitions() {
 		),
 	);
 
-	$definitions = apply_filters( 'arve_settings_definitions', $definitions );
+	foreach( $definitions as $k => $v ) {
+
+		if ( ! isset( $v['shortcode'] ) ) {
+			$definitions[ $k ]['shortcode'] = true;
+		}
+		if ( ! isset( $v['has_option'] ) ) {
+			$definitions[ $k ]['has_option'] = true;
+		}
+	}
 
 	return $definitions;
 }
@@ -1292,49 +1300,4 @@ function arve_attr( $attr = array() ) {
 
 function arve_esc_url( $url ) {
 	return str_replace( 'jukebox?list%5B0%5D', 'jukebox?list[]', esc_url( $url ) );
-}
-
-function arve_starts_with( $haystack, $needle ) {
-	// search backwards starting from haystack length characters from the end
-	return $needle === "" || strrpos( $haystack, $needle, -strlen( $haystack ) ) !== false;
-}
-
-function arve_ends_with( $haystack, $needle ) {
-	// search forward starting from end minus needle length characters
-	return $needle === "" || ( ( $temp = strlen($haystack) - strlen( $needle ) ) >= 0 && strpos( $haystack, $needle, $temp ) !== false );
-}
-
-function arve_contains( $haystack, $needle ) {
-  return strpos( $haystack, $needle ) !== false;
-}
-
-function arve_register_asset( $args ) {
-
-	$defaults = array(
-		'handle'     => null,
-		'src'        => null,
-		'deps'       => array(),
-		'in_footer'  => true,
-		'media'      => null,
-		'ver'        => ARVE_VERSION,
-		'automin'    => false,
-	);
-
-	$args = wp_parse_args( $args, $defaults );
-
-	if ( $args['automin'] && ! defined( 'WP_DEBUG' ) && ! WP_DEBUG ) {
-
-		$args['src'] = str_replace( '.css', '.min.css', $args['src'] );
-		$args['src'] = str_replace( '.js',  '.min.js',  $args['src'] );
-	}
-
-	if ( arve_ends_with( $args['src'], '.css' ) ) {
-		wp_register_style( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['media'] );
-	} else {
-		wp_register_script( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['in_footer'] );
-	}
-}
-
-function arve_get_min_suffix() {
-	return ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? '' : '.min';
 }

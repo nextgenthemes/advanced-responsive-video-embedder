@@ -41,8 +41,8 @@ class ForbiddenParameterShadowSuperGlobalsSniff extends Sniff
     public function register()
     {
         return array(
-            T_FUNCTION,
-            T_CLOSURE,
+            \T_FUNCTION,
+            \T_CLOSURE,
         );
     }
 
@@ -62,7 +62,7 @@ class ForbiddenParameterShadowSuperGlobalsSniff extends Sniff
 
         // Get all parameters from function signature.
         $parameters = PHPCSHelper::getMethodParameters($phpcsFile, $stackPtr);
-        if (empty($parameters) || is_array($parameters) === false) {
+        if (empty($parameters) || \is_array($parameters) === false) {
             return;
         }
 

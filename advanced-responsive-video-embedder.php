@@ -62,7 +62,7 @@ function init() {
 
 	require_once __DIR__ . '/public/Admin/functions-admin.php';
 
-	# Public hooks
+	// Public hooks
 	add_action( 'init',                        __NAMESPACE__ . '\add_oembed_providers' );
 	add_action( 'init',                        __NAMESPACE__ . '\register_gb_block' );
 	add_action( 'plugins_loaded',              __NAMESPACE__ . '\create_shortcodes', 999 );
@@ -76,14 +76,16 @@ function init() {
 
 	foreach ( [
 		'validate'                         => -99,
+		'deprecated_fallbacks'             => -90,
 		// 0
 		'detect_provider_and_id_from_url'  => -10,
 		'detect_html5'                     => -10,
 		'detect_youtube_playlist'          => -10,
+		'default_aspect_ratio'             => -10,
 		// 0
 		'iframe_fallback'                  => 0,
+		'aspect_ratio_gcd'                 => 0,
 		// 10
-		'default_aspect_ratio'             => 10,
 		'get_media_gallery_thumbnail'      => 10,
 		'get_media_gallery_video'          => 10,
 		'liveleak_id_fix'                  => 10,
@@ -116,7 +118,7 @@ function init() {
 	add_action( 'wp_dashboard_setup',    __NAMESPACE__ . '\add_dashboard_widget' );
 	add_filter( 'mce_css',               __NAMESPACE__ . '\mce_css' );
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), __NAMESPACE__ . '\add_action_links' );
-}
+}//end init()
 
 function url( $path ) {
 	return plugins_url( $path, __FILE__ );

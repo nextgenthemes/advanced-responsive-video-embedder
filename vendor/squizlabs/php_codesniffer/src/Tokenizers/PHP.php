@@ -266,7 +266,7 @@ class PHP extends Tokenizer
      * A list of tokens that end the scope.
      *
      * This array is just a unique collection of the end tokens
-     * from the _scopeOpeners array. The data is duplicated here to
+     * from the scopeOpeners array. The data is duplicated here to
      * save time during parsing of the file.
      *
      * @var array
@@ -504,7 +504,9 @@ class PHP extends Tokenizer
                 echo ": $type => $content";
             }//end if
 
-            if ($newStackPtr > 0 && $finalTokens[($newStackPtr - 1)]['code'] !== T_WHITESPACE) {
+            if ($newStackPtr > 0
+                && isset(Util\Tokens::$emptyTokens[$finalTokens[($newStackPtr - 1)]['code']]) === false
+            ) {
                 $lastNotEmptyToken = ($newStackPtr - 1);
             }
 
@@ -782,8 +784,8 @@ class PHP extends Tokenizer
                 && strtolower($tokens[($stackPtr + 2)][1]) === 'from'
             ) {
                 // Could be multi-line, so just the token stack.
-                $token[0] = T_YIELD_FROM;
-                $token[1] = $token[1].$tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1];
+                $token[0]  = T_YIELD_FROM;
+                $token[1] .= $tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1];
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     for ($i = ($stackPtr + 1); $i <= ($stackPtr + 2); $i++) {
@@ -816,8 +818,8 @@ class PHP extends Tokenizer
                     && strtolower($tokens[($stackPtr + 2)][1]) === 'from'
                 ) {
                     // Could be multi-line, so just just the token stack.
-                    $token[0] = T_YIELD_FROM;
-                    $token[1] = $token[1].$tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1];
+                    $token[0]  = T_YIELD_FROM;
+                    $token[1] .= $tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1];
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         for ($i = ($stackPtr + 1); $i <= ($stackPtr + 2); $i++) {
@@ -1001,7 +1003,7 @@ class PHP extends Tokenizer
                         $newToken['code'] = T_NULLABLE;
                         $newToken['type'] = 'T_NULLABLE';
                         break;
-                    } else if (in_array($tokenType, [T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO, '=', '{', ';']) === true) {
+                    } else if (in_array($tokenType, [T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO, '=', '{', ';'], true) === true) {
                         $newToken['code'] = T_INLINE_THEN;
                         $newToken['type'] = 'T_INLINE_THEN';
 
@@ -1125,7 +1127,7 @@ class PHP extends Tokenizer
                             if (is_array($tokens[$x]) === true
                                 && isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === true
                             ) {
-                                // Whitespace or coments before the return type.
+                                // Whitespace or comments before the return type.
                                 continue;
                             }
 
@@ -1281,6 +1283,7 @@ class PHP extends Tokenizer
                         T_NAMESPACE            => true,
                         T_PAAMAYIM_NEKUDOTAYIM => true,
                     ];
+
                     if (isset($context[$finalTokens[$lastNotEmptyToken]['code']]) === true) {
                         // Special case for syntax like: return new self
                         // where self should not be a string.

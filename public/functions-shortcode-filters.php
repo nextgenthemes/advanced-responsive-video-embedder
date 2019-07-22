@@ -5,6 +5,11 @@ use function Nextgenthemes\Utils\attr;
 use function Nextgenthemes\Utils\starts_with;
 use function Nextgenthemes\Utils\ends_with;
 
+function sc_filter_deprecated_fallbacks( array $a ) {
+
+	return $a;
+}
+
 // phpcs:disable Generic.Metrics.CyclomaticComplexity.MaxExceeded
 function sc_filter_iframe_src_autoplay_query( array $a ) {
 
@@ -53,6 +58,20 @@ function sc_filter_iframe_src_autoplay_query( array $a ) {
 			$on  = add_query_arg( 'player_autoplay', 'true',  $a['src'] );
 			$off = add_query_arg( 'player_autoplay', 'false', $a['src'] );
 			break;
+		case 'NOT_USED_iframe':
+			$on  = add_query_arg( [
+				'ap'               => '1',
+				'autoplay'         => '1',
+				'autoStart'        => 'true',
+				'player_autoStart' => 'true',
+			], $a['src'] );
+			$off = add_query_arg( [
+				'ap'               => '0',
+				'autoplay'         => '0',
+				'autoStart'        => 'false',
+				'player_autoStart' => 'false',
+			], $a['src'] );
+			break;
 		default:
 			// Do nothing for providers that to not support autoplay or fail with parameters
 			$on  = $a['src'];
@@ -67,24 +86,6 @@ function sc_filter_iframe_src_autoplay_query( array $a ) {
 	}
 
 	return $a;
-
-	/*
-	case 'iframe':
-		# We are spamming all kinds of autoplay parameters here in hope of a effect
-		$on  = add_query_arg( [
-			'ap'               => '1',
-			'autoplay'         => '1',
-			'autoStart'        => 'true',
-			'player_autoStart' => 'true',
-		], $a['src'] );
-		$off = add_query_arg( [
-			'ap'               => '0',
-			'autoplay'         => '0',
-			'autoStart'        => 'false',
-			'player_autoStart' => 'false',
-		], $a['src'] );
-		break;
-	*/
 }
 // phpcs:enable
 
@@ -186,6 +187,16 @@ function sc_filter_default_aspect_ratio( array $a ) {
 			$a['aspect_ratio'] = '16:9';
 		}
 	}
+
+	return $a;
+}
+
+function sc_filter_aspect_ratio_gcd( array $a ) {
+
+	$ar  = explode( ':', $a['aspect_ratio'] );
+	$gcd = gcd( $ar[0], $ar[1] );
+
+	$a['aspect_ratio'] = $ar[0] / $gcd . ':' . $ar[1] / $gcd;
 
 	return $a;
 }
@@ -319,10 +330,7 @@ function sc_filter_validate( array $a ) {
 		if ( null === $value || 'oembed_data' === $key || 'parameters' === $key ) {
 			continue;
 		}
-
-		if ( ! is_string( $value ) ) {
-			//$a = add_error( $a, 'input-type-error', "Attribute <code>$key</code> must be a string" );
-		}
+		// TODO check for strings
 	}
 
 	if ( null !== $a['oembed_data'] && ! is_object( $a['oembed_data'] ) ) {
@@ -334,17 +342,17 @@ function sc_filter_validate( array $a ) {
 	}
 
 	foreach ( bool_shortcode_args() as $boolattr ) {
-		$a[ $boolattr ] = validate_bool( $a[ $boolattr ], $boolattr );
+		$a = validate_bool( $a, $boolattr );
 	};
-	unset( $bool_attr );
+	unset( $boolattr );
 
 	foreach ( [ 'url', 'src', 'mp4', 'm4v', 'ogv', 'webm' ] as $urlattr ) {
-		$a[ $urlattr ] = validate_url( $a[ $urlattr ], $urlattr );
+		$a = validate_url( $a, $urlattr );
 	};
 	unset( $urlattr );
 
 	$a = validate_align( $a );
-	$a['aspect_ratio'] = validate_aspect_ratio( $a['aspect_ratio'] );
+	$a = validate_aspect_ratio( $a );
 
 	return $a;
 }
@@ -655,14 +663,6 @@ function sc_filter_detect_html5( array $a ) {
 			}
 
 			$a['video_src'] = $a['url'];
-
-			/*
-			$parse_url = parse_url( $a['url'] );
-			$pathinfo  = pathinfo( $parse_url['path'] );
-
-			$url_ext         = $pathinfo['extension'];
-			$url_without_ext = $parse_url['scheme'] . '://' . $parse_url['host'] . $path_without_ext;
-			*/
 		}
 	endforeach;
 
