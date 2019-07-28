@@ -27,4 +27,4 @@ before_script:
 
 script:
   - phpenv config-rm xdebug.ini
-  - ./vendor/bin/phpunit
+  - $HOME/nextgenthemes/advanced-responsive-video-embedder/vendor/bin/phpunit
