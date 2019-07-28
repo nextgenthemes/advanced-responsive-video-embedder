@@ -13,6 +13,15 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$attr = array( 'url' => 'https://example.com' );
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
+		$this->assertContains(
+			'sandbox="',
+			arve_shortcode_arve( $attr ),
+			$attr['url']
+		);
+
+		$attr['sandbox'] = 'n';
+
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
 		$this->assertNotContains(
 			'sandbox="',
 			arve_shortcode_arve( $attr ),
@@ -268,16 +277,16 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		foreach( $properties as $host_id => $host ) :
 
 		    if ( empty( $host['regex'] ) ) {
-				continue;
+					continue;
 		    }
 
 		    foreach( $host['tests'] as $test ) {
 
-				$this->$current_test;
+					$this->$current_test;
 
-				shortcode_arve( array(
-					'url' => $test['url']
-				) );
+					shortcode_arve( array(
+						'url' => $test['url']
+					) );
 	    	}
 
 		endforeach;
