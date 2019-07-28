@@ -41,41 +41,41 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 	$input_atts = (array) $input_atts;
 
 	$pairs = array(
-		'align'            => $options['align'],
-		'arve_link'        => arve_bool_to_shortcode_string( $options['promote_link'] ),
-		'aspect_ratio'     => null,
-		'autoplay'         => arve_bool_to_shortcode_string( $options['autoplay'] ),
-		'description'      => null,
-		'duration'         => null,
-		'sandbox'          => 'y',
-		'iframe_name'      => null,
-		'maxwidth'         => (string) arve_default_maxwidth(),
-		'mode'             => $options['mode'],
-		'parameters'       => null,
-		'src'              => null, // Just a alias for url to make it simple
-		'thumbnail'        => null,
-		'title'            => null,
-		'upload_date'      => null,
+		'align'        => $options['align'],
+		'arve_link'    => arve_bool_to_shortcode_string( $options['promote_link'] ),
+		'aspect_ratio' => null,
+		'autoplay'     => arve_bool_to_shortcode_string( $options['autoplay'] ),
+		'description'  => null,
+		'duration'     => null,
+		'sandbox'      => 'y',
+		'iframe_name'  => null,
+		'maxwidth'     => (string) arve_default_maxwidth(),
+		'mode'         => $options['mode'],
+		'parameters'   => null,
+		'src'          => null, // Just a alias for url to make it simple
+		'thumbnail'    => null,
+		'title'        => null,
+		'upload_date'  => null,
 		// <video>
-		'm4v'              => null,
-		'mp4'              => null,
-		'ogv'              => null,
-		'webm'             => null,
-		'preload'          => 'metadata',
-		'playsinline'      => null,
-		'muted'            => null,
-		'controls'         => 'y',
-		'controlslist'     => empty( $options['controlslist'] ) ? null : (string) $options['controlslist'],
-		'loop'             => 'n',
+		'm4v'          => null,
+		'mp4'          => null,
+		'ogv'          => null,
+		'webm'         => null,
+		'preload'      => 'metadata',
+		'playsinline'  => null,
+		'muted'        => null,
+		'controls'     => 'y',
+		'controlslist' => empty( $options['controlslist'] ) ? null : (string) $options['controlslist'],
+		'loop'         => 'n',
 		// TED only
-		'lang'             => null,
+		'lang'         => null,
 		// Vimeo only
-		'start'            => null,
+		'start'        => null,
 		// Old Shortcodes / URL embeds
-		'id'               => null,
-		'provider'         => null,
+		'id'           => null,
+		'provider'     => null,
 		// deprecated, title should be used
-		'link_text'        => null,
+		'link_text'    => null,
 	);
 
 	for ( $n = 1; $n <= ARVE_NUM_TRACKS; $n++ ) {

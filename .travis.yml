@@ -6,6 +6,7 @@ php:
   - 7.0
   - 7.1
   - 7.2
+  - 7.3
 env:
   matrix:
     - WP_VERSION=latest WP_MULTISITE=0
@@ -18,15 +19,12 @@ matrix:
     - php: 5.3
       env: WP_VERSION=latest WP_MULTISITE=0
       dist: precise
+
 before_script:
   - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
-  - |
-    if [[ ${TRAVIS_PHP_VERSION:0:2} == "7." ]]; then
-      composer global require "phpunit/phpunit=5.7.*"
-    else
-      composer global require "phpunit/phpunit=4.8.*"
-    fi
+  - composer install
+
 script:
   - phpenv config-rm xdebug.ini
-  - phpunit
+  - vendor/bin/phpunit
