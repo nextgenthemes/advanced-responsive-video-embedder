@@ -568,7 +568,6 @@ function arve_validate_options_main( $input ) {
 
 	$output['always_enqueue_assets'] = ( 'yes' == $input['always_enqueue_assets'] ) ? true : false;
 	$output['autoplay']              = ( 'yes' == $input['autoplay'] ) ? true : false;
-	$output['iframe_flash']          = ( 'yes' == $input['iframe_flash'] ) ? true : false;
 	$output['promote_link']          = ( 'yes' == $input['promote_link'] ) ? true : false;
 	$output['wp_video_override']     = ( 'yes' == $input['wp_video_override'] ) ? true : false;
 	$output['youtube_nocookie']      = ( 'yes' == $input['youtube_nocookie'] ) ? true : false;

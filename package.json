@@ -8,7 +8,7 @@
     "readme-concat": "cat readme/*.md CHANGELOG.md > readme.md; cp readme.md readme.txt",
     "js": "uglifyjs --compress --mangle --comments '/^!/' --output public/arve.min.js public/arve.js",
     "css": "cleancss --level 1 --output public/arve.min.css public/arve.css",
-    "build": "run-p css js readme-concat readme-markdown"
+    "build": "run-p css js readme-markdown"
   },
   "devDependencies": {
     "clean-css-cli": "^4.1.6",

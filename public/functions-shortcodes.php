@@ -47,7 +47,7 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 		'autoplay'         => arve_bool_to_shortcode_string( $options['autoplay'] ),
 		'description'      => null,
 		'duration'         => null,
-		'disable_flash'    => null,
+		'disable_sandbox'  => null,
 		'iframe_name'      => null,
 		'maxwidth'         => (string) arve_default_maxwidth(),
 		'mode'             => $options['mode'],
@@ -165,7 +165,6 @@ function arve_shortcode_arve_supported() {
 	$out .= '<th>Provider</th>';
 	$out .= '<th>Requires<br>embed code</th>';
 	$out .= '<th>SSL</th>';
-	$out .= '<th>Requires Flash</th>';
 	$out .= '<th>Auto Thumbnail<br>(Pro Addon)</th>';
 	$out .= '<th>Auto Title<br>(Pro Addon)</th>';
 	$out .= '</tr>';
@@ -187,7 +186,6 @@ function arve_shortcode_arve_supported() {
 		$out .= sprintf( '<td>%s</td>', esc_html( $values['name'] ) );
 		$out .= sprintf( '<td>%s</td>', ( isset( $values['requires_src'] ) && $values['requires_src'] ) ? '&#x2713;' : '' );
 		$out .= sprintf( '<td>%s</td>', ( isset( $values['embed_url'] ) && arve_starts_with( $values['embed_url'], 'https' ) ) ? '&#x2713;' : '' );
-		$out .= sprintf( '<td>%s</td>', ! empty( $values['requires_flash'] ) ? '&#x2713;' : '' );
 		$out .= sprintf( '<td>%s</td>', ( isset( $values['auto_thumbnail'] ) && $values['auto_thumbnail'] ) ? '&#x2713;' : '' );
 		$out .= sprintf( '<td>%s</td>', ( isset( $values['auto_title'] )     && $values['auto_title'] )     ? '&#x2713;' : '' );
 		$out .= '</tr>';

@@ -484,7 +484,6 @@ function arve_get_host_properties() {
 			'embed_url'      => 'http://break.com/embed/%s',
 			'default_params' => 'embed=1',
 			'auto_thumbnail' => false,
-			'requires_flash' => true,
 			'tests' => array(
 				array(
 					'url' => 'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591-test',
@@ -840,7 +839,6 @@ function arve_get_host_properties() {
 			'name'           => 'RuTube.ru',
 			'regex'          => $s . 'rutube\.ru/play/embed/(?<id>[0-9]+)',
 			'embed_url'      => 'https://rutube.ru/play/embed/%s',
-			'requires_flash' => true,
 			'tests' => array(
 				array(
 					'url' => 'https://rutube.ru/play/embed/9822149',
@@ -866,7 +864,6 @@ function arve_get_host_properties() {
 			'embed_url'      => 'https://scache.vevo.com/assets/html/embed.html?video=%s',
 			'default_params' => 'playlist=false&playerType=embedded&env=0',
 			'auto_thumbnail' => false,
-			'requires_flash' => true,
 			'tests' => array(
 				array(
 					'url'  => 'https://www.vevo.com/watch/the-offspring/the-kids-arent-alright/USSM20100649',
@@ -896,7 +893,6 @@ function arve_get_host_properties() {
 			'name'      => 'vidspot.net',
 			'regex'     => $s . 'vidspot\.net/(embed-)?(?<id>[a-z0-9]+)',
 			'embed_url' => 'http://vidspot.net/embed-%s.html',
-			'requires_flash' => true,
 			'tests' => array(
 				array( 'url' => 'http://vidspot.net/285wf9uk3rry', 'id' => '285wf9uk3rry' ),
 				array( 'url' => 'http://vidspot.net/embed-285wf9uk3rry.html', 'id' => '285wf9uk3rry' ),
@@ -977,7 +973,6 @@ function arve_get_host_properties() {
 			'regex'          => $s . 'xtube\.com/watch\.php\?v=(?<id>[a-z0-9_\-]+)',
 			'embed_url'      => 'http://www.xtube.com/embedded/user/play.php?v=%s',
 			'auto_thumbnail' => false,
-			'requires_flash' => true,
 			'tests' => array(
 				array( 'url' => 'http://www.xtube.com/watch.php?v=1234', 'id' => 1234 ),
 			),
@@ -988,7 +983,6 @@ function arve_get_host_properties() {
 			'default_params' => 'format=embed',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
-			'requires_flash' => true,
 			'tests' => array(
 				array(
 					'url' => 'https://de.sports.yahoo.com/video/krasse-vorher-nachher-bilder-mann-094957265.html?format=embed&player_autoplay=false',
@@ -1005,7 +999,6 @@ function arve_get_host_properties() {
 			'embed_url'      => 'http://player.youku.com/embed/%s',
 			'auto_thumbnail' => false,
 			'aspect_ratio'   => '450:292.5',
-			'requires_flash' => true,
 			# <iframe height=498 width=510 src="http://player.youku.com/embed/XMTUyODYwOTc4OA==" frameborder=0 allowfullscreen></iframe>
 			'tests' => array(
 				array(
@@ -1240,7 +1233,6 @@ function arve_get_host_properties() {
 			'embed_url'      => '%s',
 			'default_params' => '',
 			'auto_thumbnail' => false,
-			'requires_flash' => true,
 			'tests' => array(
 				array( 'url' => 'https://example.com/', 'id' => 'https://example.com/' ),
 			),
@@ -1257,9 +1249,6 @@ function arve_get_host_properties() {
 		}
 		if( ! isset( $value['aspect_ratio'] ) ) {
 			$properties[ $key ]['aspect_ratio'] = '16:9';
-		}
-		if( empty( $value['requires_flash'] ) ) {
-			$properties[ $key ]['requires_flash'] = false;
 		}
 	}
 

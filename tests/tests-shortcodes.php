@@ -314,20 +314,21 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertEquals( $atts['id'] );
 	}
 
-	public function test_disable_flash() {
+	public function test_disable_sandbox() {
 
 		$attr = array( 'url' => 'https://example.com' );
-		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr) );
-		$this->assertRegExp( '#<iframe .*src="https://example\.com#', arve_shortcode_arve( $attr) );
-		$this->assertContains( 'data-provider="iframe"', arve_shortcode_arve( $attr ) );
-		$this->assertNotContains( 'sandbox="', arve_shortcode_arve( $attr ) );
-
-		$attr['disable_flash'] = 'y';
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr) );
 		$this->assertRegExp( '#<iframe .*src="https://example\.com#', arve_shortcode_arve( $attr) );
 		$this->assertContains( 'data-provider="iframe"', arve_shortcode_arve( $attr ) );
 		$this->assertContains( 'sandbox="', arve_shortcode_arve( $attr ) );
+
+		$attr['sandbox'] = 'n';
+
+		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr) );
+		$this->assertRegExp( '#<iframe .*src="https://example\.com#', arve_shortcode_arve( $attr) );
+		$this->assertContains( 'data-provider="iframe"', arve_shortcode_arve( $attr ) );
+		$this->assertNotContains( 'sandbox="', arve_shortcode_arve( $attr ) );
 	}
 
 	public function test_dropbox_html5() {
