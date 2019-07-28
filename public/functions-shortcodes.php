@@ -47,7 +47,7 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 		'autoplay'         => arve_bool_to_shortcode_string( $options['autoplay'] ),
 		'description'      => null,
 		'duration'         => null,
-		'disable_sandbox'  => null,
+		'sandbox'          => 'y',
 		'iframe_name'      => null,
 		'maxwidth'         => (string) arve_default_maxwidth(),
 		'mode'             => $options['mode'],
