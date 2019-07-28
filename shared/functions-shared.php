@@ -15,7 +15,6 @@ function arve_get_options_defaults( $section ) {
 		'wp_video_override'     => true,
 		'controlslist'          => 'nodownload',
 		'vimeo_api_token'       => '',
-		'iframe_flash'          => true,
 		'youtube_nocookie'      => true,
 	);
 
@@ -344,20 +343,6 @@ function arve_get_settings_definitions() {
 				'yes'            => esc_html__( 'Yes', ARVE_SLUG ),
 			),
 			'description'        => esc_html__( 'Mute HTML5 video.', ARVE_SLUG ),
-		),
-		array(
-			'hide_from_sc' => true,
-			'attr'               => 'iframe_flash',
-			'label'              => esc_html__( 'Allow Flash for general iframe?', ARVE_SLUG ),
-			'type'               => 'select',
-			'options'            => array(
-				'yes'             => esc_html__( 'Allow Flash', ARVE_SLUG ),
-				'no'              => esc_html__( 'Do not allow Flash', ARVE_SLUG ),
-			),
-			'description'        => sprintf(
-				__( 'It is recommented to have this disabled if you not embed videos from a <a href="%s">not listed provider</a> that still requires flash and is not listed here. Disable flash will make general iframe embeds more secure, prevents evil redirection from within the iframe. This also makes the Pro Addon\'s \'Disable Links\' feature possible for unlisted providers. Note you can still put <code>disable_flash="yes/no"</code> on individual shortcodes to overwrite this if needed.', ARVE_SLUG ),
-				'https://nextgenthemes.com/plugins/arve-pro/#support-table'
-			),
 		),
 		array(
 			'hide_from_sc' => true,

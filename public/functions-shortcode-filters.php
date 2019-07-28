@@ -125,7 +125,7 @@ function arve_sc_filter_validate( $a ) {
 	$a['arve_link']     = arve_validate_bool( $a['arve_link'], 'arve_link' );
 	$a['loop']          = arve_validate_bool( $a['loop'], 'loop' );
 	$a['controls']      = arve_validate_bool( $a['controls'], 'controls' );
-	$a['disable_flash'] = arve_validate_bool( $a['disable_flash'], 'disable_flash' );
+	$a['sandbox']       = arve_validate_bool( $a['sandbox'], 'sandbox' );
 	$a['muted']         = arve_validate_bool( $a['muted'], 'muted' );
 	$a['playsinline']   = arve_validate_bool( $a['playsinline'], 'playsinline' );
 

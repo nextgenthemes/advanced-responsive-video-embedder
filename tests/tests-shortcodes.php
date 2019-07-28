@@ -20,41 +20,15 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		);
 	}
 
-	public function test_sandbox2() {
-		$attr = array( 'url' => 'https://example.com', 'disable_flash' => 'n' );
-
-		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
-		$this->assertContains(
-			'sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"',
-			arve_shortcode_arve( $attr ),
-			$attr['url']
-		);
-	}
-
-	public function test_sandbox3() {
-		$this->change_option( 'iframe_flash', false );
-
-		$attr = array( 'url' => 'https://example.com' );
-
-		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
-		$this->assertContains(
-			'sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"',
-			arve_shortcode_arve( $attr ),
-			$attr['url']
-		);
-	}
-
 	public function test_sandbox_vimeo() {
-		/*
 		$attr = array( 'url' => 'https://vimeo.com/214300845' );
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
-		$this->assertContains(
-			'sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-forms"',
+		$this->assertNotContains(
+			'sandbox="',
 			arve_shortcode_arve( $attr ),
 			$attr['url']
 		);
-		*/
 	}
 
 	public function test_thumbnails() {
