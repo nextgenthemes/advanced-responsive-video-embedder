@@ -27,4 +27,5 @@ before_script:
 
 script:
   - phpenv config-rm xdebug.ini
+  - echo "$PWD"
   - vendor/bin/phpunit
