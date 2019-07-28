@@ -95,6 +95,8 @@ function print_integer_field( $key, $option ) {
 }
 
 function print_select_field( $key, $option ) {
+
+	unset( $option['options'][''] );
 	?>
 	<p>
 		<label>

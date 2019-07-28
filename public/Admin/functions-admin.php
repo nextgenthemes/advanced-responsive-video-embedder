@@ -45,7 +45,10 @@ function display_pro_ad() {
 
 	$inst = (int) get_option( 'arve_install_date' );
 
-	if ( ! current_user_can( 'update_plugins' ) || ! apply_filters( 'arve_pro_ad', true ) || current_time( 'timestamp' ) < strtotime( '+1 week', $inst ) ) {
+	if ( ! current_user_can( 'update_plugins' )
+		|| ! apply_filters( 'nextgenthemes/arve/pro_ad', true )
+		|| current_time( 'timestamp' ) < strtotime( '+1 week', $inst )
+	) {
 		return false;
 	}
 

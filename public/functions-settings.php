@@ -309,9 +309,15 @@ function all_settings() {
 		'mode'                  => [
 			'tag'         => 'pro',
 			'default'     => 'normal',
-			'label'       => esc_html__( 'Mode', 'advanced-responsive-video-embedder' ),
+			'label'       => esc_html__( 'Mode (Pro)', 'advanced-responsive-video-embedder' ),
 			'type'        => 'select',
-			'options'     => [ '' => esc_html__( 'Default (settings page)', 'advanced-responsive-video-embedder' ) ] + get_supported_modes(),
+			'options'     => [
+				''                  => esc_html__( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
+				'normal'            => esc_html__( 'Normal', 'advanced-responsive-video-embedder' ),
+				'lazyload'          => esc_html__( 'Lazyload', 'advanced-responsive-video-embedder' ),
+				'lazyload-lightbox' => esc_html__( 'Lazyload - Lightbox', 'advanced-responsive-video-embedder' ),
+				'link-lightbox'     => esc_html__( 'Link - Lightbox', 'advanced-responsive-video-embedder' )
+			] + apply_filters( 'nextgenthemes/arve/modes', [] ),
 			'description' => sprintf(
 				// Translators: current setting value
 				__( 'For Lazyload, Lightbox and Link mode check out the <a href="%s">Pro Addon</a>.', 'advanced-responsive-video-embedder' ),
@@ -370,7 +376,6 @@ function all_settings() {
 		'disable_links'         => [
 			'tag'         => 'pro',
 			'default'     => false,
-			'shortcode'   => false,
 			'label'       => esc_html__( 'Disable links', 'advanced-responsive-video-embedder' ),
 			'type'        => 'bool+default',
 			'description' => __( 'Prevent ARVE embeds to open new popups/tabs/windows from links inside video embeds. Note this also breaks all kinds of sharing functionality and the like. (Pro Addon)', 'advanced-responsive-video-embedder' ),
