@@ -1,27 +1,27 @@
 /* stylelint-disable selector-max-id */
 
-#arve .arve-wrapper,
-#tinymce .arve-wrapper {
+#arve .arve,
+#tinymce .arve {
   display: block;
   width: 100%;
   margin-bottom: 1.5em;
 }
 
-#arve .arve-wrapper::after,
-#tinymce .arve-wrapper::after {
+#arve .arve::after,
+#tinymce .arve::after {
   display: table;
   clear: both;
   content: "";
 }
 
-#arve .arve-wrapper.alignleft,
-#tinymce .arve-wrapper.alignleft {
+#arve .arve.alignleft,
+#tinymce .arve.alignleft {
   margin-top: 0.4em;
   margin-right: 1.5em;
 }
 
-#arve .arve-wrapper.alignright,
-#tinymce .arve-wrapper.alignright {
+#arve .arve.alignright,
+#tinymce .arve.alignright {
   margin-top: 0.4em;
   margin-left: 1.5em;
 }

@@ -311,13 +311,9 @@ function all_settings() {
 			'default'     => 'normal',
 			'label'       => esc_html__( 'Mode (Pro)', 'advanced-responsive-video-embedder' ),
 			'type'        => 'select',
-			'options'     => [
-				''                  => esc_html__( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
-				'normal'            => esc_html__( 'Normal', 'advanced-responsive-video-embedder' ),
-				'lazyload'          => esc_html__( 'Lazyload', 'advanced-responsive-video-embedder' ),
-				'lazyload-lightbox' => esc_html__( 'Lazyload - Lightbox', 'advanced-responsive-video-embedder' ),
-				'link-lightbox'     => esc_html__( 'Link - Lightbox', 'advanced-responsive-video-embedder' )
-			] + apply_filters( 'nextgenthemes/arve/modes', [] ),
+			'options'     =>
+				[ '' => esc_html__( 'Default (settings page)', 'advanced-responsive-video-embedder' ) ]
+				+ get_supported_modes(),
 			'description' => sprintf(
 				// Translators: current setting value
 				__( 'For Lazyload, Lightbox and Link mode check out the <a href="%s">Pro Addon</a>.', 'advanced-responsive-video-embedder' ),
@@ -349,8 +345,7 @@ function all_settings() {
 		],
 		'play_icon_style'       => [
 			'tag'       => 'pro',
-			'default'   => false,
-			'shortcode' => true,
+			'default'   => 'youtube',
 			'label'     => __( 'Play Button', 'advanced-responsive-video-embedder' ),
 			'type'      => 'select',
 			'options'   => [
@@ -364,7 +359,6 @@ function all_settings() {
 		'hover_effect'          => [
 			'tag'       => 'pro',
 			'default'   => 'zoom',
-			'shortcode' => false,
 			'label'     => __( 'Hover Effect', 'advanced-responsive-video-embedder' ),
 			'type'      => 'select',
 			'options'   => [
@@ -520,6 +514,13 @@ function all_settings() {
 			'type'        => 'boolean',
 			'description' => esc_html__( 'Mute HTML5 video.', 'advanced-responsive-video-embedder' ),
 		],
+		'volume'                => [
+			'tag'         => 'pro',
+			'default'     => null,
+			'shortcode'   => true,
+			'label'       => esc_html__( 'Volume?', 'advanced-responsive-video-embedder' ),
+			'type'        => 'integer',
+		],
 		'always_enqueue_assets' => [
 			'shortcode'   => false,
 			'default'     => false,
@@ -604,8 +605,8 @@ function missing_settings_defaults( $settings ) {
 		if ( ! isset( $value['shortcode'] ) ) {
 			$settings[ $key ]['shortcode'] = true;
 		}
-		if ( ! isset( $value['has_option'] ) ) {
-			$settings[ $key ]['has_option'] = true;
+		if ( ! isset( $value['option'] ) ) {
+			$settings[ $key ]['option'] = true;
 		}
 
 		if ( empty( $settings[ $key ]['tag'] ) ) {

@@ -276,7 +276,7 @@ function build_promote_link_html( $arve_link ) {
 
 function arve__embed( $html, array $a ) {
 
-	$class     = 'arve-embed';
+	$class     = 'arve__embed';
 	$ratio_div = '';
 
 	if ( false !== $a['aspect_ratio'] && '16:9' !== $a['aspect_ratio'] ) {
@@ -291,17 +291,15 @@ function arve__embed( $html, array $a ) {
 		$class .= ' arve-embed--16by9';
 	}
 
-	$html = build_tag(
-		array(
+	return build_tag(
+		[
 			'name'    => 'arve__embed',
 			'tag'     => 'div',
 			'content' => $ratio_div . $html,
 			'attr'    => [ 'class' => $class ],
-		),
+		],
 		$a
 	);
-
-	return apply_filters( 'nextgenthemes/arve/embed', $html );
 }
 
 function error( $message ) {

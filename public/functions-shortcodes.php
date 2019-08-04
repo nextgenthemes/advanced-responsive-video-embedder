@@ -16,61 +16,6 @@ function shortcode( array $a, $content = null ) {
 	return build_video( $a, $content );
 }
 
-function old_pairs_for_test() {
-
-	$options = options();
-
-	return [
-		// arve visual options
-		'align'             => $options['align'],
-		'aspect_ratio'      => null,
-		'arve_link'         => bool_to_shortcode_string( $options['promote_link'] ),
-		'disable_sandbox'   => 'n',
-		'maxwidth'          => (string) $options['video_maxwidth'],
-		'mode'              => $options['mode'],
-		// url query
-		'autoplay'          => bool_to_shortcode_string( $options['autoplay'] ),
-		'parameters'        => null,
-		// old shortcodes, manual, no oembed
-		'provider'          => null,
-		'id'                => null,
-		'account_id'        => null,
-		'brightcove_player' => 'default',
-		'brightcove_embed'  => 'default',
-		// Essential + schema
-		'url'               => null,
-		'src'               => null,
-		'thumbnail'         => null,
-		// schema
-		'description'       => null,
-		'duration'          => null,
-		'title'             => null,
-		'upload_date'       => null,
-		// <video>
-		'controls'          => 'y',
-		'controlslist'      => empty( $options['controlslist'] ) ? null : (string) $options['controlslist'],
-		'loop'              => 'n',
-		'm4v'               => null,
-		'mp4'               => null,
-		'muted'             => null,
-		'ogv'               => null,
-		'playsinline'       => null,
-		'preload'           => 'metadata',
-		'webm'              => null,
-		// TED only
-		'lang'              => null,
-		// Vimeo only
-		'start'             => null,
-		// deprecated, title should be used
-		'link_text'         => null,
-		// misc
-		'oembed_data'       => null,
-		'iframe_name'       => null,
-		// debug
-		'append_text'       => null,
-	];
-}
-
 function build_video( array $input_atts ) {
 
 	for ( $n = 1; $n <= NUM_TRACKS; $n++ ) {
@@ -118,7 +63,7 @@ function build_video_html( array $a ) {
 			'tag'     => 'div',
 			'content' => $pieces->arve_inner_html,
 			'attr'    => array(
-				'class'         => empty( $a['align'] ) ? 'arve-wrapper' : 'arve-wrapper align' . $a['align'],
+				'class'         => empty( $a['align'] ) ? 'arve' : 'arve align' . $a['align'],
 				'data-mode'     => $a['mode'],
 				'data-provider' => $a['provider'],
 				'id'            => $a['wrapper_id'],
@@ -131,7 +76,7 @@ function build_video_html( array $a ) {
 		$a
 	);
 
-	return apply_filters( 'nextgenthemes/arve/video_html', $pieces->arve, $pieces, $a );
+	return apply_filters( 'nextgenthemes/arve/html', $pieces->arve, $a );
 }
 
 function shortcode_option_defaults() {

@@ -2,13 +2,13 @@
 	'use strict';
 
 	function remove_unwanted_stuff() {
-		$('.arve-wrapper').find('p, .video-wrap, .fluid-width-video-wrapper, .fluid-vids').contents().unwrap();
-		$('.arve-wrapper br').remove();
+		$('.arve').find('p, .video-wrap, .fluid-width-video-wrapper, .fluid-vids').contents().unwrap();
+		$('.arve br').remove();
 		$('.arve-iframe, .arve-video').removeAttr('width height style');
 
 		$('.wp-block-embed').each( function( index ) {
 
-			if ( $(this).has('.arve-wrapper') ) {
+			if ( $(this).has('.arve') ) {
 
 				$(this).removeClass( 'wp-embed-aspect-16-9 wp-has-aspect-ratio' );
 

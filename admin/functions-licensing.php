@@ -389,8 +389,8 @@ function nextgenthemes_get_key( $product, $option_only = false ) {
 function nextgenthemes_get_key_status( $product ) {
 	return get_option( "nextgenthemes_{$product}_key_status" );
 }
-function nextgenthemes_update_key_status( $product, $key ) {
-	update_option( "nextgenthemes_{$product}_key_status", $key );
+function nextgenthemes_update_key_status( $product, $status ) {
+	update_option( "nextgenthemes_{$product}_key_status", $status );
 }
 function nextgenthemes_has_valid_key( $product ) {
 	return ( 'valid' === nextgenthemes_get_key_status( $product ) ) ? true : false;
@@ -453,10 +453,10 @@ function nextgenthemes_init_plugin_updater( $product ) {
 		apply_filters( 'nextgenthemes_api_url', 'https://nextgenthemes.com' ),
 		$product['file'],
 		array(
-			'version'   => $product['version'],
-			'license'   => nextgenthemes_get_key( $product['slug'] ),
-			'item_id'   => $product['id'],
-			'author'    => $product['author']
+			'version' => $product['version'],
+			'license' => nextgenthemes_get_key( $product['slug'] ),
+			'item_id' => $product['id'],
+			'author'  => $product['author']
 		)
 	);
 }

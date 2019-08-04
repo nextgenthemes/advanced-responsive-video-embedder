@@ -6,7 +6,7 @@
 
 	function removeUnwantedStuff() {
 
-		qsa( '.arve-wrapper p, .arve-wrapper .video-wrap, .arve-wrapper .fluid-width-video-wrapper, .arve-wrapper .fluid-vids' ).forEach( el => {
+		qsa( '.arve p, .arve .video-wrap, .arve .fluid-width-video-wrapper, .arve .fluid-vids' ).forEach( el => {
 			let parent = el.parentNode;
 
 			// move all children out of the element
@@ -18,7 +18,7 @@
 			parent.removeChild( el );
 		});
 
-		qsa( '.arve-wrapper br' ).forEach( el => {
+		qsa( '.arve br' ).forEach( el => {
 			el.remove();
 		});
 
@@ -30,7 +30,7 @@
 
 		qsa( '.wp-block-embed' ).forEach( el => {
 
-			if ( $( this ).has( '.arve-wrapper' ) ) {
+			if ( $( this ).has( '.arve' ) ) {
 
 				$( this ).removeClass( 'wp-embed-aspect-16-9 wp-has-aspect-ratio' );
 
