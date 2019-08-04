@@ -107,6 +107,10 @@ function arve_sc_filter_attr( $a ) {
 			'height'          => empty( $a['height'] ) ? false : $a['height'],
 		);
 
+		if ( 'vimeo' == $a['provider'] ) {
+			$a['iframe_attr']['sandbox'] .= ' allow-forms';
+		}
+
 		if ( false === $a['sandbox'] ) {
 			$a['iframe_attr']['sandbox'] = false;
 		}
