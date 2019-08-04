@@ -18,7 +18,7 @@
 		"mobiledetect/mobiledetectlib": "*"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "^8",
+		"phpunit/phpunit": "4.8.* || 5.7.*",
 		"dealerdirect/phpcodesniffer-composer-installer": "*",
 		"object-calisthenics/phpcs-calisthenics-rules": "*",
 		"phpcompatibility/php-compatibility": "*",
