@@ -14,14 +14,14 @@ function build_iframe_video( array $a ) {
 				'content' => '',
 				'attr'    => [
 					// WPmaster
-					'autoplay'           => in_array( $a['mode'], [ 'lazyload', 'lazyload-lightbox', 'link-lightbox' ], true ) ? false : $a['autoplay'],
+					'autoplay'           => in_array( $a['mode'], ['lazyload', 'lightbox', 'link-lightbox'], true ) ? false : $a['autoplay'],
 					'controls'           => $a['controls'],
 					'controlslist'       => $a['controlslist'],
 					'loop'               => $a['loop'],
 					'preload'            => $a['preload'],
-					'width'              => empty( $a['width'] ) ? false : $a['width'],
-					'height'             => empty( $a['height'] ) ? false : $a['height'],
-					'poster'             => empty( $a['img_src'] ) ? false : $a['img_src'],
+					'width'              => empty( $a['width'] )     ? false : $a['width'],
+					'height'             => empty( $a['height'] )    ? false : $a['height'],
+					'poster'             => empty( $a['img_src'] )   ? false : $a['img_src'],
 					'src'                => empty( $a['video_src'] ) ? false : $a['video_src'],
 					// ARVE only
 					'class'              => 'arve-video fitvidsignore',
@@ -71,7 +71,7 @@ function build_iframe_video( array $a ) {
 
 function html_id( $html_attr ) {
 
-	if ( false !== strpos( $html_attr, 'id=' ) ) {
+	if ( false === strpos( $html_attr, 'id=' ) ) {
 		$html_attr .= ' id="arve"';
 	}
 
@@ -208,8 +208,8 @@ function build_inner_html( array $a ) {
 		);
 	}
 
-	$html .= build_iframe_video( $a );
 	$html .= build_tag( [ 'name' => 'button' ], $a );
+	$html .= build_iframe_video( $a );
 
 	return $html;
 }
@@ -237,27 +237,30 @@ function build_tag( array $tag, array $a ) {
 	$tag = apply_filters( "nextgenthemes/arve/{$tag['name']}", $tag, $a );
 
 	if ( empty( $tag['tag'] ) ) {
-		return '';
-	}
 
-	$is_dailymotion = ( 'dailymotion' === $a['provider'] );
+		$html = '';
 
-	if ( ! empty( $tag['content'] ) || ( isset( $tag['content'] ) && '' === $tag['content'] ) ) {
-		$out = sprintf(
-			'<%1$s%2$s>%3$s</%1$s>',
-			esc_html( $tag['tag'] ),
-			attr( $tag['attr'], $is_dailymotion ),
-			$tag['content']
-		);
 	} else {
-		$out = sprintf(
-			'<%s%s>',
-			esc_html( $tag['tag'] ),
-			attr( $tag['attr'], $is_dailymotion )
-		);
+
+		$is_dailymotion = ( 'dailymotion' === $a['provider'] );
+
+		if ( ! empty( $tag['content'] ) || ( isset( $tag['content'] ) && '' === $tag['content'] ) ) {
+			$html = sprintf(
+				'<%1$s%2$s>%3$s</%1$s>',
+				esc_html( $tag['tag'] ),
+				attr( $tag['attr'], $is_dailymotion ),
+				$tag['content']
+			);
+		} else {
+			$html = sprintf(
+				'<%s%s>',
+				esc_html( $tag['tag'] ),
+				attr( $tag['attr'], $is_dailymotion )
+			);
+		}
 	}
 
-	return $out;
+	return apply_filters( "nextgenthemes/arve/{$tag['name']}_html", $html, $a );
 }
 
 function build_promote_link_html( $arve_link ) {

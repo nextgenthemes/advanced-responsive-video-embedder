@@ -11,7 +11,7 @@
  * Text Domain:       advanced-responsive-video-embedder
  * Domain Path:       /languages
  * GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-embedder
- * GitHub Branch:     dev
+ * GitHub Branch:     v9
  *
  * @package Nextgenthemes/ARVE
  * @author  Nicolas Jonas
@@ -76,7 +76,7 @@ function init() {
 
 	foreach ( [
 		'validate'                         => -99,
-		'deprecated_fallbacks'             => -90,
+		'fallbacks'                        => -90,
 		// 0
 		'detect_provider_and_id_from_url'  => -10,
 		'detect_html5'                     => -10,

@@ -1,49 +1,55 @@
 /* stylelint-disable selector-max-id */
 
-#arve,
-#tinymce {
+.arve,
+#arve .arve,
+#tinymce .arve {
+  display: block;
+  width: 100%;
+  margin-bottom: 1.5em;
 
-  .arve {
-    display: block;
-    width: 100%;
-    margin-bottom: 1.5em;
-
-    &::after {
-      display: table;
-      clear: both;
-      content: "";
-    }
-
-    &.alignleft {
-      margin-top: .4em;
-      margin-right: 1.5em;
-    }
-
-    &.alignright {
-      margin-top: .4em;
-      margin-left: 1.5em;
-    }
-  }
-
-  .arve-embed--responsive {
-    position: relative;
-    display: block;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-    max-height: 100vh;
-  }
-
-  .arve-embed--16by9::before {
-    display: block;
-    padding-top: percentage(9 / 16);
+  &::after {
+    display: table;
+    clear: both;
     content: "";
   }
 
-  .arve-thumbnail,
-  .arve-play-btn,
-  .arve-iframe {
+  &.alignleft {
+    margin-top: .4em;
+    margin-right: 1.5em;
+  }
+
+  &.alignright {
+    margin-top: .4em;
+    margin-left: 1.5em;
+  }
+}
+
+.arve-embed--responsive,
+#arve .arve-embed--responsive,
+#tinymce .arve-embed--responsive {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  max-height: 100vh;
+}
+
+.arve-embed--16by9::before,
+#arve .arve-embed--16by9::before,
+#tinymce .arve-embed--16by9::before {
+  display: block;
+  padding-top: percentage(9 / 16);
+  content: "";
+}
+
+.arve-thumbnail,
+.arve-play-btn,
+.arve-iframe {
+  &,
+  #arve,
+  #tinymce {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -54,18 +60,22 @@
     margin: 0;
     border: 0;
   }
+}
 
-  .arve-video {
-    width: 100%;
-    padding: 0;
-    margin: 0;
-  }
+.arve-video,
+#arve .arve-video,
+#tinymce .arve-video {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
 
-  .arve-promote-link {
-    float: right;
-    font-family: "Open Sans", "Sagoe UI", Arvo, Lato, arial, sans-serif;
-    font-size: .8em;
-  }
+.arve-promote-link,
+#arve .arve-promote-link,
+#tinymce .arve-promote-link {
+  float: right;
+  font-family: "Open Sans", "Sagoe UI", Arvo, Lato, arial, sans-serif;
+  font-size: .8em;
 }
 
 .arve-hidden {

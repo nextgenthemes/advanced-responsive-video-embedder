@@ -374,13 +374,13 @@ function all_settings() {
 			'type'        => 'bool+default',
 			'description' => __( 'Prevent ARVE embeds to open new popups/tabs/windows from links inside video embeds. Note this also breaks all kinds of sharing functionality and the like. (Pro Addon)', 'advanced-responsive-video-embedder' ),
 		],
-		'inview_lazyload'       => [
+		'mobile_inview'         => [
 			'tag'         => 'pro',
 			'default'     => true,
 			'shortcode'   => false,
-			'label'       => __( 'Inview Lazyload', 'advanced-responsive-video-embedder' ),
+			'label'       => __( 'Mobile Inview Fallback', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
-			'description' => __( 'The inview lazyload mode videos as they come into the screen as a workarround for the problem that it otherwise needs two touches to play a lazyloaded video because mobile browsers prevent autoplay. Note that this will prevent users to see your custom thumbnails or titles!', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'This is not needed/used for YouTube and Vimeo. On mobiles fallback Lazyload mode to Lazyload Inview as workarround for the problem that it otherwise needs two touches to play a lazyloaded video because mobile browsers prevent autoplay. Note that this will prevent users to see your custom thumbnails or titles!', 'advanced-responsive-video-embedder' ),
 		],
 		'align'                 => [
 			'default'   => 'none',
@@ -430,7 +430,7 @@ function all_settings() {
 			'type'        => 'bool+default',
 			'description' => esc_html__( 'Do not expect this to always work! Mobile browsers prevent this, some video hosts do not support it at all. Only used in normal mode.', 'advanced-responsive-video-embedder' ),
 		],
-		'maxwidth'              => [
+		'maxwidth'               => [
 			'default'     => 0,
 			'shortcode'   => false,
 			'label'       => esc_html__( 'Maximal Width', 'advanced-responsive-video-embedder'),
@@ -441,14 +441,14 @@ function all_settings() {
 				empty( $GLOBALS['content_width'] ) ? '' : $GLOBALS['content_width']
 			),
 		],
-		'align_maxwidth'        => [
+		'align_maxwidth'         => [
 			'default'     => 400,
 			'shortcode'   => false,
 			'label'       => esc_html__( 'Align Maximal Width', 'advanced-responsive-video-embedder'),
 			'type'        => 'integer',
 			'description' => esc_attr__( 'In px, Needed! Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
 		],
-		'aspect_ratio'          => [
+		'aspect_ratio'           => [
 			'default'     => null,
 			'option'      => false,
 			'label'       => __( 'Aspect Ratio', 'advanced-responsive-video-embedder'),
@@ -458,7 +458,7 @@ function all_settings() {
 				'placeholder' => __( 'E.g. 4:3, 21:9.', 'advanced-responsive-video-embedder'),
 			],
 		],
-		'parameters'            => [
+		'parameters'             => [
 			'default'     => null,
 			'html5'       => false,
 			'option'      => false,
@@ -474,7 +474,7 @@ function all_settings() {
 				'https://developer.vimeo.com/player/embedding'
 			),
 		],
-		'wp_video_override'     => [
+		'wp_video_override'      => [
 			'tag'         => 'html5',
 			'default'     => true,
 			'shortcode'   => false,
@@ -538,7 +538,7 @@ function all_settings() {
 		'vimeo_api_token'       => [
 			'default'     => '',
 			'shortcode'   => false,
-			'label'       => esc_html__( 'Video API Token', 'advanced-responsive-video-embedder' ),
+			'label'       => esc_html__( 'Vimeo API Token', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
 			'description' => sprintf(
 				// Translators: URL

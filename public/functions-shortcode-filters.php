@@ -5,7 +5,7 @@ use function Nextgenthemes\Utils\attr;
 use function Nextgenthemes\Utils\starts_with;
 use function Nextgenthemes\Utils\ends_with;
 
-function sc_filter_deprecated_fallbacks( array $a ) {
+function sc_filter_fallbacks( array $a ) {
 
 	return $a;
 }
@@ -310,8 +310,8 @@ function shortcode_attributes() {
 
 function sc_filter_mode_fallback( array $a ) {
 
-	if ( 'thumbnail' === $a['mode'] ) {
-		$a['mode'] = 'lazyload-lightbox';
+	if ( in_array( $a['mode'], ['lazyload-lightbox', 'thumbnail'], true ) ) {
+		$a['mode'] = 'lightbox';
 	}
 
 	$supported_modes = get_supported_modes();

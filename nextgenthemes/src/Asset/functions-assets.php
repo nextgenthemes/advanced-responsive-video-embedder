@@ -1,6 +1,22 @@
 <?php
 namespace Nextgenthemes\Asset;
 
+function add_dep_to_script( $handle, $dep ) {
+  global $wp_scripts;
+
+  $script = $wp_scripts->query( $handle, 'registered' );
+
+	if ( ! $script ) {
+		return false;
+	}
+
+  if ( ! in_array( $dep, $script->deps ) ) {
+    $script->deps[] = $dep;
+  }
+
+  return true;
+}
+
 function enqueue_when_content_contains( array $args ) {
 	register( $args );
 
@@ -21,15 +37,16 @@ function enqueue( array $args ) {
 function register( array $args ) {
 
 	$defaults = array(
-		'enqueue'   => false,
-		'handle'    => null,
-		'src'       => null,
+		'async'     => null,
 		'cdn_src'   => null,
 		'deps'      => [],
+		'enqueue'   => false,
+		'handle'    => null,
 		'in_footer' => true,
+		'integrity' => null,
 		'media'     => 'all',
+		'src'       => null,
 		'ver'       => null,
-		'integrity' => null
 	);
 
 	$args = wp_parse_args( $args, $defaults );
@@ -45,8 +62,8 @@ function register( array $args ) {
 
 		wp_register_script( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['in_footer'] );
 
-		if ( $args['integrity'] ) {
-			add_interity_to_asset( 'script', $args['handle'], $args['integrity'] );
+		if ( $args['integrity'] || $args['async'] ) {
+			add_interity_to_asset( 'script', $args['handle'], $args['integrity'], $args['async'] );
 		}
 
 		if ( $args['enqueue'] ) {
@@ -65,22 +82,33 @@ function register( array $args ) {
 	}//end if
 }
 
-function add_interity_to_asset( $type, $handle, $integrity ) {
+function add_interity_to_asset( $type, $handle, $integrity, $async = null ) {
 
 	if ( ! in_array( $type, [ 'script', 'style' ], true ) ) {
 		wp_die( 'first arg needs to be scipts or style' );
 	}
 
-	add_filter( "{$type}_loader_tag", function( $html, $loader_handle ) use ( $type, $handle, $integrity ) {
+	add_filter( "{$type}_loader_tag", function( $html, $loader_handle ) use ( $type, $handle, $integrity, $async ) {
 
 		if ( $handle === $loader_handle ) {
 
 			$tag  = ( 'style' === $type ) ? 'link' : $type;
-			$html = str_replace(
-				sprintf( '<%s ', esc_html( $tag ) ),
-				sprintf( '<%s integrity="%s" crossorigin="anonymous" ', esc_html( $tag ), esc_attr( $integrity ) ),
-				$html
-			);
+
+			if ( $integrity ) {
+				$html = str_replace(
+					sprintf( '<%s ', esc_html( $tag ) ),
+					sprintf( '<%s integrity="%s" crossorigin="anonymous" ', esc_html( $tag ), esc_attr( $integrity ) ),
+					$html
+				);
+			}
+
+			if( $async ) {
+				$html = str_replace(
+					sprintf( '<%s ', esc_html( $tag ) ),
+					sprintf( '<%s async="async" ', esc_html( $tag ) ),
+					$html
+				);
+			}
 		}
 
 		return $html;

@@ -1,6 +1,10 @@
 <?php
 namespace Nextgenthemes\Utils;
 
+function contains( $haystack, $needle ) {
+	return strpos( $haystack, $needle ) !== false;
+}
+
 function starts_with( $haystack, $needle ) {
 	return $haystack[0] === $needle[0] ? strncmp( $haystack, $needle, strlen( $needle ) ) === 0 : false;
 }

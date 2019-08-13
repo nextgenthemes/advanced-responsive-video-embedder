@@ -18,13 +18,21 @@ function register_assets() {
 		'deps'   => [ 'jquery' ],
 		'ver'    => VERSION,
 	] );
+
+	$options = options();
+
+	if ( $options['always_enqueue_assets'] ) {
+		wp_enqueue_style( 'advanced-responsive-video-embedder' );
+		wp_enqueue_script( 'advanced-responsive-video-embedder' );
+
+		wp_enqueue_style( 'arve-pro' );
+		wp_enqueue_script( 'arve-pro' );
+	}
 }
 
 function maybe_enqueue_assets( $content ) {
 
-	$options = options();
-
-	if ( strpos( $content, 'class="arve' ) !== false || $options['always_enqueue_assets'] ) {
+	if ( strpos( $content, 'class="arve' ) !== false ) {
 		wp_enqueue_style( 'advanced-responsive-video-embedder' );
 		wp_enqueue_script( 'advanced-responsive-video-embedder' );
 

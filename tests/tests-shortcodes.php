@@ -154,7 +154,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$this->assertContains( 'alignleft', $output );
 		#$this->assertContains( 'autoplay=1', $output );
-		$this->assertContains( '<span itemprop="description" class="arve-description arve-hidden">Description Test</span>', $output );
+		$this->assertContains( '<meta itemprop="description" content="Description Test">', $output );
 		$this->assertContains( 'style="max-width:333px;"', $output );
 		$this->assertContains( '<meta itemprop="name" content="Test &lt;title&gt;">', $output );
 		$this->assertContains( '<meta itemprop="uploadDate" content="2016-10-22">', $output );
