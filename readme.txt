@@ -5,7 +5,7 @@ Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embe
 Requires at least: 4.4.0
 Tested up to: 5.2.2
 Requires PHP: 5.3
-Stable tag: 8.10.6
+Stable tag: 8.10.7
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -157,6 +157,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### 2019-08-13 - 8.10.7 ###
+
+* Setting the right branch (v8) for Github updater plugin.
 
 ### 2019-07-31 - 8.10.6 ###
 
