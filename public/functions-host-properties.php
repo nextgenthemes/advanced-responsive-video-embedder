@@ -573,7 +573,7 @@ function get_host_properties() {
 			'name'           => 'Youku',
 			'regex'          => '#https?://([a-z.]+)?\.youku.com/(embed/|v_show/id_)(?<id>[a-z0-9]+)#i',
 			'use_oembed'     => false,
-			'embed_url'      => 'http://player.youku.com/embed/%s',
+			'embed_url'      => 'https://player.youku.com/embed/%s',
 			'auto_thumbnail' => false,
 			'aspect_ratio'   => '450:292.5',
 			'tests'          => [
