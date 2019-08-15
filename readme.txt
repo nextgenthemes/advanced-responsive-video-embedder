@@ -158,9 +158,15 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-### 2018-10-02 - 9.0.0 ###
+### 2019-09-11 - 9.0.0 ###
 
-* Added Bitchute
+* Note: Minimum PHP required for ARVE is now 5.6 you should be a the latest version for security and speed anyway https://secure.php.net/supported-versions.php
+* New: Added Bitchute
+* New: ARVE Gutenberg block!
+* Improved: Lots of code refactored and rewritten.
+* Improved: Embeds work though WPs oembed system now that comes with a more stable codebase and better caching system for embeds.
+* Improved: Aspect ratios are now auto detected for all providers WP supports through oEmbed.
+* Fix: YouTube live links are now working correctly
 
 ### 2019-01-23 - 8.10.4 ###
 
