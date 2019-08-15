@@ -14,7 +14,7 @@ function build_iframe_video( array $a ) {
 				'content' => '',
 				'attr'    => [
 					// WPmaster
-					'autoplay'           => in_array( $a['mode'], ['lazyload', 'lightbox', 'link-lightbox'], true ) ? false : $a['autoplay'],
+					'autoplay'           => in_array( $a['mode'], [ 'lazyload', 'lightbox', 'link-lightbox' ], true ) ? false : $a['autoplay'],
 					'controls'           => $a['controls'],
 					'controlslist'       => $a['controlslist'],
 					'loop'               => $a['loop'],
@@ -35,7 +35,7 @@ function build_iframe_video( array $a ) {
 
 	else :
 
-		$sandbox = 'allow-scripts allow-same-origin allow-presentation allow-popups';
+		$sandbox = 'allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox';
 
 		if ( 'vimeo' === $a['provider'] ) {
 			$sandbox .= ' allow-forms';
@@ -59,7 +59,7 @@ function build_iframe_video( array $a ) {
 					'sandbox'         => $sandbox,
 					'scrolling'       => 'no',
 					'src'             => $a['src'],
-					'width'           => empty( $a['width'] ) ? false : $a['width'],
+					'width'           => empty( $a['width'] )  ? false : $a['width'],
 					'height'          => empty( $a['height'] ) ? false : $a['height']
 				),
 			],
