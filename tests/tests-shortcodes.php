@@ -208,6 +208,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		// ) );
 		//
 		// $this->assertEquals( $output, $output2 );
+
 		$this->assertNotContains( 'Error', $output );
 		$this->assertNotContains( '<iframe', $output );
 		$this->assertContains( 'data-provider="html5"', $output );
