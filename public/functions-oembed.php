@@ -8,8 +8,6 @@ function add_oembed_providers() {
 	wp_oembed_add_provider( 'https://www.twitch.tv/*', 'https://api.twitch.tv/v4/oembed' );
 	wp_oembed_add_provider( 'http://twitch.tv/*', 'https://api.twitch.tv/v4/oembed' );
 	wp_oembed_add_provider( 'https://twitch.tv/*', 'https://api.twitch.tv/v4/oembed' );
-	wp_oembed_add_provider( 'http://*.ustream.tv/*', 'http://www.ustream.tv/oembed' );
-	wp_oembed_add_provider( 'http://*.ustream.com/*', 'http://www.ustream.tv/oembed' );
 }
 
 function filter_oembed_dataparse( $result, $data, $url ) {
@@ -60,6 +58,15 @@ function oembed2args( $data ) {
 	return apply_filters( 'nextgenthemes/arve/oembed2args', $a );
 }
 
+function vimeo_referer( $args, $url ) {
+
+	if ( contains( $url, 'vimeo' ) ) {
+		$args['headers']['Referer'] = site_url();
+	}
+
+	return $args;
+}
+
 function extract_query_array( $url, $key ) {
 
 	$parsed_url = wp_parse_url( $url );
@@ -76,8 +83,6 @@ function extract_query_array( $url, $key ) {
 
 	return [];
 }
-
-
 
 function remove_query_array( $url, $key ) {
 

@@ -65,6 +65,7 @@ function init() {
 	// Public hooks
 	add_action( 'init',                        __NAMESPACE__ . '\add_oembed_providers' );
 	add_action( 'init',                        __NAMESPACE__ . '\register_gb_block' );
+	add_filter( 'oembed_remote_get_args',      __NAMESPACE__ . '\vimeo_referer', 10, 2 );	
 	add_action( 'plugins_loaded',              __NAMESPACE__ . '\create_shortcodes', 999 );
 	add_action( 'plugins_loaded',              __NAMESPACE__ . '\create_url_handlers', 999 );
 	add_action( 'plugins_loaded',              __NAMESPACE__ . '\load_textdomain' );
