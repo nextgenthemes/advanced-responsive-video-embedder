@@ -158,9 +158,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-### 2019-08-13 - 8.10.7 ###
+### 2019-08-19 - 8.10.8 ###
 
-* Setting the right branch (v8) for Github updater plugin.
+* Improved: Switch Youku embeds to https set to default 16:9 aspect ratio.
+* Improved: added `allow-popups-to-escape-sandbox` to sandbox attribute. This eliminates the need for `sandbox="false"` for Vimeo action links to work. And just in general I think its a good idea.
 
 ### 2019-07-31 - 8.10.6 ###
 
