@@ -29,15 +29,11 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		);
 	}
 
-	public function test_sandbox_vimeo() {
+	public function test_vimeo_sandbox_allow_forms() {
 		$attr = array( 'url' => 'https://vimeo.com/214300845' );
 
 		$this->assertNotContains( 'Error', arve_shortcode_arve( $attr ) );
-		$this->assertNotContains(
-			'sandbox="',
-			arve_shortcode_arve( $attr ),
-			$attr['url']
-		);
+		$this->assertContains( 'allow-forms', arve_shortcode_arve( $attr ), $attr['url'] );
 	}
 
 	public function test_thumbnails() {
