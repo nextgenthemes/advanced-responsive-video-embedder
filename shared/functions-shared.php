@@ -981,9 +981,8 @@ function arve_get_host_properties() {
 		),
 		'youku' => array(
 			'regex'          => 'https?://([a-z.]+)?\.youku.com/(embed/|v_show/id_)(?<id>[a-z0-9]+)',
-			'embed_url'      => 'http://player.youku.com/embed/%s',
+			'embed_url'      => 'https://player.youku.com/embed/%s',
 			'auto_thumbnail' => false,
-			'aspect_ratio'   => '450:292.5',
 			# <iframe height=498 width=510 src="http://player.youku.com/embed/XMTUyODYwOTc4OA==" frameborder=0 allowfullscreen></iframe>
 			'tests' => array(
 				array(
