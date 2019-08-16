@@ -12,8 +12,8 @@ mix.sourceMaps();
 mix.version();
 mix.js( 'resources/js/arve.js', 'js' );
 
-mix.sass(  'resources/scss/arve.scss',       'css', sassConfig )
-	.sass( 'resources/scss/arve-admin.scss', 'css', sassConfig );
+mix.sass( 'resources/scss/arve.scss',       'css', sassConfig );
+mix.sass( 'resources/scss/arve-admin.scss', 'css', sassConfig );
 
 // Full API
 // mix.js(src, output);

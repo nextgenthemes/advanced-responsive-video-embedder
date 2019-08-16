@@ -5,8 +5,8 @@
 }
 
 .wp-core-ui .button-primary--ngt-small {
-	line-height: 12px;
-	height: 18px;
+  height: 18px;
+  line-height: 12px;
 	padding-left: 5px;
 	padding-right: 5px;
 }
