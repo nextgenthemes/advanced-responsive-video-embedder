@@ -12,51 +12,33 @@ class Tests_Shortcode extends WP_UnitTestCase {
 	}
 
 	public function test_sandbox() {
+		$attr = [
+			'url' => 'https://example.com',
+		];
 
-		$attr = [ 'url' => 'https://example.com' ];
+		$this->assertNotContains( 'Error', shortcode( $attr ) );
+		$this->assertContains(
+			'sandbox="',
+			shortcode( $attr ),
+			$attr['url']
+		);
+
+		$attr['sandbox'] = 'false';
 
 		$this->assertNotContains( 'Error', shortcode( $attr ) );
 		$this->assertNotContains( 'sandbox="', shortcode( $attr ), $attr['url'] );
 	}
 
-	public function test_sandbox2() {
-		$attr = [
-			'url'           => 'https://example.com',
-			'disable_flash' => 'n'
-		];
-
-		$this->assertNotContains( 'Error', shortcode( $attr ) );
-		$this->assertContains(
-			'sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"',
-			shortcode( $attr ),
-			$attr['url']
-		);
-	}
-
-	public function test_sandbox3() {
-		$this->change_option( 'iframe_flash', false );
-
-		$attr = [ 'url' => 'https://example.com' ];
-
-		$this->assertNotContains( 'Error', shortcode( $attr ) );
-		$this->assertContains(
-			'sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"',
-			shortcode( $attr ),
-			$attr['url']
-		);
-	}
-
 	public function test_sandbox_vimeo() {
-		/*
+
 		$attr = array( 'url' => 'https://vimeo.com/214300845' );
 
 		$this->assertNotContains( 'Error', shortcode( $attr ) );
 		$this->assertContains(
-			'sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-forms"',
+			'allow-forms',
 			shortcode( $attr ),
 			$attr['url']
 		);
-		*/
 	}
 
 	public function test_thumbnails() {
