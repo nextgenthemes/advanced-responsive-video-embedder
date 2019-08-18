@@ -178,10 +178,14 @@ function sc_filter_default_aspect_ratio( array $a ) {
 	}
 
 	if ( ! empty( $a['oembed_data']->width ) && ! empty( $a['oembed_data']->height ) ) {
+
 		$a['aspect_ratio'] = $a['oembed_data']->width . ':' . $a['oembed_data']->height;
+
 	} else {
+
 		$properties = get_host_properties();
-		if ( ! empty( $properties[ $a['provider'] ]['aspect_ratio'] ) ) {
+
+		if ( isset( $properties[ $a['provider'] ]['aspect_ratio'] ) ) {
 			$a['aspect_ratio'] = $properties[ $a['provider'] ]['aspect_ratio'];
 		} else {
 			$a['aspect_ratio'] = '16:9';
@@ -192,6 +196,10 @@ function sc_filter_default_aspect_ratio( array $a ) {
 }
 
 function sc_filter_aspect_ratio_gcd( array $a ) {
+
+	if ( empty( $a['aspect_ratio'] ) ) {
+		return $a;
+	}
 
 	$ar  = explode( ':', $a['aspect_ratio'] );
 	$gcd = gcd( $ar[0], $ar[1] );

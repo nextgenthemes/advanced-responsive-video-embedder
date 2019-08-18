@@ -11,7 +11,7 @@ function create_url_handlers() {
 			return url_detection_to_shortcode( $provider, $matches, $attr, $url, $rawattr );
 		};
 
-		if ( ! empty( $values['regex'] ) && empty( $values['use_oembed'] ) ) {
+		if ( ! empty( $values['regex'] ) && empty( $values['oembed'] ) ) {
 			wp_embed_register_handler( 'arve_' . $provider, $values['regex'], $function );
 		}
 	}

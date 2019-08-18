@@ -7,7 +7,7 @@ function get_host_properties() {
 		'alugha'          => [
 			'name'           => 'Alugha',
 			'regex'          => '#https?://(www\.)?alugha\.com/(1/)?videos/(?<id>[a-z0-9_\-]+)#i',
-			'use_oembed'     => false,
+			'oembed'         => false,
 			'embed_url'      => 'https://alugha.com/embed/web-player/?v=%s',
 			'default_params' => 'nologo=1',
 			'auto_thumbnail' => true,
@@ -24,7 +24,7 @@ function get_host_properties() {
 		],
 		'archiveorg'      => [
 			'name'           => 'Archive.org',
-			'use_oembed'     => false,
+			'oembed'         => false,
 			'regex'          => '#https?://(www\.)?archive\.org/(details|embed)/(?<id>[0-9a-z\-]+)#i',
 			'embed_url'      => 'https://www.archive.org/embed/%s/',
 			'default_params' => '',
@@ -38,7 +38,7 @@ function get_host_properties() {
 		],
 		'bitchute'        => [
 			'name'           => 'Bitchute',
-			'use_oembed'     => false,
+			'oembed'         => false,
 			'regex'          => '#https?://www\.bitchute\.com/(video|embed)/(?<id>[0-9a-z\-]+)#i',
 			'embed_url'      => 'http://www.bitchute.com/embed/%s/',
 			'default_params' => '',
@@ -47,7 +47,7 @@ function get_host_properties() {
 		'break'           => [
 			'name'           => 'Break',
 			'regex'          => '#https?://(www\.|view\.)break\.com/(video/|embed/)?[-a-z0-9]*?(?<id>[0-9]+)#i',
-			'use_oembed'     => false,
+			'oembed'         => false,
 			'embed_url'      => 'http://break.com/embed/%s',
 			'default_params' => 'embed=1',
 			'auto_thumbnail' => false,
@@ -69,7 +69,7 @@ function get_host_properties() {
 		'brightcove'      => [
 			'name'         => 'Brightcove',
 			'regex'        => '#https?://(players|link)\.brightcove\.net/(?<account_id>[0-9]+)/(?<brightcove_player>[a-z0-9]+)_(?<brightcove_embed>[a-z0-9]+)/index\.html\?videoId=(?<id>[0-9]+)#i',
-			'use_oembed'   => false,
+			'oembed'   => false,
 			'embed_url'    => 'https://players.brightcove.net/%s/%s_%s/index.html?videoId=%s',
 			'requires_src' => true,
 			'tests'        => [
@@ -90,7 +90,7 @@ function get_host_properties() {
 			],
 		],
 		'collegehumor'    => [
-			'use_oembed'     => true,
+			'oembed'         => true,
 			'name'           => 'CollegeHumor',
 			'regex'          => '#https?://(www\.)?collegehumor\.com/video/(?<id>[0-9]+)#i',
 			'embed_url'      => 'http://www.collegehumor.com/e/%s',
@@ -124,7 +124,7 @@ function get_host_properties() {
 		],
 		'dailymotion'     => [
 			'name'           => 'Dailymotion',
-			'use_oembed'     => true,
+			'oembed'         => true,
 			'regex'          => '#https?://(www\.)?(dai\.ly|dailymotion\.com/video)/(?<id>[a-z0-9]+)#i',
 			'embed_url'      => 'https://www.dailymotion.com/embed/video/%s',
 			'default_params' => 'logo=0&hideInfos=1&related=0',
@@ -157,7 +157,7 @@ function get_host_properties() {
 		],
 		'dtube'           => [
 			'name'       => 'DTube',
-			'use_oembed' => true,
+			'oembed' => true,
 			'regex'      => '%https?://d\.tube(/#!)?/v/(?<id>[^"]+)%i',
 			'embed_url'  => 'https://emb.d.tube/#!/%s',
 			'tests'      => [
@@ -169,7 +169,7 @@ function get_host_properties() {
 		],
 		'facebook'        => [
 			'name'           => 'Facebook',
-			'use_oembed'     => true,
+			'oembed'         => true,
 			'regex'          => '#(?<id>https?://([a-z]+\.)?facebook\.com/[-.a-z0-9]+/videos/[a-z.0-9/]+)#i',
 			'url_encode_id'  => true,
 			'embed_url'      => 'https://www.facebook.com/plugins/video.php?href=%s',
@@ -186,7 +186,7 @@ function get_host_properties() {
 			],
 		],
 		'funnyordie'      => [
-			'use_oembed'     => true,
+			'oembed'         => true,
 			'name'           => 'Funny or Die',
 			'regex'          => '#https?://(www\.)?funnyordie\.com/videos/(?<id>[a-z0-9_]+)#i',
 			'embed_url'      => 'https://www.funnyordie.com/embed/%s',
@@ -215,7 +215,7 @@ function get_host_properties() {
 		],
 		'kickstarter'     => [
 			'name'           => 'Kickstarter',
-			'use_oembed'     => true,
+			'oembed'         => true,
 			'regex'          => '#https?://(www\.)?kickstarter\.com/projects/(?<id>[0-9a-z\-]+/[-0-9a-z\-]+)#i',
 			'embed_url'      => 'https://www.kickstarter.com/projects/%s/widget/video.html',
 			'auto_thumbnail' => false,
@@ -357,7 +357,7 @@ function get_host_properties() {
 		],
 		'ted'             => [
 			'name'           => 'TED Talks',
-			'use_oembed'     => true,
+			'oembed'         => true,
 			'regex'          => '#https?://(www\.)?ted\.com/talks/(?<id>[a-z0-9_]+)#i',
 			'embed_url'      => 'https://embed.ted.com/talks/%s.html',
 			'auto_thumbnail' => true,
@@ -371,7 +371,7 @@ function get_host_properties() {
 		],
 		'twitch'          => [
 			'name'           => 'Twitch',
-			'use_oembed'     => true,
+			'oembed'         => true,
 			'regex'          => '#https?://(www\.)?twitch.tv/(?!directory)(?|[a-z0-9_]+/v/(?<id>[0-9]+)|(?<id>[a-z0-9_]+))#i',
 			'embed_url'      => 'https://player.twitch.tv/?channel=%s', # if numeric id https://player.twitch.tv/?video=v%s
 			'auto_thumbnail' => true,
@@ -454,31 +454,9 @@ function get_host_properties() {
 				],
 			],
 		],
-		'vine'            => [
-			'name'           => 'Vevo',
-			'regex'          => '#https?://(www\.)?vine\.co/v/(?<id>[a-z0-9]+)#i',
-			'embed_url'      => 'https://vine.co/v/%s/embed/simple',
-			'default_params' => '', // * audio=1 supported
-			'auto_thumbnail' => false,
-			'aspect_ratio'   => '1:1',
-			'tests'          => [
-				[
-					'url' => 'https://vine.co/v/bjAaLxQvOnQ',
-					'id'  => 'bjAaLxQvOnQ'
-				],
-				[
-					'url' => 'https://vine.co/v/MbrreglaFrA',
-					'id'  => 'MbrreglaFrA'
-				],
-				[
-					'url' => 'https://vine.co/v/bjHh0zHdgZT/embed',
-					'id'  => 'bjHh0zHdgZT'
-				],
-			],
-		],
 		'vimeo'           => [
 			'name'           => 'Vimeo',
-			'use_oembed'     => true,
+			'oembed'         => true,
 			'regex'          => '#https?://(player\.)?vimeo\.com/((video/)|(channels/[a-z]+/)|(groups/[a-z]+/videos/))?(?<id>[0-9]+)(?<vimeo_secret>/[0-9a-z]+)?#i',
 			'embed_url'      => 'https://player.vimeo.com/video/%s',
 			'default_params' => 'html5=1&title=1&byline=0&portrait=0',
@@ -540,7 +518,7 @@ function get_host_properties() {
 		],
 		'xtube'           => [
 			'name'           => 'XTube',
-			'use_oembed'     => false,
+			'oembed'         => false,
 			'regex'          => '#https?://(www\.)?xtube\.com/watch\.php\?v=(?<id>[a-z0-9_\-]+)#i',
 			'embed_url'      => 'http://www.xtube.com/embedded/user/play.php?v=%s',
 			'auto_thumbnail' => false,
@@ -572,7 +550,7 @@ function get_host_properties() {
 		'youku'           => [
 			'name'           => 'Youku',
 			'regex'          => '#https?://([a-z.]+)?\.youku.com/(embed/|v_show/id_)(?<id>[a-z0-9]+)#i',
-			'use_oembed'     => false,
+			'oembed'         => false,
 			'embed_url'      => 'https://player.youku.com/embed/%s',
 			'auto_thumbnail' => false,
 			'aspect_ratio'   => '450:292.5',
@@ -588,7 +566,7 @@ function get_host_properties() {
 			],
 		],
 		'youtube'         => [
-			'use_oembed'     => true,
+			'oembed'         => true,
 			'name'           => 'YouTube',
 			'regex'          => '#https?://(www\.)?(youtube\.com\/\S*((\/e(mbed))?\/|watch\?(\S*?&?v\=))|youtu\.be\/)(?<id>[a-zA-Z0-9_-]{6,11}((\?|&)list=[a-z0-9_\-]+)?)#i',
 			'embed_url'      => 'https://www.youtube.com/embed/%s',
