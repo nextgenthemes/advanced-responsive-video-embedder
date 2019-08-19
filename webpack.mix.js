@@ -1,10 +1,10 @@
-let mix = require( 'laravel-mix' );
+const mix = require( 'laravel-mix' );
 
 // Sass configuration.
-var sassConfig = {
+const sassConfig = {
 	outputStyle: 'expanded',
 	indentType: 'tab',
-	indentWidth: 1
+	indentWidth: 1,
 };
 
 mix.setPublicPath( 'dist' );
@@ -14,6 +14,16 @@ mix.js( 'resources/js/arve.js', 'js' );
 
 mix.sass( 'resources/scss/arve.scss',       'css', sassConfig );
 mix.sass( 'resources/scss/arve-admin.scss', 'css', sassConfig );
+
+if ( process.env.sync ) {
+	mix.browserSync( {
+		proxy: 'symbiosistheme.test',
+		files: [
+			'dist/**/*',
+			'**/*.php',
+		],
+	} );
+}
 
 // Full API
 // mix.js(src, output);

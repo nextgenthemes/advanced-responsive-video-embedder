@@ -63,7 +63,7 @@ function register( array $args ) {
 		wp_register_script( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['in_footer'] );
 
 		if ( $args['integrity'] || $args['async'] ) {
-			add_interity_to_asset( 'script', $args['handle'], $args['integrity'], $args['async'] );
+			add_attr_to_asset( 'script', $args['handle'], $args['integrity'], $args['async'] );
 		}
 
 		if ( $args['enqueue'] ) {
@@ -73,7 +73,7 @@ function register( array $args ) {
 		wp_register_style( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['media'] );
 
 		if ( $args['integrity'] ) {
-			add_interity_to_asset( 'style', $args['handle'], $args['integrity'] );
+			add_attr_to_asset( 'style', $args['handle'], $args['integrity'] );
 		}
 
 		if ( $args['enqueue'] ) {
@@ -82,7 +82,7 @@ function register( array $args ) {
 	}//end if
 }
 
-function add_interity_to_asset( $type, $handle, $integrity, $async = null ) {
+function add_attr_to_asset( $type, $handle, $integrity, $async = null ) {
 
 	if ( ! in_array( $type, [ 'script', 'style' ], true ) ) {
 		wp_die( 'first arg needs to be scipts or style' );
