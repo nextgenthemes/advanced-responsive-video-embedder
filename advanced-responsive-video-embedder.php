@@ -80,8 +80,8 @@ function init() {
 		'validate'                         => -99,
 		'fallbacks'                        => -90,
 		// 0
+		'detect_html5'                     => -15,
 		'detect_provider_and_id_from_url'  => -10,
-		'detect_html5'                     => -10,
 		'detect_youtube_playlist'          => -10,
 		'default_aspect_ratio'             => -10,
 		// 0

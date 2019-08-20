@@ -486,17 +486,17 @@ function sc_filter_get_media_gallery_video( array $a ) {
 function sc_filter_detect_provider_and_id_from_url( array $a ) {
 
 	if ( ! empty( $a['src'] ) ||
+		( 'html5' === $a['provider'] ) ||
 		( ! empty( $a['id'] ) && ! empty( $a['provider'] ) )
 	) {
 		return $a;
 	}
 
-	if ( empty( $a['url'] ) && empty( $a['mp4'] ) && empty( $a['ogg'] ) && empty( $a['webm'] ) ) {
-
+	if ( empty( $a['url'] ) ) {
 		$a = add_error(
 			$a,
 			'missing_args',
-			__( 'Need either <code>url</code> paramater. Or optional for HTML5 video <code>mp4</code> or <code>m4v</code> or <code>ogg</code>.', 'advanced-responsive-video-embedder' ),
+			__( 'Need either <code>url</code> paramater. Or optional for HTML5 video attribute like <code>mp4</code>, <code>webm</code>.', 'advanced-responsive-video-embedder' ),
 			'remove-all-filters'
 		);
 		return $a;
