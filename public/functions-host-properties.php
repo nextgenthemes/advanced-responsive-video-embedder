@@ -398,7 +398,7 @@ function get_host_properties() {
 		],
 		'ustream'         => [
 			'name'           => 'Ustream',
-			'regex'          => '#https?://(www\.)?ustream\.tv/(channel/)?(?<id>[0-9]{8}|recorded/[0-9]{8}(/highlight/[0-9]+)?)#i',
+			'regex'          => '#https?://(www\.)?ustream\.tv/(embed/|channel/)?(?<id>[0-9]{8}|recorded/[0-9]{8}(/highlight/[0-9]+)?)#i',
 			'embed_url'      => 'http://www.ustream.tv/embed/%s',
 			'default_params' => 'html5ui',
 			'auto_thumbnail' => false,
