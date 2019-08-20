@@ -43,6 +43,9 @@ function get_host_properties() {
 			'embed_url'      => 'http://www.bitchute.com/embed/%s/',
 			'default_params' => '',
 			'auto_thumbnail' => false,
+			'tests'          => [
+				[ 'url' => 'https://www.bitchute.com/video/eCctkmPpK8tq/', 'id' => 'eCctkmPpK8tq' ],
+			]
 		],
 		'break'           => [
 			'name'           => 'Break',

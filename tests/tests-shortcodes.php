@@ -165,16 +165,14 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			$this->assertContains( 'data-provider="html5"', $with_ext );
 			$this->assertContains( '<video', $with_src );
 			$this->assertContains( '<video', $with_ext );
-			$this->assertContains( 'controlslist="nodownload"', $with_src );
-			$this->assertContains( 'controlslist="nodownload"', $with_ext );
 		}
 
 		$attr = [
 			'url'          => 'https://example.com/video.mp4',
-			'controlslist' => 'nofullscreen whatever',
+			'controlslist' => 'nofullscreen nodownload',
 		];
 
-		$this->assertContains( 'controlslist="nofullscreen whatever"', shortcode( $attr ) );
+		$this->assertContains( 'controlslist="nofullscreen nodownload"', shortcode( $attr ) );
 
 		$output = shortcode( [
 			'mp4'       => 'https://example.com/video.mp4',
@@ -298,22 +296,6 @@ class Tests_Shortcode extends WP_UnitTestCase {
 	public function check_regex_detection( $atts ) {
 
 		$this->assertEquals( $atts['id'] );
-	}
-
-	public function test_disable_flash() {
-
-		$attr = [ 'url' => 'https://example.com' ];
-		$this->assertNotContains( 'Error', shortcode( $attr) );
-		$this->assertRegExp( '#<iframe .*src="https://example\.com#', shortcode( $attr) );
-		$this->assertContains( 'data-provider="iframe"', shortcode( $attr ) );
-		$this->assertNotContains( 'sandbox="', shortcode( $attr ) );
-
-		$attr['disable_flash'] = 'y';
-
-		$this->assertNotContains( 'Error', shortcode( $attr) );
-		$this->assertRegExp( '#<iframe .*src="https://example\.com#', shortcode( $attr) );
-		$this->assertContains( 'data-provider="iframe"', shortcode( $attr ) );
-		$this->assertContains( 'sandbox="', shortcode( $attr ) );
 	}
 
 	public function test_dropbox_html5() {
