@@ -11,7 +11,7 @@ function build_iframe_video( array $a ) {
 			[
 				'name'    => 'video',
 				'tag'     => 'video',
-				'content' => '',
+				'content' => empty( $a['video_sources_html'] ) ? '' : $a['video_sources_html'],
 				'attr'    => [
 					// WPmaster
 					'autoplay'           => in_array( $a['mode'], [ 'lazyload', 'lightbox', 'link-lightbox' ], true ) ? false : $a['autoplay'],
