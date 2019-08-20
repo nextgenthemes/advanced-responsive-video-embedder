@@ -41,7 +41,7 @@ function build_iframe_video( array $a ) {
 			$sandbox .= ' allow-forms';
 		}
 
-		if ( $a['disable_sandbox'] ) {
+		if ( ! $a['sandbox'] ) {
 			$sandbox = false;
 		}
 
