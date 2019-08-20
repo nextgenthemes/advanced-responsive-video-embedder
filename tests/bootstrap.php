@@ -34,4 +34,4 @@ wp_update_user( array(
 	'last_name'  => 'User'
 ) );
 
-define( 'ARVE_DEBUG', true );
+#define( 'ARVE_DEBUG', true );

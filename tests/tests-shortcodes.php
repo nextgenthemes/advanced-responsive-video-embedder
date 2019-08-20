@@ -53,14 +53,18 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$attachment_id = parent::_make_attachment( $upload );
 
 		$attr = [
-			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
+			'url'       => 'https://example.com/video.mp4',
 			'thumbnail' => (string) $attachment_id,
 			'title'     => 'Something',
 		];
 
 		$this->assertRegExp( '#<meta itemprop="thumbnailUrl" content=".*test-attachment\.jpg#', shortcode( $attr ) );
 
-		$attr['thumbnail'] = 'https://example.com/image.jpg';
+		$attr = [
+			'url'       => 'https://example.com/video2.mp4',
+			'thumbnail' => 'https://example.com/image.jpg',
+		];
+
 		$this->assertContains( '<meta itemprop="thumbnailUrl" content="https://example.com/image.jpg"', shortcode( $attr ) );
 	}
 

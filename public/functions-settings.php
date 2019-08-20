@@ -553,13 +553,12 @@ function all_settings() {
 			'type'        => 'boolean',
 			'description' => __( 'Enable the old and deprected <code>[youtube id="abcde" /]</code> or <code>[vimeo id="abcde" /]</code> ... style shortcodes. Only enable if you have them in your content.', 'advanced-responsive-video-embedder' ),
 		],
-		'disable_sandbox'       => [
-			'default'     => 'n',
+		'sandbox'               => [
+			'default'     => true,
 			'shortcode'   => true,
-			'option'      => false,
-			'label'       => esc_html__( 'Disable Sandbox', 'advanced-responsive-video-embedder' ),
+			'label'       => esc_html__( 'Sandbox', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
-			'description' => __( "Only disable if you have to. 'Disable Links' feature from ARVE Pro will not work when without sandbox.", 'advanced-responsive-video-embedder' ),
+			'description' => __( "Only disable if you have to. If you embed encrypted media you have to disable this. 'Disable Links' feature from ARVE Pro will not work when without sandbox.", 'advanced-responsive-video-embedder' ),
 		],
 		'lang'                  => [
 			'default'   => null,
