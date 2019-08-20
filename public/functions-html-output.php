@@ -282,16 +282,16 @@ function arve__embed( $html, array $a ) {
 	$class     = 'arve__embed';
 	$ratio_div = '';
 
-	if ( false !== $a['aspect_ratio'] && '16:9' !== $a['aspect_ratio'] ) {
-		$ratio_div = sprintf( '<div class="padding-top:%F%%"></div>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
-	}
-
-	if ( false !== $a['aspect_ratio'] ) {
+	if ( $a['aspect_ratio'] ) {
 		$class .= ' arve-embed--responsive';
 	}
 
 	if ( '16:9' === $a['aspect_ratio'] ) {
 		$class .= ' arve-embed--16by9';
+	}
+
+	if ( $a['aspect_ratio'] && '16:9' !== $a['aspect_ratio'] ) {
+		$ratio_div = sprintf( '<div class="padding-top:%F%%"></div>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
 	}
 
 	return build_tag(
