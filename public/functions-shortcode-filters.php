@@ -485,16 +485,19 @@ function sc_filter_get_media_gallery_video( array $a ) {
 
 function sc_filter_detect_provider_and_id_from_url( array $a ) {
 
-	if ( ! empty( $a['src'] )
-		|| ( ! empty( $a['id'] ) && ! empty( $a['provider'] ) )
+	if ( ! empty( $a['src'] ) ||
+		( ! empty( $a['id'] ) && ! empty( $a['provider'] ) )
 	) {
 		return $a;
 	}
 
-	if ( empty( $a['url'] ) ) {
-		$a['provider'] = new \WP_Error(
+	if ( empty( $a['url'] ) && empty( $a['mp4'] ) && empty( $a['ogg'] ) && empty( $a['webm'] ) ) {
+
+		$a = add_error(
+			$a,
 			'missing_args',
-			__( 'Need <code>url</code> or <code>provider</code> and <code>id</code>.', 'advanced-responsive-video-embedder' )
+			__( 'Need either <code>url</code> paramater. Or optional for HTML5 video <code>mp4</code> or <code>m4v</code> or <code>ogg</code>.', 'advanced-responsive-video-embedder' ),
+			'remove-all-filters'
 		);
 		return $a;
 	}
@@ -673,6 +676,7 @@ function sc_filter_detect_html5( array $a ) {
 			$a['video_src'] = $a['url'];
 		}
 	endforeach;
+
 
 	if ( empty( $a['video_src'] ) && empty( $a['video_sources_html'] ) ) {
 		return $a;
