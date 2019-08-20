@@ -221,7 +221,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function test_regex() {
 
-		$properties = get_host_properties();
+		$properties = \Nextgenthemes\ARVE\get_host_properties();
 
 		$this->assertTrue( is_array( $properties ) );
 		$this->assertNotEmpty( $properties );
@@ -276,7 +276,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		add_filter( 'shortcode_atts_arve', [ $this, 'check_regex_detection' ] );
 
-		$properties = get_host_properties();
+		$properties = \Nextgenthemes\ARVE\get_host_properties();
 
 		foreach ( $properties as $host_id => $host ) :
 
