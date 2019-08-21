@@ -1,32 +1,29 @@
 <?php
 namespace Nextgenthemes\Asset;
 
-function add_dep_to_script( $handle, $dep ) {
-  global $wp_scripts;
+function add_dep_to_script( $type, $handle, $dep ) {
 
-  $script = $wp_scripts->query( $handle, 'registered' );
+    if ( 'script' === $type ) {
 
-	if ( ! $script ) {
-		return false;
-	}
+    } elseif ( 'style' === $type ) {
 
-  if ( ! in_array( $dep, $script->deps ) ) {
-    $script->deps[] = $dep;
-  }
-
-  return true;
+    }
 }
 
-function enqueue_when_content_contains( array $args ) {
-	register( $args );
+function add_dep_to_asset( $type, $handle, $dep ) {
+    global $wp_scripts;
 
-	add_filter( 'the_content', function( $content ) use ( $args ) {
+    $script = $wp_scripts->query( $handle, 'registered' );
 
-		if ( false !== stripos( $content, $args['contains'] ) ) {
-			wp_enqueue_script( $args['handle'] );
-		}
+    if ( ! $script ) {
+        return false;
+    }
 
-	}, PHP_INT_MAX );
+    if ( ! in_array( $dep, $script->deps ) ) {
+        $script->deps[] = $dep;
+    }
+
+    return true;
 }
 
 function enqueue( array $args ) {

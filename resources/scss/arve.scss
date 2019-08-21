@@ -1,8 +1,7 @@
 /* stylelint-disable selector-max-id */
 
 .arve,
-#arve .arve,
-#tinymce .arve {
+#arve .arve {
   display: block;
   width: 100%;
   margin-bottom: 1.5em;
@@ -25,54 +24,56 @@
 }
 
 .arve-embed--responsive,
-#arve .arve-embed--responsive,
-#tinymce .arve-embed--responsive {
+#arve .arve-embed--responsive {
   position: relative;
   display: block;
   width: 100%;
   padding: 0;
   margin: 0;
-  overflow: hidden;
   max-height: 100vh;
+  overflow: hidden;
 }
 
 .arve-embed--16by9::before,
-#arve .arve-embed--16by9::before,
-#tinymce .arve-embed--16by9::before {
+#arve .arve-embed--16by9::before {
   display: block;
   padding-top: percentage(9 / 16);
   content: "";
 }
 
+.arve-embed--4by3::before,
+#arve .arve-embed--4by3::before {
+  display: block;
+  padding-top: percentage(3 / 4);
+  content: "";
+}
+
 .arve-thumbnail,
+#arve .arve-thumbnail,
 .arve-play-btn,
-.arve-iframe {
-  &,
-  #arve,
-  #tinymce {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    border: 0;
-  }
+#arve .arve-play-btn,
+.arve-iframe,
+#arve .arve-iframe {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0;
 }
 
 .arve-video,
-#arve .arve-video,
-#tinymce .arve-video {
+#arve .arve-video {
   width: 100%;
   padding: 0;
   margin: 0;
 }
 
 .arve-promote-link,
-#arve .arve-promote-link,
-#tinymce .arve-promote-link {
+#arve .arve-promote-link {
   float: right;
   font-family: "Open Sans", "Sagoe UI", Arvo, Lato, arial, sans-serif;
   font-size: .8em;

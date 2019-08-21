@@ -516,7 +516,7 @@ function all_settings() {
 		],
 		'volume'                => [
 			'tag'         => 'pro',
-			'default'     => null,
+			'default'     => 100,
 			'shortcode'   => true,
 			'label'       => esc_html__( 'Volume?', 'advanced-responsive-video-embedder' ),
 			'type'        => 'integer',

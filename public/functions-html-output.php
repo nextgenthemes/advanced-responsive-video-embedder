@@ -143,7 +143,7 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 	return $html;
 }
 
-function build_inner_html( array $a ) {
+function arve_embed_inner_html( array $a ) {
 
 	$html = '';
 
@@ -263,7 +263,7 @@ function build_tag( array $tag, array $a ) {
 	return apply_filters( "nextgenthemes/arve/{$tag['name']}_html", $html, $a );
 }
 
-function build_promote_link_html( $arve_link ) {
+function promote_link( $arve_link ) {
 
 	if ( $arve_link ) {
 		return sprintf(
@@ -277,9 +277,9 @@ function build_promote_link_html( $arve_link ) {
 	return '';
 }
 
-function arve__embed( $html, array $a ) {
+function arve_embed( $html, array $a ) {
 
-	$class     = 'arve__embed';
+	$class     = 'arve-embed';
 	$ratio_div = '';
 
 	if ( $a['aspect_ratio'] ) {
@@ -288,15 +288,15 @@ function arve__embed( $html, array $a ) {
 
 	if ( '16:9' === $a['aspect_ratio'] ) {
 		$class .= ' arve-embed--16by9';
-	}
-
-	if ( $a['aspect_ratio'] && '16:9' !== $a['aspect_ratio'] ) {
-		$ratio_div = sprintf( '<div class="padding-top:%F%%"></div>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
+	} elseif ( '4:3' === $a['aspect_ratio'] ) {
+		$class .= ' arve-embed--4by3';
+	} elseif ( $a['aspect_ratio'] ) {
+		$ratio_div = sprintf( '<div style="padding-top:%F%%"></div>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
 	}
 
 	return build_tag(
 		[
-			'name'    => 'arve__embed',
+			'name'    => 'arve_embed',
 			'tag'     => 'div',
 			'content' => $ratio_div . $html,
 			'attr'    => [ 'class' => $class ],

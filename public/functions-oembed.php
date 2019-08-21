@@ -2,12 +2,12 @@
 namespace Nextgenthemes\ARVE;
 
 function add_oembed_providers() {
-	wp_oembed_add_provider( 'http://clips.twitch.tv/*', 'https://api.twitch.tv/v4/oembed' );
-	wp_oembed_add_provider( 'https://clips.twitch.tv/*', 'https://api.twitch.tv/v4/oembed' );
-	wp_oembed_add_provider( 'http://www.twitch.tv/*', 'https://api.twitch.tv/v4/oembed' );
-	wp_oembed_add_provider( 'https://www.twitch.tv/*', 'https://api.twitch.tv/v4/oembed' );
-	wp_oembed_add_provider( 'http://twitch.tv/*', 'https://api.twitch.tv/v4/oembed' );
-	wp_oembed_add_provider( 'https://twitch.tv/*', 'https://api.twitch.tv/v4/oembed' );
+	wp_oembed_add_provider( 'http://clips.twitch.tv/*', 'https://api.twitch.tv/v5/oembed' );
+	wp_oembed_add_provider( 'https://clips.twitch.tv/*', 'https://api.twitch.tv/v5/oembed' );
+	wp_oembed_add_provider( 'http://www.twitch.tv/*', 'https://api.twitch.tv/v5/oembed' );
+	wp_oembed_add_provider( 'https://www.twitch.tv/*', 'https://api.twitch.tv/v5/oembed' );
+	wp_oembed_add_provider( 'http://twitch.tv/*', 'https://api.twitch.tv/v5/oembed' );
+	wp_oembed_add_provider( 'https://twitch.tv/*', 'https://api.twitch.tv/v5/oembed' );
 }
 
 function filter_oembed_dataparse( $result, $data, $url ) {
@@ -45,7 +45,6 @@ function oembed2args( $data ) {
 	}
 
 	$a = [
-		// 'url'         => $url,
 		'provider'    => $provider,
 		'src'         => $matches[1],
 		'oembed_data' => $data,

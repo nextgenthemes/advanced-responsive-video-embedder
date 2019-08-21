@@ -1,8 +1,9 @@
 <?php
 namespace Nextgenthemes\Admin\Settings;
 
-use Nextgenthemes\Asset;
-use Nextgenthemes\Utils;
+use function Nextgenthemes\Asset\enqueue;
+use function Nextgenthemes\Asset\plugin_or_theme_uri;
+use function Nextgenthemes\Utils\ends_with;
 
 class Setup {
 
@@ -18,6 +19,7 @@ class Setup {
 
 	public function __construct( $args ) {
 
+
 		$defaults = [
 			'content_function'         => false,
 			'sidebar_content_function' => false,
@@ -31,7 +33,7 @@ class Setup {
 		$this->settings_page_title      = $args['settings_page_title'];
 		$this->slugged_namespace        = sanitize_key( str_replace( '\\', '_', $args['namespace'] ) );
 		$this->rest_namespace           = $this->slugged_namespace . '/v1';
-		$this->rest_url                 = get_site_url() . '/wp-json/' . $this->rest_namespace;
+		$this->rest_url                 = get_home_url() . '/wp-json/' . $this->rest_namespace;
 		$this->menu_parent_slug         = $args['menu_parent_slug'];
 		$this->content_function         = $args['content_function'];
 		$this->sidebar_content_function = $args['sidebar_content_function'];
@@ -79,22 +81,21 @@ class Setup {
 	public function assets( $page ) {
 
 		// Check if we are currently viewing our setting page
-		if ( ! Utils\ends_with( $page, $this->slugged_namespace ) ) {
+		if ( ! ends_with( $page, $this->slugged_namespace ) ) {
 			return;
 		}
 
-		// Vue.js
-		Asset\enqueue( [
+		enqueue( [
 			'handle'    => 'nextgenthemes-vue',
-			'src'       => Asset\plugin_or_theme_uri( 'nextgenthemes/dist/js/vue.min.js' ),
+			'src'       => plugin_or_theme_uri( 'nextgenthemes/dist/js/vue.min.js' ),
 			'cdn_src'   => 'https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js',
 			'ver'       => '2.5.17',
 			'integrity' => 'sha256-FtWfRI+thWlNz2sB3SJbwKx5PgMyKIVgwHCTwa3biXc='
 		] );
 
-		Asset\enqueue( [
+		enqueue( [
 			'handle' => 'nextgenthemes-settings',
-			'src'    => Asset\plugin_or_theme_uri( 'nextgenthemes/dist/js/settings.js' ),
+			'src'    => plugin_or_theme_uri( 'nextgenthemes/dist/js/settings.js' ),
 			'deps'   => [ 'nextgenthemes-vue', 'jquery' ]
 		] );
 
@@ -105,9 +106,9 @@ class Setup {
 			'options'  => $this->options,
 		] );
 
-		Asset\enqueue( [
+		enqueue( [
 			'handle' => 'nextgenthemes-settings',
-			'src'    => Asset\plugin_or_theme_uri( 'nextgenthemes/dist/css/settings.css' ),
+			'src'    => plugin_or_theme_uri( 'nextgenthemes/dist/css/settings.css' ),
 		] );
 	}
 
@@ -160,7 +161,7 @@ class Setup {
 							v-if='isSaving == true'
 							id='loading-indicator'
 							class="wrap--nextgenthemes__loading-indicator"
-							src='<?php echo esc_url( get_admin_url() ); ?>/images/wpspin_light-2x.gif'
+							src='<?php echo esc_url( get_admin_url() . '/images/wpspin_light-2x.gif' ); ?>'
 							alt='Loading indicator' />
 					</p>
 					<p v-if='message'>{{ message }}</p>

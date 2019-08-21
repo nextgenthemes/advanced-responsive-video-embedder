@@ -6,7 +6,6 @@ function vimeo_api() {
 	static $vimeo_api = null;
 
 	if ( null === $vimeo_api ) {
-		require_once ARVE_PATH . 'vendor/autoload.php';
 		$options   = options();
 		$vimeo_api = new \Vimeo\Vimeo( null, null, $options['vimeo_api_token'] );
 	}

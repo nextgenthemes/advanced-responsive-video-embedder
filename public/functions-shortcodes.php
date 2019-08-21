@@ -23,7 +23,8 @@ function build_video( array $input_atts ) {
 		$pairs[ "track_{$n}_label" ] = null;
 	}
 
-	$a = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
+	$a    = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
+	$html = '';
 
 	if ( ! empty( $a['errors'] ) && $a['errors']->get_error_code() ) {
 
@@ -37,31 +38,24 @@ function build_video( array $input_atts ) {
 		}
 
 		$error_html .= '</p>';
-		$error_html .= get_debug_info( '', $a, $input_atts );
+		#$error_html .= get_debug_info( '', $a, $input_atts );
 
-		return $error_html;
+		$html .= $error_html;
 	}
 
-	$output = build_video_html( $a );
+	$html .= build_video_html( $a );
+	$html .= get_debug_info( $html, $a, $input_atts );
 
-	if ( is_wp_error( $output ) ) {
-		return error( $output->get_error_message() );
-	}
-
-	return $output . get_debug_info( $output, $a, $input_atts );
+	return $html;
 }
 
 function build_video_html( array $a ) {
 
-	$pieces                  = (object) array();
-	$pieces->arve__embed     = arve__embed( build_inner_html( $a ), $a );
-	$pieces->arve_inner_html = $pieces->arve__embed . build_promote_link_html( $a['arve_link'] );
-
-	$pieces->arve = build_tag(
+	return build_tag(
 		array(
 			'name'    => 'arve',
 			'tag'     => 'div',
-			'content' => $pieces->arve_inner_html,
+			'content' => arve_embed( arve_embed_inner_html( $a ), $a ) . promote_link( $a['arve_link'] ),
 			'attr'    => array(
 				'class'         => empty( $a['align'] ) ? 'arve' : 'arve align' . $a['align'],
 				'data-mode'     => $a['mode'],
@@ -75,8 +69,6 @@ function build_video_html( array $a ) {
 		),
 		$a
 	);
-
-	return apply_filters( 'nextgenthemes/arve/html', $pieces->arve, $a );
 }
 
 function shortcode_option_defaults() {

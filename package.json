@@ -1,6 +1,7 @@
 {
-  "name": "arve",
+  "name": "ARVE-Advanced-Responsive-Video-Embedder",
   "main": "advanced-responsive-video-embedder.php",
+  "repository": "https://github.com/nextgenthemes/advanced-responsive-video-embedder",
   "author": "Nicolas Jonas",
   "license": "GPL-3.0",
   "devDependencies": {
@@ -14,6 +15,7 @@
     "sass": "^1.22.9",
     "sass-loader": "^7.2.0",
     "stylelint-config-twbs-bootstrap": "latest",
+    "stylelint": "latest",
     "vue-template-compiler": "^2.6.10"
   },
   "scripts": {

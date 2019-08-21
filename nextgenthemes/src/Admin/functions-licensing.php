@@ -2,8 +2,8 @@
 namespace Nextgenthemes\Admin;
 
 use Nextgenthemes;
-use Nextgenthemes\Utils;
 use Nextgenthemes\License;
+use function Nextgenthemes\Utils\attr;
 
 // phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain
 
@@ -151,7 +151,7 @@ function key_callback( $args ) {
 	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	printf(
 		'<input%s>',
-		Utils\attr( [
+		attr( [
 			'type'  => 'hidden',
 			'id'    => $args['option_basename'] . '[product]',
 			'name'  => $args['option_basename'] . '[product]',
@@ -162,7 +162,7 @@ function key_callback( $args ) {
 
 	printf(
 		'<input%s%s>',
-		Utils\attr( $args['attr'] ),
+		attr( $args['attr'] ),
 		License\get_defined_key( $args['product']['slug'] ) ? ' disabled' : ''
 	);
 
@@ -190,7 +190,7 @@ function key_callback( $args ) {
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		printf(
 			'<a%s>%s</a>',
-			Utils\attr( array(
+			attr( array(
 				'href'  => $args['product']['url'],
 				'class' => 'button button-primary',
 			) ),

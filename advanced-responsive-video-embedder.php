@@ -22,7 +22,7 @@
 namespace Nextgenthemes\ARVE;
 
 const VERSION               = '9.0.0-alpha1';
-const PRO_VERSION_REQUIRED  = '5.0.0';
+const PRO_VERSION_REQUIRED  = '5.0.0-alpha1';
 const NUM_TRACKS            = 3;
 const PLUGIN_FILE           = __FILE__;
 const VIDEO_FILE_EXTENSIONS = [ 'mp4', 'm4v', 'webm', 'ogv' ];
@@ -54,7 +54,6 @@ function init() {
 		'shortcode-data',
 		'shortcode-filters',
 		'shortcodes',
-		'gutenberg',
 		'url-handlers',
 		'validation',
 		'host-properties',
@@ -79,29 +78,23 @@ function init() {
 	foreach ( [
 		'validate'                         => -99,
 		'fallbacks'                        => -90,
-		// 0
 		'detect_html5'                     => -15,
 		'detect_provider_and_id_from_url'  => -10,
 		'detect_youtube_playlist'          => -10,
 		'default_aspect_ratio'             => -10,
-		// 0
 		'iframe_fallback'                  => 0,
 		'aspect_ratio_gcd'                 => 0,
-		// 10
 		'get_media_gallery_thumbnail'      => 10,
 		'get_media_gallery_video'          => 10,
 		'liveleak_id_fix'                  => 10,
 		'maxwidth_when_aligned'            => 10,
 		'mode_fallback'                    => 10,
-		// 15
 		'autoplay_off_after_ran_once'      => 15,
-		// 20-30
 		'dailymotion_jukebox_aspect_ratio' => 20,
 		'build_tracks_html'                => 20,
 		'build_iframe_src'                 => 20,
 		'iframe_src_query'                 => 25,
 		'iframe_src_autoplay_query'        => 30,
-		// 90
 		// 'validate_again'                   => 80,
 		'set_wrapper_id'                   => 90,
 		'set_fixed_dimensions'             => 90,
@@ -124,4 +117,18 @@ function init() {
 
 function url( $path ) {
 	return plugins_url( $path, __FILE__ );
+}
+
+function log( $log ) {
+
+    if ( true === WP_DEBUG ) {
+
+        if ( is_string( $log ) ) {
+			$log .= "\n";
+        } else {
+			$log = print_r( $log, true );
+        }
+
+		error_log( $log, 3, dirname( __DIR__ ) . '/arve.log' );
+    }
 }

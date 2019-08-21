@@ -249,82 +249,32 @@ function sc_filter_liveleak_id_fix( array $a ) {
 	return $a;
 }
 
-function shortcode_attributes() {
-	$options = options();
-
-	// phpcs:disable WordPress.Arrays.ArrayDeclarationSpacing.AssociativeArrayFound
-	$pairs = [
-		// arve visual options
-		'align'             => [
-			'default'       => $options['align'],
-			'validate_func' => __NAMESPACE__ . '\validate_align'
-		],
-		'aspect_ratio'      => [
-			'default'       => null,
-			'validate_func' => __NAMESPACE__ . '\validate_aspect_ratio'
-		],
-		'arve_link'         => [
-			'default'       => bool_to_shortcode_string( $options['promote_link'] ),
-			'validate_func' => __NAMESPACE__ . '\validate_bool'
-		],
-		'disable_sandbox'   => [ 'validate_func' => 'bool' ],
-		'maxwidth'          => [ 'default' => (string) $options['video_maxwidth'] ],
-		'mode'              => [
-			'default'       => $options['mode'],
-			'validate_func' => 'mode',
-		],
-		// url query
-		'autoplay'          => bool_to_shortcode_string( $options['autoplay'] ),
-		'parameters'        => null,
-		// old shortcodes, manual, no oembed
-		'provider'          => null,
-		'id'                => null,
-		'account_id'        => null,
-		'brightcove_player' => 'default',
-		'brightcove_embed'  => 'default',
-		// Essential + schema
-		'url'               => null,
-		'src'               => null,
-		'thumbnail'         => null,
-		// schema
-		'description'       => null,
-		'duration'          => null,
-		'title'             => null,
-		'upload_date'       => null,
-		// <video>
-		'controls'          => 'y',
-		'controlslist'      => empty( $options['controlslist'] ) ? null : (string) $options['controlslist'],
-		'loop'              => 'n',
-		'm4v'               => null,
-		'mp4'               => null,
-		'muted'             => null,
-		'ogv'               => null,
-		'playsinline'       => null,
-		'preload'           => 'metadata',
-		'webm'              => null,
-		// TED only
-		'lang'              => null,
-		// Vimeo only
-		'start'             => null,
-		// deprecated, title should be used
-		'link_text'         => null,
-		// misc
-		'oembed_data'       => null,
-		'iframe_name'       => null,
-		// debug
-		'append_text'       => null,
-	];
-}
-
 function sc_filter_mode_fallback( array $a ) {
 
-	if ( in_array( $a['mode'], ['lazyload-lightbox', 'thumbnail'], true ) ) {
+	if ( in_array( $a['mode'], [ 'lazyload-lightbox', 'thumbnail' ], true ) ) {
 		$a['mode'] = 'lightbox';
 	}
 
 	$supported_modes = get_supported_modes();
 
-	if ( ! array_key_exists( $a['mode'], $supported_modes ) ) {
+	if ( 'lazyload' === $a['mode'] && empty( $a['img_src'] ) ) {
+
+		if ( array_key_exists( 'lazyload-alt', $supported_modes ) ) {
+			$a['mode'] = 'lazyload-alt';
+		} else {
+			$a['mode'] = 'normal';
+		}
+
+	} elseif ( ! array_key_exists( $a['mode'], $supported_modes ) ) {
+
+		$a = add_error(
+			$a,
+			'mode-not-avail',
+			sprintf(
+				__( 'Mode: %s not available (ARVE Pro not active), switching to normal mode', 'advanced-responsive-video-embedder' ),
+				$a['mode']
+			),
+		);
 		$a['mode'] = 'normal';
 	}
 
@@ -531,7 +481,7 @@ function sc_filter_detect_provider_and_id_from_url( array $a ) {
 
 function sc_filter_build_iframe_src( array $a ) {
 
-	if ( ! empty( $a['id'] ) || ! empty( $a['provider'] ) ) {
+	if ( $a['src'] ) {
 		return $a;
 	}
 
