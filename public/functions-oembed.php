@@ -1,6 +1,12 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+/**
+ * Info: https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-oembed.php
+ * https://github.com/iamcal/oembed/tree/master/providers
+ *
+ *
+ */
 function add_oembed_providers() {
 	wp_oembed_add_provider( 'http://clips.twitch.tv/*', 'https://api.twitch.tv/v5/oembed' );
 	wp_oembed_add_provider( 'https://clips.twitch.tv/*', 'https://api.twitch.tv/v5/oembed' );
@@ -8,6 +14,10 @@ function add_oembed_providers() {
 	wp_oembed_add_provider( 'https://www.twitch.tv/*', 'https://api.twitch.tv/v5/oembed' );
 	wp_oembed_add_provider( 'http://twitch.tv/*', 'https://api.twitch.tv/v5/oembed' );
 	wp_oembed_add_provider( 'https://twitch.tv/*', 'https://api.twitch.tv/v5/oembed' );
+	wp_oembed_add_provider( 'https://fast.wistia.com/embed/iframe/*', 'https://fast.wistia.com/oembed.json' );
+	wp_oembed_add_provider( 'https://fast.wistia.com/embed/playlists/*', 'https://fast.wistia.com/oembed.json' );
+	wp_oembed_add_provider( 'https://*.wistia.com/medias/*', 'https://fast.wistia.com/oembed.json' );
+	wp_oembed_add_provider( 'https://d.tube/v/*', 'https://api.d.tube/oembed' );
 }
 
 function filter_oembed_dataparse( $result, $data, $url ) {
