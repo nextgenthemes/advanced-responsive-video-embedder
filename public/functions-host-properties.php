@@ -159,11 +159,11 @@ function get_host_properties() {
 			],
 		],
 		'dtube'           => [
-			'name'       => 'DTube',
-			'oembed' => true,
-			'regex'      => '%https?://d\.tube(/#!)?/v/(?<id>[^"]+)%i',
-			'embed_url'  => 'https://emb.d.tube/#!/%s',
-			'tests'      => [
+			'name'      => 'DTube',
+			'oembed'    => true,
+			'regex'     => '%https?://d\.tube(/#!)?/v/(?<id>[^"]+)%i',
+			'embed_url' => 'https://emb.d.tube/#!/%s',
+			'tests'     => [
 				[
 					'url' => 'https://d.tube/#!/v/exyle/bgc244pb',
 					'id'  => 'exyle/bgc244pb',
@@ -304,22 +304,6 @@ function get_host_properties() {
 					'id'  => 11322264
 				],
 			],
-		],
-		'mpora'           => [
-			'name'           => 'MPORA',
-			'regex'          => '#https?://(www\.)?mpora\.(com|de)/videos/(?<id>[a-z0-9]+)#i',
-			'embed_url'      => 'http://mpora.com/videos/%s/embed',
-			'auto_thumbnail' => true,
-			'tests'          => [
-				[
-					'url' => 'http://mpora.com/videos/AAdphry14rkn',
-					'id'  => 'AAdphry14rkn'
-				],
-				[
-					'url' => 'http://mpora.de/videos/AAdpxhiv6pqd',
-					'id'  => 'AAdpxhiv6pqd'
-				],
-			]
 		],
 		'myspace'         => [
 			'name'           => 'myspace',
@@ -508,7 +492,7 @@ function get_host_properties() {
 		],
 		'wistia'          => [
 			'name'           => 'Wistia',
-			# fast.wistia.net/embed/iframe/g5pnf59ala?videoFoam=true
+			'oembed'         => true,
 			'regex'          => '#https?://fast\.wistia\.net/embed/iframe/(?<id>[a-z0-9]+)#i',
 			'embed_url'      => 'https://fast.wistia.net/embed/iframe/%s',
 			'default_params' => 'videoFoam=true',
