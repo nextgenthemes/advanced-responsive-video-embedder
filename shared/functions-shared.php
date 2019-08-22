@@ -843,8 +843,8 @@ function arve_get_host_properties() {
 			#'default_params' => 'wmode=transparent&player=full&f=1&disablebranding=1',
 			'embed_url'      => 'https://www.viddler.com/embed/%s/',
 			'default_params' => '?f=1&player=full&secret=59822701&disablebackwardseek=false&disableseek=false&disableforwardseek=false&make_responsive=false&loop=false&nologo=false&hd=false',
-			'auto_thumbnail' => true,
-			'auto_title'     => true,
+			'auto_thumbnail' => false,
+			'auto_title'     => false,
 			'aspect_ratio'   => '545:349',
 			'tests' => array(
 				array(
