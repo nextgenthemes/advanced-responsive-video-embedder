@@ -562,13 +562,11 @@ function all_settings() {
 		],
 		'lang'                  => [
 			'default'   => null,
-			'shortcode' => true,
 			'label'     => __( '2 letter language (TED talks only)', 'advanced-responsive-video-embedder' ),
 			'option'    => false,
 			'type'      => 'string',
 		],
 		'start'                 => [
-			'shortcode' => true,
 			'default'   => null,
 			'option'    => false,
 			'label'     => __( 'Starttime in seconds (Vimeo only)', 'advanced-responsive-video-embedder' ),

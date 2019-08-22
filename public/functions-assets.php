@@ -1,36 +1,24 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+use function Nextgenthemes\Utils\contains;
 use function Nextgenthemes\Asset\register;
 
 function register_assets() {
 
-	$options     = options();
-	$sc_settings = shortcode_settings();
+	$options = options();
 
 	register( [
 		'handle' => 'advanced-responsive-video-embedder',
 		'src'    => url( 'dist/css/arve.css' ),
-		'deps'   => [],
 		'ver'    => VERSION,
 	] );
 
 	register( [
 		'handle' => 'advanced-responsive-video-embedder',
 		'src'    => url( 'dist/js/arve.js' ),
-		'deps'   => [ 'jquery' ],
 		'ver'    => VERSION,
 	] );
-
-	register( [
-		'handle' => 'arve-block',
-		'src'    => url( 'dist/js/wp-block.js' ),
-		'deps'   => array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ),
-		'ver'    => VERSION,
-		'footer' => false
-	] );
-
-	wp_localize_script( 'arve-block', 'ARVEsettings', $sc_settings );
 
 	if ( $options['always_enqueue_assets'] ) {
 		wp_enqueue_style( 'advanced-responsive-video-embedder' );
@@ -45,6 +33,16 @@ function register_gb_block() {
 	foreach ( $sc_settings as $key => $v ) {
 		$attr[ $key ] = [ 'type' => 'string' ];
 	}
+
+	register( [
+		'handle' => 'arve-block',
+		'src'    => url( 'dist/js/gb-block.js' ),
+		'deps'   => array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ),
+		'ver'    => VERSION,
+		'footer' => false
+	] );
+
+	wp_localize_script( 'arve-block', 'ARVEsettings', $sc_settings );
 
 	// Register our block, and explicitly define the attributes we accept.
 	register_block_type( 'nextgenthemes/arve-block', [
@@ -64,9 +62,10 @@ function gb_attr( $shortcode_settings ) {
 	return $attr;
 }
 
+
 function maybe_enqueue_assets( $content ) {
 
-	if ( strpos( $content, 'class="arve' ) !== false ) {
+	if ( contains( $content, 'class="arve' ) ) {
 		wp_enqueue_style( 'advanced-responsive-video-embedder' );
 		wp_enqueue_script( 'advanced-responsive-video-embedder' );
 	}

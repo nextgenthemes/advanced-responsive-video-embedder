@@ -1,16 +1,14 @@
-(function ( $ ) {
+( function( $ ) {
 	'use strict';
 
-	$( document).on( 'click', '[data-nextgenthemes-notice-id] .notice-dismiss', function() {
+	$( document ).on( 'click', '[data-nextgenthemes-notice-id] .notice-dismiss', function() {
+		const id = $( this ).closest( '[data-nextgenthemes-notice-id]' ).attr( 'data-nextgenthemes-notice-id' );
 
-		var id = $( this ).closest( '[data-nextgenthemes-notice-id]' ).attr( 'data-nextgenthemes-notice-id' );
-
-		$.ajax({
+		$.ajax( {
 			url: ajaxurl,
 			data: {
-				action: id
-			}
-		});
-	});
-
+				action: id,
+			},
+		} );
+	} );
 }( jQuery ) );

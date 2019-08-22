@@ -257,13 +257,9 @@ function sc_filter_mode_fallback( array $a ) {
 
 	$supported_modes = get_supported_modes();
 
-	if ( 'lazyload' === $a['mode'] && empty( $a['img_src'] ) ) {
+	if ( function_exists( '\Nextgenthemes\ARVE\Pro\init' ) && empty( $a['img_src'] ) ) {
 
-		if ( array_key_exists( 'lazyload-alt', $supported_modes ) ) {
-			$a['mode'] = 'lazyload-alt';
-		} else {
-			$a['mode'] = 'normal';
-		}
+		$a['mode'] = 'lazyload-alt';
 
 	} elseif ( ! array_key_exists( $a['mode'], $supported_modes ) ) {
 
@@ -275,6 +271,7 @@ function sc_filter_mode_fallback( array $a ) {
 				$a['mode']
 			),
 		);
+
 		$a['mode'] = 'normal';
 	}
 
