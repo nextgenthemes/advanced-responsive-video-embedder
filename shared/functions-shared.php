@@ -715,16 +715,6 @@ function arve_get_host_properties() {
 				array( 'url' => 'http://movieweb.com/v/VIOF6ytkiMEMSR/embed', 'id' => 'VIOF6ytkiMEMSR' ),
 			),
 		),
-		'mpora' => array(
-			'name'           => 'MPORA',
-			'regex'          => $s . 'mpora\.(com|de)/videos/(?<id>[a-z0-9]+)',
-			'embed_url'      => 'http://mpora.com/videos/%s/embed',
-			'auto_thumbnail' => true,
-			'tests' => array(
-				array( 'url' => 'http://mpora.com/videos/AAdphry14rkn', 'id' => 'AAdphry14rkn' ),
-				array( 'url' => 'http://mpora.de/videos/AAdpxhiv6pqd', 'id' => 'AAdpxhiv6pqd' ),
-			)
-		),
 		'myspace' => array(
 			#<iframe width="480" height="270" src="//media.myspace.com/play/video/house-of-lies-season-5-premiere-109903807-112606834" frameborder="0" allowtransparency="true" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe><p><a href="https://media.myspace.com/showtime/video/house-of-lies-season-5-premiere/109903807">House of Lies Season 5 Premiere</a> from <a href="https://media.myspace.com/Showtime">Showtime</a> on <a href="https://media.myspace.com">Myspace</a>.</p>
 			'regex'          => $s . 'myspace\.com/.+/(?<id>[0-9]+)',
@@ -734,17 +724,6 @@ function arve_get_host_properties() {
 				array( 'url' => 'https://myspace.com/myspace/video/dark-rooms-the-shadow-that-looms-o-er-my-heart-live-/109471212', 'id' => 109471212 ),
 			)
 		),
-		/*
-		'myvideo' => array(
-			'name'           => 'MyVideo',
-			'regex'          => $s . 'myvideo\.de/(watch|embed)/([0-9]+)',
-			'embed_url'      => 'http://www.myvideo.de/embedded/public/%s',
-			'auto_thumbnail' => false,
-			'tests' => array(
-				'http://www.myvideo.de/watch/8432624/Angeln_mal_anders',
-			)
-		),
-		*/
 		'snotr' => array(
 			'regex'          => $s . 'snotr\.com/(video|embed)/(?<id>[0-9]+)',
 			'embed_url'      => 'http://www.snotr.com/embed/%s',
