@@ -1,17 +1,20 @@
 const qs  = document.querySelector.bind( document );
 const qsa = document.querySelectorAll.bind( document );
 
+function unwrap( el ) {
+	// get the element's parent node
+	const parent = el.parentNode;
+	// move all children out of the element
+	while ( el.firstChild ) {
+		parent.insertBefore( el.firstChild, el );
+	}
+	// remove the empty element
+	parent.removeChild( el );
+}
+
 function removeUnwantedStuff() {
 	qsa( '.arve p, .arve .video-wrap, .arve .fluid-width-video-wrapper, .arve .fluid-vids' ).forEach( ( el ) => {
-		const parent = el.parentNode;
-
-		// move all children out of the element
-		while ( el.firstChild ) {
-			parent.insertBefore( el.firstChild, el );
-		}
-
-		// remove the empty element
-		parent.removeChild( el );
+		unwrap( el );
 	} );
 
 	qsa( '.arve br' ).forEach( ( el ) => {
@@ -30,7 +33,7 @@ function removeUnwantedStuff() {
 			el.classList.remove( [ 'wp-embed-aspect-16-9', 'wp-has-aspect-ratio' ] );
 
 			if ( $WRAPPER ) {
-				$WRAPPER.contents().unwrap();
+				unwrap( $WRAPPER );
 			}
 		}
 	} );
