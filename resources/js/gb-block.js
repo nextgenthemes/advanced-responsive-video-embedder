@@ -3,6 +3,14 @@
 const wp = window.wp;
 const el = window.wp.element.createElement;
 
+wp.data.dispatch( 'core/edit-post' ).hideBlockTypes( [
+	'core-embed/youtube',
+	'core-embed/vimeo',
+	'core-embed/dailymotion',
+	'core-embed/collegehumor',
+	'core-embed/ted',
+] );
+
 /*
  * Keypair to gutenberg component
  */
