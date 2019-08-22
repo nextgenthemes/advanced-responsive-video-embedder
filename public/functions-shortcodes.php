@@ -3,6 +3,12 @@ namespace Nextgenthemes\ARVE;
 
 function shortcode( array $a, $content = null ) {
 
+	$override = apply_filters( 'nextgenthemes/arve/shortcode_override', '', $a, $content );
+
+	if ( '' !== $override ) {
+		return $override;
+	}
+
 	if ( ! empty( $a['url'] ) ) {
 
 		$embed_check     = new EmbedChecker( $a );
@@ -47,28 +53,6 @@ function build_video( array $input_atts ) {
 	$html .= get_debug_info( $html, $a, $input_atts );
 
 	return $html;
-}
-
-function build_video_html( array $a ) {
-
-	return build_tag(
-		array(
-			'name'    => 'arve',
-			'tag'     => 'div',
-			'content' => arve_embed( arve_embed_inner_html( $a ), $a ) . promote_link( $a['arve_link'] ),
-			'attr'    => array(
-				'class'         => empty( $a['align'] ) ? 'arve' : 'arve align' . $a['align'],
-				'data-mode'     => $a['mode'],
-				'data-provider' => $a['provider'],
-				'id'            => $a['wrapper_id'],
-				'style'         => empty( $a['maxwidth'] ) ? false : sprintf( 'max-width:%dpx;', $a['maxwidth'] ),
-				// Schema.org
-				'itemscope'     => '',
-				'itemtype'      => 'http://schema.org/VideoObject'
-			)
-		),
-		$a
-	);
 }
 
 function shortcode_option_defaults() {
