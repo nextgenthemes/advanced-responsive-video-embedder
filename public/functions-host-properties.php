@@ -72,7 +72,7 @@ function get_host_properties() {
 		'brightcove'      => [
 			'name'         => 'Brightcove',
 			'regex'        => '#https?://(players|link)\.brightcove\.net/(?<account_id>[0-9]+)/(?<brightcove_player>[a-z0-9]+)_(?<brightcove_embed>[a-z0-9]+)/index\.html\?videoId=(?<id>[0-9]+)#i',
-			'oembed'   => false,
+			'oembed'       => false,
 			'embed_url'    => 'https://players.brightcove.net/%s/%s_%s/index.html?videoId=%s',
 			'requires_src' => true,
 			'tests'        => [
@@ -104,7 +104,6 @@ function get_host_properties() {
 				[
 					'url'          => 'http://www.collegehumor.com/video/6854928/troopers-holopad',
 					'id'           => 6854928,
-					'oembed_title' => 'Troopers Holopad',
 				],
 			]
 		],
@@ -137,19 +136,17 @@ function get_host_properties() {
 				[
 					'url'          => 'http://www.dailymotion.com/video/x41ia79_mass-effect-andromeda-gameplay-alpha_videogames',
 					'id'           => 'x41ia79',
-					'oembed_title' => 'Mass Effect Andromeda - Gameplay Alpha',
 				],
 				[
 					'url'          => 'http://dai.ly/x3cwlqz',
 					'id'           => 'x3cwlqz',
-					'oembed_title' => 'Mass Effect Andromeda',
 				],
 			],
 		],
-		'dailymotionlist' => [
-			'name'           => 'Dailymotion Jukebox',
+		'dailymotion_playlist' => [
+			'name'           => 'Dailymotion Playlist',
 			'regex'          => '#https?://(www\.)?dailymotion\.com/playlist/(?<id>[a-z0-9]+)#i',
-			'embed_url'      => 'https://www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2F%s%2F1&',
+			'embed_url'      => 'https://www.dailymotion.com/embed/playlist/%s',
 			'auto_thumbnail' => false,
 			'tests'          => [
 				[
