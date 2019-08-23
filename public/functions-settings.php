@@ -155,7 +155,6 @@ function shortcode_pairs() {
 			'webm'              => null,
 			'ogv'               => null,
 			'oembed_data'       => null,
-			'wrapper_id'        => null,
 			'account_id'        => null,
 			'iframe_name'       => null,
 			'brightcove_player' => null,
@@ -339,6 +338,7 @@ function all_settings() {
 		'grow'                  => [
 			'tag'         => 'pro',
 			'default'     => true,
+			'type'        => 'boolean',
 			'label'       => __( 'Expand on play?', 'advanced-responsive-video-embedder' ),
 			'type'        => 'bool+default',
 			'description' => __( 'Expands video size after clicking the thumbnail (Lazyload Mode)', 'advanced-responsive-video-embedder' ),
@@ -437,8 +437,8 @@ function all_settings() {
 			'type'        => 'integer',
 			'description' => sprintf(
 				// Translators: $content_width value.
-				__( 'In pixels. 0 or empty (default) will make ARVE use $content_width value %s from your theme.', 'advanced-responsive-video-embedder' ),
-				empty( $GLOBALS['content_width'] ) ? '' : $GLOBALS['content_width']
+				__( 'In pixels. 0 (default) will make ARVE use $content_width value %s from your theme.', 'advanced-responsive-video-embedder' ),
+				empty( $GLOBALS['content_width'] ) ? '(MISSING will use 900px)' : $GLOBALS['content_width']
 			),
 		],
 		'align_maxwidth'         => [
