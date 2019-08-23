@@ -3,7 +3,7 @@ namespace Nextgenthemes\ARVE;
 
 use function Nextgenthemes\Utils\attr;
 
-function build_video_html( array $a ) {
+function build_html( array $a ) {
 
 	return build_tag(
 		array(
@@ -25,70 +25,105 @@ function build_video_html( array $a ) {
 	);
 }
 
-function build_iframe_video( array $a ) {
+function build_iframe_tag( array $a ) {
 
-	if ( 'html5' === $a['provider'] ) :
+	$sandbox = 'allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox';
+	$class   = ( 'wistia' === $a['provider'] ) ? 'arve-iframe fitvidsignore wistia_embed' : 'arve-iframe fitvidsignore';
 
-		return build_tag(
-			[
-				'name'    => 'video',
-				'tag'     => 'video',
-				'content' => empty( $a['video_sources_html'] ) ? '' : $a['video_sources_html'],
-				'attr'    => [
-					// WPmaster
-					'autoplay'           => in_array( $a['mode'], [ 'lazyload', 'lightbox', 'link-lightbox' ], true ) ? false : $a['autoplay'],
-					'controls'           => $a['controls'],
-					'controlslist'       => $a['controlslist'],
-					'loop'               => $a['loop'],
-					'preload'            => $a['preload'],
-					'width'              => empty( $a['width'] )     ? false : $a['width'],
-					'height'             => empty( $a['height'] )    ? false : $a['height'],
-					'poster'             => empty( $a['img_src'] )   ? false : $a['img_src'],
-					'src'                => empty( $a['video_src'] ) ? false : $a['video_src'],
-					// ARVE only
-					'class'              => 'arve-video fitvidsignore',
-					'muted'              => $a['muted'],
-					'playsinline'        => $a['playsinline'],
-					'webkit-playsinline' => $a['playsinline'],
-				],
+	if ( 'vimeo' === $a['provider'] ) {
+		$sandbox .= ' allow-forms';
+	}
+
+	if ( ! $a['sandbox'] ) {
+		$sandbox = false;
+	}
+
+	return build_tag(
+		[
+			'name'    => 'iframe',
+			'tag'     => 'iframe',
+			'content' => '',
+			'attr'    => array(
+				'allow'           => 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture',
+				'allowfullscreen' => '',
+				'class'           => ( 'wistia' === $a['provider'] ) ? 'arve-iframe fitvidsignore wistia_embed' : 'arve-iframe fitvidsignore',
+				'frameborder'     => '0',
+				'name'            => $a['iframe_name'],
+				'sandbox'         => $sandbox,
+				'scrolling'       => 'no',
+				'src'             => $a['src'],
+				'width'           => empty( $a['width'] )  ? false : $a['width'],
+				'height'          => empty( $a['height'] ) ? false : $a['height']
+			),
+		],
+		$a
+	);
+}
+
+function build_video_tag( array $a ) {
+
+	return build_tag(
+		[
+			'name'    => 'video',
+			'tag'     => 'video',
+			'content' => build_tracks_html(),
+			'attr'    => [
+				// WPmaster
+				'autoplay'           => in_array( $a['mode'], [ 'lazyload', 'lightbox', 'link-lightbox' ], true ) ? false : $a['autoplay'],
+				'controls'           => $a['controls'],
+				'controlslist'       => $a['controlslist'],
+				'loop'               => $a['loop'],
+				'preload'            => $a['preload'],
+				'width'              => empty( $a['width'] )     ? false : $a['width'],
+				'height'             => empty( $a['height'] )    ? false : $a['height'],
+				'poster'             => empty( $a['img_src'] )   ? false : $a['img_src'],
+				'src'                => empty( $a['video_src'] ) ? false : $a['video_src'],
+				// ARVE only
+				'class'              => 'arve-video fitvidsignore',
+				'muted'              => $a['muted'],
+				'playsinline'        => $a['playsinline'],
+				'webkit-playsinline' => $a['playsinline'],
 			],
-			$a
-		);
+		],
+		$a
+	);
+}
 
-	else :
+function build_tracks_html( array $a ) {
 
-		$sandbox = 'allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox';
+	$tracks_html = '';
 
-		if ( 'vimeo' === $a['provider'] ) {
-			$sandbox .= ' allow-forms';
+	for ( $n = 1; $n <= NUM_TRACKS; $n++ ) {
+
+		if ( empty( $a[ "track_{$n}" ] ) ) {
+			return $a;
 		}
 
-		if ( ! $a['sandbox'] ) {
-			$sandbox = false;
-		}
-
-		return build_tag(
-			[
-				'name'    => 'iframe',
-				'tag'     => 'iframe',
-				'content' => '',
-				'attr'    => array(
-					'allow'           => 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture',
-					'allowfullscreen' => '',
-					'class'           => 'arve-iframe fitvidsignore',
-					'frameborder'     => '0',
-					'name'            => $a['iframe_name'],
-					'sandbox'         => $sandbox,
-					'scrolling'       => 'no',
-					'src'             => $a['src'],
-					'width'           => empty( $a['width'] )  ? false : $a['width'],
-					'height'          => empty( $a['height'] ) ? false : $a['height']
-				),
-			],
-			$a
+		preg_match(
+			'#-(?<type>captions|chapters|descriptions|metadata|subtitles)-(?<lang>[a-z]{2}).vtt$#i',
+			$a[ "track_{$n}" ],
+			$matches
 		);
 
-	endif;
+		if ( empty( $matches[1] ) ) {
+			$a[ "track_{$n}" ] = new \WP_Error( 'track', __( 'Track kind or language code could not detected from filename', 'advanced-responsive-video-embedder' ) );
+			return $a;
+		}
+
+		$label = empty( $a[ "track_{$n}_label" ] ) ? get_language_name_from_code( $matches['lang'] ) : $a[ "track_{$n}_label" ];
+
+		$attr = [
+			'default' => ( 1 === $n ) ? true : false,
+			'kind'    => $matches['type'],
+			'label'   => $label,
+			'src'     => $a[ "track_{$n}" ],
+			'srclang' => $matches['lang'],
+		];
+
+		$tracks_html .= sprintf( '<track%s>', attr( $attr ) );
+	}//end for
+
+	return $tracks_html;
 }
 
 function html_id( $html_attr ) {
@@ -119,12 +154,8 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 	if ( isset( $_GET['arve-debug-options'] ) ) {
 		static $show_options_debug = true;
 
-		$options               = get_option( 'arve_options_main' );
-		$options['shortcodes'] = get_option( 'arve_options_shortcodes' );
-		$options['params']     = get_option( 'arve_options_params' );
-
 		if ( $show_options_debug ) {
-			$html .= sprintf( 'Options: <pre>%s</pre>', get_var_dump( $options ) );
+			$html .= sprintf( 'Options: <pre>%s</pre>', get_var_dump( options() ) );
 		}
 
 		$show_options_debug = false;
@@ -139,15 +170,15 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 
 	if ( ! empty( $_GET['arve-debug-attr'] ) ) {
 		$debug_attr = sanitize_text_field( wp_unslash( $_GET['arve-debug-attr'] ) );
-		// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
 		// phpcs:disable Squiz.PHP.DiscouragedFunctions.Discouraged
-		$input_attr = isset( $input_atts[ $debug_attr ] ) ? print_r( $input_atts[ $debug_attr ] ) : 'not set';
+		$input_attr = isset( $input_atts[ $debug_attr ] ) ? print_r( $input_atts[ $debug_attr ], true ) : 'not set';
 		$html      .= sprintf(
-			'<pre style="%1$s">a[%2$s]: %3$sa[%2$s]: %4$s</pre>',
+			'<pre style="%1$s">in %2$s: %3$s%2$s: %4$s</pre>',
 			esc_attr( $pre_style ),
 			esc_html( $debug_attr ),
 			esc_html( $input_attr ) . PHP_EOL,
-			esc_html( print_r( $a[ $debug_attr ] ) )
+			// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
+			esc_html( print_r( $a[ $debug_attr ], true ) )
 			// phpcs:enable WordPress.PHP.DevelopmentFunctions.error_log_print_r
 			// phpcs:enable Squiz.PHP.DiscouragedFunctions.Discouraged
 		);
@@ -231,7 +262,12 @@ function arve_embed_inner_html( array $a ) {
 	}
 
 	$html .= build_tag( [ 'name' => 'button' ], $a );
-	$html .= build_iframe_video( $a );
+
+	if ( 'html5' === $a['provider'] ) {
+		$html .= build_video_tag( $a );
+	} else {
+		$html .= build_iframe_tag( $a );
+	}
 
 	return $html;
 }
@@ -264,20 +300,18 @@ function build_tag( array $tag, array $a ) {
 
 	} else {
 
-		$is_dailymotion = ( 'dailymotion' === $a['provider'] );
-
 		if ( ! empty( $tag['content'] ) || ( isset( $tag['content'] ) && '' === $tag['content'] ) ) {
 			$html = sprintf(
 				'<%1$s%2$s>%3$s</%1$s>',
 				esc_html( $tag['tag'] ),
-				attr( $tag['attr'], $is_dailymotion ),
+				attr( $tag['attr'] ),
 				$tag['content']
 			);
 		} else {
 			$html = sprintf(
 				'<%s%s>',
 				esc_html( $tag['tag'] ),
-				attr( $tag['attr'], $is_dailymotion )
+				attr( $tag['attr'] )
 			);
 		}
 	}
