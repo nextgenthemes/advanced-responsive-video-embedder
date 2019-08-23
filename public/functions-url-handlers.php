@@ -1,6 +1,8 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+use Nextgenthemes\Utils\starts_with;
+
 function create_url_handlers() {
 
 	$properties = get_host_properties();
@@ -35,7 +37,7 @@ function url_detection_to_shortcode( $provider, array $matches, array $attr, $ur
 
 	foreach ( $url_query as $key => $value ) {
 
-		if ( \Nextgenthemes\Utils\starts_with( $key, 'arve-' ) ) {
+		if ( starts_with( $key, 'arve-' ) ) {
 			$key              = substr( $key, 5 );
 			$old_atts[ $key ] = $value;
 		}

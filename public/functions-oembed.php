@@ -4,8 +4,6 @@ namespace Nextgenthemes\ARVE;
 /**
  * Info: https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-oembed.php
  * https://github.com/iamcal/oembed/tree/master/providers
- *
- *
  */
 function add_oembed_providers() {
 	wp_oembed_add_provider( 'http://clips.twitch.tv/*', 'https://api.twitch.tv/v5/oembed' );

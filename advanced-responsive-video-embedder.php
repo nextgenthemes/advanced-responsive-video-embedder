@@ -36,8 +36,6 @@ function init() {
 	if ( ! defined( 'Nextgenthemes\VERSION' ) ) {
 		define( 'Nextgenthemes\PLUGIN_FILE', __FILE__ );
 		define( 'Nextgenthemes\TEXTDOMAIN', 'advanced-responsive-video-embedder' );
-		define( 'Nextgenthemes\Admin\TEXTDOMAIN', 'advanced-responsive-video-embedder' );
-		define( 'Nextgenthemes\Utils\TEXTDOMAIN', 'advanced-responsive-video-embedder' );
 	}
 
 	require_once __DIR__ . '/nextgenthemes/init.php';
@@ -76,28 +74,22 @@ function init() {
 	add_filter( 'the_content',                 __NAMESPACE__ . '\maybe_enqueue_assets', 99 );
 
 	foreach ( [
-		'validate'                         => -99,
-		'fallbacks'                        => -90,
-		'detect_html5'                     => -15,
-		'detect_provider_and_id_from_url'  => -10,
-		'detect_youtube_playlist'          => -10,
-		'default_aspect_ratio'             => -10,
-		'iframe_fallback'                  => 0,
-		'aspect_ratio_gcd'                 => 0,
-		'get_media_gallery_thumbnail'      => 10,
-		'get_media_gallery_video'          => 10,
-		'liveleak_id_fix'                  => 10,
-		'maxwidth_when_aligned'            => 10,
-		'mode_fallback'                    => 10,
-		'autoplay_off_after_ran_once'      => 15,
-		'dailymotion_jukebox_aspect_ratio' => 20,
-		'build_tracks_html'                => 20,
-		'build_iframe_src'                 => 20,
-		'iframe_src_query'                 => 25,
-		'iframe_src_autoplay_query'        => 30,
-		// 'validate_again'                   => 80,
-		'set_wrapper_id'                   => 90,
-		'set_fixed_dimensions'             => 90,
+		'validate'                        => -99,
+		'detect_html5'                    => -15,
+		'detect_provider_and_id_from_url' => -10,
+		'detect_youtube_playlist'         => -10,
+		'aspect_ratio'                    => -10,
+		'iframe_fallback'                 => 0,
+		'get_media_gallery_thumbnail'     => 10,
+		'get_media_gallery_video'         => 10,
+		'liveleak_id_fix'                 => 10,
+		'maxwidth_when_aligned'           => 10,
+		'mode_fallback'                   => 14,
+		'autoplay_off_after_ran_once'     => 15,
+		'iframe_src'                      => 20,
+		// 'validate_again'                  => 80,
+		'set_wrapper_id'                  => 90,
+		'set_fixed_dimensions'            => 90,
 	] as $filter => $priority ) {
 		add_filter( 'shortcode_atts_arve', __NAMESPACE__ . "\sc_filter_$filter", $priority );
 	};
@@ -124,11 +116,11 @@ function log( $log ) {
     if ( true === WP_DEBUG ) {
 
         if ( is_string( $log ) ) {
-			$log .= "\n";
+			$log .= PHP_EOL;
         } else {
 			$log = print_r( $log, true );
         }
 
-		error_log( $log, 3, dirname( __DIR__ ) . '/arve.log' );
+		error_log( $log, 3, __FILE__ . '.log' );
     }
 }
