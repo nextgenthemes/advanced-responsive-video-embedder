@@ -23,11 +23,6 @@ function filter_oembed_dataparse( $result, $data, $url ) {
 	$a = oembed2args( $data, $url );
 
 	if ( $a ) {
-		/*
-		$arve_url_query  = extract_query_array( $url, 'arve' );
-		$a               = array_merge( $a, $arve_url_query );
-		$a['parameters'] = extract_query_array( $url, 'arve-ifp' );
-		*/
 		return build_video( $a );
 	}
 
@@ -73,57 +68,3 @@ function vimeo_referer( $args, $url ) {
 
 	return $args;
 }
-
-function extract_query_array( $url, $key ) {
-
-	$parsed_url = wp_parse_url( $url );
-
-	if ( empty( $parsed_url['query'] ) ) {
-		return [];
-	}
-
-	wp_parse_str( $parsed_url['query'], $url_query );
-
-	if ( ! empty( $url_query[ $key ] ) && is_array( $url_query[ $key ] ) ) {
-		return $url_query[ $key ];
-	}
-
-	return [];
-}
-
-function remove_query_array( $url, $key ) {
-
-	$parsed_url = wp_parse_url( $url );
-
-	if ( empty( $parsed_url['query'] ) ) {
-		return $url;
-	}
-
-	wp_parse_str( $parsed_url['query'], $query_array );
-	$url = str_replace( $parsed_url['query'], '', $url );
-	unset( $query_array[ $key ] );
-	$url = add_query_arg( $query_array, $url );
-
-	return $url;
-}
-
-/*
-function get_url_kp( $url, $extract_array_name ) {
-
-	$parsed_url = wp_parse_url( $url );
-
-	if ( empty( $parsed_url['query'] ) ) {
-		return [];
-	}
-
-	return parse_str( $parsed_url['query'], $url_query );
-}
-
-function get_query_str_without_args( $url, $key ) {
-
-	$url        = remove_query_array( $url, 'arve' );
-	$parsed_url = wp_parse_url( $url );
-
-	return $parsed_url['query'];
-}
-*/
