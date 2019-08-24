@@ -28,8 +28,8 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *   SEO friendly, lets you specify title, description, upload date to provide search engines with the schema.org data they like to have for better indexing.
 *   <abbr title="What You See Is What You Get">WYSIWYG</abbr> support. No more messing around with shortcodes and previewing.
 *   New improved dialog for embedding videos.
-*   Magically makes those url embedded videos responsive.
-*   No 'lock in' if you do not use shortcodes and use providers WordPress already supports.
+*   Magically makes videos responsive you already embedded with WordPress default features.
+*   No 'lock in' if you do not use the ARVE Gutenberg Block or shortcodes.
 *   Supports [almost every video host](https://nextgenthemes.com/plugins/arve-pro/#support-table) that supports iframe embed codes.
 *   Embeds via pasting the URL in its own line just like WordPress!
 *   Optionally use very powerful Shortcodes instead.
@@ -37,7 +37,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *   One single button for all providers.
 *   Responsive embeds with CSS, much better then with JavaScript.
 *   Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disables related videos at the end … to help keep people on your site rather then going to YouTube or keep watching videos.
-*   Autostart (for providers that support it, mobile browsers prevent this)
+*   Limited Autostart (for providers that support it, mobile browsers prevent this)
 *   Custom URL parameters to use all options providers offer.
 *   Optional maximal width.
 *   Video alignment.
@@ -46,7 +46,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 
 ### [Supported Providers](https://nextgenthemes.com/plugins/arve-pro/#support-table) ###
 
-allmyvideos.net, Alugha, Archive.org, Break, Brightcove, CollegeHumor, Comedy Central, Dailymotion, Facebook, Funny or Die, IGN, Kickstarter, LiveLeak, Livestream, kla.tv, Metacafe, Movieweb, MPORA, Myspace, Snotr, Spike, TED Talks, Twitch, Ustream, RuTube.ru, Veoh, Vevo, Viddler, vidspot.net, Vine, Vimeo, VK, Vzaar, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist, HTML5 video files directly, Google_drive, Dropbox, Ooyala
+allmyvideos.net, Alugha, Archive.org, Break, Brightcove, CollegeHumor, Comedy Central, Dailymotion, Facebook, Funny or Die, IGN, Kickstarter, LiveLeak, Livestream, kla.tv, Metacafe, Movieweb, MPORA, Myspace, Snotr, Spike, TED Talks, Twitch, Veoh, Vevo, Viddler, vidspot.net, Vine, Vimeo, VK, Vzaar, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist, HTML5 video files directly, Google_drive, Dropbox, Ooyala
 [All providers with responsive iframe embed codes](https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding)
 
 ### Reviews ###
