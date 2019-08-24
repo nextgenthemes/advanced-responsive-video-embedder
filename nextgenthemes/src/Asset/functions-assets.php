@@ -1,26 +1,28 @@
 <?php
 namespace Nextgenthemes\Asset;
 
-function add_dep_to_script( $type, $handle, $dep ) {
+function add_dep_to_script( $handle, $dep ) {
 
-    if ( 'script' === $type ) {
+    $asset = $GLOBALS['wp_scripts']->query( $handle, 'registered' );
 
-    } elseif ( 'style' === $type ) {
-
-    }
+    add_dep_to_asset( $handle, $dep, $asset );
 }
 
-function add_dep_to_asset( $type, $handle, $dep ) {
-    global $wp_scripts;
+function add_dep_to_style( $handle, $dep ) {
 
-    $script = $wp_scripts->query( $handle, 'registered' );
+    $asset = $GLOBALS['wp_styles']->query( $handle, 'registered' );
 
-    if ( ! $script ) {
+    add_dep_to_asset( $handle, $dep, $asset );
+}
+
+function add_dep_to_asset( $handle, $dep, $asset ) {
+
+    if ( ! $asset ) {
         return false;
     }
 
-    if ( ! in_array( $dep, $script->deps ) ) {
-        $script->deps[] = $dep;
+    if ( ! in_array( $dep, $asset->deps ) ) {
+        $asset->deps[] = $dep;
     }
 
     return true;
