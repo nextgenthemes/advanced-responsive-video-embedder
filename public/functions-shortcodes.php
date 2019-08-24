@@ -1,6 +1,8 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+use function Nextgenthemes\Utils\starts_with;
+
 function shortcode( array $a, $content = null ) {
 
 	$override = apply_filters( 'nextgenthemes/arve/shortcode_override', '', $a, $content );
@@ -22,6 +24,28 @@ function shortcode( array $a, $content = null ) {
 	return build_video( $a, $content );
 }
 
+function test_shortcode( $a, $content = null ) {
+
+	$html = '';
+
+	if ( empty( $_GET['provider'] ) ) {
+		return 'put provider in url arg';
+	}
+
+	$providers = get_host_properties();
+	$provider  = sanitize_text_field( wp_unslash( $_GET['provider'] ) );
+
+	foreach ( $providers[ $provider ]['tests'] as $key => $value ) {
+
+		$sc    = sprintf( '[arve url="%s" mode="lazyload" maxwidth="500" title="Custom Title Test" /]', $value['url'] );
+		$html .= do_shortcode( $sc );
+		$sc    = sprintf( '[arve url="%s" mode="lightbox" maxwidth="200" /]', $value['url'] );
+		$html .= do_shortcode( $sc );
+	}
+
+	return $html;
+}
+
 function build_video( array $input_atts ) {
 
 	for ( $n = 1; $n <= NUM_TRACKS; $n++ ) {
@@ -32,7 +56,9 @@ function build_video( array $input_atts ) {
 	$a    = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
 	$html = '';
 
-	if ( ! empty( $a['errors'] ) && $a['errors']->get_error_code() ) {
+	#$a = add_error( $a, 'fatal','msg', false );
+
+	if ( ! empty( $a['errors'] ) ) {
 
 		$error_html = sprintf(
 			'<p><strong>%s</strong><br>',
@@ -44,12 +70,18 @@ function build_video( array $input_atts ) {
 		}
 
 		$error_html .= '</p>';
-		#$error_html .= get_debug_info( '', $a, $input_atts );
 
 		$html .= $error_html;
+
+		$error_codes = $a['errors']->get_error_codes();
+
+		if ( '' !== $a['errors']->get_error_code( 'fatal' ) ) {
+			$html .= get_debug_info( $html, $a, $input_atts );
+			return $html;
+		}
 	}
 
-	$html .= build_video_html( $a );
+	$html .= build_html( $a );
 	$html .= get_debug_info( $html, $a, $input_atts );
 
 	return $html;
@@ -89,7 +121,8 @@ function create_shortcodes() {
 		}
 	}
 
-	add_shortcode( 'arve', __NAMESPACE__ . '\shortcode' );
+	add_shortcode( 'arve',      __NAMESPACE__ . '\shortcode' );
+	add_shortcode( 'arve_test', __NAMESPACE__ . '\test_shortcode' );
 }
 
 function wp_video_shortcode_override( $out, $attr ) {
