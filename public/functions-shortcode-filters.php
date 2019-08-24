@@ -105,9 +105,18 @@ function aspect_ratio_gcd( $aspect_ratio ) {
 	return $aspect_ratio;
 }
 
-function sc_filter_maxwidth_when_aligned( array $a ) {
+function sc_filter_maxwidth( array $a ) {
 
 	$options = options();
+
+	if ( empty( $a['maxwidth'] ) ) {
+
+		if ( empty( $options['maxwidth'] ) ) {
+			$a['maxwidth'] = (int) empty( $GLOBALS['content_width'] ) ? DEFAULT_MAXWIDTH : $GLOBALS['content_width'];
+		} else {
+			$a['maxwidth'] = (int) $options['maxwidth'];
+		}
+	}
 
 	if ( $a['maxwidth'] < 100 && in_array( $a['align'], [ 'left', 'right', 'center' ], true ) ) {
 		$a['maxwidth'] = (int) $options['align_maxwidth'];
@@ -136,7 +145,7 @@ function sc_filter_mode_fallback( array $a ) {
 
 	$supported_modes = get_supported_modes();
 
-	if ( function_exists( '\Nextgenthemes\ARVE\Pro\init' ) && empty( $a['img_src'] ) ) {
+	if ( function_exists( '\Nextgenthemes\ARVE\Pro\init' ) && 'lazyload' === $a['mode'] && empty( $a['img_src'] ) ) {
 
 		$a['mode'] = 'lazyload-alt';
 

@@ -146,7 +146,6 @@ function shortcode_pairs() {
 		[
 			'id'                => null,
 			'provider'          => null,
-			'maxwidth'          => (string) default_maxwidth(),
 			'playsinline'       => 'y',
 			'preload'           => 'metadata',
 			'src'               => null,
@@ -168,17 +167,6 @@ function shortcode_pairs() {
 	}
 
 	return apply_filters( 'nextgenthemes/arve/shortcode_pairs', $pairs );
-}
-
-function default_maxwidth() {
-
-	$options = options();
-
-	if ( empty( $options['video_maxwidth'] ) ) {
-		return empty( $GLOBALS['content_width'] ) ? 900 : $GLOBALS['content_width'];
-	}
-
-	return $options['video_maxwidth'];
 }
 
 function shortcode_ui_settings() {
@@ -432,13 +420,12 @@ function all_settings() {
 		],
 		'maxwidth'               => [
 			'default'     => 0,
-			'shortcode'   => false,
 			'label'       => esc_html__( 'Maximal Width', 'advanced-responsive-video-embedder'),
 			'type'        => 'integer',
 			'description' => sprintf(
 				// Translators: $content_width value.
 				__( 'In pixels. 0 (default) will make ARVE use $content_width value %s from your theme.', 'advanced-responsive-video-embedder' ),
-				empty( $GLOBALS['content_width'] ) ? '(MISSING will use 900px)' : $GLOBALS['content_width']
+				empty( $GLOBALS['content_width'] ) ? '(MISSING! will use ' . DEFAULT_MAXWIDTH . 'px)' : $GLOBALS['content_width']
 			),
 		],
 		'align_maxwidth'         => [
