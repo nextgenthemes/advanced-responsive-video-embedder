@@ -19,7 +19,10 @@
 		</properties>
 	</rule>
 
-	<!-- Include the WordPress-Extra standard. -->
+	<rule ref="WordPress-Core">
+		<exclude name="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma"/>
+	</rule>
+
 	<rule ref="WordPress-Extra">
 		<exclude name="WordPress.Arrays.CommaAfterArrayItem.NoComma"/>
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
@@ -28,7 +31,7 @@
 		<exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents"/>
 	</rule>
 
-	<!-- Exclude Generic rules. -->
+	<!-- Exclude Generic rules.
 	<rule ref="Generic">
 		<exclude name="Generic.Arrays.ArrayIndent.KeyIncorrect"/>
 		<exclude name="Generic.Arrays.DisallowLongArraySyntax.Found"/>
@@ -51,7 +54,6 @@
 		<exclude name="Generic.NamingConventions.CamelCapsFunctionName.ScopeNotCamelCaps"/>
 	</rule>
 
-	<!-- Exclude PEAR rules. -->
 	<rule ref="PEAR">
 		<exclude name="PEAR.Classes.ClassDeclaration.OpenBraceNewLine"/>
 		<exclude name="PEAR.Commenting.ClassComment.Missing"/>
@@ -60,7 +62,7 @@
 		<exclude name="PEAR.Commenting.ClassComment.MissingLicenseTag"/>
 		<exclude name="PEAR.Commenting.ClassComment.MissingLinkTag"/>
 		<exclude name="PEAR.Commenting.ClassComment.MissingPackageTag"/>
-		<exclude name="PEAR.Commenting.FileComment.InvalidAuthors"/><!-- Not want to disclose and email -->
+		<exclude name="PEAR.Commenting.FileComment.InvalidAuthors"/>
 		<exclude name="PEAR.Commenting.FileComment.Missing"/>
 		<exclude name="PEAR.Commenting.FileComment.MissingCategoryTag"/>
 		<exclude name="PEAR.Commenting.FileComment.MissingVersion"/>
@@ -87,7 +89,6 @@
 		<exclude name="PEAR.NamingConventions.ValidFunctionName.PrivateNoUnderscore"/>
 	</rule>
 
-	<!-- Exclude Squiz rules.
 	<rule ref="Squiz">
 		<exclude name="Squiz.WhiteSpace.MemberVarSpacing.Incorrect"/>
 		<exclude name="Squiz.Objects.ObjectInstantiation.NotAssigned"/>
