@@ -4,6 +4,7 @@ use Symfony\Component\Yaml\Yaml;
 
 require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 // phpcs:disable Squiz.PHP.DiscouragedFunctions.Discouraged
+// phpcs:disable Squiz.PHP.CommentedOutCode.Found
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_dump
 
@@ -15,8 +16,8 @@ function provider( $provider ) {
 	foreach ( $endpoints['schemes'] as $key => $value ) {
 
 		$url = $endpoints['url'];
-		$url = str_replace( 'twitch.tv/v4', 'twitch.tv/v5', $url ) ;
-		$url = str_replace( '{format}', 'json', $url ) ;
+		$url = str_replace( 'twitch.tv/v4', 'twitch.tv/v5', $url );
+		$url = str_replace( '{format}', 'json', $url );
 
 		echo "wp_oembed_add_provider( '$value', '{$url}' );" . PHP_EOL;
 	}

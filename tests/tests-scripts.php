@@ -10,20 +10,23 @@ class Tests_Scripts_And_Styles extends WP_UnitTestCase {
 
 	public function test_registered() {
 
-		add_action( 'wp_head', function() {
+		add_action(
+			'wp_head',
+			function() {
 
-			$wp_styles  = wp_styles();
-			$wp_scripts = wp_scripts();
+				$wp_styles  = wp_styles();
+				$wp_scripts = wp_scripts();
 
-			$this->assertStringEndsWith(
-				'advanced-responsive-video-embedder/dist/css/arve.css',
-				$wp_styles->registered['advanced-responsive-video-embedder']->src
-			);
+				$this->assertStringEndsWith(
+					'advanced-responsive-video-embedder/dist/css/arve.css',
+					$wp_styles->registered['advanced-responsive-video-embedder']->src
+				);
 
-			$this->assertStringEndsWith(
-				'advanced-responsive-video-embedder/dist/js/arve.js',
-				$wp_scripts->registered['advanced-responsive-video-embedder']->src
-			);
-		} );
+				$this->assertStringEndsWith(
+					'advanced-responsive-video-embedder/dist/js/arve.js',
+					$wp_scripts->registered['advanced-responsive-video-embedder']->src
+				);
+			}
+		);
 	}
 }

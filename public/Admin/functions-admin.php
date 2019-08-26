@@ -57,7 +57,6 @@ function display_pro_ad() {
 
 function widget_text() {
 
-	// printf( '<big><strong><a href="%s">Hiring a Marketing Person</a></strong></big>', 'https://nextgenthemes.com/hiring-a-marketing-person/' );
 	echo '<p>';
 	printf( '<a href="%s">Documentation</a>, ', 'https://nextgenthemes.com/plugins/arve/documentation/' );
 	printf( '<a href="%s">Support</a>, ', 'https://nextgenthemes.com/support/' );
@@ -98,7 +97,7 @@ function add_dashboard_widget() {
 		// Merge the two arrays together so our widget is at the beginning.
 		$sorted_dashboard = array_merge( $arve_widget_backup, $normal_dashboard );
 		// Save the sorted array back into the original metaboxes.
-		// phpcs:disable WordPress.WP.GlobalVariablesOverride.OverrideProhibited
+		// phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
 		$GLOBALS['wp_meta_boxes']['dashboard']['normal']['core'] = $sorted_dashboard;
 		// phpcs:enable
 	}

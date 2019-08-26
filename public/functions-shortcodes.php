@@ -56,7 +56,7 @@ function build_video( array $input_atts ) {
 	$a    = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
 	$html = '';
 
-	#$a = add_error( $a, 'fatal','msg', false );
+	$a = add_error( $a, 'fatal', 'test fatal error', false );
 
 	if ( ! empty( $a['errors'] ) ) {
 
@@ -121,7 +121,7 @@ function create_shortcodes() {
 		}
 	}
 
-	add_shortcode( 'arve',      __NAMESPACE__ . '\shortcode' );
+	add_shortcode( 'arve', __NAMESPACE__ . '\shortcode' );
 	add_shortcode( 'arve_test', __NAMESPACE__ . '\test_shortcode' );
 }
 
@@ -129,9 +129,9 @@ function wp_video_shortcode_override( $out, $attr ) {
 
 	$options = options();
 
-	if ( ! $options['wp_video_override']
-		|| ! empty( $attr['wmv'] )
-		|| ! empty( $attr['flv'] )
+	if ( ! $options['wp_video_override'] ||
+		! empty( $attr['wmv'] ) ||
+		! empty( $attr['flv'] )
 	) {
 		return $out;
 	}

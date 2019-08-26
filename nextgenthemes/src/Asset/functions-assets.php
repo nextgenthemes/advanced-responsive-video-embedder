@@ -3,29 +3,29 @@ namespace Nextgenthemes\Asset;
 
 function add_dep_to_script( $handle, $dep ) {
 
-    $asset = $GLOBALS['wp_scripts']->query( $handle, 'registered' );
+	$asset = $GLOBALS['wp_scripts']->query( $handle, 'registered' );
 
-    add_dep_to_asset( $handle, $dep, $asset );
+	return add_dep_to_asset( $handle, $dep, $asset );
 }
 
 function add_dep_to_style( $handle, $dep ) {
 
-    $asset = $GLOBALS['wp_styles']->query( $handle, 'registered' );
+	$asset = $GLOBALS['wp_styles']->query( $handle, 'registered' );
 
-    add_dep_to_asset( $handle, $dep, $asset );
+	return add_dep_to_asset( $handle, $dep, $asset );
 }
 
 function add_dep_to_asset( $handle, $dep, $asset ) {
 
-    if ( ! $asset ) {
-        return false;
-    }
+	if ( ! $asset ) {
+		return false;
+	}
 
-    if ( ! in_array( $dep, $asset->deps ) ) {
-        $asset->deps[] = $dep;
-    }
+	if ( ! in_array( $dep, $asset->deps, true ) ) {
+		$asset->deps[] = $dep;
+	}
 
-    return true;
+	return true;
 }
 
 function enqueue( array $args ) {
@@ -87,31 +87,36 @@ function add_attr_to_asset( $type, $handle, $integrity, $async = null ) {
 		wp_die( 'first arg needs to be scipts or style' );
 	}
 
-	add_filter( "{$type}_loader_tag", function( $html, $loader_handle ) use ( $type, $handle, $integrity, $async ) {
+	add_filter(
+		"{$type}_loader_tag",
+		function( $html, $loader_handle ) use ( $type, $handle, $integrity, $async ) {
 
-		if ( $handle === $loader_handle ) {
+			if ( $handle === $loader_handle ) {
 
-			$tag  = ( 'style' === $type ) ? 'link' : $type;
+				$tag = ( 'style' === $type ) ? 'link' : $type;
 
-			if ( $integrity ) {
-				$html = str_replace(
-					sprintf( '<%s ', esc_html( $tag ) ),
-					sprintf( '<%s integrity="%s" crossorigin="anonymous" ', esc_html( $tag ), esc_attr( $integrity ) ),
-					$html
-				);
+				if ( $integrity ) {
+					$html = str_replace(
+						sprintf( '<%s ', esc_html( $tag ) ),
+						sprintf( '<%s integrity="%s" crossorigin="anonymous" ', esc_html( $tag ), esc_attr( $integrity ) ),
+						$html
+					);
+				}
+
+				if ( $async ) {
+					$html = str_replace(
+						sprintf( '<%s ', esc_html( $tag ) ),
+						sprintf( '<%s async="async" ', esc_html( $tag ) ),
+						$html
+					);
+				}
 			}
 
-			if( $async ) {
-				$html = str_replace(
-					sprintf( '<%s ', esc_html( $tag ) ),
-					sprintf( '<%s async="async" ', esc_html( $tag ) ),
-					$html
-				);
-			}
-		}
-
-		return $html;
-	}, 10, 2 );
+			return $html;
+		},
+		10,
+		2
+	);
 }
 
 function plugin_asset_url( $path, $plugin_file ) {

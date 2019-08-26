@@ -151,12 +151,14 @@ function key_callback( $args ) {
 	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	printf(
 		'<input%s>',
-		attr( [
-			'type'  => 'hidden',
-			'id'    => $args['option_basename'] . '[product]',
-			'name'  => $args['option_basename'] . '[product]',
-			'value' => $args['product']['slug']
-		] )
+		attr(
+			[
+				'type'  => 'hidden',
+				'id'    => $args['option_basename'] . '[product]',
+				'name'  => $args['option_basename'] . '[product]',
+				'value' => $args['product']['slug']
+			]
+		)
 	);
 	// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 
@@ -170,9 +172,9 @@ function key_callback( $args ) {
 	$key         = License\get_key( $args['product']['slug'] );
 
 	if ( $defined_key || ! empty( $key ) ) {
-		submit_button( __( 'Activate License',   \Nextgenthemes\TEXTDOMAIN ), 'primary',   $args['option_basename'] . '[activate_key]',   false );
+		submit_button( __( 'Activate License', \Nextgenthemes\TEXTDOMAIN ), 'primary', $args['option_basename'] . '[activate_key]', false );
 		submit_button( __( 'Deactivate License', \Nextgenthemes\TEXTDOMAIN ), 'secondary', $args['option_basename'] . '[deactivate_key]', false );
-		submit_button( __( 'Check License',      \Nextgenthemes\TEXTDOMAIN ), 'secondary', $args['option_basename'] . '[check_key]',      false );
+		submit_button( __( 'Check License', \Nextgenthemes\TEXTDOMAIN ), 'secondary', $args['option_basename'] . '[check_key]', false );
 	}
 
 	echo '</p>';
@@ -190,10 +192,12 @@ function key_callback( $args ) {
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		printf(
 			'<a%s>%s</a>',
-			attr( array(
-				'href'  => $args['product']['url'],
-				'class' => 'button button-primary',
-			) ),
+			attr(
+				array(
+					'href'  => $args['product']['url'],
+					'class' => 'button button-primary',
+				)
+			),
 			__( 'Not installed, check it out', \Nextgenthemes\TEXTDOMAIN )
 		);
 		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -282,8 +286,7 @@ function init_plugin_updater( $product ) {
 			'version' => $product['version'],
 			'license' => License\get_key( $product['slug'] ),
 			'item_id' => $product['id'],
-			'author'  => $product['author']
-			// 'item_name' => $product['name'],
+			'author'  => $product['author'],
 		)
 	);
 }

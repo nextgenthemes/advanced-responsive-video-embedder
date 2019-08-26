@@ -32,6 +32,8 @@ init();
 
 function init() {
 
+	$ns = __NAMESPACE__;
+
 	add_option( 'arve_install_date', current_time( 'timestamp' ) );
 
 	if ( ! defined( 'Nextgenthemes\VERSION' ) ) {
@@ -42,37 +44,40 @@ function init() {
 	require_once __DIR__ . '/nextgenthemes/init.php';
 	require_once __DIR__ . '/vendor/autoload.php';
 
-	array_map( function( $file ) {
-		require_once( "public/functions-{$file}.php" );
-	}, [
-		'deprecated',
-		'assets',
-		'html-output',
-		'misc',
-		'oembed',
-		'shortcode-data',
-		'shortcode-filters',
-		'shortcodes',
-		'url-handlers',
-		'validation',
-		'host-properties',
-		'settings',
-	] );
+	array_map(
+		function( $file ) {
+				require_once "public/functions-{$file}.php";
+		},
+		[
+			'deprecated',
+			'assets',
+			'html-output',
+			'misc',
+			'oembed',
+			'shortcode-data',
+			'shortcode-filters',
+			'shortcodes',
+			'url-handlers',
+			'validation',
+			'host-properties',
+			'settings',
+		]
+	);
 
 	require_once __DIR__ . '/public/Admin/functions-admin.php';
 
 	// Public hooks
-	add_action( 'init',                        __NAMESPACE__ . '\add_oembed_providers' );
-	add_action( 'init',                        __NAMESPACE__ . '\register_gb_block' );
-	add_filter( 'oembed_remote_get_args',      __NAMESPACE__ . '\vimeo_referer', 10, 2 );
-	add_action( 'plugins_loaded',              __NAMESPACE__ . '\create_shortcodes', 999 );
-	add_action( 'plugins_loaded',              __NAMESPACE__ . '\create_url_handlers', 999 );
-	add_action( 'plugins_loaded',              __NAMESPACE__ . '\load_textdomain' );
-	add_action( 'wp_enqueue_scripts',          __NAMESPACE__ . '\register_assets', 0 );
-	add_action( 'wp_video_shortcode_override', __NAMESPACE__ . '\wp_video_shortcode_override', 10, 4 );
-	add_filter( 'language_attributes',         __NAMESPACE__ . '\html_id' );
-	add_filter( 'oembed_dataparse',            __NAMESPACE__ . '\filter_oembed_dataparse', 11, 3 );
-	add_filter( 'the_content',                 __NAMESPACE__ . '\maybe_enqueue_assets', 99 );
+	add_action( 'init',                        "{$ns}\\add_oembed_providers" );
+	add_action( 'init',                        "{$ns}\\register_gb_block" );
+	add_filter( 'oembed_remote_get_args',      "{$ns}\\vimeo_referer", 10, 2 );
+	add_action( 'plugins_loaded',              "{$ns}\\create_shortcodes", 999 );
+	add_action( 'plugins_loaded',              "{$ns}\\create_url_handlers", 999 );
+	add_action( 'plugins_loaded',              "{$ns}\\load_textdomain" );
+	add_action( 'wp_enqueue_scripts',          "{$ns}\\register_assets", 0 );
+	add_action( 'wp_video_shortcode_override', "{$ns}\\wp_video_shortcode_override", 10, 4 );
+	add_filter( 'language_attributes',         "{$ns}\\html_id" );
+	add_filter( 'oembed_dataparse',            "{$ns}\\filter_oembed_dataparse", 11, 3 );
+	add_filter( 'the_content',                 "{$ns}\\maybe_enqueue_assets", 99 );
 
 	foreach ( [
 		'validate'                        => -99,
@@ -90,40 +95,26 @@ function init() {
 		'mode_fallback'                   => 14,
 		'autoplay_off_after_ran_once'     => 15,
 		'iframe_src'                      => 20,
-		// 'validate_again'                  => 80,
+		// Maybe validate_again ?
 		'set_wrapper_id'                  => 90,
 		'set_fixed_dimensions'            => 90,
 	] as $filter => $priority ) {
-		add_filter( 'shortcode_atts_arve', __NAMESPACE__ . "\sc_filter_$filter", $priority );
+		add_filter( 'shortcode_atts_arve', "{$ns}\\sc_filter_$filter", $priority );
 	};
 	unset( $filter );
 	unset( $priority );
 
 	// Admin Hooks
-	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\admin_enqueue_scripts' );
-	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\admin_enqueue_styles', 99 );
-	add_action( 'admin_init',            __NAMESPACE__ . '\action_admin_init_setup_messages' );
-	add_action( 'media_buttons',         __NAMESPACE__ . '\add_media_button', 11 );
-	add_action( 'register_shortcode_ui', __NAMESPACE__ . '\register_shortcode_ui' );
-	add_action( 'wp_dashboard_setup',    __NAMESPACE__ . '\add_dashboard_widget' );
-	add_filter( 'mce_css',               __NAMESPACE__ . '\mce_css' );
-	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), __NAMESPACE__ . '\add_action_links' );
+	add_action( 'admin_enqueue_scripts', "{$ns}\\admin_enqueue_scripts" );
+	add_action( 'admin_enqueue_scripts', "{$ns}\\admin_enqueue_styles", 99 );
+	add_action( 'admin_init',            "{$ns}\\action_admin_init_setup_messages" );
+	add_action( 'media_buttons',         "{$ns}\\add_media_button", 11 );
+	add_action( 'register_shortcode_ui', "{$ns}\\register_shortcode_ui" );
+	add_action( 'wp_dashboard_setup',    "{$ns}\\add_dashboard_widget" );
+	add_filter( 'mce_css',               "{$ns}\\mce_css" );
+	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), "{$ns}\\add_action_links" );
 }//end init()
 
 function url( $path ) {
 	return plugins_url( $path, __FILE__ );
-}
-
-function log( $log ) {
-
-    if ( true === WP_DEBUG ) {
-
-        if ( is_string( $log ) ) {
-			$log .= PHP_EOL;
-        } else {
-			$log = print_r( $log, true );
-        }
-
-		error_log( $log, 3, __FILE__ . '.log' );
-    }
 }

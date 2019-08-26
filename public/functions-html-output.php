@@ -52,7 +52,7 @@ function build_iframe_tag( array $a ) {
 				'sandbox'         => $sandbox,
 				'scrolling'       => 'no',
 				'src'             => $a['src'],
-				'width'           => empty( $a['width'] )  ? false : $a['width'],
+				'width'           => empty( $a['width'] ) ? false : $a['width'],
 				'height'          => empty( $a['height'] ) ? false : $a['height']
 			),
 		],
@@ -74,9 +74,9 @@ function build_video_tag( array $a ) {
 				'controlslist'       => $a['controlslist'],
 				'loop'               => $a['loop'],
 				'preload'            => $a['preload'],
-				'width'              => empty( $a['width'] )     ? false : $a['width'],
-				'height'             => empty( $a['height'] )    ? false : $a['height'],
-				'poster'             => empty( $a['img_src'] )   ? false : $a['img_src'],
+				'width'              => empty( $a['width'] ) ? false : $a['width'],
+				'height'             => empty( $a['height'] ) ? false : $a['height'],
+				'poster'             => empty( $a['img_src'] ) ? false : $a['img_src'],
 				'src'                => empty( $a['video_src'] ) ? false : $a['video_src'],
 				// ARVE only
 				'class'              => 'arve-video fitvidsignore',
@@ -170,7 +170,7 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 
 	if ( ! empty( $_GET['arve-debug-attr'] ) ) {
 		$debug_attr = sanitize_text_field( wp_unslash( $_GET['arve-debug-attr'] ) );
-		// phpcs:disable Squiz.PHP.DiscouragedFunctions.Discouraged
+		// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
 		$input_attr = isset( $input_atts[ $debug_attr ] ) ? print_r( $input_atts[ $debug_attr ], true ) : 'not set';
 		$html      .= sprintf(
 			'<pre style="%1$s">in %2$s: %3$s%2$s: %4$s</pre>',
@@ -325,7 +325,7 @@ function promote_link( $arve_link ) {
 		return sprintf(
 			'<a href="%s" title="%s" class="arve-promote-link" target="_blank">%s</a>',
 			esc_url( 'https://nextgenthemes.com/plugins/arve-pro/' ),
-			esc_attr( __( 'Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', 'advanced-responsive-video-embedder') ),
+			esc_attr( __( 'Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', 'advanced-responsive-video-embedder' ) ),
 			esc_html__( 'ARVE', 'advanced-responsive-video-embedder' )
 		);
 	}

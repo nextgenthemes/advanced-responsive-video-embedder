@@ -21,9 +21,9 @@ class NoticeFactory {
 			$this->notice_id = 'arve_dismiss_pro_notice';
 		}
 
-		add_action( 'admin_notices',              [ $this, 'action_admin_notices' ] );
+		add_action( 'admin_notices', [ $this, 'action_admin_notices' ] );
 		add_action( "wp_ajax_{$this->notice_id}", [ $this, 'ajax_call' ] );
-		add_action( 'admin_enqueue_scripts',      [ $this, 'assets' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'assets' ] );
 	}
 
 	public function action_admin_notices() {
@@ -53,11 +53,13 @@ class NoticeFactory {
 
 	public function assets() {
 
-		\Nextgenthemes\Asset\enqueue( [
-			'handle' => 'nextgenthemes-notice-ajax',
-			'deps'   => [ 'jquery' ],
-			'src'    => \Nextgenthemes\Asset\plugin_or_theme_uri( 'nextgenthemes/dist/js/notice-ajax.js' ),
-		] );
+		\Nextgenthemes\Asset\enqueue(
+			[
+				'handle' => 'nextgenthemes-notice-ajax',
+				'deps'   => [ 'jquery' ],
+				'src'    => \Nextgenthemes\Asset\plugin_or_theme_uri( 'nextgenthemes/dist/js/notice-ajax.js' ),
+			]
+		);
 	}
 
 	public function ajax_call() {

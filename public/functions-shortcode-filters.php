@@ -155,6 +155,7 @@ function sc_filter_mode_fallback( array $a ) {
 			$a,
 			'mode-not-avail',
 			sprintf(
+				// Translators: Mode
 				__( 'Mode: %s not available (ARVE Pro not active), switching to normal mode', 'advanced-responsive-video-embedder' ),
 				$a['mode']
 			),
@@ -269,10 +270,12 @@ function sc_filter_missing_attribute_check( array $a ) {
 
 	if ( count( array_filter( $array ) ) !== count( $array ) ) {
 
-		$a['missing_atts_error'] = error( sprintf(
-			// Translators: Attributes.
-			esc_html__( 'The [arve] shortcode needs one of this attributes %s', 'advanced-responsive-video-embedder' ),
-			implode( $required_attributes ) )
+		$a['missing_atts_error'] = error(
+			sprintf(
+				// Translators: Attributes.
+				esc_html__( 'The [arve] shortcode needs one of this attributes %s', 'advanced-responsive-video-embedder' ),
+				implode( $required_attributes )
+			)
 		);
 	}
 
@@ -293,7 +296,6 @@ function sc_filter_get_media_gallery_thumbnail( array $a ) {
 		if ( ! $a['img_src'] ) {
 			$a['errors']->add( 'wp thumbnail', __( 'No attachment with that ID', 'advanced-responsive-video-embedder' ) );
 		}
-
 	} elseif ( valid_url( $a['thumbnail'] ) ) {
 
 		$a['img_src']    = $a['thumbnail'];
@@ -420,12 +422,12 @@ function iframe_src_autoplay_args( $src, $a ) {
 			break;
 		case 'twitch':
 		case 'ustream':
-			$on  = add_query_arg( 'autoplay', 'true',  $a['src'] );
+			$on  = add_query_arg( 'autoplay', 'true', $a['src'] );
 			$off = add_query_arg( 'autoplay', 'false', $a['src'] );
 			break;
 		case 'livestream':
 		case 'Wistia':
-			$on  = add_query_arg( 'autoPlay', 'true',  $a['src'] );
+			$on  = add_query_arg( 'autoPlay', 'true', $a['src'] );
 			$off = add_query_arg( 'autoPlay', 'false', $a['src'] );
 			break;
 		case 'metacafe':
@@ -446,22 +448,28 @@ function iframe_src_autoplay_args( $src, $a ) {
 			$off = remove_query_arg( 'autoplay', $a['src'] );
 			break;
 		case 'yahoo':
-			$on  = add_query_arg( 'player_autoplay', 'true',  $a['src'] );
+			$on  = add_query_arg( 'player_autoplay', 'true', $a['src'] );
 			$off = add_query_arg( 'player_autoplay', 'false', $a['src'] );
 			break;
 		case 'NOT_USED_iframe':
-			$on  = add_query_arg( [
-				'ap'               => '1',
-				'autoplay'         => '1',
-				'autoStart'        => 'true',
-				'player_autoStart' => 'true',
-			], $a['src'] );
-			$off = add_query_arg( [
-				'ap'               => '0',
-				'autoplay'         => '0',
-				'autoStart'        => 'false',
-				'player_autoStart' => 'false',
-			], $a['src'] );
+			$on  = add_query_arg(
+				[
+					'ap'               => '1',
+					'autoplay'         => '1',
+					'autoStart'        => 'true',
+					'player_autoStart' => 'true',
+				],
+				$a['src']
+			);
+			$off = add_query_arg(
+				[
+					'ap'               => '0',
+					'autoplay'         => '0',
+					'autoStart'        => 'false',
+					'player_autoStart' => 'false',
+				],
+				$a['src']
+			);
 			break;
 		default:
 			// Do nothing for providers that to not support autoplay or fail with parameters
@@ -623,7 +631,6 @@ function sc_filter_detect_html5( array $a ) {
 			$a['video_src'] = $a['url'];
 		}
 	endforeach;
-
 
 	if ( empty( $a['video_src'] ) && empty( $a['video_sources_html'] ) ) {
 		return $a;

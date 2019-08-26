@@ -2,7 +2,7 @@
 namespace Nextgenthemes\ARVE;
 
 function gcd( $a, $b ) {
-	return $b ? gcd( $b, $a % $b) : $a;
+	return $b ? gcd( $b, $a % $b ) : $a;
 }
 
 function is_bool_option( $array ) {

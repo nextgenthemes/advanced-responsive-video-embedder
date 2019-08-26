@@ -19,7 +19,6 @@ class Setup {
 
 	public function __construct( $args ) {
 
-
 		$defaults = [
 			'content_function'         => false,
 			'sidebar_content_function' => false,
@@ -85,31 +84,41 @@ class Setup {
 			return;
 		}
 
-		enqueue( [
-			'handle'    => 'nextgenthemes-vue',
-			'src'       => plugin_or_theme_uri( 'nextgenthemes/dist/js/vue.min.js' ),
-			'cdn_src'   => 'https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js',
-			'ver'       => '2.5.17',
-			'integrity' => 'sha256-FtWfRI+thWlNz2sB3SJbwKx5PgMyKIVgwHCTwa3biXc='
-		] );
+		enqueue(
+			[
+				'handle'    => 'nextgenthemes-vue',
+				'src'       => plugin_or_theme_uri( 'nextgenthemes/dist/js/vue.min.js' ),
+				'cdn_src'   => 'https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js',
+				'ver'       => '2.5.17',
+				'integrity' => 'sha256-FtWfRI+thWlNz2sB3SJbwKx5PgMyKIVgwHCTwa3biXc='
+			]
+		);
 
-		enqueue( [
-			'handle' => 'nextgenthemes-settings',
-			'src'    => plugin_or_theme_uri( 'nextgenthemes/dist/js/settings.js' ),
-			'deps'   => [ 'nextgenthemes-vue', 'jquery' ]
-		] );
+		enqueue(
+			[
+				'handle' => 'nextgenthemes-settings',
+				'src'    => plugin_or_theme_uri( 'nextgenthemes/dist/js/settings.js' ),
+				'deps'   => [ 'nextgenthemes-vue', 'jquery' ]
+			]
+		);
 
 		// Sending data to our plugin settings JS file
-		wp_localize_script( 'nextgenthemes-settings', $this->slugged_namespace, [
-			'nonce'    => wp_create_nonce( 'wp_rest' ),
-			'rest_url' => $this->rest_url,
-			'options'  => $this->options,
-		] );
+		wp_localize_script(
+			'nextgenthemes-settings',
+			$this->slugged_namespace,
+			[
+				'nonce'    => wp_create_nonce( 'wp_rest' ),
+				'rest_url' => $this->rest_url,
+				'options'  => $this->options,
+			]
+		);
 
-		enqueue( [
-			'handle' => 'nextgenthemes-settings',
-			'src'    => plugin_or_theme_uri( 'nextgenthemes/dist/css/settings.css' ),
-		] );
+		enqueue(
+			[
+				'handle' => 'nextgenthemes-settings',
+				'src'    => plugin_or_theme_uri( 'nextgenthemes/dist/css/settings.css' ),
+			]
+		);
 	}
 
 	public function print_settings_blocks() {
@@ -193,17 +202,7 @@ class Setup {
 		// The callback function for rendering our settings page HTML.
 		$callback = [ $this, 'print_admin_page' ];
 
-		// Adding a new top level menu item.
-		// add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $callback );
-
-		/**
-		 * Possible locations for adding our menu item
-		 */
 		$parent_slug = $this->menu_parent_slug;
-		#$parent_slug = 'options-general.php';
-		#$parent_slug = 'tools.php';
-		#$parent_slug = 'edit.php';
-		#$parent_slug = 'edit.php?post_type=page';
 
 		add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $callback );
 	}

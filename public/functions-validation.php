@@ -95,7 +95,12 @@ function validate_bool( array $a, $attr_name ) {
 				$attr_name,
 				// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
 				// Translators: %1$s = Attr Name, %2$s = Attribute array
-				sprintf( __( '%1$s <code>%2$s</code> not valid', 'advanced-responsive-video-embedder' ), $attr_name, print_r( $a[ $attr_name ] ) )
+				sprintf(
+					// Translators: Attribute Name
+					__( '%1$s <code>%2$s</code> not valid', 'advanced-responsive-video-embedder' ),
+					$attr_name,
+					print_r( $a[ $attr_name ] )
+				)
 				// phpcs:enable
 			);
 			break;
