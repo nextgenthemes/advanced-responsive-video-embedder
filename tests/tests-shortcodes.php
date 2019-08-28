@@ -1,8 +1,8 @@
 <?php
 use function Nextgenthemes\ARVE\shortcode;
-
+// phpcs:disable Squiz.PHP.CommentedOutCode.Found
 // phpcs:disable Squiz.Classes.ClassFileName.NoMatch
-// phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
+// phpcs:disable Squiz.PHP.Classes.ValidClassName.NotCamelCaps
 class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function change_option( $key, $val ) {
@@ -46,6 +46,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$filename = dirname( __FILE__ ) . '/test-attachment.jpg';
 		// phpcs:disable WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$contents = file_get_contents( $filename );
+		// phpcs:enable WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 
 		$upload = wp_upload_bits( basename( $filename ), null, $contents );
 		$this->assertTrue( empty( $upload['error'] ) );

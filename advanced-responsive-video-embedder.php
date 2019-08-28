@@ -80,6 +80,7 @@ function init() {
 	add_filter( 'the_content',                 "{$ns}\\maybe_enqueue_assets", 99 );
 
 	foreach ( [
+		'missing_attribute_check'         => -100,
 		'validate'                        => -99,
 		'detect_html5'                    => -31,
 		'detect_provider_and_id_from_url' => -30,

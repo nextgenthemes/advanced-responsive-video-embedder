@@ -28,7 +28,7 @@ function validate_url( $a, $attr_name ) {
 			esc_html( $attr_name )
 		);
 
-		$a = add_error( $a, $attr_name, $error_msg, 'remove-all-filters' );
+		$a = add_error( $a, $attr_name, $error_msg );
 	}
 
 	return $a;

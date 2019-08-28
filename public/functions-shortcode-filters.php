@@ -10,8 +10,8 @@ function sc_filter_set_wrapper_id( array $a ) {
 	static $wrapper_ids = [];
 
 	foreach ( [
-		'url',
 		'src',
+		'url',
 		'id',
 		'webm',
 		'mp4',
@@ -24,6 +24,11 @@ function sc_filter_set_wrapper_id( array $a ) {
 		if ( ! empty( $a[ $att ] ) && is_string( $a[ $att ] ) ) {
 			$a['wrapper_id'] = 'arve-' . $a[ $att ];
 			$a['wrapper_id'] = preg_replace( '/[^a-zA-Z0-9-]/', '', $a['wrapper_id'] );
+			$a['wrapper_id'] = str_replace(
+				[ 'http', 'https', 'httpswww' ],
+				'',
+				$a['wrapper_id']
+			);
 			break;
 		}
 	}
@@ -39,19 +44,18 @@ function sc_filter_set_wrapper_id( array $a ) {
 		}
 	}
 
-	if ( ! $a['wrapper_id'] ) {
-		$a['errors'] = add_error(
+	if ( empty( $a['wrapper_id'] ) ) {
+		$a = add_error(
 			$a,
-			'wrapper_attr',
-			__( 'Wrapper ID could not be build, this means ARVE did not get one of the essential inputs like URL.', 'advanced-responsive-video-embedder' ),
-			'remove-all-filters'
+			'fatal',
+			__( 'Wrapper ID could not be build, this means ARVE did not get one of the essential inputs like URL.', 'advanced-responsive-video-embedder' )
 		);
 	}
 
 	return $a;
 }
 
-function add_error( array $a, $code, $msg, $remove_filters = false ) {
+function add_error( array $a, $code, $msg ) {
 
 	if ( isset( $a['errors'] ) && is_wp_error( $a['errors'] ) ) {
 		$a['errors']->add( $code, $msg );
@@ -59,7 +63,7 @@ function add_error( array $a, $code, $msg, $remove_filters = false ) {
 		$a['errors'] = new \WP_Error( $code, $msg );
 	}
 
-	if ( $remove_filters ) {
+	if ( 'fatal' === $code ) {
 		remove_all_filters( 'shortcode_atts_arve' );
 	}
 
@@ -259,24 +263,34 @@ function sc_filter_autoplay_off_after_ran_once( array $a ) {
 function sc_filter_missing_attribute_check( array $a ) {
 
 	// Old shortcodes
-	if ( ! array_key_exists( 'url', $a ) ) {
-		return $a;
+	if ( $a['legacy'] ) {
+
+		if ( empty( $a['id'] ) || empty( $a['provider'] ) ) {
+			$a = add_error( $a, 'fatal', 'need id and provider' );
+			return $a;
+		}
 	}
 
+	$error                 = true;
 	$required_attributes   = VIDEO_FILE_EXTENSIONS;
 	$required_attributes[] = 'url';
 
-	$array = array_intersect_key( $a, array_flip( $required_attributes ) );
+	foreach ( $required_attributes as $key => $value ) {
 
-	if ( count( array_filter( $array ) ) !== count( $array ) ) {
+		if ( $a[ $value ] ) {
+			$error = false;
+		}
+	}
 
-		$a['missing_atts_error'] = error(
-			sprintf(
-				// Translators: Attributes.
-				esc_html__( 'The [arve] shortcode needs one of this attributes %s', 'advanced-responsive-video-embedder' ),
-				implode( $required_attributes )
-			)
+	if ( $error ) {
+
+		$msg = sprintf(
+			// Translators: Attributes.
+			esc_html__( 'The [arve] shortcode needs one of this attributes %s', 'advanced-responsive-video-embedder' ),
+			implode( ', ', $required_attributes )
 		);
+
+		$a = add_error( $a, 'fatal', $msg );
 	}
 
 	return $a;

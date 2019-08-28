@@ -11,7 +11,7 @@ function build_html( array $a ) {
 			'tag'     => 'div',
 			'content' => arve_embed( arve_embed_inner_html( $a ), $a ) . promote_link( $a['arve_link'] ),
 			'attr'    => array(
-				'class'         => empty( $a['align'] ) ? 'arve' : 'arve align' . $a['align'],
+				'class'         => empty( $a['align'] ) ? 'arve' : "arve align{$a['align']}",
 				'data-mode'     => $a['mode'],
 				'data-provider' => $a['provider'],
 				'id'            => $a['wrapper_id'],

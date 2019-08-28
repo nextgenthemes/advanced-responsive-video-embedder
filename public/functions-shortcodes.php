@@ -26,14 +26,19 @@ function shortcode( array $a, $content = null ) {
 
 function test_shortcode( $a, $content = null ) {
 
-	$html = '';
-
+	// phpcs:disable WordPress.Security.NonceVerification.Recommended
 	if ( empty( $_GET['provider'] ) ) {
-		return 'put provider in url arg';
+		return;
 	}
 
+	$html      = '';
 	$providers = get_host_properties();
 	$provider  = sanitize_text_field( wp_unslash( $_GET['provider'] ) );
+	// phpcs:enable WordPress.Security.NonceVerification.Recommended
+
+	if ( empty( $provider ) ) {
+		return 'put provider in url arg';
+	}
 
 	foreach ( $providers[ $provider ]['tests'] as $key => $value ) {
 
@@ -56,8 +61,6 @@ function build_video( array $input_atts ) {
 	$a    = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
 	$html = '';
 
-	$a = add_error( $a, 'fatal', 'test fatal error', false );
-
 	if ( ! empty( $a['errors'] ) ) {
 
 		$error_html = sprintf(
@@ -73,9 +76,7 @@ function build_video( array $input_atts ) {
 
 		$html .= $error_html;
 
-		$error_codes = $a['errors']->get_error_codes();
-
-		if ( '' !== $a['errors']->get_error_code( 'fatal' ) ) {
+		if ( '' !== $a['errors']->get_error_message( 'fatal' ) ) {
 			$html .= get_debug_info( $html, $a, $input_atts );
 			return $html;
 		}
@@ -83,7 +84,6 @@ function build_video( array $input_atts ) {
 
 	$html .= build_html( $a );
 	$html .= get_debug_info( $html, $a, $input_atts );
-
 	return $html;
 }
 
