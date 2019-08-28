@@ -48,6 +48,7 @@
 
 .arve-settings-page-ad {
   padding-right: 0.7rem !important;
+  /* stylelint-disable-line declaration-no-important */
   margin: 0;
 }
 
@@ -60,6 +61,7 @@
 @media all and (min-width: 1024px) {
   .arve-settings-page-ad {
     position: absolute !important;
+    /* stylelint-disable-line declaration-no-important */
     right: 0;
     width: 320px;
   }
