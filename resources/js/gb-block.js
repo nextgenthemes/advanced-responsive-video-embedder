@@ -1,5 +1,9 @@
-// License: GPLv2+
-//console.log( ARVEsettings );
+/**
+ * Copyright Nicolas Jonas, Gary Pendergast
+ * License: GPL 3.0
+ * Based on: https://gist.github.com/pento/cf38fd73ce0f13fcf0f0ae7d6c4b685d
+ */
+
 const wp = window.wp;
 const el = window.wp.element.createElement;
 
@@ -37,6 +41,10 @@ function BuildControls( props ) {
 
 			//help: opt.description,
 			onChange: ( value ) => {
+				if ( 'url' === key ) {
+					console.log( value );
+				}
+
 				props.setAttributes( { [ key ]: value } );
 			},
 		};
