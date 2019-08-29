@@ -11,6 +11,7 @@
   "devDependencies": {
     "clean-css-cli": "^4.3.0",
     "npm-run-all": "^4.0.2",
-    "uglify-js": "^3.6.0"
+    "uglify-js": "^3.6.0",
+    "eslint-utils": ">=1.4.1"
   }
 }
