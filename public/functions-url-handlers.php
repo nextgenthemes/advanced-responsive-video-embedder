@@ -63,6 +63,7 @@ function url_detection_to_shortcode( $provider, array $matches, array $attr, $ur
 	$a               = array_merge( (array) $old_atts, (array) $new_atts );
 	$a['parameters'] = empty( $url_query ) ? null : build_query( $url_query );
 	$a['provider']   = $provider;
+	$a['lagacy']     = 'lagacy';
 
 	foreach ( $matches as $k => $v ) {
 

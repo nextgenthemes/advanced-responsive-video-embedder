@@ -148,6 +148,7 @@ function shortcode_pairs() {
 		[
 			'id'                => null,
 			'provider'          => null,
+			'legacy'            => false,
 			'playsinline'       => 'y',
 			'preload'           => 'metadata',
 			'src'               => null,
