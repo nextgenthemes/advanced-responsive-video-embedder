@@ -1,12 +1,6 @@
-composer.lock
 /dist/zip
-
-/vendor/*
-!vendor/autoload.php
-!vendor/composer
-!vendor/nextgenthemes
-
-node_modules
+/node_modules/
+/vendor/
 
 # Numerous always-ignore extensions
 *.diff
