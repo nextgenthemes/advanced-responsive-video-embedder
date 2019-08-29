@@ -158,6 +158,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2019-08-29 - 8.10.11 ###
+
+* Removed vendor dir from Git versioning.
+
 ### 2019-08-29 - 8.10.10 ###
 
 Just a small readme update and checking new release script, making sure everything works and everyone is on the latest stable version.

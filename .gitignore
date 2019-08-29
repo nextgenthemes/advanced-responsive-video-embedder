@@ -1,9 +1,5 @@
 /dist/zip
-
-/vendor/*
-!/vendor/autoload.php
-!/vendor/composer
-!/vendor/vimeo
+/vendor/
 
 # Numerous always-ignore extensions
 *.diff
