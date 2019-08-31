@@ -10,7 +10,7 @@
 	}],
 	"autoload": {
 		"psr-4": {
-			"Nextgenthemes\\ARVE\\": "public/"
+			"Nextgenthemes\\ARVE\\": "php/"
 		}
 	},
 	"require": {

@@ -1,0 +1,49 @@
+.wrap--nextgenthemes {
+	margin-right: auto;
+	margin-left: auto;
+	max-width: 800px;
+}
+
+.wp-core-ui .button-primary--ngt-small {
+	height: 18px;
+	padding-right: 5px;
+	padding-left: 5px;
+	line-height: 12px;
+}
+
+.nextgenthemes-label-text {
+	display: block;
+	margin-bottom: 3px;
+	font-weight: 600;
+}
+
+[type="checkbox"] + .nextgenthemes-label-text {
+	display: inline;
+}
+
+.wrap--nextgenthemes__loading-indicator {
+	width: 16px;
+	height: 16px;
+}
+
+.ngt-grid {
+	display: grid;
+	grid-template-areas:
+		"content"
+		"sidebar";
+}
+
+@media (min-width: 768px) {
+	.ngt-grid {
+		grid-template-areas: "content sidebar";
+		grid-template-columns: 1fr 200px;
+	}
+}
+
+.ngt-grid__content {
+	grid-area: content;
+}
+
+.ngt-grid__sidebar {
+	grid-area: sidebar;
+}

@@ -1,0 +1,145 @@
+<?php
+namespace Nextgenthemes\ARVE\Common\Admin;
+
+function admin_install_search_url( $search_term ) {
+
+	$path = "plugin-install.php?s={$search_term}&tab=search&type=term";
+
+	if ( is_multisite() ) {
+		return network_admin_url( $path );
+	} else {
+		return admin_url( $path );
+	}
+}
+
+function ads_page() {
+	?>
+<style>
+	body {
+		background: hsl(210, 13%, 16%);
+	}
+	#wpcontent {
+		padding: 0;
+	}
+	#wpbody-content {
+		/* padding-bottom: 2rem; */
+	}
+	#wpfooter {
+		display: none;
+	}
+	#nextgenthemes-ads {
+		padding: 1.7rem;
+		column-width: 40rem;
+		column-gap: 1.7rem;
+	}
+	@media only screen and (max-device-width: 400px) {
+
+		#nextgenthemes-ads {
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+	#nextgenthemes-ads,
+	#nextgenthemes-ads * {
+		box-sizing: border-box;
+	}
+	#nextgenthemes-ads::after {
+	  content: "";
+	  display: table;
+	  clear: both;
+	}
+	#nextgenthemes-ads {
+		color: white;
+	}
+	#nextgenthemes-ads h1,
+	#nextgenthemes-ads h2,
+	#nextgenthemes-ads h3 {
+		color: inherit;
+		margin-left: 2rem;
+		margin-right: 1.7rem;
+	}
+	#nextgenthemes-ads h1 {
+		line-height: 1;
+	}
+	#nextgenthemes-ads img {
+	  width: 100%;
+		height: auto;
+	}
+	#nextgenthemes-ads > a {
+		text-decoration: none;
+		position: relative;
+		display: inline-block;
+		width: 100%;
+	  background-color: hsl(210, 13%, 13%);
+		border: 1px solid hsl(207, 48%, 30%);
+		transition: box-shadow .3s, background-color .3s, border-color .3s;
+		color: #eee;
+		font-size: 1.05rem;
+		margin-bottom: 2rem;
+		line-height: 1.4;
+	}
+	#nextgenthemes-ads > a:hover {
+		background-color: hsl(210, 13%, 10%);
+		box-shadow: 0 0 10px hsla(207, 48%, 50%, 1);
+		border-color: hsl(207, 48%, 40%);
+	}
+	#nextgenthemes-ads p {
+		margin-left: 2rem;
+		margin-right: 1.7rem;
+		font-size: 1.2rem;
+	}
+	#nextgenthemes-ads ul {
+		list-style: square;
+		margin-left: 2.5rem;
+		margin-right: .7rem;
+	}
+	#nextgenthemes-ads > a > span {
+		position: absolute;
+		padding: .6rem 1rem;
+		right: 0px;
+		bottom: 0px;
+		font-size: 2rem;
+		color: white;
+		background-color: hsl(207, 48%, 30%);
+		border-top-left-radius: 3px;
+		//transform: rotate(3deg);
+	}
+	#nextgenthemes-ads figure {
+		margin: 1rem;
+	}
+</style>
+	<?php $img_dir = plugin_dir_url( __FILE__ ) . 'product-images/'; ?>
+<div id="nextgenthemes-ads">
+
+	<?php if ( ! defined( 'ARVE_PRO_VERSION' ) ) : ?>
+		<a href="https://nextgenthemes.com/plugins/arve-pro/">
+			<figure><img src="<?php echo $img_dir; ?>arve.svg" alt"ARVE"></figure>
+			<?php feature_list_html( __DIR__ . '/dwa/d' ); ?>
+			<span>Paid</span>
+		</a>
+	<?php endif; ?>
+
+	<?php if ( ! defined( 'ARVE_AMP_VERSION' ) ) : ?>
+		<a href="https://nextgenthemes.com/plugins/arve-accelerated-mobile-pages-addon/">
+			<figure><img src="<?php echo $img_dir; ?>arve.svg" alt"ARVE"></figure>
+			<?php feature_list_html( __DIR__ . '/dwa/d' ); ?>
+			<span>Paid</span>
+		</a>
+	<?php endif; ?>
+
+	<?php if ( ! is_plugin_active( 'regenerate-thumbnails-reminder/regenerate-thumbnails-reminder.php' ) ) : ?>
+		<a href="<?php echo admin_install_search_url( 'Regenerate+Thumbnails+Reminder' ); ?>">
+			<h1>Regenerate Thumbnails Reminder</h1>
+			<p>Get a reminder when you change your thumbnail sizes to regenerate them. Note Thumbnails sizes change automatically if you swtich themes.</p>
+			<span>Free</span>
+		</a>
+	<?php endif; ?>
+
+</div>
+
+	<?php
+}
+
+function feature_list_html( $filepath ) {
+	echo strip_tags( file_get_contents( $filepath ), '<ul></ul><li></li><h3></h3>' );
+}

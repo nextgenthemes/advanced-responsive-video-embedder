@@ -6,3 +6,4 @@
     - "plugin:@wordpress/eslint-plugin/recommended"
   rules:
     no-multi-spaces: 0
+    padded-blocks: 0

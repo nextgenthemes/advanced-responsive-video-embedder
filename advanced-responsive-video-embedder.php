@@ -25,6 +25,7 @@ const VERSION               = '9.0.0-alpha1';
 const PRO_VERSION_REQUIRED  = '5.0.0-alpha1';
 const NUM_TRACKS            = 3;
 const PLUGIN_FILE           = __FILE__;
+const PLUGIN_DIR            = __DIR__;
 const VIDEO_FILE_EXTENSIONS = [ 'mp4', 'm4v', 'webm', 'ogv' ];
 const DEFAULT_MAXWIDTH      = 900;
 
@@ -36,17 +37,12 @@ function init() {
 
 	add_option( 'arve_install_date', current_time( 'timestamp' ) );
 
-	if ( ! defined( 'Nextgenthemes\VERSION' ) ) {
-		define( 'Nextgenthemes\PLUGIN_FILE', __FILE__ );
-		define( 'Nextgenthemes\TEXTDOMAIN', 'advanced-responsive-video-embedder' );
-	}
-
-	require_once __DIR__ . '/nextgenthemes/init.php';
-	require_once __DIR__ . '/vendor/autoload.php';
+	require_once PLUGIN_DIR . '/vendor/autoload.php';
+	require_once PLUGIN_DIR . '/php/Common/init.php';
 
 	array_map(
 		function( $file ) {
-				require_once "public/functions-{$file}.php";
+				require_once "php/functions-{$file}.php";
 		},
 		[
 			'deprecated',
@@ -64,7 +60,7 @@ function init() {
 		]
 	);
 
-	require_once __DIR__ . '/public/Admin/functions-admin.php';
+	require_once PLUGIN_DIR . '/php/Admin/functions-admin.php';
 
 	// Public hooks
 	add_action( 'init',                        "{$ns}\\add_oembed_providers" );
@@ -115,7 +111,3 @@ function init() {
 	add_filter( 'mce_css',               "{$ns}\\mce_css" );
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), "{$ns}\\add_action_links" );
 }//end init()
-
-function url( $path ) {
-	return plugins_url( $path, __FILE__ );
-}
