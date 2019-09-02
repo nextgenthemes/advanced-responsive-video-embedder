@@ -1,8 +1,6 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-use Nextgenthemes\ARVE\Common\Utils;
-
 function setup_settings() {
 	get_settings_instance();
 	upgrade_options();
@@ -22,6 +20,7 @@ function get_settings_instance() {
 				'menu_title'          => esc_html__( 'ARVE', 'advanced-responsive-video-embedder' ),
 				'settings_page_title' => esc_html__( 'ARVE Settings', 'advanced-responsive-video-embedder' ),
 				'content_function'    => __NAMESPACE__ . '\settings_page_content',
+				'sidebar_function'    => __NAMESPACE__ . '\settings_sidebar',
 			]
 		);
 	}
@@ -38,14 +37,19 @@ function settings_page_content() {
 
 	<?php if ( ! defined( 'Nextgenthemes\ARVE\Pro\VERSION' ) ) : ?>
 		<div class="ngt-block" v-if="showPro">
-			<p><?php esc_html_e( 'You may already set these options but they will only have a effect if the Pro Addon is installed and activated.', 'advanced-responsive-video-embedder' ); ?></p>
+			<p><?php esc_html_e( 'You may already set these options but they will only take effect if the Pro Addon is installed and activated.', 'advanced-responsive-video-embedder' ); ?></p>
 		</div>
 	<?php endif; ?>
 
 	<div class="ngt-block" v-if="showDebug">
-		<?php include_once __DIR__ . '/Admin/partials/debug-info.php'; ?>
+		<?php require_once __DIR__ . '/Admin/partials/debug-info.php'; ?>
 	</div>
 	<?php
+}
+
+function settings_sidebar() {
+	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
+	readfile( __DIR__ . '/Admin/partials/settings-sidebar.html' );
 }
 
 function options() {
@@ -148,7 +152,8 @@ function shortcode_pairs() {
 		[
 			'id'                => null,
 			'provider'          => null,
-			'legacy'            => false,
+			'url_handler'       => false,
+			'legacy_sc'         => false,
 			'playsinline'       => 'y',
 			'preload'           => 'metadata',
 			'src'               => null,
