@@ -1,8 +1,9 @@
 <?php
 namespace Nextgenthemes\ARVE\Common\Admin\Settings;
 
-use function Nextgenthemes\Asset\enqueue;
-use function Nextgenthemes\Asset\plugin_or_theme_uri;
+use function Nextgenthemes\ARVE\Common\Asset\enqueue;
+use function Nextgenthemes\ARVE\Common\Asset\ver;
+use function Nextgenthemes\ARVE\Common\Asset\plugin_or_theme_uri;
 use function Nextgenthemes\ARVE\Common\Utils\ends_with;
 
 class Setup {
@@ -20,22 +21,22 @@ class Setup {
 	public function __construct( $args ) {
 
 		$defaults = [
-			'content_function'         => false,
-			'sidebar_content_function' => false,
-			'menu_parent_slug'         => 'options-general.php',
+			'content_function' => false,
+			'sidebar_function' => false,
+			'menu_parent_slug' => 'options-general.php',
 		];
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$this->settings                 = $args['settings'];
-		$this->menu_title               = $args['menu_title'];
-		$this->settings_page_title      = $args['settings_page_title'];
-		$this->slugged_namespace        = sanitize_key( str_replace( '\\', '_', $args['namespace'] ) );
-		$this->rest_namespace           = $this->slugged_namespace . '/v1';
-		$this->rest_url                 = get_home_url() . '/wp-json/' . $this->rest_namespace;
-		$this->menu_parent_slug         = $args['menu_parent_slug'];
-		$this->content_function         = $args['content_function'];
-		$this->sidebar_content_function = $args['sidebar_content_function'];
+		$this->settings            = $args['settings'];
+		$this->menu_title          = $args['menu_title'];
+		$this->settings_page_title = $args['settings_page_title'];
+		$this->slugged_namespace   = sanitize_key( str_replace( '\\', '_', $args['namespace'] ) );
+		$this->rest_namespace      = $this->slugged_namespace . '/v1';
+		$this->rest_url            = get_home_url() . '/wp-json/' . $this->rest_namespace;
+		$this->menu_parent_slug    = $args['menu_parent_slug'];
+		$this->content_function    = $args['content_function'];
+		$this->sidebar_function    = $args['sidebar_function'];
 
 		foreach ( $this->settings as $key => $value ) {
 			$this->options_defaults[ $key ] = $value['default'];
@@ -86,19 +87,10 @@ class Setup {
 
 		enqueue(
 			[
-				'handle'    => 'nextgenthemes-vue',
-				'src'       => plugin_or_theme_uri( 'nextgenthemes/dist/js/vue.min.js' ),
-				'cdn_src'   => 'https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js',
-				'ver'       => '2.5.17',
-				'integrity' => 'sha256-FtWfRI+thWlNz2sB3SJbwKx5PgMyKIVgwHCTwa3biXc='
-			]
-		);
-
-		enqueue(
-			[
 				'handle' => 'nextgenthemes-settings',
-				'src'    => plugin_or_theme_uri( 'nextgenthemes/dist/js/settings.js' ),
-				'deps'   => [ 'nextgenthemes-vue', 'jquery' ]
+				'src'    => plugins_url( 'dist/common/js/settings.js', \Nextgenthemes\ARVE\PLUGIN_FILE ),
+				'ver'    => ver( \Nextgenthemes\ARVE\VERSION, 'dist/common/js/settings.js', \Nextgenthemes\ARVE\PLUGIN_FILE ),
+				'deps'   => [ 'jquery' ],
 			]
 		);
 
@@ -116,7 +108,7 @@ class Setup {
 		enqueue(
 			[
 				'handle' => 'nextgenthemes-settings',
-				'src'    => plugin_or_theme_uri( 'nextgenthemes/dist/css/settings.css' ),
+				'src'    => plugins_url( 'dist/common/css/settings.css', \Nextgenthemes\ARVE\PLUGIN_FILE ),
 			]
 		);
 	}
@@ -147,8 +139,8 @@ class Setup {
 
 		<div class='wrap wrap--nextgenthemes'>
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
-			<div class="ngt-grid">
-				<div class="ngt-grid__content" id='nextgenthemes-vue'>
+			<div class="ngt-settings-grid">
+				<div class="ngt-settings-grid__content" id='nextgenthemes-vue'>
 					<?php
 
 					if ( $this->content_function ) {
@@ -174,10 +166,10 @@ class Setup {
 					</p>
 					<p v-if='message'>{{ message }}</p>
 				</div>
-				<div class="ngt-grid__sidebar">
+				<div class="ngt-settings-grid__sidebar">
 					<?php
-					if ( $this->sidebar_content_function ) {
-						$function = $this->sidebar_content_function;
+					if ( $this->sidebar_function ) {
+						$function = $this->sidebar_function;
 						$function();
 					}
 					?>

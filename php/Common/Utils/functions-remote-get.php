@@ -3,7 +3,7 @@ namespace Nextgenthemes\ARVE\Common\Utils;
 
 // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
 
-function remote_get( $url, array $args = [], $json = true ) {
+function ngt_remote_get( $url, array $args = [], $json = false ) {
 
 	$response      = wp_safe_remote_post( $url, $args );
 	$response_code = wp_remote_retrieve_response_code( $response );
@@ -21,10 +21,11 @@ function remote_get( $url, array $args = [], $json = true ) {
 	if ( 200 !== $response_code ) {
 
 		return new \WP_Error(
-			'remote_get',
+			$response_code,
 			sprintf(
-				// Translators: %s is HTTP presponse code.
-				__( 'remote_get error: Status code was expected to be 200 but was %s.', 'advanced-responsive-video-embedder' ),
+				// Translators: 1 URL 2 HTTP presponse code.
+				__( 'url: %s Status code 200 expected but was %s.', 'advanced-responsive-video-embedder' ),
+				$url,
 				$response_code
 			)
 		);
@@ -33,21 +34,35 @@ function remote_get( $url, array $args = [], $json = true ) {
 	$body = wp_remote_retrieve_body( $response );
 
 	if ( '' === $body ) {
-		return new \WP_Error( 'remote_get', __( 'Empty body', 'advanced-responsive-video-embedder' ) );
+		return new \WP_Error(
+			'empty-body',
+			sprintf(
+				// Translators: URL.
+				__( 'url: %s Empty Body.', 'advanced-responsive-video-embedder' ),
+				$url
+			)
+		);
 	}
 
 	if ( $json ) {
 		$response = json_decode( $body );
 
 		if ( null === $response ) {
-			return new \WP_Error( 'remote_get', __( 'json_decode returned null', 'advanced-responsive-video-embedder' ) );
+			return new \WP_Error(
+				'json-null',
+				sprintf(
+					// Translators: URL.
+					__( 'url: %s json_decode returned null.', 'advanced-responsive-video-embedder' ),
+					$url
+				)
+			);
 		}
 	}
 
 	return $response;
 };
 
-function remote_get_cached( array $args ) {
+function ngt_remote_get_cached( array $args ) {
 
 	$defaults = array(
 		'args'       => array(),

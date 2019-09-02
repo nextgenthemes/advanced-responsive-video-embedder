@@ -1,7 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE\Common\Admin\Settings;
 
-use Nextgenthemes\ARVE\Common\Utils;
+use function Nextgenthemes\ARVE\Common\Utils\attr;
 
 function label_text( $option ) {
 	?>
@@ -121,7 +121,7 @@ function block_attr( $key, $option ) {
 		'v-if'  => 'show' . ucfirst( $option['tag'] ),
 	];
 
-	return Common\Utils\Attr( $block_attr );
+	return attr( $block_attr );
 }
 
 function block_class( $key, $option ) {

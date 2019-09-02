@@ -93,7 +93,7 @@ function register( array $args ) {
 function add_attr_to_asset( $type, $handle, $integrity, $async = null ) {
 
 	if ( ! in_array( $type, [ 'script', 'style' ], true ) ) {
-		wp_die( 'first arg needs to be scipts or style' );
+		wp_die( 'first arg needs to be script or style' );
 	}
 
 	add_filter(
@@ -126,57 +126,4 @@ function add_attr_to_asset( $type, $handle, $integrity, $async = null ) {
 		10,
 		2
 	);
-}
-
-function plugin_asset_url( $path, $plugin_file ) {
-
-	$manifest_file = plugin_dir_path( $plugin_file ) . 'dist/mix-manifest.json';
-
-	if ( ! is_file( $manifest_file ) ) {
-		wp_die( esc_html( "$manifest_file not found" ) );
-	}
-
-	$manifest_json = json_decode( file_get_contents( $manifest_file ), true );
-
-	$path = '/' . ltrim( $path, '/' );
-
-	if ( empty( $manifest_json[ $path ] ) ) {
-		wp_die( esc_html( "$path not in $manifest_file" ) );
-	}
-
-	return plugins_url( 'dist' . $manifest_json[ $path ], $plugin_file );
-}
-
-function plugin_mix_manifest( $file ) {
-
-	plugin_dir_path( $file ) . 'dist/mix-manifest.json';
-}
-
-function mix_version( $path ) {
-
-	// Make sure to trim any slashes from the front of the path.
-	$path     = '/' . ltrim( $path, '/' );
-	$path     = '/' . ltrim( $path, 'dist' );
-	$manifest = mix_manifest_json();
-
-	if ( empty( $manifest[ $path ] ) ) {
-		wp_die( 'mix manifest not found or does not contain path' );
-	}
-
-	parse_str( wp_parse_url( $manifest[ $path ], PHP_URL_QUERY ), $query );
-
-	if ( empty( $query['id'] ) ) {
-		wp_die( 'mix manifest version string not found' );
-	}
-
-	return $query['id'];
-}
-
-function plugin_or_theme_uri( $path ) {
-
-	if ( defined( 'Nextgenthemes\PLUGIN_FILE' ) ) {
-		return plugins_url( $path, \Nextgenthemes\PLUGIN_FILE );
-	} else {
-		return get_theme_file_uri( $path );
-	}
 }

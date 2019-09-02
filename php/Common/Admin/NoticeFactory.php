@@ -1,6 +1,9 @@
 <?php
 namespace Nextgenthemes\ARVE\Common\Admin;
 
+use function Nextgenthemes\ARVE\Common\Asset\enqueue;
+use function Nextgenthemes\ARVE\Common\Asset\ver;
+
 class NoticeFactory {
 
 	public $slug;
@@ -51,11 +54,12 @@ class NoticeFactory {
 
 	public function assets() {
 
-		\Nextgenthemes\Asset\enqueue(
+		enqueue(
 			[
 				'handle' => 'nextgenthemes-notice-ajax',
 				'deps'   => [ 'jquery' ],
-				'src'    => \Nextgenthemes\Asset\plugin_or_theme_uri( 'nextgenthemes/dist/js/notice-ajax.js' ),
+				'src'    => plugins_url( 'dist/common/js/notice-ajax.js', \Nextgenthemes\ARVE\PLUGIN_FILE ),
+				'ver'    => \Nextgenthemes\ARVE\Common\VERSION,
 			]
 		);
 	}

@@ -1,5 +1,5 @@
 <?php
-namespace Nextgenthemes\License;
+namespace Nextgenthemes\ARVE\Common\License;
 
 function get_key( $product, $option_only = false ) {
 
