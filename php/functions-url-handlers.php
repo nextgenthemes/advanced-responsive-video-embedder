@@ -21,6 +21,22 @@ function create_url_handlers() {
 
 function url_detection_to_shortcode( $provider, array $matches, array $attr, $url, array $rawattr ) {
 
+	foreach ( $matches as $k => $v ) {
+
+		if ( ! is_numeric( $k ) ) {
+			$a[ $k ] = $matches[ $k ];
+		}
+	}
+
+	$a['provider']    = $provider;
+	$a['url_handler'] = $matches;
+
+	return build_video( $a );
+}
+
+/* Keep this old code for now */
+function url_detection_to_shortcode_classic( $provider, array $matches, array $attr, $url, array $rawattr ) {
+
 	// Fix 'Markdown on save enhanced' issue
 	if ( substr( $url, -4 ) === '</p>' ) {
 		$url = substr( $url, 0, -4 );
