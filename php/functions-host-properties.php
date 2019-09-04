@@ -59,7 +59,7 @@ function get_host_properties() {
 			'auto_thumbnail' => false,
 			'tests'          => [
 				[
-					'url' => 'http://www.break.com/video/first-person-pov-of-tornado-strike-2542591-test',
+					'url' => 'https://www.break.com/video/first-person-pov-of-tornado-strike-2542591-test',
 					'id'  => 2542591,
 				],
 				[
@@ -132,6 +132,7 @@ function get_host_properties() {
 			'oembed'         => true,
 			'regex'          => '#https?://(www\.)?(dai\.ly|dailymotion\.com/video)/(?<id>[a-z0-9]+)#i',
 			'embed_url'      => 'https://www.dailymotion.com/embed/video/%s',
+			'rebuild_url'    => 'https://www.dailymotion.com/video/%s',
 			'default_params' => 'logo=0&hideInfos=1&related=0',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
@@ -193,6 +194,7 @@ function get_host_properties() {
 			'name'           => 'Funny or Die',
 			'regex'          => '#https?://(www\.)?funnyordie\.com/videos/(?<id>[a-z0-9_]+)#i',
 			'embed_url'      => 'https://www.funnyordie.com/embed/%s',
+			'rebuild_url'    => 'https://www.funnyordie.com/videos/%s',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'aspect_ratio'   => '640:400',
@@ -207,12 +209,12 @@ function get_host_properties() {
 		'ign'                  => [
 			'name'           => 'IGN',
 			'regex'          => '#(?<id>https?://(www\.)?ign\.com/videos/[0-9]{4}/[0-9]{2}/[0-9]{2}/[0-9a-z\-]+)#i',
-			'embed_url'      => 'http://widgets.ign.com/video/embed/content.html?url=%s',
+			'embed_url'      => 'https://widgets.ign.com/video/embed/content.html?url=%s',
 			'auto_thumbnail' => false,
 			'tests'          => [
 				[
-					'url' => 'http://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
-					'id'  => 'http://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
+					'url' => 'https://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
+					'id'  => 'https://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
 				],
 			]
 		],
@@ -320,11 +322,12 @@ function get_host_properties() {
 		'snotr'                => [
 			'name'           => 'Snotr',
 			'regex'          => '#https?://(www\.)?snotr\.com/(video|embed)/(?<id>[0-9]+)#i',
-			'embed_url'      => 'http://www.snotr.com/embed/%s',
+			'embed_url'      => 'https://www.snotr.com/embed/%s',
+			'rebuild_url'    => 'https://www.snotr.com/video/%s',
 			'auto_thumbnail' => false,
 			'tests'          => [
 				[
-					'url' => 'http://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is',
+					'url' => 'https://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is',
 					'id'  => 12314,
 				],
 			]
@@ -347,6 +350,7 @@ function get_host_properties() {
 			'oembed'         => true,
 			'regex'          => '#https?://(www\.)?ted\.com/talks/(?<id>[a-z0-9_]+)#i',
 			'embed_url'      => 'https://embed.ted.com/talks/%s.html',
+			'rebuild_url'    => 'https://www.ted.com/talks/%s.html',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'tests'          => [
@@ -408,12 +412,18 @@ function get_host_properties() {
 					'id'  => '9822149'
 				],
 			],
+			'embed_codes'    => [
+				[
+					'url'  => 'https://rutube.ru/video/0c24c646267beb3091a52c43a46214b5/',
+					'code' => '<iframe width="720" height="405" src="//rutube.ru/play/embed/9822149" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen></iframe>'
+				]
+			]
 		],
 		'viddler'              => [
 			'name'           => 'Viddler',
 			'regex'          => '#https?://(www\.)?viddler\.com/(embed|v)/(?<id>[a-z0-9]{8})#i',
 			'embed_url'      => 'https://www.viddler.com/embed/%s/',
-			'embed_url'      => 'https://www.viddler.com/embed/%s/',
+			'rebuild_url'    => 'https://www.viddler.com/v/%s/',
 			'default_params' => 'f=1&player=full&disablebackwardseek=false&disableseek=false&disableforwardseek=false&make_responsive=true&loop=false&nologo=true',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
@@ -461,16 +471,21 @@ function get_host_properties() {
 		],
 		'vk'                   => [
 			'name'           => 'VK',
-			#https://vk.com/video 162756656_171388096
-			#https://vk.com/video_ext.php?oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1
 			'regex'          => '#https?://(www\.)?vk\.com/video_ext\.php\?(?<id>[^ ]+)#i',
 			'embed_url'      => 'https://vk.com/video_ext.php?%s',
+			'rebuild_url'    => 'https://vk.com/video_ext.php?%s',
 			'requires_src'   => true,
 			'auto_thumbnail' => false,
 			'tests'          => [
 				[
 					'url' => 'https://vk.com/video_ext.php?oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1',
 					'id'  => 'oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1'
+				],
+			],
+			'embed_codes'          => [
+				[
+					'url' => 'https://vk.com/just_vid?z=video-51189706_456247608%2Fe148d26229c2e82bd9%2Fpl_wall_-51189706',
+					'code'  => '<iframe src="https://vk.com/video_ext.php?oid=-51189706&id=456247608&hash=8256b948f3f020fd" width="640" height="360" frameborder="0" allowfullscreen></iframe>'
 				],
 			],
 		],
@@ -556,6 +571,7 @@ function get_host_properties() {
 			'name'           => 'YouTube',
 			'regex'          => '#https?://(www\.)?(youtube\.com\/\S*((\/e(mbed))?\/|watch\?(\S*?&?v\=))|youtu\.be\/)(?<id>[a-zA-Z0-9_-]{6,11}((\?|&)list=[a-z0-9_\-]+)?)#i',
 			'embed_url'      => 'https://www.youtube.com/embed/%s',
+			'rebuild_url'    => 'https://www.youtube.com/watch?v=%s',
 			'default_params' => 'iv_load_policy=3&modestbranding=1&rel=0&autohide=1&playsinline=1',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
@@ -608,9 +624,11 @@ function get_host_properties() {
 
 		],
 		'youtubelist'          => [
+			'oembed'         => true,
 			'regex'          => '#https?://(www\.)?youtube\.com/(embed/videoseries|playlist)\?list=(?<id>[-a-z0-9]+)#i',
 			'name'           => 'YouTube Playlist',
 			'embed_url'      => 'https://www.youtube.com/embed/videoseries?list=%s',
+			'rebuild_url'    => 'https://www.youtube.com/watch?list=%s',
 			'default_params' => 'iv_load_policy=3&modestbranding=1&rel=0&autohide=1&playsinline=1',
 			'auto_thumbnail' => true,
 			'tests'          => [
@@ -641,8 +659,8 @@ function get_host_properties() {
 			],
 		],
 		'google_drive'         => [ 'name', 'Google Drive' ],
-		'dropbox'              => [ 'name', 'Dropbox' ],
 		'ooyala'               => [ 'name', 'ooyala' ],
+		'imdb'                 => [ 'name', 'IMDB' ],
 	];
 
 	return $properties;
