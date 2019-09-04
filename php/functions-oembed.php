@@ -1,6 +1,8 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+use function Nextgenthemes\ARVE\Common\Utils\contains;
+
 /**
  * Info: https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-oembed.php
  * https://github.com/iamcal/oembed/tree/master/providers
@@ -29,7 +31,7 @@ function filter_oembed_dataparse( $result, $data, $url ) {
 	return $result;
 }
 
-function oembed2args( $data ) {
+function oembed2args( $data, $url ) {
 
 	if ( false === $data || 'video' !== $data->type ) {
 		return false;
@@ -47,15 +49,18 @@ function oembed2args( $data ) {
 		return false;
 	}
 
-	$a = [
-		'provider'    => $provider,
-		'src'         => $matches[1],
-		'oembed_data' => $data,
-	];
+	$src = $matches[1];
 
 	if ( 'facebook' === $provider ) {
-		$a['src'] = 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $matches[1] );
+		$src = 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $src );
 	}
+
+	$a = [
+		'oembed_data' => $data,
+		'provider'    => $provider,
+		'src'         => $matches[1],
+		'url'         => $url,
+	];
 
 	return apply_filters( 'nextgenthemes/arve/oembed2args', $a );
 }
