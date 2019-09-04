@@ -1,16 +1,23 @@
 <?xml version="1.0"?>
 <ruleset name="NGT">
-
-	<file>.</file>
+	<description>A custom set of code standard rules to check for WordPress themes.</description>
 
 	<!-- Exclude files and folders. -->
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 
+	<!-- Pass some flags to PHPCS:
+		 p flag: Show progress of the run.
+		 s flag: Show sniff codes in all reports.
+	-->
+	<arg value="ps"/>
+	<!-- Strip the filepaths down to the relevant bit. -->
+	<arg name="basepath" value="./"/>
+	<arg name="parallel" value="8"/>
+	<file>.</file>
 	<!-- Only check the PHP files. -->
 	<arg name="extensions" value="php"/>
 
-	<!-- Set textdomains. -->
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
@@ -20,10 +27,10 @@
 	</rule>
 
 	<rule ref="WordPress-Core">
-		<exclude name="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma"/>
 	</rule>
 
 	<rule ref="WordPress-Extra">
+		<exclude name="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma"/>
 		<exclude name="WordPress.Arrays.CommaAfterArrayItem.NoComma"/>
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>

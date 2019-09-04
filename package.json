@@ -4,6 +4,9 @@
   "repository": "https://github.com/nextgenthemes/advanced-responsive-video-embedder",
   "author": "Nicolas Jonas",
   "license": "GPL-3.0",
+  "dependencies": {
+    "vue": "^2.6.10"
+  },
   "devDependencies": {
     "@wordpress/eslint-plugin": "latest",
     "browser-sync": "^2.26.7",
