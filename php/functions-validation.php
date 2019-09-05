@@ -40,12 +40,12 @@ function validate_aspect_ratio( $a ) {
 		return $a;
 	}
 
-	$a = explode( ':', $a['aspect_ratio'] );
+	$ratio = explode( ':', $a['aspect_ratio'] );
 
-	if ( ! empty( $a[0] )
-		&& is_numeric( $a[0] )
-		&& ! empty( $a[1] )
-		&& is_numeric( $a[1] )
+	if ( ! empty( $ratio[0] )
+		&& is_numeric( $ratio[0] )
+		&& ! empty( $ratio[1] )
+		&& is_numeric( $ratio[1] )
 	) {
 		return $a;
 	}
