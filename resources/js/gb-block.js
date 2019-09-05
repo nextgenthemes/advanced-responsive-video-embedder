@@ -1,7 +1,10 @@
 /**
- * Copyright Nicolas Jonas, Gary Pendergast
+ * Copyright (c) 2019 Nicolas Jonas
  * License: GPL 3.0
+ *
  * Based on: https://gist.github.com/pento/cf38fd73ce0f13fcf0f0ae7d6c4b685d
+ * Copyright (c) 2019 Gary Pendergast
+ * License: GPL 2.0+
  */
 
 const wp = window.wp;
@@ -18,7 +21,7 @@ wp.data.dispatch( 'core/edit-post' ).hideBlockTypes( [
 /*
  * Keypair to gutenberg component
  */
-function PrepareOptions( options ) {
+function PrepareSelectOptions( options ) {
 	const gboptions = [];
 
 	Object.keys( options ).forEach( ( key ) => {
@@ -32,46 +35,57 @@ function PrepareOptions( options ) {
 }
 
 function BuildControls( props ) {
+
+	console.log( 'props', props );
+
 	const controls = [];
 
 	Object.keys( window.ARVEsettings ).forEach( ( key ) => {
-		const opt = window.ARVEsettings[ key ];
-		const cArgs = {
-			label: opt.label,
-
-			//help: opt.description,
+		const option = window.ARVEsettings[ key ];
+		const cArgs  = {
+			label: option.label,
+			//help: option.description,
 			onChange: ( value ) => {
 				if ( 'url' === key ) {
-					console.log( value );
+					const parser  = new DOMParser();
+					const $iframe = parser.parseFromString( value, 'text/html' ).querySelector( 'iframe' );
+					if ( $iframe.src ) {
+						value   = $iframe.src;
+						const w = $iframe.width;
+						const h = $iframe.height;
+						if ( w && h ) {
+							props.setAttributes( { aspect_ratio: aspectRatio( w, h ) } );
+						}
+					}
 				}
-
 				props.setAttributes( { [ key ]: value } );
 			},
 		};
 
-		if ( 'bool+default' === opt.type ) {
-			opt.type = 'select';
+		if ( 'bool+default' === option.type ) {
+			option.type = 'select';
 		}
 
-		switch ( opt.type ) {
-			case 'boolean':
-				cArgs.onChange = ( value ) => {
-					props.setAttributes( { [ key ]: value } );
-				};
-
-				controls.push( el( wp.components.CheckboxControl, cArgs ) );
+		switch ( option.type ) {
+			case 'TODOboolean':
+				if ( typeof props.attributes[ key ] !== 'undefined' ) {
+					cArgs.selected = props.attributes[ key ];
+				}
+				cArgs.value = props.attributes[ key ];
+				controls.push( el( wp.components.ToggleControl, cArgs ) );
 				break;
 
 			case 'select':
-				cArgs.options = PrepareOptions( opt.options );
-				cArgs.selected = props.attributes[ key ];
-
+				cArgs.options = PrepareSelectOptions( option.options );
+				if ( typeof props.attributes[ key ] !== 'undefined' ) {
+					cArgs.selected = props.attributes[ key ];
+				}
+				cArgs.value = props.attributes[ key ];
 				controls.push( el( wp.components.SelectControl, cArgs ) );
 				break;
 
 			case 'string':
 				cArgs.value = props.attributes[ key ];
-
 				controls.push( el( wp.components.TextControl, cArgs ) );
 				break;
 		}
@@ -130,3 +144,19 @@ wp.blocks.registerBlockType( 'nextgenthemes/arve-block', {
 		return null;
 	},
 } );
+
+function aspectRatio( w, h ) {
+
+	const arGCD = gcd( w, h );
+
+	return ( w / arGCD ) + ':' +  ( h / arGCD );
+}
+
+function gcd( a, b ) {
+
+	if ( ! b ) {
+		return a;
+	}
+
+	return gcd( b, a % b );
+}
