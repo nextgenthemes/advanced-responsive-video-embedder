@@ -88,8 +88,16 @@ class Setup {
 		enqueue(
 			[
 				'handle' => 'nextgenthemes-settings',
-				'src'    => plugins_url( 'dist/common/js/settings.js', \Nextgenthemes\ARVE\PLUGIN_FILE ),
-				'ver'    => ver( \Nextgenthemes\ARVE\VERSION, 'dist/common/js/settings.js', \Nextgenthemes\ARVE\PLUGIN_FILE ),
+				'src'    => plugin_or_theme_src( 'dist/common/css/settings.css', '\Nextgenthemes\ARVE\PLUGIN_FILE' ),
+				'ver'    => plugin_or_theme_ver( VERSION, 'dist/common/css/settings.css', '\Nextgenthemes\ARVE\PLUGIN_FILE' ),
+			]
+		);
+
+		enqueue(
+			[
+				'handle' => 'nextgenthemes-settings',
+				'src'    => plugin_or_theme_src( 'dist/common/js/settings.js', '\Nextgenthemes\ARVE\PLUGIN_FILE' ),
+				'ver'    => plugin_or_theme_ver( VERSION, 'dist/common/js/settings.js', '\Nextgenthemes\ARVE\PLUGIN_FILE' ),
 				'deps'   => [ 'jquery' ],
 			]
 		);
@@ -102,13 +110,6 @@ class Setup {
 				'nonce'    => wp_create_nonce( 'wp_rest' ),
 				'rest_url' => $this->rest_url,
 				'options'  => $this->options,
-			]
-		);
-
-		enqueue(
-			[
-				'handle' => 'nextgenthemes-settings',
-				'src'    => plugins_url( 'dist/common/css/settings.css', \Nextgenthemes\ARVE\PLUGIN_FILE ),
 			]
 		);
 	}

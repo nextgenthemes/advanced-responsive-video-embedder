@@ -8,6 +8,7 @@ function get_products() {
 
 	$products = array(
 		'arve_pro'          => array(
+			'namespace' => '\Nextgenthemes\ARVE\Pro',
 			'name'   => 'ARVE Pro',
 			'id'     => 1253,
 			'type'   => 'plugin',
@@ -15,6 +16,7 @@ function get_products() {
 			'url'    => 'https://nextgenthemes.com/plugins/arve-pro/',
 		),
 		'arve_amp'          => array(
+			'namespace' => '\Nextgenthemes\ARVE\AMP',
 			'name'   => 'ARVE AMP',
 			'id'     => 16941,
 			'type'   => 'plugin',
@@ -22,6 +24,7 @@ function get_products() {
 			'url'    => 'https://nextgenthemes.com/plugins/arve-amp/',
 		),
 		'arve_random_video' => array(
+			'namespace' => '\Nextgenthemes\ARVE\RandomVideo',
 			'name'   => 'ARVE Random Video',
 			'id'     => 31933,
 			'type'   => 'plugin',
@@ -51,15 +54,15 @@ function get_products() {
 			$products[ $key ]['file'] = constant( $file_define );
 		}
 
-		$version_define = "\\nextgenthemes\\$key\\VERSION";
-		$file_define    = "\\nextgenthemes\\$key\\FILE";
+		$version = constant( $value['namespace'] . '\VERSION' );
+		$file    = constant( $value['namespace'] . '\FILE' );
 
-		if ( defined( $version_define ) ) {
-			$products[ $key ]['version'] = constant( $version_define );
+		if ( $version ) {
+			$products[ $key ]['version'] = $version;
 		}
 
-		if ( defined( $file_define ) ) {
-			$products[ $key ]['file'] = constant( $file_define );
+		if ( $file ) {
+			$products[ $key ]['file'] = $file;
 		}
 
 		if ( 'plugin' === $value['type'] ) {

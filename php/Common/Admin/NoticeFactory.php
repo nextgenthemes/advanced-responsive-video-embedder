@@ -58,8 +58,8 @@ class NoticeFactory {
 			[
 				'handle' => 'nextgenthemes-notice-ajax',
 				'deps'   => [ 'jquery' ],
-				'src'    => plugins_url( 'dist/common/js/notice-ajax.js', \Nextgenthemes\ARVE\PLUGIN_FILE ),
-				'ver'    => \Nextgenthemes\ARVE\Common\VERSION,
+				'src'    => plugin_or_theme_src( 'dist/common/js/notice-ajax.js', \Nextgenthemes\ARVE\PLUGIN_FILE ),
+				'ver'    => VERSION,
 			]
 		);
 	}

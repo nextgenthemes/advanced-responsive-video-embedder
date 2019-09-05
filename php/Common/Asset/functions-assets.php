@@ -1,10 +1,38 @@
 <?php
 namespace Nextgenthemes\ARVE\Common\Asset;
 
-function ver( $ver, $path, $file ) {
+function plugin_or_theme_src( $path, $plugin_file_constant = false ) {
+
+	$file = constant( $plugin_file_constant );
+
+	if ( $file ) {
+		return plugins_url( $path, constant( $plugin_file_constant ) );
+	} else {
+		return get_theme_file_uri( $path );
+	}
+}
+
+function plugin_or_theme_ver( $ver, $path, $plugin_file_constant = false ) {
+
+	$file = constant( $plugin_file_constant );
+
+	if ( $file ) {
+		return ver( $ver, $path, $file );
+	} else {
+		return ver( $ver, get_parent_theme_file_path( $path ) );
+	}
+}
+
+function ver( $ver, $path, $file = false ) {
 
 	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-		$ver = filemtime( trailingslashit( dirname( $file ) ) . $path );
+
+		// Much like plugins_url( $path, PLUGIN_FILE );
+		if ( $file ) {
+			$path = trailingslashit( dirname( $file ) ) . $path;
+		}
+
+		$ver = filemtime( $path );
 	}
 
 	return $ver;

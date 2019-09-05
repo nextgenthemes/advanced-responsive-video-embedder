@@ -68,7 +68,6 @@ function print_string_field( $key, $option ) {
 }
 
 function print_attachment_field( $key, $option ) {
-	// jQuery
 	wp_enqueue_script( 'jquery' );
 	// This will enqueue the Media Uploader script
 	wp_enqueue_media();

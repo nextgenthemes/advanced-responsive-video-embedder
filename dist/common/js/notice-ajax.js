@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -97,7 +97,7 @@ eval("/* global jQuery, ajaxurl */\n(function ($) {\n  'use strict';\n\n  $(docu
 
 /***/ }),
 
-/***/ 3:
+/***/ 4:
 /*!**************************************************!*\
   !*** multi ./resources/common/js/notice-ajax.js ***!
   \**************************************************/
