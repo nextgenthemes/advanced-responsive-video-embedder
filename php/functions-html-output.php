@@ -7,10 +7,10 @@ function build_html( array $a ) {
 
 	return build_tag(
 		array(
-			'name'    => 'arve',
-			'tag'     => 'div',
-			'content' => arve_embed( arve_embed_inner_html( $a ), $a ) . promote_link( $a['arve_link'] ),
-			'attr'    => array(
+			'name'       => 'arve',
+			'tag'        => 'div',
+			'inner-html' => arve_embed( arve_embed_inner_html( $a ), $a ) . promote_link( $a['arve_link'] ),
+			'attr'       => array(
 				'class'         => empty( $a['align'] ) ? 'arve' : "arve align{$a['align']}",
 				'data-mode'     => $a['mode'],
 				'data-provider' => $a['provider'],
@@ -28,7 +28,6 @@ function build_html( array $a ) {
 function build_iframe_tag( array $a ) {
 
 	$sandbox = 'allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox';
-	$class   = ( 'wistia' === $a['provider'] ) ? 'arve-iframe fitvidsignore wistia_embed' : 'arve-iframe fitvidsignore';
 
 	if ( 'vimeo' === $a['provider'] ) {
 		$sandbox .= ' allow-forms';
@@ -42,7 +41,7 @@ function build_iframe_tag( array $a ) {
 		[
 			'name'    => 'iframe',
 			'tag'     => 'iframe',
-			'content' => '',
+			'inner-html' => '',
 			'attr'    => array(
 				'allow'           => 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture',
 				'allowfullscreen' => '',
@@ -66,7 +65,7 @@ function build_video_tag( array $a ) {
 		[
 			'name'    => 'video',
 			'tag'     => 'video',
-			'content' => build_tracks_html(),
+			'inner-html' => build_tracks_html(),
 			'attr'    => [
 				// WPmaster
 				'autoplay'           => in_array( $a['mode'], [ 'lazyload', 'lightbox', 'link-lightbox' ], true ) ? false : $a['autoplay'],
@@ -180,8 +179,8 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 	}
 
 	if ( $debug || isset( $_GET['arve-debug-atts'] ) ) {
-		$html .= sprintf( '<pre style="%s">$a: %s</pre>', esc_attr( $pre_style ), get_var_dump( $input_atts ) );
-		$html .= sprintf( '<pre style="%s">$arve: %s</pre>', esc_attr( $pre_style ), get_var_dump( $a ) );
+		$html .= sprintf( '<pre style="%s">in: %s</pre>', esc_attr( $pre_style ), get_var_dump( $input_atts ) );
+		$html .= sprintf( '<pre style="%s">$a: %s</pre>', esc_attr( $pre_style ), get_var_dump( $a ) );
 	}
 
 	if ( isset( $_GET['arve-debug-html'] ) ) {
@@ -192,7 +191,6 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 	return $html;
 }
 
-
 function arve_embed_inner_html( array $a ) {
 
 	$html = '';
@@ -202,21 +200,21 @@ function arve_embed_inner_html( array $a ) {
 		$html        .= sprintf( '<meta itemprop="contentURL" content="%s">', esc_attr( $first_source['src'] ) );
 	}
 
-	if ( ! empty( $a['iframe_src'] ) ) {
-		$html .= sprintf( '<meta itemprop="embedURL" content="%s">', esc_attr( $a['iframe_src'] ) );
+	if ( $a['src'] ) {
+		$html .= sprintf( '<meta itemprop="embedURL" content="%s">', esc_attr( $a['src'] ) );
 	}
 
-	if ( ! empty( $a['upload_date'] ) ) {
+	if ( $a['upload_date'] ) {
 		$html .= sprintf( '<meta itemprop="uploadDate" content="%s">', esc_attr( $a['upload_date'] ) );
 	}
 
-	if ( ! empty( $a['duration'] ) ) {
+	if ( $a['duration'] ) {
 		$html .= sprintf( '<meta itemprop="duration" content="PT%s">', esc_attr( $a['duration'] ) );
 	}
 
 	$html .= build_rating_meta( $a );
 
-	if ( ! empty( $a['img_src'] ) ) {
+	if ( $a['img_src'] ) {
 		$html .= build_tag(
 			array(
 				'name' => 'thumbnail',
@@ -230,7 +228,7 @@ function arve_embed_inner_html( array $a ) {
 		);
 	}
 
-	if ( ! empty( $a['title'] ) ) {
+	if ( $a['title'] ) {
 		$html .= build_tag(
 			array(
 				'name' => 'title',
@@ -244,7 +242,7 @@ function arve_embed_inner_html( array $a ) {
 		);
 	}
 
-	if ( ! empty( $a['description'] ) ) {
+	if ( $a['description'] ) {
 		$html .= build_tag(
 			array(
 				'name' => 'description',
@@ -297,12 +295,14 @@ function build_tag( array $tag, array $a ) {
 
 	} else {
 
-		if ( ! empty( $tag['content'] ) || ( isset( $tag['content'] ) && '' === $tag['content'] ) ) {
+		if ( ! empty( $tag['inner-html'] ) ||
+			( isset( $tag['inner-html'] ) && '' === $tag['inner-html'] )
+		) {
 			$html = sprintf(
 				'<%1$s%2$s>%3$s</%1$s>',
 				esc_html( $tag['tag'] ),
 				attr( $tag['attr'] ),
-				$tag['content']
+				$tag['inner-html']
 			);
 		} else {
 			$html = sprintf(
@@ -312,6 +312,13 @@ function build_tag( array $tag, array $a ) {
 			);
 		}
 	}
+
+	$html = sprintf(
+		"\n\n<!-- ARVE %s -->\n%s\n<!-- ARVE /%s -->",
+		esc_html( $tag['name'] ),
+		$html,
+		esc_html( $tag['name'] )
+	);
 
 	return apply_filters( "nextgenthemes/arve/{$tag['name']}_html", $html, $a );
 }
@@ -351,7 +358,7 @@ function arve_embed( $html, array $a ) {
 		[
 			'name'    => 'arve_embed',
 			'tag'     => 'div',
-			'content' => $ratio_div . $html,
+			'inner-html' => $ratio_div . $html,
 			'attr'    => [ 'class' => $class ],
 		],
 		$a
