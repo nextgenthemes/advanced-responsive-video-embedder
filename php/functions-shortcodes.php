@@ -26,21 +26,28 @@ function shortcode( array $a, $content = null ) {
 
 function test_shortcode( $a, $content = null ) {
 
-	// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	if ( empty( $_GET['provider'] ) ) {
-		return;
-	}
-
 	$html      = '';
 	$providers = get_host_properties();
-	$provider  = sanitize_text_field( wp_unslash( $_GET['provider'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$provider = sanitize_text_field( wp_unslash( empty( $_GET['provider'] ) ? '' : $_GET['provider'] ) );
 
-	if ( empty( $provider ) ) {
-		return 'put provider in url arg';
+	if ( ! empty( $provider ) ) {
+		 $html .= basic_tests( $providers[ $provider ]['tests'] );
+	} else {
+
+		foreach ( $providers as $provider => $value ) {
+			$html .= basic_tests( $providers[ $provider ]['tests'] );
+		}
 	}
 
-	foreach ( $providers[ $provider ]['tests'] as $key => $value ) {
+	return $html;
+}
 
+function basic_tests() {
+
+	$html = '';
+
+	foreach ( $tests as $key => $value ) {
 		$sc    = sprintf( '[arve url="%s" mode="lazyload" maxwidth="500" title="Custom Title Test" /]', $value['url'] );
 		$html .= do_shortcode( $sc );
 		$sc    = sprintf( '[arve url="%s" mode="lightbox" maxwidth="200" /]', $value['url'] );
@@ -49,6 +56,7 @@ function test_shortcode( $a, $content = null ) {
 
 	return $html;
 }
+
 
 function build_video( array $input_atts ) {
 
@@ -62,18 +70,13 @@ function build_video( array $input_atts ) {
 
 	if ( ! empty( $a['errors'] ) ) {
 
-		$error_html = sprintf(
-			'<p><strong>%s</strong><br>',
-			__( '<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error(s):', 'advanced-responsive-video-embedder' )
-		);
-
-		foreach ( $a['errors']->get_error_messages() as $key => $value ) {
-			$error_html .= "$value<br>";
+		foreach ( $a['errors']->get_error_messages() as $key => $message ) {
+			$html .= sprintf(
+				'%s %s<br>',
+				__( '<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error:', 'advanced-responsive-video-embedder' ),
+				$message
+			);
 		}
-
-		$error_html .= '</p>';
-
-		$html .= $error_html;
 
 		if ( '' !== $a['errors']->get_error_message( 'fatal' ) ) {
 			$html .= get_debug_info( $html, $a, $input_atts );
@@ -103,7 +106,8 @@ function shortcode_option_defaults() {
 
 function create_shortcodes() {
 
-	$options = options();
+	$options    = options();
+	$properties = get_host_properties();
 
 	if ( $options['legacy_shortcodes'] ) {
 
@@ -111,9 +115,18 @@ function create_shortcodes() {
 
 		foreach ( $shortcode_options as $provider => $shortcode ) {
 
-			$function = function( $atts ) use ( $provider ) {
-				$a['provider'] = $provider;
-				return shortcode( $a );
+			$function = function( $a ) use ( $provider, $properties ) {
+
+				$a['provider']  = $provider;
+
+				if ( ! empty( $properties[ $provider ]['rebuild_url'] ) ) {
+					$a['url'] = sprintf( $properties[ $provider ]['rebuild_url'], $a['id'] );
+					unset( $a['id'] );
+					return shortcode( $a );
+				} else {
+					$a['legacy_sc'] = 'Legacy Shortcode';
+					return build_video( $a );
+				}
 			};
 
 			add_shortcode( $shortcode, $function );
