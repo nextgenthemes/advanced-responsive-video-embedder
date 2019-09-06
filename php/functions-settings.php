@@ -328,7 +328,7 @@ function all_settings() {
 			'default'     => false,
 			'shortcode'   => true,
 			'tag'         => 'pro',
-			'label'       => esc_html__( 'Hide Title', 'advanced-responsive-video-embedder' ),
+			'label'       => esc_html__( 'Hide Title (Lazyload & Lightbox only)', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
 			'description' => esc_html__( 'Usefull when the thumbnail image already displays the video title (Lazyload mode). The title will still be used for SEO.', 'advanced-responsive-video-embedder' ),
 		],
@@ -336,7 +336,7 @@ function all_settings() {
 			'tag'         => 'pro',
 			'default'     => true,
 			'type'        => 'boolean',
-			'label'       => esc_html__( 'Expand on play?', 'advanced-responsive-video-embedder' ),
+			'label'       => esc_html__( 'Expand on play? (Lazyload only)', 'advanced-responsive-video-embedder' ),
 			'description' => esc_html__( 'Expands video size after clicking the thumbnail (Lazyload Mode)', 'advanced-responsive-video-embedder' ),
 		],
 		'fullscreen'            => [
