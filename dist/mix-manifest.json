@@ -1,6 +1,10 @@
 {
-    "/js/arve.js": "/js/arve.js?id=279d46b09307d320198b",
+    "/common/js/notice-ajax.js": "/common/js/notice-ajax.js?id=7783150c5b7c5f6199b8",
+    "/common/js/settings.js": "/common/js/settings.js?id=b865451fffc1099a540c",
+    "/js/arve.js": "/js/arve.js?id=81f63b51e2137990e859",
     "/css/arve.css": "/css/arve.css?id=46418914ac7055cbe4bd",
     "/css/arve-admin.css": "/css/arve-admin.css?id=a43f957c3a28025693f0",
-    "/js/gb-block.js": "/js/gb-block.js?id=c84116794ded822d9198"
+    "/common/css/settings.css": "/common/css/settings.css?id=9c457662a4e61cee1204",
+    "/js/gb-block.js": "/js/gb-block.js?id=f5da8690b120f66540a6",
+    "/js/test-block.js": "/js/test-block.js?id=9ac34bb0c2a49243e4dc"
 }

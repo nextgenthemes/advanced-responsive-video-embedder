@@ -12,6 +12,7 @@ mix.sourceMaps();
 mix.version();
 mix.js( 'resources/js/arve.js', 'js' );
 mix.js( 'resources/js/gb-block.js', 'js' );
+mix.js( 'resources/js/test-block.js', 'js' );
 mix.js( 'resources/common/js/settings.js', 'common/js' );
 mix.js( 'resources/common/js/notice-ajax.js', 'common/js' );
 
