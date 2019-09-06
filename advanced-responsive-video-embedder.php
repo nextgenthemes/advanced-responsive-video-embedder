@@ -69,7 +69,7 @@ function init() {
 	add_action( 'plugins_loaded',              "{$ns}\\create_shortcodes", 999 );
 	add_action( 'plugins_loaded',              "{$ns}\\create_url_handlers", 999 );
 	add_action( 'plugins_loaded',              "{$ns}\\load_textdomain" );
-	add_action( 'wp_enqueue_scripts',          "{$ns}\\register_assets", 0 );
+	add_action( 'wp_enqueue_scripts',          "{$ns}\\action_wp_enqueue_scripts" );
 	add_action( 'wp_video_shortcode_override', "{$ns}\\wp_video_shortcode_override", 10, 4 );
 	add_filter( 'language_attributes',         "{$ns}\\html_id" );
 	add_filter( 'oembed_dataparse',            "{$ns}\\filter_oembed_dataparse", 11, 3 );
@@ -84,7 +84,6 @@ function init() {
 
 		'aspect_ratio'                    => -10,
 
-		'iframe_fallback'                 => 0,
 		'get_media_gallery_thumbnail'     => 10,
 		'get_media_gallery_video'         => 10,
 		'liveleak_id_fix'                 => 10,
