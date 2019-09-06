@@ -40,7 +40,8 @@ function get_host_properties() {
 			'name'           => 'Bitchute',
 			'oembed'         => false,
 			'regex'          => '#https?://www\.bitchute\.com/(video|embed)/(?<id>[0-9a-z\-]+)#i',
-			'embed_url'      => 'http://www.bitchute.com/embed/%s/',
+			'embed_url'      => 'https://www.bitchute.com/embed/%s/',
+			'rebuild_url'    => 'https://www.bitchute.com/video/%s/',
 			'default_params' => '',
 			'auto_thumbnail' => false,
 			'tests'          => [
