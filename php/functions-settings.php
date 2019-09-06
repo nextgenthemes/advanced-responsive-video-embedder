@@ -6,6 +6,16 @@ function setup_settings() {
 	upgrade_options();
 }
 
+function options() {
+	$i = get_settings_instance();
+	return $i->options;
+}
+
+function default_options() {
+	$i = get_settings_instance();
+	return $i->default_options;
+}
+
 function get_settings_instance() {
 
 	static $inst = null;
@@ -50,16 +60,6 @@ function settings_page_content() {
 function settings_sidebar() {
 	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
 	readfile( __DIR__ . '/Admin/partials/settings-sidebar.html' );
-}
-
-function options() {
-	$i = get_settings_instance();
-	return $i->options;
-}
-
-function default_options() {
-	$i = get_settings_instance();
-	return $i->default_options;
 }
 
 function settings() {
