@@ -2,8 +2,9 @@
 namespace Nextgenthemes\ARVE;
 
 use Nextgenthemes\ARVE\Common\Admin\NoticeFactory;
-use Nextgenthemes\ARVE\Common\Asset;
-use Nextgenthemes\ARVE\Common\Utils;
+use function Nextgenthemes\ARVE\Common\Asset\enqueue;
+use function Nextgenthemes\ARVE\Common\Asset\ver;
+use function Nextgenthemes\ARVE\Common\Utils\attr;
 
 function action_admin_init_setup_messages() {
 
@@ -68,8 +69,8 @@ function widget_text() {
 
 	printf( '<a href="%s">ARVE Pro Addon Features</a>:', 'https://nextgenthemes.com/plugins/arve-pro/' );
 
-	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents
-	echo file_get_contents( __DIR__ . '/partials/pro-ad.html' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
+	readfile( __DIR__ . '/partials/pro-ad.html' );
 }
 
 function add_dashboard_widget() {
@@ -170,7 +171,7 @@ function register_shortcode_ui() {
 
 function input( $args ) {
 
-	$out = sprintf( '<input%s>', Utils\attr( $args['input_attr'] ) );
+	$out = sprintf( '<input%s>', attr( $args['input_attr'] ) );
 
 	if ( ! empty( $args['option_values']['attr'] ) && 'thumbnail_fallback' === $args['option_values']['attr'] ) {
 
@@ -181,7 +182,7 @@ function input( $args ) {
 
 		$out .= sprintf(
 			'<a %s>%s</a>',
-			Utils\attr(
+			attr(
 				array(
 					'data-image-upload' => sprintf( '[name="%s"]', $args['input_attr']['name'] ),
 					'class'             => 'button-secondary',
@@ -202,7 +203,7 @@ function textarea( $args ) {
 
 	unset( $args['input_attr']['type'] );
 
-	$out = sprintf( '<textarea%s></textarea>', Utils\attr( $args['input_attr'] ) );
+	$out = sprintf( '<textarea%s></textarea>', attr( $args['input_attr'] ) );
 
 	if ( ! empty( $args['description'] ) ) {
 		$out = $out . '<p class="description">' . $args['description'] . '</p>';
@@ -237,7 +238,7 @@ function select( $args ) {
 	$select_attr = $args['input_attr'];
 	unset( $select_attr['value'] );
 
-	$out = sprintf( '<select%s>%s</select>', Utils\attr( $select_attr ), implode( '', $options ) );
+	$out = sprintf( '<select%s>%s</select>', attr( $select_attr ), implode( '', $options ) );
 
 	if ( ! empty( $args['description'] ) ) {
 		$out = $out . '<p class="description">' . $args['description'] . '</p>';
@@ -304,33 +305,33 @@ function mce_css( $mce_css ) {
 
 function admin_enqueue_styles() {
 
-	Asset\enqueue(
+	enqueue(
 		[
 			'handle' => 'advanced-responsive-video-embedder',
-			'src'    => url( 'dist/css/arve-admin.css' ),
-			'ver'    => VERSION
+			'src'    => plugins_url( 'dist/css/arve-admin.css', PLUGIN_FILE ),
+			'ver'    => ver( VERSION, 'dist/css/arve-admin.css', PLUGIN_FILE )
 		]
 	);
 }
 
 function admin_enqueue_scripts() {
 
-	Asset\enqueue(
+	enqueue(
 		[
 			'handle' => 'arve-admin',
-			'src'    => url( 'dist/js/arve-admin.js' ),
+			'src'    => plugins_url( 'dist/js/arve-admin.js', PLUGIN_FILE ),
+			'ver'    => ver( VERSION, 'dist/js/arve-admin.js', PLUGIN_FILE ),
 			'deps'   => [ 'jquery' ],
-			'ver'    => VERSION
 		]
 	);
 
 	if ( is_plugin_active( 'shortcode-ui/shortcode-ui.php' ) ) {
-		Asset\enqueue(
+		enqueue(
 			[
 				'handle' => 'arve-admin-sc-ui',
-				'src'    => url( 'dist/js/arve-shortcode-ui.js' ),
+				'src'    => plugins_url( 'dist/js/arve-shortcode-ui.js', PLUGIN_FILE ),
+				'ver'    => ver( VERSION, 'dist/js/arve-shortcode-ui.js', PLUGIN_FILE ),
 				'deps'   => [ 'shortcode-ui' ],
-				'ver'    => VERSION
 			]
 		);
 	}
