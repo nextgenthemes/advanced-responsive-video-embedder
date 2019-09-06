@@ -24,7 +24,7 @@ function ngt_remote_get( $url, array $args = [], $json = false ) {
 			$response_code,
 			sprintf(
 				// Translators: 1 URL 2 HTTP presponse code.
-				__( 'url: %s Status code 200 expected but was %s.', 'advanced-responsive-video-embedder' ),
+				__( 'url: %1$s Status code 200 expected but was %2$s.', 'advanced-responsive-video-embedder' ),
 				$url,
 				$response_code
 			)

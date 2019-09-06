@@ -432,7 +432,7 @@ function sc_filter_iframe_src( array $a ) {
 	}
 
 	if ( $a['src'] && ( $build_src !== $a['src'] ) ) {
-		$a = add_error( $a, 'src-mismatch-1', 'src mismatch <br>' . $a['src'] . '<br>'. $build_src );
+		$a = add_error( $a, 'src-mismatch-1', 'src mismatch <br>' . $a['src'] . '<br>' . $build_src );
 	}
 
 	if ( ! $a['src'] ) {

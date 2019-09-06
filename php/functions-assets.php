@@ -48,7 +48,7 @@ function register_gb_block() {
 		$type         = str_replace( 'boolean', 'string', $v['type'] );
 		$attr[ $key ] = [ 'type' => $type ];
 	}
-	$attr[ 'thumbnail' ] = [ 'type' => 'string' ];
+	$attr['thumbnail'] = [ 'type' => 'string' ];
 
 	register_assets();
 	register(

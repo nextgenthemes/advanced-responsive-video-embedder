@@ -39,10 +39,10 @@ function build_iframe_tag( array $a ) {
 
 	return build_tag(
 		[
-			'name'    => 'iframe',
-			'tag'     => 'iframe',
+			'name'       => 'iframe',
+			'tag'        => 'iframe',
 			'inner-html' => '',
-			'attr'    => array(
+			'attr'       => array(
 				'allow'           => 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture',
 				'allowfullscreen' => '',
 				'class'           => ( 'wistia' === $a['provider'] ) ? 'arve-iframe fitvidsignore wistia_embed' : 'arve-iframe fitvidsignore',
@@ -63,10 +63,10 @@ function build_video_tag( array $a ) {
 
 	return build_tag(
 		[
-			'name'    => 'video',
-			'tag'     => 'video',
+			'name'       => 'video',
+			'tag'        => 'video',
 			'inner-html' => build_tracks_html(),
-			'attr'    => [
+			'attr'       => [
 				// WPmaster
 				'autoplay'           => in_array( $a['mode'], [ 'lazyload', 'lightbox', 'link-lightbox' ], true ) ? false : $a['autoplay'],
 				'controls'           => $a['controls'],
@@ -356,10 +356,10 @@ function arve_embed( $html, array $a ) {
 
 	return build_tag(
 		[
-			'name'    => 'arve_embed',
-			'tag'     => 'div',
+			'name'       => 'arve_embed',
+			'tag'        => 'div',
 			'inner-html' => $ratio_div . $html,
-			'attr'    => [ 'class' => $class ],
+			'attr'       => [ 'class' => $class ],
 		],
 		$a
 	);

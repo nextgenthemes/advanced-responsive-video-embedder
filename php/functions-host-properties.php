@@ -404,16 +404,16 @@ function get_host_properties() {
 			],
 		],
 		'rutube'               => [
-			'name'      => 'RuTube.ru',
-			'regex'     => '#https?://(www\.)?rutube\.ru/play/embed/(?<id>[0-9]+)#i',
-			'embed_url' => 'https://rutube.ru/play/embed/%s',
-			'tests'     => [
+			'name'        => 'RuTube.ru',
+			'regex'       => '#https?://(www\.)?rutube\.ru/play/embed/(?<id>[0-9]+)#i',
+			'embed_url'   => 'https://rutube.ru/play/embed/%s',
+			'tests'       => [
 				[
 					'url' => 'https://rutube.ru/play/embed/9822149',
 					'id'  => '9822149'
 				],
 			],
-			'embed_codes'    => [
+			'embed_codes' => [
 				[
 					'url'  => 'https://rutube.ru/video/0c24c646267beb3091a52c43a46214b5/',
 					'code' => '<iframe width="720" height="405" src="//rutube.ru/play/embed/9822149" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen></iframe>'
@@ -483,10 +483,10 @@ function get_host_properties() {
 					'id'  => 'oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1'
 				],
 			],
-			'embed_codes'          => [
+			'embed_codes'    => [
 				[
-					'url' => 'https://vk.com/just_vid?z=video-51189706_456247608%2Fe148d26229c2e82bd9%2Fpl_wall_-51189706',
-					'code'  => '<iframe src="https://vk.com/video_ext.php?oid=-51189706&id=456247608&hash=8256b948f3f020fd" width="640" height="360" frameborder="0" allowfullscreen></iframe>'
+					'url'  => 'https://vk.com/just_vid?z=video-51189706_456247608%2Fe148d26229c2e82bd9%2Fpl_wall_-51189706',
+					'code' => '<iframe src="https://vk.com/video_ext.php?oid=-51189706&id=456247608&hash=8256b948f3f020fd" width="640" height="360" frameborder="0" allowfullscreen></iframe>'
 				],
 			],
 		],

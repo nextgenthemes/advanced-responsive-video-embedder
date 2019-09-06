@@ -27,9 +27,9 @@ function get_products() {
 			'namespace' => 'ARVE\RandomVideo',
 			'name'      => 'ARVE Random Video',
 			'id'        => 31933,
-			'type'   => 'plugin',
-			'author' => 'Nicolas Jonas',
-			'url'    => 'https://nextgenthemes.com/plugins/arve-random-video/',
+			'type'      => 'plugin',
+			'author'    => 'Nicolas Jonas',
+			'url'       => 'https://nextgenthemes.com/plugins/arve-random-video/',
 		)
 	);
 
