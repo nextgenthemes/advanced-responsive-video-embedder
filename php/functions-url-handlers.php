@@ -10,7 +10,7 @@ function create_url_handlers() {
 	foreach ( $properties as $provider => $values ) {
 
 		$function = function( $matches, $attr, $url, $rawattr ) use ( $provider ) {
-			return url_detection_to_shortcode( $provider, $matches, $attr, $url, $rawattr );
+			return url_handler( $provider, $matches, $attr, $url, $rawattr );
 		};
 
 		if ( ! empty( $values['regex'] ) && empty( $values['oembed'] ) ) {
@@ -19,19 +19,15 @@ function create_url_handlers() {
 	}
 }
 
-function url_detection_to_shortcode( $provider, array $matches, array $attr, $url, array $rawattr ) {
+function url_handler( $provider, array $matches, array $attr, $url, array $rawattr ) {
 
-	foreach ( $matches as $k => $v ) {
-
-		if ( ! is_numeric( $k ) ) {
-			$a[ $k ] = $matches[ $k ];
-		}
-	}
-
-	$a['provider']    = $provider;
-	$a['url_handler'] = $matches;
-
-	return build_video( $a );
+	return build_video(
+		[
+			'provider'    => $provider,
+			'url_handler' => $matches,
+			'url'         => $url,
+		]
+	);
 }
 
 /* Keep this old code for now */
