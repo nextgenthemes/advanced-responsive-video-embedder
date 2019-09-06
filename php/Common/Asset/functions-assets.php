@@ -1,12 +1,14 @@
 <?php
 namespace Nextgenthemes\ARVE\Common\Asset;
 
+use function \Nextgenthemes\ARVE\Common\plugin_file;
+
 function plugin_or_theme_src( $path, $plugin_file_constant = false ) {
 
-	$file = constant( $plugin_file_constant );
+	$plugin_file = plugin_file();
 
-	if ( $file ) {
-		return plugins_url( $path, constant( $plugin_file_constant ) );
+	if ( $plugin_file ) {
+		return plugins_url( $path, $plugin_file );
 	} else {
 		return get_theme_file_uri( $path );
 	}
@@ -14,10 +16,10 @@ function plugin_or_theme_src( $path, $plugin_file_constant = false ) {
 
 function plugin_or_theme_ver( $ver, $path, $plugin_file_constant = false ) {
 
-	$file = constant( $plugin_file_constant );
+	$plugin_file = plugin_file();
 
-	if ( $file ) {
-		return ver( $ver, $path, $file );
+	if ( $plugin_file ) {
+		return ver( $ver, $path, $plugin_file );
 	} else {
 		return ver( $ver, get_parent_theme_file_path( $path ) );
 	}

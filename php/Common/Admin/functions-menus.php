@@ -4,8 +4,8 @@ namespace Nextgenthemes\ARVE\Common\Admin;
 
 function add_menus() {
 
-	$page_title = 'Nextgenthemes';
-	$menu_title = 'Nextgenthemes';
+	$page_title = __( 'Common NextGenThemes', 'advanced-responsive-video-embedder' );
+	$menu_title = __( 'Common NextGenThemes', 'advanced-responsive-video-embedder' );
 	$capability = 'manage_options';
 	$menu_slug  = 'nextgenthemes';
 	$function   = '__return_false';
@@ -22,18 +22,23 @@ function add_menus() {
 		$position,
 	);
 
-	$submenu_parent_slug = 'options-general.php';
-	$submenu_page_title  = __( 'NextGenThemes Licenses', 'advanced-responsive-video-embedder' );
-	$submenu_title       = $submenu_page_title;
-	$submenu_slug        = 'nextgenthemes-licenses';
-	$submenu_function    = __NAMESPACE__ . '\\licenses_page';
+	if ( ! defined( 'NEXTGENTHEMES_LICENSE_MENU_ACTIVE' ) ) {
 
-	add_submenu_page(
-		$submenu_parent_slug,
-		$submenu_page_title,
-		$submenu_title,
-		$capability,
-		$submenu_slug,
-		$submenu_function
-	);
+		define( 'NEXTGENTHEMES_LICENSE_MENU_ACTIVE', true );
+
+		$submenu_parent_slug = 'options-general.php';
+		$submenu_page_title  = __( 'NextGenThemes Licenses', 'advanced-responsive-video-embedder' );
+		$submenu_title       = __( 'NextGenThemes Licenses', 'advanced-responsive-video-embedder' );
+		$submenu_slug        = 'nextgenthemes-licenses';
+		$submenu_function    = __NAMESPACE__ . '\\licenses_page';
+
+		add_submenu_page(
+			$submenu_parent_slug,
+			$submenu_page_title,
+			$submenu_title,
+			$capability,
+			$submenu_slug,
+			$submenu_function
+		);
+	}
 }

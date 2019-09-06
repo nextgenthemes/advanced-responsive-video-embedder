@@ -8,25 +8,25 @@ function get_products() {
 
 	$products = array(
 		'arve_pro'          => array(
-			'namespace' => '\Nextgenthemes\ARVE\Pro',
-			'name'   => 'ARVE Pro',
-			'id'     => 1253,
-			'type'   => 'plugin',
-			'author' => 'Nicolas Jonas',
-			'url'    => 'https://nextgenthemes.com/plugins/arve-pro/',
+			'namespace' => 'ARVE\Pro',
+			'name'      => 'ARVE Pro',
+			'id'        => 1253,
+			'type'      => 'plugin',
+			'author'    => 'Nicolas Jonas',
+			'url'       => 'https://nextgenthemes.com/plugins/arve-pro/',
 		),
 		'arve_amp'          => array(
-			'namespace' => '\Nextgenthemes\ARVE\AMP',
-			'name'   => 'ARVE AMP',
-			'id'     => 16941,
-			'type'   => 'plugin',
-			'author' => 'Nicolas Jonas',
-			'url'    => 'https://nextgenthemes.com/plugins/arve-amp/',
+			'namespace' => 'ARVE\AMP',
+			'name'      => 'ARVE AMP',
+			'id'        => 16941,
+			'type'      => 'plugin',
+			'author'    => 'Nicolas Jonas',
+			'url'       => 'https://nextgenthemes.com/plugins/arve-amp/',
 		),
 		'arve_random_video' => array(
-			'namespace' => '\Nextgenthemes\ARVE\RandomVideo',
-			'name'   => 'ARVE Random Video',
-			'id'     => 31933,
+			'namespace' => 'ARVE\RandomVideo',
+			'name'      => 'ARVE Random Video',
+			'id'        => 31933,
 			'type'   => 'plugin',
 			'author' => 'Nicolas Jonas',
 			'url'    => 'https://nextgenthemes.com/plugins/arve-random-video/',
@@ -54,15 +54,15 @@ function get_products() {
 			$products[ $key ]['file'] = constant( $file_define );
 		}
 
-		$version = constant( $value['namespace'] . '\VERSION' );
-		$file    = constant( $value['namespace'] . '\FILE' );
+		$version = "\\Nextgenthemes\\{$value['namespace']}\\VERSION";
+		$file    = "\\Nextgenthemes\\{$value['namespace']}\\FILE";
 
-		if ( $version ) {
-			$products[ $key ]['version'] = $version;
+		if ( defined( $version ) ) {
+			$products[ $key ]['version'] = constant( $version );
 		}
 
-		if ( $file ) {
-			$products[ $key ]['file'] = $file;
+		if ( defined( $file ) ) {
+			$products[ $key ]['file'] = constant( $file );
 		}
 
 		if ( 'plugin' === $value['type'] ) {

@@ -3,6 +3,11 @@ namespace Nextgenthemes\ARVE\Common;
 
 const VERSION = '1.0.0';
 
+function plugin_file() {
+	$const_name = '\Nextgenthemes\ARVE\PLUGIN_FILE';
+	return defined( $const_name ) ? constant( $const_name ) : false;
+}
+
 // phpcs:disable WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
 require_once __DIR__ . '/Admin/Settings/functions-settings.php';
 require_once __DIR__ . '/Admin/functions-licensing.php';
