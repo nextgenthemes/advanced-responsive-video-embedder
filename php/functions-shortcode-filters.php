@@ -1,17 +1,16 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-use function Common\Utils\attr;
-use function Common\Utils\starts_with;
-use function Common\Utils\ends_with;
+use function Nextgenthemes\ARVE\Common\Utils\starts_with;
+use function Nextgenthemes\ARVE\Common\Utils\ends_with;
 
 function sc_filter_set_wrapper_id( array $a ) {
 
 	static $wrapper_ids = [];
 
 	foreach ( [
-		'src',
 		'url',
+		'src',
 		'id',
 		'webm',
 		'mp4',
@@ -22,13 +21,10 @@ function sc_filter_set_wrapper_id( array $a ) {
 	] as $att ) {
 
 		if ( ! empty( $a[ $att ] ) && is_string( $a[ $att ] ) ) {
-			$a['wrapper_id'] = 'arve-' . $a[ $att ];
+			$a['wrapper_id'] = $a[ $att ];
+			$a['wrapper_id'] = str_replace( [ 'https://www.', 'https://' ], '', $a['wrapper_id'] );
 			$a['wrapper_id'] = preg_replace( '/[^a-zA-Z0-9-]/', '', $a['wrapper_id'] );
-			$a['wrapper_id'] = str_replace(
-				[ 'http', 'https', 'httpswww' ],
-				'',
-				$a['wrapper_id']
-			);
+			$a['wrapper_id'] = 'arve-' . $a[ $att ];
 			break;
 		}
 	}
@@ -151,7 +147,7 @@ function sc_filter_mode_fallback( array $a ) {
 
 	if ( function_exists( '\Nextgenthemes\ARVE\Pro\init' ) && 'lazyload' === $a['mode'] && empty( $a['img_src'] ) ) {
 
-		$a['mode'] = 'lazyload-alt';
+		$a['mode'] = 'normal';
 
 	} elseif ( ! array_key_exists( $a['mode'], $supported_modes ) ) {
 
@@ -263,22 +259,24 @@ function sc_filter_autoplay_off_after_ran_once( array $a ) {
 function sc_filter_missing_attribute_check( array $a ) {
 
 	// Old shortcodes
-	if ( $a['legacy'] ) {
+	if ( $a['legacy_sc'] || $a['url_handler'] ) {
 
-		if ( empty( $a['id'] ) || empty( $a['provider'] ) ) {
+		if ( ! $a['id'] || ! $a['provider'] ) {
 			$a = add_error( $a, 'fatal', 'need id and provider' );
-			return $a;
 		}
+
+		return $a;
 	}
 
 	$error                 = true;
 	$required_attributes   = VIDEO_FILE_EXTENSIONS;
 	$required_attributes[] = 'url';
 
-	foreach ( $required_attributes as $key => $value ) {
+	foreach ( $required_attributes as $req_attr ) {
 
-		if ( $a[ $value ] ) {
+		if ( $a[ $req_attr ] ) {
 			$error = false;
+			break;
 		}
 	}
 
@@ -337,25 +335,24 @@ function sc_filter_get_media_gallery_video( array $a ) {
 
 function sc_filter_detect_provider_and_id_from_url( array $a ) {
 
-	if ( $a['src'] ||
-		( 'html5' === $a['provider'] ) ||
-		( $a['id'] && $a['provider'] )
+	if ( 'html5' === $a['provider'] ||
+		( $a['provider'] && $a['id'] )
 	) {
 		return $a;
 	}
 
-	if ( empty( $a['url'] ) ) {
+	if ( ! $a['url'] && ! $a['src'] ) {
 		$a = add_error(
 			$a,
-			'missing_args',
-			__( 'Need either <code>url</code> paramater. Or optional for HTML5 video attribute like <code>mp4</code>, <code>webm</code>.', 'advanced-responsive-video-embedder' ),
-			'remove-all-filters'
+			'fatal',
+			__( 'sc_filter_detect_provider_and_id_from_url function needs url.', 'advanced-responsive-video-embedder' ),
 		);
 		return $a;
 	}
 
-	$options    = options();
-	$properties = get_host_properties();
+	$options        = options();
+	$properties     = get_host_properties();
+	$input_provider = str_replace( 'youtube', 'youtubelist', $a['provider'] );
 
 	foreach ( $properties as $host_id => $host ) :
 
@@ -378,14 +375,70 @@ function sc_filter_detect_provider_and_id_from_url( array $a ) {
 		}
 	endforeach;
 
+	if ( $input_provider &&
+		( $input_provider !== $a['provider'] )
+	) {
+		$a = add_error( $a, 'detect!=oembed', "Regex detected provider <code>{$a['provider']}</code> did not match given provider <code>$input_provider</code>" );
+	}
+
+	if ( ! $a['provider'] ) {
+		$a['provider'] = 'iframe';
+		$a['src']      = $a['src'] ? $a['src'] : $a['url'];
+		$a['id']       = $a['src'];
+	}
+
 	return $a;
+}
+
+function get_url_query_arg( $url, $arg ) {
+
+	$return        = false;
+	$parsed_yt_url = wp_parse_url( $url );
+
+	if ( ! empty( $parsed_yt_url['query'] ) ) {
+
+		parse_str( $parsed_yt_url['query'], $url_query );
+
+		if ( isset( $url_query[ $arg ] ) ) {
+			$return = $url_query[ $arg ];
+		}
+	}
+
+	return $return;
 }
 
 function sc_filter_iframe_src( array $a ) {
 
-	$options = options();
+	if ( ! $a['provider'] || ! $a['id'] ) {
+		$a = add_error( $a, 'no-provider-and-id', 'Need Provider and ID to build iframe src' );
+		return $a;
+	}
 
-	$a['src'] = maybe_build_iframe_src( $a['src'], $a );
+	$options   = options();
+	$build_src = build_iframe_src( $a );
+
+	if ( 'youtube' === $a['provider'] ) {
+
+		$t_arg = get_url_query_arg( $a['url'], 't' );
+
+		if ( $t_arg ) {
+			$build_src = add_query_arg(
+				'start',
+				youtube_time_to_seconds( $t_arg ),
+				$build_src
+			);
+		}
+		$build_src = add_query_arg( 'feature', 'oembed', $build_src );
+	}
+
+	if ( $a['src'] && ( $build_src !== $a['src'] ) ) {
+		$a = add_error( $a, 'src-mismatch-1', 'src mismatch <br>' . $a['src'] . '<br>'. $build_src );
+	}
+
+	if ( ! $a['src'] ) {
+		$a['src'] = $build_src;
+	}
+
 	$a['src'] = iframe_src_args( $a['src'], $a );
 	$a['src'] = iframe_src_autoplay_args( $a['src'], $a );
 
@@ -394,6 +447,43 @@ function sc_filter_iframe_src( array $a ) {
 	}
 
 	return $a;
+}
+
+function build_iframe_src( array $a ) {
+
+	$options    = options();
+	$properties = get_host_properties();
+
+	if ( isset( $properties[ $a['provider'] ]['embed_url'] ) ) {
+		$pattern = $properties[ $a['provider'] ]['embed_url'];
+	} else {
+		$pattern = '%s';
+	}
+
+	if ( 'facebook' === $a['provider'] && is_numeric( $a['id'] ) ) {
+
+		$a['id'] = "https://www.facebook.com/facebook/videos/{$a['id']}/";
+
+	} elseif ( 'twitch' === $a['provider'] && is_numeric( $a['id'] ) ) {
+
+		$pattern = 'https://player.twitch.tv/?video=v%s';
+
+	} elseif ( 'ted' === $a['provider'] && preg_match( '/^[a-z]{2}$/', $a['lang'] ) === 1 ) {
+
+		$pattern = 'https://embed-ssl.ted.com/talks/lang/' . $a['lang'] . '/%s.html';
+	}
+
+	if ( isset( $properties[ $a['provider'] ]['url_encode_id'] ) && $properties[ $a['provider'] ]['url_encode_id'] ) {
+		$a['id'] = rawurlencode( $a['id'] );
+	}
+
+	if ( 'brightcove' === $a['provider'] ) {
+		$src = sprintf( $pattern, $a['account_id'], $a['brightcove_player'], $a['brightcove_embed'], $a['id'] );
+	} else {
+		$src = sprintf( $pattern, $a['id'] );
+	}
+
+	return $src;
 }
 
 function iframe_src_args( $src, array $a ) {
@@ -410,7 +500,7 @@ function iframe_src_args( $src, array $a ) {
 	$parameters = wp_parse_args( $parameters, $option_parameters );
 	$src        = add_query_arg( $parameters, $src );
 
-	if ( 'vimeo' === $a['provider'] && ! empty( $a['start'] ) ) {
+	if ( 'vimeo' === $a['provider'] && $a['start'] ) {
 		$src .= '#t=' . (int) $a['start'];
 	}
 
@@ -418,7 +508,7 @@ function iframe_src_args( $src, array $a ) {
 }
 
 // phpcs:ignore Generic.Metrics.CyclomaticComplexity.MaxExceeded
-function iframe_src_autoplay_args( $src, $a ) {
+function iframe_src_autoplay_args( $src, array $a ) {
 
 	switch ( $a['provider'] ) {
 		case 'alugha':
@@ -487,8 +577,8 @@ function iframe_src_autoplay_args( $src, $a ) {
 			break;
 		default:
 			// Do nothing for providers that to not support autoplay or fail with parameters
-			$on  = $a['src'];
-			$off = $a['src'];
+			$on  = $src;
+			$off = $src;
 			break;
 	}//end switch
 
@@ -496,47 +586,6 @@ function iframe_src_autoplay_args( $src, $a ) {
 		$src = $on;
 	} else {
 		$src = $off;
-	}
-
-	return $src;
-}
-
-function maybe_build_iframe_src( $src, array $a ) {
-
-	if ( $src ) {
-		return $src;
-	}
-
-	$options    = options();
-	$properties = get_host_properties();
-
-	if ( isset( $properties[ $a['provider'] ]['embed_url'] ) ) {
-		$pattern = $properties[ $a['provider'] ]['embed_url'];
-	} else {
-		$pattern = '%s';
-	}
-
-	if ( 'facebook' === $a['provider'] && is_numeric( $a['id'] ) ) {
-
-		$a['id'] = "https://www.facebook.com/facebook/videos/{$a['id']}/";
-
-	} elseif ( 'twitch' === $a['provider'] && is_numeric( $a['id'] ) ) {
-
-		$pattern = 'https://player.twitch.tv/?video=v%s';
-
-	} elseif ( 'ted' === $a['provider'] && preg_match( '/^[a-z]{2}$/', $a['lang'] ) === 1 ) {
-
-		$pattern = 'https://embed-ssl.ted.com/talks/lang/' . $a['lang'] . '/%s.html';
-	}
-
-	if ( isset( $properties[ $a['provider'] ]['url_encode_id'] ) && $properties[ $a['provider'] ]['url_encode_id'] ) {
-		$a['id'] = rawurlencode( $a['id'] );
-	}
-
-	if ( 'brightcove' === $a['provider'] ) {
-		$src = sprintf( $pattern, $a['account_id'], $a['brightcove_player'], $a['brightcove_embed'], $a['id'] );
-	} else {
-		$src = sprintf( $pattern, $a['id'] );
 	}
 
 	return $src;
@@ -650,16 +699,6 @@ function sc_filter_detect_html5( array $a ) {
 	}
 
 	$a['provider'] = 'html5';
-
-	return $a;
-}
-
-function sc_filter_iframe_fallback( array $a ) {
-
-	if ( empty( $a['provider'] ) && empty( $a['src'] ) && ! empty( $a['url'] ) ) {
-		$a['provider'] = 'iframe';
-		$a['src']      = $a['url'];
-	}
 
 	return $a;
 }
