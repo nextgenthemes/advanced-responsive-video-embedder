@@ -1,5 +1,5 @@
 <?php
-namespace Nextgenthemes\ARVE\Common\Utils;
+namespace Nextgenthemes\ARVE\Common;
 
 function contains( $haystack, $needle ) {
 	return strpos( $haystack, $needle ) !== false;

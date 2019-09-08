@@ -1,8 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE\Common\Admin;
 
-use Nextgenthemes\ARVE\Common\License;
-use function Nextgenthemes\ARVE\Common\Utils\attr;
+use Nextgenthemes\ARVE\Common;
 
 function get_products() {
 
@@ -34,14 +33,14 @@ function get_products() {
 	);
 
 	$products = apply_filters( 'nextgenthemes_products', $products );
-	$plugins  = get_plugins();
+	#$plugins  = get_plugins();
 
 	foreach ( $products as $key => $value ) :
 
 		$products[ $key ]['slug']      = $key;
 		$products[ $key ]['installed'] = false;
 		$products[ $key ]['active']    = false;
-		$products[ $key ]['valid_key'] = License\has_valid_key( $key );
+		$products[ $key ]['valid_key'] = Common\has_valid_key( $key );
 
 		$version_define = strtoupper( $key ) . '_VERSION';
 		$file_define    = strtoupper( $key ) . '_FILE';
@@ -69,23 +68,12 @@ function get_products() {
 
 			$file_slug = str_replace( '_', '-', $key );
 
-			$products[ $key ]['installed'] = array_key_exists( "$file_slug/$file_slug.php", $plugins );
-			$products[ $key ]['active']    = is_plugin_active( "$file_slug/$file_slug.php" );
+			#$products[ $key ]['installed'] = array_key_exists( "$file_slug/$file_slug.php", $plugins );
+			$products[ $key ]['active'] = is_plugin_active( "$file_slug/$file_slug.php" );
 		}
 	endforeach;
 
 	return $products;
-}
-
-function menus() {
-
-	$plugin_screen_hook_suffix = add_options_page(
-		__( 'ARVE Licenses', 'advanced-responsive-video-embedder' ),
-		__( 'ARVE Licenses', 'advanced-responsive-video-embedder' ),
-		'manage_options',
-		'nextgenthemes-licenses',
-		'nextgenthemes_licenses_page'
-	);
 }
 
 function register_settings() {
@@ -101,7 +89,7 @@ function register_settings() {
 
 		$option_basename = "nextgenthemes_{$product_slug}_key";
 		$option_keyname  = $option_basename . '[key]';
-		$key             = License\get_key( $product_slug, 'option_only' );
+		$key             = Common\get_key( $product_slug, 'option_only' );
 		$key             = is_array( $key ) ? 'error should not be array' : (string) $key;
 
 		add_settings_field(
@@ -119,7 +107,7 @@ function register_settings() {
 					'id'    => $option_keyname,
 					'name'  => $option_keyname,
 					'class' => 'arve-license-input',
-					'value' => License\get_defined_key( $product_slug ) ? __( 'is defined (wp-config.php)', 'advanced-responsive-video-embedder' ) : $key,
+					'value' => Common\get_defined_key( $product_slug ) ? __( 'is defined (wp-config.php)', 'advanced-responsive-video-embedder' ) : $key,
 				]
 			]
 		);
@@ -140,7 +128,7 @@ function key_callback( $args ) {
 	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	printf(
 		'<input%s>',
-		attr(
+		Common\attr(
 			[
 				'type'  => 'hidden',
 				'id'    => $args['option_basename'] . '[product]',
@@ -153,12 +141,12 @@ function key_callback( $args ) {
 
 	printf(
 		'<input%s%s>',
-		attr( $args['attr'] ),
-		License\get_defined_key( $args['product']['slug'] ) ? ' disabled' : ''
+		Common\attr( $args['attr'] ),
+		Common\get_defined_key( $args['product']['slug'] ) ? ' disabled' : ''
 	);
 
-	$defined_key = License\get_defined_key( $args['product']['slug'] );
-	$key         = License\get_key( $args['product']['slug'] );
+	$defined_key = Common\get_defined_key( $args['product']['slug'] );
+	$key         = Common\get_key( $args['product']['slug'] );
 
 	if ( $defined_key || ! empty( $key ) ) {
 		submit_button( __( 'Activate License', 'advanced-responsive-video-embedder' ), 'primary', $args['option_basename'] . '[activate_key]', false );
@@ -170,7 +158,7 @@ function key_callback( $args ) {
 
 	echo '<p>';
 	// Translators: License Status
-	echo esc_html( sprintf( __( 'License Status: %s', 'advanced-responsive-video-embedder' ), License\get_key_status( $args['product']['slug'] ) ) );
+	echo esc_html( sprintf( __( 'License Status: %s', 'advanced-responsive-video-embedder' ), Common\get_key_status( $args['product']['slug'] ) ) );
 	echo '</p>';
 
 	if ( $args['product']['installed'] && ! $args['product']['active'] ) {
@@ -181,7 +169,7 @@ function key_callback( $args ) {
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		printf(
 			'<a%s>%s</a>',
-			attr(
+			Common\attr(
 				array(
 					'href'  => $args['product']['url'],
 					'class' => 'button button-primary',
@@ -200,14 +188,14 @@ function validate_license( $input ) {
 	}
 
 	$product     = $input['product'];
-	$defined_key = License\get_defined_key( $product );
+	$defined_key = Common\get_defined_key( $product );
 
 	if ( $defined_key ) {
 		$option_key = $defined_key;
 		$key        = $defined_key;
 	} else {
 		$key        = sanitize_text_field( $input['key'] );
-		$option_key = License\get_key( $product );
+		$option_key = Common\get_key( $product );
 	}
 
 	if ( ( $key !== $option_key ) || isset( $input['activate_key'] ) ) {
@@ -231,7 +219,7 @@ function api_update_key_status( $product, $key, $action ) {
 	$products   = get_products();
 	$key_status = api_action( $products[ $product ]['id'], $key, $action );
 
-	License\update_key_status( $product, $key_status );
+	Common\update_key_status( $product, $key_status );
 }
 
 function licenses_page() {
@@ -273,7 +261,7 @@ function init_plugin_updater( $product ) {
 		$product['file'],
 		array(
 			'version' => $product['version'],
-			'license' => License\get_key( $product['slug'] ),
+			'license' => Common\get_key( $product['slug'] ),
 			'item_id' => $product['id'],
 			'author'  => $product['author'],
 		)
@@ -286,7 +274,7 @@ function init_theme_updater( $product ) {
 		array(
 			'remote_api_url' => 'https://nextgenthemes.com',
 			'version'        => $product['version'],
-			'license'        => License\get_key( $product['slug'] ),
+			'license'        => Common\get_key( $product['slug'] ),
 			'item_id'        => $product['name'],
 			'author'         => $product['id'],
 			'theme_slug'     => $product['slug'],
@@ -324,46 +312,36 @@ function init_theme_updater( $product ) {
 	);
 }
 
-function api_action( $item_id, $key, $action ) {
+function api_action( $item_id, $key, $action = 'check' ) {
 
 	if ( ! in_array( $action, [ 'activate', 'deactivate', 'check' ], true ) ) {
 		wp_die( 'invalid action' );
 	}
 
-	// data to send in our API request
-	$api_params = array(
-		'edd_action' => $action . '_license',
-		'license'    => sanitize_text_field( $key ),
-		'item_id'    => $item_id,
-		'url'        => home_url()
-	);
-
 	// Call the custom API.
-	$response = wp_remote_post(
+	$response = Common\ngt_remote_get(
 		'https://nextgenthemes.com',
 		array(
-			'timeout'   => 15,
-			'sslverify' => true,
-			'body'      => $api_params
+			'timeout' => 10,
+			'body'    => array(
+				'edd_action' => $action . '_license',
+				'license'    => sanitize_text_field( $key ),
+				'item_id'    => $item_id,
+				'url'        => home_url()
+			)
 		)
 	);
 
 	// make sure the response came back okay
-	if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-
-		if ( is_wp_error( $response ) ) {
-			$message = $response->get_error_message();
-		} else {
-			$message = __( 'An error occurred, please try again.', 'advanced-responsive-video-embedder' );
-		}
+	if ( is_wp_error( $response ) ) {
+		$message = $response->get_error_message();
 	} else {
-		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-		$message      = get_api_error_message( $license_data );
+		$message = get_api_error_message( $response );
 	}
 
 	if ( empty( $message ) ) {
 
-		if ( empty( $license_data->license ) ) {
+		if ( empty( $response->license ) ) {
 
 			$textarea_dump = textarea_dump( $response );
 
@@ -373,14 +351,14 @@ function api_action( $item_id, $key, $action ) {
 				$textarea_dump
 			);
 		} else {
-			$message = $license_data->license;
+			$message = $response->license;
 		}
 	}
 
 	return $message;
 }
 
-function get_api_error_message() {
+function get_api_error_message( $license_data ) {
 
 	if ( false !== $license_data->success ) {
 		return '';

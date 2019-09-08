@@ -1,10 +1,8 @@
 <?php
-namespace Nextgenthemes\ARVE\Common\Admin\Settings;
+namespace Nextgenthemes\ARVE\Common\Admin;
+use \Nextgenthemes\ARVE\Common;
 
-use function Nextgenthemes\ARVE\Common\Asset\enqueue;
-use function Nextgenthemes\ARVE\Common\Asset\ver;
-use function Nextgenthemes\ARVE\Common\Asset\plugin_or_theme_uri;
-use function Nextgenthemes\ARVE\Common\Utils\ends_with;
+const VER = \Nextgenthemes\ARVE\VERSION;
 
 class Setup {
 
@@ -56,6 +54,7 @@ class Setup {
 		// remove all items from options that are not also in defaults.
 		$options = array_intersect_key( $options, $this->options_defaults );
 		// store only the options that differ from the defaults.
+
 		update_option( $this->slugged_namespace, $options );
 	}
 
@@ -81,23 +80,23 @@ class Setup {
 	public function assets( $page ) {
 
 		// Check if we are currently viewing our setting page
-		if ( ! ends_with( $page, $this->slugged_namespace ) ) {
+		if ( ! Common\ends_with( $page, $this->slugged_namespace ) ) {
 			return;
 		}
 
-		enqueue(
+		Common\enqueue(
 			[
 				'handle' => 'nextgenthemes-settings',
-				'src'    => plugin_or_theme_src( 'dist/common/css/settings.css', '\Nextgenthemes\ARVE\PLUGIN_FILE' ),
-				'ver'    => plugin_or_theme_ver( VERSION, 'dist/common/css/settings.css', '\Nextgenthemes\ARVE\PLUGIN_FILE' ),
+				'src'    => Common\plugin_or_theme_src( 'dist/common/css/settings.css', '\Nextgenthemes\ARVE\PLUGIN_FILE' ),
+				'ver'    => Common\plugin_or_theme_ver( VER, 'dist/common/css/settings.css', '\Nextgenthemes\ARVE\PLUGIN_FILE' ),
 			]
 		);
 
-		enqueue(
+		Common\enqueue(
 			[
 				'handle' => 'nextgenthemes-settings',
-				'src'    => plugin_or_theme_src( 'dist/common/js/settings.js', '\Nextgenthemes\ARVE\PLUGIN_FILE' ),
-				'ver'    => plugin_or_theme_ver( VERSION, 'dist/common/js/settings.js', '\Nextgenthemes\ARVE\PLUGIN_FILE' ),
+				'src'    => Common\plugin_or_theme_src( 'dist/common/js/settings.js', '\Nextgenthemes\ARVE\PLUGIN_FILE' ),
+				'ver'    => Common\plugin_or_theme_ver( VER, 'dist/common/js/settings.js', '\Nextgenthemes\ARVE\PLUGIN_FILE' ),
 				'deps'   => [ 'jquery' ],
 			]
 		);
@@ -198,4 +197,10 @@ class Setup {
 
 		add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $callback );
 	}
+
+
+
+
+
+
 }

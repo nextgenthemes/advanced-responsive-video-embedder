@@ -3,7 +3,7 @@
 namespace Nextgenthemes\ARVE\Common\Admin;
 
 function add_menus() {
-
+	/*
 	$page_title = __( 'Common NextGenThemes', 'advanced-responsive-video-embedder' );
 	$menu_title = __( 'Common NextGenThemes', 'advanced-responsive-video-embedder' );
 	$capability = 'manage_options';
@@ -21,24 +21,25 @@ function add_menus() {
 		$icon_url,
 		$position,
 	);
+	*/
+}
 
-	if ( ! defined( 'NEXTGENTHEMES_LICENSE_MENU_ACTIVE' ) ) {
+function add_licensing_settings_menu() {
 
-		define( 'NEXTGENTHEMES_LICENSE_MENU_ACTIVE', true );
+	$submenu_parent_slug = 'options-general.php';
+	$submenu_page_title  = __( 'NextGenThemes Licenses', 'advanced-responsive-video-embedder' );
+	$submenu_title       = __( 'NextGenThemes Licenses', 'advanced-responsive-video-embedder' );
+	$capability          = 'manage_options';
+	$submenu_slug        = 'nextgenthemes-licenses';
+	$submenu_function    = __NAMESPACE__ . '\\licenses_page';
 
-		$submenu_parent_slug = 'options-general.php';
-		$submenu_page_title  = __( 'NextGenThemes Licenses', 'advanced-responsive-video-embedder' );
-		$submenu_title       = __( 'NextGenThemes Licenses', 'advanced-responsive-video-embedder' );
-		$submenu_slug        = 'nextgenthemes-licenses';
-		$submenu_function    = __NAMESPACE__ . '\\licenses_page';
-
-		add_submenu_page(
-			$submenu_parent_slug,
-			$submenu_page_title,
-			$submenu_title,
-			$capability,
-			$submenu_slug,
-			$submenu_function
-		);
-	}
+	# add_options_page
+	add_submenu_page(
+		$submenu_parent_slug,
+		$submenu_page_title,
+		$submenu_title,
+		$capability,
+		$submenu_slug,
+		$submenu_function
+	);
 }

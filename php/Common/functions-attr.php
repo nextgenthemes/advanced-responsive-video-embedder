@@ -1,5 +1,5 @@
 <?php
-namespace Nextgenthemes\ARVE\Common\Utils;
+namespace Nextgenthemes\ARVE\Common;
 
 function attr( array $attr = [] ) {
 

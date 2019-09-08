@@ -1,9 +1,9 @@
 <?php
-namespace Nextgenthemes\ARVE\Common\Utils;
+namespace Nextgenthemes\ARVE\Common;
 
 // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
 
-function ngt_remote_get( $url, array $args = [], $json = false ) {
+function ngt_remote_get( $url, array $args = [], $json = true ) {
 
 	$response      = wp_safe_remote_post( $url, $args );
 	$response_code = wp_remote_retrieve_response_code( $response );
@@ -62,26 +62,20 @@ function ngt_remote_get( $url, array $args = [], $json = false ) {
 	return $response;
 };
 
-function ngt_remote_get_cached( array $args ) {
+function ngt_remote_get_cached( $url, array $args, $json = true ) {
 
 	$defaults = array(
-		'args'       => array(),
-		'json'       => true,
-		'cache_time' => 3600,
+		'cache_time'       => 3600,
 	);
 
 	$args = wp_parse_args( $args, $defaults );
 
-	$transient_name = 'nextgenthemes_remote_get_' . $args['url'];
+	$transient_name = 'nextgenthemes_remote_get_' . $url . json_encode( $args );
 	$cache          = get_transient( $transient_name );
 
 	if ( false === $cache ) {
-
-		$cache = remote_get( $args['url'], $args['args'], $args['json'] );
-
-		if ( ! is_wp_error( $cache ) ) {
-			set_transient( $transient_name, $cache, $args['cache_time'] );
-		}
+		$cache = ngt_remote_get( $url, $args['args'] );
+		set_transient( $transient_name, $cache, $args['cache_time'] );
 	}
 
 	return $cache;

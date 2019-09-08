@@ -1,7 +1,5 @@
 <?php
-namespace Nextgenthemes\ARVE\Common\Asset;
-
-use function \Nextgenthemes\ARVE\Common\plugin_file;
+namespace Nextgenthemes\ARVE\Common;
 
 function plugin_or_theme_src( $path, $plugin_file_constant = false ) {
 

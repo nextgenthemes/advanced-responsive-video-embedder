@@ -1,7 +1,6 @@
 <?php
-namespace Nextgenthemes\ARVE\Common\Admin\Settings;
-
-use function Nextgenthemes\ARVE\Common\Utils\attr;
+namespace Nextgenthemes\ARVE\Common\Admin;
+use \Nextgenthemes\ARVE\Common;
 
 function label_text( $option ) {
 	?>
@@ -117,10 +116,10 @@ function block_attr( $key, $option ) {
 
 	$block_attr = [
 		'class' => block_class( $key, $option ),
-		'v-if'  => 'show' . ucfirst( $option['tag'] ),
+		'v-if'  => 'sectionsDisplayed.' . $option['tag'],
 	];
 
-	return attr( $block_attr );
+	return Common\attr( $block_attr );
 }
 
 function block_class( $key, $option ) {

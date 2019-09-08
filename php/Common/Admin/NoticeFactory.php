@@ -1,8 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE\Common\Admin;
 
-use function Nextgenthemes\ARVE\Common\Asset\enqueue;
-use function Nextgenthemes\ARVE\Common\Asset\ver;
+use Nextgenthemes\ARVE\Common;
 
 class NoticeFactory {
 
@@ -54,11 +53,11 @@ class NoticeFactory {
 
 	public function assets() {
 
-		enqueue(
+		Common\enqueue(
 			[
 				'handle' => 'nextgenthemes-notice-ajax',
 				'deps'   => [ 'jquery' ],
-				'src'    => plugin_or_theme_src( 'dist/common/js/notice-ajax.js', \Nextgenthemes\ARVE\PLUGIN_FILE ),
+				'src'    => Common\plugin_or_theme_src( 'dist/common/js/notice-ajax.js', \Nextgenthemes\ARVE\PLUGIN_FILE ),
 				'ver'    => VERSION,
 			]
 		);
