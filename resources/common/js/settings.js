@@ -1,29 +1,9 @@
 import Vue from 'vue';
 /* global jQuery */
 
-const queryArgs = GetUrlParam( 'page' );
-const data      = window[ queryArgs ];
-
-function GetUrlParam( name, url ) {
-
-	if ( ! url ) {
-		url = window.location.href;
-	}
-
-	name          = name.replace( /[\[\]]/g, '\\$&' );
-	const regex   = new RegExp( '[?&]' + name + '(=([^&#]*)|&|#|$)' );
-	const results = regex.exec( url );
-
-	if ( ! results ) {
-		return null;
-	}
-
-	if ( ! results[ 2 ] ) {
-		return '';
-	}
-
-	return decodeURIComponent( results[ 2 ].replace( /\+/g, ' ' ) );
-}
+const url          = new URL( window.location.href );
+const pageQueryVal = url.searchParams.get( 'page' );
+const data         = window[ pageQueryVal ];
 
 new Vue( {
 
@@ -33,10 +13,13 @@ new Vue( {
 	// Data that will be proxied by Vue.js to provide reactivity to our template
 	data: {
 		isSaving: false,
-		showPro: false,
-		showMain: true,
-		showDebug: false,
-		showHtml5: false,
+		sectionsDisplayed: {
+			main: true,
+			html5: true,
+			pro: false,
+			debug: false,
+			urlparams: false,
+		},
 		message: '',
 		vm: data.options,
 		tabs: {
@@ -77,36 +60,27 @@ new Vue( {
 				complete: () => this.isSaving = false,
 			} );
 		}, // end: saveOptions
-		showMainOptions() {
-			this.showMain  = true;
-			this.showPro   = false;
-			this.showDebug = false;
-			this.showHtml5 = false;
+		showSection( section ) {
+			setAllObjValues( this.sectionsDisplayed, false );
+			this.sectionsDisplayed[ section ] = true;
 		},
-		showProOptions() {
-			this.showMain  = false;
-			this.showPro   = true;
-			this.showDebug = false;
-			this.showHtml5 = false;
-		},
-		showHtml5Options() {
-			this.showMain  = false;
-			this.showPro   = false;
-			this.showDebug = false;
-			this.showHtml5 = true;
-		},
-		showDebugInfo() {
-			this.showMain  = false;
-			this.showPro   = false;
-			this.showDebug = true;
-			this.showHtml5 = false;
+		showAllSectionsButDebug() {
+			setAllObjValues( this.sectionsDisplayed, true );
+			this.sectionsDisplayed.debug = false;
 		},
 	}, // end: methods
 } ); // end: Vue()
 
+function setAllObjValues( obj, val ) {
+
+	Object.keys( obj ).forEach( ( index ) => {
+		obj[ index ] = val;
+	} );
+}
+
 jQuery( document ).on( 'click', '[data-attachment-upload]', function( e ) {
 	const target = jQuery( this ).attr( 'data-attachment-upload' );
-	const image = wp.media( {
+	const image  = wp.media( {
 		title: 'Upload Image',
 
 		// mutiple: true if you want to upload multiple files at once
