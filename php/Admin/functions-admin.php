@@ -2,9 +2,9 @@
 namespace Nextgenthemes\ARVE;
 
 use Nextgenthemes\ARVE\Common\Admin\NoticeFactory;
-use function Nextgenthemes\ARVE\Common\Asset\enqueue;
-use function Nextgenthemes\ARVE\Common\Asset\ver;
-use function Nextgenthemes\ARVE\Common\Utils\attr;
+use function Nextgenthemes\ARVE\Common\enqueue;
+use function Nextgenthemes\ARVE\Common\ver;
+use function Nextgenthemes\ARVE\Common\attr;
 
 function action_admin_init_setup_messages() {
 
@@ -182,7 +182,7 @@ function input( $args ) {
 
 		$out .= sprintf(
 			'<a %s>%s</a>',
-			attr(
+			Common\attr(
 				array(
 					'data-image-upload' => sprintf( '[name="%s"]', $args['input_attr']['name'] ),
 					'class'             => 'button-secondary',

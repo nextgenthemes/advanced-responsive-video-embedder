@@ -1,9 +1,9 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-use function Nextgenthemes\ARVE\Common\Utils\contains;
-use function Nextgenthemes\ARVE\Common\Asset\register;
-use function Nextgenthemes\ARVE\Common\Asset\ver;
+use function Nextgenthemes\ARVE\Common\contains;
+use function Nextgenthemes\ARVE\Common\register;
+use function Nextgenthemes\ARVE\Common\ver;
 
 function register_assets() {
 

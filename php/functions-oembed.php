@@ -1,7 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-use function Nextgenthemes\ARVE\Common\Utils\contains;
+use function Nextgenthemes\ARVE\Common\contains;
 
 /**
  * Info: https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-oembed.php

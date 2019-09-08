@@ -1,8 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-use function Nextgenthemes\ARVE\Common\Utils\starts_with;
-use function Nextgenthemes\ARVE\Common\Utils\ends_with;
+use \Nextgenthemes\ARVE\Common;
 
 function sc_filter_set_wrapper_id( array $a ) {
 
@@ -684,9 +683,9 @@ function sc_filter_detect_html5( array $a ) {
 			$a['video_sources_html'] .= sprintf( '<source type="%s" src="%s">', get_video_type( $ext ), $a[ $ext ] );
 		}
 
-		if ( ! empty( $a['url'] ) && ends_with( $a['url'], ".$ext" ) ) {
+		if ( ! empty( $a['url'] ) && Common\ends_with( $a['url'], ".$ext" ) ) {
 
-			if ( starts_with( $a['url'], 'https://www.dropbox.com' ) ) {
+			if ( Common\starts_with( $a['url'], 'https://www.dropbox.com' ) ) {
 				$a['url'] = add_query_arg( 'dl', 1, $a['url'] );
 			}
 

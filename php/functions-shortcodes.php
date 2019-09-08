@@ -1,7 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-use function Nextgenthemes\ARVE\Common\Utils\starts_with;
+use function Nextgenthemes\ARVE\Common\starts_with;
 
 function shortcode( array $a, $content = null ) {
 

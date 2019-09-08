@@ -1,8 +1,8 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-use function Nextgenthemes\ARVE\Common\Utils\starts_with;
-use function Nextgenthemes\ARVE\Common\Utils\ends_with;
+use function Nextgenthemes\ARVE\Common\starts_with;
+use function Nextgenthemes\ARVE\Common\ends_with;
 
 function valid_url( $url ) {
 

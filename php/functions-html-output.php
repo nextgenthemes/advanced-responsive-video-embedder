@@ -1,7 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-use function Nextgenthemes\ARVE\Common\Utils\attr;
+use function Nextgenthemes\ARVE\Common\attr;
 
 function build_html( array $a ) {
 
@@ -301,14 +301,14 @@ function build_tag( array $tag, array $a ) {
 			$html = sprintf(
 				'<%1$s%2$s>%3$s</%1$s>',
 				esc_html( $tag['tag'] ),
-				attr( $tag['attr'] ),
+				Common\attr( $tag['attr'] ),
 				$tag['inner-html']
 			);
 		} else {
 			$html = sprintf(
 				'<%s%s>',
 				esc_html( $tag['tag'] ),
-				attr( $tag['attr'] )
+				Common\attr( $tag['attr'] )
 			);
 		}
 	}
