@@ -36,19 +36,18 @@ function PrepareSelectOptions( options ) {
 
 function BuildControls( props ) {
 
-	console.log( 'props', props );
-
-	const controls = [];
+	const controls  = [];
+	const domParser = new DOMParser();
 
 	Object.keys( window.ARVEsettings ).forEach( ( key ) => {
-		const option = window.ARVEsettings[ key ];
-		const cArgs  = {
+		const option   = window.ARVEsettings[ key ];
+		const attrVal  = props.attributes[ key ];
+		const ctrlArgs = {
 			label: option.label,
-			//help: option.description,
+			help: option.description,
 			onChange: ( value ) => {
 				if ( 'url' === key ) {
-					const parser  = new DOMParser();
-					const $iframe = parser.parseFromString( value, 'text/html' ).querySelector( 'iframe' );
+					const $iframe = domParser.parseFromString( value, 'text/html' ).querySelector( 'iframe' );
 					if ( $iframe.src ) {
 						value   = $iframe.src;
 						const w = $iframe.width;
@@ -67,26 +66,25 @@ function BuildControls( props ) {
 		}
 
 		switch ( option.type ) {
-			case 'TODOboolean':
-				if ( typeof props.attributes[ key ] !== 'undefined' ) {
-					cArgs.selected = props.attributes[ key ];
+			case 'boolean':
+				if ( typeof attrVal !== 'undefined' ) {
+					ctrlArgs.checked = attrVal;
 				}
-				cArgs.value = props.attributes[ key ];
-				controls.push( el( wp.components.ToggleControl, cArgs ) );
+				controls.push( el( wp.components.ToggleControl, ctrlArgs ) );
 				break;
-
 			case 'select':
-				cArgs.options = PrepareSelectOptions( option.options );
-				if ( typeof props.attributes[ key ] !== 'undefined' ) {
-					cArgs.selected = props.attributes[ key ];
+				if ( typeof attrVal !== 'undefined' ) {
+					ctrlArgs.selected = attrVal;
+					ctrlArgs.value = attrVal;
 				}
-				cArgs.value = props.attributes[ key ];
-				controls.push( el( wp.components.SelectControl, cArgs ) );
+				ctrlArgs.options = PrepareSelectOptions( option.options );
+				controls.push( el( wp.components.SelectControl, ctrlArgs ) );
 				break;
-
 			case 'string':
-				cArgs.value = props.attributes[ key ];
-				controls.push( el( wp.components.TextControl, cArgs ) );
+				if ( typeof attrVal !== 'undefined' ) {
+					ctrlArgs.value = attrVal;
+				}
+				controls.push( el( wp.components.TextControl, ctrlArgs ) );
 				break;
 		}
 	} );
@@ -135,7 +133,7 @@ wp.blocks.registerBlockType( 'nextgenthemes/arve-block', {
 			 * the block editor to update the value of our 'foo' property, and to re-render
 			 * the block.
 			 */
-			el( wp.editor.InspectorControls, {}, ...controls ),
+			el( wp.blockEditor.InspectorControls, {}, ...controls ),
 		];
 	},
 
