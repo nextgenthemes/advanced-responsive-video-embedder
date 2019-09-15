@@ -1,10 +1,12 @@
 {
-    "/common/js/notice-ajax.js": "/common/js/notice-ajax.js?id=7783150c5b7c5f6199b8",
-    "/common/js/settings.js": "/common/js/settings.js?id=b865451fffc1099a540c",
-    "/js/arve.js": "/js/arve.js?id=81f63b51e2137990e859",
-    "/css/arve.css": "/css/arve.css?id=46418914ac7055cbe4bd",
+    "/common/js/notice-ajax.js": "/common/js/notice-ajax.js?id=8ff5e3d5b57ee6e5e955",
+    "/common/js/settings.js": "/common/js/settings.js?id=54ba0b258aa5db7ac993",
+    "/js/arve.js": "/js/arve.js?id=ac2d760dd3d08655b0e8",
+    "/css/arve.css": "/css/arve.css?id=48be9b59434dfdd6326f",
     "/css/arve-admin.css": "/css/arve-admin.css?id=a43f957c3a28025693f0",
-    "/common/css/settings.css": "/common/css/settings.css?id=9c457662a4e61cee1204",
-    "/js/gb-block.js": "/js/gb-block.js?id=f5da8690b120f66540a6",
+    "/common/css/settings.css": "/common/css/settings.css?id=4c35f6735bb6047f6284",
+    "/js/arve-admin.js": "/js/arve-admin.js?id=5a98764b402b93e25033",
+    "/js/arve-shortcode-ui.js": "/js/arve-shortcode-ui.js?id=32ae012298ad7ac10a5f",
+    "/js/gb-block.js": "/js/gb-block.js?id=0d0a20ab46cc9b180bf9",
     "/js/test-block.js": "/js/test-block.js?id=9ac34bb0c2a49243e4dc"
 }

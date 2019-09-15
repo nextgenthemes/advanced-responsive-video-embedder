@@ -1,88 +1,88 @@
 /* stylelint-disable selector-max-id */
 
 .arve,
-#arve .arve {
-  display: block;
-  width: 100%;
-  margin-bottom: 1.5em;
+#global .arve {
+	display: block;
+	width: 100%;
+	margin-bottom: 1.5em;
 
-  &::after {
-    display: table;
-    clear: both;
-    content: "";
-  }
+	&::after {
+		display: table;
+		clear: both;
+		content: "";
+	}
 
-  &.alignleft {
-    margin-top: .4em;
-    margin-right: 1.5em;
-  }
+	&.alignleft {
+		margin-top: .4em;
+		margin-right: 1.5em;
+	}
 
-  &.alignright {
-    margin-top: .4em;
-    margin-left: 1.5em;
-  }
+	&.alignright {
+		margin-top: .4em;
+		margin-left: 1.5em;
+	}
 }
 
 .arve-embed,
-#arve .arve-embed {
-  position: relative;
-  display: block;
-  width: 100%;
-  max-height: 100vh;
-  padding: 0;
-  margin: 0;
+#global .arve-embed {
+	position: relative;
+	display: block;
+	width: 100%;
+	max-height: 100vh;
+	padding: 0;
+	margin: 0;
 }
 
 .arve-embed--responsive,
-#arve .arve-embed--responsive {
-  overflow: hidden;
+#global .arve-embed--responsive {
+	overflow: hidden;
 }
 
 .arve-embed--16by9::before,
-#arve .arve-embed--16by9::before {
-  display: block;
-  padding-top: percentage(9 / 16);
-  content: "";
+#global .arve-embed--16by9::before {
+	display: block;
+	padding-top: percentage(9 / 16);
+	content: "";
 }
 
 .arve-embed--4by3::before,
-#arve .arve-embed--4by3::before {
-  display: block;
-  padding-top: percentage(3 / 4);
-  content: "";
+#global .arve-embed--4by3::before {
+	display: block;
+	padding-top: percentage(3 / 4);
+	content: "";
 }
 
 .arve-thumbnail,
-#arve .arve-thumbnail,
+#global .arve-thumbnail,
 .arve-play-btn,
-#arve .arve-play-btn,
+#global .arve-play-btn,
 .arve-iframe,
-#arve .arve-iframe {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  border: 0;
+#global .arve-iframe {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	border: 0;
 }
 
 .arve-video,
-#arve .arve-video {
-  width: 100%;
-  padding: 0;
-  margin: 0;
+#global .arve-video {
+	width: 100%;
+	padding: 0;
+	margin: 0;
 }
 
 .arve-promote-link,
-#arve .arve-promote-link {
-  float: right;
-  font-family: "Open Sans", "Sagoe UI", Arvo, Lato, arial, sans-serif;
-  font-size: .8em;
+#global .arve-promote-link {
+	float: right;
+	font-family: "Open Sans", "Sagoe UI", Arvo, Lato, arial, sans-serif;
+	font-size: .8em;
 }
 
 .arve-hidden {
-  display: none !important; /* stylelint-disable-line declaration-no-important */
+	display: none !important; /* stylelint-disable-line declaration-no-important */
 }

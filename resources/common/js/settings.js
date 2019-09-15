@@ -68,6 +68,20 @@ new Vue( {
 			setAllObjValues( this.sectionsDisplayed, true );
 			this.sectionsDisplayed.debug = false;
 		},
+		uploadImage( dataKey ) {
+			const vueThis = this;
+			const image   = wp.media( {
+				title: 'Upload Image',
+				multiple: false,
+			} ).open()
+				.on( 'select', function() {
+					// This will return the selected image from the Media Uploader, the result is an object
+					const uploadedImage = image.state().get( 'selection' ).first();
+					// We convert uploadedImage to a JSON object to make accessing it easier
+					const attachmentID    = uploadedImage.toJSON().id;
+					vueThis.vm[ dataKey ] = attachmentID;
+				} );
+		},
 	}, // end: methods
 } ); // end: Vue()
 
@@ -77,25 +91,3 @@ function setAllObjValues( obj, val ) {
 		obj[ index ] = val;
 	} );
 }
-
-jQuery( document ).on( 'click', '[data-attachment-upload]', function( e ) {
-	const target = jQuery( this ).attr( 'data-attachment-upload' );
-	const image  = wp.media( {
-		title: 'Upload Image',
-
-		// mutiple: true if you want to upload multiple files at once
-		multiple: false,
-	} ).open()
-		.on( 'select', function() {
-		// This will return the selected image from the Media Uploader, the result is an object
-			const uploadedImage = image.state().get( 'selection' ).first();
-
-			// We convert uploadedImage to a JSON object to make accessing it easier
-			// Output to the console uploadedImage
-			const attachmentID = uploadedImage.toJSON().id;
-
-			// Let's assign the url value to the input field
-			jQuery( target ).val( attachmentID );
-		} );
-	e.preventDefault();
-} );

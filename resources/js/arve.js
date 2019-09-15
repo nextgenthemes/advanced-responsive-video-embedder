@@ -1,4 +1,3 @@
-const qs  = document.querySelector.bind( document );
 const qsa = document.querySelectorAll.bind( document );
 
 function unwrap( el ) {
@@ -29,8 +28,9 @@ function removeUnwantedStuff() {
 
 	qsa( '.wp-block-embed' ).forEach( ( el ) => {
 		if ( el.querySelector( '.arve' ) ) {
-			const $WRAPPER = el.querySelector( '.wp-block-embed__wrapper' );
 			el.classList.remove( [ 'wp-embed-aspect-16-9', 'wp-has-aspect-ratio' ] );
+
+			const $WRAPPER = el.querySelector( '.wp-block-embed__wrapper' );
 
 			if ( $WRAPPER ) {
 				unwrap( $WRAPPER );
@@ -40,21 +40,16 @@ function removeUnwantedStuff() {
 }
 
 function globalID() {
-	if ( qs( 'html[id="arve"]' ) ) {
+
+	// Usually the id should be already there added with php using the language_attributes filter
+	if ( 'global' === document.documentElement.id ) {
 		return;
 	}
 
-	if ( null === qs( 'html[id]' ) ) {
-		qs( 'html' ).setAttribute( 'id', 'arve' );
-	} else if ( null === qs( 'body[id]' ) ) {
-		document.body.setAttribute( 'id', 'arve' );
-	} else {
-		const $WRAP = document.createElement( 'div' );
-		$WRAP.setAttribute( 'id', 'arve' );
-		while ( document.body.firstChild ) {
-			$WRAP.append( document.body.firstChild );
-		}
-		document.body.append( $WRAP );
+	if ( ! document.documentElement.id ) {
+		document.documentElement.id = 'global';
+	} else if ( ! document.body.id ) {
+		document.body.id = 'global';
 	}
 }
 

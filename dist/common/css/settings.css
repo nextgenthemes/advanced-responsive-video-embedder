@@ -17,6 +17,10 @@
   font-weight: 600;
 }
 
+.ngt-option-block--pro .nextgenthemes-label-text {
+  color: #0a0150;
+}
+
 [type=checkbox] + .nextgenthemes-label-text {
   display: inline;
 }

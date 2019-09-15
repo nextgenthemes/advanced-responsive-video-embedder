@@ -15,10 +15,14 @@
 	display: block;
 	margin-bottom: 3px;
 	font-weight: 600;
-}
 
-[type="checkbox"] + .nextgenthemes-label-text {
-	display: inline;
+	.ngt-option-block--pro & {
+		color: hsl(247, 97%, 16%);
+	}
+
+	[type="checkbox"] + & {
+		display: inline;
+	}
 }
 
 .wrap--nextgenthemes__loading-indicator {

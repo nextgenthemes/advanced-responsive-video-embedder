@@ -48,7 +48,10 @@ function BuildControls( props ) {
 			onChange: ( value ) => {
 				if ( 'url' === key ) {
 					const $iframe = domParser.parseFromString( value, 'text/html' ).querySelector( 'iframe' );
-					if ( $iframe.src ) {
+					if ( $iframe &&
+						$iframe.hasAttribute( 'src' ) &&
+						$iframe.getAttribute( 'src' )
+					) {
 						value   = $iframe.src;
 						const w = $iframe.width;
 						const h = $iframe.height;
