@@ -2,6 +2,8 @@
 // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
 namespace Nextgenthemes\ARVE\Common\Admin;
 
+use \Nextgenthemes\ARVE\Common;
+
 function add_menus() {
 	/*
 	$page_title = __( 'Common NextGenThemes', 'advanced-responsive-video-embedder' );

@@ -1,8 +1,6 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-use function Nextgenthemes\ARVE\Common\contains;
-
 /**
  * Info: https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-oembed.php
  * https://github.com/iamcal/oembed/tree/master/providers
@@ -67,7 +65,7 @@ function oembed2args( $data, $url ) {
 
 function vimeo_referer( $args, $url ) {
 
-	if ( contains( $url, 'vimeo' ) ) {
+	if ( Common\contains( $url, 'vimeo' ) ) {
 		$args['headers']['Referer'] = site_url();
 	}
 

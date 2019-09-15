@@ -61,6 +61,7 @@ function init() {
 	);
 
 	require_once PLUGIN_DIR . '/php/Admin/functions-admin.php';
+	require_once PLUGIN_DIR . '/php/Admin/functions-settings-page.php';
 
 	// Public hooks
 	add_action( 'init',                        "{$ns}\\add_oembed_providers" );
@@ -101,12 +102,12 @@ function init() {
 	unset( $priority );
 
 	// Admin Hooks
-	add_action( 'admin_enqueue_scripts', "{$ns}\\admin_enqueue_scripts" );
-	add_action( 'admin_enqueue_scripts', "{$ns}\\admin_enqueue_styles", 99 );
-	add_action( 'admin_init',            "{$ns}\\action_admin_init_setup_messages" );
-	add_action( 'media_buttons',         "{$ns}\\add_media_button", 11 );
-	add_action( 'register_shortcode_ui', "{$ns}\\register_shortcode_ui" );
-	add_action( 'wp_dashboard_setup',    "{$ns}\\add_dashboard_widget" );
-	add_filter( 'mce_css',               "{$ns}\\mce_css" );
-	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), "{$ns}\\add_action_links" );
+	add_action( 'admin_enqueue_scripts', "{$ns}\\Admin\\admin_enqueue_scripts" );
+	add_action( 'admin_enqueue_scripts', "{$ns}\\Admin\\admin_enqueue_styles", 99 );
+	add_action( 'admin_init',            "{$ns}\\Admin\\action_admin_init_setup_messages" );
+	add_action( 'media_buttons',         "{$ns}\\Admin\\add_media_button", 11 );
+	add_action( 'register_shortcode_ui', "{$ns}\\Admin\\register_shortcode_ui" );
+	add_action( 'wp_dashboard_setup',    "{$ns}\\Admin\\add_dashboard_widget" );
+	add_filter( 'mce_css',               "{$ns}\\Admin\\mce_css" );
+	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), "{$ns}\\Admin\\add_action_links" );
 }//end init()

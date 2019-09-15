@@ -1,7 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE\Common\Admin;
 
-use Nextgenthemes\ARVE\Common;
+use \Nextgenthemes\ARVE\Common;
 
 class NoticeFactory {
 
@@ -57,8 +57,8 @@ class NoticeFactory {
 			[
 				'handle' => 'nextgenthemes-notice-ajax',
 				'deps'   => [ 'jquery' ],
-				'src'    => Common\plugin_or_theme_src( 'dist/common/js/notice-ajax.js', \Nextgenthemes\ARVE\PLUGIN_FILE ),
-				'ver'    => VERSION,
+				'src'    => Common\plugin_or_theme_src( 'dist/common/js/notice-ajax.js' ),
+				'ver'    => \Nextgenthemes\ARVE\VERSION,
 			]
 		);
 	}

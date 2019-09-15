@@ -1,6 +1,8 @@
 <?php
 namespace Nextgenthemes\ARVE\Common\Admin;
 
+use \Nextgenthemes\ARVE\Common;
+
 // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
 function activation_notices() {
 

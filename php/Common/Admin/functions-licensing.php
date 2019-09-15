@@ -1,7 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE\Common\Admin;
 
-use Nextgenthemes\ARVE\Common;
+use \Nextgenthemes\ARVE\Common;
 
 function get_products() {
 

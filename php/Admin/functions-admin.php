@@ -1,10 +1,8 @@
 <?php
-namespace Nextgenthemes\ARVE;
+namespace Nextgenthemes\ARVE\Admin;
 
-use Nextgenthemes\ARVE\Common\Admin\NoticeFactory;
-use function Nextgenthemes\ARVE\Common\enqueue;
-use function Nextgenthemes\ARVE\Common\ver;
-use function Nextgenthemes\ARVE\Common\attr;
+use \Nextgenthemes\ARVE;
+use \Nextgenthemes\ARVE\Common;
 
 function action_admin_init_setup_messages() {
 
@@ -16,18 +14,18 @@ function action_admin_init_setup_messages() {
 		$pro_version = \Nextgenthemes\ARVE\pro\VERSION;
 	}
 
-	if ( $pro_version && version_compare( PRO_VERSION_REQUIRED, $pro_version, '>' ) ) {
+	if ( $pro_version && version_compare( ARVE\PRO_VERSION_REQUIRED, $pro_version, '>' ) ) {
 
 		$msg = sprintf(
 			// Translators: %1$s Version
 			__( 'Your ARVE Pro Addon is outdated, you need version %1$s or later. If you have setup your license <a href="%2$s">here</a> semi auto updates (Admin panel notice and auto install on confirmation) should work again. If not please <a href="%3$s">report it</a> and manually update as <a href="%4$s">described here.</a>', 'advanced-responsive-video-embedder' ),
-			PRO_VERSION_REQUIRED,
+			ARVE\PRO_VERSION_REQUIRED,
 			esc_url( get_admin_url() . 'admin.php?page=nextgenthemes-licenses' ),
 			'https://nextgenthemes.com/support/',
 			'https://nextgenthemes.com/plugins/arve/documentation/installing-and-license-management/'
 		);
 
-		new NoticeFactory( 'arve-pro-outdated', "<p>$msg</p>", false );
+		new Common\Admin\NoticeFactory( 'arve-pro-outdated', "<p>$msg</p>", false );
 	}
 
 	if ( display_pro_ad() ) {
@@ -37,7 +35,7 @@ function action_admin_init_setup_messages() {
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$pro_ad_message .= file_get_contents( __DIR__ . '/partials/pro-ad.html' );
 
-		new NoticeFactory( 'arve_dismiss_pro_notice', $pro_ad_message, true );
+		new Common\Admin\NoticeFactory( 'arve_dismiss_pro_notice', $pro_ad_message, true );
 	}
 }
 
@@ -118,7 +116,7 @@ function add_action_links( $links ) {
 
 	$extra_links['settings'] = sprintf(
 		'<a href="%s">%s</a>',
-		esc_url( admin_url( 'options-general.php?page=advanced-responsive-video-embedder' ) ),
+		esc_url( admin_url( 'options-general.php?page=nextgenthemes_arve' ) ),
 		esc_html__( 'Settings', 'advanced-responsive-video-embedder' )
 	);
 
@@ -127,7 +125,7 @@ function add_action_links( $links ) {
 
 function add_media_button() {
 
-	$options = options();
+	$options = ARVE\options();
 
 	add_thickbox();
 
@@ -137,10 +135,7 @@ function add_media_button() {
 		__( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			'<p>This button can open a optional ARVE a Shortcode creation dialog. ARVE needs the <a href="%1$s">Shortcode UI plugin</a> active for this fuctionality.</p>
 
-			<p>The "Shortcake (Shortcode UI)" plugin also adds What You See Is What You Get functionality for ARVE Shortcodes to WordPress visual post editor. It is perfectly fine to pass on this and <a href="%2$s">manually</a> write shortcodes or don\'t use shortcodes at all, but it makes things easier</p>.
-
-			<p>The "Shortcake (Shortcode UI)" plugin also adds What You See Is What You Get functionality for ARVE Shortcodes to WordPress visual post editor . It is perfectly fine to pass on this and <a href="%3$s"> manually</a> write shortcodes or don\'t use shortcodes at all, but it makes things easier</p>.',
-			'advanced-responsive-video-embedder'
+			<p>The "Shortcake (Shortcode UI)" plugin also adds What You See Is What You Get functionality for ARVE Shortcodes to WordPress visual post editor. It is perfectly fine to pass on this and <a href="%2$s">manually</a> write shortcodes or don\'t use shortcodes at all, but it makes things easier.</p>'
 		),
 		esc_url( network_admin_url( 'plugin-install.php?s=Shortcode+UI&tab=search&type=term' ) ),
 		esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/' )
@@ -159,19 +154,37 @@ function add_media_button() {
 
 function register_shortcode_ui() {
 
+	$settings = ARVE\shortcode_settings();
+
+	foreach ( $settings as $k => $v ) :
+
+		if ( 'string' === $v['type'] ) {
+			$v['type'] = 'text';
+		}
+		if ( 'integer' === $v['type'] ) {
+			$v['type'] = 'number';
+		}
+		if ( 'bool+default' === $v['type'] ) {
+			$v['type'] = 'radio';
+		}
+
+		$v['attr'] = $k;
+		$attrs[]   = $v;
+	endforeach;
+
 	shortcode_ui_register_for_shortcode(
 		'arve',
 		array(
 			'label'         => esc_html( 'ARVE' ),
 			'listItemImage' => 'dashicons-format-video',
-			'attrs'         => shortcode_ui_settings(),
+			'attrs'         => $attrs,
 		)
 	);
 }
 
 function input( $args ) {
 
-	$out = sprintf( '<input%s>', attr( $args['input_attr'] ) );
+	$out = sprintf( '<input%s>', Common\attr( $args['input_attr'] ) );
 
 	if ( ! empty( $args['option_values']['attr'] ) && 'thumbnail_fallback' === $args['option_values']['attr'] ) {
 
@@ -203,7 +216,7 @@ function textarea( $args ) {
 
 	unset( $args['input_attr']['type'] );
 
-	$out = sprintf( '<textarea%s></textarea>', attr( $args['input_attr'] ) );
+	$out = sprintf( '<textarea%s></textarea>', Common\attr( $args['input_attr'] ) );
 
 	if ( ! empty( $args['description'] ) ) {
 		$out = $out . '<p class="description">' . $args['description'] . '</p>';
@@ -238,7 +251,7 @@ function select( $args ) {
 	$select_attr = $args['input_attr'];
 	unset( $select_attr['value'] );
 
-	$out = sprintf( '<select%s>%s</select>', attr( $select_attr ), implode( '', $options ) );
+	$out = sprintf( '<select%s>%s</select>', Common\attr( $select_attr ), implode( '', $options ) );
 
 	if ( ! empty( $args['description'] ) ) {
 		$out = $out . '<p class="description">' . $args['description'] . '</p>';
@@ -298,39 +311,39 @@ function mce_css( $mce_css ) {
 		$mce_css .= ',';
 	}
 
-	$mce_css .= url( 'dist/css/arve.css' );
+	$mce_css .= plugins_url( 'dist/css/arve.css', ARVE\PLUGIN_FILE );
 
 	return $mce_css;
 }
 
 function admin_enqueue_styles() {
 
-	enqueue(
+	Common\enqueue(
 		[
 			'handle' => 'advanced-responsive-video-embedder',
-			'src'    => plugins_url( 'dist/css/arve-admin.css', PLUGIN_FILE ),
-			'ver'    => ver( VERSION, 'dist/css/arve-admin.css', PLUGIN_FILE )
+			'src'    => plugins_url( 'dist/css/arve-admin.css', ARVE\PLUGIN_FILE ),
+			'ver'    => Common\ver( ARVE\VERSION, 'dist/css/arve-admin.css', ARVE\PLUGIN_FILE )
 		]
 	);
 }
 
 function admin_enqueue_scripts() {
 
-	enqueue(
+	Common\enqueue(
 		[
 			'handle' => 'arve-admin',
-			'src'    => plugins_url( 'dist/js/arve-admin.js', PLUGIN_FILE ),
-			'ver'    => ver( VERSION, 'dist/js/arve-admin.js', PLUGIN_FILE ),
+			'src'    => plugins_url( 'dist/js/arve-admin.js', ARVE\PLUGIN_FILE ),
+			'ver'    => Common\ver( ARVE\VERSION, 'dist/js/arve-admin.js', ARVE\PLUGIN_FILE ),
 			'deps'   => [ 'jquery' ],
 		]
 	);
 
 	if ( is_plugin_active( 'shortcode-ui/shortcode-ui.php' ) ) {
-		enqueue(
+		Common\enqueue(
 			[
 				'handle' => 'arve-admin-sc-ui',
-				'src'    => plugins_url( 'dist/js/arve-shortcode-ui.js', PLUGIN_FILE ),
-				'ver'    => ver( VERSION, 'dist/js/arve-shortcode-ui.js', PLUGIN_FILE ),
+				'src'    => plugins_url( 'dist/js/arve-shortcode-ui.js', ARVE\PLUGIN_FILE ),
+				'ver'    => Common\ver( ARVE\VERSION, 'dist/js/arve-shortcode-ui.js', ARVE\PLUGIN_FILE ),
 				'deps'   => [ 'shortcode-ui' ],
 			]
 		);
