@@ -1,27 +1,26 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-use function Nextgenthemes\ARVE\Common\contains;
-use function Nextgenthemes\ARVE\Common\register;
-use function Nextgenthemes\ARVE\Common\ver;
-
 function register_assets() {
 
-	register(
+	Common\register(
 		[
-			'handle' => 'advanced-responsive-video-embedder',
+			'handle' => 'arve-main',
 			'src'    => plugins_url( 'dist/css/arve.css', PLUGIN_FILE ),
-			'ver'    => ver( VERSION, 'dist/css/arve.css', PLUGIN_FILE ),
+			'ver'    => Common\ver( VERSION, 'dist/css/arve.css', PLUGIN_FILE ),
 		]
 	);
 
-	register(
+	Common\register(
 		[
-			'handle' => 'advanced-responsive-video-embedder',
+			'handle' => 'arve-main',
 			'src'    => plugins_url( 'dist/js/arve.js', PLUGIN_FILE ),
-			'ver'    => ver( VERSION, 'dist/js/arve.js', PLUGIN_FILE ),
+			'ver'    => Common\ver( VERSION, 'dist/js/arve.js', PLUGIN_FILE ),
 		]
 	);
+
+ 	wp_register_script( 'arve', null, [ 'arve-main' ], null, true );
+	wp_register_style(  'arve', null, [ 'arve-main' ], null, true );
 
 	// For addons to register their styles
 	do_action( 'nextgenthemes/arve/register_assets' );
@@ -34,8 +33,8 @@ function action_wp_enqueue_scripts() {
 	register_assets();
 
 	if ( $options['always_enqueue_assets'] ) {
-		wp_enqueue_style( 'advanced-responsive-video-embedder' );
-		wp_enqueue_script( 'advanced-responsive-video-embedder' );
+		wp_enqueue_style( 'arve' );
+		wp_enqueue_script( 'arve' );
 	}
 }
 
@@ -51,12 +50,12 @@ function register_gb_block() {
 	$attr['thumbnail'] = [ 'type' => 'string' ];
 
 	register_assets();
-	register(
+	Common\register(
 		[
 			'handle' => 'arve-block',
 			'src'    => plugins_url( 'dist/js/gb-block.js', PLUGIN_FILE ),
 			'deps'   => [ 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ],
-			'ver'    => ver( VERSION, 'dist/js/test-block.js', PLUGIN_FILE ),
+			'ver'    => Common\ver( VERSION, 'dist/js/test-block.js', PLUGIN_FILE ),
 			'footer' => false
 		]
 	);
@@ -69,7 +68,7 @@ function register_gb_block() {
 		[
 			'attributes'      => $attr,
 			'editor_script'   => 'arve-block',
-			'editor_style'    => 'advanced-responsive-video-embedder',
+			'editor_style'    => 'arve',
 			'render_callback' => __NAMESPACE__ . '\shortcode'
 		]
 	);
@@ -77,10 +76,10 @@ function register_gb_block() {
 
 function maybe_enqueue_assets( $content ) {
 
-	// We do this because of embed caching the actual functions and filters generating the videos may not be called, if the Block or Shortcode is not used the styles would never get loaded but we micro optimize and load them only when needed this way.
-	if ( contains( $content, 'class="arve' ) ) {
-		wp_enqueue_style( 'advanced-responsive-video-embedder' );
-		wp_enqueue_script( 'advanced-responsive-video-embedder' );
+	// Doing this because of embed caching the actual functions and filters generating the videos may not be called, if the Block or Shortcode is not used the styles would never get loaded but we micro optimize and load them only when needed this way.
+	if ( Common\contains( $content, 'class="arve' ) ) {
+		wp_enqueue_style( 'arve' );
+		wp_enqueue_script( 'arve' );
 	}
 
 	return $content;
