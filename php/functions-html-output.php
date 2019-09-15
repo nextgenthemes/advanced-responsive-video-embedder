@@ -1,8 +1,6 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-use function Nextgenthemes\ARVE\Common\attr;
-
 function build_html( array $a ) {
 
 	return build_tag(
@@ -119,7 +117,7 @@ function build_tracks_html( array $a ) {
 			'srclang' => $matches['lang'],
 		];
 
-		$tracks_html .= sprintf( '<track%s>', attr( $attr ) );
+		$tracks_html .= sprintf( '<track%s>', Common\attr( $attr ) );
 	}//end for
 
 	return $tracks_html;
@@ -144,7 +142,7 @@ function get_var_dump( $var ) {
 function get_debug_info( $input_html, array $a, array $input_atts ) {
 
 	$html  = '';
-	$debug = ( defined( 'ARVE_DEBUG' ) && ARVE_DEBUG );
+	$debug = false && defined( 'ARVE_DEBUG' ) && ARVE_DEBUG;
 
 	// phpcs:disable WordPress.Security.NonceVerification.Recommended
 	if ( isset( $_GET['arve-debug-options'] ) ) {
@@ -214,7 +212,7 @@ function arve_embed_inner_html( array $a ) {
 
 	$html .= build_rating_meta( $a );
 
-	if ( $a['img_src'] ) {
+	if ( ! empty( $a['img_src'] ) ) {
 		$html .= build_tag(
 			array(
 				'name' => 'thumbnail',
@@ -300,14 +298,14 @@ function build_tag( array $tag, array $a ) {
 		) {
 			$html = sprintf(
 				'<%1$s%2$s>%3$s</%1$s>',
-				esc_html( $tag['tag'] ),
+				tag_escape( $tag['tag'] ),
 				Common\attr( $tag['attr'] ),
 				$tag['inner-html']
 			);
 		} else {
 			$html = sprintf(
 				'<%s%s>',
-				esc_html( $tag['tag'] ),
+				tag_escape( $tag['tag'] ),
 				Common\attr( $tag['attr'] )
 			);
 		}
