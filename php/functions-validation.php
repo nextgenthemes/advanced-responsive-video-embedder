@@ -1,12 +1,9 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-use function Nextgenthemes\ARVE\Common\starts_with;
-use function Nextgenthemes\ARVE\Common\ends_with;
-
 function valid_url( $url ) {
 
-	if ( starts_with( $url, '//' ) ) {
+	if ( Common\starts_with( $url, '//' ) ) {
 		$url = 'https:' . $url;
 	}
 
