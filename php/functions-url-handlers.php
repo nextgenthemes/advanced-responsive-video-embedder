@@ -19,70 +19,21 @@ function create_url_handlers() {
 	}
 }
 
-function url_handler( $provider, array $matches, array $attr, $url, array $rawattr ) {
+function url_handler( $provider, array $matches, array $attr, $url, $rawattr ) {
 
-	return build_video(
-		[
-			'provider'    => $provider,
-			'url_handler' => $matches,
-			'url'         => $url,
-		]
-	);
-}
+	$info = [
+		'matches' => $matches,
+		'attr'    => $attr,
+		'rawattr' => $rawattr,
+	];
 
-/* Keep this old code for now */
-function url_detection_to_shortcode_classic( $provider, array $matches, array $attr, $url, array $rawattr ) {
-
-	// Fix 'Markdown on save enhanced' issue
-	if ( substr( $url, -4 ) === '</p>' ) {
-		$url = substr( $url, 0, -4 );
+	if ( is_array( $rawattr ) ) {
+		$a = $rawattr;
 	}
 
-	$parsed_url = wp_parse_url( $url );
-	$url_query  = [];
-	$old_atts   = [];
-	$new_atts   = [];
-
-	if ( ! empty( $parsed_url['query'] ) ) {
-		parse_str( $parsed_url['query'], $url_query );
-	}
-
-	foreach ( $url_query as $key => $value ) {
-
-		if ( starts_with( $key, 'arve-' ) ) {
-			$key              = substr( $key, 5 );
-			$old_atts[ $key ] = $value;
-		}
-	}
-
-	unset( $old_atts['param'] );
-
-	if ( isset( $url_query['arve'] ) ) {
-		$new_atts = $url_query['arve'];
-	}
-
-	if ( isset( $url_query['t'] ) ) {
-		$url_query['start'] = youtube_time_to_seconds( $url_query['t'] );
-	}
-
-	unset( $url_query['arve'] );
-
-	if ( 'youtube' === $provider ) {
-		unset( $url_query['v'] );
-		unset( $url_query['t'] );
-	}
-
-	$a               = array_merge( (array) $old_atts, (array) $new_atts );
-	$a['parameters'] = empty( $url_query ) ? null : build_query( $url_query );
-	$a['provider']   = $provider;
-	$a['lagacy']     = 'lagacy';
-
-	foreach ( $matches as $k => $v ) {
-
-		if ( ! is_numeric( $k ) ) {
-			$a[ $k ] = $matches[ $k ];
-		}
-	}
+	$a['provider']    = $provider;
+	$a['url_handler'] = $info;
+	$a['url']         = $url;
 
 	return build_video( $a );
 }
