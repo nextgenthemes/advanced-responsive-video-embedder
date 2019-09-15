@@ -22,15 +22,17 @@ function get_settings_instance() {
 
 	if ( null === $inst ) {
 
-		$inst = new Common\Admin\Setup(
+		$inst = new Common\Admin\Settings(
 			[
 				'namespace'           => __NAMESPACE__,
 				'settings'            => settings(),
 				'menu_parent_slug'    => 'options-general.php',
 				'menu_title'          => __( 'ARVE', 'advanced-responsive-video-embedder' ),
 				'settings_page_title' => __( 'ARVE Settings', 'advanced-responsive-video-embedder' ),
-				'content_function'    => __NAMESPACE__ . '\settings_page_content',
-				'sidebar_function'    => __NAMESPACE__ . '\settings_sidebar',
+				'content_function'    => __NAMESPACE__ . '\Admin\settings_page_content',
+				'sidebar_function'    => function() {
+					readfile( __DIR__ . '/Admin/partials/settings-sidebar.html' );
+				},
 			]
 		);
 	}
@@ -38,26 +40,6 @@ function get_settings_instance() {
 	return $inst;
 }
 
-function settings_page_content() {
-	?>
-	<button @click='showAllSectionsButDebug()' class="button-secondary">All Options</button>
-	<button @click='showSection("main")'       class="button-secondary">Main</button>
-	<button @click='showSection("urlparams")'  class="button-secondary">URL Parameters</button>
-	<button @click='showSection("html5")'      class="button-secondary">HTML5 Video</button>
-	<button @click='showSection("pro")'        class="button-primary">Pro</button>
-	<button @click='showSection("debug")'      class="button-secondary">Debug</button>
-
-	<?php if ( ! defined( 'Nextgenthemes\ARVE\Pro\VERSION' ) ) : ?>
-		<div class="ngt-block" v-if="sectionsDisplayed.pro">
-			<p><?php esc_html_e( 'You may already set these options but they will only take effect if the Pro Addon is installed and activated.', 'advanced-responsive-video-embedder' ); ?></p>
-		</div>
-	<?php endif; ?>
-
-	<div class="ngt-block" v-if="sectionsDisplayed.debug">
-		<?php require_once __DIR__ . '/Admin/partials/debug-info.php'; ?>
-	</div>
-	<?php
-}
 
 function settings_sidebar() {
 	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
@@ -179,30 +161,7 @@ function shortcode_pairs() {
 	return apply_filters( 'nextgenthemes/arve/shortcode_pairs', $pairs );
 }
 
-function shortcode_ui_settings() {
 
-	$settings = shortcode_settings();
-
-	foreach ( $settings as $k => $v ) :
-
-		if ( 'string' === $v['type'] ) {
-			$v['type'] = 'text';
-		}
-
-		if ( 'integer' === $v['type'] ) {
-			$v['type'] = 'number';
-		}
-
-		if ( 'bool+default' === $v['type'] ) {
-			$v['type'] = 'radio';
-		}
-
-		$v['attr']               = $k;
-		$shortcode_ui_settings[] = $v;
-	endforeach;
-
-	return $shortcode_ui_settings;
-}
 
 function upgrade_options() {
 
@@ -319,7 +278,8 @@ function all_settings() {
 		],
 		'thumbnail_fallback'    => [
 			'tag'         => 'pro',
-			'default'     => '',
+			'default'     => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABQAAAALQAQMAAAD1s08VAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TpVUqDgYUcchQnSyIiuimVShChVArtOpgPvoFTRqSFBdHwbXg4Mdi1cHFWVcHV0EQ/ABxcXVSdJES/5cUWsR4cNyPd/ced+8Arl5WNKtjDNB020wl4kImuyqEXtGFMHj0Y0ZSLGNOFJPwHV/3CLD1Lsay/M/9OXrUnKUAAYF4VjFMm3iDeGrTNhjvE/NKUVKJz4lHTbog8SPTZY/fGBdc5lgmb6ZT88Q8sVBoY7mNlaKpEU8SR1VNp3wu47HKeIuxVq4qzXuyF0Zy+soy02kOIYFFLEGEABlVlFCGjRitOikWUrQf9/EPun6RXDK5SlDIsYAKNEiuH+wPfndr5SfGvaRIHOh8cZyPYSC0CzRqjvN97DiNEyD4DFzpLX+lDkx/kl5radEjoHcbuLhuafIecLkDDDwZkim5UpAml88D72f0TVmg7xboXvN6a+7j9AFIU1fJG+DgEBgpUPa6z7vD7b39e6bZ3w+Lr3KxpOOxwQAAAAlwSFlzAAALEwAACxMBAJqcGAAAAANQTFRFJiYmimkBUQAAAIdJREFUGBntwTEBAAAAwiD7p14JT2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXAXE3wABADIQCAAAAABJRU5ErkJggg==',
+			'ui'          => 'image_upload',
 			'shortcode'   => false,
 			'label'       => __( 'Thumbnail Fallback', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',

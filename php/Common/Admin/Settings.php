@@ -1,10 +1,9 @@
 <?php
 namespace Nextgenthemes\ARVE\Common\Admin;
+
 use \Nextgenthemes\ARVE\Common;
 
-const VER = \Nextgenthemes\ARVE\VERSION;
-
-class Setup {
+class Settings {
 
 	private $menu_title          = '';
 	private $option_key          = '';
@@ -87,16 +86,16 @@ class Setup {
 		Common\enqueue(
 			[
 				'handle' => 'nextgenthemes-settings',
-				'src'    => Common\plugin_or_theme_src( 'dist/common/css/settings.css', '\Nextgenthemes\ARVE\PLUGIN_FILE' ),
-				'ver'    => Common\plugin_or_theme_ver( VER, 'dist/common/css/settings.css', '\Nextgenthemes\ARVE\PLUGIN_FILE' ),
+				'src'    => Common\plugin_or_theme_src( 'dist/common/css/settings.css' ),
+				'ver'    => Common\plugin_or_theme_ver( \Nextgenthemes\ARVE\VERSION, 'dist/common/css/settings.css' ),
 			]
 		);
 
 		Common\enqueue(
 			[
 				'handle' => 'nextgenthemes-settings',
-				'src'    => Common\plugin_or_theme_src( 'dist/common/js/settings.js', '\Nextgenthemes\ARVE\PLUGIN_FILE' ),
-				'ver'    => Common\plugin_or_theme_ver( VER, 'dist/common/js/settings.js', '\Nextgenthemes\ARVE\PLUGIN_FILE' ),
+				'src'    => Common\plugin_or_theme_src( 'dist/common/js/settings.js' ),
+				'ver'    => Common\plugin_or_theme_ver( \Nextgenthemes\ARVE\VERSION, 'dist/common/js/settings.js' ),
 				'deps'   => [ 'jquery' ],
 			]
 		);
@@ -121,6 +120,11 @@ class Setup {
 			<div <?php echo block_attr( $key, $option ); ?>>
 				<?php
 				$function = __NAMESPACE__ . "\\print_{$option['type']}_field";
+
+				if ( isset( $option['ui'] ) && 'image_upload' === $option['ui'] ) {
+					$function = __NAMESPACE__ . "\\print_image_upload_field";
+				}
+
 				$function( $key, $option );
 
 				if ( ! empty( $option['description'] ) ) {
@@ -136,7 +140,6 @@ class Setup {
 
 	public function print_admin_page() {
 		?>
-
 		<div class='wrap wrap--nextgenthemes'>
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 			<div class="ngt-settings-grid">
@@ -197,10 +200,4 @@ class Setup {
 
 		add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $callback );
 	}
-
-
-
-
-
-
 }
