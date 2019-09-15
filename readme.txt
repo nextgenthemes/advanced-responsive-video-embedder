@@ -21,11 +21,15 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * Note: Minimum PHP required for ARVE is now 5.6 you should be a the latest version for security and speed anyway https://secure.php.net/supported-versions.php
 * New: Added Bitchute
 * New: ARVE Gutenberg block!
-* Improved: Lots of code refactored and rewritten.
+* Fix: YouTube live links are now working correctly
+* Fix: TED embed url.
+* Fix: Facebook embeds.
 * Improved: Embeds work though WPs oembed system now that comes with a more stable codebase and better caching system for embeds.
 * Improved: Aspect ratios are now auto detected for all providers WP supports through oEmbed.
-* Fix: YouTube live links are now working correctly
-*
+* Improved: Lots of code refactored and rewritten.
+* Improved: New setting page design and option handling.
+* Improved: Removed jQuery dependency for frontend JavaScript.
+* Improved: Prevent autoplay of multiple videos, only the first video on pageload will be autoplayed.
 
 ### 2019-01-23 - 8.10.4 ###
 
