@@ -19,12 +19,12 @@ class Tests_Scripts_And_Styles extends WP_UnitTestCase {
 
 				$this->assertStringEndsWith(
 					'advanced-responsive-video-embedder/dist/css/arve.css',
-					$wp_styles->registered['advanced-responsive-video-embedder']->src
+					$wp_styles->registered['arve-main']->src
 				);
 
 				$this->assertStringEndsWith(
 					'advanced-responsive-video-embedder/dist/js/arve.js',
-					$wp_scripts->registered['advanced-responsive-video-embedder']->src
+					$wp_scripts->registered['arve-main']->src
 				);
 			}
 		);
