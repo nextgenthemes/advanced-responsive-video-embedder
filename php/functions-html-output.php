@@ -63,7 +63,7 @@ function build_video_tag( array $a ) {
 		[
 			'name'       => 'video',
 			'tag'        => 'video',
-			'inner-html' => build_tracks_html(),
+			'inner-html' => $a['video_sources_html'] . build_tracks_html( $a ),
 			'attr'       => [
 				// WPmaster
 				'autoplay'           => in_array( $a['mode'], [ 'lazyload', 'lightbox', 'link-lightbox' ], true ) ? false : $a['autoplay'],
@@ -93,7 +93,7 @@ function build_tracks_html( array $a ) {
 	for ( $n = 1; $n <= NUM_TRACKS; $n++ ) {
 
 		if ( empty( $a[ "track_{$n}" ] ) ) {
-			return $a;
+			return '';
 		}
 
 		preg_match(
@@ -107,7 +107,9 @@ function build_tracks_html( array $a ) {
 			return $a;
 		}
 
-		$label = empty( $a[ "track_{$n}_label" ] ) ? get_language_name_from_code( $matches['lang'] ) : $a[ "track_{$n}_label" ];
+		$label = empty( $a[ "track_{$n}_label" ] ) ?
+			get_language_name_from_code( $matches['lang'] ) :
+			$a[ "track_{$n}_label" ];
 
 		$attr = [
 			'default' => ( 1 === $n ) ? true : false,
@@ -298,21 +300,21 @@ function build_tag( array $tag, array $a ) {
 		) {
 			$html = sprintf(
 				'<%1$s%2$s>%3$s</%1$s>',
-				tag_escape( $tag['tag'] ),
+				esc_html( $tag['tag'] ),
 				Common\attr( $tag['attr'] ),
 				$tag['inner-html']
 			);
 		} else {
 			$html = sprintf(
 				'<%s%s>',
-				tag_escape( $tag['tag'] ),
+				esc_html( $tag['tag'] ),
 				Common\attr( $tag['attr'] )
 			);
 		}
 	}
 
 	$html = sprintf(
-		"\n\n<!-- ARVE %s -->\n%s\n<!-- ARVE /%s -->",
+		"\n<!-- ARVE %s -->\n%s\n<!-- ARVE /%s -->\n\n",
 		esc_html( $tag['name'] ),
 		$html,
 		esc_html( $tag['name'] )
@@ -354,7 +356,7 @@ function arve_embed( $html, array $a ) {
 
 	return build_tag(
 		[
-			'name'       => 'arve_embed',
+			'name'       => 'embed',
 			'tag'        => 'div',
 			'inner-html' => $ratio_div . $html,
 			'attr'       => [ 'class' => $class ],
