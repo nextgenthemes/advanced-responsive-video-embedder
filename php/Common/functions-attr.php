@@ -11,6 +11,8 @@ function attr( array $attr = [] ) {
 			continue;
 		} elseif ( '' === $value || true === $value ) {
 			$html .= sprintf( ' %s', esc_html( $key ) );
+		} elseif ( 'data-setup' === $key ) {
+			$html .= sprintf( " %s='%s'", esc_html( $key ), esc_url( $value ) );
 		} elseif ( in_array( $key, [ 'href', 'data-href', 'src', 'data-src' ], true ) ) {
 			$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_url( $value ) );
 		} else {
