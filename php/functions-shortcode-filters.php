@@ -1,8 +1,6 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-use \Nextgenthemes\ARVE\Common;
-
 function sc_filter_set_wrapper_id( array $a ) {
 
 	static $wrapper_ids = [];
@@ -258,7 +256,7 @@ function sc_filter_autoplay_off_after_ran_once( array $a ) {
 function sc_filter_missing_attribute_check( array $a ) {
 
 	// Old shortcodes
-	if ( $a['legacy_sc'] || $a['url_handler'] ) {
+	if ( $a['legacy_sc'] ) {
 
 		if ( ! $a['id'] || ! $a['provider'] ) {
 			$a = add_error( $a, 'fatal', 'need id and provider' );
@@ -283,7 +281,7 @@ function sc_filter_missing_attribute_check( array $a ) {
 
 		$msg = sprintf(
 			// Translators: Attributes.
-			esc_html__( 'The [arve] shortcode needs one of this attributes %s', 'advanced-responsive-video-embedder' ),
+			esc_html__( 'The [[arve]] shortcode needs one of this attributes %s', 'advanced-responsive-video-embedder' ),
 			implode( ', ', $required_attributes )
 		);
 
@@ -351,7 +349,7 @@ function sc_filter_detect_provider_and_id_from_url( array $a ) {
 
 	$options        = options();
 	$properties     = get_host_properties();
-	$input_provider = str_replace( 'youtube', 'youtubelist', $a['provider'] );
+	$input_provider = $a['provider'];
 
 	foreach ( $properties as $host_id => $host ) :
 
@@ -408,7 +406,11 @@ function get_url_query_arg( $url, $arg ) {
 
 function sc_filter_iframe_src( array $a ) {
 
-	if ( ! $a['provider'] || ! $a['id'] ) {
+	if ( 'html5' === $a['provider'] ) {
+		return $a;
+	}
+
+	if ( ! $a['provider'] || ! $a['id']  ) {
 		$a = add_error( $a, 'no-provider-and-id', 'Need Provider and ID to build iframe src' );
 		return $a;
 	}
@@ -416,22 +418,17 @@ function sc_filter_iframe_src( array $a ) {
 	$options   = options();
 	$build_src = build_iframe_src( $a );
 
-	if ( 'youtube' === $a['provider'] ) {
+	if ( $a['src'] &&
+		( $build_src !== $a['src'] )
+	) {
+		$msg = sprintf(
+			'src mismatch <br>url: %s<br>src in: %s<br>src ou: %s',
+			$a['url'],
+			$a['src'],
+			$build_src
+		);
 
-		$t_arg = get_url_query_arg( $a['url'], 't' );
-
-		if ( $t_arg ) {
-			$build_src = add_query_arg(
-				'start',
-				youtube_time_to_seconds( $t_arg ),
-				$build_src
-			);
-		}
-		$build_src = add_query_arg( 'feature', 'oembed', $build_src );
-	}
-
-	if ( $a['src'] && ( $build_src !== $a['src'] ) ) {
-		$a = add_error( $a, 'src-mismatch-1', 'src mismatch <br>' . $a['src'] . '<br>' . $build_src );
+		$a = add_error( $a, 'src-mismatch-1', $msg );
 	}
 
 	if ( ! $a['src'] ) {
@@ -480,6 +477,24 @@ function build_iframe_src( array $a ) {
 		$src = sprintf( $pattern, $a['account_id'], $a['brightcove_player'], $a['brightcove_embed'], $a['id'] );
 	} else {
 		$src = sprintf( $pattern, $a['id'] );
+	}
+
+	switch ( $a['provider'] ) {
+
+		case 'youtube':
+			$t_arg = get_url_query_arg( $a['url'], 't' );
+			if ( $t_arg ) {
+				$src = add_query_arg(
+					'start',
+					youtube_time_to_seconds( $t_arg ),
+					$src
+				);
+			}
+			$src = add_query_arg( 'feature', 'oembed', $src );
+			break;
+		case 'vimeo':
+			$src = add_query_arg( 'dnt', 1, $src );
+			break;
 	}
 
 	return $src;
@@ -666,7 +681,7 @@ function get_video_type( $ext ) {
 
 function sc_filter_detect_html5( array $a ) {
 
-	if ( ! empty( $a['provider'] ) && 'html5' !== $a['provider'] ) {
+	if ( $a['provider'] && 'html5' !== $a['provider'] ) {
 		return $a;
 	}
 
@@ -674,30 +689,25 @@ function sc_filter_detect_html5( array $a ) {
 
 	foreach ( VIDEO_FILE_EXTENSIONS as $ext ) :
 
-		if ( ! empty( $a[ $ext ] ) ) {
+		if ( Common\ends_with( $a['url'], ".$ext" ) &&
+			! $a[ $ext ]
+		) {
+			$a[ $ext ] = $a['url'];
+		}
 
-			if ( starts_with( $a[ $ext ], 'https://www.dropbox.com' ) ) {
+		if ( $a[ $ext ] ) {
+
+			if ( Common\starts_with( $a[ $ext ], 'https://www.dropbox.com' ) ) {
 				$a[ $ext ] = add_query_arg( 'dl', 1, $a[ $ext ] );
 			}
 
 			$a['video_sources_html'] .= sprintf( '<source type="%s" src="%s">', get_video_type( $ext ), $a[ $ext ] );
 		}
-
-		if ( ! empty( $a['url'] ) && Common\ends_with( $a['url'], ".$ext" ) ) {
-
-			if ( Common\starts_with( $a['url'], 'https://www.dropbox.com' ) ) {
-				$a['url'] = add_query_arg( 'dl', 1, $a['url'] );
-			}
-
-			$a['video_src'] = $a['url'];
-		}
 	endforeach;
 
-	if ( empty( $a['video_src'] ) && empty( $a['video_sources_html'] ) ) {
-		return $a;
+	if ( $a['video_sources_html'] ) {
+		$a['provider'] = 'html5';
 	}
-
-	$a['provider'] = 'html5';
 
 	return $a;
 }
