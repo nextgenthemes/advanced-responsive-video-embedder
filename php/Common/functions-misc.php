@@ -1,31 +1,12 @@
 <?php
 namespace Nextgenthemes\ARVE\Common;
 
-function plugin_file() {
-	return get_constant( '\Nextgenthemes\ARVE\PLUGIN_FILE' );
-}
-
 function get_constant( $const_name ) {
 	return defined( $const_name ) ? constant( $const_name ) : false;
 }
 
 function is_wp_debug() {
 	return get_constant( 'WP_DEBUG' );
-}
-
-function logfile( $msg, $file ) {
-
-	if ( ! is_wp_debug() ) {
-		return;
-	}
-
-	if ( ! is_string( $msg ) ) {
-		ob_start();
-		var_dump( $msg );
-		$msg = ob_get_clean();
-	}
-
-	error_log( $msg . PHP_EOL, 3, "$file.log" );
 }
 
 function get_array_key_by_value( $array, $field, $value ) {
@@ -105,7 +86,7 @@ function setup_licensing() {
 		]
 	);
 
-	$licenses = Licenses::get_instance();
+	$licenses          = Licenses::get_instance();
 	$licenses->options = $settings_instance->options;
 
 	#d( Licenses::get_instance()->options );
