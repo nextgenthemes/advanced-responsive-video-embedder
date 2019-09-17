@@ -155,7 +155,7 @@ function sc_filter_mode_fallback( array $a ) {
 				// Translators: Mode
 				__( 'Mode: %s not available (ARVE Pro not active), switching to normal mode', 'advanced-responsive-video-embedder' ),
 				$a['mode']
-			),
+			)
 		);
 
 		$a['mode'] = 'normal';
