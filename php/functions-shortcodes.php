@@ -3,7 +3,7 @@ namespace Nextgenthemes\ARVE;
 
 use function Nextgenthemes\ARVE\Common\starts_with;
 
-function shortcode( array $a, $content = null ) {
+function shortcode( $a, $content = null ) {
 
 	$override = apply_filters( 'nextgenthemes/arve/shortcode_override', '', $a, $content );
 
@@ -24,35 +24,60 @@ function shortcode( array $a, $content = null ) {
 	return build_video( $a, $content );
 }
 
-function test_shortcode( $a, $content = null ) {
+function test_shortcode( $atts, $content = null ) {
 
 	$html      = '';
 	$providers = get_host_properties();
-	// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	$provider = sanitize_text_field( wp_unslash( empty( $_GET['provider'] ) ? '' : $_GET['provider'] ) );
+	$host      = sanitize_text_field( wp_unslash( empty( $_GET['provider'] ) ? '' : $_GET['provider'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$host      = empty( $atts['provider'] ) ? $host : $atts['provider'];
 
-	if ( ! empty( $provider ) ) {
-		 $html .= basic_tests( $providers[ $provider ]['tests'] );
+	if ( 'all' === $host ) {
+
+		$count = 0;
+
+		foreach ( $providers as $k => $v ) {
+
+			$count++;
+
+			if ( $count > 7 ) {
+				break;
+			}
+
+			if ( empty( $v['tests'] ) ) {
+				continue;
+			}
+
+			$html .= basic_tests( $v['tests'] );
+		}
+
 	} else {
 
-		foreach ( $providers as $provider => $value ) {
-			$html .= basic_tests( $providers[ $provider ]['tests'] );
+		if ( empty( $providers[ $host ]['tests'] ) ) {
+			$html .= 'no tests for ' . $host;
+		} else {
+			$html .= basic_tests( $providers[ $host ]['tests'] );
 		}
 	}
 
 	return $html;
 }
 
-function basic_tests() {
+function basic_tests( $tests ) {
 
 	$html = '';
 
+	/*
 	foreach ( $tests as $key => $value ) {
-		$sc    = sprintf( '[arve url="%s" mode="lazyload" maxwidth="500" title="Custom Title Test" /]', $value['url'] );
-		$html .= do_shortcode( $sc );
 		$sc    = sprintf( '[arve url="%s" mode="lightbox" maxwidth="200" /]', $value['url'] );
 		$html .= do_shortcode( $sc );
 	}
+	*/
+
+	$sc .= sprintf( '[arve url="%s" mode="lazyload" maxwidth="400" /]', $tests[0]['url'] );
+
+	$html .= "[$sc]<br>";
+	$html .= do_shortcode( $sc );
+	$html .= "<br>";
 
 	return $html;
 }
