@@ -13,6 +13,10 @@ function get_host_properties() {
 			'auto_thumbnail' => true,
 			'tests'          => [
 				[
+					'url' => 'https://alugha.com/videos/e269333a-579b-11e5-aa10-8587cc892389/share',
+					'id'  => 'e269333a-579b-11e5-aa10-8587cc892389',
+				],
+				[
 					'url' => 'https://alugha.com/1/videos/youtube-54m1YfEuYU8',
 					'id'  => 'youtube-54m1YfEuYU8',
 				],
@@ -100,7 +104,7 @@ function get_host_properties() {
 			'oembed'         => true,
 			'name'           => 'CollegeHumor',
 			'regex'          => '#https?://(www\.)?collegehumor\.com/video/(?<id>[0-9]+)#i',
-			'embed_url'      => 'http://www.collegehumor.com/e/%s',
+			'embed_url'      => 'https://www.collegehumor.com/e/%s',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'aspect_ratio'   => '600:369',
