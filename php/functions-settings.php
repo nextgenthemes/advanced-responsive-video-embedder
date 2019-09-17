@@ -40,12 +40,6 @@ function get_settings_instance() {
 	return $inst;
 }
 
-
-function settings_sidebar() {
-	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
-	readfile( __DIR__ . '/Admin/partials/settings-sidebar.html' );
-}
-
 function settings() {
 
 	$settings = all_settings();
@@ -408,8 +402,8 @@ function all_settings() {
 			'type'        => 'integer',
 			'description' => sprintf(
 				// Translators: $content_width value.
-				__( 'In pixels. 0 (default) will make ARVE use $content_width value %s from your theme.', 'advanced-responsive-video-embedder' ),
-				empty( $GLOBALS['content_width'] ) ? '(MISSING! will use ' . DEFAULT_MAXWIDTH . 'px)' : $GLOBALS['content_width']
+				__( 'In pixels. If set to 0 (default) the $content_width value from your theme is used if present, otherwise the default is %s.', 'advanced-responsive-video-embedder' ),
+				DEFAULT_MAXWIDTH
 			),
 		],
 		'align_maxwidth'        => [
