@@ -525,12 +525,6 @@ function all_settings() {
 			'type'        => 'boolean',
 			'description' => __( "Only disable if you have to. If you embed encrypted media you have to disable this. 'Disable Links' feature from ARVE Pro will not work when without sandbox.", 'advanced-responsive-video-embedder' ),
 		],
-		'lang'                  => [
-			'default' => null,
-			'label'   => __( '2 letter language (TED talks only)', 'advanced-responsive-video-embedder' ),
-			'option'  => false,
-			'type'    => 'string',
-		],
 		'start'                 => [
 			'default' => null,
 			'option'  => false,

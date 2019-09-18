@@ -417,7 +417,7 @@ function sc_filter_iframe_src( array $a ) {
 
 	$options     = options();
 	$build_src   = build_iframe_src( $a );
-	$compare_src = remove_query_arg( 'app_id', $a['src'] ); // TODO check why vimeo adds it and
+	$compare_src = remove_query_arg( 'app_id', $a['src'] ); // TODO check why vimeo adds it and it can be removed,
 
 	if ( $a['src'] &&
 		( $build_src !== $compare_src )
@@ -439,7 +439,7 @@ function sc_filter_iframe_src( array $a ) {
 	$a['src'] = iframe_src_args( $a['src'], $a );
 	$a['src'] = iframe_src_autoplay_args( $a['src'], $a );
 
-	if ( $options['youtube_nocookie'] ) {
+	if ( 'youtube' === $a['provider'] && $options['youtube_nocookie'] ) {
 		$a['src'] = str_replace( 'https://www.youtube.com', 'https://www.youtube-nocookie.com', $a['src'] );
 	}
 
@@ -464,10 +464,6 @@ function build_iframe_src( array $a ) {
 	} elseif ( 'twitch' === $a['provider'] && is_numeric( $a['id'] ) ) {
 
 		$pattern = 'https://player.twitch.tv/?video=v%s';
-
-	} elseif ( 'ted' === $a['provider'] && preg_match( '/^[a-z]{2}$/', $a['lang'] ) === 1 ) {
-
-		$pattern = 'https://embed-ssl.ted.com/talks/lang/' . $a['lang'] . '/%s.html';
 	}
 
 	if ( isset( $properties[ $a['provider'] ]['url_encode_id'] ) && $properties[ $a['provider'] ]['url_encode_id'] ) {
@@ -495,6 +491,12 @@ function build_iframe_src( array $a ) {
 			break;
 		case 'vimeo':
 			$src = add_query_arg( 'dnt', 1, $src );
+			break;
+		case 'ted':
+			$lang = Common\get_url_arg( $a['url'], 'language' );
+			if ( $lang ) {
+				$src = str_replace( 'ted.com/talks/', "ted.com/talks/lang/{$lang}/", $src );
+			}
 			break;
 	}
 
