@@ -5,7 +5,7 @@ class Tests_Scripts_And_Styles extends WP_UnitTestCase {
 
 	public function test_hooks() {
 
-		$this->assertNotFalse( has_action( 'wp_enqueue_scripts', 'Nextgenthemes\ARVE\register_assets' ) );
+		$this->assertNotFalse( has_action( 'wp_enqueue_scripts', 'Nextgenthemes\ARVE\action_wp_enqueue_scripts' ) );
 	}
 
 	public function test_registered() {
