@@ -415,14 +415,15 @@ function sc_filter_iframe_src( array $a ) {
 		return $a;
 	}
 
-	$options   = options();
-	$build_src = build_iframe_src( $a );
+	$options     = options();
+	$build_src   = build_iframe_src( $a );
+	$compare_src = remove_query_arg( 'app_id', $a['src'] ); // TODO check why vimeo adds it and
 
 	if ( $a['src'] &&
-		( $build_src !== $a['src'] )
+		( $build_src !== $compare_src )
 	) {
 		$msg = sprintf(
-			'src mismatch <br>url: %s<br>src in: %s<br>src ou: %s',
+			'src mismatch <br>url: %s<br>src in: %s<br>src gen: %s',
 			$a['url'],
 			$a['src'],
 			$build_src
