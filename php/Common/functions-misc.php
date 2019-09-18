@@ -1,6 +1,12 @@
 <?php
 namespace Nextgenthemes\ARVE\Common;
 
+function get_url_arg( $url, $arg ) {
+	$parts = parse_url( $url );
+	parse_str( $parts['query'], $query );
+	return empty( $query[ $arg ] ) ? '' : $query[ $arg ];
+}
+
 function get_constant( $const_name ) {
 	return defined( $const_name ) ? constant( $const_name ) : false;
 }
