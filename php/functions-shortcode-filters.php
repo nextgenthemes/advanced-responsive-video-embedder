@@ -342,7 +342,7 @@ function sc_filter_detect_provider_and_id_from_url( array $a ) {
 		$a = add_error(
 			$a,
 			'fatal',
-			__( 'sc_filter_detect_provider_and_id_from_url function needs url.', 'advanced-responsive-video-embedder' ),
+			__( 'sc_filter_detect_provider_and_id_from_url function needs url.', 'advanced-responsive-video-embedder' )
 		);
 		return $a;
 	}
