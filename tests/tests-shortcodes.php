@@ -75,32 +75,17 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertArrayHasKey( 'vimeo', $GLOBALS['shortcode_tags'] );
 	}
 
-	public function test_ted_talks() {
+	public function test_ted_talks_lang() {
 
-		$atts = [
-			'id'        => 'hRonZ4wP8Ys',
-			'provider'  => 'youtube',
-			'thumbnail' => 'https://example.com/image.jpg',
-			'title'     => 'Something',
-			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
-		];
-
-		$new_atts = $atts;
-		$old_atts = $atts;
-
-		$this->assertEquals(
-			shortcode( $old_atts ),
-			shortcode( $new_atts )
+		$html = shortcode(
+			[ 'url'  => 'https://www.ted.com/talks/auke_ijspeert_a_robot_that_runs_and_swims_like_a_salamander?language=de' ]
 		);
 
-		unset( $old_atts['url'] );
-
-		unset( $new_atts['id'] );
-		unset( $new_atts['provider'] );
-
-		$this->assertEquals(
-			shortcode( $old_atts ),
-			shortcode( $new_atts )
+		$this->assertNotContains( 'Error', $html );
+		$this->assertContains(
+			'https://embed.ted.com/talks/lang/de/auke_ijspeert_a_robot_that_runs_and_swims_like_a_salamander',
+			$html,
+			$html
 		);
 	}
 
