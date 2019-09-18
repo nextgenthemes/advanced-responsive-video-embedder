@@ -148,16 +148,12 @@ function sc_filter_mode_fallback( array $a ) {
 
 	} elseif ( ! array_key_exists( $a['mode'], $supported_modes ) ) {
 
-		$a = add_error(
-			$a,
-			'mode-not-avail',
-			sprintf(
-				// Translators: Mode
-				__( 'Mode: %s not available (ARVE Pro not active), switching to normal mode', 'advanced-responsive-video-embedder' ),
-				$a['mode']
-			)
+		$err_msg = sprintf(
+			// Translators: Mode
+			__( 'Mode: %s not available (ARVE Pro not active), switching to normal mode', 'advanced-responsive-video-embedder' ),
+			$a['mode']
 		);
-
+		$a = add_error( $a, 'mode-not-avail', $err_msg );
 		$a['mode'] = 'normal';
 	}
 
@@ -417,7 +413,10 @@ function sc_filter_iframe_src( array $a ) {
 
 	$options     = options();
 	$build_src   = build_iframe_src( $a );
-	$compare_src = remove_query_arg( 'app_id', $a['src'] ); // TODO check why vimeo adds it and it can be removed,
+	$compare_src = remove_query_arg(
+		'app_id', // TODO check why vimeo adds it and it can be removed,
+		str_replace( '&amp;', '&', $a['src']
+	) );
 
 	if ( $a['src'] &&
 		( $build_src !== $compare_src )
@@ -425,7 +424,7 @@ function sc_filter_iframe_src( array $a ) {
 		$msg = sprintf(
 			'src mismatch <br>url: %s<br>src in: %s<br>src gen: %s',
 			$a['url'],
-			$a['src'],
+			$compare_src,
 			$build_src
 		);
 
