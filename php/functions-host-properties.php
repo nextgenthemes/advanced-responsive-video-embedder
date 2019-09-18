@@ -81,9 +81,17 @@ function get_host_properties() {
 			'name'         => 'Brightcove',
 			'regex'        => '#https?://(players|link)\.brightcove\.net/(?<account_id>[0-9]+)/(?<brightcove_player>[a-z0-9]+)_(?<brightcove_embed>[a-z0-9]+)/index\.html\?videoId=(?<id>[0-9]+)#i',
 			'oembed'       => false,
+			# 1) account_id
+			# 2) player id
+			# 3) embed_id
+			# 4) id
 			'embed_url'    => 'https://players.brightcove.net/%s/%s_%s/index.html?videoId=%s',
 			'requires_src' => true,
 			'tests'        => [
+				[
+					'url' => 'https://players.brightcove.net/624246174001/BJXA5Px6f_default/index.html?videoId=5809251338001',
+					'id'  => '5809251338001'
+				],
 				[
 					'url'               => 'http://players.brightcove.net/1160438696001/default_default/index.html?videoId=4587535845001',
 					'account_id'        => 1160438696001,
@@ -354,7 +362,7 @@ function get_host_properties() {
 			'name'           => 'TED Talks',
 			'oembed'         => true,
 			'regex'          => '#https?://(www\.)?ted\.com/talks/(?<id>[a-z0-9_]+)#i',
-			'embed_url'      => 'https://embed.ted.com/talks/%s.html',
+			'embed_url'      => 'https://embed.ted.com/talks/%s',
 			'rebuild_url'    => 'https://www.ted.com/talks/%s.html',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
