@@ -169,23 +169,23 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function test_html5() {
 
-		$html5_ext = [ 'mp4', 'm4v', 'webm', 'ogv' ];
+		$html5_ext = [ 'mp4', 'webm', 'ogv' ];
 
 		foreach ( $html5_ext as $ext ) {
 
 			$with_url = shortcode( [ 'url' => 'https://example.com/video.' . $ext ] );
 			$with_ext = shortcode( [ $ext => 'https://example.com/video.' . $ext ] );
 
-			$this->assertNotContains( 'Error', $with_url );
-			$this->assertNotContains( 'Error', $with_ext );
-			$this->assertNotContains( '<iframe', $with_url );
-			$this->assertNotContains( '<iframe', $with_ext );
-			$this->assertContains( 'data-provider="html5"', $with_url );
-			$this->assertContains( 'data-provider="html5"', $with_ext );
-			$this->assertContains( '<video', $with_url );
-			$this->assertContains( '<video', $with_ext );
-			$this->assertContains( '<source type="video/" src="https://example.com/video.mp4">', $$with_url );
-			$this->assertContains( '<source type="video/" src="https://example.com/video.mp4">', $with_ext );
+			$this->assertNotContains( 'Error', $with_url, $ext );
+			$this->assertNotContains( 'Error', $with_ext, $ext );
+			$this->assertNotContains( '<iframe', $with_url, $ext );
+			$this->assertNotContains( '<iframe', $with_ext, $ext );
+			$this->assertContains( 'data-provider="html5"', $with_url, $ext );
+			$this->assertContains( 'data-provider="html5"', $with_ext, $ext );
+			$this->assertContains( '<video', $with_url, $ext );
+			$this->assertContains( '<video', $with_ext, $ext );
+			$this->assertContains( '<source type="video', $$with_url, $ext );
+			$this->assertContains( '<source type="video', $with_ext, $ext );
 		}
 
 		$output = shortcode(
@@ -239,7 +239,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			$this->assertNotEmpty( $host, $host_id );
 			$this->assertTrue( is_array( $host ), $host_id );
 
-			if ( empty( $host['regex'] ) && ! empty( $host['oembed'] ) ) {
+			if ( empty( $host['regex'] ) || ! empty( $host['oembed'] ) ) {
 				continue;
 			}
 
