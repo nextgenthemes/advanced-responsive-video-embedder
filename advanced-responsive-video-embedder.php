@@ -42,7 +42,7 @@ function init() {
 
 	array_map(
 		function( $file ) {
-				require_once "php/functions-{$file}.php";
+			require_once PLUGIN_DIR . "php/functions-{$file}.php";
 		},
 		[
 			'deprecated',
