@@ -173,29 +173,26 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		foreach ( $html5_ext as $ext ) {
 
-			$with_src = shortcode( [ 'url' => 'https://example.com/video.' . $ext ] );
+			$with_url = shortcode( [ 'url' => 'https://example.com/video.' . $ext ] );
 			$with_ext = shortcode( [ $ext => 'https://example.com/video.' . $ext ] );
 
-			$this->assertNotContains( 'Error', $with_src );
+			$this->assertNotContains( 'Error', $with_url );
 			$this->assertNotContains( 'Error', $with_ext );
-			$this->assertNotContains( '<iframe', $with_src );
+			$this->assertNotContains( '<iframe', $with_url );
 			$this->assertNotContains( '<iframe', $with_ext );
-			$this->assertContains( 'data-provider="html5"', $with_src );
+			$this->assertContains( 'data-provider="html5"', $with_url );
 			$this->assertContains( 'data-provider="html5"', $with_ext );
-			$this->assertContains( '<video', $with_src );
+			$this->assertContains( '<video', $with_url );
 			$this->assertContains( '<video', $with_ext );
+			$this->assertContains( '<source type="video/" src="https://example.com/video.mp4">', $$with_url );
+			$this->assertContains( '<source type="video/" src="https://example.com/video.mp4">', $with_ext );
 		}
-
-		$attr = [
-			'url'          => 'https://example.com/video.mp4',
-			'controlslist' => 'nofullscreen nodownload',
-		];
-
-		$this->assertContains( 'controlslist="nofullscreen nodownload"', shortcode( $attr ) );
 
 		$output = shortcode(
 			[
-				'mp4'       => 'https://example.com/video.mp4',
+				'url'          => 'https://example.com/should-be-ignored.mp4',
+				'controlslist' => 'nofullscreen nodownload',
+				'mp4'          => 'https://example.com/video.mp4',
 				'ogv'       => 'https://example.com/video.ogv',
 				'webm'      => 'https://example.com/video.webm',
 				'thumbnail' => 'https://example.com/image.jpg',
@@ -207,13 +204,14 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$this->assertNotContains( 'Error', $output );
 		$this->assertNotContains( '<iframe', $output );
+		$this->assertNotContains( 'should-be-ignored.mp4', $output );
 		$this->assertContains( 'data-provider="html5"', $output );
 		$this->assertContains( '<video', $output );
 		$this->assertContains( 'poster="https://example.com/image.jpg"', $output );
 		$this->assertContains( '<source type="video/ogg" src="https://example.com/video.ogv">', $output );
 		$this->assertContains( '<source type="video/mp4" src="https://example.com/video.mp4">', $output );
 		$this->assertContains( '<source type="video/webm" src="https://example.com/video.webm">', $output );
-		$this->assertContains( 'controlslist="nodownload"', $output );
+		$this->assertContains( 'controlslist="nofullscreen nodownload"', $output );
 
 		$this->assertContains( '<track default kind="subtitles" label="English" src="https://example.com/v-subtitles-en.vtt" srclang="en">', $output );
 		$this->assertContains( '<track kind="subtitles" label="Deutsch" src="https://example.com/v-subtitles-de.vtt" srclang="de">', $output );
@@ -241,7 +239,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			$this->assertNotEmpty( $host, $host_id );
 			$this->assertTrue( is_array( $host ), $host_id );
 
-			if ( ! empty( $host['oembed'] ) ) {
+			if ( empty( $host['regex'] ) && ! empty( $host['oembed'] ) ) {
 				continue;
 			}
 
