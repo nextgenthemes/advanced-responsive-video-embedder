@@ -1,5 +1,5 @@
 <?php
-use function Nextgenthemes\ARVE\shortcode;
+use function \Nextgenthemes\ARVE\shortcode;
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found
 // phpcs:disable Squiz.Classes.ClassFileName.NoMatch
 // phpcs:disable Squiz.PHP.Classes.ValidClassName.NotCamelCaps

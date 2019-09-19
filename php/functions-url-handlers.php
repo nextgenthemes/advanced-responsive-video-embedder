@@ -1,7 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-use Nextgenthemes\ARVE\Common\starts_with;
+use \Nextgenthemes\ARVE\Common\starts_with;
 
 function create_url_handlers() {
 
