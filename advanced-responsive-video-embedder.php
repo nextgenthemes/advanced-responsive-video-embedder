@@ -39,10 +39,9 @@ function init() {
 
 	require_once PLUGIN_DIR . '/vendor/autoload.php';
 	require_once PLUGIN_DIR . '/php/Common/init.php';
-
 	array_map(
 		function( $file ) {
-			require_once PLUGIN_DIR . "php/functions-{$file}.php";
+			require_once PLUGIN_DIR . "/php/functions-{$file}.php";
 		},
 		[
 			'deprecated',
@@ -59,7 +58,6 @@ function init() {
 			'settings',
 		]
 	);
-
 	require_once PLUGIN_DIR . '/php/Admin/functions-admin.php';
 	require_once PLUGIN_DIR . '/php/Admin/functions-settings-page.php';
 
