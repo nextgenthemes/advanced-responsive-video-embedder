@@ -213,7 +213,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( '<source type="video/ogg" src="https://example.com/video.ogv">', $output );
 		$this->assertContains( '<source type="video/mp4" src="https://example.com/video.mp4">', $output );
 		$this->assertContains( '<source type="video/webm" src="https://example.com/video.webm">', $output );
-		$this->assertContains( 'controlslist="nodownload"', $output );
+		$this->assertContains( 'controlslist="nofullscreen nodownload"', $output );
 
 		$this->assertContains( '<track default kind="subtitles" label="English" src="https://example.com/v-subtitles-en.vtt" srclang="en">', $output );
 		$this->assertContains( '<track kind="subtitles" label="Deutsch" src="https://example.com/v-subtitles-de.vtt" srclang="de">', $output );
