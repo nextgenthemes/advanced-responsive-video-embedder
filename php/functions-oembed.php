@@ -47,16 +47,16 @@ function oembed2args( $data, $url ) {
 		return false;
 	}
 
-	$src = $matches[1];
-
 	if ( 'facebook' === $provider ) {
-		$src = 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $src );
+		$src = 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $matches[1] );
+	} else {
+		$src = $matches[1];
 	}
 
 	$a = [
 		'oembed_data' => $data,
 		'provider'    => $provider,
-		'src'         => $matches[1],
+		'src'         => $src,
 		'url'         => $url,
 	];
 
