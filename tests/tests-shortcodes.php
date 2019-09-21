@@ -1,5 +1,7 @@
 <?php
 use function \Nextgenthemes\ARVE\shortcode;
+use function \Nextgenthemes\ARVE\get_host_properties;
+
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found
 // phpcs:disable Squiz.Classes.ClassFileName.NoMatch
 // phpcs:disable Squiz.PHP.Classes.ValidClassName.NotCamelCaps
@@ -9,6 +11,39 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$options         = get_option( 'arve_options_main' );
 		$options[ $key ] = $val;
 		update_option( 'arve_options_main', $options );
+	}
+
+	public function test_api_data() {
+
+		$properties = get_host_properties();
+
+		foreach ( $properties as $provider => $v ) :
+
+			if ( empty( $v['tests'] ) ) {
+				continue;
+			}
+
+			$this->assertNotEmpty( $v['tests'] );
+			$this->assertTrue( is_array( $v['tests'] ) );
+
+			foreach ( $v['tests'] as $key => $test ) {
+
+				$attr = array(
+					'url'  => $test['url'],
+					'mode' => 'normal',
+				);
+
+				$this->assertNotContains( 'Error', shortcode( $attr ) );
+
+				// if( isset( $props['auto_title'] ) && $props['auto_title'] ) {.
+				if ( ! empty( $values['auto_title'] ) ) {
+					$this->assertContains( 'itemprop="name"', shortcode( $attr ) );
+				}
+				if ( ! empty( $values['auto_thumbnail'] ) ) {
+					$this->assertContains( 'itemprop="thumbnailUrl"', shortcode( $attr ) );
+				}
+			}
+		endforeach;
 	}
 
 	public function test_sandbox() {
@@ -298,15 +333,5 @@ class Tests_Shortcode extends WP_UnitTestCase {
 	public function check_regex_detection( $atts ) {
 
 		$this->assertEquals( $atts['id'] );
-	}
-
-	public function test_dropbox_html5() {
-
-		$attr = [ 'url' => 'https://www.dropbox.com/s/ocqf9u5pn9b4ox0/Oops%20I%20dropped%20my%20Hoop.mp4' ];
-
-		$this->assertNotContains( 'Error', shortcode( $attr ) );
-
-		$this->assertRegExp( '#<video .*src="https://www\.dropbox\.com/s/ocqf9u5pn9b4ox0/Oops%20I%20dropped%20my%20Hoop\.mp4\?dl=1#', shortcode( $attr ) );
-		$this->assertContains( 'data-provider="html5"', shortcode( $attr ) );
 	}
 }
