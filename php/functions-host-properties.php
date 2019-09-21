@@ -115,7 +115,7 @@ function get_host_properties() {
 			'oembed'         => true,
 			'name'           => 'CollegeHumor',
 			'regex'          => '#https?://(www\.)?collegehumor\.com/video/(?<id>[0-9]+)#i',
-			'embed_url'      => 'https://www.collegehumor.com/e/%s',
+			'embed_url'      => 'http://www.collegehumor.com/e/%s',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'aspect_ratio'   => '600:369',
@@ -190,7 +190,7 @@ function get_host_properties() {
 		'facebook'             => [
 			'name'           => 'Facebook',
 			'oembed'         => true,
-			'regex'          => '#(?<id>https?://([a-z]+\.)?facebook\.com/[-.a-z0-9]+/videos/[a-z.0-9/]+)#i',
+			'regex'          => '#(?<id>https?://([a-z]+\.)?facebook\.com/[-.a-z0-9]+/videos/[^\s]+)#i',
 			'url_encode_id'  => true,
 			'embed_url'      => 'https://www.facebook.com/plugins/video.php?href=%s',
 			'auto_thumbnail' => true,
