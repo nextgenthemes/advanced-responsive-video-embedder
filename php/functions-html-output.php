@@ -74,7 +74,6 @@ function build_video_tag( array $a ) {
 				'width'              => empty( $a['width'] ) ? false : $a['width'],
 				'height'             => empty( $a['height'] ) ? false : $a['height'],
 				'poster'             => empty( $a['img_src'] ) ? false : $a['img_src'],
-				'src'                => empty( $a['video_src'] ) ? false : $a['video_src'],
 				// ARVE only
 				'class'              => 'arve-video fitvidsignore',
 				'muted'              => $a['muted'],
@@ -299,26 +298,19 @@ function build_tag( array $tag, array $a ) {
 			( isset( $tag['inner-html'] ) && '' === $tag['inner-html'] )
 		) {
 			$html = sprintf(
-				'<%1$s%2$s>%3$s</%1$s>',
+				PHP_EOL . '<%1$s%2$s>%3$s</%1$s>' . PHP_EOL,
 				esc_html( $tag['tag'] ),
 				Common\attr( $tag['attr'] ),
 				$tag['inner-html']
 			);
 		} else {
 			$html = sprintf(
-				'<%s%s>',
+				PHP_EOL . '<%s%s>' . PHP_EOL,
 				esc_html( $tag['tag'] ),
 				Common\attr( $tag['attr'] )
 			);
 		}
 	}
-
-	$html = sprintf(
-		"\n<!-- ARVE %s -->\n%s\n<!-- ARVE /%s -->\n\n",
-		esc_html( $tag['name'] ),
-		$html,
-		esc_html( $tag['name'] )
-	);
 
 	return apply_filters( "nextgenthemes/arve/{$tag['name']}_html", $html, $a );
 }
