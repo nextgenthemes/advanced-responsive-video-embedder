@@ -81,21 +81,16 @@ function ngt_remote_get_body( $url, array $args = [] ) {
 	return $response;
 };
 
-function ngt_remote_get_cached( $url, array $args, $json = true ) {
+function ngt_remote_get_body_cached( $url, array $args = [], $time = DAY_IN_SECONDS ) {
 
-	$defaults = array(
-		'cache_time' => 3600,
-	);
+	$transient_name = 'nextgenthemes_remote_get_body_' . $url . json_encode( $args );
+	$response       = get_transient( $transient_name );
 
-	$args = wp_parse_args( $args, $defaults );
+	if ( false === $response ) {
+		$response = ngt_remote_get_body( $url, $args );
 
-	$transient_name = 'nextgenthemes_remote_get_' . $url . json_encode( $args );
-	$cache          = get_transient( $transient_name );
-
-	if ( false === $cache ) {
-		$cache = ngt_remote_get( $url, $args['args'] );
-		set_transient( $transient_name, $cache, $args['cache_time'] );
+		set_transient( $transient_name, $response, $time );
 	}
 
-	return $cache;
+	return $response;
 }
