@@ -72,7 +72,7 @@ function init() {
 	add_action( 'wp_video_shortcode_override', "{$ns}\\wp_video_shortcode_override", 10, 4 );
 	add_filter( 'language_attributes',         "{$ns}\\html_id" );
 	add_filter( 'oembed_dataparse',            "{$ns}\\filter_oembed_dataparse", 11, 3 );
-	add_filter( 'the_content',                 "{$ns}\\maybe_enqueue_assets", 99 );
+	add_filter( 'embed_oembed_html',           "{$ns}\\maybe_enqueue_assets", 99 );
 
 	foreach ( [
 		'missing_attribute_check'         => -100,
