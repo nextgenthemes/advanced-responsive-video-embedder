@@ -136,6 +136,7 @@ function shortcode_pairs() {
 			'playsinline'       => 'y',
 			'preload'           => 'metadata',
 			'src'               => null,
+			'av1mp4'            => null,
 			'mp4'               => null,
 			'm4v'               => null,
 			'webm'              => null,

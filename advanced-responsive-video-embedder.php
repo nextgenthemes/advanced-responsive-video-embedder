@@ -26,7 +26,7 @@ const PRO_VERSION_REQUIRED  = '5.0.0-alpha1';
 const NUM_TRACKS            = 3;
 const PLUGIN_FILE           = __FILE__;
 const PLUGIN_DIR            = __DIR__;
-const VIDEO_FILE_EXTENSIONS = [ 'mp4', 'm4v', 'webm', 'ogv' ];
+const VIDEO_FILE_EXTENSIONS = [ 'av1mp4', 'mp4', 'm4v', 'webm', 'ogv' ];
 const DEFAULT_MAXWIDTH      = 900;
 
 init();
@@ -79,10 +79,7 @@ function init() {
 		'validate'                        => -99,
 		'detect_html5'                    => -31,
 		'detect_provider_and_id_from_url' => -30,
-		'detect_youtube_playlist'         => -30,
-
 		'aspect_ratio'                    => -10,
-
 		'get_media_gallery_thumbnail'     => 10,
 		'get_media_gallery_video'         => 10,
 		'liveleak_id_fix'                 => 10,

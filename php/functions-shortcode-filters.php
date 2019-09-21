@@ -110,8 +110,8 @@ function sc_filter_maxwidth( array $a ) {
 function sc_filter_liveleak_id_fix( array $a ) {
 
 	if ( 'liveleak' === $a['provider']
-		&& ! starts_with( $a['id'], 'i=' )
-		&& ! starts_with( $a['id'], 'f=' )
+		&& ! Common\starts_with( $a['id'], 'i=' )
+		&& ! Common\starts_with( $a['id'], 'f=' )
 	) {
 		$a['id'] = 'i=' . $a['id'];
 	}
@@ -365,7 +365,8 @@ function sc_filter_detect_provider_and_id_from_url( array $a ) {
 	endforeach;
 
 	if ( $input_provider &&
-		( $input_provider !== $a['provider'] )
+		( $input_provider !== $a['provider'] ) &&
+		! ( 'youtube' === $input_provider && 'youtubelist' === $a['provider'] )
 	) {
 		$a['errors']->add( 'detect!=oembed', "Regex detected provider <code>{$a['provider']}</code> did not match given provider <code>$input_provider</code>" );
 	}
@@ -379,23 +380,6 @@ function sc_filter_detect_provider_and_id_from_url( array $a ) {
 	return $a;
 }
 
-function get_url_query_arg( $url, $arg ) {
-
-	$return        = false;
-	$parsed_yt_url = wp_parse_url( $url );
-
-	if ( ! empty( $parsed_yt_url['query'] ) ) {
-
-		parse_str( $parsed_yt_url['query'], $url_query );
-
-		if ( isset( $url_query[ $arg ] ) ) {
-			$return = $url_query[ $arg ];
-		}
-	}
-
-	return $return;
-}
-
 function sc_filter_iframe_src( array $a ) {
 
 	if ( 'html5' === $a['provider'] ) {
@@ -407,12 +391,35 @@ function sc_filter_iframe_src( array $a ) {
 		return $a;
 	}
 
-	$options     = options();
-	$build_src   = build_iframe_src( $a );
-	$compare_src = remove_query_arg(
-		'app_id', // TODO check why vimeo adds it and it can be removed,
-		str_replace( '&amp;', '&', $a['src']
-	) );
+	$options   = options();
+	$build_src = build_iframe_src( $a );
+
+	if ( 'youtube' === $a['provider'] ) {
+
+		if ( Common\contains( $a['src'], '/embed/videoseries?' ) &&
+			Common\get_url_arg( $a['url'], 'v' )
+	 	) {
+			$youtube_id = Common\get_url_arg( $a['url'], 'v' );
+			$a['src'] = str_replace( '/embed/videoseries?', "/embed/$youtube_id?", $a['src'] );
+		}
+
+		$list_arg = Common\get_url_arg( $a['url'], 'list' );
+
+		if ( $list_arg ) {
+			$a['src']  = remove_query_arg( 'feature', $a['src'] );
+			$a['src']  = add_query_arg( 'list', $list_arg, $a['src'] );
+			$build_src = add_query_arg( 'list', $list_arg, $build_src );
+		}
+	}
+
+	if ( 'vimeo' === $a['provider'] ) {
+		$compare_src = remove_query_arg(
+			'app_id', // TODO check why vimeo adds it and it can be removed,
+			str_replace( '&amp;', '&', $a['src']
+		) );
+	} else {
+		$compare_src = $a['src'];
+	}
 
 	if ( $a['src'] &&
 		( $build_src !== $compare_src )
@@ -462,7 +469,7 @@ function build_iframe_src( array $a ) {
 	}
 
 	if ( isset( $properties[ $a['provider'] ]['url_encode_id'] ) && $properties[ $a['provider'] ]['url_encode_id'] ) {
-		$a['id'] = rawurlencode( $a['id'] );
+		$a['id'] = rawurlencode( str_replace( '&', '&amp;', $a['id'] ) );
 	}
 
 	if ( 'brightcove' === $a['provider'] ) {
@@ -474,18 +481,26 @@ function build_iframe_src( array $a ) {
 	switch ( $a['provider'] ) {
 
 		case 'youtube':
-			$t_arg = get_url_query_arg( $a['url'], 't' );
+			$t_arg    = Common\get_url_arg( $a['url'], 't' );
+			$list_arg = Common\get_url_arg( $a['url'], 'list' );
+
 			if ( $t_arg ) {
-				$src = add_query_arg(
-					'start',
-					youtube_time_to_seconds( $t_arg ),
-					$src
-				);
+				$src = add_query_arg( 'start', youtube_time_to_seconds( $t_arg ), $src );
 			}
-			$src = add_query_arg( 'feature', 'oembed', $src );
+
+			if ( $list_arg ) {
+				$src = add_query_arg( 'list', $list_arg, $src );
+			} else {
+				$src = add_query_arg( 'feature', 'oembed', $src );
+			}
+
 			break;
 		case 'vimeo':
 			$src = add_query_arg( 'dnt', 1, $src );
+			break;
+		case 'wistia':
+			$src = add_query_arg( 'dnt', 1, $src );
+			$src = add_query_arg( 'videoFoam', 'true', $src );
 			break;
 		case 'ted':
 			$lang = Common\get_url_arg( $a['url'], 'language' );
@@ -636,42 +651,14 @@ function sc_filter_detect_query_args( array $a ) {
 	return $a;
 }
 
-function sc_filter_detect_youtube_playlist( array $a ) {
-
-	if ( 'youtube' !== $a['provider']
-		|| ( empty( $a['url'] ) && empty( $a['id'] ) )
-	) {
-		return $a;
-	}
-
-	if ( empty( $a['url'] ) ) {
-		// Not a url but it will work
-		$url = str_replace( [ '&list=', '&amp;list=' ], '?list=', $a['id'] );
-	} else {
-		$url = $a['url'];
-	}
-
-	$query_array = url_query_array( $url );
-
-	if ( empty( $query_array['list'] ) ) {
-		return $a;
-	}
-
-	$a['id'] = strtok( $a['id'], '?' );
-	$a['id'] = strtok( $a['id'], '&' );
-
-	$a['youtube_playlist_id'] = $query_array['list'];
-	$a['parameters']         .= 'list=' . $query_array['list'];
-
-	return $a;
-}
-
 function get_video_type( $ext ) {
 
 	switch ( $ext ) {
 		case 'ogv':
 		case 'ogm':
 			return 'video/ogg';
+		case 'av1mp4':
+			return 'video/mp4; codecs=av01.0.05M.08';
 		default:
 			return 'video/' . $ext;
 	}
@@ -693,12 +680,14 @@ function sc_filter_detect_html5( array $a ) {
 			$a[ $ext ] = $a['url'];
 		}
 
+		if ( 'av1' === $ext &&
+			Common\ends_with( $a['url'], 'av1.mp4' ) &&
+			! $a[ $ext ]
+		) {
+			$a[ $ext ] = $a['url'];
+		}
+
 		if ( $a[ $ext ] ) {
-
-			if ( Common\starts_with( $a[ $ext ], 'https://www.dropbox.com' ) ) {
-				$a[ $ext ] = add_query_arg( 'dl', 1, $a[ $ext ] );
-			}
-
 			$a['video_sources_html'] .= sprintf( '<source type="%s" src="%s">', get_video_type( $ext ), $a[ $ext ] );
 		}
 	endforeach;

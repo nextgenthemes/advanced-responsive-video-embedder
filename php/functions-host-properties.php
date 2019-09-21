@@ -585,7 +585,7 @@ function get_host_properties() {
 		'youtube'              => [
 			'oembed'         => true,
 			'name'           => 'YouTube',
-			'regex'          => '#https?://(www\.)?(youtube\.com\/\S*((\/e(mbed))?\/|watch\?(\S*?&?v\=))|youtu\.be\/)(?<id>[a-zA-Z0-9_-]{6,11}((\?|&)list=[a-z0-9_\-]+)?)#i',
+			'regex'          => '#https?://(www\.)?(youtube\.com\/\S*((\/e(mbed))?\/|watch\?(\S*?&?v\=))|youtu\.be\/)(?<id>[a-zA-Z0-9_-]{6,11})#i',
 			'embed_url'      => 'https://www.youtube.com/embed/%s',
 			'rebuild_url'    => 'https://www.youtube.com/watch?v=%s',
 			'default_params' => 'iv_load_policy=3&modestbranding=1&rel=0&autohide=1&playsinline=1',

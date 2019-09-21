@@ -19,17 +19,20 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 ### 2019-10-01 - 9.0.0 ###
 
 * Note: Minimum PHP required for ARVE is now 5.6 you should be a the latest version for security and speed anyway https://secure.php.net/supported-versions.php
+* New: Finally the ARVE Gutenberg block is here!
 * New: Added Bitchute
-* New: ARVE Gutenberg block!
+* New: `av1mp4` shortcode parameter so serve AV1 encoded files best named .av1.mp4 (to be used togeter with `mp4` or `webm`)
 * Fix: YouTube live links are now working correctly
 * Fix: TED embed url.
 * Fix: Facebook embeds.
+* Improved: Lots of code improvements that may not be noticeable to users but took a lot of time and will make the plugin more maintainable and easier to extend.
+* Improved: removed the `lang` shortcode parameter that was only used for TED talks video subtitle display. This is now taken from the `language=x` url query.
 * Improved: Embeds work though WPs oembed system now that comes with a more stable codebase and better caching system for embeds.
 * Improved: Aspect ratios are now auto detected for all providers WP supports through oEmbed.
-* Improved: Lots of code refactored and rewritten.
 * Improved: New setting page design and option handling.
 * Improved: Removed jQuery dependency for frontend JavaScript.
 * Improved: Prevent autoplay of multiple videos, only the first video on pageload will be autoplayed.
+* Removed: Hack to support direct embedding of Dropbox videos because it no longer works.
 
 ### 2019-01-23 - 8.10.4 ###
 
