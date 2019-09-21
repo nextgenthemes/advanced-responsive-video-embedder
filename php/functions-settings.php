@@ -128,10 +128,11 @@ function shortcode_pairs() {
 	$pairs = array_merge(
 		$pairs,
 		[
+			'errors'            => new \WP_Error,
 			'id'                => null,
 			'provider'          => null,
-			'url_handler'       => false,
-			'legacy_sc'         => false,
+			'url_handler'       => null,
+			'legacy_sc'         => null,
 			'playsinline'       => 'y',
 			'preload'           => 'metadata',
 			'src'               => null,

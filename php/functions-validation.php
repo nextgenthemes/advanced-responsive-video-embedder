@@ -25,7 +25,7 @@ function validate_url( $a, $attr_name ) {
 			esc_html( $attr_name )
 		);
 
-		$a = add_error( $a, $attr_name, $error_msg );
+		$a['errors']->add( $attr_name, $error_msg );
 	}
 
 	return $a;
@@ -87,8 +87,7 @@ function validate_bool( array $a, $attr_name ) {
 			$a[ $attr_name ] = false;
 			break;
 		default:
-			$a = add_error(
-				$a,
+			$a['errors']->add(
 				$attr_name,
 				// Translators: %1$s = Attr Name, %2$s = Attribute array
 				sprintf(
@@ -117,12 +116,12 @@ function validate_align( $a ) {
 		case 'center':
 			break;
 		default:
-			$a = add_error(
-				$a,
+			$a['errors']->add(
 				'align',
 				// Translators: Alignment
 				sprintf( __( 'Align <code>%s</code> not valid', 'advanced-responsive-video-embedder' ), esc_html( $align ) )
 			);
+			remove_all_filters( 'shortcode_atts_arve' );
 			break;
 	}
 

@@ -38,25 +38,10 @@ function sc_filter_set_wrapper_id( array $a ) {
 	}
 
 	if ( empty( $a['wrapper_id'] ) ) {
-		$a = add_error(
-			$a,
+		$a['errors']->add(
 			'fatal',
 			__( 'Wrapper ID could not be build, this means ARVE did not get one of the essential inputs like URL.', 'advanced-responsive-video-embedder' )
 		);
-	}
-
-	return $a;
-}
-
-function add_error( array $a, $code, $msg ) {
-
-	if ( isset( $a['errors'] ) && is_wp_error( $a['errors'] ) ) {
-		$a['errors']->add( $code, $msg );
-	} else {
-		$a['errors'] = new \WP_Error( $code, $msg );
-	}
-
-	if ( 'fatal' === $code ) {
 		remove_all_filters( 'shortcode_atts_arve' );
 	}
 
@@ -153,7 +138,7 @@ function sc_filter_mode_fallback( array $a ) {
 			__( 'Mode: %s not available (ARVE Pro not active), switching to normal mode', 'advanced-responsive-video-embedder' ),
 			$a['mode']
 		);
-		$a = add_error( $a, 'mode-not-avail', $err_msg );
+		$a['errors']->add( 'mode-not-avail', $err_msg );
 		$a['mode'] = 'normal';
 	}
 
@@ -164,18 +149,25 @@ function sc_filter_validate( array $a ) {
 
 	foreach ( $a as $key => $value ) {
 
-		if ( null === $value || 'oembed_data' === $key || 'parameters' === $key ) {
-			continue;
+		switch ( $key ) {
+			case 'errors':
+				break;
+			case 'url_handler':
+				if ( null !== $value && ! is_array( $value ) ) {
+					$a['errors']->add( 2, 'url_handler needs to be null or array' . $value );
+				}
+				break;
+			case 'oembed_data':
+				if ( null !== $value && ! is_object( $value ) ) {
+					$a['errors']->add( 'oembed_data', 'oembed_data needs to be null or a object' );
+				}
+				break;
+			default:
+				if ( null !== $value && ! is_string( $value ) ) {
+					$a['errors']->add( 2, "$key must be null or string" );
+				}
+				break;
 		}
-		// TODO check for strings
-	}
-
-	if ( null !== $a['oembed_data'] && ! is_object( $a['oembed_data'] ) ) {
-		$a = add_error( $a, 'oembed_data', 'oembed_data needs to be null or a object' );
-	}
-
-	if ( null !== $a['parameters'] && ! is_string( $a['parameters'] ) && ! is_array( $a['parameters'] ) ) {
-		$a = add_error( $a, 'parameters', 'parameters needs to be null, array or string' );
 	}
 
 	foreach ( bool_shortcode_args() as $boolattr ) {
@@ -183,7 +175,10 @@ function sc_filter_validate( array $a ) {
 	};
 	unset( $boolattr );
 
-	foreach ( [ 'url', 'src', 'mp4', 'm4v', 'ogv', 'webm' ] as $urlattr ) {
+	$url_args   = VIDEO_FILE_EXTENSIONS;
+	$url_args[] = 'url';
+
+	foreach ( $url_args as $urlattr ) {
 		$a = validate_url( $a, $urlattr );
 	};
 	unset( $urlattr );
@@ -255,7 +250,8 @@ function sc_filter_missing_attribute_check( array $a ) {
 	if ( $a['legacy_sc'] ) {
 
 		if ( ! $a['id'] || ! $a['provider'] ) {
-			$a = add_error( $a, 'fatal', 'need id and provider' );
+			$a['errors']->add( 'fatal', 'need id and provider' );
+			remove_all_filters( 'shortcode_atts_arve' );
 		}
 
 		return $a;
@@ -281,7 +277,7 @@ function sc_filter_missing_attribute_check( array $a ) {
 			implode( ', ', $required_attributes )
 		);
 
-		$a = add_error( $a, 'fatal', $msg );
+		$a['errors']->add( 'fatal', $msg );
 	}
 
 	return $a;
@@ -335,11 +331,11 @@ function sc_filter_detect_provider_and_id_from_url( array $a ) {
 	}
 
 	if ( ! $a['url'] && ! $a['src'] ) {
-		$a = add_error(
-			$a,
+		$a['errors']->add(
 			'fatal',
 			__( 'sc_filter_detect_provider_and_id_from_url function needs url.', 'advanced-responsive-video-embedder' )
 		);
+		remove_all_filters( 'shortcode_atts_arve' );
 		return $a;
 	}
 
@@ -371,7 +367,7 @@ function sc_filter_detect_provider_and_id_from_url( array $a ) {
 	if ( $input_provider &&
 		( $input_provider !== $a['provider'] )
 	) {
-		$a = add_error( $a, 'detect!=oembed', "Regex detected provider <code>{$a['provider']}</code> did not match given provider <code>$input_provider</code>" );
+		$a['errors']->add( 'detect!=oembed', "Regex detected provider <code>{$a['provider']}</code> did not match given provider <code>$input_provider</code>" );
 	}
 
 	if ( ! $a['provider'] ) {
@@ -407,7 +403,7 @@ function sc_filter_iframe_src( array $a ) {
 	}
 
 	if ( ! $a['provider'] || ! $a['id']  ) {
-		$a = add_error( $a, 'no-provider-and-id', 'Need Provider and ID to build iframe src' );
+		$a['errors']->add( 'no-provider-and-id', 'Need Provider and ID to build iframe src' );
 		return $a;
 	}
 
@@ -428,7 +424,7 @@ function sc_filter_iframe_src( array $a ) {
 			$build_src
 		);
 
-		$a = add_error( $a, 'src-mismatch-1', $msg );
+		$a['errors']->add( 'src-mismatch-1', $msg );
 	}
 
 	if ( ! $a['src'] ) {
