@@ -11,6 +11,9 @@ function shortcode( $a, $content = null ) {
 		return $override;
 	}
 
+	$a['errors'] = new \WP_Error();
+	$a = apply_filters( 'nextgenthemes/arve/shortcode_args', $a );
+
 	if ( ! empty( $a['url'] ) ) {
 
 		$embed_check     = new EmbedChecker( $a );
@@ -111,6 +114,10 @@ function build_video( array $input_atts ) {
 
 	$html .= build_html( $a );
 	$html .= get_debug_info( $html, $a, $input_atts );
+
+	wp_enqueue_style( 'arve' );
+	wp_enqueue_script( 'arve' );
+
 	return $html;
 }
 
