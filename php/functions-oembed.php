@@ -36,6 +36,7 @@ function oembed2args( $data, $url ) {
 	}
 
 	$provider = strtolower( $data->provider_name );
+	$provider = str_replace( 'wistia, inc.', 'wistia', $provider );
 
 	if ( 'facebook' === $provider ) {
 		preg_match( '/class="fb-video" data-href="([^"]+)"/', $data->html, $matches );
