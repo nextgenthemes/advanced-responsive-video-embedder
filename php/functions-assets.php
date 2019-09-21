@@ -40,6 +40,10 @@ function action_wp_enqueue_scripts() {
 
 function register_gb_block() {
 
+	if ( ! function_exists( 'register_block_type' ) ) {
+		return;
+	}
+
 	$sc_settings = shortcode_settings();
 
 	foreach ( $sc_settings as $key => $v ) {
@@ -74,13 +78,13 @@ function register_gb_block() {
 	);
 }
 
-function maybe_enqueue_assets( $content ) {
+function maybe_enqueue_assets( $html ) {
 
 	// Doing this because of embed caching the actual functions and filters generating the videos may not be called, if the Block or Shortcode is not used the styles would never get loaded but we micro optimize and load them only when needed this way.
-	if ( Common\contains( $content, 'class="arve' ) ) {
+	if ( Common\contains( $html, 'class="arve' ) ) {
 		wp_enqueue_style( 'arve' );
 		wp_enqueue_script( 'arve' );
 	}
 
-	return $content;
+	return $html;
 }
