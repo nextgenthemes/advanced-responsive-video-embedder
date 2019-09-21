@@ -2,9 +2,20 @@
 namespace Nextgenthemes\ARVE\Common;
 
 function get_url_arg( $url, $arg ) {
-	$parts = parse_url( $url );
-	parse_str( $parts['query'], $query );
-	return empty( $query[ $arg ] ) ? '' : $query[ $arg ];
+
+	$return     = false;
+	$parsed_url = wp_parse_url( $url );
+
+	if ( ! empty( $parsed_url['query'] ) ) {
+
+		parse_str( $parsed_url['query'], $url_query );
+
+		if ( isset( $url_query[ $arg ] ) ) {
+			$return = $url_query[ $arg ];
+		}
+	}
+
+	return $return;
 }
 
 function get_constant( $const_name ) {
