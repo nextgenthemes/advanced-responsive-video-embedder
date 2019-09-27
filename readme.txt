@@ -18,10 +18,10 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 
 ### 2019-10-01 - 9.0.0 ###
 
-* Note: Minimum PHP required for ARVE is now 5.6 you should be a the latest version for security and speed anyway https://secure.php.net/supported-versions.php
+* Note: Minimum PHP required for ARVE is now 5.6 you should be a the latest version for [security](https://secure.php.net/supported-versions.php) and speed anyway
 * New: Finally the ARVE Gutenberg block is here!
 * New: Added Bitchute
-* New: `av1mp4` shortcode parameter so serve AV1 encoded files best named .av1.mp4 (to be used togeter with `mp4` or `webm`)
+* New: `av1mp4` shortcode parameter so serve [AV1](https://en.wikipedia.org/wiki/AV1) encoded files best named .av1.mp4 (to be used together with `mp4` or `webm`)
 * Fix: YouTube live links are now working correctly
 * Fix: TED embed url.
 * Fix: Facebook embeds.
