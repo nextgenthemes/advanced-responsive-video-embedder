@@ -22,10 +22,6 @@ new Vue( {
 		},
 		message: '',
 		vm: data.options,
-		tabs: {
-			one: true,
-			two: false,
-		},
 	},
 
 	// Methods that can be invoked from within our template
@@ -82,6 +78,10 @@ new Vue( {
 					vueThis.vm[ dataKey ] = attachmentID;
 				} );
 		},
+		action( action, product ) {
+			this.vm.action = '{ "action": "' + action + '", "product": "' + product + '" }';
+			this.saveOptions();
+		},
 	}, // end: methods
 } ); // end: Vue()
 
@@ -90,4 +90,48 @@ function setAllObjValues( obj, val ) {
 	Object.keys( obj ).forEach( ( index ) => {
 		obj[ index ] = val;
 	} );
+}
+
+function apiAction( itemID, licenseKey, action ) {
+
+	// Handling a SoftwAre licensing request without jQuery in pure JavaScript
+	const xhttp = new XMLHttpRequest();
+
+	// The url to the site running Easy Digital Downloads w/ Software Licensing
+	const postUrl = 'http://<domain.com>/edd-sl/';
+
+	xhttp.onreadystatechange = function() {
+		if ( xhttp.readyState == 4 && xhttp.status == 200 ) {
+			const slData = JSON.parse( xhttp.responseText );
+			handleSoftwareLicensingResponse( slData );
+		}
+	}
+
+	const args = {
+		edd_action: action + '_license', // Valid actions are activate_license, deactivate_license, get_version, check_license
+		license: licenseKey,
+		item_name: itemID,
+		url: 'domain.com'
+	};
+
+	xhttp.open( 'POST', postUrl, true );
+	xhttp.setRequestHeader( 'Content-type', 'application/x-www-form-urlencoded' );
+	xhttp.setRequestHeader( 'Access-Control-Allow-Origin', 'http://local.dev' );
+
+	let values = '';
+	for ( const key in args ) {
+		values += key + '=' + data[ key ] + '&';
+	}
+	values = values.substring( 0, values.length - 1 );
+	xhttp.send( values );
+
+	function handleSoftwareLicensingResponse( slData ) {
+		if ( slData.success === true ) {
+
+		} else {
+
+		}
+	}
+
+	return
 }

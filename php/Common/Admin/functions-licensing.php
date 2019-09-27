@@ -3,6 +3,40 @@ namespace Nextgenthemes\ARVE\Common\Admin;
 
 use \Nextgenthemes\ARVE\Common;
 
+function setup_licensing() {
+
+	$products = get_products();
+
+	foreach ( $products as $key => $value ) {
+		$settings[ $key ] = [
+			'default' => '',
+			'option'  => true,
+			'tag'     => 'main',
+			// translators: %s is Product name
+			'label'   => sprintf( esc_html__( '%s license Key', 'advanced-responsive-video-embedder' ), $value['name'] ),
+			'type'    => 'string',
+			'ui'      => 'k'
+		];
+	}
+
+	$settings[ 'action' ] = [
+		'default' => '',
+		'option'  => true,
+		'tag'     => 'main',
+		'label'   => sprintf( esc_html__( 'Action', 'advanced-responsive-video-embedder' ), $value['name'] ),
+		'type'    => 'string',
+	];
+
+	$settings_instance = new Settings(
+		[
+			'namespace'           => 'nextgenthemes_licenses',
+			'settings'            => $settings,
+			'menu_title'          => esc_html__( 'NGT Licenses', 'advanced-responsive-video-embedder' ),
+			'settings_page_title' => esc_html__( 'NGT Licenses', 'advanced-responsive-video-embedder' )
+		]
+	);
+}
+
 function get_products() {
 
 	$products = array(
@@ -64,13 +98,13 @@ function get_products() {
 			$products[ $key ]['file'] = constant( $file );
 		}
 
-		if ( 'plugin' === $value['type'] ) {
-
-			$file_slug = str_replace( '_', '-', $key );
-
-			#$products[ $key ]['installed'] = array_key_exists( "$file_slug/$file_slug.php", $plugins );
-			$products[ $key ]['active'] = is_plugin_active( "$file_slug/$file_slug.php" );
-		}
+		// if ( 'plugin' === $value['type'] ) {
+		//
+		// 	$file_slug = str_replace( '_', '-', $key );
+		// 	$products[ $key ]['active'] = is_plugin_active( "$file_slug/$file_slug.php" );
+		//
+		// 	#$products[ $key ]['installed'] = array_key_exists( "$file_slug/$file_slug.php", $plugins );
+		// }
 	endforeach;
 
 	return $products;
@@ -319,9 +353,9 @@ function api_action( $item_id, $key, $action = 'check' ) {
 	}
 
 	// Call the custom API.
-	$response = Common\ngt_remote_get(
+	$response = Common\ngt_remote_get_json(
 		'https://nextgenthemes.com',
-		array(
+		[
 			'timeout' => 10,
 			'body'    => array(
 				'edd_action' => $action . '_license',
@@ -329,7 +363,7 @@ function api_action( $item_id, $key, $action = 'check' ) {
 				'item_id'    => $item_id,
 				'url'        => home_url()
 			)
-		)
+		]
 	);
 
 	// make sure the response came back okay

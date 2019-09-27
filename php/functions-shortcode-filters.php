@@ -396,19 +396,19 @@ function sc_filter_iframe_src( array $a ) {
 
 	if ( 'youtube' === $a['provider'] ) {
 
+		$yt_v    = Common\get_url_arg( $a['url'], 'v' );
+		$yt_list = Common\get_url_arg( $a['url'], 'list' );
+
 		if ( Common\contains( $a['src'], '/embed/videoseries?' ) &&
-			Common\get_url_arg( $a['url'], 'v' )
+			$yt_v
 	 	) {
-			$youtube_id = Common\get_url_arg( $a['url'], 'v' );
-			$a['src'] = str_replace( '/embed/videoseries?', "/embed/$youtube_id?", $a['src'] );
+			$a['src'] = str_replace( '/embed/videoseries?', "/embed/$yt_v?", $a['src'] );
 		}
 
-		$list_arg = Common\get_url_arg( $a['url'], 'list' );
-
-		if ( $list_arg ) {
+		if ( $yt_list ) {
 			$a['src']  = remove_query_arg( 'feature', $a['src'] );
-			$a['src']  = add_query_arg( 'list', $list_arg, $a['src'] );
-			$build_src = add_query_arg( 'list', $list_arg, $build_src );
+			$a['src']  = add_query_arg( 'list', $yt_list, $a['src'] );
+			$build_src = add_query_arg( 'list', $yt_list, $build_src );
 		}
 	}
 

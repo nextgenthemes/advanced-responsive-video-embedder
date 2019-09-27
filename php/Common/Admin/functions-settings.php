@@ -67,6 +67,24 @@ function print_string_field( $key, $option ) {
 	<?php
 }
 
+function print_k_field( $key, $option ) {
+	?>
+	<p>
+		<label>
+			<?php label_text( $option ); ?>
+			<input v-model="<?php esc_attr_e( "vm.$key" ); ?>" type="text" class="medium-text" style="width: 350px;" />
+			<?php if ( Common\has_valid_key( $key ) ) : ?>
+				<button @click="action( 'deactivate', '<?= $key; ?>' )">Deactivate</button>
+			<?php else : ?>
+				<button @click="action( 'activate', '<?= $key; ?>' )">Activate</button>
+			<?php endif; ?>
+			<br>
+			Status: <?php echo Common\get_key_status( $key ); ?>
+		</label>
+	</p>
+	<?php
+}
+
 function print_image_upload_field( $key, $option ) {
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_media();
@@ -115,20 +133,9 @@ function print_select_field( $key, $option ) {
 function block_attr( $key, $option ) {
 
 	$block_attr = [
-		'class' => block_class( $key, $option ),
+		'class' => "ngt-option-block ngt-option-block--$key ngt-option-block--{$option['tag']}",
 		'v-if'  => 'sectionsDisplayed.' . $option['tag'],
 	];
 
 	return Common\attr( $block_attr );
-}
-
-function block_class( $key, $option ) {
-
-	$block_class = "ngt-option-block ngt-option-block--$key";
-
-	if ( ! empty( $option['tag'] ) ) {
-		$block_class .= ' ngt-option-block--' . $option['tag'];
-	}
-
-	return $block_class;
 }

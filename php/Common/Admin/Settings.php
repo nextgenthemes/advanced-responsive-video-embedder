@@ -49,6 +49,18 @@ class Settings {
 
 	public function save_options( $options ) {
 
+		$action = json_decode( $options['action'] );
+		$options['action'] = '';
+
+		if ( $action ) {
+			$product_id = get_products()[ $action->product ]['id'];
+			$key_status = api_action( $product_id, $options[ $action->product ], $action->action );
+			logfile( $action->product, __FILE__ );
+			logfile( $product_id, __FILE__ );
+			logfile( $key_status, __FILE__ );
+			Common\update_key_status( $action->product, $key_status );
+		}
+
 		$options = array_diff_assoc( $options, $this->options_defaults );
 		// remove all items from options that are not also in defaults.
 		$options = array_intersect_key( $options, $this->options_defaults );
@@ -69,6 +81,9 @@ class Settings {
 					return current_user_can( 'manage_options' );
 				},
 				'callback'             => function( \WP_REST_Request $request ) {
+
+					api_action( 1253, 'e6cab7097dbfe39174c2310a86b2854d', 'deactivate' );
+
 					$this->save_options( $request->get_params() );
 					die( '1' );
 				},
@@ -119,11 +134,9 @@ class Settings {
 			?>
 			<div <?php echo block_attr( $key, $option ); ?>>
 				<?php
-				$function = __NAMESPACE__ . "\\print_{$option['type']}_field";
+				$field_type = isset( $option['ui'] ) ? $option['ui'] : $option['type'];
 
-				if ( isset( $option['ui'] ) && 'image_upload' === $option['ui'] ) {
-					$function = __NAMESPACE__ . "\\print_image_upload_field";
-				}
+				$function = __NAMESPACE__ . "\\print_{$field_type}_field";
 
 				$function( $key, $option );
 

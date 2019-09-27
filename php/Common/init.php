@@ -21,6 +21,7 @@ if ( ! defined( 'NGT_COMMON_INIT' ) ) {
 	add_action( 'admin_init', __NAMESPACE__ . '\Admin\init_edd_updaters', 0 );
 	add_action( 'admin_init', __NAMESPACE__ . '\Admin\activation_notices' );
 	add_action( 'admin_init', __NAMESPACE__ . '\Admin\register_settings' );
+	add_action( 'init',       __NAMESPACE__ . '\Admin\setup_licensing' );
 	add_action( 'admin_menu', __NAMESPACE__ . '\Admin\add_licensing_settings_menu' );
 
 	define( 'NGT_COMMON_INIT', true );
