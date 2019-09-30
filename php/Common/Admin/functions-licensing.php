@@ -15,16 +15,17 @@ function setup_licensing() {
 			// translators: %s is Product name
 			'label'   => sprintf( esc_html__( '%s license Key', 'advanced-responsive-video-embedder' ), $value['name'] ),
 			'type'    => 'string',
-			'ui'      => 'k'
+			'ui'      => 'licensekey',
 		];
 	}
 
-	$settings[ 'action' ] = [
+	$settings['action'] = [
 		'default' => '',
 		'option'  => true,
 		'tag'     => 'main',
-		'label'   => sprintf( esc_html__( 'Action', 'advanced-responsive-video-embedder' ), $value['name'] ),
+		'label'   => esc_html__( 'Action', 'advanced-responsive-video-embedder' ),
 		'type'    => 'string',
+		'ui'      => 'hidden',
 	];
 
 	$settings_instance = new Settings(

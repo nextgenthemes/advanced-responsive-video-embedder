@@ -31,6 +31,7 @@ function get_settings_instance() {
 				'settings_page_title' => __( 'ARVE Settings', 'advanced-responsive-video-embedder' ),
 				'content_function'    => __NAMESPACE__ . '\Admin\settings_page_content',
 				'sidebar_function'    => function() {
+					// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
 					readfile( __DIR__ . '/Admin/partials/settings-sidebar.html' );
 				},
 			]
@@ -40,18 +41,31 @@ function get_settings_instance() {
 	return $inst;
 }
 
+function has_bool_default_options( $array ) {
+
+	return ! array_diff_key(
+		$array,
+		[
+			''      => true,
+			'true'  => true,
+			'false' => true,
+		]
+	);
+}
+
 function settings() {
 
 	$settings = all_settings();
 
 	foreach ( $settings as $k => $v ) {
 
-		if ( isset( $v['option'] ) && ! $v['option'] ) {
+		if ( ! $v['option'] ) {
 			unset( $settings[ $k ] );
 		}
 
-		if ( 'bool+default' === $v['type'] ) {
+		if ( 'select' === $v['type'] && has_bool_default_options( $v['options'] ) ) {
 			$settings[ $k ]['type'] = 'boolean';
+			unset( $settings[ $k ]['options'] );
 		}
 	}
 
@@ -64,15 +78,7 @@ function shortcode_settings() {
 
 	foreach ( $settings as $k => $v ) {
 
-		if ( 'bool+default' === $v['type'] ) {
-			$settings[ $k ]['options'] = [
-				''      => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
-				'true'  => __( 'True', 'advanced-responsive-video-embedder' ),
-				'false' => __( 'False', 'advanced-responsive-video-embedder' ),
-			];
-		}
-
-		if ( isset( $v['shortcode'] ) && ! $v['shortcode'] ) {
+		if ( ! $v['shortcode'] ) {
 			unset( $settings[ $k ] );
 		}
 	}
@@ -80,6 +86,7 @@ function shortcode_settings() {
 	return $settings;
 }
 
+// TODO this is unused
 function gutenberg_ui_settings( $html5 = false ) {
 
 	$settings = all_settings();
@@ -102,7 +109,12 @@ function bool_shortcode_args() {
 
 	foreach ( $settings as $k => $v ) {
 
-		if ( $v['shortcode'] && in_array( $v['type'], [ 'bool', 'boolean', 'bool+default' ], true ) ) {
+		if ( $v['shortcode'] &&
+			(
+				'boolean' === $v['type'] ||
+				( 'select' === $v['type'] && has_bool_default_options( $v['options'] ) )
+			)
+		) {
 			$bool_attr[] = $k;
 		}
 	}
@@ -116,9 +128,9 @@ function shortcode_pairs() {
 	$settings = shortcode_settings();
 
 	foreach ( $settings as $k => $v ) :
-		if ( 'bool+default' === $v['type'] ) {
+		if ( 'select' === $v['type'] && has_bool_default_options( $v['options'] ) ) {
 			$pairs[ $k ] = bool_to_shortcode_string( $options[ $k ] );
-		} elseif ( ! empty( $v['option'] ) ) {
+		} elseif ( $v['option'] ) {
 			$pairs[ $k ] = (string) $options[ $k ];
 		} else {
 			$pairs[ $k ] = $v['default'];
@@ -128,7 +140,7 @@ function shortcode_pairs() {
 	$pairs = array_merge(
 		$pairs,
 		[
-			'errors'            => new \WP_Error,
+			'errors'            => new \WP_Error(),
 			'id'                => null,
 			'provider'          => null,
 			'url_handler'       => null,
@@ -215,17 +227,22 @@ function all_settings() {
 		}
 	}
 
-	$auto_thumbs     = implode( ', ', $auto_thumbs );
-	$auto_title      = implode( ', ', $auto_title );
-	$embed_code_only = implode( ', ', $embed_code_only );
+	$auto_thumbs      = implode( ', ', $auto_thumbs );
+	$auto_title       = implode( ', ', $auto_title );
+	$embed_code_only  = implode( ', ', $embed_code_only );
+	$def_bool_options = [
+		''      => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
+		'true'  => __( 'True', 'advanced-responsive-video-embedder' ),
+		'false' => __( 'False', 'advanced-responsive-video-embedder' ),
+	];
 
 	$settings = [
 		'url'                   => [
 			'default'     => null,
 			'option'      => false,
-			'label'       => __( 'URL / Embed Code', 'advanced-responsive-video-embedder' ),
+			'label'       => __( 'Video URL / iframe Embed Code', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
-			'meta'        => [ 'placeholder' => esc_attr__( 'Video URL / iframe Embed Code', 'advanced-responsive-video-embedder' ) ],
+			'placeholder' => esc_attr__( 'Video URL / iframe Embed Code', 'advanced-responsive-video-embedder' ),
 			'description' => sprintf(
 				// Translators: %1$s Providers
 				__( 'Post the URL of the video here. For %1$s and any <a href="%2$s">unlisted</a> video hosts paste their iframe embed codes or its src URL in here (providers embeds need to be responsive).', 'advanced-responsive-video-embedder' ),
@@ -245,18 +262,18 @@ function all_settings() {
 			),
 		],
 		'description'           => [
-			'default' => null,
-			'option'  => false,
-			'label'   => __( 'Description', 'advanced-responsive-video-embedder' ),
-			'type'    => 'string',
-			'meta'    => [ 'placeholder' => __( 'Description for SEO', 'advanced-responsive-video-embedder' ) ]
+			'default'     => null,
+			'option'      => false,
+			'label'       => __( 'Description', 'advanced-responsive-video-embedder' ),
+			'type'        => 'string',
+			'placeholder' => __( 'Used for SEO (needed schema.org data)', 'advanced-responsive-video-embedder' ),
 		],
 		'upload_date'           => [
-			'default' => null,
-			'option'  => false,
-			'label'   => __( 'Upload Date', 'advanced-responsive-video-embedder' ),
-			'type'    => 'string',
-			'meta'    => [ 'placeholder' => __( 'Upload Date for SEO, ISO 8601 format', 'advanced-responsive-video-embedder' ) ]
+			'default'     => null,
+			'option'      => false,
+			'label'       => __( 'Upload Date', 'advanced-responsive-video-embedder' ),
+			'type'        => 'string',
+			'placeholder' => __( '2019-09-29 (ISO 8601 format)', 'advanced-responsive-video-embedder' ),
 		],
 		'mode'                  => [
 			'tag'         => 'pro',
@@ -279,8 +296,23 @@ function all_settings() {
 			'shortcode'   => false,
 			'label'       => __( 'Thumbnail Fallback', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
-			'meta'        => [ 'placeholder' => __( 'URL or media gallery image ID used for thumbnail', 'advanced-responsive-video-embedder' ) ],
+			'placeholder' => __( 'URL or media gallery image ID used for thumbnail', 'advanced-responsive-video-embedder' ),
 			'description' => __( 'URL or media gallery image ID used for thumbnail', 'advanced-responsive-video-embedder' ),
+		],
+		'thumbnail'             => [
+			'default'     => null,
+			'shortcode'   => true,
+			'option'      => false,
+			'label'       => __( 'Thumbnail', 'advanced-responsive-video-embedder' ),
+			'type'        => 'attachment',
+			'libraryType' => [ 'image' ],
+			'addButton'   => __( 'Select Image', 'advanced-responsive-video-embedder' ),
+			'frameTitle'  => __( 'Select Image', 'advanced-responsive-video-embedder' ),
+			'description' => sprintf(
+				// Translators: current setting value
+				__( 'Preview image for Lazyload modes, always used for SEO. The Pro Addon is able to get them from %s automatically.', 'advanced-responsive-video-embedder' ),
+				$auto_thumbs
+			),
 		],
 		'hide_title'            => [
 			'default'     => false,
@@ -327,7 +359,7 @@ function all_settings() {
 		'hover_effect'          => [
 			'tag'     => 'pro',
 			'default' => 'zoom',
-			'label'   => __( 'Hover Effect', 'advanced-responsive-video-embedder' ),
+			'label'   => __( 'Hover Effect (Lazyload/Lightbox only)', 'advanced-responsive-video-embedder' ),
 			'type'    => 'select',
 			'options' => [
 				'zoom'      => __( 'Zoom Thumbnail', 'advanced-responsive-video-embedder' ),
@@ -338,8 +370,9 @@ function all_settings() {
 		'disable_links'         => [
 			'tag'         => 'pro',
 			'default'     => false,
-			'label'       => __( 'Disable links', 'advanced-responsive-video-embedder' ),
-			'type'        => 'bool+default',
+			'label'       => __( 'Disable links (Pro Addon)', 'advanced-responsive-video-embedder' ),
+			'type'        => 'select',
+			'options'     => $def_bool_options,
 			'description' => __( 'Prevent embeds to open new popups/tabs from links inside video embeds. Note: breaks functionality like sharing. (Pro Addon)', 'advanced-responsive-video-embedder' ),
 		],
 		'mobile_inview'         => [
@@ -366,37 +399,25 @@ function all_settings() {
 		'arve_link'             => [
 			'default'     => false,
 			'label'       => __( 'ARVE Link', 'advanced-responsive-video-embedder' ),
-			'type'        => 'bool+default',
+			'type'        => 'select',
+			'options'     => $def_bool_options,
 			'description' => __( "Shows a small 'ARVE' link below the videos. Be the most awesome person and help promoting this plugin.", 'advanced-responsive-video-embedder' ),
-		],
-		'thumbnail'             => [
-			'default'     => null,
-			'shortcode'   => true,
-			'option'      => false,
-			'label'       => __( 'Thumbnail', 'advanced-responsive-video-embedder' ),
-			'type'        => 'attachment',
-			'libraryType' => [ 'image' ],
-			'addButton'   => __( 'Select Image', 'advanced-responsive-video-embedder' ),
-			'frameTitle'  => __( 'Select Image', 'advanced-responsive-video-embedder' ),
-			'description' => sprintf(
-				// Translators: current setting value
-				__( 'Preview image for Lazyload modes, always used for SEO. The Pro Addon is able to get them from %s automatically.', 'advanced-responsive-video-embedder' ),
-				$auto_thumbs
-			),
 		],
 		'duration'              => [
 			'default'     => null,
 			'option'      => false,
 			'label'       => __( 'Duration', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
-			'description' => __( '`1HJ2M3S` for 1 hour, 2 minutes and 3 seconds. `5M` for 5 minutes.', 'advanced-responsive-video-embedder' ),
+			'placeholder' => '1H2M3S',
+			'description' => __( '`1H2M3S` for 1 hour, 2 minutes and 3 seconds. `5M` for 5 minutes.', 'advanced-responsive-video-embedder' ),
 		],
 		'autoplay'              => [
 			'default'     => false,
 			'shortcode'   => true,
 			'label'       => __( 'Autoplay', 'advanced-responsive-video-embedder' ),
-			'type'        => 'bool+default',
-			'description' => __( 'Do not expect this to always work! Mobile browsers prevent this, some video hosts do not support it at all. Only used in normal mode.', 'advanced-responsive-video-embedder' ),
+			'type'        => 'select',
+			'options'     => $def_bool_options,
+			'description' => __( 'Do not expect this to work! Browsers (expecially mobile) or user settings prevent it, some video hosts do not support it at all. Only used in normal mode.', 'advanced-responsive-video-embedder' ),
 		],
 		'maxwidth'              => [
 			'default'     => 0,
@@ -421,9 +442,7 @@ function all_settings() {
 			'label'       => __( 'Aspect Ratio', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
 			'description' => __( 'E.g. 4:3, 21:9. Only needed in rare cases. ARVE is usually smart enough to figure this out on its own.', 'advanced-responsive-video-embedder' ),
-			'meta'        => [
-				'placeholder' => __( 'E.g. 4:3, 21:9.', 'advanced-responsive-video-embedder' ),
-			],
+			'placeholder' => __( '4:3, 21:9 ...', 'advanced-responsive-video-embedder' ),
 		],
 		'parameters'            => [
 			'default'     => null,
@@ -431,7 +450,7 @@ function all_settings() {
 			'option'      => false,
 			'label'       => __( 'Parameters', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
-			'meta'        => [ 'placeholder' => __( 'provider specific parameters', 'advanced-responsive-video-embedder' ) ],
+			'placeholder' => __( 'example=true&foo=bar', 'advanced-responsive-video-embedder' ),
 			'description' => sprintf(
 				// Translators: current setting value
 				__( 'Note this values get merged with values set on the <a target="_blank" href="%1$s">ARVE setting page</a>. Example for YouTube <code>fs=0&start=30</code>. For reference: <a target="_blank" href="%2$s">Youtube Parameters</a>, <a target="_blank" href="%3$s">Dailymotion Parameters</a>, <a target="_blank" href="%4$s">Vimeo Parameters</a>.', 'advanced-responsive-video-embedder' ),
@@ -454,13 +473,15 @@ function all_settings() {
 			'default'     => '',
 			'label'       => __( 'Chrome HTML5 Player controls', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
+			'placeholder' => 'nodownload nofullscreen noremoteplayback',
 			'description' => __( 'controlsList attribute on &lt;video&gt; for example use <code>nodownload nofullscreen noremoteplayback</code> to hide the download and the fullscreen button on the chrome HTML5 video player and disable remote playback.', 'advanced-responsive-video-embedder' ),
 		],
 		'controls'              => [
 			'tag'         => 'html5',
 			'default'     => true,
 			'label'       => __( 'Show Controls? (Video file only)', 'advanced-responsive-video-embedder' ),
-			'type'        => 'bool+default',
+			'type'        => 'select',
+			'options'     => $def_bool_options,
 			'description' => __( 'Show controls on HTML5 video.', 'advanced-responsive-video-embedder' ),
 		],
 		'loop'                  => [
@@ -526,12 +547,6 @@ function all_settings() {
 			'label'       => __( 'Sandbox', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
 			'description' => __( "Only disable if you have to. If you embed encrypted media you have to disable this. 'Disable Links' feature from ARVE Pro will not work when without sandbox.", 'advanced-responsive-video-embedder' ),
-		],
-		'start'                 => [
-			'default' => null,
-			'option'  => false,
-			'label'   => __( 'Starttime in seconds (Vimeo only)', 'advanced-responsive-video-embedder' ),
-			'type'    => 'string',
 		],
 	];
 

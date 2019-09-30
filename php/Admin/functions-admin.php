@@ -164,8 +164,8 @@ function register_shortcode_ui() {
 		if ( 'integer' === $v['type'] ) {
 			$v['type'] = 'number';
 		}
-		if ( 'bool+default' === $v['type'] ) {
-			$v['type'] = 'radio';
+		if ( ! empty( $v['placeholder'] ) ) {
+			$v['meta']['placeholder'] = $v['placeholder'];
 		}
 
 		$v['attr'] = $k;

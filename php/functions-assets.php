@@ -47,11 +47,11 @@ function register_gb_block() {
 	$sc_settings = shortcode_settings();
 
 	foreach ( $sc_settings as $key => $v ) {
-		$type         = str_replace( 'bool+default', 'select', $v['type'] );
 		$type         = str_replace( 'boolean', 'string', $v['type'] );
 		$attr[ $key ] = [ 'type' => $type ];
 	}
-	$attr['thumbnail'] = [ 'type' => 'string' ];
+	$attr['thumbnail']     = [ 'type' => 'string' ];
+	$attr['thumbnail_url'] = [ 'type' => 'string' ];
 
 	register_assets();
 	Common\register(

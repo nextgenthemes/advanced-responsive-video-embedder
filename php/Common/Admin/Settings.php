@@ -49,7 +49,7 @@ class Settings {
 
 	public function save_options( $options ) {
 
-		$action = json_decode( $options['action'] );
+		$action            = json_decode( $options['action'] );
 		$options['action'] = '';
 
 		if ( $action ) {
@@ -122,6 +122,7 @@ class Settings {
 			[
 				'nonce'    => wp_create_nonce( 'wp_rest' ),
 				'rest_url' => $this->rest_url,
+				'home_url' => get_home_url(),
 				'options'  => $this->options,
 			]
 		);

@@ -89,7 +89,7 @@ function get_host_properties() {
 			'requires_src' => true,
 			'tests'        => [
 				[
-					'url' => 'https://players.brightcove.net/624246174001/BJXA5Px6f_default/index.html?videoId=5809251338001',
+					'url'               => 'https://players.brightcove.net/624246174001/BJXA5Px6f_default/index.html?videoId=5809251338001',
 					'account_id'        => 624246174001,
 					'brightcove_player' => 'BJXA5Px6f',
 					'brightcove_embed'  => 'default',

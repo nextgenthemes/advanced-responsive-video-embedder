@@ -20,8 +20,8 @@ function print_boolean_field( $key, $option ) {
 		<label>
 			<input
 				type="checkbox"
-				v-model="<?php esc_attr_e( "vm.$key" ); ?>"
-				name="<?php esc_attr_e( "vm.$key" ); ?>"
+				v-model="<?= esc_attr( "vm.$key" ); ?>"
+				name="<?= esc_attr( "vm.$key" ); ?>"
 			>
 			{{ vm.$key }} <?php label_text( $option ); ?>
 		</label>
@@ -36,9 +36,9 @@ function print_boolean_radio_field( $key, $option ) {
 		<label>
 			<input
 				type="radio"
-				v-model="<?php esc_attr_e( "vm.$key" ); ?>"
+				v-model="<?= esc_attr( "vm.$key" ); ?>"
 				v-bind:value="true"
-				name="<?php esc_attr_e( "vm.$key" ); ?>"
+				name="<?= esc_attr( "vm.$key" ); ?>"
 			>
 			Yes
 		</label>
@@ -46,9 +46,9 @@ function print_boolean_radio_field( $key, $option ) {
 		<label>
 			<input
 				type="radio"
-				v-model="<?php esc_attr_e( "vm.$key" ); ?>"
+				v-model="<?= esc_attr( "vm.$key" ); ?>"
 				v-bind:value="false"
-				name="<?php esc_attr_e( "vm.$key" ); ?>"
+				name="<?= esc_attr( "vm.$key" ); ?>"
 			>
 			No
 		</label>
@@ -61,22 +61,29 @@ function print_string_field( $key, $option ) {
 	<p>
 		<label>
 			<?php label_text( $option ); ?>
-			<input v-model="<?php esc_attr_e( "vm.$key" ); ?>" type="text" class="large-text" />
+			<input v-model="<?= esc_attr( "vm.$key" ); ?>" type="text" class="large-text" />
 		</label>
 	</p>
 	<?php
 }
 
-function print_k_field( $key, $option ) {
+function print_hidden_field( $key, $option ) {
+	?>
+	<input v-model="<?= esc_attr( "vm.$key" ); ?>" type="hidden" />
+	<?php
+}
+
+function print_licensekey_field( $key, $option ) {
+	//$product_id = get_products()[ $key ]['id'];
 	?>
 	<p>
 		<label>
 			<?php label_text( $option ); ?>
-			<input v-model="<?php esc_attr_e( "vm.$key" ); ?>" type="text" class="medium-text" style="width: 350px;" />
+			<input v-model="<?= esc_attr( "vm.$key" ); ?>" type="text" class="medium-text" style="width: 350px;" />
 			<?php if ( Common\has_valid_key( $key ) ) : ?>
-				<button @click="action( 'deactivate', '<?= $key; ?>' )">Deactivate</button>
+				<button @click="action( 'deactivate', '<?php echo $key; ?>' )">Deactivate</button>
 			<?php else : ?>
-				<button @click="action( 'activate', '<?= $key; ?>' )">Activate</button>
+				<button @click="action( 'activate', '<?php echo $key; ?>' )">Activate</button>
 			<?php endif; ?>
 			<br>
 			Status: <?php echo Common\get_key_status( $key ); ?>
@@ -92,8 +99,8 @@ function print_image_upload_field( $key, $option ) {
 	<p>
 		<label>
 			<?php label_text( $option ); ?>
-			<input v-model="<?php esc_attr_e( "vm.$key" ); ?>" type="text" class="large-text" />
-			<a class="button-secondary" @click="<?php esc_attr_e( "uploadImage('$key')" ); ?>">
+			<input v-model="<?= esc_attr( "vm.$key" ); ?>" type="text" class="large-text" />
+			<a class="button-secondary" @click="<?= esc_attr( "uploadImage('$key')" ); ?>">
 				<?php esc_html_e( 'Upload Image', 'advanced-responsive-video-embedder' ); ?>
 			</a>
 		</label>
@@ -106,7 +113,7 @@ function print_integer_field( $key, $option ) {
 	<p>
 		<label>
 			<?php label_text( $option ); ?>
-			<input v-model="<?php esc_attr_e( "vm.$key" ); ?>" type="number" />
+			<input v-model="<?= esc_attr( "vm.$key" ); ?>" type="number" />
 		</label>
 	</p>
 	<?php
@@ -119,10 +126,10 @@ function print_select_field( $key, $option ) {
 	<p>
 		<label>
 			<?php label_text( $option ); ?>
-			<select v-model="<?php esc_attr_e( "vm.$key" ); ?>">
+			<select v-model="<?= esc_attr( "vm.$key" ); ?>">
 				<option disabled value="">Please select one</option>
 				<?php foreach ( $option['options'] as $k => $v ) : ?>
-					<option value="<?php esc_attr_e( $k ); ?>"><?php esc_html_e( $v ); ?></option>
+					<option value="<?= esc_attr( $k ); ?>"><?php esc_html_e( $v ); ?></option>
 				<?php endforeach; ?>
 			</select>
 		</label>
