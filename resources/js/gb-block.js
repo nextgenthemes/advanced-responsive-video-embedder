@@ -64,10 +64,6 @@ function BuildControls( props ) {
 			},
 		};
 
-		if ( 'bool+default' === option.type ) {
-			option.type = 'select';
-		}
-
 		switch ( option.type ) {
 			case 'boolean':
 				if ( typeof attrVal !== 'undefined' ) {
@@ -87,7 +83,48 @@ function BuildControls( props ) {
 				if ( typeof attrVal !== 'undefined' ) {
 					ctrlArgs.value = attrVal;
 				}
+				ctrlArgs.placeholder = option.placeholder;
 				controls.push( el( wp.components.TextControl, ctrlArgs ) );
+				break;
+			case 'attachment':
+				let urlVal = props.attributes[ key + '_url' ];
+				if ( typeof urlVal === 'undefined' ) {
+					urlVal = '';
+				}
+
+				ctrlArgs.children = [
+					el( wp.editor.MediaUpload, {
+						type: 'image',
+						onSelect: ( media ) => {
+							return props.setAttributes( {
+								[ key ]: media.id.toString(),
+								[ key + '_url' ]: media.url,
+							} );
+						},
+						render: ( obj ) => {
+							return el(
+								wp.components.Button, {
+									className: 'components-icon-button image-block-btn is-button is-default is-large',
+									onClick: obj.open,
+								},
+								el( 'svg', {
+									className: 'dashicon dashicons-edit',
+									width: '20',
+									height: '20',
+								},
+								el( 'path', { d: 'M2.25 1h15.5c.69 0 1.25.56 1.25 1.25v15.5c0 .69-.56 1.25-1.25 1.25H2.25C1.56 19 1 18.44 1 17.75V2.25C1 1.56 1.56 1 2.25 1zM17 17V3H3v14h14zM10 6c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2 2-.9 2-2zm3 5s0-6 3-6v10c0 .55-.45 1-1 1H5c-.55 0-1-.45-1-1V8c2 0 3 4 3 4s1-3 3-3 3 2 3 2z' } )
+								),
+								el( 'span', {}, ' Select image' ),
+							); // end el button
+						},
+					} ),
+					el( 'img', {
+						src: urlVal,
+						alt: 'thumbnail',
+					} ),
+				];
+
+				controls.push( el( wp.components.BaseControl, ctrlArgs ) );
 				break;
 		}
 	} );
