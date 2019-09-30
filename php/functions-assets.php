@@ -19,8 +19,10 @@ function register_assets() {
 		]
 	);
 
- 	wp_register_script( 'arve', null, [ 'arve-main' ], null, true );
-	wp_register_style(  'arve', null, [ 'arve-main' ], null, true );
+	// phpcs:disable WordPress.WP.EnqueuedResourceParameters.MissingVersion
+	wp_register_script( 'arve', null, [ 'arve-main' ], null, true );
+	wp_register_style( 'arve', null, [ 'arve-main' ], null, true );
+	// phpcs:enable WordPress.WP.EnqueuedResourceParameters.MissingVersion
 
 	// For addons to register their styles
 	do_action( 'nextgenthemes/arve/register_assets' );
