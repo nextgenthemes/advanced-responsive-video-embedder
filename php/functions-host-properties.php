@@ -641,7 +641,7 @@ function get_host_properties() {
 		],
 		'youtubelist'          => [
 			'oembed'         => true,
-			'regex'          => '#https?://(www\.)?youtube\.com/(embed/videoseries|playlist)\?list=(?<id>[-a-z0-9]+)#i',
+			'regex'          => '#https?://(www\.)?youtube\.com/(embed/videoseries|playlist)\?list=(?<id>[-_a-z0-9]+)#i',
 			'name'           => 'YouTube Playlist',
 			'embed_url'      => 'https://www.youtube.com/embed/videoseries?list=%s',
 			'rebuild_url'    => 'https://www.youtube.com/watch?list=%s',
