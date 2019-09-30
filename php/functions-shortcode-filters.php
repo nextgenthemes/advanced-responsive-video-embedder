@@ -386,7 +386,7 @@ function sc_filter_iframe_src( array $a ) {
 		return $a;
 	}
 
-	if ( ! $a['provider'] || ! $a['id']  ) {
+	if ( ! $a['provider'] || ! $a['id'] ) {
 		$a['errors']->add( 'no-provider-and-id', 'Need Provider and ID to build iframe src' );
 		return $a;
 	}
@@ -401,7 +401,7 @@ function sc_filter_iframe_src( array $a ) {
 
 		if ( Common\contains( $a['src'], '/embed/videoseries?' ) &&
 			$yt_v
-	 	) {
+		) {
 			$a['src'] = str_replace( '/embed/videoseries?', "/embed/$yt_v?", $a['src'] );
 		}
 
@@ -415,8 +415,12 @@ function sc_filter_iframe_src( array $a ) {
 	if ( 'vimeo' === $a['provider'] ) {
 		$compare_src = remove_query_arg(
 			'app_id', // TODO check why vimeo adds it and it can be removed,
-			str_replace( '&amp;', '&', $a['src']
-		) );
+			str_replace(
+				'&amp;',
+				'&',
+				$a['src']
+			)
+		);
 	} else {
 		$compare_src = $a['src'];
 	}

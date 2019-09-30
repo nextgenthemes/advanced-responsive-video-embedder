@@ -12,7 +12,7 @@ function shortcode( $a, $content = null ) {
 	}
 
 	$a['errors'] = new \WP_Error();
-	$a = apply_filters( 'nextgenthemes/arve/shortcode_args', $a );
+	$a           = apply_filters( 'nextgenthemes/arve/shortcode_args', $a );
 
 	if ( ! empty( $a['url'] ) ) {
 
@@ -52,7 +52,6 @@ function test_shortcode( $atts, $content = null ) {
 
 			$html .= basic_tests( $v['tests'] );
 		}
-
 	} else {
 
 		if ( empty( $providers[ $host ]['tests'] ) ) {
@@ -80,7 +79,7 @@ function basic_tests( $tests ) {
 
 	$html .= "[$sc]<br>";
 	$html .= do_shortcode( $sc );
-	$html .= "<br>";
+	$html .= '<br>';
 
 	return $html;
 }

@@ -113,7 +113,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 	public function test_ted_talks_lang() {
 
 		$html = shortcode(
-			[ 'url'  => 'https://www.ted.com/talks/auke_ijspeert_a_robot_that_runs_and_swims_like_a_salamander?language=de' ]
+			[ 'url' => 'https://www.ted.com/talks/auke_ijspeert_a_robot_that_runs_and_swims_like_a_salamander?language=de' ]
 		);
 
 		$this->assertNotContains( 'Error', $html );
@@ -227,12 +227,12 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			[
 				'controlslist' => 'nofullscreen nodownload',
 				'mp4'          => 'https://example.com/video.mp4',
-				'ogv'       => 'https://example.com/video.ogv',
-				'webm'      => 'https://example.com/video.webm',
-				'thumbnail' => 'https://example.com/image.jpg',
-				'track_1'   => 'https://example.com/v-subtitles-en.vtt',
-				'track_2'   => 'https://example.com/v-subtitles-de.vtt',
-				'track_3'   => 'https://example.com/v-subtitles-es.vtt',
+				'ogv'          => 'https://example.com/video.ogv',
+				'webm'         => 'https://example.com/video.webm',
+				'thumbnail'    => 'https://example.com/image.jpg',
+				'track_1'      => 'https://example.com/v-subtitles-en.vtt',
+				'track_2'      => 'https://example.com/v-subtitles-de.vtt',
+				'track_3'      => 'https://example.com/v-subtitles-es.vtt',
 			]
 		);
 
