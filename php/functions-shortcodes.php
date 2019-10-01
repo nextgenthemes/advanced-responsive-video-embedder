@@ -95,6 +95,9 @@ function build_video( array $input_atts ) {
 	$a    = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
 	$html = '';
 
+	ksort( $a );
+	ksort( $input_atts );
+
 	if ( ! empty( $a['errors'] ) ) {
 
 		foreach ( $a['errors']->get_error_messages() as $key => $message ) {
