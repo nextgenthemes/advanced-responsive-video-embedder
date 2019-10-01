@@ -12,7 +12,7 @@ function arve_load_vimeo_api( $a ) {
 function arve_get_wrapper_id( $a ) {
 
 	static $wrapper_ids = array();
-	$wrapper_id = null;
+	$wrapper_id         = null;
 
 	foreach ( array( 'id', 'mp4', 'm4v', 'webm', 'ogv', 'url', 'random_video_url', 'webtorrent' ) as $att ) {
 
@@ -58,27 +58,27 @@ function arve_sc_filter_attr( $a ) {
 		'id'            => $wrapper_id,
 		'style'         => empty( $a['maxwidth'] ) ? false : sprintf( 'max-width:%dpx;', $a['maxwidth'] ),
 		// Schema.org
-		'itemscope' => '',
-		'itemtype'  => 'http://schema.org/VideoObject',
+		'itemscope'     => '',
+		'itemtype'      => 'http://schema.org/VideoObject',
 	);
 
-	if( 'html5' == $a['provider'] ) {
+	if ( 'html5' == $a['provider'] ) {
 
 		$a['video_attr'] = array(
 			# WP
-			'autoplay'     => in_array( $a['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ? false : $a['autoplay'],
-			'controls'     => $a['controls'],
-			'controlslist' => $a['controlslist'],
-			'loop'         => $a['loop'],
-			'preload'      => $a['preload'],
-			'width'        => empty( $a['width'] )     ? false : $a['width'],
-			'height'       => empty( $a['height'] )    ? false : $a['height'],
-			'poster'       => empty( $a['img_src'] )   ? false : $a['img_src'],
-			'src'          => empty( $a['video_src'] ) ? false : $a['video_src'],
+			'autoplay'           => in_array( $a['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ? false : $a['autoplay'],
+			'controls'           => $a['controls'],
+			'controlslist'       => $a['controlslist'],
+			'loop'               => $a['loop'],
+			'preload'            => $a['preload'],
+			'width'              => empty( $a['width'] ) ? false : $a['width'],
+			'height'             => empty( $a['height'] ) ? false : $a['height'],
+			'poster'             => empty( $a['img_src'] ) ? false : $a['img_src'],
+			'src'                => empty( $a['video_src'] ) ? false : $a['video_src'],
 			# ARVE only
-			'class'       => 'arve-video fitvidsignore',
-			'muted'       => $a['muted'],
-			'playsinline' => $a['playsinline'],
+			'class'              => 'arve-video fitvidsignore',
+			'muted'              => $a['muted'],
+			'playsinline'        => $a['playsinline'],
 			'webkit-playsinline' => $a['playsinline'],
 		);
 
@@ -103,7 +103,7 @@ function arve_sc_filter_attr( $a ) {
 			'sandbox'         => 'allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox',
 			'scrolling'       => 'no',
 			'src'             => $iframe_src,
-			'width'           => empty( $a['width'] )  ? false : $a['width'],
+			'width'           => empty( $a['width'] ) ? false : $a['width'],
 			'height'          => empty( $a['height'] ) ? false : $a['height'],
 		);
 
@@ -125,16 +125,16 @@ function arve_sc_filter_validate( $a ) {
 
 	$a['mode'] = arve_validate_mode( $a['mode'], $a['provider'] );
 
-	$a['autoplay']      = arve_validate_bool( $a['autoplay'], 'autoplay' );
-	$a['arve_link']     = arve_validate_bool( $a['arve_link'], 'arve_link' );
-	$a['loop']          = arve_validate_bool( $a['loop'], 'loop' );
-	$a['controls']      = arve_validate_bool( $a['controls'], 'controls' );
-	$a['sandbox']       = arve_validate_bool( $a['sandbox'], 'sandbox' );
-	$a['muted']         = arve_validate_bool( $a['muted'], 'muted' );
-	$a['playsinline']   = arve_validate_bool( $a['playsinline'], 'playsinline' );
+	$a['autoplay']    = arve_validate_bool( $a['autoplay'], 'autoplay' );
+	$a['arve_link']   = arve_validate_bool( $a['arve_link'], 'arve_link' );
+	$a['loop']        = arve_validate_bool( $a['loop'], 'loop' );
+	$a['controls']    = arve_validate_bool( $a['controls'], 'controls' );
+	$a['sandbox']     = arve_validate_bool( $a['sandbox'], 'sandbox' );
+	$a['muted']       = arve_validate_bool( $a['muted'], 'muted' );
+	$a['playsinline'] = arve_validate_bool( $a['playsinline'], 'playsinline' );
 
-	$a['maxwidth']  = (int) $a['maxwidth'];
-	$a['maxwidth']  = (int) arve_maxwidth_when_aligned( $a['maxwidth'], $a['align'] );
+	$a['maxwidth'] = (int) $a['maxwidth'];
+	$a['maxwidth'] = (int) arve_maxwidth_when_aligned( $a['maxwidth'], $a['align'] );
 
 	$a['id'] = arve_id_fixes( $a['id'], $a['provider'] );
 
@@ -176,7 +176,7 @@ function arve_sc_filter_sanitise( $atts ) {
 function arve_sc_filter_missing_attribute_check( $atts ) {
 
 	# Old shortcodes
-	if ( ! array_key_exists( 'url' , $atts ) ) {
+	if ( ! array_key_exists( 'url', $atts ) ) {
 		return $atts;
 	}
 
@@ -185,11 +185,13 @@ function arve_sc_filter_missing_attribute_check( $atts ) {
 
 	$array = array_intersect_key( $atts, array_flip( $required_attributes ) );
 
-	if( count( array_filter( $array ) ) != count( $array ) ) {
+	if ( count( array_filter( $array ) ) != count( $array ) ) {
 
-		$atts['missing_atts_error'] = arve_error( sprintf(
-			esc_html__( 'The [arve] shortcode needs one of this attributes %s', ARVE_SLUG ),
-			implode( $required_attributes ) )
+		$atts['missing_atts_error'] = arve_error(
+			sprintf(
+				esc_html__( 'The [arve] shortcode needs one of this attributes %s', ARVE_SLUG ),
+				implode( $required_attributes )
+			)
 		);
 	}
 
@@ -202,7 +204,7 @@ function arve_sc_filter_get_media_gallery_thumbnail( $atts ) {
 		return $atts;
 	}
 
-	if( is_numeric( $atts['thumbnail'] ) ) {
+	if ( is_numeric( $atts['thumbnail'] ) ) {
 
 		$attchment_id = $atts['thumbnail'];
 
@@ -227,7 +229,7 @@ function arve_sc_filter_get_media_gallery_video( $atts ) {
 
 	foreach ( $html5_ext as $ext ) {
 
-		if( ! empty( $atts[ $ext ] ) && is_numeric( $atts[ $ext ] ) ) {
+		if ( ! empty( $atts[ $ext ] ) && is_numeric( $atts[ $ext ] ) ) {
 			$atts[ $ext ] = wp_get_attachment_url( $atts[ $ext ] );
 		}
 	}
@@ -258,8 +260,8 @@ function arve_sc_filter_detect_provider_and_id_from_url( $atts ) {
 		foreach ( $matches as $key => $value ) {
 
 			if ( is_string( $key ) ) {
-				$atts[ 'provider' ] = $host_id;
-				$atts[ $key ]       = $matches[ $key ];
+				$atts['provider'] = $host_id;
+				$atts[ $key ]     = $matches[ $key ];
 			}
 		}
 
@@ -270,7 +272,7 @@ function arve_sc_filter_detect_provider_and_id_from_url( $atts ) {
 
 function arve_sc_filter_detect_query_args( $atts ) {
 
-	if( empty( $atts['url'] ) ) {
+	if ( empty( $atts['url'] ) ) {
 		return $atts;
 	}
 
@@ -280,7 +282,7 @@ function arve_sc_filter_detect_query_args( $atts ) {
 
 	foreach ( $to_extract as $provider => $parameters ) {
 
-		if( $provider != $atts['provider'] ) {
+		if ( $provider != $atts['provider'] ) {
 			return $atts;
 		}
 
@@ -290,7 +292,7 @@ function arve_sc_filter_detect_query_args( $atts ) {
 
 			$att_name = $atts['provider'] . "_$parameter";
 
-			if( empty( $query_array[ $parameter ] ) ) {
+			if ( empty( $query_array[ $parameter ] ) ) {
 				$atts[ $att_name ] = new WP_Error( $att_name, "$parameter not found in URL" );
 			} else {
 				$atts[ $att_name ] = $query_array[ $parameter ];
@@ -303,14 +305,14 @@ function arve_sc_filter_detect_query_args( $atts ) {
 
 function arve_sc_filter_detect_youtube_playlist( $atts ) {
 
-	if(
+	if (
 		'youtube' != $atts['provider'] ||
 		( empty( $atts['url'] ) && empty( $atts['id'] ) )
 	) {
 		return $atts;
 	}
 
-	if( empty($atts['url']) ) {
+	if ( empty( $atts['url'] ) ) {
 		# Not a url but it will work
 		$url = str_replace( array( '&list=', '&amp;list=' ), '?list=', $atts['id'] );
 	} else {
@@ -319,7 +321,7 @@ function arve_sc_filter_detect_youtube_playlist( $atts ) {
 
 	$query_array = arve_url_query_array( $url );
 
-	if( empty( $query_array['list'] ) ) {
+	if ( empty( $query_array['list'] ) ) {
 		return $atts;
 	}
 
@@ -334,7 +336,7 @@ function arve_sc_filter_detect_youtube_playlist( $atts ) {
 
 function arve_get_video_type( $ext ) {
 
-	switch( $ext ) {
+	switch ( $ext ) {
 		case 'ogv':
 		case 'ogm':
 			return 'video/ogg';
@@ -346,7 +348,7 @@ function arve_get_video_type( $ext ) {
 
 function arve_sc_filter_detect_html5( $atts ) {
 
-	if( ! empty( $atts['provider'] ) && 'html5' != $atts['provider'] ) {
+	if ( ! empty( $atts['provider'] ) && 'html5' != $atts['provider'] ) {
 		return $atts;
 	}
 
@@ -382,7 +384,7 @@ function arve_sc_filter_detect_html5( $atts ) {
 
 	endforeach;
 
-	if( empty( $atts['video_src'] ) && empty( $atts['video_sources_html'] ) ) {
+	if ( empty( $atts['video_src'] ) && empty( $atts['video_sources_html'] ) ) {
 		return $atts;
 	}
 
@@ -436,7 +438,7 @@ function arve_sc_filter_build_tracks_html( $atts ) {
 			'srclang' => $matches['lang'],
 		);
 
-		$atts['video_tracks_html'] .= sprintf( '<track%s>', arve_attr( $attr) );
+		$atts['video_tracks_html'] .= sprintf( '<track%s>', arve_attr( $attr ) );
 	}
 
 	return $atts;

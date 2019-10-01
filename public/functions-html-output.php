@@ -2,7 +2,7 @@
 
 function arve_html_id( $html_attr ) {
 
-	if( ! arve_contains( $html_attr, 'id=' ) ) {
+	if ( ! arve_contains( $html_attr, 'id=' ) ) {
 		$html_attr .= ' id="arve"';
 	}
 
@@ -84,7 +84,7 @@ function arve_build_meta_html( $a ) {
 		$meta .= sprintf( '<meta itemprop="duration" content="PT%s">', esc_attr( $a['duration'] ) );
 	}
 
-	if( ! empty( $a['img_src'] ) ) :
+	if ( ! empty( $a['img_src'] ) ) :
 
 		$thumbnail = sprintf( '<meta itemprop="thumbnailUrl" content="%s">', esc_attr( $a['img_src'] ) );
 
@@ -118,7 +118,7 @@ function arve_build_meta_html( $a ) {
 	}
 
 	if ( ! empty( $a['description'] ) ) {
-		$meta .=  sprintf( '<span itemprop="description" class="arve-description arve-hidden">%s</span>', esc_html( trim( $a['description'] ) ) );
+		$meta .= sprintf( '<span itemprop="description" class="arve-description arve-hidden">%s</span>', esc_html( trim( $a['description'] ) ) );
 	}
 
 	return $meta;
@@ -152,7 +152,7 @@ function arve_build_promote_link_html( $arve_link ) {
 		return sprintf(
 			'<a href="%s" title="%s" class="arve-promote-link" target="_blank">%s</a>',
 			esc_url( 'https://nextgenthemes.com/plugins/arve-pro/' ),
-			esc_attr( __( 'Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', ARVE_SLUG) ),
+			esc_attr( __( 'Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', ARVE_SLUG ) ),
 			esc_html__( 'ARVE', ARVE_SLUG )
 		);
 	}
@@ -188,7 +188,7 @@ function arve_arve_wrapper( $html, $atts ) {
 
 function arve_video_or_iframe( $atts ) {
 
-	switch( $atts['provider'] ) {
+	switch ( $atts['provider'] ) {
 
 		case 'veoh':
 			return arve_create_object( $atts );
@@ -249,7 +249,7 @@ function arve_error( $message ) {
 
 	return sprintf(
 		'<p><strong>%s</strong> %s</p>',
-		__('<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error:', ARVE_SLUG ),
+		__( '<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error:', ARVE_SLUG ),
 		$message
 	);
 }
@@ -259,7 +259,7 @@ function arve_output_errors( $atts ) {
 	$errors = '';
 
 	foreach ( $atts as $key => $value ) {
-		if( is_wp_error( $value ) ) {
+		if ( is_wp_error( $value ) ) {
 			$errors .= arve_error( $value->get_error_message() );
 		}
 	}

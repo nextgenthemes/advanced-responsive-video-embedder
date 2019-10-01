@@ -25,7 +25,8 @@ function arve_validate_aspect_ratio( $aspect_ratio ) {
 		return $aspect_ratio;
 	}
 
-	return new WP_Error( 'Aspect ratio',
+	return new WP_Error(
+		'Aspect ratio',
 		sprintf( __( 'Aspect ratio <code>%s</code> is not valid', ARVE_SLUG ), $aspect_ratio )
 	);
 }
@@ -60,8 +61,9 @@ function arve_validate_bool( $val, $name ) {
 			return false;
 			break;
 		default:
-			return new WP_Error( $name,
-				sprintf( __( '%s <code>%s</code> not valid', ARVE_SLUG ), $name, $val )
+			return new WP_Error(
+				$name,
+				sprintf( __( '%1$s <code>%2$s</code> not valid', ARVE_SLUG ), $name, $val )
 			);
 			break;
 	}

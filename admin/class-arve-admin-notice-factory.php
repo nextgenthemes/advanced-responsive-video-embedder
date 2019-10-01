@@ -34,9 +34,9 @@ class ARVE_Admin_Notice_Factory {
 		$user_id   = get_current_user_id();
 		$user_meta = get_user_meta( $user_id, $this->notice_id );
 
-		if( $this->dismiss_forever && ! empty( $user_meta ) ) {
+		if ( $this->dismiss_forever && ! empty( $user_meta ) ) {
 			return;
-		} elseif( get_transient( $this->notice_id ) ) {
+		} elseif ( get_transient( $this->notice_id ) ) {
 			return;
 		}
 
@@ -51,7 +51,7 @@ class ARVE_Admin_Notice_Factory {
 
 		$user_id = get_current_user_id();
 
-		if( $this->dismiss_forever ) {
+		if ( $this->dismiss_forever ) {
 			add_user_meta( $user_id, $this->notice_id, true );
 		} else {
 			set_transient( $this->notice_id, true, HOUR_IN_SECONDS );

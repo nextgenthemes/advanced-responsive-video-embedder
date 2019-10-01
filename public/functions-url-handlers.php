@@ -24,7 +24,7 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
 	}
 
 	$parsed_url = parse_url( $url );
-	$url_query = $old_atts = $new_atts = array();
+	$url_query  = $old_atts = $new_atts = array();
 
 	if ( ! empty( $parsed_url['query'] ) ) {
 		parse_str( $parsed_url['query'], $url_query );
@@ -33,7 +33,7 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
 	foreach ( $url_query as $key => $value ) {
 
 		if ( arve_starts_with( $key, 'arve-' ) ) {
-			$key = substr( $key, 5 );
+			$key              = substr( $key, 5 );
 			$old_atts[ $key ] = $value;
 		}
 	}
@@ -65,7 +65,7 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
 
 
 /**
- * Remove the Wordpress default Oembed support for video providers that ARVE Supports. Array taken from wp-includes/class-oembed.php __construct
+ * Remove the WordPress default Oembed support for video providers that ARVE Supports. Array taken from wp-includes/class-oembed.php __construct
  *
  * @since    5.9.9
  *
@@ -73,15 +73,15 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
 function arve_oembed_remove_providers() {
 
 	$wp_core_oembed_shits = array(
-		'#http://(www\.)?youtube\.com/watch.*#i'              => array( 'http://www.youtube.com/oembed',                      true  ),
-		'#https://(www\.)?youtube\.com/watch.*#i'             => array( 'http://www.youtube.com/oembed?scheme=https',         true  ),
+		'#http://(www\.)?youtube\.com/watch.*#i'         => array( 'http://www.youtube.com/oembed', true ),
+		'#https://(www\.)?youtube\.com/watch.*#i'        => array( 'http://www.youtube.com/oembed?scheme=https', true ),
 		#'#http://(www\.)?youtube\.com/playlist.*#i'           => array( 'http://www.youtube.com/oembed',                      true  ),
 		#'#https://(www\.)?youtube\.com/playlist.*#i'          => array( 'http://www.youtube.com/oembed?scheme=https',         true  ),
-		'#http://youtu\.be/.*#i'                              => array( 'http://www.youtube.com/oembed',                      true  ),
-		'#https://youtu\.be/.*#i'                             => array( 'http://www.youtube.com/oembed?scheme=https',         true  ),
-		'#https?://(.+\.)?vimeo\.com/.*#i'                    => array( 'http://vimeo.com/api/oembed.{format}',               true  ),
-		'#https?://(www\.)?dailymotion\.com/.*#i'             => array( 'http://www.dailymotion.com/services/oembed',         true  ),
-		'http://dai.ly/*'                                     => array( 'http://www.dailymotion.com/services/oembed',         false ),
+		'#http://youtu\.be/.*#i'                         => array( 'http://www.youtube.com/oembed', true ),
+		'#https://youtu\.be/.*#i'                        => array( 'http://www.youtube.com/oembed?scheme=https', true ),
+		'#https?://(.+\.)?vimeo\.com/.*#i'               => array( 'http://vimeo.com/api/oembed.{format}', true ),
+		'#https?://(www\.)?dailymotion\.com/.*#i'        => array( 'http://www.dailymotion.com/services/oembed', true ),
+		'http://dai.ly/*'                                => array( 'http://www.dailymotion.com/services/oembed', false ),
 		#'#https?://(www\.)?flickr\.com/.*#i'                  => array( 'https://www.flickr.com/services/oembed/',            true  ),
 		#'#https?://flic\.kr/.*#i'                             => array( 'https://www.flickr.com/services/oembed/',            true  ),
 		#'#https?://(.+\.)?smugmug\.com/.*#i'                  => array( 'http://api.smugmug.com/services/oembed/',            true  ),
@@ -93,9 +93,9 @@ function arve_oembed_remove_providers() {
 		#'#https?://wordpress.tv/.*#i'                         => array( 'http://wordpress.tv/oembed/',                        true ),
 		#'#https?://(.+\.)?polldaddy\.com/.*#i'                => array( 'https://polldaddy.com/oembed/',                      true  ),
 		#'#https?://poll\.fm/.*#i'                             => array( 'https://polldaddy.com/oembed/',                      true  ),
-		'#https?://(www\.)?funnyordie\.com/videos/.*#i'       => array( 'http://www.funnyordie.com/oembed',                   true  ),
+		'#https?://(www\.)?funnyordie\.com/videos/.*#i'  => array( 'http://www.funnyordie.com/oembed', true ),
 		#'#https?://(www\.)?twitter\.com/.+?/status(es)?/.*#i' => array( 'https://api.twitter.com/1/statuses/oembed.{format}', true  ),
-		'#https?://vine.co/v/.*#i'                            => array( 'https://vine.co/oembed.{format}',                    true  ),
+		'#https?://vine.co/v/.*#i'                       => array( 'https://vine.co/oembed.{format}', true ),
 		#'#https?://(www\.)?soundcloud\.com/.*#i'              => array( 'http://soundcloud.com/oembed',                       true  ),
 		#'#https?://(.+?\.)?slideshare\.net/.*#i'              => array( 'https://www.slideshare.net/api/oembed/2',            true  ),
 		#'#http://instagr(\.am|am\.com)/p/.*#i'                => array( 'http://api.instagram.com/oembed',                    true  ),
@@ -105,13 +105,13 @@ function arve_oembed_remove_providers() {
 		#'#https?://(.+\.)?imgur\.com/.*#i'                    => array( 'http://api.imgur.com/oembed',                        true  ),
 		#'#https?://(www\.)?meetu(\.ps|p\.com)/.*#i'           => array( 'http://api.meetup.com/oembed',                       true  ),
 		#'#https?://(www\.)?issuu\.com/.+/docs/.+#i'           => array( 'http://issuu.com/oembed_wp',                         true  ),
-		'#https?://(www\.)?collegehumor\.com/video/.*#i'      => array( 'http://www.collegehumor.com/oembed.{format}',        true  ),
+		'#https?://(www\.)?collegehumor\.com/video/.*#i' => array( 'http://www.collegehumor.com/oembed.{format}', true ),
 		#'#https?://(www\.)?mixcloud\.com/.*#i'                => array( 'http://www.mixcloud.com/oembed',                     true  ),
-		'#https?://(www\.|embed\.)?ted\.com/talks/.*#i'       => array( 'http://www.ted.com/talks/oembed.{format}',           true  ),
+		'#https?://(www\.|embed\.)?ted\.com/talks/.*#i'  => array( 'http://www.ted.com/talks/oembed.{format}', true ),
 		#'#https?://(www\.)?(animoto|video214)\.com/play/.*#i' => array( 'http://animoto.com/oembeds/create',                  true  ),
 	);
 
-	foreach( $wp_core_oembed_shits as $shit => $fuck ) {
+	foreach ( $wp_core_oembed_shits as $shit => $fuck ) {
 
 		wp_oembed_remove_provider( $shit );
 	}
@@ -127,7 +127,7 @@ function arve_oembed_remove_providers() {
 	wp_embed_unregister_handler( 'jetpack_vine' );
 	remove_shortcode( 'vine', 'vine_shortcode' );
 
-	remove_filter('pre_kses', 'youtube_embed_to_short_code');
+	remove_filter( 'pre_kses', 'youtube_embed_to_short_code' );
 	remove_shortcode( 'youtube', 'youtube_shortcode' );
 
 	remove_shortcode( 'ted', 'shortcode_ted' );

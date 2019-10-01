@@ -2,11 +2,15 @@
 
 function arve_is_bool_option( $array ) {
 
-	$yes_no = array( '' => 1, 'yes' => 1, 'no' => 1 );
+	$yes_no = array(
+		''    => 1,
+		'yes' => 1,
+		'no'  => 1
+	);
 
 	$check = array_diff_key( $array, $yes_no );
 
-	if( empty( $check ) ) {
+	if ( empty( $check ) ) {
 		return 'bool';
 	} else {
 		return $array;
@@ -34,7 +38,7 @@ function arve_get_first_array_value( $array ) {
 
 function arve_prefix_array_keys( $keyprefix, $array ) {
 
-	foreach( $array as $key => $value ) {
+	foreach ( $array as $key => $value ) {
 		$array[ $keyprefix . $key ] = $value;
 		unset( $array[ $key ] );
 	}
@@ -66,7 +70,7 @@ function arve_youtube_time_to_seconds( $yttime ) {
 	$hours  = $minutes = $seconds = 0;
 
 	$pattern['hms'] = '/([0-9]+)h([0-9]+)m([0-9]+)s/'; // hours, minutes, seconds
-	$pattern['ms']  =          '/([0-9]+)m([0-9]+)s/'; // minutes, seconds
+	$pattern['ms']  = '/([0-9]+)m([0-9]+)s/'; // minutes, seconds
 	$pattern['h']   = '/([0-9]+)h/';
 	$pattern['m']   = '/([0-9]+)m/';
 	$pattern['s']   = '/([0-9]+)s/';

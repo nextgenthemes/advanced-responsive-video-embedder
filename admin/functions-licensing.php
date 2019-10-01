@@ -110,7 +110,7 @@ function nextgenthemes_ads_page() { ?>
 		margin: 1rem;
 	}
 </style>
-<?php $img_dir = plugin_dir_url( __FILE__ ) . 'product-images/'; ?>
+	<?php $img_dir = plugin_dir_url( __FILE__ ) . 'product-images/'; ?>
 <div id="nextgenthemes-ads">
 
 	<?php if ( ! defined( 'ARVE_PRO_VERSION' ) ) : ?>
@@ -139,7 +139,7 @@ function nextgenthemes_ads_page() { ?>
 
 </div>
 
-<?php
+	<?php
 }
 
 function nextgenthemes_feature_list_html( $filepath ) {
@@ -152,10 +152,10 @@ function nextgenthemes_activation_notices() {
 
 	foreach ( $products as $key => $value ) {
 
-		if( $value['active'] && ! $value['valid_key'] ) {
+		if ( $value['active'] && ! $value['valid_key'] ) {
 
 			$msg = sprintf(
-				__( 'Hi there, thanks for your purchase. One last step, please activate your %s <a href="%s">here now</a>.', ARVE_SLUG ),
+				__( 'Hi there, thanks for your purchase. One last step, please activate your %1$s <a href="%2$s">here now</a>.', ARVE_SLUG ),
 				$value['name'],
 				get_admin_url() . 'admin.php?page=nextgenthemes-licenses'
 			);
@@ -167,14 +167,14 @@ function nextgenthemes_activation_notices() {
 function nextgenthemes_get_products() {
 
 	$products = array(
-		'arve_pro' => array(
-			'name'    => 'ARVE Pro',
-			'id'      => 1253,
-			'type'    => 'plugin',
-			'author'  => 'Nicolas Jonas',
-			'url'     => 'https://nextgenthemes.com/plugins/arve-pro/',
+		'arve_pro'          => array(
+			'name'   => 'ARVE Pro',
+			'id'     => 1253,
+			'type'   => 'plugin',
+			'author' => 'Nicolas Jonas',
+			'url'    => 'https://nextgenthemes.com/plugins/arve-pro/',
 		),
-		'arve_amp' => array(
+		'arve_amp'          => array(
 			'name'   => 'ARVE AMP',
 			'id'     => 16941,
 			'type'   => 'plugin',
@@ -202,20 +202,20 @@ function nextgenthemes_get_products() {
 		$version_define = strtoupper( $key ) . '_VERSION';
 		$file_define    = strtoupper( $key ) . '_FILE';
 
-		if( defined( $version_define ) ) {
+		if ( defined( $version_define ) ) {
 			$products[ $key ]['version'] = constant( $version_define );
 		}
-		if( defined( $file_define ) ) {
+		if ( defined( $file_define ) ) {
 			$products[ $key ]['file'] = constant( $file_define );
 		}
 
 		$version_define = "\\nextgenthemes\\$key\\VERSION";
 		$file_define    = "\\nextgenthemes\\$key\\FILE";
 
-		if( defined( $version_define ) ) {
+		if ( defined( $version_define ) ) {
 			$products[ $key ]['version'] = constant( $version_define );
 		}
-		if( defined( $file_define ) ) {
+		if ( defined( $file_define ) ) {
 			$products[ $key ]['file'] = constant( $file_define );
 		}
 
@@ -235,7 +235,7 @@ function nextgenthemes_is_plugin_installed( $plugin_basename ) {
 
 	$plugins = get_plugins();
 
-	if( array_key_exists( $plugin_basename, $plugins ) ) {
+	if ( array_key_exists( $plugin_basename, $plugins ) ) {
 		return true;
 	} else {
 		return false;
@@ -305,12 +305,17 @@ function nextgenthemes_key_callback( $args ) {
 
 	echo '<p>';
 
-	printf( '<input%s>', arve_attr( array(
-		'type'  => 'hidden',
-		'id'    => $args['option_basename'] . '[product]',
-		'name'  => $args['option_basename'] . '[product]',
-		'value' => $args['product']['slug'],
-	) ) );
+	printf(
+		'<input%s>',
+		arve_attr(
+			array(
+				'type'  => 'hidden',
+				'id'    => $args['option_basename'] . '[product]',
+				'name'  => $args['option_basename'] . '[product]',
+				'value' => $args['product']['slug'],
+			)
+		)
+	);
 
 	printf(
 		'<input%s%s>',
@@ -319,37 +324,39 @@ function nextgenthemes_key_callback( $args ) {
 	);
 
 	$defined_key = nextgenthemes_get_defined_key( $args['product']['slug'] );
-	$key         = nextgenthemes_get_key(         $args['product']['slug'] );
+	$key         = nextgenthemes_get_key( $args['product']['slug'] );
 
-	if( $defined_key || ! empty( $key ) ) {
+	if ( $defined_key || ! empty( $key ) ) {
 
-		submit_button( __('Activate License',   ARVE_SLUG ), 'primary',   $args['option_basename'] . '[activate_key]',   false );
-		submit_button( __('Deactivate License', ARVE_SLUG ), 'secondary', $args['option_basename'] . '[deactivate_key]', false );
-		submit_button( __('Check License',      ARVE_SLUG ), 'secondary', $args['option_basename'] . '[check_key]',      false );
-  }
+		submit_button( __( 'Activate License',   ARVE_SLUG ), 'primary',   $args['option_basename'] . '[activate_key]',   false );
+		submit_button( __( 'Deactivate License', ARVE_SLUG ), 'secondary', $args['option_basename'] . '[deactivate_key]', false );
+		submit_button( __( 'Check License',      ARVE_SLUG ), 'secondary', $args['option_basename'] . '[check_key]',      false );
+	}
 	echo '</p>';
 
-  echo '<p>';
-  echo __( 'License Status: ', ARVE_SLUG ) . nextgenthemes_get_key_status( $args['product']['slug'] );
-  echo '</p>';
+	echo '<p>';
+	echo __( 'License Status: ', ARVE_SLUG ) . nextgenthemes_get_key_status( $args['product']['slug'] );
+	echo '</p>';
 
-  if( $args['product']['installed'] && ! $args['product']['active'] ) {
+	if ( $args['product']['installed'] && ! $args['product']['active'] ) {
 		printf( '<strong>%s</strong>', __( 'Plugin is installed but not activated', ARVE_SLUG ) );
-	} elseif( ! $args['product']['active'] ) {
-    printf(
+	} elseif ( ! $args['product']['active'] ) {
+		printf(
 			'<a%s>%s</a>',
-			arve_attr( array(
-				'href'  => $args['product']['url'],
-				'class' => 'button button-primary',
-			) ),
+			arve_attr(
+				array(
+					'href'  => $args['product']['url'],
+					'class' => 'button button-primary',
+				)
+			),
 			__( 'Not installed, check it out', ARVE_SLUG )
 		);
-  }
+	}
 }
 
 function nextgenthemes_validate_license( $input ) {
 
-	if( ! is_array( $input ) ) {
+	if ( ! is_array( $input ) ) {
 		return sanitize_text_field( $input );
 	}
 
@@ -362,7 +369,7 @@ function nextgenthemes_validate_license( $input ) {
 		$option_key = nextgenthemes_get_key( $product );
 	}
 
-	if( ( $key != $option_key ) || isset( $input['activate_key'] ) ) {
+	if ( ( $key != $option_key ) || isset( $input['activate_key'] ) ) {
 
 		nextgenthemes_api_update_key_status( $product, $key, 'activate' );
 
@@ -380,7 +387,7 @@ function nextgenthemes_validate_license( $input ) {
 
 function nextgenthemes_get_key( $product, $option_only = false ) {
 
-	if( ! $option_only && $defined_key = nextgenthemes_get_defined_key( $product ) ) {
+	if ( ! $option_only && $defined_key = nextgenthemes_get_defined_key( $product ) ) {
 		return $defined_key;
 	}
 
@@ -408,7 +415,7 @@ function nextgenthemes_get_defined_key( $slug ) {
 
 	$constant_name = str_replace( '-', '_', strtoupper( $slug . '_KEY' ) );
 
-	if( defined( $constant_name ) && constant( $constant_name ) ) {
+	if ( defined( $constant_name ) && constant( $constant_name ) ) {
 		return constant( $constant_name );
 	} else {
 		return false;
@@ -416,7 +423,7 @@ function nextgenthemes_get_defined_key( $slug ) {
 }
 
 function nextgenthemes_licenses_page() {
-?>
+	?>
 	<div class="wrap">
 
 		<h2><?php esc_html_e( get_admin_page_title() ); ?></h2>
@@ -429,7 +436,7 @@ function nextgenthemes_licenses_page() {
 		</form>
 
 	</div>
-<?php
+	<?php
 }
 
 function nextgenthemes_init_edd_updaters() {
@@ -453,10 +460,10 @@ function nextgenthemes_init_plugin_updater( $product ) {
 		apply_filters( 'nextgenthemes_api_url', 'https://nextgenthemes.com' ),
 		$product['file'],
 		array(
-			'version'   => $product['version'],
-			'license'   => nextgenthemes_get_key( $product['slug'] ),
-			'item_id'   => $product['id'],
-			'author'    => $product['author']
+			'version' => $product['version'],
+			'license' => nextgenthemes_get_key( $product['slug'] ),
+			'item_id' => $product['id'],
+			'author'  => $product['author']
 		)
 	);
 }
@@ -496,7 +503,7 @@ function nextgenthemes_init_theme_updater( $product ) {
 			'site-is-inactive'          => __( 'Site is inactive.', ARVE_SLUG ),
 			'license-status-unknown'    => __( 'License status is unknown.', ARVE_SLUG ),
 			'update-notice'             => __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update.", ARVE_SLUG ),
-			'update-available'          => __('<strong>%1$s %2$s</strong> is available. <a href="%3$s" class="thickbox" title="%4s">Check out what\'s new</a> or <a href="%5$s"%6$s>update now</a>.', ARVE_SLUG ),
+			'update-available'          => __( '<strong>%1$s %2$s</strong> is available. <a href="%3$s" class="thickbox" title="%4s">Check out what\'s new</a> or <a href="%5$s"%6$s>update now</a>.', ARVE_SLUG ),
 		)
 	);
 }
@@ -518,7 +525,11 @@ function nextgenthemes_api_action( $item_id, $key, $action ) {
 	// Call the custom API.
 	$response = wp_remote_post(
 		'https://nextgenthemes.com',
-		array( 'timeout' => 15, 'sslverify' => true, 'body' => $api_params )
+		array(
+			'timeout'   => 15,
+			'sslverify' => true,
+			'body'      => $api_params
+		)
 	);
 
 	// make sure the response came back okay
@@ -529,51 +540,43 @@ function nextgenthemes_api_action( $item_id, $key, $action ) {
 		} else {
 			$message = __( 'An error occurred, please try again.', ARVE_SLUG );
 		}
-
 	} else {
 
 		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
 
 		if ( false === $license_data->success ) {
 
-			switch( $license_data->error ) {
+			switch ( $license_data->error ) {
 
-				case 'expired' :
-
+				case 'expired':
 					$message = sprintf(
 						__( 'Your license key expired on %s.' ),
 						date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) )
 					);
 					break;
 
-				case 'revoked' :
-
+				case 'revoked':
 					$message = __( 'Your license key has been disabled.', ARVE_SLUG );
 					break;
 
-				case 'missing' :
-
+				case 'missing':
 					$message = __( 'Invalid license.', ARVE_SLUG );
 					break;
 
-				case 'invalid' :
-				case 'site_inactive' :
-
+				case 'invalid':
+				case 'site_inactive':
 					$message = __( 'Your license is not active for this URL.', ARVE_SLUG );
 					break;
 
-				case 'item_name_mismatch' :
-
+				case 'item_name_mismatch':
 					$message = sprintf( __( 'This appears to be an invalid license key for %s.' ), ARVE_SLUG );
 					break;
 
 				case 'no_activations_left':
-
 					$message = __( 'Your license key has reached its activation limit.', ARVE_SLUG );
 					break;
 
-				default :
-
+				default:
 					$message = __( 'An error occurred, please try again.', ARVE_SLUG );
 					break;
 			}
