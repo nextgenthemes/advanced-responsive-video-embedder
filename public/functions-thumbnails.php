@@ -2,11 +2,13 @@
 
 function arve_get_attachment_image_url_or_srcset( $url_or_srcset, $thumbnail ) {
 
-	if ( $found = arve_get_cached_attachment_image_url_or_srcset( $url_or_srcset, $thumbnail ) ) {
+	$found = arve_get_cached_attachment_image_url_or_srcset( $url_or_srcset, $thumbnail );
+
+	if ( $found ) {
 
 		return $found;
 
-	} elseif ( 'url' == $url_or_srcset ) {
+	} elseif ( 'url' === $url_or_srcset ) {
 
 		return new WP_Error( 'wp thumbnail', __( 'No attachment with that ID', ARVE_SLUG ) );
 
@@ -25,11 +27,11 @@ function arve_get_cached_attachment_image_url_or_srcset( $url_or_srcset, $attach
 
 	if ( false === $transient || $time <= 0 ) {
 
-		if ( 'srcset' == $url_or_srcset ) {
+		if ( 'srcset' === $url_or_srcset ) {
 
 			$out = wp_get_attachment_image_srcset( $attachment_id, 'small' );
 
-		} elseif ( 'url' == $url_or_srcset ) {
+		} elseif ( 'url' === $url_or_srcset ) {
 
 			$out = wp_get_attachment_image_url( $attachment_id, 'small' );
 		}

@@ -44,13 +44,13 @@ function arve_get_options() {
 	$supported_modes = arve_get_supported_modes();
 
 	# legacy mode name
-	if ( 'thumbnail' == $options['mode'] ) {
+	if ( 'thumbnail' === $options['mode'] ) {
 
 		$options['mode'] = 'lazyload';
 		update_option( 'arve_options_main', $options );
 	}
 
-	if ( ! in_array( $options['mode'], array( 'normal', 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ) {
+	if ( ! in_array( $options['mode'], array( 'normal', 'lazyload', 'lazyload-lightbox', 'link-lightbox' ), true ) ) {
 
 		$options['mode'] = 'lazyload';
 		update_option( 'arve_options_main', $options );
@@ -85,7 +85,7 @@ function arve_get_settings_definitions() {
 	$auto_title      = implode( ', ', $auto_title );
 	$embed_code_only = implode( ', ', $embed_code_only );
 
-	if ( in_array( $options['mode'], $supported_modes ) ) {
+	if ( in_array( $options['mode'], $supported_modes, true ) ) {
 		$current_mode_name = $supported_modes[ $options['mode'] ];
 	} else {
 		$current_mode_name = $options['mode'];
@@ -277,10 +277,6 @@ function arve_get_settings_definitions() {
 			'attr'               => 'mp4',
 			'label'              => esc_html__( 'mp4 file', ARVE_SLUG ),
 			'type'               => 'url',
-			#'type'  => 'attachment',
-			#'libraryType' => array( 'video' ),
-			#'addButton'   => esc_html__( 'Select .mp4 file', ARVE_SLUG ),
-			#'frameTitle'  => esc_html__( 'Select .mp4 file', ARVE_SLUG ),
 			'meta'               => array(
 				'placeholder' => __( '.mp4 file url for HTML5 video', ARVE_SLUG ),
 			),
@@ -290,10 +286,6 @@ function arve_get_settings_definitions() {
 			'attr'               => 'webm',
 			'label'              => esc_html__( 'webm file', ARVE_SLUG ),
 			'type'               => 'url',
-			#'type'  => 'attachment',
-			#'libraryType' => array( 'video' ),
-			#'addButton'   => esc_html__( 'Select .webm file', ARVE_SLUG ),
-			#'frameTitle'  => esc_html__( 'Select .webm file', ARVE_SLUG ),
 			'meta'               => array(
 				'placeholder' => __( '.webm file url for HTML5 video', ARVE_SLUG ),
 			),
@@ -303,10 +295,12 @@ function arve_get_settings_definitions() {
 			'attr'               => 'ogv',
 			'label'              => esc_html__( 'ogv file', ARVE_SLUG ),
 			'type'               => 'url',
+			// phpcs:disable Squiz.PHP.CommentedOutCode.Found
 			#'type'  => 'attachment',
 			#'libraryType' => array( 'video' ),
 			#'addButton'   => esc_html__( 'Select .ogv file', ARVE_SLUG ),
 			#'frameTitle'  => esc_html__( 'Select .ogv file', ARVE_SLUG ),
+			// phpcs:enable Squiz.PHP.CommentedOutCode.Found
 			'meta'               => array(
 				'placeholder' => __( '.ogv file url for HTML5 video', ARVE_SLUG ),
 			),
@@ -367,7 +361,7 @@ function arve_get_settings_definitions() {
 				'yes' => esc_html__( 'Yes', ARVE_SLUG ),
 				'no'  => esc_html__( 'No', ARVE_SLUG ),
 			),
-			'description'  => esc_html__( 'Privacy enhanced mode, will NOT disable cookies but only sets them when a user starts to play a video. There is currently a youtube bug that opens highlighed video boxes with a wrong -nocookie.com url so you need to disble this if you need those.' ),
+			'description'  => esc_html__( 'Privacy enhanced mode, will NOT disable cookies but only sets them when a user starts to play a video. There is currently a youtube bug that opens highlighed video boxes with a wrong -nocookie.com url so you need to disble this if you need those.', ARVE_SLUG ),
 		),
 		array(
 			'hide_from_sc' => true,
@@ -604,7 +598,6 @@ function arve_get_host_properties() {
 			'regex'          => '(?<id>https?://([a-z]+\.)?facebook\.com/[-.a-z0-9]+/videos/[a-z.0-9/]+)',
 			'url_encode_id'  => true,
 			'embed_url'      => 'https://www.facebook.com/plugins/video.php?href=%s',
-			#'embed_url'         => 'https://www.facebook.com/video/embed?video_id=%s',
 			'auto_thumbnail' => true,
 			'tests'          => array(
 				array(
@@ -848,7 +841,6 @@ function arve_get_host_properties() {
 			'embed_url'      => 'http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1396&permalinkId=%s',
 			'default_params' => 'player=videodetailsembedded&id=anonymous',
 			'auto_thumbnail' => false,
-			#'aspect_ratio' => 60.257,
 			'tests'          => array(
 				array(
 					'url' => 'http://www.veoh.com/watch/v19866882CAdjNF9b',
@@ -866,14 +858,10 @@ function arve_get_host_properties() {
 					'url' => 'https://www.vevo.com/watch/the-offspring/the-kids-arent-alright/USSM20100649',
 					'id'  => 'USSM20100649'
 				),
-				#array( '', '' ),
-				#array( '', '' ),
 			),
 		),
 		'viddler'             => array(
 			'regex'          => $s . 'viddler\.com/(embed|v)/(?<id>[a-z0-9]{8})',
-			#'embed_url'      => 'https://www.viddler.com/player/%s/',
-			#'default_params' => 'wmode=transparent&player=full&f=1&disablebranding=1',
 			'embed_url'      => 'https://www.viddler.com/embed/%s/',
 			'default_params' => '?f=1&player=full&secret=59822701&disablebackwardseek=false&disableseek=false&disableforwardseek=false&make_responsive=false&loop=false&nologo=false&hd=false',
 			'auto_thumbnail' => false,
@@ -938,23 +926,9 @@ function arve_get_host_properties() {
 					'id'  => 124400795
 				),
 			),
-			/*
-			'query_argss' => array(
-				'autoplay'  => array( 'bool', __( 'Autoplay', ARVE_SLUG ) ),
-				'badge'     => array( 'bool', __( 'Badge', ARVE_SLUG ) ),
-				'byline'    => array( 'bool', __( 'Byline', ARVE_SLUG ) ),
-				'color'     => 'string',
-				'loop'      => array( 0, 1 ),
-				'player_id' => 'int',
-				'portrait'  => array( 0, 1 ),
-				'title'     => array( 0, 1 ),
-			),
-			*/
 		),
 		'vk'                  => array(
 			'name'           => 'VK',
-			#https://vk.com/video             162756656_171388096
-			#https://vk.com/video_ext.php?oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1
 			'regex'          => $s . 'vk\.com/video_ext\.php\?(?<id>[^ ]+)',
 			'embed_url'      => 'https://vk.com/video_ext.php?%s',
 			'requires_src'   => true,
@@ -981,7 +955,6 @@ function arve_get_host_properties() {
 			),
 		),
 		'wistia'              => array(
-			# fast.wistia.net/embed/iframe/g5pnf59ala?videoFoam=true
 			'regex'          => 'https?://fast\.wistia\.net/embed/iframe/(?<id>[a-z0-9]+)',
 			'embed_url'      => 'https://fast.wistia.net/embed/iframe/%s',
 			'default_params' => 'videoFoam=true',
@@ -1025,7 +998,6 @@ function arve_get_host_properties() {
 			'regex'          => 'https?://([a-z.]+)?\.youku.com/(embed/|v_show/id_)(?<id>[a-z0-9]+)',
 			'embed_url'      => 'https://player.youku.com/embed/%s',
 			'auto_thumbnail' => false,
-			# <iframe height=498 width=510 src="http://player.youku.com/embed/XMTUyODYwOTc4OA==" frameborder=0 allowfullscreen></iframe>
 			'tests'          => array(
 				array(
 					'url' => 'http://v.youku.com/v_show/id_XMTczMDAxMjIyNA==.html?f=27806190',
@@ -1044,7 +1016,6 @@ function arve_get_host_properties() {
 			'default_params' => 'iv_load_policy=3&modestbranding=1&rel=0&autohide=1&playsinline=1',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
-			#'[youtube id="XQEiv7t1xuQ"]',
 			'tests'          => array(
 				array(
 					'url' => 'https://youtu.be/dqLyB5srdGI',
@@ -1091,147 +1062,6 @@ function arve_get_host_properties() {
 				__( 'The Parameter start only takes values in seconds, this will start the video at 1 minute and 1 second', ARVE_SLUG ),
 				'[youtube id="uCQXKYPiz6M" parameters="start=61"]',
 			),
-			/*
-			'query_args' => array(
-				array(
-				  'attr' => 'autohide',
-					'type' => 'bool',
-					'name' => __( 'Autohide', ARVE_SLUG )
-				),
-				array(
-				  'attr' => 'autoplay',
-					'type' => 'bool',
-					'name' => __( 'Autoplay', ARVE_SLUG )
-				),
-				array(
-				  'attr' => 'cc_load_policy',
-					'type' => 'bool',
-					'name' => __( 'cc_load_policy', ARVE_SLUG )
-				),
-				array(
-				  'attr' => 'color',
-					'type' => array(
-						''      => __( 'Default', ARVE_SLUG ),
-						'red'   => __( 'Red', ARVE_SLUG ),
-						'white' => __( 'White', ARVE_SLUG ),
-					),
-					'name' => __( 'Color', ARVE_SLUG )
-				),
-				array(
-				  'attr' => 'controls',
-					'type' => array(
-						'' => __( 'Default', ARVE_SLUG ),
-						0  => __( 'None', ARVE_SLUG ),
-						1  => __( 'Yes', ARVE_SLUG ),
-						2  => __( 'Yes load after click', ARVE_SLUG ),
-					),
-					'name' => __( 'Controls', ARVE_SLUG )
-				),
-				array(
-				  'attr' => 'disablekb',
-					'type' => 'bool',
-					'name' => __( 'disablekb', ARVE_SLUG )
-				),
-				array(
-				  'attr' => 'enablejsapi',
-					'type' => 'bool',
-					'name' => __( 'JavaScript API', ARVE_SLUG )
-				),
-				array(
-				  'attr' => 'end',
-					'type' => 'number',
-					'name' => __( 'End', ARVE_SLUG )
-				),
-				array(
-				  'attr' => 'fs',
-					'type' => 'bool',
-					'name' => __( 'Fullscreen', ARVE_SLUG )
-				),
-				array(
-				  'attr' => 'hl',
-					'type' => 'text',
-					'name' => __( 'Language???', ARVE_SLUG )
-				),
-				array(
-				  'attr' => 'iv_load_policy',
-					'type' => array(
-						'' => __( 'Default', ARVE_SLUG ),
-						1  => __( 'Show annotations', ARVE_SLUG ),
-						3  => __( 'Do not show annotations', ARVE_SLUG ),
-					),
-					'name' => __( 'iv_load_policy', ARVE_SLUG ),
-				),
-				array(
-				  'attr' => 'list',
-					'type' => 'medium-text',
-					'name' => __( 'Language???', ARVE_SLUG )
-				),
-				array(
-				  'attr' => 'listType',
-					'type' => array(
-						''             => __( 'Default', ARVE_SLUG ),
-						'playlist'     => __( 'Playlist', ARVE_SLUG ),
-						'search'       => __( 'Search', ARVE_SLUG ),
-						'user_uploads' => __( 'User Uploads', ARVE_SLUG ),
-					),
-					'name' => __( 'List Type', ARVE_SLUG ),
-				),
-				array(
-				  'attr' => 'loop',
-					'type' => 'bool',
-					'name' => __( 'Loop', ARVE_SLUG ),
-				),
-				array(
-				  'attr' => 'modestbranding',
-					'type' => 'bool',
-					'name' => __( 'Modestbranding', ARVE_SLUG ),
-				),
-				array(
-				  'attr' => 'origin',
-					'type' => 'bool',
-					'name' => __( 'Origin', ARVE_SLUG ),
-				),
-				array(
-				  'attr' => 'playerapiid',
-					'type' => 'bool',
-					'name' => __( 'playerapiid', ARVE_SLUG ),
-				),
-				array(
-				  'attr' => 'playlist',
-					'type' => 'bool',
-					'name' => __( 'Playlist', ARVE_SLUG ),
-				),
-				array(
-				  'attr' => 'playsinline',
-					'type' => 'bool',
-					'name' => __( 'playsinline', ARVE_SLUG ),
-				),
-				array(
-				  'attr' => 'rel',
-					'type' => 'bool',
-					'name' => __( 'Related Videos at End', ARVE_SLUG ),
-				),
-				array(
-				  'attr' => 'showinfo',
-					'type' => 'bool',
-					'name' => __( 'Show Info', ARVE_SLUG ),
-				),
-				array(
-				  'attr' => 'start',
-					'type' => 'number',
-					'name' => __( 'Start', ARVE_SLUG ),
-				),
-				array(
-				  'attr' => 'theme',
-					'type' => array(
-						''      => __( 'Default', ARVE_SLUG ),
-						'dark'  => __( 'Dark', ARVE_SLUG ),
-						'light' => __( 'Light', ARVE_SLUG ),
-					),
-					'name' => __( 'Theme', ARVE_SLUG ),
-				),
-			),
-			*/
 		),
 		'youtubelist'         => array(
 			'regex'          => $s . 'youtube\.com/(embed/videoseries|playlist)\?list=(?<id>[-a-z0-9_]+)',
@@ -1252,7 +1082,6 @@ function arve_get_host_properties() {
 		),
 		'html5'               => array(
 			'name'         => 'HTML5 video files directly',
-			#'regex'        => '(?<id>' . $s . 'dropbox.com/[^.]+\.(mp4|webm|ogv)$)', # URLs ending with .mp4, .webm ... are handled by word
 			'aspect_ratio' => false,
 		),
 		'iframe'              => array(
@@ -1298,7 +1127,7 @@ function arve_attr( $attr = array() ) {
 			continue;
 		} elseif ( '' === $value || true === $value ) {
 			$html .= sprintf( ' %s', esc_html( $key ) );
-		} elseif ( in_array( $key, array( 'href', 'data-href', 'src', 'data-src' ) ) ) {
+		} elseif ( in_array( $key, array( 'href', 'data-href', 'src', 'data-src' ), true ) ) {
 			$html .= sprintf( ' %s="%s"', esc_html( $key ), arve_esc_url( $value ) );
 		} else {
 			$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );
@@ -1314,12 +1143,12 @@ function arve_esc_url( $url ) {
 
 function arve_starts_with( $haystack, $needle ) {
 	// search backwards starting from haystack length characters from the end
-	return $needle === '' || strrpos( $haystack, $needle, -strlen( $haystack ) ) !== false;
+	return $needle === '' || strrpos( $haystack, $needle, -strlen( $haystack ) ) !== false; // phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
 }
 
 function arve_ends_with( $haystack, $needle ) {
 	// search forward starting from end minus needle length characters
-	return $needle === '' || ( ( $temp = strlen( $haystack ) - strlen( $needle ) ) >= 0 && strpos( $haystack, $needle, $temp ) !== false );
+	return $needle === '' || ( ( $temp = strlen( $haystack ) - strlen( $needle ) ) >= 0 && strpos( $haystack, $needle, $temp ) !== false ); // phpcs:ignore
 }
 
 function arve_contains( $haystack, $needle ) {

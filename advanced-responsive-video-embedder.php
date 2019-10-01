@@ -27,7 +27,6 @@ define( 'ARVE_ADMIN_URL',  ARVE_URL . 'admin/' );
 define( 'ARVE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ARVE_NUM_TRACKS', 10 );
 
-#add_action( 'init', 'arve_init' );
 arve_init();
 
 function arve_init() {

@@ -30,6 +30,10 @@
 	</rule>
 
 	<rule ref="WordPress-Extra">
+		<exclude name="WordPress.WhiteSpace.PrecisionAlignment.Found"/>
+		<exclude name="WordPress.WP.I18n.MissingArgDomain"/>
+		<exclude name="WordPress.WP.I18n.MissingTranslatorsComment"/>
+		<exclude name="WordPress.WP.I18n.NonSingularStringLiteralDomain"/>
 		<exclude name="Generic.PHP.DisallowShortOpenTag.EchoFound"/>
 		<exclude name="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma"/>
 		<exclude name="WordPress.Arrays.CommaAfterArrayItem.NoComma"/>

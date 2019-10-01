@@ -66,8 +66,10 @@ function arve_check_filetype( $url, $ext ) {
  */
 function arve_youtube_time_to_seconds( $yttime ) {
 
-	$format = false;
-	$hours  = $minutes = $seconds = 0;
+	$format  = false;
+	$hours   = 0;
+	$minutes = 0;
+	$seconds = 0;
 
 	$pattern['hms'] = '/([0-9]+)h([0-9]+)m([0-9]+)s/'; // hours, minutes, seconds
 	$pattern['ms']  = '/([0-9]+)m([0-9]+)s/'; // minutes, seconds

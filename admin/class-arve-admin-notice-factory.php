@@ -6,7 +6,7 @@ class ARVE_Admin_Notice_Factory {
 	private $notice;
 	private $dismiss_forever;
 
-	function __construct( $notice_id, $notice, $dismiss_forever = true, $capabilities = 'activate_plugins' ) {
+	public function __construct( $notice_id, $notice, $dismiss_forever = true, $capabilities = 'activate_plugins' ) {
 
 		if ( ! current_user_can( $capabilities ) ) {
 			return;
@@ -16,7 +16,7 @@ class ARVE_Admin_Notice_Factory {
 		$this->notice          = $notice;
 		$this->dismiss_forever = $dismiss_forever;
 
-		if ( 'admin-notice-factory-arve_dismiss_pro_notice' == $this->notice_id ) {
+		if ( 'admin-notice-factory-arve_dismiss_pro_notice' === $this->notice_id ) {
 			$this->notice_id = 'arve_dismiss_pro_notice';
 		}
 
@@ -24,7 +24,7 @@ class ARVE_Admin_Notice_Factory {
 		add_action( 'wp_ajax_' . $this->notice_id, array( $this, 'ajax_call' ) );
 	}
 
-	function action_admin_notices() {
+	public function action_admin_notices() {
 
 		if ( apply_filters( 'nj_debug_admin_message', false ) ) {
 			delete_user_meta( get_current_user_id(), $this->notice_id );
@@ -43,11 +43,11 @@ class ARVE_Admin_Notice_Factory {
 		printf(
 			'<div class="notice is-dismissible updated" data-nj-notice-id="%s">%s</div>',
 			esc_attr( $this->notice_id ),
-			$this->notice
+			$this->notice // phpcs:ignore
 		);
 	}
 
-	function ajax_call() {
+	public function ajax_call() {
 
 		$user_id = get_current_user_id();
 

@@ -23,8 +23,10 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
 		$url = substr( $url, 0, -4 );
 	}
 
-	$parsed_url = parse_url( $url );
-	$url_query  = $old_atts = $new_atts = array();
+	$parsed_url = wp_parse_url( $url );
+	$url_query  = array();
+	$old_atts   = array();
+	$new_atts   = array();
 
 	if ( ! empty( $parsed_url['query'] ) ) {
 		parse_str( $parsed_url['query'], $url_query );
@@ -50,7 +52,7 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
 
 	unset( $url_query['arve'] );
 
-	if ( 'youtube' == $provider ) {
+	if ( 'youtube' === $provider ) {
 		unset( $url_query['v'] );
 		unset( $url_query['t'] );
 	}
@@ -71,6 +73,8 @@ function arve_url_detection_to_shortcode( $provider, $matches, $attr, $url, $raw
  *
  */
 function arve_oembed_remove_providers() {
+
+	// phpcs:disable Squiz.PHP.CommentedOutCode.Found
 
 	$wp_core_oembed_shits = array(
 		'#http://(www\.)?youtube\.com/watch.*#i'         => array( 'http://www.youtube.com/oembed', true ),

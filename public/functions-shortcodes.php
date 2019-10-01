@@ -94,9 +94,10 @@ function arve_shortcode_arve( $input_atts, $content = null, $arve_shortcode = tr
 		}
 	}
 
-	$atts = shortcode_atts( apply_filters( 'arve_shortcode_pairs', $pairs ), $input_atts, 'arve' );
+	$atts   = shortcode_atts( apply_filters( 'arve_shortcode_pairs', $pairs ), $input_atts, 'arve' );
+	$errors = arve_output_errors( $atts );
 
-	if ( $errors = arve_output_errors( $atts ) ) {
+	if ( $errors ) {
 		return $errors . arve_get_debug_info( '', $atts, $input_atts );
 	}
 

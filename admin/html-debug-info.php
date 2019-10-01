@@ -1,3 +1,6 @@
+<?php
+// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.PHP.DevelopmentFunctions.error_log_var_dump
+?>
 <textarea style="font-family: monospace; width: 100%" rows="25">
 ARVE Version:      <?php echo $arve_version . "\n"; ?>
 ARVE-Pro Version:  <?php echo $arve_pro_version . "\n"; ?>
@@ -6,12 +9,12 @@ PHP Version:       <?php echo phpversion() . "\n"; ?>
 
 ACTIVE PLUGINS:
 <?php
-$plugins        = get_plugins();
+$get_plugins    = get_plugins();
 $active_plugins = get_option( 'active_plugins', array() );
 
-foreach ( $plugins as $plugin_path => $plugin ) {
+foreach ( $get_plugins as $plugin_path => $plugin ) {
 	// If the plugin isn't active, don't show it.
-	if ( ! in_array( $plugin_path, $active_plugins ) ) {
+	if ( ! in_array( $plugin_path, $active_plugins, true ) ) {
 		continue;
 	}
 
@@ -23,10 +26,10 @@ if ( is_multisite() ) :
 
 NETWORK ACTIVE PLUGINS:
 	<?php
-	$plugins        = wp_get_active_network_plugins();
+	$netw_plugins   = wp_get_active_network_plugins();
 	$active_plugins = get_site_option( 'active_sitewide_plugins', array() );
 
-	foreach ( $plugins as $plugin_path ) {
+	foreach ( $netw_plugins as $plugin_path ) {
 		$plugin_base = plugin_basename( $plugin_path );
 
 		// If the plugin isn't active, don't show it.

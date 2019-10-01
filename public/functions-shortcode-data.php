@@ -15,7 +15,7 @@ function arve_get_html5_attributes() {
 
 function arve_url_query_array( $url ) {
 
-	$url = parse_url( $url );
+	$url = wp_parse_url( $url );
 
 	if ( empty( $url['query'] ) ) {
 		return array();
@@ -45,41 +45,24 @@ function arve_build_iframe_src( $atts ) {
 		$pattern = '%s';
 	}
 
-	if ( 'facebook' == $provider && is_numeric( $id ) ) {
+	if ( 'facebook' === $provider && is_numeric( $id ) ) {
 
 		$id = "https://www.facebook.com/facebook/videos/$id/";
 
-	} elseif ( 'twitch' == $provider && is_numeric( $id ) ) {
+	} elseif ( 'twitch' === $provider && is_numeric( $id ) ) {
 
 		$pattern = 'https://player.twitch.tv/?video=v%s';
 
-	} elseif ( 'ted' == $provider && preg_match( '/^[a-z]{2}$/', $lang ) === 1 ) {
+	} elseif ( 'ted' === $provider && preg_match( '/^[a-z]{2}$/', $lang ) === 1 ) {
 
 		$pattern = 'https://embed-ssl.ted.com/talks/lang/' . $lang . '/%s.html';
 	}
 
 	if ( isset( $properties[ $provider ]['url_encode_id'] ) && $properties[ $provider ]['url_encode_id'] ) {
-		$id = urlencode( $id );
+		$id = rawurlencode( $id );
 	}
 
-	#$test = 'https://www.dailymotion.com/widget/jukebox?list[]=/playlist/xr8ts/1&&autoplay=0&mute=0';
-
-	#
-	#$org = 'http://www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2Fxr2rp_RTnews_exclusive-interveiws%2F1&&autoplay=0&mute=0';
-
-	#$esc_url = esc_url( $test );
-
-	#d( $provider );
-	#d( ( $esc_url === $org ) );
-	#d( $esc_url );
-	#printf( '<iframe src="%s" width="600" height="500"></iframe>', $org );
-
-	#dd("end");
-
-	#d($provider);
-	#d($pattern);
-
-	if ( 'brightcove' == $provider ) {
+	if ( 'brightcove' === $provider ) {
 		$src = sprintf( $pattern, $atts['brightcove_account'], $atts['brightcove_player'], $atts['brightcove_embed'], $id );
 	} else {
 		$src = sprintf( $pattern, $id );
@@ -91,7 +74,7 @@ function arve_build_iframe_src( $atts ) {
 function arve_id_fixes( $id, $provider ) {
 
 	if (
-		'liveleak' == $provider &&
+		'liveleak' === $provider &&
 		! arve_starts_with( $id, 'i=' ) &&
 		! arve_starts_with( $id, 'f=' )
 	) {
@@ -122,7 +105,7 @@ function arve_add_autoplay_query_arg( $src, $a ) {
 		case 'archiveorg':
 		case 'dailymotion':
 		case 'dailymotionlist':
-			#case 'facebook': # Causes automute FUCK NSABOOK
+		case 'facebook':
 		case 'vevo':
 		case 'viddler':
 		case 'vimeo':
@@ -162,23 +145,6 @@ function arve_add_autoplay_query_arg( $src, $a ) {
 			$on  = add_query_arg( 'player_autoplay', 'true',  $src );
 			$off = add_query_arg( 'player_autoplay', 'false', $src );
 			break;
-		/*
-		case 'iframe':
-			# We are spamming all kinds of autoplay parameters here in hope of a effect
-			$on = add_query_arg( array(
-				'ap'               => '1',
-				'autoplay'         => '1',
-				'autoStart'        => 'true',
-				'player_autoStart' => 'true',
-			), $src );
-			$off = add_query_arg( array(
-				'ap'               => '0',
-				'autoplay'         => '0',
-				'autoStart'        => 'false',
-				'player_autoStart' => 'false',
-			), $src );
-			break;
-		*/
 		default:
 			# Do nothing for providers that to not support autoplay or fail with parameters
 			$on  = $src;
@@ -215,7 +181,7 @@ function arve_maxwidth_when_aligned( $maxwidth, $align ) {
 
 	$options = arve_get_options();
 
-	if ( $maxwidth < 100 && in_array( $align, array( 'left', 'right', 'center' ) ) ) {
+	if ( $maxwidth < 100 && in_array( $align, array( 'left', 'right', 'center' ), true ) ) {
 		$maxwidth = (int) $options['align_maxwidth'];
 	}
 

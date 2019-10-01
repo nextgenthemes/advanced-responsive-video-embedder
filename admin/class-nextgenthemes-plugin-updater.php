@@ -1,15 +1,14 @@
 <?php
+// phpcs:disable
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * Allows plugins to use their own update API.
  *
  * @author Easy Digital Downloads
- * @version 1.6.17
+ * @version 1.6.19
  */
 class Nextgenthemes_Plugin_Updater {
 
@@ -97,7 +96,7 @@ class Nextgenthemes_Plugin_Updater {
 		global $pagenow;
 
 		if ( ! is_object( $_transient_data ) ) {
-			$_transient_data = new stdClass();
+			$_transient_data = new stdClass;
 		}
 
 		if ( 'plugins.php' == $pagenow && is_multisite() ) {
@@ -111,13 +110,7 @@ class Nextgenthemes_Plugin_Updater {
 		$version_info = $this->get_cached_version_info();
 
 		if ( false === $version_info ) {
-			$version_info = $this->api_request(
-				'plugin_latest_version',
-				array(
-					'slug' => $this->slug,
-					'beta' => $this->beta
-				)
-			);
+			$version_info = $this->api_request( 'plugin_latest_version', array( 'slug' => $this->slug, 'beta' => $this->beta ) );
 
 			$this->set_version_info_cache( $version_info );
 
@@ -128,6 +121,9 @@ class Nextgenthemes_Plugin_Updater {
 			if ( version_compare( $this->version, $version_info->new_version, '<' ) ) {
 
 				$_transient_data->response[ $this->name ] = $version_info;
+
+				// Make sure the plugin property is set to the plugin's name/location. See issue 1463 on Software Licensing's GitHub repo.
+				$_transient_data->response[ $this->name ]->plugin = $this->name;
 
 			}
 
@@ -151,11 +147,11 @@ class Nextgenthemes_Plugin_Updater {
 			return;
 		}
 
-		if ( ! current_user_can( 'update_plugins' ) ) {
+		if( ! current_user_can( 'update_plugins' ) ) {
 			return;
 		}
 
-		if ( ! is_multisite() ) {
+		if( ! is_multisite() ) {
 			return;
 		}
 
@@ -175,13 +171,7 @@ class Nextgenthemes_Plugin_Updater {
 			$version_info = $this->get_cached_version_info();
 
 			if ( false === $version_info ) {
-				$version_info = $this->api_request(
-					'plugin_latest_version',
-					array(
-						'slug' => $this->slug,
-						'beta' => $this->beta
-					)
-				);
+				$version_info = $this->api_request( 'plugin_latest_version', array( 'slug' => $this->slug, 'beta' => $this->beta ) );
 
 				// Since we disabled our filter for the transient, we aren't running our object conversion on banners, sections, or icons. Do this now:
 				if ( isset( $version_info->banners ) && ! is_array( $version_info->banners ) ) {
@@ -194,6 +184,14 @@ class Nextgenthemes_Plugin_Updater {
 
 				if ( isset( $version_info->icons ) && ! is_array( $version_info->icons ) ) {
 					$version_info->icons = $this->convert_object_to_array( $version_info->icons );
+				}
+
+				if ( isset( $version_info->icons ) && ! is_array( $version_info->icons ) ) {
+					$version_info->icons = $this->convert_object_to_array( $version_info->icons );
+				}
+
+				if ( isset( $version_info->contributors ) && ! is_array( $version_info->contributors ) ) {
+					$version_info->contributors = $this->convert_object_to_array( $version_info->contributors );
 				}
 
 				$this->set_version_info_cache( $version_info );
@@ -209,7 +207,7 @@ class Nextgenthemes_Plugin_Updater {
 
 			}
 
-			$update_cache->last_checked           = time();
+			$update_cache->last_checked = time();
 			$update_cache->checked[ $this->name ] = $this->version;
 
 			set_site_transient( 'update_plugins', $update_cache );
@@ -249,7 +247,7 @@ class Nextgenthemes_Plugin_Updater {
 					'<a target="_blank" class="thickbox" href="' . esc_url( $changelog_link ) . '">',
 					esc_html( $version_info->new_version ),
 					'</a>',
-					'<a href="' . esc_url( wp_nonce_url( self_admin_url( 'update.php?action=upgrade-plugin&plugin=' ) . $this->name, 'upgrade-plugin_' . $this->name ) ) . '">',
+					'<a href="' . esc_url( wp_nonce_url( self_admin_url( 'update.php?action=upgrade-plugin&plugin=' ) . $this->name, 'upgrade-plugin_' . $this->name ) ) .'">',
 					'</a>'
 				);
 			}
@@ -310,6 +308,7 @@ class Nextgenthemes_Plugin_Updater {
 			if ( false !== $api_response ) {
 				$_data = $api_response;
 			}
+
 		} else {
 			$_data = $edd_api_request_transient;
 		}
@@ -327,6 +326,15 @@ class Nextgenthemes_Plugin_Updater {
 		// Convert icons into an associative array, since we're getting an object, but Core expects an array.
 		if ( isset( $_data->icons ) && ! is_array( $_data->icons ) ) {
 			$_data->icons = $this->convert_object_to_array( $_data->icons );
+		}
+
+		// Convert contributors into an associative array, since we're getting an object, but Core expects an array.
+		if ( isset( $_data->contributors ) && ! is_array( $_data->contributors ) ) {
+			$_data->contributors = $this->convert_object_to_array( $_data->contributors );
+		}
+
+		if( ! isset( $_data->plugin ) ) {
+			$_data->plugin = $this->name;
 		}
 
 		return $_data;
@@ -347,7 +355,7 @@ class Nextgenthemes_Plugin_Updater {
 	private function convert_object_to_array( $data ) {
 		$new_data = array();
 		foreach ( $data as $key => $value ) {
-			$new_data[ $key ] = $value;
+			$new_data[ $key ] = is_object( $value ) ? $this->convert_object_to_array( $value ) : $value;
 		}
 
 		return $new_data;
@@ -385,26 +393,22 @@ class Nextgenthemes_Plugin_Updater {
 
 		global $wp_version, $edd_plugin_url_available;
 
+		$verify_ssl = $this->verify_ssl();
+
 		// Do a quick status check on this domain if we haven't already checked it.
 		$store_hash = md5( $this->api_url );
 		if ( ! is_array( $edd_plugin_url_available ) || ! isset( $edd_plugin_url_available[ $store_hash ] ) ) {
 			$test_url_parts = parse_url( $this->api_url );
 
-			$scheme = ! empty( $test_url_parts['scheme'] ) ? $test_url_parts['scheme'] : 'http';
-			$host   = ! empty( $test_url_parts['host'] ) ? $test_url_parts['host'] : '';
-			$port   = ! empty( $test_url_parts['port'] ) ? ':' . $test_url_parts['port'] : '';
+			$scheme = ! empty( $test_url_parts['scheme'] ) ? $test_url_parts['scheme']     : 'http';
+			$host   = ! empty( $test_url_parts['host'] )   ? $test_url_parts['host']       : '';
+			$port   = ! empty( $test_url_parts['port'] )   ? ':' . $test_url_parts['port'] : '';
 
 			if ( empty( $host ) ) {
 				$edd_plugin_url_available[ $store_hash ] = false;
 			} else {
-				$test_url                                = $scheme . '://' . $host . $port;
-				$response                                = wp_remote_get(
-					$test_url,
-					array(
-						'timeout'   => $this->health_check_timeout,
-						'sslverify' => true
-					)
-				);
+				$test_url = $scheme . '://' . $host . $port;
+				$response = wp_remote_get( $test_url, array( 'timeout' => $this->health_check_timeout, 'sslverify' => $verify_ssl ) );
 				$edd_plugin_url_available[ $store_hash ] = is_wp_error( $response ) ? false : true;
 			}
 		}
@@ -419,7 +423,7 @@ class Nextgenthemes_Plugin_Updater {
 			return;
 		}
 
-		if ( $this->api_url == trailingslashit( home_url() ) ) {
+		if( $this->api_url == trailingslashit ( home_url() ) ) {
 			return false; // Don't allow a plugin to ping itself
 		}
 
@@ -435,15 +439,7 @@ class Nextgenthemes_Plugin_Updater {
 			'beta'       => ! empty( $data['beta'] ),
 		);
 
-		$verify_ssl = $this->verify_ssl();
-		$request    = wp_remote_post(
-			$this->api_url,
-			array(
-				'timeout'   => 15,
-				'sslverify' => $verify_ssl,
-				'body'      => $api_params
-			)
-		);
+		$request    = wp_remote_post( $this->api_url, array( 'timeout' => 15, 'sslverify' => $verify_ssl, 'body' => $api_params ) );
 
 		if ( ! is_wp_error( $request ) ) {
 			$request = json_decode( wp_remote_retrieve_body( $request ) );
@@ -463,8 +459,8 @@ class Nextgenthemes_Plugin_Updater {
 			$request->icons = maybe_unserialize( $request->icons );
 		}
 
-		if ( ! empty( $request->sections ) ) {
-			foreach ( $request->sections as $key => $section ) {
+		if( ! empty( $request->sections ) ) {
+			foreach( $request->sections as $key => $section ) {
 				$request->$key = (array) $section;
 			}
 		}
@@ -476,19 +472,19 @@ class Nextgenthemes_Plugin_Updater {
 
 		global $edd_plugin_data;
 
-		if ( empty( $_REQUEST['edd_sl_action'] ) || 'view_plugin_changelog' != $_REQUEST['edd_sl_action'] ) {
+		if( empty( $_REQUEST['edd_sl_action'] ) || 'view_plugin_changelog' != $_REQUEST['edd_sl_action'] ) {
 			return;
 		}
 
-		if ( empty( $_REQUEST['plugin'] ) ) {
+		if( empty( $_REQUEST['plugin'] ) ) {
 			return;
 		}
 
-		if ( empty( $_REQUEST['slug'] ) ) {
+		if( empty( $_REQUEST['slug'] ) ) {
 			return;
 		}
 
-		if ( ! current_user_can( 'update_plugins' ) ) {
+		if( ! current_user_can( 'update_plugins' ) ) {
 			wp_die( __( 'You do not have permission to install plugin updates', 'easy-digital-downloads' ), __( 'Error', 'easy-digital-downloads' ), array( 'response' => 403 ) );
 		}
 
@@ -497,7 +493,7 @@ class Nextgenthemes_Plugin_Updater {
 		$cache_key    = md5( 'edd_plugin_' . sanitize_key( $_REQUEST['plugin'] ) . '_' . $beta . '_version_info' );
 		$version_info = $this->get_cached_version_info( $cache_key );
 
-		if ( false === $version_info ) {
+		if( false === $version_info ) {
 
 			$api_params = array(
 				'edd_action' => 'get_version',
@@ -510,18 +506,12 @@ class Nextgenthemes_Plugin_Updater {
 			);
 
 			$verify_ssl = $this->verify_ssl();
-			$request    = wp_remote_post(
-				$this->api_url,
-				array(
-					'timeout'   => 15,
-					'sslverify' => $verify_ssl,
-					'body'      => $api_params
-				)
-			);
+			$request    = wp_remote_post( $this->api_url, array( 'timeout' => 15, 'sslverify' => $verify_ssl, 'body' => $api_params ) );
 
 			if ( ! is_wp_error( $request ) ) {
 				$version_info = json_decode( wp_remote_retrieve_body( $request ) );
 			}
+
 
 			if ( ! empty( $version_info ) && isset( $version_info->sections ) ) {
 				$version_info->sections = maybe_unserialize( $version_info->sections );
@@ -529,8 +519,8 @@ class Nextgenthemes_Plugin_Updater {
 				$version_info = false;
 			}
 
-			if ( ! empty( $version_info ) ) {
-				foreach ( $version_info->sections as $key => $section ) {
+			if( ! empty( $version_info ) ) {
+				foreach( $version_info->sections as $key => $section ) {
 					$version_info->$key = (array) $section;
 				}
 			}
@@ -539,7 +529,7 @@ class Nextgenthemes_Plugin_Updater {
 
 		}
 
-		if ( ! empty( $version_info ) && isset( $version_info->sections['changelog'] ) ) {
+		if( ! empty( $version_info ) && isset( $version_info->sections['changelog'] ) ) {
 			echo '<div style="background:#fff;padding:10px;">' . $version_info->sections['changelog'] . '</div>';
 		}
 
@@ -548,13 +538,13 @@ class Nextgenthemes_Plugin_Updater {
 
 	public function get_cached_version_info( $cache_key = '' ) {
 
-		if ( empty( $cache_key ) ) {
+		if( empty( $cache_key ) ) {
 			$cache_key = $this->cache_key;
 		}
 
 		$cache = get_option( $cache_key );
 
-		if ( empty( $cache['timeout'] ) || time() > $cache['timeout'] ) {
+		if( empty( $cache['timeout'] ) || time() > $cache['timeout'] ) {
 			return false; // Cache is expired
 		}
 
@@ -570,7 +560,7 @@ class Nextgenthemes_Plugin_Updater {
 
 	public function set_version_info_cache( $value = '', $cache_key = '' ) {
 
-		if ( empty( $cache_key ) ) {
+		if( empty( $cache_key ) ) {
 			$cache_key = $this->cache_key;
 		}
 

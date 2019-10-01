@@ -2,9 +2,7 @@
 
 function arve_load_vimeo_api( $a ) {
 
-	if ( true ) {
-		require_once ARVE_PATH . '/vendor/autoload.php';
-	}
+	require_once ARVE_PATH . '/vendor/autoload.php';
 
 	return $a;
 }
@@ -29,7 +27,7 @@ function arve_get_wrapper_id( $a ) {
 		$wrapper_ids[] = $wrapper_id;
 	}
 
-	if ( in_array( $wrapper_id, $wrapper_ids ) ) {
+	if ( in_array( $wrapper_id, $wrapper_ids, true ) ) {
 		$id_counts = array_count_values( $wrapper_ids );
 		$id_count  = $id_counts[ $wrapper_id ];
 
@@ -62,11 +60,11 @@ function arve_sc_filter_attr( $a ) {
 		'itemtype'      => 'http://schema.org/VideoObject',
 	);
 
-	if ( 'html5' == $a['provider'] ) {
+	if ( 'html5' === $a['provider'] ) {
 
 		$a['video_attr'] = array(
 			# WP
-			'autoplay'           => in_array( $a['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ) ) ? false : $a['autoplay'],
+			'autoplay'           => in_array( $a['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ), true ) ? false : $a['autoplay'],
 			'controls'           => $a['controls'],
 			'controlslist'       => $a['controlslist'],
 			'loop'               => $a['loop'],
@@ -90,7 +88,7 @@ function arve_sc_filter_attr( $a ) {
 		$iframe_src = arve_add_query_args_to_iframe_src( $iframe_src, $a );
 		$iframe_src = arve_add_autoplay_query_arg( $iframe_src, $a );
 
-		if ( 'vimeo' == $a['provider'] && ! empty( $a['start'] ) ) {
+		if ( 'vimeo' === $a['provider'] && ! empty( $a['start'] ) ) {
 			$iframe_src .= '#t=' . (int) $a['start'];
 		}
 
@@ -107,7 +105,7 @@ function arve_sc_filter_attr( $a ) {
 			'height'          => empty( $a['height'] ) ? false : $a['height'],
 		);
 
-		if ( 'vimeo' == $a['provider'] ) {
+		if ( 'vimeo' === $a['provider'] ) {
 			$a['iframe_attr']['sandbox'] .= ' allow-forms';
 		}
 
@@ -185,7 +183,7 @@ function arve_sc_filter_missing_attribute_check( $atts ) {
 
 	$array = array_intersect_key( $atts, array_flip( $required_attributes ) );
 
-	if ( count( array_filter( $array ) ) != count( $array ) ) {
+	if ( count( array_filter( $array ) ) !== count( $array ) ) {
 
 		$atts['missing_atts_error'] = arve_error(
 			sprintf(
@@ -282,7 +280,7 @@ function arve_sc_filter_detect_query_args( $atts ) {
 
 	foreach ( $to_extract as $provider => $parameters ) {
 
-		if ( $provider != $atts['provider'] ) {
+		if ( $provider !== $atts['provider'] ) {
 			return $atts;
 		}
 
@@ -306,7 +304,7 @@ function arve_sc_filter_detect_query_args( $atts ) {
 function arve_sc_filter_detect_youtube_playlist( $atts ) {
 
 	if (
-		'youtube' != $atts['provider'] ||
+		'youtube' !== $atts['provider'] ||
 		( empty( $atts['url'] ) && empty( $atts['id'] ) )
 	) {
 		return $atts;
@@ -340,7 +338,6 @@ function arve_get_video_type( $ext ) {
 		case 'ogv':
 		case 'ogm':
 			return 'video/ogg';
-			break;
 		default:
 			return 'video/' . $ext;
 	}
@@ -348,7 +345,7 @@ function arve_get_video_type( $ext ) {
 
 function arve_sc_filter_detect_html5( $atts ) {
 
-	if ( ! empty( $atts['provider'] ) && 'html5' != $atts['provider'] ) {
+	if ( ! empty( $atts['provider'] ) && 'html5' !== $atts['provider'] ) {
 		return $atts;
 	}
 
@@ -373,13 +370,6 @@ function arve_sc_filter_detect_html5( $atts ) {
 			}
 
 			$atts['video_src'] = $atts['url'];
-			/*
-			$parse_url = parse_url( $atts['url'] );
-			$pathinfo  = pathinfo( $parse_url['path'] );
-
-			$url_ext         = $pathinfo['extension'];
-			$url_without_ext = $parse_url['scheme'] . '://' . $parse_url['host'] . $path_without_ext;
-			*/
 		}
 
 	endforeach;
@@ -409,7 +399,7 @@ function arve_sc_filter_iframe_fallback( $atts ) {
 
 function arve_sc_filter_build_tracks_html( $atts ) {
 
-	if ( 'html5' != $atts['provider'] ) {
+	if ( 'html5' !== $atts['provider'] ) {
 		return $atts;
 	}
 

@@ -59,7 +59,7 @@ $options = arve_get_options();
 
 	<?php endif; ?>
 
-	<h2><?php esc_html_e( get_admin_page_title() ); ?></h2>
+	<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 
 	<h2 class="nav-tab-wrapper arve-settings-tabs"></h2>
 
@@ -68,7 +68,7 @@ $options = arve_get_options();
 		<?php do_settings_sections( ARVE_SLUG ); ?>
 		<?php settings_fields( 'arve-settings-group' ); ?>
 
-		<input type="hidden" id="arve_options_main[last_settings_tab]" name="arve_options_main[last_settings_tab]" value="<?php esc_attr_e( $options['last_settings_tab'] ); ?>">
+		<input type="hidden" id="arve_options_main[last_settings_tab]" name="arve_options_main[last_settings_tab]" value="<?php echo esc_attr( $options['last_settings_tab'] ); ?>">
 
 	</form>
 

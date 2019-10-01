@@ -43,6 +43,7 @@ function arve_display_pro_ad() {
 
 function arve_widget_text() {
 
+	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	printf( '<big><strong><a href="%s">Hiring a Marketing Person</a></strong></big>', 'https://nextgenthemes.com/hiring-a-marketing-person/' );
 
 	echo '<p>';
@@ -68,10 +69,12 @@ function arve_add_dashboard_widget() {
 		'arve_widget_text'                    // Display function.
 	);
 
+	// phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
+
 	// Globalize the metaboxes array, this holds all the widgets for wp-admin.
 	global $wp_meta_boxes, $pagenow;
 
-	if ( 'index.php' == $pagenow ) {
+	if ( 'index.php' === $pagenow ) {
 		// Get the regular dashboard widgets array.
 		// (which has our new widget already but at the end).
 		$normal_dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
@@ -86,6 +89,7 @@ function arve_add_dashboard_widget() {
 		// Save the sorted array back into the original metaboxes.
 		$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
 	}
+	// phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
 }
 
 /**
@@ -104,18 +108,6 @@ function arve_add_plugin_admin_menu() {
 			require_once plugin_dir_path( __FILE__ ) . 'html-settings-page.php';
 		}
 	);
-
-	/*
-	add_menu_page(
-		 __( 'Advanced Responsive Video Embedder Settings', ARVE_SLUG ), # Page Title
-		 __( 'ARVE', ARVE_SLUG ),    # Menu Tile
-		 'manage_options',                     # capability
-		 ARVE_SLUG,                            # menu-slug
-		 null,                                 # function
-		'dashicons-video-alt3',               # icon_url
-		'65.892'                              # position
-	 );
-	*/
 
 	add_submenu_page(
 		'nextgenthemes',         # parent_slug
@@ -203,27 +195,13 @@ function arve_register_shortcode_ui() {
 		)
 	);
 
-	/*
-
-	foreach ($options['shortcodes'] as $sc_id => $sc) {
-
-		shortcode_ui_register_for_shortcode(
-			$sc_id,
-			array(
-				'label' => esc_html( ucfirst("$sc_id ") ) . esc_html__( '(arve)', ARVE_SLUG),
-				'listItemImage' => 'dashicons-format-video',
-				'attrs' => $sc_attrs,
-			)
-		);
-	}
-	*/
 }
 
 function arve_input( $args ) {
 
 	$out = sprintf( '<input%s>', arve_attr( $args['input_attr'] ) );
 
-	if ( ! empty( $args['option_values']['attr'] ) && 'thumbnail_fallback' == $args['option_values']['attr'] ) {
+	if ( ! empty( $args['option_values']['attr'] ) && 'thumbnail_fallback' === $args['option_values']['attr'] ) {
 
 		// jQuery
 		wp_enqueue_script( 'jquery' );
@@ -331,7 +309,7 @@ function arve_register_settings() {
 			unset( $value['options'][''] );
 		}
 
-		if ( in_array( $value['type'], array( 'text', 'number', 'url' ) ) ) {
+		if ( in_array( $value['type'], array( 'text', 'number', 'url' ), true ) ) {
 			$callback_function = 'arve_input';
 		} else {
 			$callback_function = 'arve_' . $value['type'];
@@ -452,7 +430,6 @@ function arve_register_settings() {
 		)
 	);
 
-	// register_setting( $option_group, $option_name, $sanitize_callback )
 	register_setting( 'arve-settings-group', 'arve_options_main',       'arve_validate_options_main' );
 	register_setting( 'arve-settings-group', 'arve_options_params',     'arve_validate_options_params' );
 	register_setting( 'arve-settings-group', 'arve_options_shortcodes', 'arve_validate_options_shortcodes' );
@@ -478,7 +455,7 @@ function arve_register_settings_debug() {
 
 function arve_submit_reset( $args ) {
 
-	submit_button( __( 'Save Changes' ), 'primary', 'submit', false );
+	submit_button( __( 'Save Changes', ARVE_SLUG ), 'primary', 'submit', false );
 	echo '&nbsp;&nbsp;';
 	submit_button( __( 'Reset This Settings Section', ARVE_SLUG ), 'secondary', $args['reset_name'], false );
 }
@@ -543,7 +520,7 @@ function arve_debug_section_description() {
 		$pro_options = get_option( 'arve_options_pro' );
 		unset( $pro_options['key'] );
 		ob_start();
-		var_dump( $pro_options );
+		var_dump( $pro_options ); // phpcs:ignore
 		$pro_options_dump = ob_get_clean();
 	}
 
@@ -568,11 +545,11 @@ function arve_validate_options_main( $input ) {
 	$output['controlslist']      = sanitize_text_field( $input['controlslist'] );
 	$output['vimeo_api_token']   = sanitize_text_field( $input['vimeo_api_token'] );
 
-	$output['always_enqueue_assets'] = ( 'yes' == $input['always_enqueue_assets'] ) ? true : false;
-	$output['autoplay']              = ( 'yes' == $input['autoplay'] ) ? true : false;
-	$output['promote_link']          = ( 'yes' == $input['promote_link'] ) ? true : false;
-	$output['wp_video_override']     = ( 'yes' == $input['wp_video_override'] ) ? true : false;
-	$output['youtube_nocookie']      = ( 'yes' == $input['youtube_nocookie'] ) ? true : false;
+	$output['always_enqueue_assets'] = ( 'yes' === $input['always_enqueue_assets'] ) ? true : false;
+	$output['autoplay']              = ( 'yes' === $input['autoplay'] ) ? true : false;
+	$output['promote_link']          = ( 'yes' === $input['promote_link'] ) ? true : false;
+	$output['wp_video_override']     = ( 'yes' === $input['wp_video_override'] ) ? true : false;
+	$output['youtube_nocookie']      = ( 'yes' === $input['youtube_nocookie'] ) ? true : false;
 
 	$output['wp_image_cache_time'] = (int) $input['wp_image_cache_time'];
 

@@ -110,7 +110,12 @@ function nextgenthemes_ads_page() { ?>
 		margin: 1rem;
 	}
 </style>
-	<?php $img_dir = plugin_dir_url( __FILE__ ) . 'product-images/'; ?>
+
+	<?php
+	$img_dir = plugin_dir_url( __FILE__ ) . 'product-images/';
+	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+	?>
+
 <div id="nextgenthemes-ads">
 
 	<?php if ( ! defined( 'ARVE_PRO_VERSION' ) ) : ?>
@@ -360,16 +365,18 @@ function nextgenthemes_validate_license( $input ) {
 		return sanitize_text_field( $input );
 	}
 
-	$product = $input['product'];
+	$product     = $input['product'];
+	$defined_key = nextgenthemes_get_defined_key( $product );
 
-	if ( $defined_key = nextgenthemes_get_defined_key( $product ) ) {
-		$option_key = $key = $defined_key;
+	if ( $defined_key ) {
+		$option_key = $defined_key;
+		$key        = $defined_key;
 	} else {
 		$key        = sanitize_text_field( $input['key'] );
 		$option_key = nextgenthemes_get_key( $product );
 	}
 
-	if ( ( $key != $option_key ) || isset( $input['activate_key'] ) ) {
+	if ( ( $key !== $option_key ) || isset( $input['activate_key'] ) ) {
 
 		nextgenthemes_api_update_key_status( $product, $key, 'activate' );
 
@@ -387,7 +394,9 @@ function nextgenthemes_validate_license( $input ) {
 
 function nextgenthemes_get_key( $product, $option_only = false ) {
 
-	if ( ! $option_only && $defined_key = nextgenthemes_get_defined_key( $product ) ) {
+	$defined_key = nextgenthemes_get_defined_key( $product );
+
+	if ( ! $option_only && $defined_key ) {
 		return $defined_key;
 	}
 
@@ -426,7 +435,7 @@ function nextgenthemes_licenses_page() {
 	?>
 	<div class="wrap">
 
-		<h2><?php esc_html_e( get_admin_page_title() ); ?></h2>
+		<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 
 		<form method="post" action="options.php">
 
@@ -445,9 +454,9 @@ function nextgenthemes_init_edd_updaters() {
 
 	foreach ( $products as $product ) {
 
-		if ( 'plugin' == $product['type'] && ! empty( $product['file'] ) ) {
+		if ( 'plugin' === $product['type'] && ! empty( $product['file'] ) ) {
 			nextgenthemes_init_plugin_updater( $product );
-		} elseif ( 'theme' == $product['type'] ) {
+		} elseif ( 'theme' === $product['type'] ) {
 			nextgenthemes_init_theme_updater( $product );
 		}
 	}
@@ -503,14 +512,14 @@ function nextgenthemes_init_theme_updater( $product ) {
 			'site-is-inactive'          => __( 'Site is inactive.', ARVE_SLUG ),
 			'license-status-unknown'    => __( 'License status is unknown.', ARVE_SLUG ),
 			'update-notice'             => __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update.", ARVE_SLUG ),
-			'update-available'          => __( '<strong>%1$s %2$s</strong> is available. <a href="%3$s" class="thickbox" title="%4s">Check out what\'s new</a> or <a href="%5$s"%6$s>update now</a>.', ARVE_SLUG ),
+			'update-available'          => __( '<strong>%1$s %2$s</strong> is available. <a href="%3$s" class="thickbox" title="%4$s">Check out what\'s new</a> or <a href="%5$s"%6$s>update now</a>.', ARVE_SLUG ),
 		)
 	);
 }
 
 function nextgenthemes_api_action( $item_id, $key, $action ) {
 
-	if ( ! in_array( $action, array( 'activate', 'deactivate', 'check' ) ) ) {
+	if ( ! in_array( $action, array( 'activate', 'deactivate', 'check' ), true ) ) {
 		wp_die( 'invalid action' );
 	}
 
@@ -603,7 +612,7 @@ function nextgenthemes_api_action( $item_id, $key, $action ) {
 
 function arve_dump( $var ) {
 	ob_start();
-	var_dump( $var );
+	var_dump( $var ); // phpcs:ignore
 	return ob_get_clean();
 }
 
