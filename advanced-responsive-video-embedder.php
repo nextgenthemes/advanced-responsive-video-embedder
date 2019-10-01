@@ -39,25 +39,18 @@ function init() {
 
 	require_once PLUGIN_DIR . '/vendor/autoload.php';
 	require_once PLUGIN_DIR . '/php/Common/init.php';
-	array_map(
-		function( $file ) {
-			require_once PLUGIN_DIR . "/php/functions-{$file}.php";
-		},
-		[
-			'deprecated',
-			'assets',
-			'html-output',
-			'misc',
-			'oembed',
-			'shortcode-data',
-			'shortcode-filters',
-			'shortcodes',
-			'url-handlers',
-			'validation',
-			'host-properties',
-			'settings',
-		]
-	);
+	require_once PLUGIN_DIR . '/php/functions-deprecated.php';
+	require_once PLUGIN_DIR . '/php/functions-assets.php';
+	require_once PLUGIN_DIR . '/php/functions-html-output.php';
+	require_once PLUGIN_DIR . '/php/functions-misc.php';
+	require_once PLUGIN_DIR . '/php/functions-oembed.php';
+	require_once PLUGIN_DIR . '/php/functions-shortcode-data.php';
+	require_once PLUGIN_DIR . '/php/functions-shortcode-filters.php';
+	require_once PLUGIN_DIR . '/php/functions-shortcodes.php';
+	require_once PLUGIN_DIR . '/php/functions-url-handlers.php';
+	require_once PLUGIN_DIR . '/php/functions-validation.php';
+	require_once PLUGIN_DIR . '/php/functions-host-properties.php';
+	require_once PLUGIN_DIR . '/php/functions-settings.php';
 	require_once PLUGIN_DIR . '/php/Admin/functions-admin.php';
 	require_once PLUGIN_DIR . '/php/Admin/functions-settings-page.php';
 

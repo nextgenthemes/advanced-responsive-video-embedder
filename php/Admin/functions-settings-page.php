@@ -32,7 +32,7 @@ function echo_active_plugins() {
 		if ( ! in_array( $plugin_path, $active_plugins, true ) ) {
 			continue;
 		}
-		esc_html_e( "{$plugin['Name']}: {$plugin['Version']}\n" );
+		echo esc_html( "{$plugin['Name']}: {$plugin['Version']}\n" );
 	}
 }
 
@@ -51,6 +51,6 @@ function echo_network_active_plugins() {
 			continue;
 		}
 		$plugin = get_plugin_data( $plugin_path );
-		esc_html_e( "{$plugin['Name']}: {$plugin['Version']}\n" );
+		echo esc_html( "{$plugin['Name']}: {$plugin['Version']}\n" );
 	}
 }

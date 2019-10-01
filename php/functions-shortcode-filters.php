@@ -20,8 +20,8 @@ function sc_filter_set_wrapper_id( array $a ) {
 		if ( ! empty( $a[ $att ] ) && is_string( $a[ $att ] ) ) {
 			$a['wrapper_id'] = $a[ $att ];
 			$a['wrapper_id'] = str_replace( [ 'https://www.', 'https://' ], '', $a['wrapper_id'] );
-			$a['wrapper_id'] = preg_replace( '/[^a-zA-Z0-9-]/', '', $a['wrapper_id'] );
-			$a['wrapper_id'] = 'arve-' . $a[ $att ];
+			#$a['wrapper_id'] = preg_replace( '/[^a-zA-Z0-9-]/', '', $a['wrapper_id'] );
+			$a['wrapper_id'] = 'arve-' . $a['wrapper_id'];
 			break;
 		}
 	}
@@ -380,6 +380,43 @@ function sc_filter_detect_provider_and_id_from_url( array $a ) {
 	return $a;
 }
 
+function special_iframe_src_mods( array $a ) {
+
+	switch ( $a['provider'] ) {
+		case 'youtube':
+			$yt_v    = Common\get_url_arg( $a['url'], 'v' );
+			$yt_list = Common\get_url_arg( $a['url'], 'list' );
+
+			if ( Common\contains( $a['src'], '/embed/videoseries?' ) &&
+				$yt_v
+			) {
+				$a['src'] = str_replace( '/embed/videoseries?', "/embed/$yt_v?", $a['src'] );
+			}
+
+			if ( $yt_list ) {
+				$a['src']     = remove_query_arg( 'feature', $a['src'] );
+				$a['src']     = add_query_arg( 'list', $yt_list, $a['src'] );
+				$a['src_gen'] = add_query_arg( 'list', $yt_list, $a['src_gen'] );
+			}
+			break;
+		case 'vimeo':
+			$parsed_url  = wp_parse_url( $url );
+			$vimeo_appid = Common\get_url_arg( $a['src'], 'app_id' ); // TODO check why vimeo adds it and it can be removed,
+
+			if ( $vimeo_appid ) {
+				$a['src_gen'] = add_query_arg( 'app_id', $vimeo_appid, $a['src_gen'] );
+			}
+
+			if ( ! empty( $parsed_url['fragment'] ) && Common\starts_with( 't', $parsed_url['fragment'] ) ) {
+				$a['src']     .= '#' . $parsed_url['fragment'];
+				$a['src_gen'] .= '#' . $parsed_url['fragment'];
+			}
+			break;
+	}
+
+	return $a;
+}
+
 function sc_filter_iframe_src( array $a ) {
 
 	if ( 'html5' === $a['provider'] ) {
@@ -391,55 +428,26 @@ function sc_filter_iframe_src( array $a ) {
 		return $a;
 	}
 
-	$options   = options();
-	$build_src = build_iframe_src( $a );
-
-	if ( 'youtube' === $a['provider'] ) {
-
-		$yt_v    = Common\get_url_arg( $a['url'], 'v' );
-		$yt_list = Common\get_url_arg( $a['url'], 'list' );
-
-		if ( Common\contains( $a['src'], '/embed/videoseries?' ) &&
-			$yt_v
-		) {
-			$a['src'] = str_replace( '/embed/videoseries?', "/embed/$yt_v?", $a['src'] );
-		}
-
-		if ( $yt_list ) {
-			$a['src']  = remove_query_arg( 'feature', $a['src'] );
-			$a['src']  = add_query_arg( 'list', $yt_list, $a['src'] );
-			$build_src = add_query_arg( 'list', $yt_list, $build_src );
-		}
-	}
-
-	if ( 'vimeo' === $a['provider'] ) {
-		$compare_src = remove_query_arg(
-			'app_id', // TODO check why vimeo adds it and it can be removed,
-			str_replace(
-				'&amp;',
-				'&',
-				$a['src']
-			)
-		);
-	} else {
-		$compare_src = $a['src'];
-	}
+	$options      = options();
+	$a['src_gen'] = build_iframe_src( $a );
+	$a            = special_iframe_src_mods( $a );
+	$compare_src  = $a['src'];
 
 	if ( $a['src'] &&
-		( $build_src !== $compare_src )
+		( $a['src'] !== $a['src_gen'] )
 	) {
 		$msg = sprintf(
 			'src mismatch <br>url: %s<br>src in: %s<br>src gen: %s',
 			$a['url'],
-			$compare_src,
-			$build_src
+			$a['src'],
+			$a['src_gen']
 		);
 
-		$a['errors']->add( 'src-mismatch-1', $msg );
+		$a['errors']->add( 'info', $msg );
 	}
 
 	if ( ! $a['src'] ) {
-		$a['src'] = $build_src;
+		$a['src'] = $a['src_gen'];
 	}
 
 	$a['src'] = iframe_src_args( $a['src'], $a );
@@ -500,7 +508,11 @@ function build_iframe_src( array $a ) {
 
 			break;
 		case 'vimeo':
-			$src = add_query_arg( 'dnt', 1, $src );
+			$src         = add_query_arg( 'dnt', 1, $src );
+			$vimeo_appid = Common\get_url_arg( $a['src'], 'app_id' ); // TODO check why vimeo adds it and it can be removed,
+			if ( $vimeo_appid ) {
+				$src = add_query_arg( 'app_id', $vimeo_appid, $a['src_gen'] );
+			}
 			break;
 		case 'wistia':
 			$src = add_query_arg( 'dnt', 1, $src );
