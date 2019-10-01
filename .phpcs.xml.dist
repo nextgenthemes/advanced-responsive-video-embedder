@@ -5,7 +5,7 @@
 	<!-- Exclude files and folders. -->
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
-
+	<exclude-pattern>*/php/Common/Admin/EDD/*</exclude-pattern>
 	<!-- Pass some flags to PHPCS:
 		 p flag: Show progress of the run.
 		 s flag: Show sniff codes in all reports.
@@ -30,6 +30,7 @@
 	</rule>
 
 	<rule ref="WordPress-Extra">
+		<exclude name="Generic.PHP.DisallowShortOpenTag.EchoFound"/>
 		<exclude name="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma"/>
 		<exclude name="WordPress.Arrays.CommaAfterArrayItem.NoComma"/>
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
