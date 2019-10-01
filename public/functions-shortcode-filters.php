@@ -211,8 +211,7 @@ function arve_sc_filter_get_media_gallery_thumbnail( $atts ) {
 
 	} elseif ( arve_validate_url( $atts['thumbnail'] ) ) {
 
-		$atts['img_src']    = $atts['thumbnail'];
-		$atts['img_srcset'] = false;
+		$atts['img_src'] = $atts['thumbnail'];
 
 	} else {
 
