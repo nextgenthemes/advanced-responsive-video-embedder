@@ -192,8 +192,6 @@ function arve_video_or_iframe( $atts ) {
 
 	switch ( $atts['provider'] ) {
 
-		case 'veoh':
-			return arve_create_object( $atts );
 		case 'html5':
 			return arve_create_video_tag( $atts );
 		default:
@@ -221,18 +219,6 @@ function arve_create_iframe_tag( $a ) {
 }
 
 function arve_create_video_tag( $a ) {
-
-	$html = sprintf(
-		'<video%s>%s%s</video>',
-		arve_attr( $a['video_attr'] ),
-		$a['video_sources_html'],
-		$a['video_tracks_html']
-	);
-
-	return apply_filters( 'arve_video_tag', $html, $a, $a['video_attr'] );
-}
-
-function arve_create_object_tag( $a ) {
 
 	$html = sprintf(
 		'<video%s>%s%s</video>',
