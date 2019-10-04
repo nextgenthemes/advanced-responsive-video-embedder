@@ -400,14 +400,14 @@ function special_iframe_src_mods( array $a ) {
 			}
 			break;
 		case 'vimeo':
-			$parsed_url  = wp_parse_url( $url );
+			$parsed_url  = wp_parse_url( $a['url'] );
 			$vimeo_appid = Common\get_url_arg( $a['src'], 'app_id' ); // TODO check why vimeo adds it and it can be removed,
 
 			if ( $vimeo_appid ) {
 				$a['src_gen'] = add_query_arg( 'app_id', $vimeo_appid, $a['src_gen'] );
 			}
 
-			if ( ! empty( $parsed_url['fragment'] ) && Common\starts_with( 't', $parsed_url['fragment'] ) ) {
+			if ( ! empty($parsed_url['fragment']) && Common\starts_with($parsed_url['fragment'], 't') ) {
 				$a['src']     .= '#' . $parsed_url['fragment'];
 				$a['src_gen'] .= '#' . $parsed_url['fragment'];
 			}
@@ -431,7 +431,6 @@ function sc_filter_iframe_src( array $a ) {
 	$options      = options();
 	$a['src_gen'] = build_iframe_src( $a );
 	$a            = special_iframe_src_mods( $a );
-	$compare_src  = $a['src'];
 
 	if ( $a['src'] &&
 		( $a['src'] !== $a['src_gen'] )
@@ -508,10 +507,14 @@ function build_iframe_src( array $a ) {
 
 			break;
 		case 'vimeo':
-			$src         = add_query_arg( 'dnt', 1, $src );
-			$vimeo_appid = Common\get_url_arg( $a['src'], 'app_id' ); // TODO check why vimeo adds it and it can be removed,
-			if ( $vimeo_appid ) {
-				$src = add_query_arg( 'app_id', $vimeo_appid, $a['src_gen'] );
+			$src = add_query_arg( 'dnt', 1, $src );
+			if ( $a['src'] ) {
+				$a['src'] = str_replace( '&amp;', '&', $a['src'] );
+				$vimeo_appid = Common\get_url_arg( $a['src'], 'app_id' );
+				if ( $vimeo_appid ) {
+					$src = add_query_arg( 'app_id', $vimeo_appid, $src );
+					$src = str_replace( '&', '&amp;', $a['src'] );;
+				}
 			}
 			break;
 		case 'wistia':
@@ -542,10 +545,6 @@ function iframe_src_args( $src, array $a ) {
 
 	$parameters = wp_parse_args( $parameters, $option_parameters );
 	$src        = add_query_arg( $parameters, $src );
-
-	if ( 'vimeo' === $a['provider'] && $a['start'] ) {
-		$src .= '#t=' . (int) $a['start'];
-	}
 
 	return $src;
 }
