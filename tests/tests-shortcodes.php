@@ -13,6 +13,17 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		update_option( 'arve_options_main', $options );
 	}
 
+	public function test_vimeo_time_and_sandbox() {
+
+		$html = shortcode( [
+			'url' => 'https://vimeo.com/124400795#t=33',
+		] );
+
+		$this->assertNotContains( 'Error', $html );
+		$this->assertRegExp( '@src="https://player.vimeo.com/.*#t=33"@', $html );
+		$this->assertContains( 'allow-forms', $html );
+	}
+
 	public function test_api_data() {
 
 		$properties = get_host_properties();
@@ -64,17 +75,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertNotContains( 'sandbox="', shortcode( $attr ), $attr['url'] );
 	}
 
-	public function test_sandbox_vimeo() {
 
-		$attr = array( 'url' => 'https://vimeo.com/214300845' );
-
-		$this->assertNotContains( 'Error', shortcode( $attr ) );
-		$this->assertContains(
-			'allow-forms',
-			shortcode( $attr ),
-			$attr['url']
-		);
-	}
 
 	public function test_thumbnails() {
 
@@ -94,7 +95,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'title'     => 'Something',
 		];
 
-		$this->assertRegExp( '#<meta itemprop="thumbnailUrl" content=".*test-attachment\.jpg#', shortcode( $attr ) );
+		$this->assertRegExp( '#<meta itemprop="thumbnailUrl" content=".*test-attachment#', shortcode( $attr ) );
 
 		$attr = [
 			'url'       => 'https://example.com/video2.mp4',
