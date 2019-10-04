@@ -148,6 +148,7 @@ function shortcode_pairs() {
 			'playsinline'       => 'y',
 			'preload'           => 'metadata',
 			'src'               => null,
+			'img_srcset'        => null,
 			'av1mp4'            => null,
 			'mp4'               => null,
 			'm4v'               => null,
