@@ -175,6 +175,38 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		}
 	}
 
+	public function test_align_maxwidth_default() {
+
+		$output = shortcode(
+			[
+				'align'       => 'left',
+				'url'         => 'https://example.com',
+			]
+		);
+		$this->assertNotContains( 'Error', $output );
+		$this->assertContains( 'alignleft', $output );
+		$this->assertContains( 'style="max-width:400px;"', $output );
+
+		$output = shortcode(
+			[
+				'align'       => 'right',
+				'url'         => 'https://example.com',
+			]
+		);
+		$this->assertNotContains( 'Error', $output );
+		$this->assertContains( 'alignright', $output );
+		$this->assertContains( 'style="max-width:400px;"', $output );
+
+		$output = shortcode(
+			[
+				'align'       => 'center',
+				'url'         => 'https://example.com',
+			]
+		);
+		$this->assertNotContains( 'Error', $output );
+		$this->assertContains( 'aligncenter', $output );
+	}
+
 	public function test_attr() {
 
 		$output = shortcode(
