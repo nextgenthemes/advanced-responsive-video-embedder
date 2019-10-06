@@ -35,7 +35,7 @@ function init() {
 
 	$ns = __NAMESPACE__;
 
-	add_option( 'arve_install_date', current_time( 'timestamp' ) );
+	add_option( 'arve_install_date', time() );
 
 	require_once PLUGIN_DIR . '/vendor/autoload.php';
 	require_once PLUGIN_DIR . '/php/Common/init.php';
