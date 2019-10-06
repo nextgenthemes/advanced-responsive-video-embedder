@@ -66,31 +66,32 @@ function add_attr_to_asset( $type, array $args ) {
 		function( $html, $handle ) use ( $type, $args ) {
 
 			if ( $args['handle'] !== $handle ) {
+				return $html;
+			}
 
-				$tag      = ( 'style' === $type ) ? 'link' : 'script';
-				$tag_open = sprintf( '<%s ', tag_escape( $tag ) );
+			$tag      = ( 'style' === $type ) ? 'link' : 'script';
+			$tag_open = sprintf( '<%s ', tag_escape( $tag ) );
 
-				if ( $args['integrity'] ) {
-					$html = str_replace(
-						$tag_open,
-						sprintf( '%sintegrity="%s" crossorigin="anonymous" ', $tag_open, esc_attr( $args['integrity'] ) ),
-						$html
-					);
-				}
-				if ( $args['async'] ) {
-					$html = str_replace(
-						$tag_open,
-						$tag_open . 'async="async" ',
-						$html
-					);
-				}
-				if ( $args['defer'] ) {
-					$html = str_replace(
-						$tag_open,
-						$tag_open . 'defer="defer" ',
-						$html
-					);
-				}
+			if ( $args['integrity'] ) {
+				$html = str_replace(
+					$tag_open,
+					sprintf( $tag_open . 'integrity="%s" crossorigin="anonymous" ', esc_attr( $args['integrity'] ) ),
+					$html
+				);
+			}
+			if ( $args['async'] ) {
+				$html = str_replace(
+					$tag_open,
+					$tag_open . 'async="async" ',
+					$html
+				);
+			}
+			if ( $args['defer'] ) {
+				$html = str_replace(
+					$tag_open,
+					$tag_open . 'defer="defer" ',
+					$html
+				);
 			}
 
 			return $html;
