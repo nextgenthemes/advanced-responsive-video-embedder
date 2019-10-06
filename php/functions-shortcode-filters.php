@@ -93,15 +93,13 @@ function sc_filter_maxwidth( array $a ) {
 
 	if ( empty( $a['maxwidth'] ) ) {
 
-		if ( empty( $options['maxwidth'] ) ) {
+		if ( in_array( $a['align'], [ 'left', 'right', 'center' ], true ) ) {
+			$a['maxwidth'] = (int) $options['align_maxwidth'];
+		} elseif ( empty( $options['maxwidth'] ) ) {
 			$a['maxwidth'] = (int) empty( $GLOBALS['content_width'] ) ? DEFAULT_MAXWIDTH : $GLOBALS['content_width'];
 		} else {
 			$a['maxwidth'] = (int) $options['maxwidth'];
 		}
-	}
-
-	if ( $a['maxwidth'] < 100 && in_array( $a['align'], [ 'left', 'right', 'center' ], true ) ) {
-		$a['maxwidth'] = (int) $options['align_maxwidth'];
 	}
 
 	return $a;
