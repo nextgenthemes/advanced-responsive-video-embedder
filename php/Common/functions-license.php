@@ -34,3 +34,36 @@ function get_defined_key( $slug ) {
 		return false;
 	}
 }
+
+function validate_license( $input ) {
+
+	if ( ! is_array( $input ) ) {
+		return sanitize_text_field( $input );
+	}
+
+	$product     = $input['product'];
+	$defined_key = Common\get_defined_key( $product );
+
+	if ( $defined_key ) {
+		$option_key = $defined_key;
+		$key        = $defined_key;
+	} else {
+		$key        = sanitize_text_field( $input['key'] );
+		$option_key = Common\get_key( $product );
+	}
+
+	if ( ( $key !== $option_key ) || isset( $input['activate_key'] ) ) {
+
+		api_update_key_status( $product, $key, 'activate' );
+
+	} elseif ( isset( $input['deactivate_key'] ) ) {
+
+		api_update_key_status( $product, $key, 'deactivate' );
+
+	} elseif ( isset( $input['check_key'] ) ) {
+
+		api_update_key_status( $product, $key, 'check' );
+	}
+
+	return $key;
+}

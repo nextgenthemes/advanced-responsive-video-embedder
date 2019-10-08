@@ -30,7 +30,7 @@ class NoticeFactory {
 
 	public function action_admin_notices() {
 
-		if ( apply_filters( 'nj_debug_admin_message', false ) ) {
+		if ( ! empty( $_GET['ngt-notice-reset'] ) ) {
 			delete_user_meta( get_current_user_id(), $this->notice_id );
 			delete_transient( $this->notice_id );
 		}

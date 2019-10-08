@@ -24,7 +24,7 @@ function register( array $args ) {
 
 	$args = wp_parse_args( $args, $defaults );
 
-	if ( apply_filters( 'nextgenthemes/use_cdn', true ) && ! empty( $args['cdn_src'] ) ) {
+	if ( ! empty( $args['cdn_src'] ) && nextgenthemes_settings_instance()->options['cdn'] ) {
 		$args['src'] = $args['cdn_src'];
 		$args['ver'] = null;
 	}

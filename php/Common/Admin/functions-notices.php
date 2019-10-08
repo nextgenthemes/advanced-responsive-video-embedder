@@ -6,7 +6,7 @@ use \Nextgenthemes\ARVE\Common;
 // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
 function activation_notices() {
 
-	$products = get_products();
+	$products = Common\get_products();
 
 	foreach ( $products as $key => $value ) {
 
