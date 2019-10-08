@@ -200,7 +200,6 @@ class Settings {
 
 		// The HTML Document title for our settings page.
 		$page_title = $this->settings_page_title;
-
 		// The menu item title for our settings page.
 		$menu_title = $this->menu_title;
 		// The user permission required to view our settings page.
@@ -208,8 +207,7 @@ class Settings {
 		// The URL slug for our settings page.
 		$menu_slug = $this->slugged_namespace;
 		// The callback function for rendering our settings page HTML.
-		$callback = [ $this, 'print_admin_page' ];
-
+		$callback    = [ $this, 'print_admin_page' ];
 		$parent_slug = $this->menu_parent_slug;
 
 		add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $callback );
