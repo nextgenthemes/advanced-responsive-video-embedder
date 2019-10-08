@@ -8,7 +8,7 @@ function enqueue( array $args ) {
 
 function register( array $args ) {
 
-	$defaults = array(
+	$defaults = [
 		'async'     => false,
 		'cdn_src'   => '',
 		'defer'     => false,
@@ -20,7 +20,7 @@ function register( array $args ) {
 		'media'     => 'all',
 		'src'       => '',
 		'ver'       => null,
-	);
+	];
 
 	$args = wp_parse_args( $args, $defaults );
 

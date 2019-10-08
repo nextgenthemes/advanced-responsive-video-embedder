@@ -4,11 +4,11 @@ namespace Nextgenthemes\ARVE;
 function build_html( array $a ) {
 
 	return build_tag(
-		array(
+		[
 			'name'       => 'arve',
 			'tag'        => 'div',
 			'inner-html' => arve_embed( arve_embed_inner_html( $a ), $a ) . promote_link( $a['arve_link'] ),
-			'attr'       => array(
+			'attr'       => [
 				'class'         => empty( $a['align'] ) ? 'arve' : "arve align{$a['align']}",
 				'data-mode'     => $a['mode'],
 				'data-provider' => $a['provider'],
@@ -17,8 +17,8 @@ function build_html( array $a ) {
 				// Schema.org
 				'itemscope'     => '',
 				'itemtype'      => 'http://schema.org/VideoObject'
-			)
-		),
+			]
+		],
 		$a
 	);
 }
@@ -40,7 +40,7 @@ function build_iframe_tag( array $a ) {
 			'name'       => 'iframe',
 			'tag'        => 'iframe',
 			'inner-html' => '',
-			'attr'       => array(
+			'attr'       => [
 				'allow'           => 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture',
 				'allowfullscreen' => '',
 				'class'           => ( 'wistia' === $a['provider'] ) ? 'arve-iframe fitvidsignore wistia_embed' : 'arve-iframe fitvidsignore',
@@ -51,7 +51,7 @@ function build_iframe_tag( array $a ) {
 				'src'             => $a['src'],
 				'width'           => empty( $a['width'] ) ? false : $a['width'],
 				'height'          => empty( $a['height'] ) ? false : $a['height']
-			),
+			],
 		],
 		$a
 	);
@@ -192,9 +192,11 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 
 function arve_embed_inner_html( array $a ) {
 
-	$html = '';
 
-	if ( ! empty( $a['sources'] ) ) {
+	$html    = '';
+	$schema  = get_options()['schema'];
+
+	if (  ! empty( $a['sources'] ) ) {
 		$first_source = get_first_array_value( $a['sources'] );
 		$html        .= sprintf( '<meta itemprop="contentURL" content="%s">', esc_attr( $first_source['src'] ) );
 	}
@@ -214,45 +216,57 @@ function arve_embed_inner_html( array $a ) {
 	$html .= build_rating_meta( $a );
 
 	if ( ! empty( $a['img_src'] ) ) {
-		$html .= build_tag(
-			array(
+
+		$tag = [ 'name' => 'thumbnail' ];
+
+		if ( $schema ) {
+			$tag = [
 				'name' => 'thumbnail',
 				'tag'  => 'meta',
-				'attr' => array(
+				'attr' => [
 					'itemprop' => 'thumbnailUrl',
 					'content'  => $a['img_src'],
-				),
-			),
-			$a
-		);
+				],
+			];
+		}
+
+		$html .= build_tag( $tag, $a );
 	}
 
 	if ( $a['title'] ) {
-		$html .= build_tag(
-			array(
+
+		$tag = [ 'name' => 'title' ];
+
+		if ( $schema ) {
+			$tag = [
 				'name' => 'title',
 				'tag'  => 'meta',
-				'attr' => array(
+				'attr' => [
 					'itemprop' => 'name',
 					'content'  => trim( $a['title'] ),
-				)
-			),
-			$a
-		);
+				]
+			];
+		}
+
+		$html .= build_tag( $tag, $a );
 	}
 
 	if ( $a['description'] ) {
-		$html .= build_tag(
-			array(
+
+		$tag = [ 'name' => 'description' ];
+
+		if ( $schema ) {
+			$tag = [
 				'name' => 'description',
 				'tag'  => 'meta',
-				'attr' => array(
+				'attr' => [
 					'itemprop' => 'description',
 					'content'  => trim( $a['description'] ),
-				)
-			),
-			$a
-		);
+				]
+			];
+		}
+
+		$html .= build_tag( $tag, $a );
 	}
 
 	$html .= build_tag( [ 'name' => 'button' ], $a );
@@ -335,7 +349,7 @@ function arve_embed( $html, array $a ) {
 	$ratio_div = '';
 
 	if ( $a['aspect_ratio'] ) {
-		$class .= ' arve-embed--responsive';
+		$class .= ' arve-embed--has-aspect-ratio';
 	}
 
 	if ( '16:9' === $a['aspect_ratio'] ) {

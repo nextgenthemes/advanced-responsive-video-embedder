@@ -405,7 +405,7 @@ function special_iframe_src_mods( array $a ) {
 				$a['src_gen'] = add_query_arg( 'app_id', $vimeo_appid, $a['src_gen'] );
 			}
 
-			if ( ! empty($parsed_url['fragment']) && Common\starts_with($parsed_url['fragment'], 't') ) {
+			if ( ! empty( $parsed_url['fragment'] ) && Common\starts_with( $parsed_url['fragment'], 't' ) ) {
 				$a['src']     .= '#' . $parsed_url['fragment'];
 				$a['src_gen'] .= '#' . $parsed_url['fragment'];
 			}
@@ -507,11 +507,12 @@ function build_iframe_src( array $a ) {
 		case 'vimeo':
 			$src = add_query_arg( 'dnt', 1, $src );
 			if ( $a['src'] ) {
-				$a['src'] = str_replace( '&amp;', '&', $a['src'] );
+				$a['src']    = str_replace( '&amp;', '&', $a['src'] );
 				$vimeo_appid = Common\get_url_arg( $a['src'], 'app_id' );
 				if ( $vimeo_appid ) {
 					$src = add_query_arg( 'app_id', $vimeo_appid, $src );
-					$src = str_replace( '&', '&amp;', $a['src'] );;
+					$src = str_replace( '&', '&amp;', $a['src'] );
+
 				}
 			}
 			break;

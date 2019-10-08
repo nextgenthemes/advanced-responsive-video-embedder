@@ -31,19 +31,19 @@ function init_plugin_updater( $product ) {
 	new EDD\PluginUpdater(
 		apply_filters( 'nextgenthemes_api_url', 'https://nextgenthemes.com' ),
 		$product['file'],
-		array(
+		[
 			'version' => $product['version'],
 			'license' => Common\get_key( $product['slug'] ),
 			'item_id' => $product['id'],
 			'author'  => $product['author'],
-		)
+		]
 	);
 }
 
 function init_theme_updater( $product ) {
 
 	new EDD\ThemeUpdater(
-		array(
+		[
 			'remote_api_url' => 'https://nextgenthemes.com',
 			'version'        => $product['version'],
 			'license'        => Common\get_key( $product['slug'] ),
@@ -52,8 +52,8 @@ function init_theme_updater( $product ) {
 			'theme_slug'     => $product['slug'],
 			'download_id'    => $product['download_id'], // Optional, used for generating a license renewal link
 			#'renew_url'     => $product['renew_link'], // Optional, allows for a custom license renewal link
-		),
-		array(
+		],
+		[
 			'theme-license'             => __( 'Theme License', 'advanced-responsive-video-embedder' ),
 			'enter-key'                 => __( 'Enter your theme license key.', 'advanced-responsive-video-embedder' ),
 			'license-key'               => __( 'License Key', 'advanced-responsive-video-embedder' ),
@@ -80,7 +80,7 @@ function init_theme_updater( $product ) {
 			'update-notice'             => __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update.", 'advanced-responsive-video-embedder' ),
 			// phpcs:ignore
 			'update-available'          => __( '<strong>%1$s %2$s</strong> is available. <a href="%3$s" class="thickbox" title="%4s">Check out what\'s new</a> or <a href="%5$s"%6$s>update now</a>.', 'advanced-responsive-video-embedder' ),
-		)
+		]
 	);
 }
 
@@ -95,12 +95,12 @@ function api_action( $item_id, $key, $action = 'check' ) {
 		'https://nextgenthemes.com',
 		[
 			'timeout' => 10,
-			'body'    => array(
+			'body'    => [
 				'edd_action' => $action . '_license',
 				'license'    => sanitize_text_field( $key ),
 				'item_id'    => $item_id,
 				'url'        => home_url()
-			)
+			]
 		]
 	);
 

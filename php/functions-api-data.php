@@ -20,7 +20,7 @@ function video_thumbnails( $video_id ) {
 		# users/2435599/albums/4962924/videos
 		# "/users/{$user_id}/albums/{$album_id}",
 		"/videos/{$video_id}/pictures",
-		array( 'per_page' => 100 ),
+		[ 'per_page' => 100 ],
 		'GET'
 	);
 

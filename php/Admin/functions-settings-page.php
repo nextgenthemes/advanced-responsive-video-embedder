@@ -24,7 +24,7 @@ function settings_page_content() {
 
 function echo_active_plugins() {
 	$allplugins     = get_plugins();
-	$active_plugins = get_option( 'active_plugins', array() );
+	$active_plugins = get_option( 'active_plugins', [] );
 
 	echo "ACTIVE PLUGINS:\n";
 	foreach ( $allplugins as $plugin_path => $plugin ) {
@@ -43,7 +43,7 @@ function echo_network_active_plugins() {
 
 	echo "NETWORK ACTIVE PLUGINS: \n";
 	$allplugins     = wp_get_active_network_plugins();
-	$active_plugins = get_site_option( 'active_sitewide_plugins', array() );
+	$active_plugins = get_site_option( 'active_sitewide_plugins', [] );
 	foreach ( $allplugins as $plugin_path ) {
 		$plugin_base = plugin_basename( $plugin_path );
 		// If the plugin isn't active, don't show it.

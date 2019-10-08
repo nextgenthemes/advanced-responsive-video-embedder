@@ -88,7 +88,7 @@ function add_dashboard_widget() {
 		// (which has our new widget already but at the end).
 		$normal_dashboard = $GLOBALS['wp_meta_boxes']['dashboard']['normal']['core'];
 		// Backup and delete our new dashboard widget from the end of the array.
-		$arve_widget_backup = array( 'arve_dashboard_widget' => $normal_dashboard['arve_dashboard_widget'] );
+		$arve_widget_backup = [ 'arve_dashboard_widget' => $normal_dashboard['arve_dashboard_widget'] ];
 		unset( $normal_dashboard['arve_dashboard_widget'] );
 		// Merge the two arrays together so our widget is at the beginning.
 		$sorted_dashboard = array_merge( $arve_widget_backup, $normal_dashboard );
@@ -174,11 +174,11 @@ function register_shortcode_ui() {
 
 	shortcode_ui_register_for_shortcode(
 		'arve',
-		array(
+		[
 			'label'         => esc_html( 'ARVE' ),
 			'listItemImage' => 'dashicons-format-video',
 			'attrs'         => $attrs,
-		)
+		]
 	);
 }
 
@@ -196,10 +196,10 @@ function input( $args ) {
 		$out .= sprintf(
 			'<a %s>%s</a>',
 			Common\attr(
-				array(
+				[
 					'data-image-upload' => sprintf( '[name="%s"]', $args['input_attr']['name'] ),
 					'class'             => 'button-secondary',
-				)
+				]
 			),
 			__( 'Upload Image', 'advanced-responsive-video-embedder' )
 		);

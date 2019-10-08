@@ -27,9 +27,9 @@ activate_plugin( 'advanced-responsive-video-embedder/advanced-responsive-video-e
 $GLOBALS['current_user'] = new WP_User( 1 );
 $GLOBALS['current_user']->set_role( 'administrator' );
 wp_update_user(
-	array(
+	[
 		'ID'         => 1,
 		'first_name' => 'Admin',
 		'last_name'  => 'User'
-	)
+	]
 );

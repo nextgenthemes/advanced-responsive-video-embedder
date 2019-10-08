@@ -37,7 +37,7 @@ function nextgenthemes_settings() {
 	}
 
 	foreach ( $products as $key => $value ) {
-		$settings[ $key . '_beta'] = [
+		$settings[ $key . '_beta' ] = [
 			'default' => false,
 			'option'  => true,
 			'tag'     => 'main',
@@ -68,32 +68,32 @@ function nextgenthemes_settings() {
 
 function get_products() {
 
-	$products = array(
-		'arve_pro'          => array(
+	$products = [
+		'arve_pro'          => [
 			'namespace' => 'ARVE\Pro',
 			'name'      => 'ARVE Pro',
 			'id'        => 1253,
 			'type'      => 'plugin',
 			'author'    => 'Nicolas Jonas',
 			'url'       => 'https://nextgenthemes.com/plugins/arve-pro/',
-		),
-		'arve_amp'          => array(
+		],
+		'arve_amp'          => [
 			'namespace' => 'ARVE\AMP',
 			'name'      => 'ARVE AMP',
 			'id'        => 16941,
 			'type'      => 'plugin',
 			'author'    => 'Nicolas Jonas',
 			'url'       => 'https://nextgenthemes.com/plugins/arve-amp/',
-		),
-		'arve_random_video' => array(
+		],
+		'arve_random_video' => [
 			'namespace' => 'ARVE\RandomVideo',
 			'name'      => 'ARVE Random Video',
 			'id'        => 31933,
 			'type'      => 'plugin',
 			'author'    => 'Nicolas Jonas',
 			'url'       => 'https://nextgenthemes.com/plugins/arve-random-video/',
-		)
-	);
+		]
+	];
 
 	$products = apply_filters( 'nextgenthemes_products', $products );
 	#$plugins  = get_plugins();
@@ -159,19 +159,19 @@ function init_plugin_updater( $product ) {
 	new EDD\PluginUpdater(
 		apply_filters( 'nextgenthemes_api_url', 'https://nextgenthemes.com' ),
 		$product['file'],
-		array(
+		[
 			'version' => $product['version'],
 			'license' => get_key( $product['slug'] ),
 			'item_id' => $product['id'],
 			'author'  => $product['author'],
-		)
+		]
 	);
 }
 
 function init_theme_updater( $product ) {
 
 	new EDD\ThemeUpdater(
-		array(
+		[
 			'remote_api_url' => 'https://nextgenthemes.com',
 			'version'        => $product['version'],
 			'license'        => get_key( $product['slug'] ),
@@ -180,8 +180,8 @@ function init_theme_updater( $product ) {
 			'theme_slug'     => $product['slug'],
 			'download_id'    => $product['download_id'], // Optional, used for generating a license renewal link
 			#'renew_url'     => $product['renew_link'], // Optional, allows for a custom license renewal link
-		),
-		array(
+		],
+		[
 			'theme-license'             => __( 'Theme License', 'advanced-responsive-video-embedder' ),
 			'enter-key'                 => __( 'Enter your theme license key.', 'advanced-responsive-video-embedder' ),
 			'license-key'               => __( 'License Key', 'advanced-responsive-video-embedder' ),
@@ -208,7 +208,7 @@ function init_theme_updater( $product ) {
 			'update-notice'             => __( "Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update.", 'advanced-responsive-video-embedder' ),
 			// phpcs:ignore
 			'update-available'          => __( '<strong>%1$s %2$s</strong> is available. <a href="%3$s" class="thickbox" title="%4s">Check out what\'s new</a> or <a href="%5$s"%6$s>update now</a>.', 'advanced-responsive-video-embedder' ),
-		)
+		]
 	);
 }
 
@@ -223,12 +223,12 @@ function api_action( $item_id, $key, $action = 'check' ) {
 		'https://nextgenthemes.com',
 		[
 			'timeout' => 10,
-			'body'    => array(
+			'body'    => [
 				'edd_action' => $action . '_license',
 				'license'    => sanitize_text_field( $key ),
 				'item_id'    => $item_id,
 				'url'        => home_url()
-			)
+			]
 		]
 	);
 
