@@ -30,7 +30,7 @@ $options = arve_get_options();
 
 			<h3><a href="https://nextgenthemes.com/plugins/arve-pro/">Pro Addon</a></h3>
 
-			<p>Limited time price experiment: <strong><big>44% off</big></strong> first year with discount code <code>settingspage</code></p>
+			<strong><big>10% off</big></strong> first year with discount code <code>settingspage</code></p>
 
 			<p>This plugin is financed by purchases of the <a href="https://nextgenthemes.com/plugins/arve-pro/">Pro Addon</a>. The development and support of this plugins has become a job for me so I hope you understand that I can not make all features gratis and that you <a href="https://nextgenthemes.com/plugins/arve-pro/">purchase it</a> to get extra features and support the development.</p>
 

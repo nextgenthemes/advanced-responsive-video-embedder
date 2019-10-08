@@ -68,7 +68,7 @@ This plugin is financed by sales of the [Pro Addon](https://nextgenthemes.com/pl
 
 ### [Pro Addon](https://nextgenthemes.com/plugins/arve-pro/) ###
 
-Limited time price experiment: **44% off** first year with discount code `wporg`
+**10% off** first year with discount code `wporg`
 
 *   **Disable links in embeds (killer feature!)**<br>
     For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. **Prevent video hosts to lead your visitors away from your site!** Note this also breaks sharing functionality and is not possible when the provider requires flash. Try it on [this page](https://nextgenthemes.com/plugins/arve-pro/). Right click on links still works.
@@ -157,6 +157,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### 2019-10-09 - 8.10.13 ###
+
+* Removed outdated link in widget.
 
 ### 2019-10-01 - 8.10.12 ###
 

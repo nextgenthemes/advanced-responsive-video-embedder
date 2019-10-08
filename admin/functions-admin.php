@@ -44,8 +44,6 @@ function arve_display_pro_ad() {
 function arve_widget_text() {
 
 	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-	printf( '<big><strong><a href="%s">Hiring a Marketing Person</a></strong></big>', 'https://nextgenthemes.com/hiring-a-marketing-person/' );
-
 	echo '<p>';
 	printf( '<a href="%s">Documentation</a>, ', 'https://nextgenthemes.com/plugins/arve/documentation/' );
 	printf( '<a href="%s">Support</a>, ', 'https://nextgenthemes.com/support/' );

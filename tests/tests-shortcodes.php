@@ -61,7 +61,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			'title'     => 'Something',
 		);
 
-		$this->assertRegExp( '#<meta itemprop="thumbnailUrl" content=".*test-attachment\.jpg#', arve_shortcode_arve( $attr ) );
+		$this->assertRegExp( '#<meta itemprop="thumbnailUrl" content=".*test-attachment#', arve_shortcode_arve( $attr ) );
 
 		$attr['thumbnail'] = 'https://example.com/image.jpg';
 		$this->assertContains( '<meta itemprop="thumbnailUrl" content="https://example.com/image.jpg"', arve_shortcode_arve( $attr ) );
