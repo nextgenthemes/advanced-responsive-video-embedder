@@ -10,17 +10,17 @@ function action_admin_init_setup_messages() {
 
 	if ( defined( 'ARVE_PRO_VERSION' ) ) {
 		$pro_version = ARVE_PRO_VERSION;
-	} elseif ( defined( '\Nextgenthemes\ARVE\pro\VERSION' ) ) {
-		$pro_version = \Nextgenthemes\ARVE\pro\VERSION;
+	} elseif ( defined( '\Nextgenthemes\ARVE\Pro\VERSION' ) ) {
+		$pro_version = \Nextgenthemes\ARVE\Pro\VERSION;
 	}
 
 	if ( $pro_version && version_compare( ARVE\PRO_VERSION_REQUIRED, $pro_version, '>' ) ) {
 
 		$msg = sprintf(
 			// Translators: %1$s Version
-			__( 'Your ARVE Pro Addon is outdated, you need version %1$s or later. If you have setup your license <a href="%2$s">here</a> semi auto updates (Admin panel notice and auto install on confirmation) should work again. If not please <a href="%3$s">report it</a> and manually update as <a href="%4$s">described here.</a>', 'advanced-responsive-video-embedder' ),
+			__( 'Your ARVE Pro Addon is outdated, you need version %1$s or later. If you have setup your license <a href="%2$s">here</a> semi auto updates should work (Admin panel notice and auto install on confirmation). If not please <a href="%3$s">report it</a> and manually update as <a href="%4$s">described here.</a>', 'advanced-responsive-video-embedder' ),
 			ARVE\PRO_VERSION_REQUIRED,
-			esc_url( get_admin_url() . 'admin.php?page=nextgenthemes-licenses' ),
+			esc_url( get_admin_url() . 'admin.php?page=nextgenthemes_licenses' ),
 			'https://nextgenthemes.com/support/',
 			'https://nextgenthemes.com/plugins/arve/documentation/installing-and-license-management/'
 		);
