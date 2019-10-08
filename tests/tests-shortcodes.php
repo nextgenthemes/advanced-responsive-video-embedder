@@ -15,18 +15,35 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function test_vimeo_time_and_sandbox() {
 
-		$html = shortcode( [
-			'url' => 'https://vimeo.com/124400795#t=33',
-		] );
+		$html = shortcode(
+			[
+				'url' => 'https://vimeo.com/124400795#t=33',
+			]
+		);
 
 		$this->assertNotContains( 'Error', $html );
 		$this->assertRegExp( '@src="https://player.vimeo.com/.*#t=33"@', $html );
 		$this->assertContains( 'allow-forms', $html );
 	}
 
+	public function logfile( $msg, $file ) {
+		$msg = print_r( $msg, true );
+		error_log( $msg . PHP_EOL, 3, "$file.log" );
+	}
+
+	public function oembed_log( $a ) {
+		if ( $a['oembed_data'] ) {
+			$this->logfile( $a['provider'], __FILE__ );
+			$this->logfile( $a['oembed_data'], __FILE__ );
+		}
+		return $a;
+	}
+
 	public function test_api_data() {
 
 		$properties = get_host_properties();
+
+		add_filter( 'shortcode_atts_arve', [ $this, 'oembed_log' ], 999 );
 
 		foreach ( $properties as $provider => $v ) :
 
@@ -39,10 +56,10 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 			foreach ( $v['tests'] as $key => $test ) {
 
-				$attr = array(
+				$attr = [
 					'url'  => $test['url'],
 					'mode' => 'normal',
-				);
+				];
 
 				$this->assertNotContains( 'Error', shortcode( $attr ) );
 
@@ -179,8 +196,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$output = shortcode(
 			[
-				'align'       => 'left',
-				'url'         => 'https://example.com',
+				'align' => 'left',
+				'url'   => 'https://example.com',
 			]
 		);
 		$this->assertNotContains( 'Error', $output );
@@ -189,8 +206,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$output = shortcode(
 			[
-				'align'       => 'right',
-				'url'         => 'https://example.com',
+				'align' => 'right',
+				'url'   => 'https://example.com',
 			]
 		);
 		$this->assertNotContains( 'Error', $output );
@@ -199,8 +216,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$output = shortcode(
 			[
-				'align'       => 'center',
-				'url'         => 'https://example.com',
+				'align' => 'center',
+				'url'   => 'https://example.com',
 			]
 		);
 		$this->assertNotContains( 'Error', $output );
