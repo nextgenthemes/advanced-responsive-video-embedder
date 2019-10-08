@@ -6,15 +6,14 @@ function sc_filter_set_wrapper_id( array $a ) {
 	static $wrapper_ids = [];
 
 	foreach ( [
-		'url',
 		'src',
+		'url',
 		'id',
 		'webm',
 		'mp4',
 		'ogv',
 		'm4v',
-		'random_video_url',
-		'webtorrent'
+		'webtorrent',
 	] as $att ) {
 
 		if ( ! empty( $a[ $att ] ) && is_string( $a[ $att ] ) ) {
