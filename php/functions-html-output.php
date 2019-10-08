@@ -192,28 +192,29 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 
 function arve_embed_inner_html( array $a ) {
 
+	$html   = '';
+	$schema = options()['schema'];
 
-	$html    = '';
-	$schema  = get_options()['schema'];
+	if ( $schema ) :
+		if ( ! empty( $a['sources'] ) ) {
+			$first_source = get_first_array_value( $a['sources'] );
+			$html        .= sprintf( '<meta itemprop="contentURL" content="%s">', esc_attr( $first_source['src'] ) );
+		}
 
-	if (  ! empty( $a['sources'] ) ) {
-		$first_source = get_first_array_value( $a['sources'] );
-		$html        .= sprintf( '<meta itemprop="contentURL" content="%s">', esc_attr( $first_source['src'] ) );
-	}
+		if ( $a['src'] ) {
+			$html .= sprintf( '<meta itemprop="embedURL" content="%s">', esc_attr( $a['src'] ) );
+		}
 
-	if ( $a['src'] ) {
-		$html .= sprintf( '<meta itemprop="embedURL" content="%s">', esc_attr( $a['src'] ) );
-	}
+		if ( $a['upload_date'] ) {
+			$html .= sprintf( '<meta itemprop="uploadDate" content="%s">', esc_attr( $a['upload_date'] ) );
+		}
 
-	if ( $a['upload_date'] ) {
-		$html .= sprintf( '<meta itemprop="uploadDate" content="%s">', esc_attr( $a['upload_date'] ) );
-	}
+		if ( $a['duration'] ) {
+			$html .= sprintf( '<meta itemprop="duration" content="PT%s">', esc_attr( $a['duration'] ) );
+		}
 
-	if ( $a['duration'] ) {
-		$html .= sprintf( '<meta itemprop="duration" content="PT%s">', esc_attr( $a['duration'] ) );
-	}
-
-	$html .= build_rating_meta( $a );
+		$html .= build_rating_meta( $a );
+	endif;
 
 	if ( ! empty( $a['img_src'] ) ) {
 
