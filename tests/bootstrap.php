@@ -30,6 +30,6 @@ wp_update_user(
 	[
 		'ID'         => 1,
 		'first_name' => 'Admin',
-		'last_name'  => 'User'
+		'last_name'  => 'User',
 	]
 );

@@ -30,6 +30,7 @@ function ngt_remote_get_json( $url, array $args = [], $json_name = false ) {
 			return new \WP_Error(
 				'json-value-empty',
 				sprintf(
+					// Translators: 1 URL 2 JSON value
 					__( 'url: %1$s JSON value <code>%2$s</code> does not exist or is empty', 'advanced-responsive-video-embedder' ),
 					esc_url( $url ),
 					esc_html( $json_name )

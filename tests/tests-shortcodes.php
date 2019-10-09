@@ -2,9 +2,7 @@
 use function \Nextgenthemes\ARVE\shortcode;
 use function \Nextgenthemes\ARVE\get_host_properties;
 
-// phpcs:disable Squiz.PHP.CommentedOutCode.Found
-// phpcs:disable Squiz.Classes.ClassFileName.NoMatch
-// phpcs:disable Squiz.PHP.Classes.ValidClassName.NotCamelCaps
+// phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_Shortcode extends WP_UnitTestCase {
 
 	public function change_option( $key, $val ) {
@@ -185,7 +183,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			$output = shortcode(
 				[
 					'url'  => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
-					'mode' => $mode
+					'mode' => $mode,
 				]
 			);
 			$this->assertContains( 'Error', $output );
@@ -373,7 +371,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 				shortcode(
 					[
-						'url' => $test['url']
+						'url' => $test['url'],
 					]
 				);
 			}

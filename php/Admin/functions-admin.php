@@ -10,6 +10,7 @@ function action_admin_init_setup_messages() {
 
 	if ( defined( 'ARVE_PRO_VERSION' ) ) {
 		$pro_version = ARVE_PRO_VERSION;
+
 	} elseif ( defined( '\Nextgenthemes\ARVE\Pro\VERSION' ) ) {
 		$pro_version = \Nextgenthemes\ARVE\Pro\VERSION;
 	}
@@ -135,7 +136,8 @@ function add_media_button() {
 		__( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			'<p>This button can open a optional ARVE a Shortcode creation dialog. ARVE needs the <a href="%1$s">Shortcode UI plugin</a> active for this fuctionality.</p>
 
-			<p>The "Shortcake (Shortcode UI)" plugin also adds What You See Is What You Get functionality for ARVE Shortcodes to WordPress visual post editor. It is perfectly fine to pass on this and <a href="%2$s">manually</a> write shortcodes or don\'t use shortcodes at all, but it makes things easier.</p>'
+			<p>The "Shortcake (Shortcode UI)" plugin also adds What You See Is What You Get functionality for ARVE Shortcodes to WordPress visual post editor. It is perfectly fine to pass on this and <a href="%2$s">manually</a> write shortcodes or don\'t use shortcodes at all, but it makes things easier.</p>',
+			'advanced-responsive-video-embedder'
 		),
 		esc_url( network_admin_url( 'plugin-install.php?s=Shortcode+UI&tab=search&type=term' ) ),
 		esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/' )
@@ -322,7 +324,7 @@ function admin_enqueue_styles() {
 		[
 			'handle' => 'advanced-responsive-video-embedder',
 			'src'    => plugins_url( 'dist/css/arve-admin.css', ARVE\PLUGIN_FILE ),
-			'ver'    => Common\ver( ARVE\VERSION, 'dist/css/arve-admin.css', ARVE\PLUGIN_FILE )
+			'ver'    => Common\ver( ARVE\VERSION, 'dist/css/arve-admin.css', ARVE\PLUGIN_FILE ),
 		]
 	);
 }

@@ -12,7 +12,7 @@ function nextgenthemes_settings_instance() {
 				'namespace'           => 'nextgenthemes_licenses',
 				'settings'            => nextgenthemes_settings(),
 				'menu_title'          => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
-				'settings_page_title' => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' )
+				'settings_page_title' => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
 			]
 		);
 	}
@@ -41,6 +41,7 @@ function nextgenthemes_settings() {
 			'default' => false,
 			'option'  => true,
 			'tag'     => 'main',
+			// translators: Product name
 			'label'   => sprintf( esc_html__( '%s beta updates', 'advanced-responsive-video-embedder' ), $value['name'] ),
 			'type'    => 'boolean',
 		];
@@ -92,11 +93,10 @@ function get_products() {
 			'type'      => 'plugin',
 			'author'    => 'Nicolas Jonas',
 			'url'       => 'https://nextgenthemes.com/plugins/arve-random-video/',
-		]
+		],
 	];
 
 	$products = apply_filters( 'nextgenthemes_products', $products );
-	#$plugins  = get_plugins();
 
 	foreach ( $products as $key => $value ) :
 
@@ -124,16 +124,9 @@ function get_products() {
 		}
 
 		if ( defined( $file ) ) {
-			$products[ $key ]['file'] = constant( $file );
+			$products[ $key ]['file']   = constant( $file );
+			$products[ $key ]['active'] = true;
 		}
-
-		// if ( 'plugin' === $value['type'] ) {
-		//
-		// 	$file_slug = str_replace( '_', '-', $key );
-		// 	$products[ $key ]['active'] = is_plugin_active( "$file_slug/$file_slug.php" );
-		//
-		// 	#$products[ $key ]['installed'] = array_key_exists( "$file_slug/$file_slug.php", $plugins );
-		// }
 	endforeach;
 
 	return $products;
@@ -179,7 +172,7 @@ function init_theme_updater( $product ) {
 			'author'         => $product['author'],
 			'theme_slug'     => $product['slug'],
 			'download_id'    => $product['download_id'], // Optional, used for generating a license renewal link
-			#'renew_url'     => $product['renew_link'], // Optional, allows for a custom license renewal link
+			#'renew_url'     => $product['renew_link'], // Optional, allows for a custom license renewal link // phpcs:ignore
 		],
 		[
 			'theme-license'             => __( 'Theme License', 'advanced-responsive-video-embedder' ),
@@ -227,8 +220,8 @@ function api_action( $item_id, $key, $action = 'check' ) {
 				'edd_action' => $action . '_license',
 				'license'    => sanitize_text_field( $key ),
 				'item_id'    => $item_id,
-				'url'        => home_url()
-			]
+				'url'        => home_url(),
+			],
 		]
 	);
 

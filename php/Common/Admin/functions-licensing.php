@@ -99,8 +99,8 @@ function api_action( $item_id, $key, $action = 'check' ) {
 				'edd_action' => $action . '_license',
 				'license'    => sanitize_text_field( $key ),
 				'item_id'    => $item_id,
-				'url'        => home_url()
-			]
+				'url'        => home_url(),
+			],
 		]
 	);
 

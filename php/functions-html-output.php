@@ -16,8 +16,8 @@ function build_html( array $a ) {
 				'style'         => empty( $a['maxwidth'] ) ? false : sprintf( 'max-width:%dpx;', $a['maxwidth'] ),
 				// Schema.org
 				'itemscope'     => '',
-				'itemtype'      => 'http://schema.org/VideoObject'
-			]
+				'itemtype'      => 'http://schema.org/VideoObject',
+			],
 		],
 		$a
 	);
@@ -50,7 +50,7 @@ function build_iframe_tag( array $a ) {
 				'scrolling'       => 'no',
 				'src'             => $a['src'],
 				'width'           => empty( $a['width'] ) ? false : $a['width'],
-				'height'          => empty( $a['height'] ) ? false : $a['height']
+				'height'          => empty( $a['height'] ) ? false : $a['height'],
 			],
 		],
 		$a
@@ -245,7 +245,7 @@ function arve_embed_inner_html( array $a ) {
 				'attr' => [
 					'itemprop' => 'name',
 					'content'  => trim( $a['title'] ),
-				]
+				],
 			];
 		}
 
@@ -263,7 +263,7 @@ function arve_embed_inner_html( array $a ) {
 				'attr' => [
 					'itemprop' => 'description',
 					'content'  => trim( $a['description'] ),
-				]
+				],
 			];
 		}
 

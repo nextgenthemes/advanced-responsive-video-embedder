@@ -62,7 +62,7 @@ function register_gb_block() {
 			'src'    => plugins_url( 'dist/js/gb-block.js', PLUGIN_FILE ),
 			'deps'   => [ 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ],
 			'ver'    => Common\ver( VERSION, 'dist/js/test-block.js', PLUGIN_FILE ),
-			'footer' => false
+			'footer' => false,
 		]
 	);
 
@@ -75,7 +75,7 @@ function register_gb_block() {
 			'attributes'      => $attr,
 			'editor_script'   => 'arve-block',
 			'editor_style'    => 'arve',
-			'render_callback' => __NAMESPACE__ . '\shortcode'
+			'render_callback' => __NAMESPACE__ . '\shortcode',
 		]
 	);
 }

@@ -6,9 +6,9 @@ use \Nextgenthemes\ARVE\Common;
 function label_text( $option ) {
 	?>
 	<span class="nextgenthemes-label-text">
-		<?php esc_html_e( $option['label'] ); ?>
+		<?= esc_html( $option['label'] ); ?>
 		<?php if ( 'not' === $option['tag'] ) : ?>
-			&nbsp;<span class="button-primary button-primary--ngt-small"><?php esc_html_e( $option['tag'] ); ?></span>
+			&nbsp;<span class="button-primary button-primary--ngt-small"><?= esc_html( $option['tag'] ); ?></span>
 		<?php endif; ?>
 	</span>
 	<?php
@@ -74,19 +74,18 @@ function print_hidden_field( $key, $option ) {
 }
 
 function print_licensekey_field( $key, $option ) {
-	//$product_id = get_products()[ $key ]['id'];
 	?>
 	<p>
 		<label>
 			<?php label_text( $option ); ?>
 			<input v-model="<?= esc_attr( "vm.$key" ); ?>" type="text" class="medium-text" style="width: 350px;" />
 			<?php if ( Common\has_valid_key( $key ) ) : ?>
-				<button @click="action( 'deactivate', '<?php echo $key; ?>' )">Deactivate</button>
+				<button @click="action( 'deactivate', '<?= esc_attr( $key ); ?>' )">Deactivate</button>
 			<?php else : ?>
-				<button @click="action( 'activate', '<?php echo $key; ?>' )">Activate</button>
+				<button @click="action( 'activate', '<?= esc_attr( $key ); ?>' )">Activate</button>
 			<?php endif; ?>
 			<br>
-			Status: <?php echo Common\get_key_status( $key ); ?>
+			Status: <?= esc_html( Common\get_key_status( $key ) ); ?>
 		</label>
 	</p>
 	<?php
@@ -129,7 +128,7 @@ function print_select_field( $key, $option ) {
 			<select v-model="<?= esc_attr( "vm.$key" ); ?>">
 				<option disabled value="">Please select one</option>
 				<?php foreach ( $option['options'] as $k => $v ) : ?>
-					<option value="<?= esc_attr( $k ); ?>"><?php esc_html_e( $v ); ?></option>
+					<option value="<?= esc_attr( $k ); ?>"><?= esc_html( $v ); ?></option>
 				<?php endforeach; ?>
 			</select>
 		</label>

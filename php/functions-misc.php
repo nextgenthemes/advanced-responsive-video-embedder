@@ -10,7 +10,7 @@ function is_bool_option( $array ) {
 	$yes_no = [
 		''    => 1,
 		'yes' => 1,
-		'no'  => 1
+		'no'  => 1,
 	];
 
 	$check = array_diff_key( $array, $yes_no );

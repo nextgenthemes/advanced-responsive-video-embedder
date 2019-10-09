@@ -249,7 +249,7 @@ function all_settings() {
 				__( 'Post the URL of the video here. For %1$s and any <a href="%2$s">unlisted</a> video hosts paste their iframe embed codes or its src URL in here (providers embeds need to be responsive).', 'advanced-responsive-video-embedder' ),
 				esc_html( $embed_code_only ),
 				esc_url( 'https://nextgenthemes.com/arve-pro/#video-host-support' )
-			)
+			),
 		],
 		'title'                 => [
 			'default'     => null,
