@@ -1,6 +1,7 @@
 /dist/zip/
 /node_modules/
 /vendor/*
+!/vendor/autoload.php
 !/vendor/composer
 
 # Numerous always-ignore extensions
