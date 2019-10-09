@@ -17,10 +17,7 @@ function sc_filter_set_wrapper_id( array $a ) {
 	] as $att ) {
 
 		if ( ! empty( $a[ $att ] ) && is_string( $a[ $att ] ) ) {
-			$a['wrapper_id'] = $a[ $att ];
-			$a['wrapper_id'] = str_replace( [ 'https://www.', 'https://' ], '', $a['wrapper_id'] );
-			#$a['wrapper_id'] = preg_replace( '/[^a-zA-Z0-9-]/', '', $a['wrapper_id'] );
-			$a['wrapper_id'] = 'arve-' . $a['wrapper_id'];
+			$a['wrapper_id'] = 'arve-' . str_replace( [ 'https://www.', 'https://' ], '', $a[ $att ] );
 			break;
 		}
 	}
