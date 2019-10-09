@@ -549,7 +549,7 @@ function all_settings() {
 			'type'        => 'boolean',
 			'description' => __( "Only disable if you have to. If you embed encrypted media you have to disable this. 'Disable Links' feature from ARVE Pro will not work when without sandbox.", 'advanced-responsive-video-embedder' ),
 		],
-		'schema'               => [
+		'schema'                => [
 			'default'     => true,
 			'shortcode'   => false,
 			'label'       => __( 'Enable structured data (schema.org)', 'advanced-responsive-video-embedder' ),
