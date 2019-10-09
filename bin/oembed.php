@@ -7,6 +7,7 @@ require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_dump
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 
 function provider( $provider ) {
 
