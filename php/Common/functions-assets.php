@@ -154,11 +154,13 @@ function plugin_or_theme_ver( $ver, $path ) {
 	}
 }
 
+/**
+ * Much like Much like plugins_url( $path, __FILE__ );
+ */
 function ver( $ver, $path, $file = false ) {
 
 	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 
-		// Much like plugins_url( $path, __FILE__ );
 		if ( $file ) {
 			$path = trailingslashit( dirname( $file ) ) . $path;
 		}

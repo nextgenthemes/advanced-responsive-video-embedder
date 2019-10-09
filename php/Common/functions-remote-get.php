@@ -30,7 +30,7 @@ function ngt_remote_get_json( $url, array $args = [], $json_name = false ) {
 			return new \WP_Error(
 				'json-value-empty',
 				sprintf(
-					__( 'url: %1$s JSON value \'%2$s\' does not exist or is empty', 'advanced-responsive-video-embedder' ),
+					__( 'url: %1$s JSON value <code>%2$s</code> does not exist or is empty', 'advanced-responsive-video-embedder' ),
 					esc_url( $url ),
 					esc_html( $json_name )
 				)
@@ -83,7 +83,7 @@ function ngt_remote_get_body( $url, array $args = [] ) {
 
 function ngt_remote_get_body_cached( $url, array $args = [], $time = DAY_IN_SECONDS ) {
 
-	$transient_name = 'nextgenthemes_remote_get_body_' . $url . serialize( $args );
+	$transient_name = 'nextgenthemes_remote_get_body_' . $url . wp_json_encode( $args );
 	$response       = get_transient( $transient_name );
 
 	if ( false === $response ) {

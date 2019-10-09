@@ -27,35 +27,24 @@ function shortcode( $a, $content = null ) {
 	return build_video( $a, $content );
 }
 
-function test_shortcode( $atts, $content = null ) {
+function test_shortcode( $atts = null, $content = null ) {
 
 	$html      = '';
 	$providers = get_host_properties();
-	$host      = sanitize_text_field( wp_unslash( empty( $_GET['provider'] ) ? '' : $_GET['provider'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	$host      = empty( $atts['provider'] ) ? $host : $atts['provider'];
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$provider = sanitize_text_field( wp_unslash( empty( $_GET['provider'] ) ? '' : $_GET['provider'] ) );
 
-	if ( 'all' === $host ) {
+	foreach ( $providers as $k => $v ) {
 
-		$count = 0;
+		$url   = add_query_arg( $GLOBALS['wp']->query_vars, home_url( $GLOBALS['wp']->request ) );
+		$url   = add_query_arg( 'arve-provider-test', $url );
+		$html .= sprintf( '<a href="%s">Test %s</a>', $url, $provider );
+	}
 
-		foreach ( $providers as $k => $v ) {
+	if ( $provider ) {
 
-			$count++;
-
-			if ( $count > 7 ) {
-				break;
-			}
-
-			if ( empty( $v['tests'] ) ) {
-				continue;
-			}
-
-			$html .= basic_tests( $v['tests'] );
-		}
-	} else {
-
-		if ( empty( $providers[ $host ]['tests'] ) ) {
-			$html .= 'no tests for ' . $host;
+		if ( empty( $providers[ $provider ]['tests'] ) ) {
+			$html .= 'no tests for ' . $provider;
 		} else {
 			$html .= basic_tests( $providers[ $host ]['tests'] );
 		}
@@ -66,18 +55,16 @@ function test_shortcode( $atts, $content = null ) {
 
 function basic_tests( $tests ) {
 
-	$html = '';
+	$html  = '';
+	$modes = [ 'normal', 'lazyload', 'lightbox' ];
 
-	/*
 	foreach ( $tests as $key => $value ) {
-		$sc    = sprintf( '[arve url="%s" mode="lightbox" maxwidth="200" /]', $value['url'] );
+		$mode  = array_rand( $modes );
+		$sc    = sprintf( '[arve url="%s" mode="%s" maxwidth="300" /]', $value['url'], $mode );
 		$html .= do_shortcode( $sc );
 	}
-	*/
 
-	$sc .= sprintf( '[arve url="%s" mode="lazyload" maxwidth="400" /]', $tests[0]['url'] );
-
-	$html .= "[$sc]<br>";
+	$html .= "<code>[$sc]</code><br>";
 	$html .= do_shortcode( $sc );
 	$html .= '<br>';
 
