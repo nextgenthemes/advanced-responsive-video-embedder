@@ -137,7 +137,7 @@ class ThemeUpdater {
 
 			// If the response failed, try again in 30 minutes
 			if ( $failed ) {
-				$data              = new stdClass();
+				$data              = new \stdClass();
 				$data->new_version = $this->version;
 				set_transient( $this->response_key, $data, strtotime( '+30 minutes' ) );
 				return false;
