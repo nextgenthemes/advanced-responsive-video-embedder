@@ -100,9 +100,10 @@ function get_products() {
 
 	foreach ( $products as $key => $value ) :
 
-		$products[ $key ]['slug']      = $key;
-		$products[ $key ]['installed'] = false;
 		$products[ $key ]['active']    = false;
+		$products[ $key ]['file']      = false;
+		$products[ $key ]['installed'] = false;
+		$products[ $key ]['slug']      = $key;
 		$products[ $key ]['valid_key'] = has_valid_key( $key );
 
 		$version_define = strtoupper( $key ) . '_VERSION';
@@ -138,7 +139,7 @@ function init_edd_updaters() {
 
 	foreach ( $products as $product ) {
 
-		if ( 'plugin' === $product['type'] && ! empty( $product['file'] ) ) {
+		if ( 'plugin' === $product['type'] && $product['file'] ) {
 			init_plugin_updater( $product );
 		} elseif ( 'theme' === $product['type'] ) {
 			init_theme_updater( $product );
@@ -147,6 +148,8 @@ function init_edd_updaters() {
 }
 
 function init_plugin_updater( $product ) {
+
+	$ngt_options = nextgenthemes_settings_instance()->options;
 
 	// setup the updater
 	new EDD\PluginUpdater(
@@ -157,6 +160,7 @@ function init_plugin_updater( $product ) {
 			'license' => get_key( $product['slug'] ),
 			'item_id' => $product['id'],
 			'author'  => $product['author'],
+			'beta'    => $ngt_options[ $products['slug'] . '_beta' ],
 		]
 	);
 }
