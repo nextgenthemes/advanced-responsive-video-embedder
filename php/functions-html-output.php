@@ -196,21 +196,25 @@ function arve_embed_inner_html( array $a ) {
 	$schema = options()['schema'];
 
 	if ( $schema ) :
-		if ( ! empty( $a['sources'] ) ) {
-			$first_source = get_first_array_value( $a['sources'] );
-			$html        .= sprintf( '<meta itemprop="contentURL" content="%s">', esc_attr( $first_source['src'] ) );
-		}
 
-		if ( $a['src'] ) {
-			$html .= sprintf( '<meta itemprop="embedURL" content="%s">', esc_attr( $a['src'] ) );
-		}
+		$a['first_source'] = empty( $a['sources'] ) ? '' : get_first_array_value( $a['sources'] );
 
-		if ( $a['upload_date'] ) {
-			$html .= sprintf( '<meta itemprop="uploadDate" content="%s">', esc_attr( $a['upload_date'] ) );
-		}
+		$metas = [
+			'first_source' => 'contentURL',
+			'src'          => 'embedURL',
+			'upload_date'  => 'uploadDate',
+			'author_name'  => 'author',
+			'duration'     => 'duration',
+		];
 
-		if ( $a['duration'] ) {
-			$html .= sprintf( '<meta itemprop="duration" content="PT%s">', esc_attr( $a['duration'] ) );
+		foreach ( $metas as $key => $itemprop ) {
+
+			if ( ! empty( $a[ $key ] ) ) {
+				if ( 'duration' === $key && ! Common\starts_with( $a[ $key ], 'PT' ) ) {
+					$a[ $key ] = 'PT' . $a[ $key ];
+				}
+				$html .= sprintf( '<meta itemprop="%s" content="%s">' . PHP_EOL, esc_attr( $itemprop ), esc_attr( $a[ $key ] ) );
+			}
 		}
 
 		$html .= build_rating_meta( $a );
