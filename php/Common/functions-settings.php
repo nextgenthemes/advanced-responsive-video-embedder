@@ -9,7 +9,7 @@ function nextgenthemes_settings_instance() {
 
 		$inst = new Admin\Settings(
 			[
-				'namespace'           => 'nextgenthemes_licenses',
+				'namespace'           => 'nextgenthemes',
 				'settings'            => nextgenthemes_settings(),
 				'menu_title'          => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
 				'settings_page_title' => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
