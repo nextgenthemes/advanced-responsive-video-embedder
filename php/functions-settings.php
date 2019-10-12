@@ -22,7 +22,7 @@ function get_settings_instance() {
 
 	if ( null === $inst ) {
 
-		$inst = new Common\Admin\Settings(
+		$inst = new Common\Settings(
 			[
 				'namespace'           => __NAMESPACE__,
 				'settings'            => settings(),

@@ -1,7 +1,5 @@
 <?php
-namespace Nextgenthemes\ARVE\Common\Admin;
-
-use \Nextgenthemes\ARVE\Common;
+namespace Nextgenthemes\ARVE\Common;
 
 class Settings {
 
@@ -55,10 +53,7 @@ class Settings {
 		if ( $action ) {
 			$product_id = get_products()[ $action->product ]['id'];
 			$key_status = api_action( $product_id, $options[ $action->product ], $action->action );
-			logfile( $action->product, __FILE__ );
-			logfile( $product_id, __FILE__ );
-			logfile( $key_status, __FILE__ );
-			Common\update_key_status( $action->product, $key_status );
+			update_key_status( $action->product, $key_status );
 		}
 
 		$options = array_diff_assoc( $options, $this->options_defaults );
@@ -91,23 +86,23 @@ class Settings {
 	public function assets( $page ) {
 
 		// Check if we are currently viewing our setting page
-		if ( ! Common\ends_with( $page, $this->slugged_namespace ) ) {
+		if ( ! ends_with( $page, $this->slugged_namespace ) ) {
 			return;
 		}
 
-		Common\enqueue(
+		enqueue(
 			[
 				'handle' => 'nextgenthemes-settings',
-				'src'    => Common\plugin_or_theme_src( 'dist/common/css/settings.css' ),
-				'ver'    => Common\plugin_or_theme_ver( \Nextgenthemes\ARVE\VERSION, 'dist/common/css/settings.css' ),
+				'src'    => plugin_or_theme_src( 'dist/common/css/settings.css' ),
+				'ver'    => plugin_or_theme_ver( \Nextgenthemes\ARVE\VERSION, 'dist/common/css/settings.css' ),
 			]
 		);
 
-		Common\enqueue(
+		enqueue(
 			[
 				'handle' => 'nextgenthemes-settings',
-				'src'    => Common\plugin_or_theme_src( 'dist/common/js/settings.js' ),
-				'ver'    => Common\plugin_or_theme_ver( \Nextgenthemes\ARVE\VERSION, 'dist/common/js/settings.js' ),
+				'src'    => plugin_or_theme_src( 'dist/common/js/settings.js' ),
+				'ver'    => plugin_or_theme_ver( \Nextgenthemes\ARVE\VERSION, 'dist/common/js/settings.js' ),
 				'deps'   => [ 'jquery' ],
 			]
 		);
@@ -130,11 +125,11 @@ class Settings {
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		foreach ( $this->settings as $key => $option ) {
 			?>
-			<div <?php echo block_attr( $key, $option ); ?>>
+			<div <?php echo Admin\block_attr( $key, $option ); ?>>
 				<?php
 				$field_type = isset( $option['ui'] ) ? $option['ui'] : $option['type'];
 
-				$function = __NAMESPACE__ . "\\print_{$field_type}_field";
+				$function = __NAMESPACE__ . "\\Admin\\print_{$field_type}_field";
 
 				$function( $key, $option );
 
