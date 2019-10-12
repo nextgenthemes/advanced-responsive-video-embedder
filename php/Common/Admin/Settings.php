@@ -81,9 +81,6 @@ class Settings {
 					return current_user_can( 'manage_options' );
 				},
 				'callback'             => function( \WP_REST_Request $request ) {
-
-					api_action( 1253, 'e6cab7097dbfe39174c2310a86b2854d', 'deactivate' );
-
 					$this->save_options( $request->get_params() );
 					die( '1' );
 				},
