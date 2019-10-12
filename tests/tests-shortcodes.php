@@ -1,14 +1,35 @@
 <?php
 use function \Nextgenthemes\ARVE\shortcode;
 use function \Nextgenthemes\ARVE\get_host_properties;
+use function \Nextgenthemes\ARVE\get_settings_instance;
 
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_Shortcode extends WP_UnitTestCase {
 
-	public function change_option( $key, $val ) {
-		$options         = get_option( 'arve_options_main' );
-		$options[ $key ] = $val;
-		update_option( 'arve_options_main', $options );
+	public function test_schema_enabled() {
+
+		$html = shortcode( [ 'url' => 'https://example.com' ] );
+
+		$this->assertNotContains( 'Error', $html );
+		$this->assertContains( 'schema.org', $html );
+		$this->assertContains( 'itemscope', $html );
+		$this->assertContains( 'itemtype', $html );
+		$this->assertContains( 'itemprop', $html );
+	}
+
+	public function test_schema_disabled() {
+
+		get_settings_instance()->options['schema'] = false;
+
+		$html = shortcode( [ 'url' => 'https://example.com' ] );
+
+		$this->assertNotContains( 'Error', $html );
+		$this->assertNotContains( 'schema.org', $html );
+		$this->assertNotContains( 'itemscope', $html );
+		$this->assertNotContains( 'itemtype', $html );
+		$this->assertNotContains( 'itemprop', $html );
+
+		get_settings_instance()->options['schema'] = true;
 	}
 
 	public function test_vimeo_time_and_sandbox() {

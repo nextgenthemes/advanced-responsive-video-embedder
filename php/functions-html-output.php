@@ -3,20 +3,23 @@ namespace Nextgenthemes\ARVE;
 
 function build_html( array $a ) {
 
+	$options = options();
+
 	return build_tag(
 		[
 			'name'       => 'arve',
 			'tag'        => 'div',
 			'inner-html' => arve_embed( arve_embed_inner_html( $a ), $a ) . promote_link( $a['arve_link'] ),
 			'attr'       => [
-				'class'         => empty( $a['align'] ) ? 'arve' : "arve align{$a['align']}",
+				'data-test'     => wp_json_encode( $options['schema'] ),
+				'class'         => $a['align'] ? 'arve ' . $a['align'] : 'arve',
 				'data-mode'     => $a['mode'],
 				'data-provider' => $a['provider'],
 				'id'            => $a['wrapper_id'],
-				'style'         => empty( $a['maxwidth'] ) ? false : sprintf( 'max-width:%dpx;', $a['maxwidth'] ),
+				'style'         => $a['maxwidth'] ? sprintf( 'max-width:%dpx;', $a['maxwidth'] ) : false,
 				// Schema.org
-				'itemscope'     => '',
-				'itemtype'      => 'http://schema.org/VideoObject',
+				'itemscope'     => $options['schema'] ? '' : false,
+				'itemtype'      => $options['schema'] ? 'http://schema.org/VideoObject' : false,
 			],
 		],
 		$a
