@@ -8,20 +8,21 @@
     "vue": "^2.6.10"
   },
   "devDependencies": {
-    "@wordpress/eslint-plugin": "latest",
+    "@wordpress/eslint-plugin": ">=3.1.0",
     "browser-sync": "^2.26.7",
     "browser-sync-webpack-plugin": "^2.2.2",
-    "eslint": "latest",
-    "json": "latest",
+    "eslint": ">=6.5.1",
+    "json": ">=9.0.6",
     "laravel-mix": "^5.0.0",
     "resolve-url-loader": "^3.1.0",
     "sass": "^1.23.0",
     "sass-loader": "^7.3.1",
-    "stylelint": "latest",
-    "stylelint-config-twbs-bootstrap": "latest",
+    "stylelint": ">=11.1.1",
+    "stylelint-config-twbs-bootstrap": ">=0.6.0",
     "vue-template-compiler": "^2.6.10"
   },
   "scripts": {
+	  "css-lint": "stylelint \"resources/scss/**/*.scss\" --cache --cache-location /tmp/.stylelintcache",
     "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch:sync": "sync=1 NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
