@@ -1,5 +1,5 @@
 .wrap--nextgenthemes {
-	max-width: 1200px;
+	max-width: 1100px;
 	margin-right: auto;
 	margin-left: auto;
 }
@@ -36,6 +36,17 @@
 	grid-template-areas:
 		"content"
 		"sidebar";
+
+	@media (min-width: 750px) {
+		grid-column-gap: 2rem;
+		grid-template-areas: "content sidebar";
+		grid-template-columns: 1fr 300px;
+	}
+
+	@media (min-width: 1200px) {
+		grid-column-gap: 3rem;
+		grid-template-columns: 1fr 420px;
+	}
 }
 
 .ngt-settings-grid__content {
@@ -47,28 +58,27 @@
 }
 
 .ngt-sidebar-box {
-	padding: .8rem;
-	background-color: hsl(216.2, 100%, 89.6%);
+	background: #fff;
+	border-left: 4px solid hsl(125.5, 44%, 49%);
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+	margin-bottom: 1rem;
+	padding: 1rem;
 
 	h3:first-child {
 		margin-top: 0;
 	}
-}
 
-@media (min-width: 750px) {
-	.ngt-settings-grid {
-		grid-template-areas: "content sidebar";
-		grid-template-columns: 1fr 300px;
-	}
-}
-
-@media (min-width: 1200px) {
-	.ngt-settings-grid {
-		grid-template-areas: "content sidebar";
-		grid-template-columns: 1fr 500px;
+	ul {
+		list-style: square;
+		padding-left: 1em;
 	}
 
-	.ngt-sidebar-box {
+	li {
+		padding-left: .7em;
+		margin-bottom: 1em;
+	}
+
+	@media (min-width: 1200px) {
 		padding: 3rem;
 	}
 }

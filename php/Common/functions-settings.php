@@ -20,6 +20,10 @@ function nextgenthemes_settings_instance() {
 	return $inst;
 }
 
+function ngt_options() {
+	return nextgenthemes_settings_instance()->options;
+}
+
 function nextgenthemes_settings() {
 
 	$products = get_products();

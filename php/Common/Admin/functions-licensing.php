@@ -29,13 +29,14 @@ function init_plugin_updater( $product ) {
 
 	// setup the updater
 	new EDD\PluginUpdater(
-		apply_filters( 'nextgenthemes_api_url', 'https://nextgenthemes.com' ),
+		'https://nextgenthemes.com',
 		$product['file'],
 		[
 			'version' => $product['version'],
 			'license' => Common\get_key( $product['slug'] ),
 			'item_id' => $product['id'],
 			'author'  => $product['author'],
+			'beta'    => ngt_options()[ $product['slug'] . '_beta' ],
 		]
 	);
 }
