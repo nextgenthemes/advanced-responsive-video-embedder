@@ -16,10 +16,11 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-### 2019-10-01 - 9.0.0 ###
+### 2019-11-01 - 9.0.0 ###
 
 * Note: Minimum PHP required for ARVE is now 5.6 you should be a the latest version for [security](https://secure.php.net/supported-versions.php) and speed anyway
 * New: Finally the ARVE Gutenberg block is here!
+* New: Option to disable SEO schema.org data.
 * New: Added Bitchute
 * New: `av1mp4` shortcode parameter so serve [AV1](https://en.wikipedia.org/wiki/AV1) encoded files best named .av1.mp4 (to be used together with `mp4` or `webm`)
 * Fix: YouTube live links are now working correctly
@@ -27,7 +28,7 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * Fix: Facebook embeds.
 * Improved: Generated iframe src will match what providers send over oembed.
 * Improved: Lots of code improvements that may not be noticeable to users but took a lot of time and will make the plugin more maintainable and easier to extend.
-* Improved: removed the `lang` shortcode parameter that was only used for TED talks video subtitle display. This is now taken from the `language=x` url query.
+* Improved: Removed the `lang` shortcode parameter that was only used for TED talks video subtitle display. This is now taken from the `language=x` url query.
 * Improved: Embeds work though WPs oembed system now that comes with a more stable codebase and better caching system for embeds.
 * Improved: Aspect ratios are now auto detected for all providers WP supports through oEmbed.
 * Improved: New setting page design and option handling.
