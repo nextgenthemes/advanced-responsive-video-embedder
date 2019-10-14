@@ -34,8 +34,9 @@ function action_wp_enqueue_scripts() {
 
 	register_assets();
 
+	wp_enqueue_style( 'arve' );
+
 	if ( $options['always_enqueue_assets'] ) {
-		wp_enqueue_style( 'arve' );
 		wp_enqueue_script( 'arve' );
 	}
 }

@@ -76,11 +76,13 @@ function print_old_hidden_field( $key, $option ) {
 }
 
 function print_licensekey_field( $key, $option ) {
+
+	$readonly = Common\get_defined_key( $key ) ? 'readonly' : '';
 	?>
 	<p>
 		<label>
 			<?php label_text( $option ); ?>
-			<input v-model="<?= esc_attr( "vm.$key" ); ?>" type="text" class="medium-text" style="width: 350px;" />
+			<input v-model="<?= esc_attr( "vm.$key" ); ?>" type="text" class="medium-text" style="width: 350px;" <?= esc_attr( $readonly ); ?> />
 			<?php if ( Common\has_valid_key( $key ) ) : ?>
 				<button @click="action( 'deactivate', '<?= esc_attr( $key ); ?>' )">Deactivate</button>
 			<?php else : ?>

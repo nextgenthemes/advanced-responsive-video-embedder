@@ -45,6 +45,17 @@ class Settings {
 		add_action( 'admin_menu', [ $this, 'register_setting_page' ] );
 	}
 
+	public function set_defined_product_keys() {
+
+		$products = get_products();
+		foreach ( $products as $p => $value ) {
+			$defined_key = get_defined_key( $p );
+			if ( $defined_key ) {
+				$this->options[ $p ] = $defined_key;
+			}
+		}
+	}
+
 	public function save_options( $options ) {
 
 		$action            = json_decode( $options['action'] );
@@ -54,7 +65,7 @@ class Settings {
 			$product_id  = get_products()[ $action->product ]['id'];
 			$product_key = $options[ $action->product ];
 
-			$options[ $action->product . '_status' ] = Admin\api_action( $product_id, $product_key, $action->action );
+			$options[ $action->product . '_status' ] = api_action( $product_id, $product_key, $action->action );
 		}
 
 		// remove all items from options that are not also in defaults.

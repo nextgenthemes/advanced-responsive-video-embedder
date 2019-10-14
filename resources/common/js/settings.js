@@ -51,7 +51,10 @@ new Vue( {
 				},
 
 				// callback to run if our request caused an error
-				error: ( errorData ) => this.message = errorData.responseText,
+				error: ( errorData ) => {
+					this.message = errorData.responseText;
+					this.refreshAfterSave = false;
+				},
 
 				// when our request is complete (successful or not), reset the state to indicate we are no longer saving
 				complete: () => {

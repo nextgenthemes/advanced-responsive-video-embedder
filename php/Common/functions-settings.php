@@ -15,28 +15,18 @@ function nextgenthemes_settings_instance() {
 				'settings_page_title' => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
 			]
 		);
+		$inst->set_defined_product_keys();
 	}
 
 	return $inst;
 }
 
 function ngt_options() {
-	return nextgenthemes_settings_instance()->options;
+	$o = nextgenthemes_settings_instance()->options;
+	return $o;
 }
 
-function set_defined_licenses() {
-	$products = get_products();
-	foreach ( $products as $p => $value ) {
-		$defined_key = get_defined_key( $p );
-		if ( $defined_key ) {
-			$options                = (array) get_option( 'nextgenthemes' );
-			$options[ $p . '_key' ] = $defined_key;
-			update_option( 'nextgenthemes', $options );
-		}
-	}
-}
-
-function migrate_old_options() {
+function migrate_old_licenses() {
 
 	$products = get_products();
 	foreach ( $products as $p => $value ) {
@@ -53,7 +43,7 @@ function migrate_old_options() {
 
 		if ( $old_key_status ) {
 			$options                   = (array) get_option( 'nextgenthemes' );
-			$options[ $p . '_status' ] = $old_key;
+			$options[ $p . '_status' ] = $old_key_status;
 			update_option( 'nextgenthemes', $options );
 			delete_option( "nextgenthemes_{$p}_key_status" );
 		}
