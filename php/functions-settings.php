@@ -170,17 +170,11 @@ function shortcode_pairs() {
 	return apply_filters( 'nextgenthemes/arve/shortcode_pairs', $pairs );
 }
 
-
-
 function upgrade_options() {
 
 	$new_options = options();
 	$old_options = get_option( 'arve_options_main' );
 	$old_params  = get_option( 'arve_options_params' );
-
-	if ( ! empty( $new_options['old_options_imported'] ) ) {
-		return;
-	}
 
 	if ( is_array( $old_params ) && ! empty( $old_params ) ) {
 
@@ -189,7 +183,7 @@ function upgrade_options() {
 		}
 	}
 
-	if ( ! empty( $old_options ) && is_array( $old_options ) ) {
+	if ( ! empty( $old_options ) && ! is_array( $old_options ) ) {
 
 		if ( isset( $old_options['promote_link'] ) ) {
 			$old_options['arve_link'] = $old_options['promote_link'];
@@ -199,9 +193,10 @@ function upgrade_options() {
 			$old_options['maxwidth'] = $old_options['video_maxwidth'];
 		}
 
-		$new_options                         = array_diff_assoc( $old_options, default_options() );
-		$new_options['old_options_imported'] = get_the_time( 'c' );
+		$new_options = array_diff_assoc( $old_options, default_options() );
 		update_option( 'nextgenthemes_arve', $new_options );
+		delete_option( 'arve_options_main' );
+		delete_option( 'arve_options_params' );
 	}
 }
 

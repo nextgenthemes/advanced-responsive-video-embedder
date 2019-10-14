@@ -3,14 +3,6 @@ namespace Nextgenthemes\ARVE\Common\Admin;
 
 use \Nextgenthemes\ARVE\Common;
 
-function api_update_key_status( $product, $key, $action ) {
-
-	$products   = Common\get_products();
-	$key_status = api_action( $products[ $product ]['id'], $key, $action );
-
-	Common\update_key_status( $product, $key_status );
-}
-
 function init_edd_updaters() {
 
 	$products = Common\get_products();
@@ -33,7 +25,7 @@ function init_plugin_updater( $product ) {
 		$product['file'],
 		[
 			'version' => $product['version'],
-			'license' => Common\get_key( $product['slug'] ),
+			'license' => ngt_options()[ $product['slug'] ],
 			'item_id' => $product['id'],
 			'author'  => $product['author'],
 			'beta'    => ngt_options()[ $product['slug'] . '_beta' ],
@@ -47,7 +39,7 @@ function init_theme_updater( $product ) {
 		[
 			'remote_api_url' => 'https://nextgenthemes.com',
 			'version'        => $product['version'],
-			'license'        => Common\get_key( $product['slug'] ),
+			'license'        => ngt_options()[ $product['slug'] ],
 			'item_id'        => $product['id'],
 			'author'         => $product['author'],
 			'theme_slug'     => $product['slug'],

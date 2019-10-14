@@ -51,15 +51,16 @@ class Settings {
 		$options['action'] = '';
 
 		if ( $action ) {
-			$product_id = get_products()[ $action->product ]['id'];
-			$key_status = api_action( $product_id, $options[ $action->product ], $action->action );
-			update_key_status( $action->product, $key_status );
+			$product_id  = get_products()[ $action->product ]['id'];
+			$product_key = $options[ $action->product ];
+
+			$options[ $action->product . '_status' ] = Admin\api_action( $product_id, $product_key, $action->action );
 		}
 
-		$options = array_diff_assoc( $options, $this->options_defaults );
 		// remove all items from options that are not also in defaults.
-		$options = array_intersect_key( $options, $this->options_defaults );
+		$options = array_diff_assoc( $options, $this->options_defaults );
 		// store only the options that differ from the defaults.
+		$options = array_intersect_key( $options, $this->options_defaults );
 
 		update_option( $this->slugged_namespace, $options );
 	}

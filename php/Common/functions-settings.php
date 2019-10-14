@@ -24,12 +24,48 @@ function ngt_options() {
 	return nextgenthemes_settings_instance()->options;
 }
 
+function set_defined_licenses() {
+	$products = get_products();
+	foreach ( $products as $p => $value ) {
+		$defined_key = get_defined_key( $p );
+		if ( $defined_key ) {
+			$options                = (array) get_option( 'nextgenthemes' );
+			$options[ $p . '_key' ] = $defined_key;
+			update_option( 'nextgenthemes', $options );
+		}
+	}
+}
+
+function migrate_old_options() {
+
+	$products = get_products();
+	foreach ( $products as $p => $value ) {
+
+		$old_key        = get_option( "nextgenthemes_{$p}_key" );
+		$old_key_status = get_option( "nextgenthemes_{$p}_key_status" );
+
+		if ( $old_key ) {
+			$options       = (array) get_option( 'nextgenthemes' );
+			$options[ $p ] = $old_key;
+			update_option( 'nextgenthemes', $options );
+			delete_option( "nextgenthemes_{$p}_key" );
+		}
+
+		if ( $old_key_status ) {
+			$options                   = (array) get_option( 'nextgenthemes' );
+			$options[ $p . '_status' ] = $old_key;
+			update_option( 'nextgenthemes', $options );
+			delete_option( "nextgenthemes_{$p}_key_status" );
+		}
+	}
+}
+
 function nextgenthemes_settings() {
 
 	$products = get_products();
 
-	foreach ( $products as $key => $value ) {
-		$settings[ $key ] = [
+	foreach ( $products as $p => $value ) {
+		$settings[ $p ] = [
 			'default' => '',
 			'option'  => true,
 			'tag'     => 'main',
@@ -37,6 +73,16 @@ function nextgenthemes_settings() {
 			'label'   => sprintf( esc_html__( '%s license Key', 'advanced-responsive-video-embedder' ), $value['name'] ),
 			'type'    => 'string',
 			'ui'      => 'licensekey',
+		];
+
+		$settings[ $p . '_status' ] = [
+			'default' => '',
+			'option'  => true,
+			'tag'     => 'main',
+			// translators: %s is Product name
+			'label'   => sprintf( esc_html__( '%s license Key Status', 'advanced-responsive-video-embedder' ), $value['name'] ),
+			'type'    => 'string',
+			'ui'      => 'hidden',
 		];
 	}
 

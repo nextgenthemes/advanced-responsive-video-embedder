@@ -67,7 +67,9 @@ function print_string_field( $key, $option ) {
 	<?php
 }
 
-function print_hidden_field( $key, $option ) {
+function print_hidden_field( $key, $option ) {} // yes we need this nothing function
+
+function print_old_hidden_field( $key, $option ) {
 	?>
 	<input v-model="<?= esc_attr( "vm.$key" ); ?>" type="hidden" />
 	<?php
@@ -85,7 +87,7 @@ function print_licensekey_field( $key, $option ) {
 				<button @click="action( 'activate', '<?= esc_attr( $key ); ?>' )">Activate</button>
 			<?php endif; ?>
 			<br>
-			Status: <?= esc_html( Common\get_key_status( $key ) ); ?>
+			Status: <?= esc_html( "{{ vm.{$key}_status }}" ); ?>
 		</label>
 	</p>
 	<?php
