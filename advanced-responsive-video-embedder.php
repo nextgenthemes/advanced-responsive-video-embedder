@@ -37,8 +37,8 @@ function init() {
 
 	add_option( 'arve_install_date', time() );
 
-	require_once PLUGIN_DIR . '/vendor/autoload.php';
 	require_once PLUGIN_DIR . '/php/Common/init.php';
+	require_once PLUGIN_DIR . '/php/EmbedChecker.php';
 	require_once PLUGIN_DIR . '/php/functions-deprecated.php';
 	require_once PLUGIN_DIR . '/php/functions-assets.php';
 	require_once PLUGIN_DIR . '/php/functions-html-output.php';
