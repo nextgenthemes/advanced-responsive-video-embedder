@@ -8,11 +8,6 @@
 		"name": "Nicolas Jonas",
 		"homepage": "https://nextgenthemes.com"
 	}],
-	"autoload": {
-		"psr-4": {
-			"Nextgenthemes\\ARVE\\": "php/"
-		}
-	},
 	"require": {
 		"php": ">=5.6"
 	},

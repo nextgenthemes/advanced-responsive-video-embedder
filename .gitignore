@@ -1,8 +1,6 @@
-/dist/zip/
-/node_modules/
-/vendor/*
-!/vendor/autoload.php
-!/vendor/composer
+/vendor
+/dist/zip
+/node_modules
 
 # Numerous always-ignore extensions
 *.diff
