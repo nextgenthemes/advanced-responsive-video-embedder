@@ -165,7 +165,9 @@ function ver( $ver, $path, $file = false ) {
 			$path = trailingslashit( dirname( $file ) ) . $path;
 		}
 
-		$ver = filemtime( $path );
+		if ( is_file( $path ) ) { // When CI testing for only PHP
+			$ver = filemtime( $path );
+		}
 	}
 
 	return $ver;
