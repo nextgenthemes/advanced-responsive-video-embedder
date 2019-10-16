@@ -11,7 +11,6 @@ function build_html( array $a ) {
 			'tag'        => 'div',
 			'inner-html' => arve_embed( arve_embed_inner_html( $a ), $a ) . promote_link( $a['arve_link'] ),
 			'attr'       => [
-				'data-test'     => wp_json_encode( $options['schema'] ),
 				'class'         => $a['align'] ? 'arve align' . $a['align'] : 'arve',
 				'data-mode'     => $a['mode'],
 				'data-provider' => $a['provider'],
