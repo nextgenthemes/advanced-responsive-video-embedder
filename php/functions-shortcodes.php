@@ -104,10 +104,9 @@ function build_video( array $input_atts ) {
 	$html .= build_html( $a );
 	$html .= get_debug_info( $html, $a, $input_atts );
 
-	wp_enqueue_style( 'arve' );
 	wp_enqueue_script( 'arve' );
 
-	return $html;
+	return apply_filters( 'nextgenthemes/arve/html', $html, $a );
 }
 
 function shortcode_option_defaults() {
