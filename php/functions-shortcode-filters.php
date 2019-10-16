@@ -293,8 +293,7 @@ function sc_filter_get_media_gallery_thumbnail( array $a ) {
 		}
 	} elseif ( valid_url( $a['thumbnail'] ) ) {
 
-		$a['img_src']    = $a['thumbnail'];
-		$a['img_srcset'] = false;
+		$a['img_src'] = $a['thumbnail'];
 
 	} else {
 
