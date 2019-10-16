@@ -8,15 +8,24 @@ function attr( array $attr = [] ) {
 	foreach ( $attr as $key => $value ) {
 
 		if ( false === $value || null === $value ) {
+
 			continue;
+
 		} elseif ( '' === $value || true === $value ) {
+
 			$html .= sprintf( ' %s', esc_html( $key ) );
-		} elseif ( 'data-setup' === $key ) {
-			$html .= sprintf( " %s='%s'", esc_html( $key ), esc_url( $value ) );
+
 		} elseif ( in_array( $key, [ 'href', 'data-href', 'src', 'data-src' ], true ) ) {
+
 			$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_url( $value ) );
-		} else {
+
+		} elseif ( is_string( $value ) ) {
+
 			$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );
+
+		} else {
+
+			$html .= sprintf( " %s='%s'", esc_html( $key ), wp_json_encode( $value ) );
 		}
 	}
 
