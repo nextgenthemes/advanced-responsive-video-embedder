@@ -1,6 +1,8 @@
-/vendor
-/dist/zip
+/build
+/dist
 /node_modules
+/vendor
+/dist
 
 # Numerous always-ignore extensions
 *.diff

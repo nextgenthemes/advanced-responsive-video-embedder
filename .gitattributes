@@ -1,12 +1,14 @@
-/bin           export-ignore
-/tests         export-ignore
-/src           export-ignore
-/resources     export-ignore
 /.*            export-ignore
-/*.yml         export-ignore
-/*.xml         export-ignore
 /*.dist        export-ignore
+/*.js          export-ignore
+/*.xml         export-ignore
+/*.yml         export-ignore
+/bin           export-ignore
+/composer*     export-ignore
 /package*.json export-ignore
+/resources     export-ignore
+/src           export-ignore
+/tests         export-ignore
 
 * text eol=lf
 *.gif binary
