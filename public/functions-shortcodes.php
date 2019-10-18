@@ -1,6 +1,8 @@
 <?php
 
-function arve_shortcode( $input_atts, $content = null ) {
+function arve_shortcode( $a, $content = null ) {
+
+	$a = (array) $a;
 
 	/**
 	 * Filters the default arve shortcode output.
@@ -14,12 +16,12 @@ function arve_shortcode( $input_atts, $content = null ) {
 	 * @param array  $atts     Attributes of the shortcode.
 	 * @param string $content  Video shortcode content.
 	 */
-	$override = apply_filters( 'arve_shortcode_overwride', '', $input_atts, $content );
+	$override = apply_filters( 'arve_shortcode_overwride', '', $a, $content );
 	if ( '' !== $override ) {
 		return $override;
 	}
 
-	return arve_shortcode_arve( $input_atts, $content );
+	return arve_shortcode_arve( $a, $content );
 }
 
 function arve_default_maxwidth() {
