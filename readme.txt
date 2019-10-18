@@ -5,7 +5,7 @@ Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embe
 Requires at least: 4.4.0
 Tested up to: 5.2.2
 Requires PHP: 5.3
-Stable tag: 8.10.15
+Stable tag: 8.10.16
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
