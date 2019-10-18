@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "df3b44a455ba4854946d5c68db7360b0",
+    "content-hash": "4074ec0dbcb5e00e7c5ab75a09feb2ab",
     "packages": [
         {
             "name": "composer/installers",
@@ -127,53 +127,6 @@
                 "zikula"
             ],
             "time": "2019-08-12T15:00:31+00:00"
-        },
-        {
-            "name": "vimeo/vimeo-api",
-            "version": "2.0.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/vimeo/vimeo.php.git",
-                "reference": "fe9b1aa22036da8768111cfda1902b23e516460e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/vimeo.php/zipball/fe9b1aa22036da8768111cfda1902b23e516460e",
-                "reference": "fe9b1aa22036da8768111cfda1902b23e516460e",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "ext-json": "*",
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "php-coveralls/php-coveralls": "^1.0",
-                "phpunit/phpunit": "^4.8 || ^6.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Vimeo\\": "src/Vimeo"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Vimeo",
-                    "homepage": "http://vimeo.com"
-                }
-            ],
-            "description": "Official PHP library for the Vimeo API.",
-            "homepage": "https://github.com/vimeo/vimeo.php",
-            "keywords": [
-                "video",
-                "vimeo"
-            ],
-            "time": "2018-08-27T13:36:11+00:00"
         }
     ],
     "packages-dev": [
@@ -1784,7 +1737,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.3.0"
+        "php": ">=5.3"
     },
     "platform-dev": []
 }
