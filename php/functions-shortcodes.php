@@ -5,6 +5,8 @@ use function Nextgenthemes\ARVE\Common\starts_with;
 
 function shortcode( $a, $content = null ) {
 
+	$a = (array) $a;
+
 	$override = apply_filters( 'nextgenthemes/arve/shortcode_override', '', $a, $content );
 
 	if ( '' !== $override ) {
