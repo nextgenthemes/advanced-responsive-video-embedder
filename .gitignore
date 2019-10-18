@@ -1,5 +1,5 @@
-/dist/zip
-/vendor/
+/dist
+/vendor
 
 # Numerous always-ignore extensions
 *.diff
