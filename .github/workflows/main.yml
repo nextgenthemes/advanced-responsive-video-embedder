@@ -67,7 +67,9 @@ jobs:
     name: Build release Zip
     runs-on: ubuntu-latest
     env:
-      ZIPFILE: ${{ github.workspace }}/build/zip/${{ github.repository }}-${{ github.ref }}.zip
+      DEPLOY_REF: ${{ github.sha }}
+      DEPLOY_REF_SHORT: ${{ github.ref }}
+      DEPLOY_ZIPFILE: ${{ github.workspace }}/build/zip/${{ github.repository }}-${{ github.ref }}.zip
     steps:
 
       - name: Dump GitHub context
@@ -86,7 +88,7 @@ jobs:
           docker-php-ext-install mysqli pdo_mysql mbstring pcntl
 
       - name: Build Zip
-        run: bash bin/git-zip.sh ${{ github.workspace }}/build/zip/${{ github.repository }}-${{ github.ref }}.zip
+        run: bash bin/git-zip.sh
 
       - uses: actions/upload-artifact@master
         with:

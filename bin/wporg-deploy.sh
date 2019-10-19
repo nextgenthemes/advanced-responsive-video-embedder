@@ -8,64 +8,59 @@ set -Eeuxo pipefail # https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo
 # Copyright (c) 2019 Helen Hou-Sandi
 # License MIT
 
-function project_type {
-
-    if [ -f "./functions.php" ]; then
-        readonly TYPE="theme"
-    elif [ -f "./${PWD##*/}.php" ]; then
-		readonly TYPE="plugin"
-    fi
-
-    if [ -z "${TYPE+x}" ]; then
-		echo "Could not detect theme or plugin project"
-        exit 1
-    fi
-}
-
-function set_version {
-
-    if [[ $GITHUB_REF ]]; then
-		readonly VERSION=$GITHUB_REF
-	elif [[ $GITLAB_REF ]]; then
-		readonly VERSION=$GITHUB_REF
-    else
-
-		if [ -z "$1" ]; then
-			echo "Need version from ENV or 1st arg"
-			exit 1
-		fi
-
-		readonly VERSION=$1
-	fi
-}
-
-project_type
-set_version "$@"
-
+readonly DIRNAME=${PWD##*/}
 readonly GIT_WORKSPACE="$PWD"
-readonly SLUG=${GIT_WORKSPACE##*/}
 readonly ASSETS_DIR=".assets-wp-repo"
 readonly DEPLOY_DIR="$GIT_WORKSPACE/build/deploy"
 readonly SVN_DIR="$GIT_WORKSPACE/build/svn"
-readonly SVN_URL="http://plugins.svn.wordpress.org/${SLUG}/"
+readonly SVN_URL="http://plugins.svn.wordpress.org/$DIRNAME/"
+
+if [ -f "./functions.php" ]; then
+	readonly TYPE="theme"
+elif [ -f "./$DIRNAME.php" ]; then
+	readonly TYPE="plugin"
+fi
+
+if [ -z "${TYPE+x}" ]; then
+	echo "Could not detect theme or plugin project"
+	exit 1
+fi
+
+if [ -z "${DEPLOY_REF_SHORT+x}" ]; then
+	readonly DEPLOY_REF_SHORT="$DEPLOY_REF"
+fi
+
+if [ -z "${DEPLOY_REF+x}" ]; then
+	echo "need DEPLOY_REF env var not set"
+	exit 1
+fi
+
+if [ -z "${WPORG_ZIPFILE+x}" ]; then
+	readonly DEPLOY_ZIPFILE="$GIT_WORKSPACE/build/zip/$DIRNAME-$DEPLOY_REF_SHORT.zip"
+	echo "ZIPFILE env var not set. Using default $DEPLOY_ZIPFILE"
+fi
+
+if [ ! -f "$DEPLOY_ZIPFILE" ]; then
+	echo "Zip $DEPLOY_ZIPFILE does not exist"
+	exit 1
+fi
 
 rm -r --force "$SVN_DIR" "$DEPLOY_DIR"
 
 # Check if the git tag actually exists https://stackoverflow.com/a/17793125/2847723
-if ! git rev-parse "$VERSION^{tag}" --quiet; then
-    echo "Git tag not found"
-	exit 1
+if ! git rev-parse "$DEPLOY_REF^{tag}" --quiet; then
+    echo "WARNING Git tag not found"
 fi
 
 # We assume the tag is already released on (wp.org) if the SVN tag dir exists
-if svn ls "${SVN_URL}tags/$VERSION" --depth empty --quiet; then
+if svn ls "${SVN_URL}tags/$DEPLOY_REF" --depth empty --quiet; then
 	echo "TAG already exists on SVN remote"
 	exit 1
 fi
 
-if grep '\* GitHub' "$SLUG".php ; then
+if grep '\* GitHub' "$DIRNAME".php ; then
 	echo "Never push anything with Github updater headers to wp.org"
-	exit 1
+	#exit 1
 fi
 
 echo "➤ Checking out .org repository..."
@@ -82,9 +77,9 @@ svn update --set-depth infinity trunk
 
 echo "➤ Copying files..."
 
-unzip -q "$ZIPFILE" -d "$SVN_DIR"
+unzip -q "$DEPLOY_ZIPFILE" -d "$SVN_DIR"
 rm -rf trunk
-mv "$SLUG" trunk
+mv "$DIRNAME" trunk
 
 # Copy dotorg assets to /assets
 rsync -r --checksum "$GIT_WORKSPACE/$ASSETS_DIR/" assets/ --delete
@@ -104,18 +99,15 @@ svn status | grep '^\!' | sed 's/! *//' | xargs -I% svn rm % --quiet || true
 
 # Copy tag locally to make this a single commit
 echo "➤ Copying tag..."
-svn cp "trunk" "tags/$VERSION" --quiet
+svn cp "trunk" "tags/$DEPLOY_REF" --quiet
 
 svn status
 
 echo "➤ Committing files..."
 
-if [[ $DO_NOT_COMMIT ]]; then
-	echo "➤ ENDING HERE FOR TESTING..."
-	exit 1
-fi
+echo "➤ ENDING HERE FOR TESTING..."; exit 1
 
-svn commit -m "Update to version $VERSION"
+svn commit -m "Update to version $DEPLOY_REF"
 
 echo "✓ Plugin deployed!"
 )

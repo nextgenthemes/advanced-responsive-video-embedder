@@ -1,5 +1,5 @@
 {
-  "name": "ARVE-Advanced-Responsive-Video-Embedder",
+  "name": "advanced-responsive-video-embedder",
   "main": "advanced-responsive-video-embedder.php",
   "repository": "https://github.com/nextgenthemes/advanced-responsive-video-embedder",
   "author": "Nicolas Jonas",
@@ -27,6 +27,7 @@
     "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch:sync": "sync=1 NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "hot": "NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "update": "npm install; npm update; composer install; composer update"
   }
 }
