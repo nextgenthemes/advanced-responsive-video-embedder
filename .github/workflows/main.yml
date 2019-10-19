@@ -46,7 +46,7 @@ jobs:
           docker-php-ext-install -j$(nproc) gd
 
       - name: Checkout Tools
-        run: git clone https://${{ secrets.TOOLS_AUTOGIT_REPO_TOKEN }}@github.com/nextgenthemes/tools-autogit.git
+        run: git clone https://${{ secrets.TOOLS_AUTOGIT_REPO_TOKEN }}@github.com/nextgenthemes/tools-autogit.git tools
 
       # we do remove composer lock because we need different phpunit versions based on current PHP version
       - name: Run composer install
