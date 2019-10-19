@@ -62,7 +62,7 @@ jobs:
       #   run: vendor/bin/phpunit
   
   build:
-    needs: test
+    #needs: test
     name: Build release Zip
     runs-on: ubuntu-latest
     container:
