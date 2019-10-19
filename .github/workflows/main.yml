@@ -51,7 +51,7 @@ jobs:
       - name: Run composer install
         run: |
           rm composer.lock
-          composer install --silent --no-interaction
+          composer install --quiet --no-interaction
 
       - name: Install WordPress Test Suite
         run: bash bin/install-wp-tests.sh wordpress_test root root mysql ${{ matrix.wordpress }}
@@ -63,8 +63,8 @@ jobs:
     #needs: test
     name: Build release Zip
     runs-on: ubuntu-latest
-    #env:
-      #ZIPFILE: ${{ $GITHUB_WORKSPACE }}/build/zip/${{ GITHUB_REPOSITORY }}-${{ $GITHUB_REF }}.zip
+    env:
+      ZIPFILE: ${{ github.workspace }}/build/zip/${{ github.repository }}-${{ github.ref }}.zip
     steps:
 
       - name: Dump GitHub context
@@ -72,38 +72,23 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
 
-      - name: Dump GitHub repo
-        env:
-          GITHUB_CONTEXT: ${{ github.repository }}
-        run: echo "$GITHUB_CONTEXT"
+      - name: Checkout repository
+        uses: actions/checkout@v1
 
-    #  - name: Dump GitHub context
-    #     env:
-    #       TTT: ${{ github.repository }}
-    #     run: echo "$TTT"
+      - name: APT + docker
+        # https://bigbite.net/insights/github-actions-ci-cd-with-yarn-composer-phpcs-phpunit-and-built-branches/ reminder
+        run: |
+          apt-get update -yqq
+          apt-get install -yqqf default-mysql-client vim wget zip unzip git subversion libmcrypt-dev --fix-missing
+          docker-php-ext-install mysqli pdo_mysql mbstring pcntl
 
-    #   - name: Dump GitHub context
-    #     env:
-    #       TTT: ${{ github.REPOSITORY }}
-    #     run: echo "$TTT"
+      - name: Build Zip
+        run: bash bin/git-zip.sh ${{ github.workspace }}/build/zip/${{ github.repository }}-${{ github.ref }}.zip
 
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v1
-
-      # - name: APT + docker
-      #   # https://bigbite.net/insights/github-actions-ci-cd-with-yarn-composer-phpcs-phpunit-and-built-branches/ reminder
-      #   run: |
-      #     apt-get update -yqq
-      #     apt-get install -yqqf default-mysql-client vim wget zip unzip git subversion libmcrypt-dev --fix-missing
-      #     docker-php-ext-install mysqli pdo_mysql mbstring pcntl
-
-  #     - name: Build Zip
-  #       run: bash bin/git-zip ${{ $ZIPFILE }}
-
-  #     - uses: actions/upload-artifact@master
-  #       with:
-  #         name: release Zip
-  #         path: ${{ $ZIPFILE }}
+      - uses: actions/upload-artifact@master
+        with:
+          name: ${{ github.repository }}-${{ github.ref }}.zip
+          path: ${{ github.workspace }}/build/zip/${{ github.repository }}-${{ github.ref }}.zip
 
   # deploy:
   #   on: tag
