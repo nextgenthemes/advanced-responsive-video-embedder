@@ -1,8 +1,8 @@
-/build
-/dist
-/vendor
-
-*.code-workspace
+# Folders to ignore
+/build/
+/dist/
+/node_modules/
+/vendor/
 
 # Numerous always-ignore extensions
 *.diff
@@ -25,6 +25,7 @@
 .settings
 .tmproj
 *.esproj
+*.code-workspace
 *.sublime-project
 *.sublime-workspace
 nbproject
@@ -33,7 +34,3 @@ Thumbs.db
 # Komodo
 .komodotools
 *.komodoproject
-
-# Folders to ignore
-node_modules
-js/coverage
