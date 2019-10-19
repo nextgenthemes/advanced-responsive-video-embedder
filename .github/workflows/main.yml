@@ -38,7 +38,7 @@ jobs:
         # apt-get install -yq build-essential libssl-dev gnupg libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libicu-dev libxml2-dev vim wget unzip git subversion default-mysql-client nodejs
         run: |
           apt-get update
-          apt-get install -yqq default-mysql-client libssl-dev libmcrypt-dev wget unzip git subversion
+          apt-get install -yqq build-essential libssl-dev gnupg libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libicu-dev libxml2-dev vim wget unzip git subversion default-mysql-client
           docker-php-ext-install -j$(nproc) iconv intl xml soap opcache pdo pdo_mysql mysqli mbstring
           docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
           docker-php-ext-install -j$(nproc) gd
