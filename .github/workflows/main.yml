@@ -39,7 +39,7 @@ jobs:
         run: |
           apt-get update -yqq
           apt-get install -yqqf default-mysql-client vim wget zip unzip git subversion libmcrypt-dev --fix-missing
-          docker-php-ext-install mysqli pdo_mysql mbstring
+          docker-php-ext-install mysqli pdo_mysql mbstring pcntl
 
       - name: Install composer with official install script
         run: |
@@ -89,7 +89,7 @@ jobs:
       #   run: |
       #     apt-get update -yqq
       #     apt-get install -yqqf default-mysql-client vim wget zip unzip git subversion libmcrypt-dev --fix-missing
-      #     docker-php-ext-install mysqli pdo_mysql mbstring
+      #     docker-php-ext-install mysqli pdo_mysql mbstring pcntl
 
   #     - name: Build Zip
   #       run: bash bin/git-zip ${{ $ZIPFILE }}

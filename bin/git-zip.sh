@@ -1,7 +1,6 @@
 #!/bin/bash
 set -Eeuxo pipefail # https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail/
 
-readonly DIR=${PWD}
 readonly DIRNAME=${PWD##*/}
 
 if [ -z "$1" ]; then
