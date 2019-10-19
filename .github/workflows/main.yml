@@ -2,6 +2,7 @@ name: CI Build
 on: [push]
 
 jobs:
+
   test:
     name: PHP Unit tests
     strategy:
@@ -50,7 +51,7 @@ jobs:
       - name: Run composer install
         run: |
           rm composer.lock
-          composer install
+          composer install --silent --no-interaction
 
       - name: Install WordPress Test Suite
         run: bash bin/install-wp-tests.sh wordpress_test root root mysql ${{ matrix.wordpress }}
@@ -59,7 +60,7 @@ jobs:
         run: vendor/bin/phpunit
   
   build:
-    needs: test
+    #needs: test
     name: Build release Zip
     runs-on: ubuntu-latest
     #env:
@@ -69,6 +70,11 @@ jobs:
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: Dump GitHub repo
+        env:
+          GITHUB_CONTEXT: ${{ github.repository }}
         run: echo "$GITHUB_CONTEXT"
 
     #  - name: Dump GitHub context
@@ -106,9 +112,6 @@ jobs:
   #   steps:
   #     - name: Checkout repository
   #       uses: actions/checkout@v1
-
-  #     - name: Checkout Tools
-  #       run: git clone https://${{ secrets.TOOLS_AUTOGIT_REPO_TOKEN }}@github.com/nextgenthemes/tools-autogit.git tools
 
   #     - name: Deploy
   #       run: bash bin/wporg-deploy
