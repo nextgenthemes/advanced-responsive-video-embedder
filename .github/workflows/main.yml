@@ -34,19 +34,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
 
-      - name: Checkout Tools
-        run: git clone https://${{ secrets.TOOLS_AUTOGIT_REPO_TOKEN }}@github.com/nextgenthemes/tools-autogit.git
-
       - name: Set up container
         # apt-get install -yq build-essential libssl-dev gnupg libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libicu-dev libxml2-dev vim wget unzip git subversion default-mysql-client nodejs
         run: |
           apt-get update
-          apt-get install -yqq default-mysql-client libssl-dev libmcrypt-dev wget unzip subversion
+          apt-get install -yqq default-mysql-client libssl-dev libmcrypt-dev wget unzip git subversion
           bash tools/install-composer
           mv composer.phar /usr/local/bin/composer
           docker-php-ext-install -j$(nproc) iconv intl xml soap opcache pdo pdo_mysql mysqli mbstring
           # docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
           docker-php-ext-install -j$(nproc) gd
+
+      - name: Checkout Tools
+        run: git clone https://${{ secrets.TOOLS_AUTOGIT_REPO_TOKEN }}@github.com/nextgenthemes/tools-autogit.git
 
       # we do remove composer lock because we need different phpunit versions based on current PHP version
       - name: Run composer install
