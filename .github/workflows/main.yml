@@ -66,44 +66,60 @@ jobs:
     needs: test
     name: Build release Zip
     runs-on: ubuntu-latest
-    env:
-      ZIPFILE: ${{ $GITHUB_WORKSPACE }}/build/zip/${{ GITHUB_REPOSITORY }}-${{ $GITHUB_REF }}.zip
+    #env:
+      #ZIPFILE: ${{ $GITHUB_WORKSPACE }}/build/zip/${{ GITHUB_REPOSITORY }}-${{ $GITHUB_REF }}.zip
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v1
 
-      - name: Checkout Tools
-        run: git clone https://${{ secrets.TOOLS_AUTOGIT_REPO_TOKEN }}@github.com/nextgenthemes/tools-autogit.git tools
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
 
-      - name: Set up container
-        # apt-get install -yq build-essential libssl-dev gnupg libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libicu-dev libxml2-dev vim wget unzip git subversion default-mysql-client nodejs
-        run: |
-          apt-get update
-          apt-get install -yqq default-mysql-client libssl-dev libmcrypt-dev wget unzip subversion
-          bash tools/install-composer
-          mv composer.phar /usr/local/bin/composer
-          docker-php-ext-install -j$(nproc) iconv intl xml soap opcache pdo pdo_mysql mysqli mbstring
-          # docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
-          docker-php-ext-install -j$(nproc) gd
+     - name: Dump GitHub context
+        env:
+          TTT: ${{ github.repository }}
+        run: echo "$TTT"
 
-      - name: Build Zip
-        run: bash tools/git-zip ${{ $ZIPFILE }}
+      - name: Dump GitHub context
+        env:
+          TTT: ${{ github.REPOSITORY }}
+        run: echo "$TTT"
 
-      - uses: actions/upload-artifact@master
-        with:
-          name: release Zip
-          path: ${{ $ZIPFILE }}
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v1
 
-  deploy:
-    on: tag
-    needs: [test, build]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v1
+  #     - name: Checkout Tools
+  #       run: git clone https://${{ secrets.TOOLS_AUTOGIT_REPO_TOKEN }}@github.com/nextgenthemes/tools-autogit.git tools
 
-      - name: Checkout Tools
-        run: git clone https://${{ secrets.TOOLS_AUTOGIT_REPO_TOKEN }}@github.com/nextgenthemes/tools-autogit.git tools
+  #     - name: Set up container
+  #       # apt-get install -yq build-essential libssl-dev gnupg libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libicu-dev libxml2-dev vim wget unzip git subversion default-mysql-client nodejs
+  #       run: |
+  #         apt-get update
+  #         apt-get install -yqq default-mysql-client libssl-dev libmcrypt-dev wget unzip subversion
+  #         bash tools/install-composer
+  #         mv composer.phar /usr/local/bin/composer
+  #         docker-php-ext-install -j$(nproc) iconv intl xml soap opcache pdo pdo_mysql mysqli mbstring
+  #         # docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+  #         docker-php-ext-install -j$(nproc) gd
 
-      - name: Deploy
-        run: bash tools/wporg-deploy
+  #     - name: Build Zip
+  #       run: bash tools/git-zip ${{ $ZIPFILE }}
+
+  #     - uses: actions/upload-artifact@master
+  #       with:
+  #         name: release Zip
+  #         path: ${{ $ZIPFILE }}
+
+  # deploy:
+  #   on: tag
+  #   needs: [test, build]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v1
+
+  #     - name: Checkout Tools
+  #       run: git clone https://${{ secrets.TOOLS_AUTOGIT_REPO_TOKEN }}@github.com/nextgenthemes/tools-autogit.git tools
+
+  #     - name: Deploy
+  #       run: bash tools/wporg-deploy
