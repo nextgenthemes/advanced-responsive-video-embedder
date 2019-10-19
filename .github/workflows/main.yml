@@ -13,8 +13,8 @@ jobs:
     #     # wordpress: [4.9.10,5.2.4,latest]
     #     wordpress: [latest]
     runs-on: ubuntu-latest
-    # container:
-    #   image: php:${{ matrix.php }}-apache
+    container:
+      image: php:${{ matrix.php }}-apache
     #   env:
     #     NODE_ENV: production
     #   ports:
@@ -37,12 +37,12 @@ jobs:
       # - name: Checkout repository
       #   uses: actions/checkout@v1
 
-      # - name: APT + docker
-      #   # https://bigbite.net/insights/github-actions-ci-cd-with-yarn-composer-phpcs-phpunit-and-built-branches/ reminder
-      #   run: |
-      #     apt-get update -yqq
-      #     apt-get install -yqqf default-mysql-client vim wget zip unzip git subversion libmcrypt-dev --fix-missing
-      #     docker-php-ext-install mysqli pdo_mysql mbstring pcntl
+      - name: APT + docker
+         # https://bigbite.net/insights/github-actions-ci-cd-with-yarn-composer-phpcs-phpunit-and-built-branches/ reminder
+        run: |
+          apt-get update -yqq
+          apt-get install -yqqf default-mysql-client vim wget zip unzip git subversion libmcrypt-dev --fix-missing
+          docker-php-ext-install mysqli pdo_mysql mbstring pcntl
 
       # - name: Install composer with official install script
       #   run: |
@@ -66,7 +66,7 @@ jobs:
     name: Build release Zip
     runs-on: ubuntu-latest
     container:
-      image: node:lts-buster
+      image: php:7.3-apache
     env:
       DEPLOY_REF: ${{ github.sha }}
       DEPLOY_REF_SHORT: ${{ github.ref }}
@@ -86,6 +86,10 @@ jobs:
           apt-get update -yqq
           apt-get install -yqqf git tar wget zip unzip php --fix-missing
           docker-php-ext-install mysqli pdo_mysql mbstring pcntl
+      
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
 
       - name: Display versions
         run: |
