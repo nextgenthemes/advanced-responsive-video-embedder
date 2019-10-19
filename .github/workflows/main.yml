@@ -83,7 +83,7 @@ jobs:
 
       - name: APT + docker
         run: |
-          #apt-get update -yqq
+          apt-get update -yqq
           apt-get install -yqqf git tar wget zip unzip php --fix-missing
           docker-php-ext-install mysqli pdo_mysql mbstring pcntl
       
