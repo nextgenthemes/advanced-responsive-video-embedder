@@ -66,6 +66,8 @@ jobs:
     needs: test
     name: Build release Zip
     runs-on: ubuntu-latest
+    container:
+      image: ubuntu:latest
     env:
       DEPLOY_REF: ${{ github.sha }}
       DEPLOY_REF_SHORT: ${{ github.ref }}
