@@ -39,14 +39,17 @@ jobs:
         run: |
           apt-get update
           apt-get install -yqq default-mysql-client libssl-dev libmcrypt-dev wget unzip git subversion
-          bash tools/install-composer
-          mv composer.phar /usr/local/bin/composer
           docker-php-ext-install -j$(nproc) iconv intl xml soap opcache pdo pdo_mysql mysqli mbstring
           # docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
           docker-php-ext-install -j$(nproc) gd
 
       - name: Checkout Tools
         run: git clone https://${{ secrets.TOOLS_AUTOGIT_REPO_TOKEN }}@github.com/nextgenthemes/tools-autogit.git tools
+
+      - name: Install composer with official install script
+        run: |
+          bash tools/install-composer
+          mv composer.phar /usr/local/bin/composer
 
       # we do remove composer lock because we need different phpunit versions based on current PHP version
       - name: Run composer install
@@ -55,12 +58,10 @@ jobs:
           composer install
 
       - name: Install WordPress Test Suite
-        run: |
-          bash bin/install-wp-tests.sh wordpress_test root root mysql ${{ matrix.wordpress }}
+        run: bash tools/install-wp-tests wordpress_test root root mysql ${{ matrix.wordpress }}
 
       - name: Run PHPUnit
-        run: |
-          vendor/bin/phpunit
+        run: vendor/bin/phpunit
   
   build:
     needs: test
