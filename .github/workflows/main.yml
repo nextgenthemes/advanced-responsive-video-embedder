@@ -75,15 +75,15 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
 
-     - name: Dump GitHub context
-        env:
-          TTT: ${{ github.repository }}
-        run: echo "$TTT"
+    #  - name: Dump GitHub context
+    #     env:
+    #       TTT: ${{ github.repository }}
+    #     run: echo "$TTT"
 
-      - name: Dump GitHub context
-        env:
-          TTT: ${{ github.REPOSITORY }}
-        run: echo "$TTT"
+    #   - name: Dump GitHub context
+    #     env:
+    #       TTT: ${{ github.REPOSITORY }}
+    #     run: echo "$TTT"
 
   #     - name: Checkout repository
   #       uses: actions/checkout@v1
