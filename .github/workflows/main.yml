@@ -2,8 +2,8 @@ name: CI Build
 on: [push]
 
 jobs:
-  test:
-    name: PHP Unit tests
+  # test:
+  #   name: PHP Unit tests
     # strategy:
     #   matrix:
     #     # php: [5.6,7.0,7.1,7.2,7.3]
@@ -12,9 +12,9 @@ jobs:
     #     mysql: [5.7.27]
     #     # wordpress: [4.9.10,5.2.4,latest]
     #     wordpress: [latest]
-    runs-on: ubuntu-latest
-    container:
-      image: php:${{ matrix.php }}-apache
+    # runs-on: ubuntu-latest
+    # container:
+    #   image: php:${{ matrix.php }}-apache
     #   env:
     #     NODE_ENV: production
     #   ports:
@@ -30,19 +30,19 @@ jobs:
     #     - 3306
     #     volumes:
     #     - $HOME/mysql:/var/lib/mysql
-    steps:
-      - name: skip for testing
-        run: echo "SKIP"
+    # steps:
+    #   - name: skip for testing
+    #     run: echo "SKIP"
 
       # - name: Checkout repository
       #   uses: actions/checkout@v1
 
-      - name: APT + docker
-         # https://bigbite.net/insights/github-actions-ci-cd-with-yarn-composer-phpcs-phpunit-and-built-branches/ reminder
-        run: |
-          apt-get update -yqq
-          apt-get install -yqqf default-mysql-client vim wget zip unzip git subversion libmcrypt-dev --fix-missing
-          docker-php-ext-install mysqli pdo_mysql mbstring pcntl
+      # - name: APT + docker
+      #    # https://bigbite.net/insights/github-actions-ci-cd-with-yarn-composer-phpcs-phpunit-and-built-branches/ reminder
+      #   run: |
+      #     apt-get update -yqq
+      #     apt-get install -yqqf default-mysql-client vim wget zip unzip git subversion libmcrypt-dev --fix-missing
+      #     docker-php-ext-install mysqli pdo_mysql mbstring pcntl
 
       # - name: Install composer with official install script
       #   run: |
@@ -83,7 +83,7 @@ jobs:
 
       - name: APT + docker
         run: |
-          apt-get update -yqq
+          #apt-get update -yqq
           apt-get install -yqqf git tar wget zip unzip php --fix-missing
           docker-php-ext-install mysqli pdo_mysql mbstring pcntl
       
