@@ -73,15 +73,7 @@ jobs:
       - 80
       volumes:
       - $GITHUB_WORKSPACE:/var/www/html
-    services:
-      mysql:
-        image: mysql:${{ matrix.mysql }}
-        env:
-          MYSQL_ROOT_PASSWORD: root
-        ports:
-        - 3306
-        volumes:
-        - $HOME/mysql:/var/lib/mysql
+      
     env:
       DEPLOY_REF: ${{ github.sha }}
       DEPLOY_REF_SHORT: ${{ github.ref }}

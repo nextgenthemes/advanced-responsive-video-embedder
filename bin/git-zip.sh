@@ -29,6 +29,10 @@ if [ -z "${DEPLOY_ZIPFILE+x}" ]; then
 	echo "DEPLOY_ZIPFILE env var not set. Using default $DEPLOY_ZIPFILE"
 fi
 
+echo "DEPLOY_REF: $DEPLOY_REF"
+echo "DEPLOY_REF_SHORT: $DEPLOY_REF_SHORT"
+echo "REPLOY_ZIPFILE: $DEPLOY_ZIPFILE"
+
 readonly ZIPPATH="$(dirname "$DEPLOY_ZIPFILE")"
 
 mkdir -p "$ZIPPATH/$DIRNAME/"
@@ -52,6 +56,6 @@ cp -r {dist,vendor} "$ZIPPATH/$DIRNAME/"
 	rm -rf "$DIRNAME"
 )
 
-if [[ $DESKTOP_SESSION ]]; then # NOT on CI
+if [ -n "${DESKTOP_SESSION+set}" ]; then
 	composer install --quiet --no-interaction # When running local, get all the dev deps back in. Composer has them cached.
 fi
