@@ -67,8 +67,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: node:lts-buster
-    env:
-      DEPLOY_REF: ${{ github.sha }}
     steps:
 
       - name: Dump GitHub context
@@ -77,11 +75,7 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
 
       - id: zip
-        run: echo ::set-output name=file::build/zip/${{ github.event.repository.name }}-$(echo ${{ github.ref }} | sed "s/\//-/g").zip
-      - run: echo "${{ steps.zip.outputs.file }}"
-
-      - run: echo ::set-env name=DEPLOY_ZIPFILE::${{ github.workspace }}/${{ steps.zip.outputs.file }}
-      - run: echo "$DEPLOY_ZIPFILE"
+        run: echo ::set-output name=file::build/zip/${{ github.event.repository.name }}-$(echo ${{ github.ref }} | sed "s/\//-/g" | sed -E -e "s/[^a-z0-9-]+//g").zip
 
       - name: Checkout repository
         uses: actions/checkout@v1
@@ -96,19 +90,20 @@ jobs:
       - run: php --version
       - run: composer --version
       - run: bash bin/git-zip.sh
+        env:
+          DEPLOY_REF: ${{ github.sha }}
+          DEPLOY_ZIPFILE: ${{ github.workspace }}/${{ steps.zip.outputs.file }}
 
       - uses: actions/upload-artifact@master
         with:
           name: Build Zipfile
           path: "${{ steps.zip.outputs.file }}"
 
-  # deploy:
-  #   on: tag
-  #   needs: [test, build]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v1
-
-  #     - name: Deploy
-  #       run: bash bin/wporg-deploy
+      - name: Maybe deploy to wp.org
+        #if: startsWith(github.ref, 'refs/tags') && ! startsWith(github.event.repository.name, 'arve-') && startsWith(github.ref, 'refs/tags') && ! contains(github.ref, 'beta') && ! contains(github.ref, 'alpha')
+        run: |
+          apt-get install -yqqf subversion
+          bash bin/wporg-deploy.sh
+        env:
+          DEPLOY_REF: ${{ github.sha }}
+          DEPLOY_ZIPFILE: ${{ github.workspace }}/${{ steps.zip.outputs.file }}

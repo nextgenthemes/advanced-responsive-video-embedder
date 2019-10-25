@@ -8,8 +8,8 @@ set -Eeuxo pipefail # https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo
 # Copyright (c) 2019 Helen Hou-Sandi
 # License MIT
 
-readonly DIRNAME=${PWD##*/}
 readonly GIT_WORKSPACE="$PWD"
+readonly DIRNAME=${PWD##*/}
 readonly ASSETS_DIR=".assets-wp-repo"
 readonly DEPLOY_DIR="$GIT_WORKSPACE/build/deploy"
 readonly SVN_DIR="$GIT_WORKSPACE/build/svn"
@@ -26,17 +26,13 @@ if [ -z "${TYPE+x}" ]; then
 	exit 1
 fi
 
-if [ -z "${DEPLOY_REF_SHORT+x}" ]; then
-	readonly DEPLOY_REF_SHORT="$DEPLOY_REF"
-fi
-
 if [ -z "${DEPLOY_REF+x}" ]; then
 	echo "need DEPLOY_REF env var not set"
 	exit 1
 fi
 
-if [ -z "${WPORG_ZIPFILE+x}" ]; then
-	readonly DEPLOY_ZIPFILE="$GIT_WORKSPACE/build/zip/$DIRNAME-$DEPLOY_REF_SHORT.zip"
+if [ -z "${DEPLOY_ZIPFILE+x}" ]; then
+	readonly DEPLOY_ZIPFILE="$GIT_WORKSPACE/build/zip/$DIRNAME-$DEPLOY_REF.zip"
 	echo "ZIPFILE env var not set. Using default $DEPLOY_ZIPFILE"
 fi
 
