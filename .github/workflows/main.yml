@@ -2,67 +2,67 @@ name: CI Build
 on: [push]
 
 jobs:
-  # test:
-  #   name: PHP Unit tests
-    # strategy:
-    #   matrix:
-    #     # php: [5.6,7.0,7.1,7.2,7.3]
-    #     php: [7.3]
-    #     node: [12.9.0]
-    #     mysql: [5.7.27]
-    #     # wordpress: [4.9.10,5.2.4,latest]
-    #     wordpress: [latest]
-    # runs-on: ubuntu-latest
-    # container:
-    #   image: php:${{ matrix.php }}-apache
-    #   env:
-    #     NODE_ENV: production
-    #   ports:
-    #   - 80
-    #   volumes:
-    #   - $GITHUB_WORKSPACE:/var/www/html
-    # services:
-    #   mysql:
-    #     image: mysql:${{ matrix.mysql }}
-    #     env:
-    #       MYSQL_ROOT_PASSWORD: root
-    #     ports:
-    #     - 3306
-    #     volumes:
-    #     - $HOME/mysql:/var/lib/mysql
-    # steps:
-    #   - name: skip for testing
-    #     run: echo "SKIP"
+  test:
+    name: PHP Unit tests
+    strategy:
+      matrix:
+        # php: [5.6,7.0,7.1,7.2,7.3]
+        php: [7.3]
+        node: [12.9.0]
+        mysql: [5.7.27]
+        # wordpress: [4.9.10,5.2.4,latest]
+        wordpress: [latest]
+    runs-on: ubuntu-latest
+    container:
+      image: php:${{ matrix.php }}-apache
+      env:
+        NODE_ENV: production
+      ports:
+      - 80
+      volumes:
+      - $GITHUB_WORKSPACE:/var/www/html
+    services:
+      mysql:
+        image: mysql:${{ matrix.mysql }}
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+        - 3306
+        volumes:
+        - $HOME/mysql:/var/lib/mysql
+    steps:
+      - name: skip for testing
+        run: echo "SKIP"
 
-      # - name: Checkout repository
-      #   uses: actions/checkout@v1
+      - name: Checkout repository
+        uses: actions/checkout@v1
 
-      # - name: APT + docker
-      #    # https://bigbite.net/insights/github-actions-ci-cd-with-yarn-composer-phpcs-phpunit-and-built-branches/ reminder
-      #   run: |
-      #     apt-get update -yqq
-      #     apt-get install -yqqf default-mysql-client vim wget zip unzip git subversion libmcrypt-dev --fix-missing
-      #     docker-php-ext-install mysqli pdo_mysql mbstring pcntl
+      - name: APT + docker
+         # https://bigbite.net/insights/github-actions-ci-cd-with-yarn-composer-phpcs-phpunit-and-built-branches/ reminder
+        run: |
+          apt-get update -yqq
+          apt-get install -yqqf default-mysql-client vim wget zip unzip git subversion libmcrypt-dev --fix-missing
+          docker-php-ext-install mysqli pdo_mysql mbstring pcntl
 
-      # - name: Install composer with official install script
-      #   run: |
-      #     bash bin/install-composer.sh
-      #     mv composer.phar /usr/local/bin/composer
+      - name: Install composer with official install script
+        run: |
+          bash bin/install-composer.sh
+          mv composer.phar /usr/local/bin/composer
 
-      # # we do remove composer lock because we need different phpunit versions based on current PHP version
-      # - name: Run composer install
-      #   run: |
-      #     rm composer.lock
-      #     composer install --quiet --no-interaction
+      # we do remove composer lock because we need different phpunit versions based on current PHP version
+      - name: Run composer install
+        run: |
+          rm composer.lock
+          composer install --quiet --no-interaction
 
-      # - name: Install WordPress Test Suite
-      #   run: bash bin/install-wp-tests.sh wordpress_test root root mysql ${{ matrix.wordpress }}
+      - name: Install WordPress Test Suite
+        run: bash bin/install-wp-tests.sh wordpress_test root root mysql ${{ matrix.wordpress }}
 
-      # - name: Run PHPUnit
-      #   run: vendor/bin/phpunit
+      - name: Run PHPUnit
+        run: vendor/bin/phpunit
 
   build:
-    #needs: test
+    needs: test
     name: Build release Zip
     runs-on: ubuntu-latest
     container:
@@ -100,7 +100,7 @@ jobs:
           path: "${{ steps.zip.outputs.file }}"
 
       - name: Maybe deploy to wp.org
-        #if: startsWith(github.ref, 'refs/tags') && ! startsWith(github.event.repository.name, 'arve-') && startsWith(github.ref, 'refs/tags') && ! contains(github.ref, 'beta') && ! contains(github.ref, 'alpha')
+        if: startsWith(github.ref, 'refs/tags') && ! startsWith(github.event.repository.name, 'arve-') && startsWith(github.ref, 'refs/tags') && ! contains(github.ref, 'beta') && ! contains(github.ref, 'alpha')
         run: |
           apt-get install -yqqf subversion
           bash bin/wporg-deploy.sh
