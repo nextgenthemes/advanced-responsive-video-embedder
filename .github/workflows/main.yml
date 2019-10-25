@@ -44,15 +44,12 @@ jobs:
           apt-get install -yqqf default-mysql-client vim wget zip unzip git subversion libmcrypt-dev --fix-missing
           docker-php-ext-install mysqli pdo_mysql mbstring pcntl
 
-      - name: Install composer with official install script
-        run: |
-          bash bin/install-composer.sh
-          mv composer.phar /usr/local/bin/composer
-
-      # we do remove composer lock because we need different phpunit versions based on current PHP version
+      - name: Install composer
+        run: bash bin/install-composer.sh
+      
       - name: Run composer install
         run: |
-          rm composer.lock
+          rm composer.lock # we do remove composer lock because we need different phpunit versions based on current PHP version
           composer install --quiet --no-interaction
 
       - name: Install WordPress Test Suite
@@ -107,3 +104,5 @@ jobs:
         env:
           DEPLOY_REF: ${{ github.sha }}
           DEPLOY_ZIPFILE: ${{ github.workspace }}/${{ steps.zip.outputs.file }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
