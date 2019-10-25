@@ -102,8 +102,8 @@ jobs:
 
       - uses: actions/upload-artifact@master
         with:
-          name: "$DEPLOY_ZIPFILE"
-          path: "$DEPLOY_ZIPFILE"
+          name: "{{ DEPLOY_ZIPFILE }}"
+          path: "{{ DEPLOY_ZIPFILE }}"
 
   # deploy:
   #   on: tag
