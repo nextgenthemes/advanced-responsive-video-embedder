@@ -87,7 +87,7 @@ jobs:
       - name: Remove dashes from DEPLOY_REF_SHORT and set DEPLOY_ZIPFILE
         run: echo ::set-env name=DEPLOY_ZIPNAME::${{ github.workspace }}/build/zip/${{ github.repository }}-$DEPLOY_REF_SHORT.zip
 
-      - name: CHECK
+      - name: CHECK2
         run: |
           echo "$DEPLOY_REF_SHORT"
           echo "$DEPLOY_REF_ZIPFILE"
