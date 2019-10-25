@@ -80,7 +80,12 @@ jobs:
     steps:
 
       - name: Replace / with - in DEPLAY_REF_SHORT global
-        shell: bash
+        run: | 
+          ::set-env name=DEPLOY_REF_SHORT::$(echo ${{ github.ref }} | sed "s/\//-/g")
+          echo $DEPLOY_REF_SHORT
+          ::set-env name=DEPLOY_ZIPNAME::${{ github.workspace }}/build/zip/${{ github.repository }}-$DEPLOY_REF_SHORT.zip
+          echo $DEPLOY_REF_ZIPFILE
+
         run: |
           ::set-env name=DEPLOY_REF_SHORT::${DEPLOY_REF_SHORT//\//-}
           echo $DEPLOY_REF_SHORT
