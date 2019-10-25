@@ -76,11 +76,11 @@ jobs:
       
     env:
       DEPLOY_REF: ${{ github.sha }}
-      DEPLOY_ZIPFILE: ${{ github.workspace }}/build/zip/${{ github.repository }}-${{ github.ref }}.zip
+      DEPLOY_REF_SHORT: ${{ github.ref }}
     steps:
 
-      - name: Replace / with - in DEPLAY_REF_SHORT global
-        run: | 
+      - name: Reove dashes from DEPLOY_REF_SHORT and set DEPLOY_ZIPFILE
+        run: |
           ::set-env name=DEPLOY_REF_SHORT::$(echo ${{ github.ref }} | sed "s/\//-/g")
           echo $DEPLOY_REF_SHORT
           ::set-env name=DEPLOY_ZIPNAME::${{ github.workspace }}/build/zip/${{ github.repository }}-$DEPLOY_REF_SHORT.zip
