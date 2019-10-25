@@ -20,22 +20,24 @@ if [ -z "${DEPLOY_REF+x}" ]; then
 	exit 1
 fi
 
-if [ -z "${DEPLOY_REF_SHORT+x}" ]; then
-	readonly DEPLOY_REF_SHORT="$DEPLOY_REF"
+if [ -z "${DEPLOY_ZIPFILE+x}" ]; then
+
+	if [ -z "${DEPLOY_REF_SHORT+x}" ]; then
+		readonly DEPLOY_REF_SHORT="$DEPLOY_REF"
+	fi
+
+	readonly DEPLOY_ZIPFILE="$GIT_WORKSPACE/build/zip/$DIRNAME-$DEPLOY_REF_SHORT.zip"
+	echo "DEPLOY_ZIPFILE env var not set. Using default"
 fi
 
-if [ -z "${DEPLOY_ZIPFILE+x}" ]; then
-	readonly DEPLOY_ZIPFILE="$GIT_WORKSPACE/build/zip/$DIRNAME-$DEPLOY_REF_SHORT.zip"
-	echo "DEPLOY_ZIPFILE env var not set. Using default $DEPLOY_ZIPFILE"
-fi
+readonly DEPLOY_ZIPPATH="$(dirname "$DEPLOY_ZIPFILE")"
 
 echo "DEPLOY_REF: $DEPLOY_REF"
 echo "DEPLOY_REF_SHORT: $DEPLOY_REF_SHORT"
 echo "REPLOY_ZIPFILE: $DEPLOY_ZIPFILE"
+echo "DEPLOY_ZIPPATH: $DEPLOY_ZIPPATH"
 
-readonly ZIPPATH="$(dirname "$DEPLOY_ZIPFILE")"
-
-mkdir -p "$ZIPPATH/$DIRNAME/"
+mkdir -p "$DEPLOY_ZIPPATH/$DIRNAME/"
 # Nice clean zip thanks to export-ignore rules from .gitattributes
 git archive --format=zip --prefix="$DIRNAME"/ --output="$DEPLOY_ZIPFILE" "$DEPLOY_REF"
 
@@ -46,10 +48,10 @@ npm install --quiet
 npm run production --quiet
 mkdir dist -p # just for plugin that do not use it yet we create a empty folder to prevent errors
 mkdir vendor -p # just for plugin that do not use it yet we create a empty folder to prevent errors
-cp -r {dist,vendor} "$ZIPPATH/$DIRNAME/"
+cp -r {dist,vendor} "$DEPLOY_ZIPPATH/$DIRNAME/"
 
 (
-	cd "$ZIPPATH"
+	cd "$DEPLOY_ZIPPATH"
 	# Put the compressed files in dist and the php deps in vendor into our zip for ditribution
 	zip -urq "$DEPLOY_ZIPFILE" "$DIRNAME"/dist
 	zip -urq "$DEPLOY_ZIPFILE" "$DIRNAME"/vendor
