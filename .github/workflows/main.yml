@@ -60,10 +60,6 @@ jobs:
 
       # - name: Run PHPUnit
       #   run: vendor/bin/phpunit
-  
-   script:
-    - apt-get update -yqq
-    - apt-get install -yqqf git tar wget zip unzip php --fix-missing
 
   build:
     #needs: test
