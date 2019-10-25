@@ -71,14 +71,17 @@ svn checkout --depth immediates "$SVN_URL" "$SVN_DIR"
 svn update --set-depth infinity assets
 svn update --set-depth infinity trunk
 
-echo "➤ Copying files..."
+echo "➤ Extract zip to trunk ..."
 
 unzip -q "$DEPLOY_ZIPFILE" -d "$SVN_DIR"
 rm -rf trunk
 mv "$DIRNAME" trunk
 
-# Copy dotorg assets to /assets
-rsync -r --checksum "$GIT_WORKSPACE/$ASSETS_DIR/" assets/ --delete
+echo "➤ Move $ASSETS_DIR to svn /assets ..."
+
+# Just move the assets to the svn dir
+rm -rf assets 
+mv "$GIT_WORKSPACE/$ASSETS_DIR" assets
 
 # Fix screenshots getting force downloaded when clicking them
 # https://developer.wordpress.org/plugins/wordpress-org/plugin-assets/
@@ -101,7 +104,7 @@ svn status
 
 echo "➤ Committing files..."
 
-echo "➤ ENDING HERE FOR TESTING..."; exit 1
+echo "➤ ENDING HERE FOR TESTING..."; exit 0
 
 svn commit -m "Update to version $DEPLOY_REF"
 
