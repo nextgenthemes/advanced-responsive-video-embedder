@@ -113,30 +113,22 @@ function sc_filter_liveleak_id_fix( array $a ) {
 	return $a;
 }
 
-function sc_filter_mode_fallback( array $a ) {
-
-	if ( in_array( $a['mode'], [ 'lazyload-lightbox', 'thumbnail' ], true ) ) {
-		$a['mode'] = 'lightbox';
-	}
+function sc_filter_mode( array $a ) {
 
 	$supported_modes = get_supported_modes();
 
-	if ( function_exists( '\Nextgenthemes\ARVE\Pro\init' ) && 'lazyload' === $a['mode'] && empty( $a['img_src'] ) ) {
-
-		$a['mode'] = 'normal';
-
-	} elseif ( ! array_key_exists( $a['mode'], $supported_modes ) ) {
+	if ( ! array_key_exists( $a['mode'], $supported_modes ) ) {
 
 		$err_msg = sprintf(
 			// Translators: Mode
-			__( 'Mode: %s not available (ARVE Pro not active), switching to normal mode', 'advanced-responsive-video-embedder' ),
+			__( 'Mode: %s not available (ARVE Pro not active?), switching to normal mode', 'advanced-responsive-video-embedder' ),
 			$a['mode']
 		);
 		$a['errors']->add( 'mode-not-avail', $err_msg );
 		$a['mode'] = 'normal';
 	}
 
-	return $a;
+	return apply_filters( 'nextgenthemes/arve/sc_filter/mode', $a );
 }
 
 function sc_filter_validate( array $a ) {
@@ -180,7 +172,7 @@ function sc_filter_validate( array $a ) {
 	$a = validate_align( $a );
 	$a = validate_aspect_ratio( $a );
 
-	return $a;
+	return apply_filters( 'nextgenthemes/arve/sc_filter/validate', $a );
 }
 
 function sc_filter_validate_again( array $a ) {
@@ -277,7 +269,7 @@ function sc_filter_missing_attribute_check( array $a ) {
 	return $a;
 }
 
-function sc_filter_get_media_gallery_thumbnail( array $a ) {
+function sc_filter_thumbnail( array $a ) {
 
 	if ( empty( $a['thumbnail'] ) ) {
 		return $a;
@@ -300,10 +292,10 @@ function sc_filter_get_media_gallery_thumbnail( array $a ) {
 		$a['errors']->add( 'thumbnail', __( 'Not a valid thumbnail URL or Media ID given', 'advanced-responsive-video-embedder' ) );
 	}
 
-	return $a;
+	return apply_filters( 'nextgenthemes/arve/sc_filter/thumbnail', $a );
 }
 
-function sc_filter_get_media_gallery_video( array $a ) {
+function sc_filter_video( array $a ) {
 
 	foreach ( VIDEO_FILE_EXTENSIONS as $ext ) {
 
@@ -312,7 +304,7 @@ function sc_filter_get_media_gallery_video( array $a ) {
 		}
 	}
 
-	return $a;
+	return apply_filters( 'nextgenthemes/arve/sc_filter/video', $a );
 }
 
 function sc_filter_detect_provider_and_id_from_url( array $a ) {
