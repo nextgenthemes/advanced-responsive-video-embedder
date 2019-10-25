@@ -71,20 +71,18 @@ jobs:
       DEPLOY_REF: ${{ github.sha }}
     steps:
 
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
       - name: Set DEPLOY_REF_SHORT
         run: echo ::set-env name=DEPLOY_REF_SHORT::$(echo ${{ github.ref }} | sed "s/\//-/g")
       - run: echo "$DEPLOY_REF_SHORT"
 
       - name: Remove dashes from DEPLOY_REF_SHORT and set DEPLOY_ZIPFILE
-        run: echo ::set-env name=DEPLOY_ZIPFILE::${{ github.workspace }}/build/zip/${{ github.repository }}-$DEPLOY_REF_SHORT.zip
-      - run: |
-          echo "$DEPLOY_REF_SHORT"
-          echo "$DEPLOY_ZIPFILE"
-
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+        run: echo ::set-env name=DEPLOY_ZIPFILE::${{ github.workspace }}/build/zip/${{ github.event.repository.name }}-$(echo ${{ github.ref }} | sed "s/\//-/g").zip
+      - run: echo "$DEPLOY_ZIPFILE"
 
       - name: Checkout repository
         uses: actions/checkout@v1
@@ -102,8 +100,8 @@ jobs:
 
       - uses: actions/upload-artifact@master
         with:
-          name: "{{ DEPLOY_ZIPFILE }}"
-          path: "{{ DEPLOY_ZIPFILE }}"
+          name: "${{ DEPLOY_ZIPFILE }}"
+          path: "${{ DEPLOY_ZIPFILE }}"
 
   # deploy:
   #   on: tag
