@@ -61,12 +61,16 @@ jobs:
       # - name: Run PHPUnit
       #   run: vendor/bin/phpunit
   
+   script:
+    - apt-get update -yqq
+    - apt-get install -yqqf git tar wget zip unzip php --fix-missing
+
   build:
     #needs: test
     name: Build release Zip
     runs-on: ubuntu-latest
     container:
-      image: wordpressdevelop/php
+      image: node:lts-buster
       env:
         NODE_ENV: production
     env:
@@ -91,25 +95,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
 
-      # - name: APT + docker
-      #   run: |
-      #     apt-get update -yqq # broken packages error
-      #     apt-get install -yqqf git tar wget zip unzip php7.3 --fix-missing
-      #     docker-php-ext-install mysqli pdo_mysql mbstring pcntl
-
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '10.x'
-
-      - name: Display versions
-        run: |
-          node --version;
-          npm --version
-          php --version
-          composer --version
-
-      - name: Build Zip
-        run: bash bin/git-zip.sh
+      # Same as on Gitlab
+      - run: apt-get update -yqq
+      - run: apt-get install -yqqf git tar wget zip unzip php --fix-missing
+      - run: bash bin/install-composer.sh
+      - run: chmod +x /usr/bin/composer
+      - run: node --version
+      - run: npm --version
+      - run: php --version
+      - run: composer --version
+      - run: bash bin/git-zip.sh
 
       - uses: actions/upload-artifact@master
         with:
