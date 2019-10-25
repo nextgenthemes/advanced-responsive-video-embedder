@@ -67,8 +67,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: node:lts-buster
-      env:
-        NODE_ENV: production
     env:
       DEPLOY_REF: ${{ github.sha }}
     steps:
