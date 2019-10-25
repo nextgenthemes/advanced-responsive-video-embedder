@@ -66,7 +66,7 @@ jobs:
     name: Build release Zip
     runs-on: ubuntu-latest
     container:
-      image: ubuntu-latest
+      image: wordpressdevelop/php
       env:
         NODE_ENV: production
     env:
@@ -91,11 +91,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
 
-      - name: APT + docker
-        run: |
-          apt-get update -yqq # broken packages error
-          apt-get install -yqqf git tar wget zip unzip php7.3 --fix-missing
-          docker-php-ext-install mysqli pdo_mysql mbstring pcntl
+      # - name: APT + docker
+      #   run: |
+      #     apt-get update -yqq # broken packages error
+      #     apt-get install -yqqf git tar wget zip unzip php7.3 --fix-missing
+      #     docker-php-ext-install mysqli pdo_mysql mbstring pcntl
 
       - uses: actions/setup-node@v1
         with:
