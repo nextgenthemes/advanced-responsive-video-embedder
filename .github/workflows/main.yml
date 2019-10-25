@@ -104,8 +104,8 @@ jobs:
 
       - uses: actions/upload-artifact@master
         with:
-          name: ${{ github.repository }}-${{ github.ref }}.zip
-          path: ${{ github.workspace }}/build/zip/${{ github.repository }}-${{ github.ref }}.zip
+          name: "$DEPLOY_ZIPFILE"
+          path: "$DEPLOY_ZIPFILE"
 
   # deploy:
   #   on: tag
