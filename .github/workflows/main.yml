@@ -99,7 +99,7 @@ jobs:
 
       - uses: actions/upload-artifact@master
         with:
-          name: "${{ steps.zip.outputs.file }}"
+          name: Build Zipfile
           path: "${{ steps.zip.outputs.file }}"
 
   # deploy:
