@@ -83,9 +83,9 @@ jobs:
         # set-env does NOT work in bash shell!
         run: |
           echo ::set-env name=DEPLOY_REF_SHORT::$(echo ${{ github.ref }} | sed "s/\//-/g")
-          echo "$DEPLOY_REF_SHORT
+          echo "$DEPLOY_REF_SHORT"
           echo ::set-env name=DEPLOY_ZIPNAME::${{ github.workspace }}/build/zip/${{ github.repository }}-$DEPLOY_REF_SHORT.zip
-          echo $DEPLOY_REF_ZIPFILE
+          echo "$DEPLOY_REF_ZIPFILE"
 
       - name: Dump GitHub context
         env:
