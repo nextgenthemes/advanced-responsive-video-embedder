@@ -66,29 +66,20 @@ jobs:
     name: Build release Zip
     runs-on: ubuntu-latest
     container:
-      image: php:7.3-apache
+      image: ubuntu-latest
       env:
         NODE_ENV: production
-      ports:
-      - 80
-      volumes:
-      - $GITHUB_WORKSPACE:/var/www/html
-
     env:
       DEPLOY_REF: ${{ github.sha }}
     steps:
 
       - name: Set DEPLOY_REF_SHORT
         run: echo ::set-env name=DEPLOY_REF_SHORT::$(echo ${{ github.ref }} | sed "s/\//-/g")
-
-      - name: CHECK
-        run: echo "$DEPLOY_REF_SHORT"
+      - run: echo "$DEPLOY_REF_SHORT"
 
       - name: Remove dashes from DEPLOY_REF_SHORT and set DEPLOY_ZIPFILE
-        run: echo ::set-env name=DEPLOY_ZIPNAME::${{ github.workspace }}/build/zip/${{ github.repository }}-$DEPLOY_REF_SHORT.zip
-
-      - name: CHECK2
-        run: |
+        run: echo ::set-env name=DEPLOY_ZIPFILE::${{ github.workspace }}/build/zip/${{ github.repository }}-$DEPLOY_REF_SHORT.zip
+      - run: |
           echo "$DEPLOY_REF_SHORT"
           echo "$DEPLOY_ZIPFILE"
 
@@ -102,9 +93,8 @@ jobs:
 
       - name: APT + docker
         run: |
-          # Updating fails for some reason
-          # apt-get update -yqq
-          apt-get install -yqqf git tar wget zip unzip php --fix-missing
+          apt-get update -yqq # broken packages error
+          apt-get install -yqqf git tar wget zip unzip php7.3 --fix-missing
           docker-php-ext-install mysqli pdo_mysql mbstring pcntl
 
       - uses: actions/setup-node@v1
