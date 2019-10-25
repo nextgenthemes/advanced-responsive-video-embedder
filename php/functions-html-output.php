@@ -361,10 +361,8 @@ function arve_embed( $html, array $a ) {
 
 	if ( '16:9' === $a['aspect_ratio'] ) {
 		$class .= ' arve-embed--16by9';
-	} elseif ( '4:3' === $a['aspect_ratio'] ) {
-		$class .= ' arve-embed--4by3';
 	} elseif ( $a['aspect_ratio'] ) {
-		$ratio_div = sprintf( '<div style="padding-top:%F%%"></div>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
+		$ratio_div = sprintf( '<div data-ratio style="padding-top:%F%%"></div>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
 	}
 
 	return build_tag(
