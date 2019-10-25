@@ -78,9 +78,9 @@ jobs:
 
       - id: zip
         run: echo ::set-output name=file::build/zip/${{ github.event.repository.name }}-$(echo ${{ github.ref }} | sed "s/\//-/g").zip
-      - run: echo "${{ outputs.zip.file }}"
+      - run: echo "${{ steps.zip.outputs.file }}"
 
-      - run: echo ::set-env name=DEPLOY_ZIPFILE::${{ github.workspace }}/${{ outputs.zip.file }}
+      - run: echo ::set-env name=DEPLOY_ZIPFILE::${{ github.workspace }}/${{ steps.zip.outputs.file }}
       - run: echo "$DEPLOY_ZIPFILE"
 
       - name: Checkout repository
@@ -99,8 +99,8 @@ jobs:
 
       - uses: actions/upload-artifact@master
         with:
-          name: "${{ outputs.zip.file }}"
-          path: "${{ outputs.zip.file }}"
+          name: "${{ steps.zip.outputs.file }}"
+          path: "${{ steps.zip.outputs.file }}"
 
   # deploy:
   #   on: tag
