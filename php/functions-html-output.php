@@ -144,8 +144,7 @@ function get_var_dump( $var ) {
 
 function get_debug_info( $input_html, array $a, array $input_atts ) {
 
-	$html  = '';
-	$debug = false && defined( 'ARVE_DEBUG' ) && ARVE_DEBUG;
+	$html = '';
 
 	// phpcs:disable WordPress.Security.NonceVerification.Recommended
 	if ( isset( $_GET['arve-debug-options'] ) ) {
@@ -179,7 +178,7 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 		);
 	}
 
-	if ( $debug || isset( $_GET['arve-debug-atts'] ) ) {
+	if ( isset( $_GET['arve-debug-atts'] ) ) {
 		$html .= sprintf( '<pre style="%s">in: %s</pre>', esc_attr( $pre_style ), get_var_dump( $input_atts ) );
 		$html .= sprintf( '<pre style="%s">$a: %s</pre>', esc_attr( $pre_style ), get_var_dump( $a ) );
 	}
