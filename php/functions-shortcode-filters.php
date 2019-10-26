@@ -115,6 +115,10 @@ function sc_filter_liveleak_id_fix( array $a ) {
 
 function sc_filter_mode( array $a ) {
 
+	if ( in_array( $a['mode'], [ 'lazyload-lightbox', 'thumbnail' ], true ) ) {
+		$a['mode'] = 'lightbox';
+	}
+
 	$supported_modes = get_supported_modes();
 
 	if ( ! array_key_exists( $a['mode'], $supported_modes ) ) {
@@ -211,23 +215,22 @@ function sc_filter_set_fixed_dimensions( array $a ) {
 	return $a;
 }
 
-function sc_filter_autoplay_off_after_ran_once( array $a ) {
+function sc_filter_autoplay( array $a ) {
 
-	if ( 'normal' !== $a['mode'] ) {
-		return $a;
+	if ( 'normal' === $a['mode'] ) { // Prevent more then one vid autoplaying
+
+		static $did_run = false;
+
+		if ( $did_run ) {
+			$a['autoplay'] = false;
+		}
+
+		if ( ! $did_run && $a['autoplay'] ) {
+			$did_run = true;
+		}
 	}
 
-	static $did_run = false;
-
-	if ( $did_run ) {
-		$a['autoplay'] = false;
-	}
-
-	if ( ! $did_run && $a['autoplay'] ) {
-		$did_run = true;
-	}
-
-	return $a;
+	return apply_filters( 'nextgenthemes/arve/sc_filter/autoplay', $a );
 }
 
 function sc_filter_missing_attribute_check( array $a ) {

@@ -78,7 +78,7 @@ function init() {
 		'liveleak_id_fix'                 => 10,
 		'maxwidth'                        => 10,
 		'mode'                            => 14,
-		'autoplay_off_after_ran_once'     => 15,
+		'autoplay'                        => 15,
 		'iframe_src'                      => 20,
 		// Maybe validate_again ?
 		'set_wrapper_id'                  => 90,
