@@ -5,27 +5,6 @@ function gcd( $a, $b ) {
 	return $b ? gcd( $b, $a % $b ) : $a;
 }
 
-function is_bool_option( $array ) {
-
-	$yes_no = [
-		''    => 1,
-		'yes' => 1,
-		'no'  => 1,
-	];
-
-	$check = array_diff_key( $array, $yes_no );
-
-	if ( empty( $check ) ) {
-		return 'bool';
-	} else {
-		return $array;
-	}
-}
-
-function get_pre_style() {
-	return '';
-}
-
 function load_textdomain() {
 
 	\load_plugin_textdomain(
