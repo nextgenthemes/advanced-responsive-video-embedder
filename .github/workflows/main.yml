@@ -53,11 +53,11 @@ jobs:
         run: bash bin/install-wp-tests.sh wordpress_test root root mysql ${{ matrix.wordpress }}
 
       - name: Run PHPUnit
-        if: 'latest' != matrix.wordpress && '7.3' != matrix.php
+        if: matrix.wordpress != 'latest' && matrix.php != '7.3'
         run: vendor/bin/phpunit
 
       - name: Run PHPUnit
-        if: 'latest' == matrix.wordpress && '7.3' == matrix.php
+        if: matrix.wordpress == 'latest' && matrix.php == '7.3'
         run: |
           composer require --dev php-coveralls/php-coveralls 
           vendor/bin/phpunit --coverage-clover build/logs/clover.xml
