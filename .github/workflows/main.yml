@@ -7,17 +7,15 @@ jobs:
     strategy:
       matrix:
         php: [5.6,7.0,7.1,7.2,7.3]
-        node: [12.9.0]
         mysql: [5.7.27]
         wordpress: [4.9.10,5.2.4,latest]
         exclude:
-          - wordpress: 4.9.10
-            php: 7.3
+          - php: 7.3
+            mysql: 5.7.27
+            wordpress: 4.9.10
     runs-on: ubuntu-latest
     container:
       image: php:${{ matrix.php }}-apache
-      env:
-        NODE_ENV: production
       ports:
         - 80
       volumes:
