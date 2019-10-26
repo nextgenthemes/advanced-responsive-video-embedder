@@ -9,7 +9,10 @@ jobs:
         php: [5.6,7.0,7.1,7.2,7.3]
         mysql: [5.7.27]
         wordpress: [4.9.10,5.2.4,latest]
-        exclude:
+        exclude: # WP Bug https://core.trac.wordpress.org/ticket/44416
+          - php: 7.0
+            mysql: 5.7.27
+            wordpress: 4.9.10
           - php: 7.3
             mysql: 5.7.27
             wordpress: 4.9.10
