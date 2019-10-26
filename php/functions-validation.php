@@ -39,20 +39,19 @@ function validate_aspect_ratio( $a ) {
 
 	$ratio = explode( ':', $a['aspect_ratio'] );
 
-	if ( ! empty( $ratio[0] )
-		&& is_numeric( $ratio[0] )
-		&& ! empty( $ratio[1] )
-		&& is_numeric( $ratio[1] )
+	if ( empty( $ratio[0] ) || ! is_numeric( $ratio[0] ) ||
+		empty( $ratio[1] ) || ! is_numeric( $ratio[1] )
 	) {
-		return $a;
+		$a['errors']->add(
+			'aspect_ratio',
+			// Translators: attribute
+			sprintf( __( 'Aspect ratio <code>%s</code> is not valid', 'advanced-responsive-video-embedder' ), $a['aspect_ratio'] )
+		);
+
+		$a['aspect_ratio'] = null;
 	}
 
-	return add_error(
-		$a,
-		'aspect_ratio',
-		// Translators: attribute
-		sprintf( __( 'Aspect ratio <code>%s</code> is not valid', 'advanced-responsive-video-embedder' ), $a['aspect_ratio'] )
-	);
+	return $a;
 }
 
 function bool_to_shortcode_string( $val ) {
@@ -93,8 +92,8 @@ function validate_bool( array $a, $attr_name ) {
 				sprintf(
 					// Translators: Attribute Name
 					__( '%1$s <code>%2$s</code> not valid', 'advanced-responsive-video-embedder' ),
-					$attr_name,
-					print_r( $a[ $attr_name ] ) // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+					esc_html( $attr_name ),
+					esc_html( $a[ $attr_name ] )
 				)
 			);
 			break;
@@ -119,9 +118,9 @@ function validate_align( $a ) {
 			$a['errors']->add(
 				'align',
 				// Translators: Alignment
-				sprintf( __( 'Align <code>%s</code> not valid', 'advanced-responsive-video-embedder' ), esc_html( $align ) )
+				sprintf( __( 'Align <code>%s</code> not valid', 'advanced-responsive-video-embedder' ), esc_html( $a['align'] ) )
 			);
-			remove_all_filters( 'shortcode_atts_arve' );
+			$a['align'] = null;
 			break;
 	}
 
