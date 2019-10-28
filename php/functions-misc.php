@@ -50,57 +50,20 @@ function check_filetype( $url, $ext ) {
  */
 function youtube_time_to_seconds( $yttime ) {
 
-	$format  = false;
-	$hours   = 0;
-	$minutes = 0;
-	$seconds = 0;
+	$matches['h'] = 0;
+	$matches['m'] = 0;
+	$matches['s'] = 0;
 
-	$pattern['hms'] = '/([0-9]+)h([0-9]+)m([0-9]+)s/'; // hours, minutes, seconds
-	$pattern['ms']  = '/([0-9]+)m([0-9]+)s/';          // minutes, seconds
-	$pattern['h']   = '/([0-9]+)h/';
-	$pattern['m']   = '/([0-9]+)m/';
-	$pattern['s']   = '/([0-9]+)s/';
+	$pattern = '/' .
+		'(?<h>[0-9]+h)?' .
+		'(?<m>[0-9]+m)?' .
+		'(?<s>[0-9]+s)?/';
 
-	foreach ( $pattern as $key => $value ) {
+	preg_match( $pattern, $yttime, $matches );
 
-		preg_match( $value, $yttime, $result );
-
-		if ( ! empty( $result ) ) {
-			$format = $key;
-			break;
-		}
-	}
-
-	switch ( $format ) {
-
-		case 'hms':
-			$hours   = $result[1];
-			$minutes = $result[2];
-			$seconds = $result[3];
-			break;
-
-		case 'ms':
-			$minutes = $result[1];
-			$seconds = $result[2];
-			break;
-
-		case 'h':
-			$hours = $result[1];
-			break;
-
-		case 'm':
-			$minutes = $result[1];
-			break;
-
-		case 's':
-			$seconds = $result[1];
-			break;
-
-		default:
-			return false;
-	}//end switch
-
-	return ( $hours * 60 * 60 ) + ( $minutes * 60 ) + $seconds;
+	return ( (int) $matches['h'] * 60 * 60 ) +
+		( (int) $matches['m'] * 60 ) +
+		(int) $matches['s'];
 }
 
 /**
