@@ -10,6 +10,7 @@ function sc_filter_set_wrapper_id( array $a ) {
 		'url',
 		'id',
 		'webm',
+		'av1mp4',
 		'mp4',
 		'ogv',
 		'm4v',
