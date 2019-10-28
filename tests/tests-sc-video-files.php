@@ -10,7 +10,7 @@ class Tests_ShortcodeVideoFiles extends WP_UnitTestCase {
 
 		$html = do_shortcode( '[video mp4="https://example.com/video.mp4" /]' );
 
-		$this->assertContains( '.arve-embed', $html );
+		$this->assertContains( 'arve-embed', $html );
 		$this->assertContains( '<video', $html );
 		$this->assertContains( 'src="https://example.com/video.mp4"', $html );
 		$this->assertNotContains( 'Error', $html );
@@ -18,7 +18,7 @@ class Tests_ShortcodeVideoFiles extends WP_UnitTestCase {
 
 	public function test_html5() {
 
-		$html5_ext = [ 'mp4', 'webm', 'ogv' ];
+		$html5_ext = [ 'av1mp4', 'mp4', 'webm', 'ogv' ];
 
 		foreach ( $html5_ext as $ext ) {
 

@@ -1,4 +1,7 @@
 <?php
+
+use \Nextgenthemes\ARVE;
+
 // phpcs:disable Squiz.Classes.ClassFileName.NoMatch
 // phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
 class Tests_Scripts_And_Styles extends WP_UnitTestCase {
@@ -8,25 +11,16 @@ class Tests_Scripts_And_Styles extends WP_UnitTestCase {
 		$this->assertNotFalse( has_action( 'wp_enqueue_scripts', 'Nextgenthemes\ARVE\action_wp_enqueue_scripts' ) );
 	}
 
-	public function test_registered() {
+	public function test_scripts() {
 
-		add_action(
-			'wp_head',
-			function() {
+		ARVE\get_settings_instance()->options['always_enqueue_assets'] = true;
 
-				$wp_styles  = wp_styles();
-				$wp_scripts = wp_scripts();
+		$this->assertTrue( wp_script_is( 'arve-main', 'registered' ) );
+		$this->assertTrue( wp_style_is( 'arve-main', 'registered' ) );
 
-				$this->assertStringEndsWith(
-					'advanced-responsive-video-embedder/dist/css/arve.css',
-					$wp_styles->registered['arve-main']->src
-				);
+		do_action( 'wp_enqueue_scripts' );
 
-				$this->assertStringEndsWith(
-					'advanced-responsive-video-embedder/dist/js/arve.js',
-					$wp_scripts->registered['arve-main']->src
-				);
-			}
-		);
+		$this->assertTrue( wp_script_is( 'arve-main', 'enqueued' ) );
+		$this->assertTrue( wp_style_is( 'arve-main', 'enqueued' ) );
 	}
 }

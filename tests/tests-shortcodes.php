@@ -28,7 +28,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( 'itemprop', $html );
 	}
 
-	public function test_schema_disabled() {
+	public function TODO_PRO_test_schema_disabled() {
 
 		get_settings_instance()->options['schema'] = false;
 
@@ -41,19 +41,6 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertNotContains( 'itemprop', $html );
 
 		get_settings_instance()->options['schema'] = true;
-	}
-
-	public function test_vimeo_time_and_sandbox() {
-
-		$html = shortcode(
-			[
-				'url' => 'https://vimeo.com/124400795#t=33',
-			]
-		);
-
-		$this->assertNotContains( 'Error', $html );
-		$this->assertRegExp( '@src="https://player.vimeo.com/.*#t=33"@', $html );
-		$this->assertContains( 'allow-forms', $html );
 	}
 
 	public function logfile( $msg, $file ) {
@@ -93,12 +80,10 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 				$this->assertNotContains( 'Error', shortcode( $attr ) );
 
-				// if( isset( $props['auto_title'] ) && $props['auto_title'] ) {.
-				if ( ! empty( $values['auto_title'] ) ) {
-					$this->assertContains( 'itemprop="name"', shortcode( $attr ) );
-				}
-				if ( ! empty( $values['auto_thumbnail'] ) ) {
-					$this->assertContains( 'itemprop="thumbnailUrl"', shortcode( $attr ) );
+				if ( 'html5' !== $provider ) {
+					$this->assertContains( 'itemprop="embedURL', shortcode( $attr ) );
+				} else {
+					$this->assertContains( 'itemprop="contentURL', shortcode( $attr ) );
 				}
 			}
 		endforeach;
@@ -120,34 +105,6 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$this->assertNotContains( 'Error', shortcode( $attr ) );
 		$this->assertNotContains( 'sandbox="', shortcode( $attr ), $attr['url'] );
-	}
-
-	public function test_thumbnails() {
-
-		$filename = dirname( __FILE__ ) . '/test-attachment.jpg';
-		// phpcs:disable WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-		$contents = file_get_contents( $filename );
-		// phpcs:enable WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-
-		$upload = wp_upload_bits( basename( $filename ), null, $contents );
-		$this->assertTrue( empty( $upload['error'] ) );
-
-		$attachment_id = parent::_make_attachment( $upload );
-
-		$attr = [
-			'url'       => 'https://example.com/video.mp4',
-			'thumbnail' => (string) $attachment_id,
-			'title'     => 'Something',
-		];
-
-		$this->assertRegExp( '#<meta itemprop="thumbnailUrl" content=".*test-attachment#', shortcode( $attr ) );
-
-		$attr = [
-			'url'       => 'https://example.com/video2.mp4',
-			'thumbnail' => 'https://example.com/image.jpg',
-		];
-
-		$this->assertContains( '<meta itemprop="thumbnailUrl" content="https://example.com/image.jpg"', shortcode( $attr ) );
 	}
 
 	public function test_shortcodes_are_registered() {
@@ -220,38 +177,6 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		}
 	}
 
-	public function test_align_maxwidth_default() {
-
-		$output = shortcode(
-			[
-				'align' => 'left',
-				'url'   => 'https://example.com',
-			]
-		);
-		$this->assertNotContains( 'Error', $output );
-		$this->assertContains( 'alignleft', $output );
-		$this->assertContains( 'style="max-width:400px;"', $output );
-
-		$output = shortcode(
-			[
-				'align' => 'right',
-				'url'   => 'https://example.com',
-			]
-		);
-		$this->assertNotContains( 'Error', $output );
-		$this->assertContains( 'alignright', $output );
-		$this->assertContains( 'style="max-width:400px;"', $output );
-
-		$output = shortcode(
-			[
-				'align' => 'center',
-				'url'   => 'https://example.com',
-			]
-		);
-		$this->assertNotContains( 'Error', $output );
-		$this->assertContains( 'aligncenter', $output );
-	}
-
 	public function test_attr() {
 
 		$output = shortcode(
@@ -279,7 +204,6 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( '<meta itemprop="duration" content="PT1H2M3S">', $output );
 		$this->assertContains( 'src="https://example.com', $output );
 	}
-
 
 	public function test_iframe() {
 
@@ -332,35 +256,5 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			endforeach;
 
 		endforeach;
-	}
-
-	public function regex2() {
-
-		add_filter( 'shortcode_atts_arve', [ $this, 'check_regex_detection' ] );
-
-		$properties = \Nextgenthemes\ARVE\get_host_properties();
-
-		foreach ( $properties as $host_id => $host ) :
-
-			if ( empty( $host['regex'] ) ) {
-				continue;
-			}
-
-			foreach ( $host['tests'] as $test ) {
-
-				$this->$current_test;
-
-				shortcode(
-					[
-						'url' => $test['url'],
-					]
-				);
-			}
-		endforeach;
-	}
-
-	public function check_regex_detection( $atts ) {
-
-		$this->assertEquals( $atts['id'] );
 	}
 }

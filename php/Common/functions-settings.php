@@ -23,7 +23,7 @@ function nextgenthemes_settings_instance() {
 
 function ngt_options() {
 	$o = nextgenthemes_settings_instance()->options;
-	return $o;
+	return apply_filters( 'nextgenthemes/arve/options', $o );
 }
 
 function migrate_old_licenses() {
