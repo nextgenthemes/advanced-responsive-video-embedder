@@ -149,6 +149,7 @@ function shortcode_pairs() {
 			'preload'           => 'metadata',
 			'src'               => null,
 			'img_srcset'        => null,
+			'maxwidth'          => null, # Overwriting the option value ON PURPOSE here, see sv_filter_maxwidth
 			'av1mp4'            => null,
 			'mp4'               => null,
 			'm4v'               => null,
@@ -258,6 +259,7 @@ function all_settings() {
 			),
 		],
 		'description'           => [
+			'tag'         => 'pro',
 			'default'     => null,
 			'option'      => false,
 			'label'       => __( 'Description', 'advanced-responsive-video-embedder' ),
@@ -544,7 +546,7 @@ function all_settings() {
 			'type'        => 'boolean',
 			'description' => __( "Only disable if you have to. If you embed encrypted media you have to disable this. 'Disable Links' feature from ARVE Pro will not work when without sandbox.", 'advanced-responsive-video-embedder' ),
 		],
-		'schema'                => [
+		'seo_data'              => [
 			'default'     => true,
 			'shortcode'   => false,
 			'label'       => __( 'Enable structured data (schema.org)', 'advanced-responsive-video-embedder' ),
