@@ -275,28 +275,30 @@ function sc_filter_missing_attribute_check( array $a ) {
 
 function sc_filter_thumbnail( array $a ) {
 
-	if ( empty( $a['thumbnail'] ) ) {
-		return $a;
-	}
+	if ( $a['thumbnail'] ) {
 
-	if ( is_numeric( $a['thumbnail'] ) ) {
+		if ( is_numeric( $a['thumbnail'] ) ) {
 
-		$a['img_src']    = wp_get_attachment_image_url( $a['thumbnail'], 'small' );
-		$a['img_srcset'] = wp_get_attachment_image_srcset( $a['thumbnail'], 'small' );
+			$a['img_src']    = wp_get_attachment_image_url( $a['thumbnail'], 'small' );
+			$a['img_srcset'] = wp_get_attachment_image_srcset( $a['thumbnail'], 'small' );
 
-		if ( ! $a['img_src'] ) {
-			$a['errors']->add( 'wp thumbnail', __( 'No attachment with that ID', 'advanced-responsive-video-embedder' ) );
+			if ( empty( $a['img_src'] ) ) {
+				$a['errors']->add( 'wp thumbnail', __( 'No attachment with that ID', 'advanced-responsive-video-embedder' ) );
+			}
+		} elseif ( valid_url( $a['thumbnail'] ) ) {
+
+			$a['img_src'] = $a['thumbnail'];
+
+		} else {
+
+			$a['errors']->add( 'thumbnail', __( 'Not a valid thumbnail URL or Media ID given', 'advanced-responsive-video-embedder' ) );
 		}
-	} elseif ( valid_url( $a['thumbnail'] ) ) {
-
-		$a['img_src'] = $a['thumbnail'];
-
-	} else {
-
-		$a['errors']->add( 'thumbnail', __( 'Not a valid thumbnail URL or Media ID given', 'advanced-responsive-video-embedder' ) );
 	}
 
-	return apply_filters( 'nextgenthemes/arve/sc_filter/thumbnail', $a );
+	$a = apply_filters( 'nextgenthemes/arve/sc_filter/img_src', $a );
+	$a = apply_filters( 'nextgenthemes/arve/sc_filter/img_srcset', $a );
+
+	return $a;
 }
 
 function sc_filter_video( array $a ) {

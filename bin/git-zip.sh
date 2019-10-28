@@ -57,6 +57,6 @@ cp -r {dist,vendor} "$DEPLOY_ZIPPATH/$DIRNAME/"
 	rm -rf "$DIRNAME"
 )
 
-if [ -n "${DESKTOP_SESSION+set}" ]; then
+if [[ "${DESKTOP_SESSION+set}" ]]; then
 	composer install --quiet --no-interaction # When running local, get all the dev deps back in. Composer has them cached.
 fi
