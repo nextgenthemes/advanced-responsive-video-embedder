@@ -17,8 +17,8 @@ function build_html( array $a ) {
 				'id'            => $a['wrapper_id'],
 				'style'         => $a['maxwidth'] ? sprintf( 'max-width:%dpx;', $a['maxwidth'] ) : false,
 				// Schema.org
-				'itemscope'     => $options['schema'] ? '' : false,
-				'itemtype'      => $options['schema'] ? 'http://schema.org/VideoObject' : false,
+				'itemscope'     => seo_data() ? '' : false,
+				'itemtype'      => seo_data() ? 'http://schema.org/VideoObject' : false,
 			],
 		],
 		$a
@@ -103,11 +103,6 @@ function build_tracks_html( array $a ) {
 			$matches
 		);
 
-		if ( empty( $matches[1] ) ) {
-			$a[ "track_{$n}" ] = new \WP_Error( 'track', __( 'Track kind or language code could not detected from filename', 'advanced-responsive-video-embedder' ) );
-			return $a;
-		}
-
 		$label = empty( $a[ "track_{$n}_label" ] ) ?
 			get_language_name_from_code( $matches['lang'] ) :
 			$a[ "track_{$n}_label" ];
@@ -191,12 +186,16 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 	return $html;
 }
 
+function seo_data() {
+	return apply_filters( 'nextgenthemes/arve/seo_data', true );
+}
+
 function arve_embed_inner_html( array $a ) {
 
-	$html   = '';
-	$schema = options()['schema'];
+	$html     = '';
+	$seo_data = seo_data();
 
-	if ( $schema ) :
+	if ( seo_data() ) :
 
 		$a['first_source'] = empty( $a['sources'] ) ? '' : get_first_array_value( $a['sources'] );
 
@@ -225,7 +224,7 @@ function arve_embed_inner_html( array $a ) {
 
 		$tag = [ 'name' => 'thumbnail' ];
 
-		if ( $schema ) {
+		if ( $seo_data ) {
 			$tag = [
 				'name' => 'thumbnail',
 				'tag'  => 'meta',
@@ -243,7 +242,7 @@ function arve_embed_inner_html( array $a ) {
 
 		$tag = [ 'name' => 'title' ];
 
-		if ( $schema ) {
+		if ( $seo_data ) {
 			$tag = [
 				'name' => 'title',
 				'tag'  => 'meta',
@@ -261,7 +260,7 @@ function arve_embed_inner_html( array $a ) {
 
 		$tag = [ 'name' => 'description' ];
 
-		if ( $schema ) {
+		if ( $seo_data ) {
 			$tag = [
 				'name' => 'description',
 				'tag'  => 'meta',
