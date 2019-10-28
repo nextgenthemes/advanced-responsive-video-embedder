@@ -31,26 +31,27 @@ function shortcode( $a, $content = null ) {
 
 function test_shortcode( $atts = null, $content = null ) {
 
-	$html      = '';
-	$providers = get_host_properties();
-	// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	$provider = sanitize_text_field( wp_unslash( empty( $_GET['provider'] ) ? '' : $_GET['provider'] ) );
+	$html         = '';
+	$providers    = get_host_properties();
+	$get_provider = sanitize_text_field( wp_unslash( empty( $_GET['arve-provider-test'] ) ? '' : $_GET['arve-provider-test'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-	foreach ( $providers as $k => $v ) {
+	if ( $get_provider ) {
 
-		$url   = add_query_arg( $GLOBALS['wp']->query_vars, home_url( $GLOBALS['wp']->request ) );
-		$url   = add_query_arg( 'arve-provider-test', $url );
-		$html .= sprintf( '<a href="%s">Test %s</a>', $url, $provider );
-	}
-
-	if ( $provider ) {
-
-		if ( empty( $providers[ $provider ]['tests'] ) ) {
-			$html .= 'no tests for ' . $provider;
+		if ( empty( $providers[ $get_provider ]['tests'] ) ) {
+			$html .= 'no tests for ' . $get_provider;
 		} else {
-			$html .= basic_tests( $providers[ $host ]['tests'] );
+			$html .= basic_tests( $providers[ $get_provider ]['tests'] );
 		}
 	}
+
+	$html .= '<ul>';
+	foreach ( $providers as $provider => $v ) {
+
+		$url   = add_query_arg( $GLOBALS['wp']->query_vars, home_url( $GLOBALS['wp']->request ) );
+		$url   = add_query_arg( 'arve-provider-test', $provider, $url );
+		$html .= sprintf( '<li><a href="%s">Test %s</a></li>', $url, $provider );
+	}
+	$html .= '</ul>';
 
 	return $html;
 }
@@ -61,8 +62,7 @@ function basic_tests( $tests ) {
 	$modes = [ 'normal', 'lazyload', 'lightbox' ];
 
 	foreach ( $tests as $key => $value ) {
-		$mode  = array_rand( $modes );
-		$sc    = sprintf( '[arve url="%s" mode="%s" maxwidth="300" /]', $value['url'], $mode );
+		$sc    = sprintf( '[arve url="%s" mode="lazyload" maxwidth="300" /]', $value['url'], $modes[ array_rand( $modes ) ] );
 		$html .= do_shortcode( $sc );
 	}
 
