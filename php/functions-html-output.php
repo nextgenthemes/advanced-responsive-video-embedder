@@ -174,8 +174,8 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 	}
 
 	if ( isset( $_GET['arve-debug-atts'] ) ) {
-		$html .= sprintf( '<pre style="%s">in: %s</pre>', esc_attr( $pre_style ), get_var_dump( $input_atts ) );
-		$html .= sprintf( '<pre style="%s">$a: %s</pre>', esc_attr( $pre_style ), get_var_dump( $a ) );
+		$html .= sprintf( '<pre style="%s">in: %s</pre>', esc_attr( $pre_style ), get_var_dump( array_filter( $input_atts ) ) );
+		$html .= sprintf( '<pre style="%s">$a: %s</pre>', esc_attr( $pre_style ), get_var_dump( array_filter( $a ) ) );
 	}
 
 	if ( isset( $_GET['arve-debug-html'] ) ) {
@@ -195,7 +195,7 @@ function arve_embed_inner_html( array $a ) {
 	$html     = '';
 	$seo_data = seo_data();
 
-	if ( seo_data() ) :
+	if ( $seo_data ) :
 
 		$a['first_source'] = empty( $a['sources'] ) ? '' : get_first_array_value( $a['sources'] );
 
@@ -213,7 +213,7 @@ function arve_embed_inner_html( array $a ) {
 				if ( 'duration' === $key && ! Common\starts_with( $a[ $key ], 'PT' ) ) {
 					$a[ $key ] = 'PT' . $a[ $key ];
 				}
-				$html .= sprintf( '<meta itemprop="%s" content="%s">' . PHP_EOL, esc_attr( $itemprop ), esc_attr( $a[ $key ] ) );
+				$html .= sprintf( PHP_EOL . '<meta itemprop="%s" content="%s">' . PHP_EOL, esc_attr( $itemprop ), esc_attr( $a[ $key ] ) );
 			}
 		}
 
@@ -225,6 +225,7 @@ function arve_embed_inner_html( array $a ) {
 		$tag = [ 'name' => 'thumbnail' ];
 
 		if ( $seo_data ) {
+
 			$tag = [
 				'name' => 'thumbnail',
 				'tag'  => 'meta',
