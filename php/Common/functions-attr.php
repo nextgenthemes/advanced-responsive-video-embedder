@@ -15,17 +15,17 @@ function attr( array $attr = [] ) {
 
 			$html .= sprintf( ' %s', esc_html( $key ) );
 
+		} elseif ( is_array( $value ) || is_object( $value ) ) {
+
+			$html .= sprintf( " %s='%s'", esc_html( $key ), wp_json_encode( $value ) );
+
 		} elseif ( in_array( $key, [ 'href', 'data-href', 'src', 'data-src' ], true ) ) {
 
 			$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_url( $value ) );
 
-		} elseif ( is_string( $value ) ) {
-
-			$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );
-
 		} else {
 
-			$html .= sprintf( " %s='%s'", esc_html( $key ), wp_json_encode( $value ) );
+			$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );
 		}
 	}
 
