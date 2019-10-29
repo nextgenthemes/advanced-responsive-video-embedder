@@ -30,9 +30,7 @@ jobs:
         volumes:
           - $HOME/mysql:/var/lib/mysql
     steps:
-
-      - name: Checkout repository
-        uses: actions/checkout@v1
+      - uses: actions/checkout@v1
 
       - name: APT + docker
          # https://bigbite.net/insights/github-actions-ci-cd-with-yarn-composer-phpcs-phpunit-and-built-branches/ reminder
