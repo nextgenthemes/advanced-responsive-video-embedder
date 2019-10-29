@@ -13,14 +13,9 @@ class Tests_Scripts_And_Styles extends WP_UnitTestCase {
 
 	public function test_scripts() {
 
-		ARVE\get_settings_instance()->options['always_enqueue_assets'] = true;
+		do_action( 'wp_enqueue_scripts' );
 
 		$this->assertTrue( wp_script_is( 'arve-main', 'registered' ) );
 		$this->assertTrue( wp_style_is( 'arve-main', 'registered' ) );
-
-		do_action( 'wp_enqueue_scripts' );
-
-		$this->assertTrue( wp_script_is( 'arve-main', 'enqueued' ) );
-		$this->assertTrue( wp_style_is( 'arve-main', 'enqueued' ) );
 	}
 }
