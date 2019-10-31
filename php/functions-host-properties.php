@@ -660,7 +660,7 @@ function get_host_properties() {
 			],
 		],
 		'html5'                => [
-			'name'         => 'HTML5 video files directly',
+			'name'         => 'mp4 or webm video files',
 			'aspect_ratio' => false,
 		],
 		'iframe'               => [
@@ -675,9 +675,25 @@ function get_host_properties() {
 				],
 			],
 		],
-		'google_drive'         => [ 'name', 'Google Drive' ],
-		'ooyala'               => [ 'name', 'ooyala' ],
-		'imdb'                 => [ 'name', 'IMDB' ],
+		'googledrive' => [
+			'name'      => 'Google Drive',
+			'regex'     => '#https?://drive\.google\.com/file/d/(?<id>[^\s/]+)#i',
+			'embed_url' => 'https://drive.google.com/file/d/%s/preview',
+			'tests'     => [
+				[
+					'url' => 'https://drive.google.com/file/d/0BymXD1aD6QzJWkh4Q0hPRWlPYkk/edit',
+					'id'  => '0BymXD1aD6QzJWkh4Q0hPRWlPYkk',
+				],
+			],
+		],
+		'ooyala' => [
+			'name'         => 'ooyala',
+			'requires_src' => true,
+		],
+		'imdb' => [
+			'name'         => 'IMDB',
+			'requires_src' => true,
+		],
 	];
 
 	return $properties;

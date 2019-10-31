@@ -234,7 +234,7 @@ function all_settings() {
 	];
 
 	$settings = [
-		'url'                   => [
+		'url' => [
 			'default'     => null,
 			'option'      => false,
 			'label'       => __( 'Video URL / iframe Embed Code', 'advanced-responsive-video-embedder' ),
@@ -242,12 +242,12 @@ function all_settings() {
 			'placeholder' => esc_attr__( 'Video URL / iframe Embed Code', 'advanced-responsive-video-embedder' ),
 			'description' => sprintf(
 				// Translators: %1$s Providers
-				__( 'Post the URL of the video here. For %1$s and any <a href="%2$s">unlisted</a> video hosts paste their iframe embed codes or its src URL in here (providers embeds need to be responsive).', 'advanced-responsive-video-embedder' ),
+				__( 'Post the URL of the video here. For %1$s and any <a href="%2$s">unlisted</a> video hosts paste their iframe embed codes.', 'advanced-responsive-video-embedder' ),
 				esc_html( $embed_code_only ),
 				esc_url( 'https://nextgenthemes.com/arve-pro/#video-host-support' )
 			),
 		],
-		'title'                 => [
+		'title' => [
 			'default'     => null,
 			'option'      => false,
 			'label'       => __( 'Title', 'advanced-responsive-video-embedder' ),
@@ -258,22 +258,23 @@ function all_settings() {
 				$auto_title
 			),
 		],
-		'description'           => [
+		'description' => [
 			'tag'         => 'pro',
 			'default'     => null,
 			'option'      => false,
 			'label'       => __( 'Description', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
 			'placeholder' => __( 'Used for SEO (needed schema.org data)', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'ARVE Pro fills this automatically', 'advanced-responsive-video-embedder' ),
 		],
-		'upload_date'           => [
+		'upload_date' => [
 			'default'     => null,
 			'option'      => false,
 			'label'       => __( 'Upload Date', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
 			'placeholder' => __( '2019-09-29 (ISO 8601 format)', 'advanced-responsive-video-embedder' ),
 		],
-		'mode'                  => [
+		'mode' => [
 			'tag'         => 'pro',
 			'default'     => 'normal',
 			'label'       => __( 'Mode (Pro)', 'advanced-responsive-video-embedder' ),
@@ -287,7 +288,7 @@ function all_settings() {
 				$auto_thumbs
 			),
 		],
-		'thumbnail_fallback'    => [
+		'thumbnail_fallback' => [
 			'tag'         => 'pro',
 			'default'     => '',
 			'ui'          => 'image_upload',
@@ -297,7 +298,7 @@ function all_settings() {
 			'placeholder' => __( 'URL or media gallery image ID used for thumbnail', 'advanced-responsive-video-embedder' ),
 			'description' => __( 'URL or media gallery image ID used for thumbnail', 'advanced-responsive-video-embedder' ),
 		],
-		'thumbnail'             => [
+		'thumbnail' => [
 			'default'     => null,
 			'shortcode'   => true,
 			'option'      => false,
@@ -320,14 +321,14 @@ function all_settings() {
 			'type'        => 'boolean',
 			'description' => __( 'Usefull when the thumbnail image already displays the video title (Lazyload mode). The title will still be used for SEO.', 'advanced-responsive-video-embedder' ),
 		],
-		'grow'                  => [
+		'grow' => [
 			'tag'         => 'pro',
 			'default'     => true,
 			'type'        => 'boolean',
 			'label'       => __( 'Expand on play? (Lazyload only)', 'advanced-responsive-video-embedder' ),
 			'description' => __( 'Expands video size after clicking the thumbnail (Lazyload Mode)', 'advanced-responsive-video-embedder' ),
 		],
-		'fullscreen'            => [
+		'fullscreen' => [
 			'tag'         => 'pro',
 			'default'     => 'enabled-stick',
 			'type'        => 'select',
@@ -341,7 +342,7 @@ function all_settings() {
 				'disabled'      => __( 'Disabled', 'advanced-responsive-video-embedder' ),
 			],
 		],
-		'play_icon_style'       => [
+		'play_icon_style' => [
 			'tag'     => 'pro',
 			'default' => 'youtube',
 			'label'   => __( 'Play Button', 'advanced-responsive-video-embedder' ),
@@ -354,7 +355,7 @@ function all_settings() {
 				'none'    => __( 'No play image', 'advanced-responsive-video-embedder' ),
 			],
 		],
-		'hover_effect'          => [
+		'hover_effect' => [
 			'tag'     => 'pro',
 			'default' => 'zoom',
 			'label'   => __( 'Hover Effect (Lazyload/Lightbox only)', 'advanced-responsive-video-embedder' ),
@@ -365,7 +366,7 @@ function all_settings() {
 				'none'      => __( 'None', 'advanced-responsive-video-embedder' ),
 			],
 		],
-		'disable_links'         => [
+		'disable_links' => [
 			'tag'         => 'pro',
 			'default'     => false,
 			'label'       => __( 'Disable links (Pro Addon)', 'advanced-responsive-video-embedder' ),
@@ -381,7 +382,7 @@ function all_settings() {
 			'type'        => 'boolean',
 			'description' => __( 'This is not needed/used for YouTube and Vimeo. On mobiles fallback Lazyload mode to Lazyload Inview as workarround for the problem that it otherwise needs two touches to play a lazyloaded video because mobile browsers prevent autoplay. Note that this will prevent users to see your custom thumbnails or titles!', 'advanced-responsive-video-embedder' ),
 		],
-		'align'                 => [
+		'align' => [
 			'default'   => 'none',
 			'shortcode' => true,
 			'label'     => __( 'Alignment', 'advanced-responsive-video-embedder' ),
@@ -394,14 +395,14 @@ function all_settings() {
 				'center' => __( 'Center', 'advanced-responsive-video-embedder' ),
 			],
 		],
-		'arve_link'             => [
+		'arve_link' => [
 			'default'     => false,
 			'label'       => __( 'ARVE Link', 'advanced-responsive-video-embedder' ),
 			'type'        => 'select',
 			'options'     => $def_bool_options,
 			'description' => __( "Shows a small 'ARVE' link below the videos. Be the most awesome person and help promoting this plugin.", 'advanced-responsive-video-embedder' ),
 		],
-		'duration'              => [
+		'duration' => [
 			'default'     => null,
 			'option'      => false,
 			'label'       => __( 'Duration', 'advanced-responsive-video-embedder' ),
@@ -409,7 +410,7 @@ function all_settings() {
 			'placeholder' => '1H2M3S',
 			'description' => __( '`1H2M3S` for 1 hour, 2 minutes and 3 seconds. `5M` for 5 minutes.', 'advanced-responsive-video-embedder' ),
 		],
-		'autoplay'              => [
+		'autoplay' => [
 			'default'     => false,
 			'shortcode'   => true,
 			'label'       => __( 'Autoplay', 'advanced-responsive-video-embedder' ),
@@ -417,7 +418,7 @@ function all_settings() {
 			'options'     => $def_bool_options,
 			'description' => __( 'Do not expect this to work! Browsers (expecially mobile) or user settings prevent it, some video hosts do not support it at all. Only used in normal mode.', 'advanced-responsive-video-embedder' ),
 		],
-		'maxwidth'              => [
+		'maxwidth' => [
 			'default'     => 0,
 			'label'       => __( 'Maximal Width', 'advanced-responsive-video-embedder' ),
 			'type'        => 'integer',
@@ -427,14 +428,14 @@ function all_settings() {
 				DEFAULT_MAXWIDTH
 			),
 		],
-		'align_maxwidth'        => [
+		'align_maxwidth' => [
 			'default'     => 400,
 			'shortcode'   => false,
 			'label'       => __( 'Align Maximal Width', 'advanced-responsive-video-embedder' ),
 			'type'        => 'integer',
 			'description' => esc_attr__( 'In px, Needed! Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
 		],
-		'aspect_ratio'          => [
+		'aspect_ratio' => [
 			'default'     => null,
 			'option'      => false,
 			'label'       => __( 'Aspect Ratio', 'advanced-responsive-video-embedder' ),
@@ -442,7 +443,7 @@ function all_settings() {
 			'description' => __( 'E.g. 4:3, 21:9. Only needed in rare cases. ARVE is usually smart enough to figure this out on its own.', 'advanced-responsive-video-embedder' ),
 			'placeholder' => __( '4:3, 21:9 ...', 'advanced-responsive-video-embedder' ),
 		],
-		'parameters'            => [
+		'parameters' => [
 			'default'     => null,
 			'html5'       => false,
 			'option'      => false,
@@ -458,7 +459,7 @@ function all_settings() {
 				'https://developer.vimeo.com/player/embedding'
 			),
 		],
-		'wp_video_override'     => [
+		'wp_video_override' => [
 			'tag'         => 'html5',
 			'default'     => true,
 			'shortcode'   => false,
@@ -466,7 +467,7 @@ function all_settings() {
 			'type'        => 'boolean',
 			'description' => __( 'Use ARVE to embed HTML5 video files. ARVE uses the browsers players instead of loading the mediaelement player that WP uses.', 'advanced-responsive-video-embedder' ),
 		],
-		'controlslist'          => [
+		'controlslist' => [
 			'tag'         => 'html5',
 			'default'     => '',
 			'label'       => __( 'Chrome HTML5 Player controls', 'advanced-responsive-video-embedder' ),
@@ -474,7 +475,7 @@ function all_settings() {
 			'placeholder' => 'nodownload nofullscreen noremoteplayback',
 			'description' => __( 'controlsList attribute on &lt;video&gt; for example use <code>nodownload nofullscreen noremoteplayback</code> to hide the download and the fullscreen button on the chrome HTML5 video player and disable remote playback.', 'advanced-responsive-video-embedder' ),
 		],
-		'controls'              => [
+		'controls' => [
 			'tag'         => 'html5',
 			'default'     => true,
 			'label'       => __( 'Show Controls? (Video file only)', 'advanced-responsive-video-embedder' ),
@@ -482,7 +483,7 @@ function all_settings() {
 			'options'     => $def_bool_options,
 			'description' => __( 'Show controls on HTML5 video.', 'advanced-responsive-video-embedder' ),
 		],
-		'loop'                  => [
+		'loop' => [
 			'tag'         => 'html5',
 			'default'     => 'n',
 			'shortcode'   => true,
@@ -491,7 +492,7 @@ function all_settings() {
 			'type'        => 'boolean',
 			'description' => __( 'Loop HTML5 video.', 'advanced-responsive-video-embedder' ),
 		],
-		'muted'                 => [
+		'muted' => [
 			'tag'         => 'html5',
 			'default'     => 'n',
 			'shortcode'   => true,
@@ -500,12 +501,14 @@ function all_settings() {
 			'type'        => 'boolean',
 			'description' => __( 'Mute HTML5 video.', 'advanced-responsive-video-embedder' ),
 		],
-		'volume'                => [
-			'tag'       => 'pro',
-			'default'   => 100,
-			'shortcode' => true,
-			'label'     => __( 'Volume?', 'advanced-responsive-video-embedder' ),
-			'type'      => 'integer',
+		'volume' => [
+			'tag'         => 'pro',
+			'default'     => 100,
+			'shortcode'   => true,
+			'label'       => __( 'Volume?', 'advanced-responsive-video-embedder' ),
+			'placeholder' => '100',
+			'type'        => 'integer',
+			'description' => __( 'Works with video files only.', 'advanced-responsive-video-embedder' ),
 		],
 		'always_enqueue_assets' => [
 			'shortcode'   => false,
