@@ -21,7 +21,7 @@ function action_admin_init_setup_messages() {
 			// Translators: %1$s Version
 			__( 'Your ARVE Pro Addon is outdated, you need version %1$s or later. If you have setup your license <a href="%2$s">here</a> semi auto updates should work (Admin panel notice and auto install on confirmation). If not please <a href="%3$s">report it</a> and manually update as <a href="%4$s">described here.</a>', 'advanced-responsive-video-embedder' ),
 			ARVE\PRO_VERSION_REQUIRED,
-			esc_url( get_admin_url() . 'admin.php?page=nextgenthemes_licenses' ),
+			esc_url( get_admin_url() . 'options-general.php?page=nextgenthemes' ),
 			'https://nextgenthemes.com/support/',
 			'https://nextgenthemes.com/plugins/arve/documentation/installing-and-license-management/'
 		);
