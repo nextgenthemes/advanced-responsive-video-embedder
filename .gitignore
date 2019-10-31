@@ -1,7 +1,5 @@
 /build/
-/dist/
 /node_modules/
-/vendor/
 
 # Numerous always-ignore extensions
 *.diff
