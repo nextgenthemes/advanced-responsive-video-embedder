@@ -273,11 +273,12 @@ function all_settings() {
 			'label'       => __( 'Upload Date', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
 			'placeholder' => __( '2019-09-29 (ISO 8601 format)', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'ARVE Pro fills this automatically', 'advanced-responsive-video-embedder' ),
 		],
 		'mode' => [
 			'tag'         => 'pro',
 			'default'     => 'normal',
-			'label'       => __( 'Mode (Pro)', 'advanced-responsive-video-embedder' ),
+			'label'       => __( 'Mode', 'advanced-responsive-video-embedder' ),
 			'type'        => 'select',
 			'options'     =>
 				[ '' => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ) ]
@@ -285,7 +286,7 @@ function all_settings() {
 			'description' => sprintf(
 				// Translators: current setting value
 				__( 'For Lazyload, Lightbox and Link mode check out the <a href="%s">Pro Addon</a>.', 'advanced-responsive-video-embedder' ),
-				$auto_thumbs
+				'https://nextgenthemes.com/plugins/arve-pro/'
 			),
 		],
 		'thumbnail_fallback' => [
@@ -309,7 +310,7 @@ function all_settings() {
 			'frameTitle'  => __( 'Select Image', 'advanced-responsive-video-embedder' ),
 			'description' => sprintf(
 				// Translators: current setting value
-				__( 'Preview image for Lazyload modes, always used for SEO. The Pro Addon is able to get them from %s automatically.', 'advanced-responsive-video-embedder' ),
+				__( 'Preview image for Lazyload modes, always used for SEO. The ARVE Pro is able to get them from %s automatically.', 'advanced-responsive-video-embedder' ),
 				$auto_thumbs
 			),
 		],
@@ -319,7 +320,7 @@ function all_settings() {
 			'tag'         => 'pro',
 			'label'       => __( 'Hide Title (Lazyload & Lightbox only)', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
-			'description' => __( 'Usefull when the thumbnail image already displays the video title (Lazyload mode). The title will still be used for SEO.', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'Usefull when the thumbnail image already displays the video title (Lazyload & Lightbox modes).', 'advanced-responsive-video-embedder' ),
 		],
 		'grow' => [
 			'tag'         => 'pro',
@@ -335,10 +336,9 @@ function all_settings() {
 			'label'       => __( 'Go Fullscreen on opening Lightbox?', 'advanced-responsive-video-embedder' ),
 			'desc_detail' => __( 'Makes the Browser go fullscreen when opening the Lighbox. Optionally stay in Fullscreen mode even after the Lightbox is closed', 'advanced-responsive-video-embedder' ),
 			'options'     => [
-				// Translators: 1 %s is play icon style.
 				''              => __( 'Default (setting page)', 'advanced-responsive-video-embedder' ),
-				'enabled-stick' => __( 'Enabled, stay on lightbox close', 'advanced-responsive-video-embedder' ),
-				'enabled-exit'  => __( 'Enabled', 'advanced-responsive-video-embedder' ),
+				'enabled-stick' => __( 'Enabled, stay FS on lightbox close', 'advanced-responsive-video-embedder' ),
+				'enabled-exit'  => __( 'Enabled, exit FS on lightbox close', 'advanced-responsive-video-embedder' ),
 				'disabled'      => __( 'Disabled', 'advanced-responsive-video-embedder' ),
 			],
 		],
@@ -369,19 +369,19 @@ function all_settings() {
 		'disable_links' => [
 			'tag'         => 'pro',
 			'default'     => false,
-			'label'       => __( 'Disable links (Pro Addon)', 'advanced-responsive-video-embedder' ),
+			'label'       => __( 'Disable links', 'advanced-responsive-video-embedder' ),
 			'type'        => 'select',
 			'options'     => $def_bool_options,
-			'description' => __( 'Prevent embeds to open new popups/tabs from links inside video embeds. Note: breaks functionality like sharing. (Pro Addon)', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'Prevent embeds to open new popups/tabs from links inside video embeds. Note: breaks functionality like sharing.', 'advanced-responsive-video-embedder' ),
 		],
-		'mobile_inview'         => [
-			'tag'         => 'pro',
-			'default'     => true,
-			'shortcode'   => false,
-			'label'       => __( 'Mobile Inview Fallback', 'advanced-responsive-video-embedder' ),
-			'type'        => 'boolean',
-			'description' => __( 'This is not needed/used for YouTube and Vimeo. On mobiles fallback Lazyload mode to Lazyload Inview as workarround for the problem that it otherwise needs two touches to play a lazyloaded video because mobile browsers prevent autoplay. Note that this will prevent users to see your custom thumbnails or titles!', 'advanced-responsive-video-embedder' ),
-		],
+		// 'mobile_inview'         => [
+		// 	'tag'         => 'pro',
+		// 	'default'     => true,
+		// 	'shortcode'   => false,
+		// 	'label'       => __( 'Mobile Inview Fallback', 'advanced-responsive-video-embedder' ),
+		// 	'type'        => 'boolean',
+		// 	'description' => __( 'This is not needed/used for YouTube and Vimeo. On mobiles fallback Lazyload mode to Lazyload Inview as workarround for the problem that it otherwise needs two touches to play a lazyloaded video because mobile browsers prevent autoplay. Note that this will prevent users to see your custom thumbnails or titles!', 'advanced-responsive-video-embedder' ),
+		// ],
 		'align' => [
 			'default'   => 'none',
 			'shortcode' => true,
