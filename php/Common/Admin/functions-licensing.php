@@ -25,10 +25,10 @@ function init_plugin_updater( $product ) {
 		$product['file'],
 		[
 			'version' => $product['version'],
-			'license' => ngt_options()[ $product['slug'] ],
+			'license' => Common\ngt_options()[ $product['slug'] ],
 			'item_id' => $product['id'],
 			'author'  => $product['author'],
-			'beta'    => ngt_options()[ $product['slug'] . '_beta' ],
+			'beta'    => Common\ngt_options()[ $product['slug'] . '_beta' ],
 		]
 	);
 }
@@ -39,7 +39,7 @@ function init_theme_updater( $product ) {
 		[
 			'remote_api_url' => 'https://nextgenthemes.com',
 			'version'        => $product['version'],
-			'license'        => ngt_options()[ $product['slug'] ],
+			'license'        => Common\ngt_options()[ $product['slug'] ],
 			'item_id'        => $product['id'],
 			'author'         => $product['author'],
 			'theme_slug'     => $product['slug'],
