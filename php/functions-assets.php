@@ -50,8 +50,7 @@ function register_gb_block() {
 	$sc_settings = shortcode_settings();
 
 	foreach ( $sc_settings as $key => $v ) {
-		$type         = str_replace( 'boolean', 'string', $v['type'] );
-		$attr[ $key ] = [ 'type' => $type ];
+		$attr[ $key ] = [ 'type' => $v['type'] ];
 	}
 
 	$attr['thumbnail']     = [ 'type' => 'string' ];
@@ -77,9 +76,21 @@ function register_gb_block() {
 			'attributes'      => $attr,
 			'editor_script'   => 'arve-block',
 			'editor_style'    => 'arve',
-			'render_callback' => __NAMESPACE__ . '\shortcode',
+			'render_callback' => __NAMESPACE__ . '\gutenberg_block',
 		]
 	);
+}
+
+function gutenberg_block( $args ) {
+
+	foreach ( $args as $key => $value ) {
+
+		if ( is_bool( $value ) ) {
+			$args[ $key ] = $value ? 'true' : 'false';
+		}
+	}
+
+	return shortcode( $args );
 }
 
 function maybe_enqueue_assets( $html ) {
