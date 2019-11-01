@@ -28,21 +28,6 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( 'itemprop', $html );
 	}
 
-	public function TODO_PRO_test_schema_disabled() {
-
-		get_settings_instance()->options['schema'] = false;
-
-		$html = shortcode( [ 'url' => 'https://example.com' ] );
-
-		$this->assertNotContains( 'Error', $html );
-		$this->assertNotContains( 'schema.org', $html );
-		$this->assertNotContains( 'itemscope', $html );
-		$this->assertNotContains( 'itemtype', $html );
-		$this->assertNotContains( 'itemprop', $html );
-
-		get_settings_instance()->options['schema'] = true;
-	}
-
 	public function logfile( $msg, $file ) {
 		$msg = print_r( $msg, true );
 		error_log( $msg . PHP_EOL, 3, "$file.log" );
