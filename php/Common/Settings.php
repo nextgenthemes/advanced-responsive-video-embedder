@@ -136,22 +136,26 @@ class Settings {
 
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		foreach ( $this->settings as $key => $option ) {
-			?>
-			<div <?php echo Admin\block_attr( $key, $option ); ?>>
-				<?php
-				$field_type = isset( $option['ui'] ) ? $option['ui'] : $option['type'];
 
-				$function = __NAMESPACE__ . "\\Admin\\print_{$field_type}_field";
+			$field_type = isset( $option['ui'] ) ? $option['ui'] : $option['type'];
 
-				$function( $key, $option );
-
-				if ( ! empty( $option['description'] ) ) {
-					printf( '<p>%s</p>', $option['description'] );
-				}
+			if ( 'hidden' !== $field_type ) :
 				?>
-				<hr>
-			</div>
-			<?php
+				<div <?php echo Admin\block_attr( $key, $option ); ?>>
+					<?php
+
+					$function = __NAMESPACE__ . "\\Admin\\print_{$field_type}_field";
+
+					$function( $key, $option );
+
+					if ( ! empty( $option['description'] ) ) {
+						printf( '<p>%s</p>', $option['description'] );
+					}
+					?>
+					<hr>
+				</div>
+				<?php
+			endif;
 		}
 		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}

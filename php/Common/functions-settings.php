@@ -23,7 +23,7 @@ function nextgenthemes_settings_instance() {
 
 function ngt_options() {
 	$o = nextgenthemes_settings_instance()->options;
-	return apply_filters( 'nextgenthemes/arve/options', $o );
+	return apply_filters( 'nextgenthemes/settings', $o );
 }
 
 function migrate_old_licenses() {
@@ -158,7 +158,7 @@ function get_products() {
 		}
 
 		$version = "\\Nextgenthemes\\{$value['namespace']}\\VERSION";
-		$file    = "\\Nextgenthemes\\{$value['namespace']}\\FILE";
+		$file    = "\\Nextgenthemes\\{$value['namespace']}\\PLUGIN_FILE";
 
 		if ( defined( $version ) ) {
 			$products[ $key ]['version'] = constant( $version );
