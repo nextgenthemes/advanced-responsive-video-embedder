@@ -73,9 +73,6 @@ jobs:
           DEBUG: ${{ github.ref }}
         run: echo "$DEBUG"
 
-      - run: echo "${{ github.ref }}"
-      - run: echo "${{ github.event.repository.name }}"
-
       - if: startsWith(github.ref, 'refs/tags') && ! contains(github.ref, 'beta') && ! contains(github.ref, 'alpha')
         name: WordPress Plugin Deploy
         uses: 10up/action-wordpress-plugin-deploy@master
