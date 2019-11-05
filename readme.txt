@@ -17,6 +17,8 @@ The best WordPress plugin for videos? Supports close to everything you can imagi
 
 It is very likely the one and only plugin you will ever need to handle video embeds on your WordPress site(s). It goes far beyond just making your videos responsive!
 
+### Big version update with Gutenberg Block is coming [please help testing](https://nextgenthemes.com/plugins/arve/help-testing-the-beta-version/) ###
+
 [youtube https://www.youtube.com/watch?v=m6mkA6Zr1vY ]
 
 *  [Documentation](https://nextgenthemes.com/plugins/arve/documentation/)
@@ -157,6 +159,10 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### 2019-11-05 - 8.10.18 ###
+
+* Big version update with Gutenberg Block is coming [please help testing](https://nextgenthemes.com/plugins/arve/help-testing-the-beta-version/)
 
 ### 2019-10-18 - 8.10.15 ###
 

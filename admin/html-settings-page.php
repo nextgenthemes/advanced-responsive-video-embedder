@@ -25,7 +25,10 @@ $options = arve_get_options();
 
 			<div class="arve-corner-spacer"></div>
 
+			<p>Big version update with Gutenberg Block is coming <a href="https://nextgenthemes.com/plugins/arve/help-testing-the-beta-version">please help testing</a></p>
+
 			<h3>Please rate</h3>
+
 			It would really help to get a <a href="https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/#new-post">5 star rating from you.</a>
 
 			<h3><a href="https://nextgenthemes.com/plugins/arve-pro/">Pro Addon</a></h3>
