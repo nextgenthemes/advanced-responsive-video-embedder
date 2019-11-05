@@ -6,109 +6,73 @@ jobs:
     name: PHP Unit tests
     strategy:
       matrix:
-        # php: [5.6,7.0,7.1,7.2,7.3]
-        php: [7.3]
-        node: [12.9.0]
+        php: [5.6,7.1,7.2,7.3] # There is NO 7.0 docker image, it will be displayed as '7' and will actually be the latest 7.x
         mysql: [5.7.27]
-        # wordpress: [4.9.10,5.2.4,latest]
-        wordpress: [latest]
+        wordpress: [4.9.12,5.0.7,5.1.3,5.2.4,latest]
+        exclude: # WP Bug https://core.trac.wordpress.org/ticket/44416
+          - php: 7.3
+            mysql: 5.7.27
+            wordpress: 4.9.12
     runs-on: ubuntu-latest
     container:
       image: php:${{ matrix.php }}-apache
-      env:
-        NODE_ENV: production
       ports:
-      - 80
+        - 80
       volumes:
-      - $GITHUB_WORKSPACE:/var/www/html
+        - $GITHUB_WORKSPACE:/var/www/html
     services:
       mysql:
         image: mysql:${{ matrix.mysql }}
         env:
           MYSQL_ROOT_PASSWORD: root
         ports:
-        - 3306
+          - 3306
         volumes:
-        - $HOME/mysql:/var/lib/mysql
+          - $HOME/mysql:/var/lib/mysql
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v1
+      - uses: actions/checkout@v1
 
       - name: APT + docker
-        # https://bigbite.net/insights/github-actions-ci-cd-with-yarn-composer-phpcs-phpunit-and-built-branches/ reminder
+         # https://bigbite.net/insights/github-actions-ci-cd-with-yarn-composer-phpcs-phpunit-and-built-branches/ reminder
         run: |
           apt-get update -yqq
           apt-get install -yqqf default-mysql-client vim wget zip unzip git subversion libmcrypt-dev --fix-missing
           docker-php-ext-install mysqli pdo_mysql mbstring pcntl
 
-      - name: Install composer with official install script
-        run: |
-          bash bin/install-composer.sh
-          mv composer.phar /usr/local/bin/composer
-
-      # we do remove composer lock because we need different phpunit versions based on current PHP version
+      - name: Install composer
+        run: bash bin/install-composer.sh
+      
       - name: Run composer install
         run: |
-          rm composer.lock
-          composer install
+          rm composer.lock # we do remove composer lock because we need different phpunit versions based on current PHP version
+          composer install --quiet --no-interaction
 
       - name: Install WordPress Test Suite
         run: bash bin/install-wp-tests.sh wordpress_test root root mysql ${{ matrix.wordpress }}
 
-      - name: Run PHPUnit
+      - name: Run PHPUnit without code coverage
+        #if: matrix.wordpress != 'latest' && matrix.php != '7.3'
         run: vendor/bin/phpunit
-  
+
+      # - name: Install xdebug, Coveralls, run PHPunit with coverage analysis
+      #   if: matrix.wordpress == 'latest' && matrix.php == '7.3'
+      #   run: |
+      #     pecl install xdebug # fails for php 5.6
+      #     docker-php-ext-enable xdebug
+      #     composer require --dev php-coveralls/php-coveralls 
+      #     vendor/bin/phpunit --coverage-text --colors=never
+
   build:
     needs: test
-    name: Build release Zip
     runs-on: ubuntu-latest
-    #env:
-      #ZIPFILE: ${{ $GITHUB_WORKSPACE }}/build/zip/${{ GITHUB_REPOSITORY }}-${{ $GITHUB_REF }}.zip
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
 
-      - name: Dump GitHub context
+      - if: startsWith(github.ref, 'refs/tags') && ! startsWith(github.event.repository.name, 'arve-') && ! contains(github.ref, 'beta') && ! contains(github.ref, 'alpha')
+        name: WordPress Plugin Deploy
+        uses: 10up/action-wordpress-plugin-deploy@master
         env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-
-    #  - name: Dump GitHub context
-    #     env:
-    #       TTT: ${{ github.repository }}
-    #     run: echo "$TTT"
-
-    #   - name: Dump GitHub context
-    #     env:
-    #       TTT: ${{ github.REPOSITORY }}
-    #     run: echo "$TTT"
-
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v1
-
-      # - name: APT + docker
-      #   # https://bigbite.net/insights/github-actions-ci-cd-with-yarn-composer-phpcs-phpunit-and-built-branches/ reminder
-      #   run: |
-      #     apt-get update -yqq
-      #     apt-get install -yqqf default-mysql-client vim wget zip unzip git subversion libmcrypt-dev --fix-missing
-      #     docker-php-ext-install mysqli pdo_mysql mbstring pcntl
-
-  #     - name: Build Zip
-  #       run: bash bin/git-zip ${{ $ZIPFILE }}
-
-  #     - uses: actions/upload-artifact@master
-  #       with:
-  #         name: release Zip
-  #         path: ${{ $ZIPFILE }}
-
-  # deploy:
-  #   on: tag
-  #   needs: [test, build]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v1
-
-  #     - name: Checkout Tools
-  #       run: git clone https://${{ secrets.TOOLS_AUTOGIT_REPO_TOKEN }}@github.com/nextgenthemes/tools-autogit.git tools
-
-  #     - name: Deploy
-  #       run: bash bin/wporg-deploy
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SLUG: advanced-responsive-video-embedder
