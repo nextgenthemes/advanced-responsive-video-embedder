@@ -145,12 +145,12 @@ function shortcode_pairs() {
 			'provider'          => null,
 			'url_handler'       => null,
 			'legacy_sc'         => null,
-			'gutenberg'         => false,
+			'gutenberg'         => null,
 			'playsinline'       => 'y',
 			'preload'           => 'metadata',
 			'src'               => null,
 			'img_srcset'        => null,
-			'maxwidth'          => null, # Overwriting the option value ON PURPOSE here, see sv_filter_maxwidth
+			'maxwidth'          => null, # Overwriting the option value ON PURPOSE here, see sc_filter_maxwidth
 			'av1mp4'            => null,
 			'mp4'               => null,
 			'm4v'               => null,
