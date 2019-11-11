@@ -7,8 +7,9 @@
  * License: GPL 2.0+
  */
 
-const wp = window.wp;
-const el = window.wp.element.createElement;
+const wp       = window.wp;
+const el       = window.wp.element.createElement;
+const settings = window.ARVEsettings;
 
 wp.data.dispatch( 'core/edit-post' ).hideBlockTypes( [
 	'core-embed/youtube',
@@ -24,9 +25,9 @@ wp.data.dispatch( 'core/edit-post' ).hideBlockTypes( [
 function PrepareSelectOptions( options ) {
 	const gboptions = [];
 
-	Object.keys( options ).forEach( ( key ) => {
+	Object.entries( options ).forEach( ( [ key, value ] ) => {
 		gboptions.push( {
-			label: options[ key ],
+			label: value,
 			value: key,
 		} );
 	} );
@@ -36,15 +37,18 @@ function PrepareSelectOptions( options ) {
 
 function BuildControls( props ) {
 
-	const controls  = [];
-	const domParser = new DOMParser();
+	const controls        = [];
+	const sectionControls = {};
+	const domParser       = new DOMParser();
 
-	Object.keys( window.ARVEsettings ).forEach( ( key ) => {
-		const option   = window.ARVEsettings[ key ];
+	Object.values( settings ).forEach( ( option ) => {
+		sectionControls[ option.tag ] = [];
+	} );
+
+	Object.entries( settings ).forEach( ( [ key, option ] ) => {
 		const attrVal  = props.attributes[ key ];
 		const ctrlArgs = {
 			label: option.label,
-			help: option.description,
 			onChange: ( value ) => {
 				if ( 'url' === key ) {
 					const $iframe = domParser.parseFromString( value, 'text/html' ).querySelector( 'iframe' );
@@ -64,12 +68,31 @@ function BuildControls( props ) {
 			},
 		};
 
+		if ( typeof option.description === 'string' ) {
+
+			ctrlArgs.help = option.description;
+
+			if ( typeof option.descriptionlinktext === 'string' ) {
+
+				const textSplit = option.description.split( option.descriptionlinktext );
+
+				ctrlArgs.help = el( 'span', null,
+					el( 'span', {}, textSplit[ 0 ] ),
+					el( 'a', { href: option.descriptionlink }, option.descriptionlinktext ),
+					el( 'span', {}, textSplit[ 1 ] )
+				);
+			}
+		}
+
 		switch ( option.type ) {
 			case 'boolean':
+				if ( 'sandbox' === key && typeof attrVal === 'undefined' ) {
+					ctrlArgs.checked = true;
+				}
 				if ( typeof attrVal !== 'undefined' ) {
 					ctrlArgs.checked = attrVal;
 				}
-				controls.push( el( wp.components.ToggleControl, ctrlArgs ) );
+				sectionControls[ option.tag ].push( el( wp.components.ToggleControl, ctrlArgs ) );
 				break;
 			case 'select':
 				if ( typeof attrVal !== 'undefined' ) {
@@ -77,14 +100,14 @@ function BuildControls( props ) {
 					ctrlArgs.value = attrVal;
 				}
 				ctrlArgs.options = PrepareSelectOptions( option.options );
-				controls.push( el( wp.components.SelectControl, ctrlArgs ) );
+				sectionControls[ option.tag ].push( el( wp.components.SelectControl, ctrlArgs ) );
 				break;
 			case 'string':
 				if ( typeof attrVal !== 'undefined' ) {
 					ctrlArgs.value = attrVal;
 				}
 				ctrlArgs.placeholder = option.placeholder;
-				controls.push( el( wp.components.TextControl, ctrlArgs ) );
+				sectionControls[ option.tag ].push( el( wp.components.TextControl, ctrlArgs ) );
 				break;
 			case 'attachment':
 				let urlVal = props.attributes[ key + '_url' ];
@@ -124,9 +147,25 @@ function BuildControls( props ) {
 					} ),
 				];
 
-				controls.push( el( wp.components.BaseControl, ctrlArgs ) );
+				sectionControls[ option.tag ].push( el( wp.components.BaseControl, ctrlArgs ) );
 				break;
 		}
+	} );
+
+	let open = true;
+
+	Object.keys( sectionControls ).forEach( ( key ) => {
+		controls.push(
+			el(
+				wp.components.PanelBody,
+				{
+					title: key,
+					initialOpen: open,
+				},
+				...sectionControls[ key ],
+			),
+		);
+		open = false;
 	} );
 
 	return controls;

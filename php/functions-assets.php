@@ -48,9 +48,15 @@ function register_gb_block() {
 	}
 
 	$sc_settings = shortcode_settings();
+	$options     = options();
 
 	foreach ( $sc_settings as $key => $v ) {
-		$attr[ $key ] = [ 'type' => $v['type'] ];
+		$sc_settings[ $key ]['description'] = wp_strip_all_tags( $v['description'] );
+		$attr[ $key ]                       = [ 'type' => $v['type'] ];
+
+		if ( ! $options['gutenberg_help'] ) {
+			$sc_settings[ $key ]['description'] = false;
+		}
 	}
 
 	$attr['thumbnail']     = [ 'type' => 'string' ];
@@ -83,12 +89,29 @@ function register_gb_block() {
 
 function gutenberg_block( $args ) {
 
+	if ( empty( $args['url'] ) ) {
+		\ob_start();
+		?>
+		<div class="components-placeholder wp-block-embed">
+			<div class="components-placeholder__label">
+				<span class="editor-block-icon block-editor-block-icon has-colors">
+					<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" focusable="false"><path d="M0,0h24v24H0V0z" fill="none"></path><path d="M19,4H5C3.89,4,3,4.9,3,6v12c0,1.1,0.89,2,2,2h14c1.1,0,2-0.9,2-2V6C21,4.9,20.11,4,19,4z M19,18H5V8h14V18z"></path></svg>
+				</span>ARVE Video Embed
+			</div>
+			<div class="components-placeholder__instructions">Please paste Video URL / iframe Embed Code in the Sidebar for this Block.</div>	
+		</div>
+		<?php
+		return \ob_get_clean();
+	}
+
 	foreach ( $args as $key => $value ) {
 
 		if ( is_bool( $value ) ) {
 			$args[ $key ] = $value ? 'true' : 'false';
 		}
 	}
+
+	$args['gutenberg'] = 'true';
 
 	return shortcode( $args );
 }
