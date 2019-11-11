@@ -145,6 +145,7 @@ function shortcode_pairs() {
 			'provider'          => null,
 			'url_handler'       => null,
 			'legacy_sc'         => null,
+			'gutenberg'         => false,
 			'playsinline'       => 'y',
 			'preload'           => 'metadata',
 			'src'               => null,
@@ -233,61 +234,73 @@ function all_settings() {
 		'false' => __( 'False', 'advanced-responsive-video-embedder' ),
 	];
 
+	$provider_list_link = 'https://nextgenthemes.com/plugins/arve-pro/#video-host-support';
+	$pro_addon_link     = 'https://nextgenthemes.com/plugins/arve-pro/';
+
 	$settings = [
 		'url' => [
-			'default'     => null,
-			'option'      => false,
-			'label'       => __( 'Video URL / iframe Embed Code', 'advanced-responsive-video-embedder' ),
-			'type'        => 'string',
-			'placeholder' => esc_attr__( 'Video URL / iframe Embed Code', 'advanced-responsive-video-embedder' ),
-			'description' => sprintf(
+			'default'             => null,
+			'option'              => false,
+			'label'               => __( 'Video URL / iframe Embed Code', 'advanced-responsive-video-embedder' ),
+			'type'                => 'string',
+			'placeholder'         => esc_attr__( 'Video URL / iframe Embed Code', 'advanced-responsive-video-embedder' ),
+			'description'         => sprintf(
 				// Translators: %1$s Providers
 				__( 'Post the URL of the video here. For %1$s and any <a href="%2$s">unlisted</a> video hosts paste their iframe embed codes.', 'advanced-responsive-video-embedder' ),
 				esc_html( $embed_code_only ),
-				esc_url( 'https://nextgenthemes.com/arve-pro/#video-host-support' )
+				esc_url( $provider_list_link )
 			),
+			'descriptionlink'     => esc_url( $provider_list_link ),
+			'descriptionlinktext' => esc_html__( 'unlisted', 'advanced-responsive-video-embedder' ),
 		],
 		'title' => [
-			'default'     => null,
-			'option'      => false,
-			'label'       => __( 'Title', 'advanced-responsive-video-embedder' ),
-			'type'        => 'string',
-			'description' => sprintf(
+			'default'             => null,
+			'option'              => false,
+			'label'               => __( 'Title', 'advanced-responsive-video-embedder' ),
+			'type'                => 'string',
+			'description'         => sprintf(
 				// Translators: Provider list
-				__( 'Used for SEO, is visible on top of thumbnails in Lazyload modes, is used as link text in link-lightbox mode. The Pro Addon is able to get them from %s automatically.', 'advanced-responsive-video-embedder' ),
-				$auto_title
+				__( 'Used for SEO, is visible on top of thumbnails in Lazyload modes, is used as link text in link-lightbox mode. <a href="%1$s">ARVE Pro</a> is able to get them from %2$s automatically.', 'advanced-responsive-video-embedder' ),
+				esc_url( $pro_addon_link ),
+				esc_html( $auto_title )
 			),
+			'descriptionlink'     => esc_url( $pro_addon_link ),
+			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
 		],
 		'description' => [
-			'tag'         => 'pro',
-			'default'     => null,
-			'option'      => false,
-			'label'       => __( 'Description', 'advanced-responsive-video-embedder' ),
-			'type'        => 'string',
-			'placeholder' => __( 'Used for SEO (needed schema.org data)', 'advanced-responsive-video-embedder' ),
-			'description' => __( 'ARVE Pro fills this automatically', 'advanced-responsive-video-embedder' ),
+			'default'             => null,
+			'option'              => false,
+			'label'               => __( 'Description', 'advanced-responsive-video-embedder' ),
+			'type'                => 'string',
+			'placeholder'         => __( 'Used for SEO (needed schema.org data)', 'advanced-responsive-video-embedder' ),
+			'description'         => sprintf( __( '<a href="%s">ARVE Pro</a> fills this automatically', 'advanced-responsive-video-embedder' ), esc_url( $pro_addon_link ) ), // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+			'descriptionlink'     => esc_url( $pro_addon_link ),
+			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
 		],
 		'upload_date' => [
-			'default'     => null,
-			'option'      => false,
-			'label'       => __( 'Upload Date', 'advanced-responsive-video-embedder' ),
-			'type'        => 'string',
-			'placeholder' => __( '2019-09-29 (ISO 8601 format)', 'advanced-responsive-video-embedder' ),
-			'description' => __( 'ARVE Pro fills this automatically', 'advanced-responsive-video-embedder' ),
+			'default'             => null,
+			'option'              => false,
+			'label'               => __( 'Upload Date', 'advanced-responsive-video-embedder' ),
+			'type'                => 'string',
+			'placeholder'         => __( '2019-09-29 (ISO 8601 format)', 'advanced-responsive-video-embedder' ),
+			'description'         => sprintf( __( '<a href="%s">ARVE Pro</a> fills this automatically', 'advanced-responsive-video-embedder' ), esc_url( $pro_addon_link ) ), // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+			'descriptionlink'     => esc_url( $pro_addon_link ),
+			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
 		],
 		'mode' => [
-			'tag'         => 'pro',
-			'default'     => 'normal',
-			'label'       => __( 'Mode', 'advanced-responsive-video-embedder' ),
-			'type'        => 'select',
-			'options'     =>
+			'tag'                 => 'pro',
+			'default'             => 'normal',
+			'label'               => __( 'Mode', 'advanced-responsive-video-embedder' ),
+			'type'                => 'select',
+			'options'             =>
 				[ '' => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ) ]
 				+ get_supported_modes(),
-			'description' => sprintf(
-				// Translators: current setting value
-				__( 'For Lazyload, Lightbox and Link mode check out the <a href="%s">Pro Addon</a>.', 'advanced-responsive-video-embedder' ),
+			'description'         => sprintf(
+				__( 'For Lazyload, Lightbox and Link mode check out <a href="%s">ARVE Pro</a>.', 'advanced-responsive-video-embedder' ), // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
 				'https://nextgenthemes.com/plugins/arve-pro/'
 			),
+			'descriptionlink'     => esc_url( $pro_addon_link ),
+			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
 		],
 		'thumbnail_fallback' => [
 			'tag'         => 'pro',
@@ -300,19 +313,22 @@ function all_settings() {
 			'description' => __( 'URL or media gallery image ID used for thumbnail', 'advanced-responsive-video-embedder' ),
 		],
 		'thumbnail' => [
-			'default'     => null,
-			'shortcode'   => true,
-			'option'      => false,
-			'label'       => __( 'Thumbnail', 'advanced-responsive-video-embedder' ),
-			'type'        => 'attachment',
-			'libraryType' => [ 'image' ],
-			'addButton'   => __( 'Select Image', 'advanced-responsive-video-embedder' ),
-			'frameTitle'  => __( 'Select Image', 'advanced-responsive-video-embedder' ),
-			'description' => sprintf(
-				// Translators: current setting value
-				__( 'Preview image for Lazyload modes, always used for SEO. The ARVE Pro is able to get them from %s automatically.', 'advanced-responsive-video-embedder' ),
-				$auto_thumbs
+			'default'             => null,
+			'shortcode'           => true,
+			'option'              => false,
+			'label'               => __( 'Thumbnail', 'advanced-responsive-video-embedder' ),
+			'type'                => 'attachment',
+			'libraryType'         => [ 'image' ],
+			'addButton'           => __( 'Select Image', 'advanced-responsive-video-embedder' ),
+			'frameTitle'          => __( 'Select Image', 'advanced-responsive-video-embedder' ),
+			'description'         => sprintf(
+				// Translators: 1 Link, 2 Provider list
+				__( 'Preview image for Lazyload modes, always used for SEO. <a href="%1$s">ARVE Pro</a> is able to get them from %2$s automatically.', 'advanced-responsive-video-embedder' ),
+				esc_url( $pro_addon_link ),
+				esc_html( $auto_thumbs )
 			),
+			'descriptionlink'     => esc_url( $pro_addon_link ),
+			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
 		],
 		'hide_title'            => [
 			'default'     => false,
@@ -336,7 +352,7 @@ function all_settings() {
 			'label'       => __( 'Go Fullscreen on opening Lightbox?', 'advanced-responsive-video-embedder' ),
 			'desc_detail' => __( 'Makes the Browser go fullscreen when opening the Lighbox. Optionally stay in Fullscreen mode even after the Lightbox is closed', 'advanced-responsive-video-embedder' ),
 			'options'     => [
-				''              => __( 'Default (setting page)', 'advanced-responsive-video-embedder' ),
+				''              => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
 				'enabled-stick' => __( 'Enabled, stay FS on lightbox close', 'advanced-responsive-video-embedder' ),
 				'enabled-exit'  => __( 'Enabled, exit FS on lightbox close', 'advanced-responsive-video-embedder' ),
 				'disabled'      => __( 'Disabled', 'advanced-responsive-video-embedder' ),
@@ -349,7 +365,7 @@ function all_settings() {
 			'type'    => 'select',
 			'options' => [
 				// Translators: 1 %s is play icon style.
-				''        => __( 'Default (setting page)', 'advanced-responsive-video-embedder' ),
+				''        => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
 				'youtube' => __( 'Youtube style', 'advanced-responsive-video-embedder' ),
 				'circle'  => __( 'Circle', 'advanced-responsive-video-embedder' ),
 				'none'    => __( 'No play image', 'advanced-responsive-video-embedder' ),
@@ -361,6 +377,7 @@ function all_settings() {
 			'label'   => __( 'Hover Effect (Lazyload/Lightbox only)', 'advanced-responsive-video-embedder' ),
 			'type'    => 'select',
 			'options' => [
+				''          => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
 				'zoom'      => __( 'Zoom Thumbnail', 'advanced-responsive-video-embedder' ),
 				'rectangle' => __( 'Move Rectangle in', 'advanced-responsive-video-embedder' ),
 				'none'      => __( 'None', 'advanced-responsive-video-embedder' ),
@@ -449,14 +466,10 @@ function all_settings() {
 			'option'      => false,
 			'label'       => __( 'Parameters', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
-			'placeholder' => __( 'example=true&foo=bar', 'advanced-responsive-video-embedder' ),
+			'placeholder' => __( 'example=1&foo=bar', 'advanced-responsive-video-embedder' ),
 			'description' => sprintf(
-				// Translators: current setting value
-				__( 'Note this values get merged with values set on the <a target="_blank" href="%1$s">ARVE setting page</a>. Example for YouTube <code>fs=0&start=30</code>. For reference: <a target="_blank" href="%2$s">Youtube Parameters</a>, <a target="_blank" href="%3$s">Dailymotion Parameters</a>, <a target="_blank" href="%4$s">Vimeo Parameters</a>.', 'advanced-responsive-video-embedder' ),
-				admin_url( 'admin.php?page=advanced-responsive-video-embedder' ),
-				'https://developers.google.com/youtube/player_parameters',
-				'http://www.dailymotion.com/doc/api/player.html#parameters',
-				'https://developer.vimeo.com/player/embedding'
+				__( 'Provider specific player settings on iframe src. See <a href="%s">documentation.</a>', 'advanced-responsive-video-embedder' ), // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+				esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/#parematers' )
 			),
 		],
 		'wp_video_override' => [
@@ -517,44 +530,53 @@ function all_settings() {
 			'type'        => 'boolean',
 			'description' => __( 'Default=No ARVE will loads its scripts and styles only when the posts content contains a arve video. In case your content is loaded via AJAX at a later stage this detection will not work or the styles are not loaded for another reason you may have to enable this option', 'advanced-responsive-video-embedder' ),
 		],
-		'youtube_nocookie'      => [
+		'youtube_nocookie' => [
 			'default'     => true,
 			'shortcode'   => false,
 			'label'       => __( 'Use youtube-nocookie.com url?', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
 			'description' => __( 'Privacy enhanced mode, will NOT disable cookies but only sets them when a user starts to play a video. There is currently a youtube bug that opens highlighed video boxes with a wrong -nocookie.com url so you need to disble this if you need those.', 'advanced-responsive-video-embedder' ),
 		],
-		'vimeo_api_token'       => [
-			'default'     => '',
-			'shortcode'   => false,
-			'label'       => __( 'Vimeo API Token', 'advanced-responsive-video-embedder' ),
-			'type'        => 'string',
-			'description' => sprintf(
+		'vimeo_api_token' => [
+			'default'             => '',
+			'shortcode'           => false,
+			'label'               => __( 'Vimeo API Token', 'advanced-responsive-video-embedder' ),
+			'type'                => 'string',
+			'description'         => sprintf(
 				// Translators: URL
 				__( 'Needed for <a href="%s">Random Video Addon</a>.', 'advanced-responsive-video-embedder' ),
 				esc_url( 'https://nextgenthemes.local/plugins/arve-random-video/' )
 			),
+			'descriptionlink'     => esc_url( 'https://nextgenthemes.local/plugins/arve-random-video/' ),
+			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		],
-		'legacy_shortcodes'     => [
+		'legacy_shortcodes' => [
 			'default'     => true,
 			'shortcode'   => false,
 			'label'       => __( 'Enable lagacy shortcodes', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
 			'description' => __( 'Enable the old and deprected <code>[youtube id="abcde" /]</code> or <code>[vimeo id="abcde" /]</code> ... style shortcodes. Only enable if you have them in your content.', 'advanced-responsive-video-embedder' ),
 		],
-		'sandbox'               => [
+		'sandbox' => [
 			'default'     => true,
 			'shortcode'   => true,
 			'label'       => __( 'Sandbox', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
 			'description' => __( "Only disable if you have to. If you embed encrypted media you have to disable this. 'Disable Links' feature from ARVE Pro will not work when without sandbox.", 'advanced-responsive-video-embedder' ),
 		],
-		'seo_data'              => [
+		'seo_data' => [
+			'tag'         => 'pro',
 			'default'     => true,
 			'shortcode'   => false,
 			'label'       => __( 'Enable structured data (schema.org)', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
-			'description' => __( 'Disable if you use Yoast Video SEO or another that generates the data already.', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'Disable if you use Yoast Video SEO or another plugin that generates the data already.', 'advanced-responsive-video-embedder' ),
+		],
+		'gutenberg_help' => [
+			'default'     => true,
+			'shortcode'   => false,
+			'label'       => __( 'Enable help text in the Block sidebar?', 'advanced-responsive-video-embedder' ),
+			'type'        => 'boolean',
 		],
 	];
 
