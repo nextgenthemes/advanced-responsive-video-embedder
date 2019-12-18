@@ -371,8 +371,8 @@ function get_host_properties() {
 			'auto_title'     => true,
 			'tests'          => [
 				[
-					'url' => 'https://www.ted.com/talks/margaret_stewart_how_youtube_thinks_about_copyright',
-					'id'  => 'margaret_stewart_how_youtube_thinks_about_copyright',
+					'url' => 'https://www.ted.com/talks/sam_harris_can_we_build_ai_without_losing_control_over_it',
+					'id'  => 'sam_harris_can_we_build_ai_without_losing_control_over_it',
 				],
 			],
 		],
