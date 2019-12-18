@@ -7,6 +7,12 @@ function shortcode( $a, $content = null ) {
 
 	$a = (array) $a;
 
+	foreach ( $a as $k => $v ) {
+		if ( '' === $v ) {
+			unset( $a[ $k ] );
+		}
+	}
+
 	$override = apply_filters( 'nextgenthemes/arve/shortcode_override', '', $a, $content );
 
 	if ( '' !== $override ) {
