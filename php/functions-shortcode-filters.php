@@ -447,6 +447,8 @@ function sc_filter_iframe_src( array $a ) {
 		$a['src'] = str_replace( 'https://www.youtube.com', 'https://www.youtube-nocookie.com', $a['src'] );
 	}
 
+	$a = apply_filters( 'nextgenthemes/arve/sc_filter/src', $a );
+
 	return $a;
 }
 
@@ -537,6 +539,10 @@ function iframe_src_args( $src, array $a ) {
 
 	$parameters = wp_parse_args( $parameters, $option_parameters );
 	$src        = add_query_arg( $parameters, $src );
+
+	if ( 'youtube' === $a['provider'] && in_array( $a['mode'], [ 'lightbox', 'link-lightbox' ], true ) ) {
+		$src = add_query_arg( 'playsinline', '1', $src );
+	}
 
 	return $src;
 }
