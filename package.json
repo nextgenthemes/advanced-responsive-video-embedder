@@ -5,21 +5,21 @@
   "author": "Nicolas Jonas",
   "license": "GPL-3.0",
   "dependencies": {
-    "vue": "^2.6.10"
+    "vue": "^2.6.11"
   },
   "devDependencies": {
-    "@wordpress/eslint-plugin": ">=3.1.0",
+    "@wordpress/eslint-plugin": "^3.2.0",
     "browser-sync": "^2.26.7",
     "browser-sync-webpack-plugin": "^2.2.2",
-    "eslint": ">=6.5.1",
+    "eslint": "^6.7.2",
     "json": ">=9.0.6",
-    "laravel-mix": "^5.0.0",
-    "resolve-url-loader": "^3.1.0",
-    "sass": "^1.23.0",
+    "laravel-mix": "^5.0.1",
+    "resolve-url-loader": "^3.1.1",
+    "sass": "^1.23.7",
     "sass-loader": "^7.3.1",
-    "stylelint": ">=11.1.1",
-    "stylelint-config-twbs-bootstrap": ">=0.6.0",
-    "vue-template-compiler": "^2.6.10"
+    "stylelint": "^12.0.0",
+    "stylelint-config-twbs-bootstrap": "^1.0.0",
+    "vue-template-compiler": "^2.6.11"
   },
   "scripts": {
     "css-lint": "stylelint \"resources/scss/**/*.scss\" --cache --cache-location /tmp/.stylelintcache",
