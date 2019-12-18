@@ -589,7 +589,7 @@ function get_host_properties() {
 			'regex'          => '#https?://(www\.)?(youtube\.com\/\S*((\/e(mbed))?\/|watch\?(\S*?&?v\=))|youtu\.be\/)(?<id>[a-zA-Z0-9_-]{6,11})#i',
 			'embed_url'      => 'https://www.youtube.com/embed/%s',
 			'rebuild_url'    => 'https://www.youtube.com/watch?v=%s',
-			'default_params' => 'iv_load_policy=3&modestbranding=1&rel=0&autohide=1&playsinline=1',
+			'default_params' => 'iv_load_policy=3&modestbranding=1&rel=0&autohide=1&playsinline=0',
 			'auto_thumbnail' => true,
 			'auto_title'     => true,
 			'tests'          => [
@@ -638,7 +638,6 @@ function get_host_properties() {
 				__( 'The Parameter start only takes values in seconds, this will start the video at 1 minute and 1 second', 'advanced-responsive-video-embedder' ),
 				'[youtube id="uCQXKYPiz6M" parameters="start=61"]',
 			],
-
 		],
 		'youtubelist'          => [
 			'oembed'         => true,
@@ -646,7 +645,7 @@ function get_host_properties() {
 			'name'           => 'YouTube Playlist',
 			'embed_url'      => 'https://www.youtube.com/embed/videoseries?list=%s',
 			'rebuild_url'    => 'https://www.youtube.com/watch?list=%s',
-			'default_params' => 'iv_load_policy=3&modestbranding=1&rel=0&autohide=1&playsinline=1',
+			'default_params' => 'iv_load_policy=3&modestbranding=1&rel=0&autohide=1&playsinline=0',
 			'auto_thumbnail' => true,
 			'tests'          => [
 				[
