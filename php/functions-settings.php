@@ -146,7 +146,6 @@ function shortcode_pairs() {
 			'url_handler'       => null,
 			'legacy_sc'         => null,
 			'gutenberg'         => null,
-			'playsinline'       => 'y',
 			'preload'           => 'metadata',
 			'src'               => null,
 			'img_srcset'        => null,
@@ -272,7 +271,7 @@ function all_settings() {
 			'option'              => false,
 			'label'               => __( 'Description', 'advanced-responsive-video-embedder' ),
 			'type'                => 'string',
-			'placeholder'         => __( 'Used for SEO (needed schema.org data)', 'advanced-responsive-video-embedder' ),
+			'placeholder'         => __( 'Used for SEO (needed, ARVE auto fills this)', 'advanced-responsive-video-embedder' ),
 			'description'         => sprintf( __( '<a href="%s">ARVE Pro</a> fills this automatically', 'advanced-responsive-video-embedder' ), esc_url( $pro_addon_link ) ), // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
 			'descriptionlink'     => esc_url( $pro_addon_link ),
 			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
@@ -282,7 +281,7 @@ function all_settings() {
 			'option'              => false,
 			'label'               => __( 'Upload Date', 'advanced-responsive-video-embedder' ),
 			'type'                => 'string',
-			'placeholder'         => __( '2019-09-29 (ISO 8601 format)', 'advanced-responsive-video-embedder' ),
+			'placeholder'         => __( '2019-09-29 (ARVE Pro fills this with post date)', 'advanced-responsive-video-embedder' ),
 			'description'         => sprintf( __( '<a href="%s">ARVE Pro</a> fills this automatically', 'advanced-responsive-video-embedder' ), esc_url( $pro_addon_link ) ), // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
 			'descriptionlink'     => esc_url( $pro_addon_link ),
 			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
@@ -347,14 +346,14 @@ function all_settings() {
 		],
 		'fullscreen' => [
 			'tag'         => 'pro',
-			'default'     => 'enabled-stick',
+			'default'     => 'enabled-exit',
 			'type'        => 'select',
 			'label'       => __( 'Go Fullscreen on opening Lightbox?', 'advanced-responsive-video-embedder' ),
 			'desc_detail' => __( 'Makes the Browser go fullscreen when opening the Lighbox. Optionally stay in Fullscreen mode even after the Lightbox is closed', 'advanced-responsive-video-embedder' ),
 			'options'     => [
 				''              => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
-				'enabled-stick' => __( 'Enabled, stay FS on lightbox close', 'advanced-responsive-video-embedder' ),
 				'enabled-exit'  => __( 'Enabled, exit FS on lightbox close', 'advanced-responsive-video-embedder' ),
+				'enabled-stick' => __( 'Enabled, stay FS on lightbox close', 'advanced-responsive-video-embedder' ),
 				'disabled'      => __( 'Disabled', 'advanced-responsive-video-embedder' ),
 			],
 		],
@@ -412,6 +411,16 @@ function all_settings() {
 				'center' => __( 'Center', 'advanced-responsive-video-embedder' ),
 			],
 		],
+		'lightbox_script' => [
+			'default'   => 'bigpicture',
+			'shortcode' => false,
+			'label'     => __( 'Lightbox Script', 'advanced-responsive-video-embedder' ),
+			'type'      => 'select',
+			'options'   => [
+				'bigpicture' => __( 'BigPicture', 'advanced-responsive-video-embedder' ),
+				'lity'       => __( 'Lity', 'advanced-responsive-video-embedder' ),
+			],
+		],
 		'arve_link' => [
 			'default'     => false,
 			'label'       => __( 'ARVE Link', 'advanced-responsive-video-embedder' ),
@@ -444,6 +453,13 @@ function all_settings() {
 				__( 'In pixels. If set to 0 (default) the $content_width value from your theme is used if present, otherwise the default is %s.', 'advanced-responsive-video-embedder' ),
 				DEFAULT_MAXWIDTH
 			),
+		],
+		'lightbox_maxwidth' => [
+			'tag'         => 'pro',
+			'default'     => 1174,
+			'label'       => __( 'Lightbox Maximal Width', 'advanced-responsive-video-embedder' ),
+			'type'        => 'integer',
+			'placeholder' => __( 'Leave empty for default from settings page', 'advanced-responsive-video-embedder' ),
 		],
 		'align_maxwidth' => [
 			'default'     => 400,

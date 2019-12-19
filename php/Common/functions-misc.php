@@ -3,7 +3,6 @@ namespace Nextgenthemes\ARVE\Common;
 
 function get_url_arg( $url, $arg ) {
 
-	$return     = false;
 	$parsed_url = wp_parse_url( $url );
 
 	if ( ! empty( $parsed_url['query'] ) ) {
@@ -11,11 +10,11 @@ function get_url_arg( $url, $arg ) {
 		parse_str( $parsed_url['query'], $url_query );
 
 		if ( isset( $url_query[ $arg ] ) ) {
-			$return = $url_query[ $arg ];
+			return $url_query[ $arg ];
 		}
 	}
 
-	return $return;
+	return false;
 }
 
 function get_constant( $const_name ) {

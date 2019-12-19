@@ -79,8 +79,8 @@ function build_video_tag( array $a ) {
 				// ARVE only
 				'class'              => 'arve-video fitvidsignore',
 				'muted'              => $a['muted'],
-				'playsinline'        => $a['playsinline'],
-				'webkit-playsinline' => $a['playsinline'],
+				'playsinline'        => in_array( $a['mode'], [ 'lightbox', 'link-lightbox' ], true ) ? '' : false,
+				'webkit-playsinline' => in_array( $a['mode'], [ 'lightbox', 'link-lightbox' ], true ) ? '' : false,
 			],
 		],
 		$a
@@ -124,7 +124,7 @@ function build_tracks_html( array $a ) {
 function html_id( $html_attr ) {
 
 	if ( false === strpos( $html_attr, 'id=' ) ) {
-		$html_attr .= ' id="arve"';
+		$html_attr .= ' id="global"';
 	}
 
 	return $html_attr;
@@ -361,7 +361,7 @@ function arve_embed( $html, array $a ) {
 	if ( '16:9' === $a['aspect_ratio'] ) {
 		$class .= ' arve-embed--16by9';
 	} elseif ( $a['aspect_ratio'] ) {
-		$ratio_div = sprintf( '<div data-ratio style="padding-top:%F%%"></div>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
+		$ratio_div = sprintf( '<div class="arve-ar" style="padding-top:%F%%"></div>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
 	}
 
 	return build_tag(
