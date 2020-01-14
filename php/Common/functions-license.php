@@ -85,7 +85,7 @@ function get_api_error_message( $license_data ) {
 			$message = sprintf(
 				// Translators: Date
 				__( 'Your license key expired on %s.', 'advanced-responsive-video-embedder' ),
-				date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) )
+				date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, time() ) )
 			);
 			break;
 
