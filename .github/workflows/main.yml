@@ -47,18 +47,9 @@ jobs:
           rm composer.lock # we do remove composer lock because we need different phpunit versions based on current PHP version
           composer install --quiet --no-interaction
 
-      - run: node --version
-      - run: npm --version
       - run: php --version
       - run: composer --version
 
-      - name: Checkout ARVE master
-        uses: actions/checkout@v1
-        with:
-          repository: nextgenthemes/advanced-responsive-video-embedder
-          ref: master
-    
-      - run: composer install --quiet --no-interaction --no-dev -d ../advanced-responsive-video-embedder
       - run: rm composer.lock # we do remove composer lock because we need different phpunit versions based on current PHP version
       - run: composer install --quiet --no-interaction
       - run: bash ./bin/install-wp-tests.sh wordpress_test root root mysql ${{ matrix.wordpress }}
