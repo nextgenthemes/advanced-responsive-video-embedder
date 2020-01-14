@@ -47,8 +47,21 @@ jobs:
           rm composer.lock # we do remove composer lock because we need different phpunit versions based on current PHP version
           composer install --quiet --no-interaction
 
-      - name: Install WordPress Test Suite
-        run: bash bin/install-wp-tests.sh wordpress_test root root mysql ${{ matrix.wordpress }}
+      - run: node --version
+      - run: npm --version
+      - run: php --version
+      - run: composer --version
+
+      - name: Checkout ARVE master
+        uses: actions/checkout@v1
+        with:
+          repository: nextgenthemes/advanced-responsive-video-embedder
+          ref: master
+    
+      - run: composer install --quiet --no-interaction --no-dev -d ../advanced-responsive-video-embedder
+      - run: rm composer.lock # we do remove composer lock because we need different phpunit versions based on current PHP version
+      - run: composer install --quiet --no-interaction
+      - run: run: bash bin/install-wp-tests.sh wordpress_test root root mysql ${{ matrix.wordpress }}
 
       - name: Run PHPUnit without code coverage
         #if: matrix.wordpress != 'latest' && matrix.php != '7.3'
@@ -88,14 +101,13 @@ jobs:
       - run: npm --version
       - run: php --version
       - run: composer --version
-      - run: bash bin/git-zip.sh
-        env:
-          DEPLOY_REF: ${{ github.sha }}
-          DEPLOY_ZIPFILE: ${{ github.workspace }}/${{ steps.zip.outputs.file }}
+
+      - run: mkdir -p $(dirname "${{ steps.zip.outputs.file }}")
+      - run: git archive --format=zip --prefix="${PWD##*/}"/ --output="${{ steps.zip.outputs.file }}" ${{ github.sha }}
 
       - uses: actions/upload-artifact@master
         with:
-          name: Build Zipfile
+          name: artifact
           path: build
 
       # - name: Maybe deploy to wp.org
