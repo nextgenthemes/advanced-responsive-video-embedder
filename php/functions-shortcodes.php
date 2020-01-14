@@ -79,7 +79,6 @@ function basic_tests( $tests ) {
 	return $html;
 }
 
-
 function build_video( array $input_atts ) {
 
 	for ( $n = 1; $n <= NUM_TRACKS; $n++ ) {
@@ -171,7 +170,8 @@ function wp_video_shortcode_override( $out, $attr ) {
 
 	if ( ! $options['wp_video_override'] ||
 		! empty( $attr['wmv'] ) ||
-		! empty( $attr['flv'] )
+		! empty( $attr['flv'] ) ||
+		disabled_on_feeds()
 	) {
 		return $out;
 	}

@@ -31,7 +31,7 @@ function filter_oembed_dataparse( $result, $data, $url ) {
 
 function oembed2args( $data, $url ) {
 
-	if ( false === $data || 'video' !== $data->type ) {
+	if ( false === $data || 'video' !== $data->type || disabled_on_feeds() ) {
 		return false;
 	}
 

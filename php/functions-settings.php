@@ -420,6 +420,7 @@ function all_settings() {
 				'bigpicture' => __( 'BigPicture', 'advanced-responsive-video-embedder' ),
 				'lity'       => __( 'Lity', 'advanced-responsive-video-embedder' ),
 			],
+			'description' => __( 'Only use Lity if you have issues with Big Picture', 'advanced-responsive-video-embedder' ),
 		],
 		'arve_link' => [
 			'default'     => false,
@@ -460,6 +461,7 @@ function all_settings() {
 			'label'       => __( 'Lightbox Maximal Width', 'advanced-responsive-video-embedder' ),
 			'type'        => 'integer',
 			'placeholder' => __( 'Leave empty for default from settings page', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'default 1174', 'advanced-responsive-video-embedder' ),
 		],
 		'align_maxwidth' => [
 			'default'     => 400,
@@ -593,6 +595,15 @@ function all_settings() {
 			'shortcode'   => false,
 			'label'       => __( 'Enable help text in the Block sidebar?', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
+			'description' => __( 'Makes the interface much cleaner.', 'advanced-responsive-video-embedder' ),
+		],
+		'feed' => [
+			'default'     => true,
+			'shortcode'   => false,
+			'option'      => true,
+			'label'       => __( 'Use in RSS/Atom Feeds?', 'advanced-responsive-video-embedder' ),
+			'type'        => 'boolean',
+			'description' => __( 'Enable the plugin in RSS/Atom feeds? Disabling will not completely diable everything but it will use native WP behavior in feeds where possible.', 'advanced-responsive-video-embedder' ),
 		],
 	];
 
