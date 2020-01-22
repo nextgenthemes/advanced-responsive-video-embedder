@@ -64,6 +64,7 @@ function oembed2args( $data, $url ) {
 	return apply_filters( 'nextgenthemes/arve/oembed2args', $a );
 }
 
+// needed for private videos
 function vimeo_referer( $args, $url ) {
 
 	if ( Common\contains( $url, 'vimeo' ) ) {
@@ -71,4 +72,44 @@ function vimeo_referer( $args, $url ) {
 	}
 
 	return $args;
+}
+
+function trigger_cache_rebuild( $ttl, $url, $attr, $post_id ) {
+
+	if ( ! did_action( 'nextgenthemes/arve/oembed_recache' ) ) {
+		// Get the time when oEmbed HTML was last cached (based on the WP_Embed class)
+		$key_suffix    = md5( $url . serialize( $attr ) ); // phpcs:ignore
+		$cachekey_time = '_oembed_time_' . $key_suffix;
+		$cache_time    = get_post_meta( $post_id, $cachekey_time, true );
+
+		// Get the cached HTML
+		$cachekey   = '_oembed_' . $key_suffix;
+		$cache_html = strtolower( get_post_meta( $post_id, $cachekey, true ) );
+
+		// time after a recache should be done
+		$trigger_time = get_option( 'arve_oembed_recache' );
+
+		// Check if we need to regenerate the oEmbed HTML:
+		if ( $cache_time < $trigger_time &&
+			Common\contains_any( $cache_html, [ 'video', 'tube', 'dailymotion', 'vimeo', 'twitch', 'ted.com', 'wistia' ] ) &&
+			$GLOBALS['wp_embed']->usecache
+		) {
+			// What we need to skip the oembed cache part
+			$GLOBALS['wp_embed']->usecache = 0;
+			$ttl                           = 0;
+
+			do_action( 'nextgenthemes/arve/oembed_recache' );
+		}
+	}
+
+	return $ttl;
+}
+
+function reenable_oembed_cache( $discover ) {
+
+	if ( did_action( 'nextgenthemes/arve/oembed_recache' ) ) {
+		$GLOBALS['wp_embed']->usecache = true;
+	}
+
+	return $discover;
 }

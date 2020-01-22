@@ -37,6 +37,7 @@ function echo_active_plugins() {
 }
 
 function echo_network_active_plugins() {
+
 	if ( ! is_multisite() ) {
 		return;
 	}
@@ -53,4 +54,35 @@ function echo_network_active_plugins() {
 		$plugin = get_plugin_data( $plugin_path );
 		echo esc_html( "{$plugin['Name']}: {$plugin['Version']}\n" );
 	}
+}
+
+function filter_save_options( $options ) {
+
+	update_option( 'arve_oembed_recache', time() );
+
+	$action            = json_decode( $options['action'] );
+	$options['action'] = '';
+
+	if ( $action ) {
+		$product_id  = get_products()[ $action->product ]['id'];
+		$product_key = $options[ $action->product ];
+
+		$options[ $action->product . '_status' ] = api_action( $product_id, $product_key, $action->action );
+	}
+
+	return $option;
+}
+
+// unused, trigger recaching is rebuild is probably better, also there this leaves the times in the DB so will this even work?
+function delete_oembed_caches() {
+
+	global $wpdb;
+
+	$wpdb->query(
+		$wpdb->prepare(
+			"DELETE FROM {$wpdb->postmeta} WHERE meta_key LIKE %s AND meta_value LIKE %s",
+			'%_oembed_%',
+			'%' . $wpdb->esc_like( 'id="arve-' ) . '%'
+		)
+	);
 }
