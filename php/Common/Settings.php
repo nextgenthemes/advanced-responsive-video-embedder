@@ -58,14 +58,20 @@ class Settings {
 
 	public function save_options( $options ) {
 
-		$action            = json_decode( $options['action'] );
-		$options['action'] = '';
+		if ( 'nextgenthemes' === $this->slugged_namespace ) {
 
-		if ( $action ) {
-			$product_id  = get_products()[ $action->product ]['id'];
-			$product_key = $options[ $action->product ];
+			$action            = json_decode( $options['action'] );
+			$options['action'] = '';
 
-			$options[ $action->product . '_status' ] = api_action( $product_id, $product_key, $action->action );
+			if ( $action ) {
+				$product_id  = get_products()[ $action->product ]['id'];
+				$product_key = $options[ $action->product ];
+
+				$options[ $action->product . '_status' ] = api_action( $product_id, $product_key, $action->action );
+			}
+		} elseif ( 'nextgenthemes_arve' === $this->slugged_namespace ) {
+			logfile('re: ' . time(), __FILE__ );
+			update_option( 'arve_oembed_recache', time() );
 		}
 
 		// remove all items from options that are not also in defaults.
