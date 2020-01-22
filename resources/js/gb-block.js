@@ -11,6 +11,7 @@ const wp       = window.wp;
 const el       = window.wp.element.createElement;
 const settings = window.ARVEsettings;
 
+/*
 wp.data.dispatch( 'core/edit-post' ).hideBlockTypes( [
 	'core-embed/youtube',
 	'core-embed/vimeo',
@@ -18,6 +19,7 @@ wp.data.dispatch( 'core/edit-post' ).hideBlockTypes( [
 	'core-embed/collegehumor',
 	'core-embed/ted',
 ] );
+*/
 
 /*
  * Keypair to gutenberg component
