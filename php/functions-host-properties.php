@@ -253,19 +253,23 @@ function get_host_properties() {
 		],
 		'liveleak'             => [
 			'name'           => 'LiveLeak',
-			'regex'          => '#https?://(www\.)?liveleak\.com/(view|ll_embed)\?(?<id>(f|i)=[0-9a-z\_]+)#i',
+			'regex'          => '#https?://(www\.)?liveleak\.com/(view|ll_embed)\?(?<id>(f|i|t)=[0-9a-z\_]+)#i',
 			'embed_url'      => 'https://www.liveleak.com/ll_embed?%s',
 			'default_params' => '',
 			'auto_thumbnail' => true,
 			'tests'          => [
-				[
+				[ # Page/item 'i=' URL
 					'url' => 'http://www.liveleak.com/view?i=703_1385224413',
 					'id'  => 'i=703_1385224413',
-				], # Page/item 'i=' URL
-				[
+				],
+				[ #File f= URL
 					'url' => 'http://www.liveleak.com/view?f=c85bdf5e45b2',
 					'id'  => 'f=c85bdf5e45b2',
-				], #File f= URL
+				],
+				[ #No clue new t= url
+					'url' => 'https://www.liveleak.com/view?t=uGBX9_1579730411',
+					'id'  => 'i=uGBX9_1579730411',
+				],
 			],
 			'test_ids'       => [
 				'f=c85bdf5e45b2',
