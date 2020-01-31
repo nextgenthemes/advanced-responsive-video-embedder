@@ -130,13 +130,6 @@ function html_id( $html_attr ) {
 	return $html_attr;
 }
 
-function get_var_dump( $var ) {
-	ob_start();
-	// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_dump
-	var_dump( $var );
-	return ob_get_clean();
-};
-
 function get_debug_info( $input_html, array $a, array $input_atts ) {
 
 	$html = '';
@@ -372,14 +365,5 @@ function arve_embed( $html, array $a ) {
 			'attr'       => [ 'class' => $class ],
 		],
 		$a
-	);
-}
-
-function error( $message ) {
-
-	return sprintf(
-		'<p><strong>%s</strong> %s</p>',
-		__( '<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error:', 'advanced-responsive-video-embedder' ),
-		$message
 	);
 }
