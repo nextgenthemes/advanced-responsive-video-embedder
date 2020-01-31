@@ -146,7 +146,7 @@ function create_shortcodes() {
 
 				$a['provider'] = $provider;
 
-				if ( ! empty( $properties[ $provider ]['rebuild_url'] ) ) {
+				if ( ! empty( $properties[ $provider ]['rebuild_url'] ) && ! empty( $a['id'] ) ) {
 					$a['url'] = sprintf( $properties[ $provider ]['rebuild_url'], $a['id'] );
 					unset( $a['id'] );
 					return shortcode( $a );
