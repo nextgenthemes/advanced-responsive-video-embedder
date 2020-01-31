@@ -17,6 +17,13 @@ function get_url_arg( $url, $arg ) {
 	return false;
 }
 
+function get_var_dump( $var ) {
+	ob_start();
+	// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_dump
+	var_dump( $var );
+	return ob_get_clean();
+};
+
 function get_constant( $const_name ) {
 	return defined( $const_name ) ? constant( $const_name ) : false;
 }
