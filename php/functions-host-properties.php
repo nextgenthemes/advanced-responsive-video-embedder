@@ -528,13 +528,17 @@ function get_host_properties() {
 		'wistia'               => [
 			'name'           => 'Wistia',
 			'oembed'         => true,
-			'regex'          => '#https?://fast\.wistia\.net/embed/iframe/(?<id>[a-z0-9]+)#i',
+			'regex'          => '#https?://([a-z.]+)wistia\.net/(medias|embed/iframe)/(?<id>[a-z0-9]+)#i',
 			'embed_url'      => 'https://fast.wistia.net/embed/iframe/%s',
 			'default_params' => 'videoFoam=true',
 			'tests'          => [
 				[
 					'url' => 'https://fast.wistia.net/embed/iframe/g5pnf59ala?videoFoam=true',
 					'id'  => 'g5pnf59ala',
+				],
+				[
+					'url' => 'https://how-2-drive.wistia.com/medias/fi1rqe3kiy',
+					'id'  => 'fi1rqe3kiy',
 				],
 			],
 		],
