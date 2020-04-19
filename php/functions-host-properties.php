@@ -528,7 +528,7 @@ function get_host_properties() {
 		'wistia'               => [
 			'name'           => 'Wistia',
 			'oembed'         => true,
-			'regex'          => '#https?://([a-z.]+)wistia\.net/(medias|embed/iframe)/(?<id>[a-z0-9]+)#i',
+			'regex'          => '#https?://([a-z.-]+)wistia\.net/(medias|embed/iframe)/(?<id>[a-z0-9]+)#i',
 			'embed_url'      => 'https://fast.wistia.net/embed/iframe/%s',
 			'default_params' => 'videoFoam=true',
 			'tests'          => [
