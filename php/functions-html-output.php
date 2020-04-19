@@ -9,7 +9,7 @@ function build_html( array $a ) {
 		[
 			'name'       => 'arve',
 			'tag'        => 'div',
-			'inner-html' => arve_embed( arve_embed_inner_html( $a ), $a ) . promote_link( $a['arve_link'] ),
+			'inner_html' => arve_embed( arve_embed_inner_html( $a ), $a ) . promote_link( $a['arve_link'] ),
 			'attr'       => [
 				'class'         => $a['align'] ? 'arve align' . $a['align'] : 'arve',
 				'data-mode'     => $a['mode'],
@@ -41,18 +41,19 @@ function build_iframe_tag( array $a ) {
 		[
 			'name'       => 'iframe',
 			'tag'        => 'iframe',
-			'inner-html' => '',
+			'inner_html' => '',
 			'attr'       => [
-				'allow'           => 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture',
-				'allowfullscreen' => '',
-				'class'           => ( 'wistia' === $a['provider'] ) ? 'arve-iframe fitvidsignore wistia_embed' : 'arve-iframe fitvidsignore',
-				'frameborder'     => '0',
-				'name'            => $a['iframe_name'],
-				'sandbox'         => $sandbox,
-				'scrolling'       => 'no',
-				'src'             => $a['src'],
-				'width'           => empty( $a['width'] ) ? false : $a['width'],
-				'height'          => empty( $a['height'] ) ? false : $a['height'],
+				'allow'                => 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture',
+				'allowfullscreen'      => '',
+				'class'                => ( 'wistia' === $a['provider'] ) ? 'arve-iframe fitvidsignore wistia_embed' : 'arve-iframe fitvidsignore',
+				'frameborder'          => '0',
+				'name'                 => $a['iframe_name'],
+				'sandbox'              => $sandbox,
+				'scrolling'            => 'no',
+				'src'                  => $a['src'],
+				'data-src-no-autoplay' => iframe_src_autoplay_args( $a['src'], false, $a ),
+				'width'                => empty( $a['width'] ) ? false : $a['width'],
+				'height'               => empty( $a['height'] ) ? false : $a['height'],
 			],
 		],
 		$a
@@ -65,7 +66,7 @@ function build_video_tag( array $a ) {
 		[
 			'name'       => 'video',
 			'tag'        => 'video',
-			'inner-html' => $a['video_sources_html'] . build_tracks_html( $a ),
+			'inner_html' => $a['video_sources_html'] . build_tracks_html( $a ),
 			'attr'       => [
 				// WPmaster
 				'autoplay'           => in_array( $a['mode'], [ 'lazyload', 'lightbox', 'link-lightbox' ], true ) ? false : $a['autoplay'],
@@ -307,14 +308,14 @@ function build_tag( array $tag, array $a ) {
 
 	} else {
 
-		if ( ! empty( $tag['inner-html'] ) ||
-			( isset( $tag['inner-html'] ) && '' === $tag['inner-html'] )
+		if ( ! empty( $tag['inner_html'] ) ||
+			( isset( $tag['inner_html'] ) && '' === $tag['inner_html'] )
 		) {
 			$html = sprintf(
 				PHP_EOL . '<%1$s%2$s>%3$s</%1$s>' . PHP_EOL,
 				esc_html( $tag['tag'] ),
 				Common\attr( $tag['attr'] ),
-				$tag['inner-html']
+				$tag['inner_html']
 			);
 		} else {
 			$html = sprintf(
@@ -361,7 +362,7 @@ function arve_embed( $html, array $a ) {
 		[
 			'name'       => 'embed',
 			'tag'        => 'div',
-			'inner-html' => $ratio_div . $html,
+			'inner_html' => $ratio_div . $html,
 			'attr'       => [ 'class' => $class ],
 		],
 		$a

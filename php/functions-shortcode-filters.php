@@ -454,7 +454,7 @@ function sc_filter_iframe_src( array $a ) {
 	}
 
 	$a['src'] = iframe_src_args( $a['src'], $a );
-	$a['src'] = iframe_src_autoplay_args( $a['src'], $a );
+	$a['src'] = iframe_src_autoplay_args( $a['src'], $a['autoplay'], $a );
 
 	if ( 'youtube' === $a['provider'] && $options['youtube_nocookie'] ) {
 		$a['src'] = str_replace( 'https://www.youtube.com', 'https://www.youtube-nocookie.com', $a['src'] );
@@ -561,7 +561,7 @@ function iframe_src_args( $src, array $a ) {
 }
 
 // phpcs:ignore Generic.Metrics.CyclomaticComplexity.MaxExceeded
-function iframe_src_autoplay_args( $src, array $a ) {
+function iframe_src_autoplay_args( $src, $autoplay, array $a ) {
 
 	switch ( $a['provider'] ) {
 		case 'alugha':
@@ -637,7 +637,7 @@ function iframe_src_autoplay_args( $src, array $a ) {
 		*/
 	}
 
-	if ( $a['autoplay'] ) {
+	if ( $autoplay ) {
 		$src = $on;
 	} else {
 		$src = $off;
