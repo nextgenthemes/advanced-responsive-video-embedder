@@ -18,8 +18,10 @@ jobs:
         php-versions: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
         wordpress: [ '4.9.12', '5.0.7', '5.1.3', '5.2.4', 'latest' ]
         exclude: # WP Bug https://core.trac.wordpress.org/ticket/44416
-          - php-versions: [ '7.3', '7.4' ]
+          - php-versions: '7.3'
             wordpress: '4.9.12'
+          - php-versions: '7.4'
+            wordpress: '4.9.12'          
     services:
       mysql:
         image: mysql:5.7
