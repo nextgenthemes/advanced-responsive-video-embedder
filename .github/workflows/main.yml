@@ -13,7 +13,9 @@ jobs:
           - php-versions: '7.3'
             wordpress: '4.9.12'
           - php-versions: '7.4'
-            wordpress: '4.9.12'          
+            wordpress: '4.9.12'
+          - php-versions: '7.4'
+            wordpress: '5.3.2'  
     services:
       mysql:
         image: mysql:5.7
