@@ -268,7 +268,7 @@ function get_host_properties() {
 				],
 				[ #No clue new t= url
 					'url' => 'https://www.liveleak.com/view?t=uGBX9_1579730411',
-					'id'  => 'i=uGBX9_1579730411',
+					'id'  => 't=uGBX9_1579730411',
 				],
 			],
 			'test_ids'       => [
