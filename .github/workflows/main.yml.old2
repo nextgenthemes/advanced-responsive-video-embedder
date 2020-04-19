@@ -4,69 +4,67 @@ on: [push]
 jobs:
   test:
     name: PHP Unit tests
-    runs-on: ubuntu-latest
-    env:
-      DB_ADAPTER: mysql
-      DB_HOST: 127.0.0.1
-      DB_NAME: wordpress
-      DB_USERNAME: root
-      DB_PASSWORD: root
-      CODECEPTION_URL: 127.0.0.1
-      CODECEPTION_PORT: 8888
     strategy:
       matrix:
-        php-versions: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
-        wordpress: [ '4.9.12', '5.0.7', '5.1.3', '5.2.4', 'latest' ]
+        php: [5.6,7.1,7.2,7.3] # There is NO 7.0 docker image, it will be displayed as '7' and will actually be the latest 7.x
+        mysql: [5.7.27]
+        wordpress: [4.9.12,5.0.7,5.1.3,5.2.4,latest]
         exclude: # WP Bug https://core.trac.wordpress.org/ticket/44416
-          - php-versions: [ '7.3', '7.4' ]
-            wordpress: '4.9.12'
+          - php: 7.3
+            mysql: 5.7.27
+            wordpress: 4.9.12
+    runs-on: ubuntu-latest
+    container:
+      image: php:${{ matrix.php }}-apache
+      ports:
+        - 80
+      volumes:
+        - $GITHUB_WORKSPACE:/var/www/html
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:${{ matrix.mysql }}
         env:
           MYSQL_ROOT_PASSWORD: root
         ports:
           - 3306
-
+        volumes:
+          - $HOME/mysql:/var/lib/mysql
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v1
 
-      - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@v2 #https://github.com/shivammathur/setup-php
-        with:
-          php-version: ${{ matrix.php-versions }}
-          extensions: mbstring, dom, zip, phalcon4, mysql #use phalcon3 for the phalcon 3.x.
-          coverage: xdebug #optional
+      - name: APT + docker
+         # https://bigbite.net/insights/github-actions-ci-cd-with-yarn-composer-phpcs-phpunit-and-built-branches/ reminder
+        run: |
+          apt-get update -yqq
+          apt-get install -yqqf default-mysql-client vim wget zip unzip git subversion libmcrypt-dev --fix-missing
+          docker-php-ext-install mysqli pdo_mysql mbstring pcntl
 
-      - name: Start mysql service
-        run: sudo /etc/init.d/mysql start
+      - name: Install composer
+        run: bash bin/install-composer.sh
+      
+      - name: Run composer install
+        run: |
+          rm composer.lock # we do remove composer lock because we need different phpunit versions based on current PHP version
+          composer install --quiet --no-interaction
 
-      - name: Remove composer.lock # because we need different phpunit versions based on current PHP version
-        run: rm composer.lock
+      - run: php --version
+      - run: composer --version
 
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - name: Cache composer dependencies
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          # Use composer.json for key, if composer.lock is not committed.
-          # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
-
-      - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
-
-      - name: Install WP Tests
-        run: bash ./bin/install-wp-tests.sh wordpress_test root root mysql ${{ matrix.wordpress }}
+      - run: rm composer.lock # we do remove composer lock because we need different phpunit versions based on current PHP version
+      - run: composer install --quiet --no-interaction
+      - run: bash ./bin/install-wp-tests.sh wordpress_test root root mysql ${{ matrix.wordpress }}
 
       - name: Run PHPUnit without code coverage
         #if: matrix.wordpress != 'latest' && matrix.php != '7.3'
         run: vendor/bin/phpunit
+
+      # - name: Install xdebug, Coveralls, run PHPunit with coverage analysis
+      #   if: matrix.wordpress == 'latest' && matrix.php == '7.3'
+      #   run: |
+      #     pecl install xdebug # fails for php 5.6
+      #     docker-php-ext-enable xdebug
+      #     composer require --dev php-coveralls/php-coveralls 
+      #     vendor/bin/phpunit --coverage-text --colors=never
 
   build:
     needs: test
