@@ -70,7 +70,6 @@ class Settings {
 				$options[ $action->product . '_status' ] = api_action( $product_id, $product_key, $action->action );
 			}
 		} elseif ( 'nextgenthemes_arve' === $this->slugged_namespace ) {
-			logfile('re: ' . time(), __FILE__ );
 			update_option( 'arve_oembed_recache', time() );
 		}
 
