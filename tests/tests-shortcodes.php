@@ -77,7 +77,9 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		foreach ( $properties as $provider => $v ) :
 
-			if ( empty( $v['tests'] ) ) {
+			if ( empty( $v['tests'] )
+				|| '5.2.6' === WP_VERSION
+			) {
 				continue;
 			}
 
