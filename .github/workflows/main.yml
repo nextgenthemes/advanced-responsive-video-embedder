@@ -7,15 +7,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
+        php: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
         wordpress: [ '5.2.5', '5.3.2', 'latest' ] # https://wordpress.org/download/releases/
         exclude: # WP Bug https://core.trac.wordpress.org/ticket/44416
-          - php-versions: '7.3'
+          - php: '7.3'
             wordpress: '4.9.12'
-          - php-versions: '7.4'
+          - php: '7.4'
             wordpress: '4.9.12'
-          - php-versions: '7.4'
-            wordpress: '5.3.2'
+          - php: '7.4'
+            wordpress: '5.2.5'
     services:
       mysql:
         image: mysql:5.7
@@ -34,7 +34,7 @@ jobs:
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2 # https://github.com/shivammathur/setup-php
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: ${{ matrix.php }}
           extensions: mbstring, dom, zip, mysql
           coverage: none #optional
 
