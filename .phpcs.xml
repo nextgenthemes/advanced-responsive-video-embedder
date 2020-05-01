@@ -3,6 +3,7 @@
 
 	<rule ref="WordPress-Extra">
 		<exclude name="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma"/>
+		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found"/>
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
 		<exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores"/>

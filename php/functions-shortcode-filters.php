@@ -104,8 +104,13 @@ function sc_filter_maxwidth( array $a ) {
 
 function sc_filter_liveleak_id_fix( array $a ) {
 
-	if ( 'liveleak' === $a['provider']
-		&& ! Common\starts_with( $a['id'], 'i=' )
+	if ( 'liveleak' !== $a['provider'] ) {
+		return $a;
+	}
+
+	if ( Common\starts_with( $a['id'], 't=' ) ) {
+		$a['id'][0] = 'i';
+	} elseif ( ! Common\starts_with( $a['id'], 'i=' )
 		&& ! Common\starts_with( $a['id'], 'f=' )
 	) {
 		$a['id'] = 'i=' . $a['id'];
@@ -185,21 +190,29 @@ function sc_filter_validate_again( array $a ) {
 	if ( 'html5' !== $a['provider'] ) {
 
 		if ( ! is_int( $a['width'] ) ) {
-			$a['width'] = new \WP_Error( 'width', '<code>width</code> must be int' );
+			$a['width'] = (int) $a['width'];
+			$a['errors']->add( 'width', '<code>width</code> must be int' );
 		}
 
 		if ( ! is_int( $a['height'] ) ) {
-			$a['height'] = new \WP_Error( 'height', '<code>height</code> must be int' );
+			$a['height'] = (int) $a['height'];
+			$a['errors']->add( 'height', '<code>height</code> must be int' );
 		}
 	}
 
-	foreach ( bool_shortcode_args() as $attr ) {
-		$a[ $attr ] = bool_to_shortcode_string( $a[ $attr ] );
-	}
+	foreach ( $a as $key => $val ) {
 
+		if ( 'oembed_data' === $key && ! is_object( $a[ $attr ] ) && ! is_null( $a[ $attr ] ) ) {
+			$a['errors']->add( 'not bool', $attr . ' must be object' );
+		}
+
+		if ( in_array( $key, bool_shortcode_args(), true ) && ! is_bool( $a[ $attr ] ) ) {
+			$a['errors']->add( 'not bool', $attr . ' must be bool' );
+		}
+	}
 	unset( $attr );
 
-	return sc_filter_validate( $a );
+	return $a;
 }
 
 function sc_filter_set_fixed_dimensions( array $a ) {
@@ -441,7 +454,7 @@ function sc_filter_iframe_src( array $a ) {
 	}
 
 	$a['src'] = iframe_src_args( $a['src'], $a );
-	$a['src'] = iframe_src_autoplay_args( $a['src'], $a );
+	$a['src'] = iframe_src_autoplay_args( $a['src'], $a['autoplay'], $a );
 
 	if ( 'youtube' === $a['provider'] && $options['youtube_nocookie'] ) {
 		$a['src'] = str_replace( 'https://www.youtube.com', 'https://www.youtube-nocookie.com', $a['src'] );
@@ -513,7 +526,6 @@ function build_iframe_src( array $a ) {
 			break;
 		case 'wistia':
 			$src = add_query_arg( 'dnt', 1, $src );
-			$src = add_query_arg( 'videoFoam', 'true', $src );
 			break;
 		case 'ted':
 			$lang = Common\get_url_arg( $a['url'], 'language' );
@@ -548,7 +560,7 @@ function iframe_src_args( $src, array $a ) {
 }
 
 // phpcs:ignore Generic.Metrics.CyclomaticComplexity.MaxExceeded
-function iframe_src_autoplay_args( $src, array $a ) {
+function iframe_src_autoplay_args( $src, $autoplay, array $a ) {
 
 	switch ( $a['provider'] ) {
 		case 'alugha':
@@ -578,14 +590,6 @@ function iframe_src_autoplay_args( $src, array $a ) {
 			$on  = add_query_arg( 'ap', 1, $a['src'] );
 			$off = remove_query_arg( 'ap', $a['src'] );
 			break;
-		case 'videojug':
-			$on  = add_query_arg( 'ap', 1, $a['src'] );
-			$off = add_query_arg( 'ap', 0, $a['src'] );
-			break;
-		case 'veoh':
-			$on  = add_query_arg( 'videoAutoPlay', 1, $a['src'] );
-			$off = add_query_arg( 'videoAutoPlay', 0, $a['src'] );
-			break;
 		case 'brightcove':
 		case 'snotr':
 			$on  = add_query_arg( 'autoplay', 1, $a['src'] );
@@ -595,7 +599,21 @@ function iframe_src_autoplay_args( $src, array $a ) {
 			$on  = add_query_arg( 'player_autoplay', 'true', $a['src'] );
 			$off = add_query_arg( 'player_autoplay', 'false', $a['src'] );
 			break;
-		case 'NOT_USED_iframe':
+		default:
+			// Do nothing for providers that to not support autoplay or fail with parameters
+			$on  = $src;
+			$off = $src;
+			break;
+		/*
+		case 'videojug':
+			$on  = add_query_arg( 'ap', 1, $a['src'] );
+			$off = add_query_arg( 'ap', 0, $a['src'] );
+			break;
+		case 'veoh':
+			$on  = add_query_arg( 'videoAutoPlay', 1, $a['src'] );
+			$off = add_query_arg( 'videoAutoPlay', 0, $a['src'] );
+			break;
+		case 'iframe':
 			$on  = add_query_arg(
 				[
 					'ap'               => '1',
@@ -615,14 +633,10 @@ function iframe_src_autoplay_args( $src, array $a ) {
 				$a['src']
 			);
 			break;
-		default:
-			// Do nothing for providers that to not support autoplay or fail with parameters
-			$on  = $src;
-			$off = $src;
-			break;
-	}//end switch
+		*/
+	}
 
-	if ( $a['autoplay'] ) {
+	if ( $autoplay ) {
 		$src = $on;
 	} else {
 		$src = $off;
@@ -683,8 +697,6 @@ function sc_filter_detect_html5( array $a ) {
 		return $a;
 	}
 
-	$a['video_sources_html'] = '';
-
 	foreach ( VIDEO_FILE_EXTENSIONS as $ext ) :
 
 		if ( Common\ends_with( $a['url'], ".$ext" ) &&
@@ -693,7 +705,7 @@ function sc_filter_detect_html5( array $a ) {
 			$a[ $ext ] = $a['url'];
 		}
 
-		if ( 'av1' === $ext &&
+		if ( 'av1mp4' === $ext &&
 			Common\ends_with( $a['url'], 'av1.mp4' ) &&
 			! $a[ $ext ]
 		) {

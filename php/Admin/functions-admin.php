@@ -46,7 +46,7 @@ function display_pro_ad() {
 
 	if ( ! current_user_can( 'update_plugins' )
 		|| ! apply_filters( 'nextgenthemes/arve/pro_ad', true )
-		|| current_time( 'timestamp' ) < strtotime( '+1 week', $inst )
+		|| time() < strtotime( '+3 weeks', $inst )
 	) {
 		return false;
 	}

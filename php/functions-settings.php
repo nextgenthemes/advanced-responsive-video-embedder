@@ -140,26 +140,26 @@ function shortcode_pairs() {
 	$pairs = array_merge(
 		$pairs,
 		[
-			'errors'            => new \WP_Error(),
-			'id'                => null,
-			'provider'          => null,
-			'url_handler'       => null,
-			'legacy_sc'         => null,
-			'gutenberg'         => null,
-			'preload'           => 'metadata',
-			'src'               => null,
-			'img_srcset'        => null,
-			'maxwidth'          => null, # Overwriting the option value ON PURPOSE here, see sc_filter_maxwidth
-			'av1mp4'            => null,
-			'mp4'               => null,
-			'm4v'               => null,
-			'webm'              => null,
-			'ogv'               => null,
-			'oembed_data'       => null,
-			'account_id'        => null,
-			'iframe_name'       => null,
-			'brightcove_player' => null,
-			'brightcove_embed'  => null,
+			'errors'             => new \WP_Error(),
+			'id'                 => null,
+			'provider'           => null,
+			'url_handler'        => null,
+			'legacy_sc'          => null,
+			'gutenberg'          => null,
+			'src'                => null,
+			'img_srcset'         => null,
+			'maxwidth'           => null, # Overwriting the option value ON PURPOSE here, see sc_filter_maxwidth
+			'av1mp4'             => null,
+			'mp4'                => null,
+			'm4v'                => null,
+			'webm'               => null,
+			'ogv'                => null,
+			'oembed_data'        => null,
+			'account_id'         => null,
+			'iframe_name'        => null,
+			'brightcove_player'  => null,
+			'brightcove_embed'   => null,
+			'video_sources_html' => null,
 		]
 	);
 
@@ -412,14 +412,15 @@ function all_settings() {
 			],
 		],
 		'lightbox_script' => [
-			'default'   => 'bigpicture',
-			'shortcode' => false,
-			'label'     => __( 'Lightbox Script', 'advanced-responsive-video-embedder' ),
-			'type'      => 'select',
-			'options'   => [
+			'default'     => 'bigpicture',
+			'shortcode'   => false,
+			'label'       => __( 'Lightbox Script', 'advanced-responsive-video-embedder' ),
+			'type'        => 'select',
+			'options'     => [
 				'bigpicture' => __( 'BigPicture', 'advanced-responsive-video-embedder' ),
 				'lity'       => __( 'Lity', 'advanced-responsive-video-embedder' ),
 			],
+			'description' => __( 'Only use Lity if you have issues with Big Picture', 'advanced-responsive-video-embedder' ),
 		],
 		'arve_link' => [
 			'default'     => false,
@@ -460,6 +461,7 @@ function all_settings() {
 			'label'       => __( 'Lightbox Maximal Width', 'advanced-responsive-video-embedder' ),
 			'type'        => 'integer',
 			'placeholder' => __( 'Leave empty for default from settings page', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'default 1174', 'advanced-responsive-video-embedder' ),
 		],
 		'align_maxwidth' => [
 			'default'     => 400,
@@ -593,6 +595,30 @@ function all_settings() {
 			'shortcode'   => false,
 			'label'       => __( 'Enable help text in the Block sidebar?', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
+			'description' => __( 'Makes the interface much cleaner.', 'advanced-responsive-video-embedder' ),
+		],
+		'feed' => [
+			'default'     => true,
+			'shortcode'   => false,
+			'option'      => true,
+			'label'       => __( 'Use in RSS/Atom Feeds?', 'advanced-responsive-video-embedder' ),
+			'type'        => 'boolean',
+			'description' => __( 'Enable the plugin in RSS/Atom feeds? Disabling will not completely diable everything but it will use native WP behavior in feeds where possible.', 'advanced-responsive-video-embedder' ),
+		],
+		'videojs_theme' => [
+			'tag'       => 'videojs',
+			'default'   => 'default',
+			'shortcode' => false,
+			'label'     => __( 'Video.js Theme', 'advanced-responsive-video-embedder' ),
+			'type'      => 'select',
+			'options'   => [
+				'default'    => __( 'Default', 'advanced-responsive-video-embedder' ),
+				'netfoutube' => __( 'Netfoutube', 'advanced-responsive-video-embedder' ),
+				'city'       => __( 'City', 'advanced-responsive-video-embedder' ),
+				'forest'     => __( 'Forest', 'advanced-responsive-video-embedder' ),
+				'fantasy'    => __( 'Fantasy', 'advanced-responsive-video-embedder' ),
+				'sea'        => __( 'Sea', 'advanced-responsive-video-embedder' ),
+			],
 		],
 	];
 

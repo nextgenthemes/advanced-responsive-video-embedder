@@ -1,5 +1,39 @@
 const qsa = document.querySelectorAll.bind( document );
 
+document.body.addEventListener( 'mouseover', iframeEnterEvent, false );
+document.body.addEventListener( 'touchend', iframeEnterEvent, false );
+
+function iframeEnterEvent( ev ) {
+
+	const ele  = ev.target;
+	const arve = ele.closest( '.arve[mode="normal"]' );
+
+	if ( ele && ele.matches( 'iframe' ) && arve ) {
+
+		rmClass( 'arve--clicked', 'arve--clicked' );
+		arve.classList.add( 'arve--clicked' );
+	}
+}
+
+document.body.addEventListener( 'play', videoPlayEvent, true );
+
+function videoPlayEvent( ev ) {
+
+	const ele  = ev.target;
+	const arve = ele.closest( '.arve' );
+
+	if ( ele && ele.matches( 'video' ) && arve ) {
+		rmClass( 'arve--clicked', 'arve--clicked' );
+		arve.classList.add( 'arve--clicked' );
+	}
+}
+
+function rmClass( selector, ...classes ) {
+	qsa( selector ).forEach( ( el ) => {
+		el.classList.remove( ...classes );
+	} );
+}
+
 function unwrap( el ) {
 	// get the element's parent node
 	const parent = el.parentNode;

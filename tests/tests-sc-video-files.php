@@ -6,13 +6,41 @@ use function \Nextgenthemes\ARVE\get_settings_instance;
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_ShortcodeVideoFiles extends WP_UnitTestCase {
 
-	public function test_wrong_no_req_param() {
+	public function test_av1_url() {
 
-		$html = do_shortcode( '[video mp4="https://example.com/video.mp4" /]' );
+		$html = shortcode( [ 'url' => 'https://example.com/video.av1.mp4' ] );
+
+		$this->assertContains( 'arve-embed', $html );
+		$this->assertContains( '<video', $html );
+		$this->assertContains( 'src="https://example.com/video.av1.mp4"', $html );
+		$this->assertNotContains( 'Error', $html );
+	}
+
+	public function test_av1_arg() {
+
+		$html = shortcode( [ 'av1mp4' => 'https://example.com/video.mp4' ] );
 
 		$this->assertContains( 'arve-embed', $html );
 		$this->assertContains( '<video', $html );
 		$this->assertContains( 'src="https://example.com/video.mp4"', $html );
+		$this->assertContains( 'video/mp4; codecs=av01.0.05M.08', $html );
+		$this->assertNotContains( 'Error', $html );
+	}
+
+	public function test_do_not_override_wmv() {
+
+		$html = do_shortcode( '[video wmv="https://example.com/video.wmv" /]' );
+		$this->assertNotContains( 'id="arve-"', $html );
+	}
+
+	public function test_wp_video_mp4_with_poster() {
+
+		$html = do_shortcode( '[video mp4="https://example.com/video.mp4" poster="https://example.com/poster.jpg" /]' );
+
+		$this->assertContains( 'arve-embed', $html );
+		$this->assertContains( '<video', $html );
+		$this->assertContains( 'src="https://example.com/video.mp4"', $html );
+		$this->assertContains( 'https://example.com/poster.jpg', $html );
 		$this->assertNotContains( 'Error', $html );
 	}
 

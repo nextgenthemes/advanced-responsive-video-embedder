@@ -95,3 +95,7 @@ function calculate_height( $width, $aspect_ratio ) {
 
 	return false;
 }
+
+function disabled_on_feeds() {
+	return is_feed() && ! options()['feed'] ? true : false;
+}

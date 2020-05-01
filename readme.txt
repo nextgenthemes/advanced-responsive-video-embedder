@@ -3,9 +3,9 @@ Contributors: nico23
 Donate link: https://www.paypal.me/nico23
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.4.0
-Tested up to: 5.2.2
+Tested up to: 5.4
 Requires PHP: 5.6
-Stable tag: 9.0.0-alpha17
+Stable tag: 9.0.0-alpha18
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -16,13 +16,16 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-### 2019-11-01 - 9.0.0 ###
+### 9.0.0 ###
 
-* Note: Minimum PHP required for ARVE is now 5.6 you should be a the latest version for [security](https://secure.php.net/supported-versions.php) and speed anyway
-* New: Finally the ARVE Gutenberg block is here!
-* New: Option to disable SEO schema.org data.
+This update is very long in the making and I hope it will pay off somehow, hopefully literally. A lot things happened in the code that will not be visbile to the end users directly on top of the things that are visble.
+
+**Important**: Minimum PHP required for ARVE is now 5.6 you should be a the latest version (PHP 7.4) for [security](https://secure.php.net/supported-versions.php) and speed anyway
+
+* New: Finally the ARVE Gutenberg block is here! Its not polished yet and there is still work to be done.
 * New: Added Bitchute
 * New: `av1mp4` shortcode parameter so serve [AV1](https://en.wikipedia.org/wiki/AV1) encoded files best named .av1.mp4 (to be used together with `mp4` or `webm`)
+* Fix: Some issue with
 * Fix: YouTube live links are now working correctly
 * Fix: TED embed url.
 * Fix: Facebook embeds.

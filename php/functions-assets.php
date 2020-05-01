@@ -51,8 +51,12 @@ function register_gb_block() {
 	$options     = options();
 
 	foreach ( $sc_settings as $key => $v ) {
-		$sc_settings[ $key ]['description'] = wp_strip_all_tags( $v['description'] );
-		$attr[ $key ]                       = [ 'type' => $v['type'] ];
+
+		if ( ! empty( $v['description'] ) ) {
+			$sc_settings[ $key ]['description'] = wp_strip_all_tags( $v['description'] );
+		}
+
+		$attr[ $key ] = [ 'type' => $v['type'] ];
 
 		if ( ! $options['gutenberg_help'] ) {
 			$sc_settings[ $key ]['description'] = false;

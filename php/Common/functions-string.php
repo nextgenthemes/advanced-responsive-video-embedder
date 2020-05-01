@@ -1,8 +1,20 @@
 <?php
 namespace Nextgenthemes\ARVE\Common;
 
+function contains_any( $haystack, array $needles ) {
+
+	foreach ( $needles as $needle ) {
+
+		if ( contains( $haystack, $needle ) ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 function contains( $haystack, $needle ) {
-	return strpos( $haystack, $needle ) !== false;
+	return false !== strpos( $haystack, $needle );
 }
 
 function starts_with( $haystack, $needle ) {

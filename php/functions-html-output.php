@@ -9,7 +9,7 @@ function build_html( array $a ) {
 		[
 			'name'       => 'arve',
 			'tag'        => 'div',
-			'inner-html' => arve_embed( arve_embed_inner_html( $a ), $a ) . promote_link( $a['arve_link'] ),
+			'inner_html' => arve_embed( arve_embed_inner_html( $a ), $a ) . promote_link( $a['arve_link'] ),
 			'attr'       => [
 				'class'         => $a['align'] ? 'arve align' . $a['align'] : 'arve',
 				'data-mode'     => $a['mode'],
@@ -27,6 +27,8 @@ function build_html( array $a ) {
 
 function build_iframe_tag( array $a ) {
 
+	$allow   = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+	$class   = 'arve-iframe fitvidsignore';
 	$sandbox = 'allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox';
 
 	if ( 'vimeo' === $a['provider'] ) {
@@ -37,22 +39,32 @@ function build_iframe_tag( array $a ) {
 		$sandbox = false;
 	}
 
+	if ( 'wistia' === $a['provider'] ) {
+		$class .= ' wistia_embed';
+	}
+
+	if ( 'zoom' === $a['provider'] ) {
+		$allow   .= '; microphone; camera';
+		$sandbox .= ' allow-forms';
+	}
+
 	return build_tag(
 		[
 			'name'       => 'iframe',
 			'tag'        => 'iframe',
-			'inner-html' => '',
+			'inner_html' => '',
 			'attr'       => [
-				'allow'           => 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture',
+				'allow'           => $allow,
 				'allowfullscreen' => '',
-				'class'           => ( 'wistia' === $a['provider'] ) ? 'arve-iframe fitvidsignore wistia_embed' : 'arve-iframe fitvidsignore',
+				'class'           => $class,
+				'data-src-no-ap'  => iframe_src_autoplay_args( $a['src'], false, $a ),
 				'frameborder'     => '0',
+				'height'          => empty( $a['height'] ) ? false : $a['height'],
 				'name'            => $a['iframe_name'],
 				'sandbox'         => $sandbox,
 				'scrolling'       => 'no',
 				'src'             => $a['src'],
 				'width'           => empty( $a['width'] ) ? false : $a['width'],
-				'height'          => empty( $a['height'] ) ? false : $a['height'],
 			],
 		],
 		$a
@@ -65,14 +77,14 @@ function build_video_tag( array $a ) {
 		[
 			'name'       => 'video',
 			'tag'        => 'video',
-			'inner-html' => $a['video_sources_html'] . build_tracks_html( $a ),
+			'inner_html' => $a['video_sources_html'] . build_tracks_html( $a ),
 			'attr'       => [
 				// WPmaster
 				'autoplay'           => in_array( $a['mode'], [ 'lazyload', 'lightbox', 'link-lightbox' ], true ) ? false : $a['autoplay'],
 				'controls'           => $a['controls'],
 				'controlslist'       => $a['controlslist'],
 				'loop'               => $a['loop'],
-				'preload'            => $a['preload'],
+				'preload'            => 'metadata',
 				'width'              => empty( $a['width'] ) ? false : $a['width'],
 				'height'             => empty( $a['height'] ) ? false : $a['height'],
 				'poster'             => empty( $a['img_src'] ) ? false : $a['img_src'],
@@ -129,13 +141,6 @@ function html_id( $html_attr ) {
 
 	return $html_attr;
 }
-
-function get_var_dump( $var ) {
-	ob_start();
-	// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_dump
-	var_dump( $var );
-	return ob_get_clean();
-};
 
 function get_debug_info( $input_html, array $a, array $input_atts ) {
 
@@ -314,14 +319,14 @@ function build_tag( array $tag, array $a ) {
 
 	} else {
 
-		if ( ! empty( $tag['inner-html'] ) ||
-			( isset( $tag['inner-html'] ) && '' === $tag['inner-html'] )
+		if ( ! empty( $tag['inner_html'] )
+			|| ( isset( $tag['inner_html'] ) && '' === $tag['inner_html'] )
 		) {
 			$html = sprintf(
 				PHP_EOL . '<%1$s%2$s>%3$s</%1$s>' . PHP_EOL,
 				esc_html( $tag['tag'] ),
 				Common\attr( $tag['attr'] ),
-				$tag['inner-html']
+				$tag['inner_html']
 			);
 		} else {
 			$html = sprintf(
@@ -364,22 +369,20 @@ function arve_embed( $html, array $a ) {
 		$ratio_div = sprintf( '<div class="arve-ar" style="padding-top:%F%%"></div>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
 	}
 
+	if (
+		'html5' !== $a['provider']
+		|| ( 'normal' === $a['mode'] && 'html5' === $a['provider'] )
+	) {
+
+	}
+
 	return build_tag(
 		[
 			'name'       => 'embed',
 			'tag'        => 'div',
-			'inner-html' => $ratio_div . $html,
+			'inner_html' => $ratio_div . $html,
 			'attr'       => [ 'class' => $class ],
 		],
 		$a
-	);
-}
-
-function error( $message ) {
-
-	return sprintf(
-		'<p><strong>%s</strong> %s</p>',
-		__( '<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error:', 'advanced-responsive-video-embedder' ),
-		$message
 	);
 }
