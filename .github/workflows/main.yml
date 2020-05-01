@@ -15,7 +15,7 @@ jobs:
           - php-versions: '7.4'
             wordpress: '4.9.12'
           - php-versions: '7.4'
-            wordpress: '5.3.2'  
+            wordpress: '5.3.2'
     services:
       mysql:
         image: mysql:5.7
@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@v2 #https://github.com/shivammathur/setup-php
+        uses: shivammathur/setup-php@v2 # https://github.com/shivammathur/setup-php
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring, dom, zip, mysql

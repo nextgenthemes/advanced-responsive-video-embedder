@@ -8,6 +8,7 @@ function settings_page_content() {
 	<button @click='showSection("urlparams")'  class="button-secondary">URL Parameters</button>
 	<button @click='showSection("html5")'      class="button-secondary">HTML5 Video</button>
 	<button @click='showSection("pro")'        class="button-primary">Pro</button>
+	<button @click='showSection("videojs")'    class="button-primary">Video.js</button>
 	<button @click='showSection("debug")'      class="button-secondary">Debug</button>
 
 	<?php if ( ! defined( 'Nextgenthemes\ARVE\Pro\VERSION' ) ) : ?>

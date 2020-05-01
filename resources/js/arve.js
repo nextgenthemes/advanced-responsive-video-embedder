@@ -28,10 +28,9 @@ function videoPlayEvent( ev ) {
 	}
 }
 
-function rmClass() {
-	qsa( arguments[ 0 ] ).forEach( ( el ) => {
-		arguments[ 0 ] = 'ngt-tmp';
-		el.classList.remove( ...arguments );
+function rmClass( selector, ...classes ) {
+	qsa( selector ).forEach( ( el ) => {
+		el.classList.remove( ...classes );
 	} );
 }
 

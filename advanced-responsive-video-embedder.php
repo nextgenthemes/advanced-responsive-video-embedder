@@ -75,7 +75,7 @@ function init() {
 	foreach ( [
 		'missing_attribute_check'         => -100,
 		'validate'                        => -99,
-		'detect_html5'                    => -31,
+		'detect_html5'                    => -35,
 		'detect_provider_and_id_from_url' => -30,
 		'aspect_ratio'                    => -10,
 		'thumbnail'                       => 10,

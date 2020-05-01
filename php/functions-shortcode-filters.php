@@ -526,7 +526,6 @@ function build_iframe_src( array $a ) {
 			break;
 		case 'wistia':
 			$src = add_query_arg( 'dnt', 1, $src );
-			$src = add_query_arg( 'videoFoam', 'true', $src );
 			break;
 		case 'ted':
 			$lang = Common\get_url_arg( $a['url'], 'language' );
@@ -697,8 +696,6 @@ function sc_filter_detect_html5( array $a ) {
 	if ( $a['provider'] && 'html5' !== $a['provider'] ) {
 		return $a;
 	}
-
-	$a['video_sources_html'] = '';
 
 	foreach ( VIDEO_FILE_EXTENSIONS as $ext ) :
 
