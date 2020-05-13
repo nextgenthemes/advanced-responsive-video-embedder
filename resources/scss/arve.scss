@@ -31,6 +31,7 @@
 	max-height: 100vh;
 	padding: 0;
 	margin: 0;
+	overflow: hidden;
 }
 
 .arve-embed--has-aspect-ratio,
@@ -46,10 +47,10 @@
 }
 
 .arve-thumbnail,
-#global .arve-thumbnail,
 .arve-play-btn,
-#global .arve-play-btn,
 .arve-iframe,
+#global .arve-thumbnail,
+#global .arve-play-btn,
 #global .arve-iframe {
 	position: absolute;
 	top: 0;
