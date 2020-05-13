@@ -59,7 +59,7 @@ function init() {
 
 	// Public hooks
 	add_action( 'init',                        __NAMESPACE__ . '\add_oembed_providers' );
-	add_action( 'init',                        __NAMESPACE__ . '\register_gb_block' );
+	add_action( 'init',                        __NAMESPACE__ . '\register_assets' );
 	add_filter( 'oembed_remote_get_args',      __NAMESPACE__ . '\vimeo_referer', 10, 2 );
 	add_action( 'plugins_loaded',              __NAMESPACE__ . '\create_shortcodes', 999 );
 	add_action( 'plugins_loaded',              __NAMESPACE__ . '\create_url_handlers', 999 );
@@ -102,7 +102,6 @@ function init() {
 	add_action( 'register_shortcode_ui', __NAMESPACE__ . '\Admin\register_shortcode_ui' );
 	add_action( 'wp_dashboard_setup',    __NAMESPACE__ . '\Admin\add_dashboard_widget' );
 
-	add_filter( 'mce_css',                                            __NAMESPACE__ . '\Admin\mce_css' );
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), __NAMESPACE__ . '\Admin\add_action_links' );
 	add_filter( 'nextgenthemes_arve_save_options',                    __NAMESPACE__ . '\Admin\filter_save_options' );
 }//end init()
