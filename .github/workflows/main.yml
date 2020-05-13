@@ -102,18 +102,18 @@ jobs:
           name: artifact
           path: build
 
-  # wporgrelease:
-  #   needs: test
-  #   name: SVN commit to wp.org
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Maybe deploy to wp.org
-  #       if: startsWith(github.ref, 'refs/tags') && ! startsWith(github.event.repository.name, 'arve-') && startsWith(github.ref, 'refs/tags') && ! contains(github.ref, 'beta') && ! contains(github.ref, 'alpha')
-  #       run: |
-  #         apt-get install -yqqf subversion
-  #         bash bin/wporg-deploy.sh
-  #       env:
-  #         DEPLOY_REF: ${{ github.sha }}
-  #         DEPLOY_ZIPFILE: ${{ github.workspace }}/${{ steps.zip.outputs.file }}
-  #         SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-  #         SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+  wporgrelease:
+    needs: test
+    name: SVN commit to wp.org
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "TAG-- ${GITHUB_REF#refs/tags/}"
+      - run: echo "github.event.repository.name-- ${{ github.event.repository.name }}""
+      - run: echo "github.ref-- ${{ github.ref }}""
+
+      - name: Maybe deploy to wp.org
+        if: startsWith(github.ref, 'refs/tags') && ! startsWith(github.event.repository.name, 'arve-') && startsWith(github.ref, 'refs/tags') && ! contains(github.ref, 'beta') && ! contains(github.ref, 'alpha')
+        run: echo "OK it runs"
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
