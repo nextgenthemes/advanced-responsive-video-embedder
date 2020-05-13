@@ -7,6 +7,16 @@ function label_text( $option ) {
 	?>
 	<span class="nextgenthemes-label-text">
 		<?= esc_html( $option['label'] ); ?>
+		<?php
+		if ( ! in_array( $option['tag'], [ 'main', 'html5', 'urlparams' ], true ) ) {
+
+			printf(
+				'<a href="https://nextgenthemes.com/plugins/arve-%s">(%s)</a>',
+				esc_attr( $option['tag'] ),
+				esc_html( ucfirst( $option['tag'] ) . ' Addon' )
+			);
+		}
+		?>
 		<?php if ( 'not' === $option['tag'] ) : ?>
 			&nbsp;<span class="button-primary button-primary--ngt-small"><?= esc_html( $option['tag'] ); ?></span>
 		<?php endif; ?>
