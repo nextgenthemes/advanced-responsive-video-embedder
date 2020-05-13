@@ -225,6 +225,12 @@ function arve_embed_inner_html( array $a ) {
 		$html .= build_rating_meta( $a );
 	endif;
 
+	if ( 'html5' === $a['provider'] ) {
+		$html .= build_video_tag( $a );
+	} else {
+		$html .= build_iframe_tag( $a );
+	}
+
 	if ( ! empty( $a['img_src'] ) ) {
 
 		$tag = [ 'name' => 'thumbnail' ];
@@ -281,12 +287,6 @@ function arve_embed_inner_html( array $a ) {
 	}
 
 	$html .= build_tag( [ 'name' => 'button' ], $a );
-
-	if ( 'html5' === $a['provider'] ) {
-		$html .= build_video_tag( $a );
-	} else {
-		$html .= build_iframe_tag( $a );
-	}
 
 	return $html;
 }
