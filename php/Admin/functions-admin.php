@@ -307,17 +307,6 @@ function debug_section_description() {
 	include_once __DIR__ . '/partials/debug-info.php';
 }
 
-function mce_css( $mce_css ) {
-
-	if ( ! empty( $mce_css ) ) {
-		$mce_css .= ',';
-	}
-
-	$mce_css .= plugins_url( 'dist/css/arve.css', ARVE\PLUGIN_FILE );
-
-	return $mce_css;
-}
-
 function admin_enqueue_styles() {
 
 	Common\enqueue(

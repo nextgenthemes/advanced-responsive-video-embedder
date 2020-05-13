@@ -20,6 +20,7 @@ function register( array $args ) {
 		'media'     => 'all',
 		'src'       => '',
 		'ver'       => null,
+		'mce'       => false,
 	];
 
 	$args = wp_parse_args( $args, $defaults );
@@ -52,8 +53,24 @@ function register( array $args ) {
 		if ( $args['enqueue'] ) {
 			wp_enqueue_style( $args['handle'] );
 		}
+
+		if ( $args['mce'] ) {
+			add_filter(
+				'mce_css',
+				function( $mce_css ) use ( $args ) {
+					if ( ! empty( $mce_css ) ) {
+						$mce_css .= ',';
+					}
+					$mce_css .= $args['src'];
+					return $mce_css;
+				}
+			);
+		}
 	}//end if
 }
+
+
+
 
 function add_attr_to_asset( $type, array $args ) {
 
@@ -98,6 +115,20 @@ function add_attr_to_asset( $type, array $args ) {
 		},
 		10,
 		2
+	);
+}
+
+function add_mce_css() {
+
+	add_filter(
+		'mce_css',
+		function( $mce_css ) {
+			if ( ! empty( $mce_css ) ) {
+				$mce_css .= ',';
+			}
+			$mce_css .= plugins_url( 'dist/css/arve.css', ARVE\PLUGIN_FILE );
+			return $mce_css;
+		}
 	);
 }
 
