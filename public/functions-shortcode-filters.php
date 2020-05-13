@@ -62,9 +62,11 @@ function arve_sc_filter_attr( $a ) {
 
 	if ( 'html5' === $a['provider'] ) {
 
+		$autoplay = in_array( $a['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ), true ) ? false : $a['autoplay'];
+
 		$a['video_attr'] = array(
 			# WP
-			'autoplay'           => in_array( $a['mode'], array( 'lazyload', 'lazyload-lightbox', 'link-lightbox' ), true ) ? false : $a['autoplay'],
+			'autoplay'           => $autoplay,
 			'controls'           => $a['controls'],
 			'controlslist'       => $a['controlslist'],
 			'loop'               => $a['loop'],
@@ -75,7 +77,7 @@ function arve_sc_filter_attr( $a ) {
 			'src'                => empty( $a['video_src'] ) ? false : $a['video_src'],
 			# ARVE only
 			'class'              => 'arve-video fitvidsignore',
-			'muted'              => $a['muted'],
+			'muted'              => $autoplay ? 'automuted' : $a['muted'],
 			'playsinline'        => $a['playsinline'],
 			'webkit-playsinline' => $a['playsinline'],
 		);

@@ -42,11 +42,10 @@ function set_version {
 project_type
 set_version "$@"
 
-readonly GIT_WORKSPACE="$PWD"
-readonly SLUG=${GIT_WORKSPACE##*/}
+readonly SLUG=${PWD##*/}
 readonly ASSETS_DIR=".assets-wp-repo"
-readonly DEPLOY_DIR="$GIT_WORKSPACE/build/deploy"
-readonly SVN_DIR="$GIT_WORKSPACE/build/svn"
+readonly DEPLOY_DIR="$PWD/build/deploy"
+readonly SVN_DIR="$PWD/build/svn"
 readonly SVN_URL="http://plugins.svn.wordpress.org/${SLUG}/"
 
 rm -r --force "$SVN_DIR" "$DEPLOY_DIR"
@@ -73,51 +72,51 @@ echo "➤ Checking out .org repository..."
 mkdir --parents "$SVN_DIR"
 
 (
-cd "$SVN_DIR"
+	cd "$SVN_DIR"
 
-# Checkout just trunk and assets for efficiency
-svn checkout --depth immediates "$SVN_URL" "$SVN_DIR"
-svn update --set-depth infinity assets
-svn update --set-depth infinity trunk
+	# Checkout just trunk and assets for efficiency
+	svn checkout --depth immediates "$SVN_URL" "$SVN_DIR"
+	svn update --set-depth infinity assets
+	svn update --set-depth infinity trunk
 
-echo "➤ Copying files..."
+	echo "➤ Copying files..."
 
-unzip -q "$ZIPFILE" -d "$SVN_DIR"
-rm -rf trunk
-mv "$SLUG" trunk
+	unzip -q "$ZIPFILE" -d "$SVN_DIR"
+	rm -rf trunk
+	mv "$SLUG" trunk
 
-# Copy dotorg assets to /assets
-rsync -r --checksum "$GIT_WORKSPACE/$ASSETS_DIR/" assets/ --delete
+	# Copy dotorg assets to /assets
+	rsync -r --checksum "$PWD/$ASSETS_DIR/" assets/ --delete
 
-# Fix screenshots getting force downloaded when clicking them
-# https://developer.wordpress.org/plugins/wordpress-org/plugin-assets/
-svn propset svn:mime-type image/png assets/*.png || true
-svn propset svn:mime-type image/jpeg assets/*.jpg || true
+	# Fix screenshots getting force downloaded when clicking them
+	# https://developer.wordpress.org/plugins/wordpress-org/plugin-assets/
+	svn propset svn:mime-type image/png assets/*.png || true
+	svn propset svn:mime-type image/jpeg assets/*.jpg || true
 
-# Add everything and commit to SVN
-# The force flag ensures we recurse into subdirectories even if they are already added
-echo "➤ Preparing files..."
-svn add . --force --quiet
+	# Add everything and commit to SVN
+	# The force flag ensures we recurse into subdirectories even if they are already added
+	echo "➤ Preparing files..."
+	svn add . --force --quiet
 
-# SVN delete all deleted files
-svn status | grep '^\!' | sed 's/! *//' | xargs -I% svn rm % --quiet || true
+	# SVN delete all deleted files
+	svn status | grep '^\!' | sed 's/! *//' | xargs -I% svn rm % --quiet || true
 
-# Copy tag locally to make this a single commit
-echo "➤ Copying tag..."
-svn cp "trunk" "tags/$VERSION" --quiet
+	# Copy tag locally to make this a single commit
+	echo "➤ Copying tag..."
+	svn cp "trunk" "tags/$VERSION" --quiet
 
-svn status
+	svn status
 
-echo "➤ Committing files..."
+	echo "➤ Committing files..."
 
-if [[ $DO_NOT_COMMIT ]]; then
-	echo "➤ ENDING HERE FOR TESTING..."
-	exit 1
-fi
+	if [[ $DO_NOT_COMMIT ]]; then
+		echo "➤ ENDING HERE FOR TESTING..."
+		exit 1
+	fi
 
-svn commit -m "Update to version $VERSION"
+	svn commit -m "Update to version $VERSION"
 
-echo "✓ Plugin deployed!"
+	echo "✓ Plugin deployed!"
 )
 
 rm -r --force "$SVN_DIR" "$DEPLOY_DIR"
