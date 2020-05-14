@@ -112,8 +112,12 @@ jobs:
       - run: echo "github.ref-- ${{ github.ref }}"
 
       - name: Maybe deploy to wp.org
-        if: startsWith(github.ref, 'refs/tags') && ! startsWith(github.event.repository.name, 'arve-') && startsWith(github.ref, 'refs/tags') && ! contains(github.ref, 'beta') && ! contains(github.ref, 'alpha')
-        run: echo "OK it runs"
+        if: >
+          startsWith(github.ref, 'refs/tags')
+          && ! startsWith(github.event.repository.name, 'arve-')
+          && ! contains(github.ref, 'beta')
+          && ! contains(github.ref, 'alpha')
+        uses: 10up/action-wordpress-plugin-deploy@master
         env:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
