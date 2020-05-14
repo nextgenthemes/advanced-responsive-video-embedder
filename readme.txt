@@ -160,7 +160,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-### 2020-05-14 - 8.10.22 ###
+### 2020-05-14 - 8.10.21 ###
 
 * Improved: Automatically set HTML5 videos that are set to autoplay to also be muted so they may play as browsers no longer allow unmuted autoplay.
 
