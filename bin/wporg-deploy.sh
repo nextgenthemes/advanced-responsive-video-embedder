@@ -8,39 +8,20 @@ set -Eeuxo pipefail # https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo
 # Copyright (c) 2019 Helen Hou-Sandi
 # License MIT
 
-function project_type {
+if [ -f "./functions.php" ]; then
+	readonly TYPE="theme"
+elif [ -f "./${PWD##*/}.php" ]; then
+	readonly TYPE="plugin"
+else
+	echo "Could not detect theme or plugin project"
+	exit 1
+fi
 
-    if [ -f "./functions.php" ]; then
-        readonly TYPE="theme"
-    elif [ -f "./${PWD##*/}.php" ]; then
-		readonly TYPE="plugin"
-    fi
-
-    if [ -z "${TYPE+x}" ]; then
-		echo "Could not detect theme or plugin project"
-        exit 1
-    fi
-}
-
-function set_version {
-
-    if [[ $GITHUB_REF ]]; then
-		readonly VERSION=$GITHUB_REF
-	elif [[ $GITLAB_REF ]]; then
-		readonly VERSION=$GITHUB_REF
-    else
-
-		if [ -z "$1" ]; then
-			echo "Need version from ENV or 1st arg"
-			exit 1
-		fi
-
-		readonly VERSION=$1
-	fi
-}
-
-project_type
-set_version "$@"
+# Does it even make sense for VERSION to be editable in a workflow definition?
+if [[ -z "$VERSION" ]]; then
+	VERSION="${GITHUB_REF#refs/tags/}"
+	VERSION="${VERSION#v}"
+fi
 
 readonly SLUG=${PWD##*/}
 readonly ASSETS_DIR=".assets-wp-repo"
