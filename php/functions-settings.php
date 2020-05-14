@@ -620,6 +620,13 @@ function all_settings() {
 				'sea'        => __( 'Sea', 'advanced-responsive-video-embedder' ),
 			],
 		],
+		'videojs_youtube' => [
+			'tag'       => 'videojs',
+			'default'   => false,
+			'shortcode' => false,
+			'label'     => __( 'Use Video.js for YouTube', 'advanced-responsive-video-embedder' ),
+			'type'      => 'boolean',
+		],
 	];
 
 	$settings = apply_filters( 'nextgenthemes/arve/settings', $settings );

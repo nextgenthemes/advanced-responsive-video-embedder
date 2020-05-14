@@ -8,6 +8,7 @@ function register_assets() {
 			'handle' => 'arve-main',
 			'src'    => plugins_url( 'dist/css/arve.css', PLUGIN_FILE ),
 			'ver'    => Common\ver( VERSION, 'dist/css/arve.css', PLUGIN_FILE ),
+			'mce'    => true,
 		]
 	);
 
@@ -24,71 +25,59 @@ function register_assets() {
 	wp_register_style( 'arve', null, [ 'arve-main' ], null, true );
 	// phpcs:enable WordPress.WP.EnqueuedResourceParameters.MissingVersion
 
-	// For addons to register their styles
-	do_action( 'nextgenthemes/arve/register_assets' );
+	if ( ! function_exists( 'register_block_type' ) ) :
+
+		$sc_settings = shortcode_settings();
+		$options     = options();
+
+		foreach ( $sc_settings as $key => $v ) {
+
+			$attr[ $key ] = [ 'type' => $v['type'] ];
+
+			if ( $options['gutenberg_help'] && ! empty( $v['description'] ) ) {
+				$sc_settings[ $key ]['description'] = wp_strip_all_tags( $v['description'] );
+			} else {
+				$sc_settings[ $key ]['description'] = wp_strip_all_tags( $v['description'] );
+			}
+		}
+
+		$attr['thumbnail']     = [ 'type' => 'string' ];
+		$attr['thumbnail_url'] = [ 'type' => 'string' ];
+
+		Common\register(
+			[
+				'handle' => 'arve-block',
+				'src'    => plugins_url( 'dist/js/gb-block.js', PLUGIN_FILE ),
+				'deps'   => [ 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'arve' ],
+				'ver'    => Common\ver( VERSION, 'dist/js/test-block.js', PLUGIN_FILE ),
+				'footer' => false,
+			]
+		);
+		wp_localize_script( 'arve-block', 'ARVEsettings', $sc_settings );
+
+		// Register our block, and explicitly define the attributes we accept.
+		register_block_type(
+			'nextgenthemes/arve-block',
+			[
+				'attributes'      => $attr,
+				'editor_script'   => 'arve-block',
+				'editor_style'    => 'arve',
+				'render_callback' => __NAMESPACE__ . '\gutenberg_block',
+			]
+		);
+
+	endif;
 }
 
 function action_wp_enqueue_scripts() {
 
 	$options = options();
 
-	register_assets();
-
 	wp_enqueue_style( 'arve' );
 
 	if ( $options['always_enqueue_assets'] ) {
 		wp_enqueue_script( 'arve' );
 	}
-}
-
-function register_gb_block() {
-
-	if ( ! function_exists( 'register_block_type' ) ) {
-		return;
-	}
-
-	$sc_settings = shortcode_settings();
-	$options     = options();
-
-	foreach ( $sc_settings as $key => $v ) {
-
-		if ( ! empty( $v['description'] ) ) {
-			$sc_settings[ $key ]['description'] = wp_strip_all_tags( $v['description'] );
-		}
-
-		$attr[ $key ] = [ 'type' => $v['type'] ];
-
-		if ( ! $options['gutenberg_help'] ) {
-			$sc_settings[ $key ]['description'] = false;
-		}
-	}
-
-	$attr['thumbnail']     = [ 'type' => 'string' ];
-	$attr['thumbnail_url'] = [ 'type' => 'string' ];
-
-	register_assets();
-	Common\register(
-		[
-			'handle' => 'arve-block',
-			'src'    => plugins_url( 'dist/js/gb-block.js', PLUGIN_FILE ),
-			'deps'   => [ 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ],
-			'ver'    => Common\ver( VERSION, 'dist/js/test-block.js', PLUGIN_FILE ),
-			'footer' => false,
-		]
-	);
-
-	wp_localize_script( 'arve-block', 'ARVEsettings', $sc_settings );
-
-	// Register our block, and explicitly define the attributes we accept.
-	register_block_type(
-		'nextgenthemes/arve-block',
-		[
-			'attributes'      => $attr,
-			'editor_script'   => 'arve-block',
-			'editor_style'    => 'arve',
-			'render_callback' => __NAMESPACE__ . '\gutenberg_block',
-		]
-	);
 }
 
 function gutenberg_block( $args ) {
