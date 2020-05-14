@@ -71,28 +71,12 @@ jobs:
     needs: test
     name: Build release Zip
     runs-on: ubuntu-latest
-    container:
-      image: node:lts-buster
     steps:
-      - run: echo "$GITHUB_CONTEXT"
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-
       - id: zip
         run: echo ::set-output name=file::build/zip/${{ github.event.repository.name }}-$(echo ${{ github.ref }} | sed "s/\//-/g" | sed -E -e "s/[^a-z0-9-]+//g").zip
 
       - name: Checkout repository
         uses: actions/checkout@master
-
-      # Same as on Gitlab
-      - run: apt-get update -yqq
-      - run: apt-get install -yqqf git tar wget zip unzip php --fix-missing
-      - run: bash bin/install-composer.sh
-      - run: chmod +x /usr/bin/composer
-      - run: node --version
-      - run: npm --version
-      - run: php --version
-      - run: composer --version
 
       - run: mkdir -p $(dirname "${{ steps.zip.outputs.file }}")
       - run: git archive --format=zip --prefix="${PWD##*/}"/ --output="${{ steps.zip.outputs.file }}" ${{ github.sha }}
@@ -100,7 +84,7 @@ jobs:
       - uses: actions/upload-artifact@master
         with:
           name: artifact
-          path: build
+          path: ${{ steps.zip.outputs.file }}
 
   wporgrelease:
     needs: test
@@ -112,7 +96,15 @@ jobs:
       - run: echo "github.ref-- ${{ github.ref }}"
 
       - name: Maybe deploy to wp.org
-        if: >
+        if: >-
+          startsWith(github.ref, 'refs/tags')
+          && ! startsWith(github.event.repository.name, 'arve-')
+          && ! contains(github.ref, 'beta')
+          && ! contains(github.ref, 'alpha')
+        uses: actions/checkout@master
+
+      - name: Maybe deploy to wp.org
+        if: >-
           startsWith(github.ref, 'refs/tags')
           && ! startsWith(github.event.repository.name, 'arve-')
           && ! contains(github.ref, 'beta')
