@@ -1,4 +1,3 @@
-# Folders to ignore
 /build/
 /node_modules/
 /vendor/
@@ -24,13 +23,10 @@
 .project
 .settings
 .tmproj
+.vscode
 *.esproj
-*.code-workspace
 *.sublime-project
 *.sublime-workspace
+*.code-workspace
 nbproject
 Thumbs.db
-
-# Komodo
-.komodotools
-*.komodoproject
