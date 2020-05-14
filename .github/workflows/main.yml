@@ -107,8 +107,8 @@ jobs:
     name: SVN commit to wp.org
     runs-on: ubuntu-latest
     steps:
-      - run: echo "TAG-- ${GITHUB_REF#refs/tags/}"
-      - run: echo "github.event.repository.name-- ${{ github.event.repository.name }}""
+      - run: echo "GITHUB_REF#refs/tags/-- ${GITHUB_REF#refs/tags/}"
+      - run: echo "github.event.repository.name-- ${{ github.event.repository.name }}"
       - run: echo "github.ref-- ${{ github.ref }}"
 
       - name: Maybe deploy to wp.org
