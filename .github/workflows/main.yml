@@ -109,7 +109,7 @@ jobs:
     steps:
       - run: echo "TAG-- ${GITHUB_REF#refs/tags/}"
       - run: echo "github.event.repository.name-- ${{ github.event.repository.name }}""
-      - run: echo "github.ref-- ${{ github.ref }}""
+      - run: echo "github.ref-- ${{ github.ref }}"
 
       - name: Maybe deploy to wp.org
         if: startsWith(github.ref, 'refs/tags') && ! startsWith(github.event.repository.name, 'arve-') && startsWith(github.ref, 'refs/tags') && ! contains(github.ref, 'beta') && ! contains(github.ref, 'alpha')
