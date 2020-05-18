@@ -16,7 +16,7 @@ require_once $_tests_dir . '/includes/functions.php';
 
 function ci_manually_load_plugin() {
 	# /home/travis/build/nextgenthemes/advanced-responsive-video-embedder
-	require dirname( __FILE__ ) . '/../advanced-responsive-video-embedder.php';
+	require dirname( __DIR__ ) . '/advanced-responsive-video-embedder.php';
 }
 tests_add_filter( 'muplugins_loaded', 'ci_manually_load_plugin' );
 
