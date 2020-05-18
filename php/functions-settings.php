@@ -311,6 +311,13 @@ function all_settings() {
 			'placeholder' => __( 'URL or media gallery image ID used for thumbnail', 'advanced-responsive-video-embedder' ),
 			'description' => __( 'URL or media gallery image ID used for thumbnail', 'advanced-responsive-video-embedder' ),
 		],
+		'thumbnail_post_image_fallback' => [
+			'tag'       => 'pro',
+			'default'   => false,
+			'shortcode' => false,
+			'label'     => __( 'Thumbnail Featured Image Fallback', 'advanced-responsive-video-embedder' ),
+			'type'      => 'boolean',
+		],
 		'thumbnail' => [
 			'default'             => null,
 			'shortcode'           => true,
@@ -329,7 +336,7 @@ function all_settings() {
 			'descriptionlink'     => esc_url( $pro_addon_link ),
 			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
 		],
-		'hide_title'            => [
+		'hide_title' => [
 			'default'     => false,
 			'shortcode'   => true,
 			'tag'         => 'pro',
