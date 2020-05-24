@@ -73,6 +73,8 @@ function build_iframe_tag( array $a ) {
 
 function build_video_tag( array $a ) {
 
+	$autoplay = in_array( $a['mode'], [ 'lazyload', 'lightbox', 'link-lightbox' ], true ) ? false : $a['autoplay'];
+
 	return build_tag(
 		[
 			'name'       => 'video',
@@ -80,7 +82,7 @@ function build_video_tag( array $a ) {
 			'inner_html' => $a['video_sources_html'] . build_tracks_html( $a ),
 			'attr'       => [
 				// WPmaster
-				'autoplay'           => in_array( $a['mode'], [ 'lazyload', 'lightbox', 'link-lightbox' ], true ) ? false : $a['autoplay'],
+				'autoplay'           => $autoplay,
 				'controls'           => $a['controls'],
 				'controlslist'       => $a['controlslist'],
 				'loop'               => $a['loop'],
@@ -90,7 +92,7 @@ function build_video_tag( array $a ) {
 				'poster'             => empty( $a['img_src'] ) ? false : $a['img_src'],
 				// ARVE only
 				'class'              => 'arve-video fitvidsignore',
-				'muted'              => $a['muted'],
+				'muted'              => $autoplay ? 'automuted' : $a['muted'],
 				'playsinline'        => in_array( $a['mode'], [ 'lightbox', 'link-lightbox' ], true ) ? '' : false,
 				'webkit-playsinline' => in_array( $a['mode'], [ 'lightbox', 'link-lightbox' ], true ) ? '' : false,
 			],

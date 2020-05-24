@@ -288,7 +288,9 @@ function sc_filter_missing_attribute_check( array $a ) {
 
 function sc_filter_thumbnail( array $a ) {
 
-	if ( $a['thumbnail'] ) {
+	$a = apply_filters( 'nextgenthemes/arve/sc_filter/thumbnail', $a );
+
+	if ( $a['thumbnail'] ) :
 
 		if ( is_numeric( $a['thumbnail'] ) ) {
 
@@ -306,7 +308,7 @@ function sc_filter_thumbnail( array $a ) {
 
 			$a['errors']->add( 'thumbnail', __( 'Not a valid thumbnail URL or Media ID given', 'advanced-responsive-video-embedder' ) );
 		}
-	}
+	endif;
 
 	$a = apply_filters( 'nextgenthemes/arve/sc_filter/img_src', $a );
 	$a = apply_filters( 'nextgenthemes/arve/sc_filter/img_srcset', $a );

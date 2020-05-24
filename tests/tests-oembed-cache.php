@@ -1,0 +1,43 @@
+<?php
+
+use \Nextgenthemes\ARVE;
+
+// phpcs:disable Squiz.Classes.ClassFileName.NoMatch
+// phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
+class Tests_OembedCache extends WP_UnitTestCase {
+
+	public function test_oembed_cache_reset() {
+		global $post;
+
+		$post       = $this->factory()->post->create_and_get();
+		$url        = 'https://www.youtube.com/watch?v=8MzJCT2BVV0';
+		$key_suffix = md5( $url . serialize( wp_embed_defaults( $url ) ) );
+		$cachekey   = '_oembed_' . $key_suffix;
+
+		ARVE\get_settings_instance()->options['maxwidth'] = '444';
+
+		$actual = $GLOBALS['wp_embed']->shortcode( array(), $url );
+
+		ARVE\get_settings_instance()->options['maxwidth'] = '555';
+
+		#sleep(1);
+		$actual_2 = $GLOBALS['wp_embed']->shortcode( array(), $url );
+		$cached_2 = get_post_meta( $post->ID, $cachekey, true );
+
+		update_option( 'arve_oembed_recache', time() + 1 );
+
+		$actual_3 = $GLOBALS['wp_embed']->shortcode( array(), $url );
+		$cached_3 = get_post_meta( $post->ID, $cachekey, true );
+
+		// Cleanup.
+		unset( $post );
+
+		$this->assertContains( '444px', $actual );
+
+		$this->assertContains( '444px', $actual_2 );
+		$this->assertContains( '444px', $cached_2 );
+
+		$this->assertContains( '555px', $actual_3 );
+		$this->assertContains( '555px', $cached_3 );
+	}
+}

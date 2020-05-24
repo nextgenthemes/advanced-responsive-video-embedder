@@ -95,7 +95,7 @@ function trigger_cache_rebuild( $ttl, $url, $attr, $post_id ) {
 			$GLOBALS['wp_embed']->usecache
 		) {
 			// What we need to skip the oembed cache part
-			$GLOBALS['wp_embed']->usecache = 0;
+			$GLOBALS['wp_embed']->usecache = false;
 			$ttl                           = 0;
 
 			do_action( 'nextgenthemes/arve/oembed_recache' );

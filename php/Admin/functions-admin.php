@@ -340,3 +340,18 @@ function admin_enqueue_scripts() {
 		);
 	}
 }
+
+function action_admin_bar_menu( $admin_bar ) {
+
+	if ( ARVE\options()['admin_bar_menu'] ) {
+
+		$admin_bar->add_menu(
+			[
+				'id'    => 'arve-settings',
+				'title' => 'ARVE',
+				'href'  => get_admin_url() . 'options-general.php?page=nextgenthemes_arve',
+				'meta'  => [ 'title' => __( 'Advanced Responsive Video Embedder Settings', 'advanced-responsive-video-embedder' ) ],
+			]
+		);
+	}
+}
