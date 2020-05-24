@@ -95,6 +95,7 @@ function init() {
 	unset( $priority );
 
 	// Admin Hooks
+	add_action( 'admin_bar_menu',        __NAMESPACE__ . '\Admin\action_admin_bar_menu', 100 );
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\Admin\admin_enqueue_scripts' );
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\Admin\admin_enqueue_styles', 99 );
 	add_action( 'admin_init',            __NAMESPACE__ . '\Admin\action_admin_init_setup_messages' );
