@@ -634,6 +634,14 @@ function all_settings() {
 			'label'     => __( 'Use Video.js for YouTube', 'advanced-responsive-video-embedder' ),
 			'type'      => 'boolean',
 		],
+		'admin_bar_menu' => [
+			'default'     => true,
+			'shortcode'   => false,
+			'option'      => true,
+			'label'       => __( 'Admin bar ARVE button', 'advanced-responsive-video-embedder' ),
+			'type'        => 'boolean',
+			'description' => __( 'For quickly accessing the ARVE settings page.', 'advanced-responsive-video-embedder' ),
+		],
 	];
 
 	$settings = apply_filters( 'nextgenthemes/arve/settings', $settings );
