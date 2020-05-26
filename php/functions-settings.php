@@ -371,10 +371,12 @@ function all_settings() {
 			'type'    => 'select',
 			'options' => [
 				// Translators: 1 %s is play icon style.
-				''        => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
-				'youtube' => __( 'Youtube style', 'advanced-responsive-video-embedder' ),
-				'circle'  => __( 'Circle', 'advanced-responsive-video-embedder' ),
-				'none'    => __( 'No play image', 'advanced-responsive-video-embedder' ),
+				''                    => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
+				'youtube'             => __( 'Youtube', 'advanced-responsive-video-embedder' ),
+				'youtube-red-diamond' => __( 'Youtube Red Diamond', 'advanced-responsive-video-embedder' ),
+				'circle'              => __( 'Circle', 'advanced-responsive-video-embedder' ),
+				'none'                => __( 'No play image', 'advanced-responsive-video-embedder' ),
+				'custom'              => __( 'Custom (for PHP filter)', 'advanced-responsive-video-embedder' ),
 			],
 		],
 		'hover_effect' => [
@@ -563,9 +565,26 @@ function all_settings() {
 			'description' => __( 'Privacy enhanced mode, will NOT disable cookies but only sets them when a user starts to play a video. There is currently a youtube bug that opens highlighed video boxes with a wrong -nocookie.com url so you need to disble this if you need those.', 'advanced-responsive-video-embedder' ),
 		],
 		'vimeo_api_token' => [
+			'tag'                 => 'random_video',
 			'default'             => '',
 			'shortcode'           => false,
 			'label'               => __( 'Vimeo API Token', 'advanced-responsive-video-embedder' ),
+			'type'                => 'string',
+			'description'         => sprintf(
+				// Translators: URL
+				__( 'Needed for <a href="%s">Random Video Addon</a>.', 'advanced-responsive-video-embedder' ),
+				esc_url( 'https://nextgenthemes.local/plugins/arve-random-video/' )
+			),
+			'descriptionlink'     => esc_url( 'https://nextgenthemes.local/plugins/arve-random-video/' ),
+			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
+		],
+		'random_video_url' => [
+			'tag'                 => 'random_video',
+			'default'             => null,
+			'option'              => false,
+			'shortcode'           => true,
+			'attr'                => 'random_video_url',
+			'label'               => esc_html__( 'Random Video URL', 'arve-random-video' ),
 			'type'                => 'string',
 			'description'         => sprintf(
 				// Translators: URL
