@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/nextgenthemes/advanced-responsive-video-embedder.svg?branch=master)](https://travis-ci.org/nextgenthemes/advanced-responsive-video-embedder)
+![CI Build](https://github.com/nextgenthemes/advanced-responsive-video-embedder/workflows/CI%20Build/badge.svg)
 [![star this repo](http://githubbadges.com/star.svg?user=nextgenthemes&repo=advanced-responsive-video-embedder&style=default)](https://github.com/nextgenthemes/advanced-responsive-video-embedder)
 [![fork this repo](http://githubbadges.com/fork.svg?user=nextgenthemes&repo=advanced-responsive-video-embedder&style=default)](https://github.com/nextgenthemes/advanced-responsive-video-embedder/fork)
 
