@@ -1,6 +1,6 @@
 === ARVE Advanced Responsive Video Embedder (YouTube, Vimeo, HTML5 Video ...) ===
 Contributors: nico23
-Donate link: https://www.paypal.me/nico23
+Donate link: https://nextgenthemes.com/donate/
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.4.0
 Tested up to: 5.4
@@ -18,14 +18,14 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 
 ### 9.0.0 ###
 
-This update is very long in the making and I hope it will pay off somehow, hopefully literally. A lot things happened in the code that will not be visbile to the end users directly on top of the things that are visble.
+This update is very long in the making and I hope it will pay off somehow, hopefully literally. A lot things happened in the code that will not be visbile to the end users directly.
 
 **Important**: Minimum PHP required for ARVE is now 5.6 you should be a the latest version (PHP 7.4) for [security](https://secure.php.net/supported-versions.php) and speed anyway
 
+* New: Optional admin bar button to quick access settings. Disable it in ARVE settings bothers you.
 * New: Finally the ARVE Gutenberg block is here! Its not polished yet and there is still work to be done.
 * New: Added Bitchute
 * New: `av1mp4` shortcode parameter so serve [AV1](https://en.wikipedia.org/wiki/AV1) encoded files best named .av1.mp4 (to be used together with `mp4` or `webm`)
-* Fix: Some issue with
 * Fix: YouTube live links are now working correctly
 * Fix: TED embed url.
 * Fix: Facebook embeds.
@@ -39,6 +39,7 @@ This update is very long in the making and I hope it will pay off somehow, hopef
 * Improved: Prevent autoplay of multiple videos, only the first video on pageload will be autoplayed.
 * Removed: Hack to support direct embedding of Dropbox videos because it no longer works.
 * Removed: Vimeo only `start` shortcode attribute. Use vimeo urls with `#t=30` at the end for starting time in seconds instead.
+* Lots of things I forgot about, working on this for ~1 year
 
 ### 2019-01-23 - 8.10.4 ###
 
