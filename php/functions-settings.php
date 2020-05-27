@@ -584,11 +584,11 @@ function all_settings() {
 			'option'              => false,
 			'shortcode'           => true,
 			'attr'                => 'random_video_url',
-			'label'               => esc_html__( 'Random Video URL', 'arve-random-video' ),
+			'label'               => esc_html__( 'Random Video URL', 'advanced-responsive-video-embedder' ),
 			'type'                => 'string',
 			'description'         => sprintf(
 				// Translators: URL
-				__( 'Needed for <a href="%s">Random Video Addon</a>.', 'advanced-responsive-video-embedder' ),
+				__( 'Vimeo album URL <a href="%s">(Random Video Addon)</a>.', 'advanced-responsive-video-embedder' ),
 				esc_url( 'https://nextgenthemes.local/plugins/arve-random-video/' )
 			),
 			'descriptionlink'     => esc_url( 'https://nextgenthemes.local/plugins/arve-random-video/' ),
