@@ -29,7 +29,7 @@ function get_settings_instance() {
 				'menu_parent_slug'    => 'options-general.php',
 				'menu_title'          => __( 'ARVE', 'advanced-responsive-video-embedder' ),
 				'settings_page_title' => __( 'ARVE Settings', 'advanced-responsive-video-embedder' ),
-				'content_function'    => __NAMESPACE__ . '\Admin\settings_page_content',
+				'content_function'    => __NAMESPACE__ . '\Admin\settings_page_top',
 				'sidebar_function'    => function() {
 					// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
 					readfile( __DIR__ . '/Admin/partials/settings-sidebar.html' );

@@ -3,7 +3,7 @@ namespace Nextgenthemes\ARVE\Admin;
 
 use \Nextgenthemes\ARVE;
 
-function settings_page_content() {
+function settings_page_top() {
 
 	$sections = [
 		'main'        => __( 'Main', 'advanced-responsive-video-embedder' ),
