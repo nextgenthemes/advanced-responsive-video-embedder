@@ -1,23 +1,41 @@
 <?php
 namespace Nextgenthemes\ARVE\Admin;
 
+use \Nextgenthemes\ARVE;
+
 function settings_page_content() {
+
+	$sections = [
+		'main'        => __( 'Main', 'advanced-responsive-video-embedder' ),
+		'pro'         => __( 'Pro', 'advanced-responsive-video-embedder' ),
+		'videojs'     => __( 'Video.js', 'advanced-responsive-video-embedder' ),
+		'randomvideo' => __( 'Random Video', 'advanced-responsive-video-embedder' ),
+		'html5'       => __( 'HTML5 Video', 'advanced-responsive-video-embedder' ),
+		'urlparams'   => __( 'URL Parameters', 'advanced-responsive-video-embedder' ),
+		'debug'       => __( 'Debug', 'advanced-responsive-video-embedder' ),
+	];
+
 	?>
 	<button @click='showAllSectionsButDebug()' class="button-secondary">All Options</button>
-	<button @click='showSection("main")'       class="button-secondary">Main</button>
-	<button @click='showSection("urlparams")'  class="button-secondary">URL Parameters</button>
-	<button @click='showSection("html5")'      class="button-secondary">HTML5 Video</button>
-	<button @click='showSection("pro")'        class="button-primary">Pro</button>
-	<button @click='showSection("videojs")'    class="button-primary">Video.js</button>
-	<button @click='showSection("debug")'      class="button-secondary">Debug</button>
+	<?php
+	foreach ( $sections as $slug => $name ) {
 
-	<?php if ( ! defined( 'Nextgenthemes\ARVE\Pro\VERSION' ) ) : ?>
-		<div class="ngt-block" v-if="sectionsDisplayed.pro">
-			<p><?php esc_html_e( 'You may already set these options but they will only take effect if the Pro Addon is installed and activated.', 'advanced-responsive-video-embedder' ); ?></p>
-		</div>
-	<?php endif; ?>
+		$btn_type = in_array( $slug, [ 'pro', 'videojs', 'randomvideo' ], true ) ? 'primary' : 'secondary';
 
-	<div class="ngt-block" v-if="sectionsDisplayed.debug">
+		printf(
+			' <button @click=\'showSection("%s")\' class="button-%s">%s</button>',
+			esc_attr( $slug ),
+			esc_attr( $btn_type ),
+			esc_html( $name )
+		);
+	}
+	?>
+
+	<div class="ngt-block" v-show="sectionsDisplayed.pro || sectionsDisplayed.videojs || sectionsDisplayed.randomvideo" >
+		<p><?php esc_html_e( 'You may already set options for addons but they will only take effect if the associated addons are installed.', 'advanced-responsive-video-embedder' ); ?></p>
+	</div>
+
+	<div class="ngt-block" v-show="sectionsDisplayed.debug">
 		<?php require_once __DIR__ . '/partials/debug-info.php'; ?>
 	</div>
 	<?php
