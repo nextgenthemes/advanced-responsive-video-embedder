@@ -1,6 +1,22 @@
 <?php
 namespace Nextgenthemes\ARVE\Common;
 
+function first_array_value( array $array ) {
+	reset( $array );
+	$key = key( $array );
+	return $array[ $key ];
+}
+
+function prefix_array_keys( $keyprefix, array $array ) {
+
+	foreach ( $array as $key => $value ) {
+		$array[ $keyprefix . $key ] = $value;
+		unset( $array[ $key ] );
+	}
+
+	return $array;
+}
+
 function get_url_arg( $url, $arg ) {
 
 	$parsed_url = wp_parse_url( $url );
