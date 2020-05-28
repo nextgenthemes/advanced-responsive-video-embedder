@@ -1,8 +1,13 @@
 <?xml version="1.0"?>
-<ruleset name="Nextgenthemes ARVE Pro">
-
+<ruleset name="Nextgenthemes Plugin">
 	<rule ref="WordPress-Extra">
+		<!-- Annoying space in brackets rules -->
+		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceAfterOpenParenthesis"/>
+		<exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterOpen"/>
+		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceBeforeCloseParenthesis"/>
+		<!-- I like to align things -->
 		<exclude name="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma"/>
+		<!-- misc -->
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found"/>
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
@@ -18,33 +23,26 @@
 		<exclude name="Generic.Commenting.DocComment.MissingShort" />
 		<exclude name="Squiz.PHP.CommentedOutCode.Found" />
 	</rule>
-
 	<!-- Exclude files and folders. -->
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/php/Common/Admin/EDD/*</exclude-pattern>
-
 	<!-- Only check the PHP files. -->
 	<file>.</file>
 	<arg name="extensions" value="php"/>
-
-	<arg name="parallel" value="8"/>
-
+	<arg name="parallel" value="20"/>
 	<!-- Pass some flags to PHPCS:
 		 p flag: Show progress of the run.
 		 s flag: Show sniff codes in all reports.
 	-->
 	<arg value="ps"/>
-
 	<!-- Check PHP version compatibility. -->
 	<rule ref="PHPCompatibilityWP"/>
 	<config name="testVersion" value="5.6-"/>
-
 	<!-- Set the minimum supported WP version. This is used by several sniffs.
 		 The minimum version set here should be in line with the minimum WP version
 		 as set in the "Requires at least" tag in the readme.txt file. -->
 	<config name="minimum_supported_wp_version" value="4.9"/>
-
 	<!-- Set textdomains. -->
 	<rule ref="WordPress.WP.I18n">
 		<properties>
@@ -53,21 +51,17 @@
 			</property>
 		</properties>
 	</rule>
-
 	<rule ref="WordPress.Arrays.MultipleStatementAlignment">
 		<properties>
 			<!-- No need to adjust alignment of large arrays when
       			 the item with the largest key is removed. -->
 			<property name="exact" value="false"/>
-
 			<!-- Don't align multi-line items if ALL items
        			 in the array are multi-line. -->
 			<property name="alignMultilineItems" value="!=100"/>
-
 			<!-- Array assignment operator should always be on
        			 the same line as the array key. -->
 			<property name="ignoreNewlines" value="false"/>
 		</properties>
 	</rule>
-
 </ruleset>
