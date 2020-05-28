@@ -105,6 +105,7 @@ function init() {
 
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), __NAMESPACE__ . '\Admin\add_action_links' );
 	add_filter( 'nextgenthemes_arve_save_options',                    __NAMESPACE__ . '\Admin\filter_save_options' );
+
 }//end init()
 
 register_activation_hook( __FILE__, __NAMESPACE__ . '\activation_hook' );
