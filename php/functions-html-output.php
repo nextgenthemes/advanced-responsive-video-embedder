@@ -204,7 +204,7 @@ function arve_embed_inner_html( array $a ) {
 
 	if ( $seo_data ) :
 
-		$a['first_source'] = empty( $a['sources'] ) ? '' : get_first_array_value( $a['sources'] );
+		$a['first_source'] = empty( $a['sources'] ) ? '' : Common\first_array_value( $a['sources'] );
 
 		$metas = [
 			'first_source' => 'contentURL',
@@ -256,7 +256,7 @@ function arve_embed_inner_html( array $a ) {
 
 		$tag = [ 'name' => 'title' ];
 
-		if ( $seo_data ) {
+		if ( true ) {
 			$tag = [
 				'name' => 'title',
 				'tag'  => 'meta',
