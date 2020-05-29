@@ -217,6 +217,10 @@ function sc_filter_validate_again( array $a ) {
 
 function sc_filter_set_fixed_dimensions( array $a ) {
 
+	if ( is_feed() ) {
+		return $a;
+	}
+
 	if ( ! empty( $a['oembed_data']->width ) ) {
 		$width = $a['oembed_data']->width;
 	} else {

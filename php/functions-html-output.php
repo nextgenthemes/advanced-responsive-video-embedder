@@ -88,7 +88,6 @@ function build_video_tag( array $a ) {
 				'loop'               => $a['loop'],
 				'preload'            => 'metadata',
 				'width'              => empty( $a['width'] ) ? false : $a['width'],
-				'height'             => empty( $a['height'] ) ? false : $a['height'],
 				'poster'             => empty( $a['img_src'] ) ? false : $a['img_src'],
 				// ARVE only
 				'class'              => 'arve-video fitvidsignore',
@@ -138,7 +137,7 @@ function build_tracks_html( array $a ) {
 function html_id( $html_attr ) {
 
 	if ( false === strpos( $html_attr, 'id=' ) ) {
-		$html_attr .= ' id="global"';
+		$html_attr .= ' id="html"';
 	}
 
 	return $html_attr;
