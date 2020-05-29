@@ -77,14 +77,14 @@ function removeUnwantedStuff() {
 
 function globalID() {
 	// Usually the id should be already there added with php using the language_attributes filter
-	if ('global' === document.documentElement.id) {
+	if ('html' === document.documentElement.id) {
 		return;
 	}
 
 	if (!document.documentElement.id) {
-		document.documentElement.id = 'global';
+		document.documentElement.id = 'html';
 	} else if (!document.body.id) {
-		document.body.id = 'global';
+		document.body.id = 'html';
 	}
 }
 
