@@ -5,13 +5,13 @@ class Settings {
 
 	private $menu_title          = '';
 	private $option_key          = '';
-	private $project_namspace    = '';
+	private $slugged_namspace    = '';
+	private $slashed_namspace    = '';
 	private $rest_namespace      = '';
 	private $rest_url            = '';
 	private $settings            = [];
 	private $settings_page_title = '';
-	public $options              = [];
-	public $options_defaults     = [];
+	private $options_defaults    = [];
 
 	public function __construct( $args ) {
 
@@ -27,6 +27,7 @@ class Settings {
 		$this->menu_title          = $args['menu_title'];
 		$this->settings_page_title = $args['settings_page_title'];
 		$this->slugged_namespace   = sanitize_key( str_replace( '\\', '_', $args['namespace'] ) );
+		$this->slashed_namespace   = sanitize_key( str_replace( '\\', '/', $args['namespace'] ) );
 		$this->rest_namespace      = $this->slugged_namespace . '/v1';
 		$this->rest_url            = get_home_url() . '/wp-json/' . $this->rest_namespace;
 		$this->menu_parent_slug    = $args['menu_parent_slug'];
@@ -54,6 +55,16 @@ class Settings {
 				$this->options[ $p ] = $defined_key;
 			}
 		}
+	}
+
+	public function get_options() {
+		$options = (array) get_option( $this->slugged_namespace, [] );
+		$options = $options + $this->options_defaults;
+		return $options;
+	}
+
+	public function get_options_defaults() {
+		return $this->options_defaults;
 	}
 
 	public function save_options( $options ) {

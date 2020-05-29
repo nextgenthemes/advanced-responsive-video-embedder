@@ -65,16 +65,14 @@ function sc_filter_aspect_ratio( array $a ) {
 		}
 	}
 
-	$a['aspect_ratio'] = aspect_ratio_gcd( $a['aspect_ratio'] );
+	if ( $a['aspect_ratio'] ) {
+		$a['aspect_ratio'] = aspect_ratio_gcd( $a['aspect_ratio'] );
+	}
 
 	return $a;
 }
 
 function aspect_ratio_gcd( $aspect_ratio ) {
-
-	if ( empty( $aspect_ratio ) ) {
-		return false;
-	}
 
 	$ar  = explode( ':', $aspect_ratio );
 	$gcd = gcd( $ar[0], $ar[1] );
@@ -216,6 +214,10 @@ function sc_filter_validate_again( array $a ) {
 }
 
 function sc_filter_set_fixed_dimensions( array $a ) {
+
+	if ( is_feed() ) {
+		return $a;
+	}
 
 	if ( ! empty( $a['oembed_data']->width ) ) {
 		$width = $a['oembed_data']->width;

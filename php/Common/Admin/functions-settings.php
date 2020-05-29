@@ -153,8 +153,8 @@ function print_select_field( $key, $option ) {
 function block_attr( $key, $option ) {
 
 	$block_attr = [
-		'class' => "ngt-option-block ngt-option-block--$key ngt-option-block--{$option['tag']}",
-		'v-if'  => 'sectionsDisplayed.' . $option['tag'],
+		'class'  => "ngt-option-block ngt-option-block--$key ngt-option-block--{$option['tag']}",
+		'v-show' => 'sectionsDisplayed.' . $option['tag'],
 	];
 
 	return Common\attr( $block_attr );

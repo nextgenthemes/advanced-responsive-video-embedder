@@ -2,21 +2,21 @@
 namespace Nextgenthemes\ARVE;
 
 function setup_settings() {
-	get_settings_instance();
+	settings_instance();
 	upgrade_options();
 }
 
 function options() {
-	$i = get_settings_instance();
-	return $i->options;
+	$i = settings_instance();
+	return $i->get_options();
 }
 
 function default_options() {
-	$i = get_settings_instance();
-	return $i->default_options;
+	$i = settings_instance();
+	return $i->get_options_defaults();
 }
 
-function get_settings_instance() {
+function settings_instance() {
 
 	static $inst = null;
 
@@ -29,7 +29,7 @@ function get_settings_instance() {
 				'menu_parent_slug'    => 'options-general.php',
 				'menu_title'          => __( 'ARVE', 'advanced-responsive-video-embedder' ),
 				'settings_page_title' => __( 'ARVE Settings', 'advanced-responsive-video-embedder' ),
-				'content_function'    => __NAMESPACE__ . '\Admin\settings_page_content',
+				'content_function'    => __NAMESPACE__ . '\Admin\settings_page_top',
 				'sidebar_function'    => function() {
 					// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
 					readfile( __DIR__ . '/Admin/partials/settings-sidebar.html' );
@@ -177,14 +177,14 @@ function upgrade_options() {
 	$old_options = get_option( 'arve_options_main' );
 	$old_params  = get_option( 'arve_options_params' );
 
-	if ( is_array( $old_params ) && ! empty( $old_params ) ) {
+	if ( ! empty( $old_params ) && is_array( $old_params ) ) {
 
 		foreach ( $old_params as $provider => $params ) {
 			$old_options[ 'url_params_' . $provider ] = $params;
 		}
 	}
 
-	if ( ! empty( $old_options ) && ! is_array( $old_options ) ) {
+	if ( ! empty( $old_options ) && is_array( $old_options ) ) {
 
 		if ( isset( $old_options['promote_link'] ) ) {
 			$old_options['arve_link'] = $old_options['promote_link'];
@@ -371,10 +371,12 @@ function all_settings() {
 			'type'    => 'select',
 			'options' => [
 				// Translators: 1 %s is play icon style.
-				''        => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
-				'youtube' => __( 'Youtube style', 'advanced-responsive-video-embedder' ),
-				'circle'  => __( 'Circle', 'advanced-responsive-video-embedder' ),
-				'none'    => __( 'No play image', 'advanced-responsive-video-embedder' ),
+				''                    => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
+				'youtube'             => __( 'Youtube', 'advanced-responsive-video-embedder' ),
+				'youtube-red-diamond' => __( 'Youtube Red Diamond', 'advanced-responsive-video-embedder' ),
+				'circle'              => __( 'Circle', 'advanced-responsive-video-embedder' ),
+				'none'                => __( 'No play image', 'advanced-responsive-video-embedder' ),
+				'custom'              => __( 'Custom (for PHP filter)', 'advanced-responsive-video-embedder' ),
 			],
 		],
 		'hover_effect' => [
@@ -562,7 +564,36 @@ function all_settings() {
 			'type'        => 'boolean',
 			'description' => __( 'Privacy enhanced mode, will NOT disable cookies but only sets them when a user starts to play a video. There is currently a youtube bug that opens highlighed video boxes with a wrong -nocookie.com url so you need to disble this if you need those.', 'advanced-responsive-video-embedder' ),
 		],
+		'vimeo_api_id' => [
+			'tag'                 => 'randomvideo',
+			'default'             => '',
+			'shortcode'           => false,
+			'label'               => __( 'Vimeo client identifier', 'advanced-responsive-video-embedder' ),
+			'type'                => 'string',
+			'description'         => sprintf(
+				// Translators: URL
+				__( 'Needed for <a href="%s">Random Video Addon</a>.', 'advanced-responsive-video-embedder' ),
+				esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' )
+			),
+			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
+			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
+		],
+		'vimeo_api_secret' => [
+			'tag'                 => 'randomvideo',
+			'default'             => '',
+			'shortcode'           => false,
+			'label'               => __( 'Vimeo client secret', 'advanced-responsive-video-embedder' ),
+			'type'                => 'string',
+			'description'         => sprintf(
+				// Translators: URL
+				__( 'Needed for <a href="%s">Random Video Addon</a>.', 'advanced-responsive-video-embedder' ),
+				esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' )
+			),
+			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
+			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
+		],
 		'vimeo_api_token' => [
+			'tag'                 => 'randomvideo',
 			'default'             => '',
 			'shortcode'           => false,
 			'label'               => __( 'Vimeo API Token', 'advanced-responsive-video-embedder' ),
@@ -570,9 +601,39 @@ function all_settings() {
 			'description'         => sprintf(
 				// Translators: URL
 				__( 'Needed for <a href="%s">Random Video Addon</a>.', 'advanced-responsive-video-embedder' ),
-				esc_url( 'https://nextgenthemes.local/plugins/arve-random-video/' )
+				esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' )
 			),
-			'descriptionlink'     => esc_url( 'https://nextgenthemes.local/plugins/arve-random-video/' ),
+			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
+			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
+		],
+		'random_video_url' => [
+			'tag'                 => 'randomvideo',
+			'default'             => null,
+			'option'              => false,
+			'shortcode'           => true,
+			'label'               => esc_html__( 'Random Video URL', 'advanced-responsive-video-embedder' ),
+			'type'                => 'string',
+			'description'         => sprintf(
+				// Translators: URL
+				__( 'Vimeo showcase URL <a href="%s">(Random Video Addon)</a>.', 'advanced-responsive-video-embedder' ),
+				esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' )
+			),
+			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
+			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
+		],
+		'random_video_urls' => [
+			'tag'                 => 'randomvideo',
+			'default'             => null,
+			'option'              => false,
+			'shortcode'           => true,
+			'label'               => esc_html__( 'Random Video URL', 'advanced-responsive-video-embedder' ),
+			'type'                => 'string',
+			'description'         => sprintf(
+				// Translators: URL
+				__( 'Video URLs seperated by commas. <a href="%s">(Random Video Addon)</a>.', 'advanced-responsive-video-embedder' ),
+				esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' )
+			),
+			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
 			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		],
 		'legacy_shortcodes' => [

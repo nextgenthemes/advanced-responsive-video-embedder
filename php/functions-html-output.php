@@ -88,7 +88,6 @@ function build_video_tag( array $a ) {
 				'loop'               => $a['loop'],
 				'preload'            => 'metadata',
 				'width'              => empty( $a['width'] ) ? false : $a['width'],
-				'height'             => empty( $a['height'] ) ? false : $a['height'],
 				'poster'             => empty( $a['img_src'] ) ? false : $a['img_src'],
 				// ARVE only
 				'class'              => 'arve-video fitvidsignore',
@@ -138,7 +137,7 @@ function build_tracks_html( array $a ) {
 function html_id( $html_attr ) {
 
 	if ( false === strpos( $html_attr, 'id=' ) ) {
-		$html_attr .= ' id="global"';
+		$html_attr .= ' id="html"';
 	}
 
 	return $html_attr;
@@ -204,7 +203,7 @@ function arve_embed_inner_html( array $a ) {
 
 	if ( $seo_data ) :
 
-		$a['first_source'] = empty( $a['sources'] ) ? '' : get_first_array_value( $a['sources'] );
+		$a['first_source'] = empty( $a['sources'] ) ? '' : Common\first_array_value( $a['sources'] );
 
 		$metas = [
 			'first_source' => 'contentURL',
@@ -369,13 +368,6 @@ function arve_embed( $html, array $a ) {
 		$class .= ' arve-embed--16by9';
 	} elseif ( $a['aspect_ratio'] ) {
 		$ratio_div = sprintf( '<div class="arve-ar" style="padding-top:%F%%"></div>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
-	}
-
-	if (
-		'html5' !== $a['provider']
-		|| ( 'normal' === $a['mode'] && 'html5' === $a['provider'] )
-	) {
-
 	}
 
 	return build_tag(

@@ -25,7 +25,7 @@ function register_assets() {
 	wp_register_style( 'arve', null, [ 'arve-main' ], null, true );
 	// phpcs:enable WordPress.WP.EnqueuedResourceParameters.MissingVersion
 
-	if ( ! function_exists( 'register_block_type' ) ) :
+	if ( function_exists( 'register_block_type' ) ) :
 
 		$sc_settings = shortcode_settings();
 		$options     = options();
@@ -37,7 +37,9 @@ function register_assets() {
 			if ( $options['gutenberg_help'] && ! empty( $v['description'] ) ) {
 				$sc_settings[ $key ]['description'] = wp_strip_all_tags( $v['description'] );
 			} else {
-				$sc_settings[ $key ]['description'] = wp_strip_all_tags( $v['description'] );
+				unset( $sc_settings[ $key ]['description'] );
+				unset( $sc_settings[ $key ]['descriptionlink'] );
+				unset( $sc_settings[ $key ]['descriptionlinktext'] );
 			}
 		}
 
@@ -49,7 +51,7 @@ function register_assets() {
 				'handle' => 'arve-block',
 				'src'    => plugins_url( 'dist/js/gb-block.js', PLUGIN_FILE ),
 				'deps'   => [ 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'arve' ],
-				'ver'    => Common\ver( VERSION, 'dist/js/test-block.js', PLUGIN_FILE ),
+				'ver'    => Common\ver( VERSION, 'dist/js/gb-block.js', PLUGIN_FILE ),
 				'footer' => false,
 			]
 		);

@@ -1,16 +1,24 @@
 /* global jQuery, ajaxurl */
-( function() {
+(function() {
 	'use strict';
 
-	function dismiss() {
-		const id = this.closest( '[data-nextgenthemes-notice-id]' ).getAttribute( 'data-nextgenthemes-notice-id' );
+	const closeBtn = document.querySelector(
+		'[data-nextgenthemes-notice-id] .notice-dismiss'
+	);
 
-		jQuery.ajax( {
+	closeBtn.addEventListener('click', dismiss, false);
+
+	function dismiss() {
+		const id = this.closest('[data-nextgenthemes-notice-id]').getAttribute(
+			'data-nextgenthemes-notice-id'
+		);
+
+		jQuery.ajax({
 			url: ajaxurl,
 			data: {
 				action: id,
 			},
-		} );
+		});
 
 		/*
 		xhr = new XMLHttpRequest();
@@ -29,6 +37,4 @@
 		*/
 	}
 
-	const CLOSE_BTN = document.querySelector( '[data-nextgenthemes-notice-id] .notice-dismiss' );
-	CLOSE_BTN.addEventListener( 'click', dismiss, false );
-}() );
+})();

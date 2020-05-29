@@ -14,22 +14,6 @@ function load_textdomain() {
 	);
 }
 
-function get_first_array_value( array $array ) {
-	reset( $array );
-	$key = key( $array );
-	return $array[ $key ];
-}
-
-function prefix_array_keys( $keyprefix, array $array ) {
-
-	foreach ( $array as $key => $value ) {
-		$array[ $keyprefix . $key ] = $value;
-		unset( $array[ $key ] );
-	}
-
-	return $array;
-}
-
 function check_filetype( $url, $ext ) {
 
 	$check = wp_check_filetype( $url, wp_get_mime_types() );
