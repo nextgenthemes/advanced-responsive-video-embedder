@@ -5,29 +5,15 @@ use function \Nextgenthemes\ARVE\get_host_properties;
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 
-	public function setUpBeforeClass() {
-		update_options(
-			'nextgenthemes_arve',
-			[
-				'maxwidth'       => '555',
-				'align_maxwidth' => '444',
-			]
-		);
-	}
-
-	public function setUpAfterClass() {
-		update_options( 'nextgenthemes_arve', [] );
-	}
-
 	public function test_maxwidth_option() {
 
-		update_options( 'nextgenthemes_arve', [ 'maxwidth' => '555' ] );
+		update_option( 'nextgenthemes_arve', [ 'maxwidth' => '555' ] );
 		$html = shortcode(
 			[
 				'url' => 'https://example.com',
 			]
 		);
-		update_options( 'nextgenthemes_arve', [] );
+		update_option( 'nextgenthemes_arve', [] );
 
 		$this->assertContains( 'max-width:555px', $html );
 		$this->assertNotContains( 'Error', $html );
@@ -47,14 +33,14 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 
 	public function test_align_maxwidth_option() {
 
-		update_options( 'nextgenthemes_arve', [ 'align_maxwidth' => '444' ] );
+		update_option( 'nextgenthemes_arve', [ 'align_maxwidth' => '444' ] );
 		$output = shortcode(
 			[
 				'align' => 'left',
 				'url'   => 'https://example.com',
 			]
 		);
-		update_options( 'nextgenthemes_arve', [] );
+		update_option( 'nextgenthemes_arve', [] );
 		$this->assertNotContains( 'Error', $output );
 		$this->assertContains( 'alignleft', $output );
 		$this->assertContains( 'style="max-width:444px;"', $output );
