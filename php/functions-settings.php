@@ -2,21 +2,21 @@
 namespace Nextgenthemes\ARVE;
 
 function setup_settings() {
-	get_settings_instance();
+	settings_instance();
 	upgrade_options();
 }
 
 function options() {
-	$i = get_settings_instance();
-	return $i->options;
+	$i = settings_instance();
+	return $i->get_options();
 }
 
 function default_options() {
-	$i = get_settings_instance();
-	return $i->default_options;
+	$i = settings_instance();
+	return $i->get_options_defaults();
 }
 
-function get_settings_instance() {
+function settings_instance() {
 
 	static $inst = null;
 
@@ -177,14 +177,14 @@ function upgrade_options() {
 	$old_options = get_option( 'arve_options_main' );
 	$old_params  = get_option( 'arve_options_params' );
 
-	if ( is_array( $old_params ) && ! empty( $old_params ) ) {
+	if ( ! empty( $old_params ) && is_array( $old_params ) ) {
 
 		foreach ( $old_params as $provider => $params ) {
 			$old_options[ 'url_params_' . $provider ] = $params;
 		}
 	}
 
-	if ( ! empty( $old_options ) && ! is_array( $old_options ) ) {
+	if ( ! empty( $old_options ) && is_array( $old_options ) ) {
 
 		if ( isset( $old_options['promote_link'] ) ) {
 			$old_options['arve_link'] = $old_options['promote_link'];

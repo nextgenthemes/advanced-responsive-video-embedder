@@ -11,8 +11,7 @@ class Settings {
 	private $rest_url            = '';
 	private $settings            = [];
 	private $settings_page_title = '';
-	public $options              = [];
-	public $options_defaults     = [];
+	private $options_defaults    = [];
 
 	public function __construct( $args ) {
 
@@ -56,6 +55,16 @@ class Settings {
 				$this->options[ $p ] = $defined_key;
 			}
 		}
+	}
+
+	public function get_options() {
+		$options = (array) get_option( $this->slugged_namespace, [] );
+		$options = $options + $this->options_defaults;
+		return $options;
+	}
+
+	public function get_options_defaults() {
+		return $this->options_defaults;
 	}
 
 	public function save_options( $options ) {
