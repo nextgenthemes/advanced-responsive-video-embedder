@@ -1,18 +1,25 @@
 {
 	"name": "nextgenthemes/advanced-responsive-video-embedder",
 	"description": "WordPress responsive video embedding plugin that supports embedding from sites such as YouTube, Vimeo, Twitch, USTREAM, Vine, archive.org, and many more!",
-	"keywords": ["wordpress", "responsive", "video"],
+	"keywords": [
+		"wordpress",
+		"responsive",
+		"video"
+	],
 	"homepage": "http://nextgenthemes.com/plugins/arve/",
 	"license": "GPL-3.0",
-	"authors": [{
-		"name": "Nicolas Jonas",
-		"homepage": "https://nextgenthemes.com"
-	}],
+	"authors": [
+		{
+			"name": "Nicolas Jonas",
+			"homepage": "https://nextgenthemes.com"
+		}
+	],
+	"type": "wordpress-plugin",
 	"require": {
 		"php": ">=5.6"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "4.8.* || 5.7.*",
+		"phpunit/phpunit": "^5.7.0",
 		"wp-coding-standards/wpcs": ">=2.1.1",
 		"dealerdirect/phpcodesniffer-composer-installer": ">=v0.5.0",
 		"phpcompatibility/phpcompatibility-wp": ">=2.1"
