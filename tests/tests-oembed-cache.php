@@ -14,11 +14,11 @@ class Tests_OembedCache extends WP_UnitTestCase {
 		$key_suffix = md5( $url . serialize( wp_embed_defaults( $url ) ) );
 		$cachekey   = '_oembed_' . $key_suffix;
 
-		update_options( 'nextgenthemes_arve', [ 'maxwidth' => '444' ] );
+		update_option( 'nextgenthemes_arve', [ 'maxwidth' => '444' ] );
 
 		$actual = $GLOBALS['wp_embed']->shortcode( array(), $url );
 
-		update_options( 'nextgenthemes_arve', [ 'maxwidth' => '555' ] );
+		update_option( 'nextgenthemes_arve', [ 'maxwidth' => '555' ] );
 
 		#sleep(1);
 		$actual_2 = $GLOBALS['wp_embed']->shortcode( array(), $url );
