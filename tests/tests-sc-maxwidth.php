@@ -1,21 +1,35 @@
 <?php
 use function \Nextgenthemes\ARVE\shortcode;
 use function \Nextgenthemes\ARVE\get_host_properties;
-use function \Nextgenthemes\ARVE\get_settings_instance;
 
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 
+	public function setUpBeforeClass() {
+		update_options(
+			'nextgenthemes_arve',
+			[
+				'maxwidth'       => '555',
+				'align_maxwidth' => '444',
+			]
+		);
+	}
+
+	public function setUpAfterClass() {
+		update_options( 'nextgenthemes_arve', [] );
+	}
+
 	public function test_maxwidth_option() {
 
-		get_settings_instance()->options['maxwidth'] = 555;
-
+		update_options( 'nextgenthemes_arve', [ 'maxwidth' => '555' ] );
 		$html = shortcode(
 			[
 				'url' => 'https://example.com',
 			]
 		);
-		$this->assertContains( '555', $html );
+		update_options( 'nextgenthemes_arve', [] );
+
+		$this->assertContains( 'max-width:555px', $html );
 		$this->assertNotContains( 'Error', $html );
 	}
 
@@ -27,13 +41,26 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 				'maxwidth' => '666',
 			]
 		);
-		$this->assertContains( '666', $html );
+		$this->assertContains( 'max-width:666px', $html );
 		$this->assertNotContains( 'Error', $html );
 	}
 
-	public function test_align_maxwidth_default() {
+	public function test_align_maxwidth_option() {
 
-		get_settings_instance()->options['maxwidth'] = 555;
+		update_options( 'nextgenthemes_arve', [ 'align_maxwidth' => '444' ] );
+		$output = shortcode(
+			[
+				'align' => 'left',
+				'url'   => 'https://example.com',
+			]
+		);
+		update_options( 'nextgenthemes_arve', [] );
+		$this->assertNotContains( 'Error', $output );
+		$this->assertContains( 'alignleft', $output );
+		$this->assertContains( 'style="max-width:444px;"', $output );
+	}
+
+	public function test_align_maxwidth_default() {
 
 		$output = shortcode(
 			[
