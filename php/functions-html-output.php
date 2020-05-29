@@ -255,7 +255,7 @@ function arve_embed_inner_html( array $a ) {
 
 		$tag = [ 'name' => 'title' ];
 
-		if ( true ) {
+		if ( $seo_data ) {
 			$tag = [
 				'name' => 'title',
 				'tag'  => 'meta',
@@ -368,13 +368,6 @@ function arve_embed( $html, array $a ) {
 		$class .= ' arve-embed--16by9';
 	} elseif ( $a['aspect_ratio'] ) {
 		$ratio_div = sprintf( '<div class="arve-ar" style="padding-top:%F%%"></div>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
-	}
-
-	if (
-		'html5' !== $a['provider']
-		|| ( 'normal' === $a['mode'] && 'html5' === $a['provider'] )
-	) {
-
 	}
 
 	return build_tag(

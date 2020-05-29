@@ -65,16 +65,14 @@ function sc_filter_aspect_ratio( array $a ) {
 		}
 	}
 
-	$a['aspect_ratio'] = aspect_ratio_gcd( $a['aspect_ratio'] );
+	if ( $a['aspect_ratio'] ) {
+		$a['aspect_ratio'] = aspect_ratio_gcd( $a['aspect_ratio'] );
+	}
 
 	return $a;
 }
 
 function aspect_ratio_gcd( $aspect_ratio ) {
-
-	if ( empty( $aspect_ratio ) ) {
-		return false;
-	}
 
 	$ar  = explode( ':', $aspect_ratio );
 	$gcd = gcd( $ar[0], $ar[1] );
