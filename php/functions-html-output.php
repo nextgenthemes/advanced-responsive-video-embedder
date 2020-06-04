@@ -17,8 +17,8 @@ function build_html( array $a ) {
 				'id'            => $a['wrapper_id'],
 				'style'         => $a['maxwidth'] ? sprintf( 'max-width:%dpx;', $a['maxwidth'] ) : false,
 				// Schema.org
-				'itemscope'     => seo_data() ? '' : false,
-				'itemtype'      => seo_data() ? 'http://schema.org/VideoObject' : false,
+				'itemscope'     => $options['seo_data'] ? '' : false,
+				'itemtype'      => $options['seo_data'] ? 'http://schema.org/VideoObject' : false,
 			],
 		],
 		$a
@@ -192,16 +192,12 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 	return $html;
 }
 
-function seo_data() {
-	return apply_filters( 'nextgenthemes/arve/seo_data', true );
-}
-
 function arve_embed_inner_html( array $a ) {
 
-	$html     = '';
-	$seo_data = seo_data();
+	$html    = '';
+	$options = options();
 
-	if ( $seo_data ) :
+	if ( $options['seo_data'] ) :
 
 		$a['first_source'] = empty( $a['sources'] ) ? '' : Common\first_array_value( $a['sources'] );
 
@@ -236,7 +232,7 @@ function arve_embed_inner_html( array $a ) {
 
 		$tag = [ 'name' => 'thumbnail' ];
 
-		if ( $seo_data ) {
+		if ( $options['seo_data'] ) {
 
 			$tag = [
 				'name' => 'thumbnail',
@@ -255,7 +251,7 @@ function arve_embed_inner_html( array $a ) {
 
 		$tag = [ 'name' => 'title' ];
 
-		if ( $seo_data ) {
+		if ( $options['seo_data'] ) {
 			$tag = [
 				'name' => 'title',
 				'tag'  => 'meta',
@@ -273,7 +269,7 @@ function arve_embed_inner_html( array $a ) {
 
 		$tag = [ 'name' => 'description' ];
 
-		if ( $seo_data ) {
+		if ( $options['seo_data'] ) {
 			$tag = [
 				'name' => 'description',
 				'tag'  => 'meta',
