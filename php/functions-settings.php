@@ -421,6 +421,7 @@ function all_settings() {
 			],
 		],
 		'lightbox_script' => [
+			'tag'         => 'pro',
 			'default'     => 'bigpicture',
 			'shortcode'   => false,
 			'label'       => __( 'Lightbox Script', 'advanced-responsive-video-embedder' ),

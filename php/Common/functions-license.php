@@ -35,7 +35,7 @@ function api_action( $item_id, $key, $action = 'check' ) {
 	}
 
 	// Call the custom API.
-	$response = ngt_remote_get_json(
+	$response = remote_get_json(
 		'https://nextgenthemes.com',
 		[
 			'timeout' => 10,
