@@ -563,7 +563,8 @@ function iframe_src_args( $src, array $a ) {
 	}
 
 	if ( 'twitch' === $a['provider'] ) {
-		$src = add_query_arg( 'parent', home_url(), $src );
+		$domain = wp_parse_url( home_url(), PHP_URL_HOST );
+		$src    = add_query_arg( 'parent', $domain, $src );
 	}
 
 	return $src;
