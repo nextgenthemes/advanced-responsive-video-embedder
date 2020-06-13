@@ -11,14 +11,16 @@ function build_html( array $a ) {
 			'tag'        => 'div',
 			'inner_html' => arve_embed( arve_embed_inner_html( $a ), $a ) . promote_link( $a['arve_link'] ),
 			'attr'       => [
-				'class'         => $a['align'] ? 'arve align' . $a['align'] : 'arve',
-				'data-mode'     => $a['mode'],
-				'data-provider' => $a['provider'],
-				'id'            => $a['wrapper_id'],
-				'style'         => $a['maxwidth'] ? sprintf( 'max-width:%dpx;', $a['maxwidth'] ) : false,
+				'class'          => $a['align'] ? 'arve align' . $a['align'] : 'arve',
+				'data-mode'      => $a['mode'],
+				'data-provider'  => $a['provider'],
+				'id'             => 'arve-' . $a['uid'],
+				'style'          => $a['maxwidth'] ? sprintf( 'max-width:%dpx;', $a['maxwidth'] ) : false,
+				'data-max-width' => $a['maxwidth'] ? sprintf( '%dpx', $a['maxwidth'] ) : false,
+
 				// Schema.org
-				'itemscope'     => $options['seo_data'] ? '' : false,
-				'itemtype'      => $options['seo_data'] ? 'http://schema.org/VideoObject' : false,
+				'itemscope'      => $options['seo_data'] ? '' : false,
+				'itemtype'       => $options['seo_data'] ? 'http://schema.org/VideoObject' : false,
 			],
 		],
 		$a
@@ -54,6 +56,7 @@ function build_iframe_tag( array $a ) {
 			'tag'        => 'iframe',
 			'inner_html' => '',
 			'attr'       => [
+				'id'              => $a['uid'],
 				'allow'           => $allow,
 				'allowfullscreen' => '',
 				'class'           => $class,
@@ -90,6 +93,7 @@ function build_video_tag( array $a ) {
 				'width'              => empty( $a['width'] ) ? false : $a['width'],
 				'poster'             => empty( $a['img_src'] ) ? false : $a['img_src'],
 				// ARVE only
+				'id'                 => $a['uid'],
 				'class'              => 'arve-video fitvidsignore',
 				'muted'              => $autoplay ? 'automuted' : $a['muted'],
 				'playsinline'        => in_array( $a['mode'], [ 'lightbox', 'link-lightbox' ], true ) ? '' : false,

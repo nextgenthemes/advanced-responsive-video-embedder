@@ -1,9 +1,9 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-function sc_filter_set_wrapper_id( array $a ) {
+function sc_filter_set_uid( array $a ) {
 
-	static $wrapper_ids = [];
+	static $uids = [];
 
 	foreach ( [
 		'src',
@@ -18,26 +18,28 @@ function sc_filter_set_wrapper_id( array $a ) {
 	] as $att ) {
 
 		if ( ! empty( $a[ $att ] ) && is_string( $a[ $att ] ) ) {
-			$a['wrapper_id'] = 'arve-' . str_replace( [ 'https://www.', 'https://' ], '', $a[ $att ] );
+			$a['uid'] = strtolower( $a[ $att ] );
+			$a['uid'] = str_replace( [ 'https://www.', 'https://' ], '', $a['uid'] );
+			$a['uid'] = preg_replace( '/[^a-z0-9]/', '', $a['uid'] );
 			break;
 		}
 	}
 
-	$wrapper_ids[] = $a['wrapper_id'];
+	$uids[] = $a['uid'];
 
-	if ( in_array( $a['wrapper_id'], $wrapper_ids, true ) ) {
-		$id_counts = array_count_values( $wrapper_ids );
-		$id_count  = $id_counts[ $a['wrapper_id'] ];
+	if ( in_array( $a['uid'], $uids, true ) ) {
+		$id_counts = array_count_values( $uids );
+		$id_count  = $id_counts[ $a['uid'] ];
 
 		if ( $id_count >= 2 ) {
-			$a['wrapper_id'] .= '-' . $id_count;
+			$a['uid'] .= '-' . $id_count;
 		}
 	}
 
-	if ( empty( $a['wrapper_id'] ) ) {
+	if ( empty( $a['uid'] ) ) {
 		$a['errors']->add(
 			'fatal',
-			__( 'Wrapper ID could not be build, this means ARVE did not get one of the essential inputs like URL.', 'advanced-responsive-video-embedder' )
+			__( 'UID could not be build, this means ARVE did not get one of the essential inputs like URL.', 'advanced-responsive-video-embedder' )
 		);
 		remove_all_filters( 'shortcode_atts_arve' );
 	}
@@ -558,6 +560,10 @@ function iframe_src_args( $src, array $a ) {
 
 	if ( 'youtube' === $a['provider'] && in_array( $a['mode'], [ 'lightbox', 'link-lightbox' ], true ) ) {
 		$src = add_query_arg( 'playsinline', '1', $src );
+	}
+
+	if ( 'twitch' === $a['provider'] ) {
+		$src = add_query_arg( 'parent', home_url(), $src );
 	}
 
 	return $src;
