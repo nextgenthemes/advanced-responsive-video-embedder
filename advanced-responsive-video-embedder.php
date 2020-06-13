@@ -86,7 +86,7 @@ function init() {
 		'autoplay'                        => 15,
 		'iframe_src'                      => 20,
 		// Maybe validate_again ?
-		'set_wrapper_id'                  => 90,
+		'set_uid'                         => 90,
 		'set_fixed_dimensions'            => 90,
 	] as $filter => $priority ) {
 		add_filter( 'shortcode_atts_arve', __NAMESPACE__ . "\\sc_filter_{$filter}", $priority );
