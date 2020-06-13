@@ -353,7 +353,7 @@ function all_settings() {
 		],
 		'fullscreen' => [
 			'tag'         => 'pro',
-			'default'     => 'enabled-exit',
+			'default'     => 'disabled',
 			'type'        => 'select',
 			'label'       => __( 'Go Fullscreen on opening Lightbox?', 'advanced-responsive-video-embedder' ),
 			'desc_detail' => __( 'Makes the Browser go fullscreen when opening the Lighbox. Optionally stay in Fullscreen mode even after the Lightbox is closed', 'advanced-responsive-video-embedder' ),
