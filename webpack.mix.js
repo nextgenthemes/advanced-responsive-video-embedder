@@ -3,18 +3,18 @@ const mix = require('laravel-mix');
 mix.setPublicPath('dist');
 mix.sourceMaps();
 mix.version();
-mix.js('resources/js/arve.js', 'js');
-mix.js('resources/js/gb-block.js', 'js');
-mix.js('resources/js/test-block.js', 'js');
-mix.js('resources/js/arve-admin.js', 'js');
-mix.js('resources/js/arve-shortcode-ui.js', 'js');
+mix.js('src/js/arve.js', 'js');
+mix.js('src/js/gb-block.js', 'js');
+mix.js('src/js/test-block.js', 'js');
+mix.js('src/js/arve-admin.js', 'js');
+mix.js('src/js/arve-shortcode-ui.js', 'js');
 
-mix.js('resources/common/js/settings.js', 'common/js');
-mix.js('resources/common/js/notice-ajax.js', 'common/js');
+mix.js('src/common/js/settings.js', 'common/js');
+mix.js('src/common/js/notice-ajax.js', 'common/js');
 
-mix.sass('resources/scss/arve.scss', 'css');
-mix.sass('resources/scss/arve-admin.scss', 'css');
-mix.sass('resources/common/scss/settings.scss', 'common/css');
+mix.sass('src/scss/arve.scss', 'css');
+mix.sass('src/scss/arve-admin.scss', 'css');
+mix.sass('src/common/scss/settings.scss', 'common/css');
 
 if (process.env.sync) {
 	mix.browserSync({
