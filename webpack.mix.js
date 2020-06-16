@@ -3,14 +3,14 @@ const mix = require('laravel-mix');
 mix.setPublicPath('dist');
 mix.sourceMaps();
 mix.version();
-mix.js('src/js/arve.js', 'js');
-mix.js('src/js/gb-block.js', 'js');
-mix.js('src/js/test-block.js', 'js');
-mix.js('src/js/arve-admin.js', 'js');
-mix.js('src/js/arve-shortcode-ui.js', 'js');
+mix.ts('src/ts/arve.ts', 'js');
+mix.js('src/ts/gb-block.ts', 'js');
+mix.js('src/ts/test-block.ts', 'js');
+mix.js('src/ts/arve-admin.ts', 'js');
+mix.js('src/ts/arve-shortcode-ui.ts', 'js');
 
-mix.js('src/common/js/settings.js', 'common/js');
-mix.js('src/common/js/notice-ajax.js', 'common/js');
+mix.js('src/common/ts/settings.ts', 'common/js');
+mix.js('src/common/ts/notice-ajax.ts', 'common/js');
 
 mix.sass('src/scss/arve.scss', 'css');
 mix.sass('src/scss/arve-admin.scss', 'css');

@@ -1,7 +1,8 @@
 /build/
-/node_modules/
 /vendor/
 /codecov/
+
+node_modules/*
 
 # Numerous always-ignore extensions
 *.diff

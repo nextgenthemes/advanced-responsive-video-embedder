@@ -29,6 +29,7 @@ This update is very long in the making and I hope it will pay off somehow, hopef
 * Fix: YouTube live links are now working correctly
 * Fix: TED embed url.
 * Fix: Facebook embeds.
+* Fix: Twitch embeds.
 * Improved: Generated iframe src will match what providers send over oembed.
 * Improved: Lots of code improvements that may not be noticeable to users but took a lot of time and will make the plugin more maintainable and easier to extend.
 * Improved: Removed the `lang` shortcode parameter that was only used for TED talks video subtitle display. This is now taken from the `language=x` url query.

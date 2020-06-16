@@ -1,25 +1,33 @@
 {
   "name": "advanced-responsive-video-embedder",
-  "main": "advanced-responsive-video-embedder.php",
   "repository": "https://github.com/nextgenthemes/advanced-responsive-video-embedder",
   "author": "Nicolas Jonas",
   "license": "GPL-3.0",
-  "dependencies": {
-    "vue": "^2.6.11"
-  },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^3.2.0",
+    "@typescript-eslint/parser": "^3.2.0",
+    "@wordpress/element": "^2.14.0",
     "@wordpress/eslint-plugin": "^6.1.0",
     "browser-sync": "^2.26.7",
     "browser-sync-webpack-plugin": "^2.2.2",
+    "copy-webpack-plugin": "^6.0.2",
     "cross-env": "^7.0.2",
     "eslint": "^7.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "imagemin-mozjpeg": "^9.0.0",
+    "imagemin-webpack-plugin": "^2.4.2",
     "json": ">=9.0.6",
     "laravel-mix": "^5.0.4",
-    "resolve-url-loader": "^3.1.1",
+    "prettier": "^2.0.5",
+    "resolve-url-loader": "^3.1.0",
     "sass": "^1.26.8",
     "sass-loader": "^8.0.2",
     "stylelint": "^13.6.0",
     "stylelint-config-twbs-bootstrap": "^2.0.3",
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.9.5",
+    "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.11"
   },
   "scripts": {
@@ -33,7 +41,7 @@
     "update-composer": "composer update --no-dev --prefer-dist",
     "update-npm": "npm install; npm update; npm audit fix; npm audit || true",
     "update": "npm run update-composer & npm run update-npm; composer outdated & npm outdated",
-    "lint-eslint": "eslint \"src/*\"",
-    "lint-css": "stylelint \"src/scss/**/*.scss\" --cache --cache-location /tmp/.stylelintcache"
+    "eslint": "eslint \"src/**/*.js\"",
+    "css-lint": "stylelint \"src/scss/**/*.scss\""
   }
 }

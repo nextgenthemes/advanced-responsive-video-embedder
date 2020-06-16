@@ -7,9 +7,18 @@
  * License: GPL 2.0+
  */
 
-const wp = window.wp;
-const el = window.wp.element.createElement;
+export {};
+declare global {
+	interface Window {
+		wp;
+		ARVEsettings;
+	}
+}
+
 const settings = window.ARVEsettings;
+const wp = window.wp;
+// eslint-disable-next-line
+const el = window.wp.element.createElement as Function;
 
 /*
 wp.data.dispatch( 'core/edit-post' ).hideBlockTypes( [
@@ -25,7 +34,7 @@ wp.data.dispatch( 'core/edit-post' ).hideBlockTypes( [
  * Keypair to gutenberg component
  */
 function PrepareSelectOptions(options) {
-	const gboptions = [];
+	const gboptions = [] as Array<Record<string, unknown>>;
 
 	Object.entries(options).forEach(([key, value]) => {
 		gboptions.push({
@@ -37,63 +46,83 @@ function PrepareSelectOptions(options) {
 	return gboptions;
 }
 
+interface Option {
+	label: string;
+	tag: string;
+	type: string;
+	description: string;
+	descriptionlink: string;
+	descriptionlinktext: string;
+	placeholder: string;
+	options: Array<unknown>;
+}
+
+interface GBControlArgs {
+	help: string;
+	label: string;
+	value: string;
+	placeholder: string;
+	checked: boolean;
+	children;
+	options;
+	selected;
+	onChange;
+}
+
 function BuildControls(props) {
-	const controls = [];
+	const controls = [] as Array<unknown>;
 	const sectionControls = {};
+	// eslint-disable-next-line
 	const domParser = new DOMParser();
 
-	Object.values(settings).forEach((option) => {
+	Object.values(settings).forEach((option: Option) => {
 		sectionControls[option.tag] = [];
 	});
 
-	Object.entries(settings).forEach(([key, option]) => {
+	Object.entries(settings).forEach(([key, option]: [string, Option]) => {
 		const attrVal = props.attributes[key];
-		const ctrlArgs = {
-			label: option.label,
-			onChange: (value) => {
-				if ('url' === key) {
-					const $iframe = domParser
-						.parseFromString(value, 'text/html')
-						.querySelector('iframe');
-					if (
-						$iframe &&
-						$iframe.hasAttribute('src') &&
-						$iframe.getAttribute('src')
-					) {
-						value = $iframe.src;
-						const w = $iframe.width;
-						const h = $iframe.height;
-						if (w && h) {
-							props.setAttributes({
-								aspect_ratio: aspectRatio(w, h),
-							});
-						}
+
+		const ctrlArgs = {} as GBControlArgs;
+
+		ctrlArgs.label = option.label;
+		ctrlArgs.onChange = (value) => {
+			if ('url' === key) {
+				const iframe = domParser
+					.parseFromString(value, 'text/html')
+					.querySelector('iframe');
+				if (iframe && iframe.hasAttribute('src') && iframe.getAttribute('src')) {
+					value = iframe.src;
+					const w = iframe.width;
+					const h = iframe.height;
+					if (w && h) {
+						props.setAttributes({
+							aspect_ratio: aspectRatio(w, h),
+						});
 					}
 				}
-				props.setAttributes({ [key]: value });
-			},
+			}
+			props.setAttributes({ [key]: value });
 		};
 
 		if (typeof option.description === 'string') {
 			ctrlArgs.help = option.description;
 
 			if (typeof option.descriptionlinktext === 'string') {
-				const textSplit = option.description.split(
-					option.descriptionlinktext
-				);
+				const textSplit = option.description.split(option.descriptionlinktext);
 
 				ctrlArgs.help = el(
 					'span',
 					null,
 					el('span', {}, textSplit[0]),
-					el(
-						'a',
-						{ href: option.descriptionlink },
-						option.descriptionlinktext
-					),
+					el('a', { href: option.descriptionlink }, option.descriptionlinktext),
 					el('span', {}, textSplit[1])
 				);
 			}
+		}
+
+		let urlVal = props.attributes[key + '_url'];
+		if (typeof urlVal === 'undefined') {
+			urlVal = '';
 		}
 
 		switch (option.type) {
@@ -104,9 +133,7 @@ function BuildControls(props) {
 				if (typeof attrVal !== 'undefined') {
 					ctrlArgs.checked = attrVal;
 				}
-				sectionControls[option.tag].push(
-					el(wp.components.ToggleControl, ctrlArgs)
-				);
+				sectionControls[option.tag].push(el(wp.components.ToggleControl, ctrlArgs));
 				break;
 			case 'select':
 				if (typeof attrVal !== 'undefined') {
@@ -114,25 +141,16 @@ function BuildControls(props) {
 					ctrlArgs.value = attrVal;
 				}
 				ctrlArgs.options = PrepareSelectOptions(option.options);
-				sectionControls[option.tag].push(
-					el(wp.components.SelectControl, ctrlArgs)
-				);
+				sectionControls[option.tag].push(el(wp.components.SelectControl, ctrlArgs));
 				break;
 			case 'string':
 				if (typeof attrVal !== 'undefined') {
 					ctrlArgs.value = attrVal;
 				}
 				ctrlArgs.placeholder = option.placeholder;
-				sectionControls[option.tag].push(
-					el(wp.components.TextControl, ctrlArgs)
-				);
+				sectionControls[option.tag].push(el(wp.components.TextControl, ctrlArgs));
 				break;
 			case 'attachment':
-				let urlVal = props.attributes[key + '_url'];
-				if (typeof urlVal === 'undefined') {
-					urlVal = '';
-				}
-
 				ctrlArgs.children = [
 					el(wp.editor.MediaUpload, {
 						type: 'image',
@@ -172,9 +190,7 @@ function BuildControls(props) {
 					}),
 				];
 
-				sectionControls[option.tag].push(
-					el(wp.components.BaseControl, ctrlArgs)
-				);
+				sectionControls[option.tag].push(el(wp.components.BaseControl, ctrlArgs));
 				break;
 		}
 	});
@@ -184,7 +200,7 @@ function BuildControls(props) {
 	Object.keys(sectionControls).forEach((key) => {
 		controls.push(
 			el(
-				wp.components.PanelBody,
+				window.wp.components.PanelBody,
 				{
 					title: key,
 					initialOpen: open,
