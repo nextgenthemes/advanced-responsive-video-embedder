@@ -1,0 +1,26 @@
+{
+	"compileOnSave": false,
+	"compilerOptions": {
+		"noImplicitAny": false,
+		"removeComments": true,
+		"allowUnreachableCode": false,
+		"strictNullChecks": true,
+		"sourceMap": true,
+		"allowJs": false,
+    "module": "es2020",
+		"esModuleInterop": true,
+		"lib": [
+			"es2020",
+			"dom",
+			"dom.iterable"
+		]
+	},
+	"includes": [
+		"src/**/*.ts"
+	],
+	"exclude": [
+		"node_modules",
+		"dist",
+		"src/**/*.spec.ts"
+	]
+}

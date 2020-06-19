@@ -81,31 +81,31 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/common/ts/notice-ajax.ts":
-/*!**************************************!*\
-  !*** ./src/common/ts/notice-ajax.ts ***!
-  \**************************************/
+/***/ "./src/ts/admin.ts":
+/*!*************************!*\
+  !*** ./src/ts/admin.ts ***!
+  \*************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\nexports.__esModule = true;\nvar closeBtn = document.querySelector('[data-nextgenthemes-notice-id] .notice-dismiss');\nif (closeBtn) {\n    closeBtn.addEventListener('click', dismiss, false);\n}\nfunction dismiss() {\n    var id = this.closest('[data-nextgenthemes-notice-id]').getAttribute('data-nextgenthemes-notice-id');\n    window.jQuery.ajax({\n        url: window.ajaxurl,\n        data: {\n            action: id,\n        },\n    });\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvY29tbW9uL3RzL25vdGljZS1hamF4LnRzP2Q2NDciXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFRQSxJQUFNLFFBQVEsR0FBRyxRQUFRLENBQUMsYUFBYSxDQUFDLGdEQUFnRCxDQUFDLENBQUM7QUFFMUYsSUFBSSxRQUFRLEVBQUU7SUFDYixRQUFRLENBQUMsZ0JBQWdCLENBQUMsT0FBTyxFQUFFLE9BQU8sRUFBRSxLQUFLLENBQUMsQ0FBQztDQUNuRDtBQUVELFNBQVMsT0FBTztJQUNmLElBQU0sRUFBRSxHQUFHLElBQUksQ0FBQyxPQUFPLENBQUMsZ0NBQWdDLENBQUMsQ0FBQyxZQUFZLENBQ3JFLDhCQUE4QixDQUM5QixDQUFDO0lBRUYsTUFBTSxDQUFDLE1BQU0sQ0FBQyxJQUFJLENBQUM7UUFDbEIsR0FBRyxFQUFFLE1BQU0sQ0FBQyxPQUFPO1FBQ25CLElBQUksRUFBRTtZQUNMLE1BQU0sRUFBRSxFQUFFO1NBQ1Y7S0FDRCxDQUFDLENBQUM7QUFpQkosQ0FBQyIsImZpbGUiOiIuL3NyYy9jb21tb24vdHMvbm90aWNlLWFqYXgudHMuanMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQge307XG5kZWNsYXJlIGdsb2JhbCB7XG5cdGludGVyZmFjZSBXaW5kb3cge1xuXHRcdGpRdWVyeTtcblx0XHRhamF4dXJsO1xuXHR9XG59XG5cbmNvbnN0IGNsb3NlQnRuID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcignW2RhdGEtbmV4dGdlbnRoZW1lcy1ub3RpY2UtaWRdIC5ub3RpY2UtZGlzbWlzcycpO1xuXG5pZiAoY2xvc2VCdG4pIHtcblx0Y2xvc2VCdG4uYWRkRXZlbnRMaXN0ZW5lcignY2xpY2snLCBkaXNtaXNzLCBmYWxzZSk7XG59XG5cbmZ1bmN0aW9uIGRpc21pc3MoKSB7XG5cdGNvbnN0IGlkID0gdGhpcy5jbG9zZXN0KCdbZGF0YS1uZXh0Z2VudGhlbWVzLW5vdGljZS1pZF0nKS5nZXRBdHRyaWJ1dGUoXG5cdFx0J2RhdGEtbmV4dGdlbnRoZW1lcy1ub3RpY2UtaWQnXG5cdCk7XG5cblx0d2luZG93LmpRdWVyeS5hamF4KHtcblx0XHR1cmw6IHdpbmRvdy5hamF4dXJsLFxuXHRcdGRhdGE6IHtcblx0XHRcdGFjdGlvbjogaWQsXG5cdFx0fSxcblx0fSk7XG5cblx0Lypcblx0eGhyID0gbmV3IFhNTEh0dHBSZXF1ZXN0KCk7XG5cblx0eGhyLm9wZW4oICdQT1NUJywgYWpheHVybCApO1xuXHR4aHIuc2V0UmVxdWVzdEhlYWRlciggJ0NvbnRlbnQtVHlwZScsICdhcHBsaWNhdGlvbi94LXd3dy1mb3JtLXVybGVuY29kZWQnICk7XG5cdHhoci5vbmxvYWQgPSBmdW5jdGlvbigpIHtcblx0XHRpZiAoIHhoci5zdGF0dXMgPT09IDIwMCAmJiB4aHIucmVzcG9uc2VUZXh0ICE9PSBuZXdOYW1lICkge1xuXHRcdFx0YWxlcnQoJ1NvbWV0aGluZyB3ZW50IHdyb25nLiAgTmFtZSBpcyBub3cgJyArIHhoci5yZXNwb25zZVRleHQpO1xuXHRcdH1cblx0XHRlbHNlIGlmICh4aHIuc3RhdHVzICE9PSAyMDApIHtcblx0XHRcdGFsZXJ0KCdSZXF1ZXN0IGZhaWxlZC4gIFJldHVybmVkIHN0YXR1cyBvZiAnICsgeGhyLnN0YXR1cyk7XG5cdFx0fVxuXHR9O1xuXHR4aHIuc2VuZChlbmNvZGVVUkkoJ25hbWU9JyArIG5ld05hbWUpKTtcblx0Ki9cbn1cbiJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./src/common/ts/notice-ajax.ts\n");
+eval("\nexports.__esModule = true;\nwindow.jQuery(document).on('click', '#arve-btn', function () {\n    var sui = window.sui;\n    if ('undefined' !== typeof sui) {\n        sui.utils.shortcodeViewConstructor.parseShortcodeString('[arve]');\n        window.wp\n            .media({\n            frame: 'post',\n            state: 'shortcode-ui',\n            currentShortcode: sui.utils.shortcodeViewConstructor.parseShortcodeString('[arve]'),\n        })\n            .open();\n    }\n    else {\n        window.tb_show('ARVE Optional Features', '#TB_inline?inlineId=arve-thickbox');\n    }\n});\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvdHMvYWRtaW4udHM/NTZmMCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQVdBLE1BQU0sQ0FBQyxNQUFNLENBQUMsUUFBUSxDQUFDLENBQUMsRUFBRSxDQUFDLE9BQU8sRUFBRSxXQUFXLEVBQUU7SUFDaEQsSUFBTSxHQUFHLEdBQUcsTUFBTSxDQUFDLEdBQUcsQ0FBQztJQUV2QixJQUFJLFdBQVcsS0FBSyxPQUFPLEdBQUcsRUFBRTtRQUMvQixHQUFHLENBQUMsS0FBSyxDQUFDLHdCQUF3QixDQUFDLG9CQUFvQixDQUFDLFFBQVEsQ0FBQyxDQUFDO1FBRWxFLE1BQU0sQ0FBQyxFQUFFO2FBQ1AsS0FBSyxDQUFDO1lBQ04sS0FBSyxFQUFFLE1BQU07WUFDYixLQUFLLEVBQUUsY0FBYztZQUNyQixnQkFBZ0IsRUFBRSxHQUFHLENBQUMsS0FBSyxDQUFDLHdCQUF3QixDQUFDLG9CQUFvQixDQUN4RSxRQUFRLENBQ1I7U0FDRCxDQUFDO2FBQ0QsSUFBSSxFQUFFLENBQUM7S0FDVDtTQUFNO1FBQ04sTUFBTSxDQUFDLE9BQU8sQ0FBQyx3QkFBd0IsRUFBRSxtQ0FBbUMsQ0FBQyxDQUFDO0tBQzlFO0FBQ0YsQ0FBQyxDQUFDLENBQUMiLCJmaWxlIjoiLi9zcmMvdHMvYWRtaW4udHMuanMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQge307XG5kZWNsYXJlIGdsb2JhbCB7XG5cdGludGVyZmFjZSBXaW5kb3cge1xuXHRcdHdwO1xuXHRcdGpRdWVyeTtcblx0XHRzdWk7XG5cdFx0LyogZXNsaW50LWRpc2FibGUtbmV4dC1saW5lICovXG5cdFx0dGJfc2hvdztcblx0fVxufVxuXG53aW5kb3cualF1ZXJ5KGRvY3VtZW50KS5vbignY2xpY2snLCAnI2FydmUtYnRuJywgZnVuY3Rpb24gKCkge1xuXHRjb25zdCBzdWkgPSB3aW5kb3cuc3VpO1xuXG5cdGlmICgndW5kZWZpbmVkJyAhPT0gdHlwZW9mIHN1aSkge1xuXHRcdHN1aS51dGlscy5zaG9ydGNvZGVWaWV3Q29uc3RydWN0b3IucGFyc2VTaG9ydGNvZGVTdHJpbmcoJ1thcnZlXScpO1xuXG5cdFx0d2luZG93LndwXG5cdFx0XHQubWVkaWEoe1xuXHRcdFx0XHRmcmFtZTogJ3Bvc3QnLFxuXHRcdFx0XHRzdGF0ZTogJ3Nob3J0Y29kZS11aScsXG5cdFx0XHRcdGN1cnJlbnRTaG9ydGNvZGU6IHN1aS51dGlscy5zaG9ydGNvZGVWaWV3Q29uc3RydWN0b3IucGFyc2VTaG9ydGNvZGVTdHJpbmcoXG5cdFx0XHRcdFx0J1thcnZlXSdcblx0XHRcdFx0KSxcblx0XHRcdH0pXG5cdFx0XHQub3BlbigpO1xuXHR9IGVsc2Uge1xuXHRcdHdpbmRvdy50Yl9zaG93KCdBUlZFIE9wdGlvbmFsIEZlYXR1cmVzJywgJyNUQl9pbmxpbmU/aW5saW5lSWQ9YXJ2ZS10aGlja2JveCcpO1xuXHR9XG59KTtcbiJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./src/ts/admin.ts\n");
 
 /***/ }),
 
-/***/ 6:
-/*!********************************************!*\
-  !*** multi ./src/common/ts/notice-ajax.ts ***!
-  \********************************************/
+/***/ 1:
+/*!*******************************!*\
+  !*** multi ./src/ts/admin.ts ***!
+  \*******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /uncrypted/websites/symbiosistheme.com/web/app/plugins/advanced-responsive-video-embedder/src/common/ts/notice-ajax.ts */"./src/common/ts/notice-ajax.ts");
+module.exports = __webpack_require__(/*! /uncrypted/websites/symbiosistheme.com/web/app/plugins/advanced-responsive-video-embedder/src/ts/admin.ts */"./src/ts/admin.ts");
 
 
 /***/ })

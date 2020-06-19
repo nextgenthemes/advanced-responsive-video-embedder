@@ -21,6 +21,7 @@ function sc_filter_set_uid( array $a ) {
 			$a['uid'] = strtolower( $a[ $att ] );
 			$a['uid'] = str_replace( [ 'https://www.', 'https://' ], '', $a['uid'] );
 			$a['uid'] = preg_replace( '/[^a-z0-9]/', '', $a['uid'] );
+			$a['uid'] = 'arve-' . $a['uid'];
 			break;
 		}
 	}

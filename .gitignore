@@ -1,5 +1,6 @@
+node_modules/
+
 /build/
-/node_modules/
 /vendor/
 /codecov/
 
@@ -16,6 +17,8 @@
 *~
 
 # OS or Editor folders
+*.tmp
+*.code-workspace
 ._*
 .cache
 .DS_Store
@@ -28,5 +31,10 @@
 *.sublime-project
 *.sublime-workspace
 *.code-workspace
+*.vscode
 nbproject
 Thumbs.db
+
+# Komodo
+.komodotools
+*.komodoproject

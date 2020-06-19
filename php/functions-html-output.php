@@ -14,7 +14,7 @@ function build_html( array $a ) {
 				'class'          => $a['align'] ? 'arve align' . $a['align'] : 'arve',
 				'data-mode'      => $a['mode'],
 				'data-provider'  => $a['provider'],
-				'id'             => 'arve-' . $a['uid'],
+				'id'             => $a['uid'],
 				'style'          => $a['maxwidth'] ? sprintf( 'max-width:%dpx;', $a['maxwidth'] ) : false,
 				'data-max-width' => $a['maxwidth'] ? sprintf( '%dpx', $a['maxwidth'] ) : false,
 
@@ -56,10 +56,10 @@ function build_iframe_tag( array $a ) {
 			'tag'        => 'iframe',
 			'inner_html' => '',
 			'attr'       => [
-				'id'              => $a['uid'],
 				'allow'           => $allow,
 				'allowfullscreen' => '',
 				'class'           => $class,
+				'data-arve'       => $a['uid'],
 				'data-src-no-ap'  => iframe_src_autoplay_args( $a['src'], false, $a ),
 				'frameborder'     => '0',
 				'height'          => empty( $a['height'] ) ? false : $a['height'],
@@ -93,7 +93,7 @@ function build_video_tag( array $a ) {
 				'width'              => empty( $a['width'] ) ? false : $a['width'],
 				'poster'             => empty( $a['img_src'] ) ? false : $a['img_src'],
 				// ARVE only
-				'id'                 => $a['uid'],
+				'data-arve'          => $a['uid'],
 				'class'              => 'arve-video fitvidsignore',
 				'muted'              => $autoplay ? 'automuted' : $a['muted'],
 				'playsinline'        => in_array( $a['mode'], [ 'lightbox', 'link-lightbox' ], true ) ? '' : false,

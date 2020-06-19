@@ -1,3 +1,7 @@
+@charset "UTF-8";
+
+/* stylelint-disable declaration-no-important */
+
 .arve-license-input {
   width: 280px;
 }
@@ -7,13 +11,13 @@
 }
 
 .arve-icon::before {
-  /* stylelint-disable-next-line declaration-no-important */
-  content: "\f236" !important; /* dashicon-video-alt */
+  content: "\F236" !important;
+  /* dashicon-video-alt */
 }
 
 .edit-shortcode-form-fields.shortcode-ui-edit-arve .field-block {
-  padding-top: .4em;
-  padding-bottom: .4em;
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
 }
 
 .edit-shortcode-form-fields.shortcode-ui-edit-arve .field-block label {
@@ -35,7 +39,7 @@
 
 .arve-list-small {
   padding-left: 20px;
-  font-size: .85em;
+  font-size: 0.85em;
   list-style: square;
 }
 
@@ -44,7 +48,7 @@
 }
 
 .arve-settings-page-ad {
-  padding-right: .7rem !important; /* stylelint-disable-line declaration-no-important */
+  padding-right: 0.7rem !important;
   margin: 0;
 }
 
@@ -55,9 +59,8 @@
 }
 
 @media all and (min-width: 1400px) {
-
   .arve-settings-page-ad {
-    position: absolute !important; /* stylelint-disable-line declaration-no-important */
+    position: absolute !important;
     right: 0;
     width: 320px;
   }
@@ -67,3 +70,4 @@
     padding-right: 350px;
   }
 }
+

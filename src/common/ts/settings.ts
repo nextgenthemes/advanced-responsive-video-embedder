@@ -1,8 +1,12 @@
 import Vue from 'vue';
-/* global jQuery */
 
 const url = new URL(window.location.href);
 const pageQueryVal = url.searchParams.get('page');
+
+if (!pageQueryVal) {
+	throw 'Need page url arg';
+}
+
 const data = window[pageQueryVal];
 
 new Vue({
@@ -34,7 +38,7 @@ new Vue({
 			this.isSaving = true;
 
 			// Make a POST request to the REST API route that we registered in our PHP file
-			jQuery.ajax({
+			window.jQuery.ajax({
 				url: data.rest_url + '/save',
 				method: 'POST',
 				data: this.vm,
@@ -61,7 +65,7 @@ new Vue({
 					this.isSaving = false;
 					if (this.refreshAfterSave) {
 						this.refreshAfterSave = false;
-						location.reload();
+						window.location.reload();
 					}
 				},
 			});
@@ -71,7 +75,7 @@ new Vue({
 			this.isSaving = true;
 
 			// Make a POST request to the REST API route that we registered in our PHP file
-			jQuery.ajax({
+			window.jQuery.ajax({
 				url: 'https://nextgenthemes.com',
 				method: 'POST',
 				crossDomain: true,
@@ -104,7 +108,7 @@ new Vue({
 			// The url to the site running Easy Digital Downloads w/ Software Licensing
 			const postUrl = 'https://nextgenthemes.com';
 
-			xhttp.onreadystatechange = function() {
+			xhttp.onreadystatechange = function () {
 				console.log( 'xhttp.readyState', xhttp.readyState ); // eslint-disable-line
 				console.log( 'xhttp.status', xhttp.status ); // eslint-disable-line
 
@@ -123,14 +127,8 @@ new Vue({
 
 			xhttp.open('POST', postUrl, true);
 			//xhttp.setRequestHeader( 'Content-type', 'application/x-www-form-urlencoded' );
-			xhttp.setRequestHeader(
-				'Content-type',
-				'application/json; charset=utf-8'
-			);
-			xhttp.setRequestHeader(
-				'Access-Control-Allow-Origin',
-				data.home_url
-			);
+			xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+			xhttp.setRequestHeader('Access-Control-Allow-Origin', data.home_url);
 
 			let values = '';
 			for (const key in args) {
@@ -155,20 +153,16 @@ new Vue({
 					multiple: false,
 				})
 				.open()
-				.on('select', function() {
+				.on('select', function () {
 					// This will return the selected image from the Media Uploader, the result is an object
-					const uploadedImage = image
-						.state()
-						.get('selection')
-						.first();
+					const uploadedImage = image.state().get('selection').first();
 					// We convert uploadedImage to a JSON object to make accessing it easier
 					const attachmentID = uploadedImage.toJSON().id;
 					vueThis.vm[dataKey] = attachmentID;
 				});
 		},
 		action(action, product) {
-			this.vm.action =
-				'{ "action": "' + action + '", "product": "' + product + '" }';
+			this.vm.action = JSON.stringify({ action, product });
 			this.refreshAfterSave = true;
 			this.saveOptions();
 		},

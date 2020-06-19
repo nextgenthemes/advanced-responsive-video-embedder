@@ -6,8 +6,8 @@ function register_assets() {
 	Common\register(
 		[
 			'handle' => 'arve-main',
-			'src'    => plugins_url( 'dist/css/arve.css', PLUGIN_FILE ),
-			'ver'    => Common\ver( VERSION, 'dist/css/arve.css', PLUGIN_FILE ),
+			'src'    => plugins_url( 'dist/css/main.css', PLUGIN_FILE ),
+			'ver'    => Common\ver( VERSION, 'dist/css/main.css', PLUGIN_FILE ),
 			'mce'    => true,
 		]
 	);
@@ -15,8 +15,8 @@ function register_assets() {
 	Common\register(
 		[
 			'handle' => 'arve-main',
-			'src'    => plugins_url( 'dist/js/arve.js', PLUGIN_FILE ),
-			'ver'    => Common\ver( VERSION, 'dist/js/arve.js', PLUGIN_FILE ),
+			'src'    => plugins_url( 'dist/js/main.js', PLUGIN_FILE ),
+			'ver'    => Common\ver( VERSION, 'dist/js/main.js', PLUGIN_FILE ),
 		]
 	);
 
