@@ -6,7 +6,8 @@
 		"allowUnreachableCode": false,
 		"strictNullChecks": true,
 		"sourceMap": true,
-		"allowJs": true,
+		"allowJs": false,
+    "module": "es2020",
 		"esModuleInterop": true,
 		"lib": [
 			"es2020",

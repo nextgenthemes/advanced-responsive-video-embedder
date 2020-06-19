@@ -1,9 +1,14 @@
+/* eslint-disable no-undef */
 module.exports = {
+	env: {
+		browser: true,
+		node: false,
+	},
 	root: true,
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		ecmaVersion: 2020,
-		sourceType: 'module',
+		//sourceType: 'module',
 		// ecmaFeatures: {
 		// 	modules: true,
 		// },
@@ -21,7 +26,7 @@ module.exports = {
 			{
 				useTabs: true,
 				tabWidth: 4,
-				printWidth: 99,
+				printWidth: 90,
 				singleQuote: true,
 				trailingComma: 'es5',
 				bracketSpacing: true,
@@ -32,4 +37,13 @@ module.exports = {
 			},
 		],
 	},
+	overrides: [
+		{
+			files: ['webpack.mix.js'],
+			env: {
+				browser: false,
+				node: true,
+			},
+		},
+	],
 };

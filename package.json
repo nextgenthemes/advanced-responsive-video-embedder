@@ -1,12 +1,12 @@
 {
   "name": "advanced-responsive-video-embedder",
+  "homepage": "https://nextgenthemes.com",
   "repository": "https://github.com/nextgenthemes/advanced-responsive-video-embedder",
   "author": "Nicolas Jonas",
   "license": "GPL-3.0",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.2.0",
     "@typescript-eslint/parser": "^3.2.0",
-    "@wordpress/element": "^2.14.0",
     "@wordpress/eslint-plugin": "^6.1.0",
     "browser-sync": "^2.26.7",
     "browser-sync-webpack-plugin": "^2.2.2",
@@ -20,10 +20,10 @@
     "json": ">=9.0.6",
     "laravel-mix": "^5.0.4",
     "prettier": "^2.0.5",
-    "resolve-url-loader": "^3.1.0",
+    "resolve-url-loader": "^3.1.1",
     "sass": "^1.26.8",
     "sass-loader": "^8.0.2",
-    "stylelint": "^13.6.0",
+    "stylelint": "^13.6.1",
     "stylelint-config-twbs-bootstrap": "^2.0.3",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.5",
@@ -41,7 +41,6 @@
     "update-composer": "composer update --no-dev --prefer-dist",
     "update-npm": "npm install; npm update; npm audit fix; npm audit || true",
     "update": "npm run update-composer & npm run update-npm; composer outdated & npm outdated",
-    "eslint": "eslint \"src/**/*.js\"",
-    "css-lint": "stylelint \"src/scss/**/*.scss\""
+    "eslint": "eslint \"src/**/*.ts\""
   }
 }

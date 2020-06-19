@@ -11,14 +11,14 @@ export {};
 declare global {
 	interface Window {
 		wp;
-		ARVEsettings;
+		ARVEsettings: Record<string, unknown>;
 	}
 }
 
 const settings = window.ARVEsettings;
 const wp = window.wp;
-// eslint-disable-next-line
-const el = window.wp.element.createElement as Function;
+const comps = wp.components;
+const el = wp.element.createElement as Function; /* eslint-disable-line */
 
 /*
 wp.data.dispatch( 'core/edit-post' ).hideBlockTypes( [
@@ -34,6 +34,8 @@ wp.data.dispatch( 'core/edit-post' ).hideBlockTypes( [
  * Keypair to gutenberg component
  */
 function PrepareSelectOptions(options) {
+	console.log(options);
+
 	const gboptions = [] as Array<Record<string, unknown>>;
 
 	Object.entries(options).forEach(([key, value]) => {
@@ -42,6 +44,8 @@ function PrepareSelectOptions(options) {
 			value: key,
 		});
 	});
+
+	console.log(options);
 
 	return gboptions;
 }
@@ -63,9 +67,9 @@ interface GBControlArgs {
 	value: string;
 	placeholder: string;
 	checked: boolean;
-	children;
-	options;
-	selected;
+	children: unknown;
+	options: Array<unknown>;
+	selected: boolean;
 	onChange;
 }
 
@@ -90,7 +94,7 @@ function BuildControls(props) {
 				const iframe = domParser
 					.parseFromString(value, 'text/html')
 					.querySelector('iframe');
-				if (iframe && iframe.hasAttribute('src') && iframe.getAttribute('src')) {
+				if (iframe && iframe.getAttribute('src')) {
 					value = iframe.src;
 					const w = iframe.width;
 					const h = iframe.height;
@@ -133,7 +137,7 @@ function BuildControls(props) {
 				if (typeof attrVal !== 'undefined') {
 					ctrlArgs.checked = attrVal;
 				}
-				sectionControls[option.tag].push(el(wp.components.ToggleControl, ctrlArgs));
+				sectionControls[option.tag].push(el(comps.ToggleControl, ctrlArgs));
 				break;
 			case 'select':
 				if (typeof attrVal !== 'undefined') {
@@ -141,14 +145,14 @@ function BuildControls(props) {
 					ctrlArgs.value = attrVal;
 				}
 				ctrlArgs.options = PrepareSelectOptions(option.options);
-				sectionControls[option.tag].push(el(wp.components.SelectControl, ctrlArgs));
+				sectionControls[option.tag].push(el(comps.SelectControl, ctrlArgs));
 				break;
 			case 'string':
 				if (typeof attrVal !== 'undefined') {
 					ctrlArgs.value = attrVal;
 				}
 				ctrlArgs.placeholder = option.placeholder;
-				sectionControls[option.tag].push(el(wp.components.TextControl, ctrlArgs));
+				sectionControls[option.tag].push(el(comps.TextControl, ctrlArgs));
 				break;
 			case 'attachment':
 				ctrlArgs.children = [
@@ -162,7 +166,7 @@ function BuildControls(props) {
 						},
 						render: (obj) => {
 							return el(
-								wp.components.Button,
+								comps.Button,
 								{
 									className:
 										'components-icon-button image-block-btn is-button is-default is-large',
@@ -190,7 +194,7 @@ function BuildControls(props) {
 					}),
 				];
 
-				sectionControls[option.tag].push(el(wp.components.BaseControl, ctrlArgs));
+				sectionControls[option.tag].push(el(comps.BaseControl, ctrlArgs));
 				break;
 		}
 	});
@@ -200,7 +204,7 @@ function BuildControls(props) {
 	Object.keys(sectionControls).forEach((key) => {
 		controls.push(
 			el(
-				window.wp.components.PanelBody,
+				comps.PanelBody,
 				{
 					title: key,
 					initialOpen: open,
@@ -242,7 +246,7 @@ wp.blocks.registerBlockType('nextgenthemes/arve-block', {
 			 * php_block_render() in your PHP code whenever it needs to get an updated
 			 * view of the block.
 			 */
-			el(wp.components.ServerSideRender, {
+			el(comps.ServerSideRender, {
 				block: 'nextgenthemes/arve-block',
 				attributes: props.attributes,
 			}),

@@ -9,11 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function removeUnwantedStuff() {
-	qsa('.arve p, .arve .video-wrap, .arve .fluid-width-video-wrapper, .arve .fluid-vids').forEach(
-		(el) => {
-			unwrap(el);
-		}
-	);
+	qsa(
+		'.arve p, .arve .video-wrap, .arve .fluid-width-video-wrapper, .arve .fluid-vids'
+	).forEach((el) => {
+		unwrap(el);
+	});
 
 	qsa('.arve br').forEach((el) => {
 		el.remove();

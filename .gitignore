@@ -1,8 +1,8 @@
+node_modules/
+
 /build/
 /vendor/
 /codecov/
-
-node_modules/*
 
 # Numerous always-ignore extensions
 *.diff
@@ -17,6 +17,8 @@ node_modules/*
 *~
 
 # OS or Editor folders
+*.tmp
+*.code-workspace
 ._*
 .cache
 .DS_Store
@@ -29,5 +31,10 @@ node_modules/*
 *.sublime-project
 *.sublime-workspace
 *.code-workspace
+*.vscode
 nbproject
 Thumbs.db
+
+# Komodo
+.komodotools
+*.komodoproject

@@ -1,27 +1,76 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-console */
 const mix = require('laravel-mix');
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const imageminMozjpeg = require('imagemin-mozjpeg');
 
-mix.setPublicPath('dist');
 mix.sourceMaps();
-mix.version();
-mix.ts('src/ts/arve.ts', 'js');
-mix.js('src/ts/gb-block.ts', 'js');
-mix.js('src/ts/test-block.ts', 'js');
-mix.js('src/ts/arve-admin.ts', 'js');
-mix.js('src/ts/arve-shortcode-ui.ts', 'js');
+mix.setPublicPath('dist');
 
-mix.js('src/common/ts/settings.ts', 'common/js');
-mix.js('src/common/ts/notice-ajax.ts', 'common/js');
+mix.ts('src/ts/main.ts', 'js');
+mix.ts('src/ts/admin.ts', 'js');
+mix.ts('src/ts/gb-block.ts', 'js');
+mix.ts('src/ts/test-block.ts', 'js');
+mix.ts('src/ts/shortcode-ui.ts', 'js');
 
-mix.sass('src/scss/arve.scss', 'css');
-mix.sass('src/scss/arve-admin.scss', 'css');
+mix.ts('src/common/ts/settings.ts', 'common/js');
+mix.ts('src/common/ts/notice-ajax.ts', 'common/js');
+
+mix.sass('src/scss/main.scss', 'css');
+mix.sass('src/scss/admin.scss', 'css');
+
 mix.sass('src/common/scss/settings.scss', 'common/css');
 
 if (process.env.sync) {
 	mix.browserSync({
-		proxy: 'symbiosistheme.test',
-		files: ['dist/**/*', '**/*.php'],
+		proxy: 'symbiosisthemes.test/arve/',
+		files: [
+			'dist/**/*',
+			'src/views/**/*.php',
+			'app/**/*.php',
+			'php/**/*.php',
+			'*.php',
+		],
 	});
 }
+
+mix.webpackConfig({
+	stats: 'minimal',
+	devtool: mix.inProduction() ? false : 'source-map',
+	performance: { hints: false },
+	plugins: [
+		// @link https://github.com/webpack-contrib/copy-webpack-plugin
+		new CopyWebpackPlugin({
+			patterns: [
+				{ from: 'src/img', to: 'img' },
+				{ from: 'src/svg', to: 'svg' },
+			],
+		}),
+		// @link https://github.com/Klathmon/imagemin-webpack-plugin
+		new ImageminPlugin({
+			test: /\.(jpe?g|png|gif|svg)$/i,
+			disable: process.env.NODE_ENV !== 'production',
+			optipng: { optimizationLevel: 3 },
+			gifsicle: { optimizationLevel: 3 },
+			pngquant: {
+				quality: '65-90',
+				speed: 4,
+			},
+			svgo: {
+				plugins: [
+					{ cleanupIDs: false },
+					{ removeViewBox: false },
+					{ removeUnknownsAndDefaults: false },
+				],
+			},
+			plugins: [
+				// @link https://github.com/imagemin/imagemin-mozjpeg
+				imageminMozjpeg({ quality: 75 }),
+			],
+		}),
+	],
+});
 
 // Full API
 // mix.js(src, output);
