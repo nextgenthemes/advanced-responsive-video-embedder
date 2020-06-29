@@ -1,1 +1,12 @@
-{}
+{
+    "/common/js/notice-ajax.js": "/common/js/notice-ajax.js",
+    "/common/js/settings.js": "/common/js/settings.js",
+    "/js/admin.js": "/js/admin.js",
+    "/js/gb-block.js": "/js/gb-block.js",
+    "/js/main.js": "/js/main.js",
+    "/css/main.css": "/css/main.css",
+    "/css/admin.css": "/css/admin.css",
+    "/common/css/settings.css": "/common/css/settings.css",
+    "/js/shortcode-ui.js": "/js/shortcode-ui.js",
+    "/js/test-block.js": "/js/test-block.js"
+}
