@@ -309,7 +309,7 @@ function debug_section_description() {
 
 function admin_enqueue_styles() {
 
-	Common\enqueue(
+	Common\enqueue_asset(
 		[
 			'handle' => 'advanced-responsive-video-embedder',
 			'src'    => plugins_url( 'dist/css/admin.css', ARVE\PLUGIN_FILE ),
@@ -320,7 +320,7 @@ function admin_enqueue_styles() {
 
 function admin_enqueue_scripts() {
 
-	Common\enqueue(
+	Common\enqueue_asset(
 		[
 			'handle' => 'arve-admin',
 			'src'    => plugins_url( 'dist/js/admin.js', ARVE\PLUGIN_FILE ),
@@ -330,7 +330,7 @@ function admin_enqueue_scripts() {
 	);
 
 	if ( is_plugin_active( 'shortcode-ui/shortcode-ui.php' ) ) {
-		Common\enqueue(
+		Common\enqueue_asset(
 			[
 				'handle' => 'arve-admin-sc-ui',
 				'src'    => plugins_url( 'dist/js/shortcode-ui.js', ARVE\PLUGIN_FILE ),

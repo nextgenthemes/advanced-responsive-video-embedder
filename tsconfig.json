@@ -7,13 +7,7 @@
 		"strictNullChecks": true,
 		"sourceMap": true,
 		"allowJs": false,
-    "module": "es2020",
 		"esModuleInterop": true,
-		"lib": [
-			"es2020",
-			"dom",
-			"dom.iterable"
-		]
 	},
 	"includes": [
 		"src/**/*.ts"
