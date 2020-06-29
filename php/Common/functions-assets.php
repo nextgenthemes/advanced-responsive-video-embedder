@@ -1,26 +1,27 @@
 <?php
 namespace Nextgenthemes\ARVE\Common;
 
-function enqueue( array $args ) {
+function enqueue_asset( array $args ) {
 	$args['enqueue'] = true;
-	register( $args );
+	asset( $args );
 }
 
-function register( array $args ) {
+function asset( array $args ) {
 
 	$defaults = [
-		'async'     => false,
-		'cdn_src'   => '',
-		'defer'     => false,
-		'deps'      => [],
-		'enqueue'   => false,
-		'handle'    => '',
-		'in_footer' => true,
-		'integrity' => '',
-		'media'     => 'all',
-		'src'       => '',
-		'ver'       => null,
-		'mce'       => false,
+		'async'         => false,
+		'cdn_src'       => '',
+		'defer'         => false,
+		'deps'          => [],
+		'enqueue'       => false,
+		'enqueue_hooks' => [],
+		'handle'        => '',
+		'in_footer'     => true,
+		'integrity'     => '',
+		'media'         => 'all',
+		'src'           => '',
+		'ver'           => null,
+		'mce'           => false,
 	];
 
 	$args = wp_parse_args( $args, $defaults );
@@ -43,6 +44,9 @@ function register( array $args ) {
 		if ( $args['enqueue'] ) {
 			wp_enqueue_script( $args['handle'] );
 		}
+		foreach ( $args['enqueue_hooks'] as $hook ) {
+			enqueue_script( $args['handle'], $hook );
+		}
 	} else {
 		wp_register_style( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['media'] );
 
@@ -51,7 +55,10 @@ function register( array $args ) {
 		}
 
 		if ( $args['enqueue'] ) {
-			wp_enqueue_style( $args['handle'] );
+			wp_enqueue_script( $args['handle'] );
+		}
+		foreach ( $args['enqueue_hooks'] as $hook ) {
+			enqueue_style( $args['handle'], $hook );
 		}
 
 		if ( $args['mce'] ) {
@@ -69,8 +76,25 @@ function register( array $args ) {
 	}//end if
 }
 
+function enqueue_style( $handle, $hook ) {
 
+	add_filter(
+		$hook,
+		function() use ( $handle ) {
+			wp_enqueue_style( $handle );
+		}
+	);
+}
 
+function enqueue_script( $handle, $hook ) {
+
+	add_filter(
+		$hook,
+		function() use ( $handle ) {
+			wp_enqueue_script( $handle );
+		}
+	);
+}
 
 function add_attr_to_asset( $type, array $args ) {
 

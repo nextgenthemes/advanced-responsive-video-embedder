@@ -48,7 +48,7 @@ class NoticeFactory {
 
 	public function assets() {
 
-		Common\enqueue(
+		Common\enqueue_asset(
 			[
 				'handle' => 'nextgenthemes-notice-ajax',
 				'deps'   => [ 'jquery' ],

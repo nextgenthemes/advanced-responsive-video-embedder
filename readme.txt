@@ -5,7 +5,7 @@ Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embe
 Requires at least: 4.4.0
 Tested up to: 5.4
 Requires PHP: 5.6
-Stable tag: 9.0.0-alpha26
+Stable tag: 9.0.0-alpha27
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -18,7 +18,7 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 
 ### 9.0.0 ###
 
-This update is very long in the making and I hope it will pay off somehow, hopefully literally. A lot things happened in the code that will not be visbile to the end users directly.
+This update is very long in the making and I hope it will pay off somehow, hopefully literally. A lot things happened in the code that will not be visible to the end users directly but made the code more modern and easier to maintain.
 
 **Important**: Minimum PHP required for ARVE is now 5.6 you should be a the latest version (PHP 7.4) for [security](https://secure.php.net/supported-versions.php) and speed anyway
 
