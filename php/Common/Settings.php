@@ -118,7 +118,7 @@ class Settings {
 			return;
 		}
 
-		enqueue(
+		enqueue_asset(
 			[
 				'handle' => 'nextgenthemes-settings',
 				'src'    => plugin_or_theme_src( 'dist/common/css/settings.css' ),
@@ -126,7 +126,7 @@ class Settings {
 			]
 		);
 
-		enqueue(
+		enqueue_asset(
 			[
 				'handle' => 'nextgenthemes-settings',
 				'src'    => plugin_or_theme_src( 'dist/common/js/settings.js' ),
