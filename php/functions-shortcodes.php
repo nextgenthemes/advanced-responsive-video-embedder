@@ -176,6 +176,16 @@ function wp_video_shortcode_override( $out, $attr ) {
 		return $out;
 	}
 
+	if ( ! empty( $attr['url'] )
+		&& ! empty( $attr['src'] )
+	) {
+		unset( $attr['src'] );
+	}
+
+	if ( isset( $attr['loop'] ) ) {
+		$attr['loop'] = bool_to_shortcode_string( $attr['loop'] );
+	}
+
 	if ( ! empty( $attr['poster'] ) ) {
 		$attr['thumbnail'] = $attr['poster'];
 	}
