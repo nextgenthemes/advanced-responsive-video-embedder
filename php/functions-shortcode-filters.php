@@ -3,47 +3,13 @@ namespace Nextgenthemes\ARVE;
 
 function sc_filter_set_uid( array $a ) {
 
-	static $uids = [];
+	static $i = 1;
 
-	foreach ( [
-		'src',
-		'url',
-		'id',
-		'webm',
-		'av1mp4',
-		'mp4',
-		'ogv',
-		'm4v',
-		'webtorrent',
-	] as $att ) {
+	$a['uid']  = 'arve-' . $a['provider'];
+	$a['uid'] .= $a['id'] ? '-' . $a['id'] : '';
+	$a['uid'] .= uniqid('', true) . '-' . $i;
 
-		if ( ! empty( $a[ $att ] ) && is_string( $a[ $att ] ) ) {
-			$a['uid'] = strtolower( $a[ $att ] );
-			$a['uid'] = str_replace( [ 'https://www.', 'https://' ], '', $a['uid'] );
-			$a['uid'] = preg_replace( '/[^a-z0-9]/', '', $a['uid'] );
-			$a['uid'] = 'arve-' . $a['uid'];
-			break;
-		}
-	}
-
-	$uids[] = $a['uid'];
-
-	if ( in_array( $a['uid'], $uids, true ) ) {
-		$id_counts = array_count_values( $uids );
-		$id_count  = $id_counts[ $a['uid'] ];
-
-		if ( $id_count >= 2 ) {
-			$a['uid'] .= '-' . $id_count;
-		}
-	}
-
-	if ( empty( $a['uid'] ) ) {
-		$a['errors']->add(
-			'fatal',
-			__( 'UID could not be build, this means ARVE did not get one of the essential inputs like URL.', 'advanced-responsive-video-embedder' )
-		);
-		remove_all_filters( 'shortcode_atts_arve' );
-	}
+	$i++;
 
 	return $a;
 }
