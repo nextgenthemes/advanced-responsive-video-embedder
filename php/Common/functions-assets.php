@@ -55,7 +55,7 @@ function asset( array $args ) {
 		}
 
 		if ( $args['enqueue'] ) {
-			wp_enqueue_script( $args['handle'] );
+			wp_enqueue_style( $args['handle'] );
 		}
 		foreach ( $args['enqueue_hooks'] as $hook ) {
 			enqueue_style( $args['handle'], $hook );
