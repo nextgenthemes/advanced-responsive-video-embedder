@@ -22,7 +22,7 @@
 namespace Nextgenthemes\ARVE;
 
 const VERSION               = '9.0.0-alpha28';
-const PRO_VERSION_REQUIRED  = '5.0.0-alpha1';
+const PRO_VERSION_REQUIRED  = '5.0.0-alpha22';
 const NUM_TRACKS            = 3;
 const PLUGIN_FILE           = __FILE__;
 const PLUGIN_DIR            = __DIR__;
@@ -87,7 +87,6 @@ function init() {
 		'iframe_src'                      => 20,
 		// Maybe validate_again ?
 		'set_uid'                         => 90,
-		'set_fixed_dimensions'            => 90,
 	] as $filter => $priority ) {
 		add_filter( 'shortcode_atts_arve', __NAMESPACE__ . "\\sc_filter_{$filter}", $priority );
 	};
