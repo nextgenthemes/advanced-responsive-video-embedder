@@ -8,6 +8,7 @@ function sc_filter_set_uid( array $a ) {
 	$a['uid']  = 'arve-' . $a['provider'];
 	$a['uid'] .= $a['id'] ? '-' . $a['id'] : '';
 	$a['uid'] .= uniqid('', true) . '-' . $i;
+	$a['uid']  = sanitize_key( $a['uid'] );
 
 	$i++;
 
@@ -41,16 +42,6 @@ function sc_filter_aspect_ratio( array $a ) {
 	return $a;
 }
 
-function aspect_ratio_gcd( $aspect_ratio ) {
-
-	$ar  = explode( ':', $aspect_ratio );
-	$gcd = gcd( $ar[0], $ar[1] );
-
-	$aspect_ratio = $ar[0] / $gcd . ':' . $ar[1] / $gcd;
-
-	return $aspect_ratio;
-}
-
 function sc_filter_maxwidth( array $a ) {
 
 	$options = options();
@@ -64,6 +55,10 @@ function sc_filter_maxwidth( array $a ) {
 		} else {
 			$a['maxwidth'] = (int) $options['maxwidth'];
 		}
+	}
+
+	if ( $a['maxwidth'] < 50 ) {
+		$a['errors']->add( 'no-maxwidth', __( 'Maxwidth needs to be 50+', 'advanced-responsive-video-embedder' ) );
 	}
 
 	return $a;
@@ -178,24 +173,6 @@ function sc_filter_validate_again( array $a ) {
 		}
 	}
 	unset( $attr );
-
-	return $a;
-}
-
-function sc_filter_set_fixed_dimensions( array $a ) {
-
-	if ( is_feed() ) {
-		return $a;
-	}
-
-	if ( ! empty( $a['oembed_data']->width ) ) {
-		$width = $a['oembed_data']->width;
-	} else {
-		$width = 640;
-	}
-
-	$a['width']  = $width;
-	$a['height'] = calculate_height( $width, $a['aspect_ratio'] );
 
 	return $a;
 }

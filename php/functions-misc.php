@@ -1,6 +1,16 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+function aspect_ratio_gcd( $aspect_ratio ) {
+
+	list( $width, $height ) = explode( ':', $aspect_ratio );
+	$gcd = gcd( $width, $height );
+
+	$aspect_ratio = $width / $gcd . ':' . $height / $gcd;
+
+	return $aspect_ratio;
+}
+
 function gcd( $a, $b ) {
 	return $b ? gcd( $b, $a % $b ) : $a;
 }
@@ -50,10 +60,25 @@ function youtube_time_to_seconds( $yttime ) {
 		(int) $matches['s'];
 }
 
+function new_height( $old_width, $old_height, $new_width ) {
+
+	$aspect_num   = $old_width / $old_height;
+	$new_height   = $new_width / $aspect_num;
+
+	return $new_height;
+}
+
+function new_height_from_aspect_ratio( $new_width, $aspect_ratio ) {
+
+	list( $old_width, $old_height ) = explode( ':', $aspect_ratio );
+
+	return new_height( $old_width, $old_height, $new_width );
+}
+
 /**
  * Calculates padding percentage value for a particular aspect ratio
  *
- * @param string $aspect_ratio '4:3' or percentage value with percent sign.
+ * @param string $aspect_ratio example '4:3'
  *
  * @since 4.2.0
  *
@@ -61,16 +86,17 @@ function youtube_time_to_seconds( $yttime ) {
  */
 function aspect_ratio_to_percentage( $aspect_ratio ) {
 
-	$a          = explode( ':', $aspect_ratio );
-	$percentage = ( $a[1] / $a[0] ) * 100;
+	list( $width, $height ) = explode( ':', $aspect_ratio );
+	$percentage             = ( $height / $width ) * 100;
 
 	return $percentage;
 }
 
-function calculate_height( $width, $aspect_ratio ) {
+function calculate_height_old( $width, $aspect_ratio ) {
 
 	$width        = (int) $width;
 	$aspect_ratio = empty( $aspect_ratio ) ? '16:9' : $aspect_ratio;
+
 	$percent      = aspect_ratio_to_percentage( $aspect_ratio );
 
 	if ( $width > 100 && $percent ) {
