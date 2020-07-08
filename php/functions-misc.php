@@ -92,20 +92,6 @@ function aspect_ratio_to_percentage( $aspect_ratio ) {
 	return $percentage;
 }
 
-function calculate_height_old( $width, $aspect_ratio ) {
-
-	$width        = (int) $width;
-	$aspect_ratio = empty( $aspect_ratio ) ? '16:9' : $aspect_ratio;
-
-	$percent      = aspect_ratio_to_percentage( $aspect_ratio );
-
-	if ( $width > 100 && $percent ) {
-		return ( ( $width / 100 ) * $percent );
-	}
-
-	return false;
-}
-
 function disabled_on_feeds() {
 	return is_feed() && ! options()['feed'] ? true : false;
 }
