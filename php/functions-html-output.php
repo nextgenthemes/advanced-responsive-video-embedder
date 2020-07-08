@@ -16,7 +16,6 @@ function build_html( array $a ) {
 				'data-provider'  => $a['provider'],
 				'id'             => $a['uid'],
 				'style'          => $a['maxwidth'] ? sprintf( 'max-width:%dpx;', $a['maxwidth'] ) : false,
-				'data-max-width' => $a['maxwidth'] ? sprintf( '%dpx', $a['maxwidth'] ) : false,
 
 				// Schema.org
 				'itemscope'      => $options['seo_data'] ? '' : false,
@@ -29,9 +28,16 @@ function build_html( array $a ) {
 
 function build_iframe_tag( array $a ) {
 
+	$width   = false;
+	$height  = false;
 	$allow   = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
 	$class   = 'arve-iframe fitvidsignore';
 	$sandbox = 'allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox';
+
+	if ( is_feed() ) {
+		$width  = $a['maxwidth'];
+		$height = new_height_from_aspect_ratio( $a['maxwidth'], $a['aspect_ratio'] );
+	}
 
 	if ( 'vimeo' === $a['provider'] ) {
 		$sandbox .= ' allow-forms';
@@ -62,12 +68,12 @@ function build_iframe_tag( array $a ) {
 				'data-arve'       => $a['uid'],
 				'data-src-no-ap'  => iframe_src_autoplay_args( $a['src'], false, $a ),
 				'frameborder'     => '0',
-				'height'          => empty( $a['height'] ) ? false : $a['height'],
+				'height'          => $height,
 				'name'            => $a['iframe_name'],
 				'sandbox'         => $sandbox,
 				'scrolling'       => 'no',
 				'src'             => $a['src'],
-				'width'           => empty( $a['width'] ) ? false : $a['width'],
+				'width'           => $width,
 			],
 		],
 		$a
@@ -90,7 +96,7 @@ function build_video_tag( array $a ) {
 				'controlslist'       => $a['controlslist'],
 				'loop'               => $a['loop'],
 				'preload'            => 'metadata',
-				'width'              => empty( $a['width'] ) ? false : $a['width'],
+				'width'              => is_feed() ? $a['width'] : false,
 				'poster'             => empty( $a['img_src'] ) ? false : $a['img_src'],
 				// ARVE only
 				'data-arve'          => $a['uid'],

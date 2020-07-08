@@ -3,7 +3,7 @@
  * Plugin Name:       ARVE Advanced Responsive Video Embedder
  * Plugin URI:        https://nextgenthemes.com/plugins/arve-pro/
  * Description:       Easy responsive video embeds via URL (like WordPress) or Shortcodes. Supports almost anything you can imagine.
- * Version:           9.0.0-alpha28
+ * Version:           9.0.0-alpha29
  * Author:            Nicolas Jonas
  * Author URI:        https://nextgenthemes.com
  * License:           GPL-3.0
@@ -21,8 +21,8 @@
 
 namespace Nextgenthemes\ARVE;
 
-const VERSION               = '9.0.0-alpha28';
-const PRO_VERSION_REQUIRED  = '5.0.0-alpha1';
+const VERSION               = '9.0.0-alpha29';
+const PRO_VERSION_REQUIRED  = '5.0.0-alpha22';
 const NUM_TRACKS            = 3;
 const PLUGIN_FILE           = __FILE__;
 const PLUGIN_DIR            = __DIR__;
@@ -87,7 +87,6 @@ function init() {
 		'iframe_src'                      => 20,
 		// Maybe validate_again ?
 		'set_uid'                         => 90,
-		'set_fixed_dimensions'            => 90,
 	] as $filter => $priority ) {
 		add_filter( 'shortcode_atts_arve', __NAMESPACE__ . "\\sc_filter_{$filter}", $priority );
 	};
@@ -95,6 +94,9 @@ function init() {
 	unset( $priority );
 
 	// Admin Hooks
+	add_action( 'nextgenthemes/arve/admin/settings_header', __NAMESPACE__ . '\Admin\settings_header' );
+	add_action( 'nextgenthemes/arve/admin/settings_sidebar', __NAMESPACE__ . '\Admin\settings_sidebar' );
+
 	add_action( 'admin_bar_menu',        __NAMESPACE__ . '\Admin\action_admin_bar_menu', 100 );
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\Admin\admin_enqueue_scripts' );
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\Admin\admin_enqueue_styles', 99 );

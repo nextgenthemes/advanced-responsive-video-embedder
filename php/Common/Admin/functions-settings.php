@@ -6,9 +6,13 @@ use \Nextgenthemes\ARVE\Common;
 function label_text( $option ) {
 	?>
 	<span class="nextgenthemes-label-text">
-		<?= esc_html( $option['label'] ); ?>
 		<?php
-		if ( ! in_array( $option['tag'], [ 'main', 'html5', 'urlparams' ], true ) ) {
+		echo esc_html( $option['label'] );
+
+		if (
+			Common\contains( __NAMESPACE__, 'ARVE' ) &&
+			! in_array( $option['tag'], [ 'main', 'html5', 'urlparams' ], true )
+		) {
 
 			printf(
 				'<a href="https://nextgenthemes.com/plugins/arve-%s">(%s)</a>',
@@ -16,9 +20,12 @@ function label_text( $option ) {
 				esc_html( ucfirst( $option['tag'] ) . ' Addon' )
 			);
 		}
-		?>
-		<?php if ( 'not' === $option['tag'] ) : ?>
-			&nbsp;<span class="button-primary button-primary--ngt-small"><?= esc_html( $option['tag'] ); ?></span>
+
+		if ( ! empty( $option['tag'] ) && 'not' === $option['tag'] ) : ?>
+			&nbsp;
+			<span class="button-primary button-primary--ngt-small">
+				<?= esc_html( $option['tag'] ); ?>
+			</span>
 		<?php endif; ?>
 	</span>
 	<?php
@@ -152,10 +159,14 @@ function print_select_field( $key, $option ) {
 
 function block_attr( $key, $option ) {
 
-	$block_attr = [
-		'class'  => "ngt-option-block ngt-option-block--$key ngt-option-block--{$option['tag']}",
-		'v-show' => 'sectionsDisplayed.' . $option['tag'],
-	];
+	if ( empty( $option['tag'] ) ) {
+		$block_attr['class'] = "ngt-option-block ngt-option-block--$key";
+	} else {
+		$block_attr = [
+			'class'  => "ngt-option-block ngt-option-block--$key ngt-option-block--{$option['tag']}",
+			'v-show' => 'sectionsDisplayed.' . $option['tag'],
+		];
+	}
 
 	return Common\attr( $block_attr );
 }

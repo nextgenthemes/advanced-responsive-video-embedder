@@ -16,8 +16,6 @@ class Settings {
 	public function __construct( $args ) {
 
 		$defaults = [
-			'content_function' => false,
-			'sidebar_function' => false,
 			'menu_parent_slug' => 'options-general.php',
 		];
 
@@ -27,12 +25,10 @@ class Settings {
 		$this->menu_title          = $args['menu_title'];
 		$this->settings_page_title = $args['settings_page_title'];
 		$this->slugged_namespace   = sanitize_key( str_replace( '\\', '_', $args['namespace'] ) );
-		$this->slashed_namespace   = sanitize_key( str_replace( '\\', '/', $args['namespace'] ) );
+		$this->slashed_namespace   = str_replace( '_', '/', $this->slugged_namespace );
 		$this->rest_namespace      = $this->slugged_namespace . '/v1';
 		$this->rest_url            = get_home_url() . '/wp-json/' . $this->rest_namespace;
 		$this->menu_parent_slug    = $args['menu_parent_slug'];
-		$this->content_function    = $args['content_function'];
-		$this->sidebar_function    = $args['sidebar_function'];
 
 		foreach ( $this->settings as $key => $value ) {
 			$this->options_defaults[ $key ] = $value['default'];
@@ -119,11 +115,11 @@ class Settings {
 		}
 
 		enqueue_asset(
-			[
-				'handle' => 'nextgenthemes-settings',
-				'src'    => plugin_or_theme_src( 'dist/common/css/settings.css' ),
-				'ver'    => plugin_or_theme_ver( \Nextgenthemes\ARVE\VERSION, 'dist/common/css/settings.css' ),
-			]
+		 	[
+		 		'handle' => 'nextgenthemes-settings',
+		 		'src'    => plugin_or_theme_src( 'dist/common/css/settings.css' ),
+		 		'ver'    => plugin_or_theme_ver( \Nextgenthemes\ARVE\VERSION, 'dist/common/css/settings.css' ),
+		 	]
 		);
 
 		enqueue_asset(
@@ -184,10 +180,7 @@ class Settings {
 				<div class="ngt-settings-grid__content" id='nextgenthemes-vue'>
 					<?php
 
-					if ( $this->content_function ) {
-						$function = $this->content_function;
-						$function();
-					}
+					do_action( $this->slashed_namespace . '/admin/settings_header', $this );
 
 					$this->print_settings_blocks();
 
@@ -208,12 +201,7 @@ class Settings {
 					<p v-if='message'>{{ message }}</p>
 				</div>
 				<div class="ngt-settings-grid__sidebar">
-					<?php
-					if ( $this->sidebar_function ) {
-						$function = $this->sidebar_function;
-						$function();
-					}
-					?>
+					<?php do_action( $this->slashed_namespace . '/admin/settings_sidebar', $this ); ?>
 				</div>
 			</div>
 		</div>

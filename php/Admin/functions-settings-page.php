@@ -3,7 +3,7 @@ namespace Nextgenthemes\ARVE\Admin;
 
 use \Nextgenthemes\ARVE;
 
-function settings_page_top() {
+function settings_header() {
 
 	$sections = [
 		'main'        => __( 'Main', 'advanced-responsive-video-embedder' ),
@@ -39,6 +39,11 @@ function settings_page_top() {
 		<?php require_once __DIR__ . '/partials/debug-info.php'; ?>
 	</div>
 	<?php
+}
+
+function settings_sidebar() {
+	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
+	readfile( __DIR__ . '/partials/settings-sidebar.html' );
 }
 
 function echo_active_plugins() {
