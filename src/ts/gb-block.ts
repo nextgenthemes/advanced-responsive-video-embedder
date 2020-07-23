@@ -34,8 +34,6 @@ wp.data.dispatch( 'core/edit-post' ).hideBlockTypes( [
  * Keypair to gutenberg component
  */
 function PrepareSelectOptions(options) {
-	console.log(options);
-
 	const gboptions = [] as Array<Record<string, unknown>>;
 
 	Object.entries(options).forEach(([key, value]) => {
@@ -44,8 +42,6 @@ function PrepareSelectOptions(options) {
 			value: key,
 		});
 	});
-
-	console.log(options);
 
 	return gboptions;
 }
