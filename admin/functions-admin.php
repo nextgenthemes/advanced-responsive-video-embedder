@@ -23,6 +23,13 @@ function arve_action_admin_init_setup_messages() {
 
 		new ARVE_Admin_Notice_Factory( 'arve_dismiss_pro_notice', $pro_ad_message, true );
 	}
+
+	$msg = sprintf(
+		__( '<p>If this message bothers you please just close it and forget about it!</p><p>Dear ARVE users, if you can spare the time <a href="%s">I need your help</a> trying out the upcoming version with new features and improvements before official release on wp.org. I would really really appreciate you helping out. Thanks so much!</p>', ARVE_SLUG ),
+		'https://nextgenthemes.com/plugins/arve/help-testing-the-beta-version/'
+	);
+
+	new ARVE_Admin_Notice_Factory( 'arve-beta-testers', "<p>$msg</p>", false );
 }
 
 function arve_add_tinymce_plugin( $plugin_array ) {
