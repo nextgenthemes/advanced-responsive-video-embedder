@@ -74,8 +74,8 @@ function arve_build_meta_html( $a ) {
 		$meta .= sprintf( '<meta itemprop="contentURL" content="%s">', esc_attr( $first_source['src'] ) );
 	}
 
-	if ( ! empty( $a['iframe_src'] ) ) {
-		$meta .= sprintf( '<meta itemprop="embedURL" content="%s">', esc_attr( $a['iframe_src'] ) );
+	if ( ! empty( $a['iframe_attr']['src'] ) ) {
+		$meta .= sprintf( '<meta itemprop="embedURL" content="%s">', esc_attr( $a['iframe_attr']['src'] ) );
 	}
 
 	if ( ! empty( $a['upload_date'] ) ) {
