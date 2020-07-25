@@ -76,12 +76,12 @@ jobs:
         run: echo ::set-output name=file::build/zip/${{ github.event.repository.name }}-$(echo ${{ github.ref }} | sed "s/\//-/g" | sed -E -e "s/[^a-z0-9-]+//g").zip
 
       - name: Checkout repository
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
 
       - run: mkdir -p $(dirname "${{ steps.zip.outputs.file }}")
       - run: git archive --format=zip --prefix="${PWD##*/}"/ --output="${{ steps.zip.outputs.file }}" ${{ github.sha }}
 
-      - uses: actions/upload-artifact@master
+      - uses: actions/upload-artifact@v2
         with:
           name: artifact
           path: ${{ steps.zip.outputs.file }}
@@ -101,7 +101,7 @@ jobs:
           && ! startsWith(github.event.repository.name, 'arve-')
           && ! contains(github.ref, 'beta')
           && ! contains(github.ref, 'alpha')
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
 
       - name: Maybe deploy to wp.org
         if: >-

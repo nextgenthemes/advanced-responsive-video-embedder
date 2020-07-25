@@ -3,7 +3,7 @@ Contributors: nico23
 Donate link: https://www.paypal.me/nico23
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.4.0
-Tested up to: 5.2.2
+Tested up to: 5.4.2
 Requires PHP: 5.3
 Stable tag: 8.10.23
 License: GPL-3.0
