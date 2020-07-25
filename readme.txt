@@ -17,7 +17,9 @@ The best WordPress plugin for videos? Supports close to everything you can imagi
 
 It is very likely the one and only plugin you will ever need to handle video embeds on your WordPress site(s). It goes far beyond just making your videos responsive!
 
-### Big version update with Gutenberg Block is coming [please help testing](https://nextgenthemes.com/plugins/arve/help-testing-the-beta-version/) ###
+Especially new users and people who want to use the new Block Editor (Gutenberg):
+
+### [Please help test the upcoming version](https://nextgenthemes.com/please-help-test-the-beta-version/) ###
 
 [youtube https://www.youtube.com/watch?v=m6mkA6Zr1vY ]
 
@@ -159,6 +161,49 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### planned for release 9.0.0 ###
+
+This update is very long in the making and I hope it will pay off somehow, hopefully literally. A lot things happened in the code that will not be visible to the end users directly but made the code more modern and easier to maintain.
+
+[Please help test](https://nextgenthemes.com/please-help-test-the-beta-version/)
+
+[More details on this **mayor** update](https://nextgenthemes.com/improvements-in-arve-9-0-and-arve-pro-5-0/)
+
+New:
+ * Minimum PHP required is now 5.6.
+ * Finally the ARVE Gutenberg block is here! Its not polished yet and there is still work to be done.
+ * Optional admin bar button to quick access settings. Disable it in ARVE settings bothers you.
+ * Added Bitchute
+ * `av1mp4` shortcode parameter so serve [AV1](https://en.wikipedia.org/wiki/AV1) encoded files best named .av1.mp4 (to be used together with `mp4` or `webm`)
+ * Settings page overhaul, using my own little settings framework. All addon options can be seen and set (without effect) before actually having the addons installed.
+ * Option to 
+
+Fixes:
+ * YouTube live links are now working correctly.
+ * TED embed url.
+ * Facebook embeds.
+ * Twitch embeds.
+
+Improved:
+ * Generated iframe src will match what providers send over oembed.
+ * Lots of code improvements that may not be noticeable to users but took a lot of time and will make the plugin more maintainable and easier to extend.
+ * Removed the `lang` shortcode parameter that was only used for TED talks video subtitle display. This is now taken from the `language=x` url query.
+ * Embeds work though WPs oembed system now that comes with a more stable codebase and better caching system for embeds.
+ * Aspect ratios are now auto detected for all providers WP supports through oEmbed.
+ * Aspect ratio field is now auto filled when pasting a iframe embed code into the shortcode UI or Gutenberg UI.
+ * Removed jQuery dependency for frontend JavaScript.
+ * Prevent autoplay of multiple videos, only the first video on pageload will be autoplayed.
+
+ Removed:
+ * Hack to support direct embedding of Dropbox videos because it no longer works.
+ * Vimeo only `start` shortcode attribute. Use vimeo urls with `#t=30` at the end for starting time in seconds instead.
+
+ Probably things I forgot about, working on this for ~1 year
+
+### 2020-07-25 - 8.10.24 ###
+
+* Fix: `embedURL` SEO output.
 
 ### 2020-05-14 - 8.10.23 ###
 
