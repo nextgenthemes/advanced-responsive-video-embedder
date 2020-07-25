@@ -6,7 +6,7 @@
   "scripts": {
     "js": "uglifyjs --compress --mangle --comments '/^!/' --output public/arve.min.js public/arve.js",
     "css": "cleancss --level 1 --output public/arve.min.css public/arve.css",
-    "production": "run-p css js; mkdir -p dist vendor"
+    "prod": "run-p css js; mkdir -p dist vendor"
   },
   "devDependencies": {
     "clean-css-cli": "^4.3.0",
