@@ -25,7 +25,7 @@ $options = arve_get_options();
 
 			<div class="arve-corner-spacer"></div>
 
-			<p>Big version update with Gutenberg Block is coming <a href="https://nextgenthemes.com/plugins/arve/help-testing-the-beta-version">please help testing</a></p>
+			<p><a href="https://nextgenthemes.com/help-test-the-beta-version/">please help test the upcoming version</a></p>
 
 			<h3>Please rate</h3>
 

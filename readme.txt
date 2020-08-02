@@ -205,6 +205,11 @@ Removed:
 
 Probably things I forgot about, working on this for ~1 year
 
+### 2020-08-02 - 8.10.27 ###
+
+* Fix: **SORRY!** message about beta testing was **not intended** to show hourly it was intended to show only once per user.
+* Fix: Link in that messages was also to a 404 page, can it get worse?
+
 ### 2020-07-25 - 8.10.24 ###
 
 * Fix: `embedURL` SEO output.
