@@ -82,6 +82,7 @@ function init() {
 		'video'                           => 10,
 		'liveleak_id_fix'                 => 10,
 		'maxwidth'                        => 10,
+		'dimensions'                      => 12,
 		'mode'                            => 14,
 		'autoplay'                        => 15,
 		'iframe_src'                      => 20,

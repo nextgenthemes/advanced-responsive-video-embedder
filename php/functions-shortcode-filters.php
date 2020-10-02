@@ -39,6 +39,17 @@ function sc_filter_aspect_ratio( array $a ) {
 	return $a;
 }
 
+function sc_filter_dimensions( array $a ) {
+
+	$a['width'] = $a['maxwidth'];
+
+	if ( $a['aspect_ratio'] ) {
+		$a['height'] = new_height_from_aspect_ratio( $a['width'], $a['aspect_ratio'] );
+	}
+
+	return $a;
+}
+
 function sc_filter_maxwidth( array $a ) {
 
 	$options = options();
