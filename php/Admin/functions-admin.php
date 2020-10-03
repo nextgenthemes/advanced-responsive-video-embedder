@@ -312,8 +312,8 @@ function admin_enqueue_styles() {
 	Common\enqueue_asset(
 		[
 			'handle' => 'advanced-responsive-video-embedder',
-			'src'    => plugins_url( 'dist/css/admin.css', ARVE\PLUGIN_FILE ),
-			'ver'    => Common\ver( ARVE\VERSION, 'dist/css/admin.css', ARVE\PLUGIN_FILE ),
+			'src'    => plugins_url( 'dist/admin.css', ARVE\PLUGIN_FILE ),
+			'ver'    => Common\ver( ARVE\VERSION, 'dist/admin.css', ARVE\PLUGIN_FILE ),
 		]
 	);
 }
@@ -323,8 +323,8 @@ function admin_enqueue_scripts() {
 	Common\enqueue_asset(
 		[
 			'handle' => 'arve-admin',
-			'src'    => plugins_url( 'dist/js/admin.js', ARVE\PLUGIN_FILE ),
-			'ver'    => Common\ver( ARVE\VERSION, 'dist/js/admin.js', ARVE\PLUGIN_FILE ),
+			'path'   => ARVE\PLUGIN_DIR . '/dist/admin.js',
+			'src'    => plugins_url( 'dist/admin.js', ARVE\PLUGIN_FILE ),
 			'deps'   => [ 'jquery' ],
 		]
 	);
@@ -333,8 +333,8 @@ function admin_enqueue_scripts() {
 		Common\enqueue_asset(
 			[
 				'handle' => 'arve-admin-sc-ui',
-				'src'    => plugins_url( 'dist/js/shortcode-ui.js', ARVE\PLUGIN_FILE ),
-				'ver'    => Common\ver( ARVE\VERSION, 'dist/js/shortcode-ui.js', ARVE\PLUGIN_FILE ),
+			    'path'   => ARVE\PLUGIN_DIR . '/dist/shortcode-ui.js',
+				'src'    => plugins_url( 'dist/shortcode-ui.js', ARVE\PLUGIN_FILE ),
 				'deps'   => [ 'shortcode-ui' ],
 			]
 		);
