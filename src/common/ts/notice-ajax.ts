@@ -12,15 +12,22 @@ if (closeBtn) {
 	closeBtn.addEventListener('click', dismiss, false);
 }
 
-function dismiss() {
-	const id = this.closest('[data-nextgenthemes-notice-id]').getAttribute(
-		'data-nextgenthemes-notice-id'
-	);
+function dismiss(ev: Event) {
+	if (!ev || !ev.target) {
+		return;
+	}
+
+	const target = ev.target as HTMLElement;
+	const notice = target.closest('[data-nextgenthemes-notice-id]');
+
+	if (!notice) {
+		return;
+	}
 
 	window.jQuery.ajax({
 		url: window.ajaxurl,
 		data: {
-			action: id,
+			action: notice.id,
 		},
 	});
 

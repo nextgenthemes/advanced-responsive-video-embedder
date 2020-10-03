@@ -11,14 +11,23 @@ export {};
 declare global {
 	interface Window {
 		wp;
-		ARVEsettings: Record<string, unknown>;
+		ARVEsettings: Record<string, Option>;
 	}
 }
 
 const settings = window.ARVEsettings;
 const wp = window.wp;
-const comps = wp.components;
 const el = wp.element.createElement as Function; /* eslint-disable-line */
+const {
+	BaseControl,
+	TextControl,
+	Button,
+	ToggleControl,
+	SelectControl,
+	ServerSideRender,
+	PanelBody,
+	DropZone,
+} = wp.components;
 
 /*
 wp.data.dispatch( 'core/edit-post' ).hideBlockTypes( [
@@ -75,13 +84,12 @@ function BuildControls(props) {
 	// eslint-disable-next-line
 	const domParser = new DOMParser();
 
-	Object.values(settings).forEach((option: Option) => {
+	Object.values(settings).forEach((option) => {
 		sectionControls[option.tag] = [];
 	});
 
-	Object.entries(settings).forEach(([key, option]: [string, Option]) => {
+	Object.entries(settings).forEach(([key, option]) => {
 		const attrVal = props.attributes[key];
-
 		const ctrlArgs = {} as GBControlArgs;
 
 		ctrlArgs.label = option.label;
@@ -133,7 +141,7 @@ function BuildControls(props) {
 				if (typeof attrVal !== 'undefined') {
 					ctrlArgs.checked = attrVal;
 				}
-				sectionControls[option.tag].push(el(comps.ToggleControl, ctrlArgs));
+				sectionControls[option.tag].push(el(ToggleControl, ctrlArgs));
 				break;
 			case 'select':
 				if (typeof attrVal !== 'undefined') {
@@ -141,56 +149,18 @@ function BuildControls(props) {
 					ctrlArgs.value = attrVal;
 				}
 				ctrlArgs.options = PrepareSelectOptions(option.options);
-				sectionControls[option.tag].push(el(comps.SelectControl, ctrlArgs));
+				sectionControls[option.tag].push(el(SelectControl, ctrlArgs));
 				break;
 			case 'string':
 				if (typeof attrVal !== 'undefined') {
 					ctrlArgs.value = attrVal;
 				}
 				ctrlArgs.placeholder = option.placeholder;
-				sectionControls[option.tag].push(el(comps.TextControl, ctrlArgs));
+				sectionControls[option.tag].push(el(TextControl, ctrlArgs));
 				break;
 			case 'attachment':
-				ctrlArgs.children = [
-					el(wp.editor.MediaUpload, {
-						type: 'image',
-						onSelect: (media) => {
-							return props.setAttributes({
-								[key]: media.id.toString(),
-								[key + '_url']: media.url,
-							});
-						},
-						render: (obj) => {
-							return el(
-								comps.Button,
-								{
-									className:
-										'components-icon-button image-block-btn is-button is-default is-large',
-									onClick: obj.open,
-								},
-								el(
-									'svg',
-									{
-										className: 'dashicon dashicons-edit',
-										width: '20',
-										height: '20',
-									},
-									el('path', {
-										d:
-											'M2.25 1h15.5c.69 0 1.25.56 1.25 1.25v15.5c0 .69-.56 1.25-1.25 1.25H2.25C1.56 19 1 18.44 1 17.75V2.25C1 1.56 1.56 1 2.25 1zM17 17V3H3v14h14zM10 6c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2 2-.9 2-2zm3 5s0-6 3-6v10c0 .55-.45 1-1 1H5c-.55 0-1-.45-1-1V8c2 0 3 4 3 4s1-3 3-3 3 2 3 2z',
-									})
-								),
-								el('span', {}, ' Select image')
-							); // end el button
-						},
-					}),
-					el('img', {
-						src: urlVal,
-						alt: 'thumbnail',
-					}),
-				];
-
-				sectionControls[option.tag].push(el(comps.BaseControl, ctrlArgs));
+				ctrlArgs.children = createUploadControl(props, key, urlVal);
+				sectionControls[option.tag].push(el(BaseControl, ctrlArgs));
 				break;
 		}
 	});
@@ -200,9 +170,9 @@ function BuildControls(props) {
 	Object.keys(sectionControls).forEach((key) => {
 		controls.push(
 			el(
-				comps.PanelBody,
+				PanelBody,
 				{
-					title: key,
+					title: capitalizeFirstLetter(key),
 					initialOpen: open,
 				},
 				...sectionControls[key]
@@ -212,6 +182,90 @@ function BuildControls(props) {
 	});
 
 	return controls;
+}
+
+function createUploadControl(props, key, urlVal: string): Array<unknown> {
+	return [
+		el(wp.editor.MediaUpload, {
+			type: 'image',
+			onSelect: (media) => {
+				return props.setAttributes({
+					[key]: media.id.toString(),
+					[key + '_url']: media.url,
+				});
+			},
+			render: (obj) => {
+				return el(
+					Button,
+					{
+						className:
+							'components-icon-button image-block-btn is-button is-default is-large',
+						onClick: obj.open,
+					},
+					el(
+						'svg',
+						{
+							className: 'dashicon dashicons-edit',
+							width: '20',
+							height: '20',
+						},
+						el('path', {
+							d:
+								'M2.25 1h15.5c.69 0 1.25.56 1.25 1.25v15.5c0 .69-.56 1.25-1.25 1.25H2.25C1.56 19 1 18.44 1 17.75V2.25C1 1.56 1.56 1 2.25 1zM17 17V3H3v14h14zM10 6c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2 2-.9 2-2zm3 5s0-6 3-6v10c0 .55-.45 1-1 1H5c-.55 0-1-.45-1-1V8c2 0 3 4 3 4s1-3 3-3 3 2 3 2z',
+						})
+					),
+					el('span', {}, ' Select image')
+				); // end el button
+			},
+		}),
+		el('img', {
+			src: urlVal,
+			alt: 'thumbnail',
+		}),
+	];
+}
+
+function createUploadControlNew(props, key): Array<unknown> {
+	return [
+		el(wp.editor.MediaUpload, {
+			title: 'Thumbnail',
+			type: 'image',
+			onSelect: (media) => {
+				return props.setAttributes({
+					[key]: media.id.toString(),
+					[key + '_url']: media.url,
+				});
+			},
+			render: (obj) => {
+				return el(
+					'div',
+					{ class: 'wr' },
+					el(
+						Button,
+						{
+							className:
+								'components-icon-button image-block-btn is-button is-default is-large',
+							onClick: obj.open,
+						},
+						el('div', {}, props.attributes[key] ? 'HAS' : 'HASNOT')
+					),
+					el(DropZone, {
+						onFilesDrop: (media) => {
+							return props.setAttributes({
+								[key]: media.id.toString(),
+								[key + '_url']: media.url,
+							});
+						},
+					})
+				);
+			},
+		}),
+		el('div', {}, 'test'),
+	];
+}
+
+function capitalizeFirstLetter(string) {
+	return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 /*
@@ -224,8 +278,14 @@ function BuildControls(props) {
  */
 wp.blocks.registerBlockType('nextgenthemes/arve-block', {
 	title: 'Video Embed (ARVE)',
+	description:
+		'You can disable help texts on the ARVE settings page to clean the UI up',
 	icon: 'video-alt3',
 	category: 'embed',
+	supports: {
+		alignWide: true,
+		align: ['left', 'right', 'wide', 'full'],
+	},
 
 	/*
 	 * In most other blocks, you'd see an 'attributes' property being defined here.
@@ -235,14 +295,14 @@ wp.blocks.registerBlockType('nextgenthemes/arve-block', {
 
 	edit: (props) => {
 		const controls = BuildControls(props);
-
+/*  */
 		return [
 			/*
 			 * The ServerSideRender element uses the REST API to automatically call
 			 * php_block_render() in your PHP code whenever it needs to get an updated
 			 * view of the block.
 			 */
-			el(comps.ServerSideRender, {
+			el(ServerSideRender, {
 				block: 'nextgenthemes/arve-block',
 				attributes: props.attributes,
 			}),

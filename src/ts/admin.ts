@@ -1,3 +1,5 @@
+import '../scss/admin.scss';
+
 export {};
 declare global {
 	interface Window {

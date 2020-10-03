@@ -1,3 +1,5 @@
+import '../scss/main.scss';
+
 const qsa = document.querySelectorAll.bind(document) as typeof document.querySelectorAll;
 
 removeUnwantedStuff();
