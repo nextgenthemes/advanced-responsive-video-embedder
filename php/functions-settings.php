@@ -266,7 +266,7 @@ function all_settings() {
 			'option'              => false,
 			'label'               => __( 'Description', 'advanced-responsive-video-embedder' ),
 			'type'                => 'string',
-			'placeholder'         => __( 'Used for SEO (needed, ARVE auto fills this)', 'advanced-responsive-video-embedder' ),
+			'placeholder'         => __( 'Used for SEO (needed, ARVE Pro auto fills this)', 'advanced-responsive-video-embedder' ),
 			'description'         => sprintf( __( '<a href="%s">ARVE Pro</a> fills this automatically', 'advanced-responsive-video-embedder' ), esc_url( $pro_addon_link ) ), // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
 			'descriptionlink'     => esc_url( $pro_addon_link ),
 			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
@@ -694,7 +694,7 @@ function all_settings() {
 		],
 		*/
 		'admin_bar_menu' => [
-			'default'     => true,
+			'default'     => false,
 			'shortcode'   => false,
 			'option'      => true,
 			'label'       => __( 'Admin bar ARVE button', 'advanced-responsive-video-embedder' ),
