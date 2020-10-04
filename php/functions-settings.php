@@ -448,7 +448,7 @@ function all_settings() {
 			'label'       => __( 'Autoplay', 'advanced-responsive-video-embedder' ),
 			'type'        => 'select',
 			'options'     => $def_bool_options,
-			'description' => __( 'Do not expect this to work! Browsers (expecially mobile) or user settings prevent it, some video hosts do not support it at all. Only used in normal mode.', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'Do not expect this to work! Browsers (especially mobile) or user settings prevent it, some video hosts do not support it at all. Only used in normal mode. ARVE will mute HTML5 video playback in case to make autoplay work for the broadest audience.', 'advanced-responsive-video-embedder' ),
 		],
 		'maxwidth' => [
 			'default'     => 0,

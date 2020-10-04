@@ -94,7 +94,7 @@ function build_video_tag( array $a ) {
 				// ARVE only
 				'data-arve'          => $a['uid'],
 				'class'              => 'arve-video fitvidsignore',
-				'muted'              => $autoplay ? 'automuted' : $a['muted'],
+				'muted'              => $autoplay ? 'muted by ARVE because autoplay is on' : $a['muted'],
 				'playsinline'        => in_array( $a['mode'], [ 'lightbox', 'link-lightbox' ], true ) ? '' : false,
 				'webkit-playsinline' => in_array( $a['mode'], [ 'lightbox', 'link-lightbox' ], true ) ? '' : false,
 			],

@@ -160,6 +160,22 @@ function register_shortcode_ui() {
 
 	foreach ( $settings as $k => $v ) :
 
+		if ( 'boolean' === $v['type'] ) {
+			$v['type']    = 'select';
+
+			if ( isset($v['option']) && true === $v['option'] ) {
+				$v['options'] = [
+					[ 'value' => '', 'label' => esc_html__( 'Default (settings page)', 'advanced-responsive-video-embedder' ) ],
+					[ 'value' => 'yes', 'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ) ],
+					[ 'value' => 'no', 'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ) ],
+				];
+			} else {
+				$v['options'] = [
+					[ 'value' => 'no', 'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ) ],
+					[ 'value' => 'yes', 'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ) ],
+				];
+			}
+		}
 		if ( 'string' === $v['type'] ) {
 			$v['type'] = 'text';
 		}
