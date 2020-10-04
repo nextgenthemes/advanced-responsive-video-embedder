@@ -21,12 +21,12 @@ function arveExtractURL(changed, collection, shortcode) {
 	// urlInput = attrByName('url').$el.find('input');
 	// arInput = attrByName('aspect_ratio').$el.find('input');
 
-	const urlInput = attrByName('url').$el.find('input');
-	const arInput = attrByName('aspect_ratio').$el.find('input');
-
 	if (typeof val === 'undefined') {
 		return;
 	}
+
+	const urlInput = attrByName('url').$el.find('input');
+	const arInput = attrByName('aspect_ratio').$el.find('input');
 
 	// <iframe src="https://example.com" width="640" height="360"></iframe>
 
