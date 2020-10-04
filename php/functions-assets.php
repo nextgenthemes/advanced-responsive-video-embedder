@@ -6,8 +6,8 @@ function register_assets() {
 	Common\asset(
 		[
 			'handle' => 'arve-main',
-			'src'    => plugins_url( 'dist/css/main.css', PLUGIN_FILE ),
-			'ver'    => Common\ver( VERSION, 'dist/css/main.css', PLUGIN_FILE ),
+			'src'    => plugins_url( 'dist/main.css', PLUGIN_FILE ),
+			'ver'    => Common\ver( VERSION, 'dist/main.css', PLUGIN_FILE ),
 			'mce'    => true,
 		]
 	);
@@ -15,8 +15,8 @@ function register_assets() {
 	Common\asset(
 		[
 			'handle' => 'arve-main',
-			'src'    => plugins_url( 'dist/js/main.js', PLUGIN_FILE ),
-			'ver'    => Common\ver( VERSION, 'dist/js/main.js', PLUGIN_FILE ),
+			'path'   => PLUGIN_DIR . '/dist/main.js',
+			'src'    => plugins_url( 'dist/main.js', PLUGIN_FILE ),
 		]
 	);
 
@@ -49,9 +49,9 @@ function register_assets() {
 		Common\asset(
 			[
 				'handle' => 'arve-block',
-				'src'    => plugins_url( 'dist/js/gb-block.js', PLUGIN_FILE ),
-				'deps'   => [ 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'arve' ],
-				'ver'    => Common\ver( VERSION, 'dist/js/gb-block.js', PLUGIN_FILE ),
+				'path'   => PLUGIN_DIR . '/dist/block.js',
+				'src'    => plugins_url( 'dist/block.js', PLUGIN_FILE ),
+				'deps'   => [ 'arve' ],
 				'footer' => false,
 			]
 		);
@@ -107,6 +107,10 @@ function gutenberg_block( $args ) {
 	}
 
 	$args['gutenberg'] = 'true';
+
+	if ( isset( $args['align'] ) && in_array( $args['align'], [ 'wide', 'full' ], true ) ) {
+		$args['align'] = null;
+	}
 
 	return shortcode( $args );
 }

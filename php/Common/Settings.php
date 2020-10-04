@@ -96,7 +96,7 @@ class Settings {
 			[
 				'methods'              => 'POST',
 				'args'                 => $this->settings,
-				'permissions_callback' => function() {
+				'permission_callback' => function() {
 					return current_user_can( 'manage_options' );
 				},
 				'callback'             => function( \WP_REST_Request $request ) {
@@ -116,17 +116,17 @@ class Settings {
 
 		enqueue_asset(
 		 	[
-		 		'handle' => 'nextgenthemes-settings',
-		 		'src'    => plugin_or_theme_src( 'dist/common/css/settings.css' ),
-		 		'ver'    => plugin_or_theme_ver( \Nextgenthemes\ARVE\VERSION, 'dist/common/css/settings.css' ),
+				'handle' => 'nextgenthemes-settings',
+		 		'src'    => plugin_or_theme_src( 'dist/common/settings.css' ),
+		 		'ver'    => plugin_or_theme_ver( \Nextgenthemes\ARVE\VERSION, 'dist/common/settings.css' ),
 		 	]
 		);
 
 		enqueue_asset(
 			[
 				'handle' => 'nextgenthemes-settings',
-				'src'    => plugin_or_theme_src( 'dist/common/js/settings.js' ),
-				'ver'    => plugin_or_theme_ver( \Nextgenthemes\ARVE\VERSION, 'dist/common/js/settings.js' ),
+				'path'   => dirname( dirname( __DIR__ ) ) . '/dist/common/settings.js',
+				'src'    => plugin_or_theme_src( 'dist/common/settings.js' ),
 				'deps'   => [ 'jquery' ],
 			]
 		);

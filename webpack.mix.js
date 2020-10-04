@@ -4,6 +4,8 @@ const mix = require('laravel-mix');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const imageminMozjpeg = require('imagemin-mozjpeg');
+const BabelImportJsxPragma = require('@wordpress/babel-plugin-import-jsx-pragma');
+const BabelTransformReactJsx = require('@babel/plugin-transform-react-jsx');
 
 mix.sourceMaps();
 mix.setPublicPath('dist');
@@ -40,6 +42,16 @@ mix.webpackConfig({
 	devtool: mix.inProduction() ? false : 'source-map',
 	performance: { hints: false },
 	plugins: [
+		new BabelImportJsxPragma({
+			scopeVariable: 'createElement',
+			scopeVariableFrag: 'Fragment',
+			source: '@wordpress/element',
+			isDefault: false,
+		}),
+		new BabelTransformReactJsx({
+			pragma: 'createElement',
+			pragmaFrag: 'Fragment',
+		}),
 		// @link https://github.com/webpack-contrib/copy-webpack-plugin
 		new CopyWebpackPlugin({
 			patterns: [

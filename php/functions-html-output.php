@@ -28,16 +28,9 @@ function build_html( array $a ) {
 
 function build_iframe_tag( array $a ) {
 
-	$width   = false;
-	$height  = false;
 	$allow   = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
 	$class   = 'arve-iframe fitvidsignore';
 	$sandbox = 'allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox';
-
-	if ( is_feed() ) {
-		$width  = $a['maxwidth'];
-		$height = new_height_from_aspect_ratio( $a['maxwidth'], $a['aspect_ratio'] );
-	}
 
 	if ( 'vimeo' === $a['provider'] ) {
 		$sandbox .= ' allow-forms';
@@ -68,12 +61,12 @@ function build_iframe_tag( array $a ) {
 				'data-arve'       => $a['uid'],
 				'data-src-no-ap'  => iframe_src_autoplay_args( $a['src'], false, $a ),
 				'frameborder'     => '0',
-				'height'          => $height,
+				'height'          => $a['height'],
 				'name'            => $a['iframe_name'],
 				'sandbox'         => $sandbox,
 				'scrolling'       => 'no',
 				'src'             => $a['src'],
-				'width'           => $width,
+				'width'           => $a['width'],
 			],
 		],
 		$a

@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import '../scss/settings.scss';
 
 const url = new URL(window.location.href);
 const pageQueryVal = url.searchParams.get('page');

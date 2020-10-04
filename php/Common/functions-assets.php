@@ -6,9 +6,43 @@ function enqueue_asset( array $args ) {
 	asset( $args );
 }
 
+function is_script( $src ) {
+	$src_without_query = strtok( $src, '?' );
+	return '.js' === substr( $src_without_query, -3 ) ? true : false;
+}
+
+function asset_info( $path ) {
+
+	if ( ! $path && ! is_file( $path ) ) {
+		return [ 'dependencies' => [], 'version' => null ];
+	}
+
+	$info = pathinfo( $path );
+	$dir  = $info['dirname'] ? $info['dirname'] . DIRECTORY_SEPARATOR : '';
+
+	if ( 'js' === $info['extension'] ) {
+		$asset_info_php = $dir . $info['filename'] . '.asset.php';
+
+		if ( is_file( $asset_info_php ) ) {
+			return require( $asset_info_php );
+		}
+	}
+
+	return [ 'dependencies' => [], 'version' => filemtime( $path ) ];
+}
+
+function replace_extension($filename, $new_extension) {
+	$info = pathinfo($filename);
+	$dir  = $info['dirname'] ? $info['dirname'] . DIRECTORY_SEPARATOR : '';
+	
+	return $dir . $info['filename'] . '.' . $new_extension;
+}
+
+
 function asset( array $args ) {
 
 	$defaults = [
+		'path'          => '',
 		'async'         => false,
 		'cdn_src'       => '',
 		'defer'         => false,
@@ -24,16 +58,20 @@ function asset( array $args ) {
 		'mce'           => false,
 	];
 
-	$args = wp_parse_args( $args, $defaults );
+	$args         = wp_parse_args( $args, $defaults );
+	$info         = asset_info( $args['path'] );
+	$args['deps'] = $args['deps'] + $info['dependencies'];
+
+	if ( ! $args['ver'] ) {
+		$args['ver'] = $info['version'];
+	}
 
 	if ( ! empty( $args['cdn_src'] ) && nextgenthemes_settings_instance()->options['cdn'] ) {
 		$args['src'] = $args['cdn_src'];
 		$args['ver'] = null;
 	}
 
-	$src_without_query = strtok( $args['src'], '?' );
-
-	if ( '.js' === substr( $src_without_query, -3 ) ) {
+	if ( is_script( $args['src'] ) ) {
 
 		wp_register_script( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['in_footer'] );
 
@@ -44,6 +82,7 @@ function asset( array $args ) {
 		if ( $args['enqueue'] ) {
 			wp_enqueue_script( $args['handle'] );
 		}
+
 		foreach ( $args['enqueue_hooks'] as $hook ) {
 			enqueue_script( $args['handle'], $hook );
 		}
@@ -57,6 +96,7 @@ function asset( array $args ) {
 		if ( $args['enqueue'] ) {
 			wp_enqueue_style( $args['handle'] );
 		}
+
 		foreach ( $args['enqueue_hooks'] as $hook ) {
 			enqueue_style( $args['handle'], $hook );
 		}
@@ -150,7 +190,7 @@ function add_mce_css() {
 			if ( ! empty( $mce_css ) ) {
 				$mce_css .= ',';
 			}
-			$mce_css .= plugins_url( 'dist/css/arve.css', ARVE\PLUGIN_FILE );
+			$mce_css .= plugins_url( 'dist/arve.css', ARVE\PLUGIN_FILE );
 			return $mce_css;
 		}
 	);

@@ -5,10 +5,7 @@ function sc_filter_set_uid( array $a ) {
 
 	static $i = 1;
 
-	$a['uid']  = 'arve-' . $a['provider'];
-	$a['uid'] .= $a['id'] ? '-' . $a['id'] : '';
-	$a['uid'] .= uniqid('', true) . '-' . $i;
-	$a['uid']  = sanitize_key( $a['uid'] );
+	$a['uid'] = sanitize_key( uniqid( "arve-{$a['provider']}-{$a['id']}-$i", true) );
 
 	$i++;
 
@@ -37,6 +34,17 @@ function sc_filter_aspect_ratio( array $a ) {
 
 	if ( $a['aspect_ratio'] ) {
 		$a['aspect_ratio'] = aspect_ratio_gcd( $a['aspect_ratio'] );
+	}
+
+	return $a;
+}
+
+function sc_filter_dimensions( array $a ) {
+
+	$a['width'] = $a['maxwidth'];
+
+	if ( $a['aspect_ratio'] ) {
+		$a['height'] = new_height_from_aspect_ratio( $a['width'], $a['aspect_ratio'] );
 	}
 
 	return $a;
