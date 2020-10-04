@@ -13,15 +13,14 @@ function is_script( $src ) {
 
 function asset_info( $path ) {
 
-	if ( ! $path && ! is_file( $path ) ) {
+	if ( ! $path || ! is_file( $path ) ) {
 		return [ 'dependencies' => [], 'version' => null ];
 	}
 
 	$info = pathinfo( $path );
-	$dir  = $info['dirname'] ? $info['dirname'] . DIRECTORY_SEPARATOR : '';
 
 	if ( 'js' === $info['extension'] ) {
-		$asset_info_php = $dir . $info['filename'] . '.asset.php';
+		$asset_info_php = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . '.asset.php';
 
 		if ( is_file( $asset_info_php ) ) {
 			return require( $asset_info_php );

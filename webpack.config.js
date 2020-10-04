@@ -7,6 +7,7 @@ module.exports = {
 		main: './src/ts/main.ts',
 		block: './src/ts/block.tsx',
 		admin: './src/ts/admin.ts',
+		'shortcode-ui': './src/ts/shortcode-ui.ts',
 		'common/settings': './src/common/ts/settings.ts',
 		'common/notice-ajax': './src/common/ts/notice-ajax.ts',
 	},
