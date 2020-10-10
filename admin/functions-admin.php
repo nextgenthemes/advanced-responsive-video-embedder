@@ -25,7 +25,7 @@ function arve_action_admin_init_setup_messages() {
 	}
 
 	$msg = sprintf(
-		__( '<p>If this message bothers you please just close it and forget about it!</p><p>Dear ARVE users, if you can spare the time <a href="%s">I need your help</a> trying out the upcoming version with new features and improvements before official release on wp.org. I would really really appreciate you helping out. Thanks so much!</p>', ARVE_SLUG ),
+		__( '<p>Dear ARVE users, if you can spare the time <a href="%s">I need your help</a> trying out the upcoming version with new features and improvements before official release on wp.org. I would really really appreciate you helping out. Thanks so much!</p>', ARVE_SLUG ),
 		'https://nextgenthemes.com/help-test-the-beta-version/'
 	);
 

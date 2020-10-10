@@ -3,7 +3,7 @@ Contributors: nico23
 Donate link: https://www.paypal.me/nico23
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.4.0
-Tested up to: 5.4.2
+Tested up to: 5.5.1
 Requires PHP: 5.3
 Stable tag: 8.10.27
 License: GPL-3.0
@@ -204,6 +204,10 @@ Removed:
 * Vimeo only `start` shortcode attribute. Use vimeo urls with `#t=30` at the end for starting time in seconds instead.
 
 Probably things I forgot about, working on this for ~1 year
+
+### 2020-10-10 - 8.10.28 ###
+
+* Tested and marked as compatible with WP 5.5.1
 
 ### 2020-08-02 - 8.10.27 ###
 
