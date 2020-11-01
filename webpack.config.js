@@ -29,9 +29,4 @@ module.exports = {
 			vue: 'vue/dist/vue.js',
 		},
 	},
-	output: {
-		...defaultConfig.output,
-		filename: '[name].js',
-		path: __dirname + '/dist',
-	},
 };

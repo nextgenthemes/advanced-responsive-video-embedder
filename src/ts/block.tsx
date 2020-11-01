@@ -15,12 +15,12 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import {
-	BaseControl,
 	TextControl,
 	Button,
 	ToggleControl,
 	SelectControl,
 	PanelBody,
+	ResponsiveWrapper,
 	DropZone,
 } from '@wordpress/components';
 
@@ -102,6 +102,10 @@ function maybeSetAspectRatio(key: string, value: string, props) {
 function BuildControls(props) {
 	const controls = [] as Array<JSX.Element>;
 	const sectionControls = {};
+	const mediaUploadInstructions = (
+		<p>{__('To edit the featured image, you need permission to upload media.')}</p>
+	);
+	let selectedMedia = false as any;
 
 	Object.values(settings).forEach((option: OptionProps) => {
 		sectionControls[option.tag] = [];
@@ -158,7 +162,7 @@ function BuildControls(props) {
 					/>
 				);
 				break;
-			case 'attachment':
+			case 'attachment_old':
 				url = props.attributes[key + '_url'];
 
 				sectionControls[option.tag].push(
@@ -202,6 +206,112 @@ function BuildControls(props) {
 							>
 								{__('Remove Custom Thumbnail')}
 							</Button>
+						)}
+						<TextControl
+							label={option.label}
+							placeholder={option.placeholder}
+							help={createHelp(option)}
+							value={val}
+							onChange={(value) => {
+								return props.setAttributes({ [key]: value });
+							}}
+						/>
+					</div>
+				);
+				break;
+			case 'attachment':
+				url = props.attributes[key + '_url'];
+
+				sectionControls[option.tag].push(
+					<div className="editor-post-featured-image">
+						<MediaUploadCheck fallback={mediaUploadInstructions}>
+							<MediaUpload
+								title={__('Thumbnail')}
+								onSelect={(media) => {
+									selectedMedia = media;
+									console.log(selectedMedia);
+									return props.setAttributes({
+										[key]: media.id.toString(),
+										[key + '_url']: media.url,
+									});
+								}}
+								unstableFeaturedImageFlow
+								allowedTypes="Image"
+								modalClass="editor-post-featured-image__media-modal"
+								render={({ open }) => (
+									<div className="editor-post-featured-image__container">
+										<Button
+											className={
+												!val
+													? 'editor-post-featured-image__toggle'
+													: 'editor-post-featured-image__preview'
+											}
+											onClick={open}
+											aria-label={
+												!val
+													? null
+													: __('Edit or update the image')
+											}
+											aria-describedby={
+												!val
+													? ''
+													: `editor-post-featured-image-${val}-describedby`
+											}
+										>
+											{!!val && !!url && (
+												<ResponsiveWrapper
+													naturalWidth={640}
+													naturalHeight={380}
+												>
+													<img src={url} alt="" />
+												</ResponsiveWrapper>
+											)}
+											{!val && __('Set Thumbnail')}
+										</Button>
+										<DropZone />
+									</div>
+								)}
+								value={val}
+							/>
+						</MediaUploadCheck>
+						{!!val && !!url && (
+							<MediaUploadCheck>
+								<MediaUpload
+									title={__('Thumbnail')}
+									onSelect={(media) => {
+										selectedMedia = media;
+										console.log(selectedMedia);
+										return props.setAttributes({
+											[key]: media.id.toString(),
+											[key + '_url']: media.url,
+										});
+									}}
+									unstableFeaturedImageFlow
+									allowedTypes="image"
+									modalClass="editor-post-featured-image__media-modal"
+									render={({ open }) => (
+										<Button onClick={open} isSecondary>
+											{__('Replace Thumbnail')}
+										</Button>
+									)}
+								/>
+							</MediaUploadCheck>
+						)}
+						{!!val && (
+							<MediaUploadCheck>
+								<Button
+									onClick={() => {
+										return props.setAttributes({
+											[key]: '',
+											[key + '_url']: '',
+										});
+									}}
+									isLink
+									isDestructive
+								>
+									{__('Remove Thumbnail')}
+								</Button>
+							</MediaUploadCheck>
 						)}
 						<TextControl
 							label={option.label}

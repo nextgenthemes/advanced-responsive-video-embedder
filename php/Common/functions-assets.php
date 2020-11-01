@@ -189,7 +189,7 @@ function add_mce_css() {
 			if ( ! empty( $mce_css ) ) {
 				$mce_css .= ',';
 			}
-			$mce_css .= plugins_url( 'dist/arve.css', ARVE\PLUGIN_FILE );
+			$mce_css .= plugins_url( 'build/arve.css', ARVE\PLUGIN_FILE );
 			return $mce_css;
 		}
 	);
