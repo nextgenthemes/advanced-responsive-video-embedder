@@ -322,9 +322,10 @@ function all_settings() {
 			'libraryType'         => [ 'image' ],
 			'addButton'           => __( 'Select Image', 'advanced-responsive-video-embedder' ),
 			'frameTitle'          => __( 'Select Image', 'advanced-responsive-video-embedder' ),
+			'placeholder'         => __( 'Media library image ID or image URL', 'advanced-responsive-video-embedder' ),
 			'description'         => sprintf(
 				// Translators: 1 Link, 2 Provider list
-				__( 'Preview image for Lazyload modes, always used for SEO. <a href="%1$s">ARVE Pro</a> is able to get them from %2$s automatically.', 'advanced-responsive-video-embedder' ),
+				__( 'Media library image ID (Select above in Gutenberg) or image URL for preview image for Lazyload modes, always used for SEO. <a href="%1$s">ARVE Pro</a> is able to get them from %2$s automatically.', 'advanced-responsive-video-embedder' ),
 				esc_url( $pro_addon_link ),
 				esc_html( $auto_thumbs )
 			),

@@ -6,8 +6,8 @@ function register_assets() {
 	Common\asset(
 		[
 			'handle' => 'arve-main',
-			'src'    => plugins_url( 'dist/main.css', PLUGIN_FILE ),
-			'ver'    => Common\ver( VERSION, 'dist/main.css', PLUGIN_FILE ),
+			'src'    => plugins_url( 'build/main.css', PLUGIN_FILE ),
+			'ver'    => Common\ver( VERSION, 'build/main.css', PLUGIN_FILE ),
 			'mce'    => true,
 		]
 	);
@@ -15,8 +15,8 @@ function register_assets() {
 	Common\asset(
 		[
 			'handle' => 'arve-main',
-			'path'   => PLUGIN_DIR . '/dist/main.js',
-			'src'    => plugins_url( 'dist/main.js', PLUGIN_FILE ),
+			'path'   => PLUGIN_DIR . '/build/main.js',
+			'src'    => plugins_url( 'build/main.js', PLUGIN_FILE ),
 		]
 	);
 
@@ -49,8 +49,8 @@ function register_assets() {
 		Common\asset(
 			[
 				'handle' => 'arve-block',
-				'path'   => PLUGIN_DIR . '/dist/block.js',
-				'src'    => plugins_url( 'dist/block.js', PLUGIN_FILE ),
+				'path'   => PLUGIN_DIR . '/build/block.js',
+				'src'    => plugins_url( 'build/block.js', PLUGIN_FILE ),
 				'deps'   => [ 'arve' ],
 				'footer' => false,
 			]
