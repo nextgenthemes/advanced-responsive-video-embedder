@@ -29,6 +29,16 @@ function action_admin_init_setup_messages() {
 		new Common\Admin\NoticeFactory( 'arve-pro-outdated', "<p>$msg</p>", false );
 	}
 
+	$update_msg = sprintf(
+		// Translators: %1$s Version
+		__( '<p>Your ARVE version was just updated. This was a <a href="%1$s"><strong>major update</strong></a>. If you experience any urgent breaking issues please <a href="%2$s">report them</a> and <a href="%3$s">downgrade</a> short term. I tried my best to have other beta testers over many months. Thanks to anyone who did test. But 9.0 has lots of code changed, I am afraid the update will trigger some issues we could not test for.</p>', 'advanced-responsive-video-embedder' ),
+		'https://nextgenthemes.com/improvements-in-arve-9-0-and-arve-pro-5-0/',
+		'https://nextgenthemes.com/support/',
+		'https://nextgenthemes.com/plugins/arve/documentation/how-to-downgrade/',
+	);
+
+	new Common\Admin\NoticeFactory( 'arve9', $update_msg, true );
+
 	if ( display_pro_ad() ) {
 
 		$pro_ad_message = __( '<p>Hi, this is Nico(las Jonas) the author of the ARVE - Advanced Responsive Video Embedder plugin. If you are interrested in additional features and/or want to support the work I do on this plugin please consider buying the Pro Addon.</p>', 'advanced-responsive-video-embedder' );

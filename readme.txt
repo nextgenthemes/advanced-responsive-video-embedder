@@ -16,7 +16,7 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-### 9.0.0 ###
+### 9.0.0-beta2 ###
 
 [More details on this **mayor** update]()
 

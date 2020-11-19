@@ -6,11 +6,15 @@ declare global {
 	}
 }
 
-const closeBtn = document.querySelector('[data-nextgenthemes-notice-id] .notice-dismiss');
+document.addEventListener('DOMContentLoaded', function () {
+	const closeBtn = document.querySelector(
+		'[data-nextgenthemes-notice-id] .notice-dismiss'
+	);
 
-if (closeBtn) {
-	closeBtn.addEventListener('click', dismiss, false);
-}
+	if (closeBtn) {
+		closeBtn.addEventListener('click', dismiss, false);
+	}
+});
 
 function dismiss(ev: Event) {
 	if (!ev || !ev.target) {
@@ -18,7 +22,7 @@ function dismiss(ev: Event) {
 	}
 
 	const target = ev.target as HTMLElement;
-	const notice = target.closest('[data-nextgenthemes-notice-id]');
+	const notice = target.closest('[data-nextgenthemes-notice-id]') as HTMLElement | null;
 
 	if (!notice) {
 		return;
@@ -27,7 +31,7 @@ function dismiss(ev: Event) {
 	window.jQuery.ajax({
 		url: window.ajaxurl,
 		data: {
-			action: notice.id,
+			action: notice.dataset.nextgenthemesNoticeId,
 		},
 	});
 
