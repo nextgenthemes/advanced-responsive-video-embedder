@@ -15,7 +15,8 @@
 		"module": "esnext", // for import() and es5 import/export
 		"lib": [
 			"esnext",
-			"dom"
+			"DOM",
+			"DOM.Iterable",
 		], // include all libraries you need
 		"jsx": "react",
 		"jsxFactory": "createElement",

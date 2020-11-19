@@ -372,7 +372,7 @@ function arve_embed( $html, array $a ) {
 	return build_tag(
 		[
 			'name'       => 'embed',
-			'tag'        => 'div',
+			'tag'        => 'span', // so we output it within <p>
 			'inner_html' => $ratio_div . $html,
 			'attr'       => [ 'class' => $class ],
 		],
