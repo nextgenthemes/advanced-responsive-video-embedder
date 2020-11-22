@@ -356,8 +356,8 @@ function promote_link( $arve_link ) {
 
 function arve_embed( $html, array $a ) {
 
-	$class     = 'arve-embed';
-	$ratio_div = '';
+	$class      = 'arve-embed';
+	$ratio_span = '';
 
 	if ( $a['aspect_ratio'] ) {
 		$class .= ' arve-embed--has-aspect-ratio';
@@ -366,14 +366,14 @@ function arve_embed( $html, array $a ) {
 	if ( '16:9' === $a['aspect_ratio'] ) {
 		$class .= ' arve-embed--16by9';
 	} elseif ( $a['aspect_ratio'] ) {
-		$ratio_div = sprintf( '<div class="arve-ar" style="padding-top:%F%%"></div>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
+		$ratio_span = sprintf( '<span class="arve-ar" style="padding-top:%F%%"></span>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
 	}
 
 	return build_tag(
 		[
 			'name'       => 'embed',
 			'tag'        => 'span', // so we output it within <p>
-			'inner_html' => $ratio_div . $html,
+			'inner_html' => $ratio_span . $html,
 			'attr'       => [ 'class' => $class ],
 		],
 		$a
