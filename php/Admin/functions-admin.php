@@ -31,7 +31,7 @@ function action_admin_init_setup_messages() {
 
 	$update_msg = sprintf(
 		// Translators: %1$s Version
-		__( '<p>Your ARVE version was just updated. This was a <a href="%1$s"><strong>major update</strong></a>. If you experience any urgent breaking issues please <a href="%2$s">report them</a> and <a href="%3$s">downgrade</a> short term. I tried my best to have other beta testers over many months. Thanks to anyone who did test. But 9.0 has lots of code changed, I am afraid the update will trigger some issues we could not test for.</p>', 'advanced-responsive-video-embedder' ),
+		__( '<p>Your ARVE version was just updated. This was a <a href="%1$s"><strong>major update</strong></a>. If you experience any urgent breaking issues please <a href="%2$s">report them</a> and <a href="%3$s">downgrade</a> short term. I tried my best to have other beta testers over many months. Thanks to everyone who did test. But 9.0 has lots of code changed, I am afraid the update will trigger some issues we could not test for.</p>', 'advanced-responsive-video-embedder' ),
 		'https://nextgenthemes.com/improvements-in-arve-9-0-and-arve-pro-5-0/',
 		'https://nextgenthemes.com/support/',
 		'https://nextgenthemes.com/plugins/arve/documentation/how-to-downgrade/'
