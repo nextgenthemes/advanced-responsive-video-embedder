@@ -168,9 +168,20 @@ function shortcode_pairs() {
 
 function upgrade_options() {
 
-	$new_options = options();
-	$old_options = get_option( 'arve_options_main' );
-	$old_params  = get_option( 'arve_options_params' );
+	$options_ver = get_option( 'nextgenthemes_arve_options_ver' );
+
+	if ( \version_compare( $options_ver, '9.0', '>=' ) ) {
+		return;
+	}
+
+	$new_options     = options();
+	$old_options     = get_option( 'arve_options_main' );
+	$old_params      = get_option( 'arve_options_params' );
+	$old_pro_options = get_option( 'arve_options_pro' );
+
+	if ( ! empty( $old_pro_options ) && is_array( $old_pro_options ) ) {
+		$old_options = array_merge( $old_options, $old_pro_options );
+	}
 
 	if ( ! empty( $old_params ) && is_array( $old_params ) ) {
 
@@ -191,8 +202,7 @@ function upgrade_options() {
 
 		$new_options = array_diff_assoc( $old_options, default_options() );
 		update_option( 'nextgenthemes_arve', $new_options );
-		delete_option( 'arve_options_main' );
-		delete_option( 'arve_options_params' );
+		update_option( 'nextgenthemes_arve_options_ver', '9.0' );
 	}
 }
 
