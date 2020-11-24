@@ -202,7 +202,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 				'thumbnail'   => 'https://example.com/image.jpg',
 				'title'       => ' Test <title>  ',
 				'upload_date' => '2016-10-22',
-				'duration'    => '1H2M3S',
+				'duration'    => 'PT1H2M3S',
 				'url'         => 'https://example.com',
 				'arve_link'   => 'y',
 			]
