@@ -77,7 +77,7 @@ class Settings {
 				$options[ $action->product . '_status' ] = api_action( $product_id, $product_key, $action->action );
 			}
 		} elseif ( 'nextgenthemes_arve' === $this->slugged_namespace ) {
-			update_option( 'arve_oembed_recache', time() );
+			update_option( 'nextgenthemes_arve_oembed_recache', time() );
 		}
 
 		// remove all items from options that are not also in defaults.

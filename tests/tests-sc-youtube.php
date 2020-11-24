@@ -41,7 +41,7 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 	public function test_oembed_recache() {
 
 		shortcode( [ 'url' => 'https://www.youtube.com/watch?v=--SCDa1zsYI&t=1m2s' ] );
-		update_option( 'arve_oembed_recache', time() );
+		update_option( 'nextgenthemes_arve_oembed_recache', time() );
 		$html = shortcode( [ 'url' => 'https://www.youtube.com/watch?v=--SCDa1zsYI&t=1m2s' ] );
 
 		$this->assertNotContains( 'Error', $html );

@@ -36,7 +36,7 @@ function init() {
 	add_option( 'arve_install_date', time() );
 
 	if ( version_compare( get_option( 'arve_version'), VERSION, '<' ) ) {
-		update_option( 'arve_oembed_recache', time() );
+		update_option( 'nextgenthemes_arve_oembed_recache', time() );
 		update_option( 'arve_version', VERSION );
 	}
 
@@ -113,7 +113,7 @@ function init() {
 
 register_activation_hook( __FILE__, __NAMESPACE__ . '\activation_hook' );
 function activation_hook() {
-	update_option( 'arve_oembed_recache', time() );
+	update_option( 'nextgenthemes_arve_oembed_recache', time() );
 }
 
 register_uninstall_hook( __FILE__, __NAMESPACE__ . '\uninstall_hook' );

@@ -87,7 +87,7 @@ function trigger_cache_rebuild( $ttl, $url, $attr, $post_id ) {
 		$cache_html = strtolower( get_post_meta( $post_id, $cachekey, true ) );
 
 		// time after a recache should be done
-		$trigger_time = get_option( 'arve_oembed_recache' );
+		$trigger_time = get_option( 'nextgenthemes_arve_oembed_recache' );
 
 		// Check if we need to regenerate the oEmbed HTML:
 		if ( $cache_time < $trigger_time &&
