@@ -24,7 +24,7 @@ class Tests_OembedCache extends WP_UnitTestCase {
 		$actual_2 = $GLOBALS['wp_embed']->shortcode( array(), $url );
 		$cached_2 = get_post_meta( $post->ID, $cachekey, true );
 
-		update_option( 'arve_oembed_recache', time() + 1 );
+		update_option( 'nextgenthemes_arve_oembed_recache', time() + 1 );
 
 		$actual_3 = $GLOBALS['wp_embed']->shortcode( array(), $url );
 		$cached_3 = get_post_meta( $post->ID, $cachekey, true );

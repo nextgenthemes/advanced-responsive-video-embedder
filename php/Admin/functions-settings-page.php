@@ -82,7 +82,7 @@ function echo_network_active_plugins() {
 
 function filter_save_options( $options ) {
 
-	update_option( 'arve_oembed_recache', time() );
+	update_option( 'nextgenthemes_arve_oembed_recache', time() );
 
 	$action            = json_decode( $options['action'] );
 	$options['action'] = '';
