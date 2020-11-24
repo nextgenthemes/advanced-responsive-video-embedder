@@ -65,48 +65,63 @@ jobs:
         #if: matrix.wordpress != 'latest' && matrix.php != '7.3'
         run: vendor/bin/phpunit
 
-  build:
-    needs: test
-    name: Build release Zip
-    runs-on: ubuntu-latest
-    container:
-      image: node:lts-buster
-    steps:
-      - run: echo "$GITHUB_CONTEXT"
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
+  # build:
+  #   needs: test
+  #   name: Build release Zip
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: node:lts-buster
+  #   steps:
+  #     - run: echo "$GITHUB_CONTEXT"
+  #       env:
+  #         GITHUB_CONTEXT: ${{ toJson(github) }}
 
-      - id: zip
-        run: echo ::set-output name=file::build/zip/${{ github.event.repository.name }}-$(echo ${{ github.ref }} | sed "s/\//-/g" | sed -E -e "s/[^a-z0-9-]+//g").zip
+  #     - id: zip
+  #       run: echo ::set-output name=file::build/zip/${{ github.event.repository.name }}-$(echo ${{ github.ref }} | sed "s/\//-/g" | sed -E -e "s/[^a-z0-9-]+//g").zip
 
-      - name: Checkout repository
-        uses: actions/checkout@v2
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v2
 
-      # Same as on Gitlab
-      - run: apt-get update -yqq
-      - run: apt-get install -yqqf git tar wget zip unzip php --fix-missing
-      - run: bash bin/install-composer.sh
-      - run: chmod +x /usr/bin/composer
-      - run: node --version
-      - run: npm --version
-      - run: php --version
-      - run: composer --version
+  #     # Same as on Gitlab
+  #     - run: apt-get update -yqq
+  #     - run: apt-get install -yqqf git tar wget zip unzip php --fix-missing
+  #     - run: bash bin/install-composer.sh
+  #     - run: chmod +x /usr/bin/composer
+  #     - run: node --version
+  #     - run: npm --version
+  #     - run: php --version
+  #     - run: composer --version
 
-      - run: mkdir -p $(dirname "${{ steps.zip.outputs.file }}")
-      - run: git archive --format=zip --prefix="${PWD##*/}"/ --output="${{ steps.zip.outputs.file }}" ${{ github.sha }}
+  #     - run: mkdir -p $(dirname "${{ steps.zip.outputs.file }}")
+  #     - run: git archive --format=zip --prefix="${PWD##*/}"/ --output="${{ steps.zip.outputs.file }}" ${{ github.sha }}
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: artifact
-          path: build
+  #     - uses: actions/upload-artifact@v2
+  #       with:
+  #         name: artifact
+  #         path: build
 
-      # - name: Maybe deploy to wp.org
-      #   if: startsWith(github.ref, 'refs/tags') && ! startsWith(github.event.repository.name, 'arve-') && startsWith(github.ref, 'refs/tags') && ! contains(github.ref, 'beta') && ! contains(github.ref, 'alpha')
-      #   run: |
-      #     apt-get install -yqqf subversion
-      #     bash bin/wporg-deploy.sh
-      #   env:
-      #     DEPLOY_REF: ${{ github.sha }}
-      #     DEPLOY_ZIPFILE: ${{ github.workspace }}/${{ steps.zip.outputs.file }}
-      #     SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-      #     SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+  # wporgrelease:
+  #   needs: test
+  #   name: SVN commit to wp.org
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - run: echo "GITHUB_REF#refs/tags/-- ${GITHUB_REF#refs/tags/}"
+  #     - run: echo "github.event.repository.name-- ${{ github.event.repository.name }}"
+  #     - run: echo "github.ref-- ${{ github.ref }}"
+
+  #     - name: Checkout
+  #       if: >-
+  #         startsWith(github.ref, 'refs/tags')
+  #         && ! startsWith(github.event.repository.name, 'arve-')
+  #         && ! contains(github.ref, 'alpha')
+  #       uses: actions/checkout@v2
+
+  #     - name: Maybe deploy to wp.org
+  #       if: >-
+  #         startsWith(github.ref, 'refs/tags')
+  #         && ! startsWith(github.event.repository.name, 'arve-')
+  #         && ! contains(github.ref, 'alpha')
+  #       uses: 10up/action-wordpress-plugin-deploy@master
+  #       env:
+  #         SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+  #         SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
