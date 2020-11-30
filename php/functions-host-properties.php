@@ -111,21 +111,6 @@ function get_host_properties() {
 				],
 			],
 		],
-		'collegehumor' => [
-			'oembed'         => true,
-			'name'           => 'CollegeHumor',
-			'regex'          => '#https?://(www\.)?collegehumor\.com/video/(?<id>[0-9]+)#i',
-			'embed_url'      => 'http://www.collegehumor.com/e/%s',
-			'auto_thumbnail' => true,
-			'auto_title'     => true,
-			'aspect_ratio'   => '600:369',
-			'tests'          => [
-				[
-					'url' => 'http://www.collegehumor.com/video/6854928/troopers-holopad',
-					'id'  => 6854928,
-				],
-			],
-		],
 		'comedycentral' => [
 			'name'           => 'Comedy Central',
 			'regex'          => '#https?://media\.mtvnservices\.com/embed/mgid:arc:video:comedycentral\.com:(?<id>[-a-z0-9]{36})#i',
