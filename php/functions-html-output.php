@@ -28,7 +28,7 @@ function build_html( array $a ) {
 
 function build_iframe_tag( array $a ) {
 
-	$allow   = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+	$allow   = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
 	$class   = 'arve-iframe fitvidsignore';
 	$sandbox = 'allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox';
 
