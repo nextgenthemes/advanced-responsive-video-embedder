@@ -28,26 +28,34 @@ function ngt_options() {
 
 function migrate_old_licenses() {
 
+	$options_ver = get_option( 'nextgenthemes_options_ver' );
+
+	if ( \version_compare( $options_ver, '9.0', '>=' ) ) {
+		return;
+	}
+
 	$products = get_products();
 	foreach ( $products as $p => $value ) {
 
 		$old_key        = get_option( "nextgenthemes_{$p}_key" );
 		$old_key_status = get_option( "nextgenthemes_{$p}_key_status" );
 
+		$new_options = get_option( 'nextgenthemes', [] );
+
 		if ( $old_key ) {
 			$options       = (array) get_option( 'nextgenthemes' );
 			$options[ $p ] = $old_key;
 			update_option( 'nextgenthemes', $options );
-			delete_option( "nextgenthemes_{$p}_key" );
 		}
 
 		if ( $old_key_status ) {
 			$options                   = (array) get_option( 'nextgenthemes' );
 			$options[ $p . '_status' ] = $old_key_status;
 			update_option( 'nextgenthemes', $options );
-			delete_option( "nextgenthemes_{$p}_key_status" );
 		}
 	}
+
+	update_option( 'nextgenthemes_options_ver', '9.0' );
 }
 
 function nextgenthemes_settings() {
