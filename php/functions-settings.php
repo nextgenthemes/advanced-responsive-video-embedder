@@ -670,7 +670,7 @@ function all_settings() {
 			'shortcode'   => false,
 			'label'       => __( 'Enable help text in the Block sidebar?', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
-			'description' => __( 'Makes the interface much cleaner.', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'Disabling this makes the interface much cleaner.', 'advanced-responsive-video-embedder' ),
 		],
 		'feed' => [
 			'default'     => true,

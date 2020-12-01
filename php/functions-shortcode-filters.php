@@ -500,14 +500,14 @@ function iframe_src_args( $src, array $a ) {
 
 	$options = options();
 
-	$parameters        = wp_parse_args( preg_replace( '!\s+!', '&', $a['parameters'] ) );
-	$option_parameters = [];
+	$parameters     = wp_parse_args( preg_replace( '!\s+!', '&', $a['parameters'] ) );
+	$params_options = [];
 
-	if ( isset( $options['params'][ $a['provider'] ] ) ) {
-		$option_parameters = wp_parse_args( preg_replace( '!\s+!', '&', $options['params'][ $a['provider'] ] ) );
+	if ( ! empty( $options['url_params_' . $a['provider'] ] ) ) {
+		$params_options = wp_parse_args( preg_replace( '!\s+!', '&', $options['url_params_' . $a['provider'] ] ) );
 	}
 
-	$parameters = wp_parse_args( $parameters, $option_parameters );
+	$parameters = wp_parse_args( $parameters, $params_options );
 	$src        = add_query_arg( $parameters, $src );
 
 	if ( 'youtube' === $a['provider'] && in_array( $a['mode'], [ 'lightbox', 'link-lightbox' ], true ) ) {
