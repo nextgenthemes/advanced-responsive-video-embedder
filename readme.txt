@@ -16,46 +16,55 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-### 9.0.0-beta2 ###
+### 2020-12-01 9.0.0-beta6 ###
 
-[More details on this **mayor** update]()
+* Fix: Url parameters from settings page not working.
+* Improved: Do not delete old license options in case people need to downgrade.
+
+### 2020-11-28 9.0.0-beta5 ###
 
 This update is very long in the making and I hope it will pay off somehow, hopefully literally. A lot things happened in the code that will not be visible to the end users directly but made the code more modern and easier to maintain.
 
+[More details on this **mayor** update](https://nextgenthemes.com/improvements-in-arve-9-0-and-arve-pro-5-0/)
+
 New:
- * Minimum PHP required is now 5.6.
- * Finally the ARVE Gutenberg block is here! Its not polished yet and there is still work to be done.
- * Optional admin bar button to quick access settings. Disable it in ARVE settings bothers you.
- * Added Bitchute
- * `av1mp4` shortcode parameter so serve [AV1](https://en.wikipedia.org/wiki/AV1) encoded files best named .av1.mp4 (to be used together with `mp4` or `webm`)
- * Settings page overhaul, using my own little settings framework. All addon options can be seen and set (without effect) before actually having the addons installed.
- * Option to 
+
+* Minimum PHP required is now 5.6.
+* Finally the ARVE Gutenberg block is here! Its not polished yet and there is still work to be done.
+* Optional admin bar button to quick access settings.
+* Added Bitchute
+* `av1mp4` shortcode parameter so serve [AV1](https://en.wikipedia.org/wiki/AV1) encoded files best named .av1.mp4 (to be used together with `mp4` or `webm`)
+* Settings page overhaul, using my own little settings framework. All addon options can be seen and set (without effect) before actually having the addons installed.
+* Option to completely disable all SEO data generation in case you want to use Yoast SEO or another plugin for that. Note that ARVE Pro offers more then just SEO for less.
 
 Fixes:
- * YouTube live links are now working correctly.
- * TED embed url.
- * Facebook embeds.
- * Twitch embeds.
+
+* YouTube live links are now working correctly.
+* TED embed url.
+* Facebook embeds.
+* Twitch embeds.
 
 Improved:
- * Generated iframe src will match what providers send over oembed.
- * Lots of code improvements that may not be noticeable to users but took a lot of time and will make the plugin more maintainable and easier to extend.
- * Removed the `lang` shortcode parameter that was only used for TED talks video subtitle display. This is now taken from the `language=x` url query.
- * Embeds work though WPs oembed system now that comes with a more stable codebase and better caching system for embeds.
- * Aspect ratios are now auto detected for all providers WP supports through oEmbed.
- * Aspect ratio field is now auto filled when pasting a iframe embed code into the shortcode UI or Gutenberg UI.
- * Removed jQuery dependency for frontend JavaScript.
- * Prevent autoplay of multiple videos, only the first video on pageload will be autoplayed.
 
- Removed:
- * Hack to support direct embedding of Dropbox videos because it no longer works.
- * Vimeo only `start` shortcode attribute. Use vimeo urls with `#t=30` at the end for starting time in seconds instead.
+* Generated iframe src will match what providers send over oembed.
+* Lots of code improvements that may not be noticeable to users but took a lot of time and will make the plugin more maintainable and easier to extend.
+* Removed the `lang` shortcode parameter that was only used for TED talks video subtitle display. This is now taken from the `language=x` url query.
+* Embeds work though WPs oembed system now that comes with a more stable codebase and better caching system for embeds.
+* Aspect ratios are now auto detected for all providers WP supports through oEmbed.
+* Aspect ratio field is now auto filled when pasting a iframe embed code into the shortcode UI or Gutenberg UI.
+* Removed jQuery dependency for frontend JavaScript.
+* Prevent autoplay of multiple videos, only the first video on pageload will be autoplayed.
 
- Probably things I forgot about, working on this for ~1 year
+Removed:
+
+* Hack to support direct embedding of Dropbox videos because it no longer works.
+* Vimeo only `start` shortcode attribute. Use vimeo urls with `#t=30` at the end for starting time in seconds instead.
+
+Probably things I forgot about, working on this for ~1 year
 
 ### 2019-01-23 - 8.10.4 ###
 
-* Fix: PHP compatibility lowered to offical 5.3 as there was accidentally 5.4+ code used. Make sure you are on PHP 7.3 or at least 5.6 for the upcoming future as WP itself will require 5.6 this year. Its also insecure to run on those outdated versions: https://secure.php.net/supported-versions.php.
+* Fix: PHP compatibility lowered to official 5.3 as there was accidentally 5.4+ code used. Make sure you are on PHP 7.3 or at least 5.6 for the upcoming future as WP itself will require 5.6 this year. Its also insecure to run on those outdated versions: https://secure.php.net/supported-versions.php.
 
 ### 2019-01-16 - 8.10.2 ###
 
