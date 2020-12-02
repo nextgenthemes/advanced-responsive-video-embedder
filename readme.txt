@@ -1157,8 +1157,6 @@ This plugin is financed by sales of the [Pro Addon](https://nextgenthemes.com/pl
 
 ### [Pro Addon](https://nextgenthemes.com/plugins/arve-pro/) ###
 
-Limited time price experiment: **44% off** first year with discount code `wporg`
-
 *   **Disable links in embeds (killer feature!)**<br>
     For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. **Prevent video hosts to lead your visitors away from your site!** Note this also breaks sharing functionality and is not possible when the provider requires flash. Try it on [this page](https://nextgenthemes.com/plugins/arve-pro/). Right click on links still works.
 *   **Lazyload mode**<br>
@@ -1171,12 +1169,12 @@ Limited time price experiment: **44% off** first year with discount code `wporg`
 *   Automatic or custom titles on top of your thumbnails
 *   'Expand on click' feature
 *   3 hover styles
-*   2 play icon styles to choose from
+*   3 play icon styles to choose from
 *   Responsive thumbnails using cutting edge HTML5 technology
 *   **Feel good about yourself**<br>
-    for supporting my 5+ years work on this plugin. Tons of hours, weekends … always worked on improving it.
+    for supporting my 8+ years work on this plugin. Tons of hours, weekends … always worked on improving it.
 *   Show the latest video of a YouTube channel by using the channel URL (updated/cached hourly)
-*   **[Get the ARVE Pro Addon](https://nextgenthemes.com/plugins/arve-pro/)**
+*   **[Get the ARVE Pro Addon](https://nextgenthemes.com/plugins/arve-pro/)** 10% off first year with discount code `wporg`
 
 ### ARVE AMP Addon ###
 
