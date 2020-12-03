@@ -36,17 +36,17 @@ function check_filetype( $url, $ext ) {
 }
 
 /**
- * Calculates seconds based on youtube times
+ * Calculates seconds based on youtube times if needed
  *
- * @param string $yttime   The '1h25m13s' part of youtube URLs.
+ * @param string $yttime   The 't=1h25m13s' or t=123 part of youtube URLs.
  *
  * @return int Starttime in seconds.
  */
 function youtube_time_to_seconds( $yttime ) {
 
-	$matches['h'] = 0;
-	$matches['m'] = 0;
-	$matches['s'] = 0;
+	if ( \is_numeric( $yttime ) ) {
+		return $yttime;
+	}
 
 	$pattern = '/' .
 		'(?<h>[0-9]+h)?' .
@@ -54,6 +54,12 @@ function youtube_time_to_seconds( $yttime ) {
 		'(?<s>[0-9]+s)?/';
 
 	preg_match( $pattern, $yttime, $matches );
+
+	foreach( [ 'h', 'm', 's' ] as $m ) {
+		if ( ! isset( $matches[ $m ] ) ) {
+			$matches[ $m ] = 0;
+		}
+	}
 
 	return ( (int) $matches['h'] * 60 * 60 ) +
 		( (int) $matches['m'] * 60 ) +

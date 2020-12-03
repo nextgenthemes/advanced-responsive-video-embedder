@@ -38,6 +38,17 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 		$this->assertContains( '?start=62', $html );
 	}
 
+	public function test_yt_time_in_seconds() {
+
+		$html = shortcode(
+			[
+				'url' => 'https://www.youtube.com/watch?v=--SCDa1zsYI&t=1621',
+			]
+		);
+		$this->assertNotContains( 'Error', $html );
+		$this->assertContains( '?start=1621', $html );
+	}
+
 	public function test_oembed_recache() {
 
 		shortcode( [ 'url' => 'https://www.youtube.com/watch?v=--SCDa1zsYI&t=1m2s' ] );

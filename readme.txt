@@ -16,6 +16,10 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2020-12-02 9.0.0-beta7 ###
+
+* Fix: YouTube timestamp urls not working with only seconds `t=1234`.
+
 ### 2020-12-01 9.0.0-beta6 ###
 
 * Fix: Url parameters from settings page not working.
@@ -61,6 +65,57 @@ Removed:
 * Vimeo only `start` shortcode attribute. Use vimeo urls with `#t=30` at the end for starting time in seconds instead.
 
 Probably things I forgot about, working on this for ~1 year
+
+### 2020-10-10 - 8.10.28 ###
+
+* Tested and marked as compatible with WP 5.5.1
+
+### 2020-08-02 - 8.10.27 ###
+
+* Fix: **SORRY!** message about beta testing was **not intended** to show hourly it was intended to show only once per user.
+* Fix: Link in that messages was also to a 404 page, can it get worse?
+
+### 2020-07-25 - 8.10.24 ###
+
+* Fix: `embedURL` SEO output.
+
+### 2020-05-14 - 8.10.23 ###
+
+* Improved: Automatically set HTML5 videos that are set to autoplay to also be muted so they may play as browsers no longer allow unmuted autoplay.
+
+### 2019-11-05 - 8.10.20 ###
+
+* Big version update with Gutenberg Block is coming [please help testing](https://nextgenthemes.com/plugins/arve/help-testing-the-beta-version/)
+
+### 2019-10-18 - 8.10.15 ###
+
+* Fix: Force shortcode args to be array. To prevent issues.
+
+### 2019-10-09 - 8.10.13 ###
+
+* Removed outdated link in widget.
+
+### 2019-10-01 - 8.10.12 ###
+
+* Improved: Allow for manually srcset with `img_srcset` with the Pro Addon.
+
+### 2019-08-29 - 8.10.11 ###
+
+* Removed vendor dir from Git versioning.
+
+### 2019-08-29 - 8.10.10 ###
+
+Just a small readme update and checking new release script, making sure everything works and everyone is on the latest stable version.
+
+### 2019-08-19 - 8.10.8 ###
+
+* Improved: Switch Youku embeds to https set to default 16:9 aspect ratio.
+* Improved: added `allow-popups-to-escape-sandbox` to sandbox attribute. This eliminates the need for `sandbox="false"` for Vimeo action links to work. And just in general I think its a good idea.
+
+### 2019-07-31 - 8.10.6 ###
+
+* Fix: Vimeo Action links not working correctly in Chrome when Sandbox is enabled. You can fix this by adding `sandbox="false"` to your shortcodes. But the ARVE Pro "disable links" option will no longer work.
+* Improved: Deprecated `requires_flash` attribute and `Iframe Flash` option. Replaced is the new `sandbox` shortcode attribute.
 
 ### 2019-01-23 - 8.10.4 ###
 
