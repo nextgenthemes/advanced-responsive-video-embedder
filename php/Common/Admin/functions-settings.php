@@ -16,7 +16,7 @@ function label_text( $option ) {
 
 			printf(
 				' <a href="https://nextgenthemes.com/plugins/arve-%s">(%s)</a>',
-				esc_attr( $option['tag'] ),
+				esc_attr( str_replace( 'randomvideo', 'random-video', $option['tag'] ) ),
 				esc_html( ucfirst( $option['tag'] ) . ' Addon' )
 			);
 		}
