@@ -16,6 +16,11 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2020-12-09 9.0.0-beta8 ###
+
+* New: Transfer settings from version 8.0 to version 9.0. [Sorry](https://api.ipfsbrowser.com/ipfs/get.php?hash=QmTHuTcq4iYsoHYomBwV7Xp3KSuLVT1pAnoWQP5uH78d3A) this was supposed to work with the first 9.0 beta.
+* Fix: Issues with error handling.
+
 ### 2020-12-02 9.0.0-beta7 ###
 
 * Fix: YouTube timestamp urls not working with only seconds `t=1234`.
