@@ -95,17 +95,4 @@ class Tests_Options extends WP_UnitTestCase {
 			$options3
 		);
 	}
-
-	public function test_init() {
-		update_option( 'dddd', 'phpunitoptiontest' );
-	}
-
-	public function test_init_check() {
-
-		$this->assertEquals(
-			'phpunitoptiontest',
-			get_option( 'dddd' )
-		);
-	}
-
 }
