@@ -370,7 +370,7 @@ function admin_enqueue_scripts() {
 
 function action_admin_bar_menu( $admin_bar ) {
 
-	if ( ARVE\options()['admin_bar_menu'] ) {
+	if ( current_user_can( 'manage_options' ) && ARVE\options()['admin_bar_menu'] ) {
 
 		$admin_bar->add_menu(
 			[
