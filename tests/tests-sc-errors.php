@@ -72,10 +72,13 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertContains( 'Error', $html );
 	}
 
-	public function test_empty_url() {
+	public function test_empty_url_and_fatal_error() {
 
 		$html = shortcode( [ 'url' => '' ] );
 		$this->assertContains( 'Error', $html );
+
+		$html = shortcode( [ 'url' => 'https://example.com' ] );
+		$this->assertContains( '<iframe', $html );
 	}
 
 	public function test_wrong_url() {

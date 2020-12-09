@@ -13,7 +13,6 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 				'url' => 'https://example.com',
 			]
 		);
-		update_option( 'nextgenthemes_arve', [] );
 
 		$this->assertContains( 'max-width:555px', $html );
 		$this->assertNotContains( 'Error', $html );
@@ -40,7 +39,6 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 				'url'   => 'https://example.com',
 			]
 		);
-		update_option( 'nextgenthemes_arve', [] );
 		$this->assertNotContains( 'Error', $output );
 		$this->assertContains( 'alignleft', $output );
 		$this->assertContains( 'style="max-width:444px;"', $output );

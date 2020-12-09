@@ -3,6 +3,10 @@ namespace Nextgenthemes\ARVE;
 
 function sc_filter_set_uid( array $a ) {
 
+	if ( has_fatal_error( $a ) ) {
+		return $a;
+	}
+
 	static $i = 1;
 
 	$a['uid'] = sanitize_key( uniqid( "arve-{$a['provider']}-{$a['id']}-$i", true) );
@@ -13,6 +17,10 @@ function sc_filter_set_uid( array $a ) {
 }
 
 function sc_filter_aspect_ratio( array $a ) {
+
+	if ( has_fatal_error( $a ) ) {
+		return $a;
+	}
 
 	if ( ! empty( $a['aspect_ratio'] ) ) {
 		return $a;
@@ -41,6 +49,10 @@ function sc_filter_aspect_ratio( array $a ) {
 
 function sc_filter_dimensions( array $a ) {
 
+	if ( has_fatal_error( $a ) ) {
+		return $a;
+	}
+
 	$a['width'] = $a['maxwidth'];
 
 	if ( $a['aspect_ratio'] ) {
@@ -51,6 +63,10 @@ function sc_filter_dimensions( array $a ) {
 }
 
 function sc_filter_maxwidth( array $a ) {
+
+	if ( has_fatal_error( $a ) ) {
+		return $a;
+	}
 
 	$options = options();
 
@@ -74,6 +90,10 @@ function sc_filter_maxwidth( array $a ) {
 
 function sc_filter_liveleak_id_fix( array $a ) {
 
+	if ( has_fatal_error( $a ) ) {
+		return $a;
+	}
+
 	if ( 'liveleak' !== $a['provider'] ) {
 		return $a;
 	}
@@ -90,6 +110,10 @@ function sc_filter_liveleak_id_fix( array $a ) {
 }
 
 function sc_filter_mode( array $a ) {
+
+	if ( has_fatal_error( $a ) ) {
+		return $a;
+	}
 
 	if ( in_array( $a['mode'], [ 'lazyload-lightbox', 'thumbnail' ], true ) ) {
 		$a['mode'] = 'lightbox';
@@ -112,6 +136,10 @@ function sc_filter_mode( array $a ) {
 }
 
 function sc_filter_validate( array $a ) {
+
+	if ( has_fatal_error( $a ) ) {
+		return $a;
+	}
 
 	foreach ( $a as $key => $value ) {
 
@@ -157,6 +185,10 @@ function sc_filter_validate( array $a ) {
 
 function sc_filter_validate_again( array $a ) {
 
+	if ( has_fatal_error( $a ) ) {
+		return $a;
+	}
+
 	if ( 'html5' !== $a['provider'] ) {
 
 		if ( ! is_int( $a['width'] ) ) {
@@ -187,6 +219,10 @@ function sc_filter_validate_again( array $a ) {
 
 function sc_filter_autoplay( array $a ) {
 
+	if ( has_fatal_error( $a ) ) {
+		return $a;
+	}
+
 	if ( 'normal' === $a['mode'] ) { // Prevent more then one vid autoplaying
 
 		static $did_run = false;
@@ -203,14 +239,32 @@ function sc_filter_autoplay( array $a ) {
 	return apply_filters( 'nextgenthemes/arve/sc_filter/autoplay', $a );
 }
 
+function has_fatal_error( array $a ) {
+	( '' !== $a['errors']->get_error_message( 'fatal' ) ) ? true : false;
+}
+
 function sc_filter_missing_attribute_check( array $a ) {
+
+	if ( has_fatal_error( $a ) ) {
+		return $a;
+	}
+
+	// Old shortcodes
+	if ( ! is_wp_error( $a['errors'] ) ) {
+
+		$a['errors'] = new \WP_Error();
+
+		$msg = 'WP Error was not initialized, attributes were: <pre>' . var_export( $a, true ) . '</pre>';
+		$a['errors']->add( 'no-wp-error', $msg );
+
+		return $a;
+	}
 
 	// Old shortcodes
 	if ( $a['legacy_sc'] ) {
 
 		if ( ! $a['id'] || ! $a['provider'] ) {
 			$a['errors']->add( 'fatal', 'need id and provider' );
-			remove_all_filters( 'shortcode_atts_arve' );
 		}
 
 		return $a;
@@ -244,6 +298,10 @@ function sc_filter_missing_attribute_check( array $a ) {
 
 function sc_filter_thumbnail( array $a ) {
 
+	if ( has_fatal_error( $a ) ) {
+		return $a;
+	}
+
 	$a = apply_filters( 'nextgenthemes/arve/sc_filter/thumbnail', $a );
 
 	if ( $a['thumbnail'] ) :
@@ -274,6 +332,10 @@ function sc_filter_thumbnail( array $a ) {
 
 function sc_filter_video( array $a ) {
 
+	if ( has_fatal_error( $a ) ) {
+		return $a;
+	}
+
 	foreach ( VIDEO_FILE_EXTENSIONS as $ext ) {
 
 		if ( ! empty( $a[ $ext ] ) && is_numeric( $a[ $ext ] ) ) {
@@ -286,6 +348,10 @@ function sc_filter_video( array $a ) {
 
 function sc_filter_detect_provider_and_id_from_url( array $a ) {
 
+	if ( has_fatal_error( $a ) ) {
+		return $a;
+	}
+
 	if ( 'html5' === $a['provider'] ||
 		( $a['provider'] && $a['id'] )
 	) {
@@ -297,7 +363,6 @@ function sc_filter_detect_provider_and_id_from_url( array $a ) {
 			'fatal',
 			__( 'sc_filter_detect_provider_and_id_from_url function needs url.', 'advanced-responsive-video-embedder' )
 		);
-		remove_all_filters( 'shortcode_atts_arve' );
 		return $a;
 	}
 
@@ -380,6 +445,10 @@ function special_iframe_src_mods( array $a ) {
 }
 
 function sc_filter_iframe_src( array $a ) {
+
+	if ( has_fatal_error( $a ) ) {
+		return $a;
+	}
 
 	if ( 'html5' === $a['provider'] ) {
 		return $a;
@@ -655,6 +724,10 @@ function get_video_type( $ext ) {
 }
 
 function sc_filter_detect_html5( array $a ) {
+
+	if ( has_fatal_error( $a ) ) {
+		return $a;
+	}
 
 	if ( $a['provider'] && 'html5' !== $a['provider'] ) {
 		return $a;

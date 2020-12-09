@@ -26,6 +26,5 @@ class Tests_URLParams extends WP_UnitTestCase {
 
 		$this->assertContains( 'title=1&amp;byline=1&amp;portrait=0', $html );
 		$this->assertNotContains( 'Error', $html );
-		update_option( 'nextgenthemes_arve', [] );
 	}
 }
