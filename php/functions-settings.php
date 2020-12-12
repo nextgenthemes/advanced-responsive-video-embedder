@@ -21,6 +21,15 @@ function settings_instance() {
 			[
 				'namespace'           => __NAMESPACE__,
 				'settings'            => settings(),
+				'sections'            => [
+					'main'        => __( 'Main', 'advanced-responsive-video-embedder' ),
+					'pro'         => __( 'Pro', 'advanced-responsive-video-embedder' ),
+					#'videojs'     => __( 'Video.js', 'advanced-responsive-video-embedder' ),
+					'randomvideo' => __( 'Random Video', 'advanced-responsive-video-embedder' ),
+					'html5'       => __( 'HTML5', 'advanced-responsive-video-embedder' ),
+					'urlparams'   => __( 'URL Parameters', 'advanced-responsive-video-embedder' ),
+					'debug'       => __( 'Debug', 'advanced-responsive-video-embedder' ),
+				],
 				'menu_parent_slug'    => 'options-general.php',
 				'menu_title'          => __( 'ARVE', 'advanced-responsive-video-embedder' ),
 				'settings_page_title' => __( 'ARVE Settings', 'advanced-responsive-video-embedder' ),
@@ -166,12 +175,13 @@ function shortcode_pairs() {
 function upgrade_options( $settings_instance ) {
 
 	$options_ver           = get_option( 'nextgenthemes_arve_options_ver' );
-	$options_ver_when_done = '9.0.0-beta8';
+	$options_ver_when_done = '9.0.0-beta9';
 
 	if ( \version_compare( $options_ver, $options_ver_when_done, '>=' ) ) {
 		return;
 	}
 
+	$settings        = settings();
 	$new_options     = $settings_instance->get_options();
 	$default_options = $settings_instance->get_options_defaults();
 	$old_options     = (array) get_option( 'arve_options_main' );
@@ -204,8 +214,22 @@ function upgrade_options( $settings_instance ) {
 
 		// Filter out options that got removed or renamed
 		foreach ( $new_options as $key => $val ) {
+
 			if ( ! array_key_exists( $key, $default_options ) ) {
 				unset( $new_options[ $key ] );
+				continue;
+			}
+
+			switch ( $settings[ $key ]['type'] ) {
+				case 'boolean':
+					$new_options[ $key ] = (bool) $new_options[ $key ];
+					break;
+				case 'integer':
+					$new_options[ $key ] = (int) $new_options[ $key ];
+					break;
+				default:
+					$new_options[ $key ] = (string) $new_options[ $key ];
+					break;
 			}
 		}
 

@@ -3,22 +3,12 @@ namespace Nextgenthemes\ARVE\Admin;
 
 use \Nextgenthemes\ARVE;
 
-function settings_header() {
-
-	$sections = [
-		'main'        => __( 'Main', 'advanced-responsive-video-embedder' ),
-		'pro'         => __( 'Pro', 'advanced-responsive-video-embedder' ),
-		'videojs'     => __( 'Video.js', 'advanced-responsive-video-embedder' ),
-		'randomvideo' => __( 'Random Video', 'advanced-responsive-video-embedder' ),
-		'html5'       => __( 'HTML5 Video', 'advanced-responsive-video-embedder' ),
-		'urlparams'   => __( 'URL Parameters', 'advanced-responsive-video-embedder' ),
-		'debug'       => __( 'Debug', 'advanced-responsive-video-embedder' ),
-	];
+function settings_header( $instance ) {
 
 	?>
 	<button @click='showAllSectionsButDebug()' class="button-secondary">All Options</button>
 	<?php
-	foreach ( $sections as $slug => $name ) {
+	foreach ( $instance->sections as $slug => $name ) {
 
 		$btn_type = in_array( $slug, [ 'pro', 'videojs', 'randomvideo' ], true ) ? 'primary' : 'secondary';
 
@@ -36,6 +26,7 @@ function settings_header() {
 	</div>
 
 	<div class="ngt-block" v-show="sectionsDisplayed.debug">
+		<br>
 		<?php require_once __DIR__ . '/partials/debug-info.php'; ?>
 	</div>
 	<?php

@@ -2,7 +2,8 @@
 namespace Nextgenthemes\ARVE\Common;
 
 class Settings {
-
+	
+	public $sections             = [];
 	private $menu_title          = '';
 	private $option_key          = '';
 	private $slugged_namspace    = '';
@@ -12,16 +13,19 @@ class Settings {
 	private $settings            = [];
 	private $settings_page_title = '';
 	private $options_defaults    = [];
+	private $options_by_tag      = [];
 
 	public function __construct( $args ) {
 
 		$defaults = [
 			'menu_parent_slug' => 'options-general.php',
+			'sections'         => [],
 		];
 
 		$args = wp_parse_args( $args, $defaults );
 
 		$this->settings            = $args['settings'];
+		$this->sections            = $args['sections'];
 		$this->menu_title          = $args['menu_title'];
 		$this->settings_page_title = $args['settings_page_title'];
 		$this->slugged_namespace   = sanitize_key( str_replace( '\\', '_', $args['namespace'] ) );
@@ -31,7 +35,11 @@ class Settings {
 		$this->menu_parent_slug    = $args['menu_parent_slug'];
 
 		foreach ( $this->settings as $key => $value ) {
-			$this->options_defaults[ $key ] = $value['default'];
+			
+			$this->options_tags[] = $value['tag'];
+
+			$this->options_defaults[ $key ]        = $value['default'];
+			$this->options_by_tag[ $value['tag'] ] = $key;
 		}
 
 		$this->options = (array) get_option( $this->slugged_namespace, [] );
@@ -136,10 +144,11 @@ class Settings {
 			'nextgenthemes-settings',
 			$this->slugged_namespace,
 			[
-				'nonce'    => wp_create_nonce( 'wp_rest' ),
-				'rest_url' => $this->rest_url,
-				'home_url' => get_home_url(),
-				'options'  => $this->options,
+				'nonce'        => wp_create_nonce( 'wp_rest' ),
+				'rest_url'     => $this->rest_url,
+				'home_url'     => get_home_url(),
+				'options'      => $this->options,
+				'settings'     => $this->settings,
 			]
 		);
 	}
@@ -172,6 +181,24 @@ class Settings {
 		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
+	public function print_save_section() {
+		?>
+		<p>
+			<button
+				@click='saveOptions'
+				:disabled='isSaving'
+				class='button button-primary'
+			>Save</button>
+			<strong v-if='message'>{{ message }}</strong>
+			<img
+				v-if='isSaving == true'
+				class="wrap--nextgenthemes__loading-indicator"
+				src='<?php echo esc_url( get_admin_url() . '/images/wpspin_light-2x.gif' ); ?>'
+				alt='Loading indicator' />
+		</p>
+		<?php
+	}
+
 	public function print_admin_page() {
 		?>
 		<div class='wrap wrap--nextgenthemes'>
@@ -181,24 +208,34 @@ class Settings {
 					<?php
 
 					do_action( $this->slashed_namespace . '/admin/settings_header', $this );
-
+					$this->print_save_section();
 					$this->print_settings_blocks();
-
+					$this->print_save_section();
 					?>
 					<p>
+						<?php
+						foreach ( $this->sections as $key => $label ) {
+
+							if ( in_array( $key, [ 'debug', 'randomvideo' ] ) )
+								continue;
+							?>
+							<button
+								@click='resetOptions("<?= $key; ?>")'
+								:disabled='isSaving'
+								class='button button-secondary'
+							><?php
+								esc_html_e( 'Reset', 'advanced-responsive-video-embedder' );
+								esc_html_e( " $label" )	;
+							?></button>
+							<?php
+						}
+						?>
 						<button
-							@click='saveOptions'
+							@click='resetOptions("all")'
 							:disabled='isSaving'
-							id='vpsp-submit-settings'
-							class='button button-primary'>Save</button>
-						<img
-							v-if='isSaving == true'
-							id='loading-indicator'
-							class="wrap--nextgenthemes__loading-indicator"
-							src='<?php echo esc_url( get_admin_url() . '/images/wpspin_light-2x.gif' ); ?>'
-							alt='Loading indicator' />
+							class='button button-secondary'
+						><?php esc_html_e( 'Reset ALL Options', 'advanced-responsive-video-embedder' ); ?></button>
 					</p>
-					<p v-if='message'>{{ message }}</p>
 				</div>
 				<div class="ngt-settings-grid__sidebar">
 					<?php do_action( $this->slashed_namespace . '/admin/settings_sidebar', $this ); ?>

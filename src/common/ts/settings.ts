@@ -9,6 +9,19 @@ if (!pageQueryVal) {
 }
 
 const data = window[pageQueryVal];
+const settings = data.settings as Record<string, OptionProps>;
+
+interface OptionProps {
+	label: string;
+	tag: string;
+	type: string;
+	default: number | string | boolean;
+	description?: string;
+	descriptionlink?: string;
+	descriptionlinktext?: string;
+	placeholder?: string;
+	options?;
+}
 
 new Vue({
 	// DOM selector for our app's main wrapper element
@@ -71,6 +84,27 @@ new Vue({
 				},
 			});
 		}, // end: saveOptions
+		resetOptions(tag = 'all') {
+			console.log(tag);
+
+			if ('all' === tag) {
+				Object.entries(settings).forEach(([key, value]) => {
+					this.vm[key] = value.default;
+				});
+			} else {
+				Object.entries(settings).forEach(([key, value]) => {
+					console.log('tag', tag);
+					console.log('key', key);
+					console.log('value', value);
+					console.log('value.tag', value.tag);
+
+					if (tag === value.tag) {
+						this.vm[key] = value.default;
+					}
+				});
+			}
+			this.saveOptions();
+		},
 		licenseAPI(action, itemID, optKey) {
 			// set the state so that another save cannot happen while processing
 			this.isSaving = true;
