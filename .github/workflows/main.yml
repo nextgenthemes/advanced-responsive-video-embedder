@@ -12,6 +12,9 @@ jobs:
       matrix:
         php: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
         wordpress: [ '5.5.3', 'latest' ] # https://wordpress.org/download/releases/
+        include:
+          - php: '8.0'
+            wordpress: 'latest'        
     services:
       mysql:
         image: mysql:5.7
@@ -54,7 +57,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader --ignore-platform-req=php
 
       - name: Install WP Tests
         run: bash ./bin/install-wp-tests.sh dbname root dbpass "127.0.0.1:$DB_PORT" ${{ matrix.wordpress }} true
@@ -66,6 +69,10 @@ jobs:
         run: vendor/bin/phpunit
 
   wporgrelease:
+    if: >-
+      startsWith(github.ref, 'refs/tags')
+      && ! startsWith(github.event.repository.name, 'arve-')
+      && ! contains(github.ref, 'alpha')
     needs: test
     name: SVN commit to wp.org
     runs-on: ubuntu-latest
@@ -75,17 +82,9 @@ jobs:
       - run: echo "github.ref-- ${{ github.ref }}"
 
       - name: Checkout
-        if: >-
-          startsWith(github.ref, 'refs/tags')
-          && ! startsWith(github.event.repository.name, 'arve-')
-          && ! contains(github.ref, 'alpha')
         uses: actions/checkout@v2
 
       - name: Maybe deploy to wp.org
-        if: >-
-          startsWith(github.ref, 'refs/tags')
-          && ! startsWith(github.event.repository.name, 'arve-')
-          && ! contains(github.ref, 'alpha')
         uses: 10up/action-wordpress-plugin-deploy@master
         env:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
