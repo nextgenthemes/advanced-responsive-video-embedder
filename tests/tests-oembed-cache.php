@@ -7,10 +7,11 @@ use \Nextgenthemes\ARVE;
 class Tests_OembedCache extends WP_UnitTestCase {
 
 	public function test_oembed_cache_reset() {
+
 		global $post;
 
 		$post       = $this->factory()->post->create_and_get();
-		$url        = 'https://www.youtube.com/watch?v=8MzJCT2BVV0';
+		$url        = 'https://vimeo.com/265932488';
 		$key_suffix = md5( $url . serialize( wp_embed_defaults( $url ) ) );
 		$cachekey   = '_oembed_' . $key_suffix;
 
