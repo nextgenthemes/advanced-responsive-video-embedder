@@ -154,7 +154,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$new_atts = $atts;
 		$old_atts = $atts;
 
-		$this->assertEquals(
+		$this->assertSame(
 			shortcode( $old_atts ),
 			shortcode( $new_atts )
 		);
@@ -164,7 +164,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		unset( $new_atts['id'] );
 		unset( $new_atts['provider'] );
 
-		$this->assertEquals(
+		$this->assertSame(
 			shortcode( $old_atts ),
 			shortcode( $new_atts )
 		);

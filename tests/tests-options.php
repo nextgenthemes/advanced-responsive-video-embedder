@@ -8,7 +8,8 @@ class Tests_Options extends WP_UnitTestCase {
 			'arve_options_main',
 			[
 				'promote_link'   => true,
-				'video_maxwidth' => 444,
+				'video_maxwidth' => '444',
+				'align_maxwidth' => 333,
 			]
 		);
 		update_option(
@@ -24,7 +25,7 @@ class Tests_Options extends WP_UnitTestCase {
 			]
 		);
 
-		update_option( 'nextgenthemes_arve_options_ver', '1.0' );
+		update_option( 'nextgenthemes_arve_options_ver', '9.0.0-beta8' );
 		\Nextgenthemes\ARVE\settings_instance();
 
 		$options = get_option( 'nextgenthemes_arve' );
@@ -32,17 +33,18 @@ class Tests_Options extends WP_UnitTestCase {
 			'disable_links'    => true,
 			'url_params_vimeo' => 'vimeo=123',
 			'maxwidth'         => 444,
+			'align_maxwidth'   => 333,
 			'arve_link'        => true,
 		];
 
-		$this->assertEquals(
-			'9.0.0-beta8',
+		$this->assertSame(
+			'9.0.0-beta9',
 			get_option( 'nextgenthemes_arve_options_ver' )
 		);
 
 		ksort( $options );
 		ksort( $expected );
-		$this->assertEquals(
+		$this->assertSame(
 			$expected,
 			$options
 		);
@@ -57,7 +59,7 @@ class Tests_Options extends WP_UnitTestCase {
 		update_option(
 			'arve_options_main',
 			[
-				'video_maxwidth' => 666,
+				'video_maxwidth' => '666',
 			]
 		);
 		update_option(
@@ -72,7 +74,7 @@ class Tests_Options extends WP_UnitTestCase {
 
 		ksort( $options2 );
 		ksort( $expected );
-		$this->assertEquals(
+		$this->assertSame(
 			$expected,
 			$options
 		);
@@ -90,7 +92,7 @@ class Tests_Options extends WP_UnitTestCase {
 
 		ksort( $options3 );
 		ksort( $expected2 );
-		$this->assertEquals(
+		$this->assertSame(
 			$expected2,
 			$options3
 		);

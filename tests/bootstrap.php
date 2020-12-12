@@ -33,3 +33,16 @@ wp_update_user(
 		'last_name'  => 'User',
 	]
 );
+
+function logfile( $name, $msg, $file ) {
+
+	// if ( ! is_string( $msg ) ) {
+	// 	ob_start();
+	// 	var_dump( $msg );
+	// 	$msg  = ob_get_clean();
+	// 	$msg .= PHP_EOL;
+	// }
+	$msg = $name . var_export( $msg, true ) . PHP_EOL;
+
+	error_log( "$msg " . PHP_EOL, 3, "$file.log" );
+}
