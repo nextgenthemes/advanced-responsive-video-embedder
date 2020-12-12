@@ -16,6 +16,13 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2020-12-12 9.0.0-beta9 ###
+
+* Improved: Reset buttons for settings sections.
+* Fix: Issues with error handling #2.
+* Fix: Hide non critical errors relating to private Vimeo videos.
+* Fix: Make sure 8.0 settings are moved over with right datatype. Hopefully fixes issues with not being able to save settings.
+
 ### 2020-12-09 9.0.0-beta8 ###
 
 * New: Transfer settings from version 8.0 to version 9.0. [Sorry](https://api.ipfsbrowser.com/ipfs/get.php?hash=QmTHuTcq4iYsoHYomBwV7Xp3KSuLVT1pAnoWQP5uH78d3A) this was supposed to work with the first 9.0 beta.
