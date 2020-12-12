@@ -244,19 +244,16 @@ function has_fatal_error( array $a ) {
 }
 
 function sc_filter_missing_attribute_check( array $a ) {
-
-	if ( has_fatal_error( $a ) ) {
-		return $a;
-	}
-
-	// Old shortcodes
+	
 	if ( ! is_wp_error( $a['errors'] ) ) {
 
 		$a['errors'] = new \WP_Error();
 
 		$msg = 'WP Error was not initialized, attributes were: <pre>' . var_export( $a, true ) . '</pre>';
 		$a['errors']->add( 'no-wp-error', $msg );
+	}
 
+	if ( has_fatal_error( $a ) ) {
 		return $a;
 	}
 
@@ -427,17 +424,20 @@ function special_iframe_src_mods( array $a ) {
 			}
 			break;
 		case 'vimeo':
-			$parsed_url  = wp_parse_url( $a['url'] );
-			$vimeo_appid = Common\get_url_arg( $a['src'], 'app_id' ); // TODO check why vimeo adds it and it can be removed,
+			$a['src']     = add_query_arg( 'dnt', 1, $a['src'] );
+			$a['src_gen'] = add_query_arg( 'dnt', 1, $a['src_gen'] );
 
-			if ( $vimeo_appid ) {
-				$a['src_gen'] = add_query_arg( 'app_id', $vimeo_appid, $a['src_gen'] );
-			}
+			$parsed_url = wp_parse_url( $a['url'] );
 
 			if ( ! empty( $parsed_url['fragment'] ) && Common\starts_with( $parsed_url['fragment'], 't' ) ) {
 				$a['src']     .= '#' . $parsed_url['fragment'];
 				$a['src_gen'] .= '#' . $parsed_url['fragment'];
 			}
+			break;
+		case 'wistia':
+			$a['src']     = add_query_arg( 'dnt', 1, $a['src'] );
+			$a['src_gen'] = add_query_arg( 'dnt', 1, $a['src_gen'] );
+
 			break;
 	}
 
@@ -462,19 +462,7 @@ function sc_filter_iframe_src( array $a ) {
 	$options      = options();
 	$a['src_gen'] = build_iframe_src( $a );
 	$a            = special_iframe_src_mods( $a );
-
-	if ( $a['src'] &&
-		( $a['src'] !== $a['src_gen'] )
-	) {
-		$msg = sprintf(
-			'src mismatch <br>url: %s<br>src in: %s<br>src gen: %s',
-			$a['url'],
-			$a['src'],
-			$a['src_gen']
-		);
-
-		$a['errors']->add( 'info', $msg );
-	}
+	$a            = compare_oembed_src_with_generated_src( $a );
 
 	if ( ! $a['src'] ) {
 		$a['src'] = $a['src_gen'];
@@ -488,6 +476,36 @@ function sc_filter_iframe_src( array $a ) {
 	}
 
 	$a = apply_filters( 'nextgenthemes/arve/sc_filter/src', $a );
+
+	return $a;
+}
+
+function compare_oembed_src_with_generated_src( array $a ) {
+
+	if ( ! $a['src'] ) {
+		return $a;
+	}
+
+	$src     = $a['src'];
+	$src_gen = $a['src_gen'];
+
+	switch ( $a['provider'] ) {
+		case 'vimeo':
+			$src     = Common\remove_url_query( $a['src'] );
+			$src_gen = Common\remove_url_query( $a['src_gen'] );
+			break;
+	}
+
+	if ( $src !== $src_gen ) {
+		$msg = sprintf(
+			'src mismatch <br>url: %s<br>src in: %s<br>src gen: %s',
+			$a['url'],
+			$a['src'],
+			$a['src_gen']
+		);
+
+		$a['errors']->add( 'info', $msg );
+	}
 
 	return $a;
 }
@@ -537,22 +555,6 @@ function build_iframe_src( array $a ) {
 			} else {
 				$src = add_query_arg( 'feature', 'oembed', $src );
 			}
-
-			break;
-		case 'vimeo':
-			$src = add_query_arg( 'dnt', 1, $src );
-			if ( $a['src'] ) {
-				$a['src']    = str_replace( '&amp;', '&', $a['src'] );
-				$vimeo_appid = Common\get_url_arg( $a['src'], 'app_id' );
-				if ( $vimeo_appid ) {
-					$src = add_query_arg( 'app_id', $vimeo_appid, $src );
-					$src = str_replace( '&', '&amp;', $a['src'] );
-
-				}
-			}
-			break;
-		case 'wistia':
-			$src = add_query_arg( 'dnt', 1, $src );
 			break;
 		case 'ted':
 			$lang = Common\get_url_arg( $a['url'], 'language' );
