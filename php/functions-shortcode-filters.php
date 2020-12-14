@@ -171,6 +171,7 @@ function sc_filter_validate( array $a ) {
 
 	$url_args   = VIDEO_FILE_EXTENSIONS;
 	$url_args[] = 'url';
+	$url_args[] = 'src';
 
 	foreach ( $url_args as $urlattr ) {
 		$a = validate_url( $a, $urlattr );
@@ -437,7 +438,6 @@ function special_iframe_src_mods( array $a ) {
 		case 'wistia':
 			$a['src']     = add_query_arg( 'dnt', 1, $a['src'] );
 			$a['src_gen'] = add_query_arg( 'dnt', 1, $a['src_gen'] );
-
 			break;
 	}
 
@@ -464,7 +464,7 @@ function sc_filter_iframe_src( array $a ) {
 	$a            = special_iframe_src_mods( $a );
 	$a            = compare_oembed_src_with_generated_src( $a );
 
-	if ( ! $a['src'] ) {
+	if ( ! valid_url( $a['src'] ) && valid_url( $a['src_gen'] ) ) {
 		$a['src'] = $a['src_gen'];
 	}
 
@@ -494,6 +494,9 @@ function compare_oembed_src_with_generated_src( array $a ) {
 			$src     = Common\remove_url_query( $a['src'] );
 			$src_gen = Common\remove_url_query( $a['src_gen'] );
 			break;
+		case 'youtube':
+			$src = remove_query_arg( 'feature', $a['src'] );
+			break;
 	}
 
 	if ( $src !== $src_gen ) {
@@ -504,7 +507,16 @@ function compare_oembed_src_with_generated_src( array $a ) {
 			$a['src_gen']
 		);
 
-		$a['errors']->add( 'info', $msg );
+		if ( 'vimeo' === $a['provider'] ) {
+			$msg .= sprintf(
+				'vimeo compared <br>url: %s<br>src in: %s<br>src gen: %s',
+				$a['url'],
+				$src,
+				$src_gen
+			);
+		}
+
+		$a['errors']->add( 'hidden', $msg );
 	}
 
 	return $a;
@@ -543,17 +555,20 @@ function build_iframe_src( array $a ) {
 	switch ( $a['provider'] ) {
 
 		case 'youtube':
-			$t_arg    = Common\get_url_arg( $a['url'], 't' );
-			$list_arg = Common\get_url_arg( $a['url'], 'list' );
+			$t_arg         = Common\get_url_arg( $a['url'], 't' );
+			$time_continue = Common\get_url_arg( $a['url'], 'time_continue' );
+			$list_arg      = Common\get_url_arg( $a['url'], 'list' );
 
 			if ( $t_arg ) {
 				$src = add_query_arg( 'start', youtube_time_to_seconds( $t_arg ), $src );
 			}
 
+			if ( $time_continue ) {
+				$src = add_query_arg( 'start', youtube_time_to_seconds( $time_continue ), $src );
+			}
+
 			if ( $list_arg ) {
 				$src = add_query_arg( 'list', $list_arg, $src );
-			} else {
-				$src = add_query_arg( 'feature', 'oembed', $src );
 			}
 			break;
 		case 'ted':

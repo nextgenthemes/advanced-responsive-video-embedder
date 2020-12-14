@@ -595,6 +595,10 @@ function get_host_properties() {
 					'id'  => '-fEo3kgHFaw',
 				],
 				[
+					'url' => 'https://www.youtube.com/watch?time_continue=1&v=eqnnyDa7C7Q&feature=emb_logo',
+					'id'  => 'eqnnyDa7C7Q',
+				],
+				[
 					'url'          => 'http://www.youtube.com/watch?v=vrXgLhkv21Y',
 					'id'           => 'vrXgLhkv21Y',
 					'oembed_title' => 'TerrorStorm Full length version',

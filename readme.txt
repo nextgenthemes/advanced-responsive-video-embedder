@@ -16,7 +16,13 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-### 2020-12-13 9.0.0-beta12 ###
+### 2020-12-14 9.0.0-beta13 ###
+
+* Fix: When no oembed data is found or input `src` is invalid url use generated `src` in all cases.
+* Improved: added check for valid url for `src` input.
+* Improved: 'src mismach' errors will be hidden as they are not critical and should not clutter peoples sites.
+
+### 2020-12-14 9.0.0-beta12 ###
 
 * Fix: When deactivating or uninstalling ARVE, it will delete its embeds from the oembed cache.
 * Improved: Caching system.

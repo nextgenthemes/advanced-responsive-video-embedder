@@ -97,4 +97,27 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		);
 		$this->assertContains( 'Error', $html );
 	}
+
+	public function test_wrong_src() {
+
+		$html = shortcode(
+			[
+				'src' => '?dnt=1',
+			]
+		);
+		$this->assertContains( 'Error', $html );
+	}
+
+	public function test_wrong_src_mismatch() {
+
+		$html = shortcode(
+			[
+				'provider' => 'vimeo',
+				'url'      => 'https://vimeo.com/375438048',
+				'src'      => '?dnt=1',
+			]
+		);
+		$this->assertContains( 'Error', $html );
+		$this->assertContains( '<span class="arve-error" hidden>', $html );
+	}
 }

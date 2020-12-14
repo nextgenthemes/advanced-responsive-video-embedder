@@ -3,6 +3,10 @@ namespace Nextgenthemes\ARVE;
 
 function valid_url( $url ) {
 
+	if ( empty( $url ) ) {
+		return false;
+	}
+
 	if ( Common\starts_with( $url, '//' ) ) {
 		$url = 'https:' . $url;
 	}
@@ -14,7 +18,7 @@ function valid_url( $url ) {
 	return false;
 }
 
-function validate_url( $a, $attr_name ) {
+function validate_url( array $a, $attr_name ) {
 
 	if ( ! empty( $a[ $attr_name ] ) && ! valid_url( $a[ $attr_name ] ) ) {
 
@@ -31,7 +35,7 @@ function validate_url( $a, $attr_name ) {
 	return $a;
 }
 
-function validate_aspect_ratio( $a ) {
+function validate_aspect_ratio( array $a ) {
 
 	if ( empty( $a['aspect_ratio'] ) ) {
 		return $a;
@@ -102,7 +106,7 @@ function validate_bool( array $a, $attr_name ) {
 	return $a;
 }
 
-function validate_align( $a ) {
+function validate_align( array $a ) {
 
 	switch ( $a['align'] ) {
 		case null:
