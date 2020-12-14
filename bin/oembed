@@ -17,14 +17,14 @@ function provider( $provider ) {
 	foreach ( $endpoints['schemes'] as $key => $value ) {
 
 		$url = $endpoints['url'];
-		$url = str_replace( 'twitch.tv/v4', 'twitch.tv/v5', $url );
 		$url = str_replace( '{format}', 'json', $url );
 
 		echo "wp_oembed_add_provider( '$value', '{$url}' );" . PHP_EOL;
 	}
 
 	$example_data = file_get_contents( $endpoints['example_urls'][0] );
-	// var_dump( json_decode( $example_data, true ) );
+	$oembed_data  = json_decode( $example_data, true );
+	var_dump( $oembed_data );
 }
 
 foreach ( [
