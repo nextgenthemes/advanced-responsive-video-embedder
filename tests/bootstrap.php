@@ -34,15 +34,16 @@ wp_update_user(
 	]
 );
 
-function logfile( $name, $msg, $file ) {
+function logfile( $name, $debug_var, $file ) {
 
-	// if ( ! is_string( $msg ) ) {
+	// if ( ! is_string( $debug_var ) ) {
 	// 	ob_start();
-	// 	var_dump( $msg );
-	// 	$msg  = ob_get_clean();
-	// 	$msg .= PHP_EOL;
+	// 	var_dump( $debug_var );
+	// 	$debug_var  = ob_get_clean();
+	// 	$debug_var .= PHP_EOL;
 	// }
-	$msg = $name . var_export( $msg, true ) . PHP_EOL;
+	$log  = "$name ";
+	$log .= var_export( $debug_var, true ) . PHP_EOL;
 
-	error_log( "$msg " . PHP_EOL, 3, "$file.log" );
+	error_log( $log, 3, "$file.log" );
 }

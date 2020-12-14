@@ -6,12 +6,6 @@ namespace Nextgenthemes\ARVE;
  * https://github.com/iamcal/oembed/tree/master/providers
  */
 function add_oembed_providers() {
-	wp_oembed_add_provider( 'http://clips.twitch.tv/*', 'https://api.twitch.tv/v5/oembed' );
-	wp_oembed_add_provider( 'https://clips.twitch.tv/*', 'https://api.twitch.tv/v5/oembed' );
-	wp_oembed_add_provider( 'http://www.twitch.tv/*', 'https://api.twitch.tv/v5/oembed' );
-	wp_oembed_add_provider( 'https://www.twitch.tv/*', 'https://api.twitch.tv/v5/oembed' );
-	wp_oembed_add_provider( 'http://twitch.tv/*', 'https://api.twitch.tv/v5/oembed' );
-	wp_oembed_add_provider( 'https://twitch.tv/*', 'https://api.twitch.tv/v5/oembed' );
 	wp_oembed_add_provider( 'https://fast.wistia.com/embed/iframe/*', 'https://fast.wistia.com/oembed.json' );
 	wp_oembed_add_provider( 'https://fast.wistia.com/embed/playlists/*', 'https://fast.wistia.com/oembed.json' );
 	wp_oembed_add_provider( 'https://*.wistia.com/medias/*', 'https://fast.wistia.com/oembed.json' );
@@ -76,30 +70,46 @@ function vimeo_referer( $args, $url ) {
 
 function trigger_cache_rebuild( $ttl, $url, $attr, $post_id ) {
 
-	if ( ! did_action( 'nextgenthemes/arve/oembed_recache' ) ) {
-		// Get the time when oEmbed HTML was last cached (based on the WP_Embed class)
-		$key_suffix    = md5( $url . serialize( $attr ) ); // phpcs:ignore
-		$cachekey_time = '_oembed_time_' . $key_suffix;
-		$cache_time    = get_post_meta( $post_id, $cachekey_time, true );
+	if ( did_action( 'nextgenthemes/arve/oembed_recache' ) ) {
+		return $ttl;
+	}
 
-		// Get the cached HTML
-		$cachekey   = '_oembed_' . $key_suffix;
-		$cache_html = strtolower( get_post_meta( $post_id, $cachekey, true ) );
+	// Get the time when oEmbed HTML was last cached (based on the WP_Embed class)
+	$key_suffix    = md5( $url . serialize( $attr ) ); // phpcs:ignore
+	$cachekey_time = '_oembed_time_' . $key_suffix;
+	$cache_time    = get_post_meta( $post_id, $cachekey_time, true );
 
-		// time after a recache should be done
-		$trigger_time = get_option( 'nextgenthemes_arve_oembed_recache' );
+	// Get the cached HTML
+	$cachekey      = '_oembed_' . $key_suffix;
+	$metadata      = get_post_custom( $post_id );
+	$cache_exists  = isset( $metadata[ $cachekey ][0] );
+	$cache_html    = $cache_exists ? strtolower( get_post_meta( $post_id, $cachekey, true ) ) : false;
+	// $cache_exists2 = metadata_exists( 'post', $post_id, $cachekey ); // TODO not sure of 'post' is always right for embeds outside of 
 
-		// Check if we need to regenerate the oEmbed HTML:
-		if ( $cache_time < $trigger_time &&
-			Common\contains_any( $cache_html, [ 'video', 'tube', 'dailymotion', 'vimeo', 'twitch', 'ted.com', 'wistia' ] ) &&
-			$GLOBALS['wp_embed']->usecache
-		) {
-			// What we need to skip the oembed cache part
-			$GLOBALS['wp_embed']->usecache = false;
-			$ttl                           = 0;
+	// time after a recache should be done
+	$trigger_time = get_option( 'nextgenthemes_arve_oembed_recache' );
 
-			do_action( 'nextgenthemes/arve/oembed_recache' );
-		}
+	$not_touching = [
+		'platform.twitter.com',
+		'embed.redditmedia.com',
+		'embedr.flickr.com',
+		'open.spotify.com',
+		'secure.polldaddy.com',
+		'embed.tumblr.com',
+		'imgur.com'
+	];
+
+	// Check if we need to regenerate the oEmbed HTML:
+	if ( $cache_exists &&
+		$cache_time < $trigger_time &&
+		! Common\contains_any( $cache_html, $not_touching ) &&
+		$GLOBALS['wp_embed']->usecache
+	) {
+		// What we need to skip the oembed cache part
+		$GLOBALS['wp_embed']->usecache = false;
+		$ttl                           = 0;
+
+		do_action( 'nextgenthemes/arve/oembed_recache' );
 	}
 
 	return $ttl;

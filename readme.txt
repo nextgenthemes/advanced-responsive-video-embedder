@@ -16,9 +16,15 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
-### 2020-12-12 9.0.0-beta10 ###
+### 2020-12-13 9.0.0-beta12 ###
 
-* Improved: Reset buttons for settings sections.
+* Fix: When deactivating or uninstalling ARVE, it will delete its embeds from the oembed cache.
+* Improved: Caching system.
+* Improved: Removed Twitch oembed handler (not provided anymore, still works without it).
+
+### 2020-12-12 9.0.0-beta11 ###
+
+* New: Reset buttons for settings sections.
 * Fix: Issues with error handling #2.
 * Fix: Hide non critical errors relating to private Vimeo videos.
 * Fix: Make sure 8.0 settings are moved over with right datatype. Hopefully fixes issues with not being able to save settings.

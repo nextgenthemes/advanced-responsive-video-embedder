@@ -115,16 +115,18 @@ function activation_hook() {
 	update_option( 'nextgenthemes_arve_oembed_recache', time() );
 }
 
-register_uninstall_hook( __FILE__, __NAMESPACE__ . '\uninstall_hook' );
-function uninstall_hook() {
+register_deactivation_hook( __FILE__, __NAMESPACE__ . '\delete_oembed_cache' );
+register_uninstall_hook(    __FILE__, __NAMESPACE__ . '\delete_oembed_cache' );
 
+function delete_oembed_cache() {
 	global $wpdb;
 
 	$wpdb->query(
 		$wpdb->prepare(
-			"DELETE FROM {$wpdb->postmeta} WHERE meta_key LIKE %s AND meta_value LIKE %s",
+			"DELETE FROM {$wpdb->postmeta} WHERE meta_key LIKE %s AND (meta_value LIKE %s OR meta_value LIKE %s)",
 			'%_oembed_%',
-			'%' . $wpdb->esc_like( 'id="arve-' ) . '%'
+			'%' . $wpdb->esc_like( 'id="arve' ) . '%',
+			'%' . $wpdb->esc_like( 'Advanced Responsive Video Embedder' ) . '%'
 		)
 	);
 }
