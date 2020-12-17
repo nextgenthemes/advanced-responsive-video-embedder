@@ -16,6 +16,10 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2020-12-17 9.0.1 ###
+
+* Fix: `contentURL` output for html5 video file embeds.
+
 ### 2020-12-14 9.0.0-beta13 ###
 
 * Fix: When no oembed data is found or input `src` is invalid url use generated `src` in all cases.

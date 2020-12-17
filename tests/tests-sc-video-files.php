@@ -62,6 +62,9 @@ class Tests_ShortcodeVideoFiles extends WP_UnitTestCase {
 			$this->assertContains( '<video', $with_ext );
 			$this->assertContains( '<source type="video', $with_url );
 			$this->assertContains( '<source type="video', $with_ext );
+
+			$this->assertContains( '<meta itemprop="contentURL"', $with_url );
+			$this->assertContains( '<meta itemprop="contentURL"', $with_ext );
 		}
 
 		$output = shortcode(

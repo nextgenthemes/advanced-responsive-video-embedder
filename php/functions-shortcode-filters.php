@@ -490,6 +490,7 @@ function compare_oembed_src_with_generated_src( array $a ) {
 	$src_gen = $a['src_gen'];
 
 	switch ( $a['provider'] ) {
+		case 'wistia':
 		case 'vimeo':
 			$src     = Common\remove_url_query( $a['src'] );
 			$src_gen = Common\remove_url_query( $a['src_gen'] );
@@ -501,15 +502,15 @@ function compare_oembed_src_with_generated_src( array $a ) {
 
 	if ( $src !== $src_gen ) {
 		$msg = sprintf(
-			'src mismatch <br>url: %s<br>src in: %s<br>src gen: %s',
+			'src mismatch<br>url: %s<br>src in: %s<br>src gen: %s',
 			$a['url'],
 			$a['src'],
 			$a['src_gen']
 		);
 
-		if ( 'vimeo' === $a['provider'] ) {
+		if ( $src !== $a['src'] || $src_gen !== $a['src_gen'] ) {
 			$msg .= sprintf(
-				'vimeo compared <br>url: %s<br>src in: %s<br>src gen: %s',
+				'Actual comparison<br>url: %s<br>src in: %s<br>src gen: %s',
 				$a['url'],
 				$src,
 				$src_gen
@@ -562,7 +563,6 @@ function build_iframe_src( array $a ) {
 			if ( $t_arg ) {
 				$src = add_query_arg( 'start', youtube_time_to_seconds( $t_arg ), $src );
 			}
-
 			if ( $time_continue ) {
 				$src = add_query_arg( 'start', youtube_time_to_seconds( $time_continue ), $src );
 			}
@@ -767,7 +767,12 @@ function sc_filter_detect_html5( array $a ) {
 
 		if ( $a[ $ext ] ) {
 			$a['video_sources_html'] .= sprintf( '<source type="%s" src="%s">', get_video_type( $ext ), $a[ $ext ] );
+
+			if ( empty( $a['first_video_file'] ) ) {
+				$a['first_video_file'] = $a[ $ext ];
+			}
 		}
+
 	endforeach;
 
 	if ( $a['video_sources_html'] ) {

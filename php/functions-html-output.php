@@ -202,14 +202,12 @@ function arve_embed_inner_html( array $a ) {
 
 	if ( $options['seo_data'] ) :
 
-		$a['first_source'] = empty( $a['sources'] ) ? '' : Common\first_array_value( $a['sources'] );
-
 		$metas = [
-			'first_source' => 'contentURL',
-			'src'          => 'embedURL',
-			'upload_date'  => 'uploadDate',
-			'author_name'  => 'author',
-			'duration'     => 'duration',
+			'first_video_file' => 'contentURL',
+			'src'              => 'embedURL',
+			'upload_date'      => 'uploadDate',
+			'author_name'      => 'author',
+			'duration'         => 'duration',
 		];
 
 		foreach ( $metas as $key => $itemprop ) {
@@ -218,7 +216,7 @@ function arve_embed_inner_html( array $a ) {
 				if ( 'duration' === $key && \is_numeric( $a[ $key ] ) ) {
 					$a[ $key ] = seconds_to_iso8601_duration( $a[ $key ] );
 				}
-				$html .= sprintf( PHP_EOL . '<meta itemprop="%s" content="%s">' . PHP_EOL, esc_attr( $itemprop ), esc_attr( $a[ $key ] ) );
+				$html .= sprintf( '<meta itemprop="%s" content="%s">' . PHP_EOL, esc_attr( $itemprop ), esc_attr( $a[ $key ] ) );
 			}
 		}
 
