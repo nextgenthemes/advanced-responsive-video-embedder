@@ -16,6 +16,14 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2020-12-22 9.1.0 ###
+
+* Fix: Correct backwards compatibility for deprecated mode values.
+* Fix: Expand on click UI in Gutenberg.
+* Fix: Not dismissible admin messages.
+* New: Wrapper element `.arve-inner` for more custom control over embeds.
+* Improved: Asset loading and caching.
+
 ### 2020-12-17 9.0.1 ###
 
 * Fix: `contentURL` output for html5 video file embeds.
