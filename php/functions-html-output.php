@@ -3,13 +3,15 @@ namespace Nextgenthemes\ARVE;
 
 function build_html( array $a ) {
 
-	$options = options();
+	$options       = options();
+	$wrapped_video = arve_embed( arve_embed_inner_html( $a ), $a );
+	$wrapped_video = '<span class="arve-inner">' . $wrapped_video . '</span>';
 
 	return build_tag(
 		[
 			'name'       => 'arve',
 			'tag'        => 'div',
-			'inner_html' => arve_embed( arve_embed_inner_html( $a ), $a ) . promote_link( $a['arve_link'] ),
+			'inner_html' => $wrapped_video . promote_link( $a['arve_link'] ),
 			'attr'       => [
 				'class'          => $a['align'] ? 'arve align' . $a['align'] : 'arve',
 				'data-mode'      => $a['mode'],
