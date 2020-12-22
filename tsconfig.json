@@ -28,11 +28,13 @@
 		"isolatedModules": false // to limit implementation
 	},
 	"includes": [
-		"src/ts/**/*.ts"
+		"src/**/*.ts",
+		"src/**/*.tsx",
+		"src/**/*.js",
+		"src/**/*.jsx",
 	],
 	"exclude": [
 		"node_modules",
-		"dist",
-		"src/**/*.spec.ts"
+		"build",
 	]
 }

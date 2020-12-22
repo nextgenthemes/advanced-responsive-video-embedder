@@ -39,7 +39,7 @@ module.exports = {
 	},
 	overrides: [
 		{
-			files: ['webpack.mix.js'],
+			files: ['webpack.config.js'],
 			env: {
 				browser: false,
 				node: true,
