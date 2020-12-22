@@ -229,7 +229,6 @@ function BuildControls(props) {
 								title={__('Thumbnail')}
 								onSelect={(media) => {
 									selectedMedia = media;
-									console.log(selectedMedia);
 									return props.setAttributes({
 										[key]: media.id.toString(),
 										[key + '_url']: media.url,
@@ -247,11 +246,11 @@ function BuildControls(props) {
 													: 'editor-post-featured-image__preview'
 											}
 											onClick={open}
-											aria-label={
-												!val
-													? null
-													: __('Edit or update the image')
-											}
+											// aria-label={
+											// 	!val
+											// 		? null
+											// 		: __('Edit or update the image')
+											// }
 											aria-describedby={
 												!val
 													? ''
@@ -280,7 +279,6 @@ function BuildControls(props) {
 									title={__('Thumbnail')}
 									onSelect={(media) => {
 										selectedMedia = media;
-										console.log(selectedMedia);
 										return props.setAttributes({
 											[key]: media.id.toString(),
 											[key + '_url']: media.url,

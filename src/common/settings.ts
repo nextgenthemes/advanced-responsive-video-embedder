@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import '../scss/settings.scss';
+import './settings.scss';
 
 const url = new URL(window.location.href);
 const pageQueryVal = url.searchParams.get('page');
@@ -85,19 +85,12 @@ new Vue({
 			});
 		}, // end: saveOptions
 		resetOptions(tag = 'all') {
-			console.log(tag);
-
 			if ('all' === tag) {
 				Object.entries(settings).forEach(([key, value]) => {
 					this.vm[key] = value.default;
 				});
 			} else {
 				Object.entries(settings).forEach(([key, value]) => {
-					console.log('tag', tag);
-					console.log('key', key);
-					console.log('value', value);
-					console.log('value.tag', value.tag);
-
 					if (tag === value.tag) {
 						this.vm[key] = value.default;
 					}
@@ -123,8 +116,6 @@ new Vue({
 
 				// callback to run upon successful completion of our request
 				success: (response) => {
-					console.log( 'response', response ); // eslint-disable-line
-
 					this.message = 'License API call saved';
 					setTimeout(() => (this.message = ''), 1000);
 				},

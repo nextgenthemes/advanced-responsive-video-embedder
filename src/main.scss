@@ -23,6 +23,14 @@
 	}
 }
 
+.arve-inner,
+#html .arve-inner {
+	display: block;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
 .arve-embed,
 #html .arve-embed {
 	position: relative;

@@ -1,15 +1,14 @@
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
 	...defaultConfig,
 	entry: {
-		main: './src/ts/main.ts',
-		block: './src/ts/block.tsx',
-		admin: './src/ts/admin.ts',
-		'shortcode-ui': './src/ts/shortcode-ui.ts',
-		'common/settings': './src/common/ts/settings.ts',
-		'common/notice-ajax': './src/common/ts/notice-ajax.ts',
+		main: './src/main.ts',
+		block: './src/block.tsx',
+		admin: './src/admin.ts',
+		'shortcode-ui': './src/shortcode-ui.ts',
+		'common/settings': './src/common/settings.ts',
+		'common/notice-ajax': './src/common/notice-ajax.ts',
 	},
 	module: {
 		...defaultConfig.module,

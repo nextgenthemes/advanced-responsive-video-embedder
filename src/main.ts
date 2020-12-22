@@ -1,4 +1,4 @@
-import '../scss/main.scss';
+import './main.scss';
 
 const qsa = document.querySelectorAll.bind(document) as typeof document.querySelectorAll;
 
