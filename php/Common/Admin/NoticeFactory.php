@@ -52,8 +52,9 @@ class NoticeFactory {
 			[
 				'handle' => 'nextgenthemes-notice-ajax',
 				'deps'   => [ 'jquery' ],
-				'path'   => dirname( dirname( dirname( __DIR__ ) ) ) . '/build/common/notice-ajax.js',
 				'src'    => Common\plugin_or_theme_src( 'build/common/notice-ajax.js' ),
+				'path'   => dirname( dirname( dirname( __DIR__ ) ) ) . '/build/common/notice-ajax.js',
+				'async'  => false,
 			]
 		);
 	}

@@ -11,23 +11,31 @@ function is_script( $src ) {
 	return '.js' === substr( $src_without_query, -3 ) ? true : false;
 }
 
-function asset_info( $path ) {
+function deps_and_ver( $path ) {
+
+	$dv = [
+		'dependencies' => [],
+		'version'      => null,
+	];
 
 	if ( ! $path || ! is_file( $path ) ) {
-		return [ 'dependencies' => [], 'version' => null ];
+		return $dv;
 	}
 
-	$info = pathinfo( $path );
+	$pathinfo  = pathinfo( $path );
+	$asset_php = $pathinfo['dirname'] . DIRECTORY_SEPARATOR . $pathinfo['filename'] . '.asset.php';
 
-	if ( 'js' === $info['extension'] ) {
-		$asset_info_php = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . '.asset.php';
+	if ( is_file( $asset_php ) ) {
+		$dv = require( $asset_php );
 
-		if ( is_file( $asset_info_php ) ) {
-			return require( $asset_info_php );
+		if ( 'css' === $pathinfo['extension'] ) {
+			$dv['dependencies'] = [];
 		}
+	} else {
+		$dv['version'] = filemtime( $path );
 	}
 
-	return [ 'dependencies' => [], 'version' => filemtime( $path ) ];
+	return $dv;
 }
 
 function replace_extension($filename, $new_extension) {
@@ -37,12 +45,11 @@ function replace_extension($filename, $new_extension) {
 	return $dir . $info['filename'] . '.' . $new_extension;
 }
 
-
 function asset( array $args ) {
 
 	$defaults = [
 		'path'          => '',
-		'async'         => false,
+		'async'         => true,
 		'cdn_src'       => '',
 		'defer'         => false,
 		'deps'          => [],
@@ -58,11 +65,10 @@ function asset( array $args ) {
 	];
 
 	$args         = wp_parse_args( $args, $defaults );
-	$info         = asset_info( $args['path'] );
-	$args['deps'] = $args['deps'] + $info['dependencies'];
+	$deps_and_ver = deps_and_ver( $args['path'] );
 
 	if ( ! $args['ver'] ) {
-		$args['ver'] = $info['version'];
+		$args['ver'] = $deps_and_ver['version'];
 	}
 
 	if ( ! empty( $args['cdn_src'] ) && nextgenthemes_settings_instance()->options['cdn'] ) {
@@ -71,6 +77,8 @@ function asset( array $args ) {
 	}
 
 	if ( is_script( $args['src'] ) ) {
+
+		$args['deps'] = $args['deps'] + $deps_and_ver['dependencies'];
 
 		wp_register_script( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['in_footer'] );
 
@@ -178,20 +186,6 @@ function add_attr_to_asset( $type, array $args ) {
 		},
 		10,
 		2
-	);
-}
-
-function add_mce_css() {
-
-	add_filter(
-		'mce_css',
-		function( $mce_css ) {
-			if ( ! empty( $mce_css ) ) {
-				$mce_css .= ',';
-			}
-			$mce_css .= plugins_url( 'build/arve.css', ARVE\PLUGIN_FILE );
-			return $mce_css;
-		}
 	);
 }
 

@@ -126,16 +126,17 @@ class Settings {
 		 	[
 				'handle' => 'nextgenthemes-settings',
 		 		'src'    => plugin_or_theme_src( 'build/common/settings.css' ),
-		 		'ver'    => plugin_or_theme_ver( \Nextgenthemes\ARVE\VERSION, 'build/common/settings.css' ),
+		 		'path'   => dirname( dirname( __DIR__ ) ) . '/build/common/settings.css',
 		 	]
 		);
 
 		enqueue_asset(
 			[
 				'handle' => 'nextgenthemes-settings',
-				'path'   => dirname( dirname( __DIR__ ) ) . '/build/common/settings.js',
 				'src'    => plugin_or_theme_src( 'build/common/settings.js' ),
+				'path'   => dirname( dirname( __DIR__ ) ) . '/build/common/settings.js',
 				'deps'   => [ 'jquery' ],
+				'async'  => false,
 			]
 		);
 

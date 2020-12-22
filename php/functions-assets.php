@@ -7,7 +7,7 @@ function register_assets() {
 		[
 			'handle' => 'arve-main',
 			'src'    => plugins_url( 'build/main.css', PLUGIN_FILE ),
-			'ver'    => Common\ver( VERSION, 'build/main.css', PLUGIN_FILE ),
+			'path'   => PLUGIN_DIR . '/build/main.css',
 			'mce'    => true,
 		]
 	);
@@ -15,8 +15,8 @@ function register_assets() {
 	Common\asset(
 		[
 			'handle' => 'arve-main',
-			'path'   => PLUGIN_DIR . '/build/main.js',
 			'src'    => plugins_url( 'build/main.js', PLUGIN_FILE ),
+			'path'   => PLUGIN_DIR . '/build/main.js',
 		]
 	);
 
@@ -32,7 +32,9 @@ function register_assets() {
 
 		foreach ( $sc_settings as $key => $v ) {
 
-			$attr[ $key ] = [ 'type' => $v['type'] ];
+			$attr[ $key ] = [
+				'type' => ( 'select' === $v['type'] ) ? 'string' : $v['type']
+			];
 
 			if ( $options['gutenberg_help'] && ! empty( $v['description'] ) ) {
 				$sc_settings[ $key ]['description'] = wp_strip_all_tags( $v['description'] );
@@ -49,10 +51,11 @@ function register_assets() {
 		Common\asset(
 			[
 				'handle' => 'arve-block',
-				'path'   => PLUGIN_DIR . '/build/block.js',
 				'src'    => plugins_url( 'build/block.js', PLUGIN_FILE ),
+				'path'   => PLUGIN_DIR . '/build/block.js',
 				'deps'   => [ 'arve' ],
 				'footer' => false,
+				'async'  => false,
 			]
 		);
 		wp_localize_script( 'arve-block', 'ARVEsettings', $sc_settings );
