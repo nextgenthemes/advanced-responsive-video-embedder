@@ -296,7 +296,7 @@ function all_settings() {
 			'type'                => 'string',
 			'description'         => sprintf(
 				// Translators: Provider list
-				__( 'Used for SEO, is visible on top of thumbnails in Lazyload modes, is used as link text in link-lightbox mode. <a href="%1$s">ARVE Pro</a> is able to get them from %2$s automatically.', 'advanced-responsive-video-embedder' ),
+				__( 'Used for SEO, is visible on top of thumbnails in Lazyload/Lightbox modes, is used as link text in link-lightbox mode. <a href="%1$s">ARVE Pro</a> is able to get them from %2$s automatically.', 'advanced-responsive-video-embedder' ),
 				esc_url( $pro_addon_link ),
 				esc_html( $auto_title )
 			),
@@ -385,7 +385,8 @@ function all_settings() {
 		'grow' => [
 			'tag'         => 'pro',
 			'default'     => true,
-			'type'        => 'boolean',
+			'type'        => 'select',
+			'options'     => $def_bool_options,
 			'label'       => __( 'Expand on play? (Lazyload only)', 'advanced-responsive-video-embedder' ),
 			'description' => __( 'Expands video size after clicking the thumbnail (Lazyload Mode)', 'advanced-responsive-video-embedder' ),
 		],
