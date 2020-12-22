@@ -115,8 +115,12 @@ function sc_filter_mode( array $a ) {
 		return $a;
 	}
 
-	if ( in_array( $a['mode'], [ 'lazyload-lightbox', 'thumbnail' ], true ) ) {
+	if ( 'lazyload-lightbox' === $a['mode'] ) {
 		$a['mode'] = 'lightbox';
+	}
+
+	if ( 'thumbnail' === $a['mode'] ) {
+		$a['mode'] = 'lazyload';
 	}
 
 	$supported_modes = get_supported_modes();
