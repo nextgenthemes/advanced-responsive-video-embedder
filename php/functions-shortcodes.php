@@ -167,11 +167,15 @@ function create_shortcodes() {
 	add_shortcode( 'arve_test', __NAMESPACE__ . '\test_shortcode' );
 }
 
+// TODO sometimes $attr is string, investigate when and what it is exacly
 function wp_video_shortcode_override( $out, $attr ) {
 
 	$options = options();
 
-	if ( ! $options['wp_video_override'] ||
+	if (
+		! $options['wp_video_override'] ||
+		empty( $attr ) ||
+		! is_array( $attr ) ||
 		! empty( $attr['wmv'] ) ||
 		! empty( $attr['flv'] ) ||
 		disabled_on_feeds()
