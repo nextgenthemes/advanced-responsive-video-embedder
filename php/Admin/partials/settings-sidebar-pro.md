@@ -12,9 +12,9 @@ This plugin is financed by purchases of the [Pro Addon][1]. The development and 
 
 *   **Disable links in embeds (killer feature!)**  
     For example: Clicking on a title in a YouTube embed will not open a new tab. **Prevent video hosts to lead your visitors away from your site!**
-*   **Lazyload mode**  
+*   **Lazyload**  
     Make your site load **faster** by loading only a image instead of the entire video player on pageload.
-*   **Lazyload -> Lightbox**  
+*   **Lightbox**  
     Shows the Video in a Lightbox after clicking a preview image
 *   **Link -> Lightbox**  
     Use simple links as triggers for lightboxed videos

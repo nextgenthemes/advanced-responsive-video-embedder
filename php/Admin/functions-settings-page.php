@@ -34,7 +34,19 @@ function settings_header( $instance ) {
 
 function settings_sidebar() {
 	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
-	readfile( __DIR__ . '/partials/settings-sidebar.html' );
+	if ( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
+		readfile( __DIR__ . '/partials/settings-sidebar-pro.html' );
+	}
+
+	if ( ! is_plugin_active( 'arve-random-video/arve-random-video.php' ) ) {
+		readfile( __DIR__ . '/partials/settings-sidebar-random-video.html' );
+	}
+
+	if ( ! is_plugin_active( 'arve-amp/arve-amp.php' ) ) {
+		readfile( __DIR__ . '/partials/settings-sidebar-amp.html' );
+	}
+
+	readfile( __DIR__ . '/partials/settings-sidebar-rate.html' );
 }
 
 function echo_active_plugins() {
