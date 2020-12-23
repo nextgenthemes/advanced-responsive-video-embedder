@@ -55,8 +55,8 @@ function display_pro_ad() {
 
 	$inst = (int) get_option( 'arve_install_date' );
 
-	if ( ! current_user_can( 'update_plugins' )
-		|| ! apply_filters( 'nextgenthemes/arve/pro_ad', true )
+	if ( is_plugin_active( 'arve-pro/arve-pro.php' )
+		|| ! current_user_can( 'update_plugins' )
 		|| time() < strtotime( '+3 weeks', $inst )
 	) {
 		return false;
@@ -350,9 +350,10 @@ function admin_enqueue_scripts() {
 	Common\enqueue_asset(
 		[
 			'handle' => 'arve-admin',
-			'path'   => ARVE\PLUGIN_DIR . '/build/admin.js',
 			'src'    => plugins_url( 'build/admin.js', ARVE\PLUGIN_FILE ),
+			'path'   => ARVE\PLUGIN_DIR . '/build/admin.js',
 			'deps'   => [ 'jquery' ],
+			'async'  => false,
 		]
 	);
 
