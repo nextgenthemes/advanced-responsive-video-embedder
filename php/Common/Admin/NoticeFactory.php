@@ -7,6 +7,7 @@ class NoticeFactory {
 
 	public $slug;
 	public $notice;
+	public $notice_id;
 	public $dismiss_forever;
 
 	public function __construct( $slug, $notice, $dismiss_forever = true, $capabilities = 'activate_plugins' ) {
@@ -33,7 +34,7 @@ class NoticeFactory {
 		$user_id   = get_current_user_id();
 		$user_meta = get_user_meta( $user_id, $this->notice_id );
 
-		if ( $this->dismiss_forever && ! empty( $user_meta ) ) {
+		if ( $this->dismiss_forever && $user_meta ) {
 			return;
 		} elseif ( get_transient( $this->notice_id ) ) {
 			return;
@@ -51,10 +52,9 @@ class NoticeFactory {
 		Common\enqueue_asset(
 			[
 				'handle' => 'nextgenthemes-notice-ajax',
-				'deps'   => [ 'jquery' ],
 				'src'    => Common\plugin_or_theme_src( 'build/common/notice-ajax.js' ),
 				'path'   => dirname( dirname( dirname( __DIR__ ) ) ) . '/build/common/notice-ajax.js',
-				'async'  => false,
+				'footer' => false,
 			]
 		);
 	}
@@ -64,7 +64,7 @@ class NoticeFactory {
 		$user_id = get_current_user_id();
 
 		if ( $this->dismiss_forever ) {
-			add_user_meta( $user_id, $this->notice_id, true );
+			update_user_meta( $user_id, $this->notice_id, 'ngt-notice-dismissed' );
 		} else {
 			set_transient( $this->notice_id, true, HOUR_IN_SECONDS );
 		}
