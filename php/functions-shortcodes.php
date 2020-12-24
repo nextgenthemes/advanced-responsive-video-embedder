@@ -183,9 +183,8 @@ function wp_video_shortcode_override( $out, $attr ) {
 		return $out;
 	}
 
-	if ( ! empty( $attr['url'] )
-		&& ! empty( $attr['src'] )
-	) {
+	if ( empty( $attr['url'] ) && ! empty( $attr['src'] ) ) {
+		$attr['url'] = $attr['src'];
 		unset( $attr['src'] );
 	}
 

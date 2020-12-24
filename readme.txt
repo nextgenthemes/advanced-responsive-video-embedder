@@ -16,9 +16,14 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2020-12-24 9.1.2 ###
+
+* Fix: Missing attribute errors when using `[embed]https://example.com/vid.mp4[/embed]` like shortcodes.  
+
 ### 2020-12-24 9.1.1 ###
 
 * Marry XMAS, bitches.
+* Fix: Errors related to video shortcode override.
 
 ### 2020-12-23 9.1.0 ###
 
