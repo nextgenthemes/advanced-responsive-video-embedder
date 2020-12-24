@@ -7,7 +7,7 @@ class Tests_Embed_Shortcode extends WP_UnitTestCase {
 
 	public function test_embed_sc_mp4() {
 
-		$html = do_shortcode( 'embed]https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4[/embed]' );
+		$html = apply_filters( 'the_content', '[embed]https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4[/embed]' );
 		$this->assertContains( 'class="arve-video', $html );
 		$this->assertNotContains( 'Error', $html );
 	}
