@@ -413,6 +413,7 @@ function all_settings() {
 				''                    => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
 				'youtube'             => __( 'Youtube', 'advanced-responsive-video-embedder' ),
 				'youtube-red-diamond' => __( 'Youtube Red Diamond', 'advanced-responsive-video-embedder' ),
+				'vimeo'               => __( 'Vimeo', 'advanced-responsive-video-embedder' ),
 				'circle'              => __( 'Circle', 'advanced-responsive-video-embedder' ),
 				'none'                => __( 'No play image', 'advanced-responsive-video-embedder' ),
 				'custom'              => __( 'Custom (for PHP filter)', 'advanced-responsive-video-embedder' ),

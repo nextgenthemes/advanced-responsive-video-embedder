@@ -1,14 +1,25 @@
 import './main.scss';
 
 const qsa = document.querySelectorAll.bind(document) as typeof document.querySelectorAll;
+const jq = window.jQuery;
 
-removeUnwantedStuff();
 globalID();
+removeUnwantedStuff();
 
+// eslint-disable-next-line @wordpress/no-global-event-listener
 document.addEventListener('DOMContentLoaded', () => {
-	removeUnwantedStuff();
-	globalID();
+	setTimeout(() => {
+		removeUnwantedStuff();
+	}, 1);
 });
+
+if (jq && typeof jq.fn.fitVids !== 'undefined') {
+	jq(document).ready(() => {
+		setTimeout(() => {
+			removeUnwantedStuff();
+		}, 1);
+	});
+}
 
 function removeUnwantedStuff() {
 	qsa(

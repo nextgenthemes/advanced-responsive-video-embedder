@@ -16,6 +16,11 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2021-01-03 9.1.3 ###
+
+* New: Vimeo play button option for ARVE Pro
+* Improved: Fitvids conflict mitigation 
+
 ### 2020-12-24 9.1.2 ###
 
 * Fix: Missing attribute errors when using `[embed]https://example.com/vid.mp4[/embed]` like shortcodes.  
