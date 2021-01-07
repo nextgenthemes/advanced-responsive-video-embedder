@@ -182,7 +182,7 @@ function get_host_properties() {
 			'tests'          => [
 				[
 					'url' => 'https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/?type=2&theater',
-					'id'  => 'https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/',
+					'id'  => 'https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/?type=2&theater',
 				],
 				[
 					'url' => 'https://web.facebook.com/XTvideo/videos/10153906059711871/',
