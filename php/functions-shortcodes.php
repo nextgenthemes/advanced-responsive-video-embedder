@@ -92,23 +92,20 @@ function build_video( array $input_atts ) {
 	ksort( $a );
 	ksort( $input_atts );
 
-	if ( $a['errors']->has_errors() ) {
-
-		foreach ( $a['errors']->get_error_codes() as $code ) {
-			foreach ( $a['errors']->get_error_messages( $code ) as $key => $message ) {
-				$html .= sprintf(
-					'<span class="arve-error"%s>%s %s</span>',
-					'hidden' === $code ? ' hidden' : '',
-					__( '<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error:', 'advanced-responsive-video-embedder' ),
-					$message
-				);
-			}
+	foreach ( $a['errors']->get_error_codes() as $code ) {
+		foreach ( $a['errors']->get_error_messages( $code ) as $key => $message ) {
+			$html .= sprintf(
+				'<span class="arve-error"%s>%s %s</span>',
+				'hidden' === $code ? ' hidden' : '',
+				__( '<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error:', 'advanced-responsive-video-embedder' ),
+				$message
+			);
 		}
+	}
 
-		if ( '' !== $a['errors']->get_error_message( 'fatal' ) ) {
-			$html .= get_debug_info( $html, $a, $input_atts );
-			return $html;
-		}
+	if ( '' !== $a['errors']->get_error_message( 'fatal' ) ) {
+		$html .= get_debug_info( $html, $a, $input_atts );
+		return $html;
 	}
 
 	$html .= build_html( $a );

@@ -174,11 +174,11 @@ function get_host_properties() {
 		],
 		'facebook' => [
 			'name'           => 'Facebook',
-			'oembed'         => true,
+			'oembed'         => false,
 			'regex'          => '#(?<id>https?://([a-z]+\.)?facebook\.com/[-.a-z0-9]+/videos/[^\s]+)#i',
 			'url_encode_id'  => true,
 			'embed_url'      => 'https://www.facebook.com/plugins/video.php?href=%s',
-			'auto_thumbnail' => true,
+			'auto_thumbnail' => false,
 			'tests'          => [
 				[
 					'url' => 'https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/?type=2&theater',

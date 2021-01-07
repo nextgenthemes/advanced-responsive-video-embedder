@@ -2,7 +2,7 @@
 Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
-Requires at least: 4.4.0
+Requires at least: 4.4.24
 Tested up to: 5.6
 Requires PHP: 5.6
 Stable tag: 9.1.3
@@ -15,6 +15,10 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
+
+### 2021-01-07 9.1.4 ###
+
+* New: Vimeo play button option for ARVE Pro
 
 ### 2021-01-03 9.1.3 ###
 
