@@ -33,7 +33,7 @@ function register_assets() {
 		foreach ( $sc_settings as $key => $v ) {
 
 			$attr[ $key ] = [
-				'type' => ( 'select' === $v['type'] ) ? 'string' : $v['type']
+				'type' => ( 'select' === $v['type'] ) ? 'string' : $v['type'],
 			];
 
 			if ( $options['gutenberg_help'] && ! empty( $v['description'] ) ) {

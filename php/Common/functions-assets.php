@@ -26,7 +26,7 @@ function deps_and_ver( $path ) {
 	$asset_php = $pathinfo['dirname'] . DIRECTORY_SEPARATOR . $pathinfo['filename'] . '.asset.php';
 
 	if ( is_file( $asset_php ) ) {
-		$dv = require( $asset_php );
+		$dv = require $asset_php;
 
 		if ( 'css' === $pathinfo['extension'] ) {
 			$dv['dependencies'] = [];
@@ -41,7 +41,7 @@ function deps_and_ver( $path ) {
 function replace_extension($filename, $new_extension) {
 	$info = pathinfo($filename);
 	$dir  = $info['dirname'] ? $info['dirname'] . DIRECTORY_SEPARATOR : '';
-	
+
 	return $dir . $info['filename'] . '.' . $new_extension;
 }
 

@@ -1,5 +1,6 @@
 <?php
 namespace Nextgenthemes\ARVE\Admin;
+
 ?>
 <textarea style="font-family: monospace; width: 100%" rows="25">
 ARVE Version:      <?= esc_html( plugin_ver_status( 'advanced-responsive-video-embedder/advanced-responsive-video-embedder.php' ) . "\n" ); ?>

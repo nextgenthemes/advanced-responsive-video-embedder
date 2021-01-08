@@ -249,7 +249,7 @@ function has_fatal_error( array $a ) {
 }
 
 function sc_filter_missing_attribute_check( array $a ) {
-	
+
 	if ( ! is_wp_error( $a['errors'] ) ) {
 
 		$a['errors'] = new \WP_Error();
@@ -593,8 +593,8 @@ function iframe_src_args( $src, array $a ) {
 	$parameters     = wp_parse_args( preg_replace( '!\s+!', '&', $a['parameters'] ) );
 	$params_options = [];
 
-	if ( ! empty( $options['url_params_' . $a['provider'] ] ) ) {
-		$params_options = wp_parse_args( preg_replace( '!\s+!', '&', $options['url_params_' . $a['provider'] ] ) );
+	if ( ! empty( $options[ 'url_params_' . $a['provider'] ] ) ) {
+		$params_options = wp_parse_args( preg_replace( '!\s+!', '&', $options[ 'url_params_' . $a['provider'] ] ) );
 	}
 
 	$parameters = wp_parse_args( $parameters, $params_options );

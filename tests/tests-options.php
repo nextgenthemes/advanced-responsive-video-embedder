@@ -28,7 +28,7 @@ class Tests_Options extends WP_UnitTestCase {
 		update_option( 'nextgenthemes_arve_options_ver', '9.0.0-beta8' );
 		\Nextgenthemes\ARVE\settings_instance();
 
-		$options = get_option( 'nextgenthemes_arve' );
+		$options  = get_option( 'nextgenthemes_arve' );
 		$expected = [
 			'disable_links'    => true,
 			'url_params_vimeo' => 'vimeo=123',

@@ -2,7 +2,7 @@
 namespace Nextgenthemes\ARVE\Common;
 
 class Settings {
-	
+
 	public $sections             = [];
 	private $menu_title          = '';
 	private $option_key          = '';
@@ -35,7 +35,7 @@ class Settings {
 		$this->menu_parent_slug    = $args['menu_parent_slug'];
 
 		foreach ( $this->settings as $key => $value ) {
-			
+
 			$this->options_tags[] = $value['tag'];
 
 			$this->options_defaults[ $key ]        = $value['default'];
@@ -104,7 +104,7 @@ class Settings {
 			[
 				'methods'              => 'POST',
 				'args'                 => $this->settings,
-				'permission_callback' => function() {
+				'permission_callback'  => function() {
 					return current_user_can( 'manage_options' );
 				},
 				'callback'             => function( \WP_REST_Request $request ) {
@@ -123,11 +123,11 @@ class Settings {
 		}
 
 		enqueue_asset(
-		 	[
+			[
 				'handle' => 'nextgenthemes-settings',
-		 		'src'    => plugin_or_theme_src( 'build/common/settings.css' ),
-		 		'path'   => dirname( dirname( __DIR__ ) ) . '/build/common/settings.css',
-		 	]
+				'src'    => plugin_or_theme_src( 'build/common/settings.css' ),
+				'path'   => dirname( dirname( __DIR__ ) ) . '/build/common/settings.css',
+			]
 		);
 
 		enqueue_asset(
@@ -217,17 +217,20 @@ class Settings {
 						<?php
 						foreach ( $this->sections as $key => $label ) {
 
-							if ( in_array( $key, [ 'debug', 'randomvideo' ] ) )
+							if ( in_array( $key, [ 'debug', 'randomvideo' ] ) ) {
 								continue;
+							}
 							?>
 							<button
 								@click='resetOptions("<?= $key; ?>")'
 								:disabled='isSaving'
 								class='button button-secondary'
-							><?php
+							>
+							<?php
 								esc_html_e( 'Reset', 'advanced-responsive-video-embedder' );
-								esc_html_e( " $label" )	;
-							?></button>
+								esc_html_e( " $label" );
+							?>
+							</button>
 							<?php
 						}
 						?>

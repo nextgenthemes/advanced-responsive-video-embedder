@@ -34,16 +34,16 @@ wp_update_user(
 	]
 );
 
-// List of name of files inside 
-// specified folder 
-$files = glob( \Nextgenthemes\ARVE\PLUGIN_DIR . '/php/*.log' );  
+// List of name of files inside
+// specified folder
+$files = glob( \Nextgenthemes\ARVE\PLUGIN_DIR . '/php/*.log' );
 
-// Deleting all the files in the list 
-foreach( $files as $file ) {
-    if(is_file($file)) {
+// Deleting all the files in the list
+foreach ( $files as $file ) {
+	if (is_file($file)) {
 		unlink($file);
 	}
-} 
+}
 
 function logfile( $name, $debug_var, $file ) {
 

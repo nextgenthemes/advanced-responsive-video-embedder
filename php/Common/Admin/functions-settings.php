@@ -21,7 +21,8 @@ function label_text( $option ) {
 			);
 		}
 
-		if ( ! empty( $option['tag'] ) && 'not' === $option['tag'] ) : ?>
+		if ( ! empty( $option['tag'] ) && 'not' === $option['tag'] ) :
+			?>
 			&nbsp;
 			<span class="button-primary button-primary--ngt-small">
 				<?= esc_html( $option['tag'] ); ?>

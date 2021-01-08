@@ -172,18 +172,33 @@ function register_shortcode_ui() {
 	foreach ( $settings as $k => $v ) :
 
 		if ( 'boolean' === $v['type'] ) {
-			$v['type']    = 'select';
+			$v['type'] = 'select';
 
 			if ( isset($v['option']) && true === $v['option'] ) {
 				$v['options'] = [
-					[ 'value' => '', 'label' => esc_html__( 'Default (settings page)', 'advanced-responsive-video-embedder' ) ],
-					[ 'value' => 'yes', 'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ) ],
-					[ 'value' => 'no', 'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ) ],
+					[
+						'value' => '',
+						'label' => esc_html__( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
+					],
+					[
+						'value' => 'yes',
+						'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
+					],
+					[
+						'value' => 'no',
+						'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
+					],
 				];
 			} else {
 				$v['options'] = [
-					[ 'value' => 'no', 'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ) ],
-					[ 'value' => 'yes', 'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ) ],
+					[
+						'value' => 'no',
+						'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
+					],
+					[
+						'value' => 'yes',
+						'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
+					],
 				];
 			}
 		}
@@ -361,7 +376,7 @@ function admin_enqueue_scripts() {
 		Common\enqueue_asset(
 			[
 				'handle' => 'arve-admin-sc-ui',
-			    'path'   => ARVE\PLUGIN_DIR . '/build/shortcode-ui.js',
+				'path'   => ARVE\PLUGIN_DIR . '/build/shortcode-ui.js',
 				'src'    => plugins_url( 'build/shortcode-ui.js', ARVE\PLUGIN_FILE ),
 				'deps'   => [ 'shortcode-ui' ],
 			]
