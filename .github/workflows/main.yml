@@ -12,20 +12,23 @@ jobs:
       matrix:
         php: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
         wordpress: [ '5.5.3', 'latest' ] # https://wordpress.org/download/releases/
+        mysql: [ '5.7' ]
         include:
           - php: '8.0'
+            mysql: '5.7'
             wordpress: 'latest'
           - php: '5.6'
-            wordpress: '4.4.24'  
+            mysql: '5.4'
+            wordpress: '4.4.24'
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:${{ matrix.mysql }}
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: false
           MYSQL_ROOT_PASSWORD: dbpass
           MYSQL_DATABASE: dbname
         ports:
-          - 3306
+          - 3306/tcp
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
