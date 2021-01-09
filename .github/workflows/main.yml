@@ -12,17 +12,14 @@ jobs:
       matrix:
         php: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
         wordpress: [ '5.5.3', 'latest' ] # https://wordpress.org/download/releases/
-        mysql: [ '5.7' ]
         include:
           - php: '8.0'
-            mysql: '5.7'
             wordpress: 'latest'
           - php: '5.6'
-            mysql: '5.4'
-            wordpress: '4.4.24'
+            wordpress: '4.9.16'
     services:
       mysql:
-        image: mysql:${{ matrix.mysql }}
+        image: mysql:5.7
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: false
           MYSQL_ROOT_PASSWORD: dbpass
