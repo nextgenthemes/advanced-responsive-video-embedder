@@ -72,7 +72,9 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$properties = get_host_properties();
 
-		add_filter( 'shortcode_atts_arve', [ $this, 'oembed_log' ], 999 );
+		if ( ! getenv('CI') ) {
+			add_filter( 'shortcode_atts_arve', [ $this, 'oembed_log' ], 999 );
+		}
 
 		foreach ( $properties as $provider => $v ) :
 
