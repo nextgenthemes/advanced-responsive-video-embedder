@@ -33,7 +33,7 @@ function settings_header( $instance ) {
 }
 
 function settings_sidebar() {
-	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
+	// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_read_readfile
 	if ( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
 		readfile( __DIR__ . '/partials/settings-sidebar-pro.html' );
 	}

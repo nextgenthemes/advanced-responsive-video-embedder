@@ -42,7 +42,9 @@ function action_admin_init_setup_messages() {
 
 	if ( display_pro_ad() ) {
 
-		$pro_ad_message = __( '<p>Hi, this is Nico(las Jonas) the author of the ARVE - Advanced Responsive Video Embedder plugin. If you are interrested in additional features and/or want to support the work I do on this plugin please consider buying the Pro Addon.</p>', 'advanced-responsive-video-embedder' );
+		$pro_ad_message = __( 'Hi, this is Nico(las Jonas) the author of the ARVE - Advanced Responsive Video Embedder plugin. If you are interrested in additional features and/or want to support the work I do on this plugin please consider buying the Pro Addon.', 'advanced-responsive-video-embedder' );
+
+		$pro_ad_message = "<p>$pro_ad_message</p>";
 
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$pro_ad_message .= file_get_contents( __DIR__ . '/partials/pro-ad.html' );

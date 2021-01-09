@@ -7,6 +7,8 @@
 		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceBeforeCloseParenthesis"/>
 		<!-- I like to align things -->
 		<exclude name="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma"/>
+		<!-- This was just for very old PHP version -->
+		<exclude name="WordPress.WP.AlternativeFunctions.parse_url_parse_url"/>
 		<!-- misc -->
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found"/>
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
@@ -42,7 +44,7 @@
 	<!-- Set the minimum supported WP version. This is used by several sniffs.
 		 The minimum version set here should be in line with the minimum WP version
 		 as set in the "Requires at least" tag in the readme.txt file. -->
-	<config name="minimum_supported_wp_version" value="4.9"/>
+	<config name="minimum_supported_wp_version" value="4.4.24"/>
 	<!-- Set textdomains. -->
 	<rule ref="WordPress.WP.I18n">
 		<properties>

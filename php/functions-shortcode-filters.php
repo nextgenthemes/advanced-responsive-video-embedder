@@ -254,6 +254,7 @@ function sc_filter_missing_attribute_check( array $a ) {
 
 		$a['errors'] = new \WP_Error();
 
+		//phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
 		$msg = 'WP Error was not initialized, attributes were: <pre>' . var_export( $a, true ) . '</pre>';
 		$a['errors']->add( 'no-wp-error', $msg );
 	}

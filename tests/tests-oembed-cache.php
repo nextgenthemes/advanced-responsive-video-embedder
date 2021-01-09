@@ -6,6 +6,7 @@ use \Nextgenthemes\ARVE\Common;
 
 // phpcs:disable Squiz.Classes.ClassFileName.NoMatch
 // phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
+// phpcs:disable WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 class Tests_OembedCache extends WP_UnitTestCase {
 
 	public function test_oembed_cache_rebuild() {
@@ -71,7 +72,7 @@ class Tests_OembedCache extends WP_UnitTestCase {
 		unset( $post );
 	}
 
-	function check_db_for_oembed_cache() {
+	public function check_db_for_oembed_cache() {
 		global $wpdb;
 		return $wpdb->get_results(
 			$wpdb->prepare(

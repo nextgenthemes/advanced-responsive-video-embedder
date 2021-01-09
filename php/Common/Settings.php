@@ -217,18 +217,22 @@ class Settings {
 						<?php
 						foreach ( $this->sections as $key => $label ) {
 
-							if ( in_array( $key, [ 'debug', 'randomvideo' ] ) ) {
+							if ( in_array( $key, [ 'debug', 'randomvideo' ], true ) ) {
 								continue;
 							}
+
 							?>
 							<button
-								@click='resetOptions("<?= $key; ?>")'
+								@click='<?= esc_attr( "resetOptions(\"$key\")" ); ?>'
 								:disabled='isSaving'
 								class='button button-secondary'
 							>
 							<?php
-								esc_html_e( 'Reset', 'advanced-responsive-video-embedder' );
-								esc_html_e( " $label" );
+								printf(
+									// translators: Options section
+									esc_html__( 'Reset %s', 'advanced-responsive-video-embedder' ),
+									esc_html( $label )
+								);
 							?>
 							</button>
 							<?php

@@ -54,7 +54,7 @@ function logfile( $name, $debug_var, $file ) {
 	// 	$debug_var .= PHP_EOL;
 	// }
 	$log  = "$name ";
-	$log .= var_export( $debug_var, true ) . PHP_EOL;
+	$log .= var_export( $debug_var, true ) . PHP_EOL; //phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
 
-	error_log( $log, 3, "$file.log" );
+	error_log( $log, 3, "$file.log" ); //phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 }

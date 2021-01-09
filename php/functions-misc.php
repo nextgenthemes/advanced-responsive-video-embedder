@@ -114,16 +114,16 @@ function seconds_to_iso8601_duration( $time ) {
 	$str    = 'P';
 	$istime = false;
 
-	foreach ( $units as $unitName => &$unit ) {
+	foreach ( $units as  $unit_name => $unit ) {
 		$quot  = intval($time / $unit);
 		$time -= $quot * $unit;
 		$unit  = $quot;
 		if ( $unit > 0 ) {
-			if ( ! $istime && in_array($unitName, array( 'H', 'M', 'S' ))) { // There may be a better way to do this
+			if ( ! $istime && in_array( $unit_name, array( 'H', 'M', 'S' ), true )) { // There may be a better way to do this
 				$str   .= 'T';
 				$istime = true;
 			}
-			$str .= strval($unit) . $unitName;
+			$str .= strval($unit) . $unit_name;
 		}
 	}
 

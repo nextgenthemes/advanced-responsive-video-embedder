@@ -102,9 +102,9 @@ function print_licensekey_field( $key, $option ) {
 			<?php label_text( $option ); ?>
 			<input v-model="<?= esc_attr( "vm.$key" ); ?>" type="text" class="medium-text" style="width: 350px;" <?= esc_attr( $readonly ); ?> />
 			<?php if ( Common\has_valid_key( $key ) ) : ?>
-				<button @click="action( 'deactivate', '<?= esc_attr( $key ); ?>' )">Deactivate</button>
+				<button @click="action( 'deactivate', '<?= esc_attr( $key ); ?>' )" class="button button-secondary">Deactivate</button>
 			<?php else : ?>
-				<button @click="action( 'activate', '<?= esc_attr( $key ); ?>' )">Activate</button>
+				<button @click="action( 'activate', '<?= esc_attr( $key ); ?>' )" class="button button-secondary">Activate</button>
 			<?php endif; ?>
 			<br>
 			Status: <?= esc_html( "{{ vm.{$key}_status }}" ); ?>
