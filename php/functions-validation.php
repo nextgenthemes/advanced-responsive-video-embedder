@@ -7,7 +7,7 @@ function valid_url( $url ) {
 		return false;
 	}
 
-	if ( Common\starts_with( $url, '//' ) ) {
+	if ( str_starts_with( $url, '//' ) ) {
 		$url = 'https:' . $url;
 	}
 

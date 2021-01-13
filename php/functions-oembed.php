@@ -61,7 +61,7 @@ function oembed2args( $data, $url ) {
 // needed for private videos
 function vimeo_referer( $args, $url ) {
 
-	if ( Common\contains( $url, 'vimeo' ) ) {
+	if ( str_contains( $url, 'vimeo' ) ) {
 		$args['headers']['Referer'] = site_url();
 	}
 
@@ -102,7 +102,7 @@ function trigger_cache_rebuild( $ttl, $url, $attr, $post_id ) {
 	// Check if we need to regenerate the oEmbed HTML:
 	if ( $cache_exists &&
 		$cache_time < $trigger_time &&
-		! Common\contains_any( $cache_html, $not_touching ) &&
+		! Common\str_contains_any( $cache_html, $not_touching ) &&
 		$GLOBALS['wp_embed']->usecache
 	) {
 		// What we need to skip the oembed cache part

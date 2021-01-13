@@ -98,10 +98,10 @@ function sc_filter_liveleak_id_fix( array $a ) {
 		return $a;
 	}
 
-	if ( Common\starts_with( $a['id'], 't=' ) ) {
+	if ( str_starts_with( $a['id'], 't=' ) ) {
 		$a['id'][0] = 'i';
-	} elseif ( ! Common\starts_with( $a['id'], 'i=' )
-		&& ! Common\starts_with( $a['id'], 'f=' )
+	} elseif ( ! str_starts_with( $a['id'], 'i=' )
+		&& ! str_starts_with( $a['id'], 'f=' )
 	) {
 		$a['id'] = 'i=' . $a['id'];
 	}
@@ -417,7 +417,7 @@ function special_iframe_src_mods( array $a ) {
 			$yt_v    = Common\get_url_arg( $a['url'], 'v' );
 			$yt_list = Common\get_url_arg( $a['url'], 'list' );
 
-			if ( Common\contains( $a['src'], '/embed/videoseries?' ) &&
+			if ( str_contains( $a['src'], '/embed/videoseries?' ) &&
 				$yt_v
 			) {
 				$a['src'] = str_replace( '/embed/videoseries?', "/embed/$yt_v?", $a['src'] );
@@ -435,7 +435,7 @@ function special_iframe_src_mods( array $a ) {
 
 			$parsed_url = wp_parse_url( $a['url'] );
 
-			if ( ! empty( $parsed_url['fragment'] ) && Common\starts_with( $parsed_url['fragment'], 't' ) ) {
+			if ( ! empty( $parsed_url['fragment'] ) && str_starts_with( $parsed_url['fragment'], 't' ) ) {
 				$a['src']     .= '#' . $parsed_url['fragment'];
 				$a['src_gen'] .= '#' . $parsed_url['fragment'];
 			}
@@ -757,14 +757,14 @@ function sc_filter_detect_html5( array $a ) {
 
 	foreach ( VIDEO_FILE_EXTENSIONS as $ext ) :
 
-		if ( Common\ends_with( $a['url'], ".$ext" ) &&
+		if ( str_ends_with( $a['url'], ".$ext" ) &&
 			! $a[ $ext ]
 		) {
 			$a[ $ext ] = $a['url'];
 		}
 
 		if ( 'av1mp4' === $ext &&
-			Common\ends_with( $a['url'], 'av1.mp4' ) &&
+			str_ends_with( $a['url'], 'av1.mp4' ) &&
 			! $a[ $ext ]
 		) {
 			$a[ $ext ] = $a['url'];

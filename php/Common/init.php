@@ -4,6 +4,8 @@ namespace Nextgenthemes\ARVE\Common;
 const VERSION = '1.0.0';
 
 // phpcs:disable WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
+require_once __DIR__ . '/functions-compat.php';
+
 require_once __DIR__ . '/Settings.php';
 require_once __DIR__ . '/functions-settings.php';
 require_once __DIR__ . '/functions-license.php';
