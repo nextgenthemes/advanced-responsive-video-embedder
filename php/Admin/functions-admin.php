@@ -329,24 +329,6 @@ function params_section_description() {
 	<?php
 }
 
-function plugin_ver_status( $folder_and_filename ) {
-
-	$file = WP_PLUGIN_DIR . '/' . $folder_and_filename;
-
-	if ( ! is_file( $file ) ) {
-		return 'NOT INSTALLED';
-	}
-
-	$data = get_plugin_data( $file );
-	$out  = $data['Version'];
-
-	if ( ! is_plugin_active( $folder_and_filename ) ) {
-		$out .= ' INACTIVE';
-	}
-
-	return $out; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-}
-
 function debug_section_description() {
 	include_once __DIR__ . '/partials/debug-info.php';
 }

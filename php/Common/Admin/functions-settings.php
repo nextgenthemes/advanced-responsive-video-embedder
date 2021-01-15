@@ -9,19 +9,16 @@ function label_text( $option ) {
 		<?php
 		echo esc_html( $option['label'] );
 
-		if (
-			Common\contains( __NAMESPACE__, 'ARVE' ) &&
-			! in_array( $option['tag'], [ 'main', 'html5', 'urlparams' ], true )
-		) {
+		if ( $option['premium'] ) {
 
 			printf(
-				' <a href="https://nextgenthemes.com/plugins/arve-%s">(%s)</a>',
-				esc_attr( str_replace( 'randomvideo', 'random-video', $option['tag'] ) ),
-				esc_html( ucfirst( $option['tag'] ) . ' Addon' )
+				' <span>(</span><a href="https://nextgenthemes.com/plugins/arve-%s">%s</a><span>)</span>',
+				esc_attr( $option['tag'] ),
+				esc_html( $option['tag_name'] )
 			);
 		}
 
-		if ( ! empty( $option['tag'] ) && 'not' === $option['tag'] ) :
+		if ( ! empty( $option['tag'] ) && 'not' === $option['tag'] ) : // TODO this seems to be unused
 			?>
 			&nbsp;
 			<span class="button-primary button-primary--ngt-small">
@@ -165,7 +162,7 @@ function block_attr( $key, $option ) {
 	} else {
 		$block_attr = [
 			'class'  => "ngt-option-block ngt-option-block--$key ngt-option-block--{$option['tag']}",
-			'v-show' => 'sectionsDisplayed.' . $option['tag'],
+			'v-show' => "sectionsDisplayed['{$option['tag']}']",
 		];
 	}
 

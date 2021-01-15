@@ -2,8 +2,10 @@
 namespace Nextgenthemes\ARVE\Common;
 
 class Settings {
+	private static $no_reset_sections = [ 'debug', 'random-video', 'keys' ];
 
 	public $sections             = [];
+	private $premium_sections    = [];
 	private $menu_title          = '';
 	private $option_key          = '';
 	private $slugged_namspace    = '';
@@ -18,14 +20,18 @@ class Settings {
 	public function __construct( $args ) {
 
 		$defaults = [
-			'menu_parent_slug' => 'options-general.php',
-			'sections'         => [],
+			'menu_parent_slug'    => 'options-general.php',
+			'sections'            => [ 'main' => 'Main' ],
+			'premium_sections'    => [],
+			'settings_page_title' => 'Default Page Title',
+			'default_menu_title'  => 'Default Menu Title',
 		];
 
 		$args = wp_parse_args( $args, $defaults );
 
 		$this->settings            = $args['settings'];
 		$this->sections            = $args['sections'];
+		$this->premium_sections    = $args['premium_sections'];
 		$this->menu_title          = $args['menu_title'];
 		$this->settings_page_title = $args['settings_page_title'];
 		$this->slugged_namespace   = sanitize_key( str_replace( '\\', '_', $args['namespace'] ) );
@@ -118,7 +124,7 @@ class Settings {
 	public function assets( $page ) {
 
 		// Check if we are currently viewing our setting page
-		if ( ! ends_with( $page, $this->slugged_namespace ) ) {
+		if ( ! str_ends_with( $page, $this->slugged_namespace ) ) {
 			return;
 		}
 
@@ -130,26 +136,37 @@ class Settings {
 			]
 		);
 
+		$settings_data = [
+			'nonce'    => wp_create_nonce( 'wp_rest' ),
+			'rest_url' => $this->rest_url,
+			'home_url' => get_home_url(),
+			'options'  => $this->options,
+			'settings' => $this->settings,
+			'sections' => $this->sections,
+		];
+
 		enqueue_asset(
 			[
-				'handle' => 'nextgenthemes-settings',
-				'src'    => plugin_or_theme_src( 'build/common/settings.js' ),
-				'path'   => dirname( dirname( __DIR__ ) ) . '/build/common/settings.js',
-				'deps'   => [ 'jquery' ],
-				'async'  => false,
+				'handle'            => 'nextgenthemes-settings',
+				'src'               => plugin_or_theme_src( 'build/common/settings.js' ),
+				'path'              => dirname( dirname( __DIR__ ) ) . '/build/common/settings.js',
+				'deps'              => [ 'jquery' ],
+				'async'             => false,
+				'inline_script'     => "var {$this->slugged_namespace} = " . \wp_json_encode( $settings_data ) . ';',
+				'inline_script_pos' => 'before',
 			]
 		);
 
 		// Sending data to our plugin settings JS file
 		wp_localize_script(
 			'nextgenthemes-settings',
-			$this->slugged_namespace,
+			'OLD' . $this->slugged_namespace,
 			[
-				'nonce'        => wp_create_nonce( 'wp_rest' ),
-				'rest_url'     => $this->rest_url,
-				'home_url'     => get_home_url(),
-				'options'      => $this->options,
-				'settings'     => $this->settings,
+				'nonce'    => wp_create_nonce( 'wp_rest' ),
+				'rest_url' => $this->rest_url,
+				'home_url' => get_home_url(),
+				'options'  => $this->options,
+				'settings' => $this->settings,
 			]
 		);
 	}
@@ -159,7 +176,9 @@ class Settings {
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		foreach ( $this->settings as $key => $option ) {
 
-			$field_type = isset( $option['ui'] ) ? $option['ui'] : $option['type'];
+			$option['premium']  = in_array( $option['tag'], $this->premium_sections, true );
+			$option['tag_name'] = $this->sections[ $option['tag'] ];
+			$field_type         = isset( $option['ui'] ) ? $option['ui'] : $option['type'];
 
 			if ( 'hidden' !== $field_type ) :
 				?>
@@ -182,6 +201,27 @@ class Settings {
 		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
+	private function print_settings_tabs() {
+		?>
+		<h2 class="nav-tab-wrapper">
+			<a @click='showAllSectionsButDebug()' class="nav-tab">All Options</button>
+			<?php
+			foreach ( $this->sections as $slug => $name ) :
+
+				$classes = in_array( $slug, $this->premium_sections, true ) ? 'nav-tab nav-tab--ngt-highlight' : 'nav-tab';
+				?>
+				<a 
+					@click="showSection('<?= esc_attr($slug) ?>')"
+					class="<?= esc_attr($classes) ?>"
+					v-bind:class='{ "nav-tab-active": sectionsDisplayed["<?= esc_attr($slug) ?>"] }'
+				>
+					<?= esc_html($name) ?>
+				</a>
+			<?php endforeach; ?>
+		</h2>
+		<?php
+	}
+
 	public function print_save_section() {
 		?>
 		<p>
@@ -189,61 +229,95 @@ class Settings {
 				@click='saveOptions'
 				:disabled='isSaving'
 				class='button button-primary'
-			>Save</button>
+			>
+				Save
+			</button>
 			<strong v-if='message'>{{ message }}</strong>
 			<img
 				v-if='isSaving == true'
 				class="wrap--nextgenthemes__loading-indicator"
 				src='<?php echo esc_url( get_admin_url() . '/images/wpspin_light-2x.gif' ); ?>'
-				alt='Loading indicator' />
+				alt='Loading indicator'
+			/>
+		</p>
+		<?php
+	}
+
+	private function print_paid_section_message() {
+
+		if ( empty ( $this->premium_sections ) ) {
+			return;
+		}
+
+		foreach ( $this->premium_sections as $slug ) {
+			$d_sections[] = sprintf( "sectionsDisplayed['%s']", esc_attr($slug) );
+		}
+
+		$v_show = implode( ' || ', $d_sections );
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+		?>
+		<div class="ngt-block" v-show="<?= $v_show  ?>" >
+			<p><?php esc_html_e( 'You may already set options for addons but they will only take effect if the associated addons are installed.', 'advanced-responsive-video-embedder' ); ?></p>
+		</div>
+		<?php
+		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	private function print_debug_info_block() {
+		?>
+		<div class="ngt-block" v-show="sectionsDisplayed.debug">
+			<?php require_once __DIR__ . '/Admin/partials/debug-info.php'; ?>
+		</div>
+		<?php
+	}
+
+	private function print_reset_bottons() {
+		?>
+		<p>
+			<?php
+			foreach ( $this->sections as $key => $label ) {
+
+				if ( in_array( $key, self::$no_reset_sections, true ) ) {
+					continue;
+				}
+
+				?>
+				<button
+					@click="resetOptions('<?= esc_attr($key); ?>')"
+					:disabled='isSaving'
+					class='button button--ngt-reset button-secondary'
+					v-show="sectionsDisplayed['<?= esc_attr( $key ); ?>']"
+				>
+				<?php
+					printf(
+						// translators: Options section
+						esc_html__( 'Reset %s section', 'advanced-responsive-video-embedder' ),
+						esc_html( $label )
+					);
+				?>
+				</button>
+				<?php
+			}
+			?>
 		</p>
 		<?php
 	}
 
 	public function print_admin_page() {
 		?>
-		<div class='wrap wrap--nextgenthemes'>
+		<div class='wrap wrap--nextgenthemes' id='nextgenthemes-vue'>
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
+			<?php $this->print_settings_tabs(); ?>
 			<div class="ngt-settings-grid">
-				<div class="ngt-settings-grid__content" id='nextgenthemes-vue'>
+				<div class="ngt-settings-grid__content" >
 					<?php
-
-					do_action( $this->slashed_namespace . '/admin/settings_header', $this );
-					$this->print_save_section();
+					$this->print_paid_section_message();
+					$this->print_save_section();	
+					$this->print_debug_info_block();
 					$this->print_settings_blocks();
 					$this->print_save_section();
+					$this->print_reset_bottons();
 					?>
-					<p>
-						<?php
-						foreach ( $this->sections as $key => $label ) {
-
-							if ( in_array( $key, [ 'debug', 'randomvideo' ], true ) ) {
-								continue;
-							}
-
-							?>
-							<button
-								@click='<?= esc_attr( "resetOptions(\"$key\")" ); ?>'
-								:disabled='isSaving'
-								class='button button-secondary'
-							>
-							<?php
-								printf(
-									// translators: Options section
-									esc_html__( 'Reset %s', 'advanced-responsive-video-embedder' ),
-									esc_html( $label )
-								);
-							?>
-							</button>
-							<?php
-						}
-						?>
-						<button
-							@click='resetOptions("all")'
-							:disabled='isSaving'
-							class='button button-secondary'
-						><?php esc_html_e( 'Reset ALL Options', 'advanced-responsive-video-embedder' ); ?></button>
-					</p>
 				</div>
 				<div class="ngt-settings-grid__sidebar">
 					<?php do_action( $this->slashed_namespace . '/admin/settings_sidebar', $this ); ?>

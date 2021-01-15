@@ -48,20 +48,23 @@ function replace_extension($filename, $new_extension) {
 function asset( array $args ) {
 
 	$defaults = [
-		'path'          => '',
-		'async'         => true,
-		'cdn_src'       => '',
-		'defer'         => false,
-		'deps'          => [],
-		'enqueue'       => false,
-		'enqueue_hooks' => [],
-		'handle'        => '',
-		'in_footer'     => true,
-		'integrity'     => '',
-		'media'         => 'all',
-		'src'           => '',
-		'ver'           => null,
-		'mce'           => false,
+		'path'              => '',
+		'async'             => true,
+		'cdn_src'           => '',
+		'defer'             => false,
+		'deps'              => [],
+		'enqueue'           => false,
+		'enqueue_hooks'     => [],
+		'handle'            => '',
+		'in_footer'         => true,
+		'integrity'         => '',
+		'media'             => 'all',
+		'src'               => '',
+		'ver'               => null,
+		'mce'               => false,
+		'inline_style'      => '',
+		'inline_script'     => '',
+		'inline_script_pos' => 'after',
 	];
 
 	$args         = wp_parse_args( $args, $defaults );
@@ -82,6 +85,10 @@ function asset( array $args ) {
 
 		wp_register_script( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['in_footer'] );
 
+		if ( $args['inline_script'] ) {
+			wp_add_inline_script( $args['handle'], $args['inline_script'], $args['inline_script_pos'] );
+		}
+
 		if ( $args['integrity'] || $args['async'] || $args['defer'] ) {
 			add_attr_to_asset( 'script', $args );
 		}
@@ -95,6 +102,10 @@ function asset( array $args ) {
 		}
 	} else {
 		wp_register_style( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['media'] );
+
+		if ( $args['inline_style'] ) {
+			wp_add_inline_style( $args['handle'], $args['inline_style'] );
+		}
 
 		if ( $args['integrity'] ) {
 			add_attr_to_asset( 'style', $args );

@@ -11,6 +11,10 @@ function nextgenthemes_settings_instance() {
 			[
 				'namespace'           => 'nextgenthemes',
 				'settings'            => nextgenthemes_settings(),
+				'sections'            => [
+					'keys'         => esc_html__( 'License Keys', 'advanced-responsive-video-embedder' ),
+					'beta-updates' => esc_html__( 'Beta Updates', 'advanced-responsive-video-embedder' ),
+				],
 				'menu_title'          => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
 				'settings_page_title' => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
 			]
@@ -66,7 +70,7 @@ function nextgenthemes_settings() {
 		$settings[ $p ] = [
 			'default' => '',
 			'option'  => true,
-			'tag'     => 'main',
+			'tag'     => 'keys',
 			// translators: %s is Product name
 			'label'   => sprintf( esc_html__( '%s license Key', 'advanced-responsive-video-embedder' ), $value['name'] ),
 			'type'    => 'string',
@@ -76,7 +80,7 @@ function nextgenthemes_settings() {
 		$settings[ $p . '_status' ] = [
 			'default' => '',
 			'option'  => true,
-			'tag'     => 'main',
+			'tag'     => 'keys',
 			// translators: %s is Product name
 			'label'   => sprintf( esc_html__( '%s license Key Status', 'advanced-responsive-video-embedder' ), $value['name'] ),
 			'type'    => 'string',
@@ -88,7 +92,7 @@ function nextgenthemes_settings() {
 		$settings[ $key . '_beta' ] = [
 			'default' => false,
 			'option'  => true,
-			'tag'     => 'main',
+			'tag'     => 'beta-updates',
 			// translators: Product name
 			'label'   => sprintf( esc_html__( '%s beta updates', 'advanced-responsive-video-embedder' ), $value['name'] ),
 			'type'    => 'boolean',
@@ -96,17 +100,17 @@ function nextgenthemes_settings() {
 	}
 
 	$settings['cdn'] = [
+		'tag'     => 'keys',
 		'default' => false,
 		'option'  => true,
-		'tag'     => 'main',
 		'label'   => esc_html__( 'Use jsDelivr CDN for some assets', 'advanced-responsive-video-embedder' ),
 		'type'    => 'boolean',
 	];
 
 	$settings['action'] = [
+		'tag'     => 'keys',
 		'default' => '',
 		'option'  => true,
-		'tag'     => 'main',
 		'label'   => esc_html__( 'Action', 'advanced-responsive-video-embedder' ),
 		'type'    => 'string',
 		'ui'      => 'hidden',

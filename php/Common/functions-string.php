@@ -32,3 +32,18 @@ function remove_url_query( $url ) {
 
 	return "$scheme$user$pass$host$port$path$fragment";
 }
+
+function dashes_to_camel_case( $string, $capitalize_first_character = false ) {
+
+	$str = str_replace('-', '', ucwords($string, '-'));
+
+	if ( ! $capitalize_first_character ) {
+		$str = lcfirst($str);
+	}
+
+	return $str;
+}
+
+function kses_link_only( $html_with_a ) {
+	return wp_kses( $html_with_a, [ 'a' => [ 'href' => [] ] ] );
+}

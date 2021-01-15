@@ -95,7 +95,6 @@ function init() {
 	unset( $priority );
 
 	// Admin Hooks
-	add_action( 'nextgenthemes/arve/admin/settings_header', __NAMESPACE__ . '\Admin\settings_header' );
 	add_action( 'nextgenthemes/arve/admin/settings_sidebar', __NAMESPACE__ . '\Admin\settings_sidebar' );
 
 	add_action( 'admin_bar_menu',        __NAMESPACE__ . '\Admin\action_admin_bar_menu', 100 );

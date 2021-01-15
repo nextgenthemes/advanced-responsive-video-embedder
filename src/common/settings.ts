@@ -10,6 +10,7 @@ if (!pageQueryVal) {
 
 const data = window[pageQueryVal];
 const settings = data.settings as Record<string, OptionProps>;
+const sections = data.sections as Record<string, string>;
 
 interface OptionProps {
 	label: string;
@@ -23,6 +24,16 @@ interface OptionProps {
 	options?;
 }
 
+function buildSectionsDisplayed() {
+	const o = {};
+
+	Object.keys(sections).forEach((key) => {
+		o[key] = 'debug' === key || 'urlparams' === key ? false : true;
+	});
+
+	return o;
+}
+
 new Vue({
 	// DOM selector for our app's main wrapper element
 	el: '#nextgenthemes-vue',
@@ -31,15 +42,7 @@ new Vue({
 	data: {
 		isSaving: false,
 		refreshAfterSave: false,
-		sectionsDisplayed: {
-			main: true,
-			html5: true,
-			pro: true,
-			videojs: true,
-			randomvideo: true,
-			debug: false,
-			urlparams: false,
-		},
+		sectionsDisplayed: buildSectionsDisplayed(),
 		message: '',
 		vm: data.options,
 	},

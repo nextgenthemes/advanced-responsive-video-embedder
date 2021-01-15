@@ -20,6 +20,7 @@ require_once __DIR__ . '/Admin/NoticeFactory.php';
 require_once __DIR__ . '/Admin/functions-licensing.php';
 require_once __DIR__ . '/Admin/functions-settings.php';
 require_once __DIR__ . '/Admin/functions-notices.php';
+require_once __DIR__ . '/Admin/functions-debug.php';
 // phpcs:enable WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
 
 if ( ! defined( 'NGT_COMMON_INIT' ) ) {
