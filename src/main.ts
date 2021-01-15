@@ -28,6 +28,13 @@ function removeUnwantedStuff() {
 		unwrap(el);
 	});
 
+	// Astor theme fix
+	qsa('.ast-oembed-container').forEach((el) => {
+		if (el.querySelectorAll('.arve')) {
+			unwrap(el);
+		}
+	});
+
 	qsa('.arve br').forEach((el) => {
 		el.remove();
 	});
