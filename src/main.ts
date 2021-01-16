@@ -30,7 +30,7 @@ function removeUnwantedStuff() {
 
 	// Astor theme fix
 	qsa('.ast-oembed-container').forEach((el) => {
-		if (el.querySelectorAll('.arve')) {
+		if (el.querySelector('.arve')) {
 			unwrap(el);
 		}
 	});
