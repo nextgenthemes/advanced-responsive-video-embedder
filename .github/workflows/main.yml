@@ -16,9 +16,7 @@ jobs:
           - php: '8.0'
             wordpress: 'latest'
           - php: '5.6'
-            wordpress: '5.3.6'
-          - php: '5.6'
-            wordpress: '5.2.9'
+            wordpress: '4.9.16'
     services:
       mysql:
         image: mysql:5.7
