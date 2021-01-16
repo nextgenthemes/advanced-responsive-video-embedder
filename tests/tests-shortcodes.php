@@ -72,21 +72,21 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$properties = get_host_properties();
 
-		if ( ! getenv('CI') ) {
-			add_filter( 'shortcode_atts_arve', [ $this, 'oembed_log' ], 999 );
-		}
+		// if ( ! getenv('CI') ) {
+		// 	add_filter( 'shortcode_atts_arve', [ $this, 'oembed_log' ], 999 );
+		// }
 
 		foreach ( $properties as $provider => $v ) :
 
-			if ( empty( $v['tests'] )
-				|| '5.2.6' === $GLOBALS['wp_version'] // TODO: find out why this fails
-			) {
+			// TODO: this fails on older WP versions (5.3??)
+
+			if ( empty( $v['tests'] ) ) {
 				continue;
 			}
 
-			if ( 'youtube' === $provider && getenv('CI') ) {
-				continue;
-			}
+			// if ( 'youtube' === $provider && getenv('CI') ) {
+			// 	continue;
+			// }
 
 			$this->assertNotEmpty( $v['tests'] );
 			$this->assertTrue( is_array( $v['tests'] ) );
