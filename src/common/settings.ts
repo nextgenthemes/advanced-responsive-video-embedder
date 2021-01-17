@@ -25,13 +25,13 @@ interface OptionProps {
 }
 
 function buildSectionsDisplayed() {
-	const o = {};
+	const sectionsDisplayed = {};
 
 	Object.keys(sections).forEach((key) => {
-		o[key] = 'debug' === key || 'urlparams' === key ? false : true;
+		sectionsDisplayed[key] = 'debug' === key ? false : true;
 	});
 
-	return o;
+	return sectionsDisplayed;
 }
 
 new Vue({
@@ -40,6 +40,7 @@ new Vue({
 
 	// Data that will be proxied by Vue.js to provide reactivity to our template
 	data: {
+		errors: [],
 		isSaving: false,
 		refreshAfterSave: false,
 		sectionsDisplayed: buildSectionsDisplayed(),
@@ -49,6 +50,11 @@ new Vue({
 
 	// Methods that can be invoked from within our template
 	methods: {
+		checkForError() {
+			if (!this.name) {
+				this.errors.push('Name required.');
+			}
+		},
 		// Save the options to the database
 		saveOptions() {
 			// set the state so that another save cannot happen while processing

@@ -79,13 +79,11 @@ function basic_tests( $tests ) {
 
 function build_video( array $input_atts ) {
 
-	for ( $n = 1; $n <= NUM_TRACKS; $n++ ) {
-		$pairs[ "track_{$n}" ]       = null;
-		$pairs[ "track_{$n}_label" ] = null;
-	}
-
 	$a    = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
 	$html = '';
+
+	$build_args = new ShortcodeArgs( $a['errors'] );
+	$a          = $build_args->get_done( $a );
 
 	ksort( $a );
 	ksort( $input_atts );
@@ -95,7 +93,7 @@ function build_video( array $input_atts ) {
 			$html .= sprintf(
 				'<span class="arve-error"%s>%s %s</span>',
 				'hidden' === $code ? ' hidden' : '',
-				__( '<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error:', 'advanced-responsive-video-embedder' ),
+				__( '<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error: ', 'advanced-responsive-video-embedder' ),
 				$message
 			);
 		}
@@ -112,6 +110,13 @@ function build_video( array $input_atts ) {
 	wp_enqueue_script( 'arve' );
 
 	return apply_filters( 'nextgenthemes/arve/html', $html, $a );
+}
+
+function arg_filters( array $a ) {
+
+	$args = new ShortcodeArgs( $a );
+
+	return $args->get_done();
 }
 
 function shortcode_option_defaults() {

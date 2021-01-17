@@ -42,6 +42,7 @@ function init() {
 
 	require_once PLUGIN_DIR . '/php/Common/init.php';
 	require_once PLUGIN_DIR . '/php/EmbedChecker.php';
+	require_once PLUGIN_DIR . '/php/ShortcodeArgs.php';
 	require_once PLUGIN_DIR . '/php/functions-deprecated.php';
 	require_once PLUGIN_DIR . '/php/functions-assets.php';
 	require_once PLUGIN_DIR . '/php/functions-html-output.php';
@@ -71,28 +72,6 @@ function init() {
 	add_filter( 'embed_oembed_html',           __NAMESPACE__ . '\maybe_enqueue_assets', 99 );
 	add_filter( 'oembed_ttl',                  __NAMESPACE__ . '\trigger_cache_rebuild', 10, 4 );
 	add_filter( 'embed_oembed_discover',       __NAMESPACE__ . '\reenable_oembed_cache' );
-
-	foreach ( [
-		'missing_attribute_check'         => -100,
-		'validate'                        => -99,
-		'detect_html5'                    => -35,
-		'detect_provider_and_id_from_url' => -30,
-		'aspect_ratio'                    => -10,
-		'thumbnail'                       => 10,
-		'video'                           => 10,
-		'liveleak_id_fix'                 => 10,
-		'maxwidth'                        => 10,
-		'dimensions'                      => 12,
-		'mode'                            => 14,
-		'autoplay'                        => 15,
-		'iframe_src'                      => 20,
-		// Maybe validate_again ?
-		'set_uid'                         => 90,
-	] as $filter => $priority ) {
-		add_filter( 'shortcode_atts_arve', __NAMESPACE__ . "\\sc_filter_{$filter}", $priority );
-	};
-	unset( $filter );
-	unset( $priority );
 
 	// Admin Hooks
 	add_action( 'nextgenthemes/arve/admin/settings_sidebar', __NAMESPACE__ . '\Admin\settings_sidebar' );

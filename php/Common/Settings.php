@@ -303,6 +303,17 @@ class Settings {
 		<?php
 	}
 
+	public function print_errors() {
+		?>
+		<div class="ngt-block" v-if="errors.length">
+			<strong>Please correct the following error(s):</strong>
+			<ul>
+				<li v-for="error in errors">{{ error }}</li>
+			</ul>
+		</div>
+		<?php
+	}
+
 	public function print_admin_page() {
 		?>
 		<div class='wrap wrap--nextgenthemes' id='nextgenthemes-vue'>

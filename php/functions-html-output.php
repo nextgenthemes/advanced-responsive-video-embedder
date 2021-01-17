@@ -61,7 +61,7 @@ function build_iframe_tag( array $a ) {
 				'allowfullscreen' => '',
 				'class'           => $class,
 				'data-arve'       => $a['uid'],
-				'data-src-no-ap'  => iframe_src_autoplay_args( $a['src'], false, $a ),
+				'data-src-no-ap'  => iframe_src_autoplay_args( false, $a ),
 				'frameborder'     => '0',
 				'height'          => $a['height'],
 				'name'            => $a['iframe_name'],

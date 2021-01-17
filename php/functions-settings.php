@@ -153,7 +153,7 @@ function shortcode_pairs() {
 			'gutenberg'          => null,
 			'src'                => null,
 			'img_srcset'         => null,
-			'maxwidth'           => null, # Overwriting the option value ON PURPOSE here, see sc_filter_maxwidth
+			'maxwidth'           => null, # Overwriting the option value ON PURPOSE here, see arg_maxwidth
 			'av1mp4'             => null,
 			'mp4'                => null,
 			'm4v'                => null,
@@ -240,10 +240,6 @@ function upgrade_options( $settings_instance ) {
 		update_option( 'nextgenthemes_arve', $new_options );
 		update_option( 'nextgenthemes_arve_options_ver', $options_ver_when_done );
 	}
-}
-
-function get_supported_modes() {
-	return apply_filters( 'nextgenthemes/arve/modes', [ 'normal' => esc_html__( 'Normal', 'advanced-responsive-video-embedder' ) ] );
 }
 
 function all_settings() {
@@ -341,11 +337,15 @@ function all_settings() {
 			'default'             => 'normal',
 			'label'               => __( 'Mode', 'advanced-responsive-video-embedder' ),
 			'type'                => 'select',
-			'options'             =>
-				[ '' => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ) ]
-				+ get_supported_modes(),
+			'options'             => [
+				''              => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
+				'lazyload'      => __( 'Lazyload', 'advanced-responsive-video-embedder' ),
+				'lightbox'      => __( 'Lightbox', 'advanced-responsive-video-embedder' ),
+				'link-lightbox' => __( 'Link -> Lightbox', 'advanced-responsive-video-embedder' ),
+			],
 			'description'         => sprintf(
-				kses_link_only( __( 'For Lazyload, Lightbox and Link mode check out <a href="%s">ARVE Pro</a>.', 'advanced-responsive-video-embedder' ) ), // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+				// translators: URL
+				kses_link_only( __( 'For Lazyload, Lightbox and Link mode check out <a href="%s">ARVE Pro</a>. Only use normal when Pro is not installed!', 'advanced-responsive-video-embedder' ) ),
 				'https://nextgenthemes.com/plugins/arve-pro/'
 			),
 			'descriptionlink'     => esc_url( $pro_addon_link ),
@@ -527,7 +527,7 @@ function all_settings() {
 			'description' => __( 'default 1174', 'advanced-responsive-video-embedder' ),
 		],
 		'sticky_width' => [
-			'tag'         => 'sticky',
+			'tag'         => 'sticky-videos',
 			'default'     => '350px',
 			'shortcode'   => false,
 			'label'       => __( 'Sticky Video Width', 'advanced-responsive-video-embedder' ),
@@ -535,17 +535,33 @@ function all_settings() {
 			'description' => esc_attr__( 'CSS value (px, vw, ...) 350px is default.', 'advanced-responsive-video-embedder' ),
 		],
 		'sticky_gap' => [
-			'tag'         => 'sticky',
+			'tag'         => 'sticky-videos',
 			'default'     => '0',
 			'shortcode'   => false,
 			'label'       => __( 'Sticky Video Corner Gap', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
-			'description' => esc_attr__( 'CSS value (px, vw, ...) default is 0.', 'advanced-responsive-video-embedder' ),
+			'description' => esc_attr__( 'CSS value (px, vw, ...).', 'advanced-responsive-video-embedder' ),
 		],
-		'sticky_position' => [
-			'tag'         => 'sticky',
+		'sticky_close_btn_pos_x' => [
+			'tag'         => 'sticky-videos',
+			'default'     => '0',
+			'shortcode'   => false,
+			'label'       => __( 'Close Button Position X', 'advanced-responsive-video-embedder' ),
+			'type'        => 'string',
+			'description' => esc_attr__( 'The base poition is always in the corner pointing to the middle of the screem, nagative values will position the button outside of video.', 'advanced-responsive-video-embedder' ),
+		],
+		'sticky_close_btn_pos_y' => [
+			'tag'         => 'sticky-videos',
+			'default'     => '-15px',
+			'shortcode'   => false,
+			'label'       => __( 'Close Button Position X', 'advanced-responsive-video-embedder' ),
+			'type'        => 'string',
+			'description' => esc_attr__( 'The base poition is always in the corner pointing to the middle of the screem, nagative values will position the button outside of video.', 'advanced-responsive-video-embedder' ),
+		],		
+		'sticky_pos' => [
+			'tag'         => 'sticky-videos',
 			'default'     => 'top-left',
-			'label'       => __( 'Align Maximal Width', 'advanced-responsive-video-embedder' ),
+			'label'       => __( 'Sticky Video Position', 'advanced-responsive-video-embedder' ),
 			'type'        => 'select',
 			'options'     => [
 				'top-left'     => __( 'Top left', 'advanced-responsive-video-embedder' ),

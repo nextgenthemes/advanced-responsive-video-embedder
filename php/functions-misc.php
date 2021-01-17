@@ -74,13 +74,6 @@ function new_height( $old_width, $old_height, $new_width ) {
 	return $new_height;
 }
 
-function new_height_from_aspect_ratio( $new_width, $aspect_ratio ) {
-
-	list( $old_width, $old_height ) = explode( ':', $aspect_ratio );
-
-	return new_height( $old_width, $old_height, $new_width );
-}
-
 /**
  * Calculates padding percentage value for a particular aspect ratio
  *
