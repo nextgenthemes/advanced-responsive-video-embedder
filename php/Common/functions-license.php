@@ -12,7 +12,7 @@ function check_product_keys() {
 		if ( $value['active'] && ! $value['valid_key'] ) {
 			$msg = sprintf(
 				// Translators: URL, Product name
-				kses_link_only( __( '<a href="%1$s">%2$s</a> license not activated or valid', 'advanced-responsive-video-embedder' ) ),
+				kses_basic( __( '<a href="%1$s">%2$s</a> license not activated or valid', 'advanced-responsive-video-embedder' ) ),
 				esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/installing-and-license-management/' ),
 				$value['name']
 			);
