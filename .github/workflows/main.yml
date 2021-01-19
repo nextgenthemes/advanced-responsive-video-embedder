@@ -18,7 +18,7 @@ jobs:
           - php: '5.6'
             wordpress: '4.9.16'
           - php: '5.6'
-            wordpress: '4.4.24'  
+            wordpress: '4.4.24'
     services:
       mysql:
         image: mysql:5.7
