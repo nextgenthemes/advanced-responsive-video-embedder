@@ -245,7 +245,7 @@ class Settings {
 
 	private function print_paid_section_message() {
 
-		if ( empty ( $this->premium_sections ) ) {
+		if ( empty( $this->premium_sections ) ) {
 			return;
 		}
 
@@ -314,6 +314,43 @@ class Settings {
 		<?php
 	}
 
+	public function print_outdated_php_msg() {
+
+		if ( \version_compare(PHP_VERSION, '5.6.40', '<=') ) {
+
+			?>
+			<div class="ngt-sidebar-box">
+				<p>
+					<?php
+					printf(
+						// translators: PHP version, URL, Contact URL
+						kses_basic( __( 'Your PHP version %1$s is very <a href="%2$s">outdated, insecure and slow</a>. No pressure, this plugin will continue to work with PHP 5.6, but at some undecided point I like to use features from PHP 7. If you can not update for some reason please tell <a href="%3$s">tell me</a>. WordPress itself planned to require PHP 7 in a feature release but decided not to persue this for now because so many people still run on outdated versions. WordPress already has beta support for 8.0 but I would not go with 8.0 just yet.', 'advanced-responsive-video-embedder' ) ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						esc_html( PHP_VERSION ),
+						esc_url( 'https://www.php.net/supported-versions' ),
+						esc_url( 'https://nextgenthemes.com/contact/' )
+					);
+					?>
+				</p>
+			</div>
+			<?php
+		} elseif ( \version_compare(PHP_VERSION, '7.3.23', '<') ) {
+			?>
+			<div class="ngt-sidebar-box">
+				<p>
+					<?php
+					printf(
+						// translators: URL
+						kses_basic( __( 'Just a heads up, your PHP version %1$s is outdated and potentially insecure. See what versions are <a href="%2$s">good here</a>. WordPress already has beta support for 8.0 but I would not go with 8.0 just yet.', 'advanced-responsive-video-embedder' ) ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						esc_html( PHP_VERSION ),
+						esc_url( 'https://www.php.net/supported-versions' )
+					);
+					?>
+				</p>
+			</div>
+			<?php
+		}
+	}
+
 	public function print_admin_page() {
 		?>
 		<div class='wrap wrap--nextgenthemes' id='nextgenthemes-vue'>
@@ -323,7 +360,7 @@ class Settings {
 				<div class="ngt-settings-grid__content" >
 					<?php
 					$this->print_paid_section_message();
-					$this->print_save_section();	
+					$this->print_save_section();
 					$this->print_debug_info_block();
 					$this->print_settings_blocks();
 					$this->print_save_section();
@@ -332,6 +369,7 @@ class Settings {
 				</div>
 				<div class="ngt-settings-grid__sidebar">
 					<?php do_action( $this->slashed_namespace . '/admin/settings_sidebar', $this ); ?>
+					<?php $this->print_outdated_php_msg(); ?>
 				</div>
 			</div>
 		</div>
