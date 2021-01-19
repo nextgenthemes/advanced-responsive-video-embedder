@@ -40,7 +40,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 
 	public function test_wrong_no_req_param() {
 
-		$this->expectException('Exception');
+		#$this->expectException('Exception');
 
 		$html = shortcode( [ 'bullshit' => 'bullshit' ] );
 		$this->assertContains( 'Error', $html );
@@ -70,7 +70,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 
 	public function test_legacy_yt_sc_no_id() {
 
-		$this->expectException('Exception');
+		#$this->expectException('Exception');
 
 		$html = do_shortcode( '[youtube title="testing" /]' );
 		$this->assertContains( 'Error', $html );
@@ -78,7 +78,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 
 	public function test_empty_url_and_fatal_error() {
 
-		$this->expectException('Exception');
+		#$this->expectException('Exception');
 
 		$html = shortcode( [ 'url' => '' ] );
 		$this->assertContains( 'Error', $html );
@@ -90,7 +90,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 	public function test_wrong_url() {
 
 		$html = shortcode( [ 'url' => 'bullshit' ] );
-		$this->assertContains( 'Error', $html );
+		$this->assertContains( 'Errror', $html );
 	}
 
 	public function test_wrong_sandbox() {
@@ -106,7 +106,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 
 	public function test_wrong_src() {
 
-		$this->expectException('Exception');
+		#$this->expectException('Exception');
 
 		$html = shortcode(
 			[

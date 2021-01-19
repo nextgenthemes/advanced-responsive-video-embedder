@@ -1,6 +1,8 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+use function \Nextgenthemes\ARVE\Common\get_var_dump;
+
 function build_html( array $a ) {
 
 	$options       = options();

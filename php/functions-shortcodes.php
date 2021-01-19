@@ -77,39 +77,57 @@ function basic_tests( $tests ) {
 	return $html;
 }
 
-function build_video( array $input_atts ) {
+function error( $msg, $code = '' ) {
 
-	$a    = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
+	return sprintf(
+		'<span class="arve-error"%s><abbr title="%s">ARVE</abbr> %s</span>',
+		'hidden' === $code ? ' hidden' : '',
+		__( 'Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ),
+		// translators: Error message
+		sprintf( __( 'Error: %s', 'advanced-responsive-video-embedder' ), $msg )
+	);
+}
+
+function add_error_html( array $a ) {
+
 	$html = '';
-
-	$build_args = new ShortcodeArgs( $a['errors'] );
-	$a          = $build_args->get_done( $a );
-
-	ksort( $a );
-	ksort( $input_atts );
 
 	foreach ( $a['errors']->get_error_codes() as $code ) {
 		foreach ( $a['errors']->get_error_messages( $code ) as $key => $message ) {
-			$html .= sprintf(
-				'<span class="arve-error"%s>%s %s</span>',
-				'hidden' === $code ? ' hidden' : '',
-				__( '<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error: ', 'advanced-responsive-video-embedder' ),
-				$message
-			);
+			$html .= error( $message, $code );
 		}
 	}
 
-	if ( '' !== $a['errors']->get_error_message( 'fatal' ) ) {
+	return $html;
+}
+
+function build_video( array $input_atts ) {
+
+	$a    = array();
+	$html = '';
+
+	try {
+		Common\check_product_keys();
+
+		$a = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
+		ksort( $a );
+		ksort( $input_atts );
+
+		$build_args = new ShortcodeArgs( $a['errors'] );
+		$a          = $build_args->get_done( $a );
+
+		$html .= add_error_html( $a );
+		$html .= build_html( $a );
 		$html .= get_debug_info( $html, $a, $input_atts );
-		return $html;
+
+		wp_enqueue_script( 'arve' );
+
+		return apply_filters( 'nextgenthemes/arve/html', $html, $a );
+
+	} catch ( \Exception $e ) {
+		return error( $e->getMessage(), $e->getCode() ) .
+			get_debug_info( '', $a, $input_atts );
 	}
-
-	$html .= build_html( $a );
-	$html .= get_debug_info( $html, $a, $input_atts );
-
-	wp_enqueue_script( 'arve' );
-
-	return apply_filters( 'nextgenthemes/arve/html', $html, $a );
 }
 
 function arg_filters( array $a ) {

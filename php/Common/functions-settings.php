@@ -122,7 +122,7 @@ function nextgenthemes_settings() {
 function get_products() {
 
 	$products = [
-		'arve_pro'          => [
+		'arve_pro' => [
 			'namespace' => 'ARVE\Pro',
 			'name'      => 'ARVE Pro',
 			'id'        => 1253,
@@ -130,7 +130,7 @@ function get_products() {
 			'author'    => 'Nicolas Jonas',
 			'url'       => 'https://nextgenthemes.com/plugins/arve-pro/',
 		],
-		'arve_amp'          => [
+		'arve_amp' => [
 			'namespace' => 'ARVE\AMP',
 			'name'      => 'ARVE AMP',
 			'id'        => 16941,
@@ -145,6 +145,14 @@ function get_products() {
 			'type'      => 'plugin',
 			'author'    => 'Nicolas Jonas',
 			'url'       => 'https://nextgenthemes.com/plugins/arve-random-video/',
+		],
+		'arve_sticky_videos' => [
+			'namespace' => 'ARVE\StickyVideos',
+			'name'      => 'ARVE Sticky Videos',
+			'id'        => false,
+			'type'      => 'plugin',
+			'author'    => 'Nicolas Jonas',
+			'url'       => 'https://nextgenthemes.com/plugins/arve-sticky-videos/',
 		],
 	];
 
