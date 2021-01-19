@@ -10,15 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        #php: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
-        #wordpress: [ '5.5.3', 'latest' ] # https://wordpress.org/download/releases/
+        php: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
+        wordpress: [ '5.5.3', 'latest' ] # https://wordpress.org/download/releases/
         include:
           - php: '8.0'
             wordpress: 'latest'
-          - php: '5.6'
-            wordpress: '4.9.16'
-          - php: '5.6'
-            wordpress: '4.4.24'
+          #- php: '5.6'
+          #  wordpress: '4.9.16' # This works with the test_api_data skipped that creates symphony/yaml errors
     services:
       mysql:
         image: mysql:5.7
