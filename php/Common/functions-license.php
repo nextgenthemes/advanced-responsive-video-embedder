@@ -1,6 +1,27 @@
 <?php
 namespace Nextgenthemes\ARVE\Common;
 
+function check_product_keys() {
+
+	$products = get_products();
+
+	unset( $products['arve_amp'] );
+
+	foreach ( $products as $key => $value ) :
+
+		if ( $value['active'] && ! $value['valid_key'] ) {
+			$msg = sprintf(
+				// Translators: URL, Product name
+				kses_link_only( __( '<a href="%1$s">%2$s</a> license not activated or valid', 'advanced-responsive-video-embedder' ) ),
+				esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/installing-and-license-management/' ),
+				$value['name']
+			);
+
+			throw new \Exception($msg);
+		}
+	endforeach;
+}
+
 function has_valid_key( $product ) {
 	$o = (array) get_option( 'nextgenthemes' );
 
