@@ -90,7 +90,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 	public function test_wrong_url() {
 
 		$html = shortcode( [ 'url' => 'bullshit' ] );
-		$this->assertContains( 'Errror', $html );
+		$this->assertContains( 'Error', $html );
 	}
 
 	public function test_wrong_sandbox() {
