@@ -11,36 +11,25 @@ class ShortcodeArgs {
 
 	public function get_done( array $a ) {
 
-		try {
-			if ( '' !== $this->errors->get_error_message( 'fatal' ) ) {
-				throw new Exeption( $this->errors->get_error_message( 'fatal' ) );
-			}
+		missing_attribute_check( $a );
 
-			missing_attribute_check( $a );
+		$a = $this->args_validate( $a );
+		$a = args_detect_html5( $a );
+		$a = $this->detect_provider_and_id_from_url( $a );
 
-			$a = $this->args_validate( $a );
-			$a = args_detect_html5( $a );
-			$a = $this->detect_provider_and_id_from_url( $a );
-
-			$a['aspect_ratio'] = arg_aspect_ratio( $a );
-			$a['thumbnail']    = apply_filters( 'nextgenthemes/arve/args/thumbnail', $a['thumbnail'], $a );
-			$a['img_src']      = $this->arg_img_src( $a );
-			$a['img_srcset']   = $this->arg_img_srcset( $a );
-			$a                 = args_video( $a );
-			$a['id']           = liveleak_id_fix( $a );
-			$a['maxwidth']     = $this->arg_maxwidth( $a );
-			$a['width']        = $a['maxwidth'];
-			$a['height']       = height_from_width_and_ratio( $a['width'], $a['aspect_ratio'] );
-			$a['mode']         = $this->arg_mode( $a );
-			$a['autoplay']     = arg_autoplay( $a );
-			$a['src']          = $this->arg_iframe_src( $a );
-			$a['uid']          = sanitize_key( uniqid( "arve-{$a['provider']}-{$a['id']}", true) );
-			// Maybe validate_again ?
-		} catch ( Exception $ex ) {
-			$this->$errors->add( 'fatal', $ex );
-		}
-
-		$a['errors'] = $this->errors;
+		$a['aspect_ratio'] = arg_aspect_ratio( $a );
+		$a['thumbnail']    = apply_filters( 'nextgenthemes/arve/args/thumbnail', $a['thumbnail'], $a );
+		$a['img_src']      = $this->arg_img_src( $a );
+		$a['img_srcset']   = $this->arg_img_srcset( $a );
+		$a                 = args_video( $a );
+		$a['id']           = liveleak_id_fix( $a );
+		$a['maxwidth']     = $this->arg_maxwidth( $a );
+		$a['width']        = $a['maxwidth'];
+		$a['height']       = height_from_width_and_ratio( $a['width'], $a['aspect_ratio'] );
+		$a['mode']         = $this->arg_mode( $a );
+		$a['autoplay']     = arg_autoplay( $a );
+		$a['src']          = $this->arg_iframe_src( $a );
+		$a['uid']          = sanitize_key( uniqid( "arve-{$a['provider']}-{$a['id']}", true) );
 
 		return $a;
 	}
@@ -279,7 +268,7 @@ class ShortcodeArgs {
 		}
 
 		if ( ! $a['url'] && ! $a['src'] ) {
-			throw new Exception(
+			throw new \Exception(
 				__( 'detect_provider_and_id_from_url method needs url.', 'advanced-responsive-video-embedder' )
 			);
 		}
