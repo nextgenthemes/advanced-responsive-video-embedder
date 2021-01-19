@@ -16,6 +16,12 @@ Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement
 * [ARVE Pro addon changelog](https://nextgenthemes.com/plugins/arve-pro/changelog/)
 * [ARVE AMP addon changelog](https://nextgenthemes.com/plugins/arve-amp/)
 
+### 2021-01-20 9.2.0 ###
+
+* Fix: Compatibility with Astor Theme.
+* Improved: Classic Tabs, new settings section for upcoming [ARVE sticky Videos](https://nextgenthemes.com/plugins/arve-sticky-videos/).
+* Improved: Lots of code restructured and improved.
+
 ### 2021-01-07 9.1.4 ###
 
 * New: Vimeo play button option for ARVE Pro
