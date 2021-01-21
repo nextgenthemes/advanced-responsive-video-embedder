@@ -44,9 +44,9 @@ function dashes_to_camel_case( $string, $capitalize_first_character = false ) {
 	return $str;
 }
 
-function kses_basic( $html_with_a ) {
+function kses_basic( $html ) {
 	return wp_kses(
-		$html_with_a,
+		$html,
 		[
 			'a'      => [
 				'href'   => [],
@@ -56,6 +56,7 @@ function kses_basic( $html_with_a ) {
 			'br'     => [],
 			'em'     => [],
 			'strong' => [],
+			'code'   => [],
 		]
 	);
 }
