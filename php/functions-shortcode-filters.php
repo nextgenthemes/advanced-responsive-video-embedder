@@ -294,7 +294,7 @@ function iframe_src_autoplay_args( $autoplay, array $a ) {
 				add_query_arg( 'autoplay', 'true', $a['src'] ) :
 				add_query_arg( 'autoplay', 'false', $a['src'] );
 		case 'livestream':
-		case 'Wistia':
+		case 'wistia':
 			return $autoplay ?
 				add_query_arg( 'autoPlay', 'true', $a['src'] ) :
 				add_query_arg( 'autoPlay', 'false', $a['src'] );
