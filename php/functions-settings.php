@@ -339,7 +339,7 @@ function all_settings() {
 			'type'                => 'select',
 			'options'             => [
 				''              => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
-				'normal'        => __( 'Normal', 'advanced-responsive-video-embedder' ),
+				#'normal'        => __( 'Normal', 'advanced-responsive-video-embedder' ),
 				'lazyload'      => __( 'Lazyload', 'advanced-responsive-video-embedder' ),
 				'lightbox'      => __( 'Lightbox', 'advanced-responsive-video-embedder' ),
 				'link-lightbox' => __( 'Link -> Lightbox', 'advanced-responsive-video-embedder' ),
@@ -596,7 +596,7 @@ function all_settings() {
 			'placeholder' => __( 'example=1&foo=bar', 'advanced-responsive-video-embedder' ),
 			'description' => sprintf(
 				kses_basic( __( 'Provider specific player settings on iframe src. See <a href="%s">documentation.</a>', 'advanced-responsive-video-embedder' ) ), // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
-				esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/#parematers' )
+				esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/#parameters' )
 			),
 		],
 		'wp_video_override' => [
