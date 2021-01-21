@@ -4,6 +4,10 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
 
+### 2021-01-21 9.2.3 ###
+
+* Revert some things that made latest Pro tests fail
+
 ### 2021-01-21 9.2.0 ###
 
 * Fix: Compatibility with Astor Theme.
