@@ -11,7 +11,6 @@ class Settings {
 	private $slugged_namspace    = '';
 	private $slashed_namspace    = '';
 	private $rest_namespace      = '';
-	private $rest_url            = '';
 	private $settings            = [];
 	private $settings_page_title = '';
 	private $options_defaults    = [];
@@ -37,7 +36,6 @@ class Settings {
 		$this->slugged_namespace   = sanitize_key( str_replace( '\\', '_', $args['namespace'] ) );
 		$this->slashed_namespace   = str_replace( '_', '/', $this->slugged_namespace );
 		$this->rest_namespace      = $this->slugged_namespace . '/v1';
-		$this->rest_url            = get_home_url() . '/wp-json/' . $this->rest_namespace;
 		$this->menu_parent_slug    = $args['menu_parent_slug'];
 
 		foreach ( $this->settings as $key => $value ) {
@@ -137,10 +135,10 @@ class Settings {
 		);
 
 		$settings_data = [
-			'nonce'    => wp_create_nonce( 'wp_rest' ),
-			'rest_url' => $this->rest_url,
-			'home_url' => get_home_url(),
 			'options'  => $this->options,
+			'home_url' => get_home_url(),
+			'rest_url' => esc_url( get_rest_url( null, $this->rest_namespace ) ),
+			'nonce'    => wp_create_nonce( 'wp_rest' ),
 			'settings' => $this->settings,
 			'sections' => $this->sections,
 		];
@@ -154,19 +152,6 @@ class Settings {
 				'async'             => false,
 				'inline_script'     => "var {$this->slugged_namespace} = " . \wp_json_encode( $settings_data ) . ';',
 				'inline_script_pos' => 'before',
-			]
-		);
-
-		// Sending data to our plugin settings JS file
-		wp_localize_script(
-			'nextgenthemes-settings',
-			'OLD' . $this->slugged_namespace,
-			[
-				'nonce'    => wp_create_nonce( 'wp_rest' ),
-				'rest_url' => $this->rest_url,
-				'home_url' => get_home_url(),
-				'options'  => $this->options,
-				'settings' => $this->settings,
 			]
 		);
 	}

@@ -10,6 +10,7 @@ ARVE Sticky Videos: <?= esc_html( plugin_ver_status( 'arve-sticky-videos/arve-st
 ARVE Random Video:  <?= esc_html( plugin_ver_status( 'arve-random-video/arve-random-video.php' ) . "\n" ); ?>
 WordPress Version:  <?= esc_html( $GLOBALS['wp_version'] . "\n" ); ?>
 PHP Version:        <?= esc_html( phpversion() . "\n" ); ?>
+REST URL:           <?= esc_html( get_rest_url( null, $this->rest_namespace ) . "\n" ); ?>
 
 <?php print_active_plugins(); ?>
 
