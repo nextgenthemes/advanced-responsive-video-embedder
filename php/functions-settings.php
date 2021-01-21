@@ -339,6 +339,7 @@ function all_settings() {
 			'type'                => 'select',
 			'options'             => [
 				''              => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
+				'normal'        => __( 'Normal', 'advanced-responsive-video-embedder' ),
 				'lazyload'      => __( 'Lazyload', 'advanced-responsive-video-embedder' ),
 				'lightbox'      => __( 'Lightbox', 'advanced-responsive-video-embedder' ),
 				'link-lightbox' => __( 'Link -> Lightbox', 'advanced-responsive-video-embedder' ),

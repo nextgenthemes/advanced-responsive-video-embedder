@@ -56,6 +56,7 @@ function kses_basic( $html_with_a ) {
 			'br'     => [],
 			'em'     => [],
 			'strong' => [],
+			'code'   => [],
 		]
 	);
 }
