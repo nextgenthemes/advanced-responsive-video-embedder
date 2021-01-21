@@ -9,6 +9,7 @@
 /resources     export-ignore
 /src           export-ignore
 /tests         export-ignore
+/readme        export-ignore
 
 * text eol=lf
 *.gif binary
