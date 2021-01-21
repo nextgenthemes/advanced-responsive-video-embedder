@@ -16,6 +16,7 @@
 
 * Fix: Compatibility with Astor Theme.
 * Improved: Added notes that Shortcode UI is not maintained to the button and readme.
+* Improved: Added notes about outdated PHP versions to settings page sidebar.
 * Improved: Classic Tabs, new settings section for upcoming [ARVE sticky Videos](https://nextgenthemes.com/plugins/arve-sticky-videos/).
 * Improved: Lots of code restructured and improved.
 
