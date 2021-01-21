@@ -139,25 +139,30 @@ function add_action_links( $links ) {
 function add_media_button() {
 
 	$options = ARVE\options();
-
 	add_thickbox();
+	?>
 
-	echo '<div id="arve-thickbox" style="display:none;">';
-	// phpcs:disable WordPress.WP.I18n.MissingTranslatorsComment
-	printf(
-		__( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			'<p>This button can open a optional ARVE a Shortcode creation dialog. ARVE needs the <a href="%1$s">Shortcode UI plugin</a> active for this fuctionality. The plugin </p>
-
-			<p>The "Shortcake (Shortcode UI)" plugin also adds What You See Is What You Get functionality for ARVE Shortcodes to WordPress visual post editor. It is perfectly fine to pass on this and <a href="%2$s">manually</a> write shortcodes or don\'t use shortcodes at all, but it makes things easier.</p>',
-			'advanced-responsive-video-embedder'
-		),
-		esc_url( network_admin_url( 'plugin-install.php?s=Shortcode+UI&tab=search&type=term' ) ),
-		esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/' )
-	);
-	// phpcs:enable WordPress.WP.I18n.MissingTranslatorsComment
-
-	echo '</div>';
-
+	<div id="arve-thickbox" style="display:none;">
+		<p>
+			<?php
+			printf(
+				// phpcs:ignore
+				Common\kses_basic( __( 'This button can open an optional ARVE a Shortcode creation dialog. ARVE needs the <a href="%s">Shortcode UI plugin</a> active for this fuctionality. It helps creating shortcodes and provides a preview in the Editor. But sadly Shortcode UI is not maintained anymore and there have been some know issues with Shortcode UI.', 'advanced-responsive-video-embedder' ) ),
+				esc_url( network_admin_url( 'plugin-install.php?s=Shortcode+UI&tab=search&type=term' ) )
+			);
+			?>
+		</p>
+		<p>
+			<?php
+			printf(
+				// phpcs:ignore
+				Common\kses_basic( __( 'It is perfectly fine to pass on this and <a href="%s">manually</a> write shortcodes or don\'t use shortcodes at all, but it makes things easier. And if you even switch to Gutenberg there is a ARVE Block all the settings in the sidebar waiting for you..', 'advanced-responsive-video-embedder' ) ),
+				esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/' )
+			);
+			?>
+		</p>
+	</div>
+	<?php
 	printf(
 		'<button id="arve-btn" title="%s" data-mode="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
 		esc_attr__( 'ARVE Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ),

@@ -22,16 +22,16 @@
 namespace Nextgenthemes\ARVE;
 
 const VERSION               = '9.2.0-alpha7';
-const PRO_VERSION_REQUIRED  = '5.0.0-beta5';
+const PRO_VERSION_REQUIRED  = '5.1.5';
 const NUM_TRACKS            = 3;
 const PLUGIN_FILE           = __FILE__;
 const PLUGIN_DIR            = __DIR__;
 const VIDEO_FILE_EXTENSIONS = [ 'av1mp4', 'mp4', 'm4v', 'webm', 'ogv' ];
 const DEFAULT_MAXWIDTH      = 900;
 
-init();
+init_920();
 
-function init() {
+function init_920() {
 
 	add_option( 'arve_install_date', time() );
 

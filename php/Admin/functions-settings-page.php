@@ -14,9 +14,9 @@ function settings_sidebar() {
 		print_settings_box_html( '/partials/settings-sidebar-random-video.html' );
 	}
 
-	if ( ! is_plugin_active( 'arve-amp/arve-amp.php' ) ) {
-		print_settings_box_html( '/partials/settings-sidebar-amp.html' );
-	}
+	// if ( ! is_plugin_active( 'arve-amp/arve-amp.php' ) ) {
+	// 	print_settings_box_html( '/partials/settings-sidebar-amp.html' );
+	// }
 
 	print_settings_box_html( '/partials/settings-sidebar-rate.html' );
 }
