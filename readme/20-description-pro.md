@@ -1,7 +1,7 @@
 
 ### [Pro Addon][20]
 
-**<big>10% off</big>** first year with discount code `settingspage`.
+**<big>10% off</big>** first year with discount code `wporg`.
 
 This plugin is financed by purchases of the [Pro Addon][20]. The development and support of this plugins has become a job for me, so I hope you understand that I can not make all features gratis and that you [purchase it][20] to get extra features and support the development.
 
@@ -22,6 +22,6 @@ This plugin is financed by purchases of the [Pro Addon][20]. The development and
 *   **Feel good about yourself**<br>
     for supporting my 8+ years work on this plugin. Tons of hours, weekends … always worked on improving it
 *   Show the latest video of a YouTube channel by using the channel URL (updated/cached hourly)
-*   **[Get the ARVE Pro][20]**
+*   **[Get ARVE Pro][20]**
 
 [20]: https://nextgenthemes.com/plugins/arve-pro/

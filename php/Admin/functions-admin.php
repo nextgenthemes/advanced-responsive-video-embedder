@@ -1,21 +1,27 @@
 <?php
 namespace Nextgenthemes\ARVE\Admin;
 
+use const \Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
+
 use \Nextgenthemes\ARVE;
-use \Nextgenthemes\ARVE\Common;
+use \Nextgenthemes\ARVE\Common\Admin\NoticeFactory;
+
+use function \Nextgenthemes\ARVE\Common\ver;
+use function \Nextgenthemes\ARVE\Common\attr;
+use function \Nextgenthemes\ARVE\Common\kses_basic;
+use function \Nextgenthemes\ARVE\Common\enqueue_asset;
 
 function action_admin_init_setup_messages() {
 
-	$pro_version = false;
+	$pro_ver = false;
 
 	if ( defined( 'ARVE_PRO_VERSION' ) ) {
-		$pro_version = ARVE_PRO_VERSION;
+		$pro_ver = ARVE_PRO_VERSION;
 	} elseif ( defined( '\Nextgenthemes\ARVE\Pro\VERSION' ) ) {
-		$pro_version = \Nextgenthemes\ARVE\Pro\VERSION;
+		$pro_ver = \Nextgenthemes\ARVE\Pro\VERSION;
 	}
 
-	if ( $pro_version && version_compare( ARVE\PRO_VERSION_REQUIRED, $pro_version, '>' ) ) {
-
+	if ( $pro_ver && version_compare( PRO_VERSION_REQUIRED, $pro_ver, '>' ) ) {
 		$msg = sprintf(
 			// Translators: %1$s Version
 			__( 'Your ARVE Pro Addon is outdated, you need version %1$s or later. If you have setup your license <a href="%2$s">here</a> semi auto updates should work (Admin panel notice and auto install on confirmation). If not please <a href="%3$s">report it</a> and manually update as <a href="%4$s">described here.</a>', 'advanced-responsive-video-embedder' ),
@@ -25,7 +31,7 @@ function action_admin_init_setup_messages() {
 			'https://nextgenthemes.com/plugins/arve/documentation/installing-and-license-management/'
 		);
 
-		new Common\Admin\NoticeFactory( 'arve-pro-outdated', "<p>$msg</p>", false );
+		new NoticeFactory( 'arve-pro-outdated', "<p>$msg</p>", false );
 	}
 
 	$update_msg = sprintf(
@@ -37,7 +43,7 @@ function action_admin_init_setup_messages() {
 		'https://nextgenthemes.com/plugins/arve/documentation/how-to-downgrade/'
 	);
 
-	new Common\Admin\NoticeFactory( 'arve9', $update_msg, true );
+	new NoticeFactory( 'arve9', $update_msg, true );
 
 	if ( display_pro_ad() ) {
 
@@ -48,7 +54,7 @@ function action_admin_init_setup_messages() {
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$pro_ad_message .= file_get_contents( __DIR__ . '/partials/pro-ad.html' );
 
-		new Common\Admin\NoticeFactory( 'arve_dismiss_pro_notice', $pro_ad_message, true );
+		new NoticeFactory( 'arve_dismiss_pro_notice', $pro_ad_message, true );
 	}
 }
 
@@ -256,7 +262,7 @@ function input( $args ) {
 	}
 
 	if ( ! empty( $args['description'] ) ) {
-		$out = $out . '<p class="description">' . $args['description'] . '</p>';
+		$out = $out . '<p class="description">' . Common\kses_basic( $args['description'] ) . '</p>';
 	}
 
 	echo $out; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -269,7 +275,7 @@ function textarea( $args ) {
 	$out = sprintf( '<textarea%s></textarea>', Common\attr( $args['input_attr'] ) );
 
 	if ( ! empty( $args['description'] ) ) {
-		$out = $out . '<p class="description">' . $args['description'] . '</p>';
+		$out = $out . '<p class="description">' . Common\kses_basic( $args['description'] ) . '</p>';
 	}
 
 	echo $out; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -339,18 +345,18 @@ function debug_section_description() {
 
 function admin_enqueue_styles() {
 
-	Common\enqueue_asset(
+	enqueue_asset(
 		[
 			'handle' => 'advanced-responsive-video-embedder',
 			'src'    => plugins_url( 'build/admin.css', ARVE\PLUGIN_FILE ),
-			'ver'    => Common\ver( ARVE\VERSION, 'build/admin.css', ARVE\PLUGIN_FILE ),
+			'ver'    => ver( ARVE\VERSION, 'build/admin.css', ARVE\PLUGIN_FILE ),
 		]
 	);
 }
 
 function admin_enqueue_scripts() {
 
-	Common\enqueue_asset(
+	enqueue_asset(
 		[
 			'handle' => 'arve-admin',
 			'src'    => plugins_url( 'build/admin.js', ARVE\PLUGIN_FILE ),
@@ -361,7 +367,7 @@ function admin_enqueue_scripts() {
 	);
 
 	if ( is_plugin_active( 'shortcode-ui/shortcode-ui.php' ) ) {
-		Common\enqueue_asset(
+		enqueue_asset(
 			[
 				'handle' => 'arve-admin-sc-ui',
 				'path'   => ARVE\PLUGIN_DIR . '/build/shortcode-ui.js',
