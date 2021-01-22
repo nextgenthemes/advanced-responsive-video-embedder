@@ -153,7 +153,7 @@ function add_media_button() {
 			<?php
 			printf(
 				// phpcs:ignore
-				Common\kses_basic( __( 'This button can open an optional ARVE a Shortcode creation dialog. ARVE needs the <a href="%s">Shortcode UI plugin</a> active for this fuctionality. It helps creating shortcodes and provides a preview in the Editor. But sadly Shortcode UI is not maintained anymore and there have been some know issues with Shortcode UI.', 'advanced-responsive-video-embedder' ) ),
+				kses_basic( __( 'This button can open an optional ARVE a Shortcode creation dialog. ARVE needs the <a href="%s">Shortcode UI plugin</a> active for this fuctionality. It helps creating shortcodes and provides a preview in the Editor. But sadly Shortcode UI is not maintained anymore and there have been some know issues with Shortcode UI.', 'advanced-responsive-video-embedder' ) ),
 				esc_url( network_admin_url( 'plugin-install.php?s=Shortcode+UI&tab=search&type=term' ) )
 			);
 			?>
@@ -162,7 +162,7 @@ function add_media_button() {
 			<?php
 			printf(
 				// phpcs:ignore
-				Common\kses_basic( __( 'It is perfectly fine to pass on this and <a href="%s">manually</a> write shortcodes or don\'t use shortcodes at all, but it makes things easier. And if you even switch to Gutenberg there is a ARVE Block all the settings in the sidebar waiting for you..', 'advanced-responsive-video-embedder' ) ),
+				kses_basic( __( 'It is perfectly fine to pass on this and <a href="%s">manually</a> write shortcodes or don\'t use shortcodes at all, but it makes things easier. And if you ever switch to Gutenberg there is a ARVE Block all the settings in the sidebar waiting for you.', 'advanced-responsive-video-embedder' ) ),
 				esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/' )
 			);
 			?>
