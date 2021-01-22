@@ -5,7 +5,7 @@ Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embe
 Requires at least: 4.4.24
 Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 9.2.4
+Stable tag: 9.2.0-alpha7
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -78,7 +78,7 @@ I used a lot of high ranking plug-ins but they still broke my design. Downloaded
 
 ### [Pro Addon][20]
 
-**<big>10% off</big>** first year with discount code `settingspage`.
+**<big>10% off</big>** first year with discount code `wporg`.
 
 This plugin is financed by purchases of the [Pro Addon][20]. The development and support of this plugins has become a job for me, so I hope you understand that I can not make all features gratis and that you [purchase it][20] to get extra features and support the development.
 
@@ -99,7 +99,7 @@ This plugin is financed by purchases of the [Pro Addon][20]. The development and
 *   **Feel good about yourself**<br>
     for supporting my 8+ years work on this plugin. Tons of hours, weekends … always worked on improving it
 *   Show the latest video of a YouTube channel by using the channel URL (updated/cached hourly)
-*   **[Get the ARVE Pro][20]**
+*   **[Get ARVE Pro][20]**
 
 [20]: https://nextgenthemes.com/plugins/arve-pro/
 
@@ -111,10 +111,6 @@ Display random video from:
 *  Vimeo Showcase
 *  Comma separated list of video URLs
 
-#### Supported Providers ####
-
-[All providers with iframe embed codes](https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding)
-Alugha, Archive.org, Bitchute, Break, Brightcove, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Funny or Die, IGN, Kickstarter, LiveLeak, Livestream.com, kla.tv, Metacafe, myspace, Snotr, Spike, TED Talks, Twitch, Ustream, RuTube.ru, Viddler, vidspot.net, Vimeo, VK, vzaar, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist, mp4 or webm video files, ARVE general iframe embed, Google Drive, ooyala, IMDB
 ### Thanks ###
 
 *   Of course all the customers who bought a addon.
@@ -184,6 +180,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 * Fix: Compatibility with Astor Theme.
 * Improved: Added notes that Shortcode UI is not maintained to the button and readme.
+* Improved: Added notes about outdated PHP versions to settings page sidebar.
 * Improved: Classic Tabs, new settings section for upcoming [ARVE sticky Videos](https://nextgenthemes.com/plugins/arve-sticky-videos/).
 * Improved: Lots of code restructured and improved.
 

@@ -2,6 +2,25 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+function sys( $command ) {
+
+	$out = system( $command, $exit_code );
+
+	if ( 0 !== $exit_code || false === $out ) {
+		echo "Command: $command had an error." . PHP_EOL;
+		echo "System returned: ";
+		var_dump($out);
+		echo "Exit Code: $exit_code." . PHP_EOL;
+		exit($exit_code);
+	}
+}
+
+function replace_in_file( $file, $str, $rep ) {
+	$file_content=file_get_contents( $file );
+	$file_content=str_replace( $str, $rep, $file_content );
+	file_put_contents($file, $file_content);
+}
+
 function __( $a, $b ) {}
 function provider_list() {
 
@@ -21,12 +40,14 @@ require_once( $root . '/php/functions-host-properties.php' );
 $dirname  = basename( $root );
 $markdown = provider_list();
 
-file_put_contents( $root . '/readme/23-description-supported-providers.md', $markdown );
+file_put_contents( $root . '/readme/13-description-supported-providers.md', $markdown );
 
-echo \shell_exec( "cat $root/readme/*.md $root/changelog.md > $root/readme.txt" );
-echo \shell_exec( "markdown $root/readme/20-description-pro.md > $root/php/Admin/partials/settings-sidebar-pro.html" );
-echo \shell_exec( "markdown $root/readme/21-description-random-video.md > $root/php/Admin/partials/settings-sidebar-random-video.html" );
+sys( "cat $root/readme/*.md $root/changelog.md > $root/readme.txt" );
+sys( "markdown $root/readme/20-description-pro.md > $root/php/Admin/partials/settings-sidebar-pro.html" );
+sys( "markdown $root/readme/21-description-random-video.md > $root/php/Admin/partials/settings-sidebar-random-video.html" );
 
-$str=file_get_contents("$root/php/Admin/partials/settings-sidebar-pro.html");
-$str=str_replace( '<code>wporg</code>', '<code>settingspage</code>', $str );
-file_put_contents("$root/php/Admin/partials/settings-sidebar-pro.html", $str);
+replace_in_file(
+	"$root/php/Admin/partials/settings-sidebar-pro.html",
+	'<code>wporg</code>',
+	'<code>settingspage</code>'
+);
