@@ -143,7 +143,7 @@ function build_tracks_html( array $a ) {
 
 function html_id( $html_attr ) {
 
-	if ( false === strpos( $html_attr, 'id=' ) ) {
+	if ( str_contains( $html_attr, 'id=' ) ) {
 		$html_attr .= ' id="html"';
 	}
 
@@ -165,12 +165,12 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 		$show_options_debug = false;
 	}
 
-	$pre_style = ''
-		. 'background-color: #111;'
-		. 'color: #eee;'
-		. 'font-size: 15px;'
-		. 'white-space: pre-wrap;'
-		. 'word-wrap: break-word;';
+	$pre_style =
+		'background-color: #111;' .
+		'color: #eee;' .
+		'font-size: 15px;' .
+		'white-space: pre-wrap;' .
+		'word-wrap: break-word;';
 
 	if ( ! empty( $_GET['arve-debug-attr'] ) ) {
 		$debug_attr = sanitize_text_field( wp_unslash( $_GET['arve-debug-attr'] ) );
