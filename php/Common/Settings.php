@@ -5,16 +5,17 @@ class Settings {
 	private static $no_reset_sections = [ 'debug', 'random-video', 'keys' ];
 
 	public $sections             = [];
-	private $premium_sections    = [];
 	private $menu_title          = '';
 	private $option_key          = '';
-	private $slugged_namspace    = '';
-	private $slashed_namspace    = '';
+	private $options             = [];
+	private $options_by_tag      = [];
+	private $options_defaults    = [];
+	private $premium_sections    = [];
 	private $rest_namespace      = '';
 	private $settings            = [];
 	private $settings_page_title = '';
-	private $options_defaults    = [];
-	private $options_by_tag      = [];
+	private $slashed_namspace    = '';
+	private $slugged_namspace    = '';
 
 	public function __construct( $args ) {
 
@@ -39,11 +40,7 @@ class Settings {
 		$this->menu_parent_slug    = $args['menu_parent_slug'];
 
 		foreach ( $this->settings as $key => $value ) {
-
-			$this->options_tags[] = $value['tag'];
-
-			$this->options_defaults[ $key ]        = $value['default'];
-			$this->options_by_tag[ $value['tag'] ] = $key;
+			$this->options_defaults[ $key ] = $value['default'];
 		}
 
 		$this->options = (array) get_option( $this->slugged_namespace, [] );
@@ -158,16 +155,33 @@ class Settings {
 
 	public function print_settings_blocks() {
 
+		$description_allowed_html = [
+			'a'      => [
+				'href'   => [],
+				'target' => [],
+				'title'  => [],
+			],
+			'br'     => [],
+			'em'     => [],
+			'strong' => [],
+			'code'   => [],
+		];
+
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		foreach ( $this->settings as $key => $option ) {
 
 			$option['premium']  = in_array( $option['tag'], $this->premium_sections, true );
 			$option['tag_name'] = $this->sections[ $option['tag'] ];
 			$field_type         = isset( $option['ui'] ) ? $option['ui'] : $option['type'];
+			$block_class        = "ngt-option-block ngt-option-block--$key ngt-option-block--{$option['tag']}";
 
 			if ( 'hidden' !== $field_type ) :
 				?>
-				<div <?php echo Admin\block_attr( $key, $option ); ?>>
+				<div 
+					class="<?= esc_attr($block_class); ?>"
+					v-show="sectionsDisplayed['<?= esc_attr($option['tag']); ?>']"
+				>
+				<!-- <div <?php #echo Admin\block_attr( $key, $option ); ?>> -->
 					<?php
 
 					$function = __NAMESPACE__ . "\\Admin\\print_{$field_type}_field";
@@ -175,7 +189,10 @@ class Settings {
 					$function( $key, $option );
 
 					if ( ! empty( $option['description'] ) ) {
-						printf( '<p>%s</p>', $option['description'] );
+						printf(
+							'<p>%s</p>',
+							wp_kses( $option['description'], $description_allowed_html )
+						);
 					}
 					?>
 					<hr>
@@ -183,7 +200,6 @@ class Settings {
 				<?php
 			endif;
 		}
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	private function print_settings_tabs() {
@@ -209,7 +225,7 @@ class Settings {
 
 	public function print_save_section() {
 		?>
-		<p>
+		<p v-show="onlySectionDisplayed !== 'debug'">
 			<button
 				@click='saveOptions'
 				:disabled='isSaving'
@@ -239,13 +255,11 @@ class Settings {
 		}
 
 		$v_show = implode( ' || ', $d_sections );
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
-		<div class="ngt-block" v-show="<?= $v_show  ?>" >
+		<div class="ngt-block" v-show="<?= $v_show // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" >
 			<p><?php esc_html_e( 'You may already set options for addons but they will only take effect if the associated addons are installed.', 'advanced-responsive-video-embedder' ); ?></p>
 		</div>
 		<?php
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	private function print_debug_info_block() {
@@ -301,15 +315,22 @@ class Settings {
 
 	public function print_outdated_php_msg() {
 
-		if ( \version_compare(PHP_VERSION, '5.6.40', '<=') ) {
+		$link_only = [
+			'a' => [
+				'href'   => [],
+				'target' => [],
+				'title'  => [],
+			],
+		];
 
+		if ( \version_compare(PHP_VERSION, '5.6.40', '<=') ) {
 			?>
 			<div class="ngt-sidebar-box">
 				<p>
 					<?php
 					printf(
 						// translators: PHP version, URL, Contact URL
-						kses_basic( __( 'Your PHP version %1$s is very <a href="%2$s">outdated, insecure and slow</a>. No pressure, this plugin will continue to work with PHP 5.6, but at some undecided point I like to use features from PHP 7. If you can not update for some reason please tell <a href="%3$s">tell me</a>. WordPress itself planned to require PHP 7 in a feature release but decided not to persue this for now because so many people still run on outdated versions. WordPress already has beta support for 8.0 but I would not go with 8.0 just yet.', 'advanced-responsive-video-embedder' ) ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						wp_kses( __('Your PHP version %1$s is very <a href="%2$s">outdated, insecure and slow</a>. No pressure, this plugin will continue to work with PHP 5.6, but at some undecided point I like to use features from PHP 7. If you can not update for some reason please tell <a href="%3$s">tell me</a>. WordPress itself planned to require PHP 7 in a feature release but decided not to persue this for now because so many people still run on outdated versions. WordPress already has beta support for 8.0 but I would not go with 8.0 just yet.', 'advanced-responsive-video-embedder'), $link_only ),
 						esc_html( PHP_VERSION ),
 						esc_url( 'https://www.php.net/supported-versions' ),
 						esc_url( 'https://nextgenthemes.com/contact/' )
@@ -318,14 +339,14 @@ class Settings {
 				</p>
 			</div>
 			<?php
-		} elseif ( \version_compare(PHP_VERSION, '7.3.23', '<') ) {
+		} elseif ( \version_compare(PHP_VERSION, '7.3.26', '<') ) {
 			?>
 			<div class="ngt-sidebar-box">
 				<p>
 					<?php
 					printf(
 						// translators: URL
-						kses_basic( __( 'Just a heads up, your PHP version %1$s is outdated and potentially insecure. See what versions are <a href="%2$s">good here</a>. WordPress already has beta support for 8.0 but I would not go with 8.0 just yet.', 'advanced-responsive-video-embedder' ) ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						wp_kses( __( 'Just a heads up, your PHP version %1$s is outdated and potentially insecure. See what versions are <a href="%2$s">good here</a>. WordPress already has beta support for 8.0 but I would not go with 8.0 just yet.', 'advanced-responsive-video-embedder' ), $link_only ),
 						esc_html( PHP_VERSION ),
 						esc_url( 'https://www.php.net/supported-versions' )
 					);
@@ -344,6 +365,7 @@ class Settings {
 			<div class="ngt-settings-grid">
 				<div class="ngt-settings-grid__content" >
 					<?php
+					do_action( $this->slashed_namespace . '/admin/settings/content', $this );
 					$this->print_paid_section_message();
 					$this->print_save_section();
 					$this->print_debug_info_block();
@@ -353,8 +375,10 @@ class Settings {
 					?>
 				</div>
 				<div class="ngt-settings-grid__sidebar">
-					<?php do_action( $this->slashed_namespace . '/admin/settings_sidebar', $this ); ?>
-					<?php $this->print_outdated_php_msg(); ?>
+					<?php
+					do_action( $this->slashed_namespace . '/admin/settings/sidebar', $this );
+					$this->print_outdated_php_msg();
+					?>
 				</div>
 			</div>
 		</div>

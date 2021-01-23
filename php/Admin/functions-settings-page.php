@@ -4,6 +4,38 @@ namespace Nextgenthemes\ARVE\Admin;
 use \Nextgenthemes\ARVE;
 use \Nextgenthemes\ARVE\Common;
 
+function settings_content() {
+
+	$link_code_only = [
+		'code' => [],
+		'a'    => [
+			'href'   => [],
+			'target' => [],
+			'title'  => [],
+		],
+	];
+	?>
+
+	<div class="ngt-block" v-show="onlySectionDisplayed === 'urlparams'">
+		<p>
+			<?php
+			printf(
+				// Translators: URL
+				wp_kses( __( 'This parameters will be added to the <code>iframe src</code> urls, you can control the video players behavior with them. Please read <a href="%s" target="_blank">the documentation</a> on.', 'advanced-responsive-video-embedder' ), $link_code_only ),
+				esc_url( 'https://nextgenthemes.com/arve/documentation' )
+			);
+			?>
+		</p>
+		<p>
+			See
+			<a target="_blank" href="https://developers.google.com/youtube/player_parameters#Parameters">Youtube Parameters</a>,
+			<a target="_blank" href="http://www.dailymotion.com/doc/api/player.html#parameters">Dailymotion Parameters</a>,
+			<a target="_blank" href="https://developer.vimeo.com/player/embedding">Vimeo Parameters</a>
+		</p>
+	</div>
+	<?php
+}
+
 function settings_sidebar() {
 
 	if ( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
