@@ -144,7 +144,14 @@ function add_action_links( $links ) {
 
 function add_media_button() {
 
-	$options = ARVE\options();
+	$options   = ARVE\options();
+	$link_only = [
+		'a' => [
+			'href'   => [],
+			'target' => [],
+			'title'  => [],
+		],
+	];
 	add_thickbox();
 	?>
 
@@ -152,8 +159,8 @@ function add_media_button() {
 		<p>
 			<?php
 			printf(
-				// phpcs:ignore
-				kses_basic( __( 'This button can open an optional ARVE a Shortcode creation dialog. ARVE needs the <a href="%s">Shortcode UI plugin</a> active for this fuctionality. It helps creating shortcodes and provides a preview in the Editor. But sadly Shortcode UI is not maintained anymore and there have been some know issues with Shortcode UI.', 'advanced-responsive-video-embedder' ) ),
+				// translators: URL
+				wp_kses( __( 'This button can open an optional ARVE a Shortcode creation dialog. ARVE needs the <a href="%s">Shortcode UI plugin</a> active for this fuctionality. It helps creating shortcodes and provides a preview in the Editor. But sadly Shortcode UI is not maintained anymore and there have been some know issues with Shortcode UI.', 'advanced-responsive-video-embedder' ), $link_only ),
 				esc_url( network_admin_url( 'plugin-install.php?s=Shortcode+UI&tab=search&type=term' ) )
 			);
 			?>
@@ -161,8 +168,8 @@ function add_media_button() {
 		<p>
 			<?php
 			printf(
-				// phpcs:ignore
-				kses_basic( __( 'It is perfectly fine to pass on this and <a href="%s">manually</a> write shortcodes or don\'t use shortcodes at all, but it makes things easier. And if you ever switch to Gutenberg there is a ARVE Block all the settings in the sidebar waiting for you.', 'advanced-responsive-video-embedder' ) ),
+				// translators: URL
+				wp_kses( __( 'It is perfectly fine to pass on this and <a href="%s">manually</a> write shortcodes or don\'t use shortcodes at all, but it makes things easier. And if you ever switch to Gutenberg there is a ARVE Block all the settings in the sidebar waiting for you.', 'advanced-responsive-video-embedder' ), $link_only ),
 				esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/' )
 			);
 			?>
@@ -236,111 +243,6 @@ function register_shortcode_ui() {
 			'attrs'         => $attrs,
 		]
 	);
-}
-
-function input( $args ) {
-
-	$out = sprintf( '<input%s>', Common\attr( $args['input_attr'] ) );
-
-	if ( ! empty( $args['option_values']['attr'] ) && 'thumbnail_fallback' === $args['option_values']['attr'] ) {
-
-		// jQuery
-		wp_enqueue_script( 'jquery' );
-		// This will enqueue the Media Uploader script
-		wp_enqueue_media();
-
-		$out .= sprintf(
-			'<a %s>%s</a>',
-			Common\attr(
-				[
-					'data-image-upload' => sprintf( '[name="%s"]', $args['input_attr']['name'] ),
-					'class'             => 'button-secondary',
-				]
-			),
-			__( 'Upload Image', 'advanced-responsive-video-embedder' )
-		);
-	}
-
-	if ( ! empty( $args['description'] ) ) {
-		$out = $out . '<p class="description">' . Common\kses_basic( $args['description'] ) . '</p>';
-	}
-
-	echo $out; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-}
-
-function textarea( $args ) {
-
-	unset( $args['input_attr']['type'] );
-
-	$out = sprintf( '<textarea%s></textarea>', Common\attr( $args['input_attr'] ) );
-
-	if ( ! empty( $args['description'] ) ) {
-		$out = $out . '<p class="description">' . Common\kses_basic( $args['description'] ) . '</p>';
-	}
-
-	echo $out; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-}
-
-function select( $args ) {
-
-	unset( $args['input_attr']['type'] );
-
-	foreach ( $args['option_values']['options'] as $key => $value ) {
-
-		if ( 2 === count( $args['option_values']['options'] )
-			&& array_key_exists( 'yes', $args['option_values']['options'] )
-			&& array_key_exists( 'no', $args['option_values']['options'] )
-		) {
-			$current_option = $args['input_attr']['value'] ? 'yes' : 'no';
-		} else {
-			$current_option = $args['input_attr']['value'];
-		}
-
-		$options[] = sprintf(
-			'<option value="%s" %s>%s</option>',
-			esc_attr( $key ),
-			selected( $current_option, $key, false ),
-			esc_html( $value )
-		);
-	}
-
-	$select_attr = $args['input_attr'];
-	unset( $select_attr['value'] );
-
-	$out = sprintf( '<select%s>%s</select>', Common\attr( $select_attr ), implode( '', $options ) );
-
-	if ( ! empty( $args['description'] ) ) {
-		$out = $out . '<p class="description">' . $args['description'] . '</p>';
-	}
-
-	echo $out; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-}
-
-function params_section_description() {
-
-	$desc = sprintf(
-		__(  // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
-			'This parameters will be added to the <code>iframe src</code> urls, you can control the video players behavior with them. Please read <a href="%s" target="_blank">the documentation</a> on.',
-			'advanced-responsive-video-embedder'
-		),
-		esc_url( 'https://nextgenthemes.com/arve/documentation' )
-	);
-
-	echo "<p>$desc</p>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-
-	?>
-	<p>
-		See
-		<a target="_blank" href="https://developers.google.com/youtube/player_parameters">Youtube Parameters</a>,
-		<a target="_blank" href="http://www.dailymotion.com/doc/api/player.html#parameters">Dailymotion Parameters</a>,
-		<a target="_blank" href="https://developer.vimeo.com/player/embedding">Vimeo Parameters</a>,
-		<a target="_blank" href="https://nextgenthemes.com/arve-pro/documentation">Vimeo Parameters</a>,
-	</p>
-	<?php
-}
-
-function debug_section_description() {
-	include_once __DIR__ . '/partials/debug-info.php';
 }
 
 function admin_enqueue_styles() {

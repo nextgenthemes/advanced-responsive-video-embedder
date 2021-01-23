@@ -1,8 +1,9 @@
 <?php
 namespace Nextgenthemes\ARVE\Common\Admin;
 
+use function \Nextgenthemes\ARVE\Common\get_var_dump;
 ?>
-<textarea style="font-family: monospace; width: 100%" rows="25">
+<textarea class="ngt-debug-textarea">
 ARVE:               <?= esc_html( plugin_ver_status( 'advanced-responsive-video-embedder/advanced-responsive-video-embedder.php' ) . "\n" ); ?>
 ARVE Pro:           <?= esc_html( plugin_ver_status( 'arve-pro/arve-pro.php' ) . "\n" ); ?>
 ARVE AMP:           <?= esc_html( plugin_ver_status( 'arve-amp/arve-amp.php' ) . "\n" ); ?>
@@ -17,5 +18,5 @@ REST URL:           <?= esc_html( get_rest_url( null, $this->rest_namespace ) . 
 <?php print_network_active_plugins(); ?>
 
 ARVE OPTIONS:
-<?php var_dump( get_option( 'nextgenthemes_arve' ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_dump ?>
+<?= wp_kses( get_var_dump( get_option( 'nextgenthemes_arve' ) ), [] ); ?>
 </textarea>

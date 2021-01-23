@@ -12,7 +12,7 @@ function check_product_keys() {
 		if ( $value['active'] && ! $value['valid_key'] ) {
 			$msg = sprintf(
 				// Translators: URL, Product name
-				kses_basic( __( '<a href="%1$s">%2$s</a> license not activated or valid', 'advanced-responsive-video-embedder' ) ),
+				__( '<a href="%1$s">%2$s</a> license not activated or valid', 'advanced-responsive-video-embedder' ),
 				esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/installing-and-license-management/' ),
 				$value['name']
 			);
@@ -156,13 +156,6 @@ function get_api_error_message( $license_data ) {
 	}//end switch
 }
 
-function dump( $var ) {
-	ob_start();
-	// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_dump
-	var_dump( $var );
-	return ob_get_clean();
-}
-
 function textarea_dump( $var ) {
-	return sprintf( '<textarea style="width: 100%; height: 70vh;">%s</textarea>', esc_textarea( dump( $var ) ) );
+	return sprintf( '<textarea style="width: 100%; height: 70vh;">%s</textarea>', esc_textarea( get_var_dump( $var ) ) );
 }
