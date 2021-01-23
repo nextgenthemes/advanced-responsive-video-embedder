@@ -34,6 +34,12 @@ function buildSectionsDisplayed() {
 	return sectionsDisplayed;
 }
 
+function setAllObjValues(obj, val) {
+	Object.keys(obj).forEach((index) => {
+		obj[index] = val;
+	});
+}
+
 new Vue({
 	// DOM selector for our app's main wrapper element
 	el: '#nextgenthemes-vue',
@@ -44,17 +50,13 @@ new Vue({
 		isSaving: false,
 		refreshAfterSave: false,
 		sectionsDisplayed: buildSectionsDisplayed(),
+		onlySectionDisplayed: false,
 		message: '',
 		vm: data.options,
 	},
 
 	// Methods that can be invoked from within our template
 	methods: {
-		checkForError() {
-			if (!this.name) {
-				this.errors.push('Name required.');
-			}
-		},
 		// Save the options to the database
 		saveOptions() {
 			// set the state so that another save cannot happen while processing
@@ -175,10 +177,12 @@ new Vue({
 		showSection(section) {
 			setAllObjValues(this.sectionsDisplayed, false);
 			this.sectionsDisplayed[section] = true;
+			this.onlySectionDisplayed = section;
 		},
 		showAllSectionsButDebug() {
 			setAllObjValues(this.sectionsDisplayed, true);
 			this.sectionsDisplayed.debug = false;
+			this.onlySectionDisplayed = false;
 		},
 		uploadImage(dataKey) {
 			const vueThis = this;
@@ -204,8 +208,4 @@ new Vue({
 	}, // end: methods
 }); // end: Vue()
 
-function setAllObjValues(obj, val) {
-	Object.keys(obj).forEach((index) => {
-		obj[index] = val;
-	});
-}
+

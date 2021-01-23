@@ -95,3 +95,11 @@
 		padding: 3rem;
 	}
 }
+
+.ngt-debug-textarea {
+	width: 100%;
+	height: 1000px;
+	max-height: calc(95vh - 230px);
+	margin-top: 2em;
+	font-family: monospace;
+}
