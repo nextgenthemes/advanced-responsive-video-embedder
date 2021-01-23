@@ -34,16 +34,29 @@ class NoticeFactory {
 		$user_id   = get_current_user_id();
 		$user_meta = get_user_meta( $user_id, $this->notice_id );
 
-		if ( $this->dismiss_forever && $user_meta ) {
-			return;
-		} elseif ( get_transient( $this->notice_id ) ) {
+		if ( ($this->dismiss_forever && $user_meta) ||
+			get_transient($this->notice_id)
+		) {
 			return;
 		}
+
+		$allowed_notice_html = [
+			'a'      => [
+				'href'   => [],
+				'target' => [],
+				'title'  => [],
+			],
+			'p'      => [],
+			'br'     => [],
+			'em'     => [],
+			'strong' => [],
+			'code'   => [],
+		];
 
 		printf(
 			'<div class="notice is-dismissible updated" data-nextgenthemes-notice-id="%s">%s</div>',
 			esc_attr( $this->notice_id ),
-			$this->notice // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			wp_kses( $this->notice, $allowed_notice_html )
 		);
 	}
 
