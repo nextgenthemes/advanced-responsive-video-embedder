@@ -4,6 +4,17 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
 
+### 2021-01-24 9.3.0 ###
+
+Improved:
+
+*  Simplified CSS and reduced size.
+*  Security related escaping filtering HTML output in settings page.
+*  No longer show save buttons for on Debug Info tab. Nothing to save there.
+*  Added back info text for URL Parameter settings. Found in the code from 8.0.
+*  Added in placeholders for settings text field.
+*  General code improvements and removal of unused code.
+
 ### 2021-01-21 9.2.4 ###
 
 * Fix: Missing 'Normal' mode select
