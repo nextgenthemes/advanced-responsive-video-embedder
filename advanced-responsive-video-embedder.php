@@ -74,7 +74,8 @@ function init_920() {
 	add_filter( 'embed_oembed_discover',       __NAMESPACE__ . '\reenable_oembed_cache' );
 
 	// Admin Hooks
-	add_action( 'nextgenthemes/arve/admin/settings_sidebar', __NAMESPACE__ . '\Admin\settings_sidebar' );
+	add_action( 'nextgenthemes/arve/admin/settings/sidebar', __NAMESPACE__ . '\Admin\settings_sidebar' );
+	add_action( 'nextgenthemes/arve/admin/settings/content', __NAMESPACE__ . '\Admin\settings_content' );
 
 	add_action( 'admin_bar_menu',        __NAMESPACE__ . '\Admin\action_admin_bar_menu', 100 );
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\Admin\admin_enqueue_scripts' );
