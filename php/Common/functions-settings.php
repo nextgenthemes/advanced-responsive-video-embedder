@@ -26,7 +26,7 @@ function nextgenthemes_settings_instance() {
 }
 
 function ngt_options() {
-	$o = nextgenthemes_settings_instance()->options;
+	$o = nextgenthemes_settings_instance()->get_options();
 	return apply_filters( 'nextgenthemes/settings', $o );
 }
 
@@ -149,7 +149,7 @@ function get_products() {
 		'arve_sticky_videos' => [
 			'namespace' => 'ARVE\StickyVideos',
 			'name'      => 'ARVE Sticky Videos',
-			'id'        => false,
+			'id'        => 42602,
 			'type'      => 'plugin',
 			'author'    => 'Nicolas Jonas',
 			'url'       => 'https://nextgenthemes.com/plugins/arve-sticky-videos/',

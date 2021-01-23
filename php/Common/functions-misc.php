@@ -1,20 +1,35 @@
 <?php
 namespace Nextgenthemes\ARVE\Common;
 
-function first_array_value( array $array ) {
-	reset( $array );
-	$key = key( $array );
-	return $array[ $key ];
-}
+function attr( array $attr = [] ) {
 
-function prefix_array_keys( $keyprefix, array $array ) {
+	$html = '';
 
-	foreach ( $array as $key => $value ) {
-		$array[ $keyprefix . $key ] = $value;
-		unset( $array[ $key ] );
+	foreach ( $attr as $key => $value ) {
+
+		if ( false === $value || null === $value ) {
+
+			continue;
+
+		} elseif ( '' === $value || true === $value ) {
+
+			$html .= sprintf( ' %s', esc_html( $key ) );
+
+		} elseif ( is_array( $value ) || is_object( $value ) ) {
+
+			$html .= sprintf( " %s='%s'", esc_html( $key ), wp_json_encode( $value ) );
+
+		} elseif ( in_array( $key, [ 'href', 'data-href', 'src', 'data-src' ], true ) ) {
+
+			$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_url( $value ) );
+
+		} else {
+
+			$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( $value ) );
+		}
 	}
 
-	return $array;
+	return $html;
 }
 
 function get_url_arg( $url, $arg ) {
@@ -46,78 +61,4 @@ function get_constant( $const_name ) {
 
 function is_wp_debug() {
 	return get_constant( 'WP_DEBUG' );
-}
-
-function get_array_key_by_value( $array, $field, $value ) {
-
-	foreach ( $array as $key => $array_value ) {
-
-		if ( $array_value[ $field ] === $value ) {
-			return $key;
-		}
-	}
-
-	return false;
-}
-
-/**
- * Inserts a new key/value before the key in the array.
- *
- * @param $key
- *   The key to insert before.
- * @param $array
- *   An array to insert in to.
- * @param $new_key
- *   The key to insert.
- * @param $new_value
- *   An value to insert.
- *
- * @return
- *   The new array if the key exists, FALSE otherwise.
- *
- * @see array_insert_after()
- */
-function array_insert_before($key, array &$array, $new_key, $new_value) {
-	if (array_key_exists($key, $array)) {
-		$new = array();
-		foreach ($array as $k => $value) {
-			if ($k === $key) {
-				$new[ $new_key ] = $new_value;
-			}
-			$new[ $k ] = $value;
-		}
-		return $new;
-	}
-	return false;
-}
-
-/**
- * Inserts a new key/value after the key in the array.
- *
- * @param $key
- *   The key to insert after.
- * @param $array
- *   An array to insert in to.
- * @param $new_key
- *   The key to insert.
- * @param $new_value
- *   An value to insert.
- *
- * @return
- *   The new array if the key exists, FALSE otherwise.
- *
- * @see array_insert_before()
- */
-function array_insert_after($key, array &$array, $new_key, $new_value) {
-	if (array_key_exists($key, $array)) {
-		$new = array();
-		foreach ($array as $k => $value) {
-			$new[ $k ] = $value;
-			if ($k === $key) {
-				$new[ $new_key ] = $new_value;
-			}
-		}
-		return $new;
-	}
-	return false;
 }

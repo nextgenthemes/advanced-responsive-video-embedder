@@ -7,13 +7,14 @@ const VERSION = '1.0.0';
 require_once __DIR__ . '/functions-compat.php';
 require_once __DIR__ . '/functions-deprecated.php';
 // ------------------------------------------------
+require_once __DIR__ . '/functions-array.php';
+require_once __DIR__ . '/functions-string.php';
+require_once __DIR__ . '/functions-misc.php';
+// ------------------------------------------------
 require_once __DIR__ . '/Settings.php';
 require_once __DIR__ . '/functions-settings.php';
 require_once __DIR__ . '/functions-license.php';
-require_once __DIR__ . '/functions-misc.php';
 require_once __DIR__ . '/functions-assets.php';
-require_once __DIR__ . '/functions-attr.php';
-require_once __DIR__ . '/functions-string.php';
 require_once __DIR__ . '/functions-remote-get.php';
 require_once __DIR__ . '/Admin/EDD/PluginUpdater.php';
 require_once __DIR__ . '/Admin/EDD/ThemeUpdater.php';
