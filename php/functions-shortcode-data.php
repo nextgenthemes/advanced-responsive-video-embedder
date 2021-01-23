@@ -14,7 +14,6 @@ function url_query_array( $url ) {
 	return $url_params;
 }
 
-// phpcs:ignore
 function get_language_name_from_code( $lang_code ) {
 	// This list is based on languages available from localize.drupal.org. See
 	// http://localize.drupal.org/issues for information on how to add languages
@@ -123,4 +122,3 @@ function get_language_name_from_code( $lang_code ) {
 
 	return $lang[ $lang_code ][1];
 }
-// phpcs:enable

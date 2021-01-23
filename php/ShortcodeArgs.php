@@ -5,7 +5,7 @@ class ShortcodeArgs {
 
 	private $errors;
 
-	public function __construct( $error_instance ) {
+	public function __construct( \WP_Error $error_instance ) {
 		$this->errors = $error_instance;
 	}
 

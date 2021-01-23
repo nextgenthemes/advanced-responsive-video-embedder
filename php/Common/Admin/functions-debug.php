@@ -18,7 +18,7 @@ function plugin_ver_status( $folder_and_filename ) {
 		$out .= ' INACTIVE';
 	}
 
-	return $out; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	return $out;
 }
 
 function print_active_plugins() {

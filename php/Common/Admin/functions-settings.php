@@ -76,7 +76,12 @@ function print_string_field( $key, $option ) {
 	<p>
 		<label>
 			<?php label_text( $option ); ?>
-			<input v-model="<?= esc_attr( "vm.$key" ); ?>" type="text" class="large-text" />
+			<input
+				v-model="<?= esc_attr( "vm.$key" ); ?>"
+				type="text"
+				class="large-text"
+				placeholder="<?= esc_attr( $option['placeholder'] ); ?>"
+			/>
 		</label>
 	</p>
 	<?php
