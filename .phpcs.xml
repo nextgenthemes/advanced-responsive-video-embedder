@@ -5,6 +5,8 @@
 		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceAfterOpenParenthesis"/>
 		<exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterOpen"/>
 		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceBeforeCloseParenthesis"/>
+		<exclude name="Generic.WhiteSpace.ArbitraryParenthesesSpacing.SpaceAfterOpen"/>
+		<exclude name="Generic.WhiteSpace.ArbitraryParenthesesSpacing.SpaceBeforeClose"/>
 		<!-- I like to align things -->
 		<exclude name="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma"/>
 		<!-- This was just for very old PHP version -->
