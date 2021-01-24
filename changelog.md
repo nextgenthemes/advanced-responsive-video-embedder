@@ -7,12 +7,11 @@
 ### 2021-01-24 9.3.0 ###
 
 Improved:
-
 *  Simplified CSS and reduced size.
-*  Security related escaping filtering HTML output in settings page.
-*  No longer show save buttons for on Debug Info tab. Nothing to save there.
-*  Added back info text for URL Parameter settings. Found in the code from 8.0.
-*  Added in placeholders for settings text field.
+*  Security related escaping and filtering HTML output on settings page.
+*  No longer show save buttons on Debug Info tab. Nothing to save there.
+*  Added back info text for URL Parameters settings. Found in the code from 8.0.
+*  Added in placeholders for text fields.
 *  General code improvements and removal of unused code.
 
 ### 2021-01-21 9.2.4 ###
