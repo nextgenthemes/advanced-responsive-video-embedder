@@ -143,7 +143,7 @@ function build_tracks_html( array $a ) {
 
 function html_id( $html_attr ) {
 
-	if ( str_contains( $html_attr, 'id=' ) ) {
+	if ( ! str_contains( $html_attr, 'id=' ) ) {
 		$html_attr .= ' id="html"';
 	}
 
