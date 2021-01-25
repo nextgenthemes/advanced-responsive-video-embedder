@@ -147,98 +147,47 @@ function args_video( array $a ) {
 	return $a;
 }
 
-function special_iframe_src_mods( array $a ) {
+function special_iframe_src_mods( $src, array $a, $oembed_src = false ) {
+
+	if ( empty( $src ) ) {
+		return $src;
+	}
 
 	switch ( $a['provider'] ) {
 		case 'youtube':
 			$yt_v    = Common\get_url_arg( $a['url'], 'v' );
 			$yt_list = Common\get_url_arg( $a['url'], 'list' );
 
-			if ( str_contains( $a['src'], '/embed/videoseries?' ) &&
+			if ( $oembed_src &&
+				str_contains( $src, '/embed/videoseries?' ) &&
 				$yt_v
 			) {
-				$a['src'] = str_replace( '/embed/videoseries?', "/embed/$yt_v?", $a['src'] );
+				$src = str_replace( '/embed/videoseries?', "/embed/$yt_v?", $src );
 			}
 
 			if ( $yt_list ) {
-				$a['src']     = remove_query_arg( 'feature', $a['src'] );
-				$a['src']     = add_query_arg( 'list', $yt_list, $a['src'] );
-				$a['src_gen'] = add_query_arg( 'list', $yt_list, $a['src_gen'] );
+				$src = remove_query_arg( 'feature', $src );
+				$src = add_query_arg( 'list', $yt_list, $src );
 			}
+
+			$options = options();
+
+			if ( $options['youtube_nocookie'] ) {
+				$src = str_replace( 'https://www.youtube.com', 'https://www.youtube-nocookie.com', $src );
+			}
+
 			break;
 		case 'vimeo':
-			$a['src']     = add_query_arg( 'dnt', 1, $a['src'] );
-			$a['src_gen'] = add_query_arg( 'dnt', 1, $a['src_gen'] );
+			$src = add_query_arg( 'dnt', 1, $src );
 
 			$parsed_url = wp_parse_url( $a['url'] );
 
 			if ( ! empty( $parsed_url['fragment'] ) && str_starts_with( $parsed_url['fragment'], 't' ) ) {
-				$a['src']     .= '#' . $parsed_url['fragment'];
-				$a['src_gen'] .= '#' . $parsed_url['fragment'];
+				$src .= '#' . $parsed_url['fragment'];
 			}
 			break;
 		case 'wistia':
-			$a['src']     = add_query_arg( 'dnt', 1, $a['src'] );
-			$a['src_gen'] = add_query_arg( 'dnt', 1, $a['src_gen'] );
-			break;
-	}
-
-	return $a;
-}
-
-function build_iframe_src( array $a ) {
-
-	$options    = options();
-	$properties = get_host_properties();
-
-	if ( isset( $properties[ $a['provider'] ]['embed_url'] ) ) {
-		$pattern = $properties[ $a['provider'] ]['embed_url'];
-	} else {
-		$pattern = '%s';
-	}
-
-	if ( 'facebook' === $a['provider'] && is_numeric( $a['id'] ) ) {
-
-		$a['id'] = "https://www.facebook.com/facebook/videos/{$a['id']}/";
-
-	} elseif ( 'twitch' === $a['provider'] && is_numeric( $a['id'] ) ) {
-
-		$pattern = 'https://player.twitch.tv/?video=v%s';
-	}
-
-	if ( isset( $properties[ $a['provider'] ]['url_encode_id'] ) && $properties[ $a['provider'] ]['url_encode_id'] ) {
-		$a['id'] = rawurlencode( str_replace( '&', '&amp;', $a['id'] ) );
-	}
-
-	if ( 'brightcove' === $a['provider'] ) {
-		$src = sprintf( $pattern, $a['account_id'], $a['brightcove_player'], $a['brightcove_embed'], $a['id'] );
-	} else {
-		$src = sprintf( $pattern, $a['id'] );
-	}
-
-	switch ( $a['provider'] ) {
-
-		case 'youtube':
-			$t_arg         = Common\get_url_arg( $a['url'], 't' );
-			$time_continue = Common\get_url_arg( $a['url'], 'time_continue' );
-			$list_arg      = Common\get_url_arg( $a['url'], 'list' );
-
-			if ( $t_arg ) {
-				$src = add_query_arg( 'start', youtube_time_to_seconds( $t_arg ), $src );
-			}
-			if ( $time_continue ) {
-				$src = add_query_arg( 'start', youtube_time_to_seconds( $time_continue ), $src );
-			}
-
-			if ( $list_arg ) {
-				$src = add_query_arg( 'list', $list_arg, $src );
-			}
-			break;
-		case 'ted':
-			$lang = Common\get_url_arg( $a['url'], 'language' );
-			if ( $lang ) {
-				$src = str_replace( 'ted.com/talks/', "ted.com/talks/lang/{$lang}/", $src );
-			}
+			$src = add_query_arg( 'dnt', 1, $src );
 			break;
 	}
 
