@@ -26,12 +26,12 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *  Takes over WordPress embeds with URLs on their own line and `[embed]` shortcodes.
 *  Can take over WP's default video file embeds.
 *  Has its own very powerful `[arve]` shortcode.
-*  Optional <abbr title="What You See Is What You Get">WYSIWYG</abbr> support with [Shortcode UI]() (not maintained). No more messing around with shortcodes and previewing.
+*  Optional <abbr title="What You See Is What You Get">WYSIWYG</abbr> support with [Shortcode UI](https://wordpress.org/plugins/shortcode-ui/) (not maintained). No more messing around with shortcodes and previewing.
 
 #### Gutenberg ####
 
 *  Works with Embed, YouTube, Vimeo, Shortcode ... blocks.
-*  Provides it's own powerful ARVE Block with all the features the `[arve]` shortcode provides with a nice UI with detailed settings descriptions in.
+*  Provides it's own powerful ARVE Block with all the features the `[arve]` shortcode offer with a nice UI with detailed settings descriptions.
 
 #### Both ####
 
@@ -132,9 +132,9 @@ Please report it on [nextgenthemes.com/support/](https://nextgenthemes.com/suppo
 
 ### How to get the pro version working? ###
 
-1. Go though the purchase process on [nextgenthemes.com/arve-pro/](https://nextgenthemes.com/arve-pro/)
+1. Go though the purchase process on [nextgenthemes.com](https://nextgenthemes.com/plugins/arve-pro/)
 1. Follow the 3 easy steps you get with the purchase receipt. It is basically downloading a arve-pro.zip and installing it through your WordPress Admin panel.
-1. After that you may want to switch your default mode to Lazyload or Lightbox or the ARVE settings page.
+1. After that you may want to switch your default mode to Lazyload or Lightbox on the ARVE settings page.
 
 ### Why are my videos not filling their container? ###
 
@@ -148,13 +148,17 @@ Feel free to ask.
 
 ### How do I embed videos from a unlisted providers / iframes? ###
 
-This plugin not changes anything to usual HTML `<iframe>` embed codes you have to use the shortcodes or the Gutenberg Block. They will become `[arve url="https://..."]`. The url represents what is the `src` in HTML embeds. It works as simple as this, if the [arve] shortcode does not detect a known URL structure then it will treat the URL as a `src` for the iframe.
+This plugin not changes anything to usual HTML `<iframe>` embed codes you have to use the shortcodes or the Gutenberg Block. They will become `[arve url="https://..."]`. The url represents what is the `src` in HTML embeds. It works as simple as this, if the `[arve]` shortcode does not detect a known URL structure then it will treat the URL as a `src` for the iframe. 
 
 ### Why does my YouTube video not repeat/loop? ###
 
 This plugins embed is considered as 'custom player' by YouTube so you have to pass the video ID as playlist parameters to make the loop work.
 
 `[arve url="https://www.youtube.com/watch?v=pvRqvX413Ik" parameters="loop=1&playlist=pvRqvX413Ik"]`
+
+## Installation ##
+
+Please read the [official documentation](https://wordpress.org/support/article/managing-plugins/#installing-plugins) for that.
 
 ## Screenshots ##
 
@@ -167,6 +171,22 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
+
+### 2021-01-25 9.3.1 ###
+
+*  Fix: Avoid passing `null` to `str_contains`.
+*  Improved: Code related to the above.
+*  Improved: Added back Installation section to the readme.
+
+### 2021-01-24 9.3.0 ###
+
+Improved:
+*  Simplified CSS and reduced size.
+*  Security related escaping and filtering HTML output on settings page.
+*  No longer show save buttons on Debug Info tab. Nothing to save there.
+*  Added back info text for URL Parameters settings. Found in the code from 8.0.
+*  Added in placeholders for text fields.
+*  General code improvements and removal of unused code.
 
 ### 2021-01-21 9.2.4 ###
 
