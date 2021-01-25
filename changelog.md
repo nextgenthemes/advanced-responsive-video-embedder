@@ -4,6 +4,12 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
 
+### 2021-01-25 9.3.1 ###
+
+*  Fix: Avoid passing `null` to `str_contains`.
+*  Improved: Code related to the above.
+*  Improved: Added back Installation section to the readme.
+
 ### 2021-01-24 9.3.0 ###
 
 Improved:

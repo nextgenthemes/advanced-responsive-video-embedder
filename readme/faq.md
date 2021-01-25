@@ -7,9 +7,9 @@ Please report it on [nextgenthemes.com/support/](https://nextgenthemes.com/suppo
 
 ### How to get the pro version working? ###
 
-1. Go though the purchase process on [nextgenthemes.com/arve-pro/](https://nextgenthemes.com/arve-pro/)
+1. Go though the purchase process on [nextgenthemes.com](https://nextgenthemes.com/plugins/arve-pro/)
 1. Follow the 3 easy steps you get with the purchase receipt. It is basically downloading a arve-pro.zip and installing it through your WordPress Admin panel.
-1. After that you may want to switch your default mode to Lazyload or Lightbox or the ARVE settings page.
+1. After that you may want to switch your default mode to Lazyload or Lightbox on the ARVE settings page.
 
 ### Why are my videos not filling their container? ###
 
@@ -23,7 +23,7 @@ Feel free to ask.
 
 ### How do I embed videos from a unlisted providers / iframes? ###
 
-This plugin not changes anything to usual HTML `<iframe>` embed codes you have to use the shortcodes or the Gutenberg Block. They will become `[arve url="https://..."]`. The url represents what is the `src` in HTML embeds. It works as simple as this, if the [arve] shortcode does not detect a known URL structure then it will treat the URL as a `src` for the iframe.
+This plugin not changes anything to usual HTML `<iframe>` embed codes you have to use the shortcodes or the Gutenberg Block. They will become `[arve url="https://..."]`. The url represents what is the `src` in HTML embeds. It works as simple as this, if the `[arve]` shortcode does not detect a known URL structure then it will treat the URL as a `src` for the iframe. 
 
 ### Why does my YouTube video not repeat/loop? ###
 

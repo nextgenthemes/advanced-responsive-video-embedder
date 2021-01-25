@@ -19,7 +19,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 #### Gutenberg ####
 
 *  Works with Embed, YouTube, Vimeo, Shortcode ... blocks.
-*  Provides it's own powerful ARVE Block with all the features the `[arve]` shortcode provides with a nice UI with detailed settings descriptions.
+*  Provides it's own powerful ARVE Block with all the features the `[arve]` shortcode offer with a nice UI with detailed settings descriptions.
 
 #### Both ####
 
