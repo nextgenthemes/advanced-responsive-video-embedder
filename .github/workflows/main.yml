@@ -30,10 +30,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
 
       - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@v2 # https://github.com/shivammathur/setup-php
+        uses: shivammathur/setup-php@a83d4379b1200b3d0d19ad4fe0d7a440e00749c1 # 2.9.0 # https://github.com/shivammathur/setup-php
         with:
           php-version: ${{ matrix.php }}
           extensions: mbstring, dom, zip, mysql
@@ -83,10 +83,10 @@ jobs:
       - run: echo "github.ref-- ${{ github.ref }}"
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
 
       - name: Maybe deploy to wp.org
-        uses: 10up/action-wordpress-plugin-deploy@master
+        uses: 10up/action-wordpress-plugin-deploy@0dc3f76f710b55cd07aa546a77bc103a0f1f2f7a # 1.5.0 https://github.com/10up/action-wordpress-plugin-deploy/tags
         env:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
