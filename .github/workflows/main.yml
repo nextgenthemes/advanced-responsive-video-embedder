@@ -42,8 +42,8 @@ jobs:
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
 
-      #- name: Remove composer.lock # because we need different phpunit versions based on current PHP version
-        #run: rm composer.lock
+      - name: Remove composer.lock # because we need different phpunit versions based on current PHP version
+        run: rm composer.lock
 
       - name: Get composer cache directory
         id: composer-cache
