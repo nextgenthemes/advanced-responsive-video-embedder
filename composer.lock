@@ -4,8 +4,49 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c13b765d146ac60c48266b094e41ecd",
-    "packages": [],
+    "content-hash": "b027a8f7b0ed1b02f72c9b0d999c2c2f",
+    "packages": [
+        {
+            "name": "julien731/wp-dismissible-notices-handler",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/julien731/WP-Dismissible-Notices-Handler.git",
+                "reference": "e5c11a5bd490405f162213c45fb579ba8a9ae992"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/julien731/WP-Dismissible-Notices-Handler/zipball/e5c11a5bd490405f162213c45fb579ba8a9ae992",
+                "reference": "e5c11a5bd490405f162213c45fb579ba8a9ae992",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "handler.php",
+                    "includes/helper-functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GNU GPL"
+            ],
+            "authors": [
+                {
+                    "name": "Julien Liabeuf",
+                    "email": "julien@liabeuf.fr",
+                    "homepage": "https://julienliabeuf.com",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "A simple library to handle Ajax-dismissible admin notices for WordPress",
+            "homepage": "https://github.com/julien731/WP-Dismissible-Notices-Handler",
+            "time": "2021-01-15T10:27:28+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",

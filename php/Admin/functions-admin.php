@@ -11,9 +11,39 @@ use function \Nextgenthemes\ARVE\Common\attr;
 use function \Nextgenthemes\ARVE\Common\kses_basic;
 use function \Nextgenthemes\ARVE\Common\enqueue_asset;
 
+const ALLOWED_HTML = [
+	'a'      => [
+		'href'   => [],
+		'target' => [],
+		'title'  => [],
+	],
+	'p'      => [],
+	'br'     => [],
+	'em'     => [],
+	'strong' => [],
+	'code'   => [],
+	'ul'     => [],
+	'li'     => [],
+];
+
 function action_admin_init_setup_messages() {
 
+	require_once ARVE\PLUGIN_DIR . '/vendor/autoload.php';
+
+	if ( ! function_exists('dnh_register_notice') ) {
+		return;
+	}
+
 	$pro_ver = false;
+
+	dnh_register_notice(
+		'arve-notice-test5',
+		'notice-warning',
+		wp_kses( 'test', ALLOWED_HTML ),
+		[
+			'cap' => 'install_plugins',
+		]
+	);
 
 	if ( defined( 'ARVE_PRO_VERSION' ) ) {
 		$pro_ver = ARVE_PRO_VERSION;
@@ -21,9 +51,9 @@ function action_admin_init_setup_messages() {
 		$pro_ver = \Nextgenthemes\ARVE\Pro\VERSION;
 	}
 
-	if ( $pro_ver && version_compare( PRO_VERSION_REQUIRED, $pro_ver, '>' ) ) {
+	if ( true /* $pro_ver && version_compare( PRO_VERSION_REQUIRED, $pro_ver, '>' ) */ ) {
 		$msg = sprintf(
-			// Translators: %1$s Version
+			// Translators: %1$s Pro Version required
 			__( 'Your ARVE Pro Addon is outdated, you need version %1$s or later. If you have setup your license <a href="%2$s">here</a> semi auto updates should work (Admin panel notice and auto install on confirmation). If not please <a href="%3$s">report it</a> and manually update as <a href="%4$s">described here.</a>', 'advanced-responsive-video-embedder' ),
 			ARVE\PRO_VERSION_REQUIRED,
 			esc_url( get_admin_url() . 'options-general.php?page=nextgenthemes' ),
@@ -31,40 +61,61 @@ function action_admin_init_setup_messages() {
 			'https://nextgenthemes.com/plugins/arve/documentation/installing-and-license-management/'
 		);
 
-		new NoticeFactory( 'arve-pro-outdated', "<p>$msg</p>", false );
+		dnh_register_notice(
+			'arve-pro-outdated-' . PRO_VERSION_REQUIRED,
+			'notice-error',
+			wp_kses( $msg, ALLOWED_HTML ),
+			[
+				'cap' => 'update_plugins',
+			]
+		);
 	}
 
-	$update_msg = sprintf(
-		// Translators: %1$s Version
-		__( '<p>Your ARVE version was just updated. Please check <a href="%1$s">the new settings page</a> and verify/adjust your settings.</p><p>This was a <a href="%2$s"><strong>major update</strong></a>. If you experience any urgent breaking issues please <a href="%3$s">report them</a> and <a href="%4$s">downgrade</a> short term. I tried my best to have other beta testers over many months. Thanks to everyone who did test. But 9.0 has lots of code changed, I am afraid the update will trigger some issues we could not test for.</p>', 'advanced-responsive-video-embedder' ),
-		esc_url( get_admin_url() . 'options-general.php?page=nextgenthemes_arve' ),
-		'https://nextgenthemes.com/improvements-in-arve-9-0-and-arve-pro-5-0/',
-		'https://nextgenthemes.com/support/',
-		'https://nextgenthemes.com/plugins/arve/documentation/how-to-downgrade/'
-	);
-
-	new NoticeFactory( 'arve9', $update_msg, true );
-
-	if ( display_pro_ad() ) {
-
-		$pro_ad_message = __( 'Hi, this is Nico(las Jonas) the author of the ARVE - Advanced Responsive Video Embedder plugin. If you are interrested in additional features and/or want to support the work I do on this plugin please consider buying the Pro Addon.', 'advanced-responsive-video-embedder' );
-
-		$pro_ad_message = "<p>$pro_ad_message</p>";
-
-		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-		$pro_ad_message .= file_get_contents( __DIR__ . '/partials/pro-ad.html' );
-
-		new NoticeFactory( 'arve_dismiss_pro_notice', $pro_ad_message, true );
+#	if ( display_pro_ad() ) {
+	if ( true ) {
+		dnh_register_notice(
+			'addon-ad',
+			'notice-info',
+			wp_kses( ad_html(), ALLOWED_HTML ),
+			[
+				'cap' => 'install_plugins',
+			]
+		);
 	}
+}
+
+function ad_html() {
+
+	$html = esc_html__( 'Hi, this is Nico(las Jonas) the author of the ARVE Advanced Responsive Video Embedder plugin. If you are interrested in additional features and/or want to support the work I do on this plugin please consider buying the Pro Addon.', 'advanced-responsive-video-embedder' );
+
+	$html = "<p>$html</p><ul>";
+
+	$lis = [
+		__( '<strong>Disable links in embeds</strong><br>For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. <strong>Prevent providers from leading your visitors away from your site!</strong>', 'advanced-responsive-video-embedder' ),
+		__( '<strong>Lazyload mode</strong><br>Make your site load <strong>faster</strong> by loading only a image instead of the entire video player on pageload.', 'advanced-responsive-video-embedder' ),
+		__( '<strong>Lightbox</strong><br>Shows the Video in a Lightbox after clicking a preview image or link.', 'advanced-responsive-video-embedder' ),
+		sprintf(
+			// Translators: URLs
+			__( 'Expand on click and more, for a <strong><a href="%1$s">complete feature list</a></strong> please visit the <strong><a href="%1$s">official site</a></strong>.', 'advanced-responsive-video-embedder' ),
+			esc_url( 'https://nextgenthemes.com/plugins/arve-pro/' )
+		),
+	];
+
+	foreach ( $lis as $li ) {
+		$html .= "<li>$li</li>";
+	}
+	$html .= '</ul>';
+
+	return $html;
 }
 
 function display_pro_ad() {
 
 	$inst = (int) get_option( 'arve_install_date' );
 
-	if ( is_plugin_active( 'arve-pro/arve-pro.php' )
-		|| ! current_user_can( 'update_plugins' )
-		|| time() < strtotime( '+3 weeks', $inst )
+	if ( get_user_meta( get_current_user_id(), 'arve_dismiss_pro_notice' ) ||
+		is_plugin_active( 'arve-pro/arve-pro.php' ) ||
+		time() < strtotime( '+3 weeks', $inst )
 	) {
 		return false;
 	}
@@ -87,7 +138,7 @@ function widget_text() {
 	printf( '<a href="%s">ARVE Pro Addon Features</a>:', 'https://nextgenthemes.com/plugins/arve-pro/' );
 
 	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
-	readfile( __DIR__ . '/partials/pro-ad.html' );
+	echo wp_kses( ad_html(), ALLOWED_HTML );
 }
 
 function add_dashboard_widget() {
