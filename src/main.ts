@@ -7,10 +7,8 @@ globalID();
 removeUnwantedStuff();
 
 // eslint-disable-next-line @wordpress/no-global-event-listener
-document.addEventListener('DOMContentLoaded', () => {
-	setTimeout(() => {
-		removeUnwantedStuff();
-	}, 1);
+document.addEventListener('DOMContentLoaded', (): void => {
+	removeUnwantedStuff();
 });
 
 if (jq && typeof jq.fn.fitVids !== 'undefined') {
@@ -21,7 +19,7 @@ if (jq && typeof jq.fn.fitVids !== 'undefined') {
 	});
 }
 
-function removeUnwantedStuff() {
+function removeUnwantedStuff(): void {
 	qsa(
 		'.arve p, .arve .video-wrap, .arve .fluid-width-video-wrapper, .arve .fluid-vids'
 	).forEach((el) => {
@@ -58,7 +56,7 @@ function removeUnwantedStuff() {
 	});
 }
 
-function globalID() {
+function globalID(): void {
 	// Usually the id should be already there added with php using the language_attributes filter
 	if ('html' === document.documentElement.id) {
 		return;
@@ -71,13 +69,13 @@ function globalID() {
 	}
 }
 
-function unwrap(el) {
+function unwrap(el: Element): void {
 	// get the element's parent node
 	const parent = el.parentNode;
 	// move all children out of the element
 	while (el.firstChild) {
-		parent.insertBefore(el.firstChild, el);
+		parent!.insertBefore(el.firstChild, el);
 	}
 	// remove the empty element
-	parent.removeChild(el);
+	parent!.removeChild(el);
 }
