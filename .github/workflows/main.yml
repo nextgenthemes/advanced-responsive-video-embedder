@@ -15,8 +15,8 @@ jobs:
         include:
           - php: '8.0'
             wordpress: 'latest'
-          #- php: '5.6'
-          #  wordpress: '4.9.16' # This works with the test_api_data skipped that creates symphony/yaml errors
+          - php: '5.6'
+            wordpress: '4.9.16' # This works with the test_api_data skipped that creates symphony/yaml errors
     services:
       mysql:
         image: mysql:5.7
@@ -53,8 +53,8 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }} # Use composer.json if composer.lock is not committed.
           restore-keys: ${{ runner.os }}-composer-
 
-      #- name: Remove composer.lock # because we need different phpunit versions based on current PHP version
-        #run: rm composer.lock
+      - name: Remove composer.lock # this does not work as different packages for different php versions are needed
+        run: rm composer.lock
 
       - if: matrix.php == '8.0'
         name: Install Composer dependencies
