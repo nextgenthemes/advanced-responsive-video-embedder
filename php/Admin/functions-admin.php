@@ -36,22 +36,13 @@ function action_admin_init_setup_messages() {
 
 	$pro_ver = false;
 
-	dnh_register_notice(
-		'arve-notice-test5',
-		'notice-warning',
-		wp_kses( 'test', ALLOWED_HTML ),
-		[
-			'cap' => 'install_plugins',
-		]
-	);
-
 	if ( defined( 'ARVE_PRO_VERSION' ) ) {
 		$pro_ver = ARVE_PRO_VERSION;
 	} elseif ( defined( '\Nextgenthemes\ARVE\Pro\VERSION' ) ) {
 		$pro_ver = \Nextgenthemes\ARVE\Pro\VERSION;
 	}
 
-	if ( true /* $pro_ver && version_compare( PRO_VERSION_REQUIRED, $pro_ver, '>' ) */ ) {
+	if ( $pro_ver && version_compare( PRO_VERSION_REQUIRED, $pro_ver, '>' ) ) {
 		$msg = sprintf(
 			// Translators: %1$s Pro Version required
 			__( 'Your ARVE Pro Addon is outdated, you need version %1$s or later. If you have setup your license <a href="%2$s">here</a> semi auto updates should work (Admin panel notice and auto install on confirmation). If not please <a href="%3$s">report it</a> and manually update as <a href="%4$s">described here.</a>', 'advanced-responsive-video-embedder' ),
@@ -71,8 +62,7 @@ function action_admin_init_setup_messages() {
 		);
 	}
 
-#	if ( display_pro_ad() ) {
-	if ( true ) {
+	if ( display_pro_ad() ) {
 		dnh_register_notice(
 			'addon-ad',
 			'notice-info',
