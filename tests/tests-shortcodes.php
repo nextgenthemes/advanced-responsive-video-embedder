@@ -111,6 +111,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 	}
 
 	public function test_sandbox() {
+
 		$html = shortcode(
 			[
 				'url' => 'https://example.com',
@@ -118,11 +119,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		);
 
 		$this->assertNotContains( 'Error', $html );
-		$this->assertContains(
-			'sandbox="',
-			$html,
-			$attr['url']
-		);
+		$this->assertContains( 'sandbox="', $html, $attr['url'] );
 
 		$attr['sandbox'] = 'false';
 
