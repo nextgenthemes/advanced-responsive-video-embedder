@@ -87,47 +87,47 @@ class Tests_Shortcode extends WP_UnitTestCase {
 				continue;
 			}
 
-			// if ( 'youtube' === $provider && getenv('CI') ) {
-			// 	continue;
-			// }
-
 			$this->assertNotEmpty( $v['tests'] );
 			$this->assertTrue( is_array( $v['tests'] ) );
 
 			foreach ( $v['tests'] as $key => $test ) {
 
-				$attr = [
-					'url'  => $test['url'],
-					'mode' => 'normal',
-				];
+				$html = shortcode(
+					[
+						'url'  => $test['url'],
+						'mode' => 'normal',
+					]
+				);
 
-				$this->assertNotContains( 'Error', shortcode( $attr ) );
+				$this->assertNotContains( 'Error', $html );
 
 				if ( 'html5' !== $provider ) {
-					$this->assertContains( 'itemprop="embedURL', shortcode( $attr ) );
+					$this->assertContains( 'itemprop="embedURL', $html );
 				} else {
-					$this->assertContains( 'itemprop="contentURL', shortcode( $attr ) );
+					$this->assertContains( 'itemprop="contentURL', $html );
 				}
 			}
 		endforeach;
 	}
 
 	public function test_sandbox() {
-		$attr = [
-			'url' => 'https://example.com',
-		];
+		$html = shortcode(
+			[
+				'url' => 'https://example.com',
+			]
+		);
 
-		$this->assertNotContains( 'Error', shortcode( $attr ) );
+		$this->assertNotContains( 'Error', $html );
 		$this->assertContains(
 			'sandbox="',
-			shortcode( $attr ),
+			$html,
 			$attr['url']
 		);
 
 		$attr['sandbox'] = 'false';
 
-		$this->assertNotContains( 'Error', shortcode( $attr ) );
-		$this->assertNotContains( 'sandbox="', shortcode( $attr ), $attr['url'] );
+		$this->assertNotContains( 'Error', $html );
+		$this->assertNotContains( 'sandbox="', $html, $attr['url'] );
 	}
 
 	public function test_shortcodes_are_registered() {
