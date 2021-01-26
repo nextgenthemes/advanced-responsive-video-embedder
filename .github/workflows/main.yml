@@ -42,9 +42,6 @@ jobs:
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
 
-      - name: Remove composer.lock # because we need different phpunit versions based on current PHP version
-        run: rm composer.lock
-
       - name: Get composer cache directory
         id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
@@ -53,14 +50,15 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          # Use composer.json for key, if composer.lock is not committed.
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }} # Use composer.json if composer.lock is not committed.
           restore-keys: ${{ runner.os }}-composer-
+
+      #- name: Remove composer.lock # because we need different phpunit versions based on current PHP version
+        #run: rm composer.lock
 
       - if: matrix.php == '8.0'
         name: Install Composer dependencies
         run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader --ignore-platform-req=php
-
       - if: matrix.php != '8.0'
         name: Install Composer dependencies
         run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader    
@@ -71,7 +69,6 @@ jobs:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
 
       - name: Run PHPUnit without code coverage
-        #if: matrix.wordpress != 'latest' && matrix.php != '7.3'
         run: vendor/bin/phpunit
 
   wporgrelease:
