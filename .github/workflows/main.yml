@@ -57,11 +57,11 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
-      - if: '8.0' == matrix.php
+      - if: matrix.php == '8.0'
         name: Install Composer dependencies
         run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader --ignore-platform-req=php
 
-      - if: '8.0' != matrix.php
+      - if: matrix.php != '8.0'
         name: Install Composer dependencies
         run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader    
 
