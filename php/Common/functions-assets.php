@@ -49,14 +49,14 @@ function asset( array $args ) {
 
 	$defaults = [
 		'path'              => '',
-		'async'             => true,
+		'async'             => false,
 		'cdn_src'           => '',
-		'defer'             => false,
+		'defer'             => true,
 		'deps'              => [],
 		'enqueue'           => false,
 		'enqueue_hooks'     => [],
 		'handle'            => '',
-		'in_footer'         => true,
+		'in_footer'         => false,
 		'integrity'         => '',
 		'media'             => 'all',
 		'src'               => '',

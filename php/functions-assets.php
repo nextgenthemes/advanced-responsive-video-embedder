@@ -17,12 +17,14 @@ function register_assets() {
 			'handle' => 'arve-main',
 			'src'    => plugins_url( 'build/main.js', PLUGIN_FILE ),
 			'path'   => PLUGIN_DIR . '/build/main.js',
+			'async'  => true,
+			'defer'  => false,
 		]
 	);
 
 	// phpcs:disable WordPress.WP.EnqueuedResourceParameters.MissingVersion
-	wp_register_script( 'arve', null, [ 'arve-main' ], null, true );
-	wp_register_style( 'arve', null, [ 'arve-main' ], null, true );
+	wp_register_script( 'arve', null, [ 'arve-main' ], null, false );
+	wp_register_style( 'arve', null, [ 'arve-main' ], null, false );
 	// phpcs:enable WordPress.WP.EnqueuedResourceParameters.MissingVersion
 
 	if ( function_exists( 'register_block_type' ) ) :
@@ -79,6 +81,7 @@ function action_wp_enqueue_scripts() {
 	$options = options();
 
 	wp_enqueue_style( 'arve' );
+	wp_enqueue_script( 'arve-main' );
 
 	if ( $options['always_enqueue_assets'] ) {
 		wp_enqueue_script( 'arve' );
