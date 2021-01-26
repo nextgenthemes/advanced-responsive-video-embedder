@@ -92,6 +92,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 			foreach ( $v['tests'] as $key => $test ) {
 
+				//phpcs:ignore
+				fwrite( STDOUT, print_r($test['url'], true) );
 				$html = shortcode(
 					[
 						'url'  => $test['url'],
