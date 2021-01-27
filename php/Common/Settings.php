@@ -146,7 +146,6 @@ class Settings {
 				'src'               => plugin_or_theme_src( 'build/common/settings.js' ),
 				'path'              => dirname( dirname( __DIR__ ) ) . '/build/common/settings.js',
 				'deps'              => [ 'jquery' ],
-				'async'             => false,
 				'inline_script'     => "var {$this->slugged_namespace} = " . \wp_json_encode( $settings_data ) . ';',
 				'inline_script_pos' => 'before',
 			]

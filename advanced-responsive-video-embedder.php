@@ -57,7 +57,6 @@ function init_920() {
 	require_once PLUGIN_DIR . '/php/functions-settings.php';
 
 	if ( is_admin() ) {
-
 		if ( is_file(PLUGIN_DIR . '/vendor/autoload.php') ) {
 			require_once PLUGIN_DIR . '/vendor/autoload.php';
 		}

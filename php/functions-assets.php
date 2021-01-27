@@ -56,8 +56,6 @@ function register_assets() {
 				'src'    => plugins_url( 'build/block.js', PLUGIN_FILE ),
 				'path'   => PLUGIN_DIR . '/build/block.js',
 				'deps'   => [ 'arve' ],
-				'footer' => false,
-				'async'  => false,
 			]
 		);
 		wp_localize_script( 'arve-block', 'ARVEsettings', $sc_settings );
