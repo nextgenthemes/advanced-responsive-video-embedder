@@ -55,7 +55,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 #### Supported Providers ####
 
 [All providers with iframe embed codes](https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding)
-Alugha, Archive.org, Bitchute, Break, Brightcove, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Funny or Die, IGN, Kickstarter, LiveLeak, Livestream.com, kla.tv, Metacafe, myspace, Snotr, Spike, TED Talks, Twitch, Ustream, RuTube.ru, Viddler, vidspot.net, Vimeo, VK, vzaar, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist, mp4 or webm video files, ARVE general iframe embed, Google Drive, ooyala, IMDB
+Alugha, Archive.org, Bitchute, Break, Brightcove, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Funny or Die, IGN, Kickstarter, LiveLeak, Livestream.com, kla.tv, Metacafe, myspace, Snotr, Spike, TED Talks, Twitch, Ustream, RuTube.ru, Viddler, vidspot.net, Vimeo, VK, vzaar, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist, mp4 or webm video files, Google Drive, ooyala, IMDB, rumble.com, ARVE general iframe embed
 ### Reviews ###
 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Great plugin, great support ####
@@ -171,6 +171,12 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
+
+### 2021-01-27 9.3.6 ###
+
+* Fix: (hopefully) Non dismissible admin notices. Also removed the notice that came with 9.0-beta completely.
+* Fix: rumble.com and other providers.
+* Improved: The __tiny__ JavaScript of ARVE is now loaded in the `<head>` with `<script async src=` this will deal with edge cases.
 
 ### 2021-01-25 9.3.5 ###
 
