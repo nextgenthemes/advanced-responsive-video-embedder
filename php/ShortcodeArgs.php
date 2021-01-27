@@ -273,9 +273,9 @@ class ShortcodeArgs {
 			);
 		}
 
-		$options        = options();
 		$properties     = get_host_properties();
 		$input_provider = $a['provider'];
+		$check_url      = $a['url'] ? $a['url'] : $a['src'];
 
 		foreach ( $properties as $host_id => $host ) :
 
@@ -283,7 +283,7 @@ class ShortcodeArgs {
 				continue;
 			}
 
-			$preg_match = preg_match( $host['regex'], $a['url'], $matches );
+			$preg_match = preg_match( $host['regex'], $check_url, $matches );
 
 			if ( 1 !== $preg_match ) {
 				continue;
@@ -308,7 +308,6 @@ class ShortcodeArgs {
 		if ( ! $a['provider'] ) {
 			$a['provider'] = 'iframe';
 			$a['src']      = $a['src'] ? $a['src'] : $a['url'];
-			$a['id']       = $a['src'];
 		}
 
 		return $a;
@@ -340,9 +339,14 @@ class ShortcodeArgs {
 	private function build_iframe_src( array $a ) {
 
 		if ( ! $a['provider'] || ! $a['id'] ) {
-			throw new \Exception(
-				__( 'Need Provider and ID to build iframe src.', 'advanced-responsive-video-embedder' )
-			);
+
+			if ( $a['src'] ) {
+				return false;
+			} else {
+				throw new \Exception(
+					__( 'Need Provider and ID to build iframe src.', 'advanced-responsive-video-embedder' )
+				);
+			}
 		}
 
 		$options    = options();
@@ -404,7 +408,7 @@ class ShortcodeArgs {
 
 	private function compare_oembed_src_with_generated_src( $a ) {
 
-		if ( ! $a['src'] ) {
+		if ( ! $a['src'] || ! $a['src_gen'] ) {
 			return;
 		}
 
