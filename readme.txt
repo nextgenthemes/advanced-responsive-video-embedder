@@ -2,7 +2,7 @@
 Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
-Requires at least: 4.4.24
+Requires at least: 4.9.16
 Tested up to: 5.6
 Requires PHP: 5.6
 Stable tag: 9.4.1
@@ -172,11 +172,11 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
 
-### 2021-01-27 9.3.6 ###
+### 2021-01-28 9.4.1 ###
 
 * Fix: (hopefully) Non dismissible admin notices. Also removed the notice that came with 9.0-beta completely.
 * Fix: rumble.com and other providers.
-* Improved: The __tiny__ JavaScript of ARVE is now loaded in the `<head>` with `<script async src=` this will deal with edge cases.
+* Improved: The __tiny__ JavaScript of ARVE is now loaded in the `<head>` with `<script async src=` this will deal with edge cases when styles would get applied late.
 
 ### 2021-01-25 9.3.5 ###
 
