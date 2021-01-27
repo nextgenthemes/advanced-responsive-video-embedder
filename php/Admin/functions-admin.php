@@ -4,7 +4,6 @@ namespace Nextgenthemes\ARVE\Admin;
 use const \Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
 
 use \Nextgenthemes\ARVE;
-use \Nextgenthemes\ARVE\Common\Admin\NoticeFactory;
 
 use function \Nextgenthemes\ARVE\Common\ver;
 use function \Nextgenthemes\ARVE\Common\attr;
@@ -303,7 +302,6 @@ function admin_enqueue_scripts() {
 			'src'    => plugins_url( 'build/admin.js', ARVE\PLUGIN_FILE ),
 			'path'   => ARVE\PLUGIN_DIR . '/build/admin.js',
 			'deps'   => [ 'jquery' ],
-			'async'  => false,
 		]
 	);
 

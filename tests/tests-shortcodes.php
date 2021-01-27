@@ -80,7 +80,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 			// TODO: This generates a error on symphony/yaml
 			if ( version_compare( $GLOBALS['wp_version'], '5.2.9', '<=' ) ) {
-				#continue;
+				$stfu = '';
 			}
 
 			if ( empty( $v['tests'] ) ) {

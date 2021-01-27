@@ -8,7 +8,7 @@
 
 * Fix: (hopefully) Non dismissible admin notices. Also removed the notice that came with 9.0-beta completely.
 * Fix: rumble.com and other providers.
-* Improved: The __tiny__ javascript of ARVE is now loaded in the `<head>` with `<script async src=` this will deal with edge cases when styles were applied late on slow sites with shitty themes.
+* Improved: The __tiny__ JavaScript of ARVE is now loaded in the `<head>` with `<script async src=` this will deal with edge cases when styles were applied late on slow sites with shitty themes.
 
 ### 2021-01-25 9.3.5 ###
 

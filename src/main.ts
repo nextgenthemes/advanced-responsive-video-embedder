@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', (): void => {
 	removeUnwantedStuff();
 });
 
+// Mitigation for outdated versions of fitvids
 if (jq && typeof jq.fn.fitVids !== 'undefined') {
 	jq(document).ready(() => {
 		setTimeout(() => {
@@ -70,12 +71,15 @@ function globalID(): void {
 }
 
 function unwrap(el: Element): void {
-	// get the element's parent node
 	const parent = el.parentNode;
+	// make eslint STFU
+	if (!parent) {
+		return;
+	}
 	// move all children out of the element
-	while (el.firstChild) {
-		parent!.insertBefore(el.firstChild, el);
+	while (parent && el.firstChild) {
+		parent.insertBefore(el.firstChild, el);
 	}
 	// remove the empty element
-	parent!.removeChild(el);
+	parent.removeChild(el);
 }
