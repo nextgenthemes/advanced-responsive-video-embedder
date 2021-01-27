@@ -90,10 +90,13 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			$this->assertNotEmpty( $v['tests'] );
 			$this->assertTrue( is_array( $v['tests'] ) );
 
+			//phpcs:ignore
+			fwrite( STDOUT, PHP_EOL );
+
 			foreach ( $v['tests'] as $key => $test ) {
 
 				//phpcs:ignore
-				fwrite( STDOUT, print_r($test['url'], true) );
+				fwrite( STDOUT, print_r($test['url'], true) . PHP_EOL );
 				$html = shortcode(
 					[
 						'url'  => $test['url'],
