@@ -29,9 +29,7 @@ function oembed2args( $data, $url ) {
 		return false;
 	}
 
-	$provider = preg_replace( '/[^a-z0-9]/', '', strtolower( $key ) );
-	$provider = str_replace( 'wistiainc', 'wistia', $provider );
-	$provider = str_replace( 'rumblecom', 'rumble', $provider );
+	$provider = provider_name( $data->provider_name );
 
 	if ( 'facebook' === $provider ) {
 		preg_match( '/class="fb-video" data-href="([^"]+)"/', $data->html, $matches );
@@ -57,6 +55,14 @@ function oembed2args( $data, $url ) {
 	];
 
 	return apply_filters( 'nextgenthemes/arve/oembed2args', $a );
+}
+
+function provider_name($provider) {
+	$provider = preg_replace( '/[^a-z0-9]/', '', strtolower($provider) );
+	$provider = str_replace( 'wistiainc', 'wistia', $provider );
+	$provider = str_replace( 'rumblecom', 'rumble', $provider );
+
+	return $provider;
 }
 
 // needed for private videos
