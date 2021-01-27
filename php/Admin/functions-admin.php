@@ -28,7 +28,9 @@ const ALLOWED_HTML = [
 
 function action_admin_init_setup_messages() {
 
-	require_once ARVE\PLUGIN_DIR . '/vendor/autoload.php';
+	if ( ! is_file(ARVE\PLUGIN_DIR . '/vendor/autoload.php') ) {
+		require_once ARVE\PLUGIN_DIR . '/vendor/autoload.php';
+	}
 
 	if ( ! function_exists('dnh_register_notice') ) {
 		return;
