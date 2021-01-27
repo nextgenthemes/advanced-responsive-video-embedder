@@ -4,11 +4,11 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
 
-### 2021-01-27 9.3.6 ###
+### 2021-01-28 9.4.1 ###
 
 * Fix: (hopefully) Non dismissible admin notices. Also removed the notice that came with 9.0-beta completely.
 * Fix: rumble.com and other providers.
-* Improved: The __tiny__ JavaScript of ARVE is now loaded in the `<head>` with `<script async src=` this will deal with edge cases.
+* Improved: The __tiny__ JavaScript of ARVE is now loaded in the `<head>` with `<script async src=` this will deal with edge cases when styles would get applied late.
 
 ### 2021-01-25 9.3.5 ###
 
