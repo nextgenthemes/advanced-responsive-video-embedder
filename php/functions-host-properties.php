@@ -659,18 +659,6 @@ function get_host_properties() {
 			'name'         => 'mp4 or webm video files',
 			'aspect_ratio' => false,
 		],
-		'iframe' => [
-			'name'           => 'ARVE general iframe embed',
-			'embed_url'      => '%s',
-			'default_params' => '',
-			'auto_thumbnail' => false,
-			'tests'          => [
-				[
-					'url' => 'https://example.com/',
-					'id'  => 'https://example.com/',
-				],
-			],
-		],
 		'googledrive' => [
 			'name'      => 'Google Drive',
 			'regex'     => '#https?://drive\.google\.com/file/d/(?<id>[^\s/]+)#i',
@@ -689,6 +677,18 @@ function get_host_properties() {
 		'imdb' => [
 			'name'         => 'IMDB',
 			'requires_src' => true,
+		],
+		'iframe' => [
+			'name'           => 'ARVE general iframe embed',
+			'embed_url'      => '%s',
+			'default_params' => '',
+			'auto_thumbnail' => false,
+			'tests'          => [
+				[
+					'url' => 'https://example.com/',
+					'id'  => 'https://example.com/',
+				],
+			],
 		],
 	];
 
