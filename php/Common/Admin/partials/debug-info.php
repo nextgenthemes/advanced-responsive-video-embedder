@@ -17,6 +17,9 @@ REST URL:           <?= esc_html( get_rest_url( null, $this->rest_namespace ) . 
 
 <?php print_network_active_plugins(); ?>
 
-ARVE OPTIONS:
+ARVE Options:
 <?= wp_kses( get_var_dump( get_option( 'nextgenthemes_arve' ) ), [] ); ?>
+
+Dismissed Notices:
+<?= wp_kses( get_var_dump( get_user_meta( get_current_user_id(), 'dnh_dismissed_notices' ) ), [] ); ?>
 </textarea>

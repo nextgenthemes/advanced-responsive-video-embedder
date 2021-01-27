@@ -6,6 +6,10 @@ use \Nextgenthemes\ARVE\Common;
 // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
 function activation_notices() {
 
+	if ( ! function_exists('dnh_register_notice') ) {
+		return;
+	}
+
 	$products = Common\get_products();
 
 	foreach ( $products as $key => $value ) :
@@ -17,7 +21,15 @@ function activation_notices() {
 				$value['name'],
 				get_admin_url() . 'options-general.php?page=nextgenthemes'
 			);
-			new NoticeFactory( $key . '-activation-notice', "<p>$msg</p>", HOUR_IN_SECONDS );
+
+			dnh_register_notice(
+				"ngt-$key-activation-notice",
+				'notice-info',
+				'<p>' . wp_kses( $msg, [ 'a' => [ 'href' ] ] ) . '</p>',
+				[
+					'cap' => 'change_options',
+				]
+			);
 		}
 	endforeach;
 }

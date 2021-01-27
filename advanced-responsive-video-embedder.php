@@ -55,6 +55,13 @@ function init_920() {
 	require_once PLUGIN_DIR . '/php/functions-validation.php';
 	require_once PLUGIN_DIR . '/php/functions-host-properties.php';
 	require_once PLUGIN_DIR . '/php/functions-settings.php';
+
+	if ( is_admin() ) {
+
+		if ( is_file(PLUGIN_DIR . '/vendor/autoload.php') ) {
+			require_once PLUGIN_DIR . '/vendor/autoload.php';
+		}
+	}
 	require_once PLUGIN_DIR . '/php/Admin/functions-admin.php';
 	require_once PLUGIN_DIR . '/php/Admin/functions-settings-page.php';
 

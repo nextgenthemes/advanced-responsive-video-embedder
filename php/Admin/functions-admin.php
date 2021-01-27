@@ -28,13 +28,18 @@ const ALLOWED_HTML = [
 
 function action_admin_init_setup_messages() {
 
-	if ( ! is_file(ARVE\PLUGIN_DIR . '/vendor/autoload.php') ) {
-		require_once ARVE\PLUGIN_DIR . '/vendor/autoload.php';
-	}
-
 	if ( ! function_exists('dnh_register_notice') ) {
 		return;
 	}
+
+	dnh_register_notice(
+		'ngt-arve---test3',
+		'notice-success',
+		'was',
+		[
+			'cap' => 'update_plugins',
+		]
+	);
 
 	$pro_ver = false;
 
@@ -55,7 +60,7 @@ function action_admin_init_setup_messages() {
 		);
 
 		dnh_register_notice(
-			'arve-pro-outdated-' . PRO_VERSION_REQUIRED,
+			'ngt-arve-outdated-pro-v' . PRO_VERSION_REQUIRED,
 			'notice-error',
 			wp_kses( $msg, ALLOWED_HTML ),
 			[
@@ -66,7 +71,7 @@ function action_admin_init_setup_messages() {
 
 	if ( display_pro_ad() ) {
 		dnh_register_notice(
-			'addon-ad',
+			'ngt-arve-addon-ad',
 			'notice-info',
 			wp_kses( ad_html(), ALLOWED_HTML ),
 			[
