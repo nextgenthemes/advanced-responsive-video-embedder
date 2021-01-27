@@ -33,50 +33,6 @@ function shortcode( $a, $content = null ) {
 	return build_video( $a, $content );
 }
 
-function test_shortcode( $atts = null, $content = null ) {
-
-	$html         = '';
-	$providers    = get_host_properties();
-	$get_provider = sanitize_text_field( wp_unslash( empty( $_GET['arve-provider-test'] ) ? '' : $_GET['arve-provider-test'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-
-	if ( $get_provider ) {
-
-		if ( empty( $providers[ $get_provider ]['tests'] ) ) {
-			$html .= 'no tests for ' . $get_provider;
-		} else {
-			$html .= basic_tests( $providers[ $get_provider ]['tests'] );
-		}
-	}
-
-	$html .= '<ul>';
-	foreach ( $providers as $provider => $v ) {
-
-		$url   = add_query_arg( $GLOBALS['wp']->query_vars, home_url( $GLOBALS['wp']->request ) );
-		$url   = add_query_arg( 'arve-provider-test', $provider, $url );
-		$html .= sprintf( '<li><a href="%s">Test %s</a></li>', $url, $provider );
-	}
-	$html .= '</ul>';
-
-	return $html;
-}
-
-function basic_tests( $tests ) {
-
-	$html  = '';
-	$modes = [ 'normal', 'lazyload', 'lightbox' ];
-
-	foreach ( $tests as $key => $value ) {
-		$sc    = sprintf( '[arve url="%s" mode="lazyload" maxwidth="300" /]', $value['url'], $modes[ array_rand( $modes ) ] );
-		$html .= do_shortcode( $sc );
-	}
-
-	$html .= "<code>[$sc]</code><br>";
-	$html .= do_shortcode( $sc );
-	$html .= '<br>';
-
-	return $html;
-}
-
 function error( $msg, $code = '' ) {
 
 	return sprintf(
@@ -182,7 +138,6 @@ function create_shortcodes() {
 	}
 
 	add_shortcode( 'arve', __NAMESPACE__ . '\shortcode' );
-	add_shortcode( 'arve_test', __NAMESPACE__ . '\test_shortcode' );
 }
 
 // TODO sometimes $attr is string, investigate when and what it is exacly
