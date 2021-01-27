@@ -678,6 +678,24 @@ function get_host_properties() {
 			'name'         => 'IMDB',
 			'requires_src' => true,
 		],
+		'rumble' => [
+			'name'           => 'rumble.com',
+			'regex'          => '#https://rumble\.com/(embed/)?(?<id>[^-/]+)#i',
+			'embed_url'      => 'https://rumble.com/embed/%s/',
+			'default_params' => '',
+			'auto_thumbnail' => true,
+			'auto_title'     => true,
+			'tests'          => [
+				[
+					'url' => 'https://rumble.com/vd6thp-gigantic-galapagos-tortoise-casually-strolls-through-a-restaurant.html',
+					'id'  => 'vd6thp',
+				],
+				[
+					'url' => 'https://rumble.com/embed/vd6thp/?foo=bar',
+					'id'  => 'vd6thp',
+				],
+			],
+		],
 		'iframe' => [
 			'name'           => 'ARVE general iframe embed',
 			'embed_url'      => '%s',
