@@ -32,15 +32,6 @@ function action_admin_init_setup_messages() {
 		return;
 	}
 
-	dnh_register_notice(
-		'ngt-arve---test3',
-		'notice-success',
-		'was',
-		[
-			'cap' => 'update_plugins',
-		]
-	);
-
 	$pro_ver = false;
 
 	if ( defined( 'ARVE_PRO_VERSION' ) ) {
