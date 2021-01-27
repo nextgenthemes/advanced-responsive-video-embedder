@@ -79,8 +79,10 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		foreach ( $properties as $provider => $v ) :
 
 			// TODO: This generates a error on symphony/yaml
-			if ( version_compare( $GLOBALS['wp_version'], '5.2.9', '<=' ) ) {
-				$stfu = '';
+			if ( version_compare( $GLOBALS['wp_version'], '5.2.9', '<=' ) &&
+				'dailymotion' === $provider
+			) {
+				continue;
 			}
 
 			if ( empty( $v['tests'] ) ) {
