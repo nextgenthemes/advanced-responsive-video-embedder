@@ -172,6 +172,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
 
+### 2021-01-28 9.4.2 ###
+
+* Fix: Include new library for notices.
+
 ### 2021-01-28 9.4.1 ###
 
 * Fix: (hopefully) Non dismissible admin notices. Also removed the notice that came with 9.0-beta completely.
