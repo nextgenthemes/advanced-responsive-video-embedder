@@ -13,9 +13,10 @@ class ShortcodeArgs {
 
 		missing_attribute_check( $a );
 
-		$a = $this->args_validate( $a );
-		$a = args_detect_html5( $a );
-		$a = $this->detect_provider_and_id_from_url( $a );
+		$a        = $this->args_validate( $a );
+		$a['src'] = $this->video_widget_fix( $a );
+		$a        = args_detect_html5( $a );
+		$a        = $this->detect_provider_and_id_from_url( $a );
 
 		$a['aspect_ratio'] = arg_aspect_ratio( $a );
 		$a['thumbnail']    = apply_filters( 'nextgenthemes/arve/args/thumbnail', $a['thumbnail'], $a );
@@ -32,6 +33,19 @@ class ShortcodeArgs {
 		$a['uid']          = sanitize_key( uniqid( "arve-{$a['provider']}-{$a['id']}", true) );
 
 		return $a;
+	}
+
+	private static function video_widget_fix( array $a ) {
+
+		// This happens in the video widget (classic)
+		if ( $a['src'] &&
+			($a['src'] === $a['url']) &&
+			! $a['provider']
+		) {
+			$a['src'] = null;
+		}
+
+		return $a['src'];
 	}
 
 	private function arg_maxwidth( array $a ) {
