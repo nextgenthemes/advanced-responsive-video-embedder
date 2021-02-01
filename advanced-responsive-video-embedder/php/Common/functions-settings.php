@@ -156,8 +156,6 @@ function get_products() {
 		],
 	];
 
-	$products = apply_filters( 'nextgenthemes_products', $products );
-
 	foreach ( $products as $key => $value ) :
 
 		$products[ $key ]['active']    = false;
