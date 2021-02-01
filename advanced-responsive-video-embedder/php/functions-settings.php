@@ -538,6 +538,14 @@ function all_settings() {
 			'type'        => 'string',
 			'description' => __( 'CSS value (px, vw, ...).', 'advanced-responsive-video-embedder' ),
 		],
+		'sticky_on_mobile' => [
+			'tag'         => 'sticky-videos',
+			'default'     => true,
+			'shortcode'   => true,
+			'label'       => __( 'Sticky on Mobiles', 'advanced-responsive-video-embedder' ),
+			'type'        => 'select',
+			'options'     => $def_bool_options,
+		],
 		'sticky_close_btn_pos_x' => [
 			'tag'         => 'sticky-videos',
 			'default'     => '0',
