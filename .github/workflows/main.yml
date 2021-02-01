@@ -38,7 +38,7 @@ jobs:
           repository: git@github.com:nextgenthemes/arve-random-video.git
           ref: master
           path: arve-random-video
-          token: token: ${{ secrets.REPO_TOKEN }}
+          token: ${{ secrets.REPO_TOKEN }}
 
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@a83d4379b1200b3d0d19ad4fe0d7a440e00749c1 # 2.9.0 # https://github.com/shivammathur/setup-php
