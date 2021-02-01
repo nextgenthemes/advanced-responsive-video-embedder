@@ -67,28 +67,6 @@ function arg_aspect_ratio( array $a ) {
 	return $a['aspect_ratio'];
 }
 
-function arg_maxwidth( $maxwidth, $align ) {
-
-	$options = options();
-
-	if ( empty( $maxwidth ) ) {
-
-		if ( in_array( $align, [ 'left', 'right', 'center' ], true ) ) {
-			$maxwidth = (int) $options['align_maxwidth'];
-		} elseif ( empty( $options['maxwidth'] ) ) {
-			$maxwidth = (int) empty( $GLOBALS['content_width'] ) ? DEFAULT_MAXWIDTH : $GLOBALS['content_width'];
-		} else {
-			$maxwidth = (int) $options['maxwidth'];
-		}
-	}
-
-	if ( $maxwidth < 50 ) {
-		throw new \Exception( __( 'Maxwidth needs to be 50+', 'advanced-responsive-video-embedder' ) );
-	}
-
-	return $maxwidth;
-}
-
 function liveleak_id_fix( array $a ) {
 
 	if ( 'liveleak' !== $a['provider'] ) {

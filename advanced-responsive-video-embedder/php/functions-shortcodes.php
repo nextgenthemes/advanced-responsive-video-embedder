@@ -66,11 +66,10 @@ function build_video( array $input_atts ) {
 		Common\check_product_keys();
 
 		$a = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
+		$a = process_shortcode_args( $a );
+
 		ksort( $a );
 		ksort( $input_atts );
-
-		$build_args = new ShortcodeArgs( $a['errors'] );
-		$a          = $build_args->get_done( $a );
 
 		$html .= add_error_html( $a );
 		$html .= build_html( $a );
