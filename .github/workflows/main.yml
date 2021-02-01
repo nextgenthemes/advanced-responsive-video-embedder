@@ -35,7 +35,7 @@ jobs:
       - name: Checkout ARVE Random Video
         uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
         with:
-          repository: git@github.com:nextgenthemes/arve-random-video.git
+          repository: nextgenthemes/arve-random-video
           ref: master
           path: arve-random-video
           token: ${{ secrets.REPO_TOKEN }}
