@@ -15,14 +15,14 @@ function sys( $command ) {
 	}
 }
 
-function replace_in_file( $file, $str, $rep ) {
+function replace_in_file( string $file, string $str, string $rep ) {
 	$file_content=file_get_contents( $file );
 	$file_content=str_replace( $str, $rep, $file_content );
 	file_put_contents($file, $file_content);
 }
 
 function __( $a, $b ) {}
-function provider_list() {
+function provider_list(): string {
 
 	foreach ( get_host_properties() as $key => $value ) {
 		$list[] = $value['name'];
@@ -36,8 +36,7 @@ function provider_list() {
 }
 
 $root = dirname( __DIR__ );
-require_once( $root . '/php/functions-host-properties.php' );
-$dirname  = basename( $root );
+require_once $root . '/php/functions-host-properties.php';
 $markdown = provider_list();
 
 file_put_contents( $root . '/readme/13-description-supported-providers.md', $markdown );
