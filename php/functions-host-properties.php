@@ -696,6 +696,28 @@ function get_host_properties() {
 				],
 			],
 		],
+		'bannedvideo' => [
+			'name'         => 'Banned.video',
+			'regex'        => '#https://banned\.video/watch\?id=(?<id>[a-z0-9]+)#i',
+			'embed_url'    => 'https://api.banned.video/embed/%s',
+			'tests'        => [
+				[
+					'url' => 'https://banned.video/watch?id=5ffe509f0d763c3dca0e8ad7',
+					'id'  => '5ffe509f0d763c3dca0e8ad7',
+				],
+			],
+		],
+		'cantcensortruthcom' => [
+			'name'         => 'cantcensortruth.com',
+			'regex'        => '#https://cantcensortruth\.com/watch\?id=(?<id>[a-z0-9]+)#i',
+			'embed_url'    => 'https://api.banned.video/embed/%s',
+			'tests'        => [
+				[
+					'url' => 'https://cantcensortruth.com/watch?id=601218b0de226411596203ae',
+					'id'  => '601218b0de226411596203ae',
+				],
+			],
+		],
 		'iframe' => [
 			'name'           => 'ARVE general iframe embed',
 			'embed_url'      => '%s',
