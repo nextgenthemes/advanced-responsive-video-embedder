@@ -5,6 +5,7 @@
 	convertErrorsToExceptions="true"
 	convertNoticesToExceptions="true"
 	convertWarningsToExceptions="true"
+	stopOnFailure="true"
 	>
 	<testsuites>
 		<testsuite name="arve">
@@ -12,6 +13,12 @@
 		</testsuite>
 		<testsuite name="arve-random-video">
 			<directory prefix="tests-" suffix=".php">./arve-random-video/tests/</directory>
+		</testsuite>
+		<testsuite name="arve-pro">
+			<directory prefix="tests-" suffix=".php">./arve-pro/tests/</directory>
+		</testsuite>
+		<testsuite name="arve-sticky-videos">
+			<directory prefix="tests-" suffix=".php">./arve-sticky-videos/tests/</directory>
 		</testsuite>
 	</testsuites>
 	<filter>

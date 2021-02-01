@@ -1,4 +1,8 @@
 <?php
+// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_dump
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_read_fwrite
+// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_error_log
+// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
 
 function logfile( $name, $var, $file ) {
 	// if ( ! is_string( $msg ) ) {

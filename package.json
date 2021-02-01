@@ -41,8 +41,11 @@
   "scripts": {
     "build": "npm-run-all build:*",
     "build:arve": "export NPROJECT=advanced-responsive-video-embedder && wp-scripts build",
+    "start:arve": "export NPROJECT=advanced-responsive-video-embedder && wp-scripts start",
+    "build:arve-pro": "export NPROJECT=arve-pro && wp-scripts build",
+    "start:arve-pro": "export NPROJECT=arve-pro && wp-scripts start",
     "build:arve-random-video": "export NPROJECT=arve-random-video && wp-scripts build",
-    "BBbuild:arve-pro": "export NPROJECT=arve-pro && wp-scripts build",
+    "start:arve-random-video": "export NPROJECT=arve-random-video && wp-scripts start",
     "check-engines": "wp-scripts check-engines",
     "check-licenses": "wp-scripts check-licenses",
     "format:js": "wp-scripts format-js",
@@ -52,12 +55,11 @@
     "lint:md:js": "wp-scripts lint-md-js",
     "lint:pkg-json": "wp-scripts lint-pkg-json",
     "packages-update": "wp-scripts packages-update",
-    "start:arve": "export NPROJECT=advanced-responsive-video-embedder && wp-scripts start",
     "test:e2e": "wp-scripts test-e2e",
     "test:unit": "wp-scripts test-unit-js",
     "SEPP": "SEP",
-    "update-composer": "composer update --no-dev --prefer-dist",
-    "update-npm": "npm install; npm update; npm audit fix; npm audit || true",
-    "update": "npm run update-composer & npm run update-npm; composer outdated & npm outdated"
+    "update:composer": "composer update --no-dev --prefer-dist",
+    "update:npm": "npm install; npm update; npm audit fix; npm audit || true",
+    "update": "npm run update:composer & npm run update:npm; composer outdated & npm outdated"
   }
 }

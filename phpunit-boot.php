@@ -27,10 +27,11 @@ require_once $_tests_dir . '/includes/functions.php';
 function _manually_load_plugin() {
 
 	require __DIR__ . '/advanced-responsive-video-embedder/advanced-responsive-video-embedder.php';
+	require __DIR__ . '/arve-random-video/tests/activate.php';
 
 	foreach ( glob('arve-*', GLOB_ONLYDIR ) as $dirname ) {
-		require __DIR__ . "/$dirname/tests/activate.php";
 		require __DIR__ . "/$dirname/$dirname.php";
+		$GLOBALS['arve_detected_addons'][] = $dirname;
 	}
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );

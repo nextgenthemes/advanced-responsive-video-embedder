@@ -28,6 +28,7 @@
 		<exclude name="Squiz.PHP.CommentedOutCode.Found" />
 	</rule>
 	<!-- Exclude files and folders. -->
+	<exclude-pattern>*/advanced-responsive-video-embedder/libs/*</exclude-pattern>
 	<exclude-pattern>*/build/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
@@ -47,21 +48,14 @@
 	<!-- Set the minimum supported WP version. This is used by several sniffs.
 		 The minimum version set here should be in line with the minimum WP version
 		 as set in the "Requires at least" tag in the readme.txt file. -->
-	<config name="minimum_supported_wp_version" value="4.4.24"/>
+	<config name="minimum_supported_wp_version" value="4.9.16"/>
 	<!-- Set textdomains. -->
 	<rule ref="WordPress.WP.I18n">
-		<include-pattern>./advanced-responsive-video-embedder/*</include-pattern>
 		<properties>
 			<property name="text_domain" type="array">
 				<element value="advanced-responsive-video-embedder"/>
-			</property>
-		</properties>
-	</rule>
-	<rule ref="WordPress.WP.I18n">
-		<include-pattern>./advanced-responsive-video-embedder/*</include-pattern>
-		<properties>
-			<property name="text_domain" type="array">
-				<element value="advanced-responsive-video-embedder"/>
+				<element value="arve-random-video"/>
+				<element value="arve-pro"/>
 			</property>
 		</properties>
 	</rule>
