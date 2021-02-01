@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitaf41d04bdafc625aeb08cb6c03a36d8f
+class ComposerStaticInit516b5fd3c4d56c19317857df7012b08f
 {
     public static $files = array (
         'c14057a02afc95b84dc5bf85d98c5b66' => __DIR__ . '/..' . '/julien731/wp-dismissible-notices-handler/handler.php',
