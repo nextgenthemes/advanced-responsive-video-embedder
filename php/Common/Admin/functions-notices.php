@@ -25,7 +25,7 @@ function activation_notices() {
 			dnh_register_notice(
 				"ngt-$key-activation-notice",
 				'notice-info',
-				'<p>' . wp_kses( $msg, [ 'a' => [ 'href' ] ] ) . '</p>',
+				'<p>' . $msg . '</p>',
 				[
 					'cap' => 'change_options',
 				]
