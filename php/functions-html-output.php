@@ -194,7 +194,7 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 	if ( isset( $_GET['arve-debug-html'] ) ) {
 		$html .= sprintf( '<pre style="%s">%s</pre>', esc_attr( $pre_style ), esc_html( $input_html ) );
 	}
-	// phpcs:enable WordPress.Security.NonceVerification.Recommended
+	// phpcs:enable
 
 	return $html;
 }
@@ -226,6 +226,15 @@ function arve_embed_inner_html( array $a ) {
 
 		$html .= build_rating_meta( $a );
 	endif;
+
+	/*
+	$providers  = get_host_properties();
+	$embed_code = empty( $providers[ $a['provider'] ]['embed_code'] ) ? false : $providers[ $a['provider'] ]['embed_code'];
+
+	if ( $embed_code ) {
+		$html .= sprintf( $embed_code, $a['id'] );
+	}
+	*/
 
 	if ( 'html5' === $a['provider'] ) {
 		$html .= build_video_tag( $a );
@@ -348,7 +357,7 @@ function promote_link( $arve_link ) {
 		return sprintf(
 			'<a href="%s" title="%s" class="arve-promote-link" target="_blank">%s</a>',
 			esc_url( 'https://nextgenthemes.com/plugins/arve-pro/' ),
-			esc_attr( __( 'Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', 'advanced-responsive-video-embedder' ) ),
+			esc_attr( __( 'Powered by ARVE Advanced Responsive Video Embedder WordPress plugin', 'advanced-responsive-video-embedder' ) ),
 			esc_html__( 'ARVE', 'advanced-responsive-video-embedder' )
 		);
 	}
