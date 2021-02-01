@@ -554,12 +554,13 @@ function all_settings() {
 			'type'        => 'string',
 			'description' => __( 'The base poition is always in the corner pointing to the middle of the screem, nagative values will position the button outside of video.', 'advanced-responsive-video-embedder' ),
 		],
-		'sticky_pos' => [
+		'sticky_position' => [
 			'tag'         => 'sticky-videos',
-			'default'     => 'top-left',
+			'default'     => 'top-right',
 			'label'       => __( 'Sticky Video Position', 'advanced-responsive-video-embedder' ),
 			'type'        => 'select',
 			'options'     => [
+				''             => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
 				'top-left'     => __( 'Top left', 'advanced-responsive-video-embedder' ),
 				'top-right'    => __( 'Top right', 'advanced-responsive-video-embedder' ),
 				'bottom-left'  => __( 'Bottom left', 'advanced-responsive-video-embedder' ),

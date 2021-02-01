@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019 Nicolas Jonas
+ * Copyright (c) 2019-2021 Nicolas Jonas
  * License: GPL 3.0
  *
  * Based on: https://gist.github.com/pento/cf38fd73ce0f13fcf0f0ae7d6c4b685d

@@ -146,12 +146,12 @@ new Vue({
 			const postUrl = 'https://nextgenthemes.com';
 
 			xhttp.onreadystatechange = function () {
-				console.log( 'xhttp.readyState', xhttp.readyState ); // eslint-disable-line
-				console.log( 'xhttp.status', xhttp.status ); // eslint-disable-line
+				console.log('xhttp.readyState', xhttp.readyState); // eslint-disable-line
+				console.log('xhttp.status', xhttp.status); // eslint-disable-line
 
 				if (xhttp.readyState === 4 && xhttp.status === 200) {
 					const slData = JSON.parse(xhttp.responseText);
-					console.log( 'slData', slData ); // eslint-disable-line
+					console.log('slData', slData); // eslint-disable-line
 				}
 			};
 
@@ -207,5 +207,3 @@ new Vue({
 		},
 	}, // end: methods
 }); // end: Vue()
-
-
