@@ -1,24 +1,30 @@
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
+const path = require('path');
+const { exit, cwd, env } = require('process');
+const project = env.NPROJECT;
 
-module.exports = {
+if ( undefined === project ) {
+	exit(1);
+}
+
+const config = {
 	...defaultConfig,
 	entry: {
-		main: './src/main.ts',
-		block: './src/block.tsx',
-		admin: './src/admin.ts',
-		'shortcode-ui': './src/shortcode-ui.ts',
-		'common/settings': './src/common/settings.ts',
-		'common/notice-ajax': './src/common/notice-ajax.ts',
+		main: path.resolve( cwd(), project, 'src', 'main.ts' ),
+	},
+	output: {
+		...defaultConfig.output,
+		path: path.resolve(cwd(), project, 'build'),
 	},
 	module: {
 		...defaultConfig.module,
 		rules: [
+			...defaultConfig.module.rules,
 			{
 				test: /\.tsx?$/,
 				use: 'ts-loader',
 				exclude: /node_modules/,
 			},
-			...defaultConfig.module.rules,
 		],
 	},
 	resolve: {
@@ -29,3 +35,15 @@ module.exports = {
 		},
 	},
 };
+
+if ('advanced-responsive-video-embedder' === project ) {
+	config.entry = {
+		main: path.resolve(cwd(), project, 'src', 'main.ts'),
+		block: path.resolve(cwd(), project, 'src', 'block.tsx'),
+		admin: path.resolve(cwd(), project, 'src', 'admin.ts'),
+		'shortcode-ui': path.resolve(cwd(), project, 'src', 'shortcode-ui.ts'),
+		'common/settings': path.resolve(cwd(), project, 'src', 'common', 'settings.ts'),
+	};
+}
+
+module.exports = config;

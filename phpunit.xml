@@ -1,5 +1,5 @@
 <phpunit
-	bootstrap="tests/bootstrap.php"
+	bootstrap="phpunit-boot.php"
 	backupGlobals="false"
 	colors="true"
 	convertErrorsToExceptions="true"
@@ -7,8 +7,11 @@
 	convertWarningsToExceptions="true"
 	>
 	<testsuites>
-		<testsuite>
-			<directory prefix="tests-" suffix=".php">./tests/</directory>
+		<testsuite name="arve">
+			<directory prefix="tests-" suffix=".php">./advanced-responsive-video-embedder/tests/</directory>
+		</testsuite>
+		<testsuite name="arve-random-video">
+			<directory prefix="tests-" suffix=".php">./arve-random-video/tests/</directory>
 		</testsuite>
 	</testsuites>
 	<filter>

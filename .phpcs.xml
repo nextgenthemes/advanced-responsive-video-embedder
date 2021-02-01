@@ -50,6 +50,15 @@
 	<config name="minimum_supported_wp_version" value="4.4.24"/>
 	<!-- Set textdomains. -->
 	<rule ref="WordPress.WP.I18n">
+		<include-pattern>./advanced-responsive-video-embedder/*</include-pattern>
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="advanced-responsive-video-embedder"/>
+			</property>
+		</properties>
+	</rule>
+	<rule ref="WordPress.WP.I18n">
+		<include-pattern>./advanced-responsive-video-embedder/*</include-pattern>
 		<properties>
 			<property name="text_domain" type="array">
 				<element value="advanced-responsive-video-embedder"/>

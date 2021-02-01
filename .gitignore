@@ -1,7 +1,8 @@
+# symlinks
+/arve-*
+# folders
 node_modules/
-
-/vendor/
-/codecov/
+vendor/
 
 # Numerous always-ignore extensions
 *.diff
