@@ -37,7 +37,7 @@ jobs:
         with:
           repository: nextgenthemes/arve-pro
           ref: v5
-          path: arve-pro
+          path: plugins/arve-pro
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Checkout ARVE Random Video
@@ -45,7 +45,7 @@ jobs:
         with:
           repository: nextgenthemes/arve-random-video
           ref: master
-          path: arve-random-video
+          path: plugins/arve-random-video
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Checkout ARVE Random Video
@@ -53,7 +53,7 @@ jobs:
         with:
           repository: nextgenthemes/arve-random-video
           ref: master
-          path: arve-random-video
+          path: plugins/arve-random-video
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Setup PHP, with composer and extensions

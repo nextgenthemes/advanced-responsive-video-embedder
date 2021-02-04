@@ -1,13 +1,7 @@
-/*/
-!/.dependabot
-!/.github
-!/plugins/
-/plugins/*
-!/plugins/advanced-responsive-video-embedder
-
 # folders
 node_modules/
 vendor/
+src/
 
 # Numerous always-ignore extensions
 *.diff

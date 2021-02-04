@@ -25,10 +25,16 @@
 		"moduleResolution": "node", // because of webpack
 		"allowSyntheticDefaultImports": true, // to make it compatible with babel
 		"esModuleInterop": true, // to make it compatible with babel
-		"isolatedModules": false // to limit implementation
+		"isolatedModules": false, // to limit implementation
+		"preserveSymlinks": true // Also needs webpackConfig.resolve.symlinks = false
 	},
 	"exclude": [
-		"node_modules",
-		"build",
+		"**/build/**",
+		"**/test/**"
+	],
+	"include": [
+		"plugins/advanced-responsive-video-embedder/src/*",
+		"plugins/arve-*/src/*",
+		"plugins/symbiosis/src/ts/*",
 	]
 }

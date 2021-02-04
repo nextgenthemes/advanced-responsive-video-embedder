@@ -12,4 +12,4 @@ update_configs:
     update_schedule: "monthly"
     default_labels:
       - "dependencies"
-    version_requirement_updates: "increase_versions
+    version_requirement_updates: "increase_versions"

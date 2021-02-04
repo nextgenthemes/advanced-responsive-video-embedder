@@ -26,11 +26,12 @@ require_once $_tests_dir . '/includes/functions.php';
  */
 function _manually_load_plugin() {
 
-	require __DIR__ . '/advanced-responsive-video-embedder/advanced-responsive-video-embedder.php';
-	require __DIR__ . '/arve-random-video/tests/activate.php';
+	require __DIR__ . '/plugins/advanced-responsive-video-embedder/advanced-responsive-video-embedder.php';
+	require __DIR__ . '/plugins/arve-random-video/tests/activate.php';
 
-	foreach ( glob('arve-*', GLOB_ONLYDIR ) as $dirname ) {
-		require __DIR__ . "/$dirname/$dirname.php";
+	foreach ( glob( 'plugins/arve-*', GLOB_ONLYDIR ) as $dirname ) {
+		$dirname = basename( $dirname );
+		require __DIR__ . "/plugins/$dirname/$dirname.php";
 		$GLOBALS['arve_detected_addons'][] = $dirname;
 	}
 }

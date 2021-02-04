@@ -16,19 +16,19 @@ function logfile( $name, $var, $file ) {
 	error_log( $msg . PHP_EOL, 3, "$file.log" );
 }
 
-function rm_logfile($file) {
+function rm_logfile( $file ) {
 
 	$file = "$file.log";
 
-	if (is_file($file)) {
-		unlink($file);
+	if ( is_file( $file ) ) {
+		unlink( $file );
 	}
 }
 
-function pd($var) {
+function pd( $var ) {
 
 	ob_start();
-	var_dump($var);
+	var_dump( $var );
 
 	fwrite( STDOUT, ob_get_clean() . PHP_EOL );
 }

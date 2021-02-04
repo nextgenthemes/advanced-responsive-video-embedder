@@ -44,6 +44,10 @@ module.exports = {
 				browser: false,
 				node: true,
 			},
+			rules: {
+				'no-console': 'off',
+				'@typescript-eslint/no-var-requires': 'off',
+			},
 		},
 	],
 };
