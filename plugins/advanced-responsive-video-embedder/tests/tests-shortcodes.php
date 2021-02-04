@@ -159,56 +159,6 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		);
 	}
 
-	public function old_test_compare_shortcodes() {
-
-		$atts = array(
-			'id'        => 'hRonZ4wP8Ys',
-			'provider'  => 'youtube',
-			'thumbnail' => 'https://example.com/image.jpg',
-			'title'     => 'Something',
-			'url'       => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
-		);
-
-		$new_atts = $atts;
-		$old_atts = $atts;
-
-		$this->assertSame(
-			shortcode( $old_atts ),
-			shortcode( $new_atts )
-		);
-
-		unset( $old_atts['url'] );
-
-		unset( $new_atts['id'] );
-		unset( $new_atts['provider'] );
-
-		$this->assertSame(
-			shortcode( $old_atts ),
-			shortcode( $new_atts )
-		);
-	}
-
-	public function NO_test_modes() {
-
-		$output = shortcode( array( 'url' => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys' ) );
-
-		$this->assertNotContains( 'Error', $output );
-		$this->assertContains( 'data-mode="normal"', $output );
-
-		$modes = array( 'lazyload', 'lazyload-lightbox' );
-
-		foreach ( $modes as $key => $mode ) {
-
-			$output = shortcode(
-				array(
-					'url'  => 'https://www.youtube.com/watch?v=hRonZ4wP8Ys',
-					'mode' => $mode,
-				)
-			);
-			$this->assertContains( 'Error', $output );
-		}
-	}
-
 	public function test_attr() {
 
 		$output = shortcode(

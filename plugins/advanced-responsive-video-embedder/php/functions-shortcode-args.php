@@ -116,10 +116,10 @@ function args_validate( array $a ) {
 		$a[ $arg ] = validate_bool( $a[ $arg ], $arg );
 	};
 
-	$url_args = array_merge( VIDEO_FILE_EXTENSIONS, array( 'url', 'src' ) );
+	$url_args = array_merge( VIDEO_FILE_EXTENSIONS, [ 'url', 'src' ] );
 
-	foreach ( $url_args as $key => $urlarg ) {
-		$a[ $urlarg ] = validate_url( $a[ $urlarg ], $urlarg );
+	foreach ( $url_args as $argname ) {
+		$a[ $argname ] = validate_url( $a[ $argname ], $argname, $a );
 	};
 
 	$a['align']        = validate_align( $a );
@@ -128,7 +128,7 @@ function args_validate( array $a ) {
 	return $a;
 }
 
-function validate_url( $url, $attr_name ) {
+function validate_url( $url, $argname, array $a ) {
 
 	if ( ! empty( $url ) && ! valid_url( $url ) ) {
 
@@ -136,10 +136,10 @@ function validate_url( $url, $attr_name ) {
 			// Translators: 1 URL 2 Attr name
 			__( 'Invalid URL <code>%1$s</code> in <code>%2$s</code>', 'advanced-responsive-video-embedder' ),
 			esc_html( $url ),
-			esc_html( $attr_name )
+			esc_html( $argname )
 		);
 
-		$a['errors']->add( $attr_name, $error_msg );
+		$a['errors']->add( $argname, $error_msg );
 	}
 
 	return $url;
