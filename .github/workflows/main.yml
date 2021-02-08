@@ -129,5 +129,5 @@ jobs:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
         with:
-          working-directory: advanced-responsive-video-embedder
+          working-directory: plugins/advanced-responsive-video-embedder
           create zip: false

@@ -75,6 +75,10 @@ switch (project) {
 					{
 						from: 'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
 					},
+					// {
+					// 	from: 'node_modules/bootstrap-icons/icons',
+					// 	to: 'svg/bs-icons',
+					// },
 				],
 			}),
 		];
