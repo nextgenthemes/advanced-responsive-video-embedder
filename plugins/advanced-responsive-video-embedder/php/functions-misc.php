@@ -1,6 +1,10 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+function get_host_properties() {
+	return require __DIR__ . '/providers.php';
+}
+
 function aspect_ratio_gcd( $aspect_ratio ) {
 
 	list( $width, $height ) = explode( ':', $aspect_ratio );

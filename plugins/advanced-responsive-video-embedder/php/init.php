@@ -29,7 +29,6 @@ function init_public() {
 	require_once PLUGIN_DIR . '/php/functions-shortcodes.php';
 	require_once PLUGIN_DIR . '/php/functions-url-handlers.php';
 	require_once PLUGIN_DIR . '/php/functions-validation.php';
-	require_once PLUGIN_DIR . '/php/functions-host-properties.php';
 	require_once PLUGIN_DIR . '/php/functions-settings.php';
 
 	add_action( 'init', __NAMESPACE__ . '\add_oembed_providers' );

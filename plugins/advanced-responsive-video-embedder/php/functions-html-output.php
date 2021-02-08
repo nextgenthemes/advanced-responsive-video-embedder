@@ -227,15 +227,6 @@ function arve_embed_inner_html( array $a ) {
 		$html .= build_rating_meta( $a );
 	endif;
 
-	/*
-	$providers  = get_host_properties();
-	$embed_code = empty( $providers[ $a['provider'] ]['embed_code'] ) ? false : $providers[ $a['provider'] ]['embed_code'];
-
-	if ( $embed_code ) {
-		$html .= sprintf( $embed_code, $a['id'] );
-	}
-	*/
-
 	if ( 'html5' === $a['provider'] ) {
 		$html .= build_video_tag( $a );
 	} else {
