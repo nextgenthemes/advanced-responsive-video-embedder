@@ -67,9 +67,8 @@ function build_video( array $input_atts ) {
 	$html = '';
 
 	try {
-		Common\check_product_keys();
-
 		$a = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
+		Common\check_product_keys();
 		$a = process_shortcode_args( $a );
 
 		ksort( $a );
