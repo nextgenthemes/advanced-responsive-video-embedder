@@ -4,9 +4,13 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
 
-### 2021-02-01 9.5.0 ###
+### 2021-02-07 9.5.0 ###
 
-* New: Support for [banned.video](https://banned.video) and their [cantcensortruth.com](https://cantcensortruth.com) mirror site. Works directly with their URLs and **not** their embed codes. ARVE works without using their JavaScript on your site.
+* New video hosts support for
+  * [LBRY](https://lbry.com)
+  * [Odyssey](https://odysee.com)
+  * [donnersender.ru](https://donnersender.ru)
+  * [banned.video](https://banned.video) and their [cantcensortruth.com](https://cantcensortruth.com) mirror site. Works directly with their URLs and **not** their embed codes. ARVE works without using their JavaScript on your site.
 * Fix: Classic Video widget use with provider urls.
 * Fix: Filtered out link in new admin notices.
 
