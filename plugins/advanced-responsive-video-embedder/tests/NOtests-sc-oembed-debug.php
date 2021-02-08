@@ -7,7 +7,7 @@ use function \Nextgenthemes\ARVE\shortcode;
 // phpcs:disable WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 class Tests_OembedD extends WP_UnitTestCase {
 
-	public function oembed_debug() {
+	public function test_oembed_debug() {
 
 		// $html = shortcode(
 		// 	[
