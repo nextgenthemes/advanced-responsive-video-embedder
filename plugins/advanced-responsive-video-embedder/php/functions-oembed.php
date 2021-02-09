@@ -23,6 +23,15 @@ function filter_oembed_dataparse( $result, $data, $url ) {
 	return $result;
 }
 
+function filter_oembed_dataparse_script( $result, $data, $url ) {
+
+	if ( $data && 'video' === $data->type ) {
+		$result .= '<script data-arve-oembed type="application/json">' . \wp_json_encode( $data, JSON_PRETTY_PRINT ) . '</script>';
+	}
+
+	return $result;
+}
+
 function oembed2args( $data, $url ) {
 
 	if ( false === $data || 'video' !== $data->type || disabled_on_feeds() ) {
