@@ -5,6 +5,7 @@ namespace Nextgenthemes\ARVE;
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
 // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+// phpcs:disable WordPress.PHP.DiscouragedPHPFunctions.system_calls_system
 function __( $a, $b ) {}
 function varexport($expression, $return = false) {
 	$export = var_export($expression, true);
@@ -27,3 +28,5 @@ ksort( $hosts );
 
 $content = '<?php return ' . varexport( $hosts, true ) . ';';
 file_put_contents( $file, $content );
+
+system( "phpcbf $file" );
