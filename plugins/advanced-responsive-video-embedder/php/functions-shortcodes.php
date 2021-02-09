@@ -59,11 +59,6 @@ function add_error_html( array $a ) {
 
 function build_video( array $input_atts ) {
 
-	if ( ! empty( $input_atts['oembed_debug'] ) ) {
-		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
-		return '<pre class="arve-debug">' . var_export( $input_atts['oembed_data'], true ) . '</pre>';
-	}
-
 	$html = '';
 
 	try {
