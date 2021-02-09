@@ -113,16 +113,6 @@ class Tests_Shortcode extends WP_UnitTestCase {
 				} else {
 					$this->assertContains( 'itemprop="contentURL', $html );
 				}
-
-				if ( defined('Nextgenthemes\ARVE\Pro\VERSION') && ! empty( $v['auto_title'] ) ) {
-					$this->assertContains( 'class="arve-title', "Test for host: $provider and url: {$test['url']}" );
-					$this->assertContains( 'itemprop="name"', $html );
-				}
-
-				if ( defined('Nextgenthemes\ARVE\Pro\VERSION') && ! empty( $v['auto_thumbnial'] ) ) {
-					$this->assertContains( 'class="arve-thumbnail', $html, "Test for host: $provider and url: {$test['url']}" );
-					$this->assertContains( 'itemprop="thumbnailUrl"', $html );
-				}
 			}
 		endforeach;
 	}
