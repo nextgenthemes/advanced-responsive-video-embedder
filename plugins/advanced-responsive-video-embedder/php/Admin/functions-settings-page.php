@@ -38,6 +38,12 @@ function settings_content() {
 
 function settings_sidebar() {
 
+	if ( ! current_user_can('install_plugins') ) {
+		echo '<div class="ngt-sidebar-box">';
+		esc_html_e( 'Note that you are logged in with a user who that can\'t install plugins, ask someone who can if you are interrested an addon.', 'advanced-responsive-video-embedder' );
+		echo '</div>';
+	}
+
 	if ( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
 		print_settings_box_html( '/partials/settings-sidebar-pro.html' );
 	}
