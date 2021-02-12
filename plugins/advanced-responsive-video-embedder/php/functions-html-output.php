@@ -6,8 +6,17 @@ use function \Nextgenthemes\ARVE\Common\get_var_dump;
 function build_html( array $a ) {
 
 	$options       = options();
-	$wrapped_video = arve_embed( arve_embed_inner_html( $a ), $a );
-	$wrapped_video = '<span class="arve-inner">' . $wrapped_video . '</span>';
+	$wrapped_video = build_tag(
+		array(
+			'name'       => 'inner',
+			'tag'        => 'span',
+			'inner_html' => arve_embed( arve_embed_inner_html( $a ), $a ),
+			'attr'       => array(
+				'class' => 'arve-inner',
+			),
+		),
+		$a
+	);
 
 	return build_tag(
 		array(
@@ -155,6 +164,8 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 	$html = '';
 
 	// phpcs:disable WordPress.Security.NonceVerification.Recommended
+	// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
+	// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
 	if ( isset( $_GET['arve-debug-options'] ) ) {
 		static $show_options_debug = true;
 
@@ -174,21 +185,19 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 
 	if ( ! empty( $_GET['arve-debug-attr'] ) ) {
 		$debug_attr = sanitize_text_field( wp_unslash( $_GET['arve-debug-attr'] ) );
-		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 		$input_attr = isset( $input_atts[ $debug_attr ] ) ? print_r( $input_atts[ $debug_attr ], true ) : 'not set';
 		$html      .= sprintf(
 			'<pre style="%1$s">in %2$s: %3$s%2$s: %4$s</pre>',
 			esc_attr( $pre_style ),
 			esc_html( $debug_attr ),
 			esc_html( $input_attr ) . PHP_EOL,
-			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 			esc_html( print_r( $a[ $debug_attr ], true ) )
 		);
 	}
 
 	if ( isset( $_GET['arve-debug-atts'] ) ) {
-		$html .= sprintf( '<pre style="%s">in: %s</pre>', esc_attr( $pre_style ), get_var_dump( array_filter( $input_atts ) ) );
-		$html .= sprintf( '<pre style="%s">$a: %s</pre>', esc_attr( $pre_style ), get_var_dump( array_filter( $a ) ) );
+		$html .= sprintf( '<pre style="%s">in: %s</pre>', esc_attr( $pre_style ), var_export( array_filter( $input_atts ), true ) );
+		$html .= sprintf( '<pre style="%s">$a: %s</pre>', esc_attr( $pre_style ), var_export( array_filter( $a ), true ) );
 	}
 
 	if ( isset( $_GET['arve-debug-html'] ) ) {
@@ -319,20 +328,25 @@ function build_tag( array $tag, array $a ) {
 
 		$html = '';
 
+		if ( ! empty($tag['inner_html']) ) {
+			$html = $tag['inner_html'];
+		}
 	} else {
 
 		if ( ! empty( $tag['inner_html'] )
 			|| ( isset( $tag['inner_html'] ) && '' === $tag['inner_html'] )
 		) {
+			$inner_html = $tag['inner_html'] ? PHP_EOL . $tag['inner_html'] . PHP_EOL : '';
+
 			$html = sprintf(
-				PHP_EOL . '<%1$s%2$s>%3$s</%1$s>' . PHP_EOL,
+				'<%1$s%2$s>%3$s</%1$s>' . PHP_EOL,
 				esc_html( $tag['tag'] ),
 				Common\attr( $tag['attr'] ),
-				$tag['inner_html']
+				$inner_html
 			);
 		} else {
 			$html = sprintf(
-				PHP_EOL . '<%s%s>' . PHP_EOL,
+				'<%s%s>' . PHP_EOL,
 				esc_html( $tag['tag'] ),
 				Common\attr( $tag['attr'] )
 			);
@@ -368,7 +382,18 @@ function arve_embed( $html, array $a ) {
 	if ( '16:9' === $a['aspect_ratio'] ) {
 		$class .= ' arve-embed--16by9';
 	} elseif ( $a['aspect_ratio'] ) {
-		$ratio_span = sprintf( '<span class="arve-ar" style="padding-top:%F%%"></span>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
+		$ratio_span = build_tag(
+			array(
+				'name'       => 'ar',
+				'tag'        => 'span', // so we output it within <p>
+				'inner_html' => '',
+				'attr'       => array(
+					'class' => 'arve-ar',
+					'style' => sprintf( 'padding-top:%F%%', aspect_ratio_to_percentage( $a['aspect_ratio'] ) ),
+				),
+			),
+			$a
+		);
 	}
 
 	return build_tag(
