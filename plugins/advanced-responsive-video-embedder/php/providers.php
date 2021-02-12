@@ -83,6 +83,19 @@
 			],
 		],
 	],
+	'mailru' => [
+		'name'         => 'Mail.ru',
+		'regex'        => '#https?://my\\.mail\\.ru/video/embed/(?<id>[0-9]+)#i',
+		'oembed'       => false,
+		'embed_url'    => 'https://my.mail.ru/video/embed/%s',
+		'requires_src' => true,
+		'tests'        => [
+			0 => [
+				'url' => 'https://my.mail.ru/video/embed/1475383959813619758',
+				'id'  => 1475383959813619758,
+			],
+		],
+	],
 	'brightcove' => [
 		'name'         => 'Brightcove',
 		'regex'        => '#https?://(players|link)\\.brightcove\\.net/(?<account_id>[0-9]+)/(?<brightcove_player>[a-z0-9]+)_(?<brightcove_embed>[a-z0-9]+)/index\\.html\\?videoId=(?<id>[0-9]+)#i',
@@ -355,7 +368,7 @@
 		'requires_src' => true,
 	],
 	'rumble' => [
-		'name'           => 'rumble.com',
+		'name'           => 'Rumble.com',
 		'regex'          => '#https://rumble\\.com/(embed/)?(?<id>[^-/]+)#i',
 		'embed_url'      => 'https://rumble.com/embed/%s/',
 		'default_params' => '',
@@ -628,8 +641,8 @@
 				'id'  => 'eqnnyDa7C7Q',
 			],
 			4 => [
-				'url'          => 'https://youtu.be/hRonZ4wP8Ys',
-				'id'           => 'hRonZ4wP8Ys',
+				'url' => 'https://youtu.be/hRonZ4wP8Ys',
+				'id'  => 'hRonZ4wP8Ys',
 			],
 			5 => [
 				'url' => 'http://www.youtube.com/watch?v=GjL82KUHVb0&list=PLI46g-I12_9qGBq-4epxOay0hotjys5iA&index=10',
