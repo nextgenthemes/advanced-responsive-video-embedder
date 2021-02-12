@@ -149,7 +149,6 @@ function shortcode_pairs() {
 			'url_handler'        => null,
 			'legacy_sc'          => null,
 			'gutenberg'          => null,
-			'src'                => null,
 			'img_srcset'         => null,
 			'maxwidth'           => null, # Overwriting the option value ON PURPOSE here, see arg_maxwidth
 			'av1mp4'             => null,
@@ -163,6 +162,7 @@ function shortcode_pairs() {
 			'brightcove_player'  => null,
 			'brightcove_embed'   => null,
 			'video_sources_html' => null,
+			'post_id'            => null,
 		)
 	);
 
@@ -545,22 +545,6 @@ function all_settings() {
 			'label'     => __( 'Sticky on Mobiles', 'advanced-responsive-video-embedder' ),
 			'type'      => 'select',
 			'options'   => $def_bool_options,
-		),
-		'sticky_close_btn_pos_x'        => array(
-			'tag'         => 'sticky-videos',
-			'default'     => '0',
-			'shortcode'   => false,
-			'label'       => __( 'Close Button Position X', 'advanced-responsive-video-embedder' ),
-			'type'        => 'string',
-			'description' => __( 'The base poition is always in the corner pointing to the middle of the screem, nagative values will position the button outside of video.', 'advanced-responsive-video-embedder' ),
-		),
-		'sticky_close_btn_pos_y'        => array(
-			'tag'         => 'sticky-videos',
-			'default'     => '-15px',
-			'shortcode'   => false,
-			'label'       => __( 'Close Button Position X', 'advanced-responsive-video-embedder' ),
-			'type'        => 'string',
-			'description' => __( 'The base poition is always in the corner pointing to the middle of the screem, nagative values will position the button outside of video.', 'advanced-responsive-video-embedder' ),
 		),
 		'sticky_position'               => array(
 			'tag'         => 'sticky-videos',

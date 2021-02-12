@@ -1,5 +1,6 @@
 <?php
 use function \Nextgenthemes\ARVE\shortcode;
+use function \Nextgenthemes\ARVE\build_video;
 use function \Nextgenthemes\ARVE\get_host_properties;
 
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
@@ -78,13 +79,12 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertContains( 'Error', $html );
 	}
 
-	public function test_empty_url_and_fatal_error() {
-
-		#$this->expectException('Exception');
-
+	public function test_empty_url() {
 		$html = shortcode( array( 'url' => '' ) );
 		$this->assertContains( 'Error', $html );
+	}
 
+	public function test_unknown_url() {
 		$html = shortcode( array( 'url' => 'https://example.com' ) );
 		$this->assertContains( '<iframe', $html );
 	}
@@ -118,16 +118,21 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertContains( 'Error', $html );
 	}
 
-	public function test_wrong_src_mismatch() {
+	public function test_wrong_oembed_iframe_src() {
 
-		$html = shortcode(
-			array(
-				'provider' => 'vimeo',
-				'url'      => 'https://vimeo.com/375438048',
-				'src'      => '?dnt=1',
-			)
+		$od = new StdClass();
+
+		$od->provider_name = 'Unknown';
+		$od->html          = '<iframe src="?bullshit">';
+
+		$html = build_video(
+			[
+				'url'         => 'http://example.com',
+				'oembed_data' => $od,
+			]
 		);
+
 		$this->assertContains( 'Error', $html );
-		$this->assertContains( '<span class="arve-error" hidden>', $html );
+		$this->assertContains( 'Invalid oembed src url detected', $html );
 	}
 }

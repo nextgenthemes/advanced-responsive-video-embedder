@@ -12,13 +12,12 @@ function init_public() {
 
 	add_option( 'arve_install_date', time() );
 
-	if ( version_compare( get_option( 'arve_version' ), VERSION, '<' ) ) {
+	if ( version_compare( get_option( 'arve_version' ), '9.5.0', '<' ) ) {
 		update_option( 'nextgenthemes_arve_oembed_recache', time() );
-		update_option( 'arve_version', VERSION );
 	}
+	update_option( 'arve_version', VERSION );
 
 	require_once PLUGIN_DIR . '/php/Common/init.php';
-	require_once PLUGIN_DIR . '/php/EmbedChecker.php';
 	require_once PLUGIN_DIR . '/php/functions-deprecated.php';
 	require_once PLUGIN_DIR . '/php/functions-assets.php';
 	require_once PLUGIN_DIR . '/php/functions-html-output.php';
@@ -41,7 +40,7 @@ function init_public() {
 	add_action( 'wp_video_shortcode_override', __NAMESPACE__ . '\wp_video_shortcode_override', 10, 4 );
 	add_filter( 'language_attributes', __NAMESPACE__ . '\html_id' );
 	add_filter( 'oembed_dataparse', __NAMESPACE__ . '\filter_oembed_dataparse', 11, 3 );
-	add_filter( 'embed_oembed_html', __NAMESPACE__ . '\maybe_enqueue_assets', 99 );
+	add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', 20, 4 );
 	add_filter( 'oembed_ttl', __NAMESPACE__ . '\trigger_cache_rebuild', 10, 4 );
 	add_filter( 'embed_oembed_discover', __NAMESPACE__ . '\reenable_oembed_cache' );
 }

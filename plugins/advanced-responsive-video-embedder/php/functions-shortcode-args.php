@@ -3,12 +3,16 @@ namespace Nextgenthemes\ARVE;
 
 function process_shortcode_args( array $a ) {
 
+	if ( ! empty( $a['oembed_data'] ) ) {
+		$a['provider'] = sane_provider_name( $a['oembed_data']->provider_name );
+		$a['src']      = oembed_html2src( $a['oembed_data'], $a );
+	}
+
 	missing_attribute_check( $a );
 
-	$a        = args_validate( $a );
-	$a['src'] = video_widget_fix( $a );
-	$a        = args_detect_html5( $a );
-	$a        = detect_provider_and_id_from_url( $a );
+	$a = args_validate( $a );
+	$a = args_detect_html5( $a );
+	$a = detect_provider_and_id_from_url( $a );
 
 	$a['aspect_ratio'] = arg_aspect_ratio( $a );
 	$a['thumbnail']    = apply_filters( 'nextgenthemes/arve/args/thumbnail', $a['thumbnail'], $a );
@@ -27,17 +31,37 @@ function process_shortcode_args( array $a ) {
 	return $a;
 }
 
-function video_widget_fix( array $a ) {
+function sane_provider_name( $provider ) {
+	$provider = preg_replace( '/[^a-z0-9]/', '', strtolower( $provider ) );
+	$provider = str_replace( 'wistiainc', 'wistia', $provider );
+	$provider = str_replace( 'rumblecom', 'rumble', $provider );
 
-	// This happens in the video widget (classic)
-	if ( $a['src'] &&
-		( $a['src'] === $a['url'] ) &&
-		! $a['provider']
-	) {
-		$a['src'] = null;
+	return $provider;
+}
+
+function oembed_html2src( $data, $a ) {
+
+	if ( 'Facebook' === $data->provider_name ) {
+		preg_match( '/class="fb-video" data-href="([^"]+)"/', $data->html, $matches );
+	} else {
+		preg_match( '/<iframe [^>]*src="([^"]+)"/', $data->html, $matches );
 	}
 
-	return $a['src'];
+	if ( empty( $matches[1] ) ) {
+		$a['errors']->add( 'on-oembed-src', 'No oembed src detected' );
+		return null;
+	}
+
+	if ( ! valid_url( $matches[1] ) ) {
+		$a['errors']->add( 'invalid-oembed-src-url', 'Invalid oembed src url detected' );
+		return null;
+	}
+
+	if ( 'Facebook' === $data->provider_name ) {
+		return 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $matches[1] );
+	} else {
+		return $matches[1];
+	}
 }
 
 function arg_maxwidth( array $a ) {
@@ -116,7 +140,7 @@ function args_validate( array $a ) {
 		$a[ $arg ] = validate_bool( $a[ $arg ], $arg );
 	};
 
-	$url_args = array_merge( VIDEO_FILE_EXTENSIONS, [ 'url', 'src' ] );
+	$url_args = array_merge( VIDEO_FILE_EXTENSIONS, [ 'url' ] );
 
 	foreach ( $url_args as $argname ) {
 		$a[ $argname ] = validate_url( $a[ $argname ], $argname, $a );
@@ -313,7 +337,7 @@ function detect_provider_and_id_from_url( array $a ) {
 
 	if ( ! $a['provider'] ) {
 		$a['provider'] = 'iframe';
-		$a['src']      = $a['src'] ? $a['src'] : $a['url'];
+		$a['src']      = $a['url'];
 	}
 
 	return $a;
@@ -328,9 +352,13 @@ function arg_iframe_src( array $a ) {
 	$options      = options();
 	$a['src_gen'] = build_iframe_src( $a );
 	$a['src_gen'] = special_iframe_src_mods( $a['src_gen'], $a );
-	$a['src']     = special_iframe_src_mods( $a['src'], $a, 'oembed src' );
 
-	compare_oembed_src_with_generated_src( $a );
+	if ( ! empty( $a['src'] ) ) {
+		$a['src'] = special_iframe_src_mods( $a['src'], $a, 'oembed src' );
+		compare_oembed_src_with_generated_src( $a );
+	} else {
+		$a['src'] = false;
+	}
 
 	if ( ! valid_url( $a['src'] ) && valid_url( $a['src_gen'] ) ) {
 		$a['src'] = $a['src_gen'];
@@ -414,7 +442,7 @@ function build_iframe_src( array $a ) {
 
 function compare_oembed_src_with_generated_src( $a ) {
 
-	if ( ! $a['src'] || ! $a['src_gen'] ) {
+	if ( empty($a['src']) || empty($a['src_gen']) ) {
 		return;
 	}
 

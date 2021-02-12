@@ -118,14 +118,3 @@ function gutenberg_block( $args ) {
 
 	return shortcode( $args );
 }
-
-function maybe_enqueue_assets( $html ) {
-
-	// Doing this because of embed caching the actual functions and filters generating the videos may not be called, if the Block or Shortcode is not used the styles would never get loaded but we micro optimize and load them only when needed this way.
-	if ( str_contains( $html, 'class="arve' ) ) {
-		wp_enqueue_style( 'arve' );
-		wp_enqueue_script( 'arve' );
-	}
-
-	return $html;
-}

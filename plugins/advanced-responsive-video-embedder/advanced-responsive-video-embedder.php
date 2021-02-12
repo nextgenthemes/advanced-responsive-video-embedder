@@ -44,10 +44,9 @@ function delete_oembed_cache() {
 
 	$wpdb->query(
 		$wpdb->prepare(
-			"DELETE FROM {$wpdb->postmeta} WHERE meta_key LIKE %s AND (meta_value LIKE %s OR meta_value LIKE %s)",
+			"DELETE FROM {$wpdb->postmeta} WHERE meta_key LIKE %s AND meta_value LIKE %s",
 			'%_oembed_%',
-			'%' . $wpdb->esc_like( 'id="arve' ) . '%',
-			'%' . $wpdb->esc_like( 'Advanced Responsive Video Embedder' ) . '%'
+			'%' . $wpdb->esc_like( 'data-arve-oembed' ) . '%'
 		)
 	);
 }
