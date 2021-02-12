@@ -8,7 +8,7 @@
 	stopOnFailure="true"
 	>
 	<testsuites>
-		<testsuite name="arve">
+		<testsuite name="advanced-responsive-video-embedder">
 			<directory prefix="tests-" suffix=".php">./plugins/advanced-responsive-video-embedder/tests/</directory>
 		</testsuite>
 		<testsuite name="arve-random-video">
