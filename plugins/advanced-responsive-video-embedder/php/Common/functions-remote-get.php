@@ -95,3 +95,13 @@ function remote_get_body_cached( $url, array $args = array(), $time = DAY_IN_SEC
 
 	return $response;
 }
+
+function get_image_size( $img_url ) {
+	$response = remote_get_body( $img_url, [ 'timeout' => 0.5 ] );
+
+	if ( is_wp_error( $response ) ) {
+		return false;
+	}
+
+	return getimagesizefromstring( $response );
+}

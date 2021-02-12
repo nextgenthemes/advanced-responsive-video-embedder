@@ -48,13 +48,13 @@ jobs:
           path: plugins/arve-random-video
           token: ${{ secrets.REPO_TOKEN }}
 
-      - name: Checkout ARVE Random Video
-        uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
-        with:
-          repository: nextgenthemes/arve-random-video
-          ref: master
-          path: plugins/arve-random-video
-          token: ${{ secrets.REPO_TOKEN }}
+      # - name: Checkout ARVE Sticky Videos
+      #   uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
+      #   with:
+      #     repository: nextgenthemes/arve-sticky-videos
+      #     ref: master
+      #     path: plugins/arve-sticky-videos
+      #     token: ${{ secrets.REPO_TOKEN }}
 
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@a83d4379b1200b3d0d19ad4fe0d7a440e00749c1 # 2.9.0 # https://github.com/shivammathur/setup-php

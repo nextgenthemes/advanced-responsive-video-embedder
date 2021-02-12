@@ -17,6 +17,9 @@
 		<testsuite name="arve-pro">
 			<directory prefix="tests-" suffix=".php">./plugins/arve-pro/tests/</directory>
 		</testsuite>
+		<testsuite name="arve-amp">
+			<directory prefix="tests-" suffix=".php">./plugins/arve-amp/tests/</directory>
+		</testsuite>
 		<testsuite name="arve-sticky-videos">
 			<directory prefix="tests-" suffix=".php">./plugins/arve-sticky-videos/tests/</directory>
 		</testsuite>
