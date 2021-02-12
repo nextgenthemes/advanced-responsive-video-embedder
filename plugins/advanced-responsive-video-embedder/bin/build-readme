@@ -36,7 +36,7 @@ function provider_list(): string {
 }
 
 $root = dirname( __DIR__ );
-require_once $root . '/php/functions-host-properties.php';
+require_once $root . '/php/functions-misc.php';
 $markdown = provider_list();
 
 file_put_contents( $root . '/readme/13-description-supported-providers.md', $markdown );

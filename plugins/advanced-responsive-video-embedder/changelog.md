@@ -9,10 +9,14 @@
 * New video hosts support for
   * [LBRY](https://lbry.com)
   * [Odyssey](https://odysee.com)
+  * [mail.ru](https://my.mail.ru/videos/)
   * [donnersender.ru](https://donnersender.ru)
-  * [banned.video](https://banned.video) and their [cantcensortruth.com](https://cantcensortruth.com) mirror site. Works directly with their URLs and **not** their embed codes. ARVE works without using their JavaScript on your site.
+  * [banned.video](https://banned.video) & [cantcensortruth.com](https://cantcensortruth.com) mirror site. Works directly with their URLs, **not** their embed codes. ARVE works without using their JavaScript on your site.
 * Fix: Classic Video widget use with provider urls.
 * Fix: Filtered out link in new admin notices.
+* Improved: Caching system simplified and improved.
+* Improved: Added info if logged in user can not install plugins.
+* Improved: Make more tags filterable.
 
 ### 2021-01-28 9.4.2 ###
 
