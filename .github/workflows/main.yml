@@ -105,11 +105,6 @@ jobs:
     name: SVN commit to wp.org
     runs-on: ubuntu-latest
     steps:
-        run: |
-          echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
-          echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
-          echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
-
       - name: Checkout
         uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
 
@@ -125,13 +120,13 @@ jobs:
       #   with:
       #     working-directory: plugins/advanced-responsive-video-embedder
 
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+
       - name: Deploy
-        run: ../../bin/wporg-deploy.php --version='$SOURCE_TAG' --svn-user='${{ secrets.SVN_USERNAME }}' --svn-pass='${{ secrets.SVN_PASSWORD }}'
+        run: ../../bin/wporg-deploy.php --version='${{ steps.get_version.outputs.VERSION }}' --svn-user='${{ secrets.SVN_USERNAME }}' --svn-pass='${{ secrets.SVN_PASSWORD }}'
         working-directory: plugins/advanced-responsive-video-embedder
-        env:
-          SOURCE_NAME: ${{ steps.branch_name.outputs.SOURCE_NAME }}
-          SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
-          SOURCE_TAG: ${{ steps.branch_name.outputs.SOURCE_TAG }}
 
       # - name: Maybe deploy to wp.org
       #   uses: 10up/action-wordpress-plugin-deploy@0dc3f76f710b55cd07aa546a77bc103a0f1f2f7a # 1.5.0 https://github.com/10up/action-wordpress-plugin-deploy/tags
