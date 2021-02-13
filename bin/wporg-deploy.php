@@ -30,7 +30,7 @@ var_export(
 
 # Checkout just trunk and assets for efficiency
 # Tagging will be handled on the SVN level
-echo '➤ Checking out .org repository...';
+echo '➤ Checking out wp.org repository...';
 sys( 'svn checkout --depth immediates ' . e($svn_url) . ' ' . e($svn_dir) );
 
 chdir($svn_dir);
@@ -38,8 +38,6 @@ sys('svn update --set-depth infinity assets');
 sys('svn update --set-depth infinity trunk');
 
 echo '➤ Copying files...' . PHP_EOL;
-#	git config --global user.email "10upbot+github@10up.com"
-#	git config --global user.name "10upbot on GitHub"
 
 mkdir($git_arch);
 sys('git --git-dir='.e("$git_dir/.git").' archive '.e("$version:$subdir").' | tar x --directory='.e($git_arch));

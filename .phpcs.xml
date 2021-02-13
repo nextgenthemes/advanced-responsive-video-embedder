@@ -52,16 +52,16 @@
 	<arg name="extensions" value="php"/>
 	<arg name="parallel" value="20"/>
 	<!-- Pass some flags to PHPCS:
-		 p flag: Show progress of the run.
-		 s flag: Show sniff codes in all reports.
+		p flag: Show progress of the run.
+		s flag: Show sniff codes in all reports.
 	-->
 	<arg value="ps"/>
 	<!-- Check PHP version compatibility. -->
 	<rule ref="PHPCompatibilityWP"/>
 	<config name="testVersion" value="5.6-"/>
 	<!-- Set the minimum supported WP version. This is used by several sniffs.
-		 The minimum version set here should be in line with the minimum WP version
-		 as set in the "Requires at least" tag in the readme.txt file. -->
+		The minimum version set here should be in line with the minimum WP version
+		as set in the "Requires at least" tag in the readme.txt file. -->
 	<config name="minimum_supported_wp_version" value="4.9.16"/>
 	<!-- Set textdomains. -->
 	<rule ref="WordPress.WP.I18n">

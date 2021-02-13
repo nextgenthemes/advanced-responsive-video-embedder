@@ -5,11 +5,11 @@
   "author": "Nicolas Jonas",
   "license": "GPL-3.0",
   "devDependencies": {
-    "@babel/plugin-transform-react-jsx": "^7.12.13",
-    "@babel/preset-typescript": "^7.12.13",
+    "@babel/plugin-transform-react-jsx": "^7.12.16",
+    "@babel/preset-typescript": "^7.12.16",
     "@svgr/webpack": "^5.5.0",
     "@types/classnames": "^2.2.11",
-    "@types/node": "^14.14.26",
+    "@types/node": "^14.14.27",
     "@types/wordpress__blocks": "^6.4.12",
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
@@ -25,7 +25,7 @@
     "bootstrap": "^5.0.0-beta2",
     "bootstrap-icons": "^1.3.0",
     "copy-webpack-plugin": "^6.4.1",
-    "eslint": "^7.18.0",
+    "eslint": "^7.20.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
@@ -78,7 +78,7 @@
     "test:e2e": "wp-scripts test-e2e",
     "test:unit": "wp-scripts test-unit-js",
     "SEPP": "SEP",
-    "update:composer": "composer update --no-dev --prefer-dist",
+    "update:composer": "composer update",
     "update:npm": "npm install; npm update; npm audit fix; npm audit || true",
     "update": "npm run update:composer & npm run update:npm; composer outdated & npm outdated"
   }
