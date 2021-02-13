@@ -125,7 +125,7 @@ jobs:
 
       - name: Deploy
         run: ../../bin/wporg-deploy.php --version='${{ github.ref }}' --svn-user='${{ secrets.SVN_USERNAME }}' --svn-pass='${{ secrets.SVN_PASSWORD }}'
-          working-directory: plugins/advanced-responsive-video-embedder
+        working-directory: plugins/advanced-responsive-video-embedder
 
       # - name: Maybe deploy to wp.org
       #   uses: 10up/action-wordpress-plugin-deploy@0dc3f76f710b55cd07aa546a77bc103a0f1f2f7a # 1.5.0 https://github.com/10up/action-wordpress-plugin-deploy/tags
