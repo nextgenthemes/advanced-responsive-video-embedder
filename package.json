@@ -56,6 +56,8 @@
     "start:advanced-responsive-video-embedder": "wp-scripts start",
     "build:arve-pro": "wp-scripts build",
     "start:arve-pro": "wp-scripts start",
+    "build:arve-amp": "echo no-build",
+    "start:arve-amp": "echo no-build",
     "build:arve-random-video": "wp-scripts build",
     "start:arve-random-video": "wp-scripts build",
     "build:arve-sticky-videos": "wp-scripts build",
