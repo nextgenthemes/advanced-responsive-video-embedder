@@ -68,10 +68,10 @@ system('svn propset svn:mime-type image/jpeg assets/*.jpg');
 sys('svn status');
 
 echo '➤ Committing files...' . PHP_EOL;
-$commit_command = 'svn commit -m "Update to version '.e($version).' from automation script" --no-auth-cache --non-interactive';
+$commit_command = 'svn commit -m "Update to version '.e($version).' from automation script" ';
 
 if ( $svn_user && $svn_pass ) {
-	$commit_command .= ' --username '.e($svn_user). ' --password '.e($svn_pass);
+	$commit_command .= '--no-auth-cache --non-interactive --username '.e($svn_user). ' --password '.e($svn_pass);
 }
 
 sys($commit_command);

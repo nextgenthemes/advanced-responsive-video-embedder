@@ -125,7 +125,6 @@ jobs:
 
       - name: Deploy
         run: ../../bin/wporg-deploy.php --version='${{ github.ref }}' --svn-user='${{ secrets.SVN_USERNAME }}' --svn-pass='${{ secrets.SVN_PASSWORD }}'
-        with:
           working-directory: plugins/advanced-responsive-video-embedder
 
       # - name: Maybe deploy to wp.org
