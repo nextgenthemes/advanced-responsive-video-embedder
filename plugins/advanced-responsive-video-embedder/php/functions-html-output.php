@@ -26,6 +26,7 @@ function build_html( array $a ) {
 			'attr'       => array(
 				'class'         => $a['align'] ? 'arve align' . $a['align'] : 'arve',
 				'data-mode'     => $a['mode'],
+				'data-oembed'   => $a['oembed_data'] ? '1' : false,
 				'data-provider' => $a['provider'],
 				'id'            => $a['uid'],
 				'style'         => $a['maxwidth'] ? sprintf( 'max-width:%dpx;', $a['maxwidth'] ) : false,
