@@ -26,6 +26,19 @@
 		<exclude name="Squiz.Commenting.FileComment.Missing" />
 		<exclude name="Generic.Commenting.DocComment.MissingShort" />
 		<exclude name="Squiz.PHP.CommentedOutCode.Found" />
+		<exclude name="Squiz.Strings.ConcatenationSpacing.PaddingFound" />
+	</rule>
+	<rule ref="WordPress.PHP.DevelopmentFunctions">
+		<exclude-pattern>*/bin/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.Security.EscapeOutput">
+		<exclude-pattern>*/bin/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.PHP.DiscouragedPHPFunctions">
+		<exclude-pattern>*/bin/*</exclude-pattern>
+	</rule>
+	<rule ref="PHPCompatibility">
+		<exclude-pattern>*/bin/*</exclude-pattern>
 	</rule>
 	<!-- Exclude files and folders. -->
 	<exclude-pattern>*/libs/*</exclude-pattern>
