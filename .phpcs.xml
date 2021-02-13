@@ -46,7 +46,6 @@
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/php/Common/Admin/EDD/*</exclude-pattern>
-	<exclude-pattern type="relative">^(?!plugins/(arve-|advanced-re|edd-)).+</exclude-pattern>
 	<!-- Only check the PHP files. -->
 	<file>.</file>
 	<arg name="extensions" value="php"/>

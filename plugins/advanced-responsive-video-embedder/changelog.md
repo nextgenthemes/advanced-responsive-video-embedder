@@ -4,7 +4,7 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
 
-### 2021-02-07 9.5.0 ###
+### 2021-02-13 9.5.1-beta1 ###
 
 * New video hosts support for
   * [LBRY](https://lbry.com)

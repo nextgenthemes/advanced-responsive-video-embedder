@@ -1,9 +1,3 @@
-/*/
-!/.dependabot
-!/.github
-!/plugins/
-!/ts/
-!/bin/
 /plugins/*
 !/plugins/advanced-responsive-video-embedder
 

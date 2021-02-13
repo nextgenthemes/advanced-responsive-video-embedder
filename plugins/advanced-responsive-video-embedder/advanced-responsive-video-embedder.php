@@ -10,8 +10,6 @@
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain:       advanced-responsive-video-embedder
  * Domain Path:       /languages
- * GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-embedder
- * GitHub Branch:     beta
  *
  * @package Nextgenthemes/ARVE
  * @author  Nicolas Jonas
@@ -22,7 +20,7 @@
 namespace Nextgenthemes\ARVE;
 
 const VERSION               = '9.5.0-beta2';
-const PRO_VERSION_REQUIRED  = '5.1.5';
+const PRO_VERSION_REQUIRED  = '5.1.11';
 const NUM_TRACKS            = 3;
 const PLUGIN_FILE           = __FILE__;
 const PLUGIN_DIR            = __DIR__;
