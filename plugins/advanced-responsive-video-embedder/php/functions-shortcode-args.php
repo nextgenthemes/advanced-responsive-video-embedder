@@ -17,7 +17,6 @@ function process_shortcode_args( array $a ) {
 	$a['aspect_ratio'] = arg_aspect_ratio( $a );
 	$a['thumbnail']    = apply_filters( 'nextgenthemes/arve/args/thumbnail', $a['thumbnail'], $a );
 	$a['img_src']      = arg_img_src( $a );
-	$a['img_srcset']   = arg_img_srcset( $a );
 	$a                 = args_video( $a );
 	$a['id']           = liveleak_id_fix( $a );
 	$a['maxwidth']     = arg_maxwidth( $a );
@@ -276,17 +275,6 @@ function arg_img_src( array $a ) {
 	endif; // thumbnail
 
 	return apply_filters( 'nextgenthemes/arve/args/img_src', $img_src, $a );
-}
-
-function arg_img_srcset( array $a ) {
-
-	$img_srcset = false;
-
-	if ( $a['img_src'] && is_numeric( $a['thumbnail'] ) ) {
-		$img_srcset = wp_get_attachment_image_srcset( $a['thumbnail'], 'small' );
-	}
-
-	return apply_filters( 'nextgenthemes/arve/args/img_srcset', $img_srcset, $a );
 }
 
 function detect_provider_and_id_from_url( array $a ) {
