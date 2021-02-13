@@ -10,13 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
+        php: [ '7.4' ]
+        #: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
         wordpress: [ '5.5.3', 'latest' ] # https://wordpress.org/download/releases/ 
-        include:
-          - php: '8.0'
-            wordpress: 'latest'
-          - php: '5.6'
-            wordpress: '4.9.16' # Need to skip dailymotion in test_api_data
+        # include:
+        #   - php: '8.0'
+        #     wordpress: 'latest'
+        #   - php: '5.6'
+        #     wordpress: '4.9.16' # Need to skip dailymotion in test_api_data
     services:
       mysql:
         image: mysql:5.7
@@ -104,9 +105,10 @@ jobs:
     name: SVN commit to wp.org
     runs-on: ubuntu-latest
     steps:
-      - run: echo "GITHUB_REF#refs/tags/-- ${GITHUB_REF#refs/tags/}"
-      - run: echo "github.event.repository.name-- ${{ github.event.repository.name }}"
-      - run: echo "github.ref-- ${{ github.ref }}"
+        run: |
+          echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
+          echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
+          echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
 
       - name: Checkout
         uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
@@ -124,8 +126,12 @@ jobs:
       #     working-directory: plugins/advanced-responsive-video-embedder
 
       - name: Deploy
-        run: ../../bin/wporg-deploy.php --version='${{ github.ref }}' --svn-user='${{ secrets.SVN_USERNAME }}' --svn-pass='${{ secrets.SVN_PASSWORD }}'
+        run: ../../bin/wporg-deploy.php --version='$SOURCE_TAG' --svn-user='${{ secrets.SVN_USERNAME }}' --svn-pass='${{ secrets.SVN_PASSWORD }}'
         working-directory: plugins/advanced-responsive-video-embedder
+        env:
+          SOURCE_NAME: ${{ steps.branch_name.outputs.SOURCE_NAME }}
+          SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
+          SOURCE_TAG: ${{ steps.branch_name.outputs.SOURCE_TAG }}
 
       # - name: Maybe deploy to wp.org
       #   uses: 10up/action-wordpress-plugin-deploy@0dc3f76f710b55cd07aa546a77bc103a0f1f2f7a # 1.5.0 https://github.com/10up/action-wordpress-plugin-deploy/tags
