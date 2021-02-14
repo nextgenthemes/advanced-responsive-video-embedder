@@ -55,7 +55,9 @@ function build_iframe_tag( array $a ) {
 	}
 
 	if ( 'wistia' === $a['provider'] ) {
-		$class .= ' wistia_embed';
+		$class   .= ' wistia_embed';
+		$sandbox .= ' allow-forms';
+
 	}
 
 	if ( 'zoom' === $a['provider'] ) {
