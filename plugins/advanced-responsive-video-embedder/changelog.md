@@ -4,6 +4,10 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
 
+### 2021-02-13 9.5.1-beta7 ###
+
+* Fixed and further simplified oembed caching.
+
 ### 2021-02-13 9.5.1-beta1 ###
 
 * New video hosts support for

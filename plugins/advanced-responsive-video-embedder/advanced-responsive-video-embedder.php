@@ -19,7 +19,7 @@
 
 namespace Nextgenthemes\ARVE;
 
-const VERSION               = '9.5.1-beta6';
+const VERSION               = '9.5.1-beta7';
 const PRO_VERSION_REQUIRED  = '5.1.11';
 const NUM_TRACKS            = 3;
 const PLUGIN_FILE           = __FILE__;
@@ -28,23 +28,3 @@ const VIDEO_FILE_EXTENSIONS = array( 'av1mp4', 'mp4', 'm4v', 'webm', 'ogv' );
 const DEFAULT_MAXWIDTH      = 900;
 
 require_once __DIR__ . '/php/init.php';
-
-register_activation_hook( __FILE__, __NAMESPACE__ . '\activation_hook' );
-function activation_hook() {
-	update_option( 'nextgenthemes_arve_oembed_recache', time() );
-}
-
-register_deactivation_hook( __FILE__, __NAMESPACE__ . '\delete_oembed_cache' );
-register_uninstall_hook( __FILE__, __NAMESPACE__ . '\delete_oembed_cache' );
-
-function delete_oembed_cache() {
-	global $wpdb;
-
-	$wpdb->query(
-		$wpdb->prepare(
-			"DELETE FROM {$wpdb->postmeta} WHERE meta_key LIKE %s AND meta_value LIKE %s",
-			'%_oembed_%',
-			'%' . $wpdb->esc_like( 'data-arve-oembed' ) . '%'
-		)
-	);
-}

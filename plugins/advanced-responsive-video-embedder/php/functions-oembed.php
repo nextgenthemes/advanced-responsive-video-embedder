@@ -1,7 +1,8 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-const JSON_REGEX = '#<script data-arve-oembed type="application/json">(?<json>{[^}]+})</script>#i';
+const JSON_REGEX = '#<script type="application/json" data-arve-oembed>({[^}]+})</script>#s';
+const DATA_REGEX = '#(?<=data-arve-oembed>).*?(?=</script>)#s';
 
 /**
  * Info: https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-oembed.php
@@ -17,13 +18,13 @@ function add_oembed_providers() {
 function filter_oembed_dataparse( $result, $data, $url ) {
 
 	if ( $data && 'video' === $data->type ) {
-
+		$data->html = str_replace( '<script', '<ESCAPED-cript', $data->html );
+		$data->html = str_replace( '</script', '</ESCAPED-cript', $data->html );
 		$data->arve_cachetime = time();
-
 		if ( 'YouTube' === $data->provider_name ) {
 			$data->arve_srcset = yt_srcset( $data->thumbnail_url );
 		}
-		$result .= '<script data-arve-oembed type="application/json">' . \wp_json_encode( $data, JSON_PRETTY_PRINT ) . '</script>';
+		$result .= '<script type="text" data-arve-oembed>' . \serialize( $data ) . '</script>';
 	}
 
 	return $result;
@@ -31,16 +32,14 @@ function filter_oembed_dataparse( $result, $data, $url ) {
 
 function filter_embed_oembed_html( $cache, $url, array $attr, $post_ID ) {
 
-	if ( disabled_on_feeds() ) {
-		return \preg_replace( JSON_REGEX, '', $cache, 1 );
-	}
+	\preg_match( '#(?<=data-arve-oembed>).*?(?=</script>)#s', $cache, $matches );
 
-	\preg_match( JSON_REGEX, $cache, $matches );
-
-	if ( ! empty( $matches['json'] ) ) {
-		$attr['oembed_data'] = json_decode( $matches['json'] );
+	if ( ! empty( $matches[0] ) ) {
+		$attr['oembed_data'] = unserialize( $matches[0] );
 		$attr['url']         = $url;
 		$attr['post_id']     = (string) $post_ID;
+
+		d($attr['oembed_data']);
 
 		$cache = build_video( $attr );
 	}
@@ -89,60 +88,4 @@ function vimeo_referer( $args, $url ) {
 	}
 
 	return $args;
-}
-
-function trigger_cache_rebuild( $ttl, $url, $attr, $post_id ) {
-
-	if ( did_action( 'nextgenthemes/arve/oembed_recache' ) ) {
-		return $ttl;
-	}
-
-	// Get the time when oEmbed HTML was last cached (based on the WP_Embed class)
-	$key_suffix    = md5( $url . serialize( $attr ) ); // phpcs:ignore
-	$cachekey_time = '_oembed_time_' . $key_suffix;
-	$cache_time    = get_post_meta( $post_id, $cachekey_time, true );
-
-	// Get the cached HTML
-	$cachekey     = '_oembed_' . $key_suffix;
-	$metadata     = get_post_custom( $post_id );
-	$cache_exists = isset( $metadata[ $cachekey ][0] );
-	$cache_html   = $cache_exists ? strtolower( get_post_meta( $post_id, $cachekey, true ) ) : false;
-	// $cache_exists2 = metadata_exists( 'post', $post_id, $cachekey ); // TODO not sure of 'post' is always right for embeds outside of
-
-	// time after a recache should be done
-	$trigger_time = get_option( 'nextgenthemes_arve_oembed_recache' );
-
-	$not_touching = array(
-		'platform.twitter.com',
-		'embed.redditmedia.com',
-		'embedr.flickr.com',
-		'open.spotify.com',
-		'secure.polldaddy.com',
-		'embed.tumblr.com',
-		'imgur.com',
-	);
-
-	// Check if we need to regenerate the oEmbed HTML:
-	if ( $cache_exists &&
-		$cache_time < $trigger_time &&
-		! Common\str_contains_any( $cache_html, $not_touching ) &&
-		$GLOBALS['wp_embed']->usecache
-	) {
-		// What we need to skip the oembed cache part
-		$GLOBALS['wp_embed']->usecache = false;
-		$ttl                           = 0;
-
-		do_action( 'nextgenthemes/arve/oembed_recache' );
-	}
-
-	return $ttl;
-}
-
-function reenable_oembed_cache( $discover ) {
-
-	if ( did_action( 'nextgenthemes/arve/oembed_recache' ) ) {
-		$GLOBALS['wp_embed']->usecache = true;
-	}
-
-	return $discover;
 }

@@ -67,8 +67,6 @@ function print_settings_box_html( $file ) {
 
 function filter_save_options( $options ) {
 
-	update_option( 'nextgenthemes_arve_oembed_recache', time() );
-
 	$action            = json_decode( $options['action'] );
 	$options['action'] = '';
 

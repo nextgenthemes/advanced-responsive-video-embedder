@@ -12,8 +12,8 @@ function init_public() {
 
 	add_option( 'arve_install_date', time() );
 
-	if ( version_compare( get_option( 'arve_version' ), '9.5.0', '<' ) ) {
-		update_option( 'nextgenthemes_arve_oembed_recache', time() );
+	if ( version_compare( get_option( 'arve_version' ), '9.5.1-beta7', '<' ) ) {
+		$GLOBALS['wpdb']->query( "DELETE FROM {$GLOBALS['wpdb']->postmeta} WHERE meta_key LIKE '%_oembed_%'" );
 	}
 	update_option( 'arve_version', VERSION );
 
@@ -41,8 +41,6 @@ function init_public() {
 	add_filter( 'language_attributes', __NAMESPACE__ . '\html_id' );
 	add_filter( 'oembed_dataparse', __NAMESPACE__ . '\filter_oembed_dataparse', 11, 3 );
 	add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', 20, 4 );
-	add_filter( 'oembed_ttl', __NAMESPACE__ . '\trigger_cache_rebuild', 10, 4 );
-	add_filter( 'embed_oembed_discover', __NAMESPACE__ . '\reenable_oembed_cache' );
 }
 
 function init_admin() {
