@@ -43,7 +43,7 @@ function oembed_html2src( $data, $a ) {
 	if ( 'Facebook' === $data->provider_name ) {
 		preg_match( '/class="fb-video" data-href="([^"]+)"/', $data->html, $matches );
 	} else {
-		preg_match( '/<iframe [^>]*src="([^"]+) "/', $data->html, $matches );
+		preg_match( '/<iframe [^>]*src="([^"]+)"/', $data->html, $matches );
 	}
 
 	if ( empty( $matches[1] ) ) {

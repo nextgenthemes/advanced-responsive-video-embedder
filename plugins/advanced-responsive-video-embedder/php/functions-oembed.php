@@ -39,8 +39,6 @@ function filter_embed_oembed_html( $cache, $url, array $attr, $post_ID ) {
 		$attr['url']         = $url;
 		$attr['post_id']     = (string) $post_ID;
 
-		d($attr['oembed_data']);
-
 		$cache = build_video( $attr );
 	}
 
