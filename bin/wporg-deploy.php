@@ -2,17 +2,24 @@
 <?php
 use function \escapeshellarg as e;
 
-$slug     = basename(getcwd());
-$dir      = getcwd();
-$git_dir  = sys('git rev-parse --show-toplevel');
-$subdir   = trim(str_replace($git_dir, '', $dir), '/');
-$svn_user = arg_with_default('svn-user', false);
-$svn_pass = arg_with_default('svn-pass', false);
-$svn_url  = "https://plugins.svn.wordpress.org/$slug/";
-$tmp_dir  = '/tmp/wp-deploy';
-$svn_dir  = "$tmp_dir/svn-$slug";
-$git_arch = "$tmp_dir/gitarchive-$slug";
-$version  = required_arg('version');
+$slug       = basename(getcwd());
+$dir        = getcwd();
+$git_dir    = sys('git rev-parse --show-toplevel');
+$subdir     = trim(str_replace($git_dir, '', $dir), '/');
+$svn_user   = arg_with_default('svn-user', false);
+$svn_pass   = arg_with_default('svn-pass', false);
+$svn_url    = "https://plugins.svn.wordpress.org/$slug/";
+$tmp_dir    = '/tmp/wp-deploy';
+$svn_dir    = "$tmp_dir/svn-$slug";
+$git_arch   = "$tmp_dir/gitarchive-$slug";
+$version     = required_arg('version');
+$readme_only = has_arg('readme-only');
+
+if ( $readme_only ) {
+	$commit_msg = "Update only readme and assets from $version with automation script";
+} else {
+	$commit_msg = "Update to version $version with automation script";
+}
 
 sys('rm -rf ' . e($tmp_dir) );
 
@@ -42,7 +49,12 @@ echo '➤ Copying files...' . PHP_EOL;
 mkdir($git_arch);
 sys('git --git-dir='.e("$git_dir/.git").' archive '.e("$version:$subdir").' | tar x --directory='.e($git_arch));
 
-sys('rsync -rc '.e("$git_arch/").' '.e("$svn_dir/trunk").' --delete --delete-excluded');
+if ( $commit_msg ) {
+	copy("$git_arch/readme.txt", "$svn_dir/trunk" );
+} else {
+	sys('rsync -rc '.e("$git_arch/").' '.e("$svn_dir/trunk").' --delete --delete-excluded');
+}
+
 sys('rsync -rc '.e("$dir/.wordpress-org/").' '.e("$svn_dir/assets").' --delete');
 
 # Add everything and commit to SVN
@@ -66,7 +78,7 @@ system('svn propset svn:mime-type image/jpeg assets/*.jpg');
 sys('svn status');
 
 echo '➤ Committing files...' . PHP_EOL;
-$commit_command = 'svn commit -m "Update to version '.e($version).' from automation script" ';
+$commit_command = 'svn commit -m '.e($commit_msg);
 
 if ( $svn_user && $svn_pass ) {
 	$commit_command .= '--no-auth-cache --non-interactive --username '.e($svn_user). ' --password '.e($svn_pass);
@@ -117,4 +129,9 @@ function sys( string $command, array $args = [] ): ?string {
 	}
 
 	return $out;
+}
+
+function has_arg( string $arg ): string {
+	$args = getopt( null, [ "$arg" ] );
+	return isset($args[ $arg ]);
 }

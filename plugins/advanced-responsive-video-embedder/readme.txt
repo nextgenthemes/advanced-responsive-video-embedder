@@ -175,6 +175,7 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 ### 2021-02-13 9.5.1-beta7 ###
 
 * Fixed and further simplified oembed caching.
+* Improved: Allow forms for Wistia.
 
 ### 2021-02-13 9.5.1-beta1 ###
 
