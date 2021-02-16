@@ -2,12 +2,10 @@
 <?php
 use function \escapeshellarg as e;
 
-sys('tree .');
-
 $workdir = arg_with_default('workdir', false);
 
 if ( $workdir ) {
-	chdir("./$workdir");
+	chdir( getcwd() . "/$workdir");
 }
 
 $slug        = basename(getcwd());
@@ -46,7 +44,8 @@ var_export(
 		'svn_url',
 		'build_dirs',
 		'tmp_dir',
-		'version'
+		'version',
+		'workdir'
 	)
 );
 
