@@ -4,9 +4,9 @@ author: 'nextgenthemes' # inspired by 10up action
 
 inputs:
   svn_user:
-    required: false
+    required: true
   svn_pass:
-    required: false
+    required: true
   version:
     description: Is required unless you just update readme and assets
     required: false
@@ -16,15 +16,22 @@ inputs:
   build_dirs:
     description: Comma seperated list of folders to include in distribution.
     required: false
-  args:
-    description: Use --readme-only and/or --dry-run 
+  readme_only:
     required: false
+  dry_run:
+    required: false 
 
 runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - ${{ inputs.args }}
+    - --svn-user='${{ inputs.svn_user }}'
+    - --svn-pass='${{ inputs.svn_pass }}'
+    - --version='${{ inputs.version }}'
+    - --build-dirs='${{ inputs.build_dirs }}'
+    - --workdir='${{ inputs.workdir }}'
+    - --${{ inputs.readme_only }}
+    - --${{ inputs.dry_run }}
 
 branding:
   icon: 'upload-cloud'
