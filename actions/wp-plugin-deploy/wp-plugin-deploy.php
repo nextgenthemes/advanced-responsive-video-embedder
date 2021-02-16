@@ -2,6 +2,8 @@
 <?php
 use function \escapeshellarg as e;
 
+sys('tree .');
+
 $workdir = arg_with_default('workdir', false);
 
 if ( $workdir ) {
