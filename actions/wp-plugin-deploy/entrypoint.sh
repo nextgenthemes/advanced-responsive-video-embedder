@@ -4,4 +4,4 @@
 # or splits `args` in a string separated by whitespace.
 sh -c "echo $*"
 
-sh -c "php ./wp-plugin-deploy.php $*"
+sh -c "./wp-plugin-deploy.php $*"
