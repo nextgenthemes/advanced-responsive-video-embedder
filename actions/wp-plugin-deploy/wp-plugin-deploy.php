@@ -2,6 +2,19 @@
 <?php
 use function \escapeshellarg as e;
 
+if ($handle = opendir('.')) {
+
+    while (false !== ($entry = readdir($handle))) {
+
+        if ($entry != "." && $entry != "..") {
+
+            echo "$entry\n";
+        }
+    }
+
+    closedir($handle);
+}
+
 $workdir = arg_with_default('workdir', false);
 
 if ( $workdir ) {
@@ -9,9 +22,9 @@ if ( $workdir ) {
 }
 
 $slug        = basename(getcwd());
-$dir         = getcwd();
+$cwd         = getcwd();
 $git_dir     = sys('git rev-parse --show-toplevel');
-$subdir      = trim(str_replace($git_dir, '', $dir), '/');
+$subdir      = trim(str_replace($git_dir, '', $cwd), '/');
 $svn_user    = arg_with_default('svn-user', false);
 $svn_pass    = arg_with_default('svn-pass', false);
 $build_dirs  = arg_with_default('build-dirs', false);
@@ -38,14 +51,16 @@ sys('rm -rf ' . e($tmp_dir) );
 var_export(
 	compact(
 		'slug',
-		'dir',
+		'cwd',
 		'git_dir',
 		'subdir',
 		'svn_url',
 		'build_dirs',
 		'tmp_dir',
 		'version',
-		'workdir'
+		'workdir',
+		'readme_only',
+		'dry_run'
 	)
 );
 
@@ -61,8 +76,8 @@ sys('svn update --set-depth infinity trunk');
 echo '➤ Copying files...' . PHP_EOL;
 
 if ( $readme_only ) {
-	copy( "$dir/readme.txt", "$svn_dir/trunk/readme.txt" );
-	copy( "$dir/readme.txt", "$svn_dir/tags/$last_svg_tag/readme.txt" );
+	copy( "$cwd/readme.txt", "$svn_dir/trunk/readme.txt" );
+	copy( "$cwd/readme.txt", "$svn_dir/tags/$last_svg_tag/readme.txt" );
 } else {
 	mkdir($gitarch_dir);
 	sys('git --git-dir='.e("$git_dir/.git").' archive '.e("$version:$subdir").' | tar x --directory='.e($gitarch_dir));
@@ -71,16 +86,16 @@ if ( $readme_only ) {
 	foreach ( $build_dirs as $build_dir ) {
 		$build_dir = trim( $build_dir );
 
-		if ( ! file_exists( "$dir/$build_dir" ) ) {
-			echo "Build dir $dir/$build_dir does not exists." . PHP_EOL;
+		if ( ! file_exists( "$cwd/$build_dir" ) ) {
+			echo "Build dir $cwd/$build_dir does not exists." . PHP_EOL;
 			exit(1);
 		}
 
-		sys('rsync -rc '.e("$dir/$build_dir").' '.e("$svn_dir/trunk/").' --delete');
+		sys('rsync -rc '.e("$cwd/$build_dir").' '.e("$svn_dir/trunk/").' --delete');
 	}
 }
 
-sys('rsync -rc '.e("$dir/.wordpress-org/").' '.e("$svn_dir/assets").' --delete');
+sys('rsync -rc '.e("$cwd/.wordpress-org/").' '.e("$svn_dir/assets").' --delete');
 
 # Add everything and commit to SVN
 # The force flag ensures we recurse into subdirectories even if they are already added
