@@ -5,6 +5,8 @@ RUN apt-get update \
 	&& apt-get clean -y \
 	&& rm -rf /var/lib/apt/lists/*
 
+WORKDIR /
+
 COPY entrypoint.sh                  /entrypoint.sh
 COPY wp-plugin-deploy-functions.php /wp-plugin-deploy-functions.php
 COPY wp-plugin-deploy.php           /wp-plugin-deploy.php
