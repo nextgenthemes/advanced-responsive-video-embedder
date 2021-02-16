@@ -25,11 +25,11 @@ runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - --svn-user='${{ inputs.svn_user }}'
-    - --svn-pass='${{ inputs.svn_pass }}'
-    - --version='${{ inputs.version }}'
-    - --build-dirs='${{ inputs.build_dirs }}'
-    - --workdir='${{ inputs.workdir }}'
+    - --svn-user=${{ inputs.svn_user }}
+    - --svn-pass=${{ inputs.svn_pass }}
+    - --version=${{ inputs.version }}
+    - --build-dirs=${{ inputs.build_dirs }}
+    - --workdir=${{ inputs.workdir }}
     - --${{ inputs.readme_only }}
     - --${{ inputs.dry_run }}
 
