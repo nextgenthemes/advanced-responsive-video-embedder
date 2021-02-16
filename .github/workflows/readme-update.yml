@@ -1,0 +1,21 @@
+name: CI Build
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  update-readme:
+    name: SVN commit to wp.org
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
+
+      - name: Deploy
+        uses: ./actions/wp-plugin-deploy
+        with:
+          workdir: plugins/advanced-responsive-video-embedder
+          svn_user: ${{ secrets.SVN_USERNAME }}
+          svn_pass: ${{ secrets.SVN_PASSWORD }}
+          args: --readme-only --dry-run

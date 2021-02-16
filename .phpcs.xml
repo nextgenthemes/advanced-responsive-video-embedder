@@ -29,15 +29,19 @@
 		<exclude name="Squiz.Strings.ConcatenationSpacing.PaddingFound" />
 	</rule>
 	<rule ref="WordPress.PHP.DevelopmentFunctions">
+		<exclude-pattern>*/actions/*</exclude-pattern>
 		<exclude-pattern>*/bin/*</exclude-pattern>
 	</rule>
 	<rule ref="WordPress.Security.EscapeOutput">
+		<exclude-pattern>*/actions/*</exclude-pattern>
 		<exclude-pattern>*/bin/*</exclude-pattern>
 	</rule>
 	<rule ref="WordPress.PHP.DiscouragedPHPFunctions">
+		<exclude-pattern>*/actions/*</exclude-pattern>
 		<exclude-pattern>*/bin/*</exclude-pattern>
 	</rule>
 	<rule ref="PHPCompatibility">
+		<exclude-pattern>*/actions/*</exclude-pattern>
 		<exclude-pattern>*/bin/*</exclude-pattern>
 	</rule>
 	<!-- Exclude files and folders. -->

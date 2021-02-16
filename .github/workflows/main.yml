@@ -132,14 +132,10 @@ jobs:
         run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
 
       - name: Deploy
-        run: ../../bin/wporg-deploy.php --version='${{ steps.get_version.outputs.VERSION }}' --svn-user='${{ secrets.SVN_USERNAME }}' --svn-pass='${{ secrets.SVN_PASSWORD }}'
-        working-directory: plugins/advanced-responsive-video-embedder
-
-      # - name: Maybe deploy to wp.org
-      #   uses: 10up/action-wordpress-plugin-deploy@0dc3f76f710b55cd07aa546a77bc103a0f1f2f7a # 1.5.0 https://github.com/10up/action-wordpress-plugin-deploy/tags
-      #   env:
-      #     SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-      #     SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
-      #   with:
-      #     working-directory: plugins/advanced-responsive-video-embedder
-      #     create zip: false
+        uses: ./actions/wp-plugin-deploy
+        with:
+          version: ${{ steps.get_version.outputs.VERSION }}
+          workdir: plugins/advanced-responsive-video-embedder
+          svn_user: ${{ secrets.SVN_USERNAME }}
+          svn_pass: ${{ secrets.SVN_PASSWORD }}
+          args: --dry-run
