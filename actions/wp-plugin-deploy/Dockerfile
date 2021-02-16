@@ -9,4 +9,4 @@ COPY entrypoint.sh                  /entrypoint.sh
 COPY wp-plugin-deploy-functions.php /wp-plugin-deploy-functions.php
 COPY wp-plugin-deploy.php           /wp-plugin-deploy.php
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.php"]
