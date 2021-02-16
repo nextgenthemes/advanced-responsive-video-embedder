@@ -15,7 +15,7 @@ jobs:
       - name: Deploy
         uses: ./actions/wp-plugin-deploy
         with:
-          workdir: plugins/advanced-responsive-video-embedder
+          workdir: advanced-responsive-video-embedder/plugins/advanced-responsive-video-embedder
           svn_user: ${{ secrets.SVN_USERNAME }}
           svn_pass: ${{ secrets.SVN_PASSWORD }}
           args: --readme-only --dry-run
