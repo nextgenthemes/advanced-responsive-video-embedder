@@ -16,10 +16,6 @@
 		}
 	],
 	"require": {
-		"php": ">=5.6",
-		"julien731/wp-dismissible-notices-handler": "^1.2"
-	},
-	"config": {
-		"vendor-dir": "libs"
+		"php": ">=5.6"
 	}
 }

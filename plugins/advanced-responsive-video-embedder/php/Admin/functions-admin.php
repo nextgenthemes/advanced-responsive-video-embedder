@@ -4,6 +4,7 @@ namespace Nextgenthemes\ARVE\Admin;
 use const \Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
 
 use \Nextgenthemes\ARVE;
+use \Nextgenthemes\ARVE\Common\Admin\Notices;
 
 use function \Nextgenthemes\ARVE\Common\ver;
 use function \Nextgenthemes\ARVE\Common\attr;
@@ -27,10 +28,6 @@ const ALLOWED_HTML = array(
 
 function action_admin_init_setup_messages() {
 
-	if ( ! function_exists( 'dnh_register_notice' ) ) {
-		return;
-	}
-
 	$pro_ver = false;
 
 	if ( defined( 'ARVE_PRO_VERSION' ) ) {
@@ -49,7 +46,7 @@ function action_admin_init_setup_messages() {
 			'https://nextgenthemes.com/plugins/arve/documentation/installing-and-license-management/'
 		);
 
-		dnh_register_notice(
+		Notices::instance()->register_notice(
 			'ngt-arve-outdated-pro-v' . PRO_VERSION_REQUIRED,
 			'notice-error',
 			wp_kses( $msg, ALLOWED_HTML ),
@@ -60,7 +57,7 @@ function action_admin_init_setup_messages() {
 	}
 
 	if ( display_pro_ad() ) {
-		dnh_register_notice(
+		Notices::instance()->register_notice(
 			'ngt-arve-addon-ad',
 			'notice-info',
 			wp_kses( ad_html(), ALLOWED_HTML ),

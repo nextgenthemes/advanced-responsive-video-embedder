@@ -45,10 +45,6 @@ function init_public() {
 
 function init_admin() {
 
-	if ( is_admin() ) {
-		require_once PLUGIN_DIR . '/libs/autoload.php';
-	}
-
 	require_once PLUGIN_DIR . '/php/Admin/functions-admin.php';
 	require_once PLUGIN_DIR . '/php/Admin/functions-settings-page.php';
 

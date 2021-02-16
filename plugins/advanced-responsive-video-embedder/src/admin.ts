@@ -8,6 +8,7 @@ declare global {
 		sui;
 		/* eslint-disable-next-line */
 		tb_show;
+		ajaxurl;
 	}
 }
 
@@ -29,4 +30,19 @@ window.jQuery(document).on('click', '#arve-btn', function () {
 	} else {
 		window.tb_show('ARVE Optional Features', '#TB_inline?inlineId=arve-thickbox');
 	}
+});
+
+window.jQuery(document).ready(function ($) {
+	$('.notice.is-dismissible').on('click', '.notice-dismiss', function (event) {
+		event.preventDefault();
+		const $this = $(this);
+		if ('undefined' == $this.parent().attr('id')) {
+			return;
+		}
+		$.post(window.ajaxurl, {
+			action: 'dnh_dismiss_notice',
+			url: window.ajaxurl,
+			id: $this.parent().attr('id'),
+		});
+	});
 });
