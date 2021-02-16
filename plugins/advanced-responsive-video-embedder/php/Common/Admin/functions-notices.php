@@ -2,13 +2,10 @@
 namespace Nextgenthemes\ARVE\Common\Admin;
 
 use \Nextgenthemes\ARVE\Common;
+use \Nextgenthemes\ARVE\Common\Admin\Notices;
 
 // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
 function activation_notices() {
-
-	if ( ! function_exists( 'dnh_register_notice' ) ) {
-		return;
-	}
 
 	$products = Common\get_products();
 
@@ -22,7 +19,7 @@ function activation_notices() {
 				get_admin_url() . 'options-general.php?page=nextgenthemes'
 			);
 
-			dnh_register_notice(
+			Notices::instance()->register_notice(
 				"ngt-$key-activation-notice",
 				'notice-info',
 				'<p>' . $msg . '</p>',
