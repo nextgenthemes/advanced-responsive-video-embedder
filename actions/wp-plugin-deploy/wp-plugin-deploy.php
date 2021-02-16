@@ -2,19 +2,6 @@
 <?php
 use function \escapeshellarg as e;
 
-if ($handle = opendir('.')) {
-
-    while (false !== ($entry = readdir($handle))) {
-
-        if ($entry != "." && $entry != "..") {
-
-            echo "$entry\n";
-        }
-    }
-
-    closedir($handle);
-}
-
 $workdir = arg_with_default('workdir', false);
 
 if ( $workdir ) {
@@ -118,19 +105,15 @@ system('svn propset svn:mime-type image/png assets/*.png');
 system('svn propset svn:mime-type image/jpeg assets/*.jpg');
 
 sys('svn status');
-
-echo '➤ Committing files...' . PHP_EOL;
-$commit_command = 'svn commit -m '.e($commit_msg);
-
 if ( $dry_run ) {
-	$commit_command .= ' --dry-run';
+	exit(1);
 }
-
+$commit_cmd = 'svn commit -m '.e($commit_msg) . ' ';
 if ( $svn_user && $svn_pass ) {
-	$commit_command .= ' --no-auth-cache --non-interactive --username '.e($svn_user). ' --password '.e($svn_pass);
+	$commit_cmd .= ' --no-auth-cache --non-interactive --username '.e($svn_user). ' --password '.e($svn_pass);
 }
-
-sys($commit_command);
+echo '➤ Committing files...' . PHP_EOL;
+sys($commit_cmd);
 
 echo '✓ Plugin deployed!';
 

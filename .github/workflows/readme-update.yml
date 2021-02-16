@@ -6,6 +6,7 @@ on:
 
 jobs:
   update-readme:
+    if: contains(github.event.head_commit.message, '[update-readme]')
     name: SVN commit to wp.org
     runs-on: ubuntu-latest
     steps:
@@ -19,4 +20,3 @@ jobs:
           svn_user: ${{ secrets.SVN_USERNAME }}
           svn_pass: ${{ secrets.SVN_PASSWORD }}
           readme_only: readme-only
-          dry_run: dry-run

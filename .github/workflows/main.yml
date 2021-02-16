@@ -134,8 +134,8 @@ jobs:
       - name: Deploy
         uses: ./actions/wp-plugin-deploy
         with:
-          version: ${{ steps.get_version.outputs.VERSION }}
           workdir: plugins/advanced-responsive-video-embedder
+          version: ${{ steps.get_version.outputs.VERSION }}
           svn_user: ${{ secrets.SVN_USERNAME }}
           svn_pass: ${{ secrets.SVN_PASSWORD }}
-          args: --dry-run
+          dry_run: dry-run
