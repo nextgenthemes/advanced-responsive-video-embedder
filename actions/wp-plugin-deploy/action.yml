@@ -4,9 +4,9 @@ author: 'nextgenthemes' # inspired by 10up action
 
 inputs:
   svn_user:
-    required: true
+    required: false
   svn_pass:
-    required: true
+    required: false
   version:
     description: Is required unless you just update readme and assets
     required: false
@@ -23,13 +23,7 @@ inputs:
 runs:
   using: "docker"
   image: "Dockerfile"
-  args:
-    - "--svn-user='${{ inputs.svn_user }}'"
-    - "--svn-pass='${{ inputs.svn_pass }}'"
-    - "--version='${{ inputs.version }}'"
-    - "--build-dirs='${{ inputs.build_dirs }}'"
-    - "--workdir='${{ inputs.workdir }}'"
-    - ${{ inputs.args }}
+  args: ${{ inputs.args }}
 
 branding:
   icon: 'upload-cloud'
