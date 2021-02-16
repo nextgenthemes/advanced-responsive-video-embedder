@@ -2,8 +2,6 @@
 <?php
 use function \escapeshellarg as e;
 
-require_once 'wp-plugin-deploy-functions.php';
-
 $workdir = arg_with_default('workdir', false);
 
 if ( $workdir ) {
