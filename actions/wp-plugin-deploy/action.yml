@@ -16,11 +16,8 @@ inputs:
   build_dirs:
     description: Comma separated list of folders to include in distribution.
     required: false
-  readme_only:
-    description: Use --readme-only string exactly to enable
-    required: false
-  dry_run:
-    description: Use --dry-run string exactly to enable
+  switch:
+    description: Use --readme-only or --dry-run
     required: false
 
 runs:
@@ -32,8 +29,7 @@ runs:
     - --version=${{ inputs.version }}
     - --build-dirs=${{ inputs.build_dirs }}
     - --workdir=${{ inputs.workdir }}
-    - ${{ inputs.readme_only }}
-    - ${{ inputs.dry_run }}
+    - ${{ inputs.switch }}
 
 branding:
   icon: 'upload-cloud'
