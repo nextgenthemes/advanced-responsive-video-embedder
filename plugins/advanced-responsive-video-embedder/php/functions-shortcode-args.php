@@ -40,6 +40,13 @@ function sane_provider_name( $provider ) {
 
 function oembed_html2src( $data, $a ) {
 
+	if ( empty( $data->html ) ) {
+		$a['errors']->add( 'no-oembed-html', 'No oembed html' );
+		return null;
+	}
+
+	$data->html = htmlspecialchars_decode( $data->html, ENT_COMPAT | ENT_HTML5 );
+
 	if ( 'Facebook' === $data->provider_name ) {
 		preg_match( '/class="fb-video" data-href="([^"]+)"/', $data->html, $matches );
 	} else {
@@ -47,7 +54,7 @@ function oembed_html2src( $data, $a ) {
 	}
 
 	if ( empty( $matches[1] ) ) {
-		$a['errors']->add( 'on-oembed-src', 'No oembed src detected' );
+		$a['errors']->add( 'no-oembed-src', 'No oembed src detected' );
 		return null;
 	}
 

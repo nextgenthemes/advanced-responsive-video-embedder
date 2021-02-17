@@ -1,9 +1,6 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-const JSON_REGEX = '#<script type="application/json" data-arve-oembed>({[^}]+})</script>#s';
-const DATA_REGEX = '#(?<=data-arve-oembed>).*?(?=</script>)#s';
-
 /**
  * Info: https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-oembed.php
  * https://github.com/iamcal/oembed/tree/master/providers
@@ -18,13 +15,18 @@ function add_oembed_providers() {
 function filter_oembed_dataparse( $result, $data, $url ) {
 
 	if ( $data && 'video' === $data->type ) {
-		$data->html = str_replace( '<script', '<ESCAPED-cript', $data->html );
-		$data->html = str_replace( '</script', '</ESCAPED-cript', $data->html );
-		$data->arve_cachetime = time();
+		unset($data->type);
+		$data->arve_cachetime = gmdate('Y-m-d H:i:s');
+
 		if ( 'YouTube' === $data->provider_name ) {
 			$data->arve_srcset = yt_srcset( $data->thumbnail_url );
 		}
-		$result .= '<script type="text" data-arve-oembed>' . \serialize( $data ) . '</script>';
+
+		foreach ( $data as $k => $v ) {
+			$data->$k = \esc_html($v);
+		}
+
+		$result .= '<script type="application/json" data-arve-oembed>'.\wp_json_encode($data, JSON_UNESCAPED_UNICODE).'</script>';
 	}
 
 	return $result;
@@ -35,7 +37,8 @@ function filter_embed_oembed_html( $cache, $url, array $attr, $post_ID ) {
 	\preg_match( '#(?<=data-arve-oembed>).*?(?=</script>)#s', $cache, $matches );
 
 	if ( ! empty( $matches[0] ) ) {
-		$attr['oembed_data'] = unserialize( $matches[0] );
+
+		$attr['oembed_data'] = json_decode( $matches[0], false, 512, JSON_UNESCAPED_UNICODE );
 		$attr['url']         = $url;
 		$attr['post_id']     = (string) $post_ID;
 
@@ -57,7 +60,7 @@ function yt_srcset( $url ) {
 	$size_maxres = Common\get_image_size( $maxres );
 
 	$srcset[320] = $mq;
-	$srcset[480] = $url; // 480x360
+	$srcset[480] = $url; // hqdefault.jpg 480x360
 
 	if ( $size_sd && 640 === $size_sd[0] ) {
 		$srcset[640] = $sd;
