@@ -6,7 +6,7 @@ Requires at least: 4.9.16
 Tested up to: 5.6
 Requires PHP: 5.6
 Stable tag: 9.5.1-beta8
-License: GPL-3.0 test
+License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement for WordPress' default embeds. Best plugin for videos?
@@ -171,6 +171,11 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
+
+### 2021-02-17 9.5.2-beta1 ###
+
+* Fix: Conflict with Notice library.
+* Changes to oembed data caching.
 
 ### 2021-02-13 9.5.1-beta7 ###
 
