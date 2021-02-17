@@ -15,6 +15,7 @@ $subdir      = trim(str_replace($git_dir, '', $cwd), '/');
 $svn_user    = arg_with_default('svn-user', false);
 $svn_pass    = arg_with_default('svn-pass', false);
 $build_dirs  = arg_with_default('build-dirs', false);
+$version     = arg_with_default('version', false);
 $svn_url     = "https://plugins.svn.wordpress.org/$slug/";
 $tmp_dir     = '/tmp/wp-deploy';
 $svn_dir     = "$tmp_dir/svn-$slug";
@@ -63,8 +64,15 @@ sys('svn update --set-depth infinity trunk');
 echo '➤ Copying files...' . PHP_EOL;
 
 if ( $readme_only ) {
-	copy( "$cwd/readme.txt", "$svn_dir/trunk/readme.txt" );
+	$last_svg_tag = sys('svn ls '.e("$svn_dir/tags").' | tail -n 1');
+	sys('svn update --set-depth immediates '.e("$svn_dir/tags/$last_svg_tag"));
 	copy( "$cwd/readme.txt", "$svn_dir/tags/$last_svg_tag/readme.txt" );
+	copy( "$cwd/readme.txt", "$svn_dir/trunk/readme.txt" );
+
+	if ( $version ) {
+		sys('svn update --set-depth immediates '.e("$svn_dir/tags/$version"));
+		copy( "$cwd/readme.txt", "$svn_dir/tags/$version/readme.txt" );
+	}
 } else {
 	mkdir($gitarch_dir);
 	sys('git --git-dir='.e("$git_dir/.git").' archive '.e("$version:$subdir").' | tar x --directory='.e($gitarch_dir));
@@ -108,9 +116,9 @@ sys('svn status');
 if ( $dry_run ) {
 	exit(1);
 }
-$commit_cmd = 'svn commit -m '.e($commit_msg) . ' ';
+$commit_cmd = 'svn commit -m '.e($commit_msg).' ';
 if ( $svn_user && $svn_pass ) {
-	$commit_cmd .= ' --no-auth-cache --non-interactive --username '.e($svn_user). ' --password '.e($svn_pass);
+	$commit_cmd .= ' --no-auth-cache --non-interactive --username '.e($svn_user).' --password '.e($svn_pass);
 }
 echo '➤ Committing files...' . PHP_EOL;
 sys($commit_cmd);
@@ -152,8 +160,8 @@ function sys( string $command, array $args = [] ): ?string {
 	}
 
 	echo "Executing: $command" . PHP_EOL;
-
 	$out = system( $command, $exit_code );
+	echo PHP_EOL;
 
 	if ( 0 !== $exit_code || false === $out ) {
 		echo 'Error, output: ';

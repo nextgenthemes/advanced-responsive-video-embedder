@@ -1,7 +1,7 @@
 FROM debian:stable-slim
 
 RUN apt-get update \
-	&& apt-get install -y subversion rsync git zip php-cli tree \
+	&& apt-get install -y subversion rsync git php-cli \
 	&& apt-get clean -y \
 	&& rm -rf /var/lib/apt/lists/*
 
