@@ -14,12 +14,14 @@ inputs:
     description: Optional relative path to where the main plugin file is.
     required: false
   build_dirs:
-    description: Comma seperated list of folders to include in distribution.
+    description: Comma separated list of folders to include in distribution.
     required: false
   readme_only:
+    description: Use --readme-only string exactly to enable
     required: false
   dry_run:
-    required: false 
+    description: Use --dry-run string exactly to enable
+    required: false
 
 runs:
   using: "docker"
@@ -30,8 +32,8 @@ runs:
     - --version=${{ inputs.version }}
     - --build-dirs=${{ inputs.build_dirs }}
     - --workdir=${{ inputs.workdir }}
-    - --${{ inputs.readme_only }}
-    - --${{ inputs.dry_run }}
+    - ${{ inputs.readme_only }}
+    - ${{ inputs.dry_run }}
 
 branding:
   icon: 'upload-cloud'
