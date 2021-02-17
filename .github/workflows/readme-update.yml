@@ -7,7 +7,7 @@ on:
 jobs:
   update-readme:
     if: contains(github.event.head_commit.message, '[update-readme]')
-    name: SVN commit to wp.org
+    name: Readme and Asset update to wp.org
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,4 +19,4 @@ jobs:
           workdir: plugins/advanced-responsive-video-embedder
           svn_user: ${{ secrets.SVN_USERNAME }}
           svn_pass: ${{ secrets.SVN_PASSWORD }}
-          readme_only: readme-only
+          readme_only: --readme-only
