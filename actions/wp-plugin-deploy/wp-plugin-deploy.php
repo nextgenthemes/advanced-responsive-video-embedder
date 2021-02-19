@@ -114,6 +114,7 @@ system('svn propset svn:mime-type image/jpeg assets/*.jpg');
 
 sys('svn status');
 if ( $dry_run ) {
+	echo '➤ Dry run exit' . PHP_EOL;
 	exit(1);
 }
 $commit_cmd = 'svn commit -m '.e($commit_msg).' ';
