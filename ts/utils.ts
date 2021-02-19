@@ -34,6 +34,20 @@ export function wrap(el: Element, wrapper: Element): void {
 	wrapper.appendChild(el);
 }
 
+export function unwrap(el: Element): void {
+	if (!el.parentNode) {
+		throw 'element has no parentNode';
+	}
+	const parent = el.parentNode;
+
+	// move all children out of the element
+	while (el.firstChild) {
+		parent.insertBefore(el.firstChild, el);
+	}
+	// remove the empty element
+	parent.removeChild(el);
+}
+
 export function elWithClass(el: string, ...classes: Array<string>): HTMLElement {
 	const ele = elem(el);
 	ele.classList.add(...classes);
