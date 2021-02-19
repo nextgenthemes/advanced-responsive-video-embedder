@@ -2,10 +2,13 @@
 namespace Nextgenthemes\ARVE\Common;
 
 // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
-
 function remote_get_json( $url, array $args = array(), $json_name = false ) {
+	return remote_get_json_cached( $url, $args, $json_name );
+}
 
-	$response = remote_get_body( $url, $args );
+function remote_get_json_cached( $url, array $args = array(), $json_name = false ) {
+
+	$response = remote_get_body_cached( $url, $args );
 
 	if ( is_wp_error( $response ) ) {
 		return $response;
