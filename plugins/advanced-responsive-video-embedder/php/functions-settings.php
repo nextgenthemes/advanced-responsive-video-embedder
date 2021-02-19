@@ -585,7 +585,7 @@ function all_settings() {
 			'description' => sprintf(
 				// Translators: URL
 				__( 'Provider specific player settings on iframe src. See <a href="%s">documentation.</a>', 'advanced-responsive-video-embedder' ),
-				esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/#parematers' )
+				esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/#parameters' )
 			),
 		),
 		'wp_video_override'             => array(
