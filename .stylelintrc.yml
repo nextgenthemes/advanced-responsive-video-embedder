@@ -4,3 +4,7 @@ extends:
 rules:
   selector-class-pattern: "^[a-z][a-z0-9\\-_]*[a-z0-9]$"
   indentation: tab
+  length-zero-no-unit:
+  - true
+  - ignore:
+    - custom-properties
