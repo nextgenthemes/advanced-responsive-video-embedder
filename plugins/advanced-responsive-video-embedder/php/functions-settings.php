@@ -163,6 +163,7 @@ function shortcode_pairs() {
 			'brightcove_embed'   => null,
 			'video_sources_html' => null,
 			'post_id'            => null,
+			'thumbnail_fallback' => null, # Pro
 		)
 	);
 
