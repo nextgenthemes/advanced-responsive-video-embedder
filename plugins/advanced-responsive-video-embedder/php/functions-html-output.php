@@ -199,8 +199,16 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 	}
 
 	if ( isset( $_GET['arve-debug-atts'] ) ) {
-		$html .= sprintf( '<pre style="%s">in: %s</pre>', esc_attr( $pre_style ), var_export( array_filter( $input_atts ), true ) );
-		$html .= sprintf( '<pre style="%s">$a: %s</pre>', esc_attr( $pre_style ), var_export( array_filter( $a ), true ) );
+		$html .= sprintf(
+			'<pre style="%s">in: %s</pre>',
+			esc_attr( $pre_style ),
+			esc_html( var_export( array_filter( $input_atts ), true ) )
+		);
+		$html .= sprintf(
+			'<pre style="%s">$a: %s</pre>',
+			esc_attr( $pre_style ),
+			esc_html( var_export( array_filter( $a ), true ) )
+		);
 	}
 
 	if ( isset( $_GET['arve-debug-html'] ) ) {
