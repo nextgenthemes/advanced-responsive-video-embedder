@@ -172,6 +172,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
 
+### 2021-02-22 9.5.3-beta1 ###
+
+* Fix: Shortcode arguments not working in all situations.
+
 ### 2021-02-17 9.5.2-beta1 ###
 
 * Fix: Conflict with Notice library.
