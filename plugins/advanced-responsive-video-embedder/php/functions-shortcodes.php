@@ -69,6 +69,8 @@ function build_video( array $input_atts ) {
 		ksort( $a );
 		ksort( $input_atts );
 
+		d('buiold',$a['errors']);
+
 		$html .= get_error_html( $a );
 		$html .= build_html( $a );
 		$html .= get_debug_info( $html, $a, $input_atts );
@@ -79,6 +81,8 @@ function build_video( array $input_atts ) {
 		return apply_filters( 'nextgenthemes/arve/html', $html, $a );
 
 	} catch ( \Exception $e ) {
+
+		d('buiold ex',$a['errors']);
 
 		if ( ! isset( $a['errors'] ) ) {
 			$a['errors'] = new WP_Error();

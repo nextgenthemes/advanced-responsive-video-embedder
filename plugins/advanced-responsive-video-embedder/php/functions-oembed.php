@@ -34,6 +34,8 @@ function filter_oembed_dataparse( $result, $data, $url ) {
 
 function filter_embed_oembed_html( $cache, $url, array $attr, $post_ID ) {
 
+	d($attr);
+
 	\preg_match( '#(?<=data-arve-oembed>).*?(?=</script>)#s', $cache, $matches );
 
 	if ( ! empty( $matches[0] ) ) {
