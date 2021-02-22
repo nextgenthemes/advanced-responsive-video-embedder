@@ -1,9 +1,11 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-function shortcode( $a, $content = null ) {
+function shortcode( $a ) {
 
 	$a = (array) $a;
+
+	$a['origin_data']['from'] = 'shortcode';
 
 	foreach ( $a as $k => $v ) {
 		if ( '' === $v ) {
@@ -11,7 +13,7 @@ function shortcode( $a, $content = null ) {
 		}
 	}
 
-	$override = apply_filters( 'nextgenthemes/arve/shortcode_override', '', $a, $content );
+	$override = apply_filters( 'nextgenthemes/arve/shortcode_override', '', $a, 'not used' );
 
 	if ( '' !== $override ) {
 		return $override;
@@ -22,20 +24,23 @@ function shortcode( $a, $content = null ) {
 
 	if ( ! empty( $a['url'] ) ) {
 
-		add_filter( 'nextgenthemes/arve/oembed_return', '__return_true' );
-		$maybe_arve_html = $GLOBALS['wp_embed']->shortcode( $a, $a['url'] );
-		remove_filter( 'nextgenthemes/arve/oembed_return', '__return_true' );
+		remove_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', -5 );
+		$maybe_arve_html = $GLOBALS['wp_embed']->shortcode( array(), $a['url'] );
+		add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', -5, 4 );
 
-		if ( str_contains( $maybe_arve_html, 'arve_cachetime' ) ) {
-			$a['oembed_data'] = \json_decode( $maybe_arve_html );
+		$json = extract_oembed_json( $maybe_arve_html );
 
-			if ( json_last_error() !== JSON_ERROR_NONE ) {
-				$attr['errors']->add( 'json-error', 'json decode error code' . json_last_error() );
-			}
+		if ( json_last_error() !== JSON_ERROR_NONE ) {
+			$a['errors']->add( 'json-error', 'json decode error code ' . json_last_error() );
+		}
+
+		if ( $json ) {
+			$a['oembed_data']         = $json;
+			$a['origin_data']['from'] = 'shortcode oembed_data detected';
 		}
 	}
 
-	return build_video( $a, $content );
+	return build_video( $a );
 }
 
 function error( $msg, $code = '' ) {
@@ -63,10 +68,6 @@ function get_error_html( array $a ) {
 }
 
 function build_video( array $input_atts ) {
-
-	if ( ! empty( $input_atts['oembed_data'] ) && apply_filters( 'nextgenthemes/arve/oembed_return', false ) ) {
-		return \json_encode($input_atts['oembed_data']);
-	}
 
 	$html = '';
 	$a    = [];
@@ -143,9 +144,10 @@ function create_shortcodes() {
 				if ( ! empty( $properties[ $provider ]['rebuild_url'] ) && ! empty( $a['id'] ) ) {
 					$a['url'] = sprintf( $properties[ $provider ]['rebuild_url'], $a['id'] );
 					unset( $a['id'] );
+					$a['origin_data']['from'] = 'create_shortcodes rebuild_url';
 					return shortcode( $a );
 				} else {
-					$a['legacy_sc'] = 'Legacy Shortcode';
+					$a['origin_data']['from'] = 'create_shortcodes';
 					return build_video( $a );
 				}
 			};

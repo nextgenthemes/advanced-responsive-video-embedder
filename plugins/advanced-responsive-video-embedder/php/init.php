@@ -12,7 +12,7 @@ function init_public() {
 
 	add_option( 'arve_install_date', time() );
 
-	if ( version_compare( get_option( 'arve_version' ), '9.5.2-beta1', '<' ) ) {
+	if ( version_compare( get_option( 'arve_version' ), '9.5.3-alpha1', '<' ) ) {
 		$GLOBALS['wpdb']->query( "DELETE FROM {$GLOBALS['wpdb']->postmeta} WHERE meta_key LIKE '%_oembed_%'" );
 	}
 	update_option( 'arve_version', VERSION );

@@ -146,9 +146,6 @@ function shortcode_pairs() {
 			'errors'             => new \WP_Error(),
 			'id'                 => null,
 			'provider'           => null,
-			'url_handler'        => null,
-			'legacy_sc'          => null,
-			'gutenberg'          => null,
 			'img_srcset'         => null,
 			'maxwidth'           => null, # Overwriting the option value ON PURPOSE here, see arg_maxwidth
 			'av1mp4'             => null,
@@ -157,6 +154,7 @@ function shortcode_pairs() {
 			'webm'               => null,
 			'ogv'                => null,
 			'oembed_data'        => null,
+			'origin_data'        => null,
 			'account_id'         => null,
 			'iframe_name'        => null,
 			'brightcove_player'  => null,

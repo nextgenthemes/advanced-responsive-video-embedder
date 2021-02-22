@@ -110,7 +110,7 @@ function gutenberg_block( $args ) {
 		}
 	}
 
-	$args['gutenberg'] = 'true';
+	$args['origin_data']['from'] = 'gutenberg_block';
 
 	if ( isset( $args['align'] ) && in_array( $args['align'], array( 'wide', 'full' ), true ) ) {
 		$args['align'] = null;

@@ -15,8 +15,8 @@ function add_oembed_providers() {
 function filter_oembed_dataparse( $result, $data, $url ) {
 
 	if ( $data && 'video' === $data->type ) {
-		unset($data->type);
 		$data->arve_cachetime = gmdate('Y-m-d H:i:s');
+		$data->arve_url       = $url;
 
 		if ( 'YouTube' === $data->provider_name ) {
 			$data->arve_srcset = yt_srcset( $data->thumbnail_url );
@@ -32,24 +32,38 @@ function filter_oembed_dataparse( $result, $data, $url ) {
 	return $result;
 }
 
-function filter_embed_oembed_html( $cache, $url, array $attr, $post_ID ) {
+function filter_embed_oembed_html( $cache, $url, $attr, $post_ID ) {
 
-	\preg_match( '#(?<=data-arve-oembed>).*?(?=</script>)#s', $cache, $matches );
+	$json = extract_oembed_json( $cache );
 
-	if ( ! empty( $matches[0] ) ) {
+	if ( json_last_error() !== JSON_ERROR_NONE ) {
+		$a['errors'] = new \WP_Error( 'json-error', 'json decode error code ' . json_last_error() );
+	}
 
-		$a['oembed_data'] = json_decode( $matches[0], false, 512, JSON_UNESCAPED_UNICODE );
+	if ( $json ) {
+
 		$a['url']         = $url;
-		$a['post_id']     = (string) $post_ID;
-
-		if ( json_last_error() !== JSON_ERROR_NONE ) {
-			$a['errors'] = new \WP_Error( 'json-error', 'json decode error code ' . json_last_error() );
-		}
+		$a['oembed_data'] = $json;
+		$a['origin_data'] = [
+			'from'    => 'filter_embed_oembed_html',
+			'post_id' => $post_ID,
+		];
 
 		$cache = build_video( $a );
 	}
 
 	return $cache;
+}
+
+function extract_oembed_json( $html ) {
+
+	\preg_match( '#(?<=data-arve-oembed>).*?(?=</script>)#s', $html, $matches );
+
+	if ( ! empty( $matches[0] ) ) {
+		return json_decode( $matches[0], false, 512, JSON_UNESCAPED_UNICODE );
+	}
+
+	return false;
 }
 
 function yt_srcset( $url ) {

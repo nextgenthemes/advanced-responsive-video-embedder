@@ -19,19 +19,18 @@ function create_url_handlers() {
 
 function url_handler( $provider, array $matches, array $attr, $url, $rawattr ) {
 
-	$info = array(
-		'matches' => $matches,
-		'attr'    => $attr,
-		'rawattr' => $rawattr,
-	);
-
 	if ( is_array( $rawattr ) ) {
 		$a = $rawattr;
 	}
 
 	$a['provider']    = $provider;
-	$a['url_handler'] = $info;
 	$a['url']         = $url;
+	$a['origin_data'] = [
+		'from'    => 'url_handler',
+		'matches' => $matches,
+		'attr'    => $attr,
+		'rawattr' => $rawattr,
+	];
 
 	return build_video( $a );
 }
