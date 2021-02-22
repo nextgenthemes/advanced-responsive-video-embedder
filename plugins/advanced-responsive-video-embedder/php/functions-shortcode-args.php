@@ -143,7 +143,7 @@ function args_validate( array $a ) {
 	}
 
 	foreach ( bool_shortcode_args() as $arg ) {
-		$a[ $arg ] = validate_bool( $a[ $arg ], $arg );
+		$a[ $arg ] = validate_bool( $a[ $arg ], $arg, $a['errors'] );
 	};
 
 	$url_args = array_merge( VIDEO_FILE_EXTENSIONS, [ 'url' ] );
@@ -176,7 +176,7 @@ function validate_url( $url, $argname, array $a ) {
 }
 
 // phpcs:ignore Generic.Metrics.CyclomaticComplexity.TooHigh
-function validate_bool( $str, $attr_name ) {
+function validate_bool( $str, $attr_name, $errors ) {
 
 	switch ( $str ) {
 		case 'true':
@@ -195,7 +195,7 @@ function validate_bool( $str, $attr_name ) {
 		case 'off':
 			return false;
 		default:
-			$a['errors']->add(
+			$errors->add(
 				$attr_name,
 				// Translators: %1$s = Attr Name, %2$s = Attribute array
 				sprintf(

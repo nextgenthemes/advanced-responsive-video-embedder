@@ -22,10 +22,16 @@ function shortcode( $a, $content = null ) {
 
 	if ( ! empty( $a['url'] ) ) {
 
+		add_filter( 'nextgenthemes/arve/oembed_return', '__return_true' );
 		$maybe_arve_html = $GLOBALS['wp_embed']->shortcode( $a, $a['url'] );
+		remove_filter( 'nextgenthemes/arve/oembed_return', '__return_true' );
 
-		if ( str_contains( $maybe_arve_html, 'class="arve' ) ) {
-			return $maybe_arve_html;
+		if ( str_contains( $maybe_arve_html, 'arve_cachetime' ) ) {
+			$a['oembed_data'] = \json_decode( $maybe_arve_html );
+
+			if ( json_last_error() !== JSON_ERROR_NONE ) {
+				$attr['errors']->add( 'json-error', 'json decode error code' . json_last_error() );
+			}
 		}
 	}
 
@@ -57,6 +63,10 @@ function get_error_html( array $a ) {
 }
 
 function build_video( array $input_atts ) {
+
+	if ( ! empty( $input_atts['oembed_data'] ) && apply_filters( 'nextgenthemes/arve/oembed_return', false ) ) {
+		return \json_encode($input_atts['oembed_data']);
+	}
 
 	$html = '';
 	$a    = [];

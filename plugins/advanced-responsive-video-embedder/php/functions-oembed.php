@@ -38,11 +38,15 @@ function filter_embed_oembed_html( $cache, $url, array $attr, $post_ID ) {
 
 	if ( ! empty( $matches[0] ) ) {
 
-		$attr['oembed_data'] = json_decode( $matches[0], false, 512, JSON_UNESCAPED_UNICODE );
-		$attr['url']         = $url;
-		$attr['post_id']     = (string) $post_ID;
+		$a['oembed_data'] = json_decode( $matches[0], false, 512, JSON_UNESCAPED_UNICODE );
+		$a['url']         = $url;
+		$a['post_id']     = (string) $post_ID;
 
-		$cache = build_video( $attr );
+		if ( json_last_error() !== JSON_ERROR_NONE ) {
+			$a['errors'] = new \WP_Error( 'json-error', 'json decode error code ' . json_last_error() );
+		}
+
+		$cache = build_video( $a );
 	}
 
 	return $cache;
