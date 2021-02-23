@@ -12,8 +12,8 @@
 				'id'  => 'e269333a-579b-11e5-aa10-8587cc892389',
 			],
 			1 => [
-				'url' => 'https://alugha.com/1/videos/youtube-54m1YfEuYU8',
-				'id'  => 'youtube-54m1YfEuYU8',
+				'url' => 'https://alugha.com/videos/e5ddd7d0-6b7c-11eb-b741-7b3016ed7f90',
+				'id'  => 'e5ddd7d0-6b7c-11eb-b741-7b3016ed7f90',
 			],
 			2 => [
 				'url' => 'https://alugha.com/videos/7cab9cd7-f64a-11e5-939b-c39074d29b86',
@@ -37,6 +37,7 @@
 	],
 	'bannedvideo' => [
 		'name'      => 'Banned.video',
+		'oembed'    => false,
 		'regex'     => '#https://banned\\.video/watch\\?id=(?<id>[a-z0-9]+)#i',
 		'embed_url' => 'https://api.banned.video/embed/%s',
 		'tests'     => [
@@ -61,30 +62,9 @@
 			],
 		],
 	],
-	'break' => [
-		'name'           => 'Break',
-		'regex'          => '#https?://(www\\.|view\\.)break\\.com/(video/|embed/)?[-a-z0-9]*?(?<id>[0-9]+)#i',
-		'oembed'         => false,
-		'embed_url'      => 'http://break.com/embed/%s',
-		'default_params' => 'embed=1',
-		'auto_thumbnail' => false,
-		'tests'          => [
-			0 => [
-				'url' => 'https://www.break.com/video/first-person-pov-of-tornado-strike-2542591-test',
-				'id'  => 2542591,
-			],
-			1 => [
-				'url' => 'http://view.break.com/2542591-test',
-				'id'  => 2542591,
-			],
-			2 => [
-				'url' => 'http://www.break.com/embed/2542591?embed=1',
-				'id'  => 2542591,
-			],
-		],
-	],
 	'mailru' => [
 		'name'         => 'Mail.ru',
+		'oembed'       => false,
 		'regex'        => '#https?://my\\.mail\\.ru/video/embed/(?<id>[0-9]+)#i',
 		'oembed'       => false,
 		'embed_url'    => 'https://my.mail.ru/video/embed/%s',
@@ -128,6 +108,7 @@
 	],
 	'cantcensortruthcom' => [
 		'name'      => 'cantcensortruth.com',
+		'oembed'    => false,
 		'regex'     => '#https://cantcensortruth\\.com/watch\\?id=(?<id>[a-z0-9]+)#i',
 		'embed_url' => 'https://api.banned.video/embed/%s',
 		'tests'     => [
@@ -139,6 +120,7 @@
 	],
 	'comedycentral' => [
 		'name'           => 'Comedy Central',
+		'oembed'         => false,
 		'regex'          => '#https?://media\\.mtvnservices\\.com/embed/mgid:arc:video:comedycentral\\.com:(?<id>[-a-z0-9]{36})#i',
 		'embed_url'      => 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:%s',
 		'requires_src'   => true,
@@ -176,6 +158,7 @@
 	],
 	'dailymotion_playlist' => [
 		'name'           => 'Dailymotion Playlist',
+		'oembed'         => false,
 		'regex'          => '#https?://(www\\.)?dailymotion\\.com/playlist/(?<id>[a-z0-9]+)#i',
 		'embed_url'      => 'https://www.dailymotion.com/embed/playlist/%s',
 		'auto_thumbnail' => false,
@@ -188,7 +171,7 @@
 	],
 	'dtube' => [
 		'name'      => 'DTube',
-		'oembed'    => true,
+		'oembed'    => false,
 		'regex'     => '%https?://d\\.tube(/#!)?/v/(?<id>[^"]+)%i',
 		'embed_url' => 'https://emb.d.tube/#!/%s',
 		'tests'     => [
@@ -218,6 +201,7 @@
 	],
 	'googledrive' => [
 		'name'      => 'Google Drive',
+		'oembed'    => false,
 		'regex'     => '#https?://drive\\.google\\.com/file/d/(?<id>[^\\s/]+)#i',
 		'embed_url' => 'https://drive.google.com/file/d/%s/preview',
 		'tests'     => [
@@ -233,6 +217,7 @@
 	],
 	'iframe' => [
 		'name'           => 'ARVE general iframe embed',
+		'oembed'         => false,
 		'embed_url'      => '%s',
 		'default_params' => '',
 		'auto_thumbnail' => false,
@@ -245,13 +230,14 @@
 	],
 	'ign' => [
 		'name'           => 'IGN',
+		'oembed'         => false,
 		'regex'          => '#(?<id>https?://(www\\.)?ign\\.com/videos/[0-9]{4}/[0-9]{2}/[0-9]{2}/[0-9a-z\\-]+)#i',
 		'embed_url'      => 'https://widgets.ign.com/video/embed/content.html?url=%s',
 		'auto_thumbnail' => false,
 		'tests'          => [
 			0 => [
-				'url' => 'https://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
-				'id'  => 'https://www.ign.com/videos/2012/03/06/mass-effect-3-video-review',
+				'url' => 'https://ign.com/videos/2012/03/06/mass-effect-3-video-review',
+				'id'  => 'https://ign.com/videos/2012/03/06/mass-effect-3-video-review',
 			],
 		],
 	],
@@ -261,7 +247,7 @@
 	],
 	'kickstarter' => [
 		'name'           => 'Kickstarter',
-		'oembed'         => true,
+		'oembed'         => false,
 		'regex'          => '#https?://(www\\.)?kickstarter\\.com/projects/(?<id>[0-9a-z\\-]+/[-0-9a-z\\-]+)#i',
 		'embed_url'      => 'https://www.kickstarter.com/projects/%s/widget/video.html',
 		'auto_thumbnail' => false,
@@ -278,6 +264,7 @@
 	],
 	'klatv' => [
 		'name'           => 'kla.tv',
+		'oembed'         => false,
 		'regex'          => '#https?://(www\\.)?kla(gemauer)?.tv/(?<id>[0-9]+)#i',
 		'embed_url'      => 'https://www.kla.tv/index.php?a=showembed&vidid=%s',
 		'url'            => true,
@@ -294,16 +281,15 @@
 		],
 	],
 	'liveleak' => [
+		# <iframe width="640" height="360" src="//www.liveleak.com/e/9UCAQ_1613786191" frameborder="0" allowfullscreen></iframe>
+		# https://www.liveleak.com/view?t=svtYD_1613984945
 		'name'           => 'LiveLeak',
+		'oembed'         => false,
 		'regex'          => '#https?://(www\\.)?liveleak\\.com/(view|ll_embed)\\?(?<id>(f|i|t)=[0-9a-z\\_]+)#i',
 		'embed_url'      => 'https://www.liveleak.com/ll_embed?%s',
 		'default_params' => '',
 		'auto_thumbnail' => true,
 		'tests'          => [
-			0 => [
-				'url' => 'http://www.liveleak.com/view?i=703_1385224413',
-				'id'  => 'i=703_1385224413',
-			],
 			1 => [
 				'url' => 'http://www.liveleak.com/view?f=c85bdf5e45b2',
 				'id'  => 'f=c85bdf5e45b2',
@@ -320,6 +306,7 @@
 	],
 	'livestream' => [
 		'name'           => 'Livestream.com',
+		'oembed'         => false,
 		'regex'          => '#https?://(www\\.)?livestream\\.com/accounts/(?<id>[0-9]+/events/[0-9]+(/videos/[0-9]+)?)#i',
 		'embed_url'      => 'https://livestream.com/accounts/%s/player',
 		'default_params' => 'width=1280&height=720&enableInfoAndActivity=true&defaultDrawer=&mute=false',
@@ -337,6 +324,7 @@
 	],
 	'metacafe' => [
 		'name'           => 'Metacafe',
+		'oembed'         => false,
 		'regex'          => '#https?://(www\\.)?metacafe\\.com/(watch|fplayer)/(?<id>[0-9]+)#i',
 		'embed_url'      => 'http://www.metacafe.com/embed/%s/',
 		'auto_thumbnail' => false,
@@ -353,6 +341,8 @@
 	],
 	'myspace' => [
 		'name'           => 'myspace',
+		'oembed'         => false,
+
 		'regex'          => '#https?://(www\\.)?myspace\\.com/.+/(?<id>[0-9]+)#i',
 		'embed_url'      => 'https://media.myspace.com/play/video/%s',
 		'auto_thumbnail' => false,
@@ -369,6 +359,7 @@
 	],
 	'rumble' => [
 		'name'           => 'Rumble.com',
+		'oembed'         => false,
 		'regex'          => '#https://rumble\\.com/(embed/)?(?<id>[^-/]+)#i',
 		'embed_url'      => 'https://rumble.com/embed/%s/',
 		'default_params' => '',
@@ -380,13 +371,14 @@
 				'id'  => 'vd6thp',
 			],
 			1 => [
-				'url' => 'https://rumble.com/embed/vd6thp/?foo=bar',
-				'id'  => 'vd6thp',
+				'url' => 'https://rumble.com/ve2ez5-airplane-returns-to-denver-after-engine-malfunction.html?foo=bar',
+				'id'  => 've2ez5',
 			],
 		],
 	],
 	'rutube' => [
 		'name'        => 'RuTube.ru',
+		'oembed'      => false,
 		'regex'       => '#https?://(www\\.)?rutube\\.ru/play/embed/(?<id>[0-9]+)#i',
 		'embed_url'   => 'https://rutube.ru/play/embed/%s',
 		'tests'       => [
@@ -404,6 +396,7 @@
 	],
 	'snotr' => [
 		'name'           => 'Snotr',
+		'oembed'         => false,
 		'regex'          => '#https?://(www\\.)?snotr\\.com/(video|embed)/(?<id>[0-9]+)#i',
 		'embed_url'      => 'https://www.snotr.com/embed/%s',
 		'rebuild_url'    => 'https://www.snotr.com/video/%s',
@@ -412,19 +405,6 @@
 			0 => [
 				'url' => 'https://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is',
 				'id'  => 12314,
-			],
-		],
-	],
-	'spike' => [
-		'name'           => 'Spike',
-		'regex'          => '#https?://media.mtvnservices.com/embed/mgid:arc:video:spike\\.com:(?<id>[a-z0-9\\-]{36})#i',
-		'embed_url'      => 'http://media.mtvnservices.com/embed/mgid:arc:video:spike.com:%s',
-		'requires_src'   => true,
-		'auto_thumbnail' => false,
-		'tests'          => [
-			0 => [
-				'url' => 'http://media.mtvnservices.com/embed/mgid:arc:video:spike.com:6a219882-c412-46ce-a8c9-32e043396621',
-				'id'  => '6a219882-c412-46ce-a8c9-32e043396621',
 			],
 		],
 	],
@@ -469,6 +449,7 @@
 	],
 	'ustream' => [
 		'name'           => 'Ustream',
+		'oembed'         => false,
 		'regex'          => '#https?://(www\\.)?ustream\\.tv/(embed/|channel/)?(?<id>[0-9]{8}|recorded/[0-9]{8}(/highlight/[0-9]+)?)#i',
 		'embed_url'      => 'http://www.ustream.tv/embed/%s',
 		'default_params' => 'html5ui',
@@ -487,6 +468,7 @@
 	],
 	'viddler' => [
 		'name'           => 'Viddler',
+		'oembed'         => false,
 		'regex'          => '#https?://(www\\.)?viddler\\.com/(embed|v)/(?<id>[a-z0-9]{8})#i',
 		'embed_url'      => 'https://www.viddler.com/embed/%s/',
 		'rebuild_url'    => 'https://www.viddler.com/v/%s/',
@@ -516,13 +498,14 @@
 				'id'  => 124400795,
 			],
 			1 => [
-				'url' => 'https://player.vimeo.com/124400795',
-				'id'  => 124400795,
+				'url' => 'https://player.vimeo.com/video/265932452',
+				'id'  => 265932452,
 			],
 		],
 	],
 	'vk' => [
 		'name'           => 'VK',
+		'oembed'         => false,
 		'regex'          => '#https?://(www\\.)?vk\\.com/video_ext\\.php\\?(?<id>[^ ]+)#i',
 		'embed_url'      => 'https://vk.com/video_ext.php?%s',
 		'rebuild_url'    => 'https://vk.com/video_ext.php?%s',
@@ -538,21 +521,6 @@
 			0 => [
 				'url'  => 'https://vk.com/just_vid?z=video-51189706_456247608%2Fe148d26229c2e82bd9%2Fpl_wall_-51189706',
 				'code' => '<iframe src="https://vk.com/video_ext.php?oid=-51189706&id=456247608&hash=8256b948f3f020fd" width="640" height="360" frameborder="0" allowfullscreen></iframe>',
-			],
-		],
-	],
-	'vzaar' => [
-		'name'      => 'vzaar',
-		'regex'     => '#https?://(www\\.)?vzaar.(com|tv)/(videos/)?(?<id>[0-9]+)#i',
-		'embed_url' => 'https://view.vzaar.com/%s/player',
-		'tests'     => [
-			0 => [
-				'url' => 'https://vzaar.com/videos/993324',
-				'id'  => 993324,
-			],
-			1 => [
-				'url' => 'https://vzaar.com/videos/1515906',
-				'id'  => 1515906,
 			],
 		],
 	],
@@ -588,6 +556,7 @@
 	],
 	'yahoo' => [
 		'name'           => 'Yahoo',
+		'oembed'         => false,
 		'regex'          => '#(?<id>https?://([a-z.]+)yahoo\\.com/[/-a-z0-9öäü]+\\.html)#i',
 		'embed_url'      => '%s',
 		'default_params' => 'format=embed',
@@ -606,25 +575,25 @@
 	],
 	'youku' => [
 		'name'           => 'Youku',
-		'regex'          => '#https?://([a-z.]+)?\\.youku.com/(embed/|v_show/id_)(?<id>[a-z0-9]+)#i',
 		'oembed'         => false,
+		'regex'          => '#https?://([a-z.]+)?\\.youku.com/(embed/|v_show/id_)(?<id>[a-z0-9]+)#i',
 		'embed_url'      => 'https://player.youku.com/embed/%s',
 		'auto_thumbnail' => false,
 		'aspect_ratio'   => '450:292.5',
 		'tests'          => [
 			0 => [
-				'url' => 'http://v.youku.com/v_show/id_XMTczMDAxMjIyNA==.html?f=27806190',
+				'url' => 'https://v.youku.com/v_show/id_XMTczMDAxMjIyNA==.html?f=27806190',
 				'id'  => 'XMTczMDAxMjIyNA',
 			],
 			1 => [
-				'url' => 'http://player.youku.com/embed/XMTUyODYwOTc4OA==',
+				'url' => 'https://player.youku.com/embed/XMTUyODYwOTc4OA==',
 				'id'  => 'XMTUyODYwOTc4OA',
 			],
 		],
 	],
 	'youtube' => [
-		'oembed'         => true,
 		'name'           => 'YouTube',
+		'oembed'         => true,
 		'regex'          => '#https?://(www\\.)?(youtube\\.com\\/\\S*((\\/e(mbed))?\\/|watch\\?(\\S*?&?v\\=))|youtu\\.be\\/)(?<id>[a-zA-Z0-9_-]{6,11})#i',
 		'embed_url'      => 'https://www.youtube.com/embed/%s',
 		'rebuild_url'    => 'https://www.youtube.com/watch?v=%s',
@@ -686,7 +655,7 @@
 				'id'  => 'PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7',
 			],
 			1 => [
-				'url' => 'https://www.youtube.com/embed/videoseries?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
+				'url' => 'https://www.youtube.com/watch?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk&v=cyoffsDl4Hw',
 				'id'  => 'PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
 			],
 		],
