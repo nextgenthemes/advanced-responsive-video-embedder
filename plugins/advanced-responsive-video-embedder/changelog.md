@@ -7,6 +7,7 @@
 ### 2021-02-22 9.5.3-beta1 ###
 
 * Fix: Shortcode arguments not working in all situations.
+* Removed services that went down.
 
 ### 2021-02-17 9.5.2-beta1 ###
 
