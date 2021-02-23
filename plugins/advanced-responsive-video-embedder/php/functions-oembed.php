@@ -37,7 +37,7 @@ function filter_embed_oembed_html( $cache, $url, $attr, $post_ID ) {
 	$json = extract_oembed_json( $cache );
 
 	if ( json_last_error() !== JSON_ERROR_NONE ) {
-		$a['errors'] = new \WP_Error( 'json-error', 'json decode error code ' . json_last_error() );
+		$a['errors'] = new \WP_Error( $url . '-json-error', 'json decode error code ' . json_last_error() );
 	}
 
 	if ( $json ) {
