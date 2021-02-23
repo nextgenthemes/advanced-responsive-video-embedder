@@ -1,6 +1,7 @@
 <?php
 use function \Nextgenthemes\ARVE\shortcode;
 use function \Nextgenthemes\ARVE\get_host_properties;
+use function \Nextgenthemes\ARVE\Common\remote_get_body;
 
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_Shortcode extends WP_UnitTestCase {
@@ -68,6 +69,33 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		return $a;
 	}
 
+	public function check_link( $url ) {
+
+		if (
+			! in_array(
+				$provider,
+				[
+					'bannedvideo', # 403
+					'ign', # 403
+					'kickstarter', #403
+					'rutube', #403
+					'mailru', # 404
+					'xtube', # nobody uses this
+					'youku', # does not like this check
+					'brightcove', #timeout
+				],
+				true
+			)
+		) {
+			$html = remote_get_body( $url, [ 'timeout' => 10 ] );
+
+			if ( is_wp_error( $html ) ) {
+				pd( $html );
+			}
+			$this->assertTrue( ! is_wp_error( $html ) );
+		}
+	}
+
 	public function test_api_data() {
 
 		$properties = get_host_properties();
@@ -79,9 +107,11 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		foreach ( $properties as $provider => $v ) :
 
 			// TODO: This generates a error on symphony/yaml
-			if ( version_compare( $GLOBALS['wp_version'], '5.2.9', '<=' ) &&
-				'dailymotion' === $provider
-			) {
+			if ( version_compare( $GLOBALS['wp_version'], '5.2.9', '<=' ) && 'dailymotion' === $provider ) {
+				continue;
+			}
+			// This generates a json syntax error.
+			if ( version_compare( $GLOBALS['wp_version'], '5.0', '<' ) && 'kickstarter' === $provider ) {
 				continue;
 			}
 
@@ -98,7 +128,10 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			foreach ( $v['tests'] as $key => $test ) {
 
 				//phpcs:ignore
-				fwrite( STDOUT, print_r($test['url'], true) . PHP_EOL );
+				fwrite( STDOUT, print_r( $test['url'], true ) . PHP_EOL );
+
+				#check_link( $test['url'] );
+
 				$html = shortcode(
 					array(
 						'url'  => $test['url'],
@@ -112,6 +145,12 @@ class Tests_Shortcode extends WP_UnitTestCase {
 					$this->assertContains( 'itemprop="embedURL', $html );
 				} else {
 					$this->assertContains( 'itemprop="contentURL', $html );
+				}
+
+				if ( $v['oembed'] ) {
+					$this->assertContains( 'data-oembed="1"', $html );
+				} else {
+					$this->assertNotContains( 'data-oembed="1"', $html );
 				}
 			}
 		endforeach;
