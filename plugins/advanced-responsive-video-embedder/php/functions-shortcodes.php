@@ -46,7 +46,7 @@ function shortcode( $a ) {
 function error( $msg, $code = '' ) {
 
 	return sprintf(
-		'<span class="arve-error"%s><abbr title="%s">ARVE</abbr> %s</span><br>' . PHP_EOL,
+		'<span class="arve-error"%s><abbr title="%s">ARVE</abbr> %s<br></span>' . PHP_EOL,
 		'hidden' === $code ? ' hidden' : '',
 		__( 'Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ),
 		// translators: Error message
