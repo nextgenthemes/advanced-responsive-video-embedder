@@ -383,7 +383,7 @@ function all_settings() {
 			'descriptionlink'     => esc_url( $pro_addon_link ),
 			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
 		),
-		'hide_title'                    => array(
+		'hide_title' => array(
 			'default'     => false,
 			'shortcode'   => true,
 			'tag'         => 'pro',
@@ -391,7 +391,7 @@ function all_settings() {
 			'type'        => 'boolean',
 			'description' => __( 'Usefull when the thumbnail image already displays the video title (Lazyload & Lightbox modes).', 'advanced-responsive-video-embedder' ),
 		),
-		'grow'                          => array(
+		'grow' => array(
 			'tag'         => 'pro',
 			'default'     => true,
 			'type'        => 'select',
@@ -399,7 +399,7 @@ function all_settings() {
 			'label'       => __( 'Expand on play? (Lazyload only)', 'advanced-responsive-video-embedder' ),
 			'description' => __( 'Expands video size after clicking the thumbnail (Lazyload Mode)', 'advanced-responsive-video-embedder' ),
 		),
-		'fullscreen'                    => array(
+		'fullscreen' => array(
 			'tag'         => 'pro',
 			'default'     => 'disabled',
 			'type'        => 'select',
@@ -412,7 +412,7 @@ function all_settings() {
 				'disabled'      => __( 'Disabled', 'advanced-responsive-video-embedder' ),
 			),
 		),
-		'play_icon_style'               => array(
+		'play_icon_style' => array(
 			'tag'     => 'pro',
 			'default' => 'youtube',
 			'label'   => __( 'Play Button', 'advanced-responsive-video-embedder' ),
@@ -428,7 +428,7 @@ function all_settings() {
 				'custom'              => __( 'Custom (for PHP filter)', 'advanced-responsive-video-embedder' ),
 			),
 		),
-		'hover_effect'                  => array(
+		'hover_effect' => array(
 			'tag'     => 'pro',
 			'default' => 'zoom',
 			'label'   => __( 'Hover Effect (Lazyload/Lightbox only)', 'advanced-responsive-video-embedder' ),
@@ -440,7 +440,7 @@ function all_settings() {
 				'none'      => __( 'None', 'advanced-responsive-video-embedder' ),
 			),
 		),
-		'disable_links'                 => array(
+		'disable_links' => array(
 			'tag'         => 'pro',
 			'default'     => false,
 			'label'       => __( 'Disable links', 'advanced-responsive-video-embedder' ),
@@ -448,15 +448,7 @@ function all_settings() {
 			'options'     => $def_bool_options,
 			'description' => __( 'Prevent embeds to open new popups/tabs from links inside video embeds. Note: breaks functionality like sharing.', 'advanced-responsive-video-embedder' ),
 		),
-		// 'mobile_inview'         => [
-		// 	'tag'         => 'pro',
-		// 	'default'     => true,
-		// 	'shortcode'   => false,
-		// 	'label'       => __( 'Mobile Inview Fallback', 'advanced-responsive-video-embedder' ),
-		// 	'type'        => 'boolean',
-		// 	'description' => __( 'This is not needed/used for YouTube and Vimeo. On mobiles fallback Lazyload mode to Lazyload Inview as workarround for the problem that it otherwise needs two touches to play a lazyloaded video because mobile browsers prevent autoplay. Note that this will prevent users to see your custom thumbnails or titles!', 'advanced-responsive-video-embedder' ),
-		// ],
-		'align'                         => array(
+		'align' => array(
 			'default'   => 'none',
 			'shortcode' => true,
 			'label'     => __( 'Alignment', 'advanced-responsive-video-embedder' ),
@@ -469,7 +461,7 @@ function all_settings() {
 				'center' => __( 'Center', 'advanced-responsive-video-embedder' ),
 			),
 		),
-		'lightbox_script'               => array(
+		'lightbox_script' => array(
 			'tag'         => 'pro',
 			'default'     => 'bigpicture',
 			'shortcode'   => false,
@@ -481,14 +473,14 @@ function all_settings() {
 			),
 			'description' => __( 'Only use Lity if you have issues with Big Picture', 'advanced-responsive-video-embedder' ),
 		),
-		'arve_link'                     => array(
+		'arve_link' => array(
 			'default'     => false,
 			'label'       => __( 'ARVE Link', 'advanced-responsive-video-embedder' ),
 			'type'        => 'select',
 			'options'     => $def_bool_options,
 			'description' => __( "Shows a small 'ARVE' link below the videos. Be the most awesome person and help promoting this plugin.", 'advanced-responsive-video-embedder' ),
 		),
-		'duration'                      => array(
+		'duration' => array(
 			'default'     => null,
 			'option'      => false,
 			'label'       => __( 'Duration', 'advanced-responsive-video-embedder' ),
@@ -496,7 +488,7 @@ function all_settings() {
 			'placeholder' => '1H2M3S',
 			'description' => __( '`1H2M3S` for 1 hour, 2 minutes and 3 seconds. `5M` for 5 minutes.', 'advanced-responsive-video-embedder' ),
 		),
-		'autoplay'                      => array(
+		'autoplay' => array(
 			'default'     => false,
 			'shortcode'   => true,
 			'label'       => __( 'Autoplay', 'advanced-responsive-video-embedder' ),
@@ -504,7 +496,7 @@ function all_settings() {
 			'options'     => $def_bool_options,
 			'description' => __( 'Do not expect this to work! Browsers (especially mobile) or user settings prevent it, some video hosts do not support it at all. Only used in normal mode. ARVE will mute HTML5 video playback in case to make autoplay work for the broadest audience.', 'advanced-responsive-video-embedder' ),
 		),
-		'maxwidth'                      => array(
+		'maxwidth' => array(
 			'default'     => 0,
 			'label'       => __( 'Maximal Width', 'advanced-responsive-video-embedder' ),
 			'type'        => 'integer',
@@ -514,14 +506,14 @@ function all_settings() {
 				DEFAULT_MAXWIDTH
 			),
 		),
-		'lightbox_maxwidth'             => array(
+		'lightbox_maxwidth' => array(
 			'tag'         => 'pro',
 			'default'     => 1174,
 			'label'       => __( 'Lightbox Maximal Width', 'advanced-responsive-video-embedder' ),
 			'type'        => 'integer',
 			'description' => __( 'default 1174', 'advanced-responsive-video-embedder' ),
 		),
-		'sticky_width'                  => array(
+		'sticky_width' => array(
 			'tag'         => 'sticky-videos',
 			'default'     => '350px',
 			'shortcode'   => false,
@@ -529,7 +521,15 @@ function all_settings() {
 			'type'        => 'string',
 			'description' => __( 'CSS value (px, vw, ...) 350px is default.', 'advanced-responsive-video-embedder' ),
 		),
-		'sticky_gap'                    => array(
+		'sticky_max_width' => array(
+			'tag'         => 'sticky-videos',
+			'default'     => '40vw',
+			'shortcode'   => false,
+			'label'       => __( 'Sticky Video Width', 'advanced-responsive-video-embedder' ),
+			'type'        => 'string',
+			'description' => __( 'A vw (viewport width) value is recommended. The default of 40vw tells the video it can never be wider than 40% of the screens width.', 'advanced-responsive-video-embedder' ),
+		),
+		'sticky_gap' => array(
 			'tag'         => 'sticky-videos',
 			'default'     => '0px',
 			'shortcode'   => false,
@@ -538,16 +538,17 @@ function all_settings() {
 			'description' => __( 'CSS value (px, vw, ...).', 'advanced-responsive-video-embedder' ),
 		),
 		'sticky_on_mobile'              => array(
-			'tag'       => 'sticky-videos',
-			'default'   => true,
-			'shortcode' => true,
-			'label'     => __( 'Sticky on Mobiles', 'advanced-responsive-video-embedder' ),
-			'type'      => 'select',
-			'options'   => $def_bool_options,
+			'tag'         => 'sticky-videos',
+			'default'     => true,
+			'shortcode'   => true,
+			'label'       => __( 'Sticky top on smaller screens', 'advanced-responsive-video-embedder' ),
+			'type'        => 'select',
+			'options'     => $def_bool_options,
+			'description' => __( 'Stick the video to the top of screens below 768px width in portrait orientation. The Video will always be as wide as the screen ignoring the Stick Width and Stick Maxwidth settings.', 'advanced-responsive-video-embedder' ),
 		),
 		'sticky_position'               => array(
 			'tag'         => 'sticky-videos',
-			'default'     => 'top-right',
+			'default'     => 'bottom-right',
 			'label'       => __( 'Sticky Video Position', 'advanced-responsive-video-embedder' ),
 			'type'        => 'select',
 			'options'     => array(
