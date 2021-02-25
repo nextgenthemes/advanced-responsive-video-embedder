@@ -1,9 +1,9 @@
 
-### [Pro Addon][20]
+### [ARVE Pro][20] ###
 
 **<big>10% off</big>** first year with discount code `wporg`.
 
-This plugin is financed by purchases of the [Pro Addon][20]. The development and support of this plugins has become a job for me, so I hope you understand that I can not make all features gratis and that you [purchase it][20] to get extra features and support the development.
+This plugin is financed by purchases of [ARVE Pro][20]. The development and support of this plugins has become a job for me, so I hope you understand that I can not make all features gratis and that you [purchase it][20] to get extra features and support the development.
 
 *   **Disable links in embeds (killer feature!)**<br>
     For example: Clicking on a title in a YouTube embed will not open a new tab. **Prevent video hosts to lead your visitors away from your site!**

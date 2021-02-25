@@ -40,7 +40,7 @@ function settings_sidebar() {
 
 	if ( ! current_user_can('install_plugins') ) {
 		echo '<div class="ngt-sidebar-box">';
-		esc_html_e( 'Note that you are logged in with a user who that can\'t install plugins, ask someone who can if you are interrested an addon.', 'advanced-responsive-video-embedder' );
+		esc_html_e( 'Note that you are logged in with a user who that can\'t install plugins, ask someone who can if you are interrested in ARVE Extensions.', 'advanced-responsive-video-embedder' );
 		echo '</div>';
 	}
 
@@ -48,16 +48,22 @@ function settings_sidebar() {
 		print_settings_box_html( '/partials/settings-sidebar-pro.html' );
 	}
 
+	if ( ! is_plugin_active( 'arve-sticky-videos/arve-sticky-videos.php' ) ) {
+		print_settings_box_html( '/partials/settings-sidebar-sticky-videos.html' );
+	}
+
 	if ( ! is_plugin_active( 'arve-random-video/arve-random-video.php' ) ) {
 		print_settings_box_html( '/partials/settings-sidebar-random-video.html' );
 	}
 
-	// if ( ! is_plugin_active( 'arve-amp/arve-amp.php' ) ) {
-	// 	print_settings_box_html( '/partials/settings-sidebar-amp.html' );
-	// }
+	if ( ! is_plugin_active( 'arve-amp/arve-amp.php' ) ) {
+		print_settings_box_html( '/partials/settings-sidebar-amp.html' );
+	}
 
 	print_settings_box_html( '/partials/settings-sidebar-rate.html' );
 }
+
+
 
 function print_settings_box_html( $file ) {
 	echo '<div class="ngt-sidebar-box">';

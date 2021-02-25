@@ -42,8 +42,15 @@ $markdown = provider_list();
 file_put_contents( $root . '/readme/13-description-supported-providers.md', $markdown );
 
 sys( "cat $root/readme/*.md $root/changelog.md > $root/readme.txt" );
-sys( "markdown $root/readme/20-description-pro.md > $root/php/Admin/partials/settings-sidebar-pro.html" );
-sys( "markdown $root/readme/21-description-random-video.md > $root/php/Admin/partials/settings-sidebar-random-video.html" );
+
+foreach ( glob( $root . '/readme/*description-ext-*.md' ) as $filename ) {
+
+	\preg_match( '/description-ext-([^.]+)/', basename( $filename ), $matches );
+
+	$html_filename = 'settings-sidebar-' . $matches[1] . '.html';
+
+	sys( "markdown $filename > $root/php/Admin/partials/$html_filename" );
+}
 
 replace_in_file(
 	"$root/php/Admin/partials/settings-sidebar-pro.html",
