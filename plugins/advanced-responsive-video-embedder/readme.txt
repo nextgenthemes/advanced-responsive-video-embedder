@@ -3,7 +3,7 @@ Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.9.16
-Tested up to: 5.6
+Tested up to: 5.6.2
 Requires PHP: 5.6
 Stable tag: 9.5.3-beta1
 License: GPL-3.0
@@ -76,11 +76,11 @@ I used a lot of high ranking plug-ins but they still broke my design. Downloaded
 
 [16]: https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/?filter=5
 
-### [Pro Addon][20]
+### [ARVE Pro][20] ###
 
 **<big>10% off</big>** first year with discount code `wporg`.
 
-This plugin is financed by purchases of the [Pro Addon][20]. The development and support of this plugins has become a job for me, so I hope you understand that I can not make all features gratis and that you [purchase it][20] to get extra features and support the development.
+This plugin is financed by purchases of [ARVE Pro][20]. The development and support of this plugins has become a job for me, so I hope you understand that I can not make all features gratis and that you [purchase it][20] to get extra features and support the development.
 
 *   **Disable links in embeds (killer feature!)**<br>
     For example: Clicking on a title in a YouTube embed will not open a new tab. **Prevent video hosts to lead your visitors away from your site!**
@@ -103,6 +103,15 @@ This plugin is financed by purchases of the [Pro Addon][20]. The development and
 
 [20]: https://nextgenthemes.com/plugins/arve-pro/
 
+### [ARVE Sticky Videos][23] ###
+
+Keep videos on the screen when scrolling.
+
+*  Choose if videos should be pinned to the top of the screen. Like the YouTube app for example.
+*  For bigger screen choose a corner where a video should be pinned to. Like last.fm [for example][23].
+
+  [23]: https://nextgenthemes.com/plugins/arve-sticky-videos/
+
 ### [Random Video Addon](https://nextgenthemes.com/plugins/arve-random-video/) ###
 
 Display random video from:
@@ -110,6 +119,18 @@ Display random video from:
 *  YouTube Playlist
 *  Vimeo Showcase
 *  Comma separated list of video URLs
+
+### [ARVE AMP][29] ###
+
+When you use the AMP or 'AMP for WP' plugin you need this.
+
+* It will display videos embedded with ARVE on AMP pages correctly
+* No options, just works
+* It creates `<amp-youtube>`, `<amp-vimeo>`, `<amp-dailymotion>` elements
+* For all other video hosts `<amp-video-iframe>` element is used
+* Video files are also supported with `<amp-video>`
+
+  [29]: https://nextgenthemes.com/plugins/arve-amp/
 
 ### Thanks ###
 
@@ -171,6 +192,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
+
+### 2021-02-26 9.5.3-beta2 ###
+
+* Fix: Unintentional newlines.
 
 ### 2021-02-22 9.5.3-beta1 ###
 
