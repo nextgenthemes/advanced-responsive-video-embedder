@@ -15,9 +15,10 @@ function url_query_array( $url ) {
 }
 
 function get_language_name_from_code( $lang_code ) {
-	// This list is based on languages available from localize.drupal.org. See
-	// http://localize.drupal.org/issues for information on how to add languages
-	// there.
+	// based on:
+	// https://github.com/drupal/drupal/blob/9c7b7f7be26a1b9179010851e6800424c524acc9/core/lib/Drupal/Core/Language/LanguageManager.php#L224
+	// Copyright Drupal and contributors
+	// License GPL 2.0 or later
 	//
 	// The "Left-to-right marker" comments and the enclosed UTF-8 markers are to
 	// make otherwise strange looking PHP syntax natural (to not be displayed in
