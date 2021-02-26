@@ -99,6 +99,7 @@ function nextgenthemes_settings() {
 		);
 	}
 
+	/*
 	$settings['cdn'] = array(
 		'tag'     => 'keys',
 		'default' => false,
@@ -106,6 +107,7 @@ function nextgenthemes_settings() {
 		'label'   => esc_html__( 'Use jsDelivr CDN for some assets', 'advanced-responsive-video-embedder' ),
 		'type'    => 'boolean',
 	);
+	*/
 
 	$settings['action'] = array(
 		'tag'     => 'keys',
