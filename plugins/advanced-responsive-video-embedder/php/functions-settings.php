@@ -271,7 +271,7 @@ function all_settings() {
 	$pro_addon_link     = 'https://nextgenthemes.com/plugins/arve-pro/';
 
 	$settings = array(
-		'url'                           => array(
+		'url' => array(
 			'default'             => null,
 			'option'              => false,
 			'label'               => __( 'Video URL / iframe Embed Code', 'advanced-responsive-video-embedder' ),
@@ -286,7 +286,7 @@ function all_settings() {
 			'descriptionlink'     => esc_url( $provider_list_link ),
 			'descriptionlinktext' => esc_html__( 'unlisted', 'advanced-responsive-video-embedder' ),
 		),
-		'title'                         => array(
+		'title' => array(
 			'default'             => null,
 			'option'              => false,
 			'label'               => __( 'Title', 'advanced-responsive-video-embedder' ),
@@ -300,7 +300,7 @@ function all_settings() {
 			'descriptionlink'     => esc_url( $pro_addon_link ),
 			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
 		),
-		'description'                   => array(
+		'description' => array(
 			'default'             => null,
 			'option'              => false,
 			'label'               => __( 'Description', 'advanced-responsive-video-embedder' ),
@@ -328,7 +328,7 @@ function all_settings() {
 			'descriptionlink'     => esc_url( $pro_addon_link ),
 			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
 		),
-		'mode'                          => array(
+		'mode' => array(
 			'tag'                 => 'pro',
 			'default'             => 'normal',
 			'label'               => __( 'Mode', 'advanced-responsive-video-embedder' ),
@@ -348,7 +348,7 @@ function all_settings() {
 			'descriptionlink'     => esc_url( $pro_addon_link ),
 			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
 		),
-		'thumbnail_fallback'            => array(
+		'thumbnail_fallback' => array(
 			'tag'         => 'pro',
 			'default'     => '',
 			'ui'          => 'image_upload',
@@ -364,7 +364,7 @@ function all_settings() {
 			'label'     => __( 'Thumbnail Featured Image Fallback', 'advanced-responsive-video-embedder' ),
 			'type'      => 'boolean',
 		),
-		'thumbnail'                     => array(
+		'thumbnail' => array(
 			'default'             => null,
 			'shortcode'           => true,
 			'option'              => false,
@@ -512,6 +512,14 @@ function all_settings() {
 			'label'       => __( 'Lightbox Maximal Width', 'advanced-responsive-video-embedder' ),
 			'type'        => 'integer',
 			'description' => __( 'default 1174', 'advanced-responsive-video-embedder' ),
+		),
+		'sticky' => array(
+			'default'     => true,
+			'shortcode'   => true,
+			'label'       => __( 'Sticky', 'advanced-responsive-video-embedder' ),
+			'type'        => 'select',
+			'options'     => $def_bool_options,
+			'description' => __( 'Keep the video on the screen when scrolling.', 'advanced-responsive-video-embedder' ),
 		),
 		'sticky_width' => array(
 			'tag'         => 'sticky-videos',
