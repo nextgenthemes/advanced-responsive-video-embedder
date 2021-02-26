@@ -107,7 +107,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		foreach ( $properties as $provider => $v ) :
 
 			// Fails for some reason
-			if ( 'dailymotion' === $provider ) {
+			if ( 'dailymotion' === $provider && getenv('CI_SHA') ) {
 				continue;
 			}
 			// TODO: This generates a error on symphony/yaml
