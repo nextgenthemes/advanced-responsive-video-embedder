@@ -13,12 +13,11 @@ namespace Nextgenthemes\ARVE\Common\Admin;
  * General Public License for more details. You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://opensource.org/licenses/gpl-license.php>
  *
- * @package   Dismissible Notices Handler
- * @author    Julien Liabeuf <julien@liabeuf.fr>
- * @version   1.2.0
- * @license   GPL-2.0+
- * @link      https://julienliabeuf.com
- * @copyright 2018 Julien Liabeuf
+ * @author    Nicolas Jonas, Julien Liabeuf <julien@liabeuf.fr>
+ * @version   1.2.1
+ * @license   GPL-3.0
+ * @link      https://nextgenthemes.com
+ * @copyright 2021 Nicolas Jonas, 2018 Julien Liabeuf
  */
 
 if ( 'always' ) {
@@ -70,7 +69,7 @@ if ( 'always' ) {
 		public static function instance() {
 
 			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Notices ) ) {
-				self::$instance = new Notices;
+				self::$instance = new Notices();
 				self::$instance->init();
 			}
 
@@ -91,7 +90,7 @@ if ( 'always' ) {
 				self::$instance->spit_error(
 					sprintf(
 						/* translators: %s: required WordPress version */
-						esc_html__( 'The library can not be used because your version of WordPress is too old. You need version %s at least.', 'wp-dismissible-notices-handler' ),
+						esc_html__( 'The library can not be used because your version of WordPress is too old. You need version %s at least.', 'advanced-responsive-video-embedder' ),
 						self::$instance->wordpress_version_required
 					)
 				);
@@ -104,7 +103,7 @@ if ( 'always' ) {
 				self::$instance->spit_error(
 					sprintf(
 						/* translators: %s: required php version */
-						esc_html__( 'The library can not be used because your version of PHP is too old. You need version %s at least.', 'wp-dismissible-notices-handler' ),
+						esc_html__( 'The library can not be used because your version of PHP is too old. You need version %s at least.', 'advanced-responsive-video-embedder' ),
 						self::$instance->php_version_required
 					)
 				);
@@ -194,7 +193,12 @@ if ( 'always' ) {
 					$notice['class'],
 				);
 
-				printf( '<div id="%3$s" class="%1$s"><p>%2$s</p></div>', trim( implode( ' ', $class ) ), $notice['content'], "dnh-$id" );
+				printf(
+					'<div id="%1$s" class="%2$s"><p>%3$s</p></div>',
+					esc_attr( "dnh-$id" ),
+					esc_attr( trim( implode( ' ', $class ) ) ),
+					wp_kses_post( $notice['content'] )
+				);
 
 			}
 
@@ -212,7 +216,7 @@ if ( 'always' ) {
 		protected function spit_error( $error ) {
 			printf(
 				'<div style="margin: 20px; text-align: center;"><strong>%1$s</strong> %2$s</pre></div>',
-				esc_html__( 'Dismissible Notices Handler Error:', 'wp-dismissible-notices-handler' ),
+				esc_html__( 'Dismissible Notices Handler Error:', 'advanced-responsive-video-embedder' ),
 				wp_kses_post( $error )
 			);
 		}
@@ -289,8 +293,9 @@ if ( 'always' ) {
 				self::$instance->notices = array();
 			}
 
+			$t       = sanitize_text_field( $type );
 			$id      = self::$instance->get_id( $id );
-			$type    = in_array( $t = sanitize_text_field( $type ), self::$instance->get_types() ) ? $t : 'updated';
+			$type    = in_array( $t, self::$instance->get_types(), true ) ? $t : 'updated';
 			$content = wp_kses_post( $content );
 			$args    = wp_parse_args( $args, self::$instance->default_args() );
 
@@ -299,7 +304,7 @@ if ( 'always' ) {
 				self::$instance->spit_error(
 					sprintf(
 						/* translators: %s: required php version */
-						esc_html__( 'A notice with the ID %s has already been registered.', 'wp-dismissible-notices-handler' ),
+						esc_html__( 'A notice with the ID %s has already been registered.', 'advanced-responsive-video-embedder' ),
 						"<code>$id</code>"
 					)
 				);
@@ -328,6 +333,7 @@ if ( 'always' ) {
 		 */
 		public function dismiss_notice_ajax() {
 
+			// phpcs:disable WordPress.Security.NonceVerification.Missing
 			if ( ! isset( $_POST['id'] ) ) {
 				echo 0;
 				exit;
@@ -339,10 +345,10 @@ if ( 'always' ) {
 			}
 
 			$id = self::$instance->get_id( str_replace( 'dnh-', '', $_POST['id'] ) );
+			// phpcs:enable
 
-			echo self::$instance->dismiss_notice( $id );
+			echo wp_kses_post( self::$instance->dismiss_notice( $id ) );
 			exit;
-
 		}
 
 		/**
@@ -383,7 +389,7 @@ if ( 'always' ) {
 
 			$dismissed = self::$instance->dismissed_user();
 
-			if ( in_array( $id, $dismissed ) ) {
+			if ( in_array( $id, $dismissed, true ) ) {
 				return false;
 			}
 
@@ -406,7 +412,7 @@ if ( 'always' ) {
 
 			$dismissed = self::$instance->dismissed_global();
 
-			if ( in_array( $id, $dismissed ) ) {
+			if ( in_array( $id, $dismissed, true ) ) {
 				return false;
 			}
 
@@ -458,7 +464,7 @@ if ( 'always' ) {
 
 			$dismissed = self::$instance->dismissed_user();
 
-			if ( ! in_array( $id, $dismissed ) ) {
+			if ( ! in_array( $id, $dismissed, true ) ) {
 				return false;
 			}
 
@@ -491,7 +497,7 @@ if ( 'always' ) {
 
 			$dismissed = self::$instance->dismissed_global();
 
-			if ( ! in_array( $id, $dismissed ) ) {
+			if ( ! in_array( $id, $dismissed, true ) ) {
 				return false;
 			}
 
@@ -562,7 +568,7 @@ if ( 'always' ) {
 
 			$dismissed = self::$instance->dismissed_notices();
 
-			if ( ! in_array( self::$instance->get_id( $id ), $dismissed ) ) {
+			if ( ! in_array( self::$instance->get_id( $id ), $dismissed, true ) ) {
 				return false;
 			}
 
