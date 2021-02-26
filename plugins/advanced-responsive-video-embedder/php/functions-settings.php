@@ -514,6 +514,7 @@ function all_settings() {
 			'description' => __( 'default 1174', 'advanced-responsive-video-embedder' ),
 		),
 		'sticky' => array(
+			'tag'         => 'sticky-videos',
 			'default'     => true,
 			'shortcode'   => true,
 			'label'       => __( 'Sticky', 'advanced-responsive-video-embedder' ),
