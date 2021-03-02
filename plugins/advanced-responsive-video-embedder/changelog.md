@@ -6,7 +6,9 @@
 
 ### 2021-02-26 9.5.3-beta2 ###
 
+* Fix: Possible conflict with PHP8 polyfills.
 * Fix: Unintentional newlines.
+* Options for stick videos are ready to use.
 
 ### 2021-02-22 9.5.3-beta1 ###
 
