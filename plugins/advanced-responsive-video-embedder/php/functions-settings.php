@@ -314,7 +314,7 @@ function all_settings() {
 			'descriptionlink'     => esc_url( $pro_addon_link ),
 			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
 		),
-		'upload_date'                   => array(
+		'upload_date' => array(
 			'default'             => null,
 			'option'              => false,
 			'label'               => __( 'Upload Date', 'advanced-responsive-video-embedder' ),
@@ -322,7 +322,7 @@ function all_settings() {
 			'placeholder'         => __( '2019-09-29 (ARVE Pro fills this with post date)', 'advanced-responsive-video-embedder' ),
 			'description'         => sprintf(
 				// translators: URL
-				__( '<a href="%s">ARVE Pro</a> fills this automatically', 'advanced-responsive-video-embedder' ),
+				__( '<a href="%s">ARVE Pro</a> fills this automatically.', 'advanced-responsive-video-embedder' ),
 				esc_url( $pro_addon_link )
 			),
 			'descriptionlink'     => esc_url( $pro_addon_link ),
@@ -534,25 +534,25 @@ function all_settings() {
 			'tag'         => 'sticky-videos',
 			'default'     => '40vw',
 			'shortcode'   => false,
-			'label'       => __( 'Sticky Video Width', 'advanced-responsive-video-embedder' ),
+			'label'       => __( 'Sticky Video Maximal Width', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
 			'description' => __( 'A vw (viewport width) value is recommended. The default of 40vw tells the video it can never be wider than 40% of the screens width.', 'advanced-responsive-video-embedder' ),
 		),
 		'sticky_gap' => array(
 			'tag'         => 'sticky-videos',
-			'default'     => '0px',
+			'default'     => '0.7rem',
 			'shortcode'   => false,
 			'label'       => __( 'Sticky Video Corner Gap', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
-			'description' => __( 'CSS value (px, vw, ...).', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'CSS value (px, me, rem ...). Space between browser windows corner and pinned video.', 'advanced-responsive-video-embedder' ),
 		),
 		'sticky_navbar_selector' => array(
 			'tag'         => 'sticky-videos',
 			'default'     => '.navbar--primary',
 			'shortcode'   => false,
-			'label'       => __( 'Sticky Video Corner Gap', 'advanced-responsive-video-embedder' ),
+			'label'       => __( 'Selector for fixed Navbar', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
-			'description' => __( 'If you have a fixed navbar on the top if your site you need this. Selector for a fixed navbar element account for its height.', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'If you have a fixed navbar on the top if your site you need this. document.querySelector(x) for a fixed navbar element to account for its height when pinning videos to the top.', 'advanced-responsive-video-embedder' ),
 		),
 		'sticky_on_mobile'              => array(
 			'tag'         => 'sticky-videos',
