@@ -11,7 +11,7 @@
 		"importsNotUsedAsValues": "preserve",
 		/* -- wppack.io (changed) -- */
 		/* Basic Options */
-		"target": "esnext", // we would be compiling with babel, so we can target esnext
+		"target": "es2019", // we would be compiling with babel, so we can target esnext
 		"module": "esnext", // for import() and es5 import/export
 		"lib": [
 			"esnext",
