@@ -768,14 +768,14 @@ function args_detect_html5( array $a ) {
 
 	foreach ( VIDEO_FILE_EXTENSIONS as $ext ) :
 
-		if ( str_ends_with( $a['url'], ".$ext" ) &&
+		if ( str_ends_with( (string) $a['url'], ".$ext" ) &&
 			! $a[ $ext ]
 		) {
 			$a[ $ext ] = $a['url'];
 		}
 
 		if ( 'av1mp4' === $ext &&
-			str_ends_with( $a['url'], 'av1.mp4' ) &&
+			str_ends_with( (string) $a['url'], 'av1.mp4' ) &&
 			! $a[ $ext ]
 		) {
 			$a[ $ext ] = $a['url'];
