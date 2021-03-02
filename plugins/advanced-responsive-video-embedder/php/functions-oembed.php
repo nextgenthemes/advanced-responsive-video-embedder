@@ -29,7 +29,7 @@ function filter_oembed_dataparse( $result, $data, $url ) {
 		$result .= '<script type="application/json" data-arve-oembed>'.\wp_json_encode($data, JSON_UNESCAPED_UNICODE).'</script>';
 	}
 
-	$result .= '<!-- arve filter_oembed_dataparse -->';
+	$result .= '<template class="arve-filter-oembed-dataparse"></template>';
 
 	return $result;
 }
@@ -54,7 +54,9 @@ function filter_embed_oembed_html( $cache, $url, $attr, $post_ID ) {
 		$cache = build_video( $a );
 	}
 
-	$cache .= '<!-- arve filter_embed_oembed_html -->';
+	if ( isset( $_GET['arve-debug-oembed'] ) ) {
+		$cache .= '<template class="arve-filter-oembed-html"></template>';
+	}
 
 	return $cache;
 }
