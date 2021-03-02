@@ -2,13 +2,14 @@
 ## Changelog ##
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
-* [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
+* [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2021-02-26 9.5.3-beta2 ###
+### 2021-03-02 9.5.4-beta1 ###
 
 * Fix: Possible conflict with PHP8 polyfills.
 * Fix: Unintentional newlines.
-* Options for stick videos are ready to use.
+* Improved: Tweaks to make debugging easier.
+* Options for [sticky videos](https://nextgenthemes.com/plugins/arve-sticky-videos/) are ready to use.
 
 ### 2021-02-22 9.5.3-beta1 ###
 
