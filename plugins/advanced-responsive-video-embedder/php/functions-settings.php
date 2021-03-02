@@ -546,6 +546,14 @@ function all_settings() {
 			'type'        => 'string',
 			'description' => __( 'CSS value (px, vw, ...).', 'advanced-responsive-video-embedder' ),
 		),
+		'sticky_navbar_selector' => array(
+			'tag'         => 'sticky-videos',
+			'default'     => '.navbar--primary',
+			'shortcode'   => false,
+			'label'       => __( 'Sticky Video Corner Gap', 'advanced-responsive-video-embedder' ),
+			'type'        => 'string',
+			'description' => __( 'If you have a fixed navbar on the top if your site you need this. Selector for a fixed navbar element account for its height.', 'advanced-responsive-video-embedder' ),
+		),
 		'sticky_on_mobile'              => array(
 			'tag'         => 'sticky-videos',
 			'default'     => true,
