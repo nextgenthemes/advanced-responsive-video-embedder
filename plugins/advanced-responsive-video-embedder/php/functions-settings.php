@@ -524,7 +524,7 @@ function all_settings() {
 		),
 		'sticky_width' => array(
 			'tag'         => 'sticky-videos',
-			'default'     => '350px',
+			'default'     => '500px',
 			'shortcode'   => false,
 			'label'       => __( 'Sticky Video Width', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
@@ -577,7 +577,7 @@ function all_settings() {
 			),
 			'description' => __( 'Corner the video gets pinned to on bigger screens.', 'advanced-responsive-video-embedder' ),
 		),
-		'align_maxwidth'                => array(
+		'align_maxwidth' => array(
 			'default'     => 400,
 			'shortcode'   => false,
 			'label'       => __( 'Align Maximal Width', 'advanced-responsive-video-embedder' ),
@@ -592,7 +592,7 @@ function all_settings() {
 			'description' => __( 'E.g. 4:3, 21:9. ARVE is usually smart enough to figure this out on its own.', 'advanced-responsive-video-embedder' ),
 			'placeholder' => __( '4:3, 21:9 ...', 'advanced-responsive-video-embedder' ),
 		),
-		'parameters'                    => array(
+		'parameters' => array(
 			'default'     => null,
 			'html5'       => false,
 			'option'      => false,
@@ -605,7 +605,7 @@ function all_settings() {
 				esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/#parameters' )
 			),
 		),
-		'wp_video_override'             => array(
+		'wp_video_override' => array(
 			'tag'         => 'html5',
 			'default'     => true,
 			'shortcode'   => false,
@@ -628,7 +628,7 @@ function all_settings() {
 			'options'     => $def_bool_options,
 			'description' => __( 'Show controls on HTML5 video.', 'advanced-responsive-video-embedder' ),
 		),
-		'loop'                          => array(
+		'loop' => array(
 			'tag'         => 'html5',
 			'default'     => 'n',
 			'shortcode'   => true,
@@ -682,7 +682,7 @@ function all_settings() {
 			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
 			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		),
-		'vimeo_api_secret'              => array(
+		'vimeo_api_secret' => array(
 			'tag'                 => 'random-video',
 			'default'             => '',
 			'shortcode'           => false,
@@ -696,7 +696,7 @@ function all_settings() {
 			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
 			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		),
-		'vimeo_api_token'               => array(
+		'vimeo_api_token' => array(
 			'tag'                 => 'random-video',
 			'default'             => '',
 			'shortcode'           => false,
@@ -710,7 +710,7 @@ function all_settings() {
 			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
 			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		),
-		'random_video_url'              => array(
+		'random_video_url' => array(
 			'tag'                 => 'random-video',
 			'default'             => null,
 			'option'              => false,
@@ -725,7 +725,7 @@ function all_settings() {
 			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
 			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		),
-		'random_video_urls'             => array(
+		'random_video_urls' => array(
 			'tag'                 => 'random-video',
 			'default'             => null,
 			'option'              => false,
@@ -740,36 +740,36 @@ function all_settings() {
 			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
 			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		),
-		'legacy_shortcodes'             => array(
+		'legacy_shortcodes' => array(
 			'default'     => true,
 			'shortcode'   => false,
 			'label'       => __( 'Enable lagacy shortcodes', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
 			'description' => __( 'Enable the old and deprected <code>[youtube id="abcde" /]</code> or <code>[vimeo id="abcde" /]</code> ... style shortcodes. Only enable if you have them in your content.', 'advanced-responsive-video-embedder' ),
 		),
-		'sandbox'                       => array(
+		'sandbox' => array(
 			'default'     => true,
 			'shortcode'   => true,
 			'label'       => __( 'Sandbox', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
 			'description' => __( "Only disable if you have to. If you embed encrypted media you have to disable this. 'Disable Links' feature from ARVE Pro will not work when without sandbox.", 'advanced-responsive-video-embedder' ),
 		),
-		'seo_data'                      => array(
+		'seo_data' => array(
 			'tag'         => 'main',
 			'default'     => true,
 			'shortcode'   => false,
 			'label'       => __( 'Enable structured data (schema.org)', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
-			'description' => __( 'Disable if you use Yoast Video SEO or another plugin that generates the data already.', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'ARVE Pro helps you autofill the data so you do not have to manually enter things for every single video to make it complete.', 'advanced-responsive-video-embedder' ),
 		),
-		'gutenberg_help'                => array(
+		'gutenberg_help' => array(
 			'default'     => true,
 			'shortcode'   => false,
 			'label'       => __( 'Enable help text in the Block sidebar?', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
 			'description' => __( 'Disabling this makes the interface much cleaner.', 'advanced-responsive-video-embedder' ),
 		),
-		'feed'                          => array(
+		'feed' => array(
 			'default'     => true,
 			'shortcode'   => false,
 			'option'      => true,
@@ -801,7 +801,7 @@ function all_settings() {
 			'type'      => 'boolean',
 		],
 		*/
-		'admin_bar_menu'                => array(
+		'admin_bar_menu' => array(
 			'default'     => false,
 			'shortcode'   => false,
 			'option'      => true,

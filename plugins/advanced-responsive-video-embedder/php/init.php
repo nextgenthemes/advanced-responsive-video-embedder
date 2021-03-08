@@ -40,7 +40,7 @@ function init_public() {
 	add_action( 'wp_video_shortcode_override', __NAMESPACE__ . '\wp_video_shortcode_override', 10, 4 );
 	add_filter( 'language_attributes', __NAMESPACE__ . '\html_id' );
 	add_filter( 'oembed_dataparse', __NAMESPACE__ . '\filter_oembed_dataparse', PHP_INT_MAX, 3 );
-	add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', -5, 4 );
+	add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', OEMBED_HTML_PRIORITY, 4 );
 }
 
 function init_admin() {

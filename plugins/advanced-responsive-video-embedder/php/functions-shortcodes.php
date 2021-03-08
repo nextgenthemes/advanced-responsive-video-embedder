@@ -3,8 +3,8 @@ namespace Nextgenthemes\ARVE;
 
 function shortcode( $a ) {
 
-	$a = (array) $a;
-
+	$a                        = (array) $a;
+	$a['errors']              = new \WP_Error();
 	$a['origin_data']['from'] = 'shortcode';
 
 	foreach ( $a as $k => $v ) {
@@ -19,23 +19,18 @@ function shortcode( $a ) {
 		return $override;
 	}
 
-	$a['errors'] = new \WP_Error();
-	$a           = apply_filters( 'nextgenthemes/arve/shortcode_args', $a );
+	$a = apply_filters( 'nextgenthemes/arve/shortcode_args', $a );
 
 	if ( ! empty( $a['url'] ) ) {
 
-		remove_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', -5 );
+		remove_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', OEMBED_HTML_PRIORITY );
 		$maybe_arve_html = $GLOBALS['wp_embed']->shortcode( array(), $a['url'] );
-		add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', -5, 4 );
+		add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', OEMBED_HTML_PRIORITY, 4 );
 
-		$json = extract_oembed_json( $maybe_arve_html );
+		$oembed_data = extract_oembed_json( $maybe_arve_html, $a );
 
-		if ( json_last_error() !== JSON_ERROR_NONE ) {
-			$a['errors']->add( 'json-error', 'json decode error code ' . json_last_error() );
-		}
-
-		if ( $json ) {
-			$a['oembed_data']         = $json;
+		if ( $oembed_data ) {
+			$a['oembed_data']         = $oembed_data;
 			$a['origin_data']['from'] = 'shortcode oembed_data detected';
 		}
 	}

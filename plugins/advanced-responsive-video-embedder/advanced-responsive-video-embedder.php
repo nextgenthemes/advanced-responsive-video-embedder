@@ -26,5 +26,6 @@ const PLUGIN_FILE           = __FILE__;
 const PLUGIN_DIR            = __DIR__;
 const VIDEO_FILE_EXTENSIONS = array( 'av1mp4', 'mp4', 'm4v', 'webm', 'ogv' );
 const DEFAULT_MAXWIDTH      = 900;
+const OEMBED_HTML_PRIORITY  = -5;
 
 require_once __DIR__ . '/php/init.php';

@@ -4,6 +4,13 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2021-03-08 9.5.5 ###
+
+* Fix: JSON decode error appearing. 
+* Fix: Error messages for no longer needed and not existing `.js` file.
+* Improved: Default width for sticky videos set to `500px`.
+* Tested with WP 5.7-RC2
+
 ### 2021-03-02 9.5.4-beta1 ###
 
 * Fix: Possible conflict with PHP8 polyfills.
