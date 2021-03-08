@@ -150,17 +150,6 @@ if ( 'always' ) {
 		}
 
 		/**
-		 * Load the script
-		 *
-		 * @since 1.0
-		 * @return void
-		 */
-		public function load_script() {
-			wp_register_script( 'dnh', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'assets/js/main.js', array( 'jquery' ), self::$instance->version, true );
-			wp_enqueue_script( 'dnh' );
-		}
-
-		/**
 		 * Display all the registered notices
 		 *
 		 * @since 1.0
