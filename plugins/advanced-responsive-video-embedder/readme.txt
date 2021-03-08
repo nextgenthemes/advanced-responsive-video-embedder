@@ -3,7 +3,7 @@ Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.9.16
-Tested up to: 5.7.0
+Tested up to: 5.7-RC2
 Requires PHP: 5.6
 Stable tag: 9.5.5
 License: GPL-3.0
@@ -192,6 +192,13 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2021-03-08 9.5.5 ###
+
+* Fix: JSON decode error appearing. 
+* Fix: Error messages for no longer needed and not existing `.js` file.
+* Improved: Default width for sticky videos set to `500px`.
+* Tested with WP 5.7-RC2
 
 ### 2021-03-02 9.5.4-beta1 ###
 
