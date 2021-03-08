@@ -12,7 +12,7 @@ class Tests_ShortcodeThumbnail extends WP_UnitTestCase {
 		$contents = file_get_contents( $filename );
 		// phpcs:enable WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 
-		$upload = @wp_upload_bits( basename( $filename ), null, $contents );
+		$upload = wp_upload_bits( basename( $filename ), null, $contents );
 		$this->assertTrue( empty( $upload['error'] ) );
 
 		$attachment_id = parent::_make_attachment( $upload );
