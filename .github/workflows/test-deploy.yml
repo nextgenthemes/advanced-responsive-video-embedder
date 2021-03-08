@@ -11,12 +11,12 @@ jobs:
     strategy:
       matrix:
         php: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
-        wordpress: [ '5.5.3', '5.7-RC2' ] # https://wordpress.org/download/releases/ 
+        wordpress: [ '5.5.3', '5.6.2' ] # https://wordpress.org/download/releases/ 
         include:
-          - php: '8.0'
-            wordpress: '5.7-RC2'
           - php: '5.6'
             wordpress: '4.9.16' # Need to skip dailymotion in test_api_data
+          - php: '8.0'
+            wordpress: '5.6.2'
     services:
       mysql:
         image: mysql:5.7
