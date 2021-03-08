@@ -82,7 +82,7 @@ if ( $readme_only ) {
 		$build_dir = trim( $build_dir );
 
 		if ( ! file_exists( "$cwd/$build_dir" ) ) {
-			echo "Build dir $cwd/$build_dir does not exists." . PHP_EOL;
+			echo 'Build dir '.e("$cwd/$build_dir").' does not exists.' . PHP_EOL;
 			exit(1);
 		}
 
