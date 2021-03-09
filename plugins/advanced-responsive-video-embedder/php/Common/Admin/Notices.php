@@ -112,7 +112,6 @@ if ( 'always' ) {
 			}
 
 			add_action( 'admin_notices', array( self::$instance, 'display' ) );
-			add_action( 'admin_print_scripts', array( self::$instance, 'load_script' ) );
 			add_action( 'wp_ajax_dnh_dismiss_notice', array( self::$instance, 'dismiss_notice_ajax' ) );
 
 		}
