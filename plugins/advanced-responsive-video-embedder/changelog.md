@@ -4,6 +4,11 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2021-03-09 9.5.6 ###
+
+* Improved: Load scripts with higher priority.
+* Fix: Error related to removed notice script.
+
 ### 2021-03-08 9.5.5 ###
 
 * Fix: JSON decode error appearing. 
