@@ -7,7 +7,9 @@ class Tests_ShortcodeThumbnail extends WP_UnitTestCase {
 
 	public function test_thumbnails() {
 
-		$this->expectException('Exception');
+		if ( version_compare( $GLOBALS['wp_version'], '5.7', '>=' ) ) {
+			$this->expectException('Exception');
+		}
 
 		$filename = dirname( __FILE__ ) . '/test-attachment.jpg';
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
