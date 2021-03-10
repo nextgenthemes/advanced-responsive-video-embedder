@@ -6,7 +6,6 @@ use function \Nextgenthemes\ARVE\get_host_properties;
 class Tests_ShortcodeThumbnail extends WP_UnitTestCase {
 
 	public function test_thumbnails() {
-
 		if ( version_compare( $GLOBALS['wp_version'], '5.7', '>=' ) ) {
 			$this->expectException('Exception');
 		}
