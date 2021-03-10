@@ -7,6 +7,8 @@ class Tests_ShortcodeThumbnail extends WP_UnitTestCase {
 
 	public function test_thumbnails() {
 
+		$this->expectException('Exception');
+
 		$filename = dirname( __FILE__ ) . '/test-attachment.jpg';
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$contents = file_get_contents( $filename );
@@ -15,7 +17,7 @@ class Tests_ShortcodeThumbnail extends WP_UnitTestCase {
 		$this->assertTrue( empty( $upload['error'] ) );
 
 		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
-		$attachment_id = @parent::_make_attachment( $upload );
+		$attachment_id = parent::_make_attachment( $upload );
 
 		$attr = array(
 			'url'       => 'https://example.com/video.mp4',
