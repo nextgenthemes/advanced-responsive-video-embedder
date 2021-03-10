@@ -14,11 +14,12 @@ function register_assets() {
 
 	Common\asset(
 		array(
-			'handle' => 'arve-main',
-			'src'    => plugins_url( 'build/main.js', PLUGIN_FILE ),
-			'path'   => PLUGIN_DIR . '/build/main.js',
-			'async'  => true,
-			'defer'  => false,
+			'handle'    => 'arve-main',
+			'src'       => plugins_url( 'build/main.js', PLUGIN_FILE ),
+			'path'      => PLUGIN_DIR . '/build/main.js',
+			'async'     => true,
+			'in_footer' => false,
+			'defer'     => false,
 		)
 	);
 
