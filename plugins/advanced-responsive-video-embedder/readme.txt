@@ -193,6 +193,11 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+
+### 2021-03-11 9.5.8 ###
+
+* Fix: Scripts wrongly moved to the `<head>` with the "Always load assets" option turned on.
+
 ### 2021-03-11 9.5.7 ###
 
 * Minor tweak: Load main.js in `<head>`.
