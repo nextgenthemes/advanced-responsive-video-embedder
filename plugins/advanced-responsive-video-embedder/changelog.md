@@ -4,6 +4,11 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2021-03-11 9.5.7 ###
+
+* Minor tweak: Load main.js in `<head>`.
+* Tested with WP 5.7.0
+
 ### 2021-03-09 9.5.6 ###
 
 * Improved: Load scripts with higher priority.
