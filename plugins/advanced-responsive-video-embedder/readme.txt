@@ -3,14 +3,13 @@ Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.9.16
-Tested up to: 5.6.2
+Tested up to: 5.7.0
 Requires PHP: 5.6
 Stable tag: 9.5.7
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement for WordPress' default embeds. Best plugin for videos?
-
 
 ## Description ##
 
@@ -193,6 +192,11 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2021-03-11 9.5.7 ###
+
+* Minor tweak: Load main.js in `<head>`.
+* Tested with WP 5.7.0
 
 ### 2021-03-09 9.5.6 ###
 
