@@ -24,8 +24,8 @@ function register_assets() {
 	);
 
 	// phpcs:disable WordPress.WP.EnqueuedResourceParameters.MissingVersion
-	wp_register_script( 'arve', null, array( 'arve-main' ), null, false );
-	wp_register_style( 'arve', null, array( 'arve-main' ), null, false );
+	wp_register_script( 'arve', null, array( 'arve-main' ), null, true );
+	wp_register_style( 'arve', null, array( 'arve-main' ), null, true );
 	// phpcs:enable WordPress.WP.EnqueuedResourceParameters.MissingVersion
 
 	if ( function_exists( 'register_block_type' ) ) :
