@@ -14,23 +14,28 @@ class Tests_ShortcodeThumbnail extends WP_UnitTestCase {
 
 		$attachment_id = parent::_make_attachment( $upload );
 
-		$attr = array(
-			'url'       => 'https://example.com/video.mp4',
-			'thumbnail' => (string) $attachment_id,
-			'title'     => 'Something',
+		$html = shortcode(
+			array(
+				'url'       => 'https://example.com/video.mp4',
+				'thumbnail' => (string) $attachment_id,
+				'title'     => 'Something',
+			)
 		);
 
-		$this->assertRegExp( '#<meta itemprop="thumbnailUrl" content=".*icon-128x128#', shortcode( $attr ) );
+		$this->assertRegExp( '#<meta itemprop="thumbnailUrl" content=".*icon-128x128#', $html );
 		$this->assertNotContains( 'Error', $html );
 	}
 
 	public function test_thumbnail_by_url() {
-		$attr = array(
-			'url'       => 'https://example.com/video2.mp4',
-			'thumbnail' => 'https://example.com/image.jpg',
+
+		$html = shortcode(
+			array(
+				'url'       => 'https://example.com/video2.mp4',
+				'thumbnail' => 'https://example.com/image.jpg',
+			)
 		);
 
-		$this->assertContains( '<meta itemprop="thumbnailUrl" content="https://example.com/image.jpg"', shortcode( $attr ) );
+		$this->assertContains( '<meta itemprop="thumbnailUrl" content="https://example.com/image.jpg"', $html );
 		$this->assertNotContains( 'Error', $html );
 	}
 }
