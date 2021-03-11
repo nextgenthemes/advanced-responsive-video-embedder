@@ -11,7 +11,6 @@ class Tests_ShortcodeThumbnail extends WP_UnitTestCase {
 
 		$upload = wp_upload_bits( basename( $filename ), null, $contents );
 		$this->assertTrue( empty( $upload['error'] ) );
-		pd('test');
 
 		$attachment_id = parent::_make_attachment( $upload );
 
@@ -21,7 +20,7 @@ class Tests_ShortcodeThumbnail extends WP_UnitTestCase {
 			'title'     => 'Something',
 		);
 
-		$this->assertRegExp( '#<meta itemprop="thumbnailUrl" content=".*icon-128x128.png#', shortcode( $attr ) );
+		$this->assertRegExp( '#<meta itemprop="thumbnailUrl" content=".*icon-128x128#', shortcode( $attr ) );
 
 		$attr = array(
 			'url'       => 'https://example.com/video2.mp4',
