@@ -11,6 +11,7 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement for WordPress' default embeds. Best plugin for videos?
 
+
 ## Description ##
 
 The best WordPress plugin for videos? Supports close to everything you can imagine, still keeping it easy & simple.
