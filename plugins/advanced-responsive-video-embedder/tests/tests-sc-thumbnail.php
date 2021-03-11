@@ -5,7 +5,7 @@ use function \Nextgenthemes\ARVE\get_host_properties;
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 class Tests_ShortcodeThumbnail extends WP_UnitTestCase {
 
-	public function test_thumbnails() {
+	public function test_thumbnail_by_upload_id() {
 		$filename = \Nextgenthemes\ARVE\PLUGIN_DIR . '/.wordpress-org/icon-128x128.png';
 		$contents = file_get_contents( $filename );
 
@@ -21,12 +21,16 @@ class Tests_ShortcodeThumbnail extends WP_UnitTestCase {
 		);
 
 		$this->assertRegExp( '#<meta itemprop="thumbnailUrl" content=".*icon-128x128#', shortcode( $attr ) );
+		$this->assertNotContains( 'Error', $html );
+	}
 
+	public function test_thumbnail_by_url() {
 		$attr = array(
 			'url'       => 'https://example.com/video2.mp4',
 			'thumbnail' => 'https://example.com/image.jpg',
 		);
 
 		$this->assertContains( '<meta itemprop="thumbnailUrl" content="https://example.com/image.jpg"', shortcode( $attr ) );
+		$this->assertNotContains( 'Error', $html );
 	}
 }
