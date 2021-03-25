@@ -21,7 +21,7 @@ function process_shortcode_args( array $a ) {
 	$a['id']           = liveleak_id_fix( $a );
 	$a['maxwidth']     = arg_maxwidth( $a );
 	$a['width']        = $a['maxwidth'];
-	$a['height']       = height_from_width_and_ratio( $a['width'], $a['aspect_ratio'] );
+	$a['height']       = height_from_width_and_ratio( $a );
 	$a['mode']         = arg_mode( $a );
 	$a['autoplay']     = arg_autoplay( $a );
 	$a['src']          = arg_iframe_src( $a );
@@ -585,15 +585,20 @@ function arg_autoplay( array $a ) {
 	return apply_filters( 'nextgenthemes/arve/args/autoplay', $a['autoplay'], $a );
 }
 
-function height_from_width_and_ratio( $width, $ratio ) {
+function height_from_width_and_ratio( array $a ) {
 
-	if ( empty( $ratio ) ) {
+	if ( empty( $a['aspect_ratio'] ) ) {
 		return false;
 	}
 
-	list( $old_width, $old_height ) = explode( ':', $ratio );
+	list( $old_width, $old_height ) = explode( ':', $a['aspect_ratio'], 2 );
 
-	return new_height( $old_width, $old_height, $width );
+	if ( ! is_numeric( $old_width ) || ! is_numeric( $old_height ) ) {
+		$a['errors']->add( 'wrong-ar', 'Wrong aspect ratio' );
+		return false;
+	}
+
+	return new_height( $old_width, $old_height, $a['width'] );
 }
 
 function args_video( array $a ) {
