@@ -193,7 +193,7 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2021-03-25 9.5.9 ###
+### 2021-03-25 9.5.10 ###
 
 * Fix: 'None numeric value' errors in some situations.
 
