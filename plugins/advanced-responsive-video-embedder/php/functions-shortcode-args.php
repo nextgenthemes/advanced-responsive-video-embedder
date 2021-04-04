@@ -755,8 +755,10 @@ function get_video_type( $ext ) {
 			return 'video/ogg';
 		case 'av1mp4':
 			return 'video/mp4; codecs=av01.0.05M.08';
+		case 'mp4':
+			return 'video/mp4';
 		default:
-			return 'video/' . $ext;
+			return 'video/x-' . $ext;
 	}
 }
 

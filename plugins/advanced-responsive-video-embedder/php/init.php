@@ -15,6 +15,7 @@ function init_public() {
 	if ( version_compare( get_option( 'arve_version' ), '9.5.3-alpha1', '<' ) ) {
 		$GLOBALS['wpdb']->query( "DELETE FROM {$GLOBALS['wpdb']->postmeta} WHERE meta_key LIKE '%_oembed_%'" );
 	}
+
 	update_option( 'arve_version', VERSION );
 
 	require_once PLUGIN_DIR . '/php/Common/init.php';
