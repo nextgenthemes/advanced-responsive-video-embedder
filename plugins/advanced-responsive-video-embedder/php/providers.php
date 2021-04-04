@@ -357,6 +357,23 @@
 		'name'         => 'ooyala',
 		'requires_src' => true,
 	],
+	'qq' => [
+		'name'           => 'v.qq.com',
+		'oembed'         => false,
+		'regex'          => '#https?://v\.qq\.com/.+?(?<id>[a-z0-9]+).html#i',
+		'embed_url'      => 'https://v.qq.com/txp/iframe/player.html?vid=%s',
+		'auto_thumbnail' => false,
+		'tests'          => [
+			0 => [
+				'url' => 'https://v.qq.com/txp/iframe/player.html?vid=v3237pcgrhe',
+				'id'  => 'v3237pcgrhe',
+			],
+			1 => [
+				'url' => 'https://v.qq.com/x/cover/zf2z0xpqcculhcz/y0016tj0qvh.html',
+				'id'  => 'y0016tj0qvh',
+			],
+		],
+	],
 	'rumble' => [
 		'name'           => 'Rumble.com',
 		'oembed'         => false,
