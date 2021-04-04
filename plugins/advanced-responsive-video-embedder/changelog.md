@@ -4,6 +4,11 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2021-04-04 9.5.11 ###
+
+* New: Support for v.qq.com videos.
+* Fix: `.m4v` files not loading.
+
 ### 2021-03-25 9.5.10 ###
 
 * Fix: 'None numeric value' errors in some situations.
