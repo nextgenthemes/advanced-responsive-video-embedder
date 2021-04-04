@@ -342,7 +342,6 @@
 	'myspace' => [
 		'name'           => 'myspace',
 		'oembed'         => false,
-
 		'regex'          => '#https?://(www\\.)?myspace\\.com/.+/(?<id>[0-9]+)#i',
 		'embed_url'      => 'https://media.myspace.com/play/video/%s',
 		'auto_thumbnail' => false,
@@ -365,8 +364,8 @@
 		'auto_thumbnail' => false,
 		'tests'          => [
 			0 => [
-				'url' => 'https://v.qq.com/txp/iframe/player.html?vid=v3237pcgrhe',
-				'id'  => 'v3237pcgrhe',
+				'url' => 'https://v.qq.com/x/page/u0863pgoecf.html',
+				'id'  => 'u0863pgoecf',
 			],
 			1 => [
 				'url' => 'https://v.qq.com/x/cover/zf2z0xpqcculhcz/y0016tj0qvh.html',
