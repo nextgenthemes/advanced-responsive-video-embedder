@@ -29,8 +29,6 @@ function filter_oembed_dataparse( $result, $data, $url ) {
 		$result .= '<script type="application/json" data-arve-oembed>'.\wp_json_encode($data, JSON_UNESCAPED_UNICODE).'</script>';
 	}
 
-	$result .= '<template class="arve-filter-oembed-dataparse"></template>';
-
 	return $result;
 }
 

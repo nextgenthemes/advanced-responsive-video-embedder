@@ -4,6 +4,10 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2021-04-22 9.5.12 ###
+
+* Fix: Removed `<template>` tag that was causing AMP errors messages.
+
 ### 2021-04-04 9.5.11 ###
 
 * New: Support for v.qq.com videos.
