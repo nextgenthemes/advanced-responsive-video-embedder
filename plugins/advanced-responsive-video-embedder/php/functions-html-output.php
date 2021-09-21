@@ -46,7 +46,7 @@ function build_iframe_tag( array $a ) {
 	$class   = 'arve-iframe fitvidsignore';
 	$sandbox = 'allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox';
 
-	if ( 'vimeo' === $a['provider'] ) {
+	if ( 'vimeo' === $a['provider'] || \str_contains( $a ['src'], 'vimeo.com' ) ) {
 		$sandbox .= ' allow-forms';
 	}
 
