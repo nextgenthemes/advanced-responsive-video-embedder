@@ -4,6 +4,11 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2021-09-21 9.5.14 ###
+
+* Fix: Vimeo color bar thumbnail issue. (they changed their URLs)
+* Fix: Vimeo chat can now be embedded with ARVE `allow-forms` will be added to sandbox attribute. 
+
 ### 2021-04-22 9.5.12 ###
 
 * Fix: Removed `<template>` tag that was causing AMP errors messages.
