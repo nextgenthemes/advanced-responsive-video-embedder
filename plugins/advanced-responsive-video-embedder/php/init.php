@@ -16,6 +16,10 @@ function init_public() {
 		$GLOBALS['wpdb']->query( "DELETE FROM {$GLOBALS['wpdb']->postmeta} WHERE meta_key LIKE '%_oembed_%'" );
 	}
 
+	if ( version_compare( get_option( 'arve_version' ), '9.5.13', '<' ) ) {
+		$GLOBALS['wpdb']->query( "DELETE FROM {$GLOBALS['wpdb']->postmeta} WHERE meta_key LIKE '%_oembed_%' AND meta_value LIKE '%vimeocdn%'" );
+	}
+
 	update_option( 'arve_version', VERSION );
 
 	require_once PLUGIN_DIR . '/php/Common/init.php';
@@ -48,6 +52,7 @@ function init_admin() {
 
 	require_once PLUGIN_DIR . '/php/Admin/functions-admin.php';
 	require_once PLUGIN_DIR . '/php/Admin/functions-settings-page.php';
+	//require_once PLUGIN_DIR . '/php/Admin/functions-shortcode-creator.php';
 
 	// Admin Hooks
 	add_action( 'nextgenthemes/arve/admin/settings/sidebar', __NAMESPACE__ . '\Admin\settings_sidebar' );
