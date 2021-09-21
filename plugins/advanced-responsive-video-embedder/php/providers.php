@@ -667,8 +667,8 @@
 		'auto_thumbnail' => true,
 		'tests'          => [
 			0 => [
-				'url' => 'https://www.youtube.com/playlist?list=PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7',
-				'id'  => 'PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7',
+				'url' => 'https://www.youtube.com/playlist?list=PLF7uln2NT38hg0CbCsVAeHIeCMJgWT5Fo',
+				'id'  => 'PLF7uln2NT38hg0CbCsVAeHIeCMJgWT5Fo',
 			],
 			1 => [
 				'url' => 'https://www.youtube.com/watch?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk&v=cyoffsDl4Hw',
