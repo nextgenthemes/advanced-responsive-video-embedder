@@ -16,7 +16,7 @@ function init_public() {
 		$GLOBALS['wpdb']->query( "DELETE FROM {$GLOBALS['wpdb']->postmeta} WHERE meta_key LIKE '%_oembed_%'" );
 	}
 
-	if ( version_compare( get_option( 'arve_version' ), '9.5.13', '<' ) ) {
+	if ( version_compare( get_option( 'arve_version' ), '9.5.14', '<' ) ) {
 		$GLOBALS['wpdb']->query( "DELETE FROM {$GLOBALS['wpdb']->postmeta} WHERE meta_key LIKE '%_oembed_%' AND meta_value LIKE '%vimeocdn%'" );
 	}
 
