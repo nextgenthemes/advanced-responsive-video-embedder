@@ -57,7 +57,6 @@ function build_iframe_tag( array $a ) {
 	if ( 'wistia' === $a['provider'] ) {
 		$class   .= ' wistia_embed';
 		$sandbox .= ' allow-forms';
-
 	}
 
 	if ( 'zoom' === $a['provider'] ) {
@@ -83,6 +82,7 @@ function build_iframe_tag( array $a ) {
 				'scrolling'       => 'no',
 				'src'             => $a['src'],
 				'width'           => $a['width'],
+				'title'           => $a['title'],
 			),
 		),
 		$a
@@ -104,7 +104,7 @@ function build_video_tag( array $a ) {
 				'controls'           => $a['controls'],
 				'controlslist'       => $a['controlslist'],
 				'loop'               => $a['loop'],
-				'preload'            => 'metadata',
+				'preload'            => 'none',
 				'width'              => is_feed() ? $a['width'] : false,
 				'poster'             => empty( $a['img_src'] ) ? false : $a['img_src'],
 				// ARVE only
