@@ -211,6 +211,24 @@
 			],
 		],
 	],
+	'gab' => [
+		'name'      => 'Gab TV',
+		'oembed'    => false,
+		'regex'     => '#https?://tv\\.gab\\.com/channel/(?<account_id>[a-z0-9]+)/(view|embed)/(?<id>[^\\s/]+)#i',
+		'embed_url' => 'https://tv.gab.com/channel/%s/embed/%s',
+		'tests'     => [
+			0 => [
+				'url'     => 'https://tv.gab.com/channel/owenbenjamin/view/1190-live-with-curtis-stone-the-60fb935386d788cd4a48c43a',
+				'channel' => 'owenbenjamin',
+				'id'      => '1190-live-with-curtis-stone-the-60fb935386d788cd4a48c43a',
+			],
+			1 => [
+				'url'     => 'https://tv.gab.com/channel/realalexjones/embed/doctor-exposes-covid-vaccine-attacking-blood-6155ff91153e0a6ab9e5ef93',
+				'channel' => 'owenbenjamin',
+				'id'      => 'doctor-exposes-covid-vaccine-attacking-blood-6155ff91153e0a6ab9e5ef93',
+			],
+		],
+	],
 	'html5' => [
 		'name'         => 'mp4 or webm video files',
 		'aspect_ratio' => false,
@@ -622,8 +640,8 @@
 				'id'  => '-fEo3kgHFaw',
 			],
 			2 => [
-				'url' => 'https://www.youtube.com/watch?time_continue=1&v=eqnnyDa7C7Q&feature=emb_logo',
-				'id'  => 'eqnnyDa7C7Q',
+				'url' => 'https://www.youtube.com/watch?time_continue=1&v=uYADic1PloY&feature=emb_logo',
+				'id'  => 'uYADic1PloY',
 			],
 			4 => [
 				'url' => 'https://youtu.be/hRonZ4wP8Ys',
@@ -667,8 +685,8 @@
 		'auto_thumbnail' => true,
 		'tests'          => [
 			0 => [
-				'url' => 'https://www.youtube.com/playlist?list=PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7',
-				'id'  => 'PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7',
+				'url' => 'https://www.youtube.com/playlist?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
+				'id'  => 'PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
 			],
 			1 => [
 				'url' => 'https://www.youtube.com/watch?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk&v=cyoffsDl4Hw',
