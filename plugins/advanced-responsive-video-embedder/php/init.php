@@ -52,7 +52,7 @@ function init_admin() {
 
 	require_once PLUGIN_DIR . '/php/Admin/functions-admin.php';
 	require_once PLUGIN_DIR . '/php/Admin/functions-settings-page.php';
-	//require_once PLUGIN_DIR . '/php/Admin/functions-shortcode-creator.php';
+	require_once PLUGIN_DIR . '/php/Admin/functions-shortcode-creator.php';
 
 	// Admin Hooks
 	add_action( 'nextgenthemes/arve/admin/settings/sidebar', __NAMESPACE__ . '\Admin\settings_sidebar' );

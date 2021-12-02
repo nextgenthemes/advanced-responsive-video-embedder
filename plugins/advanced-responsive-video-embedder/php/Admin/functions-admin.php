@@ -177,48 +177,6 @@ function add_action_links( $links ) {
 	return array_merge( $extra_links, $links );
 }
 
-function add_media_button() {
-
-	$options   = ARVE\options();
-	$link_only = array(
-		'a' => array(
-			'href'   => array(),
-			'target' => array(),
-			'title'  => array(),
-		),
-	);
-	add_thickbox();
-	?>
-
-	<div id="arve-thickbox" style="display:none;">
-		<p>
-			<?php
-			printf(
-				// translators: URL
-				wp_kses( __( 'This button can open an optional ARVE a Shortcode creation dialog. ARVE needs the <a href="%s">Shortcode UI plugin</a> active for this fuctionality. It helps creating shortcodes and provides a preview in the Editor. But sadly Shortcode UI is not maintained anymore and there have been some know issues with Shortcode UI.', 'advanced-responsive-video-embedder' ), $link_only ),
-				esc_url( network_admin_url( 'plugin-install.php?s=Shortcode+UI&tab=search&type=term' ) )
-			);
-			?>
-		</p>
-		<p>
-			<?php
-			printf(
-				// translators: URL
-				wp_kses( __( 'It is perfectly fine to pass on this and <a href="%s">manually</a> write shortcodes or don\'t use shortcodes at all, but it makes things easier. And if you ever switch to Gutenberg there is a ARVE Block all the settings in the sidebar waiting for you.', 'advanced-responsive-video-embedder' ), $link_only ),
-				esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/' )
-			);
-			?>
-		</p>
-	</div>
-	<?php
-	printf(
-		'<button id="arve-btn" title="%s" data-mode="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
-		esc_attr__( 'ARVE Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ),
-		esc_attr( $options['mode'] ),
-		esc_html__( 'Embed Video (ARVE)', 'advanced-responsive-video-embedder' )
-	);
-}
-
 function register_shortcode_ui() {
 
 	$settings = ARVE\shortcode_settings();
@@ -287,18 +245,32 @@ function admin_enqueue_styles() {
 			'handle' => 'advanced-responsive-video-embedder',
 			'src'    => plugins_url( 'build/admin.css', ARVE\PLUGIN_FILE ),
 			'ver'    => ver( ARVE\VERSION, 'build/admin.css', ARVE\PLUGIN_FILE ),
+			'deps'   => array( 'wp-jquery-ui-dialog' ),
 		)
 	);
 }
 
 function admin_enqueue_scripts() {
 
+	foreach ( ARVE\shortcode_settings() as $k => $v ) {
+		$options[ $k ] = '';
+	}
+
+	$settings_data = array(
+		'options'  => $options,
+		'nonce'    => wp_create_nonce( 'wp_rest' ),
+		'settings' => ARVE\shortcode_settings(),
+		'sections' => ARVE\settings_sections(),
+	);
+
 	enqueue_asset(
 		array(
-			'handle' => 'arve-admin',
-			'src'    => plugins_url( 'build/admin.js', ARVE\PLUGIN_FILE ),
-			'path'   => ARVE\PLUGIN_DIR . '/build/admin.js',
-			'deps'   => array( 'jquery' ),
+			'handle'            => 'arve-admin',
+			'src'               => plugins_url( 'build/admin.js', ARVE\PLUGIN_FILE ),
+			'path'              => ARVE\PLUGIN_DIR . '/build/admin.js',
+			'deps'              => array( 'jquery-ui-dialog' ),
+			'inline_script'     => 'var arveSCSettings = ' . \wp_json_encode( $settings_data ) . ';',
+			'inline_script_pos' => 'before',
 		)
 	);
 
