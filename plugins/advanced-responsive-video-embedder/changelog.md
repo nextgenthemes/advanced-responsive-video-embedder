@@ -4,6 +4,12 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2021-12-03 9.6.0 ###
+
+* Preprecated: Shortcode UI dialog is no longer maintained but you can still use it by clicking on "Add Post Element" button when Shortcode UI is installed.
+* New: ARVE now has its own dependecy free Shortcode creator dialog in Classic Editor. It will pop up when you click the "Embed Video" button that previously opened up SCUI.
+* New: Support for tv.gab.com
+
 ### 2021-09-21 9.5.13 ###
 
 * Fix: Vimeo color bar thumbnail issue. (they changed their URLs)
