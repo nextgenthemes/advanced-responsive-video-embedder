@@ -80,9 +80,6 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }} # Use composer.json if composer.lock is not committed.
           restore-keys: ${{ runner.os }}-composer-
 
-      - name: Remove composer.lock # this does not work as different packages for different php versions are needed
-        run: rm composer.lock
-
       - name: Install Composer dependencies
         run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
 
