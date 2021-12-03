@@ -42,7 +42,7 @@ require "{$_tests_dir}/includes/bootstrap.php";
 
 activate_plugin( 'advanced-responsive-video-embedder/advanced-responsive-video-embedder.php' );
 
-$GLOBALS['current_user'] = new WP_User( 1 );
+$GLOBALS['current_user'] = new WP_User( 1 ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 $GLOBALS['current_user']->set_role( 'administrator' );
 wp_update_user(
 	array(
