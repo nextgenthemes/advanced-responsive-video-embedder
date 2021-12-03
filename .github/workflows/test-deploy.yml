@@ -81,13 +81,13 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader --ignore-platform-req=php
 
       - if: matrix.wp == 'trunk'
         name: Install the right phpunit version
         run: |
           composer remove --dev phpunit/phpunit
-          composer update -W
+          composer update -W 
 
       - name: Install WP Tests
         run: bash ./bin/install-wp-tests.sh dbname root dbpass "127.0.0.1:$DB_PORT" ${{ matrix.wordpress }} true
