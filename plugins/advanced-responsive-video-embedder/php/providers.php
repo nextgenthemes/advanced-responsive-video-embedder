@@ -147,12 +147,12 @@
 		'auto_title'     => true,
 		'tests'          => [
 			0 => [
-				'url' => 'https://www.dailymotion.com/video/x41ia79_mass-effect-andromeda-gameplay-alpha_videogames',
-				'id'  => 'x41ia79',
+				'url' => 'https://www.dailymotion.com/video/x84qh50',
+				'id'  => 'x84qh50',
 			],
 			1 => [
-				'url' => 'https://dai.ly/x3cwlqz',
-				'id'  => 'x3cwlqz',
+				'url' => 'https://dai.ly/x84qh50',
+				'id'  => 'x84qh50',
 			],
 		],
 	],
@@ -296,30 +296,6 @@
 				'url' => 'http://www.kla.tv/9122',
 				'id'  => 9122,
 			],
-		],
-	],
-	'liveleak' => [
-		# <iframe width="640" height="360" src="//www.liveleak.com/e/9UCAQ_1613786191" frameborder="0" allowfullscreen></iframe>
-		# https://www.liveleak.com/view?t=svtYD_1613984945
-		'name'           => 'LiveLeak',
-		'oembed'         => false,
-		'regex'          => '#https?://(www\\.)?liveleak\\.com/(view|ll_embed)\\?(?<id>(f|i|t)=[0-9a-z\\_]+)#i',
-		'embed_url'      => 'https://www.liveleak.com/ll_embed?%s',
-		'default_params' => '',
-		'auto_thumbnail' => true,
-		'tests'          => [
-			1 => [
-				'url' => 'http://www.liveleak.com/view?f=c85bdf5e45b2',
-				'id'  => 'f=c85bdf5e45b2',
-			],
-			2 => [
-				'url' => 'https://www.liveleak.com/view?t=uGBX9_1579730411',
-				'id'  => 't=uGBX9_1579730411',
-			],
-		],
-		'test_ids'       => [
-			0 => 'f=c85bdf5e45b2',
-			1 => 'c85bdf5e45b2',
 		],
 	],
 	'livestream' => [
