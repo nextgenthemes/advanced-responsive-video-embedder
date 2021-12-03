@@ -10,13 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
-        wordpress: [ '5.6.2', 'latest' ] # https://wordpress.org/download/releases/ 
-        include:
-          - php: '5.6'
-            wordpress: '4.9.16' # Need to skip dailymotion in test_api_data
-          - php: '8.0'
-            wordpress: 'latest'
+        php: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1' ]
+        wordpress: [ '5.8.2', 'trunk' ] # https://wordpress.org/download/releases/
     services:
       mysql:
         image: mysql:5.7
@@ -79,21 +74,23 @@ jobs:
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Cache composer dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # 2.1.7
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }} # Use composer.json if composer.lock is not committed.
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }} # Use composer.json if composer.lock is not committed.
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Remove composer.lock # this does not work as different packages for different php versions are needed
         run: rm composer.lock
 
-      - if: matrix.php == '8.0'
-        name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader --ignore-platform-req=php
-      - if: matrix.php != '8.0'
-        name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader    
+      - name: Install Composer dependencies
+        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+
+      - if: matrix.wp == 'trunk'
+        name: Install the right phpunit version
+        run: |
+          composer remove --dev phpunit/phpunit
+          composer update -W
 
       - name: Install WP Tests
         run: bash ./bin/install-wp-tests.sh dbname root dbpass "127.0.0.1:$DB_PORT" ${{ matrix.wordpress }} true
