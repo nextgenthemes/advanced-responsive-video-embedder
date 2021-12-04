@@ -94,9 +94,12 @@ jobs:
 
       - if: matrix.wordpress == 'trunk'
         name: Install the right phpunit version
-        run: |
-          composer remove --dev phpunit/phpunit
-          composer update -W
+        continue-on-error: true
+        run: composer remove --dev phpunit/phpunit # does not remove phpunit but upgrades it, exactly what we want
+
+      - if: matrix.wordpress == 'trunk'
+        name: Install the right phpunit version
+        run: composer update -W
 
       - name: Install WP Tests
         run: bash ./bin/install-wp-tests.sh dbname root dbpass "127.0.0.1:$DB_PORT" ${{ matrix.wordpress }} true

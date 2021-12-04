@@ -1,6 +1,6 @@
 /plugins/*
 !/plugins/advanced-responsive-video-embedder
-.composer.lock
+composer.lock
 
 # folders
 node_modules/
