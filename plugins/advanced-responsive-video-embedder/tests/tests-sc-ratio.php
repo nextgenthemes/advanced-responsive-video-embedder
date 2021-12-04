@@ -12,8 +12,8 @@ class Tests_Ratio extends WP_UnitTestCase {
 				'url' => 'https://www.example.com',
 			)
 		);
-		$this->assertNotContains( 'Error', $html );
-		$this->assertContains( 'arve-embed--16by9', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringContainsString( 'arve-embed--16by9', $html );
 	}
 
 	public function test_ratio_1by1() {
@@ -24,8 +24,8 @@ class Tests_Ratio extends WP_UnitTestCase {
 				'aspect_ratio' => '1:1',
 			)
 		);
-		$this->assertNotContains( 'Error', $html );
-		$this->assertContains( 'padding-top:100.000000%', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringContainsString( 'padding-top:100.000000%', $html );
 	}
 
 	public function test_ratio_1by3() {
@@ -36,7 +36,7 @@ class Tests_Ratio extends WP_UnitTestCase {
 				'aspect_ratio' => '1:4',
 			)
 		);
-		$this->assertNotContains( 'Error', $html );
-		$this->assertContains( 'padding-top:400.000000%', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringContainsString( 'padding-top:400.000000%', $html );
 	}
 }

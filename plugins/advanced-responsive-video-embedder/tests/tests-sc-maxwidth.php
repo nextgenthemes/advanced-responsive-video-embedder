@@ -14,8 +14,8 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertContains( 'max-width:555px', $html );
-		$this->assertNotContains( 'Error', $html );
+		$this->assertStringContainsString( 'max-width:555px', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
 	}
 
 	public function test_maxwidth_set() {
@@ -26,8 +26,8 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 				'maxwidth' => '666',
 			)
 		);
-		$this->assertContains( 'max-width:666px', $html );
-		$this->assertNotContains( 'Error', $html );
+		$this->assertStringContainsString( 'max-width:666px', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
 	}
 
 	public function test_align_maxwidth_option() {
@@ -39,9 +39,9 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 				'url'   => 'https://example.com',
 			)
 		);
-		$this->assertNotContains( 'Error', $output );
-		$this->assertContains( 'alignleft', $output );
-		$this->assertContains( 'style="max-width:444px;"', $output );
+		$this->assertStringNotContainsString( 'Error', $output );
+		$this->assertStringContainsString( 'alignleft', $output );
+		$this->assertStringContainsString( 'style="max-width:444px;"', $output );
 	}
 
 	public function test_align_maxwidth_default() {
@@ -52,9 +52,9 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 				'url'   => 'https://example.com',
 			)
 		);
-		$this->assertNotContains( 'Error', $output );
-		$this->assertContains( 'alignleft', $output );
-		$this->assertContains( 'style="max-width:400px;"', $output );
+		$this->assertStringNotContainsString( 'Error', $output );
+		$this->assertStringContainsString( 'alignleft', $output );
+		$this->assertStringContainsString( 'style="max-width:400px;"', $output );
 
 		$output = shortcode(
 			array(
@@ -62,9 +62,9 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 				'url'   => 'https://example.com',
 			)
 		);
-		$this->assertNotContains( 'Error', $output );
-		$this->assertContains( 'alignright', $output );
-		$this->assertContains( 'style="max-width:400px;"', $output );
+		$this->assertStringNotContainsString( 'Error', $output );
+		$this->assertStringContainsString( 'alignright', $output );
+		$this->assertStringContainsString( 'style="max-width:400px;"', $output );
 
 		$output = shortcode(
 			array(
@@ -72,8 +72,8 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 				'url'   => 'https://example.com',
 			)
 		);
-		$this->assertNotContains( 'Error', $output );
-		$this->assertContains( 'aligncenter', $output );
-		$this->assertContains( 'style="max-width:400px;"', $output );
+		$this->assertStringNotContainsString( 'Error', $output );
+		$this->assertStringContainsString( 'aligncenter', $output );
+		$this->assertStringContainsString( 'style="max-width:400px;"', $output );
 	}
 }

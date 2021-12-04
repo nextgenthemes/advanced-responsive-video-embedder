@@ -14,8 +14,8 @@ class Tests_URLParams extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertContains( 'title=0&amp;byline=0&amp;portrait=0', $html );
-		$this->assertNotContains( 'Error', $html );
+		$this->assertStringContainsString( 'title=0&amp;byline=0&amp;portrait=0', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
 
 		$html = shortcode(
 			array(
@@ -24,7 +24,7 @@ class Tests_URLParams extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertContains( 'title=1&amp;byline=1&amp;portrait=0', $html );
-		$this->assertNotContains( 'Error', $html );
+		$this->assertStringContainsString( 'title=1&amp;byline=1&amp;portrait=0', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
 	}
 }

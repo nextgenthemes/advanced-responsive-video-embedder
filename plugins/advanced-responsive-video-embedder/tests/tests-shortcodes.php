@@ -10,7 +10,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$html = do_shortcode( '[arve_test]' );
 
-		$this->assertNotContains( 'Error', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
 	}
 
 	public function test_sc_overwrite() {
@@ -30,8 +30,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertNotContains( 'Error', $html );
-		$this->assertContains( 'override', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringContainsString( 'override', $html );
 	}
 
 	public function test_slashes_url() {
@@ -42,18 +42,18 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertNotContains( 'Error', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
 	}
 
 	public function test_schema_enabled() {
 
 		$html = shortcode( array( 'url' => 'https://example.com' ) );
 
-		$this->assertNotContains( 'Error', $html );
-		$this->assertContains( 'schema.org', $html );
-		$this->assertContains( 'itemscope', $html );
-		$this->assertContains( 'itemtype', $html );
-		$this->assertContains( 'itemprop', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringContainsString( 'schema.org', $html );
+		$this->assertStringContainsString( 'itemscope', $html );
+		$this->assertStringContainsString( 'itemtype', $html );
+		$this->assertStringContainsString( 'itemprop', $html );
 	}
 
 	public function logfile( $msg, $file ) {
@@ -143,18 +143,18 @@ class Tests_Shortcode extends WP_UnitTestCase {
 					)
 				);
 
-				$this->assertNotContains( 'Error', $html );
+				$this->assertStringNotContainsString( 'Error', $html );
 
 				if ( 'html5' !== $provider ) {
-					$this->assertContains( 'itemprop="embedURL', $html );
+					$this->assertStringContainsString( 'itemprop="embedURL', $html );
 				} else {
-					$this->assertContains( 'itemprop="contentURL', $html );
+					$this->assertStringContainsString( 'itemprop="contentURL', $html );
 				}
 
 				if ( $v['oembed'] ) {
-					$this->assertContains( 'data-oembed="1"', $html );
+					$this->assertStringContainsString( 'data-oembed="1"', $html );
 				} else {
-					$this->assertNotContains( 'data-oembed="1"', $html );
+					$this->assertStringNotContainsString( 'data-oembed="1"', $html );
 				}
 			}
 		endforeach;
@@ -168,8 +168,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertNotContains( 'Error', $html );
-		$this->assertContains( 'sandbox="', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringContainsString( 'sandbox="', $html );
 
 		$html = shortcode(
 			array(
@@ -178,8 +178,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertNotContains( 'Error', $html );
-		$this->assertNotContains( 'sandbox="', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsString( 'sandbox="', $html );
 	}
 
 	public function test_shortcodes_are_registered() {
@@ -194,8 +194,8 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			array( 'url' => 'https://www.ted.com/talks/auke_ijspeert_a_robot_that_runs_and_swims_like_a_salamander?language=de' )
 		);
 
-		$this->assertNotContains( 'Error', $html );
-		$this->assertContains(
+		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringContainsString(
 			'https://embed.ted.com/talks/lang/de/auke_ijspeert_a_robot_that_runs_and_swims_like_a_salamander',
 			$html,
 			$html
@@ -219,26 +219,26 @@ class Tests_Shortcode extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertNotContains( 'Error', $output );
+		$this->assertStringNotContainsString( 'Error', $output );
 
-		$this->assertContains( 'alignleft', $output );
-		#$this->assertContains( 'autoplay=1', $output );
-		$this->assertContains( '<meta itemprop="description" content="Description Test">', $output );
-		$this->assertContains( 'style="max-width:333px;"', $output );
-		$this->assertContains( '<meta itemprop="name" content="Test &lt;title&gt;">', $output );
-		$this->assertContains( '<meta itemprop="uploadDate" content="2016-10-22">', $output );
-		$this->assertContains( '<meta itemprop="duration" content="PT1H2M3S">', $output );
-		$this->assertContains( 'src="https://example.com', $output );
-		$this->assertContains( '<a href="https://nextgenthemes.com/plugins/arve-pro/" title="Powered by ARVE Advanced Responsive Video Embedder WordPress plugin" class="arve-promote-link" target="_blank">ARVE</a>', $output );
+		$this->assertStringContainsString( 'alignleft', $output );
+		#$this->assertStringContainsString( 'autoplay=1', $output );
+		$this->assertStringContainsString( '<meta itemprop="description" content="Description Test">', $output );
+		$this->assertStringContainsString( 'style="max-width:333px;"', $output );
+		$this->assertStringContainsString( '<meta itemprop="name" content="Test &lt;title&gt;">', $output );
+		$this->assertStringContainsString( '<meta itemprop="uploadDate" content="2016-10-22">', $output );
+		$this->assertStringContainsString( '<meta itemprop="duration" content="PT1H2M3S">', $output );
+		$this->assertStringContainsString( 'src="https://example.com', $output );
+		$this->assertStringContainsString( '<a href="https://nextgenthemes.com/plugins/arve-pro/" title="Powered by ARVE Advanced Responsive Video Embedder WordPress plugin" class="arve-promote-link" target="_blank">ARVE</a>', $output );
 	}
 
 	public function test_iframe() {
 
 		$output = shortcode( array( 'url' => 'https://example.com' ) );
 
-		$this->assertNotContains( 'Error', $output );
-		$this->assertRegExp( '#<iframe .*src="https://example\.com#', $output );
-		$this->assertContains( 'data-provider="iframe"', $output );
+		$this->assertStringNotContainsString( 'Error', $output );
+		$this->assertMatchesRegularExpression( '#<iframe .*src="https://example\.com#', $output );
+		$this->assertStringContainsString( 'data-provider="iframe"', $output );
 	}
 
 	public function test_regex() {

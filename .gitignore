@@ -24,7 +24,7 @@ vendor/
 *.tmp
 *.code-workspace
 ._*
-.cache
+*.cache
 .DS_Store
 .idea
 .project

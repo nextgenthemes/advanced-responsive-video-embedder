@@ -16,7 +16,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		);
 
 		$this->markTestSkipped('must be revisited.');
-		#$this->assertContains( 'Error', $html );
+		#$this->assertStringContainsString( 'Error', $html );
 	}
 
 	public function test_wrong_thumb_id() {
@@ -27,7 +27,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 				'thumbnail' => '666',
 			)
 		);
-		$this->assertContains( 'Error', $html );
+		$this->assertStringContainsString( 'Error', $html );
 	}
 
 	public function test_wrong_thumb_url() {
@@ -38,7 +38,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 				'thumbnail' => 'bullshit',
 			)
 		);
-		$this->assertContains( 'Error', $html );
+		$this->assertStringContainsString( 'Error', $html );
 	}
 
 	public function test_wrong_no_req_param() {
@@ -46,7 +46,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		#$this->expectException('Exception');
 
 		$html = shortcode( array( 'bullshit' => 'bullshit' ) );
-		$this->assertContains( 'Error', $html );
+		$this->assertStringContainsString( 'Error', $html );
 	}
 
 	public function test_wrong_align() {
@@ -57,7 +57,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 				'align' => 'bullshit',
 			)
 		);
-		$this->assertContains( 'Error', $html );
+		$this->assertStringContainsString( 'Error', $html );
 	}
 
 	public function test_wrong_ar() {
@@ -68,7 +68,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 				'aspect_ratio' => '4',
 			)
 		);
-		$this->assertContains( 'Error', $html );
+		$this->assertStringContainsString( 'Error', $html );
 	}
 
 	public function test_legacy_yt_sc_no_id() {
@@ -76,23 +76,23 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		#$this->expectException('Exception');
 
 		$html = do_shortcode( '[youtube title="testing" /]' );
-		$this->assertContains( 'Error', $html );
+		$this->assertStringContainsString( 'Error', $html );
 	}
 
 	public function test_empty_url() {
 		$html = shortcode( array( 'url' => '' ) );
-		$this->assertContains( 'Error', $html );
+		$this->assertStringContainsString( 'Error', $html );
 	}
 
 	public function test_unknown_url() {
 		$html = shortcode( array( 'url' => 'https://example.com' ) );
-		$this->assertContains( '<iframe', $html );
+		$this->assertStringContainsString( '<iframe', $html );
 	}
 
 	public function test_wrong_url() {
 
 		$html = shortcode( array( 'url' => 'bullshit' ) );
-		$this->assertContains( 'Error', $html );
+		$this->assertStringContainsString( 'Error', $html );
 	}
 
 	public function test_wrong_sandbox() {
@@ -103,7 +103,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 				'sandbox' => 'bullshit',
 			)
 		);
-		$this->assertContains( 'Error', $html );
+		$this->assertStringContainsString( 'Error', $html );
 	}
 
 	public function test_wrong_src() {
@@ -115,7 +115,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 				'src' => '?dnt=1',
 			)
 		);
-		$this->assertContains( 'Error', $html );
+		$this->assertStringContainsString( 'Error', $html );
 	}
 
 	public function test_wrong_oembed_iframe_src() {
@@ -132,7 +132,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 			]
 		);
 
-		$this->assertContains( 'Error', $html );
-		$this->assertContains( 'Invalid oembed src url detected', $html );
+		$this->assertStringContainsString( 'Error', $html );
+		$this->assertStringContainsString( 'Invalid oembed src url detected', $html );
 	}
 }
