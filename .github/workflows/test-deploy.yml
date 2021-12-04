@@ -83,16 +83,16 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }} # Use composer.json if composer.lock is not committed.
           restore-keys: ${{ runner.os }}-composer-
 
-      - if: matrix.wp != 'trunk'
+      - if: matrix.wordpress != 'trunk'
         name: Install Composer dependencies
         run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
-      # - if: matrix.wp == '5.8.2' && (matrix.php == '5.6' || matrix.php == '7.0')
+      # - if: matrix.wordpress == '5.8.2' && (matrix.php == '5.6' || matrix.php == '7.0')
       #   name: Install the right phpunit version
       #   run: |
       #     composer remove --dev phpunit/phpunit
       #     composer require "phpunit/phpunit:^5.0.0"
 
-      - if: matrix.wp == 'trunk'
+      - if: matrix.wordpress == 'trunk'
         name: Install the right phpunit version
         run: |
           composer remove --dev phpunit/phpunit
