@@ -784,6 +784,20 @@ function all_settings() {
 			'type'        => 'boolean',
 			'description' => __( 'Enable the plugin in RSS/Atom feeds? Disabling will not completely diable everything but it will use native WP behavior in feeds where possible.', 'advanced-responsive-video-embedder' ),
 		),
+		'reset_after_played' => [
+			'tag'         => 'pro',
+			'default'     => 'enabled',
+			'shortcode'   => false,
+			'label'       => __( 'Reset at end', 'advanced-responsive-video-embedder' ),
+			'type'        => 'select',
+			'options'     => [
+				''                   => __( 'Default', 'advanced-responsive-video-embedder' ),
+				'enabled'            => __( 'Enabled', 'advanced-responsive-video-embedder' ),
+				'disabled'           => __( 'Disabled', 'advanced-responsive-video-embedder' ),
+				'disabled-for-vimeo' => __( 'Disabled for Vimeo only', 'advanced-responsive-video-embedder' ),
+			],
+			'description' => __( 'When enabled ARVE Pro will display the thumbnial again like it is shown before the video was loaded. When a video is displayed in a lightbox the lightbox will automatically close. If you are using Vimeos "call to action" feature for example you want to disable this for vimeo.', 'advanced-responsive-video-embedder' ),
+		],
 		/*
 		'videojs_theme' => [
 			'tag'       => 'videojs',
