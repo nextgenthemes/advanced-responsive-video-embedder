@@ -714,6 +714,10 @@ function iframe_src_autoplay_args( $autoplay, array $a ) {
 			return $autoplay ?
 				add_query_arg( 'ap', 1, $a['src'] ) :
 				remove_query_arg( 'ap', $a['src'] );
+		case 'gab':
+			return $autoplay ?
+				add_query_arg( 'autoplay', 'on', $a['src'] ) :
+				remove_query_arg( 'autoplay', $a['src'] );
 		case 'brightcove':
 		case 'snotr':
 			return $autoplay ?
