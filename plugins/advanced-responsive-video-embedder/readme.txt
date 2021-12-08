@@ -3,7 +3,7 @@ Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.9.16
-Tested up to: 5.7.1
+Tested up to: 5.9.0
 Requires PHP: 5.6
 Stable tag: 9.6.0
 License: GPL-3.0
@@ -55,7 +55,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 #### Supported Providers ####
 
 [All providers with iframe embed codes](https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding)
-Alugha, Archive.org, Banned.video, Bitchute, Mail.ru, Brightcove, cantcensortruth.com, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Google Drive, Gab TV, mp4 or webm video files, ARVE general iframe embed, IGN, IMDB, Kickstarter, kla.tv, Livestream.com, Metacafe, myspace, ooyala, v.qq.com, Rumble.com, RuTube.ru, Snotr, TED Talks, Twitch, Ustream, Viddler, Vimeo, VK, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist
+Alugha, Archive.org, Banned.video, Bitchute, Mail.ru, Brightcove, cantcensortruth.com, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Gab TV, Google Drive, mp4 or webm video files, ARVE general iframe embed, IGN, IMDB, Kickstarter, kla.tv, Livestream.com, Metacafe, myspace, ooyala, v.qq.com, Rumble.com, RuTube.ru, Snotr, TED Talks, Twitch, Ustream, Viddler, Vimeo, VK, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist
 ### Reviews ###
 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Great plugin, great support ####
@@ -193,11 +193,14 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2021-12-03 9.6.0 ###
+### 2021-12-07 9.6.0 ###
 
 * Preprecated: Shortcode UI dialog is no longer maintained but you can still use it by clicking on "Add Post Element" button when Shortcode UI is installed.
-* New: ARVE now has its own dependecy free Shortcode creator dialog in Classic Editor. It will pop up when you click the "Embed Video" button that previously opened up SCUI.
+* New: ARVE now has its own dependecy free Shortcode creator dialog in Classic Editor. It will pop up when you click the "Embed Video" button that previously opened up Shortcode UI dialog.
 * New: Support for tv.gab.com
+* Improved: Video files will be embedded with `preload="none"` to prevent desktop browsers from buffering videos without interaction.
+* Improved: Tested with WP 5.9 nighly and PHP 8.0
+* Improved: Make use of modern CSS `aspect-ratio` instead of padding hack.
 
 ### 2021-09-21 9.5.13 ###
 
