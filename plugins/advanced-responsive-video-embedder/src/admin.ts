@@ -7,8 +7,6 @@ declare global {
 		wp;
 		jQuery;
 		sui;
-		/* eslint-disable-next-line */
-		tb_show;
 		ajaxurl;
 	}
 }

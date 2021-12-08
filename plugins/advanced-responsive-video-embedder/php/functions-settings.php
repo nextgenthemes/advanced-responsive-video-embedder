@@ -788,7 +788,7 @@ function all_settings() {
 			'tag'         => 'pro',
 			'default'     => 'enabled',
 			'shortcode'   => false,
-			'label'       => __( 'Reset at end', 'advanced-responsive-video-embedder' ),
+			'label'       => __( 'Reset after played', 'advanced-responsive-video-embedder' ),
 			'type'        => 'select',
 			'options'     => [
 				''                   => __( 'Default', 'advanced-responsive-video-embedder' ),

@@ -13,7 +13,7 @@ class Tests_Ratio extends WP_UnitTestCase {
 			)
 		);
 		$this->assertStringNotContainsString( 'Error', $html );
-		$this->assertStringContainsString( 'arve-embed--16by9', $html );
+		$this->assertStringContainsString( 'arve-embed--has-aspect-ratio', $html );
 	}
 
 	public function test_ratio_1by1() {
@@ -25,7 +25,7 @@ class Tests_Ratio extends WP_UnitTestCase {
 			)
 		);
 		$this->assertStringNotContainsString( 'Error', $html );
-		$this->assertStringContainsString( 'padding-top:100.000000%', $html );
+		$this->assertStringContainsString( 'style="aspect-ratio: 1 / 1', $html );
 	}
 
 	public function test_ratio_1by3() {
@@ -37,6 +37,7 @@ class Tests_Ratio extends WP_UnitTestCase {
 			)
 		);
 		$this->assertStringNotContainsString( 'Error', $html );
-		$this->assertStringContainsString( 'padding-top:400.000000%', $html );
+		$this->assertStringContainsString( 'style="aspect-ratio: 1 / 4', $html );
+
 	}
 }

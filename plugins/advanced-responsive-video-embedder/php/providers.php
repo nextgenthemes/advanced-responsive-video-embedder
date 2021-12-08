@@ -199,24 +199,13 @@
 			],
 		],
 	],
-	'googledrive' => [
-		'name'      => 'Google Drive',
-		'oembed'    => false,
-		'regex'     => '#https?://drive\\.google\\.com/file/d/(?<id>[^\\s/]+)#i',
-		'embed_url' => 'https://drive.google.com/file/d/%s/preview',
-		'tests'     => [
-			0 => [
-				'url' => 'https://drive.google.com/file/d/0BymXD1aD6QzJWkh4Q0hPRWlPYkk/edit',
-				'id'  => '0BymXD1aD6QzJWkh4Q0hPRWlPYkk',
-			],
-		],
-	],
 	'gab' => [
-		'name'      => 'Gab TV',
-		'oembed'    => false,
-		'regex'     => '#https?://tv\\.gab\\.com/channel/(?<account_id>[a-z0-9]+)/(view|embed)/(?<id>[^\\s/]+)#i',
-		'embed_url' => 'https://tv.gab.com/channel/%s/embed/%s',
-		'tests'     => [
+		'name'           => 'Gab TV',
+		'oembed'         => false,
+		'regex'          => '#https?://tv\\.gab\\.com/channel/(?<account_id>[a-z0-9]+)/(view|embed)/(?<id>[^\\s/]+)#i',
+		'embed_url'      => 'https://tv.gab.com/channel/%s/embed/%s',
+		'default_params' => '', // minimal=on
+		'tests'          => [
 			0 => [
 				'url'     => 'https://tv.gab.com/channel/owenbenjamin/view/1190-live-with-curtis-stone-the-60fb935386d788cd4a48c43a',
 				'channel' => 'owenbenjamin',
@@ -226,6 +215,18 @@
 				'url'     => 'https://tv.gab.com/channel/realalexjones/embed/doctor-exposes-covid-vaccine-attacking-blood-6155ff91153e0a6ab9e5ef93',
 				'channel' => 'owenbenjamin',
 				'id'      => 'doctor-exposes-covid-vaccine-attacking-blood-6155ff91153e0a6ab9e5ef93',
+			],
+		],
+	],
+	'googledrive' => [
+		'name'      => 'Google Drive',
+		'oembed'    => false,
+		'regex'     => '#https?://drive\\.google\\.com/file/d/(?<id>[^\\s/]+)#i',
+		'embed_url' => 'https://drive.google.com/file/d/%s/preview',
+		'tests'     => [
+			0 => [
+				'url' => 'https://drive.google.com/file/d/0BymXD1aD6QzJWkh4Q0hPRWlPYkk/edit',
+				'id'  => '0BymXD1aD6QzJWkh4Q0hPRWlPYkk',
 			],
 		],
 	],

@@ -383,36 +383,27 @@ function promote_link( $arve_link ) {
 
 function arve_embed( $html, array $a ) {
 
-	$class      = 'arve-embed';
-	$ratio_span = '';
+	$class = 'arve-embed';
+	$style = false;
 
 	if ( $a['aspect_ratio'] ) {
 		$class .= ' arve-embed--has-aspect-ratio';
 	}
 
-	if ( '16:9' === $a['aspect_ratio'] ) {
-		$class .= ' arve-embed--16by9';
-	} elseif ( $a['aspect_ratio'] ) {
-		$ratio_span = build_tag(
-			array(
-				'name'       => 'ar',
-				'tag'        => 'span', // so we output it within <p>
-				'inner_html' => '',
-				'attr'       => array(
-					'class' => 'arve-ar',
-					'style' => sprintf( 'padding-top:%F%%', aspect_ratio_to_percentage( $a['aspect_ratio'] ) ),
-				),
-			),
-			$a
-		);
+	if ( ! in_array($a['aspect_ratio'], [ '16:9', '375:211' ], true) ) {
+		$ar    = str_replace( ':', ' / ', $a['aspect_ratio'] );
+		$style = sprintf( 'aspect-ratio: %s', $ar );
 	}
 
 	return build_tag(
 		array(
 			'name'       => 'embed',
 			'tag'        => 'span', // so we output it within <p>
-			'inner_html' => $ratio_span . $html,
-			'attr'       => array( 'class' => $class ),
+			'inner_html' => $html,
+			'attr'       => array(
+				'class' => $class,
+				'style' => $style,
+			),
 		),
 		$a
 	);

@@ -1,4 +1,3 @@
-@use "sass:math";
 /* stylelint-disable selector-max-id */
 
 #html {
@@ -47,18 +46,8 @@
 		overflow: hidden;
 	}
 
-	.arve-ar {
-		display: block;
-	}
-
 	.arve-embed--has-aspect-ratio {
-		overflow: hidden;
-	}
-
-	.arve-embed--16by9::before {
-		display: block;
-		padding-top: percentage(math.div(9, 16));
-		content: "";
+		aspect-ratio: 16 / 9;
 	}
 
 	.arve-thumbnail,
@@ -93,4 +82,19 @@
 .components-button--arve-thumbnail {
 	display: block;
 	height: auto;
+}
+
+@supports not (aspect-ratio: 16 / 9) {
+
+	#html .arve-embed--has-aspect-ratio::before {
+		float: left;
+		padding-top: 56.25%;
+		content: "";
+	}
+
+	#html .arve-embed--has-aspect-ratio::after {
+		display: block;
+		clear: both;
+		content: "";
+	}
 }
