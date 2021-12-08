@@ -11,10 +11,9 @@ It is very likely the one and only plugin you will ever need to handle video emb
 
 #### Classic Editor ####
 
+*  Adds "Embed Video" button to help you create very powerful `[arve]` shortcodes.
 *  Takes over WordPress embeds with URLs on their own line and `[embed]` shortcodes.
 *  Can take over WP's default video file embeds.
-*  Has its own very powerful `[arve]` shortcode.
-*  Optional <abbr title="What You See Is What You Get">WYSIWYG</abbr> support with [Shortcode UI](https://wordpress.org/plugins/shortcode-ui/) (not maintained). No more messing around with shortcodes and previewing.
 
 #### Gutenberg ####
 
