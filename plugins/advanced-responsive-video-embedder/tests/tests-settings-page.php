@@ -16,6 +16,6 @@ class Tests_SettingsPage extends WP_UnitTestCase {
 		$i->print_admin_page();
 		$html = ob_get_clean();
 
-		$this->assertContains( 'maxwidth', $html );
+		$this->assertStringContainsString( 'maxwidth', $html );
 	}
 }

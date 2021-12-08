@@ -11,6 +11,20 @@ function default_options() {
 	return $i->get_options_defaults();
 }
 
+function settings_sections() {
+
+	return array(
+		'main'          => __( 'Main', 'advanced-responsive-video-embedder' ),
+		'pro'           => __( 'Pro', 'advanced-responsive-video-embedder' ),
+		'sticky-videos' => __( 'Sticky Videos', 'advanced-responsive-video-embedder' ),
+		'random-video'  => __( 'Random Video', 'advanced-responsive-video-embedder' ),
+		'urlparams'     => __( 'URL Parameters', 'advanced-responsive-video-embedder' ),
+		'html5'         => __( 'HTML5', 'advanced-responsive-video-embedder' ),
+		'debug'         => __( 'Debug Info', 'advanced-responsive-video-embedder' ),
+		#'videojs'      => __( 'Video.js', 'advanced-responsive-video-embedder' ),
+	);
+}
+
 function settings_instance() {
 
 	static $inst = null;
@@ -21,17 +35,8 @@ function settings_instance() {
 			array(
 				'namespace'           => __NAMESPACE__,
 				'settings'            => settings(),
-				'sections'            => array(
-					'main'          => __( 'Main', 'advanced-responsive-video-embedder' ),
-					'pro'           => __( 'Pro', 'advanced-responsive-video-embedder' ),
-					'sticky-videos' => __( 'Sticky Videos', 'advanced-responsive-video-embedder' ),
-					'random-video'  => __( 'Random Video', 'advanced-responsive-video-embedder' ),
-					'urlparams'     => __( 'URL Parameters', 'advanced-responsive-video-embedder' ),
-					'html5'         => __( 'HTML5', 'advanced-responsive-video-embedder' ),
-					'debug'         => __( 'Debug Info', 'advanced-responsive-video-embedder' ),
-					#'videojs'      => __( 'Video.js', 'advanced-responsive-video-embedder' ),
-				),
-				'premium_sections'    => array( 'pro', 'sticky-videos', 'random-video', 'videojs' ),
+				'sections'            => settings_sections(),
+				'premium_sections'    => PREMIUM_SECTIONS,
 				'menu_parent_slug'    => 'options-general.php',
 				'menu_title'          => __( 'ARVE', 'advanced-responsive-video-embedder' ),
 				'settings_page_title' => __( 'ARVE Settings', 'advanced-responsive-video-embedder' ),
@@ -267,7 +272,7 @@ function all_settings() {
 		'false' => __( 'False', 'advanced-responsive-video-embedder' ),
 	);
 
-	$provider_list_link = 'https://nextgenthemes.com/plugins/arve-pro/#video-host-support';
+	$provider_list_link = 'https://nextgenthemes.com/plugins/arve-pro/#support-table';
 	$pro_addon_link     = 'https://nextgenthemes.com/plugins/arve-pro/';
 
 	$settings = array(
@@ -365,6 +370,7 @@ function all_settings() {
 			'type'      => 'boolean',
 		),
 		'thumbnail' => array(
+			'ui'                  => 'image_upload',
 			'default'             => null,
 			'shortcode'           => true,
 			'option'              => false,
@@ -751,7 +757,8 @@ function all_settings() {
 			'default'     => true,
 			'shortcode'   => true,
 			'label'       => __( 'Sandbox', 'advanced-responsive-video-embedder' ),
-			'type'        => 'boolean',
+			'type'        => 'select',
+			'options'     => $def_bool_options,
 			'description' => __( "Only disable if you have to. If you embed encrypted media you have to disable this. 'Disable Links' feature from ARVE Pro will not work when without sandbox.", 'advanced-responsive-video-embedder' ),
 		),
 		'seo_data' => array(
@@ -765,9 +772,9 @@ function all_settings() {
 		'gutenberg_help' => array(
 			'default'     => true,
 			'shortcode'   => false,
-			'label'       => __( 'Enable help text in the Block sidebar?', 'advanced-responsive-video-embedder' ),
+			'label'       => __( 'Enable help text?', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
-			'description' => __( 'Disabling this makes the interface much cleaner.', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'Disabling this makes the interface in Gutenberg/Shortcode dialog much cleaner.', 'advanced-responsive-video-embedder' ),
 		),
 		'feed' => array(
 			'default'     => true,
@@ -777,6 +784,20 @@ function all_settings() {
 			'type'        => 'boolean',
 			'description' => __( 'Enable the plugin in RSS/Atom feeds? Disabling will not completely diable everything but it will use native WP behavior in feeds where possible.', 'advanced-responsive-video-embedder' ),
 		),
+		'reset_after_played' => [
+			'tag'         => 'pro',
+			'default'     => 'enabled',
+			'shortcode'   => false,
+			'label'       => __( 'Reset after played', 'advanced-responsive-video-embedder' ),
+			'type'        => 'select',
+			'options'     => [
+				''                   => __( 'Default', 'advanced-responsive-video-embedder' ),
+				'enabled'            => __( 'Enabled', 'advanced-responsive-video-embedder' ),
+				'disabled'           => __( 'Disabled', 'advanced-responsive-video-embedder' ),
+				'disabled-for-vimeo' => __( 'Disabled for Vimeo only', 'advanced-responsive-video-embedder' ),
+			],
+			'description' => __( 'When enabled ARVE Pro will display the thumbnial again like it is shown before the video was loaded. When a video is displayed in a lightbox the lightbox will automatically close. If you are using Vimeos "call to action" feature for example you want to disable this for vimeo.', 'advanced-responsive-video-embedder' ),
+		],
 		/*
 		'videojs_theme' => [
 			'tag'       => 'videojs',

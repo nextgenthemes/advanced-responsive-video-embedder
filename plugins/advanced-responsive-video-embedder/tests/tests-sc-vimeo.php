@@ -13,8 +13,8 @@ class Tests_ShortcodeVimeo extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertNotContains( 'Error', $html );
-		$this->assertRegExp( '@src="https://player.vimeo.com/.*#t=33"@', $html );
-		$this->assertContains( 'allow-forms', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertMatchesRegularExpression( '@src="https://player.vimeo.com/.*#t=33"@', $html );
+		$this->assertStringContainsString( 'allow-forms', $html );
 	}
 }

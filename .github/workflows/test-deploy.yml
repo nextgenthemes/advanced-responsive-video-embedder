@@ -11,12 +11,10 @@ jobs:
     strategy:
       matrix:
         php: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
-        wordpress: [ '5.7.3', 'latest' ] # https://wordpress.org/download/releases/ 
+        wordpress: [ '5.8.2', 'trunk' ] # https://wordpress.org/download/releases/
         include:
-          - php: '5.6'
-            wordpress: '4.9.16' # Need to skip dailymotion in test_api_data
           - php: '8.0'
-            wordpress: 'latest'
+            wordpress: 'trunk'
     services:
       mysql:
         image: mysql:5.7
@@ -56,16 +54,16 @@ jobs:
           path: plugins/arve-amp
           token: ${{ secrets.REPO_TOKEN }}
 
-      # - name: Checkout ARVE Sticky Videos
-      #   uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
-      #   with:
-      #     repository: nextgenthemes/arve-sticky-videos
-      #     ref: master
-      #     path: plugins/arve-sticky-videos
-      #     token: ${{ secrets.REPO_TOKEN }}
+      - name: Checkout ARVE Sticky Videos
+        uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
+        with:
+          repository: nextgenthemes/arve-sticky-videos
+          ref: master
+          path: plugins/arve-sticky-videos
+          token: ${{ secrets.REPO_TOKEN }}
 
       - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@abfbe6a46b637e038be212af3c5d3475b3e3213c # 2.10.0 # https://github.com/shivammathur/setup-php
+        uses: shivammathur/setup-php@a274bd910ac3c4911b8c7859409efa4059fdd2a4 # 2.16.0 # https://github.com/shivammathur/setup-php/releases/
         with:
           php-version: ${{ matrix.php }}
           extensions: mbstring, dom, zip, mysql, gd
@@ -79,21 +77,29 @@ jobs:
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Cache composer dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # 2.1.7
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }} # Use composer.json if composer.lock is not committed.
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }} # Use composer.json if composer.lock is not committed.
           restore-keys: ${{ runner.os }}-composer-
 
-      - name: Remove composer.lock # this does not work as different packages for different php versions are needed
-        run: rm composer.lock
+      - if: matrix.wordpress != 'trunk'
+        name: Install Composer dependencies
+        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+      # - if: matrix.wordpress == '5.8.2' && (matrix.php == '5.6' || matrix.php == '7.0')
+      #   name: Install the right phpunit version
+      #   run: |
+      #     composer remove --dev phpunit/phpunit
+      #     composer require "phpunit/phpunit:^5.0.0"
 
-      - if: matrix.php == '8.0'
-        name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader --ignore-platform-req=php
-      - if: matrix.php != '8.0'
-        name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader    
+      - if: matrix.wordpress == 'trunk'
+        name: Install the right phpunit version
+        continue-on-error: true
+        run: composer remove --dev phpunit/phpunit # does not remove phpunit but upgrades it, exactly what we want
+
+      - if: matrix.wordpress == 'trunk'
+        name: Install the right phpunit version
+        run: composer update -W
 
       - name: Install WP Tests
         run: bash ./bin/install-wp-tests.sh dbname root dbpass "127.0.0.1:$DB_PORT" ${{ matrix.wordpress }} true

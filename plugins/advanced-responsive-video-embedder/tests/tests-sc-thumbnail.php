@@ -22,8 +22,8 @@ class Tests_ShortcodeThumbnail extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertRegExp( '#<meta itemprop="thumbnailUrl" content=".*icon-128x128#', $html );
-		$this->assertNotContains( 'Error', $html );
+		$this->assertMatchesRegularExpression( '#<meta itemprop="thumbnailUrl" content=".*icon-128x128#', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
 	}
 
 	public function test_thumbnail_by_url() {
@@ -35,7 +35,7 @@ class Tests_ShortcodeThumbnail extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertContains( '<meta itemprop="thumbnailUrl" content="https://example.com/image.jpg"', $html );
-		$this->assertNotContains( 'Error', $html );
+		$this->assertStringContainsString( '<meta itemprop="thumbnailUrl" content="https://example.com/image.jpg"', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
 	}
 }

@@ -408,7 +408,9 @@ function build_iframe_src( array $a ) {
 		$a['id'] = rawurlencode( str_replace( '&', '&amp;', $a['id'] ) );
 	}
 
-	if ( 'brightcove' === $a['provider'] ) {
+	if ( 'gab' === $a['provider'] ) {
+		$src = sprintf( $pattern, $a['account_id'], $a['id'] );
+	} elseif ( 'brightcove' === $a['provider'] ) {
 		$src = sprintf( $pattern, $a['account_id'], $a['brightcove_player'], $a['brightcove_embed'], $a['id'] );
 	} else {
 		$src = sprintf( $pattern, $a['id'] );
@@ -712,6 +714,10 @@ function iframe_src_autoplay_args( $autoplay, array $a ) {
 			return $autoplay ?
 				add_query_arg( 'ap', 1, $a['src'] ) :
 				remove_query_arg( 'ap', $a['src'] );
+		case 'gab':
+			return $autoplay ?
+				add_query_arg( 'autoplay', 'on', $a['src'] ) :
+				remove_query_arg( 'autoplay', $a['src'] );
 		case 'brightcove':
 		case 'snotr':
 			return $autoplay ?

@@ -147,12 +147,12 @@
 		'auto_title'     => true,
 		'tests'          => [
 			0 => [
-				'url' => 'https://www.dailymotion.com/video/x41ia79_mass-effect-andromeda-gameplay-alpha_videogames',
-				'id'  => 'x41ia79',
+				'url' => 'https://www.dailymotion.com/video/x84qh50',
+				'id'  => 'x84qh50',
 			],
 			1 => [
-				'url' => 'https://dai.ly/x3cwlqz',
-				'id'  => 'x3cwlqz',
+				'url' => 'https://dai.ly/x84qh50',
+				'id'  => 'x84qh50',
 			],
 		],
 	],
@@ -196,6 +196,25 @@
 			1 => [
 				'url' => 'https://web.facebook.com/XTvideo/videos/10153906059711871/',
 				'id'  => 'https://web.facebook.com/XTvideo/videos/10153906059711871/',
+			],
+		],
+	],
+	'gab' => [
+		'name'           => 'Gab TV',
+		'oembed'         => false,
+		'regex'          => '#https?://tv\\.gab\\.com/channel/(?<account_id>[a-z0-9]+)/(view|embed)/(?<id>[^\\s/]+)#i',
+		'embed_url'      => 'https://tv.gab.com/channel/%s/embed/%s',
+		'default_params' => '', // minimal=on
+		'tests'          => [
+			0 => [
+				'url'     => 'https://tv.gab.com/channel/owenbenjamin/view/1190-live-with-curtis-stone-the-60fb935386d788cd4a48c43a',
+				'channel' => 'owenbenjamin',
+				'id'      => '1190-live-with-curtis-stone-the-60fb935386d788cd4a48c43a',
+			],
+			1 => [
+				'url'     => 'https://tv.gab.com/channel/realalexjones/embed/doctor-exposes-covid-vaccine-attacking-blood-6155ff91153e0a6ab9e5ef93',
+				'channel' => 'owenbenjamin',
+				'id'      => 'doctor-exposes-covid-vaccine-attacking-blood-6155ff91153e0a6ab9e5ef93',
 			],
 		],
 	],
@@ -278,30 +297,6 @@
 				'url' => 'http://www.kla.tv/9122',
 				'id'  => 9122,
 			],
-		],
-	],
-	'liveleak' => [
-		# <iframe width="640" height="360" src="//www.liveleak.com/e/9UCAQ_1613786191" frameborder="0" allowfullscreen></iframe>
-		# https://www.liveleak.com/view?t=svtYD_1613984945
-		'name'           => 'LiveLeak',
-		'oembed'         => false,
-		'regex'          => '#https?://(www\\.)?liveleak\\.com/(view|ll_embed)\\?(?<id>(f|i|t)=[0-9a-z\\_]+)#i',
-		'embed_url'      => 'https://www.liveleak.com/ll_embed?%s',
-		'default_params' => '',
-		'auto_thumbnail' => true,
-		'tests'          => [
-			1 => [
-				'url' => 'http://www.liveleak.com/view?f=c85bdf5e45b2',
-				'id'  => 'f=c85bdf5e45b2',
-			],
-			2 => [
-				'url' => 'https://www.liveleak.com/view?t=uGBX9_1579730411',
-				'id'  => 't=uGBX9_1579730411',
-			],
-		],
-		'test_ids'       => [
-			0 => 'f=c85bdf5e45b2',
-			1 => 'c85bdf5e45b2',
 		],
 	],
 	'livestream' => [
@@ -622,8 +617,8 @@
 				'id'  => '-fEo3kgHFaw',
 			],
 			2 => [
-				'url' => 'https://www.youtube.com/watch?time_continue=1&v=lX8os2SB1i8&feature=emb_logo',
-				'id'  => 'lX8os2SB1i8',
+				'url' => 'https://www.youtube.com/watch?time_continue=1&v=uYADic1PloY&feature=emb_logo',
+				'id'  => 'uYADic1PloY',
 			],
 			4 => [
 				'url' => 'https://youtu.be/hRonZ4wP8Ys',
@@ -667,8 +662,8 @@
 		'auto_thumbnail' => true,
 		'tests'          => [
 			0 => [
-				'url' => 'https://www.youtube.com/playlist?list=PLF7uln2NT38hg0CbCsVAeHIeCMJgWT5Fo',
-				'id'  => 'PLF7uln2NT38hg0CbCsVAeHIeCMJgWT5Fo',
+				'url' => 'https://www.youtube.com/playlist?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
+				'id'  => 'PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
 			],
 			1 => [
 				'url' => 'https://www.youtube.com/watch?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk&v=cyoffsDl4Hw',

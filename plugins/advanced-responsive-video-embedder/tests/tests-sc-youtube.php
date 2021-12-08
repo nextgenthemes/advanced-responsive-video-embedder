@@ -12,8 +12,8 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 				'url' => 'https://www.youtube.com/watch?v=--SCDa1zsYI&t=1h1m2s',
 			)
 		);
-		$this->assertNotContains( 'Error', $html );
-		$this->assertContains( '?start=3662', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringContainsString( '?start=3662', $html );
 	}
 
 	public function test_yt_time_h_s() {
@@ -23,8 +23,8 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 				'url' => 'https://www.youtube.com/watch?v=--SCDa1zsYI&t=1h2s',
 			)
 		);
-		$this->assertNotContains( 'Error', $html );
-		$this->assertContains( '?start=3602', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringContainsString( '?start=3602', $html );
 	}
 
 	public function test_yt_time_m_s() {
@@ -34,8 +34,8 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 				'url' => 'https://www.youtube.com/watch?v=--SCDa1zsYI&t=1m2s',
 			)
 		);
-		$this->assertNotContains( 'Error', $html );
-		$this->assertContains( '?start=62', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringContainsString( '?start=62', $html );
 	}
 
 	public function test_yt_time_in_seconds() {
@@ -45,7 +45,7 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 				'url' => 'https://www.youtube.com/watch?v=--SCDa1zsYI&t=1621',
 			)
 		);
-		$this->assertNotContains( 'Error', $html );
-		$this->assertContains( '?start=1621', $html );
+		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringContainsString( '?start=1621', $html );
 	}
 }

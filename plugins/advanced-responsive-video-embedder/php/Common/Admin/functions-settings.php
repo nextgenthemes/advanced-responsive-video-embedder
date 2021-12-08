@@ -144,13 +144,12 @@ function print_integer_field( $key, $option ) {
 
 function print_select_field( $key, $option ) {
 
-	unset( $option['options'][''] );
 	?>
 	<p>
 		<label>
 			<?php label_text( $option ); ?>
 			<select v-model="<?php echo esc_attr( "vm.$key" ); ?>">
-				<option disabled value="">Please select one</option>
+				<option disabled>Please select one</option>
 				<?php foreach ( $option['options'] as $k => $v ) : ?>
 					<option value="<?php echo esc_attr( $k ); ?>"><?php echo esc_html( $v ); ?></option>
 				<?php endforeach; ?>
@@ -172,4 +171,55 @@ function block_attr( $key, $option ) {
 	}
 
 	return Common\attr( $block_attr );
+}
+
+function print_settings_blocks( array $settings, array $sections, array $premium_sections, $context ) {
+
+	$description_allowed_html = array(
+		'a'      => array(
+			'href'   => array(),
+			'target' => array(),
+			'title'  => array(),
+		),
+		'br'     => array(),
+		'em'     => array(),
+		'strong' => array(),
+		'code'   => array(),
+	);
+
+	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+	foreach ( $settings as $key => $option ) {
+
+		if ( 'settings-page' === $context && ! empty($option['options']) ) {
+			unset($option['options']['']);
+		}
+
+		$option['premium']  = in_array( $option['tag'], $premium_sections, true );
+		$option['tag_name'] = $sections[ $option['tag'] ];
+		$field_type         = isset( $option['ui'] ) ? $option['ui'] : $option['type'];
+		$block_class        = "ngt-option-block ngt-option-block--$key ngt-option-block--{$option['tag']}";
+
+		if ( 'hidden' !== $field_type ) :
+			?>
+			<div 
+				class="<?php echo esc_attr( $block_class ); ?>"
+				v-show="sectionsDisplayed['<?php echo esc_attr( $option['tag'] ); ?>']"
+			>
+				<?php
+				$function = __NAMESPACE__ . "\\print_{$field_type}_field";
+
+				$function( $key, $option );
+
+				if ( ! empty( $option['description'] ) ) {
+					printf(
+						'<p>%s</p>',
+						wp_kses( $option['description'], $description_allowed_html )
+					);
+				}
+				?>
+				<hr>
+			</div>
+			<?php
+		endif;
+	}
 }

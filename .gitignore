@@ -1,5 +1,6 @@
 /plugins/*
 !/plugins/advanced-responsive-video-embedder
+composer.lock
 
 # folders
 node_modules/
@@ -16,12 +17,14 @@ vendor/
 *.vi
 *.zip
 *~
+*.sql
+*.tar.gz
 
 # OS or Editor folders
 *.tmp
 *.code-workspace
 ._*
-.cache
+*.cache
 .DS_Store
 .idea
 .project

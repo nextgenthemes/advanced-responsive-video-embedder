@@ -116,11 +116,6 @@ class Settings {
 
 	public function assets( $page ) {
 
-		// Check if we are currently viewing our setting page
-		if ( ! str_ends_with( $page, $this->slugged_namespace ) ) {
-			return;
-		}
-
 		enqueue_asset(
 			array(
 				'handle' => 'nextgenthemes-settings',
@@ -128,6 +123,11 @@ class Settings {
 				'path'   => dirname( dirname( __DIR__ ) ) . '/build/settings.css',
 			)
 		);
+
+		// Check if we are currently viewing our setting page
+		if ( ! str_ends_with( $page, $this->slugged_namespace ) ) {
+			return;
+		}
 
 		$settings_data = array(
 			'options'  => $this->options,
@@ -148,55 +148,6 @@ class Settings {
 				'inline_script_pos' => 'before',
 			)
 		);
-	}
-
-	public function print_settings_blocks() {
-
-		$description_allowed_html = array(
-			'a'      => array(
-				'href'   => array(),
-				'target' => array(),
-				'title'  => array(),
-			),
-			'br'     => array(),
-			'em'     => array(),
-			'strong' => array(),
-			'code'   => array(),
-		);
-
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		foreach ( $this->settings as $key => $option ) {
-
-			$option['premium']  = in_array( $option['tag'], $this->premium_sections, true );
-			$option['tag_name'] = $this->sections[ $option['tag'] ];
-			$field_type         = isset( $option['ui'] ) ? $option['ui'] : $option['type'];
-			$block_class        = "ngt-option-block ngt-option-block--$key ngt-option-block--{$option['tag']}";
-
-			if ( 'hidden' !== $field_type ) :
-				?>
-				<div 
-					class="<?php echo esc_attr( $block_class ); ?>"
-					v-show="sectionsDisplayed['<?php echo esc_attr( $option['tag'] ); ?>']"
-				>
-				<!-- <div <?php #echo Admin\block_attr( $key, $option ); ?>> -->
-					<?php
-
-					$function = __NAMESPACE__ . "\\Admin\\print_{$field_type}_field";
-
-					$function( $key, $option );
-
-					if ( ! empty( $option['description'] ) ) {
-						printf(
-							'<p>%s</p>',
-							wp_kses( $option['description'], $description_allowed_html )
-						);
-					}
-					?>
-					<hr>
-				</div>
-				<?php
-			endif;
-		}
 	}
 
 	private function print_settings_tabs() {
@@ -366,7 +317,7 @@ class Settings {
 					$this->print_paid_section_message();
 					$this->print_save_section();
 					$this->print_debug_info_block();
-					$this->print_settings_blocks();
+					ADMIN\print_settings_blocks( $this->settings, $this->sections, $this->premium_sections, 'settings-page' );
 					$this->print_save_section();
 					$this->print_reset_bottons();
 					?>

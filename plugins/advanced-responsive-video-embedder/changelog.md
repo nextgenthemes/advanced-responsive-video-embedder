@@ -4,7 +4,16 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2021-09-21 9.5.14 ###
+### 2021-12-07 9.6.0 ###
+
+* Preprecated: Shortcode UI dialog is no longer maintained but you can still use it by clicking on "Add Post Element" button when Shortcode UI is installed.
+* New: ARVE now has its own dependecy free Shortcode creator dialog in Classic Editor. It will pop up when you click the "Embed Video" button that previously opened up Shortcode UI dialog.
+* New: Support for tv.gab.com
+* Improved: Video files will be embedded with `preload="none"` to prevent desktop browsers from buffering videos without interaction.
+* Improved: Tested with WP 5.9 nighly and PHP 8.0
+* Improved: Make use of modern CSS `aspect-ratio` instead of padding hack.
+
+### 2021-09-21 9.5.13 ###
 
 * Fix: Vimeo color bar thumbnail issue. (they changed their URLs)
 * Fix: Vimeo chat can now be embedded with ARVE `allow-forms` will be added to sandbox attribute. 
