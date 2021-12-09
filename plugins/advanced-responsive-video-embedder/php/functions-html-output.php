@@ -22,7 +22,7 @@ function build_html( array $a ) {
 		array(
 			'name'       => 'arve',
 			'tag'        => 'div',
-			'inner_html' => $wrapped_video . promote_link( $a['arve_link'] ),
+			'inner_html' => $wrapped_video . promote_link( $a['arve_link'] ) . build_seo_data( $a ),
 			'attr'       => array(
 				'class'         => $a['align'] ? 'arve align' . $a['align'] : 'arve',
 				'data-mode'     => $a['mode'],
@@ -30,10 +30,6 @@ function build_html( array $a ) {
 				'data-provider' => $a['provider'],
 				'id'            => $a['uid'],
 				'style'         => $a['maxwidth'] ? sprintf( 'max-width:%dpx;', $a['maxwidth'] ) : false,
-
-				// Schema.org
-				'itemscope'     => $options['seo_data'] ? '' : false,
-				'itemtype'      => $options['seo_data'] ? 'http://schema.org/VideoObject' : false,
 			),
 		),
 		$a
@@ -92,6 +88,11 @@ function build_iframe_tag( array $a ) {
 function build_video_tag( array $a ) {
 
 	$autoplay = in_array( $a['mode'], array( 'lazyload', 'lightbox', 'link-lightbox' ), true ) ? false : $a['autoplay'];
+	$preload  = 'metadata';
+
+	if ( in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true ) && ! empty( $a['img_src'] ) ) {
+		$preload = 'none';
+	}
 
 	return build_tag(
 		array(
@@ -104,7 +105,7 @@ function build_video_tag( array $a ) {
 				'controls'           => $a['controls'],
 				'controlslist'       => $a['controlslist'],
 				'loop'               => $a['loop'],
-				'preload'            => 'none',
+				'preload'            => $preload,
 				'width'              => is_feed() ? $a['width'] : false,
 				'poster'             => empty( $a['img_src'] ) ? false : $a['img_src'],
 				// ARVE only
@@ -221,31 +222,7 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 
 function arve_embed_inner_html( array $a ) {
 
-	$html    = '';
-	$options = options();
-
-	if ( $options['seo_data'] ) :
-
-		$metas = array(
-			'first_video_file' => 'contentURL',
-			'src'              => 'embedURL',
-			'upload_date'      => 'uploadDate',
-			'author_name'      => 'author',
-			'duration'         => 'duration',
-		);
-
-		foreach ( $metas as $key => $itemprop ) {
-
-			if ( ! empty( $a[ $key ] ) ) {
-				if ( 'duration' === $key && \is_numeric( $a[ $key ] ) ) {
-					$a[ $key ] = seconds_to_iso8601_duration( $a[ $key ] );
-				}
-				$html .= sprintf( '<meta itemprop="%s" content="%s">' . PHP_EOL, esc_attr( $itemprop ), esc_attr( $a[ $key ] ) );
-			}
-		}
-
-		$html .= build_rating_meta( $a );
-	endif;
+	$html = '';
 
 	if ( 'html5' === $a['provider'] ) {
 		$html .= build_video_tag( $a );
@@ -254,63 +231,56 @@ function arve_embed_inner_html( array $a ) {
 	}
 
 	if ( ! empty( $a['img_src'] ) ) {
-
-		$tag = array( 'name' => 'thumbnail' );
-
-		if ( $options['seo_data'] ) {
-
-			$tag = array(
-				'name' => 'thumbnail',
-				'tag'  => 'meta',
-				'attr' => array(
-					'itemprop' => 'thumbnailUrl',
-					'content'  => $a['img_src'],
-				),
-			);
-		}
-
+		$tag   = array( 'name' => 'thumbnail' );
 		$html .= build_tag( $tag, $a );
 	}
 
 	if ( $a['title'] ) {
-
-		$tag = array( 'name' => 'title' );
-
-		if ( $options['seo_data'] ) {
-			$tag = array(
-				'name' => 'title',
-				'tag'  => 'meta',
-				'attr' => array(
-					'itemprop' => 'name',
-					'content'  => trim( $a['title'] ),
-				),
-			);
-		}
-
-		$html .= build_tag( $tag, $a );
-	}
-
-	if ( $a['description'] ) {
-
-		$tag = array( 'name' => 'description' );
-
-		if ( $options['seo_data'] ) {
-			$tag = array(
-				'name' => 'description',
-				'tag'  => 'meta',
-				'attr' => array(
-					'itemprop' => 'description',
-					'content'  => trim( $a['description'] ),
-				),
-			);
-		}
-
+		$tag   = array( 'name' => 'title' );
 		$html .= build_tag( $tag, $a );
 	}
 
 	$html .= build_tag( array( 'name' => 'button' ), $a );
 
 	return $html;
+}
+
+function build_seo_data( array $a ) {
+
+	$options = options();
+
+	if ( ! $options['seo_data'] ) {
+		return '';
+	}
+
+	$payload = array(
+		'@context' => 'http://schema.org/',
+		'@id'      => get_permalink() . '#' . $a['uid'],
+		'type'     => 'VideoObject',
+	);
+
+	$metas = array(
+		'first_video_file' => 'contentURL',
+		'src'              => 'embedURL',
+		'title'            => 'name',
+		'img_src'          => 'thumbnailUrl',
+		'upload_date'      => 'uploadDate',
+		'author_name'      => 'author',
+		'duration'         => 'duration',
+		'description'      => 'description',
+	);
+
+	foreach ( $metas as $key => $val ) {
+
+		if ( ! empty( $a[ $key ] ) ) {
+			if ( 'duration' === $key && \is_numeric( $a[ $key ] ) ) {
+				$a[ $key ] = seconds_to_iso8601_duration( $a[ $key ] );
+			}
+			$payload[ $val ] = trim( $a[ $key ] );
+		}
+	}
+
+	return '<script type="application/ld+json">' . wp_json_encode($payload) . '</script>';
 }
 
 function build_rating_meta( array $a ) {

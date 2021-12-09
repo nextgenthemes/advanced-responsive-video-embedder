@@ -50,10 +50,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$html = shortcode( array( 'url' => 'https://example.com' ) );
 
 		$this->assertStringNotContainsString( 'Error', $html );
-		$this->assertStringContainsString( 'schema.org', $html );
-		$this->assertStringContainsString( 'itemscope', $html );
-		$this->assertStringContainsString( 'itemtype', $html );
-		$this->assertStringContainsString( 'itemprop', $html );
+		$this->assertStringContainsString( '<script type="application/ld+json">{"@context":"http:\/\/schema.org\/"', $html );
 	}
 
 	public function logfile( $msg, $file ) {
@@ -146,9 +143,9 @@ class Tests_Shortcode extends WP_UnitTestCase {
 				$this->assertStringNotContainsString( 'Error', $html );
 
 				if ( 'html5' !== $provider ) {
-					$this->assertStringContainsString( 'itemprop="embedURL', $html );
+					$this->assertStringContainsString( '"embedURL":', $html );
 				} else {
-					$this->assertStringContainsString( 'itemprop="contentURL', $html );
+					$this->assertStringContainsString( '"contentURL":', $html );
 				}
 
 				if ( $v['oembed'] ) {
@@ -223,11 +220,11 @@ class Tests_Shortcode extends WP_UnitTestCase {
 
 		$this->assertStringContainsString( 'alignleft', $output );
 		#$this->assertStringContainsString( 'autoplay=1', $output );
-		$this->assertStringContainsString( '<meta itemprop="description" content="Description Test">', $output );
+		$this->assertStringContainsString( '"description":', $output );
 		$this->assertStringContainsString( 'style="max-width:333px;"', $output );
-		$this->assertStringContainsString( '<meta itemprop="name" content="Test &lt;title&gt;">', $output );
-		$this->assertStringContainsString( '<meta itemprop="uploadDate" content="2016-10-22">', $output );
-		$this->assertStringContainsString( '<meta itemprop="duration" content="PT1H2M3S">', $output );
+		$this->assertStringContainsString( '"name":"Test', $output );
+		$this->assertStringContainsString( '"uploadDate":"2016-10-22"', $output );
+		$this->assertStringContainsString( '"duration":"PT1H2M3S"', $output );
 		$this->assertStringContainsString( 'src="https://example.com', $output );
 		$this->assertStringContainsString( '<a href="https://nextgenthemes.com/plugins/arve-pro/" title="Powered by ARVE Advanced Responsive Video Embedder WordPress plugin" class="arve-promote-link" target="_blank">ARVE</a>', $output );
 	}
