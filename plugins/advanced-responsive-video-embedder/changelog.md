@@ -4,6 +4,11 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2021-12-09 9.7.0 ###
+
+* Fix: Partially reverse `preload="none"` on `<video>`. This causes thumbnails not to be generated from the video by the browser. `preload="none"` will be used only for Lazyload and Lightbox mode when there is a thumbnail image.
+* Improved: Seo data is now generated in `json-ld`.
+
 ### 2021-12-07 9.6.0 ###
 
 * Preprecated: Shortcode UI dialog is no longer maintained but you can still use it by clicking on "Add Post Element" button when Shortcode UI is installed.

@@ -5,6 +5,14 @@
 
 Please report it on [nextgenthemes.com/support/](https://nextgenthemes.com/support/) **and please do not on the wordpess.org forums, thanks.**
 
+### Google structured data tool complains about data missing ###
+
+You have 3 options:
+
+1. Best option is to get [ARVE Pro](https://nextgenthemes.com/plugins/arve-pro/). It will fill all the SEO data needed  without you having to do anything.
+1. Manually fill the data needed via shortcode or Block. Note that filling the title will fill `name` in the SEO data.
+1. You can completely disable the generation of SEO data on the ARVE settings page. This will make the error on SEO tools disappear but will not give you any SEO benefits.
+
 ### How to get the pro version working? ###
 
 1. Go though the purchase process on [nextgenthemes.com](https://nextgenthemes.com/plugins/arve-pro/)
