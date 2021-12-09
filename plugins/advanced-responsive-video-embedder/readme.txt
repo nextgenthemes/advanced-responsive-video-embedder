@@ -23,10 +23,9 @@ It is very likely the one and only plugin you will ever need to handle video emb
 
 #### Classic Editor ####
 
+*  Adds "Embed Video" button to help you create very powerful `[arve]` shortcodes.
 *  Takes over WordPress embeds with URLs on their own line and `[embed]` shortcodes.
 *  Can take over WP's default video file embeds.
-*  Has its own very powerful `[arve]` shortcode.
-*  Optional <abbr title="What You See Is What You Get">WYSIWYG</abbr> support with [Shortcode UI](https://wordpress.org/plugins/shortcode-ui/) (not maintained). No more messing around with shortcodes and previewing.
 
 #### Gutenberg ####
 
@@ -151,6 +150,14 @@ When you use the AMP or 'AMP for WP' plugin you need this.
 
 Please report it on [nextgenthemes.com/support/](https://nextgenthemes.com/support/) **and please do not on the wordpess.org forums, thanks.**
 
+### Google structured data tool complains about data missing ###
+
+You have 3 options:
+
+1. Best option is to get [ARVE Pro](https://nextgenthemes.com/plugins/arve-pro/). It will fill all the SEO data needed  without you having to do anything.
+1. Manually fill the data needed via shortcode or Block. Note that filling the title will fill `name` in the SEO data.
+1. You can completely disable the generation of SEO data on the ARVE settings page. This will make the error on SEO tools disappear but will not give you any SEO benefits.
+
 ### How to get the pro version working? ###
 
 1. Go though the purchase process on [nextgenthemes.com](https://nextgenthemes.com/plugins/arve-pro/)
@@ -192,6 +199,11 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2021-12-09 9.7.0 ###
+
+* Fix: Partially reverse `preload="none"` on `<video>`. This causes thumbnails not to be generated from the video by the browser. `preload="none"` will be used only for Lazyload and Lightbox mode when there is a thumbnail image.
+* Improved: Seo data is now generated in `json-ld`.
 
 ### 2021-12-07 9.6.0 ###
 
