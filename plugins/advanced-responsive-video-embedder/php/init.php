@@ -69,3 +69,18 @@ function init_admin() {
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), __NAMESPACE__ . '\Admin\add_action_links' );
 	add_filter( 'nextgenthemes_arve_save_options', __NAMESPACE__ . '\Admin\filter_save_options' );
 }
+
+register_uninstall_hook( __FILE__, __NAMESPACE__ . '\\uninstall' );
+
+function uninstall() {
+
+	if ( version_compare( $GLOBALS['wpdb']->db_version(), '8.0', '>=' ) ) {
+
+		$GLOBALS['wpdb']->query(
+			"UPDATE {$GLOBALS['wpdb']->postmeta} SET meta_value = REGEXP_REPLACE( meta_value, '<script type=\"application/json\" data-arve-oembed>[^<]+</script>', '' )"
+		);
+	} else {
+		$GLOBALS['wpdb']->query( "DELETE FROM {$GLOBALS['wpdb']->postmeta} WHERE meta_key LIKE '%_oembed_%'" );
+		delete_option('arve_version');
+	}
+}
