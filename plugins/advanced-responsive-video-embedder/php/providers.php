@@ -106,6 +106,19 @@
 			],
 		],
 	],
+	'brighteon' => [
+		'name'         => 'Brighteon',
+		'regex'        => '#https?://(www)\\.brighteon\\.com/(?<id>[a-z0-9-]+)#i',
+		'oembed'       => false,
+		'embed_url'    => 'https://www.brighteon.com/embed/%s/',
+		'requires_src' => false,
+		'tests'        => [
+			0 => [
+				'url' => 'https://www.brighteon.com/e7d18308-7cae-4a04-8a42-7088a8bea02c',
+				'id'  => 'e7d18308-7cae-4a04-8a42-7088a8bea02c',
+			],
+		],
+	],
 	'cantcensortruthcom' => [
 		'name'      => 'cantcensortruth.com',
 		'oembed'    => false,
