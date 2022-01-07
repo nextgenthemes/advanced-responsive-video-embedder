@@ -463,6 +463,9 @@ function compare_oembed_src_with_generated_src( $a ) {
 		case 'youtube':
 			$src = remove_query_arg( 'feature', $a['src'] );
 			break;
+		case 'dailymotion':
+			$src = remove_query_arg( 'pubtool', $a['src'] );
+			break;
 	}
 
 	if ( $src !== $src_gen ) {
