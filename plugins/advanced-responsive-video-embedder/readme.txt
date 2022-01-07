@@ -1,4 +1,4 @@
-=== ARVE Advanced Responsive Video Embedder (YouTube, Vimeo, HTML5 Video ...) ===
+=== Advanced Responsive Video Embedder (Rumble, YouTube, Vimeo, HTML5 Video ...) ===
 Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
