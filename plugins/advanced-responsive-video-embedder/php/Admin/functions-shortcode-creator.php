@@ -23,7 +23,7 @@ function add_media_button() {
 	}
 	?>
 
-	<div id="arve-sc-dialog" class="hidden">
+	<div id="arve-sc-dialog" hidden>
 		<div id="arve-sc-vue">
 			<?php
 			Common\Admin\print_settings_blocks(
