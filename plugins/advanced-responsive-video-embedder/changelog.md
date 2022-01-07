@@ -4,6 +4,12 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2021-12-17 9.7.1 ###
+
+* Fix: Elements from the dialog showing up in Elemetor. (Button does not work)
+* New: Support for [brighteon](https://brighteon.com)
+* Improved: Make sure there is no ARVE pecific json left in the oemed caches after uninstalling the plugin.
+
 ### 2021-12-09 9.7.0 ###
 
 * Fix: Partially reverse `preload="none"` on `<video>`. This causes thumbnails not to be generated from the video by the browser. `preload="none"` will be used only for Lazyload and Lightbox mode when there is a thumbnail image.
