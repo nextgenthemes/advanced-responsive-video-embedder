@@ -462,6 +462,8 @@ function compare_oembed_src_with_generated_src( $a ) {
 			break;
 		case 'youtube':
 			$src = remove_query_arg( 'feature', $a['src'] );
+			$src = remove_query_arg( 'origin', $a['src'] );
+			$src = remove_query_arg( 'enablejsapi', $a['src'] );
 			break;
 		case 'dailymotion':
 			$src = remove_query_arg( 'pubtool', $a['src'] );

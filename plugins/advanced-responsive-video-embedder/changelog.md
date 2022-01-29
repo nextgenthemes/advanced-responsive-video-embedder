@@ -4,6 +4,10 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2022-01-29 9.7.2 ###
+
+* Fix (unconfirmed): Some internal errors generated for YouTube embeds.
+
 ### 2021-12-17 9.7.1 ###
 
 * Fix: Elements from the dialog showing up in Elemetor. (Button does not work)
