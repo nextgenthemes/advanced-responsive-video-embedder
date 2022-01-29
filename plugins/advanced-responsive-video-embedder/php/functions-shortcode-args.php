@@ -471,21 +471,21 @@ function compare_oembed_src_with_generated_src( $a ) {
 	}
 
 	if ( $src !== $src_gen ) {
-		$msg = sprintf(
-			'src mismatch<br>' . PHP_EOL . 'url: %s<br>' . PHP_EOL . 'src in org: %s<br>' . PHP_EOL,
-			$a['url'],
-			$a['src']
-		);
+
+		$msg = 'src mismatch<br>' . PHP_EOL;
+
+		$msg = sprintf( 'url: %s<br>' . PHP_EOL, esc_url($a['url']) );
+		$msg = sprintf( 'src in org: %s<br>' . PHP_EOL, esc_url($a['src']) );
 
 		if ( $src !== $a['src'] ) {
-			$msg .= sprintf( 'src in mod: %s<br>' . PHP_EOL, $src );
+			$msg .= sprintf( 'src in mod: %s<br>' . PHP_EOL, esc_url($src) );
 		}
 
 		if ( $src_gen !== $a['src_gen'] ) {
-			$msg .= sprintf( 'src gen in mod: %s<br>' . PHP_EOL, $src_gen );
+			$msg .= sprintf( 'src gen in mod: %s<br>' . PHP_EOL, esc_url($src_gen) );
 		}
 
-		$msg .= sprintf( 'src gen org: %s<br>' . PHP_EOL, $a['src_gen'] );
+		$msg .= sprintf( 'src gen org: %s<br>' . PHP_EOL, esc_url($a['src_gen']) );
 
 		$a['errors']->add( 'hidden', $msg );
 	}
