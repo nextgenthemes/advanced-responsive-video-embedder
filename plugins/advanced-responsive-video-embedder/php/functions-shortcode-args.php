@@ -472,20 +472,20 @@ function compare_oembed_src_with_generated_src( $a ) {
 
 	if ( $src !== $src_gen ) {
 		$msg = sprintf(
-			'src mismatch<br>url: %s<br>src in: %s<br>src gen: %s',
+			'src mismatch<br>url: %s<br>src in org: %s<br>',
 			$a['url'],
-			$a['src'],
-			$a['src_gen']
+			$a['src']
 		);
 
-		if ( $src !== $a['src'] || $src_gen !== $a['src_gen'] ) {
-			$msg .= sprintf(
-				'Actual comparison<br>url: %s<br>src in: %s<br>src gen: %s',
-				$a['url'],
-				$src,
-				$src_gen
-			);
+		if ( $src !== $a['src'] ) {
+			$msg .= sprintf( 'src in mod: %s', $src );
 		}
+
+		if ( $src_gen !== $a['src_gen'] ) {
+			$msg .= sprintf( 'src gen in mod: %s', $src_gen );
+		}
+
+		$msg .= sprintf( 'src gen org: %s', $a['src_gen'] );
 
 		$a['errors']->add( 'hidden', $msg );
 	}
