@@ -472,10 +472,9 @@ function compare_oembed_src_with_generated_src( $a ) {
 
 	if ( $src !== $src_gen ) {
 
-		$msg = 'src mismatch<br>' . PHP_EOL;
-
-		$msg = sprintf( 'url: %s<br>' . PHP_EOL, esc_url($a['url']) );
-		$msg = sprintf( 'src in org: %s<br>' . PHP_EOL, esc_url($a['src']) );
+		$msg  = 'src mismatch<br>' . PHP_EOL;
+		$msg .= sprintf( 'url: %s<br>' . PHP_EOL, esc_url($a['url']) );
+		$msg .= sprintf( 'src in org: %s<br>' . PHP_EOL, esc_url($a['src']) );
 
 		if ( $src !== $a['src'] ) {
 			$msg .= sprintf( 'src in mod: %s<br>' . PHP_EOL, esc_url($src) );
