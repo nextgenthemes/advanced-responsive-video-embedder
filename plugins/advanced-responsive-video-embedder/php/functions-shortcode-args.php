@@ -457,22 +457,23 @@ function compare_oembed_src_with_generated_src( $a ) {
 	switch ( $a['provider'] ) {
 		case 'wistia':
 		case 'vimeo':
-			$src     = Common\remove_url_query( $a['src'] );
-			$src_gen = Common\remove_url_query( $a['src_gen'] );
+			$src     = Common\remove_url_query( $src );
+			$src_gen = Common\remove_url_query( $src_gen );
 			break;
 		case 'youtube':
-			$src = remove_query_arg( 'feature', $a['src'] );
-			$src = remove_query_arg( 'origin', $a['src'] );
-			$src = remove_query_arg( 'enablejsapi', $a['src'] );
+			$src = remove_query_arg( 'feature', $src );
+			$src = remove_query_arg( 'origin', $src );
+			$src = remove_query_arg( 'enablejsapi', $src );
 			break;
 		case 'dailymotion':
-			$src = remove_query_arg( 'pubtool', $a['src'] );
+			$src = remove_query_arg( 'pubtool', $src );
 			break;
 	}
 
 	if ( $src !== $src_gen ) {
 
 		$msg  = 'src mismatch<br>' . PHP_EOL;
+		$msg .= sprintf( 'provider: %s<br>' . PHP_EOL, esc_html($a['provider']) );
 		$msg .= sprintf( 'url: %s<br>' . PHP_EOL, esc_url($a['url']) );
 		$msg .= sprintf( 'src in org: %s<br>' . PHP_EOL, esc_url($a['src']) );
 
