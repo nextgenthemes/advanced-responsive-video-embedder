@@ -1,4 +1,4 @@
-=== ARVE Advanced Responsive Video Embedder (YouTube, Vimeo, HTML5 Video ...) ===
+=== Advanced Responsive Video Embedder (Rumble, YouTube, Vimeo, HTML5 Video ...) ===
 Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
@@ -9,7 +9,7 @@ Stable tag: 9.7.5
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Easy responsive video embeds via URLs or shortcodes. Perfect drop-in replacement for WordPress' default embeds. Best plugin for videos?
+Easy video embeds via URLs or shortcodes or Blocks. Perfect drop-in replacement for WordPress' default embeds. Best plugin for videos?
 
 ## Description ##
 
