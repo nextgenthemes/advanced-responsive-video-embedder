@@ -69,56 +69,60 @@ export function initSC(): void {
 		$('#arve-sc-dialog').dialog('open');
 	});
 
-	new Vue({
-		// DOM selector for our app's main wrapper element
-		el: '#arve-sc-vue',
+	const vueDiv = document.getElementById('arve-sc-vue');
 
-		// Data that will be proxied by Vue.js to provide reactivity to our template
-		data: {
-			errors: [],
-			isSaving: false,
-			refreshAfterSave: false,
-			sectionsDisplayed: buildSectionsDisplayed(),
-			onlySectionDisplayed: false,
-			message: '',
-			vm: data.options,
-		},
+	if (vueDiv) {
+		new Vue({
+			// DOM selector for our app's main wrapper element
+			el: '#arve-sc-vue',
 
-		// Methods that can be invoked from within our template
-		methods: {
-			showSection(section) {
-				setAllObjValues(this.sectionsDisplayed, false);
-				this.sectionsDisplayed[section] = true;
-				this.onlySectionDisplayed = section;
+			// Data that will be proxied by Vue.js to provide reactivity to our template
+			data: {
+				errors: [],
+				isSaving: false,
+				refreshAfterSave: false,
+				sectionsDisplayed: buildSectionsDisplayed(),
+				onlySectionDisplayed: false,
+				message: '',
+				vm: data.options,
 			},
-			showAllSectionsButDebug() {
-				setAllObjValues(this.sectionsDisplayed, true);
-				this.sectionsDisplayed.debug = false;
-				this.onlySectionDisplayed = false;
-			},
-			uploadImage(dataKey) {
-				const vueThis = this;
-				const image = window.wp
-					.media({
-						title: 'Upload Image',
-						multiple: false,
-					})
-					.open()
-					.on('select', function () {
-						// This will return the selected image from the Media Uploader, the result is an object
-						const uploadedImage = image.state().get('selection').first();
-						// We convert uploadedImage to a JSON object to make accessing it easier
-						const attachmentID = uploadedImage.toJSON().id;
-						vueThis.vm[dataKey] = attachmentID;
-					});
-			},
-			action(action, product) {
-				this.vm.action = JSON.stringify({ action, product });
-				this.refreshAfterSave = true;
-				this.saveOptions();
-			},
-		}, // end: methods
-	}); // end: Vue()
+
+			// Methods that can be invoked from within our template
+			methods: {
+				showSection(section) {
+					setAllObjValues(this.sectionsDisplayed, false);
+					this.sectionsDisplayed[section] = true;
+					this.onlySectionDisplayed = section;
+				},
+				showAllSectionsButDebug() {
+					setAllObjValues(this.sectionsDisplayed, true);
+					this.sectionsDisplayed.debug = false;
+					this.onlySectionDisplayed = false;
+				},
+				uploadImage(dataKey) {
+					const vueThis = this;
+					const image = window.wp
+						.media({
+							title: 'Upload Image',
+							multiple: false,
+						})
+						.open()
+						.on('select', function () {
+							// This will return the selected image from the Media Uploader, the result is an object
+							const uploadedImage = image.state().get('selection').first();
+							// We convert uploadedImage to a JSON object to make accessing it easier
+							const attachmentID = uploadedImage.toJSON().id;
+							vueThis.vm[dataKey] = attachmentID;
+						});
+				},
+				action(action, product) {
+					this.vm.action = JSON.stringify({ action, product });
+					this.refreshAfterSave = true;
+					this.saveOptions();
+				},
+			}, // end: methods
+		}); // end: Vue()
+	}
 }
 
 function buildSectionsDisplayed() {
