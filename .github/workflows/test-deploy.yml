@@ -64,14 +64,6 @@ jobs:
           path: plugins/arve-sticky-videos
           token: ${{ secrets.REPO_TOKEN }}
 
-      - run: echo "use $COMPOSER"
-        env:
-          COMPOSER: composer
-      - if: matrix.php == '5.6' || matrix.php == '7.0' || matrix.php == '7.1'
-        run: echo "use $COMPOSER"
-        env:
-          COMPOSER: composer:2.2
-
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@448bd61c6fe9db2113173467e4c22b87ddc2971a # 2.18.1 # https://github.com/shivammathur/setup-php/releases/
         with:
@@ -89,7 +81,7 @@ jobs:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
 
       - name: Run PHPUnit without code coverage
-        run: vendor/bin/phpunit
+        run: phpunit
 
   deploy:
     if: >-
@@ -102,11 +94,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
-
-      # - name: Install Composer dependencies
-      #   run: composer install --no-dev --no-progress --no-suggest --prefer-dist --optimize-autoloader
-      #   with:
-      #     working-directory: plugins/advanced-responsive-video-embedder
 
       - name: Get the version
         id: get_version
