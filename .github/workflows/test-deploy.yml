@@ -15,8 +15,8 @@ jobs:
         include:
           - php: '8.0'
             wordpress: 'latest'
-          - php: '8.1'
-            wordpress: 'latest'
+          - php: '7.4'
+            wordpress: 'trunk'  
     services:
       mysql:
         image: mysql:5.7
@@ -77,41 +77,11 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: mbstring, dom, zip, mysql, gd
-          tools: ${{ env.COMPOSER }}
+          tools:  phpunit-polyfills
           coverage: none #optional
 
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
-
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - name: Cache composer dependencies
-        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # 2.1.7
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }} # Use composer.json if composer.lock is not committed.
-          restore-keys: ${{ runner.os }}-composer-
-
-      - if: matrix.wordpress != 'latest'
-        name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
-
-      # - if: matrix.wordpress == '5.8.2' && (matrix.php == '5.6' || matrix.php == '7.0')
-      #   name: Install the right phpunit version
-      #   run: |
-      #     composer remove --dev phpunit/phpunit
-      #     composer require "phpunit/phpunit:^5.0.0"
-
-      - if: matrix.wordpress == 'latest'
-        name: Install the right phpunit version
-        continue-on-error: true
-        run: composer remove --dev phpunit/phpunit # does not remove phpunit but upgrades it, exactly what we want
-
-      - if: matrix.wordpress == 'latest'
-        name: Install the right phpunit version
-        run: composer update -W
 
       - name: Install WP Tests
         run: bash ./bin/install-wp-tests.sh dbname root dbpass "127.0.0.1:$DB_PORT" ${{ matrix.wordpress }} true

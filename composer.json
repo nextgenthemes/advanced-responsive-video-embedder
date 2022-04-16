@@ -16,10 +16,6 @@
 		"dealerdirect/phpcodesniffer-composer-installer": ">=v0.5.0",
 		"phpcompatibility/phpcompatibility-wp": ">=2.1",
 		"wptrt/wpthemereview": ">=0.2.0",
-		"yoast/phpunit-polyfills": "^1.0.3",
-		"phpunit/phpunit": "^5.7.21 || ^7.5"
-	},
-	"require-dev-save": {
-		"phpunit/phpunit": "^5.7.21 || ^6.5 || ^7.5"
+		"yoast/phpunit-polyfills": "^1.0.3"
 	}
 }
