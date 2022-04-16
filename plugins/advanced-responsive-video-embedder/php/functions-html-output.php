@@ -353,11 +353,13 @@ function promote_link( $arve_link ) {
 
 function arve_embed( $html, array $a ) {
 
-	$class = 'arve-embed';
-	$style = false;
+	$ratio_span = '';
+	$class      = 'arve-embed';
+	$style      = false;
 
 	if ( $a['aspect_ratio'] ) {
-		$class .= ' arve-embed--has-aspect-ratio';
+		$class     .= ' arve-embed--has-aspect-ratio';
+		$ratio_span = sprintf( '<span class="arve-ar" style="padding-top:%F%%"></span>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
 	}
 
 	if ( ! in_array($a['aspect_ratio'], [ '16:9', '375:211' ], true) ) {

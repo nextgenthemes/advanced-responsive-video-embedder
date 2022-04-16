@@ -48,6 +48,16 @@
 
 	.arve-embed--has-aspect-ratio {
 		aspect-ratio: 16 / 9;
+
+		&::after {
+			display: block;
+			clear: both;
+			content: "";
+		}
+	}
+
+	.arve-ar {
+		display: block;
 	}
 
 	.arve-thumbnail,
@@ -84,17 +94,10 @@
 	height: auto;
 }
 
-@supports not (aspect-ratio: 16 / 9) {
+@supports (aspect-ratio: 16 / 9) {
 
-	#html .arve-embed--has-aspect-ratio::before {
-		float: left;
-		padding-top: 56.25%;
-		content: "";
-	}
-
+	#html .arve-ar,
 	#html .arve-embed--has-aspect-ratio::after {
-		display: block;
-		clear: both;
-		content: "";
+		display: none;
 	}
 }
