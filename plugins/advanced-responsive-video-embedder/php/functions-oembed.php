@@ -18,7 +18,7 @@ function filter_oembed_dataparse( $result, $data, $url ) {
 		$data->arve_cachetime = gmdate('Y-m-d H:i:s');
 		$data->arve_url       = $url;
 
-		if ( 'YouTube' === $data->provider_name ) {
+		if ( 'YouTube' === $data->provider_name && ! empty( $data->thumbnail_url ) ) {
 			$data->arve_srcset = yt_srcset( $data->thumbnail_url );
 		}
 
