@@ -4,7 +4,11 @@
  *
  * @package Arve_Pro
  */
-require_once __DIR__ . '/vendor/autoload.php';
+
+if ( is_file( __DIR__ . '/vendor/autoload.php' ) ) {
+	require_once __DIR__ . '/vendor/autoload.php';
+}
+
 require_once __DIR__ . '/phpunit-debug-helpers.php';
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
