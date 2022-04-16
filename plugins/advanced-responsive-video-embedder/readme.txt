@@ -200,6 +200,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2022-04-16 9.7.7 ###
+
+* Improved browser support to display aspect ratio correctly on older browsers.
+
 ### 2022-02-01 9.7.4 ###
 
 * Fix: '[Vue warn]: Cannot find element: #arve-sc-vue' JavaScript error on admin page.
