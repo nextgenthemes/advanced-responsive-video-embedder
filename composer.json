@@ -17,5 +17,10 @@
 		"phpcompatibility/phpcompatibility-wp": ">=2.1",
 		"wptrt/wpthemereview": ">=0.2.0",
 		"yoast/phpunit-polyfills": "^1.0.3"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
 	}
 }

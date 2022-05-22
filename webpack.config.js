@@ -1,97 +1,61 @@
-const fs = require('fs-extra');
-const defaultConfig = require('@wordpress/scripts/config/webpack.config');
-const CopyPlugin = require('copy-webpack-plugin');
-const replaceInFile = require('replace-in-file');
-const path = require('path');
-const { exit, cwd, env } = require('process');
-//const { getArgFromCLI } = require('@wordpress/scripts/utils');
+const fs = require( 'fs-extra' );
+const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
+const CopyPlugin = require( 'copy-webpack-plugin' );
+const replaceInFile = require( 'replace-in-file' );
+const path = require( 'path' );
+const { env } = require( 'process' );
+const regex = /--output-path=([^\s'"]+)/s;
+const matches = regex.exec( env.npm_lifecycle_script );
+const arveSrc = path.resolve(
+	__dirname,
+	'plugins/advanced-responsive-video-embedder/src'
+);
+let outputPath = null;
 
-//const project = getArgFromCLI('--project');
-const project = process.env.npm_lifecycle_event.split(/:/)[1];
-console.log('Project:', project);
-
-if (undefined === project) {
-	exit(1);
+if ( 1 in matches ) {
+	outputPath = matches[ 1 ];
+	console.log( '--output-path', matches[ 1 ] );
 }
 
-const srcDir = './plugins/' + project + '/src';
-// all work by why use them?
-//const srcDir = path.resolve(cwd(), 'plugins', project, 'src');
-//const srcDir = path.resolve(__dirname, 'plugins', project, 'src');
+const config = defaultConfig;
 
-const config = {
-	...defaultConfig,
-	entry: {
-		main: srcDir + '/main.ts',
-	},
-	output: {
-		...defaultConfig.output,
-		path: path.resolve(__dirname, 'plugins', project, 'build'),
-	},
-	module: {
-		...defaultConfig.module,
-		rules: [
-			...defaultConfig.module.rules,
-			{
-				test: /\.tsx?$/,
-				use: 'ts-loader',
-				exclude: /node_modules/,
-			},
-		],
-	},
-	resolve: {
-		...defaultConfig.resolve,
-		extensions: ['.tsx', '.ts', 'js', 'jsx'],
-		symlinks: false,
-		alias: {
-			vue: 'vue/dist/vue.js',
-		},
-	},
-};
-
-switch (project) {
-	case 'advanced-responsive-video-embedder':
+switch ( outputPath ) {
+	case 'plugins/advanced-responsive-video-embedder/build':
 		config.entry = {
 			...config.entry,
-			block: srcDir + '/block.tsx',
-			admin: srcDir + '/admin.ts',
-			'shortcode-ui': srcDir + '/shortcode-ui.ts',
-			settings: srcDir + '/settings.ts',
+			main: arveSrc + '/main.ts',
+			block: arveSrc + '/block.tsx',
+			admin: arveSrc + '/admin.ts',
+			'shortcode-ui': arveSrc + '/shortcode-ui.ts',
+			settings: arveSrc + '/settings.ts',
+		};
+		config.resolve.alias = {
+			...config.resolve.alias,
+			vue: 'vue/dist/vue.js',
 		};
 		break;
-
-	case 'symbiosis':
+	case 'themes/symbiosis/build':
 		prepareSCSS();
-		config.entry = {
-			main: srcDir + '/ts/main.ts',
-			essential: srcDir + '/ts/essential.ts',
-			customizepreview: srcDir + '/ts/customizepreview.ts',
-			settings: './plugins/advanced-responsive-video-embedder/src/settings.ts',
-		};
 		config.plugins = [
 			...config.plugins,
-			new CopyPlugin({
+			new CopyPlugin( {
 				patterns: [
 					{
-						from: 'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
+						from:
+							'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
 					},
 					{
-						from: srcDir + '/svg',
+						from: 'themes/symbiosis/src/svg/bootstrap-icons.svg',
 						to: 'svg',
 					},
-					// {
-					// 	from: 'node_modules/bootstrap-icons/icons',
-					// 	to: 'svg/bs-icons',
-					// },
 				],
-			}),
+			} ),
 		];
 		break;
-
-	case 'arve-pro':
+	case 'plugins/arve-pro/build':
 		config.plugins = [
 			...config.plugins,
-			new CopyPlugin({
+			new CopyPlugin( {
 				patterns: [
 					{
 						from: 'node_modules/lity/dist/lity.min.js',
@@ -100,7 +64,7 @@ switch (project) {
 						from: 'node_modules/lity/dist/lity.min.css',
 					},
 				],
-			}),
+			} ),
 		];
 		break;
 }
@@ -109,26 +73,41 @@ function prepareSCSS() {
 	try {
 		fs.copySync(
 			'node_modules/bootstrap/scss',
-			'plugins/symbiosis/src/scss/bootstrap'
+			'themes/symbiosis/src/scss/bootstrap'
 		);
-		const results = replaceInFile.sync({
-			files: 'plugins/symbiosis/src/scss/bootstrap.scss',
+
+		const results = replaceInFile.sync( {
+			files: path.resolve(
+				__dirname,
+				'themes/symbiosis/src/scss/bootstrap/bootstrap.scss'
+			),
 			from: [
-				'@import "root";',
+				'@import "functions";',
 				'@import "reboot";',
 				'@import "type";',
+				'---',
 				'@import "images";',
+				'@import "carousel";',
+				'@import "placeholders";',
+				'@import "progress";',
+				'@import "spinners";',
 			],
 			to: [
-				'//removed root',
-				'//removed reboot',
-				'//removed type',
-				'//removed images',
+				'@import "functions"; @import "../bs-vars.scss";',
+				'// essential "reboot"',
+				'// essential "type"',
+				'---',
+				'// removed "images"',
+				'// removed "carousel";',
+				'// removed "placeholders";',
+				'// removed "progress";',
+				'// removed "spinners";',
 			],
-		});
-		console.log('Replacement results:', results);
-	} catch (error) {
-		console.error('Error occurred:', error);
+			countMatches: true,
+		} );
+		console.log( 'Replacement results:', results );
+	} catch ( error ) {
+		console.error( 'Error occurred:', error );
 	}
 }
 

@@ -1,0 +1,25 @@
+{
+	"core": "WordPress/WordPress",
+	"phpVersion": "7.4",
+	"config": {
+		"ENABLE_THEME_SAVING": true
+	},
+	"plugins": [
+		"./mu-plugins/devonly-ngt-kint-debugger",
+		"Automattic/create-block-theme#trunk",
+		"./plugins/gutenberg",
+		"./plugins/nextgenthemes-blocks"
+	],
+	"plugins2": [
+		"/home/user23/dev/build/gutenberg",
+		"./plugins/gutenberg"
+	],
+	"themes": [
+		"./themes/symbiosis"
+	],
+	"mappings": {
+		"wp-content/mu-plugins": "./mu-plugins",
+		"wp-content/plugins": "./plugins",
+		"wp-content/themes": "./themes"
+	}
+}

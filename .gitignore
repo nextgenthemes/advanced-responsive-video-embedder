@@ -1,8 +1,12 @@
+/*/
+!/actions/
+!/bin/
+!/plugins/
 /plugins/*
 !/plugins/advanced-responsive-video-embedder
-composer.lock
+!/plugins/nextgenthemes-blocks
 
-# folders
+composer.lock
 node_modules/
 vendor/
 
