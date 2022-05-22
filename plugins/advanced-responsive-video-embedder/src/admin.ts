@@ -11,19 +11,23 @@ declare global {
 	}
 }
 
-window.jQuery(document).ready(function ($) {
-	$('.notice.is-dismissible').on('click', '.notice-dismiss', function (event) {
-		event.preventDefault();
-		const $this = $(this);
-		if ('undefined' == $this.parent().attr('id')) {
-			return;
+window.jQuery( document ).ready( function ( $ ) {
+	$( '.notice.is-dismissible' ).on(
+		'click',
+		'.notice-dismiss',
+		function ( event ) {
+			event.preventDefault();
+			const $this = $( this );
+			if ( 'undefined' == $this.parent().attr( 'id' ) ) {
+				return;
+			}
+			$.post( window.ajaxurl, {
+				action: 'dnh_dismiss_notice',
+				url: window.ajaxurl,
+				id: $this.parent().attr( 'id' ),
+			} );
 		}
-		$.post(window.ajaxurl, {
-			action: 'dnh_dismiss_notice',
-			url: window.ajaxurl,
-			id: $this.parent().attr('id'),
-		});
-	});
-});
+	);
+} );
 
 initSC();

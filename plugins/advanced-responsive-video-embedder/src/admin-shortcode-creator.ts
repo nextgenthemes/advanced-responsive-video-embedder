@@ -12,8 +12,8 @@ declare global {
 
 const $ = window.jQuery;
 const data = window.arveSCSettings;
-const settings = data.settings as Record<string, OptionProps>;
-const sections = data.sections as Record<string, string>;
+const settings = data.settings as Record< string, OptionProps >;
+const sections = data.sections as Record< string, string >;
 
 interface OptionProps {
 	label: string;
@@ -28,7 +28,7 @@ interface OptionProps {
 }
 
 export function initSC(): void {
-	$('#arve-sc-dialog').dialog({
+	$( '#arve-sc-dialog' ).dialog( {
 		title: 'ARVE Shortcode',
 		dialogClass: 'wp-dialog',
 		autoOpen: false,
@@ -44,35 +44,37 @@ export function initSC(): void {
 		},
 		open: () => {
 			// close dialog by clicking the overlay behind it
-			$('.ui-widget-overlay').bind('click', function () {
-				$('#arve-sc-dialog').dialog('close');
-			});
+			$( '.ui-widget-overlay' ).bind( 'click', function () {
+				$( '#arve-sc-dialog' ).dialog( 'close' );
+			} );
 		},
 		create: () => {
 			// style fix for WordPress admin
-			$('.ui-dialog-titlebar-close').addClass('ui-button');
-			$('.ui-dialog-buttonset button:first').addClass('button-primary');
+			$( '.ui-dialog-titlebar-close' ).addClass( 'ui-button' );
+			$( '.ui-dialog-buttonset button:first' ).addClass(
+				'button-primary'
+			);
 		},
 		buttons: {
 			'Insert Shortcode'() {
-				$(this).dialog('close');
-				const text = $.trim($('#arve-shortcode').text());
-				window.wp.media.editor.insert(text);
+				$( this ).dialog( 'close' );
+				const text = $.trim( $( '#arve-shortcode' ).text() );
+				window.wp.media.editor.insert( text );
 			},
 			Cancel() {
-				$(this).dialog('close');
+				$( this ).dialog( 'close' );
 			},
 		},
-	});
+	} );
 
-	$(document).on('click', '#arve-btn', () => {
-		$('#arve-sc-dialog').dialog('open');
-	});
+	$( document ).on( 'click', '#arve-btn', () => {
+		$( '#arve-sc-dialog' ).dialog( 'open' );
+	} );
 
-	const vueDiv = document.getElementById('arve-sc-vue');
+	const vueDiv = document.getElementById( 'arve-sc-vue' );
 
-	if (vueDiv) {
-		new Vue({
+	if ( vueDiv ) {
+		new Vue( {
 			// DOM selector for our app's main wrapper element
 			el: '#arve-sc-vue',
 
@@ -89,56 +91,57 @@ export function initSC(): void {
 
 			// Methods that can be invoked from within our template
 			methods: {
-				showSection(section) {
-					setAllObjValues(this.sectionsDisplayed, false);
-					this.sectionsDisplayed[section] = true;
+				showSection( section ) {
+					setAllObjValues( this.sectionsDisplayed, false );
+					this.sectionsDisplayed[ section ] = true;
 					this.onlySectionDisplayed = section;
 				},
 				showAllSectionsButDebug() {
-					setAllObjValues(this.sectionsDisplayed, true);
+					setAllObjValues( this.sectionsDisplayed, true );
 					this.sectionsDisplayed.debug = false;
 					this.onlySectionDisplayed = false;
 				},
-				uploadImage(dataKey) {
+				uploadImage( dataKey ) {
 					const vueThis = this;
 					const image = window.wp
-						.media({
+						.media( {
 							title: 'Upload Image',
 							multiple: false,
-						})
+						} )
 						.open()
-						.on('select', function () {
+						.on( 'select', function () {
 							// This will return the selected image from the Media Uploader, the result is an object
-							const uploadedImage = image.state().get('selection').first();
+							const uploadedImage = image
+								.state()
+								.get( 'selection' )
+								.first();
 							// We convert uploadedImage to a JSON object to make accessing it easier
 							const attachmentID = uploadedImage.toJSON().id;
-							vueThis.vm[dataKey] = attachmentID;
-						});
+							vueThis.vm[ dataKey ] = attachmentID;
+						} );
 				},
-				action(action, product) {
-					this.vm.action = JSON.stringify({ action, product });
+				action( action, product ) {
+					this.vm.action = JSON.stringify( { action, product } );
 					this.refreshAfterSave = true;
 					this.saveOptions();
 				},
 			}, // end: methods
-		}); // end: Vue()
+		} ); // end: Vue()
 	}
 }
 
 function buildSectionsDisplayed() {
 	const sectionsDisplayed = {};
 
-	Object.keys(sections).forEach((key) => {
-		sectionsDisplayed[key] = 'debug' === key ? false : true;
-	});
-
-	console.log('sections', sectionsDisplayed);
+	Object.keys( sections ).forEach( ( key ) => {
+		sectionsDisplayed[ key ] = 'debug' === key ? false : true;
+	} );
 
 	return sectionsDisplayed;
 }
 
-function setAllObjValues(obj, val) {
-	Object.keys(obj).forEach((index) => {
-		obj[index] = val;
-	});
+function setAllObjValues( obj, val ) {
+	Object.keys( obj ).forEach( ( index ) => {
+		obj[ index ] = val;
+	} );
 }
