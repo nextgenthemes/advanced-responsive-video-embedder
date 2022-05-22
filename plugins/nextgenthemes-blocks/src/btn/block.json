@@ -1,0 +1,11 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "nextgenthemes/btn",
+	"title": "botton (ngt)",
+	"category": "layout",
+	"icon": "dashicons-editor-code",
+	"textdomain": "nextgenthemes",
+	"example": {},
+	"editorScript": "file:./index.js"
+}

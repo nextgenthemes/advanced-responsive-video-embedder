@@ -1,0 +1,11 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "nextgenthemes/block-filters",
+	"title": "NGT Block Filters",
+	"category": "layout",
+	"icon": "universal-access-alt",
+	"textdomain": "nextgenthemes",
+	"example": {},
+	"editorScript": "file:./index.js"
+}
