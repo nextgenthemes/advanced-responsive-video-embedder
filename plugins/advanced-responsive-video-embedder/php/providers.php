@@ -8,16 +8,12 @@
 		'auto_thumbnail' => true,
 		'tests'          => [
 			0 => [
-				'url' => 'https://alugha.com/videos/e269333a-579b-11e5-aa10-8587cc892389/share',
-				'id'  => 'e269333a-579b-11e5-aa10-8587cc892389',
+				'url' => 'https://alugha.com/videos/056c3560-801c-11ec-acb8-cf7ea315aa57/share',
+				'id'  => '056c3560-801c-11ec-acb8-cf7ea315aa57',
 			],
 			1 => [
 				'url' => 'https://alugha.com/videos/e5ddd7d0-6b7c-11eb-b741-7b3016ed7f90',
 				'id'  => 'e5ddd7d0-6b7c-11eb-b741-7b3016ed7f90',
-			],
-			2 => [
-				'url' => 'https://alugha.com/videos/7cab9cd7-f64a-11e5-939b-c39074d29b86',
-				'id'  => '7cab9cd7-f64a-11e5-939b-c39074d29b86',
 			],
 		],
 	],
