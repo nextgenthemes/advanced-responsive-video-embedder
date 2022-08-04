@@ -284,7 +284,7 @@ function all_settings() {
 			'placeholder'         => __( 'http://...', 'advanced-responsive-video-embedder' ),
 			'description'         => sprintf(
 				// Translators: %1$s Providers
-				\__( 'Post the URL of the video here. For %1$s and any <a href="%2$s">unlisted</a> video hosts paste their iframe embed codes.', 'advanced-responsive-video-embedder' ),
+				__( 'Post the URL of the video here. For %1$s and any <a href="%2$s">unlisted</a> video hosts paste their iframe embed codes.', 'advanced-responsive-video-embedder' ),
 				esc_html( $embed_code_only ),
 				esc_url( $provider_list_link )
 			),
@@ -298,7 +298,7 @@ function all_settings() {
 			'type'                => 'string',
 			'description'         => sprintf(
 				// Translators: Provider list
-				\__( 'Used for SEO, is visible on top of thumbnails in Lazyload/Lightbox modes, is used as link text in link-lightbox mode. <a href="%1$s">ARVE Pro</a> is able to get them from %2$s automatically.', 'advanced-responsive-video-embedder' ),
+				__( 'Used for SEO, is visible on top of thumbnails in Lazyload/Lightbox modes, is used as link text in link-lightbox mode. <a href="%1$s">ARVE Pro</a> is able to get them from %2$s automatically.', 'advanced-responsive-video-embedder' ),
 				esc_url( $pro_addon_link ),
 				esc_html( $auto_title )
 			),
@@ -313,7 +313,7 @@ function all_settings() {
 			'placeholder'         => __( 'Description Text', 'advanced-responsive-video-embedder' ),
 			'description'         => sprintf(
 				// translators: URL
-				\__( 'Needed for SEO <a href="%s">ARVE Pro</a> fills this automatically', 'advanced-responsive-video-embedder' ),
+				__( 'Needed for SEO <a href="%s">ARVE Pro</a> fills this automatically', 'advanced-responsive-video-embedder' ),
 				esc_url( $pro_addon_link )
 			),
 			'descriptionlink'     => esc_url( $pro_addon_link ),
@@ -327,7 +327,7 @@ function all_settings() {
 			'placeholder'         => __( '2019-09-29 (ARVE Pro fills this with post date)', 'advanced-responsive-video-embedder' ),
 			'description'         => sprintf(
 				// translators: URL
-				\__( '<a href="%s">ARVE Pro</a> fills this automatically.', 'advanced-responsive-video-embedder' ),
+				__( '<a href="%s">ARVE Pro</a> fills this automatically.', 'advanced-responsive-video-embedder' ),
 				esc_url( $pro_addon_link )
 			),
 			'descriptionlink'     => esc_url( $pro_addon_link ),
@@ -347,7 +347,7 @@ function all_settings() {
 			),
 			'description'         => sprintf(
 				// translators: URL
-				\__( 'For Lazyload, Lightbox and Link mode check out <a href="%s">ARVE Pro</a>. Only use normal when Pro is not installed!', 'advanced-responsive-video-embedder' ),
+				__( 'For Lazyload, Lightbox and Link mode check out <a href="%s">ARVE Pro</a>. Only use normal when Pro is not installed!', 'advanced-responsive-video-embedder' ),
 				'https://nextgenthemes.com/plugins/arve-pro/'
 			),
 			'descriptionlink'     => esc_url( $pro_addon_link ),
@@ -382,7 +382,7 @@ function all_settings() {
 			'placeholder'         => __( 'Image URL or media library image ID', 'advanced-responsive-video-embedder' ),
 			'description'         => sprintf(
 				// Translators: 1 Link, 2 Provider list
-				\__( 'Media library image ID (Select above in Gutenberg) or image URL for preview image for Lazyload modes, always used for SEO. <a href="%1$s">ARVE Pro</a> is able to get them from %2$s automatically.', 'advanced-responsive-video-embedder' ),
+				__( 'Media library image ID (Select above in Gutenberg) or image URL for preview image for Lazyload modes, always used for SEO. <a href="%1$s">ARVE Pro</a> is able to get them from %2$s automatically.', 'advanced-responsive-video-embedder' ),
 				esc_url( $pro_addon_link ),
 				esc_html( $auto_thumbs )
 			),
@@ -509,7 +509,7 @@ function all_settings() {
 			'type'        => 'integer',
 			'description' => sprintf(
 				// Translators: $content_width value.
-				\__( 'In pixels. If set to 0 (default) the $content_width value from your theme is used if present, otherwise the default is %s.', 'advanced-responsive-video-embedder' ),
+				__( 'In pixels. If set to 0 (default) the $content_width value from your theme is used if present, otherwise the default is %s.', 'advanced-responsive-video-embedder' ),
 				DEFAULT_MAXWIDTH
 			),
 		),
@@ -608,7 +608,7 @@ function all_settings() {
 			'placeholder' => __( 'example=1&foo=bar', 'advanced-responsive-video-embedder' ),
 			'description' => sprintf(
 				// Translators: URL
-				\__( 'Provider specific player settings on iframe src. See <a href="%s">documentation.</a>', 'advanced-responsive-video-embedder' ),
+				__( 'Provider specific player settings on iframe src. See <a href="%s">documentation.</a>', 'advanced-responsive-video-embedder' ),
 				esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/#parameters' )
 			),
 		),
@@ -683,7 +683,7 @@ function all_settings() {
 			'type'                => 'string',
 			'description'         => sprintf(
 				// Translators: URL
-				\__( 'Needed for <a href="%s">Random Video Addon</a>.', 'advanced-responsive-video-embedder' ),
+				__( 'Needed for <a href="%s">Random Video Addon</a>.', 'advanced-responsive-video-embedder' ),
 				esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' )
 			),
 			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
@@ -697,7 +697,7 @@ function all_settings() {
 			'type'                => 'string',
 			'description'         => sprintf(
 				// Translators: URL
-				\__( 'Needed for <a href="%s">Random Video Addon</a>.', 'advanced-responsive-video-embedder' ),
+				__( 'Needed for <a href="%s">Random Video Addon</a>.', 'advanced-responsive-video-embedder' ),
 				esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' )
 			),
 			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
@@ -711,7 +711,7 @@ function all_settings() {
 			'type'                => 'string',
 			'description'         => sprintf(
 				// Translators: URL
-				\__( 'Needed for <a href="%s">Random Video Addon</a>.', 'advanced-responsive-video-embedder' ),
+				__( 'Needed for <a href="%s">Random Video Addon</a>.', 'advanced-responsive-video-embedder' ),
 				esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' )
 			),
 			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
@@ -726,7 +726,7 @@ function all_settings() {
 			'type'                => 'string',
 			'description'         => sprintf(
 				// Translators: URL
-				\__( 'Youtube Playlist or Vimeo showcase URL<a href="%s">(Random Video Addon)</a>.', 'advanced-responsive-video-embedder' ),
+				__( 'Youtube Playlist or Vimeo showcase URL<a href="%s">(Random Video Addon)</a>.', 'advanced-responsive-video-embedder' ),
 				esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' )
 			),
 			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
@@ -741,7 +741,7 @@ function all_settings() {
 			'type'                => 'string',
 			'description'         => sprintf(
 				// Translators: URL
-				\__( 'Video URLs seperated by commas. <a href="%s">(Random Video Addon)</a>.', 'advanced-responsive-video-embedder' ),
+				__( 'Video URLs seperated by commas. <a href="%s">(Random Video Addon)</a>.', 'advanced-responsive-video-embedder' ),
 				esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' )
 			),
 			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
@@ -845,7 +845,7 @@ function all_settings() {
 				'option'    => true,
 				'shortcode' => false,
 				// Translators: %s is Provider
-				'label'     => sprintf( \__( '%s url parameters', 'advanced-responsive-video-embedder' ), $provider ),
+				'label'     => sprintf( __( '%s url parameters', 'advanced-responsive-video-embedder' ), $provider ),
 				'type'      => 'string',
 			);
 		}
