@@ -30,7 +30,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 #### Gutenberg ####
 
 *  Works with Embed, YouTube, Vimeo, Shortcode ... blocks.
-*  Provides it's own powerful ARVE Block with all the features the `[arve]` shortcode offer with a nice UI with detailed settings descriptions.
+*  Provides it's own powerful ARVE Block with all the features the `[arve]` shortcode offers, with a nice UI and detailed settings descriptions.
 
 #### Both ####
 
@@ -40,10 +40,10 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *   Supports [almost every video host](https://nextgenthemes.com/plugins/arve-pro/#support-table) that supports iframe embed codes.
 *   Embeds via pasting the URL in its own line just like WordPress!
 *   Optionally use very powerful Shortcodes instead.
-*   Clean shortcode syntax `[arve url="https://youtu.be/yUCFRL43Zm4" align="left" parameters="start=30" ... /]`, no unnecessary shortcode wrapping.
+*   Clean shortcode syntax `[arve url="https://youtu.be/yUCFRL43Zm4" parameters="start=30" ... /]`, no unnecessary shortcode wrapping.
 *   One shortcode or Block for all video providers.
 *   Responsive embeds with CSS, much better than with JavaScript.
-*   Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disables related videos at the end … to help keep people on your site rather then going to YouTube or keep watching videos.
+*   Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disables related videos from other channels at the end … to help keep people on your site rather then going to YouTube or keep watching videos.
 *   Limited Autoplay (for providers that support it, they may mute it. Mobile browsers prevent autoplay with audio so ARVE will automatically mute HTML5 videos set to autoplay)
 *   Custom URL parameters to use all options providers offer.
 *   Optional maximal width.
@@ -54,7 +54,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 #### Supported Providers ####
 
 [All providers with iframe embed codes](https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding)
-Alugha, Archive.org, Banned.video, Bitchute, Mail.ru, Brightcove, Brighteon, cantcensortruth.com, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Gab TV, Google Drive, mp4 or webm video files, ARVE general iframe embed, IGN, IMDB, Kickstarter, kla.tv, Livestream.com, Metacafe, myspace, ooyala, v.qq.com, Rumble.com, RuTube.ru, Snotr, TED Talks, Twitch, Ustream, Viddler, Vimeo, VK, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist
+Alugha, Archive.org, Banned.video, Bitchute, Mail.ru, Brightcove, Brighteon, cantcensortruth.com, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Gab TV, Google Drive, mp4 or webm video files, ARVE general iframe embed, IGN, IMDB, Kickstarter, kla.tv, Livestream.com, Metacafe, myspace, ooyala, v.qq.com, Rumble.com, RuTube.ru, Snotr, TED Talks, Twitch, Viddler, Vimeo, VK, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist
 ### Reviews ###
 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Great plugin, great support ####
@@ -199,6 +199,11 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2022-09-04 9.7.8 ###
+
+* New: Add new 'Darken' hover effect option for Pro Addon.
+* Removed Ustream from providers (not functional bought up by IBM)
 
 ### 2022-04-16 9.7.7 ###
 
