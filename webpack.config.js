@@ -1,7 +1,7 @@
 const fs = require( 'fs-extra' );
 const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 const CopyPlugin = require( 'copy-webpack-plugin' );
-const replaceInFile = require( 'replace-in-file' );
+// const replaceInFile = require( 'replace-in-file' );
 const path = require( 'path' );
 const { env } = require( 'process' );
 const regex = /--output-path=([^\s'"]+)/s;
@@ -35,18 +35,12 @@ switch ( outputPath ) {
 		};
 		break;
 	case 'themes/symbiosis/build':
-		prepareSCSS();
 		config.plugins = [
 			...config.plugins,
 			new CopyPlugin( {
 				patterns: [
 					{
-						from:
-							'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
-					},
-					{
-						from: 'themes/symbiosis/src/svg/bootstrap-icons.svg',
-						to: 'svg',
+						from: 'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
 					},
 				],
 			} ),
@@ -67,48 +61,6 @@ switch ( outputPath ) {
 			} ),
 		];
 		break;
-}
-
-function prepareSCSS() {
-	try {
-		fs.copySync(
-			'node_modules/bootstrap/scss',
-			'themes/symbiosis/src/scss/bootstrap'
-		);
-
-		const results = replaceInFile.sync( {
-			files: path.resolve(
-				__dirname,
-				'themes/symbiosis/src/scss/bootstrap/bootstrap.scss'
-			),
-			from: [
-				'@import "functions";',
-				'@import "reboot";',
-				'@import "type";',
-				'---',
-				'@import "images";',
-				'@import "carousel";',
-				'@import "placeholders";',
-				'@import "progress";',
-				'@import "spinners";',
-			],
-			to: [
-				'@import "functions"; @import "../bs-vars.scss";',
-				'// essential "reboot"',
-				'// essential "type"',
-				'---',
-				'// removed "images"',
-				'// removed "carousel";',
-				'// removed "placeholders";',
-				'// removed "progress";',
-				'// removed "spinners";',
-			],
-			countMatches: true,
-		} );
-		console.log( 'Replacement results:', results );
-	} catch ( error ) {
-		console.error( 'Error occurred:', error );
-	}
 }
 
 module.exports = config;
