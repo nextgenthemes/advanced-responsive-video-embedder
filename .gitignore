@@ -4,7 +4,6 @@
 !/plugins/
 /plugins/*
 !/plugins/advanced-responsive-video-embedder
-!/plugins/nextgenthemes-blocks
 
 composer.lock
 node_modules/
