@@ -6,7 +6,9 @@ namespace Nextgenthemes\ARVE;
 // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 // phpcs:disable WordPress.PHP.DiscouragedPHPFunctions.system_calls_system
-function __( $a, $b ) {}
+function __( string $a, string $b ): string {
+	return 'dummy';
+}
 function varexport($expression, $return = false) {
 	$export = var_export($expression, true);
 	$export = preg_replace('/^([ ]*)(.*)/m', '$1$1$2', $export);
