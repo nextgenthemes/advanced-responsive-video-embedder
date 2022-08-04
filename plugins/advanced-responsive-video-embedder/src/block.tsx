@@ -1,9 +1,9 @@
 /**
- * Copyright (c) 2019-2021 Nicolas Jonas
+ * Copyright 2019-2022 Nicolas Jonas
  * License: GPL 3.0
  *
  * Based on: https://gist.github.com/pento/cf38fd73ce0f13fcf0f0ae7d6c4b685d
- * Copyright (c) 2019 Gary Pendergast
+ * Copyright 2019 Gary Pendergast
  * License: GPL 2.0+
  */
 import { __ } from '@wordpress/i18n';

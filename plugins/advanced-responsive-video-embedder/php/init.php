@@ -75,7 +75,6 @@ register_uninstall_hook( __FILE__, __NAMESPACE__ . '\\uninstall' );
 function uninstall() {
 
 	if ( version_compare( $GLOBALS['wpdb']->db_version(), '8.0', '>=' ) ) {
-
 		$GLOBALS['wpdb']->query(
 			"UPDATE {$GLOBALS['wpdb']->postmeta} SET meta_value = REGEXP_REPLACE( meta_value, '<script type=\"application/json\" data-arve-oembed>[^<]+</script>', '' )"
 		);

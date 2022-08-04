@@ -87,7 +87,7 @@ function build_video( array $input_atts ) {
 	} catch ( \Exception $e ) {
 
 		if ( ! isset( $a['errors'] ) ) {
-			$a['errors'] = new WP_Error();
+			$a['errors'] = new \WP_Error();
 		}
 
 		$a['errors']->add( $e->getCode(), $e->getMessage() );
@@ -97,13 +97,6 @@ function build_video( array $input_atts ) {
 
 		return $html;
 	}
-}
-
-function arg_filters( array $a ) {
-
-	$args = new ShortcodeArgs( $a );
-
-	return $args->get_done();
 }
 
 function shortcode_option_defaults() {

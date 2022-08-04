@@ -1,5 +1,11 @@
 import './main.scss';
 
+declare global {
+	interface Window {
+		jQuery;
+	}
+}
+
 const qsa = document.querySelectorAll.bind(
 	document
 ) as typeof document.querySelectorAll;
