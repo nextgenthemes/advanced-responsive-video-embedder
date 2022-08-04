@@ -23,6 +23,10 @@ function url_handler( $provider, array $matches, array $attr, $url, $rawattr ) {
 		$a = $rawattr;
 	}
 
+	if ( is_wp_error( $url ) ) {
+		$a['errors'] = $url;
+	}
+
 	$a['provider']    = $provider;
 	$a['url']         = $url;
 	$a['origin_data'] = [
