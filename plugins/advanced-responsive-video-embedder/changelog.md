@@ -4,6 +4,11 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2022-09-04 9.7.8 ###
+
+* New: Add new 'Darken' hover effect option for Pro Addon.
+* Removed Ustream from providers (not functional bought up by IBM)
+
 ### 2022-04-16 9.7.7 ###
 
 * Improved browser support to display aspect ratio correctly on older browsers.
