@@ -18,7 +18,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 #### Gutenberg ####
 
 *  Works with Embed, YouTube, Vimeo, Shortcode ... blocks.
-*  Provides it's own powerful ARVE Block with all the features the `[arve]` shortcode offer with a nice UI with detailed settings descriptions.
+*  Provides it's own powerful ARVE Block with all the features the `[arve]` shortcode offers, with a nice UI and detailed settings descriptions.
 
 #### Both ####
 
@@ -28,10 +28,10 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *   Supports [almost every video host](https://nextgenthemes.com/plugins/arve-pro/#support-table) that supports iframe embed codes.
 *   Embeds via pasting the URL in its own line just like WordPress!
 *   Optionally use very powerful Shortcodes instead.
-*   Clean shortcode syntax `[arve url="https://youtu.be/yUCFRL43Zm4" align="left" parameters="start=30" ... /]`, no unnecessary shortcode wrapping.
+*   Clean shortcode syntax `[arve url="https://youtu.be/yUCFRL43Zm4" parameters="start=30" ... /]`, no unnecessary shortcode wrapping.
 *   One shortcode or Block for all video providers.
 *   Responsive embeds with CSS, much better than with JavaScript.
-*   Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disables related videos at the end … to help keep people on your site rather then going to YouTube or keep watching videos.
+*   Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disables related videos from other channels at the end … to help keep people on your site rather then going to YouTube or keep watching videos.
 *   Limited Autoplay (for providers that support it, they may mute it. Mobile browsers prevent autoplay with audio so ARVE will automatically mute HTML5 videos set to autoplay)
 *   Custom URL parameters to use all options providers offer.
 *   Optional maximal width.
