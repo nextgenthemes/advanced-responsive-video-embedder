@@ -471,25 +471,6 @@
 			],
 		],
 	],
-	'ustream' => [
-		'name'           => 'Ustream',
-		'oembed'         => false,
-		'regex'          => '#https?://(www\\.)?ustream\\.tv/(embed/|channel/)?(?<id>[0-9]{8}|recorded/[0-9]{8}(/highlight/[0-9]+)?)#i',
-		'embed_url'      => 'http://www.ustream.tv/embed/%s',
-		'default_params' => 'html5ui',
-		'auto_thumbnail' => false,
-		'aspect_ratio'   => '480:270',
-		'tests'          => [
-			0 => [
-				'url' => 'http://www.ustream.tv/recorded/59999872?utm_campaign=ustre.am&utm_source=ustre.am/:43KHS&utm_medium=social&utm_content=20170405204127',
-				'id'  => 'recorded/59999872',
-			],
-			1 => [
-				'url' => 'http://www.ustream.tv/embed/17074538?wmode=transparent&v=3&autoplay=false',
-				'id'  => '17074538',
-			],
-		],
-	],
 	'viddler' => [
 		'name'           => 'Viddler',
 		'oembed'         => false,
