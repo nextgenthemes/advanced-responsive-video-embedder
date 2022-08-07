@@ -7,7 +7,7 @@ namespace Nextgenthemes\ARVE;
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 // phpcs:disable WordPress.PHP.DiscouragedPHPFunctions.system_calls_system
 function __( string $a, string $b ): string {
-	return 'dummy';
+	return $a;
 }
 function varexport($expression, $return = false) {
 	$export = var_export($expression, true);
