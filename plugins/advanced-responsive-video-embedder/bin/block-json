@@ -1,0 +1,66 @@
+#!/usr/bin/env php
+<?php
+namespace Nextgenthemes\ARVE;
+
+require dirname( __DIR__ ) . '/advanced-responsive-video-embedder.php';
+require dirname( __DIR__ ) . '/php/functions-misc.php';
+require dirname( __DIR__ ) . '/php/functions-settings.php';
+
+init();
+
+function init() {
+
+	$settings = gutenberg_ui_settings();
+
+	foreach ( $settings as $key => $v ) {
+
+		$attr[ $key ] = array(
+			'type' => ( 'select' === $v['type'] ) ? 'string' : $v['type'],
+		);
+	}
+
+	$attr['thumbnail']     = array( 'type' => 'string' );
+	$attr['thumbnail_url'] = array( 'type' => 'string' );
+
+	update_block_json( $attr );
+}
+
+function update_block_json( array $attr ) {
+
+	$file = dirname( __DIR__ ) . '/src/block.json';
+
+	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+	$json = file_get_contents( $file );
+
+	try {
+		$json = json_decode( $json, true, 15, JSON_THROW_ON_ERROR );
+	} catch (\JsonException $exception) {
+		wp_die( esc_html( $exception->getMessage() ) );
+	}
+
+	if ( empty( $json ) ) {
+		wp_die( esc_html( 'Empty JSON' ) );
+	}
+
+	$json['attributes'] = $attr;
+	$json['version']    = VERSION;
+
+	// phpcs:ignore
+	file_put_contents( $file, json_encode( $json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) );
+}
+
+function __( string $a, string $b ): string {
+	return 'dummy';
+}
+
+function esc_html( string $str ): string {
+	return $str;
+}
+
+function esc_html__( string $str, string $str2 ): string {
+	return $str;
+}
+
+function esc_url( string $str ): string {
+	return $str;
+}

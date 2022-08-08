@@ -31,4 +31,4 @@ ksort( $hosts );
 $content = '<?php return ' . varexport( $hosts, true ) . ';';
 file_put_contents( $file, $content );
 
-system( "phpcbf $file" );
+system( "../../../vendor/bin/phpcbf $file" );
