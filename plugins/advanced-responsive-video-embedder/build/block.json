@@ -1,0 +1,128 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "nextgenthemes/arve-block",
+  "title": "Video Embed (ARVE)",
+  "category": "embed",
+  "icon": "video-alt3",
+  "description": "Advanced Responsive Video Embedder",
+  "keywords": [
+    "embed",
+    "youtube",
+    "rumble",
+    "vimeo",
+    "odysee"
+  ],
+  "version": "9.7.8",
+  "textdomain": "advanced-responsive-video-embedder",
+  "supports": {
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "styles": [],
+  "example": {
+    "attributes": {
+      "url": "https://www.youtube.com/watch?v=oe452WcY7fA",
+      "title": "Example Title"
+    }
+  },
+  "editorScript": "arve-block",
+  "editorStyle": "arve",
+  "attributes": {
+    "url": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "upload_date": {
+      "type": "string"
+    },
+    "mode": {
+      "type": "string"
+    },
+    "thumbnail": {
+      "type": "string"
+    },
+    "hide_title": {
+      "type": "boolean"
+    },
+    "grow": {
+      "type": "string"
+    },
+    "fullscreen": {
+      "type": "string"
+    },
+    "play_icon_style": {
+      "type": "string"
+    },
+    "hover_effect": {
+      "type": "string"
+    },
+    "disable_links": {
+      "type": "string"
+    },
+    "align": {
+      "type": "string"
+    },
+    "arve_link": {
+      "type": "string"
+    },
+    "duration": {
+      "type": "string"
+    },
+    "autoplay": {
+      "type": "string"
+    },
+    "lightbox_maxwidth": {
+      "type": "integer"
+    },
+    "sticky": {
+      "type": "string"
+    },
+    "sticky_on_mobile": {
+      "type": "string"
+    },
+    "sticky_position": {
+      "type": "string"
+    },
+    "aspect_ratio": {
+      "type": "string"
+    },
+    "parameters": {
+      "type": "string"
+    },
+    "controlslist": {
+      "type": "string"
+    },
+    "controls": {
+      "type": "string"
+    },
+    "loop": {
+      "type": "boolean"
+    },
+    "muted": {
+      "type": "boolean"
+    },
+    "volume": {
+      "type": "integer"
+    },
+    "random_video_url": {
+      "type": "string"
+    },
+    "random_video_urls": {
+      "type": "string"
+    },
+    "sandbox": {
+      "type": "string"
+    },
+    "thumbnail_url": {
+      "type": "string"
+    }
+  }
+}
