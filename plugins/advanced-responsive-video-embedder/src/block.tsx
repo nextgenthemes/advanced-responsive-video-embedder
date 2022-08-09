@@ -6,6 +6,7 @@
  * Copyright 2019 Gary Pendergast
  * License: GPL 2.0+
  */
+import json from './block.json';
 import { __ } from '@wordpress/i18n';
 import ServerSideRender from '@wordpress/server-side-render';
 import { createElement, Fragment } from '@wordpress/element';
@@ -13,8 +14,10 @@ import {
 	MediaUpload,
 	MediaUploadCheck,
 	InspectorControls,
+	useBlockProps,
 } from '@wordpress/block-editor';
 import {
+	BaseControl,
 	TextControl,
 	Button,
 	ToggleControl,
@@ -23,28 +26,18 @@ import {
 	ResponsiveWrapper,
 	DropZone,
 } from '@wordpress/components';
+import { registerBlockType } from '@wordpress/blocks';
 
 export {};
 declare global {
 	interface Window {
-		wp;
 		ARVEsettings: Record< string, OptionProps >;
 	}
 }
 
+const { name } = json;
 const settings = window.ARVEsettings;
-const wp = window.wp;
 const domParser = new DOMParser();
-
-/*
-wp.data.dispatch( 'core/edit-post' ).hideBlockTypes( [
-	'core-embed/youtube',
-	'core-embed/vimeo',
-	'core-embed/dailymotion',
-	'core-embed/collegehumor',
-	'core-embed/ted',
-] );
-*/
 
 /*
  * Keypair to gutenberg component
@@ -173,74 +166,15 @@ function BuildControls( props ) {
 						/>
 					);
 					break;
-				case 'attachment_old':
-					url = props.attributes[ key + '_url' ];
-
-					sectionControls[ option.tag ].push(
-						<div>
-							<MediaUploadCheck>
-								<MediaUpload
-									onSelect={ ( media ) => {
-										return props.setAttributes( {
-											[ key ]: media.id.toString(),
-											[ key + '_url' ]: media.url,
-										} );
-									} }
-									allowedTypes="image"
-									render={ ( { open } ) => (
-										<Button
-											className="components-button--arve-thumbnail"
-											onClick={ open }
-											aria-label={ __(
-												'Edit or update the image'
-											) }
-										>
-											{ !! url && (
-												<div>
-													<img
-														src={ url }
-														alt={ __(
-															'Selected Thumbnail'
-														) }
-													/>
-												</div>
-											) }
-											{ __( 'Edit or update the image' ) }
-										</Button>
-									) }
-								/>
-							</MediaUploadCheck>
-							{ !! val && (
-								<Button
-									onClick={ () => {
-										return props.setAttributes( {
-											[ key ]: '',
-											[ key + '_url' ]: '',
-										} );
-									} }
-								>
-									{ __( 'Remove Custom Thumbnail' ) }
-								</Button>
-							) }
-							<TextControl
-								label={ option.label }
-								placeholder={ option.placeholder }
-								help={ createHelp( option ) }
-								value={ val }
-								onChange={ ( value ) => {
-									return props.setAttributes( {
-										[ key ]: value,
-									} );
-								} }
-							/>
-						</div>
-					);
-					break;
 				case 'attachment':
 					url = props.attributes[ key + '_url' ];
 
 					sectionControls[ option.tag ].push(
-						<div className="editor-post-featured-image">
+						<BaseControl
+							className="editor-post-featured-image"
+							help={ createHelp( option ) }
+							key={ key }
+						>
 							<MediaUploadCheck
 								fallback={ mediaUploadInstructions }
 							>
@@ -254,7 +188,7 @@ function BuildControls( props ) {
 										} );
 									} }
 									unstableFeaturedImageFlow
-									allowedTypes="Image"
+									allowedTypes={ [ 'image' ] }
 									modalClass="editor-post-featured-image__media-modal"
 									render={ ( { open } ) => (
 										<div className="editor-post-featured-image__container">
@@ -265,11 +199,13 @@ function BuildControls( props ) {
 														: 'editor-post-featured-image__preview'
 												}
 												onClick={ open }
-												// aria-label={
-												// 	!val
-												// 		? null
-												// 		: __('Edit or update the image')
-												// }
+												aria-label={
+													! val
+														? null
+														: __(
+																'Edit or update the image'
+														  )
+												}
 												aria-describedby={
 													! val
 														? ''
@@ -277,15 +213,28 @@ function BuildControls( props ) {
 												}
 											>
 												{ !! val && !! url && (
-													<ResponsiveWrapper
-														naturalWidth={ 640 }
-														naturalHeight={ 380 }
+													<div
+														style={ {
+															overflow: 'hidden',
+														} }
 													>
-														<img
-															src={ url }
-															alt=""
-														/>
-													</ResponsiveWrapper>
+														<ResponsiveWrapper
+															naturalWidth={ 640 }
+															naturalHeight={
+																360
+															}
+															isInline
+														>
+															<img
+																src={ url }
+																alt="ARVE Thumbnail"
+																style={ {
+																	objectFit:
+																		'cover',
+																} }
+															/>
+														</ResponsiveWrapper>
+													</div>
 												) }
 												{ ! val &&
 													__( 'Set Thumbnail' ) }
@@ -308,7 +257,7 @@ function BuildControls( props ) {
 											} );
 										} }
 										unstableFeaturedImageFlow
-										allowedTypes="image"
+										allowedTypes={ [ 'image' ] }
 										modalClass="editor-post-featured-image__media-modal"
 										render={ ( { open } ) => (
 											<Button
@@ -337,18 +286,7 @@ function BuildControls( props ) {
 									</Button>
 								</MediaUploadCheck>
 							) }
-							<TextControl
-								label={ option.label }
-								placeholder={ option.placeholder }
-								help={ createHelp( option ) }
-								value={ val }
-								onChange={ ( value ) => {
-									return props.setAttributes( {
-										[ key ]: value,
-									} );
-								} }
-							/>
-						</div>
+						</BaseControl>
 					);
 					break;
 			}
@@ -356,6 +294,20 @@ function BuildControls( props ) {
 	);
 
 	let open = true;
+
+	sectionControls.main.push(
+		<BaseControl
+			key={ 'info' }
+			help={ __(
+				'You can disable the extensive help texts on the ARVE settings page to clean up this UI',
+				'advanced-responsive-video-embedder'
+			) }
+		>
+			<BaseControl.VisualLabel>
+				{ __( 'Info', 'advanced-responsive-video-embedder' ) }
+			</BaseControl.VisualLabel>
+		</BaseControl>
+	);
 
 	Object.keys( sectionControls ).forEach( ( key ) => {
 		controls.push(
@@ -400,60 +352,37 @@ function capitalizeFirstLetter( string ) {
 	return string.charAt( 0 ).toUpperCase() + string.slice( 1 );
 }
 
-/*
- * Here's where we register the block in JavaScript.
- *
- * It's not yet possible to register a block entirely without JavaScript, but
- * that is something I'd love to see happen. This is a barebones example
- * of registering the block, and giving the basic ability to edit the block
- * attributes. (In this case, there's only one attribute, 'foo'.)
- */
-wp.blocks.registerBlockType( 'nextgenthemes/arve-block', {
-	title: 'Video Embed (ARVE)',
-	description:
-		'You can disable help texts on the ARVE settings page to clean up the UI',
-	icon: 'video-alt3',
-	category: 'embed',
-	supports: {
-		AlignWide: true,
-		align: [ 'left', 'right', 'center', 'wide', 'full' ],
-	},
+function Edit( props ) {
+	const {
+		attributes: { align },
+		setAttributes,
+	} = props;
 
-	/*
-	 * In most other blocks, you'd see an 'attributes' property being defined here.
-	 * We've defined attributes in the PHP, that information is automatically sent
-	 * to the block editor, so we don't need to redefine it here.
-	 */
+	const blockProps = useBlockProps();
+	const controls = BuildControls( props );
 
-	edit: ( props ) => {
-		const controls = BuildControls( props );
-		/*  */
-		return [
-			/*
-			 * The ServerSideRender element uses the REST API to automatically call
-			 * php_block_render() in your PHP code whenever it needs to get an updated
-			 * view of the block.
-			 */
+	return [
+		<div { ...blockProps } key="block">
+			<div
+				className="arve-select-helper"
+				style={ { textAlign: 'center', padding: '.1em' } }
+			>
+				{ __(
+					'Select ARVE block',
+					'advanced-responsive-video-embedder'
+				) }
+			</div>
 			<ServerSideRender
-				key="ssr"
 				block="nextgenthemes/arve-block"
 				attributes={ props.attributes }
-			/>,
-			/*
-			 * InspectorControls lets you add controls to the Block sidebar. In this case,
-			 * we're adding a TextControl, which lets us edit the 'foo' attribute (which
-			 * we defined in the PHP). The onChange property is a little bit of magic to tell
-			 * the block editor to update the value of our 'foo' property, and to re-render
-			 * the block.
-			 */
-			<InspectorControls key="insp">{ controls }</InspectorControls>,
-		];
-	},
+			/>
+		</div>,
+		<InspectorControls key="insp">{ controls }</InspectorControls>,
+	];
+};
 
-	// We're going to be rendering in PHP, so save() can just return null.
-	save: () => {
-		return null;
-	},
+registerBlockType( name, {
+	edit: Edit,
 } );
 
 function aspectRatio( w, h ) {
@@ -469,3 +398,13 @@ function gcd( a, b ) {
 
 	return gcd( b, a % b );
 }
+
+/*
+wp.data.dispatch( 'core/edit-post' ).hideBlockTypes( [
+	'core-embed/youtube',
+	'core-embed/vimeo',
+	'core-embed/dailymotion',
+	'core-embed/collegehumor',
+	'core-embed/ted',
+] );
+*/
