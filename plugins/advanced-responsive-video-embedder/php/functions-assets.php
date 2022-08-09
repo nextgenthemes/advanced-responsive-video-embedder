@@ -30,45 +30,34 @@ function register_assets() {
 
 	if ( function_exists( 'register_block_type' ) ) :
 
-		$sc_settings = shortcode_settings();
-		$options     = options();
+		$settings = gutenberg_ui_settings();
+		$options  = options();
 
-		foreach ( $sc_settings as $key => $v ) {
-
-			$attr[ $key ] = array(
-				'type' => ( 'select' === $v['type'] ) ? 'string' : $v['type'],
-			);
+		foreach ( $settings as $key => $v ) {
 
 			if ( $options['gutenberg_help'] && ! empty( $v['description'] ) ) {
-				$sc_settings[ $key ]['description'] = wp_strip_all_tags( $v['description'] );
+				$settings[ $key ]['description'] = wp_strip_all_tags( $v['description'] );
 			} else {
-				unset( $sc_settings[ $key ]['description'] );
-				unset( $sc_settings[ $key ]['descriptionlink'] );
-				unset( $sc_settings[ $key ]['descriptionlinktext'] );
+				unset( $settings[ $key ]['description'] );
+				unset( $settings[ $key ]['descriptionlink'] );
+				unset( $settings[ $key ]['descriptionlinktext'] );
 			}
 		}
 
-		$attr['thumbnail']     = array( 'type' => 'string' );
-		$attr['thumbnail_url'] = array( 'type' => 'string' );
-
 		Common\asset(
 			array(
-				'handle' => 'arve-block',
-				'src'    => plugins_url( 'build/block.js', PLUGIN_FILE ),
-				'path'   => PLUGIN_DIR . '/build/block.js',
-				'deps'   => array( 'arve' ),
-				'footer' => 'false',
+				'handle'  => 'arve-block',
+				'src'     => plugins_url( 'build/block.js', PLUGIN_FILE ),
+				'path'    => PLUGIN_DIR . '/build/block.js',
+				'deps'    => array( 'arve' ),
+				'footer'  => 'false',
 			)
 		);
-		wp_localize_script( 'arve-block', 'ARVEsettings', $sc_settings );
-
+		wp_localize_script( 'arve-block', 'ARVEsettings', $settings );
 		// Register our block, and explicitly define the attributes we accept.
 		register_block_type(
-			'nextgenthemes/arve-block',
+			PLUGIN_DIR . '/src/block.json',
 			array(
-				'attributes'      => $attr,
-				'editor_script'   => 'arve-block',
-				'editor_style'    => 'arve',
 				'render_callback' => __NAMESPACE__ . '\gutenberg_block',
 			)
 		);
@@ -88,9 +77,9 @@ function action_wp_enqueue_scripts() {
 	}
 }
 
-function gutenberg_block( $args ) {
+function gutenberg_block( $attr, $content, $block ) {
 
-	if ( empty( $args['url'] ) ) {
+	if ( empty( $attr['url'] ) && empty( $attr['random_video_url'] ) && empty( $attr['random_video_urls'] ) ) {
 		\ob_start();
 		?>
 		<div class="components-placeholder wp-block-embed">
@@ -105,18 +94,14 @@ function gutenberg_block( $args ) {
 		return \ob_get_clean();
 	}
 
-	foreach ( $args as $key => $value ) {
+	foreach ( $attr as $key => $value ) {
 
 		if ( is_bool( $value ) ) {
-			$args[ $key ] = $value ? 'true' : 'false';
+			$attr[ $key ] = $value ? 'true' : 'false';
 		}
 	}
 
-	$args['origin_data']['from'] = 'gutenberg_block';
+	$attr['origin_data']['from'] = 'gutenberg_block';
 
-	if ( isset( $args['align'] ) && in_array( $args['align'], array( 'wide', 'full' ), true ) ) {
-		$args['align'] = null;
-	}
-
-	return shortcode( $args );
+	return shortcode( $attr );
 }

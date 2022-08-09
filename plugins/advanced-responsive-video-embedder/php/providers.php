@@ -58,20 +58,6 @@
 			],
 		],
 	],
-	'mailru' => [
-		'name'         => 'Mail.ru',
-		'oembed'       => false,
-		'regex'        => '#https?://my\\.mail\\.ru/video/embed/(?<id>[0-9]+)#i',
-		'oembed'       => false,
-		'embed_url'    => 'https://my.mail.ru/video/embed/%s',
-		'requires_src' => true,
-		'tests'        => [
-			0 => [
-				'url' => 'https://my.mail.ru/video/embed/1475383959813619758',
-				'id'  => 1475383959813619758,
-			],
-		],
-	],
 	'brightcove' => [
 		'name'         => 'Brightcove',
 		'regex'        => '#https?://(players|link)\\.brightcove\\.net/(?<account_id>[0-9]+)/(?<brightcove_player>[a-z0-9]+)_(?<brightcove_embed>[a-z0-9]+)/index\\.html\\?videoId=(?<id>[0-9]+)#i',
@@ -213,7 +199,7 @@
 		'oembed'         => false,
 		'regex'          => '#https?://tv\\.gab\\.com/channel/(?<account_id>[a-z0-9]+)/(view|embed)/(?<id>[^\\s/]+)#i',
 		'embed_url'      => 'https://tv.gab.com/channel/%s/embed/%s',
-		'default_params' => '', // minimal=on
+		'default_params' => '',
 		'tests'          => [
 			0 => [
 				'url'     => 'https://tv.gab.com/channel/owenbenjamin/view/1190-live-with-curtis-stone-the-60fb935386d788cd4a48c43a',
@@ -326,6 +312,19 @@
 			],
 		],
 	],
+	'mailru' => [
+		'name'         => 'Mail.ru',
+		'oembed'       => false,
+		'regex'        => '#https?://my\\.mail\\.ru/video/embed/(?<id>[0-9]+)#i',
+		'embed_url'    => 'https://my.mail.ru/video/embed/%s',
+		'requires_src' => true,
+		'tests'        => [
+			0 => [
+				'url' => 'https://my.mail.ru/video/embed/1475383959813619758',
+				'id'  => 1475383959813619758,
+			],
+		],
+	],
 	'metacafe' => [
 		'name'           => 'Metacafe',
 		'oembed'         => false,
@@ -363,7 +362,7 @@
 	'qq' => [
 		'name'           => 'v.qq.com',
 		'oembed'         => false,
-		'regex'          => '#https?://v\.qq\.com/.+?(?<id>[a-z0-9]+).html#i',
+		'regex'          => '#https?://v\\.qq\\.com/.+?(?<id>[a-z0-9]+).html#i',
 		'embed_url'      => 'https://v.qq.com/txp/iframe/player.html?vid=%s',
 		'auto_thumbnail' => false,
 		'tests'          => [

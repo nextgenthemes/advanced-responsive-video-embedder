@@ -5,7 +5,6 @@ use function \Nextgenthemes\ARVE\Common\get_var_dump;
 
 function build_html( array $a ) {
 
-	$options       = options();
 	$wrapped_video = build_tag(
 		array(
 			'name'       => 'inner',
@@ -18,13 +17,15 @@ function build_html( array $a ) {
 		$a
 	);
 
+	$align_class = $a['align'] ? " align{$a['align']}" : '';
+
 	return build_tag(
 		array(
 			'name'       => 'arve',
 			'tag'        => 'div',
 			'inner_html' => $wrapped_video . promote_link( $a['arve_link'] ) . build_seo_data( $a ),
 			'attr'       => array(
-				'class'         => $a['align'] ? 'arve align' . $a['align'] : 'arve',
+				'class'         => 'arve wp-block-nextgenthemes-arve' . $align_class,
 				'data-mode'     => $a['mode'],
 				'data-oembed'   => $a['oembed_data'] ? '1' : false,
 				'data-provider' => $a['provider'],

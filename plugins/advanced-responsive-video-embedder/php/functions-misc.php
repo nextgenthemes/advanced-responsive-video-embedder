@@ -126,3 +126,37 @@ function seconds_to_iso8601_duration( $time ) {
 
 	return $str;
 }
+
+/**
+ * Check if Gutenberg is enabled.
+ * Must be used not earlier than plugins_loaded action fired.
+ *
+ * @return bool
+ */
+function is_gutenberg() {
+
+	$gutenberg    = false;
+	$block_editor = false;
+
+	if ( has_filter( 'replace_editor', 'gutenberg_init' ) ) {
+		// Gutenberg is installed and activated.
+		$gutenberg = true;
+	}
+
+	if ( version_compare( $GLOBALS['wp_version'], '5.0-beta', '>' ) ) {
+		// Block editor.
+		$block_editor = true;
+	}
+
+	if ( ! $gutenberg && ! $block_editor ) {
+		return false;
+	}
+
+	if ( ! class_exists( 'Classic_Editor' ) ) {
+		return true;
+	}
+
+	$use_block_editor = ( get_option( 'classic-editor-replace' ) === 'no-replace' );
+
+	return $use_block_editor;
+}

@@ -29,4 +29,8 @@ const PREMIUM_SECTIONS      = array( 'pro', 'sticky-videos', 'random-video', 'vi
 const DEFAULT_MAXWIDTH      = 900;
 const OEMBED_HTML_PRIORITY  = -5;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	return; // no exit for use in build script
+}
+
 require_once __DIR__ . '/php/init.php';

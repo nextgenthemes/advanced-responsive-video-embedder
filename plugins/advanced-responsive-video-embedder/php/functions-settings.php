@@ -96,18 +96,8 @@ function shortcode_settings() {
 
 // TODO this is unused
 function gutenberg_ui_settings( $html5 = false ) {
-
-	$settings = all_settings();
-
-	foreach ( $settings as $k => $v ) {
-
-		if ( $html5 && isset( $v['html5'] ) && ! $v['html5'] ) {
-			unset( $settings[ $k ] );
-		} elseif ( 'html5' === $v['tag'] ) {
-			unset( $settings[ $k ] );
-		}
-	}
-
+	$settings = shortcode_settings();
+	unset( $settings['maxwidth'] );
 	return $settings;
 }
 
@@ -363,11 +353,12 @@ function all_settings() {
 			'description' => __( 'URL or media gallery image ID used for thumbnail', 'advanced-responsive-video-embedder' ),
 		),
 		'thumbnail_post_image_fallback' => array(
-			'tag'       => 'pro',
-			'default'   => false,
-			'shortcode' => false,
-			'label'     => __( 'Thumbnail Featured Image Fallback', 'advanced-responsive-video-embedder' ),
-			'type'      => 'boolean',
+			'tag'         => 'pro',
+			'default'     => false,
+			'shortcode'   => false,
+			'label'       => __( 'Thumbnail Featured Image Fallback', 'advanced-responsive-video-embedder' ),
+			'type'        => 'boolean',
+			'description' => __( 'In case ARVE Pro can not get a thumbnail, the posts Featured image will be used instead', 'advanced-responsive-video-embedder' ),
 		),
 		'thumbnail' => array(
 			'ui'                  => 'image_upload',
@@ -382,7 +373,7 @@ function all_settings() {
 			'placeholder'         => __( 'Image URL or media library image ID', 'advanced-responsive-video-embedder' ),
 			'description'         => sprintf(
 				// Translators: 1 Link, 2 Provider list
-				__( 'Media library image ID (Select above in Gutenberg) or image URL for preview image for Lazyload modes, always used for SEO. <a href="%1$s">ARVE Pro</a> is able to get them from %2$s automatically.', 'advanced-responsive-video-embedder' ),
+				__( 'Media library image ID or image URL for preview image for SEO and Lazyload modes. <a href="%1$s">ARVE Pro</a> is able to get them from %2$s automatically, leave empty in this case unless you want use a different thumbnail.', 'advanced-responsive-video-embedder' ),
 				esc_url( $pro_addon_link ),
 				esc_html( $auto_thumbs )
 			),
@@ -833,7 +824,7 @@ function all_settings() {
 		),
 	);
 
-	$settings = apply_filters( 'nextgenthemes/arve/settings', $settings );
+	//$settings = apply_filters( 'nextgenthemes/arve/settings', $settings );
 
 	foreach ( $properties as $provider => $v ) {
 

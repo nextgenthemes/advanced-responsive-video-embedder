@@ -78,15 +78,13 @@ function arg_maxwidth( array $a ) {
 
 		if ( in_array( $a['align'], array( 'left', 'right', 'center' ), true ) ) {
 			$a['maxwidth'] = (int) $options['align_maxwidth'];
+		} elseif ( is_gutenberg() ) {
+			$a['maxwidth'] = false;
 		} elseif ( empty( $options['maxwidth'] ) ) {
 			$a['maxwidth'] = (int) empty( $GLOBALS['content_width'] ) ? DEFAULT_MAXWIDTH : $GLOBALS['content_width'];
 		} else {
 			$a['maxwidth'] = (int) $options['maxwidth'];
 		}
-	}
-
-	if ( $a['maxwidth'] < 50 ) {
-		$a['errors']->add( 'maxw', __( 'Maxwidth needs to be 50+', 'advanced-responsive-video-embedder' ) );
 	}
 
 	return $a['maxwidth'];
@@ -228,6 +226,8 @@ function validate_align( array $a ) {
 		case 'left':
 		case 'right':
 		case 'center':
+		case 'wide':
+		case 'full':
 			break;
 		default:
 			$a['errors']->add(
