@@ -200,12 +200,13 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2022-09-04 9.7.9 ###
+### 2022-09-09 9.7.9 ###
 
 ##### Improvents Gutenberg Block #####
+* Introduces clickable area above the Block in the Editor.
 * Fixed Thumbnail image overflowing.
-* Removed maximal width setting when not aligned. This concept does not fit Gutenberg. Width should be controlled by wrapping ARVE block in a group block and changing the alignment of the group block to wide or full. The ARVE block itself can also be aligned wide and full for that but its currently not working on tbe backend.
-* Introduces a `block.json`.
+* Removed maximal width setting when not aligned. This concept does not fit Gutenberg. Width should be controlled by setting the block to wide or full alignment.
+* Introduces a recommended `block.json`.
 * Some other minor improvements.
 
 ### 2022-09-04 9.7.8 ###
