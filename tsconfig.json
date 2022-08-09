@@ -1,31 +1,53 @@
 {
+	/* https://github.com/WordPress/gutenberg/blob/trunk/tsconfig.base.json */
 	"compileOnSave": false,
 	"compilerOptions": {
-		"noImplicitAny": false,
-		"removeComments": true,
-		"allowUnreachableCode": false,
-		"strictNullChecks": true,
-		"sourceMap": true,
-		"allowJs": false,
-		/* https://github.com/TypeStrong/fork-ts-checker-webpack-plugin says this is needed */
-		"importsNotUsedAsValues": "preserve",
-		/* -- wppack.io (changed) -- */
-		/* Basic Options */
-		"target": "es2019", // we would be compiling with babel, so we can target esnext
-		"module": "esnext", // for import() and es5 import/export
+		"allowJs": true,
+		"checkJs": true,
+		"allowSyntheticDefaultImports": true, // to make it compatible with babel
+		"jsx": "preserve",
+		"target": "esnext",
+		"module": "esnext",
 		"lib": [
 			"esnext",
 			"DOM",
-			"DOM.Iterable",
-		], // include all libraries you need
-		"jsx": "react",
-		"jsxFactory": "createElement",
-		"jsxFragmentFactory": "Fragment",
+			"DOM.Iterable"
+		],
+		"declaration": true,
+		"declarationMap": true,
+		"composite": true,
+		"emitDeclarationOnly": true,
+		"isolatedModules": true,
+
+		/* Strict Type-Checking Options */
+		"strict": true,
+
+		/* Additional Checks */
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"importsNotUsedAsValues": "error",
+
 		/* Module Resolution Options */
 		"moduleResolution": "node", // because of webpack
-		"allowSyntheticDefaultImports": true, // to make it compatible with babel
-		"esModuleInterop": true, // to make it compatible with babel
-		"isolatedModules": false, // to limit implementation
+
+		/* This needs to be false so our types are possible to consume without setting this */
+		"esModuleInterop": false,
+		"resolveJsonModule": true,
+
+		"typeRoots": [ "./node_modules/@types" ],
+		"types": [],
+
+		/* https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/tsconfig.json */
+		"declarationDir": "build-types",
+		"strictNullChecks": true,
+
+		/* nico */
+		"noImplicitAny": false,
+		"removeComments": true,
+		"allowUnreachableCode": false,
+		"sourceMap": true,
 	},
 	"exclude": [
 		"**/build/**",
