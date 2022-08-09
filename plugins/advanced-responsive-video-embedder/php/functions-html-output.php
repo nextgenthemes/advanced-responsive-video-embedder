@@ -290,7 +290,7 @@ function build_rating_meta( array $a ) {
 		return '';
 	}
 
-	$html .= '<span itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">';
+	$html  = '<span itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">';
 	$html .= sprintf( '<meta itemprop="ratingValue" content="%s">', esc_attr( $a['rating'] ) );
 
 	if ( ! empty( $a['review_count'] ) ) {
