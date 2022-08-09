@@ -54,7 +54,7 @@
     "start:blocks": "wp-scripts start --webpack-src-dir=plugins/nextgenthemes-blocks/src --output-path=plugins/nextgenthemes-blocks/build --webpack-copy-php",
     "build:blocks": "wp-scripts build --webpack-src-dir=plugins/nextgenthemes-blocks/src --output-path=plugins/nextgenthemes-blocks/build --webpack-copy-php",
     "start:advanced-responsive-video-embedder": "wp-scripts start --output-path=plugins/advanced-responsive-video-embedder/build",
-    "build:advanced-responsive-video-embedder": "wp-scripts build --webpack-src-dir=plugins/advanced-responsive-video-embedder/src --output-path=plugins/advanced-responsive-video-embedder/build",
+    "build:advanced-responsive-video-embedder": "wp-scripts build --output-path=plugins/advanced-responsive-video-embedder/build",
     "start:arve-pro": "wp-scripts start plugins/arve-pro/src/main --output-path=plugins/arve-pro/build",
     "build:arve-pro": "wp-scripts build plugins/arve-pro/src/main --output-path=plugins/arve-pro/build",
     "start:arve-random-video": "wp-scripts start",
