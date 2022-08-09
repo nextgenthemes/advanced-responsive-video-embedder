@@ -1,7 +1,10 @@
 #!/bin/bash
 set -Eeuxo pipefail # https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail/
 
-./block-json
-./build-readme
-./sort-provider-array
+SCRIPT=$(realpath "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
+
+"$SCRIPTPATH"/block-json
+"$SCRIPTPATH"/build-readme
+"$SCRIPTPATH"/sort-provider-array
 
