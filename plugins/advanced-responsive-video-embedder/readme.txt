@@ -150,13 +150,9 @@ When you use the AMP or 'AMP for WP' plugin you need this.
 
 Please report it on [nextgenthemes.com/support/](https://nextgenthemes.com/support/) **and please do not on the wordpess.org forums, thanks.**
 
-### Google structured data tool complains about data missing ###
+### I’m experiencing these errors on Google Search Console ###
 
-You have 3 options:
-
-1. Best option is to get [ARVE Pro](https://nextgenthemes.com/plugins/arve-pro/). It will fill all the SEO data needed  without you having to do anything.
-1. Manually fill the data needed via shortcode or Block. Note that filling the title will fill `name` in the SEO data.
-1. You can completely disable the generation of SEO data on the ARVE settings page. This will make the error on SEO tools disappear but will not give you any SEO benefits.
+Best option to resolve these errors is to get [ARVE Pro](https://nextgenthemes.com/plugins/arve-pro/) as it fills these in for you hassle free, only activate the addon - done. For more options please see the [detailed answer](https://nextgenthemes.com/plugins/arve/faq/).
 
 ### How to get the pro version working? ###
 
@@ -200,7 +196,11 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2022-09-09 9.7.9 ###
+### 2022-09-11 9.7.11 ###
+
+* Fix: Block not registering.
+
+### 2022-09-09 9.7.10 ###
 
 ##### Improvents Gutenberg Block #####
 * Introduces clickable area above the Block in the Editor.
