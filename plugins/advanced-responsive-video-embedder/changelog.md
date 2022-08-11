@@ -4,7 +4,11 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2022-09-09 9.7.9 ###
+### 2022-09-11 9.7.11 ###
+
+* Fix: Block not registering.
+
+### 2022-09-09 9.7.10 ###
 
 ##### Improvents Gutenberg Block #####
 * Introduces clickable area above the Block in the Editor.
