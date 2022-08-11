@@ -7,7 +7,7 @@ Please report it on [nextgenthemes.com/support/](https://nextgenthemes.com/suppo
 
 ### I’m experiencing these errors on Google Search Console ###
 
-Best option to resolve these errors is to get [ARVE Pro](https://nextgenthemes.com/plugins/arve-pro/) as it fills these in for you hassle free, only activate the addon - done. For more options please see the [detailed answer](https://nextgenthemes.com/plugins/arve/faq/).
+Best option to resolve these errors is to get [ARVE Pro](https://nextgenthemes.com/plugins/arve-pro/) as it fills these in for you hassle-free, only activate the add-on - done. For more options, please see the [detailed answer](https://nextgenthemes.com/plugins/arve/faq/).
 
 ### How to get the pro version working? ###
 
