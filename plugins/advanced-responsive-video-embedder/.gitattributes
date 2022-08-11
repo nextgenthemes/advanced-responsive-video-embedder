@@ -6,7 +6,6 @@
 /bin           export-ignore
 /composer*     export-ignore
 /package*.json export-ignore
-/src           export-ignore
 /tests         export-ignore
 /readme        export-ignore
 
