@@ -196,7 +196,7 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2022-08-21 9.7.12 ###
+### 2022-08-21 9.7.13 ###
 
 * Simplyfied and reduced debug info.
 * A few minor adjustments for upcoming ARVE Pro version.
