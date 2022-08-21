@@ -145,7 +145,7 @@ function required_arg( string $arg ): string {
 
 function arg_with_default( string $arg, $default ): string {
 
-	$getopt = getopt( null, [ "$arg::" ] );
+	$getopt = getopt( '', [ "$arg::" ] );
 
 	if ( empty($getopt[ $arg ]) ) {
 		return $default;

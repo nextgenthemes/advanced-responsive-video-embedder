@@ -4,11 +4,16 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2022-09-11 9.7.11 ###
+
+### 2022-08-21 9.7.12 ###
+
+* A few minor adjustments for upcoming ARVE Pro version.
+
+### 2022-08-11 9.7.11 ###
 
 * Fix: Block not registering.
 
-### 2022-09-09 9.7.10 ###
+### 2022-08-09 9.7.10 ###
 
 ##### Improvents Gutenberg Block #####
 * Introduces clickable area above the Block in the Editor.
@@ -17,7 +22,7 @@
 * Introduces a recommended `block.json`.
 * Some other minor improvements.
 
-### 2022-09-04 9.7.8 ###
+### 2022-08-04 9.7.8 ###
 
 * New: Add new 'Darken' hover effect option for Pro Addon.
 * Removed Ustream from providers (not functional bought up by IBM)

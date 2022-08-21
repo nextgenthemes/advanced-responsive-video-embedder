@@ -797,7 +797,14 @@ function args_detect_html5( array $a ) {
 		}
 
 		if ( $a[ $ext ] ) {
-			$a['video_sources_html'] .= sprintf( '<source type="%s" src="%s">', get_video_type( $ext ), $a[ $ext ] );
+
+			$source = array(
+				'src'  => $a[ $ext ],
+				'type' => get_video_type( $ext ),
+			);
+
+			$a['video_sources'][]     = $source;
+			$a['video_sources_html'] .= sprintf( '<source src="%s" type="%s">', $source['src'], $source['type'], $a[ $ext ] );
 
 			if ( empty( $a['first_video_file'] ) ) {
 				$a['first_video_file'] = $a[ $ext ];
@@ -808,7 +815,51 @@ function args_detect_html5( array $a ) {
 
 	if ( $a['video_sources_html'] ) {
 		$a['provider'] = 'html5';
+		$a['tracks']   = detect_tracks( $a );
 	}
 
 	return $a;
+}
+
+function detect_tracks( array $a ) {
+
+	$tracks = array();
+
+	for ( $n = 1; $n <= NUM_TRACKS; $n++ ) {
+
+		if ( empty( $a[ "track_{$n}" ] ) ) {
+			return array();
+		}
+
+		preg_match(
+			'#-(?<type>captions|chapters|descriptions|metadata|subtitles)-(?<lang>[a-z]{2}).vtt$#i',
+			$a[ "track_{$n}" ],
+			$matches
+		);
+
+		$label = empty( $a[ "track_{$n}_label" ] ) ?
+			get_language_name_from_code( $matches['lang'] ) :
+			$a[ "track_{$n}_label" ];
+
+		$track_attr = array(
+			'default' => ( 1 === $n ) ? true : false,
+			'kind'    => $matches['type'],
+			'label'   => $label,
+			'src'     => $a[ "track_{$n}" ],
+			'srclang' => $matches['lang'],
+		);
+
+		$tracks[] = $track_attr;
+	}//end for
+
+	return $tracks;
+}
+
+function tracks_html( array $tracks ) {
+
+	$html = '';
+
+	foreach ( $tracks as $track_attr ) {
+		$html .= sprintf( '<track%s>', Common\attr( $track_attr ) );
+	}
 }

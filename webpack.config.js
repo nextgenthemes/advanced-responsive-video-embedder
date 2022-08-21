@@ -14,7 +14,6 @@ let outputPath = null;
 
 if ( 1 in matches ) {
 	outputPath = matches[ 1 ];
-	console.log( '--output-path', matches[ 1 ] );
 }
 
 const config = defaultConfig;
@@ -41,21 +40,6 @@ switch ( outputPath ) {
 				patterns: [
 					{
 						from: 'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
-					},
-				],
-			} ),
-		];
-		break;
-	case 'plugins/arve-pro/build':
-		config.plugins = [
-			...config.plugins,
-			new CopyPlugin( {
-				patterns: [
-					{
-						from: 'node_modules/lity/dist/lity.min.js',
-					},
-					{
-						from: 'node_modules/lity/dist/lity.min.css',
 					},
 				],
 			} ),

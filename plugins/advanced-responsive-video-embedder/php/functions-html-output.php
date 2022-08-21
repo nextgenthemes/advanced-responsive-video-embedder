@@ -99,9 +99,9 @@ function build_video_tag( array $a ) {
 		array(
 			'name'       => 'video',
 			'tag'        => 'video',
-			'inner_html' => $a['video_sources_html'] . build_tracks_html( $a ),
+			'inner_html' => $a['video_sources_html'] . tracks_html( $a['tracks'] ),
 			'attr'       => array(
-				// WPmaster
+				// WP
 				'autoplay'           => $autoplay,
 				'controls'           => $a['controls'],
 				'controlslist'       => $a['controlslist'],
@@ -119,40 +119,6 @@ function build_video_tag( array $a ) {
 		),
 		$a
 	);
-}
-
-function build_tracks_html( array $a ) {
-
-	$tracks_html = '';
-
-	for ( $n = 1; $n <= NUM_TRACKS; $n++ ) {
-
-		if ( empty( $a[ "track_{$n}" ] ) ) {
-			return '';
-		}
-
-		preg_match(
-			'#-(?<type>captions|chapters|descriptions|metadata|subtitles)-(?<lang>[a-z]{2}).vtt$#i',
-			$a[ "track_{$n}" ],
-			$matches
-		);
-
-		$label = empty( $a[ "track_{$n}_label" ] ) ?
-			get_language_name_from_code( $matches['lang'] ) :
-			$a[ "track_{$n}_label" ];
-
-		$attr = array(
-			'default' => ( 1 === $n ) ? true : false,
-			'kind'    => $matches['type'],
-			'label'   => $label,
-			'src'     => $a[ "track_{$n}" ],
-			'srclang' => $matches['lang'],
-		);
-
-		$tracks_html .= sprintf( '<track%s>', Common\attr( $attr ) );
-	}//end for
-
-	return $tracks_html;
 }
 
 function html_id( $html_attr ) {

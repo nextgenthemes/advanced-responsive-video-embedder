@@ -427,15 +427,16 @@ function all_settings() {
 		),
 		'hover_effect' => array(
 			'tag'     => 'pro',
-			'default' => 'zoom',
+			'default' => 'darken',
 			'label'   => __( 'Hover Effect (Lazyload/Lightbox only)', 'advanced-responsive-video-embedder' ),
 			'type'    => 'select',
 			'options' => array(
 				''          => __( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
+				'darken'    => __( 'Darken', 'advanced-responsive-video-embedder' ),
 				'zoom'      => __( 'Zoom Thumbnail', 'advanced-responsive-video-embedder' ),
 				'rectangle' => __( 'Move Rectangle in', 'advanced-responsive-video-embedder' ),
-				'darken'    => __( 'Darken', 'advanced-responsive-video-embedder' ),
 				'none'      => __( 'None', 'advanced-responsive-video-embedder' ),
+				'custom'    => __( 'Custom (for your own CSS styles', 'advanced-responsive-video-embedder' ),
 			),
 		),
 		'disable_links' => array(
@@ -458,18 +459,6 @@ function all_settings() {
 				'right'  => __( 'Right', 'advanced-responsive-video-embedder' ),
 				'center' => __( 'Center', 'advanced-responsive-video-embedder' ),
 			),
-		),
-		'lightbox_script' => array(
-			'tag'         => 'pro',
-			'default'     => 'bigpicture',
-			'shortcode'   => false,
-			'label'       => __( 'Lightbox Script', 'advanced-responsive-video-embedder' ),
-			'type'        => 'select',
-			'options'     => array(
-				'bigpicture' => __( 'BigPicture', 'advanced-responsive-video-embedder' ),
-				'lity'       => __( 'Lity', 'advanced-responsive-video-embedder' ),
-			),
-			'description' => __( 'Only use Lity if you have issues with Big Picture', 'advanced-responsive-video-embedder' ),
 		),
 		'arve_link' => array(
 			'default'     => false,

@@ -9,7 +9,7 @@
 import json from './block.json';
 import { __ } from '@wordpress/i18n';
 import ServerSideRender from '@wordpress/server-side-render';
-import { createElement, Fragment } from '@wordpress/element';
+//import { createElement, Fragment } from '@wordpress/element';
 import {
 	MediaUpload,
 	MediaUploadCheck,
@@ -229,6 +229,8 @@ function BuildControls( props ) {
 																src={ url }
 																alt="ARVE Thumbnail"
 																style={ {
+																	width: '100%',
+																	height: '100%',
 																	objectFit:
 																		'cover',
 																} }
@@ -379,7 +381,7 @@ function Edit( props ) {
 		</div>,
 		<InspectorControls key="insp">{ controls }</InspectorControls>,
 	];
-};
+}
 
 registerBlockType( name, {
 	edit: Edit,
