@@ -3,7 +3,7 @@ namespace Nextgenthemes\ARVE\Common\Admin;
 
 use function \Nextgenthemes\ARVE\Common\get_var_dump;
 
-// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
+// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
 ?>
 <textarea class="ngt-debug-textarea">
 ARVE:               <?php echo esc_html( plugin_ver_status( 'advanced-responsive-video-embedder/advanced-responsive-video-embedder.php' ) . "\n" ); ?>
@@ -20,15 +20,8 @@ REST URL:           <?php echo esc_html( get_rest_url( null, $this->rest_namespa
 <?php print_network_active_plugins(); ?>
 
 ARVE Options:
-<?php echo wp_kses( get_var_dump( get_option( 'nextgenthemes_arve' ) ), array() ); ?>
+<?php echo wp_kses( var_export( get_option( 'nextgenthemes_arve' ), true ), array() ); ?>
 
 Dismissed Notices:
-<?php echo wp_kses( get_var_dump( get_user_meta( get_current_user_id(), 'dnh_dismissed_notices' ) ), array() ); ?>
-
-oembed_dataparse:
-<?php print_r( list_hooks('oembed_dataparse') ); ?>
-
-embed_oembed_html:
-<?php print_r( list_hooks('embed_oembed_html') ); ?>
-
+<?php echo wp_kses( var_export( get_user_meta( get_current_user_id(), 'dnh_dismissed_notices' ), true ), array() ); ?>
 </textarea>
