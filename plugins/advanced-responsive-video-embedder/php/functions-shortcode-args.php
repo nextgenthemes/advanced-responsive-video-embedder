@@ -862,4 +862,6 @@ function tracks_html( array $tracks ) {
 	foreach ( $tracks as $track_attr ) {
 		$html .= sprintf( '<track%s>', Common\attr( $track_attr ) );
 	}
+
+	return $html;
 }
