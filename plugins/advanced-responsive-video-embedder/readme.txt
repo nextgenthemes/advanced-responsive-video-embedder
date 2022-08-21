@@ -152,7 +152,7 @@ Please report it on [nextgenthemes.com/support/](https://nextgenthemes.com/suppo
 
 ### I’m experiencing these errors on Google Search Console ###
 
-Best option to resolve these errors is to get [ARVE Pro](https://nextgenthemes.com/plugins/arve-pro/) as it fills these in for you hassle free, only activate the addon - done. For more options please see the [detailed answer](https://nextgenthemes.com/plugins/arve/faq/).
+Best option to resolve these errors is to get [ARVE Pro](https://nextgenthemes.com/plugins/arve-pro/) as it fills these in for you hassle-free, only activate the add-on - done. For more options, please see the [detailed answer](https://nextgenthemes.com/plugins/arve/faq/).
 
 ### How to get the pro version working? ###
 
@@ -196,11 +196,16 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2022-09-11 9.7.11 ###
+
+### 2022-08-21 9.7.12 ###
+
+* A few minor adjustments for upcoming ARVE Pro version.
+
+### 2022-08-11 9.7.11 ###
 
 * Fix: Block not registering.
 
-### 2022-09-09 9.7.10 ###
+### 2022-08-09 9.7.10 ###
 
 ##### Improvents Gutenberg Block #####
 * Introduces clickable area above the Block in the Editor.
@@ -209,7 +214,7 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * Introduces a recommended `block.json`.
 * Some other minor improvements.
 
-### 2022-09-04 9.7.8 ###
+### 2022-08-04 9.7.8 ###
 
 * New: Add new 'Darken' hover effect option for Pro Addon.
 * Removed Ustream from providers (not functional bought up by IBM)
