@@ -804,7 +804,7 @@ function args_detect_html5( array $a ) {
 			);
 
 			$a['video_sources'][]     = $source;
-			$a['video_sources_html'] .= sprintf( '<source src="%s" type="%s">', $source['src'], $source['type'], $a[ $ext ] );
+			$a['video_sources_html'] .= sprintf( '<source type="%s" src="%s">', $source['type'], $source['src'], $a[ $ext ] );
 
 			if ( empty( $a['first_video_file'] ) ) {
 				$a['first_video_file'] = $a[ $ext ];
