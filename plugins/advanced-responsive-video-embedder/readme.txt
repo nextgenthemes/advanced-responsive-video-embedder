@@ -196,10 +196,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2022-08-21 9.7.13 ###
+### 2022-08-22 9.7.14 ###
 
-* Simplyfied and reduced debug info.
-* A few minor adjustments for upcoming ARVE Pro version.
+* Improved: Simplyfied and reduced debug info.
+* Improved: Adjustments for updated ARVE Pro version.
 
 ### 2022-08-11 9.7.11 ###
 
@@ -207,7 +207,7 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 ### 2022-08-09 9.7.10 ###
 
-##### Improvents Gutenberg Block #####
+##### Improvents for Gutenberg Block #####
 * Introduces clickable area above the Block in the Editor.
 * Fixed Thumbnail image overflowing.
 * Removed maximal width setting when not aligned. This concept does not fit Gutenberg. Width should be controlled by setting the block to wide or full alignment.
@@ -244,7 +244,7 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 ### 2021-12-07 9.6.0 ###
 
-* Preprecated: Shortcode UI dialog is no longer maintained but you can still use it by clicking on "Add Post Element" button when Shortcode UI is installed.
+* Deprecated: Shortcode UI dialog is no longer maintained but you can still use it by clicking on "Add Post Element" button when Shortcode UI is installed.
 * New: ARVE now has its own dependecy free Shortcode creator dialog in Classic Editor. It will pop up when you click the "Embed Video" button that previously opened up Shortcode UI dialog.
 * New: Support for tv.gab.com
 * Improved: Video files will be embedded with `preload="none"` to prevent desktop browsers from buffering videos without interaction.
