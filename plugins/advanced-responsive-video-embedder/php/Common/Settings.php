@@ -278,7 +278,7 @@ class Settings {
 					<?php
 					printf(
 						// translators: PHP version, URL, Contact URL
-						wp_kses( __( 'Your PHP version %1$s is very <a href="%2$s">outdated, insecure and slow</a>. No pressure, this plugin will continue to work with PHP 5.6, but at some undecided point I like to use features from PHP 7. If you can not update for some reason please tell <a href="%3$s">tell me</a>. WordPress itself planned to require PHP 7 in a feature release but decided not to persue this for now because so many people still run on outdated versions. WordPress already has beta support for 8.0 but I would not go with 8.0 just yet.', 'advanced-responsive-video-embedder' ), $link_only ),
+						wp_kses( __( 'Your PHP version %1$s is very <a href="%2$s">outdated, insecure and slow</a>. No pressure, this plugin will continue to work with PHP 5.6, but at some undecided point I like to use features from PHP 7. If you can not update for some reason please tell <a href="%3$s">tell me</a>. WordPress itself planned to require PHP 7 in a feature release but decided not to persue this for now because so many people still run on outdated versions.', 'advanced-responsive-video-embedder' ), $link_only ),
 						esc_html( PHP_VERSION ),
 						esc_url( 'https://www.php.net/supported-versions' ),
 						esc_url( 'https://nextgenthemes.com/contact/' )
@@ -287,14 +287,14 @@ class Settings {
 				</p>
 			</div>
 			<?php
-		} elseif ( \version_compare( PHP_VERSION, '7.3.26', '<' ) ) {
+		} elseif ( \version_compare( PHP_VERSION, '7.3', '<=' ) ) {
 			?>
 			<div class="ngt-sidebar-box">
 				<p>
 					<?php
 					printf(
 						// translators: URL
-						wp_kses( __( 'Just a heads up, your PHP version %1$s is outdated and potentially insecure. See what versions are <a href="%2$s">good here</a>. WordPress already has beta support for 8.0 but I would not go with 8.0 just yet.', 'advanced-responsive-video-embedder' ), $link_only ),
+						wp_kses( __( 'Just a heads up, your PHP version %1$s is outdated and insecure. See what versions are <a href="%2$s">good here</a>. ARVE <strong>currently</strong> works with PHP as old as 5.6 like WP itself but may require 7.2 or 7.4+ in the future.', 'advanced-responsive-video-embedder' ), $link_only ),
 						esc_html( PHP_VERSION ),
 						esc_url( 'https://www.php.net/supported-versions' )
 					);
