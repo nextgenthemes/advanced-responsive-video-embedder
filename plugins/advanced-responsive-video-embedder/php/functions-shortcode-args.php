@@ -369,8 +369,18 @@ function arg_iframe_src( array $a ) {
 
 	$a['src'] = iframe_src_args( $a['src'], $a );
 	$a['src'] = iframe_src_autoplay_args( $a['autoplay'], $a );
+	$a['src'] = iframe_src_jsapi_arg( $a['src'], $a );
 
 	return $a['src'];
+}
+
+function iframe_src_jsapi_arg( $src, $a ) {
+
+	if ( function_exists('Nextgenthemes\ARVE\Pro\init') && 'youtube' === $a['provider'] ) {
+		$src = add_query_arg( [ 'enablejsapi' => 1 ], $src );
+	}
+
+	return $src;
 }
 
 function build_iframe_src( array $a ) {
