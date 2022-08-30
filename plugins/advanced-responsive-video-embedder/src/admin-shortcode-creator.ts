@@ -28,49 +28,6 @@ interface OptionProps {
 }
 
 export function initSC(): void {
-	$( '#arve-sc-dialog' ).dialog( {
-		title: 'ARVE Shortcode',
-		dialogClass: 'wp-dialog',
-		autoOpen: false,
-		draggable: true,
-		width: 900,
-		modal: true,
-		resizable: true,
-		closeOnEscape: true,
-		position: {
-			my: 'center',
-			at: 'center',
-			of: window,
-		},
-		open: () => {
-			// close dialog by clicking the overlay behind it
-			$( '.ui-widget-overlay' ).bind( 'click', function () {
-				$( '#arve-sc-dialog' ).dialog( 'close' );
-			} );
-		},
-		create: () => {
-			// style fix for WordPress admin
-			$( '.ui-dialog-titlebar-close' ).addClass( 'ui-button' );
-			$( '.ui-dialog-buttonset button:first' ).addClass(
-				'button-primary'
-			);
-		},
-		buttons: {
-			'Insert Shortcode'() {
-				$( this ).dialog( 'close' );
-				const text = $.trim( $( '#arve-shortcode' ).text() );
-				window.wp.media.editor.insert( text );
-			},
-			Cancel() {
-				$( this ).dialog( 'close' );
-			},
-		},
-	} );
-
-	$( document ).on( 'click', '#arve-btn', () => {
-		$( '#arve-sc-dialog' ).dialog( 'open' );
-	} );
-
 	const vueDiv = document.getElementById( 'arve-sc-vue' );
 
 	if ( vueDiv ) {
@@ -128,6 +85,49 @@ export function initSC(): void {
 			}, // end: methods
 		} ); // end: Vue()
 	}
+
+	$( '#arve-sc-dialog' ).dialog( {
+		title: 'ARVE Shortcode',
+		dialogClass: 'wp-dialog',
+		autoOpen: false,
+		draggable: true,
+		width: 900,
+		modal: true,
+		resizable: true,
+		closeOnEscape: true,
+		position: {
+			my: 'center',
+			at: 'center',
+			of: window,
+		},
+		open: () => {
+			// close dialog by clicking the overlay behind it
+			$( '.ui-widget-overlay' ).bind( 'click', function () {
+				$( '#arve-sc-dialog' ).dialog( 'close' );
+			} );
+		},
+		create: () => {
+			// style fix for WordPress admin
+			$( '.ui-dialog-titlebar-close' ).addClass( 'ui-button' );
+			$( '.ui-dialog-buttonset button:first' ).addClass(
+				'button-primary'
+			);
+		},
+		buttons: {
+			'Insert Shortcode'() {
+				$( this ).dialog( 'close' );
+				const text = $.trim( $( '#arve-shortcode' ).text() );
+				window.wp.media.editor.insert( text );
+			},
+			Cancel() {
+				$( this ).dialog( 'close' );
+			},
+		},
+	} );
+
+	$( document ).on( 'click', '#arve-btn', () => {
+		$( '#arve-sc-dialog' ).dialog( 'open' );
+	} );
 }
 
 function buildSectionsDisplayed() {
