@@ -196,6 +196,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2022-08-30 9.7.15 ###
+
+* Fix: Shortcode Creator dialog with Advanced Custom Fields plugin active.
+
 ### 2022-08-22 9.7.14 ###
 
 * Improved: Simplyfied and reduced debug info.
