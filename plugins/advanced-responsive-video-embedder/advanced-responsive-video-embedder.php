@@ -16,7 +16,6 @@
  * @license GPL 3.0
  * @link    https://nextgenthemes.com
  */
-
 namespace Nextgenthemes\ARVE;
 
 const VERSION               = '9.7.15';

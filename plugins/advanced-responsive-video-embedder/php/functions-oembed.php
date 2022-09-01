@@ -14,6 +14,11 @@ function add_oembed_providers() {
 
 function filter_oembed_dataparse( $result, $data, $url ) {
 
+	// this is to fix Divi endless reload issue.
+	if ( is_admin() && function_exists('et_setup_theme') ) {
+		return $result;
+	}
+
 	if ( $data && 'video' === $data->type ) {
 		$data->arve_cachetime = gmdate('Y-m-d H:i:s');
 		$data->arve_url       = $url;
@@ -26,7 +31,7 @@ function filter_oembed_dataparse( $result, $data, $url ) {
 			$data->$k = \esc_html($v);
 		}
 
-		$result .= '<script type="application/json" data-arve-oembed>'.\wp_json_encode($data, JSON_UNESCAPED_UNICODE).'</script>';
+		$result .= '<script type="application/json" data-arve-oembed>' . \wp_json_encode($data, JSON_UNESCAPED_UNICODE) . '</script>';
 	}
 
 	return $result;
