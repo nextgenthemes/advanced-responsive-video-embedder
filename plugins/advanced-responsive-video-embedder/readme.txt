@@ -3,7 +3,7 @@ Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.9.16
-Tested up to: 5.9.0
+Tested up to: 6.0.2
 Requires PHP: 5.6
 Stable tag: 9.7.16
 License: GPL-3.0
@@ -195,6 +195,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2022-09-01 9.7.16 ###
+
+* Fix: Divi endless reload issue is hopefully finally fixed. ARVE Pro users please note this is a workaround that causes previews inside the Divi builder not have the correct data. Most noticable thumbnails and titles. If you provide a fallback thumbnail in ARVE Pro settings it will show that while you using Divi. The plugin works correctly on the frontend. The "Video (ARVE)" button currently does not work in 
 
 ### 2022-08-30 9.7.15 ###
 
