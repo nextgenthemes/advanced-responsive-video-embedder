@@ -250,8 +250,8 @@ function validate_aspect_ratio( array $a ) {
 
 	$ratio = explode( ':', $a['aspect_ratio'] );
 
-	if ( empty( $ratio[0] ) || ! is_numeric( $ratio[0] ) ||
-		empty( $ratio[1] ) || ! is_numeric( $ratio[1] )
+	if ( empty( $ratio[0] ) || ! is_int( $ratio[0] ) ||
+		empty( $ratio[1] ) || ! is_int( $ratio[1] )
 	) {
 		$a['errors']->add(
 			'aspect_ratio',
@@ -271,7 +271,7 @@ function arg_img_src( array $a ) {
 
 	if ( $a['thumbnail'] ) :
 
-		if ( is_numeric( $a['thumbnail'] ) ) {
+		if ( is_int( $a['thumbnail'] ) ) {
 
 			$img_src = wp_get_attachment_image_url( $a['thumbnail'], 'small' );
 
@@ -676,7 +676,7 @@ function iframe_src_args( $src, array $a ) {
 
 	$options = options();
 
-	$parameters     = wp_parse_args( preg_replace( '!\s+!', '&', $a['parameters'] ) );
+	$parameters     = wp_parse_args( preg_replace( '!\s+!', '&', (string) $a['parameters'] ) );
 	$params_options = array();
 
 	if ( ! empty( $options[ 'url_params_' . $a['provider'] ] ) ) {
