@@ -1,5 +1,6 @@
 <?php
 namespace Nextgenthemes\ARVE\Common\Admin\EDD;
+
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
