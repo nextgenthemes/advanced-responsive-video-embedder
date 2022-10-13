@@ -1,9 +1,19 @@
 <?php
 namespace Nextgenthemes\ARVE\Common;
 
+function theme_version() {
+	$theme_version = wp_get_theme()->get( 'Version' );
+	return is_string( $theme_version ) ? $theme_version : false;
+}
+
+function register_asset( array $args ) {
+	$args['enqueue'] = false;
+	_asset( $args );
+}
+
 function enqueue_asset( array $args ) {
 	$args['enqueue'] = true;
-	asset( $args );
+	_asset( $args );
 }
 
 function is_script( $src ) {
@@ -38,6 +48,10 @@ function deps_and_ver( $path ) {
 	return $dv;
 }
 
+function ver_from_asset( $path ) {
+	return deps_and_ver( $path )['version'];
+}
+
 function replace_extension( $filename, $new_extension ) {
 	$info = pathinfo( $filename );
 	$dir  = $info['dirname'] ? $info['dirname'] . DIRECTORY_SEPARATOR : '';
@@ -45,26 +59,28 @@ function replace_extension( $filename, $new_extension ) {
 	return $dir . $info['filename'] . '.' . $new_extension;
 }
 
-function asset( array $args ) {
+function _asset( array $args ) {
 
 	$defaults = array(
-		'path'              => '',
+		// wp_register_script args in order
+		'handle'            => '',
+		'src'               => '',
+		'deps'              => array(),
+		'media'             => 'all',
+		'ver'               => null,
+		'in_footer'         => true,
+
+		// new
 		'async'             => false,
 		'cdn_src'           => '',
 		'defer'             => false,
-		'deps'              => array(),
 		'enqueue'           => false,
-		'enqueue_hooks'     => array(),
-		'handle'            => '',
-		'in_footer'         => true,
-		'integrity'         => '',
-		'media'             => 'all',
-		'src'               => '',
-		'ver'               => null,
-		'mce'               => false,
-		'inline_style'      => '',
 		'inline_script'     => '',
 		'inline_script_pos' => 'after',
+		'inline_style'      => '',
+		'integrity'         => '',
+		'mce'               => false,
+		'path'              => '',
 	);
 
 	$args         = wp_parse_args( $args, $defaults );
@@ -96,10 +112,6 @@ function asset( array $args ) {
 		if ( $args['enqueue'] ) {
 			wp_enqueue_script( $args['handle'] );
 		}
-
-		foreach ( $args['enqueue_hooks'] as $hook ) {
-			enqueue_script( $args['handle'], $hook );
-		}
 	} else {
 		wp_register_style( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['media'] );
 
@@ -115,10 +127,6 @@ function asset( array $args ) {
 			wp_enqueue_style( $args['handle'] );
 		}
 
-		foreach ( $args['enqueue_hooks'] as $hook ) {
-			enqueue_style( $args['handle'], $hook );
-		}
-
 		if ( $args['mce'] ) {
 			add_filter(
 				'mce_css',
@@ -132,26 +140,6 @@ function asset( array $args ) {
 			);
 		}
 	}//end if
-}
-
-function enqueue_style( $handle, $hook ) {
-
-	add_filter(
-		$hook,
-		function() use ( $handle ) {
-			wp_enqueue_style( $handle );
-		}
-	);
-}
-
-function enqueue_script( $handle, $hook ) {
-
-	add_filter(
-		$hook,
-		function() use ( $handle ) {
-			wp_enqueue_script( $handle );
-		}
-	);
 }
 
 function add_attr_to_asset( $type, array $args ) {
