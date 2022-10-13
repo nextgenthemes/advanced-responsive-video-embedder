@@ -28,10 +28,10 @@ jobs:
 
     steps:
       - name: Checkout ARVE
-        uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
+        uses: actions/checkout@v3
 
       - name: Checkout ARVE Pro
-        uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
+        uses: actions/checkout@v3
         with:
           repository: nextgenthemes/arve-pro
           ref: master
@@ -39,7 +39,7 @@ jobs:
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Checkout ARVE Random Video
-        uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
+        uses: actions/checkout@v3
         with:
           repository: nextgenthemes/arve-random-video
           ref: master
@@ -47,7 +47,7 @@ jobs:
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Checkout ARVE AMP
-        uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
+        uses: actions/checkout@v3
         with:
           repository: nextgenthemes/arve-amp
           ref: master
@@ -55,7 +55,7 @@ jobs:
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Checkout ARVE Sticky Videos
-        uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
+        uses: actions/checkout@v3
         with:
           repository: nextgenthemes/arve-sticky-videos
           ref: master
@@ -63,7 +63,7 @@ jobs:
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@448bd61c6fe9db2113173467e4c22b87ddc2971a # 2.18.1 # https://github.com/shivammathur/setup-php/releases/
+        uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709 # 2.21.2 # https://github.com/shivammathur/setup-php/releases/
         with:
           php-version: ${{ matrix.php }}
           extensions: mbstring, dom, zip, mysql, gd
@@ -91,7 +91,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
+        uses: actions/checkout@v3
 
       - name: Get the version
         id: get_version
