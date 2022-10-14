@@ -6,6 +6,15 @@ function theme_version() {
 	return is_string( $theme_version ) ? $theme_version : false;
 }
 
+function asset( array $args ) {
+
+	// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+	trigger_error( 'Function ' . __FUNCTION__ . ' is deprecated', E_USER_DEPRECATED );
+
+	$args['enqueue'] = false;
+	_asset( $args );
+}
+
 function register_asset( array $args ) {
 	$args['enqueue'] = false;
 	_asset( $args );

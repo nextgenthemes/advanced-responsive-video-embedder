@@ -3,7 +3,7 @@ namespace Nextgenthemes\ARVE;
 
 function register_assets() {
 
-	Common\asset(
+	Common\register_asset(
 		array(
 			'handle' => 'arve-main',
 			'src'    => plugins_url( 'build/main.css', PLUGIN_FILE ),
@@ -12,7 +12,7 @@ function register_assets() {
 		)
 	);
 
-	Common\asset(
+	Common\register_asset(
 		array(
 			'handle'    => 'arve-main',
 			'src'       => plugins_url( 'build/main.js', PLUGIN_FILE ),
@@ -44,7 +44,7 @@ function register_assets() {
 			}
 		}
 
-		Common\asset(
+		Common\register_asset(
 			array(
 				'handle'  => 'arve-block',
 				'src'     => plugins_url( 'build/block.js', PLUGIN_FILE ),
