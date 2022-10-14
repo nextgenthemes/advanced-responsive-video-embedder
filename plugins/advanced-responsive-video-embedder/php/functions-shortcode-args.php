@@ -250,8 +250,8 @@ function validate_aspect_ratio( array $a ) {
 
 	$ratio = explode( ':', $a['aspect_ratio'] );
 
-	if ( empty( $ratio[0] ) || ! is_int( $ratio[0] ) ||
-		empty( $ratio[1] ) || ! is_int( $ratio[1] )
+	if ( empty( $ratio[0] ) || ! ctype_digit( (string) $ratio[0] ) ||
+		empty( $ratio[1] ) || ! ctype_digit( (string) $ratio[1] )
 	) {
 		$a['errors']->add(
 			'aspect_ratio',
@@ -271,7 +271,7 @@ function arg_img_src( array $a ) {
 
 	if ( $a['thumbnail'] ) :
 
-		if ( is_int( $a['thumbnail'] ) ) {
+		if ( ctype_digit( (string) $a['thumbnail'] ) ) {
 
 			$img_src = wp_get_attachment_image_url( $a['thumbnail'], 'small' );
 
