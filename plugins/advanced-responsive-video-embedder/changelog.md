@@ -6,7 +6,7 @@
 
 ### 2022-10-28 9.8.0 ###
 
-* New: TokTok support.
+* New: TikTok support.
 * Improved: Removed deprecated message because it broke the WP login when debug output was enabled.
 
 ### 2022-10-14 9.7.17 ###
