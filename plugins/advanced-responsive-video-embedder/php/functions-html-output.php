@@ -327,11 +327,11 @@ function arve_embed( $html, array $a ) {
 	if ( $a['aspect_ratio'] ) {
 		$class     .= ' arve-embed--has-aspect-ratio';
 		$ratio_span = sprintf( '<span class="arve-ar" style="padding-top:%F%%"></span>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
-	}
 
-	if ( ! in_array($a['aspect_ratio'], [ '16:9', '375:211' ], true) ) {
-		$ar    = str_replace( ':', ' / ', $a['aspect_ratio'] );
-		$style = sprintf( 'aspect-ratio: %s', $ar );
+		if ( ! in_array($a['aspect_ratio'], [ '16:9', '375:211' ], true) ) {
+			$ar    = str_replace( ':', ' / ', $a['aspect_ratio'] );
+			$style = sprintf( 'aspect-ratio: %s', $ar );
+		}
 	}
 
 	return build_tag(

@@ -47,7 +47,9 @@ function oembed_html2src( $data, $a ) {
 
 	$data->html = htmlspecialchars_decode( $data->html, ENT_COMPAT | ENT_HTML5 );
 
-	if ( 'Facebook' === $data->provider_name ) {
+	if ( 'TikTok' === $data->provider_name ) {
+		preg_match( '/ data-video-id="([^"]+)"/', $data->html, $matches );
+	} elseif ( 'Facebook' === $data->provider_name ) {
 		preg_match( '/class="fb-video" data-href="([^"]+)"/', $data->html, $matches );
 	} else {
 		preg_match( '/<iframe [^>]*src="([^"]+)"/', $data->html, $matches );
@@ -58,16 +60,18 @@ function oembed_html2src( $data, $a ) {
 		return null;
 	}
 
-	if ( ! valid_url( $matches[1] ) ) {
-		$a['errors']->add( 'invalid-oembed-src-url', 'Invalid oembed src url detected' );
+	if ( 'TikTok' !== $data->provider_name && ! valid_url( $matches[1] ) ) {
+		$a['errors']->add( 'invalid-oembed-src-url', 'Invalid oembed src url detected:' . $matches[1] );
 		return null;
 	}
 
-	if ( 'Facebook' === $data->provider_name ) {
+	if ( 'TikTok' === $data->provider_name ) {
+		return 'https://www.tiktok.com/embed/v2/' . $matches[1];
+	} elseif ( 'Facebook' === $data->provider_name ) {
 		return 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $matches[1] );
-	} else {
-		return $matches[1];
 	}
+
+	return $matches[1];
 }
 
 function arg_maxwidth( array $a ) {
@@ -85,6 +89,10 @@ function arg_maxwidth( array $a ) {
 		} else {
 			$a['maxwidth'] = (int) $options['maxwidth'];
 		}
+	}
+
+	if ( 'tiktok' === $a['provider'] && $a['maxwidth'] > 320 ) {
+		$a['maxwidth'] = 320;
 	}
 
 	return $a['maxwidth'];
@@ -546,10 +554,12 @@ function arg_aspect_ratio( array $a ) {
 		return $a['aspect_ratio'];
 	}
 
-	if ( ! empty( $a['oembed_data']->width ) && ! empty( $a['oembed_data']->height ) ) {
-
+	if ( ! empty( $a['oembed_data']->width ) &&
+		! empty( $a['oembed_data']->height ) &&
+		is_numeric( $a['oembed_data']->width ) &&
+		is_numeric( $a['oembed_data']->height )
+	) {
 		$a['aspect_ratio'] = $a['oembed_data']->width . ':' . $a['oembed_data']->height;
-
 	} else {
 		$properties = get_host_properties();
 

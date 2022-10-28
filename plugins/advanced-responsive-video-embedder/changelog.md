@@ -4,6 +4,11 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2022-10-28 9.8.0 ###
+
+* New: TokTok support.
+* Improved: Removed deprecated message because it broke the WP login when debug output was enabled.
+
 ### 2022-10-14 9.7.17 ###
 
 * Fix: Give errors and prevent php 8.0 and 8.1 from having errors when the aspect ratio contains non integer numbers like `0.9:1` only integers are allowed like `9:10`.

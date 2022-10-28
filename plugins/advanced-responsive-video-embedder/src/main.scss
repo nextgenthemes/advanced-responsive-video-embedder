@@ -46,6 +46,10 @@
 		overflow: hidden;
 	}
 
+	.arve[data-provider="tiktok"] .arve-embed {
+		height: 580px;
+	}
+
 	.arve-embed--has-aspect-ratio {
 		aspect-ratio: 16 / 9;
 
