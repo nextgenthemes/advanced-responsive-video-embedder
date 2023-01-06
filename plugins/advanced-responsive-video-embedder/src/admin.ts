@@ -30,4 +30,6 @@ window.jQuery( document ).ready( function ( $ ) {
 	);
 } );
 
-initSC();
+window.addEventListener( 'DOMContentLoaded', () => {
+	initSC();
+} );

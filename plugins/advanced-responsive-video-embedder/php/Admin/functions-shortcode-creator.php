@@ -23,7 +23,7 @@ function add_media_button() {
 	}
 	?>
 
-	<div id="arve-sc-dialog" hidden>
+	<div id="arve-sc-dialog-old" hidden>
 		<div id="arve-sc-vue">
 			<?php
 			Common\Admin\print_settings_blocks(
@@ -40,6 +40,37 @@ function add_media_button() {
 			</div>
 		</div>
 	</div>
+
+	<dialog class="arve-sc-dialog" style="max-width: 900px;">
+		<!-- <form method="dialog"> -->
+
+			<button class="arve-sc-dialog__close-btn">&times;</button>
+
+
+
+			<div>
+				<button class="arve-sc-dialog__cancel-btn button-secondary">Cancel</button>
+				<button class="arve-sc-dialog__submit-btn button-primary">Confirm</button>
+			</div>
+
+		<!-- </form> -->
+	</dialog>
+
+			<div id="arve-sc-vue">
+				<?php
+				Common\Admin\print_settings_blocks(
+					$settings,
+					ARVE\settings_sections(),
+					ARVE\PREMIUM_SECTIONS,
+					'shortcode-dialog'
+				);
+				?>
+				<div id="arve-shortcode" class="arve-shortcode">
+					<?php
+					print_shortcode_template();
+					?>
+				</div>
+			</div>
 
 	<?php
 	printf(
