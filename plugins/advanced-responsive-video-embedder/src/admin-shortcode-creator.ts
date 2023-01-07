@@ -10,11 +10,6 @@ declare global {
 	}
 }
 
-const $ = window.jQuery;
-const data = window.arveSCSettings;
-const settings = data.settings as Record< string, OptionProps >;
-const sections = data.sections as Record< string, string >;
-
 interface OptionProps {
 	label: string;
 	tag: string;
@@ -27,107 +22,116 @@ interface OptionProps {
 	options?;
 }
 
-export function initSC(): void {
-	const vueDiv = document.getElementById( 'arve-sc-vue' );
+const d = document;
+const qs = d.querySelector.bind( d ) as typeof d.querySelector;
+const qsa = d.querySelectorAll.bind( d ) as typeof d.querySelectorAll;
+const id = d.getElementById.bind( d ) as typeof d.getElementById;
 
-	if ( vueDiv ) {
-		new Vue( {
-			// DOM selector for our app's main wrapper element
-			el: '#arve-sc-vue',
+const $ = window.jQuery;
+const data = window.arveSCSettings;
+const settings = data.settings as Record< string, OptionProps >;
+const sections = data.sections as Record< string, string >;
 
-			// Data that will be proxied by Vue.js to provide reactivity to our template
-			data: {
-				errors: [],
-				isSaving: false,
-				refreshAfterSave: false,
-				sectionsDisplayed: buildSectionsDisplayed(),
-				onlySectionDisplayed: false,
-				message: '',
-				vm: data.options,
-			},
+window.addEventListener( 'DOMContentLoaded', () => {
+	init();
+} );
 
-			// Methods that can be invoked from within our template
-			methods: {
-				showSection( section ) {
-					setAllObjValues( this.sectionsDisplayed, false );
-					this.sectionsDisplayed[ section ] = true;
-					this.onlySectionDisplayed = section;
-				},
-				showAllSectionsButDebug() {
-					setAllObjValues( this.sectionsDisplayed, true );
-					this.sectionsDisplayed.debug = false;
-					this.onlySectionDisplayed = false;
-				},
-				uploadImage( dataKey ) {
-					const vueThis = this;
-					const image = window.wp
-						.media( {
-							title: 'Upload Image',
-							multiple: false,
-						} )
-						.open()
-						.on( 'select', function () {
-							// This will return the selected image from the Media Uploader, the result is an object
-							const uploadedImage = image
-								.state()
-								.get( 'selection' )
-								.first();
-							// We convert uploadedImage to a JSON object to make accessing it easier
-							const attachmentID = uploadedImage.toJSON().id;
-							vueThis.vm[ dataKey ] = attachmentID;
-						} );
-				},
-				action( action, product ) {
-					this.vm.action = JSON.stringify( { action, product } );
-					this.refreshAfterSave = true;
-					this.saveOptions();
-				},
-			}, // end: methods
-		} ); // end: Vue()
+function init(): void {
+	// const arveBtn = id( 'arve-btn' );
+	const arveBtn = id( 'arve-btn' );
+	const dialog = qs( '.arve-sc-dialog' ) as HTMLDialogElement | null;
+	const submitBtn = qs( '.arve-sc-dialog__submit-btn' );
+	const closeBtn = qs( '.arve-sc-dialog__close-btn' );
+	const cancelBtn = qs( '.arve-sc-dialog__cancel-btn' );
+
+	if ( ! arveBtn || ! dialog || ! submitBtn || ! closeBtn || ! cancelBtn ) {
+		return;
 	}
 
-	$( '#arve-sc-dialog' ).dialog( {
-		title: 'ARVE Shortcode',
-		dialogClass: 'wp-dialog',
-		autoOpen: false,
-		draggable: true,
-		width: 900,
-		modal: true,
-		resizable: true,
-		closeOnEscape: true,
-		position: {
-			my: 'center',
-			at: 'center',
-			of: window,
-		},
-		open: () => {
-			// close dialog by clicking the overlay behind it
-			$( '.ui-widget-overlay' ).bind( 'click', function () {
-				$( '#arve-sc-dialog' ).dialog( 'close' );
-			} );
-		},
-		create: () => {
-			// style fix for WordPress admin
-			$( '.ui-dialog-titlebar-close' ).addClass( 'ui-button' );
-			$( '.ui-dialog-buttonset button:first' ).addClass(
-				'button-primary'
-			);
-		},
-		buttons: {
-			'Insert Shortcode'() {
-				$( this ).dialog( 'close' );
-				const text = $.trim( $( '#arve-shortcode' ).text() );
-				window.wp.media.editor.insert( text );
-			},
-			Cancel() {
-				$( this ).dialog( 'close' );
-			},
-		},
+	arveBtn.addEventListener( 'click', () => {
+		initVue();
+		dialog.showModal();
 	} );
 
-	$( document ).on( 'click', '#arve-btn', () => {
-		$( '#arve-sc-dialog' ).dialog( 'open' );
+	submitBtn.addEventListener( 'click', ( ev: Event ) => {
+		ev.preventDefault();
+		dialog.close();
+
+		const text = qs( '#arve-shortcode' )?.textContent?.trim();
+		window.wp.media.editor.insert( text );
 	} );
+
+	closeBtn.addEventListener( 'click', ( ev: Event ) => {
+		ev.preventDefault();
+		dialog.close();
+	} );
+
+	cancelBtn.addEventListener( 'click', ( ev: Event ) => {
+		ev.preventDefault();
+		dialog.close();
+	} );
+}
+
+function initVue() {
+	const vueDiv = id( 'arve-sc-vue' );
+
+	if ( ! vueDiv ) {
+		return;
+	}
+
+	new Vue( {
+		// DOM selector for our app's main wrapper element
+		el: '#arve-sc-vue',
+
+		// Data that will be proxied by Vue.js to provide reactivity to our template
+		data: {
+			errors: [],
+			isSaving: false,
+			refreshAfterSave: false,
+			sectionsDisplayed: buildSectionsDisplayed(),
+			onlySectionDisplayed: false,
+			message: '',
+			vm: data.options,
+		},
+
+		// Methods that can be invoked from within our template
+		methods: {
+			showSection( section ) {
+				setAllObjValues( this.sectionsDisplayed, false );
+				this.sectionsDisplayed[ section ] = true;
+				this.onlySectionDisplayed = section;
+			},
+			showAllSectionsButDebug() {
+				setAllObjValues( this.sectionsDisplayed, true );
+				this.sectionsDisplayed.debug = false;
+				this.onlySectionDisplayed = false;
+			},
+			uploadImage( dataKey ) {
+				const vueThis = this;
+				const image = window.wp
+					.media( {
+						title: 'Upload Image',
+						multiple: false,
+					} )
+					.open()
+					.on( 'select', function () {
+						// This will return the selected image from the Media Uploader, the result is an object
+						const uploadedImage = image
+							.state()
+							.get( 'selection' )
+							.first();
+						// We convert uploadedImage to a JSON object to make accessing it easier
+						const attachmentID = uploadedImage.toJSON().id;
+						vueThis.vm[ dataKey ] = attachmentID;
+					} );
+			},
+			action( action, product ) {
+				this.vm.action = JSON.stringify( { action, product } );
+				this.refreshAfterSave = true;
+				this.saveOptions();
+			},
+		}, // end: methods
+	} ); // end: Vue()
 }
 
 function buildSectionsDisplayed() {

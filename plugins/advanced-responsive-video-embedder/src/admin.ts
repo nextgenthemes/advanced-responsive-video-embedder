@@ -1,5 +1,5 @@
 import './admin.scss';
-import { initSC } from './admin-shortcode-creator';
+import './admin-shortcode-creator';
 
 export {};
 declare global {
@@ -29,5 +29,3 @@ window.jQuery( document ).ready( function ( $ ) {
 		}
 	);
 } );
-
-initSC();

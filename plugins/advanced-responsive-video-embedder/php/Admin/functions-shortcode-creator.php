@@ -23,7 +23,9 @@ function add_media_button() {
 	}
 	?>
 
-	<div id="arve-sc-dialog" hidden>
+	<dialog class="arve-sc-dialog">
+		<button class="arve-sc-dialog__close-btn">&times;</button>
+
 		<div id="arve-sc-vue">
 			<?php
 			Common\Admin\print_settings_blocks(
@@ -33,13 +35,18 @@ function add_media_button() {
 				'shortcode-dialog'
 			);
 			?>
-			<div id="arve-shortcode" class="arve-shortcode">
+			<p id="arve-shortcode" class="arve-shortcode">
 				<?php
 				print_shortcode_template();
 				?>
-			</div>
+			</p>
 		</div>
-	</div>
+
+		<div>
+			<button class="arve-sc-dialog__cancel-btn button-secondary"><?php echo __( 'Cancel', 'advanced-responsive-video-embedder' ); ?></button>
+			<button class="arve-sc-dialog__submit-btn button-primary"><?php echo __( 'Insert Shortcode', 'advanced-responsive-video-embedder' ); ?></button>
+		</div>
+	</dialog>
 
 	<?php
 	printf(

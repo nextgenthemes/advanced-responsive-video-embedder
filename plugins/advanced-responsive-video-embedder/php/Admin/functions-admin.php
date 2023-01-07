@@ -245,7 +245,7 @@ function admin_enqueue_styles() {
 			'handle' => 'advanced-responsive-video-embedder',
 			'src'    => plugins_url( 'build/admin.css', ARVE\PLUGIN_FILE ),
 			'ver'    => ver( ARVE\VERSION, 'build/admin.css', ARVE\PLUGIN_FILE ),
-			'deps'   => array( 'wp-jquery-ui-dialog' ),
+			'deps'   => array(),
 		)
 	);
 }
@@ -268,7 +268,7 @@ function admin_enqueue_scripts() {
 			'handle'            => 'arve-admin',
 			'src'               => plugins_url( 'build/admin.js', ARVE\PLUGIN_FILE ),
 			'path'              => ARVE\PLUGIN_DIR . '/build/admin.js',
-			'deps'              => array( 'jquery-ui-dialog' ),
+			'deps'              => array(),
 			'inline_script'     => 'var arveSCSettings = ' . \wp_json_encode( $settings_data ) . ';',
 			'inline_script_pos' => 'before',
 		)
