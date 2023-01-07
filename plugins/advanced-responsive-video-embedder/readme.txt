@@ -196,6 +196,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2022-10-28 9.9.0 ###
+
+* Fix: Incompatibility with Accelerated Mobile Pages by removing the jquery-ui depedancy and using a native `<dialog>` for the shortcode creator modal. This may also fix layering (z-index) issues with other plugins.
+
 ### 2022-10-28 9.8.0 ###
 
 * New: TikTok support.
