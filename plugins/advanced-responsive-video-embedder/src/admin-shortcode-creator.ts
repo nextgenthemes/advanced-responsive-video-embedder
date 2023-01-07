@@ -48,8 +48,9 @@ function init(): void {
 		return;
 	}
 
+	initVue();
+
 	arveBtn.addEventListener( 'click', () => {
-		initVue();
 		dialog.showModal();
 	} );
 
