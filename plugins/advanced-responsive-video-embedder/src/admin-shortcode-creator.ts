@@ -51,6 +51,14 @@ function init(): void {
 	initVue();
 
 	arveBtn.addEventListener( 'click', () => {
+		if ( undefined === window.HTMLDialogElement ) {
+			// eslint-disable-next-line no-alert
+			alert(
+				'Your browser does not support the <dialog> element, please see https://caniuse.com/mdn-html_elements_dialog_open and use a browser that supports it to use this button'
+			);
+			return;
+		}
+
 		dialog.showModal();
 	} );
 
