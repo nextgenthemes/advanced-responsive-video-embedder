@@ -33,7 +33,7 @@ interface OptionProps {
 }
 
 function buildSectionsDisplayed() {
-	const sectionsDisplayed = {};
+	const sectionsDisplayed = {} as Record< string, boolean >;
 
 	Object.keys( sections ).forEach( ( key ) => {
 		sectionsDisplayed[ key ] = 'debug' === key ? false : true;
@@ -134,7 +134,7 @@ new Vue( {
 				},
 
 				// callback to run upon successful completion of our request
-				success: ( response ) => {
+				success: () => {
 					this.message = 'License API call saved';
 					setTimeout( () => ( this.message = '' ), 1000 );
 				},

@@ -24,6 +24,7 @@ function add_media_button() {
 	?>
 
 	<dialog class="arve-sc-dialog">
+
 		<button class="arve-sc-dialog__close-btn">&times;</button>
 
 		<div id="arve-sc-vue">
@@ -43,8 +44,8 @@ function add_media_button() {
 		</div>
 
 		<div>
-			<button class="arve-sc-dialog__cancel-btn button-secondary"><?php echo __( 'Cancel', 'advanced-responsive-video-embedder' ); ?></button>
-			<button class="arve-sc-dialog__submit-btn button-primary"><?php echo __( 'Insert Shortcode', 'advanced-responsive-video-embedder' ); ?></button>
+			<button class="arve-sc-dialog__cancel-btn button-secondary"><?php esc_html_e( 'Cancel', 'advanced-responsive-video-embedder' ); ?></button>
+			<button class="arve-sc-dialog__submit-btn button-primary"><?php esc_html_e( 'Insert Shortcode', 'advanced-responsive-video-embedder' ); ?></button>
 		</div>
 	</dialog>
 
