@@ -33,7 +33,7 @@ function init(): void {
 		return;
 	}
 
-	initVue();
+	initVue( dialog );
 
 	arveBtn.addEventListener( 'click', () => {
 		if ( undefined === window.HTMLDialogElement ) {
@@ -66,7 +66,7 @@ function init(): void {
 	} );
 }
 
-function initVue() {
+function initVue( dialog: HTMLDialogElement ) {
 	const vueDiv = id( 'arve-sc-vue' );
 
 	if ( ! vueDiv ) {
@@ -101,6 +101,8 @@ function initVue() {
 				this.onlySectionDisplayed = false;
 			},
 			uploadImage( dataKey ) {
+				dialog.close();
+
 				const vueThis = this;
 				const image = window.wp
 					.media( {
@@ -108,6 +110,9 @@ function initVue() {
 						multiple: false,
 					} )
 					.open()
+					.on( 'close', function () {
+						dialog.showModal();
+					} )
 					.on( 'select', function () {
 						// This will return the selected image from the Media Uploader, the result is an object
 						const uploadedImage = image
@@ -117,6 +122,8 @@ function initVue() {
 						// We convert uploadedImage to a JSON object to make accessing it easier
 						const attachmentID = uploadedImage.toJSON().id;
 						vueThis.vm[ dataKey ] = attachmentID;
+
+						dialog.showModal();
 					} );
 			},
 		}, // end: methods
