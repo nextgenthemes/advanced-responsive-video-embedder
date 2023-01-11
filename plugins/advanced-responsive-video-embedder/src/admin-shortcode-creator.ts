@@ -24,12 +24,10 @@ interface OptionProps {
 
 const d = document;
 const qs = d.querySelector.bind( d ) as typeof d.querySelector;
-const qsa = d.querySelectorAll.bind( d ) as typeof d.querySelectorAll;
 const id = d.getElementById.bind( d ) as typeof d.getElementById;
 
 const $ = window.jQuery;
 const data = window.arveSCSettings;
-const settings = data.settings as Record< string, OptionProps >;
 const sections = data.sections as Record< string, string >;
 
 window.addEventListener( 'DOMContentLoaded', () => {
@@ -126,17 +124,12 @@ function initVue() {
 						vueThis.vm[ dataKey ] = attachmentID;
 					} );
 			},
-			action( action, product ) {
-				this.vm.action = JSON.stringify( { action, product } );
-				this.refreshAfterSave = true;
-				this.saveOptions();
-			},
 		}, // end: methods
 	} ); // end: Vue()
 }
 
 function buildSectionsDisplayed() {
-	const sectionsDisplayed = {};
+	const sectionsDisplayed = {} as Record< string, boolean >;
 
 	Object.keys( sections ).forEach( ( key ) => {
 		sectionsDisplayed[ key ] = 'debug' === key ? false : true;
