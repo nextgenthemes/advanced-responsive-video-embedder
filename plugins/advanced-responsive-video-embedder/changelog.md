@@ -8,7 +8,7 @@
 * Fix: Invisble Shortcode creation dialog content.
 * Fix: Hide the dialog when the WP image upload dialog is opened.
 
-### 2023-01-08 9.9.3 ###
+### 2023-01-10 9.9.3 ###
 * Fix: Issue when browser does not support `<dialog>`.
 
 ### 2022-01-08 9.9.2 ###
