@@ -6,15 +6,25 @@ use \Nextgenthemes\ARVE\Common;
 
 function add_media_button() {
 
-	$options   = ARVE\options();
-	$settings  = ARVE\shortcode_settings();
-	$link_only = array(
-		'a' => array(
-			'href'   => array(),
-			'target' => array(),
-			'title'  => array(),
-		),
+	create_dialog_once();
+
+	printf(
+		'<button id="arve-btn" title="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
+		esc_attr__( 'ARVE Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ),
+		esc_html__( 'Video (ARVE)', 'advanced-responsive-video-embedder' )
 	);
+}
+
+function create_dialog_once() {
+
+	static $ran = false;
+
+	if ( $ran ) {
+		return;
+	}
+
+	$options  = ARVE\options();
+	$settings = ARVE\shortcode_settings();
 
 	foreach ( ARVE\shortcode_settings() as $k => $v ) {
 		if ( $options['gutenberg_help'] ) {
@@ -50,11 +60,7 @@ function add_media_button() {
 	</dialog>
 
 	<?php
-	printf(
-		'<button id="arve-btn" title="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
-		esc_attr__( 'ARVE Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ),
-		esc_html__( 'Video (ARVE)', 'advanced-responsive-video-embedder' )
-	);
+	$ran = true;
 }
 
 function print_shortcode_template() {
