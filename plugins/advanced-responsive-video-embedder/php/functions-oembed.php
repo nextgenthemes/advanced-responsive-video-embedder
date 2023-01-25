@@ -10,6 +10,7 @@ function add_oembed_providers() {
 	wp_oembed_add_provider( 'https://fast.wistia.com/embed/playlists/*', 'https://fast.wistia.com/oembed.json' );
 	wp_oembed_add_provider( 'https://*.wistia.com/medias/*', 'https://fast.wistia.com/oembed.json' );
 	wp_oembed_add_provider( 'https://d.tube/v/*', 'https://api.d.tube/oembed' );
+	wp_oembed_add_provider( 'https://rumble.com/*', 'https://rumble.com/api/Media/oembed.json' );
 }
 
 function filter_oembed_dataparse( $result, $data, $url ) {

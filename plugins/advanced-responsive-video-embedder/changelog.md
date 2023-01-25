@@ -4,6 +4,9 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2023-01-25 9.9.5 ###
+* Fix: Rumble videos not work correctly on all cases correct oembed data.
+
 ### 2023-01-11 9.9.4 ###
 * Fix: Invisble Shortcode creation dialog content.
 * Fix: Hide the dialog when the WP image upload dialog is opened.
