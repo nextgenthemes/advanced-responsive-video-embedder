@@ -196,8 +196,9 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2023-01-25 9.9.5 ###
+### 2023-01-25 9.9.6 ###
 * Fix: Rumble videos not work correctly on all cases correct oembed data.
+* Fix: Incompability with WP Courseware? Making sure the ARVE `<dialog>` is only created once per pageload.
 
 ### 2023-01-11 9.9.4 ###
 * Fix: Invisble Shortcode creation dialog content.
