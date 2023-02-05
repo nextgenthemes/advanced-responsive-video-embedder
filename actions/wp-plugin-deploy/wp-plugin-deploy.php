@@ -8,6 +8,10 @@ if ( $workdir ) {
 	chdir( getcwd() . "/$workdir");
 }
 
+if ( getenv( 'GITHUB_ACTION' ) ) {
+	sys('git config --global --add safe.directory /github/workspace');
+}
+
 $slug        = basename(getcwd());
 $cwd         = getcwd();
 $git_dir     = sys('git rev-parse --show-toplevel');
