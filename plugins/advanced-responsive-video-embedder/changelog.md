@@ -4,9 +4,11 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2023-02-05 9.9.7 ###
+* Fix: WP Courseware Course Builder meta box was always collapsed. (Could not get the ARVE button to work for the Course Description)
+
 ### 2023-01-25 9.9.6 ###
 * Fix: Rumble videos not work correctly on all cases correct oembed data.
-* Fix: Incompability with WP Courseware? Making sure the ARVE `<dialog>` is only created once per pageload.
 
 ### 2023-01-11 9.9.4 ###
 * Fix: Invisble Shortcode creation dialog content.

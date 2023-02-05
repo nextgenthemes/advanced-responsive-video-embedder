@@ -35,7 +35,9 @@ function init(): void {
 
 	initVue( dialog );
 
-	arveBtn.addEventListener( 'click', () => {
+	arveBtn.addEventListener( 'click', ( ev: Event ) => {
+		ev.preventDefault();
+
 		if ( undefined === window.HTMLDialogElement ) {
 			// eslint-disable-next-line no-alert
 			alert(

@@ -6,8 +6,6 @@ use \Nextgenthemes\ARVE\Common;
 
 function add_media_button() {
 
-	create_dialog_once();
-
 	printf(
 		'<button id="arve-btn" title="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
 		esc_attr__( 'ARVE Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ),
@@ -15,13 +13,7 @@ function add_media_button() {
 	);
 }
 
-function create_dialog_once() {
-
-	static $ran = false;
-
-	if ( $ran ) {
-		return;
-	}
+function create_shortcode_dialog() {
 
 	$options  = ARVE\options();
 	$settings = ARVE\shortcode_settings();
@@ -31,8 +23,8 @@ function create_dialog_once() {
 			unset($settings[ $k ]['description']);
 		}
 	}
-	?>
 
+	?>
 	<dialog class="arve-sc-dialog">
 
 		<button class="arve-sc-dialog__close-btn">&times;</button>
@@ -58,9 +50,7 @@ function create_dialog_once() {
 			<button class="arve-sc-dialog__submit-btn button-primary"><?php esc_html_e( 'Insert Shortcode', 'advanced-responsive-video-embedder' ); ?></button>
 		</div>
 	</dialog>
-
 	<?php
-	$ran = true;
 }
 
 function print_shortcode_template() {

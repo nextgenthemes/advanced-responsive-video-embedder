@@ -63,6 +63,7 @@ function init_admin() {
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\Admin\admin_enqueue_styles', 99 );
 	add_action( 'admin_init', __NAMESPACE__ . '\Admin\action_admin_init_setup_messages' );
 	add_action( 'media_buttons', __NAMESPACE__ . '\Admin\add_media_button', 11 );
+	add_action( 'admin_footer', __NAMESPACE__ . '\Admin\create_shortcode_dialog' );
 	add_action( 'register_shortcode_ui', __NAMESPACE__ . '\Admin\register_shortcode_ui' );
 	add_action( 'wp_dashboard_setup', __NAMESPACE__ . '\Admin\add_dashboard_widget' );
 
