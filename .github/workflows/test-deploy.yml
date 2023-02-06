@@ -98,9 +98,6 @@ jobs:
         #run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
-      - name: Git add safe.directory
-        run: git config --global --add safe.directory /github/workspace
-
       - name: Deploy
         uses: ./actions/wp-plugin-deploy
         with:
