@@ -14,8 +14,9 @@ class Settings {
 	private $rest_namespace      = '';
 	private $settings            = array();
 	private $settings_page_title = '';
-	private $slashed_namspace    = '';
-	private $slugged_namspace    = '';
+	private $slashed_namespace   = '';
+	private $slugged_namespace   = '';
+	private $menu_parent_slug    = '';
 
 	public function __construct( $args ) {
 
