@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <ruleset name="Nextgenthemes Plugin">
 	<rule ref="WordPress-Extra">
+		<!-- Fucking retarded -->
+		<exclude name="WordPress.WP.CapitalPDangit"/>
 		<!-- Annoying space in brackets rules -->
 		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing.NoSpaceAfterOpenParenthesis"/>
 		<exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterOpen"/>

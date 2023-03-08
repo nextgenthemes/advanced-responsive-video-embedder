@@ -12,7 +12,7 @@ module.exports = {
 	],
 	overrides: [
 		{
-			files: [ 'webpack.config*.js' ],
+			files: [ 'webpack.config*.js', 'postcss.config.js' ],
 			env: {
 				browser: false,
 				node: true,

@@ -1,20 +1,13 @@
-const fs = require( 'fs-extra' );
 const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 const CopyPlugin = require( 'copy-webpack-plugin' );
 // const replaceInFile = require( 'replace-in-file' );
 const path = require( 'path' );
-const { env } = require( 'process' );
-const regex = /--output-path=([^\s'"]+)/s;
-const matches = regex.exec( env.npm_lifecycle_script );
+const { getArgFromCLI } = require( '@wordpress/scripts/utils' );
+const outputPath = getArgFromCLI( '--output-path' );
 const arveSrc = path.resolve(
 	__dirname,
 	'plugins/advanced-responsive-video-embedder/src'
 );
-let outputPath = null;
-
-if ( 1 in matches ) {
-	outputPath = matches[ 1 ];
-}
 
 const config = defaultConfig;
 
@@ -40,6 +33,10 @@ switch ( outputPath ) {
 				patterns: [
 					{
 						from: 'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
+					},
+					{
+						from: 'plugins/advanced-responsive-video-embedder/php/Common/functions-assets.php',
+						to: 'themes/symbiosis/php/Common2/functions-assets.php',
 					},
 				],
 			} ),

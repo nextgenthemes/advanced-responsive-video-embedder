@@ -38,12 +38,9 @@
 
 		"typeRoots": [ "./node_modules/@types" ],
 		"types": [],
-
-		/* https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/tsconfig.json */
-		"declarationDir": "build-types",
-		"strictNullChecks": true,
-
+		
 		/* nico */
+		"strictNullChecks": true,
 		"noImplicitAny": false,
 		"removeComments": true,
 		"allowUnreachableCode": false,
@@ -53,9 +50,4 @@
 		"**/build/**",
 		"**/test/**"
 	],
-	"include": [
-		"plugins/advanced-responsive-video-embedder/src/*",
-		"plugins/arve-*/src/*",
-		"plugins/symbiosis/src/ts/*",
-	]
 }
