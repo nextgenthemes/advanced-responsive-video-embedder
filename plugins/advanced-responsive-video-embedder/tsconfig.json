@@ -5,7 +5,7 @@
 		"declarationDir": "build-types",
 		"baseUrl": "src",
 	},
-	"include": ["src/**/*"],
+	"include": ["src/**/*", "src/block.json"],
 	"references": [],
 	"files": []
 }
