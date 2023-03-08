@@ -25,7 +25,7 @@ function build_html( array $a ) {
 			'tag'        => 'div',
 			'inner_html' => $wrapped_video . promote_link( $a['arve_link'] ) . build_seo_data( $a ),
 			'attr'       => array(
-				'class'         => 'arve wp-block-nextgenthemes-arve' . $align_class,
+				'class'         => 'arve' . $align_class,
 				'data-mode'     => $a['mode'],
 				'data-oembed'   => $a['oembed_data'] ? '1' : false,
 				'data-provider' => $a['provider'],
@@ -276,27 +276,33 @@ function build_tag( array $tag, array $a ) {
 
 		$html = '';
 
-		if ( ! empty($tag['inner_html']) ) {
+		if ( ! empty( $tag['inner_html'] ) ) {
 			$html = $tag['inner_html'];
 		}
 	} else {
 
-		if ( ! empty( $tag['inner_html'] )
-			|| ( isset( $tag['inner_html'] ) && '' === $tag['inner_html'] )
+		if ( 'arve' === $tag['name'] && ! empty( $a['origin_data']['gutenberg'] ) ) {
+			$attr = Common\ngt_get_block_wrapper_attributes( $tag['attr'] );
+		} else {
+			$attr = Common\attr( $tag['attr'] );
+		}
+
+		if ( ! empty( $tag['inner_html'] ) ||
+			( isset( $tag['inner_html'] ) && '' === $tag['inner_html'] )
 		) {
 			$inner_html = $tag['inner_html'] ? PHP_EOL . $tag['inner_html'] . PHP_EOL : '';
 
 			$html = sprintf(
 				'<%1$s%2$s>%3$s</%1$s>' . PHP_EOL,
 				esc_html( $tag['tag'] ),
-				Common\attr( $tag['attr'] ),
+				$attr,
 				$inner_html
 			);
 		} else {
 			$html = sprintf(
 				'<%s%s>' . PHP_EOL,
 				esc_html( $tag['tag'] ),
-				Common\attr( $tag['attr'] )
+				$attr
 			);
 		}
 	}

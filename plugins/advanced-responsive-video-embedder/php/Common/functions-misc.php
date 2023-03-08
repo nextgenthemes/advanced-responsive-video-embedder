@@ -1,6 +1,21 @@
 <?php
 namespace Nextgenthemes\ARVE\Common;
 
+function ngt_get_block_wrapper_attributes( array $attr ) {
+
+	foreach ( $attr as $key => $value ) {
+
+		if ( false === $value || null === $value ) {
+			unset( $attr[ $key ] );
+			continue;
+		} elseif ( in_array( $key, array( 'href', 'data-href', 'src', 'data-src' ), true ) ) {
+			#$attr[ $key ] = esc_url( $value );
+		}
+	}
+
+	return ' ' . get_block_wrapper_attributes( $attr );
+}
+
 function attr( array $attr = array() ) {
 
 	$html = '';
@@ -55,6 +70,7 @@ function get_var_dump( $var ) {
 	return ob_get_clean();
 };
 
+// this is to prevent constant() throwing as Error in PHP 8, E_WARNING in PHP < 8
 function get_constant( $const_name ) {
 	return defined( $const_name ) ? constant( $const_name ) : false;
 }
