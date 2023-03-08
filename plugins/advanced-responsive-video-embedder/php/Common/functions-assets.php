@@ -110,8 +110,10 @@ function _asset( array $args ) {
 			wp_add_inline_script( $args['handle'], $args['inline_script'], $args['inline_script_pos'] );
 		}
 
-		if ( $args['integrity'] || $args['async'] || $args['defer'] ) {
-			add_attr_to_asset( 'script', $args );
+		if ( $args['async'] ) {
+			wp_script_add_data( $args['handle'], 'sync', true );
+		} elseif ( $args['defer'] ) {
+			wp_script_add_data( $args['handle'], 'defer', true );
 		}
 
 		if ( $args['enqueue'] ) {
@@ -122,10 +124,6 @@ function _asset( array $args ) {
 
 		if ( $args['inline_style'] ) {
 			wp_add_inline_style( $args['handle'], $args['inline_style'] );
-		}
-
-		if ( $args['integrity'] ) {
-			add_attr_to_asset( 'style', $args );
 		}
 
 		if ( $args['enqueue'] ) {
@@ -145,52 +143,6 @@ function _asset( array $args ) {
 			);
 		}
 	}//end if
-}
-
-function add_attr_to_asset( $type, array $args ) {
-
-	if ( ! in_array( $type, array( 'script', 'style' ), true ) ) {
-		wp_die( 'first arg needs to be script or style' );
-	}
-
-	add_filter(
-		"{$type}_loader_tag",
-		function( $html, $handle ) use ( $type, $args ) {
-
-			if ( $args['handle'] !== $handle ) {
-				return $html;
-			}
-
-			$tag      = ( 'style' === $type ) ? 'link' : 'script';
-			$tag_open = sprintf( '<%s ', tag_escape( $tag ) );
-
-			if ( $args['integrity'] ) {
-				$html = str_replace(
-					$tag_open,
-					sprintf( $tag_open . 'integrity="%s" crossorigin="anonymous" ', esc_attr( $args['integrity'] ) ),
-					$html
-				);
-			}
-			if ( $args['async'] ) {
-				$html = str_replace(
-					$tag_open,
-					$tag_open . 'async="async" ',
-					$html
-				);
-			}
-			if ( $args['defer'] ) {
-				$html = str_replace(
-					$tag_open,
-					$tag_open . 'defer="defer" ',
-					$html
-				);
-			}
-
-			return $html;
-		},
-		10,
-		2
-	);
 }
 
 function add_dep_to_script( $handle, $dep ) {
