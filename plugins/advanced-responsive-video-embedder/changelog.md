@@ -4,6 +4,10 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2023-03-08 9.10.0 ###
+* New: Support for extra classes on the ARVE Gutenberg block.
+* Improved: Some minor code changes.
+
 ### 2023-02-05 9.9.7 ###
 * Fix: WP Courseware Course Builder meta box was always collapsed. (Could not get the ARVE button to work for the Course Description)
 
