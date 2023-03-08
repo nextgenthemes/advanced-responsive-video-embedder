@@ -9,7 +9,7 @@ function ngt_get_block_wrapper_attributes( array $attr ) {
 			unset( $attr[ $key ] );
 			continue;
 		} elseif ( in_array( $key, array( 'href', 'data-href', 'src', 'data-src' ), true ) ) {
-			#$attr[ $key ] = esc_url( $value );
+			$attr[ $key ] = esc_url( $value );
 		}
 	}
 
