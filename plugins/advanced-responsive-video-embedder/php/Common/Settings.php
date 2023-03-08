@@ -154,17 +154,15 @@ class Settings {
 	private function print_settings_tabs() {
 		?>
 		<h2 class="nav-tab-wrapper">
-			<a @click='showAllSectionsButDebug()' class="nav-tab">All Options</button>
+			<a @click='showAllSectionsButDebug()'
+				class="nav-tab">All Options</button>
 			<?php
 			foreach ( $this->sections as $slug => $name ) :
-
 				$classes = in_array( $slug, $this->premium_sections, true ) ? 'nav-tab nav-tab--ngt-highlight' : 'nav-tab';
 				?>
-				<a 
-					@click="showSection('<?php echo esc_attr( $slug ); ?>')"
+				<a @click="showSection('<?php echo esc_attr( $slug ); ?>')"
 					class="<?php echo esc_attr( $classes ); ?>"
-					v-bind:class='{ "nav-tab-active": sectionsDisplayed["<?php echo esc_attr( $slug ); ?>"] }'
-				>
+					v-bind:class='{ "nav-tab-active": sectionsDisplayed["<?php echo esc_attr( $slug ); ?>"] }'>
 					<?php echo esc_html( $name ); ?>
 				</a>
 			<?php endforeach; ?>
@@ -175,20 +173,16 @@ class Settings {
 	public function print_save_section() {
 		?>
 		<p v-show="onlySectionDisplayed !== 'debug'">
-			<button
-				@click='saveOptions'
+			<button @click='saveOptions'
 				:disabled='isSaving'
-				class='button button-primary'
-			>
+				class='button button-primary'>
 				Save
 			</button>
 			<strong v-if='message'>{{ message }}</strong>
-			<img
-				v-if='isSaving == true'
+			<img v-if='isSaving == true'
 				class="wrap--nextgenthemes__loading-indicator"
 				src='<?php echo esc_url( get_admin_url() . '/images/wpspin_light-2x.gif' ); ?>'
-				alt='Loading indicator'
-			/>
+				alt='Loading indicator' />
 		</p>
 		<?php
 	}
@@ -205,15 +199,17 @@ class Settings {
 
 		$v_show = implode( ' || ', $d_sections );
 		?>
-		<div class="ngt-block" v-show="<?php echo $v_show; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" >
-			<p><?php esc_html_e( 'You may already set options for addons but they will only take effect if the associated addons are installed.', 'advanced-responsive-video-embedder' ); ?></p>
+		<div class="ngt-block" v-show="<?php echo $v_show; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+			<p><?php esc_html_e( 'You may already set options for addons but they will only take effect if the associated addons are installed.', 'advanced-responsive-video-embedder' ); ?>
+			</p>
 		</div>
 		<?php
 	}
 
 	private function print_debug_info_block() {
 		?>
-		<div class="ngt-block" v-show="sectionsDisplayed.debug">
+		<div class="ngt-block"
+			v-show="sectionsDisplayed.debug">
 			<?php require_once __DIR__ . '/Admin/partials/debug-info.php'; ?>
 		</div>
 		<?php
@@ -230,19 +226,17 @@ class Settings {
 				}
 
 				?>
-				<button
-					@click="resetOptions('<?php echo esc_attr( $key ); ?>')"
+				<button @click="resetOptions('<?php echo esc_attr( $key ); ?>')"
 					:disabled='isSaving'
 					class='button button--ngt-reset button-secondary'
-					v-show="sectionsDisplayed['<?php echo esc_attr( $key ); ?>']"
-				>
-				<?php
+					v-show="sectionsDisplayed['<?php echo esc_attr( $key ); ?>']">
+					<?php
 					printf(
 						// translators: Options section
 						esc_html__( 'Reset %s section', 'advanced-responsive-video-embedder' ),
 						esc_html( $label )
 					);
-				?>
+					?>
 				</button>
 				<?php
 			}
@@ -253,7 +247,8 @@ class Settings {
 
 	public function print_errors() {
 		?>
-		<div class="ngt-block" v-if="errors.length">
+		<div class="ngt-block"
+			v-if="errors.length">
 			<strong>Please correct the following error(s):</strong>
 			<ul>
 				<li v-for="error in errors">{{ error }}</li>
@@ -308,11 +303,12 @@ class Settings {
 
 	public function print_admin_page() {
 		?>
-		<div class='wrap wrap--nextgenthemes' id='nextgenthemes-vue'>
+		<div class='wrap wrap--nextgenthemes'
+			id='nextgenthemes-vue'>
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 			<?php $this->print_settings_tabs(); ?>
 			<div class="ngt-settings-grid">
-				<div class="ngt-settings-grid__content" >
+				<div class="ngt-settings-grid__content">
 					<?php
 					do_action( $this->slashed_namespace . '/admin/settings/content', $this );
 					$this->print_paid_section_message();
