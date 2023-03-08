@@ -6,16 +6,13 @@ use \Nextgenthemes\ARVE\Admin;
 
 // phpcs:disable Squiz.Classes.ClassFileName.NoMatch
 // phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
-class Tests_SettingsPage extends WP_UnitTestCase {
+class Tests_Settings extends WP_UnitTestCase {
 
 	public function test_settings_page() {
 
-		$i = ARVE\settings_instance();
+		$i       = ARVE\settings_instance();
+		$options = $i->get_options();
 
-		ob_start();
-		$i->print_admin_page();
-		$html = ob_get_clean();
-
-		$this->assertStringContainsString( 'maxwidth', $html );
+		$this->assertArrayHasKey( 'maxwidth', $options );
 	}
 }
