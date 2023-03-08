@@ -17,6 +17,17 @@ function create_url_handlers() {
 	}
 }
 
+/**
+ * Callback for wp_embed_register_handler
+ *
+ * @param string $provider The lower case provider name
+ * @param array  $matches  The RegEx matches from the provided regex when calling
+ *                          wp_embed_register_handler().
+ * @param array  $attr     Embed attributes.
+ * @param string $url      The original URL that was matched by the regex.
+ * @param array  $rawattr  The original unmodified attributes.
+ * @return string  The embed HTML.
+ */
 function url_handler( $provider, array $matches, array $attr, $url, $rawattr ) {
 
 	if ( is_array( $rawattr ) ) {
