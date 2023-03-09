@@ -10,11 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2' ] # https://www.php.net/supported-versions
+        php: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0' ] # https://www.php.net/supported-versions
         wordpress: [ 'latest' ] # https://wordpress.org/download/releases/
         include:
-          - php: '7.4'
-            wordpress: 'trunk'
+          - php: '8.1'
+            wordpress: trunk
+          - php: '8.2'
+            wordpress: trunk
     services:
       mysql:
         image: mysql:5.7
@@ -63,7 +65,7 @@ jobs:
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709 # 2.21.2 # https://github.com/shivammathur/setup-php/releases/
+        uses: shivammathur/setup-php@d30ad8b1843ace22e6698ab99bbafaa747b6bd0d # 2.24.0 # https://github.com/shivammathur/setup-php/releases/
         with:
           php-version: ${{ matrix.php }}
           extensions: mbstring, dom, zip, mysql, gd
