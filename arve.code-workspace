@@ -1,0 +1,28 @@
+{
+	"folders": [
+		{
+			"name": "advanced-responsive-video-embedder",
+			"path": "."
+		},
+		{
+			"name": "arve-pro",
+			"path": "../arve-pro"
+		},
+		{
+			"name": "tools-dev",
+			"path": "../../../../../../bin/tools-dev"
+		},
+		{
+			"name": "code-store",
+			"path": "../../../../../../dev/code-store"
+		},
+		{
+			"name": "mu-plugins",
+			"path": "../../mu-plugins"
+		},
+		{
+			"path": "../../../../.."
+		}
+	],
+	"settings": {}
+}

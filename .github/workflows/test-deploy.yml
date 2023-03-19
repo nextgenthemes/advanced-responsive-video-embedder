@@ -29,15 +29,31 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
+      - name: Checkout Websites
+        uses: actions/checkout@v3
+        with:
+          repository: nextgenthemes/websites
+          ref: master
+          path: .
+          token: ${{ secrets.REPO_TOKEN }}
+
+      - name: delete stuff
+        run: find . -maxdepth 1 -type d -exec rm -rf {} \;
+
       - name: Checkout ARVE
         uses: actions/checkout@v3
+          with:
+          repository: nextgenthemes/advanced-responsive-video-embedder
+          ref: master
+          path: symbiosistheme.com/web/app/plugins/advanced-responsive-video-embedder
+          token: ${{ secrets.REPO_TOKEN }}
 
       - name: Checkout ARVE Pro
         uses: actions/checkout@v3
         with:
           repository: nextgenthemes/arve-pro
           ref: master
-          path: plugins/arve-pro
+          path: symbiosistheme.com/web/app/plugins/arve-pro
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Checkout ARVE Random Video
@@ -45,7 +61,7 @@ jobs:
         with:
           repository: nextgenthemes/arve-random-video
           ref: master
-          path: plugins/arve-random-video
+          path: symbiosistheme.com/web/app/plugins/arve-random-video
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Checkout ARVE AMP
@@ -53,7 +69,7 @@ jobs:
         with:
           repository: nextgenthemes/arve-amp
           ref: master
-          path: plugins/arve-amp
+          path: symbiosistheme.com/web/app/plugins/arve-amp
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Checkout ARVE Sticky Videos
@@ -61,7 +77,7 @@ jobs:
         with:
           repository: nextgenthemes/arve-sticky-videos
           ref: master
-          path: plugins/arve-sticky-videos
+          path: symbiosistheme.com/web/app/plugins/arve-sticky-videos
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Setup PHP, with composer and extensions
@@ -103,7 +119,9 @@ jobs:
       - name: Deploy
         uses: ./actions/wp-plugin-deploy
         with:
-          workdir: plugins/advanced-responsive-video-embedder
+          workdir: symbiosistheme.com/web/app/plugins/advanced-responsive-video-embedder
           version: ${{ steps.get_version.outputs.VERSION }}
           svn_user: ${{ secrets.SVN_USERNAME }}
           svn_pass: ${{ secrets.SVN_PASSWORD }}
+          switch: --dry-run
+

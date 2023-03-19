@@ -1,6 +1,5 @@
 /* stylelint-disable selector-max-id */
-
-#html {
+#html, & {
 
 	.arve {
 		display: block;
@@ -100,7 +99,9 @@
 
 @supports (aspect-ratio: 16 / 9) {
 
+	.arve-ar,
 	#html .arve-ar,
+	.arve-embed--has-aspect-ratio::after,
 	#html .arve-embed--has-aspect-ratio::after {
 		display: none;
 	}
