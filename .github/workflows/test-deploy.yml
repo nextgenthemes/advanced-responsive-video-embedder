@@ -36,9 +36,9 @@ jobs:
           ref: master
           path: .
           token: ${{ secrets.REPO_TOKEN }}
-      #
-      # - name: delete stuff
-      #   run: find . -maxdepth 1 -type d -exec rm -rf {} \;
+
+      - name: rm -rf symbiosistheme.com
+        run: rm -rf symbiosistheme.com
 
       - name: Checkout ARVE
         uses: actions/checkout@v3
@@ -116,15 +116,12 @@ jobs:
 
       - name: Get the version
         id: get_version
-        #run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
       - name: Deploy
         uses: ./actions/wp-plugin-deploy
         with:
-          workdir: symbiosistheme.com/web/app/plugins/advanced-responsive-video-embedder
           version: ${{ steps.get_version.outputs.VERSION }}
           svn_user: ${{ secrets.SVN_USERNAME }}
           svn_pass: ${{ secrets.SVN_PASSWORD }}
-          switch: --dry-run
 
