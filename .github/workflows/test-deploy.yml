@@ -37,8 +37,8 @@ jobs:
           path: .
           token: ${{ secrets.REPO_TOKEN }}
 
-      - name: delete stuff
-        run: find . -maxdepth 1 -type d -exec rm -rf {} \;
+      # - name: delete stuff
+      #   run: find . -maxdepth 1 -type d -exec rm -rf {} \;
 
       - name: Checkout ARVE
         uses: actions/checkout@v3
