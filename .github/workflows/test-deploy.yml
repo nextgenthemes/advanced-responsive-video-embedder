@@ -36,7 +36,7 @@ jobs:
           ref: master
           path: .
           token: ${{ secrets.REPO_TOKEN }}
-
+      #
       # - name: delete stuff
       #   run: find . -maxdepth 1 -type d -exec rm -rf {} \;
 
