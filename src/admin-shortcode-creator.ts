@@ -117,10 +117,7 @@ function initVue( dialog: HTMLDialogElement ) {
 					} )
 					.on( 'select', function () {
 						// This will return the selected image from the Media Uploader, the result is an object
-						const uploadedImage = image
-							.state()
-							.get( 'selection' )
-							.first();
+						const uploadedImage = image.state().get( 'selection' ).first();
 						// We convert uploadedImage to a JSON object to make accessing it easier
 						const attachmentID = uploadedImage.toJSON().id;
 						vueThis.vm[ dataKey ] = attachmentID;
