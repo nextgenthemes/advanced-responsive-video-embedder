@@ -265,12 +265,11 @@ function admin_enqueue_scripts() {
 
 	enqueue_asset(
 		array(
-			'handle'            => 'arve-admin',
-			'src'               => plugins_url( 'build/admin.js', ARVE\PLUGIN_FILE ),
-			'path'              => ARVE\PLUGIN_DIR . '/build/admin.js',
-			'deps'              => array(),
-			'inline_script'     => 'var arveSCSettings = ' . \wp_json_encode( $settings_data ) . ';',
-			'inline_script_pos' => 'before',
+			'handle'               => 'arve-admin',
+			'src'                  => plugins_url( 'build/admin.js', ARVE\PLUGIN_FILE ),
+			'path'                 => ARVE\PLUGIN_DIR . '/build/admin.js',
+			'deps'                 => array(),
+			'inline_script_before' => 'var arveSCSettings = ' . \wp_json_encode( $settings_data ) . ';',
 		)
 	);
 

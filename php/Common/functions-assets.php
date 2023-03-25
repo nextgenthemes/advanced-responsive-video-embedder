@@ -68,24 +68,23 @@ function _asset( array $args ) {
 
 	$defaults = array(
 		// wp_register_script args in order
-		'handle'            => '',
-		'src'               => '',
-		'deps'              => array(),
-		'media'             => 'all',
-		'ver'               => null,
-		'in_footer'         => true,
+		'handle'               => '',
+		'src'                  => '',
+		'deps'                 => array(),
+		'media'                => 'all',
+		'ver'                  => null,
+		'in_footer'            => true,
 
 		// new
-		'async'             => false,
-		'cdn_src'           => '',
-		'defer'             => false,
-		'enqueue'           => false,
-		'inline_script'     => '',
-		'inline_script_pos' => 'after',
-		'inline_style'      => '',
-		'integrity'         => '',
-		'mce'               => false,
-		'path'              => '',
+		'async'                => false,
+		'defer'                => false,
+		'enqueue'              => false,
+		'inline_script_before' => '',
+		'inline_script_after'  => '',
+		'inline_style'         => '',
+		'integrity'            => '',
+		'mce'                  => false,
+		'path'                 => '',
 	);
 
 	$args         = wp_parse_args( $args, $defaults );
@@ -95,19 +94,26 @@ function _asset( array $args ) {
 		$args['ver'] = $deps_and_ver['version'];
 	}
 
-	if ( ! empty( $args['cdn_src'] ) && nextgenthemes_settings_instance()->options['cdn'] ) {
-		$args['src'] = $args['cdn_src'];
-		$args['ver'] = null;
-	}
-
 	if ( is_script( $args['src'] ) ) {
 
 		$args['deps'] = $args['deps'] + $deps_and_ver['dependencies'];
 
 		wp_register_script( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['in_footer'] );
 
-		if ( $args['inline_script'] ) {
-			wp_add_inline_script( $args['handle'], $args['inline_script'], $args['inline_script_pos'] );
+		if ( $args['inline_script_before'] ) {
+			wp_add_inline_script(
+				$args['handle'],
+				inline_script($args['inline_script_before'], $args['handle'], 'before'),
+				'before'
+			);
+		}
+
+		if ( $args['inline_script_after'] ) {
+			wp_add_inline_script(
+				$args['handle'],
+				inline_script($args['inline_script_after'], $args['handle'], 'after'),
+				'after'
+			);
 		}
 
 		if ( $args['async'] ) {
@@ -143,6 +149,18 @@ function _asset( array $args ) {
 			);
 		}
 	}//end if
+}
+
+function inline_script( $script, $handle, $position ) {
+
+	if ( ! is_string($script) ) {
+		// dash-ed-string to CamelCaseString
+		$js_var_name = str_replace('-', '', ucwords("{$handle}-js-{$position}", '-'));
+
+		return "var $js_var_name = " . \wp_json_encode( $script ) . ';';
+	}
+
+	return $script;
 }
 
 function add_dep_to_script( $handle, $dep ) {

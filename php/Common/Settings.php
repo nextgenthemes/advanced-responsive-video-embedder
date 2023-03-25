@@ -141,12 +141,11 @@ class Settings {
 
 		enqueue_asset(
 			array(
-				'handle'            => 'nextgenthemes-settings',
-				'src'               => plugin_or_theme_src( 'build/settings.js' ),
-				'path'              => dirname( dirname( __DIR__ ) ) . '/build/settings.js',
-				'deps'              => array( 'jquery' ),
-				'inline_script'     => "var {$this->slugged_namespace} = " . \wp_json_encode( $settings_data ) . ';',
-				'inline_script_pos' => 'before',
+				'handle'               => 'nextgenthemes-settings',
+				'src'                  => plugin_or_theme_src( 'build/settings.js' ),
+				'path'                 => dirname( dirname( __DIR__ ) ) . '/build/settings.js',
+				'deps'                 => array( 'jquery' ),
+				'inline_script_before' => "var {$this->slugged_namespace} = " . \wp_json_encode( $settings_data ) . ';',
 			)
 		);
 	}

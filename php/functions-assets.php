@@ -19,7 +19,6 @@ function register_assets() {
 			'path'      => PLUGIN_DIR . '/build/main.js',
 			'async'     => true,
 			'in_footer' => false,
-			'defer'     => false,
 		)
 	);
 
@@ -34,7 +33,6 @@ function register_assets() {
 		$options  = options();
 
 		foreach ( $settings as $key => $v ) {
-
 			if ( $options['gutenberg_help'] && ! empty( $v['description'] ) ) {
 				$settings[ $key ]['description'] = wp_strip_all_tags( $v['description'] );
 			} else {
@@ -46,14 +44,18 @@ function register_assets() {
 
 		Common\register_asset(
 			array(
-				'handle'  => 'arve-block',
-				'src'     => plugins_url( 'build/block.js', PLUGIN_FILE ),
-				'path'    => PLUGIN_DIR . '/build/block.js',
-				'deps'    => array( 'arve' ),
-				'footer'  => 'false',
+				'handle'               => 'arve-block',
+				'src'                  => plugins_url( 'build/block.js', PLUGIN_FILE ),
+				'path'                 => PLUGIN_DIR . '/build/block.js',
+				//'deps'                 => array( 'arve' ),
+				'footer'               => 'false',
+				'inline_script_before' => [
+					'settings' => $settings,
+					'options'  => $options,
+				],
 			)
 		);
-		wp_localize_script( 'arve-block', 'ARVEsettings', $settings );
+
 		// Register our block, and explicitly define the attributes we accept.
 		register_block_type(
 			PLUGIN_DIR . '/src/block.json',
