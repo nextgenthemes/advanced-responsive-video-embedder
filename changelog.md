@@ -1,11 +1,13 @@
-
 ## Changelog ##
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2023-03-08 9.10.0 ###
-* New: Support for extra classes on the ARVE Gutenberg block.
+### 2023-03-xx 9.10.0 ###
+* New: Support for extra classes (Advanced section) on the ARVE block.
+* New: You can align left/right the ARVE block now.
+* Fix: Styles were not applied inside new Gutenberg versions.
+* Improved: Videos are no longer playble in the Block editor, instead the block is selected when clicking on them.
 * Improved: Some minor code changes.
 
 ### 2023-02-05 9.9.7 ###
