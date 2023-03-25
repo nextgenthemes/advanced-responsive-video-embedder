@@ -18,8 +18,12 @@
     "supports": {
         "align": [
             "wide",
-            "full"
-        ]
+            "full",
+            "left",
+            "right"
+        ],
+        "className": true,
+        "customClassName": true
     },
     "styles": [],
     "example": {
@@ -29,7 +33,10 @@
         }
     },
     "editorScript": "arve-block",
-    "editorStyle": "arve",
+    "editorStyle": [
+        "arve",
+        "file:../build/block.css"
+    ],
     "attributes": {
         "url": {
             "type": "string"

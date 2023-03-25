@@ -1,5 +1,5 @@
 /**
- * Copyright 2019-2022 Nicolas Jonas
+ * Copyright 2019-2023 Nicolas Jonas
  * License: GPL 3.0
  *
  * Based on: https://gist.github.com/pento/cf38fd73ce0f13fcf0f0ae7d6c4b685d
@@ -7,9 +7,9 @@
  * License: GPL 2.0+
  */
 import json from './block.json';
+import './editor.scss';
 import { __ } from '@wordpress/i18n';
 import ServerSideRender from '@wordpress/server-side-render';
-//import { createElement, Fragment } from '@wordpress/element';
 import {
 	MediaUpload,
 	MediaUploadCheck,
@@ -27,34 +27,27 @@ import {
 	DropZone,
 } from '@wordpress/components';
 import { registerBlockType } from '@wordpress/blocks';
+import classnames from 'classnames';
 
 export {};
 declare global {
 	interface Window {
-		ARVEsettings: Record< string, OptionProps >;
+		ArveBlockJsBefore: inlineScriptJSON;
+		Sanitizer?: any;
 	}
 }
 
-const { name } = json;
-const settings = window.ARVEsettings;
-const domParser = new DOMParser();
+interface inlineScriptJSON {
+	settings: Record< string, OptionProps >;
+	options: Record< string, boolean | number | string >;
+}
 
-/*
- * Keypair to gutenberg component
- */
-function PrepareSelectOptions( options: OptionProps ) {
-	const gboptions = [] as Array< SelectOption >;
-
-	Object.entries( options ).forEach( ( [ key, value ] ) => {
-		const o: SelectOption = {
-			label: value,
-			value: key,
-		};
-
-		gboptions.push( o );
-	} );
-
-	return gboptions;
+interface sectionControls {
+	main: Array< JSX.Element >;
+	pro: Array< JSX.Element >;
+	html5: Array< JSX.Element >;
+	'sticky-videos': Array< JSX.Element >;
+	'random-video': Array< JSX.Element >;
 }
 
 interface SelectOption {
@@ -74,11 +67,33 @@ interface OptionProps {
 	options?;
 }
 
+const { name } = json;
+const { settings, options } = window.ArveBlockJsBefore;
+delete settings.align.options.center;
+
+const domParser = new DOMParser();
+
+/*
+ * Keypair to gutenberg component
+ */
+function PrepareSelectOptions( selectOptions: OptionProps ) {
+	const gboptions = [] as Array< SelectOption >;
+
+	Object.entries( selectOptions ).forEach( ( [ key, value ] ) => {
+		const o: SelectOption = {
+			label: value,
+			value: key,
+		};
+
+		gboptions.push( o );
+	} );
+
+	return gboptions;
+}
+
 function maybeSetAspectRatio( key: string, value: string, props ) {
 	if ( 'url' === key ) {
-		const iframe = domParser
-			.parseFromString( value, 'text/html' )
-			.querySelector( 'iframe' );
+		const iframe = domParser.parseFromString( value, 'text/html' ).querySelector( 'iframe' );
 		if ( iframe && iframe.getAttribute( 'src' ) ) {
 			value = iframe.src;
 			const w = iframe.width;
@@ -91,93 +106,151 @@ function maybeSetAspectRatio( key: string, value: string, props ) {
 		}
 	}
 }
-
-function BuildControls( props ) {
-	const controls = [] as Array< JSX.Element >;
-	const sectionControls = {};
-	const mediaUploadInstructions = (
-		<p>
-			{ __(
-				'To edit the featured image, you need permission to upload media.'
-			) }
-		</p>
+const mediaUploadRender = ( open, val, url ) => {
+	return (
+		// @ts-ignore
+		<div className="editor-post-featured-image__container">
+			{ /* @ts-ignore */ }
+			<Button
+				className={
+					! val
+						? 'editor-post-featured-image__toggle'
+						: 'editor-post-featured-image__preview'
+				}
+				onClick={ open }
+				aria-label={ ! val ? null : __( 'Edit or update the image' ) }
+				aria-describedby={ ! val ? '' : `editor-post-featured-image-${ val }-describedby` }
+			>
+				{ !! val && !! url && (
+					<div
+						style={ {
+							overflow: 'hidden',
+						} }
+					>
+						{ /* @ts-ignore */ }
+						<ResponsiveWrapper naturalWidth={ 640 } naturalHeight={ 360 } isInline>
+							{ /* @ts-ignore */ }
+							<img
+								src={ url }
+								alt="ARVE Thumbnail"
+								style={ {
+									width: '100%',
+									height: '100%',
+									objectFit: 'cover',
+								} }
+							/>
+						</ResponsiveWrapper>
+					</div>
+				) }
+				{ ! val && __( 'Set Thumbnail' ) }
+			</Button>
+			{ /* @ts-ignore */ }
+			<DropZone />
+		</div>
 	);
-	let selectedMedia = false as any;
+};
+
+function buildControls( props ) {
+	const controls = [] as Array< JSX.Element >;
+	const sectionControls = {} as sectionControls;
+	const mediaUploadInstructions = (
+		<p>{ __( 'To edit the featured image, you need permission to upload media.' ) }</p>
+	);
+	let selectedMedia;
 
 	Object.values( settings ).forEach( ( option: OptionProps ) => {
 		sectionControls[ option.tag ] = [];
 	} );
 
-	Object.entries( settings ).forEach(
-		( [ key, option ]: [ string, OptionProps ] ) => {
-			let val = props.attributes[ key ];
-			let url = '';
+	Object.entries( settings ).forEach( ( [ key, option ]: [ string, OptionProps ] ) => {
+		const val = props.attributes[ key ];
+		const url = '';
 
-			switch ( option.type ) {
-				case 'boolean':
-					if ( 'sandbox' === key && typeof val === 'undefined' ) {
-						val = true;
-					}
-					sectionControls[ option.tag ].push(
-						<ToggleControl
-							key={ key }
-							label={ option.label }
-							help={ createHelp( option ) }
-							checked={ !! val }
-							onChange={ ( value ) => {
-								return props.setAttributes( {
-									[ key ]: value,
-								} );
-							} }
-						/>
-					);
-
-					break;
-				case 'select':
-					sectionControls[ option.tag ].push(
-						<SelectControl
-							key={ key }
-							value={ val }
-							label={ option.label }
-							help={ createHelp( option ) }
-							options={ PrepareSelectOptions( option.options ) }
-							onChange={ ( value ) => {
-								return props.setAttributes( {
-									[ key ]: value,
-								} );
-							} }
-						/>
-					);
-					break;
-				case 'string':
-					sectionControls[ option.tag ].push(
-						<TextControl
-							key={ key }
-							label={ option.label }
-							placeholder={ option.placeholder }
-							help={ createHelp( option ) }
-							value={ val }
-							onChange={ ( value ) => {
-								maybeSetAspectRatio( key, value, props );
-								return props.setAttributes( {
-									[ key ]: value,
-								} );
-							} }
-						/>
-					);
-					break;
-				case 'attachment':
-					url = props.attributes[ key + '_url' ];
-
-					sectionControls[ option.tag ].push(
-						<BaseControl
-							className="editor-post-featured-image"
-							help={ createHelp( option ) }
-							key={ key }
+		sectionControls[ option.tag ].push(
+			<>
+				{ 'boolean' === option.type && (
+					// @ts-ignore
+					<ToggleControl
+						key={ key }
+						label={ option.label }
+						// @ts-ignore
+						help={ createHelp( option ) }
+						checked={ !! val }
+						onChange={ ( value ) => {
+							return props.setAttributes( {
+								[ key ]: value,
+							} );
+						} }
+					/>
+				) }
+				{ 'select' === option.type && (
+					<SelectControl
+						key={ key }
+						value={ val }
+						label={ option.label }
+						// @ts-ignore
+						help={ createHelp( option ) }
+						options={ PrepareSelectOptions( option.options ) }
+						onChange={ ( value ) => {
+							return props.setAttributes( {
+								[ key ]: value,
+							} );
+						} }
+					/>
+				) }
+				{ 'string' === option.type && (
+					// @ts-ignore
+					<TextControl
+						key={ key }
+						label={ option.label }
+						placeholder={ option.placeholder }
+						// @ts-ignore
+						help={ createHelp( option ) }
+						value={ val }
+						onChange={ ( value ) => {
+							maybeSetAspectRatio( key, value, props );
+							return props.setAttributes( {
+								[ key ]: value,
+							} );
+						} }
+					/>
+				) }
+				{ 'attachment' === option.type && (
+					// @ts-ignore
+					<BaseControl
+						key={ key }
+						className="editor-post-featured-image"
+						// @ts-ignore
+						help={ createHelp( option ) }
+					>
+						{ /* @ts-ignore */ }
+						<MediaUploadCheck
+							// @ts-ignore
+							fallback={ mediaUploadInstructions }
 						>
-							<MediaUploadCheck
-								fallback={ mediaUploadInstructions }
-							>
+							{ /* @ts-ignore */ }
+							<MediaUpload
+								title={ __( 'Thumbnail' ) }
+								onSelect={ ( media ) => {
+									selectedMedia = media;
+									return props.setAttributes( {
+										[ key ]: media.id.toString(),
+										[ key + '_url' ]: media.url,
+									} );
+								} }
+								allowedTypes={ [ 'image' ] }
+								modalClass="editor-post-featured-image__media-modal"
+								// @ts-ignore
+								render={ ( { open } ) => {
+									return mediaUploadRender( open, val, url );
+								} }
+								value={ val }
+							/>
+						</MediaUploadCheck>
+						{ !! val && !! url && (
+							// @ts-ignore
+							<MediaUploadCheck>
+								{ /* @ts-ignore */ }
 								<MediaUpload
 									title={ __( 'Thumbnail' ) }
 									onSelect={ ( media ) => {
@@ -187,113 +260,40 @@ function BuildControls( props ) {
 											[ key + '_url' ]: media.url,
 										} );
 									} }
-									unstableFeaturedImageFlow
 									allowedTypes={ [ 'image' ] }
 									modalClass="editor-post-featured-image__media-modal"
 									render={ ( { open } ) => (
-										<div className="editor-post-featured-image__container">
-											<Button
-												className={
-													! val
-														? 'editor-post-featured-image__toggle'
-														: 'editor-post-featured-image__preview'
-												}
-												onClick={ open }
-												aria-label={
-													! val
-														? null
-														: __(
-																'Edit or update the image'
-														  )
-												}
-												aria-describedby={
-													! val
-														? ''
-														: `editor-post-featured-image-${ val }-describedby`
-												}
-											>
-												{ !! val && !! url && (
-													<div
-														style={ {
-															overflow: 'hidden',
-														} }
-													>
-														<ResponsiveWrapper
-															naturalWidth={ 640 }
-															naturalHeight={
-																360
-															}
-															isInline
-														>
-															<img
-																src={ url }
-																alt="ARVE Thumbnail"
-																style={ {
-																	width: '100%',
-																	height: '100%',
-																	objectFit:
-																		'cover',
-																} }
-															/>
-														</ResponsiveWrapper>
-													</div>
-												) }
-												{ ! val &&
-													__( 'Set Thumbnail' ) }
-											</Button>
-											<DropZone />
-										</div>
+										// @ts-ignore
+										<Button onClick={ open } variant="secondary">
+											{ __( 'Replace Thumbnail' ) }
+										</Button>
 									) }
-									value={ val }
 								/>
 							</MediaUploadCheck>
-							{ !! val && !! url && (
-								<MediaUploadCheck>
-									<MediaUpload
-										title={ __( 'Thumbnail' ) }
-										onSelect={ ( media ) => {
-											selectedMedia = media;
-											return props.setAttributes( {
-												[ key ]: media.id.toString(),
-												[ key + '_url' ]: media.url,
-											} );
-										} }
-										unstableFeaturedImageFlow
-										allowedTypes={ [ 'image' ] }
-										modalClass="editor-post-featured-image__media-modal"
-										render={ ( { open } ) => (
-											<Button
-												onClick={ open }
-												isSecondary
-											>
-												{ __( 'Replace Thumbnail' ) }
-											</Button>
-										) }
-									/>
-								</MediaUploadCheck>
-							) }
-							{ !! val && (
-								<MediaUploadCheck>
-									<Button
-										onClick={ () => {
-											return props.setAttributes( {
-												[ key ]: '',
-												[ key + '_url' ]: '',
-											} );
-										} }
-										isLink
-										isDestructive
-									>
-										{ __( 'Remove Thumbnail' ) }
-									</Button>
-								</MediaUploadCheck>
-							) }
-						</BaseControl>
-					);
-					break;
-			}
-		}
-	);
+						) }
+						{ !! val && (
+							// @ts-ignore
+							<MediaUploadCheck>
+								{ /* @ts-ignore */ }
+								<Button
+									onClick={ () => {
+										return props.setAttributes( {
+											[ key ]: '',
+											[ key + '_url' ]: '',
+										} );
+									} }
+									isLink
+									isDestructive
+								>
+									{ __( 'Remove Thumbnail' ) }
+								</Button>
+							</MediaUploadCheck>
+						) }
+					</BaseControl>
+				) }
+			</>
+		);
+	} );
 
 	let open = true;
 
@@ -305,6 +305,7 @@ function BuildControls( props ) {
 				'advanced-responsive-video-embedder'
 			) }
 		>
+			{ /* @ts-ignore */ }
 			<BaseControl.VisualLabel>
 				{ __( 'Info', 'advanced-responsive-video-embedder' ) }
 			</BaseControl.VisualLabel>
@@ -313,11 +314,8 @@ function BuildControls( props ) {
 
 	Object.keys( sectionControls ).forEach( ( key ) => {
 		controls.push(
-			<PanelBody
-				key={ key }
-				title={ capitalizeFirstLetter( key ) }
-				initialOpen={ open }
-			>
+			// @ts-ignore
+			<PanelBody key={ key } title={ capitalizeFirstLetter( key ) } initialOpen={ open }>
 				{ sectionControls[ key ] }
 			</PanelBody>
 		);
@@ -333,18 +331,14 @@ function createHelp( option: OptionProps ) {
 	}
 
 	if ( typeof option.descriptionlinktext === 'string' ) {
-		const textSplit = option.description.split(
-			option.descriptionlinktext
-		);
+		const textSplit = option.description.split( option.descriptionlinktext );
 
 		return (
-			<span>
-				<span>{ textSplit[ 0 ] }</span>
-				<a href={ option.descriptionlink }>
-					{ option.descriptionlinktext }
-				</a>
-				,<span>{ textSplit[ 1 ] }</span>
-			</span>
+			<>
+				{ textSplit[ 0 ] }
+				<a href={ option.descriptionlink }>{ option.descriptionlinktext }</a>
+				{ textSplit[ 1 ] }
+			</>
 		);
 	}
 	return option.description;
@@ -356,33 +350,52 @@ function capitalizeFirstLetter( string ) {
 
 function Edit( props ) {
 	const {
-		attributes: { align },
-		setAttributes,
+		attributes: { mode, align, maxwidth },
 	} = props;
 
-	const blockProps = useBlockProps();
-	const controls = BuildControls( props );
+	let pointerEvents = true;
+	const style = {} as React.CSSProperties;
+	const attrCopy = JSON.parse( JSON.stringify( props.attributes ) );
+	delete attrCopy.align;
+	delete attrCopy.maxwidth;
 
-	return [
-		<div { ...blockProps } key="block">
-			<div
-				className="arve-select-helper"
-				style={ { textAlign: 'center', padding: '.1em' } }
-			>
-				{ __(
-					'Select ARVE block',
-					'advanced-responsive-video-embedder'
-				) }
+	if ( maxwidth && ( 'left' === align || 'right' === align ) ) {
+		style.width = '100%';
+		style.maxWidth = maxwidth;
+	} else if ( 'left' === align || 'right' === align ) {
+		style.width = '100%';
+		style.maxWidth = options.align_maxwidth as string | number;
+	}
+	const blockProps = useBlockProps( { style } );
+
+	if ( 'normal' === mode || ( ! mode && 'normal' === options.mode ) ) {
+		pointerEvents = false;
+	}
+
+	return (
+		<>
+			<div { ...blockProps } key="block">
+				{ /* @ts-ignore */ }
+				<ServerSideRender
+					className={ classnames( {
+						'arve-ssr': true,
+						'arve-ssr--pointer-events-none': ! pointerEvents,
+					} ) }
+					block="nextgenthemes/arve-block"
+					attributes={ attrCopy }
+					skipBlockSupportAttributes={ true }
+				/>
 			</div>
-			<ServerSideRender
-				block="nextgenthemes/arve-block"
-				attributes={ props.attributes }
-			/>
-		</div>,
-		<InspectorControls key="insp">{ controls }</InspectorControls>,
-	];
+			{ /* @ts-ignore */ }
+			<InspectorControls key="insp">
+				{ /* @ts-ignore */ }
+				{ buildControls( props ) }
+			</InspectorControls>
+		</>
+	);
 }
 
+// @ts-ignore
 registerBlockType( name, {
 	edit: Edit,
 } );
@@ -409,4 +422,37 @@ wp.data.dispatch( 'core/edit-post' ).hideBlockTypes( [
 	'core-embed/collegehumor',
 	'core-embed/ted',
 ] );
+*/
+
+/*
+TODO when the sanitizer API
+function sanitizeHelpHTML( option: OptionProps ) {
+	if ( typeof option.description !== 'string' ) {
+		return '';
+	}
+
+	const div = document.createElement( 'div' );
+
+	if ( 'Sanitizer' in window ) {
+		const sanitizer = new window.Sanitizer( {
+			allowElements: [ 'a' ],
+			allowAttributes: {
+				target: [ 'a' ],
+				href: [ 'a' ],
+			},
+		} );
+
+		// @ts-ignore
+		div.setHTML( option.description, { sanitizer } );
+
+		return <span dangerouslySetInnerHTML={ { __html: div.innerHTML } } />;
+	}
+
+	return stripHTML( option.description );
+}
+
+function stripHTML( html ) {
+	const doc = new DOMParser().parseFromString( html, 'text/html' );
+	return doc.body.textContent || '';
+}
 */
