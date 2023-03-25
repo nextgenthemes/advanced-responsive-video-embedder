@@ -80,9 +80,6 @@ jobs:
           path: symbiosistheme.com/web/app/plugins/arve-sticky-videos
           token: ${{ secrets.REPO_TOKEN }}
 
-      - name: tree
-        run: tree -d -L 4 -I node_modules
-
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@d30ad8b1843ace22e6698ab99bbafaa747b6bd0d # 2.24.0 # https://github.com/shivammathur/setup-php/releases/
         with:
