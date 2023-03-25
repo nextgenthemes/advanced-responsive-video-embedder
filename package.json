@@ -1,6 +1,5 @@
 {
   "name": "advanced-responsive-video-embedder",
-  "version": "1.0.0",
   "description": "",
   "main": "build/block.js",
   "directories": {
