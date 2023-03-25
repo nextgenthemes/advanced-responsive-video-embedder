@@ -1,0 +1,31 @@
+{
+  "name": "advanced-responsive-video-embedder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/block.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "cd ../../../../.. && npm run start:advanced-responsive-video-embedder",
+    "build": "cd ../../../../.. && npm run build:advanced-responsive-video-embedder",
+    "test": "cd ../../../../.. && phpunit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nextgenthemes/advanced-responsive-video-embedder.git"
+  },
+  "keywords": [
+    "WordPress",
+    "video",
+    "embeds",
+    "iframe",
+    "responsive"
+  ],
+  "author": "Nicolas Jonas",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/nextgenthemes/advanced-responsive-video-embedder/issues"
+  },
+  "homepage": "https://nextgenthemes.com/plugins/arve-pro"
+}
