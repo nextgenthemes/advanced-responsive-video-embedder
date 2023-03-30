@@ -106,7 +106,7 @@ function maybeSetAspectRatio( key: string, value: string, props ) {
 		}
 	}
 }
-const mediaUploadRender = ( open, val, url ) => {
+const mediaUploadRender = ( open: VoidFunction, val, url ) => {
 	return (
 		// @ts-ignore
 		<div className="editor-post-featured-image__container">

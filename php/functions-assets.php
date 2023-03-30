@@ -22,6 +22,16 @@ function register_assets() {
 		)
 	);
 
+	Common\register_asset(
+		array(
+			'handle' => 'arve-editor-iframe',
+			'src'    => plugins_url( 'build/editor-iframe.js' ),
+			'path'   => PLUGIN_DIR . '/build/editor-iframe.js',
+		)
+	);
+
+	Common\add_dep_to_script( 'wp-polyfill', 'arve-editor-iframe' );
+
 	// phpcs:disable WordPress.WP.EnqueuedResourceParameters.MissingVersion
 	wp_register_script( 'arve', null, array( 'arve-main' ), null, true );
 	wp_register_style( 'arve', null, array( 'arve-main' ), null, true );
