@@ -34,18 +34,20 @@ function url_handler( $provider, array $matches, array $attr, $url, $rawattr ) {
 		$a = $rawattr;
 	}
 
+	$errors = new \WP_Error();
+
 	if ( is_wp_error( $url ) ) {
-		$a['errors'] = $url;
+		$errors = $url;
 	}
 
-	$a['provider']    = $provider;
-	$a['url']         = $url;
-	$a['origin_data'] = [
+	$a['provider'] = $provider;
+	$a['url']      = $url;
+	$origin_data   = [
 		'from'    => 'url_handler',
 		'matches' => $matches,
 		'attr'    => $attr,
 		'rawattr' => $rawattr,
 	];
 
-	return build_video( $a );
+	return build_video( $a, $origin_data, null, $errors );
 }

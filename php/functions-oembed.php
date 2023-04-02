@@ -49,18 +49,18 @@ function filter_oembed_dataparse( $result, $data, $url ) {
  */
 function filter_embed_oembed_html( $cache, $url, array $attr, $post_ID ) {
 
-	$a['errors'] = new \WP_Error();
-	$oembed_data = extract_oembed_json( $cache, $url, $a );
+	$errors      = new \WP_Error();
+	$oembed_data = extract_oembed_json( $cache, $url, $errors );
 
 	if ( $oembed_data ) {
-		$a['url']         = $url;
-		$a['oembed_data'] = $oembed_data;
-		$a['origin_data'] = [
+		$a['url']    = $url;
+		$origin_data = [
 			'from'    => 'filter_embed_oembed_html',
 			'post_id' => $post_ID,
 		];
 
-		$cache = build_video( $a );
+		$video = new Video( $a, $origin_data, $oembed_data, $errors );
+		$cache = $video->build_video();
 	}
 
 	// if ( isset( $_GET['arve-debug-oembed'] ) ) {
@@ -70,7 +70,7 @@ function filter_embed_oembed_html( $cache, $url, array $attr, $post_ID ) {
 	return $cache;
 }
 
-function extract_oembed_json( $html, $url, array $a ) {
+function extract_oembed_json( $html, $url, \WP_Error $errors ) {
 
 	\preg_match( '#(?<=data-arve-oembed>).*?(?=</script>)#s', $html, $matches );
 
@@ -84,8 +84,8 @@ function extract_oembed_json( $html, $url, array $a ) {
 
 		$error_code = esc_attr( "$url-extract-json" );
 
-		$a['errors']->add( $error_code, 'json decode error code: ' . json_last_error() . '<br>From url: ' . $url );
-		$a['errors']->add_data(
+		$errors->add( $error_code, 'json decode error code: ' . json_last_error() . '<br>From url: ' . $url );
+		$errors->add_data(
 			compact('html', 'matches', 'data', 'a'),
 			$error_code
 		);

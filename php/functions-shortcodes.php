@@ -3,9 +3,10 @@ namespace Nextgenthemes\ARVE;
 
 function shortcode( $a ) {
 
-	$a                        = (array) $a;
-	$a['errors']              = new \WP_Error();
-	$a['origin_data']['from'] = 'shortcode';
+	$a                   = (array) $a;
+	$errors              = new \WP_Error();
+	$origin_data['from'] = 'shortcode';
+	$oembed_data         = null;
 
 	foreach ( $a as $k => $v ) {
 		if ( '' === $v ) {
@@ -27,15 +28,15 @@ function shortcode( $a ) {
 		$maybe_arve_html = $GLOBALS['wp_embed']->shortcode( array(), $a['url'] );
 		add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', OEMBED_HTML_PRIORITY, 4 );
 
-		$oembed_data = extract_oembed_json( $maybe_arve_html, $a['url'], $a );
+		$oembed_data = extract_oembed_json( $maybe_arve_html, $a['url'], $errors );
 
 		if ( $oembed_data ) {
-			$a['oembed_data']         = $oembed_data;
-			$a['origin_data']['from'] = 'shortcode oembed_data detected';
+			$origin_data['from'] = 'shortcode oembed_data detected';
 		}
 	}
 
-	return build_video( $a );
+	$video = new Video( $a, $origin_data, $oembed_data, $errors );
+	return $video->build_video();
 }
 
 function error( $msg, $code = '' ) {
@@ -49,7 +50,7 @@ function error( $msg, $code = '' ) {
 	);
 }
 
-function get_error_html( array $a ) {
+function old_get_error_html( array $a ) {
 
 	$html = '';
 
@@ -60,43 +61,6 @@ function get_error_html( array $a ) {
 	}
 
 	return $html;
-}
-
-function build_video( array $input_atts ) {
-
-	$html = '';
-	$a    = [];
-
-	try {
-		$a = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
-		Common\check_product_keys();
-		$a = process_shortcode_args( $a );
-
-		ksort( $a );
-		ksort( $input_atts );
-
-		$html .= get_error_html( $a );
-		$html .= build_html( $a );
-		$html .= get_debug_info( $html, $a, $input_atts );
-
-		wp_enqueue_style( 'arve' );
-		wp_enqueue_script( 'arve' );
-
-		return apply_filters( 'nextgenthemes/arve/html', $html, $a );
-
-	} catch ( \Exception $e ) {
-
-		if ( ! isset( $a['errors'] ) ) {
-			$a['errors'] = new \WP_Error();
-		}
-
-		$a['errors']->add( $e->getCode(), $e->getMessage() );
-
-		$html .= get_error_html( $a );
-		$html .= get_debug_info( '', $a, $input_atts );
-
-		return $html;
-	}
 }
 
 function shortcode_option_defaults() {
@@ -132,11 +96,13 @@ function create_shortcodes() {
 				if ( ! empty( $properties[ $provider ]['rebuild_url'] ) && ! empty( $a['id'] ) ) {
 					$a['url'] = sprintf( $properties[ $provider ]['rebuild_url'], $a['id'] );
 					unset( $a['id'] );
-					$a['origin_data']['from'] = 'create_shortcodes rebuild_url';
+					$origin_data['from'] = 'create_shortcodes rebuild_url';
 					return shortcode( $a );
 				} else {
-					$a['origin_data']['from'] = 'create_shortcodes';
-					return build_video( $a );
+					$origin_data['from'] = 'create_shortcodes';
+
+					$video = new Video( $a, $origin_data );
+					return $video->build_video();
 				}
 			};
 
@@ -174,6 +140,8 @@ function wp_video_shortcode_override( $out, $attr ) {
 	if ( ! empty( $attr['poster'] ) ) {
 		$attr['thumbnail'] = $attr['poster'];
 	}
+
+	$video = new Video( $attr );
 
 	return build_video( $attr );
 }

@@ -3,6 +3,9 @@ namespace Nextgenthemes\ARVE;
 
 function process_shortcode_args( array $a ) {
 
+	$class_a  = new Video( $a );
+	$new_args = $class_a->current_set_args();
+
 	if ( ! empty( $a['oembed_data'] ) ) {
 		$a['provider'] = sane_provider_name( $a['oembed_data']->provider_name );
 		$a['src']      = oembed_html2src( $a['oembed_data'], $a );
@@ -27,7 +30,7 @@ function process_shortcode_args( array $a ) {
 	$a['src']          = arg_iframe_src( $a );
 	$a['uid']          = sanitize_key( uniqid( "arve-{$a['provider']}-{$a['id']}", true ) );
 
-	return $a;
+	return $new_args;
 }
 
 function sane_provider_name( $provider ) {
@@ -503,7 +506,7 @@ function compare_oembed_src_with_generated_src( array $a ) {
 			$msg .= sprintf( 'src gen in mod: %s<br>' . PHP_EOL, esc_url($src_gen) );
 		}
 
-		$msg .= sprintf( 'src gen org: %s<br>' . PHP_EOL, esc_url($a['src_gen']) );
+		$msg .= sprintf( 'src gen org: %s<br>' . PHP_EOL, esc_url( $a['src_gen'] ) );
 
 		$a['errors']->add( 'hidden', $msg );
 	}

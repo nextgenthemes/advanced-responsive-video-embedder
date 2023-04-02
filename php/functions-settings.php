@@ -101,6 +101,20 @@ function gutenberg_ui_settings( $html5 = false ) {
 	return $settings;
 }
 
+function int_shortcode_args() {
+
+	$settings = all_settings();
+
+	foreach ( $settings as $k => $v ) {
+
+		if ( $v['shortcode'] && 'integer' === $v['type'] ) {
+			$bool_attr[] = $k;
+		}
+	}
+
+	return $bool_attr;
+}
+
 function bool_shortcode_args() {
 
 	$settings = all_settings();
@@ -138,25 +152,22 @@ function shortcode_pairs() {
 	$pairs = array_merge(
 		$pairs,
 		array(
-			'errors'             => new \WP_Error(),
-			'id'                 => null,
-			'provider'           => null,
-			'img_srcset'         => null,
+			'id'                 => '',
+			'provider'           => '',
+			'img_srcset'         => '',
 			'maxwidth'           => null, # Overwriting the option value ON PURPOSE here, see arg_maxwidth
-			'av1mp4'             => null,
-			'mp4'                => null,
-			'm4v'                => null,
-			'webm'               => null,
-			'ogv'                => null,
-			'oembed_data'        => null,
-			'origin_data'        => null,
-			'account_id'         => null,
-			'iframe_name'        => null,
-			'brightcove_player'  => null,
-			'brightcove_embed'   => null,
-			'video_sources_html' => null,
-			'post_id'            => null,
-			'thumbnail_fallback' => null, # Pro
+			'av1mp4'             => '',
+			'mp4'                => '',
+			'm4v'                => '',
+			'webm'               => '',
+			'ogv'                => '',
+			'account_id'         => '',
+			'iframe_name'        => '',
+			'brightcove_player'  => '',
+			'brightcove_embed'   => '',
+			'video_sources_html' => '',
+			'post_id'            => '',
+			'thumbnail_fallback' => '', # Pro
 		)
 	);
 
@@ -468,7 +479,7 @@ function all_settings() {
 			'description' => __( "Shows a small 'ARVE' link below the videos. Be the most awesome person and help promoting this plugin.", 'advanced-responsive-video-embedder' ),
 		),
 		'duration' => array(
-			'default'     => null,
+			'default'     => '',
 			'option'      => false,
 			'label'       => __( 'Duration', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
@@ -572,7 +583,7 @@ function all_settings() {
 			'description' => __( 'In px, Needed! Must be 100+ to work.', 'advanced-responsive-video-embedder' ),
 		),
 		'aspect_ratio'                  => array(
-			'default'     => null,
+			'default'     => '',
 			'option'      => false,
 			'label'       => __( 'Aspect Ratio', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
@@ -580,7 +591,7 @@ function all_settings() {
 			'placeholder' => __( '4:3, 21:9 ...', 'advanced-responsive-video-embedder' ),
 		),
 		'parameters' => array(
-			'default'     => null,
+			'default'     => '',
 			'html5'       => false,
 			'option'      => false,
 			'label'       => __( 'Parameters', 'advanced-responsive-video-embedder' ),
@@ -699,7 +710,7 @@ function all_settings() {
 		),
 		'random_video_url' => array(
 			'tag'                 => 'random-video',
-			'default'             => null,
+			'default'             => '',
 			'option'              => false,
 			'shortcode'           => true,
 			'label'               => esc_html__( 'Random Video URL', 'advanced-responsive-video-embedder' ),
@@ -714,7 +725,7 @@ function all_settings() {
 		),
 		'random_video_urls' => array(
 			'tag'                 => 'random-video',
-			'default'             => null,
+			'default'             => '',
 			'option'              => false,
 			'shortcode'           => true,
 			'label'               => esc_html__( 'Random Video URLs', 'advanced-responsive-video-embedder' ),
