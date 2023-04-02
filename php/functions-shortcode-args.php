@@ -9,48 +9,6 @@ function sane_provider_name( $provider ) {
 	return $provider;
 }
 
-// phpcs:ignore Generic.Metrics.CyclomaticComplexity.TooHigh
-function validate_bool( $attr_name, $a ) {
-
-	switch ( $a[ $attr_name ] ) {
-		case 'true':
-		case '1':
-		case 'y':
-		case 'yes':
-		case 'on':
-			return true;
-		// case '':
-		// case null:
-		// 	return null;
-		case 'false':
-		case '0':
-		case 'n':
-		case 'no':
-		case 'off':
-			return false;
-		default:
-			$error_code = $attr_name . ' bool-validation';
-
-			arve_errors()->add(
-				$attr_name,
-				// Translators: %1$s = Attr Name, %2$s = Attribute array
-				sprintf(
-					// Translators: Attribute Name
-					__( '%1$s <code>%2$s</code> not valid', 'advanced-responsive-video-embedder' ),
-					esc_html( $attr_name ),
-					esc_html( $a[ $attr_name ] )
-				)
-			);
-
-			arve_errors()->add_data(
-				compact( 'attr_name', 'a' ),
-				$error_code
-			);
-
-			return false;
-	}//end switch
-}
-
 function compare_oembed_src_with_generated_src( array $a ) {
 
 	if ( empty($a['src']) || empty($a['src_gen']) ) {

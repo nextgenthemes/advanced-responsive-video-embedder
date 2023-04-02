@@ -7,7 +7,7 @@ class Video {
 
 	// shortcode args
 	private $aspect_ratio;
-	private ?bool $hide_title;
+	private bool $hide_title;
 	private ?int $maxwidth;
 	private ?string $url;
 	private bool $arve_link;
@@ -94,6 +94,7 @@ class Video {
 
 		try {
 			$this->shortcode_atts = \shortcode_atts( shortcode_pairs(), $this->org_args, 'arve' );
+
 			Common\check_product_keys();
 			$this->process_shortcode_atts();
 
@@ -180,7 +181,7 @@ class Video {
 		}
 
 		$this->iframe_src_args();
-		$this->iframe_src_autoplay_args( $this->autoplay );
+		$this->src = $this->iframe_src_autoplay_args( $this->autoplay );
 		$this->iframe_src_jsapi_arg();
 
 		return $this->src;
@@ -220,7 +221,7 @@ class Video {
 	}
 
 	// phpcs:ignore Generic.Metrics.CyclomaticComplexity.MaxExceeded
-	private function iframe_src_autoplay_args( bool $autoplay ) {
+	private function iframe_src_autoplay_args( bool $autoplay ): string {
 
 		switch ( $this->provider ) {
 			case 'alugha':
@@ -770,6 +771,48 @@ class Video {
 		return true;
 	}
 
+	// phpcs:ignore Generic.Metrics.CyclomaticComplexity.TooHigh
+	private static function validate_bool( $attr_name, $value ) {
+
+		switch ( $value ) {
+			case 'true':
+			case '1':
+			case 'y':
+			case 'yes':
+			case 'on':
+				return true;
+			// case '':
+			// case null:
+			// 	return null;
+			case 'false':
+			case '0':
+			case 'n':
+			case 'no':
+			case 'off':
+				return false;
+			default:
+				$error_code = $attr_name . ' bool-validation';
+
+				arve_errors()->add(
+					$attr_name,
+					// Translators: %1$s = Attr Name, %2$s = Attribute array
+					sprintf(
+						// Translators: Attribute Name
+						__( '%1$s <code>%2$s</code> not valid', 'advanced-responsive-video-embedder' ),
+						esc_html( $attr_name ),
+						esc_html( $value )
+					)
+				);
+
+				arve_errors()->add_data(
+					compact( 'attr_name', 'value' ),
+					$error_code
+				);
+
+				return false;
+		}//end switch
+	}
+
 	private function args_validate() {
 
 		foreach ( $this->shortcode_atts as $arg_name => $value ) {
@@ -803,7 +846,7 @@ class Video {
 				if ( 'bool' !== $rp->getType()->getName() ) {
 					wp_die( esc_html( "$arg_name is not bool" ) );
 				}
-				$this->validated_args[ $arg_name ] = validate_bool( $arg_name, $this->shortcode_atts );
+				$this->validated_args[ $arg_name ] = $this->validate_bool( $arg_name, $value );
 
 			} elseif ( in_array( $arg_name, $url_args, true) ) {
 

@@ -1,7 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-function valid_url( $url ) {
+function valid_url( string $url ): bool {
 
 	if ( empty( $url ) ) {
 		return false;
@@ -18,11 +18,11 @@ function valid_url( $url ) {
 	return false;
 }
 
-function bool_to_shortcode_string( $val ) {
+function bool_to_shortcode_string( bool $val ): string {
 
-	if ( false === $val ) {
-		return 'n';
+	if ( true === $val ) {
+		return 'y';
 	}
 
-	return (string) $val;
+	return 'n';
 }

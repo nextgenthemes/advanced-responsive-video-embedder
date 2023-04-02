@@ -4,6 +4,9 @@
  *
  * @package Scuff
  */
+
+define( 'ARVE_UNIT_TESTS', true );
+
 require_once dirname( dirname( __FILE__ ) ) . '/vendor/autoload.php';
 
 

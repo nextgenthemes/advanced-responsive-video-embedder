@@ -134,6 +134,16 @@ function bool_shortcode_args() {
 	return $bool_attr;
 }
 
+function is_bool_arg( $arg_name ) {
+	return in_array( $arg_name, bool_shortcode_args(), true );
+}
+
+function testing( $arg_name, $msg, $var ) {
+	if ( 'hide_title' === $arg_name ) {
+		d($msg, $var);
+	}
+}
+
 function shortcode_pairs() {
 
 	$options  = options();
@@ -143,7 +153,12 @@ function shortcode_pairs() {
 		if ( 'select' === $v['type'] && has_bool_default_options( $v['options'] ) ) {
 			$pairs[ $k ] = bool_to_shortcode_string( $options[ $k ] );
 		} elseif ( $v['option'] ) {
-			$pairs[ $k ] = (string) $options[ $k ];
+
+			if ( is_bool_arg( $k ) ) {
+				$pairs[ $k ] = bool_to_shortcode_string( $options[ $k ] );
+			} else {
+				$pairs[ $k ] = (string) $options[ $k ];
+			}
 		} else {
 			$pairs[ $k ] = $v['default'];
 		}

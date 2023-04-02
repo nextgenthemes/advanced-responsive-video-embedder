@@ -39,10 +39,9 @@ function shortcode( $a ) {
 }
 
 function error( $msg, $code = '' ) {
-
 	return sprintf(
 		PHP_EOL . PHP_EOL .'<span class="arve-error"%s><abbr title="%s">ARVE</abbr> %s<br></span>' . PHP_EOL,
-		'hidden' === $code ? ' hidden' : '',
+		str_contains( $code, 'hidden' ) ? 'hidden' : '',
 		__( 'Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ),
 		// translators: Error message
 		sprintf( __( 'Error: %s', 'advanced-responsive-video-embedder' ), $msg )
@@ -57,6 +56,16 @@ function get_error_html() {
 		foreach ( arve_errors()->get_error_messages( $code ) as $key => $message ) {
 			$html .= error( $message, $code );
 		}
+
+		$data = arve_errors()->get_error_data( $code );
+
+		if ( ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ||
+			( defined( 'ARVE_UNIT_TESTS' ) && ARVE_UNIT_TESTS )
+		) {
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+			$html .= error( print_r( $data ), $code );
+		}
+
 		arve_errors()->remove($code);
 	}
 

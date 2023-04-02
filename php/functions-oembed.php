@@ -49,7 +49,7 @@ function filter_oembed_dataparse( $result, $data, $url ) {
  */
 function filter_embed_oembed_html( $cache, $url, array $attr, $post_ID ) {
 
-	$oembed_data = extract_oembed_json( $cache, $url, $a );
+	$oembed_data = extract_oembed_json( $cache, $url );
 
 	if ( $oembed_data ) {
 		$a['url']         = $url;
@@ -69,7 +69,7 @@ function filter_embed_oembed_html( $cache, $url, array $attr, $post_ID ) {
 	return $cache;
 }
 
-function extract_oembed_json( $html, $url, array $a ) {
+function extract_oembed_json( $html, $url ) {
 
 	\preg_match( '#(?<=data-arve-oembed>).*?(?=</script>)#s', $html, $matches );
 
