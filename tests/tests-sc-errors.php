@@ -2,6 +2,7 @@
 use function \Nextgenthemes\ARVE\shortcode;
 use function \Nextgenthemes\ARVE\build_video;
 use function \Nextgenthemes\ARVE\get_host_properties;
+use \Nextgenthemes\ARVE\Video;
 
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
@@ -125,12 +126,14 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$od->provider_name = 'Unknown';
 		$od->html          = '<iframe src="?bullshit">';
 
-		$html = build_video(
+		$video = new Video(
 			[
-				'url'         => 'http://example.com',
-				'oembed_data' => $od,
-			]
+				'url' => 'http://example.com',
+			],
+			null,
+			$od
 		);
+		$html  = $video->build_video(
 
 		$this->assertStringContainsString( 'Error', $html );
 		$this->assertStringContainsString( 'Invalid oembed src url detected', $html );

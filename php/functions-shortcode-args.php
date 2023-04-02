@@ -1,38 +1,6 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-function process_shortcode_args( array $a ) {
-
-	$class_a  = new Video( $a );
-	$new_args = $class_a->current_set_args();
-
-	if ( ! empty( $a['oembed_data'] ) ) {
-		$a['provider'] = sane_provider_name( $a['oembed_data']->provider_name );
-		$a['src']      = oembed_html2src( $a['oembed_data'], $a );
-	}
-
-	missing_attribute_check( $a );
-
-	$a = args_validate( $a );
-	$a = args_detect_html5( $a );
-	$a = detect_provider_and_id_from_url( $a );
-
-	$a['aspect_ratio'] = arg_aspect_ratio( $a );
-	$a['thumbnail']    = apply_filters( 'nextgenthemes/arve/args/thumbnail', $a['thumbnail'], $a );
-	$a['img_src']      = arg_img_src( $a );
-	$a                 = args_video( $a );
-	$a['id']           = liveleak_id_fix( $a );
-	$a['maxwidth']     = arg_maxwidth( $a );
-	$a['width']        = $a['maxwidth'];
-	$a['height']       = height_from_width_and_ratio( $a['width'], $a['aspect_ratio'] );
-	$a['mode']         = arg_mode( $a );
-	$a['autoplay']     = arg_autoplay( $a );
-	$a['src']          = arg_iframe_src( $a );
-	$a['uid']          = sanitize_key( uniqid( "arve-{$a['provider']}-{$a['id']}", true ) );
-
-	return $new_args;
-}
-
 function sane_provider_name( $provider ) {
 	$provider = preg_replace( '/[^a-z0-9]/', '', strtolower( $provider ) );
 	$provider = str_replace( 'wistiainc', 'wistia', $provider );
@@ -75,96 +43,6 @@ function oembed_html2src( $data, $a ) {
 	}
 
 	return $matches[1];
-}
-
-function arg_maxwidth( array $a ) {
-
-	$options = options();
-
-	if ( empty( $a['maxwidth'] ) ) {
-
-		if ( in_array( $a['align'], array( 'left', 'right', 'center' ), true ) ) {
-			$a['maxwidth'] = (int) $options['align_maxwidth'];
-		} elseif ( is_gutenberg() ) {
-			$a['maxwidth'] = false;
-		} elseif ( empty( $options['maxwidth'] ) ) {
-			$a['maxwidth'] = (int) empty( $GLOBALS['content_width'] ) ? DEFAULT_MAXWIDTH : $GLOBALS['content_width'];
-		} else {
-			$a['maxwidth'] = (int) $options['maxwidth'];
-		}
-	}
-
-	if ( 'tiktok' === $a['provider'] && $a['maxwidth'] > 320 ) {
-		$a['maxwidth'] = 320;
-	}
-
-	return $a['maxwidth'];
-}
-
-function arg_mode( array $a ) {
-
-	if ( 'lazyload-lightbox' === $a['mode'] ) {
-		$a['mode'] = 'lightbox';
-	}
-
-	if ( 'thumbnail' === $a['mode'] ) {
-		$a['mode'] = 'lazyload';
-	}
-
-	if ( 'normal' !== $a['mode'] &&
-		! defined( '\Nextgenthemes\ARVE\Pro\VERSION' ) ) {
-
-		$err_msg = sprintf(
-			// Translators: Mode
-			__( 'Mode: %s not available (ARVE Pro not active?), switching to normal mode', 'advanced-responsive-video-embedder' ),
-			$a['mode']
-		);
-		$a['errors']->add( 'mode-not-avail', $err_msg );
-		$a['mode'] = 'normal';
-	}
-
-	return $a['mode'];
-}
-
-function args_validate( array $a ) {
-
-	foreach ( $a as $key => $value ) {
-
-		switch ( $key ) {
-			case 'errors':
-				break;
-			case 'origin_data':
-				if ( null !== $value && ! is_array( $value ) ) {
-					$a['errors']->add( 'origin_data-type', 'origin_data needs to be null or array' . $value );
-				}
-				break;
-			case 'oembed_data':
-				if ( null !== $value && ! is_object( $value ) ) {
-					$a['errors']->add( 'oembed_data-type', 'oembed_data needs to be null or a object' );
-				}
-				break;
-			default:
-				if ( null !== $value && ! is_string( $value ) ) {
-					$a['errors']->add( 'wrong-type', "$key must be null or string" );
-				}
-				break;
-		}
-	}
-
-	foreach ( bool_shortcode_args() as $attr_name ) {
-		$a[ $attr_name ] = validate_bool( $attr_name, $a );
-	};
-
-	$url_args = array_merge( VIDEO_FILE_EXTENSIONS, [ 'url' ] );
-
-	foreach ( $url_args as $argname ) {
-		$a[ $argname ] = validate_url( $a[ $argname ], $argname, $a );
-	};
-
-	$a['align']        = validate_align( $a );
-	$a['aspect_ratio'] = validate_aspect_ratio( $a );
-
-	return $a;
 }
 
 function validate_url( $url, $argname, array $a ) {

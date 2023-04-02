@@ -142,6 +142,5 @@ function wp_video_shortcode_override( $out, $attr ) {
 	}
 
 	$video = new Video( $attr );
-
-	return build_video( $attr );
+	return $video->build_video();
 }

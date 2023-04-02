@@ -49,5 +49,6 @@ function url_handler( $provider, array $matches, array $attr, $url, $rawattr ) {
 		'rawattr' => $rawattr,
 	];
 
-	return build_video( $a, $origin_data, null, $errors );
+	$video = new Video( $a, $origin_data, null, $errors );
+	return $video->build_video();
 }

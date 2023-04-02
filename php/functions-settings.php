@@ -373,7 +373,7 @@ function all_settings() {
 		),
 		'thumbnail' => array(
 			'ui'                  => 'image_upload',
-			'default'             => null,
+			'default'             => '',
 			'shortcode'           => true,
 			'option'              => false,
 			'label'               => __( 'Thumbnail', 'advanced-responsive-video-embedder' ),

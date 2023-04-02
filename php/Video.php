@@ -7,10 +7,10 @@ class Video {
 
 	// shortcode args
 	private ?bool $hide_title;
-	private ?string $align;
-	private ?string $id;
-	private int $maxwidth;
-	private ?string $provider;
+	private string $align;
+	private string $id;
+	private ?int $maxwidth;
+	private string $provider;
 	private ?string $track_1;
 	private ?string $track_1_label;
 	private ?string $track_2;
@@ -860,7 +860,7 @@ class Video {
 			case null:
 			case '':
 			case 'none':
-				return null;
+				return '';
 			case 'left':
 			case 'right':
 			case 'center':
@@ -873,7 +873,7 @@ class Video {
 					// Translators: Alignment
 					sprintf( __( 'Align <code>%s</code> not valid', 'advanced-responsive-video-embedder' ), esc_html( $align ) )
 				);
-				return null;
+				return '';
 		}
 	}
 

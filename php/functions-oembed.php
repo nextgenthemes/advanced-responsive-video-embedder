@@ -75,7 +75,7 @@ function extract_oembed_json( $html, $url, \WP_Error $errors ) {
 	\preg_match( '#(?<=data-arve-oembed>).*?(?=</script>)#s', $html, $matches );
 
 	if ( empty( $matches[0] ) ) {
-		return false;
+		return null;
 	}
 
 	$data = json_decode( $matches[0], false, 512, JSON_UNESCAPED_UNICODE );
