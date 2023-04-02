@@ -4,17 +4,10 @@ namespace Nextgenthemes\ARVE;
 class Video {
 
 	// shortcode args
+	private $aspect_ratio;
 	private ?bool $hide_title;
-	private string $align;
-	private string $id;
 	private ?int $maxwidth;
-	private string $provider;
-	private ?string $track_1;
-	private ?string $track_1_label;
-	private ?string $track_2;
-	private ?string $track_2_label;
-	private ?string $track_3;
-	private ?string $track_3_label;
+	private ?string $url;
 	private bool $arve_link;
 	private bool $autoplay;
 	private bool $controls;
@@ -25,13 +18,10 @@ class Video {
 	private bool $sandbox;
 	private bool $sticky;
 	private bool $sticky_on_mobile;
+	private int $lightbox_maxwidth;
+	private int $volume;
 	private string $account_id;
-	/**
-	 * Holds the ratio in 16:9 format, false to disable
-	 *
-	 * @var string|false
-	 */
-	private $aspect_ratio;
+	private string $align;
 	private string $author_name;
 	private string $brightcove_embed;
 	private string $brightcove_player;
@@ -40,13 +30,14 @@ class Video {
 	private string $duration;
 	private string $fullscreen;
 	private string $hover_effect;
+	private string $id;
 	private string $iframe_name;
 	private string $img_srcset;
-	private int $lightbox_maxwidth;
 	private string $mode;
 	private string $parameters;
 	private string $play_icon_style;
 	private string $post_id;
+	private string $provider;
 	private string $random_video_url;
 	private string $random_video_urls;
 	private string $sticky_position;
@@ -54,14 +45,18 @@ class Video {
 	private string $thumbnail_fallback;
 	private string $title;
 	private string $upload_date;
-	private ?string $url;
-	private int $volume;
 	// html5
 	private string $av1mp4;
 	private string $m4v;
 	private string $mp4;
 	private string $ogv;
 	private string $webm;
+	private ?string $track_1;
+	private ?string $track_1_label;
+	private ?string $track_2;
+	private ?string $track_2_label;
+	private ?string $track_3;
+	private ?string $track_3_label;
 
 	// new stuff needed to build HTML
 	private int $width;
@@ -157,7 +152,7 @@ class Video {
 		$this->detect_provider_and_id_from_url();
 
 		$this->aspect_ratio = $this->arg_aspect_ratio( $this->validated_args['aspect_ratio'] );
-		$this->thumbnail    = apply_filters( 'nextgenthemes/arve/args/thumbnail', $this->validated_args['thumbnail'], $this->current_set_args() );
+		$this->thumbnail    = apply_filters( 'nextgenthemes/arve/args/thumbnail', $this->thumbnail, $this->current_set_args() );
 		$this->img_src      = $this->arg_img_src();
 
 		$this->set_video_properties_from_attachments();
