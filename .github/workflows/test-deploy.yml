@@ -12,11 +12,14 @@ jobs:
       matrix:
         php: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0' ] # https://www.php.net/supported-versions
         wordpress: [ 'latest' ] # https://wordpress.org/download/releases/
+        coverage: [ 'none' ]
         include:
           - php: '8.1'
             wordpress: trunk
+            coverage: none
           - php: '8.2'
             wordpress: trunk
+            coverage: xdebug
     services:
       mysql:
         image: mysql:5.7
@@ -86,7 +89,7 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: mbstring, dom, zip, mysql, gd
           tools:  phpunit-polyfills
-          coverage: none #optional
+          coverage: ${{ matrix.coverage }}
 
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
@@ -96,8 +99,19 @@ jobs:
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
 
-      - name: Run PHPUnit without code coverage
+      - if: matrix.coverage == 'none'
+        name: Run PHPUnit without code coverage
         run: phpunit
+
+      - if: matrix.coverage == 'xdebug'
+        name: Run PHPUnit with code coverage
+        run: phpunit --coverage-html ./coverage-html
+
+      - if: matrix.coverage == 'xdebug'
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-html
+          path: coverage-html/
 
   deploy:
     if: >-
