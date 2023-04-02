@@ -19,7 +19,7 @@ jobs:
             coverage: none
           - php: '8.2'
             wordpress: trunk
-            coverage: xdebug
+            coverage: none
     services:
       mysql:
         image: mysql:5.7
