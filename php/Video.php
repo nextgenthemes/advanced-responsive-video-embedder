@@ -62,7 +62,7 @@ class Video {
 	private int $width;
 	private float $height;
 	private string $uid;
-	private string $img_src;
+	private string $img_src = '';
 	private ?string $src;
 	private array $video_sources;
 	private ?string $video_sources_html = '';
@@ -92,6 +92,8 @@ class Video {
 	public function build_video() {
 
 		$html = '';
+
+		$this->org_args['oembed_data'] = $this->oembed_data;
 
 		try {
 			$this->shortcode_atts = \shortcode_atts( shortcode_pairs(), $this->org_args, 'arve' );
@@ -635,20 +637,18 @@ class Video {
 
 	private function arg_img_src() {
 
-		$img_src = false;
-
 		if ( $this->thumbnail ) :
 
 			if ( ctype_digit( (string) $this->thumbnail ) ) {
 
-				$img_src = wp_get_attachment_image_url( $this->thumbnail, 'small' );
+				$this->img_src = wp_get_attachment_image_url( $this->thumbnail, 'small' );
 
-				if ( empty( $img_src ) ) {
+				if ( empty( $this->img_src ) ) {
 					$this->errors->add( 'no-media-id', __( 'No attachment with that ID', 'advanced-responsive-video-embedder' ) );
 				}
 			} elseif ( valid_url( $this->thumbnail ) ) {
 
-				$img_src = $this->thumbnail;
+				$this->img_src = $this->thumbnail;
 
 			} else {
 
@@ -657,7 +657,7 @@ class Video {
 
 		endif; // thumbnail
 
-		return apply_filters( 'nextgenthemes/arve/args/img_src', $img_src, $this->current_set_args() );
+		return apply_filters( 'nextgenthemes/arve/args/img_src', $this->img_src, $this->current_set_args() );
 	}
 
 	private function arg_aspect_ratio( $ratio ) {

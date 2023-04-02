@@ -32,6 +32,7 @@ function shortcode( array $a, string $content = null, array $origin_data = array
 
 		if ( $oembed_data ) {
 			$origin_data['from'] = 'shortcode oembed_data detected';
+			$a['oembed_data']    = $oembed_data;
 		}
 	}
 

@@ -168,6 +168,7 @@ function shortcode_pairs() {
 			'video_sources_html' => '',
 			'post_id'            => '',
 			'thumbnail_fallback' => '', # Pro
+			'oembed_data'        => null,
 		)
 	);
 
