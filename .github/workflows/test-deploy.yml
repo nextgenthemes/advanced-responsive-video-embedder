@@ -10,13 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0' ] # https://www.php.net/supported-versions
+        php: [ '7.4', '8.0', '8.1' ] # https://www.php.net/supported-versions
         wordpress: [ 'latest' ] # https://wordpress.org/download/releases/
         coverage: [ 'none' ]
         include:
-          - php: '8.1'
-            wordpress: latest
-            coverage: none
           - php: '8.2'
             wordpress: latest
             coverage: none
