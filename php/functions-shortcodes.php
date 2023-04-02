@@ -1,7 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-function shortcode( $a ) {
+function shortcode( array $a, string $content = null, array $origin_data = array() ): string {
 
 	$a                   = (array) $a;
 	$errors              = new \WP_Error();

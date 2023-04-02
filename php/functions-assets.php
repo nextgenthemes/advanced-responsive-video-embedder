@@ -126,7 +126,7 @@ function gutenberg_block( $attr, $content, $block ) {
 		}
 	}
 
-	$attr['origin_data']['gutenberg'] = true;
+	$origin_data['gutenberg'] = true;
 
-	return shortcode( $attr );
+	return shortcode( $attr, null, $origin_data );
 }

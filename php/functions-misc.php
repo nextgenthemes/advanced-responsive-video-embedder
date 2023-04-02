@@ -70,10 +70,10 @@ function youtube_time_to_seconds( $yttime ) {
 		(int) $matches['s'];
 }
 
-function new_height( $old_width, $old_height, $new_width ) {
+function new_height( float $old_width, float $old_height, float $new_width ): float {
 
-	$aspect_num = (int) $old_width / (int) $old_height;
-	$new_height = (int) $new_width / $aspect_num;
+	$aspect_num = $old_width / $old_height;
+	$new_height = $new_width / $aspect_num;
 
 	return $new_height;
 }

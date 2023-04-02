@@ -130,10 +130,10 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 			[
 				'url' => 'http://example.com',
 			],
-			null,
+			[],
 			$od
 		);
-		$html  = $video->build_video(
+		$html  = $video->build_video();
 
 		$this->assertStringContainsString( 'Error', $html );
 		$this->assertStringContainsString( 'Invalid oembed src url detected', $html );

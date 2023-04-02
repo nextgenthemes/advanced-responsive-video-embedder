@@ -1,8 +1,6 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-use stdClass;
-
 class Video {
 
 	// shortcode args
@@ -56,7 +54,7 @@ class Video {
 	private string $thumbnail_fallback;
 	private string $title;
 	private string $upload_date;
-	private string $url;
+	private ?string $url;
 	private int $volume;
 	// html5
 	private string $av1mp4;
@@ -66,8 +64,8 @@ class Video {
 	private string $webm;
 
 	// new stuff needed to build HTML
-	private ?int $width;
-	private ?int $height;
+	private int $width;
+	private float $height;
 	private string $uid;
 	private string $img_src;
 	private ?string $src;
@@ -90,8 +88,6 @@ class Video {
 	public function __construct( array $args, array $origin_data = array(), object $oembed_data = null, \WP_Error $errors = null ) {
 		$this->org_args = $args;
 		ksort( $this->org_args );
-
-		#dd($origin_data, $oembed_data);
 
 		$this->oembed_data = $oembed_data;
 		$this->origin_data = $origin_data;
@@ -183,11 +179,22 @@ class Video {
 
 		$options       = options();
 		$this->src_gen = $this->build_iframe_src();
-		$this->src_gen = $this->special_iframe_src_mods( $this->src, $this->provider, $this->url );
+		$this->src_gen = $this->special_iframe_src_mods( $this->src_gen, $this->provider, $this->url );
 
 		if ( ! empty( $this->src ) ) {
-			$this->special_iframe_src_mods( $this->src, $this->provider, $this->url, 'oembed src' );
-			$this->compare_oembed_src_with_generated_src();
+			$this->src = $this->special_iframe_src_mods( $this->src, $this->provider, $this->url, 'oembed src' );
+
+			$a = [
+				'provider' => $this->provider,
+				'errors'   => $this->errors,
+				'src'      => $this->src,
+				'src_gen'  => $this->src_gen,
+				'url'      => $this->url,
+			];
+
+			compare_oembed_src_with_generated_src( $a );
+
+			#$this->compare_oembed_src_with_generated_src();
 		} else {
 			$this->src = false;
 		}
@@ -412,7 +419,6 @@ class Video {
 			}
 		}
 
-		$options    = options();
 		$properties = get_host_properties();
 
 		if ( isset( $properties[ $this->provider ]['embed_url'] ) ) {
@@ -479,6 +485,8 @@ class Video {
 			if ( ! $this->org_args['id'] || ! $this->org_args['provider'] ) {
 				throw new \Exception( 'need id and provider' );
 			}
+
+			return;
 		}
 
 		$error                 = true;
