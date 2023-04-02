@@ -23,6 +23,7 @@ function init_public() {
 	update_option( 'arve_version', VERSION );
 
 	require_once PLUGIN_DIR . '/php/Common/init.php';
+	require_once PLUGIN_DIR . '/php/Video.php';
 	require_once PLUGIN_DIR . '/php/functions-deprecated.php';
 	require_once PLUGIN_DIR . '/php/functions-assets.php';
 	require_once PLUGIN_DIR . '/php/functions-html-output.php';

@@ -49,14 +49,15 @@ function error( $msg, $code = '' ) {
 	);
 }
 
-function get_error_html( array $a ) {
+function get_error_html() {
 
 	$html = '';
 
-	foreach ( $a['errors']->get_error_codes() as $code ) {
-		foreach ( $a['errors']->get_error_messages( $code ) as $key => $message ) {
+	foreach ( arve_errors()->get_error_codes() as $code ) {
+		foreach ( arve_errors()->get_error_messages( $code ) as $key => $message ) {
 			$html .= error( $message, $code );
 		}
+		arve_errors()->remove($code);
 	}
 
 	return $html;
@@ -64,39 +65,12 @@ function get_error_html( array $a ) {
 
 function build_video( array $input_atts ) {
 
-	$html = '';
-	$a    = [];
-
-	try {
-		$a = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
-		Common\check_product_keys();
-		$a = process_shortcode_args( $a );
-
-		ksort( $a );
-		ksort( $input_atts );
-
-		$html .= get_error_html( $a );
-		$html .= build_html( $a );
-		$html .= get_debug_info( $html, $a, $input_atts );
-
-		wp_enqueue_style( 'arve' );
-		wp_enqueue_script( 'arve' );
-
-		return apply_filters( 'nextgenthemes/arve/html', $html, $a );
-
-	} catch ( \Exception $e ) {
-
-		if ( ! isset( $a['errors'] ) ) {
-			$a['errors'] = new \WP_Error();
-		}
-
-		$a['errors']->add( $e->getCode(), $e->getMessage() );
-
-		$html .= get_error_html( $a );
-		$html .= get_debug_info( '', $a, $input_atts );
-
-		return $html;
+	if ( ! empty( $input_atts['errors'] ) ) {
+		arve_errors()->merge_from( $input_atts['errors'] );
 	}
+
+	$video = new Video( $input_atts );
+	return $video->build_video();
 }
 
 function shortcode_option_defaults() {

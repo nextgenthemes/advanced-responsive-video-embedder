@@ -49,7 +49,6 @@ function filter_oembed_dataparse( $result, $data, $url ) {
  */
 function filter_embed_oembed_html( $cache, $url, array $attr, $post_ID ) {
 
-	$a['errors'] = new \WP_Error();
 	$oembed_data = extract_oembed_json( $cache, $url, $a );
 
 	if ( $oembed_data ) {
@@ -84,8 +83,8 @@ function extract_oembed_json( $html, $url, array $a ) {
 
 		$error_code = esc_attr( "$url-extract-json" );
 
-		$a['errors']->add( $error_code, 'json decode error code: ' . json_last_error() . '<br>From url: ' . $url );
-		$a['errors']->add_data(
+		arve_errors()->add( $error_code, 'json decode error code: ' . json_last_error() . '<br>From url: ' . $url );
+		arve_errors()->add_data(
 			compact('html', 'matches', 'data', 'a'),
 			$error_code
 		);

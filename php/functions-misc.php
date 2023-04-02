@@ -1,6 +1,17 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+function arve_errors() {
+
+	static $errors;
+
+	if ( ! is_wp_error( $errors ) ) {
+		$errors = new \WP_Error();
+	}
+
+	return $errors;
+}
+
 function get_host_properties() {
 	return require __DIR__ . '/providers.php';
 }
