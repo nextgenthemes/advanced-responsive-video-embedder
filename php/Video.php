@@ -1049,6 +1049,10 @@ class Video {
 
 	private function get_debug_info( $input_html = '' ) {
 
+		if ( ! defined( WP_DEBUG ) || ! WP_DEBUG ) {
+			return '';
+		}
+
 		$html = '';
 
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended

@@ -130,63 +130,6 @@ function html_id( $html_attr ) {
 	return $html_attr;
 }
 
-function get_debug_info( $input_html, array $a, array $input_atts ) {
-
-	$html = '';
-
-	// phpcs:disable WordPress.Security.NonceVerification.Recommended
-	// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
-	// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
-	if ( isset( $_GET['arve-debug-options'] ) ) {
-		static $show_options_debug = true;
-
-		if ( $show_options_debug ) {
-			$html .= sprintf( 'Options: <pre>%s</pre>', get_var_dump( options() ) );
-		}
-
-		$show_options_debug = false;
-	}
-
-	$pre_style =
-		'background-color: #111;' .
-		'color: #eee;' .
-		'font-size: 15px;' .
-		'white-space: pre-wrap;' .
-		'word-wrap: break-word;';
-
-	if ( ! empty( $_GET['arve-debug-attr'] ) ) {
-		$debug_attr = sanitize_text_field( wp_unslash( $_GET['arve-debug-attr'] ) );
-		$input_attr = isset( $input_atts[ $debug_attr ] ) ? print_r( $input_atts[ $debug_attr ], true ) : 'not set';
-		$html      .= sprintf(
-			'<pre style="%1$s">in %2$s: %3$s%2$s: %4$s</pre>',
-			esc_attr( $pre_style ),
-			esc_html( $debug_attr ),
-			esc_html( $input_attr ) . PHP_EOL,
-			esc_html( print_r( $a[ $debug_attr ], true ) )
-		);
-	}
-
-	if ( isset( $_GET['arve-debug-atts'] ) ) {
-		$html .= sprintf(
-			'<pre style="%s">in: %s</pre>',
-			esc_attr( $pre_style ),
-			esc_html( var_export( array_filter( $input_atts ), true ) )
-		);
-		$html .= sprintf(
-			'<pre style="%s">$a: %s</pre>',
-			esc_attr( $pre_style ),
-			esc_html( var_export( array_filter( $a ), true ) )
-		);
-	}
-
-	if ( isset( $_GET['arve-debug-html'] ) ) {
-		$html .= sprintf( '<pre style="%s">%s</pre>', esc_attr( $pre_style ), esc_html( $input_html ) );
-	}
-	// phpcs:enable
-
-	return $html;
-}
-
 function arve_embed_inner_html( array $a ) {
 
 	$html = '';

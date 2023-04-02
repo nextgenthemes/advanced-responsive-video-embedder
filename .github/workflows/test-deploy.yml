@@ -47,7 +47,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: nextgenthemes/advanced-responsive-video-embedder
-          ref: master
           path: symbiosistheme.com/web/app/plugins/advanced-responsive-video-embedder
           token: ${{ secrets.REPO_TOKEN }}
 
