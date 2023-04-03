@@ -76,5 +76,5 @@ function get_constant( $const_name ) {
 }
 
 function is_wp_debug() {
-	return get_constant( 'WP_DEBUG' );
+	return defined( 'WP_DEBUG' ) && WP_DEBUG;
 }

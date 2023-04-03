@@ -53,12 +53,12 @@ class Video {
 	private string $mp4;
 	private string $ogv;
 	private string $webm;
-	private ?string $track_1;
-	private ?string $track_1_label;
-	private ?string $track_2;
-	private ?string $track_2_label;
-	private ?string $track_3;
-	private ?string $track_3_label;
+	private string $track_1;
+	private string $track_1_label;
+	private string $track_2;
+	private string $track_2_label;
+	private string $track_3;
+	private string $track_3_label;
 
 	// new stuff needed to build HTML
 	private int $width;
@@ -74,7 +74,6 @@ class Video {
 
 	// args
 	private array $org_args;
-	private array $validated_args;
 	private array $shortcode_atts;
 
 	// process data
@@ -105,11 +104,18 @@ class Video {
 			wp_enqueue_style( 'arve' );
 			wp_enqueue_script( 'arve' );
 
-			return apply_filters( 'nextgenthemes/arve/html', $html, $this->current_set_args() );
+			return apply_filters( 'nextgenthemes/arve/html', $html, $this->current_set_props() );
 
 		} catch ( \Exception $e ) {
 
-			arve_errors()->add( $e->getCode(), $e->getMessage() );
+			$trace = '';
+
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
+				$trace = '<br>Exception Trace:<br>' . var_export($e->getTrace(), true);
+			}
+
+			arve_errors()->add( $e->getCode(), $e->getMessage() . $trace );
 
 			$html .= get_error_html();
 			$html .= $this->get_debug_info();
@@ -121,10 +127,9 @@ class Video {
 	private function process_shortcode_atts() {
 
 		$this->missing_attribute_check();
-		$this->args_validate();
 
-		foreach ( $this->validated_args as $arg_name => $arg_value ) {
-			$this->$arg_name = $arg_value;
+		foreach ( $this->shortcode_atts as $arg_name => $value ) {
+			$this->set_prop( $arg_name, $value );
 		}
 
 		if ( ! empty( $this->oembed_data ) ) {
@@ -135,323 +140,22 @@ class Video {
 		$this->detect_html5();
 		$this->detect_provider_and_id_from_url();
 
-		$this->aspect_ratio = $this->arg_aspect_ratio( $this->validated_args['aspect_ratio'] );
-		$this->thumbnail    = apply_filters( 'nextgenthemes/arve/args/thumbnail', $this->thumbnail, $this->current_set_args() );
-		$this->img_src      = $this->arg_img_src();
+		$this->set_prop( 'aspect_ratio', $this->arg_aspect_ratio( $this->aspect_ratio ) );
+		$this->set_prop( 'thumbnail', apply_filters( 'nextgenthemes/arve/args/thumbnail', $this->thumbnail, $this->current_set_props() ) );
+		$this->set_prop( 'img_src', $this->arg_img_src( $this->img_src ) );
 
 		$this->set_video_properties_from_attachments();
 
-		$this->maxwidth = $this->arg_maxwidth();
-		$this->width    = $this->maxwidth;
-		$this->height   = height_from_width_and_ratio( $this->width, $this->aspect_ratio );
-		$this->mode     = $this->arg_mode();
-		$this->autoplay = $this->arg_autoplay();
-		$this->src      = $this->arg_iframe_src();
-		$this->uid      = sanitize_key( uniqid( "arve-{$this->provider}-{$this->id}", true ) );
-	}
+		$this->set_prop( 'maxwidth', $this->arg_maxwidth() );
+		$this->set_prop( 'width', $this->maxwidth );
+		$this->set_prop( 'height', height_from_width_and_ratio( $this->width, $this->aspect_ratio ) );
+		$this->set_prop( 'mode', $this->arg_mode( $this->mode ) );
+		$this->set_prop( 'autoplay', $this->arg_autoplay() );
 
-	private function arg_iframe_src() {
+		$src = arg_iframe_src( $this->current_set_props() );
 
-		if ( 'html5' === $this->provider ) {
-			return false;
-		}
-
-		$this->src_gen = $this->build_iframe_src();
-		$this->src_gen = $this->special_iframe_src_mods( $this->src_gen, $this->provider, $this->url );
-
-		if ( ! empty( $this->src ) ) {
-			$this->src = $this->special_iframe_src_mods( $this->src, $this->provider, $this->url, 'oembed src' );
-
-			$a = [
-				'provider' => $this->provider,
-				'src'      => $this->src,
-				'src_gen'  => $this->src_gen,
-				'url'      => $this->url,
-			];
-
-			compare_oembed_src_with_generated_src( $a );
-
-			#$this->compare_oembed_src_with_generated_src();
-		} else {
-			$this->src = false;
-		}
-
-		if ( ! valid_url( $this->src ) && valid_url( $this->src_gen ) ) {
-			$this->src = $this->src_gen;
-		}
-
-		$this->iframe_src_args();
-		$this->src = $this->iframe_src_autoplay_args( $this->autoplay );
-		$this->iframe_src_jsapi_arg();
-
-		return $this->src;
-	}
-
-	private function iframe_src_jsapi_arg() {
-
-		if ( function_exists('Nextgenthemes\ARVE\Pro\init') && 'youtube' === $this->provider ) {
-			$this->src = add_query_arg( [ 'enablejsapi' => 1 ], $this->src );
-		}
-
-		return $this->src;
-	}
-
-	private function iframe_src_args() {
-
-		$options = options();
-
-		$parameters     = wp_parse_args( preg_replace( '!\s+!', '&', (string) $this->parameters ) );
-		$params_options = array();
-
-		if ( ! empty( $options[ 'url_params_' . $this->provider ] ) ) {
-			$params_options = wp_parse_args( preg_replace( '!\s+!', '&', $options[ 'url_params_' . $this->provider ] ) );
-		}
-
-		$parameters = wp_parse_args( $parameters, $params_options );
-		$this->src  = add_query_arg( $parameters, $this->src );
-
-		if ( 'youtube' === $this->provider && in_array( $this->mode, array( 'lightbox', 'link-lightbox' ), true ) ) {
-			$this->src = add_query_arg( 'playsinline', '1', $this->src );
-		}
-
-		if ( 'twitch' === $this->provider ) {
-			$domain    = wp_parse_url( home_url(), PHP_URL_HOST );
-			$this->src = add_query_arg( 'parent', $domain, $this->src );
-		}
-	}
-
-	// phpcs:ignore Generic.Metrics.CyclomaticComplexity.MaxExceeded
-	private function iframe_src_autoplay_args( bool $autoplay ): string {
-
-		switch ( $this->provider ) {
-			case 'alugha':
-			case 'archiveorg':
-			case 'dailymotion':
-			case 'dailymotionlist':
-			case 'facebook':
-			case 'vevo':
-			case 'viddler':
-			case 'vimeo':
-			case 'youtube':
-			case 'youtubelist':
-				return $autoplay ?
-					add_query_arg( 'autoplay', 1, $this->src ) :
-					add_query_arg( 'autoplay', 0, $this->src );
-			case 'twitch':
-			case 'ustream':
-				return $autoplay ?
-					add_query_arg( 'autoplay', 'true', $this->src ) :
-					add_query_arg( 'autoplay', 'false', $this->src );
-			case 'livestream':
-			case 'wistia':
-				return $autoplay ?
-					add_query_arg( 'autoPlay', 'true', $this->src ) :
-					add_query_arg( 'autoPlay', 'false', $this->src );
-			case 'metacafe':
-				return $autoplay ?
-					add_query_arg( 'ap', 1, $this->src ) :
-					remove_query_arg( 'ap', $this->src );
-			case 'gab':
-				return $autoplay ?
-					add_query_arg( 'autoplay', 'on', $this->src ) :
-					remove_query_arg( 'autoplay', $this->src );
-			case 'brightcove':
-			case 'snotr':
-				return $autoplay ?
-					add_query_arg( 'autoplay', 1, $this->src ) :
-					remove_query_arg( 'autoplay', $this->src );
-			case 'yahoo':
-				return $autoplay ?
-					add_query_arg( 'autoplay', 'true', $this->src ) :
-					add_query_arg( 'autoplay', 'false', $this->src );
-			default:
-				// Do nothing for providers that to not support autoplay or fail with parameters
-				return $this->src;
-			case 'MAYBEiframe':
-				return $autoplay ?
-					add_query_arg(
-						array(
-							'ap'               => '1',
-							'autoplay'         => '1',
-							'autoStart'        => 'true',
-							'player_autoStart' => 'true',
-						),
-						$this->src
-					) :
-					add_query_arg(
-						array(
-							'ap'               => '0',
-							'autoplay'         => '0',
-							'autoStart'        => 'false',
-							'player_autoStart' => 'false',
-						),
-						$this->src
-					);
-		}
-	}
-
-	private static function special_iframe_src_mods( $src, $provider, $url, $oembed_src = false ) {
-
-		if ( empty( $src ) ) {
-			return $src;
-		}
-
-		switch ( $provider ) {
-			case 'youtube':
-				$yt_v    = Common\get_url_arg( $url, 'v' );
-				$yt_list = Common\get_url_arg( $url, 'list' );
-
-				if ( $oembed_src &&
-					str_contains( $src, '/embed/videoseries?' ) &&
-					$yt_v
-				) {
-					$src = str_replace( '/embed/videoseries?', "/embed/$yt_v?", $src );
-				}
-
-				if ( $yt_list ) {
-					$src = remove_query_arg( 'feature', $src );
-					$src = add_query_arg( 'list', $yt_list, $src );
-				}
-
-				$options = options();
-
-				if ( $options['youtube_nocookie'] ) {
-					$src = str_replace( 'https://www.youtube.com', 'https://www.youtube-nocookie.com', $src );
-				}
-
-				break;
-			case 'vimeo':
-				$src = add_query_arg( 'dnt', 1, $src );
-
-				$parsed_url = wp_parse_url( $url );
-
-				if ( ! empty( $parsed_url['fragment'] ) && str_starts_with( $parsed_url['fragment'], 't' ) ) {
-					$src .= '#' . $parsed_url['fragment'];
-				}
-				break;
-			case 'wistia':
-				$src = add_query_arg( 'dnt', 1, $src );
-				break;
-		}
-
-		return $src;
-	}
-
-	private function compare_oembed_src_with_generated_src() {
-
-		if ( empty($this->src) || empty($this->src_gen) ) {
-			return;
-		}
-
-		$src     = $this->src;
-		$src_gen = $this->src_gen;
-
-		switch ( $this->provider ) {
-			case 'wistia':
-			case 'vimeo':
-				$src     = Common\remove_url_query( $src );
-				$src_gen = Common\remove_url_query( $src_gen );
-				break;
-			case 'youtube':
-				$src = remove_query_arg( 'feature', $src );
-				$src = remove_query_arg( 'origin', $src );
-				$src = remove_query_arg( 'enablejsapi', $src );
-				break;
-			case 'dailymotion':
-				$src = remove_query_arg( 'pubtool', $src );
-				break;
-		}
-
-		if ( $src !== $src_gen ) {
-
-			$msg  = 'src mismatch<br>' . PHP_EOL;
-			$msg .= sprintf( 'provider: %s<br>' . PHP_EOL, esc_html($this->provider) );
-			$msg .= sprintf( 'url: %s<br>' . PHP_EOL, esc_url($this->url) );
-			$msg .= sprintf( 'src in org: %s<br>' . PHP_EOL, esc_url($this->src) );
-
-			if ( $src !== $this->src ) {
-				$msg .= sprintf( 'src in mod: %s<br>' . PHP_EOL, esc_url($src) );
-			}
-
-			if ( $src_gen !== $this->src_gen ) {
-				$msg .= sprintf( 'src gen in mod: %s<br>' . PHP_EOL, esc_url($src_gen) );
-			}
-
-			$msg .= sprintf( 'src gen org: %s<br>' . PHP_EOL, esc_url( $this->src_gen ) );
-
-			arve_errors()->add( 'hidden', $msg );
-		}
-	}
-
-	private function build_iframe_src() {
-
-		if ( ! $this->provider || ! $this->id ) {
-
-			if ( $this->src ) {
-				return false;
-			} else {
-				throw new \Exception(
-					__( 'Need Provider and ID to build iframe src.', 'advanced-responsive-video-embedder' )
-				);
-			}
-		}
-
-		$properties = get_host_properties();
-
-		if ( isset( $properties[ $this->provider ]['embed_url'] ) ) {
-			$pattern = $properties[ $this->provider ]['embed_url'];
-		} else {
-			$pattern = '%s';
-		}
-
-		if ( 'facebook' === $this->provider && is_numeric( $this->id ) ) {
-
-			$this->id = "https://www.facebook.com/facebook/videos/{$this->id}/";
-
-		} elseif ( 'twitch' === $this->provider && is_numeric( $this->id ) ) {
-
-			$pattern = 'https://player.twitch.tv/?video=v%s';
-		}
-
-		if ( isset( $properties[ $this->provider ]['url_encode_id'] ) && $properties[ $this->provider ]['url_encode_id'] ) {
-			$this->id = rawurlencode( str_replace( '&', '&amp;', $this->id ) );
-		}
-
-		if ( 'gab' === $this->provider ) {
-			$src = sprintf( $pattern, $this->account_id, $this->id );
-		} elseif ( 'brightcove' === $this->provider ) {
-			$src = sprintf( $pattern, $this->account_id, $this->brightcove_player, $this->brightcove_embed, $this->id );
-		} else {
-			$src = sprintf( $pattern, $this->id );
-		}
-
-		switch ( $this->provider ) {
-
-			case 'youtube':
-				$t_arg         = Common\get_url_arg( $this->url, 't' );
-				$time_continue = Common\get_url_arg( $this->url, 'time_continue' );
-				$list_arg      = Common\get_url_arg( $this->url, 'list' );
-
-				if ( $t_arg ) {
-					$src = add_query_arg( 'start', youtube_time_to_seconds( $t_arg ), $src );
-				}
-				if ( $time_continue ) {
-					$src = add_query_arg( 'start', youtube_time_to_seconds( $time_continue ), $src );
-				}
-
-				if ( $list_arg ) {
-					$src = add_query_arg( 'list', $list_arg, $src );
-				}
-				break;
-			case 'ted':
-				$lang = Common\get_url_arg( $this->url, 'language' );
-				if ( $lang ) {
-					$src = str_replace( 'ted.com/talks/', "ted.com/talks/lang/{$lang}/", $src );
-				}
-				break;
-		}
-
-		return $src;
+		$this->set_prop( 'src', $src );
+		$this->set_prop( 'uid', sanitize_key( uniqid( "arve-{$this->provider}-{$this->id}", true ) ) );
 	}
 
 	private function missing_attribute_check() {
@@ -530,12 +234,12 @@ class Video {
 
 		foreach ( VIDEO_FILE_EXTENSIONS as $ext ) {
 			if ( ! empty( $this->$ext ) && is_numeric( $this->$ext ) ) {
-				$this->$ext = wp_get_attachment_url( $this->$ext );
+				$this->set_prop( $ext, wp_get_attachment_url( $this->$ext ) );
 			}
 		}
 	}
 
-	public function current_set_args() {
+	public function current_set_props() {
 
 		$current_args = [];
 
@@ -548,29 +252,29 @@ class Video {
 		return $current_args;
 	}
 
-	private function arg_mode() {
+	private static function arg_mode( string $mode ): string {
 
-		if ( 'lazyload-lightbox' === $this->mode ) {
-			$this->mode = 'lightbox';
+		if ( 'lazyload-lightbox' === $mode ) {
+			$mode = 'lightbox';
 		}
 
-		if ( 'thumbnail' === $this->mode ) {
-			$this->mode = 'lazyload';
+		if ( 'thumbnail' === $mode ) {
+			$mode = 'lazyload';
 		}
 
-		if ( 'normal' !== $this->mode &&
+		if ( 'normal' !== $mode &&
 			! defined( '\Nextgenthemes\ARVE\Pro\VERSION' ) ) {
 
 			$err_msg = sprintf(
 				// Translators: Mode
 				__( 'Mode: %s not available (ARVE Pro not active?), switching to normal mode', 'advanced-responsive-video-embedder' ),
-				$this->mode
+				$mode
 			);
 			arve_errors()->add( 'mode-not-avail', $err_msg );
-			$this->mode = 'normal';
+			$mode = 'normal';
 		}
 
-		return $this->mode;
+		return $mode;
 	}
 
 	private function arg_maxwidth() {
@@ -612,23 +316,23 @@ class Video {
 			}
 		}
 
-		return apply_filters( 'nextgenthemes/arve/args/autoplay', $this->autoplay, $this->current_set_args() );
+		return apply_filters( 'nextgenthemes/arve/args/autoplay', $this->autoplay, $this->current_set_props() );
 	}
 
-	private function arg_img_src() {
+	private function arg_img_src( string $img_src ): string {
 
 		if ( $this->thumbnail ) :
 
 			if ( ctype_digit( (string) $this->thumbnail ) ) {
 
-				$this->img_src = wp_get_attachment_image_url( $this->thumbnail, 'small' );
+				$img_src = wp_get_attachment_image_url( $this->thumbnail, 'small' );
 
-				if ( empty( $this->img_src ) ) {
+				if ( empty( $img_src ) ) {
 					arve_errors()->add( 'no-media-id', __( 'No attachment with that ID', 'advanced-responsive-video-embedder' ) );
 				}
 			} elseif ( valid_url( $this->thumbnail ) ) {
 
-				$this->img_src = $this->thumbnail;
+				$img_src = $this->thumbnail;
 
 			} else {
 
@@ -637,10 +341,10 @@ class Video {
 
 		endif; // thumbnail
 
-		return apply_filters( 'nextgenthemes/arve/args/img_src', $this->img_src, $this->current_set_args() );
+		return apply_filters( 'nextgenthemes/arve/args/img_src', $img_src, $this->current_set_props() );
 	}
 
-	private function arg_aspect_ratio( $ratio ) {
+	private function arg_aspect_ratio( string $ratio ) {
 
 		if ( ! empty( $ratio ) ) {
 			return $ratio;
@@ -709,12 +413,49 @@ class Video {
 
 		if ( $this->video_sources_html ) {
 			$this->provider = 'html5';
-			$this->tracks   = detect_tracks( $this->validated_args );
+			$this->tracks   = $this->detect_tracks();
 
 			return true;
 		}
 
 		return false;
+	}
+
+	private function detect_tracks() {
+
+		$tracks = array();
+
+		for ( $n = 1; $n <= NUM_TRACKS; $n++ ) {
+
+			$track_property_name       = "track_{$n}";
+			$track_label_property_name = "track_{$n}_label";
+
+			if ( empty( $this->$track_property_name ) ) {
+				return array();
+			}
+
+			preg_match(
+				'#-(?<type>captions|chapters|descriptions|metadata|subtitles)-(?<lang>[a-z]{2}).vtt$#i',
+				$this->$track_property_name,
+				$matches
+			);
+
+			$label = empty( $this->$track_label_property_name ) ?
+				get_language_name_from_code( $matches['lang'] ) :
+				$this->$track_label_property_name;
+
+			$track_attr = array(
+				'default' => ( 1 === $n ) ? true : false,
+				'kind'    => $matches['type'],
+				'label'   => $label,
+				'src'     => $this->$track_property_name,
+				'srclang' => $matches['lang'],
+			);
+
+			$tracks[] = $track_attr;
+		}//end for
+
+		return $tracks;
 	}
 
 	private function detect_provider_and_id_from_url() {
@@ -813,62 +554,68 @@ class Video {
 		}//end switch
 	}
 
-	private function args_validate() {
-
-		foreach ( $this->shortcode_atts as $arg_name => $value ) {
-
-			if ( ! property_exists($this, $arg_name) ) {
-				wp_die( esc_html( "$arg_name 'property does not exists" ) );
-			}
-
-			if ( in_array( $arg_name, [ 'oembed_data', 'origin_data', 'errors' ], true ) ) {
-				$this->validated_args[ $arg_name ] = $value;
-				continue;
-			}
-
-			$rp       = new \ReflectionProperty($this, $arg_name);
-			$url_args = array_merge( VIDEO_FILE_EXTENSIONS, [ 'url' ] );
-
-			if ( 'aspect_ratio' === $arg_name && null === $rp->getType() ) {
-				$this->validated_args[ $arg_name ] = $value;
-				continue;
-			}
-
-			if ( in_array( $arg_name, int_shortcode_args(), true )) {
-
-				if ( 'int' !== $rp->getType()->getName() ) {
-					wp_die( esc_html( "$arg_name is not int" ) );
-				}
-				$this->validated_args[ $arg_name ] = $this->shortcode_atts[ $arg_name ];
-
-			} elseif ( in_array( $arg_name, bool_shortcode_args(), true )) {
-
-				if ( 'bool' !== $rp->getType()->getName() ) {
-					wp_die( esc_html( "$arg_name is not bool" ) );
-				}
-				$this->validated_args[ $arg_name ] = $this->validate_bool( $arg_name, $value );
-
-			} elseif ( in_array( $arg_name, $url_args, true) ) {
-
-				if ( 'string' !== $rp->getType()->getName() ) {
-					wp_die( esc_html( "$arg_name is not string" ) );
-				}
-				$this->validated_args[ $arg_name ] = $this->validate_url( $this->shortcode_atts[ $arg_name ], $arg_name );
-
-			} else {
-
-				if ( 'string' !== $rp->getType()->getName() ) {
-					wp_die( esc_html( "$arg_name is not string" ) );
-				}
-				$this->validated_args[ $arg_name ] = $value;
-			}
-		}
-
-		$this->validated_args['align']        = $this->validate_align( $this->shortcode_atts['align'] );
-		$this->validated_args['aspect_ratio'] = $this->validate_aspect_ratio( $this->shortcode_atts['aspect_ratio'] );
+	public function set_bool_prop( string $arg_name, bool $value ): void {
+		$this->$arg_name = $value;
 	}
 
-	private static function validate_url( $url, $argname ) {
+	public function set_int_prop( string $arg_name, int $value ): void {
+		$this->$arg_name = $value;
+	}
+
+	public function set_float_prop( string $arg_name, float $value ): void {
+		$this->$arg_name = $value;
+	}
+
+	public function set_string_prop( string $arg_name, string $value ): void {
+		$this->$arg_name = $value;
+	}
+
+	public function set_array_prop( string $arg_name, array $value ): void {
+		$this->$arg_name = $value;
+	}
+
+	public function set_object_nullable_prop( string $arg_name, ?object $value ): void {
+		$this->$arg_name = $value;
+	}
+
+	public function set_prop( string $prop_name, mixed $value ): void {
+
+		if ( ! property_exists($this, $prop_name) ) {
+			throw new \Exception( "$prop_name 'property does not exists" );
+		}
+
+		$url_args        = array_merge( VIDEO_FILE_EXTENSIONS, [ 'url' ] );
+		$type            = get_arg_type( $prop_name );
+		$set_method_name = "set_{$type}_prop";
+
+		switch ( $prop_name ) {
+
+			case in_array( $prop_name, $url_args, true):
+				$this->set_string_prop( $prop_name, $this->validate_url( $prop_name, $value ) );
+				break;
+			case 'origin_data':
+				$this->set_array_prop( 'origin_data', $value );
+				break;
+			case 'oembed_data':
+				$this->set_object_nullable_prop( 'oembed_data', $value );
+				break;
+			case 'align':
+				$this->set_string_prop( 'align', $this->validate_align( $value ) );
+				break;
+			case 'aspecet_ratio':
+				$this->set_string_prop( 'aspect_ratio', $this->validate_aspect_ratio( $value ) );
+				break;
+			default:
+				if ( 'bool' === $type ) {
+					$value = $this->validate_bool( $prop_name, $value );
+				}
+
+				$this->$set_method_name( $prop_name, $value );
+				break;
+		}
+	}
+
+	private static function validate_url( $argname, $url ) {
 
 		if ( ! empty( $url ) && ! valid_url( $url ) ) {
 
@@ -997,7 +744,7 @@ class Video {
 					'allowfullscreen' => '',
 					'class'           => $class,
 					'data-arve'       => $this->uid,
-					'data-src-no-ap'  => $this->iframe_src_autoplay_args( false ),
+					'data-src-no-ap'  => iframe_src_autoplay_args( $this->autoplay, $this->current_set_props() ),
 					'frameborder'     => '0',
 					'height'          => $this->height,
 					'name'            => $this->iframe_name,
@@ -1096,7 +843,7 @@ class Video {
 			$html .= sprintf(
 				'<pre style="%s">$a: %s</pre>',
 				esc_attr( $pre_style ),
-				esc_html( var_export( array_filter( $this->current_set_args() ), true ) )
+				esc_html( var_export( array_filter( $this->current_set_props() ), true ) )
 			);
 		}
 
@@ -1173,7 +920,7 @@ class Video {
 
 	private function build_tag( array $tag ) {
 
-		$tag = apply_filters( "nextgenthemes/arve/{$tag['name']}", $tag, $this->current_set_args() );
+		$tag = apply_filters( "nextgenthemes/arve/{$tag['name']}", $tag, $this->current_set_props() );
 
 		if ( empty( $tag['tag'] ) ) {
 
@@ -1210,7 +957,7 @@ class Video {
 			}
 		}
 
-		return apply_filters( "nextgenthemes/arve/{$tag['name']}_html", $html, $this->current_set_args() );
+		return apply_filters( "nextgenthemes/arve/{$tag['name']}_html", $html, $this->current_set_props() );
 	}
 
 	private static function promote_link( $arve_link ) {
@@ -1254,5 +1001,352 @@ class Video {
 				),
 			)
 		);
+	}
+}
+
+function new_sane_provider_name( $provider ) {
+	$provider = preg_replace( '/[^a-z0-9]/', '', strtolower( $provider ) );
+	$provider = str_replace( 'wistiainc', 'wistia', $provider );
+	$provider = str_replace( 'rumblecom', 'rumble', $provider );
+
+	return $provider;
+}
+
+function new_height_from_width_and_ratio( $width, $ratio ) {
+
+	if ( empty( $ratio ) ) {
+		return false;
+	}
+
+	list( $old_width, $old_height ) = explode( ':', $ratio, 2 );
+
+	return new_height( $old_width, $old_height, $width );
+}
+
+function new_get_video_type( $ext ) {
+
+	switch ( $ext ) {
+		case 'ogv':
+		case 'ogm':
+			return 'video/ogg';
+		case 'av1mp4':
+			return 'video/mp4; codecs=av01.0.05M.08';
+		case 'mp4':
+			return 'video/mp4';
+		case 'webm':
+			return 'video/webm';
+		default:
+			return 'video/x-' . $ext;
+	}
+}
+
+function new_tracks_html( array $tracks ) {
+
+	$html = '';
+
+	foreach ( $tracks as $track_attr ) {
+		$html .= sprintf( '<track%s>', Common\attr( $track_attr ) );
+	}
+
+	return $html;
+}
+
+function new_arg_iframe_src( array $a ) {
+
+	if ( 'html5' === $a['provider'] ) {
+		return false;
+	}
+
+	$options = options();
+
+	// build src with regex
+	$a['src_gen'] = build_iframe_src( $a );
+	$a['src_gen'] = special_iframe_src_mods( $a['src_gen'], $a['provider'], $a['url'] );
+
+	if ( ! empty( $a['src'] ) ) {
+		$a['src'] = special_iframe_src_mods( $a['src_gen'], $a['provider'], $a['url'], 'oembed src' );
+		compare_oembed_src_with_generated_src( $a );
+	} else {
+		$a['src'] = false;
+	}
+
+	if ( ! valid_url( $a['src'] ) && valid_url( $a['src_gen'] ) ) {
+		$a['src'] = $a['src_gen'];
+	}
+
+	$a['src'] = iframe_src_args( $a['src'], $a );
+	$a['src'] = iframe_src_autoplay_args( $a['src'], $a['provider'], $a['autoplay'] );
+	$a['src'] = iframe_src_jsapi_arg( $a['src'], $a['provider'] );
+
+	return $a['src'];
+}
+
+function new_iframe_src_jsapi_arg( string $src, string $provider ): string {
+
+	if ( function_exists('Nextgenthemes\ARVE\Pro\init') && 'youtube' === $provider ) {
+		$src = add_query_arg( [ 'enablejsapi' => 1 ], $src );
+	}
+
+	return $src;
+}
+
+function new_build_iframe_src( array $a ) {
+
+	if ( ! $a['provider'] || ! $a['id'] ) {
+
+		if ( $a['src'] ) {
+			return false;
+		} else {
+			throw new \Exception(
+				__( 'Need Provider and ID to build iframe src.', 'advanced-responsive-video-embedder' )
+			);
+		}
+	}
+
+	$options    = options();
+	$properties = get_host_properties();
+
+	if ( isset( $properties[ $a['provider'] ]['embed_url'] ) ) {
+		$pattern = $properties[ $a['provider'] ]['embed_url'];
+	} else {
+		$pattern = '%s';
+	}
+
+	if ( 'facebook' === $a['provider'] && is_numeric( $a['id'] ) ) {
+
+		$a['id'] = "https://www.facebook.com/facebook/videos/{$a['id']}/";
+
+	} elseif ( 'twitch' === $a['provider'] && is_numeric( $a['id'] ) ) {
+
+		$pattern = 'https://player.twitch.tv/?video=v%s';
+	}
+
+	if ( isset( $properties[ $a['provider'] ]['url_encode_id'] ) && $properties[ $a['provider'] ]['url_encode_id'] ) {
+		$a['id'] = rawurlencode( str_replace( '&', '&amp;', $a['id'] ) );
+	}
+
+	if ( 'gab' === $a['provider'] ) {
+		$src = sprintf( $pattern, $a['account_id'], $a['id'] );
+	} elseif ( 'brightcove' === $a['provider'] ) {
+		$src = sprintf( $pattern, $a['account_id'], $a['brightcove_player'], $a['brightcove_embed'], $a['id'] );
+	} else {
+		$src = sprintf( $pattern, $a['id'] );
+	}
+
+	switch ( $a['provider'] ) {
+
+		case 'youtube':
+			$t_arg         = Common\get_url_arg( $a['url'], 't' );
+			$time_continue = Common\get_url_arg( $a['url'], 'time_continue' );
+			$list_arg      = Common\get_url_arg( $a['url'], 'list' );
+
+			if ( $t_arg ) {
+				$src = add_query_arg( 'start', youtube_time_to_seconds( $t_arg ), $src );
+			}
+			if ( $time_continue ) {
+				$src = add_query_arg( 'start', youtube_time_to_seconds( $time_continue ), $src );
+			}
+
+			if ( $list_arg ) {
+				$src = add_query_arg( 'list', $list_arg, $src );
+			}
+			break;
+		case 'ted':
+			$lang = Common\get_url_arg( $a['url'], 'language' );
+			if ( $lang ) {
+				$src = str_replace( 'ted.com/talks/', "ted.com/talks/lang/{$lang}/", $src );
+			}
+			break;
+	}
+
+	return $src;
+}
+
+function new_special_iframe_src_mods( string $src, string $provider, string $url, bool $oembed_src = false ) {
+
+	if ( empty( $src ) ) {
+		return $src;
+	}
+
+	switch ( $provider ) {
+		case 'youtube':
+			$yt_v    = Common\get_url_arg( $url, 'v' );
+			$yt_list = Common\get_url_arg( $url, 'list' );
+
+			if ( $oembed_src &&
+				str_contains( $src, '/embed/videoseries?' ) &&
+				$yt_v
+			) {
+				$src = str_replace( '/embed/videoseries?', "/embed/$yt_v?", $src );
+			}
+
+			if ( $yt_list ) {
+				$src = remove_query_arg( 'feature', $src );
+				$src = add_query_arg( 'list', $yt_list, $src );
+			}
+
+			$options = options();
+
+			if ( $options['youtube_nocookie'] ) {
+				$src = str_replace( 'https://www.youtube.com', 'https://www.youtube-nocookie.com', $src );
+			}
+
+			break;
+		case 'vimeo':
+			$src = add_query_arg( 'dnt', 1, $src );
+
+			$parsed_url = wp_parse_url( $url );
+
+			if ( ! empty( $parsed_url['fragment'] ) && str_starts_with( $parsed_url['fragment'], 't' ) ) {
+				$src .= '#' . $parsed_url['fragment'];
+			}
+			break;
+		case 'wistia':
+			$src = add_query_arg( 'dnt', 1, $src );
+			break;
+	}
+
+	return $src;
+}
+
+function new_iframe_src_args( $src, array $a ) {
+
+	$options = options();
+
+	$parameters     = wp_parse_args( preg_replace( '!\s+!', '&', (string) $a['parameters'] ) );
+	$params_options = array();
+
+	if ( ! empty( $options[ 'url_params_' . $a['provider'] ] ) ) {
+		$params_options = wp_parse_args( preg_replace( '!\s+!', '&', $options[ 'url_params_' . $a['provider'] ] ) );
+	}
+
+	$parameters = wp_parse_args( $parameters, $params_options );
+	$src        = add_query_arg( $parameters, $src );
+
+	if ( 'youtube' === $a['provider'] && in_array( $a['mode'], array( 'lightbox', 'link-lightbox' ), true ) ) {
+		$src = add_query_arg( 'playsinline', '1', $src );
+	}
+
+	if ( 'twitch' === $a['provider'] ) {
+		$domain = wp_parse_url( home_url(), PHP_URL_HOST );
+		$src    = add_query_arg( 'parent', $domain, $src );
+	}
+
+	return $src;
+}
+
+// phpcs:ignore Generic.Metrics.CyclomaticComplexity.MaxExceeded
+function new_iframe_src_autoplay_args( string $src, string $provider, bool $autoplay ) {
+
+	switch ( $provider ) {
+		case 'alugha':
+		case 'archiveorg':
+		case 'dailymotion':
+		case 'dailymotionlist':
+		case 'facebook':
+		case 'vevo':
+		case 'viddler':
+		case 'vimeo':
+		case 'youtube':
+		case 'youtubelist':
+			return $autoplay ?
+				add_query_arg( 'autoplay', 1, $src ) :
+				add_query_arg( 'autoplay', 0, $src );
+		case 'twitch':
+		case 'ustream':
+			return $autoplay ?
+				add_query_arg( 'autoplay', 'true', $src ) :
+				add_query_arg( 'autoplay', 'false', $src );
+		case 'livestream':
+		case 'wistia':
+			return $autoplay ?
+				add_query_arg( 'autoPlay', 'true', $src ) :
+				add_query_arg( 'autoPlay', 'false', $src );
+		case 'metacafe':
+			return $autoplay ?
+				add_query_arg( 'ap', 1, $src ) :
+				remove_query_arg( 'ap', $src );
+		case 'gab':
+			return $autoplay ?
+				add_query_arg( 'autoplay', 'on', $src ) :
+				remove_query_arg( 'autoplay', $src );
+		case 'brightcove':
+		case 'snotr':
+			return $autoplay ?
+				add_query_arg( 'autoplay', 1, $src ) :
+				remove_query_arg( 'autoplay', $src );
+		case 'yahoo':
+			return $autoplay ?
+				add_query_arg( 'autoplay', 'true', $src ) :
+				add_query_arg( 'autoplay', 'false', $src );
+		default:
+			// Do nothing for providers that to not support autoplay or fail with parameters
+			return $src;
+		case 'MAYBEiframe':
+			return $autoplay ?
+				add_query_arg(
+					array(
+						'ap'               => '1',
+						'autoplay'         => '1',
+						'autoStart'        => 'true',
+						'player_autoStart' => 'true',
+					),
+					$src
+				) :
+				add_query_arg(
+					array(
+						'ap'               => '0',
+						'autoplay'         => '0',
+						'autoStart'        => 'false',
+						'player_autoStart' => 'false',
+					),
+					$src
+				);
+	}
+}
+
+function new_compare_oembed_src_with_generated_src( array $a ) {
+
+	if ( empty($a['src']) || empty($a['src_gen']) ) {
+		return;
+	}
+
+	$src     = $a['src'];
+	$src_gen = $a['src_gen'];
+
+	switch ( $a['provider'] ) {
+		case 'wistia':
+		case 'vimeo':
+			$src     = Common\remove_url_query( $src );
+			$src_gen = Common\remove_url_query( $src_gen );
+			break;
+		case 'youtube':
+			$src = remove_query_arg( 'feature', $src );
+			$src = remove_query_arg( 'origin', $src );
+			$src = remove_query_arg( 'enablejsapi', $src );
+			break;
+		case 'dailymotion':
+			$src = remove_query_arg( 'pubtool', $src );
+			break;
+	}
+
+	if ( $src !== $src_gen ) {
+
+		$msg  = 'src mismatch<br>' . PHP_EOL;
+		$msg .= sprintf( 'provider: %s<br>' . PHP_EOL, esc_html($a['provider']) );
+		$msg .= sprintf( 'url: %s<br>' . PHP_EOL, esc_url($a['url']) );
+		$msg .= sprintf( 'src in org: %s<br>' . PHP_EOL, esc_url($a['src']) );
+
+		if ( $src !== $a['src'] ) {
+			$msg .= sprintf( 'src in mod: %s<br>' . PHP_EOL, esc_url($src) );
+		}
+
+		if ( $src_gen !== $a['src_gen'] ) {
+			$msg .= sprintf( 'src gen in mod: %s<br>' . PHP_EOL, esc_url($src_gen) );
+		}
+
+		$msg .= sprintf( 'src gen org: %s<br>' . PHP_EOL, esc_url($a['src_gen']) );
+
+		$a['errors']->add( 'hidden', $msg );
 	}
 }
