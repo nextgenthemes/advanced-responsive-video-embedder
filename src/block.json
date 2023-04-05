@@ -84,7 +84,7 @@
             "type": "string"
         },
         "autoplay": {
-            "type": "string"
+            "type": "boolean"
         },
         "lightbox_maxwidth": {
             "type": "integer"

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
 function register_assets() {
@@ -116,13 +116,6 @@ function gutenberg_block( $attr, $content, $block ) {
 		</div>
 		<?php
 		return \ob_get_clean();
-	}
-
-	foreach ( $attr as $key => $value ) {
-
-		if ( is_bool( $value ) ) {
-			$attr[ $key ] = $value ? 'true' : 'false';
-		}
 	}
 
 	$attr['origin_data']['gutenberg']    = true;

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
 use WP_Error;
@@ -7,8 +7,13 @@ class Video {
 
 	// shortcode args
 	private $aspect_ratio;
+	/**
+	 * Undocumented variable
+	 *
+	 * @var boolean
+	 */
 	private bool $hide_title;
-	private ?int $maxwidth;
+	private int $maxwidth;
 	private ?string $url;
 	private bool $arve_link;
 	private bool $autoplay;
@@ -62,10 +67,10 @@ class Video {
 
 	// new stuff needed to build HTML
 	private int $width;
-	private float $height;
+	private $height;
 	private string $uid;
 	private string $img_src = '';
-	private ?string $src;
+	private string $src     = '';
 	private array $video_sources;
 	private ?string $video_sources_html = '';
 	private ?array $tracks;
@@ -82,6 +87,7 @@ class Video {
 	private WP_Error $errors;
 
 	public function __construct( array $args ) {
+
 		$this->errors   = arve_errors();
 		$this->org_args = $args;
 		ksort( $this->org_args );
@@ -133,8 +139,8 @@ class Video {
 		}
 
 		if ( ! empty( $this->oembed_data ) ) {
-			$this->provider = sane_provider_name( $this->oembed_data->provider_name );
-			$this->src      = $this->oembed_html2src( $this->oembed_data );
+			$this->set_prop( 'provider', sane_provider_name( $this->oembed_data->provider_name ) );
+			$this->set_prop( 'src', oembed_html2src( $this->oembed_data ) );
 		}
 
 		$this->detect_html5();
@@ -146,16 +152,123 @@ class Video {
 
 		$this->set_video_properties_from_attachments();
 
-		$this->set_prop( 'maxwidth', $this->arg_maxwidth() );
+		$this->set_prop( 'maxwidth', arg_maxwidth( $this->maxwidth, $this->provider, $this->align ) );
 		$this->set_prop( 'width', $this->maxwidth );
 		$this->set_prop( 'height', height_from_width_and_ratio( $this->width, $this->aspect_ratio ) );
-		$this->set_prop( 'mode', $this->arg_mode( $this->mode ) );
-		$this->set_prop( 'autoplay', $this->arg_autoplay() );
-
-		$src = arg_iframe_src( $this->current_set_props() );
-
-		$this->set_prop( 'src', $src );
+		$this->set_prop( 'mode', arg_mode( $this->mode ) );
+		$this->set_prop( 'autoplay', $this->arg_autoplay( $this->autoplay ) );
+		$this->set_prop( 'src', $this->arg_iframe_src( $this->src ) );
 		$this->set_prop( 'uid', sanitize_key( uniqid( "arve-{$this->provider}-{$this->id}", true ) ) );
+	}
+
+	private function arg_iframe_src( ?string $src ): string {
+
+		if ( 'html5' === $this->provider ) {
+			return '';
+		}
+
+		#$src_gen = build_iframe_src( $this->current_set_props() );
+		$src_gen = $this->build_iframe_src(
+			$this->src,
+			$this->provider,
+			$this->id,
+			$this->account_id,
+			$this->brightcove_embed,
+			$this->brightcove_player,
+			$this->url
+		);
+
+		$src_gen = special_iframe_src_mods( $src_gen, $this->provider, $this->url );
+
+		if ( ! empty( $src ) ) {
+			$src = special_iframe_src_mods( $src, $this->provider, $this->url, true );
+			compare_oembed_src_with_generated_src( $src, $src_gen, $this->provider, $this->url );
+		} else {
+			$src = '';
+		}
+
+		if ( ! valid_url( $src ) && valid_url( $src_gen ) ) {
+			$src = $src_gen;
+		}
+
+		$src = iframesrc_urlargs( $src, $this->provider, $this->mode, $this->parameters );
+		$src = iframesrc_urlarg_autoplay( $src, $this->provider, $this->autoplay );
+		$src = iframesrc_urlarg_enablejsapi( $src, $this->provider );
+
+		return $src;
+	}
+
+	private function build_iframe_src( string $src, string $provider, string $id, string $account_id, string $brightcove_embed, string $brightcove_player, string $url ): string {
+
+		// we do not have provider and id to build a src with
+		if ( ! $provider || ! $id ) {
+
+			// we have a src (from oembed most likely)
+			if ( $src ) {
+				return '';
+			} else {
+				throw new \Exception(
+					__( 'Need Provider and ID to build iframe src.', 'advanced-responsive-video-embedder' )
+				);
+			}
+		}
+
+		$properties = get_host_properties();
+
+		if ( isset( $properties[ $provider ]['embed_url'] ) ) {
+			$pattern = $properties[ $provider ]['embed_url'];
+		} else {
+			$pattern = '%s';
+		}
+
+		if ( 'facebook' === $provider && is_numeric( $id ) ) {
+
+			$id = "https://www.facebook.com/facebook/videos/{$id}/";
+
+		} elseif ( 'twitch' === $provider && is_numeric( $id ) ) {
+
+			$pattern = 'https://player.twitch.tv/?video=v%s';
+		}
+
+		if ( isset( $properties[ $provider ]['url_encode_id'] ) && $properties[ $provider ]['url_encode_id'] ) {
+			$id = rawurlencode( str_replace( '&', '&amp;', $id ) );
+		}
+
+		if ( 'gab' === $provider ) {
+			$src = sprintf( $pattern, $account_id, $id );
+		} elseif ( 'brightcove' === $provider ) {
+			$src = sprintf( $pattern, $account_id, $brightcove_player, $brightcove_embed, $id );
+		} else {
+			$src = sprintf( $pattern, $id );
+		}
+
+		switch ( $provider ) {
+
+			case 'youtube':
+				$t_arg         = Common\get_url_arg( $url, 't' );
+				$time_continue = Common\get_url_arg( $url, 'time_continue' );
+				$list_arg      = Common\get_url_arg( $url, 'list' );
+
+				if ( $t_arg ) {
+					$src = add_query_arg( 'start', youtube_time_to_seconds( $t_arg ), $src );
+				}
+				if ( $time_continue ) {
+					$src = add_query_arg( 'start', youtube_time_to_seconds( $time_continue ), $src );
+				}
+
+				if ( $list_arg ) {
+					$src = add_query_arg( 'list', $list_arg, $src );
+				}
+				break;
+			case 'ted':
+				$lang = Common\get_url_arg( $url, 'language' );
+				if ( $lang ) {
+					$src = str_replace( 'ted.com/talks/', "ted.com/talks/lang/{$lang}/", $src );
+				}
+				break;
+		}
+
+		return $src;
 	}
 
 	private function missing_attribute_check() {
@@ -194,42 +307,6 @@ class Video {
 		}
 	}
 
-	private function oembed_html2src( $data ) {
-
-		if ( empty( $data->html ) ) {
-			arve_errors()->add( 'no-oembed-html', 'No oembed html' );
-			return null;
-		}
-
-		$data->html = htmlspecialchars_decode( $data->html, ENT_COMPAT | ENT_HTML5 );
-
-		if ( 'TikTok' === $data->provider_name ) {
-			preg_match( '/ data-video-id="([^"]+)"/', $data->html, $matches );
-		} elseif ( 'Facebook' === $data->provider_name ) {
-			preg_match( '/class="fb-video" data-href="([^"]+)"/', $data->html, $matches );
-		} else {
-			preg_match( '/<iframe [^>]*src="([^"]+)"/', $data->html, $matches );
-		}
-
-		if ( empty( $matches[1] ) ) {
-			arve_errors()->add( 'no-oembed-src', 'No oembed src detected' );
-			return null;
-		}
-
-		if ( 'TikTok' !== $data->provider_name && ! valid_url( $matches[1] ) ) {
-			arve_errors()->add( 'invalid-oembed-src-url', 'Invalid oembed src url detected:' . $matches[1] );
-			return null;
-		}
-
-		if ( 'TikTok' === $data->provider_name ) {
-			return 'https://www.tiktok.com/embed/v2/' . $matches[1];
-		} elseif ( 'Facebook' === $data->provider_name ) {
-			return 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $matches[1] );
-		}
-
-		return $matches[1];
-	}
-
 	private function set_video_properties_from_attachments() {
 
 		foreach ( VIDEO_FILE_EXTENSIONS as $ext ) {
@@ -252,71 +329,22 @@ class Video {
 		return $current_args;
 	}
 
-	private static function arg_mode( string $mode ): string {
-
-		if ( 'lazyload-lightbox' === $mode ) {
-			$mode = 'lightbox';
-		}
-
-		if ( 'thumbnail' === $mode ) {
-			$mode = 'lazyload';
-		}
-
-		if ( 'normal' !== $mode &&
-			! defined( '\Nextgenthemes\ARVE\Pro\VERSION' ) ) {
-
-			$err_msg = sprintf(
-				// Translators: Mode
-				__( 'Mode: %s not available (ARVE Pro not active?), switching to normal mode', 'advanced-responsive-video-embedder' ),
-				$mode
-			);
-			arve_errors()->add( 'mode-not-avail', $err_msg );
-			$mode = 'normal';
-		}
-
-		return $mode;
-	}
-
-	private function arg_maxwidth() {
-
-		if ( empty( $this->maxwidth ) ) {
-
-			$options = options();
-
-			if ( in_array( $this->align, array( 'left', 'right', 'center' ), true ) ) {
-				$this->maxwidth = (int) $options['align_maxwidth'];
-			} elseif ( is_gutenberg() ) {
-				$this->maxwidth = false;
-			} elseif ( empty( $options['maxwidth'] ) ) {
-				$this->maxwidth = (int) empty( $GLOBALS['content_width'] ) ? DEFAULT_MAXWIDTH : $GLOBALS['content_width'];
-			} else {
-				$this->maxwidth = (int) $options['maxwidth'];
-			}
-		}
-
-		if ( 'tiktok' === $this->provider && $this->maxwidth > 320 ) {
-			$this->maxwidth = 320;
-		}
-
-		return $this->maxwidth;
-	}
-
-	private function arg_autoplay() {
+	private function arg_autoplay( bool $autoplay ) {
 
 		if ( 'normal' === $this->mode ) { // Prevent more then one vid autoplaying
 
 			static $did_run = false;
 
 			if ( $did_run ) {
-				$this->autoplay = false;
+				$autoplay = false;
 			}
 
-			if ( ! $did_run && $this->autoplay ) {
+			if ( ! $did_run && $autoplay ) {
 				$did_run = true;
 			}
 		}
 
-		return apply_filters( 'nextgenthemes/arve/args/autoplay', $this->autoplay, $this->current_set_props() );
+		return apply_filters( 'nextgenthemes/arve/args/autoplay', $autoplay, $this->current_set_props() );
 	}
 
 	private function arg_img_src( string $img_src ): string {
@@ -341,7 +369,7 @@ class Video {
 
 		endif; // thumbnail
 
-		return apply_filters( 'nextgenthemes/arve/args/img_src', $img_src, $this->current_set_props() );
+		return (string) apply_filters( 'nextgenthemes/arve/args/img_src', $img_src, $this->current_set_props() );
 	}
 
 	private function arg_aspect_ratio( string $ratio ) {
@@ -512,48 +540,6 @@ class Video {
 		return true;
 	}
 
-	// phpcs:ignore Generic.Metrics.CyclomaticComplexity.TooHigh
-	private static function validate_bool( $attr_name, $value ) {
-
-		switch ( $value ) {
-			case 'true':
-			case '1':
-			case 'y':
-			case 'yes':
-			case 'on':
-				return true;
-			// case '':
-			// case null:
-			// 	return null;
-			case 'false':
-			case '0':
-			case 'n':
-			case 'no':
-			case 'off':
-				return false;
-			default:
-				$error_code = $attr_name . ' bool-validation';
-
-				arve_errors()->add(
-					$attr_name,
-					// Translators: %1$s = Attr Name, %2$s = Attribute array
-					sprintf(
-						// Translators: Attribute Name
-						__( '%1$s <code>%2$s</code> not valid', 'advanced-responsive-video-embedder' ),
-						esc_html( $attr_name ),
-						esc_html( $value )
-					)
-				);
-
-				arve_errors()->add_data(
-					compact( 'attr_name', 'value' ),
-					$error_code
-				);
-
-				return false;
-		}//end switch
-	}
-
 	public function set_bool_prop( string $arg_name, bool $value ): void {
 		$this->$arg_name = $value;
 	}
@@ -588,94 +574,42 @@ class Video {
 		$type            = get_arg_type( $prop_name );
 		$set_method_name = "set_{$type}_prop";
 
-		switch ( $prop_name ) {
+		if ( in_array($prop_name, $url_args, true) ) {
+			$this->set_string_prop( $prop_name, validate_url( $prop_name, $value ) );
+			return;
+		}
 
-			case in_array( $prop_name, $url_args, true):
-				$this->set_string_prop( $prop_name, $this->validate_url( $prop_name, $value ) );
-				break;
+		switch ( $prop_name ) {
+			// this could hold int old id for attachment id or
+			case 'thumbnail':
+				$this->set_string_prop( 'aspect_ratio', validate_aspect_ratio( $value ) );
 			case 'origin_data':
 				$this->set_array_prop( 'origin_data', $value );
-				break;
+				return;
 			case 'oembed_data':
 				$this->set_object_nullable_prop( 'oembed_data', $value );
-				break;
+				return;
 			case 'align':
-				$this->set_string_prop( 'align', $this->validate_align( $value ) );
-				break;
-			case 'aspecet_ratio':
-				$this->set_string_prop( 'aspect_ratio', $this->validate_aspect_ratio( $value ) );
-				break;
-			default:
-				if ( 'bool' === $type ) {
-					$value = $this->validate_bool( $prop_name, $value );
-				}
-
-				$this->$set_method_name( $prop_name, $value );
-				break;
-		}
-	}
-
-	private static function validate_url( $argname, $url ) {
-
-		if ( ! empty( $url ) && ! valid_url( $url ) ) {
-
-			$error_msg = sprintf(
-				// Translators: 1 URL 2 Attr name
-				__( 'Invalid URL <code>%1$s</code> in <code>%2$s</code>', 'advanced-responsive-video-embedder' ),
-				esc_html( $url ),
-				esc_html( $argname )
-			);
-
-			arve_errors()->add( $argname, $error_msg );
+				$this->set_string_prop( 'align', validate_align( $value ) );
+				return;
+			case 'aspect_ratio':
+				$this->set_string_prop( 'aspect_ratio', validate_aspect_ratio( $value ) );
+				return;
 		}
 
-		return $url;
-	}
-
-	private static function validate_align( $align ) {
-
-		switch ( $align ) {
-			case null:
-			case '':
-			case 'none':
-				return '';
-			case 'left':
-			case 'right':
-			case 'center':
-			case 'wide':
-			case 'full':
-				return $align;
-			default:
-				arve_errors()->add(
-					'align',
-					// Translators: Alignment
-					sprintf( __( 'Align <code>%s</code> not valid', 'advanced-responsive-video-embedder' ), esc_html( $align ) )
-				);
-				return '';
-		}
-	}
-
-	private static function validate_aspect_ratio( $aspect_ratio ) {
-
-		if ( empty( $aspect_ratio ) ) {
-			return $aspect_ratio;
+		if ( 'string' === $type ) {
+			$this->set_string_prop( $prop_name, $value );
+			return;
 		}
 
-		$ratio = explode( ':', $aspect_ratio );
-
-		if ( empty( $ratio[0] ) || ! ctype_digit( (string) $ratio[0] ) ||
-			empty( $ratio[1] ) || ! ctype_digit( (string) $ratio[1] )
-		) {
-			arve_errors()->add(
-				'aspect_ratio',
-				// Translators: attribute
-				sprintf( __( 'Aspect ratio <code>%s</code> is not valid', 'advanced-responsive-video-embedder' ), $aspect_ratio )
-			);
-
-			return null;
+		if ( 'float' === $type ) {
+			$this->set_float_prop( $prop_name, $value );
+			return;
 		}
 
-		return $aspect_ratio;
+		$validate_function_name = __NAMESPACE__ . "\\validate_{$type}";
+
+		$this->$set_method_name( $prop_name, $validate_function_name( $prop_name, $value ) );
 	}
 
 	private function build_html() {
@@ -744,7 +678,7 @@ class Video {
 					'allowfullscreen' => '',
 					'class'           => $class,
 					'data-arve'       => $this->uid,
-					'data-src-no-ap'  => iframe_src_autoplay_args( $this->autoplay, $this->current_set_props() ),
+					'data-src-no-ap'  => iframesrc_urlarg_autoplay( $this->src, $this->provider, false ),
 					'frameborder'     => '0',
 					'height'          => $this->height,
 					'name'            => $this->iframe_name,
@@ -796,7 +730,7 @@ class Video {
 
 	private function get_debug_info( $input_html = '' ) {
 
-		if ( ! defined( WP_DEBUG ) || ! WP_DEBUG ) {
+		if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
 			return '';
 		}
 
@@ -1004,18 +938,10 @@ class Video {
 	}
 }
 
-function new_sane_provider_name( $provider ) {
-	$provider = preg_replace( '/[^a-z0-9]/', '', strtolower( $provider ) );
-	$provider = str_replace( 'wistiainc', 'wistia', $provider );
-	$provider = str_replace( 'rumblecom', 'rumble', $provider );
-
-	return $provider;
-}
-
 function new_height_from_width_and_ratio( $width, $ratio ) {
 
 	if ( empty( $ratio ) ) {
-		return false;
+		return 0;
 	}
 
 	list( $old_width, $old_height ) = explode( ':', $ratio, 2 );
@@ -1040,48 +966,7 @@ function new_get_video_type( $ext ) {
 	}
 }
 
-function new_tracks_html( array $tracks ) {
-
-	$html = '';
-
-	foreach ( $tracks as $track_attr ) {
-		$html .= sprintf( '<track%s>', Common\attr( $track_attr ) );
-	}
-
-	return $html;
-}
-
-function new_arg_iframe_src( array $a ) {
-
-	if ( 'html5' === $a['provider'] ) {
-		return false;
-	}
-
-	$options = options();
-
-	// build src with regex
-	$a['src_gen'] = build_iframe_src( $a );
-	$a['src_gen'] = special_iframe_src_mods( $a['src_gen'], $a['provider'], $a['url'] );
-
-	if ( ! empty( $a['src'] ) ) {
-		$a['src'] = special_iframe_src_mods( $a['src_gen'], $a['provider'], $a['url'], 'oembed src' );
-		compare_oembed_src_with_generated_src( $a );
-	} else {
-		$a['src'] = false;
-	}
-
-	if ( ! valid_url( $a['src'] ) && valid_url( $a['src_gen'] ) ) {
-		$a['src'] = $a['src_gen'];
-	}
-
-	$a['src'] = iframe_src_args( $a['src'], $a );
-	$a['src'] = iframe_src_autoplay_args( $a['src'], $a['provider'], $a['autoplay'] );
-	$a['src'] = iframe_src_jsapi_arg( $a['src'], $a['provider'] );
-
-	return $a['src'];
-}
-
-function new_iframe_src_jsapi_arg( string $src, string $provider ): string {
+function iframesrc_urlarg_enablejsapi( string $src, string $provider ): string {
 
 	if ( function_exists('Nextgenthemes\ARVE\Pro\init') && 'youtube' === $provider ) {
 		$src = add_query_arg( [ 'enablejsapi' => 1 ], $src );
@@ -1090,144 +975,25 @@ function new_iframe_src_jsapi_arg( string $src, string $provider ): string {
 	return $src;
 }
 
-function new_build_iframe_src( array $a ) {
-
-	if ( ! $a['provider'] || ! $a['id'] ) {
-
-		if ( $a['src'] ) {
-			return false;
-		} else {
-			throw new \Exception(
-				__( 'Need Provider and ID to build iframe src.', 'advanced-responsive-video-embedder' )
-			);
-		}
-	}
-
-	$options    = options();
-	$properties = get_host_properties();
-
-	if ( isset( $properties[ $a['provider'] ]['embed_url'] ) ) {
-		$pattern = $properties[ $a['provider'] ]['embed_url'];
-	} else {
-		$pattern = '%s';
-	}
-
-	if ( 'facebook' === $a['provider'] && is_numeric( $a['id'] ) ) {
-
-		$a['id'] = "https://www.facebook.com/facebook/videos/{$a['id']}/";
-
-	} elseif ( 'twitch' === $a['provider'] && is_numeric( $a['id'] ) ) {
-
-		$pattern = 'https://player.twitch.tv/?video=v%s';
-	}
-
-	if ( isset( $properties[ $a['provider'] ]['url_encode_id'] ) && $properties[ $a['provider'] ]['url_encode_id'] ) {
-		$a['id'] = rawurlencode( str_replace( '&', '&amp;', $a['id'] ) );
-	}
-
-	if ( 'gab' === $a['provider'] ) {
-		$src = sprintf( $pattern, $a['account_id'], $a['id'] );
-	} elseif ( 'brightcove' === $a['provider'] ) {
-		$src = sprintf( $pattern, $a['account_id'], $a['brightcove_player'], $a['brightcove_embed'], $a['id'] );
-	} else {
-		$src = sprintf( $pattern, $a['id'] );
-	}
-
-	switch ( $a['provider'] ) {
-
-		case 'youtube':
-			$t_arg         = Common\get_url_arg( $a['url'], 't' );
-			$time_continue = Common\get_url_arg( $a['url'], 'time_continue' );
-			$list_arg      = Common\get_url_arg( $a['url'], 'list' );
-
-			if ( $t_arg ) {
-				$src = add_query_arg( 'start', youtube_time_to_seconds( $t_arg ), $src );
-			}
-			if ( $time_continue ) {
-				$src = add_query_arg( 'start', youtube_time_to_seconds( $time_continue ), $src );
-			}
-
-			if ( $list_arg ) {
-				$src = add_query_arg( 'list', $list_arg, $src );
-			}
-			break;
-		case 'ted':
-			$lang = Common\get_url_arg( $a['url'], 'language' );
-			if ( $lang ) {
-				$src = str_replace( 'ted.com/talks/', "ted.com/talks/lang/{$lang}/", $src );
-			}
-			break;
-	}
-
-	return $src;
-}
-
-function new_special_iframe_src_mods( string $src, string $provider, string $url, bool $oembed_src = false ) {
-
-	if ( empty( $src ) ) {
-		return $src;
-	}
-
-	switch ( $provider ) {
-		case 'youtube':
-			$yt_v    = Common\get_url_arg( $url, 'v' );
-			$yt_list = Common\get_url_arg( $url, 'list' );
-
-			if ( $oembed_src &&
-				str_contains( $src, '/embed/videoseries?' ) &&
-				$yt_v
-			) {
-				$src = str_replace( '/embed/videoseries?', "/embed/$yt_v?", $src );
-			}
-
-			if ( $yt_list ) {
-				$src = remove_query_arg( 'feature', $src );
-				$src = add_query_arg( 'list', $yt_list, $src );
-			}
-
-			$options = options();
-
-			if ( $options['youtube_nocookie'] ) {
-				$src = str_replace( 'https://www.youtube.com', 'https://www.youtube-nocookie.com', $src );
-			}
-
-			break;
-		case 'vimeo':
-			$src = add_query_arg( 'dnt', 1, $src );
-
-			$parsed_url = wp_parse_url( $url );
-
-			if ( ! empty( $parsed_url['fragment'] ) && str_starts_with( $parsed_url['fragment'], 't' ) ) {
-				$src .= '#' . $parsed_url['fragment'];
-			}
-			break;
-		case 'wistia':
-			$src = add_query_arg( 'dnt', 1, $src );
-			break;
-	}
-
-	return $src;
-}
-
-function new_iframe_src_args( $src, array $a ) {
+function iframesrc_urlargs( string $src, string $provider, string $mode, string $parameters ): string {
 
 	$options = options();
 
-	$parameters     = wp_parse_args( preg_replace( '!\s+!', '&', (string) $a['parameters'] ) );
+	$parameters     = wp_parse_args( preg_replace( '!\s+!', '&', $parameters ) );
 	$params_options = array();
 
-	if ( ! empty( $options[ 'url_params_' . $a['provider'] ] ) ) {
-		$params_options = wp_parse_args( preg_replace( '!\s+!', '&', $options[ 'url_params_' . $a['provider'] ] ) );
+	if ( ! empty( $options[ 'url_params_' . $provider ] ) ) {
+		$params_options = wp_parse_args( preg_replace( '!\s+!', '&', $options[ 'url_params_' . $provider ] ) );
 	}
 
 	$parameters = wp_parse_args( $parameters, $params_options );
 	$src        = add_query_arg( $parameters, $src );
 
-	if ( 'youtube' === $a['provider'] && in_array( $a['mode'], array( 'lightbox', 'link-lightbox' ), true ) ) {
+	if ( 'youtube' === $provider && in_array( $mode, array( 'lightbox', 'link-lightbox' ), true ) ) {
 		$src = add_query_arg( 'playsinline', '1', $src );
 	}
 
-	if ( 'twitch' === $a['provider'] ) {
+	if ( 'twitch' === $provider ) {
 		$domain = wp_parse_url( home_url(), PHP_URL_HOST );
 		$src    = add_query_arg( 'parent', $domain, $src );
 	}
@@ -1236,7 +1002,7 @@ function new_iframe_src_args( $src, array $a ) {
 }
 
 // phpcs:ignore Generic.Metrics.CyclomaticComplexity.MaxExceeded
-function new_iframe_src_autoplay_args( string $src, string $provider, bool $autoplay ) {
+function iframesrc_urlarg_autoplay( string $src, string $provider, bool $autoplay ): string {
 
 	switch ( $provider ) {
 		case 'alugha':
@@ -1305,48 +1071,3 @@ function new_iframe_src_autoplay_args( string $src, string $provider, bool $auto
 	}
 }
 
-function new_compare_oembed_src_with_generated_src( array $a ) {
-
-	if ( empty($a['src']) || empty($a['src_gen']) ) {
-		return;
-	}
-
-	$src     = $a['src'];
-	$src_gen = $a['src_gen'];
-
-	switch ( $a['provider'] ) {
-		case 'wistia':
-		case 'vimeo':
-			$src     = Common\remove_url_query( $src );
-			$src_gen = Common\remove_url_query( $src_gen );
-			break;
-		case 'youtube':
-			$src = remove_query_arg( 'feature', $src );
-			$src = remove_query_arg( 'origin', $src );
-			$src = remove_query_arg( 'enablejsapi', $src );
-			break;
-		case 'dailymotion':
-			$src = remove_query_arg( 'pubtool', $src );
-			break;
-	}
-
-	if ( $src !== $src_gen ) {
-
-		$msg  = 'src mismatch<br>' . PHP_EOL;
-		$msg .= sprintf( 'provider: %s<br>' . PHP_EOL, esc_html($a['provider']) );
-		$msg .= sprintf( 'url: %s<br>' . PHP_EOL, esc_url($a['url']) );
-		$msg .= sprintf( 'src in org: %s<br>' . PHP_EOL, esc_url($a['src']) );
-
-		if ( $src !== $a['src'] ) {
-			$msg .= sprintf( 'src in mod: %s<br>' . PHP_EOL, esc_url($src) );
-		}
-
-		if ( $src_gen !== $a['src_gen'] ) {
-			$msg .= sprintf( 'src gen in mod: %s<br>' . PHP_EOL, esc_url($src_gen) );
-		}
-
-		$msg .= sprintf( 'src gen org: %s<br>' . PHP_EOL, esc_url($a['src_gen']) );
-
-		$a['errors']->add( 'hidden', $msg );
-	}
-}

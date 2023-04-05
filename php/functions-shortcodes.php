@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
 function shortcode( $a ) {
@@ -38,33 +38,40 @@ function shortcode( $a ) {
 	return build_video( $a );
 }
 
-function error( $msg, $code = '' ) {
+function error( $messages, $code = '' ) {
+
 	return sprintf(
-		PHP_EOL . PHP_EOL .'<span class="arve-error"%s><abbr title="%s">ARVE</abbr> %s<br></span>' . PHP_EOL,
+		PHP_EOL . PHP_EOL .
+			'<span class="arve-error"%s><abbr title="%s">ARVE</abbr> %s</span>' . PHP_EOL,
 		str_contains( $code, 'hidden' ) ? 'hidden' : '',
 		__( 'Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ),
 		// translators: Error message
-		sprintf( __( 'Error: %s', 'advanced-responsive-video-embedder' ), $msg )
+		sprintf( __( 'Error: %s', 'advanced-responsive-video-embedder' ), $messages ),
 	);
 }
 
 function get_error_html() {
 
-	$html = '';
+	$html     = '';
+	$messages = '';
 
 	foreach ( arve_errors()->get_error_codes() as $code ) {
+
+		$message = '';
+
 		foreach ( arve_errors()->get_error_messages( $code ) as $key => $message ) {
-			$html .= error( $message, $code );
+			$messages .= sprintf( '%s<br>', $message );
 		}
 
-		$data = arve_errors()->get_error_data( $code );
+		$html .= $messages;
+		$data  = arve_errors()->get_error_data( $code );
 
-		if ( ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ||
-			( defined( 'ARVE_UNIT_TESTS' ) && ARVE_UNIT_TESTS )
-		) {
-			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
-			$html .= error( print_r( $data ), $code );
+		if ( ! empty( $data ) && ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ) {
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
+			$html .= sprintf( 'Data: %s', var_export( $data, true ) );
 		}
+
+		$html = error( $html );
 
 		arve_errors()->remove($code);
 	}
@@ -148,10 +155,6 @@ function wp_video_shortcode_override( $out, $attr ) {
 
 	if ( empty( $attr['url'] ) && ! empty( $attr['src'] ) ) {
 		$attr['url'] = $attr['src'];
-	}
-
-	if ( isset( $attr['loop'] ) ) {
-		$attr['loop'] = bool_to_shortcode_string( $attr['loop'] );
 	}
 
 	if ( ! empty( $attr['poster'] ) ) {

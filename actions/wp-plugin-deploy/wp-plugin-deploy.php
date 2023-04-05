@@ -108,7 +108,10 @@ sys("svn status | grep '^\!' | sed 's/! *//' | xargs -I% svn rm %@ --quiet");
 # Copy tag locally to make this a single commit
 if ( ! $readme_only ) {
 	echo '➤ Copying tag...' . PHP_EOL;
-	sys('svn cp trunk '.e("tags/$version"));
+
+	if ( 'trunk' !== $version ) {
+		sys('svn cp trunk '.e("tags/$version"));
+	}
 }
 
 # Fix screenshots getting force downloaded when clicking them
@@ -131,13 +134,13 @@ sys($commit_cmd);
 echo '✓ Plugin deployed!';
 
 function has_arg( string $arg ): bool {
-	$getopt = getopt( null, [ $arg ] );
+	$getopt = getopt( '', [ $arg ] );
 	return isset($getopt[ $arg ]);
 }
 
 function required_arg( string $arg ): string {
 
-	$getopt = getopt( null, [ "$arg:" ] );
+	$getopt = getopt( '', [ "$arg:" ] );
 
 	if ( empty($getopt[ $arg ]) ) {
 		echo "need --$arg=x";

@@ -1,7 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-function arve_errors() {
+use WP_Error;
+
+function arve_errors(): WP_Error {
 
 	static $errors;
 

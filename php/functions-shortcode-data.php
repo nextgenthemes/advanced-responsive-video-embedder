@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
 function url_query_array( $url ) {

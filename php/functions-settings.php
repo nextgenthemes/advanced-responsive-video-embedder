@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
 function options() {
@@ -155,7 +155,6 @@ function get_arg_type( $arg_name ) {
 	if ( empty( all_settings()[ $arg_name ] ) ) {
 
 		switch ( $arg_name ) {
-
 			case 'width':
 				return 'int';
 			case 'height':
@@ -168,13 +167,10 @@ function get_arg_type( $arg_name ) {
 	$s = all_settings()[ $arg_name ];
 
 	switch ( $s['type'] ) {
-
 		case 'select':
 			if ( ! empty( $s['options'] ) && has_bool_default_options( $s['options'] ) ) {
 				return 'bool';
 			}
-			return 'string';
-		case 'attachment':
 			return 'string';
 		case 'boolean':
 			return 'bool';
@@ -185,32 +181,14 @@ function get_arg_type( $arg_name ) {
 	return $s['type'];
 }
 
-function is_int_arg( $arg_name ) {
-
-	$s = all_settings()[ $arg_name ];
-
-	if ( $s['shortcode'] && 'integer' === $s['type'] ) {
-		return true;
-	}
-
-	return false;
-}
-
 function shortcode_pairs() {
 
 	$options  = options();
 	$settings = shortcode_settings();
 
 	foreach ( $settings as $k => $v ) :
-		if ( 'select' === $v['type'] && has_bool_default_options( $v['options'] ) ) {
-			$pairs[ $k ] = bool_to_shortcode_string( $options[ $k ] );
-		} elseif ( $v['option'] ) {
-
-			if ( is_bool_arg( $k ) ) {
-				$pairs[ $k ] = bool_to_shortcode_string( $options[ $k ] );
-			} else {
-				$pairs[ $k ] = (string) $options[ $k ];
-			}
+		if ( $v['option'] ) {
+			$pairs[ $k ] = $options[ $k ];
 		} else {
 			$pairs[ $k ] = $v['default'];
 		}
@@ -857,7 +835,7 @@ function all_settings() {
 				'disabled'           => __( 'Disabled', 'advanced-responsive-video-embedder' ),
 				'disabled-for-vimeo' => __( 'Disabled for Vimeo only', 'advanced-responsive-video-embedder' ),
 			],
-			'description' => __( 'When enabled ARVE Pro will display the thumbnial again like it is shown before the video was loaded. When a video is displayed in a lightbox the lightbox will automatically close. If you are using Vimeos "call to action" feature for example you want to disable this for vimeo.', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'When enabled ARVE Pro will display the thumbnail again like it is shown before the video was loaded. When a video is displayed in a lightbox the lightbox will automatically close. If you are using Vimeos "call to action" feature for example you want to disable this for vimeo.', 'advanced-responsive-video-embedder' ),
 		],
 		/*
 		'videojs_theme' => [
