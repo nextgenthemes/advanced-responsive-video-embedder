@@ -9,6 +9,8 @@
 /tests         export-ignore
 /readme        export-ignore
 
+build/* -diff
+
 * text eol=lf
 *.gif binary
 *.ico binary
