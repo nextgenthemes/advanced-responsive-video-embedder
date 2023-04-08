@@ -66,6 +66,17 @@ function action_admin_init_setup_messages() {
 			)
 		);
 	}
+
+	if ( PHP_VERSION_ID < 70200 ) {
+		$msg = esc_html__( 'Your php version is very outdated, the next version of ARVE will require probably require php 7.2+, possibly 7.2+ please update (ask your host to update).', 'advanced-responsive-video-embedder' );
+
+		Notices::instance()->register_notice(
+			'ngt-arve-addon-ad',
+			'notice-info',
+			$msg,
+		);
+	}
+
 }
 
 function ad_html() {
