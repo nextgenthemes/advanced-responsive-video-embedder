@@ -9,7 +9,7 @@ if ( $workdir ) {
 }
 
 if ( getenv( 'GITHUB_ACTION' ) ) {
-	sys('git config --global --add safe.directory /github/workspace');
+	#sys('git config --global --add safe.directory /github/workspace');
 }
 
 $slug        = basename(getcwd());
