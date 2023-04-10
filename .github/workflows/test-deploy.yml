@@ -117,9 +117,9 @@ jobs:
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
       - name: Deploy
-        uses: ./actions/wp-plugin-deploy
-        working-directory: advanced-responsive-video-embedder
+        uses: ./advanced-responsive-video-embedder/actions/wp-plugin-deploy
         with:
+          workdir: advanced-responsive-video-embedder
           version: ${{ steps.get_version.outputs.VERSION }}
           svn_user: ${{ secrets.SVN_USERNAME }}
           svn_pass: ${{ secrets.SVN_PASSWORD }}
