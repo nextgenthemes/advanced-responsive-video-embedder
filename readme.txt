@@ -195,8 +195,8 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2023-04-09 9.10.0 ###
-* New: Warning massage that ARVE will require PHP 7.2 or 7.4 soon.
+### 2023-04-11 9.10.0 ###
+* New: Warning massage that ARVE will require PHP 7.2 soon.
 * New: Support for extra classes (Advanced section) on the ARVE block.
 * New: You can align left/right the ARVE block now.
 * Fix: Styles were not applied inside new Gutenberg versions.
