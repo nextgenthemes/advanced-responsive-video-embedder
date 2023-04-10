@@ -137,7 +137,7 @@ function has_arg( string $arg ): bool {
 
 function required_arg( string $arg ): string {
 
-	$getopt = getopt( null, [ "$arg:" ] );
+	$getopt = getopt( '', [ "$arg:" ] );
 
 	if ( empty($getopt[ $arg ]) ) {
 		echo "need --$arg=x";
@@ -147,7 +147,7 @@ function required_arg( string $arg ): string {
 	return $getopt[ $arg ];
 }
 
-function arg_with_default( string $arg, $default ): string {
+function arg_with_default( string $arg, mixed $default ): mixed {
 
 	$getopt = getopt( '', [ "$arg::" ] );
 
@@ -166,12 +166,10 @@ function sys( string $command, array $args = [] ): ?string {
 
 	echo "Executing: $command" . PHP_EOL;
 	$out = system( $command, $exit_code );
-	echo PHP_EOL;
+	echo $out . PHP_EOL;
 
 	if ( 0 !== $exit_code || false === $out ) {
-		echo 'Error, output: ';
-		var_dump($out);
-		echo "Exit Code: $exit_code." . PHP_EOL;
+		echo "Exit Code: $exit_code" . PHP_EOL;
 		exit($exit_code);
 	}
 

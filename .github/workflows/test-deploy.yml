@@ -109,6 +109,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          path: advanced-responsive-video-embedder
 
       - name: Get the version
         id: get_version
@@ -116,9 +118,9 @@ jobs:
 
       - name: Deploy
         uses: ./actions/wp-plugin-deploy
+        working-directory: advanced-responsive-video-embedder
         with:
           version: ${{ steps.get_version.outputs.VERSION }}
-          workdir: symbiosistheme.com/web/app/plugins/advanced-responsive-video-embedder
           svn_user: ${{ secrets.SVN_USERNAME }}
           svn_pass: ${{ secrets.SVN_PASSWORD }}
 
