@@ -147,7 +147,7 @@ function required_arg( string $arg ): string {
 	return $getopt[ $arg ];
 }
 
-function arg_with_default( string $arg, mixed $default ): mixed {
+function arg_with_default( string $arg, $default ) {
 
 	$getopt = getopt( '', [ "$arg::" ] );
 
