@@ -167,7 +167,6 @@ class Video {
 			return '';
 		}
 
-		#$src_gen = build_iframe_src( $this->current_set_props() );
 		$src_gen = $this->build_iframe_src(
 			$this->src,
 			$this->provider,
@@ -582,7 +581,8 @@ class Video {
 		switch ( $prop_name ) {
 			// this could hold int old id for attachment id or
 			case 'thumbnail':
-				$this->set_string_prop( 'aspect_ratio', validate_aspect_ratio( $value ) );
+				$this->set_string_prop( 'thumbnail', validate_thumbnail( $value ) );
+				return;
 			case 'origin_data':
 				$this->set_array_prop( 'origin_data', $value );
 				return;

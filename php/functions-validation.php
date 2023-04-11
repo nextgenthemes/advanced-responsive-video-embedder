@@ -1,7 +1,11 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-function validate_thumbnail( mixed $id_or_url ): string {
+function validate_thumbnail( $id_or_url ): string {
+
+	if ( '' === $id_or_url ) {
+		return $id_or_url;
+	}
 
 	// attachment id
 	if ( is_int( $id_or_url ) ) {
@@ -9,13 +13,13 @@ function validate_thumbnail( mixed $id_or_url ): string {
 		return (string) $id_or_url;
 	}
 
-	// attachment id
+	// attachment id as string
 	if ( is_string( $id_or_url ) && ctype_digit( $id_or_url ) ) {
 		return $id_or_url;
 	}
 
 	// url
-	if ( is_string( $id_or_url ) && ! empty( $id_or_ur ) && valid_url( $id_or_ur ) ) {
+	if ( is_string( $id_or_url ) && ! empty( $id_or_url ) && valid_url( $id_or_url ) ) {
 		return $id_or_url;
 	}
 
@@ -26,6 +30,7 @@ function validate_thumbnail( mixed $id_or_url ): string {
 	);
 
 	arve_errors()->add( 'validate_thumbnail', $error_msg );
+	arve_errors()->add_data( $id_or_url, 'validate_thumbnail' );
 
 	return '';
 }
@@ -186,6 +191,8 @@ function validate_int( string $prop_name, mixed $value ) {
 }
 
 function valid_url( string $url ): bool {
+
+	pd( __FUNCTION__ . " $url" );
 
 	if ( empty( $url ) ) {
 		return false;

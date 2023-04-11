@@ -44,8 +44,6 @@ function settings_instance() {
 		);
 	}
 
-	upgrade_options( $inst );
-
 	return $inst;
 }
 
@@ -224,72 +222,6 @@ function shortcode_pairs() {
 	}
 
 	return apply_filters( 'nextgenthemes/arve/shortcode_pairs', $pairs );
-}
-
-function upgrade_options( $settings_instance ) {
-
-	$options_ver           = get_option( 'nextgenthemes_arve_options_ver' );
-	$options_ver_when_done = '9.0.0-beta9';
-
-	if ( \version_compare( $options_ver, $options_ver_when_done, '>=' ) ) {
-		return;
-	}
-
-	$settings        = settings();
-	$new_options     = $settings_instance->get_options();
-	$default_options = $settings_instance->get_options_defaults();
-	$old_options     = (array) get_option( 'arve_options_main' );
-	$old_params      = (array) get_option( 'arve_options_params' );
-	$old_pro_options = (array) get_option( 'arve_options_pro' );
-
-	if ( ! empty( $old_pro_options ) ) {
-		$old_options = array_merge( $old_options, $old_pro_options );
-	}
-
-	if ( ! empty( $old_params ) ) {
-
-		foreach ( $old_params as $provider => $params ) {
-			$old_options[ 'url_params_' . $provider ] = $params;
-		}
-	}
-
-	if ( ! empty( $old_options ) ) {
-
-		if ( isset( $old_options['promote_link'] ) ) {
-			$old_options['arve_link'] = $old_options['promote_link'];
-		}
-
-		if ( isset( $old_options['video_maxwidth'] ) ) {
-			$old_options['maxwidth'] = $old_options['video_maxwidth'];
-		}
-
-		// Not storing options with default values
-		$new_options = array_diff_assoc( $old_options, $default_options );
-
-		// Filter out options that got removed or renamed
-		foreach ( $new_options as $key => $val ) {
-
-			if ( ! array_key_exists( $key, $default_options ) ) {
-				unset( $new_options[ $key ] );
-				continue;
-			}
-
-			switch ( $settings[ $key ]['type'] ) {
-				case 'boolean':
-					$new_options[ $key ] = (bool) $new_options[ $key ];
-					break;
-				case 'integer':
-					$new_options[ $key ] = (int) $new_options[ $key ];
-					break;
-				default:
-					$new_options[ $key ] = (string) $new_options[ $key ];
-					break;
-			}
-		}
-
-		update_option( 'nextgenthemes_arve', $new_options );
-		update_option( 'nextgenthemes_arve_options_ver', $options_ver_when_done );
-	}
 }
 
 function all_settings() {
