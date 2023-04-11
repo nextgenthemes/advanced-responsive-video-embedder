@@ -9,8 +9,7 @@ if ( $workdir ) {
 }
 
 if ( getenv( 'GITHUB_ACTION' ) ) {
-	var_dump($workdir);
-	sys('git config --global --add safe.directory ' . e($workdir) );
+	sys('git config --global --add safe.directory ' . e( getcwd() ) );
 }
 
 $slug        = basename(getcwd());
@@ -109,7 +108,7 @@ sys("svn status | grep '^\!' | sed 's/! *//' | xargs -I% svn rm %@ --quiet");
 # Copy tag locally to make this a single commit
 if ( ! $readme_only ) {
 	echo '➤ Copying tag...' . PHP_EOL;
-	sys('svn cp trunk '.e("tags/$version"));
+	sys('svn cp trunk ' . e("tags/$version"));
 }
 
 # Fix screenshots getting force downloaded when clicking them
@@ -132,7 +131,7 @@ sys($commit_cmd);
 echo '✓ Plugin deployed!';
 
 function has_arg( string $arg ): bool {
-	$getopt = getopt( null, [ $arg ] );
+	$getopt = getopt( '', [ $arg ] );
 	return isset($getopt[ $arg ]);
 }
 
