@@ -33,10 +33,7 @@
         }
     },
     "editorScript": "arve-block",
-    "editorStyle": [
-        "arve",
-        "file:../build/block.css"
-    ],
+    "editorStyle": "arve-block",
     "attributes": {
         "url": {
             "type": "string"

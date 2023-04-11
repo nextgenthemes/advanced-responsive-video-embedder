@@ -66,6 +66,15 @@ function register_assets() {
 			)
 		);
 
+		Common\register_asset(
+			array(
+				'handle'               => 'arve-block',
+				'src'                  => plugins_url( 'build/block.css', PLUGIN_FILE ),
+				'path'                 => PLUGIN_DIR . '/build/block.css',
+				'deps'                 => array( 'arve' ),
+			)
+		);
+
 		// Register our block, and explicitly define the attributes we accept.
 		register_block_type(
 			PLUGIN_DIR . '/src/block.json',
