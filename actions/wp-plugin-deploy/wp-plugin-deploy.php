@@ -113,6 +113,7 @@ if ( ! $readme_only ) {
 
 # Fix screenshots getting force downloaded when clicking them
 # https://developer.wordpress.org/plugins/wordpress-org/plugin-assets/
+# We use system here because we ignore any errors that happen if these files not exit.
 system('svn propset svn:mime-type image/png assets/*.png');
 system('svn propset svn:mime-type image/jpeg assets/*.jpg');
 
