@@ -9,6 +9,7 @@ if ( $workdir ) {
 }
 
 if ( getenv( 'GITHUB_ACTION' ) ) {
+	var_dump($workdir);
 	sys('git config --global --add safe.directory ' . e($workdir) );
 }
 
