@@ -8,6 +8,7 @@
 /package*.json export-ignore
 /tests         export-ignore
 /readme        export-ignore
+/actions       export-ignore
 
 build/* -diff
 
