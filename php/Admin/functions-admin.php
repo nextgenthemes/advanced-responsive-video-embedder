@@ -282,6 +282,8 @@ function admin_enqueue_scripts() {
 			'src'                  => plugins_url( 'build/admin.js', ARVE\PLUGIN_FILE ),
 			'path'                 => ARVE\PLUGIN_DIR . '/build/admin.js',
 			'deps'                 => array(),
+			'async'                => true,
+			'in_footer'            => true,
 			'inline_script_before' => 'var arveSCSettings = ' . \wp_json_encode( $settings_data ) . ';',
 		)
 	);
