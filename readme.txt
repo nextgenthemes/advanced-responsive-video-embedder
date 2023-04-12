@@ -195,6 +195,9 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2023-04-12 9.10.3 ###
+* Fix: Yoast SEO compatibility and other possible issues.
+
 ### 2023-04-11 9.10.2 ###
 * Fix: Fatal error with WordPress 5.8.6
 
