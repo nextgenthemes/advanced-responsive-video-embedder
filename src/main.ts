@@ -51,10 +51,7 @@ function removeUnwantedStuff(): void {
 
 	qsa( '.wp-block-embed' ).forEach( ( el ) => {
 		if ( el.querySelector( '.arve' ) ) {
-			el.classList.remove(
-				'wp-embed-aspect-16-9',
-				'wp-has-aspect-ratio'
-			);
+			el.classList.remove( 'wp-embed-aspect-16-9', 'wp-has-aspect-ratio' );
 
 			const wrapper = el.querySelector( '.wp-block-embed__wrapper' );
 
@@ -65,7 +62,7 @@ function removeUnwantedStuff(): void {
 	} );
 }
 
-function globalID(): void {
+export function globalID(): void {
 	// Usually the id should be already there added with php using the language_attributes filter
 	if ( 'html' === d.documentElement.id ) {
 		return;
@@ -92,7 +89,7 @@ function unwrap( el: Element ): void {
 	parent.removeChild( el );
 }
 
-function domReady( callback ): void {
+export function domReady( callback ): void {
 	if ( typeof d === 'undefined' ) {
 		return;
 	}
