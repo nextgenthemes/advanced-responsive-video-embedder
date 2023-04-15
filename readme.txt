@@ -1603,4 +1603,4 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 
 ### 2012-02-03 0.1 ###
 
-* Started by improving the WordPress 'Video Embedder Plugin' but now complete new code `svn log --stop-on-copy --quiet https://plugins.svn.wordpress.org/advanced-responsive-video-embedder/ | tail -2` this plugins was submitted and approved in 2012, seems I have been working on this longer then I thought..
+* Started by improving the WordPress 'Video Embedder Plugin' but now complete new code `svn log --stop-on-copy --quiet https://plugins.svn.wordpress.org/advanced-responsive-video-embedder/ | tail -2` this plugins was submitted and approved in 2012, seems I have been working on this longer then I thought...

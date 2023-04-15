@@ -23,4 +23,7 @@ jobs:
           workdir: advanced-responsive-video-embedder
           svn_user: ${{ secrets.SVN_USERNAME }}
           svn_pass: ${{ secrets.SVN_PASSWORD }}
-          switch: --readme-assets-only
+          readme-and-assets-only: true
+          verbose: true
+
+
