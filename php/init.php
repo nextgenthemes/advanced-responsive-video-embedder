@@ -5,7 +5,10 @@ init_920();
 
 function init_920() {
 	init_public();
-	init_admin();
+
+	if ( is_admin() ) {
+		init_admin();
+	}
 }
 
 function init_public() {
@@ -68,11 +71,11 @@ function init_admin() {
 	add_action( 'register_shortcode_ui', __NAMESPACE__ . '\Admin\register_shortcode_ui' );
 	add_action( 'wp_dashboard_setup', __NAMESPACE__ . '\Admin\add_dashboard_widget' );
 
-	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), __NAMESPACE__ . '\Admin\add_action_links' );
+	add_filter( 'plugin_action_links_' . plugin_basename( PLUGIN_FILE ), __NAMESPACE__ . '\Admin\add_action_links' );
 	add_filter( 'nextgenthemes_arve_save_options', __NAMESPACE__ . '\Admin\filter_save_options' );
 }
 
-register_uninstall_hook( __FILE__, __NAMESPACE__ . '\\uninstall' );
+register_uninstall_hook( PLUGIN_FILE, __NAMESPACE__ . '\\uninstall' );
 
 function uninstall() {
 
