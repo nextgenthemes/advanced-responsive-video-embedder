@@ -1,22 +1,25 @@
-<?php
-namespace Nextgenthemes\ARVE\Common;
+<?php declare(strict_types=1);
+namespace Nextgenthemes\WP;
+
+use Exception;
 
 class Settings {
 	private static $no_reset_sections = array( 'debug', 'random-video', 'keys' );
 
-	public $sections             = array();
-	private $menu_title          = '';
-	private $option_key          = '';
-	private $options             = array();
-	private $options_by_tag      = array();
-	private $options_defaults    = array();
-	private $premium_sections    = array();
-	private $rest_namespace      = '';
-	private $settings            = array();
-	private $settings_page_title = '';
-	private $slashed_namespace   = '';
-	private $slugged_namespace   = '';
-	private $menu_parent_slug    = '';
+	private string $menu_parent_slug;
+	private string $menu_title;
+	private string $settings_page_title;
+	private string $slashed_namespace;
+	private string $slugged_namespace;
+	private string $rest_namespace;
+	private string $base_path;
+	private string $base_url;
+
+	public array $sections;
+	private array $options;
+	private array $options_defaults;
+	private array $premium_sections;
+	private array $settings;
 
 	public function __construct( $args ) {
 
@@ -30,6 +33,9 @@ class Settings {
 
 		$args = wp_parse_args( $args, $defaults );
 
+		$this->base_url  = $args['base_url'];
+		$this->base_path = $args['base_path'];
+
 		$this->settings            = $args['settings'];
 		$this->sections            = $args['sections'];
 		$this->premium_sections    = $args['premium_sections'];
@@ -40,9 +46,8 @@ class Settings {
 		$this->rest_namespace      = $this->slugged_namespace . '/v1';
 		$this->menu_parent_slug    = $args['menu_parent_slug'];
 
-		foreach ( $this->settings as $key => $value ) {
-			$this->options_defaults[ $key ] = $value['default'];
-		}
+		$this->set_namespaces( $args['namespace'] );
+		$this->set_default_options();
 
 		$this->options = (array) get_option( $this->slugged_namespace, array() );
 		$this->options = $this->options + $this->options_defaults;
@@ -52,11 +57,71 @@ class Settings {
 		add_action( 'admin_menu', array( $this, 'register_setting_page' ) );
 	}
 
+	private function set_default_options() {
+
+		foreach ( $this->settings as $key => $value ) {
+
+			$type = $this->get_php_type_from_setting( $key );
+
+			if ( gettype( $value['default'] ) !== $type ) {
+
+				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+					d($key, $type, $value['default']);
+				}
+
+				throw new Exception( "Default value for '$key' has wring type" );
+			}
+
+			$this->options_defaults[ $key ] = $value['default'];
+		}
+	}
+
+	public function get_php_type_from_setting( string $setting_key ): string {
+
+		$setting_props = $this->settings[ $setting_key ];
+
+		if ( 'select' === $setting_props['type'] ) {
+			if ( ! empty( $setting_props['options'] ) && $this->has_bool_default_options( $setting_props['options'] ) ) {
+				return 'boolean';
+			}
+			return 'string';
+		}
+
+		return $setting_props['type'];
+	}
+
+	public static function has_bool_default_options( array $array ) {
+
+		return ! array_diff_key(
+			$array,
+			array(
+				''      => true,
+				'true'  => true,
+				'false' => true,
+			)
+		);
+	}
+
+	private function set_namespaces( string $namespace ) {
+		$this->slugged_namespace = sanitize_key( str_replace( '\\', '_', $namespace ) );
+		$this->slashed_namespace = str_replace( '_', '/', $this->slugged_namespace );
+		$this->rest_namespace    = $this->slugged_namespace . '/v1';
+	}
+
+	public function __set($name, $value) {
+
+		if ( ! property_exists( __CLASS__, $name ) ) {
+			throw new Exception( "Trying to set property '$name', but it does not exits" );
+		}
+
+		$this->$name = $value;
+	}
+
 	public function set_defined_product_keys() {
 
-		$products = get_products();
+		$products = \Nextgenthemes\ARVE\Common\get_products();
 		foreach ( $products as $p => $value ) {
-			$defined_key = get_defined_key( $p );
+			$defined_key = \Nextgenthemes\ARVE\Common\get_defined_key( $p );
 			if ( $defined_key ) {
 				$this->options[ $p ] = $defined_key;
 			}
@@ -78,7 +143,7 @@ class Settings {
 		if ( 'nextgenthemes' === $this->slugged_namespace ) {
 
 			$action            = json_decode( $options['action'] );
-			$options['action'] = '';
+			$options['action'] = 'str';
 
 			if ( $action ) {
 				$product_id  = get_products()[ $action->product ]['id'];
@@ -120,8 +185,8 @@ class Settings {
 		enqueue_asset(
 			array(
 				'handle' => 'nextgenthemes-settings',
-				'src'    => plugin_or_theme_src( 'build/settings.css' ),
-				'path'   => dirname( dirname( __DIR__ ) ) . '/build/settings.css',
+				'src'    => trailingslashit( $this->base_url ) . 'fake-vendor/nextgenthemes/WP_Settings/public/build/bundle.css',
+				'path'   => trailingslashit( $this->base_path ) . 'fake-vendor/nextgenthemes/WP_Settings/public/build/bundle.css',
 			)
 		);
 
@@ -142,8 +207,8 @@ class Settings {
 		enqueue_asset(
 			array(
 				'handle'               => 'nextgenthemes-settings',
-				'src'                  => plugin_or_theme_src( 'build/settings.js' ),
-				'path'                 => dirname( dirname( __DIR__ ) ) . '/build/settings.js',
+				'src'                  => trailingslashit( $this->base_url ) . 'fake-vendor/nextgenthemes/WP_Settings/public/build/bundle.js',
+				'path'                 => trailingslashit( $this->base_path ) . 'fake-vendor/nextgenthemes/WP_Settings/public/build/bundle.js',
 				'deps'                 => array( 'jquery' ),
 				'inline_script_before' => "var {$this->slugged_namespace} = " . \wp_json_encode( $settings_data ) . ';',
 			)
@@ -205,15 +270,6 @@ class Settings {
 		<?php
 	}
 
-	private function print_debug_info_block() {
-		?>
-		<div class="ngt-block"
-			v-show="sectionsDisplayed.debug">
-			<?php require_once __DIR__ . '/Admin/partials/debug-info.php'; ?>
-		</div>
-		<?php
-	}
-
 	private function print_reset_bottons() {
 		?>
 		<p>
@@ -256,81 +312,34 @@ class Settings {
 		<?php
 	}
 
-	public function print_outdated_php_msg() {
-
-		$link_only = array(
-			'a' => array(
-				'href'   => array(),
-				'target' => array(),
-				'title'  => array(),
-			),
-		);
-
-		if ( \version_compare( PHP_VERSION, '5.6.40', '<=' ) ) {
-			?>
-			<div class="ngt-sidebar-box">
-				<p>
-					<?php
-					printf(
-						// translators: PHP version, URL, Contact URL
-						wp_kses( __( 'Your PHP version %1$s is very <a href="%2$s">outdated, insecure and slow</a>. No pressure, this plugin will continue to work with PHP 5.6, but at some undecided point I like to use features from PHP 7. If you can not update for some reason please tell <a href="%3$s">tell me</a>. WordPress itself planned to require PHP 7 in a feature release but decided not to persue this for now because so many people still run on outdated versions.', 'advanced-responsive-video-embedder' ), $link_only ),
-						esc_html( PHP_VERSION ),
-						esc_url( 'https://www.php.net/supported-versions' ),
-						esc_url( 'https://nextgenthemes.com/contact/' )
-					);
-					?>
-				</p>
-			</div>
-			<?php
-		} elseif ( \version_compare( PHP_VERSION, '7.3', '<=' ) ) {
-			?>
-			<div class="ngt-sidebar-box">
-				<p>
-					<?php
-					printf(
-						// translators: URL
-						wp_kses( __( 'Just a heads up, your PHP version %1$s is outdated and insecure. See what versions are <a href="%2$s">good here</a>. ARVE <strong>currently</strong> works with PHP as old as 5.6 like WP itself but may require 7.2 or 7.4+ in the future.', 'advanced-responsive-video-embedder' ), $link_only ),
-						esc_html( PHP_VERSION ),
-						esc_url( 'https://www.php.net/supported-versions' )
-					);
-					?>
-				</p>
-			</div>
-			<?php
-		}
-	}
-
 	public function print_admin_page() {
 		?>
-		<div class='wrap wrap--nextgenthemes'
-			id='nextgenthemes-vue'>
+		<div class="wrap wrap--nextgenthemes">
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
-			<?php $this->print_settings_tabs(); ?>
-			<div class="ngt-settings-grid">
-				<div class="ngt-settings-grid__content">
-					<?php
-					do_action( $this->slashed_namespace . '/admin/settings/content', $this );
-					$this->print_paid_section_message();
-					$this->print_save_section();
-					$this->print_debug_info_block();
-					ADMIN\print_settings_blocks( $this->settings, $this->sections, $this->premium_sections, 'settings-page' );
-					$this->print_save_section();
-					$this->print_reset_bottons();
-					?>
-				</div>
-				<div class="ngt-settings-grid__sidebar">
-					<?php
-					do_action( $this->slashed_namespace . '/admin/settings/sidebar', $this );
-					$this->print_outdated_php_msg();
-					?>
-				</div>
-			</div>
+
+			<div id="ngt-settings-svelte"></div>
+
+			<?php
+			do_action( $this->slashed_namespace . '/admin/settings/content', $this );
+			?>
+
+			<?php
+			/*
+			do_action( $this->slashed_namespace . '/admin/settings/content', $this );
+			$this->print_paid_section_message();
+			$this->print_save_section();
+			$this->print_debug_info_block();
+			$this->print_save_section();
+			$this->print_reset_bottons();
+			*/
+			?>
 		</div>
 		<?php
 	}
 
 	public function register_setting_page() {
 
+		$parent_slug = $this->menu_parent_slug;
 		// The HTML Document title for our settings page.
 		$page_title = $this->settings_page_title;
 		// The menu item title for our settings page.
@@ -340,8 +349,7 @@ class Settings {
 		// The URL slug for our settings page.
 		$menu_slug = $this->slugged_namespace;
 		// The callback function for rendering our settings page HTML.
-		$callback    = array( $this, 'print_admin_page' );
-		$parent_slug = $this->menu_parent_slug;
+		$callback = array( $this, 'print_admin_page' );
 
 		add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $callback );
 	}

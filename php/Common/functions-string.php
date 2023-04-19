@@ -1,7 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE\Common;
 
-function str_contains_any( $haystack, array $needles ) {
+function str_contains_any( string $haystack, array $needles ) {
 
 	foreach ( $needles as $needle ) {
 

@@ -192,8 +192,6 @@ function validate_int( string $prop_name, mixed $value ) {
 
 function valid_url( string $url ): bool {
 
-	pd( __FUNCTION__ . " $url" );
-
 	if ( empty( $url ) ) {
 		return false;
 	}

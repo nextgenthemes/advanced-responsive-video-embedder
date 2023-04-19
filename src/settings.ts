@@ -140,8 +140,7 @@ new Vue( {
 				},
 
 				// callback to run if our request caused an error
-				error: ( errorData ) =>
-					( this.message = errorData.responseText ),
+				error: ( errorData ) => ( this.message = errorData.responseText ),
 
 				// when our request is complete (successful or not), reset the state to indicate we are no longer saving
 				complete: () => ( this.isSaving = false ),
@@ -173,14 +172,8 @@ new Vue( {
 
 			xhttp.open( 'POST', postUrl, true );
 			//xhttp.setRequestHeader( 'Content-type', 'application/x-www-form-urlencoded' );
-			xhttp.setRequestHeader(
-				'Content-type',
-				'application/json; charset=utf-8'
-			);
-			xhttp.setRequestHeader(
-				'Access-Control-Allow-Origin',
-				data.home_url
-			);
+			xhttp.setRequestHeader( 'Content-type', 'application/json; charset=utf-8' );
+			xhttp.setRequestHeader( 'Access-Control-Allow-Origin', data.home_url );
 
 			let values = '';
 			for ( const key in args ) {
@@ -209,10 +202,7 @@ new Vue( {
 				.open()
 				.on( 'select', function () {
 					// This will return the selected image from the Media Uploader, the result is an object
-					const uploadedImage = image
-						.state()
-						.get( 'selection' )
-						.first();
+					const uploadedImage = image.state().get( 'selection' ).first();
 					// We convert uploadedImage to a JSON object to make accessing it easier
 					const attachmentID = uploadedImage.toJSON().id;
 					vueThis.vm[ dataKey ] = attachmentID;

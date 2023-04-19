@@ -9,7 +9,7 @@ use \Nextgenthemes\ARVE\Common\Admin\Notices;
 use function \Nextgenthemes\ARVE\Common\ver;
 use function \Nextgenthemes\ARVE\Common\attr;
 use function \Nextgenthemes\ARVE\Common\kses_basic;
-use function \Nextgenthemes\ARVE\Common\enqueue_asset;
+use function \Nextgenthemes\Assets\enqueue_asset;
 
 const ALLOWED_HTML = array(
 	'a'      => array(
@@ -244,7 +244,7 @@ function admin_enqueue_styles() {
 		array(
 			'handle' => 'advanced-responsive-video-embedder',
 			'src'    => plugins_url( 'build/admin.css', ARVE\PLUGIN_FILE ),
-			'ver'    => ver( ARVE\VERSION, 'build/admin.css', ARVE\PLUGIN_FILE ),
+			'path'   => ARVE\PLUGIN_DIR . '/build/admin.css',
 			'deps'   => array(),
 		)
 	);

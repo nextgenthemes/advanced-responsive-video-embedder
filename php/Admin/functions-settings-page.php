@@ -16,7 +16,7 @@ function settings_content() {
 	);
 	?>
 
-	<div class="ngt-block" v-show="onlySectionDisplayed === 'urlparams'">
+	<template data-ngt-svelte-target=".ngt-section--urlparams">
 		<p>
 			<?php
 			printf(
@@ -32,44 +32,101 @@ function settings_content() {
 			<a target="_blank" href="http://www.dailymotion.com/doc/api/player.html#parameters">Dailymotion Parameters</a>,
 			<a target="_blank" href="https://developer.vimeo.com/player/embedding">Vimeo Parameters</a>
 		</p>
-	</div>
+	</template>
+
+	<template data-ngt-svelte-target=".ngt-settings-grid__sidebar">
+		<?php
+		if ( ! current_user_can('install_plugins') ) {
+			echo '<div class="ngt-sidebar-box">';
+			esc_html_e( 'Note that you are logged in with a user who that can\'t install plugins, ask someone who can if you are interrested in ARVE Extensions.', 'advanced-responsive-video-embedder' );
+			echo '</div>';
+		}
+
+		if ( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
+			print_settings_box_html( '/partials/settings-sidebar-pro.html' );
+		}
+
+		if ( ! is_plugin_active( 'arve-sticky-videos/arve-sticky-videos.php' ) ) {
+			print_settings_box_html( '/partials/settings-sidebar-sticky-videos.html' );
+		}
+
+		if ( ! is_plugin_active( 'arve-random-video/arve-random-video.php' ) ) {
+			print_settings_box_html( '/partials/settings-sidebar-random-video.html' );
+		}
+
+		if ( ! is_plugin_active( 'arve-amp/arve-amp.php' ) ) {
+			print_settings_box_html( '/partials/settings-sidebar-amp.html' );
+		}
+
+		print_settings_box_html( '/partials/settings-sidebar-rate.html' );
+
+		print_outdated_php_box();
+		?>
+	</template>
+
+	<template data-ngt-svelte-target=".ngt-section--pro">
+		<?php print_premium_section_message(); ?>
+	</template>
+
+	<template data-ngt-svelte-target=".ngt-section--sticky-videos">
+		<?php print_premium_section_message(); ?>
+	</template>
+
+	<template data-ngt-svelte-target=".ngt-section--random-video">
+		<?php print_premium_section_message(); ?>
+	</template>
+
+	<template data-ngt-svelte-target=".ngt-section--debug">
+		<?php #require_once __DIR__ . '/partials/debug-info.php'; ?>
+	</template>
+
 	<?php
 }
 
-function settings_sidebar() {
-
-	if ( ! current_user_can('install_plugins') ) {
-		echo '<div class="ngt-sidebar-box">';
-		esc_html_e( 'Note that you are logged in with a user who that can\'t install plugins, ask someone who can if you are interrested in ARVE Extensions.', 'advanced-responsive-video-embedder' );
-		echo '</div>';
-	}
-
-	if ( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
-		print_settings_box_html( '/partials/settings-sidebar-pro.html' );
-	}
-
-	if ( ! is_plugin_active( 'arve-sticky-videos/arve-sticky-videos.php' ) ) {
-		print_settings_box_html( '/partials/settings-sidebar-sticky-videos.html' );
-	}
-
-	if ( ! is_plugin_active( 'arve-random-video/arve-random-video.php' ) ) {
-		print_settings_box_html( '/partials/settings-sidebar-random-video.html' );
-	}
-
-	if ( ! is_plugin_active( 'arve-amp/arve-amp.php' ) ) {
-		print_settings_box_html( '/partials/settings-sidebar-amp.html' );
-	}
-
-	print_settings_box_html( '/partials/settings-sidebar-rate.html' );
+function print_premium_section_message() {
+	?>
+		<p>
+			<?php
+			esc_html_e( 'You may already set options for addons but they will only take effect if the associated addons are installed.', 'advanced-responsive-video-embedder' );
+			?>
+		</p>
+	<?php
 }
-
-
 
 function print_settings_box_html( $file ) {
 	echo '<div class="ngt-sidebar-box">';
 	readfile( __DIR__ . $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
 	echo '</div>';
 }
+
+function print_outdated_php_box() {
+
+	$link_only = array(
+		'a' => array(
+			'href'   => array(),
+			'target' => array(),
+			'title'  => array(),
+		),
+	);
+
+	if ( \version_compare( PHP_VERSION, '8.2.5', '<' ) ) {
+		?>
+		<div class="ngt-sidebar-box">
+			<p>
+				<?php
+				printf(
+					// translators: URL
+					wp_kses( __( 'Just a heads up, your PHP version %1$s is outdated and possibly insecure. See what versions are <a href="%2$s">good here</a>', 'advanced-responsive-video-embedder' ), $link_only ),
+					esc_html( PHP_VERSION ),
+					esc_url( 'https://www.php.net/supported-versions' )
+				);
+				?>
+			</p>
+		</div>
+		<?php
+	}
+}
+
 
 function filter_save_options( $options ) {
 

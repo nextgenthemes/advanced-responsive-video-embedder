@@ -98,3 +98,14 @@ function array_insert_after( $key, array &$array, $new_key, $new_value ) {
 	}
 	return false;
 }
+
+function sort_array_by_array(array $array, array $order_array) {
+	$ordered = array();
+	foreach ($order_array as $key) {
+		if (array_key_exists($key, $array)) {
+			$ordered[ $key ] = $array[ $key ];
+			unset($array[ $key ]);
+		}
+	}
+	return $ordered + $array;
+}

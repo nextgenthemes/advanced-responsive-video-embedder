@@ -78,3 +78,10 @@ function get_constant( $const_name ) {
 function is_wp_debug() {
 	return defined( 'WP_DEBUG' ) && WP_DEBUG;
 }
+
+function replace_extension( $filename, $new_extension ) {
+	$info = pathinfo( $filename );
+	$dir  = $info['dirname'] ? $info['dirname'] . DIRECTORY_SEPARATOR : '';
+
+	return $dir . $info['filename'] . '.' . $new_extension;
+}

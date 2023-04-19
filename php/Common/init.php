@@ -11,11 +11,12 @@ require_once __DIR__ . '/functions-array.php';
 require_once __DIR__ . '/functions-string.php';
 require_once __DIR__ . '/functions-misc.php';
 // ------------------------------------------------
-require_once __DIR__ . '/Settings.php';
+#require_once __DIR__ . '/Settings.php';
+require_once \Nextgenthemes\ARVE\PLUGIN_DIR . '/fake-vendor/nextgenthemes/WP_Settings/includes/Settings.php';
+require_once \Nextgenthemes\ARVE\PLUGIN_DIR . '/fake-vendor/nextgenthemes/Assets/src/Asset.php';
+
 require_once __DIR__ . '/functions-settings.php';
 require_once __DIR__ . '/functions-license.php';
-require_once __DIR__ . '/functions-async-defer.php';
-require_once __DIR__ . '/functions-assets.php';
 require_once __DIR__ . '/functions-remote-get.php';
 require_once __DIR__ . '/Admin/EDD/PluginUpdater.php';
 require_once __DIR__ . '/Admin/EDD/ThemeUpdater.php';

@@ -1,6 +1,7 @@
 composer.lock
 node_modules/
 vendor/
+ignore*
 
 # Numerous always-ignore extensions
 *.diff

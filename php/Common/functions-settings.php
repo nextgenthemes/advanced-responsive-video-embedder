@@ -1,13 +1,15 @@
 <?php
 namespace Nextgenthemes\ARVE\Common;
 
+use const Nextgenthemes\ARVE\PLUGIN_FILE;
+
 function nextgenthemes_settings_instance() {
 
 	static $inst = null;
 
 	if ( null === $inst ) {
 
-		$inst = new Settings(
+		$inst = new \Nextgenthemes\WP_Settings\Settings(
 			array(
 				'namespace'           => 'nextgenthemes',
 				'settings'            => nextgenthemes_settings(),
@@ -17,6 +19,8 @@ function nextgenthemes_settings_instance() {
 				),
 				'menu_title'          => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
 				'settings_page_title' => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
+				'base_url'            => plugins_url( '', PLUGIN_FILE ),
+				'base_path'           => plugin_dir_path( PLUGIN_FILE ),
 			)
 		);
 		$inst->set_defined_product_keys();

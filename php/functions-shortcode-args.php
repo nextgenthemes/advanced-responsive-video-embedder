@@ -280,9 +280,9 @@ function special_iframe_src_mods( string $src, string $provider, string $url, bo
 }
 
 // phpcs:ignore Generic.Metrics.CyclomaticComplexity.MaxExceeded
-function iframe_src_autoplay_args( $autoplay, array $a ) {
+function iframesrc_urlarg_autoplay( string $src, string $provider, bool $autoplay ): string {
 
-	switch ( $a['provider'] ) {
+	switch ( $provider ) {
 		case 'alugha':
 		case 'archiveorg':
 		case 'dailymotion':
@@ -294,38 +294,38 @@ function iframe_src_autoplay_args( $autoplay, array $a ) {
 		case 'youtube':
 		case 'youtubelist':
 			return $autoplay ?
-				add_query_arg( 'autoplay', 1, $a['src'] ) :
-				add_query_arg( 'autoplay', 0, $a['src'] );
+				add_query_arg( 'autoplay', 1, $src ) :
+				add_query_arg( 'autoplay', 0, $src );
 		case 'twitch':
 		case 'ustream':
 			return $autoplay ?
-				add_query_arg( 'autoplay', 'true', $a['src'] ) :
-				add_query_arg( 'autoplay', 'false', $a['src'] );
+				add_query_arg( 'autoplay', 'true', $src ) :
+				add_query_arg( 'autoplay', 'false', $src );
 		case 'livestream':
 		case 'wistia':
 			return $autoplay ?
-				add_query_arg( 'autoPlay', 'true', $a['src'] ) :
-				add_query_arg( 'autoPlay', 'false', $a['src'] );
+				add_query_arg( 'autoPlay', 'true', $src ) :
+				add_query_arg( 'autoPlay', 'false', $src );
 		case 'metacafe':
 			return $autoplay ?
-				add_query_arg( 'ap', 1, $a['src'] ) :
-				remove_query_arg( 'ap', $a['src'] );
+				add_query_arg( 'ap', 1, $src ) :
+				remove_query_arg( 'ap', $src );
 		case 'gab':
 			return $autoplay ?
-				add_query_arg( 'autoplay', 'on', $a['src'] ) :
-				remove_query_arg( 'autoplay', $a['src'] );
+				add_query_arg( 'autoplay', 'on', $src ) :
+				remove_query_arg( 'autoplay', $src );
 		case 'brightcove':
 		case 'snotr':
 			return $autoplay ?
-				add_query_arg( 'autoplay', 1, $a['src'] ) :
-				remove_query_arg( 'autoplay', $a['src'] );
+				add_query_arg( 'autoplay', 1, $src ) :
+				remove_query_arg( 'autoplay', $src );
 		case 'yahoo':
 			return $autoplay ?
-				add_query_arg( 'autoplay', 'true', $a['src'] ) :
-				add_query_arg( 'autoplay', 'false', $a['src'] );
+				add_query_arg( 'autoplay', 'true', $src ) :
+				add_query_arg( 'autoplay', 'false', $src );
 		default:
 			// Do nothing for providers that to not support autoplay or fail with parameters
-			return $a['src'];
+			return $src;
 		case 'MAYBEiframe':
 			return $autoplay ?
 				add_query_arg(
@@ -335,7 +335,7 @@ function iframe_src_autoplay_args( $autoplay, array $a ) {
 						'autoStart'        => 'true',
 						'player_autoStart' => 'true',
 					),
-					$a['src']
+					$src
 				) :
 				add_query_arg(
 					array(
@@ -344,10 +344,12 @@ function iframe_src_autoplay_args( $autoplay, array $a ) {
 						'autoStart'        => 'false',
 						'player_autoStart' => 'false',
 					),
-					$a['src']
+					$src
 				);
 	}
-}function get_video_type( $ext ) {
+}
+
+function get_video_type( $ext ) {
 
 	switch ( $ext ) {
 		case 'ogv':
@@ -364,4 +366,37 @@ function iframe_src_autoplay_args( $autoplay, array $a ) {
 	}
 }
 
+function iframesrc_urlarg_enablejsapi( string $src, string $provider ): string {
 
+	if ( function_exists('Nextgenthemes\ARVE\Pro\init') && 'youtube' === $provider ) {
+		$src = add_query_arg( [ 'enablejsapi' => 1 ], $src );
+	}
+
+	return $src;
+}
+
+function iframesrc_urlargs( string $src, string $provider, string $mode, string $parameters ): string {
+
+	$options = options();
+
+	$parameters     = wp_parse_args( preg_replace( '!\s+!', '&', $parameters ) );
+	$params_options = array();
+
+	if ( ! empty( $options[ 'url_params_' . $provider ] ) ) {
+		$params_options = wp_parse_args( preg_replace( '!\s+!', '&', $options[ 'url_params_' . $provider ] ) );
+	}
+
+	$parameters = wp_parse_args( $parameters, $params_options );
+	$src        = add_query_arg( $parameters, $src );
+
+	if ( 'youtube' === $provider && in_array( $mode, array( 'lightbox', 'link-lightbox' ), true ) ) {
+		$src = add_query_arg( 'playsinline', '1', $src );
+	}
+
+	if ( 'twitch' === $provider ) {
+		$domain = wp_parse_url( home_url(), PHP_URL_HOST );
+		$src    = add_query_arg( 'parent', $domain, $src );
+	}
+
+	return $src;
+}

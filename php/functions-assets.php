@@ -1,9 +1,14 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
+use function \Nextgenthemes\Assets\register_asset;
+use function \Nextgenthemes\Assets\add_dep_to_script;
+
+use Nextgenthemes;
+
 function register_assets() {
 
-	Common\register_asset(
+	register_asset(
 		array(
 			'handle' => 'arve-main',
 			'src'    => plugins_url( 'build/main.css', PLUGIN_FILE ),
@@ -12,7 +17,7 @@ function register_assets() {
 		)
 	);
 
-	Common\register_asset(
+	register_asset(
 		array(
 			'handle'    => 'arve-main',
 			'src'       => plugins_url( 'build/main.js', PLUGIN_FILE ),
@@ -22,15 +27,7 @@ function register_assets() {
 		)
 	);
 
-	Common\register_asset(
-		array(
-			'handle' => 'arve-editor-iframe',
-			'src'    => plugins_url( 'build/editor-iframe.js' ),
-			'path'   => PLUGIN_DIR . '/build/editor-iframe.js',
-		)
-	);
-
-	Common\add_dep_to_script( 'wp-polyfill', 'arve-editor-iframe' );
+	#add_dep_to_script( 'wp-polyfill', 'arve-editor-iframe' );
 
 	// phpcs:disable WordPress.WP.EnqueuedResourceParameters.MissingVersion
 	wp_register_script( 'arve', null, array( 'arve-main' ), null, true );
@@ -52,7 +49,7 @@ function register_assets() {
 			}
 		}
 
-		Common\register_asset(
+		register_asset(
 			array(
 				'handle'               => 'arve-block',
 				'src'                  => plugins_url( 'build/block.js', PLUGIN_FILE ),

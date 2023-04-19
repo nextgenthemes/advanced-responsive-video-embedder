@@ -5,30 +5,29 @@ use WP_Error;
 
 class Video {
 
-	// shortcode args
-	private $aspect_ratio;
-	/**
-	 * Undocumented variable
-	 *
-	 * @var boolean
-	 */
-	private bool $hide_title;
-	private int $maxwidth;
-	private ?string $url;
+	// bools
 	private bool $arve_link;
 	private bool $autoplay;
 	private bool $controls;
 	private bool $disable_links;
 	private bool $grow;
+	private bool $hide_title;
 	private bool $loop;
 	private bool $muted;
 	private bool $sandbox;
 	private bool $sticky;
 	private bool $sticky_on_mobile;
+
+	// ints
 	private int $lightbox_maxwidth;
+	private int $maxwidth;
 	private int $volume;
+
+	// strings
+	private ?string $url;
 	private string $account_id;
 	private string $align;
+	private string $aspect_ratio;
 	private string $author_name;
 	private string $brightcove_embed;
 	private string $brightcove_player;
@@ -52,6 +51,7 @@ class Video {
 	private string $thumbnail_fallback;
 	private string $title;
 	private string $upload_date;
+
 	// html5
 	private string $av1mp4;
 	private string $m4v;
@@ -937,137 +937,3 @@ class Video {
 		);
 	}
 }
-
-function new_height_from_width_and_ratio( $width, $ratio ) {
-
-	if ( empty( $ratio ) ) {
-		return 0;
-	}
-
-	list( $old_width, $old_height ) = explode( ':', $ratio, 2 );
-
-	return new_height( $old_width, $old_height, $width );
-}
-
-function new_get_video_type( $ext ) {
-
-	switch ( $ext ) {
-		case 'ogv':
-		case 'ogm':
-			return 'video/ogg';
-		case 'av1mp4':
-			return 'video/mp4; codecs=av01.0.05M.08';
-		case 'mp4':
-			return 'video/mp4';
-		case 'webm':
-			return 'video/webm';
-		default:
-			return 'video/x-' . $ext;
-	}
-}
-
-function iframesrc_urlarg_enablejsapi( string $src, string $provider ): string {
-
-	if ( function_exists('Nextgenthemes\ARVE\Pro\init') && 'youtube' === $provider ) {
-		$src = add_query_arg( [ 'enablejsapi' => 1 ], $src );
-	}
-
-	return $src;
-}
-
-function iframesrc_urlargs( string $src, string $provider, string $mode, string $parameters ): string {
-
-	$options = options();
-
-	$parameters     = wp_parse_args( preg_replace( '!\s+!', '&', $parameters ) );
-	$params_options = array();
-
-	if ( ! empty( $options[ 'url_params_' . $provider ] ) ) {
-		$params_options = wp_parse_args( preg_replace( '!\s+!', '&', $options[ 'url_params_' . $provider ] ) );
-	}
-
-	$parameters = wp_parse_args( $parameters, $params_options );
-	$src        = add_query_arg( $parameters, $src );
-
-	if ( 'youtube' === $provider && in_array( $mode, array( 'lightbox', 'link-lightbox' ), true ) ) {
-		$src = add_query_arg( 'playsinline', '1', $src );
-	}
-
-	if ( 'twitch' === $provider ) {
-		$domain = wp_parse_url( home_url(), PHP_URL_HOST );
-		$src    = add_query_arg( 'parent', $domain, $src );
-	}
-
-	return $src;
-}
-
-// phpcs:ignore Generic.Metrics.CyclomaticComplexity.MaxExceeded
-function iframesrc_urlarg_autoplay( string $src, string $provider, bool $autoplay ): string {
-
-	switch ( $provider ) {
-		case 'alugha':
-		case 'archiveorg':
-		case 'dailymotion':
-		case 'dailymotionlist':
-		case 'facebook':
-		case 'vevo':
-		case 'viddler':
-		case 'vimeo':
-		case 'youtube':
-		case 'youtubelist':
-			return $autoplay ?
-				add_query_arg( 'autoplay', 1, $src ) :
-				add_query_arg( 'autoplay', 0, $src );
-		case 'twitch':
-		case 'ustream':
-			return $autoplay ?
-				add_query_arg( 'autoplay', 'true', $src ) :
-				add_query_arg( 'autoplay', 'false', $src );
-		case 'livestream':
-		case 'wistia':
-			return $autoplay ?
-				add_query_arg( 'autoPlay', 'true', $src ) :
-				add_query_arg( 'autoPlay', 'false', $src );
-		case 'metacafe':
-			return $autoplay ?
-				add_query_arg( 'ap', 1, $src ) :
-				remove_query_arg( 'ap', $src );
-		case 'gab':
-			return $autoplay ?
-				add_query_arg( 'autoplay', 'on', $src ) :
-				remove_query_arg( 'autoplay', $src );
-		case 'brightcove':
-		case 'snotr':
-			return $autoplay ?
-				add_query_arg( 'autoplay', 1, $src ) :
-				remove_query_arg( 'autoplay', $src );
-		case 'yahoo':
-			return $autoplay ?
-				add_query_arg( 'autoplay', 'true', $src ) :
-				add_query_arg( 'autoplay', 'false', $src );
-		default:
-			// Do nothing for providers that to not support autoplay or fail with parameters
-			return $src;
-		case 'MAYBEiframe':
-			return $autoplay ?
-				add_query_arg(
-					array(
-						'ap'               => '1',
-						'autoplay'         => '1',
-						'autoStart'        => 'true',
-						'player_autoStart' => 'true',
-					),
-					$src
-				) :
-				add_query_arg(
-					array(
-						'ap'               => '0',
-						'autoplay'         => '0',
-						'autoStart'        => 'false',
-						'player_autoStart' => 'false',
-					),
-					$src
-				);
-	}
-}
-

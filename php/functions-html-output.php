@@ -20,6 +20,7 @@ function html_id( $html_attr ) {
 
 	return $html_attr;
 }
+
 function build_tag( array $tag, array $a ) {
 
 	$tag = apply_filters( "nextgenthemes/arve/{$tag['name']}", $tag, $a );
