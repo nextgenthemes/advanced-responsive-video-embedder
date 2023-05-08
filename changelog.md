@@ -3,6 +3,9 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2023-05-08 9.10.6 ###
+* Fix: Styles not loading correctly in latest Gutenberg versions.
+
 ### 2023-04-12 9.10.3 ###
 * Fix: Yoast SEO compatibility and other possible issues.
 
