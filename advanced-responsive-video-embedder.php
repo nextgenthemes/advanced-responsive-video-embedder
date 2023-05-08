@@ -26,11 +26,17 @@ const PLUGIN_FILE           = __FILE__;
 const PLUGIN_DIR            = __DIR__;
 const VIDEO_FILE_EXTENSIONS = array( 'av1mp4', 'mp4', 'm4v', 'webm', 'ogv' );
 const PREMIUM_SECTIONS      = array( 'pro', 'sticky-videos', 'random-video', 'videojs' );
+const PREMIUM_URL_PREFIX    = 'https://nextgenthemes.com/plugins/arve-';
 const DEFAULT_MAXWIDTH      = 900;
 const OEMBED_HTML_PRIORITY  = -5;
+
+if ( defined( 'WP_INSTALLING' ) && WP_INSTALLING ) {
+	return;
+}
 
 if ( ! defined( 'ABSPATH' ) ) {
 	return; // no exit for use in build script
 }
 
+require_once __DIR__ . '/vendor/autoload_packages.php';
 require_once __DIR__ . '/php/init.php';
