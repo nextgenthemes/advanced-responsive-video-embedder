@@ -1,5 +1,4 @@
 import './admin.scss';
-import './admin-shortcode-creator';
 
 export {};
 declare global {
