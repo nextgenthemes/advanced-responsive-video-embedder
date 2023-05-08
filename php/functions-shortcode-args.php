@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
+use Nextgenthemes\WP as Common;
+
 function sane_provider_name( string $provider ): string {
 	$provider = preg_replace( '/[^a-z0-9]/', '', strtolower( $provider ) );
 	$provider = str_replace( 'wistiainc', 'wistia', $provider );

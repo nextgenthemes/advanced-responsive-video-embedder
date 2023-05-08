@@ -1,15 +1,22 @@
 <?php
 namespace Nextgenthemes\ARVE\Admin;
 
+use const \Nextgenthemes\ARVE\PREMIUM_SECTIONS;
+use const \Nextgenthemes\ARVE\PREMIUM_URL_PREFIX;
 use const \Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
+use const \Nextgenthemes\ARVE\PLUGIN_DIR;
+use const \Nextgenthemes\ARVE\PLUGIN_FILE;
+use function \Nextgenthemes\ARVE\is_gutenberg;
+use function \Nextgenthemes\ARVE\shortcode_settings;
+use function \Nextgenthemes\ARVE\settings_sections;
+use function \Nextgenthemes\ARVE\options;
 
-use \Nextgenthemes\ARVE;
-use \Nextgenthemes\ARVE\Common\Admin\Notices;
-
-use function \Nextgenthemes\ARVE\Common\ver;
-use function \Nextgenthemes\ARVE\Common\attr;
-use function \Nextgenthemes\ARVE\Common\kses_basic;
-use function \Nextgenthemes\Assets\enqueue_asset;
+use \Nextgenthemes\WP\Admin\Notices;
+use function \Nextgenthemes\WP\enqueue_asset;
+use function \Nextgenthemes\WP\register_asset;
+use function \Nextgenthemes\WP\ver;
+use function \Nextgenthemes\WP\attr;
+use function \Nextgenthemes\WP\kses_basic;
 
 const ALLOWED_HTML = array(
 	'a'      => array(
@@ -40,7 +47,7 @@ function action_admin_init_setup_messages() {
 		$msg = sprintf(
 			// Translators: %1$s Pro Version required
 			__( 'Your ARVE Pro Addon is outdated, you need version %1$s or later. If you have setup your license <a href="%2$s">here</a> semi auto updates should work (Admin panel notice and auto install on confirmation). If not please <a href="%3$s">report it</a> and manually update as <a href="%4$s">described here.</a>', 'advanced-responsive-video-embedder' ),
-			ARVE\PRO_VERSION_REQUIRED,
+			PRO_VERSION_REQUIRED,
 			esc_url( get_admin_url() . 'options-general.php?page=nextgenthemes' ),
 			'https://nextgenthemes.com/support/',
 			'https://nextgenthemes.com/plugins/arve/documentation/installing-and-license-management/'
@@ -179,7 +186,7 @@ function add_action_links( $links ) {
 
 function register_shortcode_ui() {
 
-	$settings = ARVE\shortcode_settings();
+	$settings = shortcode_settings();
 
 	foreach ( $settings as $k => $v ) :
 
@@ -190,7 +197,7 @@ function register_shortcode_ui() {
 				$v['options'] = array(
 					array(
 						'value' => '',
-						'label' => esc_html__( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
+						'label' => esc_html__( 'Default', 'advanced-responsive-video-embedder' ),
 					),
 					array(
 						'value' => 'yes',
@@ -243,31 +250,71 @@ function admin_enqueue_styles() {
 	enqueue_asset(
 		array(
 			'handle' => 'advanced-responsive-video-embedder',
-			'src'    => plugins_url( 'build/admin.css', ARVE\PLUGIN_FILE ),
-			'path'   => ARVE\PLUGIN_DIR . '/build/admin.css',
+			'src'    => plugins_url( 'build/admin.css', PLUGIN_FILE ),
+			'path'   => PLUGIN_DIR . '/build/admin.css',
 			'deps'   => array(),
 		)
 	);
 }
 
-function admin_enqueue_scripts() {
+function get_first_glob( string $pattern ): string {
 
-	foreach ( ARVE\shortcode_settings() as $k => $v ) {
-		$options[ $k ] = '';
+	$res = glob( $pattern, GLOB_NOSORT | GLOB_ERR );
+
+	if ( empty( $res[0] ) ) {
+		return '';
 	}
 
-	$settings_data = array(
-		'options'  => $options,
-		'nonce'    => wp_create_nonce( 'wp_rest' ),
-		'settings' => ARVE\shortcode_settings(),
-		'sections' => ARVE\settings_sections(),
-	);
+	return $res[0];
+}
+
+function admin_enqueue_scripts() {
+
+	if ( ! is_gutenberg() ) {
+
+		$shortcode_dialog_js  = get_first_glob( PLUGIN_DIR . '/vendor/nextgenthemes/wp-shared/dist/assets/shortcode-dialog-*.js' );
+		$shortcode_dialog_css = get_first_glob( PLUGIN_DIR . '/vendor/nextgenthemes/wp-shared/dist/assets/shortcode-dialog-*.css' );
+
+		if ( $shortcode_dialog_js && $shortcode_dialog_css ) {
+
+			foreach ( shortcode_settings() as $k => $v ) {
+				$options[ $k ] = '';
+			}
+
+			$settings_data = array(
+				'options'          => $options,
+				'nonce'            => wp_create_nonce( 'wp_rest' ),
+				'settings'         => shortcode_settings(),
+				'sections'         => settings_sections(),
+				'premiumSections'  => PREMIUM_SECTIONS,
+				'premiumUrlPrefix' => PREMIUM_URL_PREFIX,
+			);
+
+			register_asset(
+				array(
+					'handle'               => 'arve-shortcode-dialog',
+					'src'                  => plugins_url( 'vendor/nextgenthemes/wp-shared/dist/assets/' . basename($shortcode_dialog_js), PLUGIN_FILE ),
+					'path'                 => $shortcode_dialog_js,
+					'inline_script_before' => $settings_data,
+					'module'               => true,
+				)
+			);
+
+			register_asset(
+				array(
+					'handle' => 'arve-shortcode-dialog',
+					'src'    => plugins_url( 'vendor/nextgenthemes/wp-shared/dist/assets/' . basename($shortcode_dialog_css), PLUGIN_FILE ),
+					'path'   => $shortcode_dialog_css,
+				)
+			);
+		}
+	}
 
 	enqueue_asset(
 		array(
 			'handle'               => 'arve-admin',
-			'src'                  => plugins_url( 'build/admin.js', ARVE\PLUGIN_FILE ),
-			'path'                 => ARVE\PLUGIN_DIR . '/build/admin.js',
+			'src'                  => plugins_url( 'build/admin.js', PLUGIN_FILE ),
+			'path'                 => PLUGIN_DIR . '/build/admin.js',
 			'deps'                 => array(),
 			'inline_script_before' => 'var arveSCSettings = ' . \wp_json_encode( $settings_data ) . ';',
 		)
@@ -277,8 +324,8 @@ function admin_enqueue_scripts() {
 		enqueue_asset(
 			array(
 				'handle' => 'arve-admin-sc-ui',
-				'path'   => ARVE\PLUGIN_DIR . '/build/shortcode-ui.js',
-				'src'    => plugins_url( 'build/shortcode-ui.js', ARVE\PLUGIN_FILE ),
+				'path'   => PLUGIN_DIR . '/build/shortcode-ui.js',
+				'src'    => plugins_url( 'build/shortcode-ui.js', PLUGIN_FILE ),
 				'deps'   => array( 'shortcode-ui' ),
 			)
 		);
@@ -287,7 +334,7 @@ function admin_enqueue_scripts() {
 
 function action_admin_bar_menu( $admin_bar ) {
 
-	if ( current_user_can( 'manage_options' ) && ARVE\options()['admin_bar_menu'] ) {
+	if ( current_user_can( 'manage_options' ) && options()['admin_bar_menu'] ) {
 
 		$admin_bar->add_menu(
 			array(

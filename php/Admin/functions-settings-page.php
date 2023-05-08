@@ -2,7 +2,7 @@
 namespace Nextgenthemes\ARVE\Admin;
 
 use \Nextgenthemes\ARVE;
-use \Nextgenthemes\ARVE\Common;
+use \Nextgenthemes\WP;
 
 function settings_content() {
 
@@ -34,7 +34,7 @@ function settings_content() {
 		</p>
 	</template>
 
-	<template data-ngt-svelte-target=".ngt-settings-grid__sidebar">
+	<template data-ngt-svelte-target=".ngt-settings-grid__sidebar" data-append="1">
 		<?php
 		if ( ! current_user_can('install_plugins') ) {
 			echo '<div class="ngt-sidebar-box">';
@@ -64,20 +64,20 @@ function settings_content() {
 		?>
 	</template>
 
-	<template data-ngt-svelte-target=".ngt-section--pro">
+	<template data-ngt-svelte-target=".ngt-section--pro .ngt-section__info">
 		<?php print_premium_section_message(); ?>
 	</template>
 
-	<template data-ngt-svelte-target=".ngt-section--sticky-videos">
+	<template data-ngt-svelte-target=".ngt-section--sticky-videos .ngt-section__info">
 		<?php print_premium_section_message(); ?>
 	</template>
 
-	<template data-ngt-svelte-target=".ngt-section--random-video">
+	<template data-ngt-svelte-target=".ngt-section--random-video .ngt-section__info">
 		<?php print_premium_section_message(); ?>
 	</template>
 
 	<template data-ngt-svelte-target=".ngt-section--debug">
-		<?php #require_once __DIR__ . '/partials/debug-info.php'; ?>
+		<?php require_once __DIR__ . '/partials/debug-info-textarea.php'; ?>
 	</template>
 
 	<?php
@@ -126,7 +126,6 @@ function print_outdated_php_box() {
 		<?php
 	}
 }
-
 
 function filter_save_options( $options ) {
 

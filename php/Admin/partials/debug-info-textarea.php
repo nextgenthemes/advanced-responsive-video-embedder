@@ -1,5 +1,5 @@
 <?php
-namespace Nextgenthemes\ARVE\Common\Admin;
+namespace Nextgenthemes\ARVE\Admin;
 
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
 ?>
@@ -22,3 +22,4 @@ ARVE Options:
 Dismissed Notices:
 <?php echo wp_kses( var_export( get_user_meta( get_current_user_id(), 'dnh_dismissed_notices' ), true ), array() ); ?>
 </textarea>
+

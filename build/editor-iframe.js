@@ -1,1 +1,1 @@
-!function(){"use strict";var t;null===(t=document.querySelector(".editor-styles-wrapper"))||void 0===t||t.setAttribute("id","html")}();
+!function(){"use strict";document.querySelector(".editor-styles-wrapper")?.setAttribute("id","html")}();

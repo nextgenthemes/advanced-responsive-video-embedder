@@ -8,7 +8,7 @@ class Tests_AddonsBaseChecks extends WP_UnitTestCase {
 
 	public function test_product_data() {
 
-		$products = \Nextgenthemes\ARVE\Common\get_products();
+		$products = \Nextgenthemes\WP\get_products();
 
 		$this->assertNotEmpty( $GLOBALS['arve_detected_addons'] );
 		$this->assertTrue( is_array( $GLOBALS['arve_detected_addons'] ) );

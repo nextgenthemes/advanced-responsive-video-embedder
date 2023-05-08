@@ -2,9 +2,14 @@
 namespace Nextgenthemes\ARVE\Admin;
 
 use \Nextgenthemes\ARVE;
-use \Nextgenthemes\ARVE\Common;
+use \Nextgenthemes\WP as Common;
 
 function add_media_button() {
+
+
+	
+
+	return;
 
 	printf(
 		'<button id="arve-btn" title="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',

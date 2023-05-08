@@ -25,7 +25,6 @@ function init_public() {
 
 	update_option( 'arve_version', VERSION );
 
-	require_once PLUGIN_DIR . '/php/Common/init.php';
 	require_once PLUGIN_DIR . '/php/functions-deprecated.php';
 	require_once PLUGIN_DIR . '/php/functions-assets.php';
 	require_once PLUGIN_DIR . '/php/functions-html-output.php';
@@ -57,6 +56,7 @@ function init_admin() {
 	require_once PLUGIN_DIR . '/php/Admin/functions-admin.php';
 	require_once PLUGIN_DIR . '/php/Admin/functions-settings-page.php';
 	require_once PLUGIN_DIR . '/php/Admin/functions-shortcode-creator.php';
+	require_once PLUGIN_DIR . '/php/Admin/functions-debug-info.php';
 
 	// Admin Hooks
 	add_action( 'nextgenthemes/arve/admin/settings/sidebar', __NAMESPACE__ . '\Admin\settings_sidebar' );
@@ -66,7 +66,19 @@ function init_admin() {
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\Admin\admin_enqueue_scripts' );
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\Admin\admin_enqueue_styles', 99 );
 	add_action( 'admin_init', __NAMESPACE__ . '\Admin\action_admin_init_setup_messages' );
-	add_action( 'media_buttons', __NAMESPACE__ . '\Admin\add_media_button', 11 );
+	//add_action( 'media_buttons', __NAMESPACE__ . '\Admin\add_media_button', 11 );
+
+	add_action(
+		'media_buttons',
+		function() {
+			wp_enqueue_script( 'arve-shortcode-dialog' );
+			wp_enqueue_style( 'arve-shortcode-dialog' );
+
+			echo '<span id="arve-shortcode-dialog"></span>';
+		},
+		11
+	);
+
 	add_action( 'admin_footer', __NAMESPACE__ . '\Admin\create_shortcode_dialog' );
 	add_action( 'register_shortcode_ui', __NAMESPACE__ . '\Admin\register_shortcode_ui' );
 	add_action( 'wp_dashboard_setup', __NAMESPACE__ . '\Admin\add_dashboard_widget' );

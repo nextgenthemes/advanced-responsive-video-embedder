@@ -1,12 +1,15 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
+use function Nextgenthemes\WP\ngt_get_block_wrapper_attributes;
+use function Nextgenthemes\WP\attr;
+
 function tracks_html( array $tracks ) {
 
 	$html = '';
 
 	foreach ( $tracks as $track_attr ) {
-		$html .= sprintf( '<track%s>', Common\attr( $track_attr ) );
+		$html .= sprintf( '<track%s>', attr( $track_attr ) );
 	}
 
 	return $html;
@@ -35,9 +38,9 @@ function build_tag( array $tag, array $a ) {
 	} else {
 
 		if ( 'arve' === $tag['name'] && ! empty( $a['origin_data']['gutenberg'] ) ) {
-			$attr = Common\ngt_get_block_wrapper_attributes( $tag['attr'] );
+			$attr = ngt_get_block_wrapper_attributes( $tag['attr'] );
 		} else {
-			$attr = Common\attr( $tag['attr'] );
+			$attr = attr( $tag['attr'] );
 		}
 
 		if ( ! empty( $tag['inner_html'] ) ||

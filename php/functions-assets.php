@@ -1,10 +1,8 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-use function \Nextgenthemes\Assets\register_asset;
-use function \Nextgenthemes\Assets\add_dep_to_script;
-
-use Nextgenthemes;
+use function \Nextgenthemes\WP\register_asset;
+use function \Nextgenthemes\WP\add_dep_to_script;
 
 function register_assets() {
 
@@ -55,7 +53,7 @@ function register_assets() {
 				'src'                  => plugins_url( 'build/block.js', PLUGIN_FILE ),
 				'path'                 => PLUGIN_DIR . '/build/block.js',
 				//'deps'                 => array( 'arve' ),
-				'footer'               => 'false',
+				'in_footer'            => false,
 				'inline_script_before' => [
 					'settings' => $settings,
 					'options'  => $options,

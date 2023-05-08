@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
+use Nextgenthemes\WP as Common;
 use WP_Error;
 
 class Video {

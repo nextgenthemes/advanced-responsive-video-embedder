@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
+use Nextgenthemes\WP as Common;
+
 /**
  * Info: https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-oembed.php
  * https://github.com/iamcal/oembed/tree/master/providers

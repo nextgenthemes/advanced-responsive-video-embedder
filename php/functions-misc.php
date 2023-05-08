@@ -59,7 +59,7 @@ function check_filetype( $url, $ext ) {
  *
  * @return int Starttime in seconds.
  */
-function youtube_time_to_seconds( $yttime ) {
+function youtube_time_to_seconds( string $yttime ): int {
 
 	if ( \is_numeric( $yttime ) ) {
 		return $yttime;
@@ -100,7 +100,7 @@ function new_height( $old_width, $old_height, $new_width ) {
  *
  * @return float
  */
-function aspect_ratio_to_percentage( $aspect_ratio ) {
+function aspect_ratio_to_percentage( string $aspect_ratio ) {
 
 	list( $width, $height ) = explode( ':', $aspect_ratio );
 	$percentage             = ( $height / $width ) * 100;
@@ -146,7 +146,7 @@ function seconds_to_iso8601_duration( $time ) {
  *
  * @return bool
  */
-function is_gutenberg() {
+function is_gutenberg(): bool {
 
 	$gutenberg    = false;
 	$block_editor = false;
