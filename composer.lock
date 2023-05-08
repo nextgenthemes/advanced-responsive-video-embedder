@@ -1,0 +1,117 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "f973013fb246d9428a5c9987f358b640",
+    "packages": [
+        {
+            "name": "nextgenthemes/wp-shared",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../../../composer-packages/wp-shared",
+                "reference": "12a2f129bc6286424d3c4c87299a802902a15bc3"
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "type": "wp-package",
+            "autoload": {
+                "psr-4": {
+                    "WP\\": "includes/WP"
+                },
+                "files": [
+                    "includes/WP/functions-asset-helpers.php",
+                    "includes/WP/functions-compat.php",
+                    "includes/WP/functions-deprecated.php",
+                    "includes/WP/functions-array.php",
+                    "includes/WP/functions-string.php",
+                    "includes/WP/functions-misc.php",
+                    "includes/WP/functions-settings.php",
+                    "includes/WP/functions-license.php",
+                    "includes/WP/functions-remote-get.php",
+                    "includes/WP/Admin/load-admin-files.php"
+                ]
+            },
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Jonas"
+                }
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        }
+    ],
+    "packages-dev": [
+        {
+            "name": "automattic/jetpack-autoloader",
+            "version": "v2.11.18",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Automattic/jetpack-autoloader.git",
+                "reference": "53cbf0528fa6931c4fa6465bccd37514f9eda720"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/53cbf0528fa6931c4fa6465bccd37514f9eda720",
+                "reference": "53cbf0528fa6931c4fa6465bccd37514f9eda720",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.1 || ^2.0"
+            },
+            "require-dev": {
+                "automattic/jetpack-changelogger": "^3.3.2",
+                "yoast/phpunit-polyfills": "1.0.4"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "autotagger": true,
+                "class": "Automattic\\Jetpack\\Autoloader\\CustomAutoloaderPlugin",
+                "mirror-repo": "Automattic/jetpack-autoloader",
+                "changelogger": {
+                    "link-template": "https://github.com/Automattic/jetpack-autoloader/compare/v${old}...v${new}"
+                },
+                "branch-alias": {
+                    "dev-trunk": "2.11.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Automattic\\Jetpack\\Autoloader\\": "src"
+                },
+                "classmap": [
+                    "src/AutoloadGenerator.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Creates a custom autoloader for a plugin or theme.",
+            "support": {
+                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v2.11.18"
+            },
+            "time": "2023-03-29T12:51:59+00:00"
+        }
+    ],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "nextgenthemes/wp-shared": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.2"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
+}

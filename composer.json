@@ -3,12 +3,30 @@
 	"description": "ARVE Advanced Responsive Video Embedder",
 	"type": "wordpress-plugin",
 	"require": {
-		"php": ">=5.6"
+		"php": ">=7.2",
+		"nextgenthemes/wp-shared": "@dev"
+	},
+	"require-dev": {
+		"automattic/jetpack-autoloader": "^2.0.0"
 	},
 	"license": "GPL-3.0",
 	"authors": [
 		{
 			"name": "Nicolas Jonas"
 		}
-	]
+	],
+	"repositories": [
+		{
+			"type": "path",
+			"url": "../../../composer-packages/wp-shared",
+			"options": {
+				"symlink": true
+			}
+		}
+	],
+	"config": {
+		"allow-plugins": {
+			"automattic/jetpack-autoloader": true
+		}
+	}
 }
