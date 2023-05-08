@@ -1,1 +1,0 @@
-!function(){"use strict";document.querySelector(".editor-styles-wrapper")?.setAttribute("id","html")}();
