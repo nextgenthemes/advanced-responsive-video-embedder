@@ -7,7 +7,7 @@ jobs:
       startsWith(github.ref, 'refs/tags')
       || contains(github.event.head_commit.message, '[ci]')
     name: PHP Unit tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         php: [ '5.6', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2' ] # https://www.php.net/supported-versions
@@ -77,7 +77,7 @@ jobs:
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@d30ad8b1843ace22e6698ab99bbafaa747b6bd0d # 2.24.0 # https://github.com/shivammathur/setup-php/releases/
+        uses: shivammathur/setup-php@cb8f453143149404c7fd670b5f37c91d395b3054 # 2.25.1 # https://github.com/shivammathur/setup-php/releases/
         with:
           php-version: ${{ matrix.php }}
           extensions: mbstring, dom, zip, mysql, gd
@@ -102,7 +102,7 @@ jobs:
       && ! contains(github.ref, 'alpha')
     needs: test
     name: SVN commit to wp.org
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
