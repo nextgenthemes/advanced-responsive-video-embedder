@@ -96,8 +96,7 @@ jobs:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
 
       - name: Run PHPUnit without code coverage
-        run: phpunit --testsuite advanced-responsive-video-embedder
-        #run: phpunit --testsuite advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos
+        run: phpunit --testsuite advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos
 
   deploy:
     if: >-
