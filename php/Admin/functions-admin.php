@@ -67,14 +67,14 @@ function action_admin_init_setup_messages() {
 		);
 	}
 
-	if ( PHP_VERSION_ID < 70200 ) {
+	if ( PHP_VERSION_ID < 70400 ) {
 		$msg = esc_html__(
-			'Your php version is very outdated, the next version of ARVE will probably require php 7.2+, possibly 7.4+ please update (ask your host to update).',
+			'Your php version is very outdated, the next version of ARVE will probably require 7.4+ please update (ask your host to update).',
 			'advanced-responsive-video-embedder'
 		);
 
 		Notices::instance()->register_notice(
-			'arve-php-outdated-warn',
+			'arve-php-outdated-warn-7-4',
 			'notice-error',
 			$msg
 		);
