@@ -3,6 +3,10 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2023-09-16 9.10.10 ###
+* Tested with latest WP version.
+* Updated warning that next major version will required php 7.4+.
+
 ### 2023-05-17 9.10.9 ###
 * Fix: Styles not loading correctly in latest Gutenberg versions.
 
