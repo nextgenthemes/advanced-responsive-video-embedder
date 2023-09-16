@@ -3,7 +3,7 @@ Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.9.16
-Tested up to: 6.0.2
+Tested up to: 6.3.1
 Requires PHP: 5.6
 Stable tag: 9.10.10
 License: GPL-3.0
@@ -194,6 +194,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2023-09-16 9.10.10 ###
+* Tested with latest WP version.
+* Updated warning that next major version will required php 7.4+.
 
 ### 2023-05-17 9.10.9 ###
 * Fix: Styles not loading correctly in latest Gutenberg versions.
