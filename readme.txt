@@ -195,7 +195,7 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2023-09-16 9.10.10 ###
+### 2023-09-16 9.10.12 ###
 * Tested with latest WP version.
 * Updated warning that next major version will required php 7.4+.
 
