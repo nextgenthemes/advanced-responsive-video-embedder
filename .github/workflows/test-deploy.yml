@@ -36,9 +36,6 @@ jobs:
       - name: rm -rf symbiosistheme.com
         run: rm -rf symbiosistheme.com
 
-      - name: rm composer.json
-        run: rm composer.json
-
       - name: Checkout ARVE
         uses: actions/checkout@v3
         with:
