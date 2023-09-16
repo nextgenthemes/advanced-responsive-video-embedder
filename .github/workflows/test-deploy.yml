@@ -87,7 +87,7 @@ jobs:
           tools: #phpunit-polyfills:1
           coverage: none #optional
 
-      - run: rm composer.lock
+      - run: rm composer.lock || true
 
       - name: Install Composer dependencies - normal
         uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6 # 2.2
