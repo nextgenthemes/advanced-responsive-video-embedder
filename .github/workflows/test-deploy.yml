@@ -36,6 +36,9 @@ jobs:
       - name: rm -rf symbiosistheme.com
         run: rm -rf symbiosistheme.com
 
+      - name: rm composer.json
+        run: rm composer.json
+
       - name: Checkout ARVE
         uses: actions/checkout@v3
         with:
@@ -81,22 +84,8 @@ jobs:
           php-version: ${{ matrix.php }}
           ini-values: zend.assertions=1, error_reporting=-1, display_errors=On
           extensions: mbstring, dom, zip, mysql, gd
-          tools: #phpunit-polyfills:1
+          tools: phpunit-polyfills:1
           coverage: none #optional
-
-      - run: rm composer.lock || true
-
-      - name: Install Composer dependencies - normal
-        uses: ramsey/composer-install@83af392bf5f031813d25e6fe4cd626cdba9a2df6 # 2.2
-        with:
-          # Bust the cache at least once a month - output format: YYYY-MM.
-          custom-cache-suffix: $(date -u "+%Y-%m")
-
-      - name: Debug - composer global info
-        run: composer global info
-
-      - name: Debug - PHPUnit version
-        run: phpunit --version
 
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
