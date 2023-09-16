@@ -135,7 +135,8 @@
 		'name'           => 'Dailymotion',
 		'oembed'         => true,
 		'regex'          => '#https?://(www\\.)?(dai\\.ly|dailymotion\\.com/video)/(?<id>[a-z0-9]+)#i',
-		'embed_url'      => 'https://www.dailymotion.com/embed/video/%s',
+		#
+		'embed_url'      => 'https://geo.dailymotion.com/player.html?video=%s', # https://www.dailymotion.com/embed/video/%s is given out for copy paste, but oembed endpoint give out geo... url.
 		'rebuild_url'    => 'https://www.dailymotion.com/video/%s',
 		'default_params' => 'logo=0&hideInfos=1&related=0',
 		'auto_thumbnail' => true,
@@ -146,8 +147,8 @@
 				'id'  => 'x84qh50',
 			],
 			1 => [
-				'url' => 'https://dai.ly/x84qh50',
-				'id'  => 'x84qh50',
+				'url' => 'https://dai.ly/x84s8c4',
+				'id'  => 'x84s8c4',
 			],
 		],
 	],

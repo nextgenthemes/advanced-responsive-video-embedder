@@ -485,7 +485,6 @@ function compare_oembed_src_with_generated_src( array $a ) {
 			break;
 		case 'dailymotion':
 			$src = remove_query_arg( 'pubtool', $src );
-			$src = rtrim($src, '&#038;');
 			break;
 	}
 
