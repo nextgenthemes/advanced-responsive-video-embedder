@@ -7,16 +7,12 @@ jobs:
       startsWith(github.ref, 'refs/tags')
       || contains(github.event.head_commit.message, '[ci]')
     name: PHP Unit tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
+      fail-fast: false
       matrix:
-        php: [ '7.4', '8.0', '8.1' ] # https://www.php.net/supported-versions
+        php: [ '7.4', '8.0', '8.1', '8.2' ] # https://www.php.net/supported-versions
         wordpress: [ 'latest' ] # https://wordpress.org/download/releases/
-        coverage: [ 'none' ]
-        include:
-          - php: '8.2'
-            wordpress: latest
-            coverage: none
     services:
       mysql:
         image: mysql:5.7
@@ -39,6 +35,9 @@ jobs:
 
       - name: rm -rf symbiosistheme.com
         run: rm -rf symbiosistheme.com
+
+      - name: rm composer.json
+        run: rm composer.json
 
       - name: Checkout ARVE
         uses: actions/checkout@v3
@@ -80,12 +79,13 @@ jobs:
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@d30ad8b1843ace22e6698ab99bbafaa747b6bd0d # 2.24.0 # https://github.com/shivammathur/setup-php/releases/
+        uses: shivammathur/setup-php@7fdd3ece872ec7ec4c098ae5ab7637d5e0a96067 # 2.26.0 # https://github.com/shivammathur/setup-php/releases/
         with:
           php-version: ${{ matrix.php }}
+          ini-values: zend.assertions=1, error_reporting=-1, display_errors=On
           extensions: mbstring, dom, zip, mysql, gd
-          tools:  phpunit-polyfills
-          coverage: ${{ matrix.coverage }}
+          tools: phpunit-polyfills:1
+          coverage: none #optional
 
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
@@ -95,19 +95,8 @@ jobs:
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
 
-      - if: matrix.coverage == 'none'
-        name: Run PHPUnit without code coverage
-        run: phpunit
-
-      - if: matrix.coverage == 'xdebug'
-        name: Run PHPUnit with code coverage
-        run: phpunit --coverage-html ./coverage-html
-
-      - if: matrix.coverage == 'xdebug'
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage-html
-          path: coverage-html/
+      - name: Run PHPUnit without code coverage
+        run: phpunit --testsuite advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos
 
   deploy:
     if: >-
@@ -116,18 +105,24 @@ jobs:
       && ! contains(github.ref, 'alpha')
     needs: test
     name: SVN commit to wp.org
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          path: advanced-responsive-video-embedder
+
+      - run: pwd
 
       - name: Get the version
         id: get_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
       - name: Deploy
-        uses: ./actions/wp-plugin-deploy
+        uses: nextgenthemes/action-wordpress-plugin-deploy@master
         with:
+          workdir: advanced-responsive-video-embedder
           version: ${{ steps.get_version.outputs.VERSION }}
           svn_user: ${{ secrets.SVN_USERNAME }}
           svn_pass: ${{ secrets.SVN_PASSWORD }}
+          verbose: true
