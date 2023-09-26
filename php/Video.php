@@ -1,7 +1,11 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-use Nextgenthemes\WP as Common;
+use function Nextgenthemes\WP\get_url_arg;
+use function Nextgenthemes\WP\ngt_get_block_wrapper_attributes;
+use function Nextgenthemes\WP\attr;
+use function Nextgenthemes\WP\check_product_keys;
+
 use WP_Error;
 
 class Video {
@@ -101,7 +105,7 @@ class Video {
 		try {
 			$this->shortcode_atts = \shortcode_atts( shortcode_pairs(), $this->org_args, 'arve' );
 
-			Common\check_product_keys();
+			check_product_keys();
 			$this->process_shortcode_atts();
 
 			$html .= get_error_html();
@@ -245,9 +249,9 @@ class Video {
 		switch ( $provider ) {
 
 			case 'youtube':
-				$t_arg         = Common\get_url_arg( $url, 't' );
-				$time_continue = Common\get_url_arg( $url, 'time_continue' );
-				$list_arg      = Common\get_url_arg( $url, 'list' );
+				$t_arg         = get_url_arg( $url, 't' );
+				$time_continue = get_url_arg( $url, 'time_continue' );
+				$list_arg      = get_url_arg( $url, 'list' );
 
 				if ( $t_arg ) {
 					$src = add_query_arg( 'start', youtube_time_to_seconds( $t_arg ), $src );
@@ -261,7 +265,7 @@ class Video {
 				}
 				break;
 			case 'ted':
-				$lang = Common\get_url_arg( $url, 'language' );
+				$lang = get_url_arg( $url, 'language' );
 				if ( $lang ) {
 					$src = str_replace( 'ted.com/talks/', "ted.com/talks/lang/{$lang}/", $src );
 				}
@@ -867,9 +871,9 @@ class Video {
 		} else {
 
 			if ( 'arve' === $tag['name'] && ! empty( $this->origin_data['gutenberg'] ) ) {
-				$attr = Common\ngt_get_block_wrapper_attributes( $tag['attr'] );
+				$attr = ngt_get_block_wrapper_attributes( $tag['attr'] );
 			} else {
-				$attr = Common\attr( $tag['attr'] );
+				$attr = attr( $tag['attr'] );
 			}
 
 			if ( ! empty( $tag['inner_html'] ) ||

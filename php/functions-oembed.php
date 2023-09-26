@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-use Nextgenthemes\WP as Common;
+use function Nextgenthemes\WP\get_image_size;
 
 /**
  * Info: https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-oembed.php
@@ -49,7 +49,7 @@ function filter_oembed_dataparse( $result, $data, $url ) {
  * @param int          $post_ID
  * @return void
  */
-function filter_embed_oembed_html( $cache, $url, array $attr, $post_ID ) {
+function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_ID ) {
 
 	$oembed_data = extract_oembed_json( $cache, $url );
 
@@ -95,7 +95,7 @@ function extract_oembed_json( $html, $url ) {
 	return $data;
 }
 
-function yt_srcset( $url ) {
+function yt_srcset( string $url ) {
 
 	$re = '@[a-z]+.jpg$@';
 
@@ -103,8 +103,8 @@ function yt_srcset( $url ) {
 	$sd     = preg_replace($re, 'sddefault.jpg', $url, 1);     // 640x480
 	$maxres = preg_replace($re, 'maxresdefault.jpg', $url, 1); // hd, fullhd ...
 
-	$size_sd     = Common\get_image_size( $sd );
-	$size_maxres = Common\get_image_size( $maxres );
+	$size_sd     = get_image_size( $sd );
+	$size_maxres = get_image_size( $maxres );
 
 	$srcset[320] = $mq;
 	$srcset[480] = $url; // hqdefault.jpg 480x360

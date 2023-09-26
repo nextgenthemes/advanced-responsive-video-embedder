@@ -184,7 +184,7 @@ function get_arg_type( $arg_name ) {
 	return $s['type'];
 }
 
-function shortcode_pairs() {
+function shortcode_pairs(): array {
 
 	$options  = options();
 	$settings = shortcode_settings();
@@ -229,7 +229,7 @@ function shortcode_pairs() {
 	return apply_filters( 'nextgenthemes/arve/shortcode_pairs', $pairs );
 }
 
-function all_settings() {
+function all_settings(): array {
 
 	$properties = get_host_properties();
 
