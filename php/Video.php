@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
+use function Nextgenthemes\WP\get_var_dump;
 use function Nextgenthemes\WP\get_url_arg;
 use function Nextgenthemes\WP\ngt_get_block_wrapper_attributes;
 use function Nextgenthemes\WP\attr;
@@ -72,7 +73,7 @@ class Video {
 
 	// new stuff needed to build HTML
 	private int $width;
-	private $height;
+	private ?float $height;
 	private string $uid;
 	private string $img_src = '';
 	private string $src     = '';
@@ -91,6 +92,9 @@ class Video {
 	private array $origin_data;
 	private WP_Error $errors;
 
+	/**
+	 * @param array <string, any> $args
+	 */
 	public function __construct( array $args ) {
 
 		$this->errors   = arve_errors();
@@ -98,7 +102,7 @@ class Video {
 		ksort( $this->org_args );
 	}
 
-	public function build_video() {
+	public function build_video(): string {
 
 		$html = '';
 
@@ -135,7 +139,7 @@ class Video {
 		}
 	}
 
-	private function process_shortcode_atts() {
+	private function process_shortcode_atts(): void {
 
 		$this->missing_attribute_check();
 
@@ -275,7 +279,7 @@ class Video {
 		return $src;
 	}
 
-	private function missing_attribute_check() {
+	private function missing_attribute_check(): void {
 
 		// Old shortcodes
 		if ( ! empty( $this->org_args['origin_data']['from'] ) && 'create_shortcodes' === $this->org_args['origin_data']['from'] ) {
@@ -311,7 +315,7 @@ class Video {
 		}
 	}
 
-	private function set_video_properties_from_attachments() {
+	private function set_video_properties_from_attachments(): void {
 
 		foreach ( VIDEO_FILE_EXTENSIONS as $ext ) {
 			if ( ! empty( $this->$ext ) && is_numeric( $this->$ext ) ) {
@@ -320,7 +324,10 @@ class Video {
 		}
 	}
 
-	public function current_set_props() {
+	/**
+	 * @return array <string, any>
+	 */
+	public function current_set_props(): array {
 
 		$current_args = [];
 
@@ -333,7 +340,7 @@ class Video {
 		return $current_args;
 	}
 
-	private function arg_autoplay( bool $autoplay ) {
+	private function arg_autoplay( bool $autoplay ): bool {
 
 		if ( 'normal' === $this->mode ) { // Prevent more then one vid autoplaying
 
@@ -376,6 +383,9 @@ class Video {
 		return (string) apply_filters( 'nextgenthemes/arve/args/img_src', $img_src, $this->current_set_props() );
 	}
 
+	/**
+	 * @return string|bool
+	 */
 	private function arg_aspect_ratio( string $ratio ) {
 
 		if ( ! empty( $ratio ) ) {
@@ -405,7 +415,7 @@ class Video {
 		return $ratio;
 	}
 
-	private function detect_html5() {
+	private function detect_html5(): bool {
 
 		if ( $this->provider && 'html5' !== $this->provider ) {
 			return false;
@@ -453,7 +463,10 @@ class Video {
 		return false;
 	}
 
-	private function detect_tracks() {
+	/**
+	 * @return array <int, Array>
+	 */
+	private function detect_tracks(): array {
 
 		$tracks = array();
 
@@ -490,7 +503,7 @@ class Video {
 		return $tracks;
 	}
 
-	private function detect_provider_and_id_from_url() {
+	private function detect_provider_and_id_from_url(): bool {
 
 		if ( 'html5' === $this->provider ||
 			( $this->provider && $this->id )
@@ -544,80 +557,45 @@ class Video {
 		return true;
 	}
 
-	public function set_bool_prop( string $arg_name, bool $value ): void {
-		$this->$arg_name = $value;
-	}
-
-	public function set_int_prop( string $arg_name, int $value ): void {
-		$this->$arg_name = $value;
-	}
-
-	public function set_float_prop( string $arg_name, float $value ): void {
-		$this->$arg_name = $value;
-	}
-
-	public function set_string_prop( string $arg_name, string $value ): void {
-		$this->$arg_name = $value;
-	}
-
-	public function set_array_prop( string $arg_name, array $value ): void {
-		$this->$arg_name = $value;
-	}
-
-	public function set_object_nullable_prop( string $arg_name, ?object $value ): void {
-		$this->$arg_name = $value;
-	}
-
-	public function set_prop( string $prop_name, mixed $value ): void {
+	/**
+	 * @param mixed $value
+	 */
+	public function set_prop( string $prop_name, $value ): void {
 
 		if ( ! property_exists($this, $prop_name) ) {
 			throw new \Exception( "$prop_name 'property does not exists" );
 		}
 
-		$url_args        = array_merge( VIDEO_FILE_EXTENSIONS, [ 'url' ] );
-		$type            = get_arg_type( $prop_name );
-		$set_method_name = "set_{$type}_prop";
+		$url_args      = array_merge( VIDEO_FILE_EXTENSIONS, [ 'url' ] );
+		$type          = get_arg_type( $prop_name );
+		$property_type = ( new \ReflectionProperty(__CLASS__, $prop_name) )->getType()->getName();
+
+		if ( $type && $type !== $property_type ) {
+			throw new \Exception( "$prop_name 'property has the wrong type" );
+		}
 
 		if ( in_array($prop_name, $url_args, true) ) {
-			$this->set_string_prop( $prop_name, validate_url( $prop_name, $value ) );
+			$this->$prop_name = validate_url( $prop_name, $value );
 			return;
 		}
 
-		switch ( $prop_name ) {
-			// this could hold int old id for attachment id or
-			case 'thumbnail':
-				$this->set_string_prop( 'thumbnail', validate_thumbnail( $value ) );
-				return;
-			case 'origin_data':
-				$this->set_array_prop( 'origin_data', $value );
-				return;
-			case 'oembed_data':
-				$this->set_object_nullable_prop( 'oembed_data', $value );
-				return;
-			case 'align':
-				$this->set_string_prop( 'align', validate_align( $value ) );
-				return;
-			case 'aspect_ratio':
-				$this->set_string_prop( 'aspect_ratio', validate_aspect_ratio( $value ) );
-				return;
-		}
+		$validate_function      = __NAMESPACE__ . "\\validate_{$prop_name}";
+		$validate_type_function = __NAMESPACE__ . "\\validate_{$type}";
 
-		if ( 'string' === $type ) {
-			$this->set_string_prop( $prop_name, $value );
+		if ( function_exists( $validate_function ) ) {
+			$this->$prop_name = $validate_function( $value );
 			return;
 		}
 
-		if ( 'float' === $type ) {
-			$this->set_float_prop( $prop_name, $value );
+		if ( $type && function_exists( $validate_type_function ) ) {
+			$this->$prop_name = $validate_type_function( $prop_name, $value );
 			return;
 		}
 
-		$validate_function_name = __NAMESPACE__ . "\\validate_{$type}";
-
-		$this->$set_method_name( $prop_name, $validate_function_name( $prop_name, $value ) );
+		$this->$prop_name = $value;
 	}
 
-	private function build_html() {
+	private function build_html(): string {
 
 		$wrapped_video = $this->build_tag(
 			array(
@@ -649,7 +627,7 @@ class Video {
 		);
 	}
 
-	private function build_iframe_tag() {
+	private function build_iframe_tag(): string {
 
 		$allow   = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
 		$class   = 'arve-iframe fitvidsignore';
@@ -697,7 +675,7 @@ class Video {
 		);
 	}
 
-	private function build_video_tag() {
+	private function build_video_tag(): string {
 
 		$autoplay = in_array( $this->mode, array( 'lazyload', 'lightbox', 'link-lightbox' ), true ) ?
 			false :
@@ -733,7 +711,7 @@ class Video {
 		);
 	}
 
-	private function get_debug_info( $input_html = '' ) {
+	private function get_debug_info( string $input_html = '' ): string {
 
 		if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
 			return '';
@@ -794,7 +772,7 @@ class Video {
 		return $html;
 	}
 
-	private function arve_embed_inner_html() {
+	private function arve_embed_inner_html(): string {
 
 		$html = '';
 
@@ -819,7 +797,7 @@ class Video {
 		return $html;
 	}
 
-	private function build_seo_data() {
+	private function build_seo_data(): string {
 
 		$options = options();
 
@@ -857,7 +835,10 @@ class Video {
 		return '<script type="application/ld+json">' . wp_json_encode($payload) . '</script>';
 	}
 
-	private function build_tag( array $tag ) {
+	/**
+	 * @param array <string, any> $tag
+	 */
+	private function build_tag( array $tag ): string {
 
 		$tag = apply_filters( "nextgenthemes/arve/{$tag['name']}", $tag, $this->current_set_props() );
 
@@ -899,7 +880,7 @@ class Video {
 		return apply_filters( "nextgenthemes/arve/{$tag['name']}_html", $html, $this->current_set_props() );
 	}
 
-	private static function promote_link( $arve_link ) {
+	private static function promote_link( bool $arve_link ): string {
 
 		if ( $arve_link ) {
 			return sprintf(
@@ -913,7 +894,7 @@ class Video {
 		return '';
 	}
 
-	private function arve_embed( $html ) {
+	private function arve_embed( string $html ): string {
 
 		$ratio_span = '';
 		$class      = 'arve-embed';

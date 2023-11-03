@@ -3,7 +3,7 @@ namespace Nextgenthemes\ARVE;
 
 init_920();
 
-function init_920() {
+function init_920(): void {
 	init_public();
 
 	if ( is_admin() ) {
@@ -11,7 +11,7 @@ function init_920() {
 	}
 }
 
-function init_public() {
+function init_public(): void {
 
 	add_option( 'arve_install_date', time() );
 
@@ -51,7 +51,7 @@ function init_public() {
 	add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', OEMBED_HTML_PRIORITY, 4 );
 }
 
-function init_admin() {
+function init_admin(): void {
 
 	require_once PLUGIN_DIR . '/php/Admin/functions-admin.php';
 	require_once PLUGIN_DIR . '/php/Admin/functions-settings-page.php';
@@ -66,18 +66,7 @@ function init_admin() {
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\Admin\admin_enqueue_scripts' );
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\Admin\admin_enqueue_styles', 99 );
 	add_action( 'admin_init', __NAMESPACE__ . '\Admin\action_admin_init_setup_messages' );
-	//add_action( 'media_buttons', __NAMESPACE__ . '\Admin\add_media_button', 11 );
-
-	add_action(
-		'media_buttons',
-		function() {
-			wp_enqueue_script( 'arve-shortcode-dialog' );
-			wp_enqueue_style( 'arve-shortcode-dialog' );
-
-			echo '<span id="arve-shortcode-dialog"></span>';
-		},
-		11
-	);
+	add_action( 'media_buttons', __NAMESPACE__ . '\Admin\add_media_button', 11 );
 
 	add_action( 'admin_footer', __NAMESPACE__ . '\Admin\create_shortcode_dialog' );
 	add_action( 'register_shortcode_ui', __NAMESPACE__ . '\Admin\register_shortcode_ui' );
@@ -89,7 +78,7 @@ function init_admin() {
 
 register_uninstall_hook( PLUGIN_FILE, __NAMESPACE__ . '\\uninstall' );
 
-function uninstall() {
+function uninstall(): void {
 
 	if ( version_compare( $GLOBALS['wpdb']->db_version(), '8.0', '>=' ) ) {
 		$GLOBALS['wpdb']->query(

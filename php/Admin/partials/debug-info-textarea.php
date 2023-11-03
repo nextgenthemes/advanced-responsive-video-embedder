@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE\Admin;
 
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export

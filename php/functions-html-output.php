@@ -4,8 +4,12 @@ namespace Nextgenthemes\ARVE;
 use function Nextgenthemes\WP\ngt_get_block_wrapper_attributes;
 use function Nextgenthemes\WP\attr;
 
-function tracks_html( array $tracks ) {
-
+/**
+ * Undocumented function
+ *
+ * @param array <int, Array> $tracks
+ */
+function tracks_html( array $tracks ): string {
 	$html = '';
 
 	foreach ( $tracks as $track_attr ) {
@@ -15,7 +19,7 @@ function tracks_html( array $tracks ) {
 	return $html;
 }
 
-function html_id( $html_attr ) {
+function html_id( string $html_attr ): string {
 
 	if ( ! str_contains( $html_attr, 'id=' ) ) {
 		$html_attr .= ' id="html"';
@@ -24,7 +28,13 @@ function html_id( $html_attr ) {
 	return $html_attr;
 }
 
-function build_tag( array $tag, array $a ) {
+/**
+ * Build HTML tag output
+ *
+ * @param array <string, Array> $tag
+ * @param array <string, any> $a
+ */
+function build_tag( array $tag, array $a ): string {
 
 	$tag = apply_filters( "nextgenthemes/arve/{$tag['name']}", $tag, $a );
 
@@ -66,7 +76,7 @@ function build_tag( array $tag, array $a ) {
 	return apply_filters( "nextgenthemes/arve/{$tag['name']}_html", $html, $a );
 }
 
-function promote_link( $arve_link ) {
+function promote_link( bool $arve_link ): string {
 
 	if ( $arve_link ) {
 		return sprintf(

@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-function query_args() {
+function query_args(): array {
 
 	$hosts = array(
 		'dailymotion' => array(

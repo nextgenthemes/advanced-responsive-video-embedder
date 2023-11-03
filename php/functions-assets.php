@@ -4,7 +4,7 @@ namespace Nextgenthemes\ARVE;
 use function \Nextgenthemes\WP\register_asset;
 use function \Nextgenthemes\WP\add_dep_to_script;
 
-function register_assets() {
+function register_assets(): void {
 
 	register_asset(
 		array(
@@ -72,7 +72,7 @@ function register_assets() {
 	endif;
 }
 
-function action_wp_enqueue_scripts() {
+function action_wp_enqueue_scripts(): void {
 
 	$options = options();
 
@@ -84,7 +84,7 @@ function action_wp_enqueue_scripts() {
 	}
 }
 
-function gutenberg_block( $attr, $content, $block ) {
+function gutenberg_block( array $attr ): string {
 
 	if ( empty( $attr['url'] ) && empty( $attr['random_video_url'] ) && empty( $attr['random_video_urls'] ) ) {
 		\ob_start();

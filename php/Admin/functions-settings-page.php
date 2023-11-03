@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE\Admin;
 
 use \Nextgenthemes\ARVE;
 use \Nextgenthemes\WP;
 
-function settings_content() {
+function settings_content(): void {
 
 	$link_code_only = array(
 		'code' => array(),
@@ -16,7 +16,7 @@ function settings_content() {
 	);
 	?>
 
-	<template data-ngt-svelte-target=".ngt-section--urlparams">
+	<div x-show="'urlparams' === tab">
 		<p>
 			<?php
 			printf(
@@ -27,63 +27,56 @@ function settings_content() {
 			?>
 		</p>
 		<p>
-			See
+			See 
 			<a target="_blank" href="https://developers.google.com/youtube/player_parameters#Parameters">Youtube Parameters</a>,
 			<a target="_blank" href="http://www.dailymotion.com/doc/api/player.html#parameters">Dailymotion Parameters</a>,
 			<a target="_blank" href="https://developer.vimeo.com/player/embedding">Vimeo Parameters</a>
 		</p>
-	</template>
+	</div>
 
-	<template data-ngt-svelte-target=".ngt-settings-grid__sidebar" data-append="1">
-		<?php
-		if ( ! current_user_can('install_plugins') ) {
-			echo '<div class="ngt-sidebar-box">';
-			esc_html_e( 'Note that you are logged in with a user who that can\'t install plugins, ask someone who can if you are interrested in ARVE Extensions.', 'advanced-responsive-video-embedder' );
-			echo '</div>';
-		}
-
-		if ( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
-			print_settings_box_html( '/partials/settings-sidebar-pro.html' );
-		}
-
-		if ( ! is_plugin_active( 'arve-sticky-videos/arve-sticky-videos.php' ) ) {
-			print_settings_box_html( '/partials/settings-sidebar-sticky-videos.html' );
-		}
-
-		if ( ! is_plugin_active( 'arve-random-video/arve-random-video.php' ) ) {
-			print_settings_box_html( '/partials/settings-sidebar-random-video.html' );
-		}
-
-		if ( ! is_plugin_active( 'arve-amp/arve-amp.php' ) ) {
-			print_settings_box_html( '/partials/settings-sidebar-amp.html' );
-		}
-
-		print_settings_box_html( '/partials/settings-sidebar-rate.html' );
-
-		print_outdated_php_box();
-		?>
-	</template>
-
-	<template data-ngt-svelte-target=".ngt-section--pro .ngt-section__info">
-		<?php print_premium_section_message(); ?>
-	</template>
-
-	<template data-ngt-svelte-target=".ngt-section--sticky-videos .ngt-section__info">
-		<?php print_premium_section_message(); ?>
-	</template>
-
-	<template data-ngt-svelte-target=".ngt-section--random-video .ngt-section__info">
-		<?php print_premium_section_message(); ?>
-	</template>
-
-	<template data-ngt-svelte-target=".ngt-section--debug">
+	<div x-show="'debug' === tab">
 		<?php require_once __DIR__ . '/partials/debug-info-textarea.php'; ?>
-	</template>
+	</div>
+
+	<div x-show="['pro', 'random-video', 'sticky-videos'].includes(tab)">
+		<?php print_premium_section_message(); ?>
+	</div>
+	<?php
+}
+
+function settings_sidebar(): void {
+	?>
+
+	<?php
+	if ( ! current_user_can('install_plugins') ) {
+		echo '<div class="ngt-sidebar-box">';
+		esc_html_e( 'Note that you are logged in with a user who that can\'t install plugins, ask someone who can if you are interrested in ARVE Extensions.', 'advanced-responsive-video-embedder' );
+		echo '</div>';
+	}
+
+	if ( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
+		print_settings_box_html( '/partials/settings-sidebar-pro.html' );
+	}
+
+	if ( ! is_plugin_active( 'arve-sticky-videos/arve-sticky-videos.php' ) ) {
+		print_settings_box_html( '/partials/settings-sidebar-sticky-videos.html' );
+	}
+
+	if ( ! is_plugin_active( 'arve-random-video/arve-random-video.php' ) ) {
+		print_settings_box_html( '/partials/settings-sidebar-random-video.html' );
+	}
+
+	if ( ! is_plugin_active( 'arve-amp/arve-amp.php' ) ) {
+		print_settings_box_html( '/partials/settings-sidebar-amp.html' );
+	}
+
+	print_settings_box_html( '/partials/settings-sidebar-rate.html' );
+	?>
 
 	<?php
 }
 
-function print_premium_section_message() {
+function print_premium_section_message(): void {
 	?>
 		<p>
 			<?php
@@ -93,57 +86,29 @@ function print_premium_section_message() {
 	<?php
 }
 
-function print_settings_box_html( $file ) {
+function print_settings_box_html( string $file ): void {
 	echo '<div class="ngt-sidebar-box">';
 	readfile( __DIR__ . $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
 	echo '</div>';
 }
 
-function print_outdated_php_box() {
-
-	$link_only = array(
-		'a' => array(
-			'href'   => array(),
-			'target' => array(),
-			'title'  => array(),
-		),
-	);
-
-	if ( \version_compare( PHP_VERSION, '8.2.5', '<' ) ) {
-		?>
-		<div class="ngt-sidebar-box">
-			<p>
-				<?php
-				printf(
-					// translators: URL
-					wp_kses( __( 'Just a heads up, your PHP version %1$s is outdated and possibly insecure. See what versions are <a href="%2$s">good here</a>', 'advanced-responsive-video-embedder' ), $link_only ),
-					esc_html( PHP_VERSION ),
-					esc_url( 'https://www.php.net/supported-versions' )
-				);
-				?>
-			</p>
-		</div>
-		<?php
-	}
-}
-
-function filter_save_options( $options ) {
+function filter_save_options( array $options ): array {
 
 	$action            = json_decode( $options['action'] );
 	$options['action'] = '';
 
 	if ( $action ) {
-		$product_id  = get_products()[ $action->product ]['id'];
+		$product_id  = WP\get_products()[ $action->product ]['id'];
 		$product_key = $options[ $action->product ];
 
-		$options[ $action->product . '_status' ] = api_action( $product_id, $product_key, $action->action );
+		$options[ $action->product . '_status' ] = WP\api_action( $product_id, $product_key, $action->action );
 	}
 
-	return $option;
+	return $options;
 }
 
 // unused, trigger recaching is rebuild is probably better, also there this leaves the times in the DB so will this even work?
-function delete_oembed_caches() {
+function delete_oembed_caches(): void {
 
 	global $wpdb;
 

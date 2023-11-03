@@ -1,6 +1,9 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
+/**
+ * @param string|int $id_or_url
+ */
 function validate_thumbnail( $id_or_url ): string {
 
 	if ( '' === $id_or_url ) {
@@ -130,10 +133,24 @@ function validate_align( string $align ): string {
 	return '';
 }
 
-function validate_aspect_ratio( string $aspect_ratio ): string {
+
+/**
+ * @param string|false $aspect_ratio
+ */
+function validate_aspect_ratio( $aspect_ratio ): string {
+
+	if ( false !== $aspect_ratio && ! is_string( $aspect_ratio ) ) {
+		arve_errors()->add(
+			'validate_aspect_ratio',
+			// Translators: attribute
+			sprintf( __( 'Aspect ratio <code>%s</code> is not valid', 'advanced-responsive-video-embedder' ), $aspect_ratio )
+		);
+
+		return '16:9';
+	}
 
 	if ( empty( $aspect_ratio ) ) {
-		return $aspect_ratio;
+		return '';
 	}
 
 	$ratio = explode( ':', $aspect_ratio );
@@ -167,7 +184,10 @@ function validate_height( mixed $height ): mixed {
 	return $height;
 }
 
-function validate_int( string $prop_name, mixed $value ) {
+/**
+ * @param mixed $value
+ */
+function validate_int( string $prop_name, $value ): int {
 
 	if ( is_int( $value ) ) {
 		return $value;
@@ -179,8 +199,8 @@ function validate_int( string $prop_name, mixed $value ) {
 
 	arve_errors()->add(
 		"validate_int $prop_name",
-		// Translators: attribute name, value
 		sprintf(
+			// translators: attribute name, value
 			__( '%1$s: <code>%2$s</code> is not valid', 'advanced-responsive-video-embedder' ),
 			$prop_name,
 			$value

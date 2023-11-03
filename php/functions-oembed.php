@@ -7,7 +7,7 @@ use function Nextgenthemes\WP\get_image_size;
  * Info: https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-oembed.php
  * https://github.com/iamcal/oembed/tree/master/providers
  */
-function add_oembed_providers() {
+function add_oembed_providers(): void {
 	wp_oembed_add_provider( 'https://fast.wistia.com/embed/iframe/*', 'https://fast.wistia.com/oembed.json' );
 	wp_oembed_add_provider( 'https://fast.wistia.com/embed/playlists/*', 'https://fast.wistia.com/oembed.json' );
 	wp_oembed_add_provider( 'https://*.wistia.com/medias/*', 'https://fast.wistia.com/oembed.json' );
@@ -15,11 +15,19 @@ function add_oembed_providers() {
 	wp_oembed_add_provider( 'https://rumble.com/*', 'https://rumble.com/api/Media/oembed.json' );
 }
 
-function filter_oembed_dataparse( $result, $data, $url ) {
+
+/**
+ * Undocumented function
+ *
+ * @param string $return The returned oEmbed HTML.
+ * @param object $data   A data object result from an oEmbed provider.
+ * @param string $url    The URL of the content to be embedded.
+ */
+function filter_oembed_dataparse( string $return, object $data, string $url ): string {
 
 	// this is to fix Divi endless reload issue.
 	if ( is_admin() && function_exists('et_setup_theme') ) {
-		return $result;
+		return $return;
 	}
 
 	if ( $data && 'video' === $data->type ) {
@@ -34,22 +42,23 @@ function filter_oembed_dataparse( $result, $data, $url ) {
 			$data->$k = \esc_html($v);
 		}
 
-		$result .= '<script type="application/json" data-arve-oembed>' . \wp_json_encode($data, JSON_UNESCAPED_UNICODE) . '</script>';
+		$return .= '<script type="application/json" data-arve-oembed>' . \wp_json_encode($data, JSON_UNESCAPED_UNICODE) . '</script>';
 	}
 
-	return $result;
+	return $return;
 }
 
 /**
- * Callback for embed_oembed_html filter
+ * Filters the cached oEmbed HTML.
  *
- * @param string|false $cache
- * @param string       $url
- * @param array        $attr
- * @param int          $post_ID
- * @return void
+ * @see WP_Embed::shortcode()
+ *
+ * @param string|false        $cache   The cached HTML result, stored in post meta.
+ * @param string              $url     The attempted embed URL.
+ * @param array <string, any> $attr    An array of shortcode attributes.
+ * @param ?int                $post_id Post ID.
  */
-function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_ID ) {
+function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_id ): string {
 
 	$oembed_data = extract_oembed_json( $cache, $url );
 
@@ -58,7 +67,7 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 		$a['oembed_data'] = $oembed_data;
 		$a['origin_data'] = [
 			'from'    => 'filter_embed_oembed_html',
-			'post_id' => $post_ID,
+			'post_id' => $post_id,
 		];
 
 		$cache = build_video( $a );
@@ -71,12 +80,15 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 	return $cache;
 }
 
-function extract_oembed_json( $html, $url ) {
+/**
+ * Undocumented function
+ */
+function extract_oembed_json( string $html, string $url ): ?object {
 
 	\preg_match( '#(?<=data-arve-oembed>).*?(?=</script>)#s', $html, $matches );
 
 	if ( empty( $matches[0] ) ) {
-		return false;
+		return null;
 	}
 
 	$data = json_decode( $matches[0], false, 512, JSON_UNESCAPED_UNICODE );
@@ -95,7 +107,7 @@ function extract_oembed_json( $html, $url ) {
 	return $data;
 }
 
-function yt_srcset( string $url ) {
+function yt_srcset( string $url ): string {
 
 	$re = '@[a-z]+.jpg$@';
 
@@ -125,11 +137,17 @@ function yt_srcset( string $url ) {
 		return implode( ', ', $srcset_comb );
 	}
 
-	return false;
+	return '';
 }
 
-// needed for private videos
-function vimeo_referer( $args, $url ) {
+/**
+ * Undocumented function
+ *
+ * @param array <string, any> $args
+ *
+ * @return array <string, any>
+ */
+function vimeo_referer( array $args, string $url ): array {
 
 	if ( str_contains( $url, 'vimeo' ) ) {
 		$args['headers']['Referer'] = site_url();

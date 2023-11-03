@@ -97,7 +97,7 @@ function arg_mode( string $mode ): string {
 }
 
 
-function compare_oembed_src_with_generated_src( string $src, string $src_gen, string $provider, string $url ) {
+function compare_oembed_src_with_generated_src( string $src, string $src_gen, string $provider, string $url ): void {
 
 	if ( empty($src) || empty($src_arve) ) {
 		return;
@@ -143,6 +143,13 @@ function compare_oembed_src_with_generated_src( string $src, string $src_gen, st
 	}
 }
 
+/**
+ * Undocumented function
+ *
+ * @param array <string, any> $a ARVE args
+ *
+ * @return void|array <string,any>
+ */
 function missing_attribute_check( array $a ) {
 
 	// Old shortcodes
@@ -180,6 +187,8 @@ function missing_attribute_check( array $a ) {
 }
 
 /**
+ * @param array <string, any> $a ARVE args
+ *
  * @return false|string
  */
 function arg_aspect_ratio( array $a ) {
@@ -211,7 +220,7 @@ function arg_aspect_ratio( array $a ) {
 	return $a['aspect_ratio'];
 }
 
-function height_from_width_and_ratio( int $width, string $ratio ) {
+function height_from_width_and_ratio( int $width, string $ratio ): float {
 
 	if ( empty( $ratio ) ) {
 		return 0;
@@ -222,7 +231,12 @@ function height_from_width_and_ratio( int $width, string $ratio ) {
 	return new_height( $old_width, $old_height, $width );
 }
 
-function args_video( array $a ) {
+/**
+ * @param array <string, any> $a
+ *
+ * @return array <string, any>
+ */
+function args_video( array $a ): array {
 
 	foreach ( VIDEO_FILE_EXTENSIONS as $ext ) {
 
@@ -351,7 +365,7 @@ function iframesrc_urlarg_autoplay( string $src, string $provider, bool $autopla
 	}
 }
 
-function get_video_type( $ext ) {
+function get_video_type( string $ext ): string {
 
 	switch ( $ext ) {
 		case 'ogv':

@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-use Nextgenthemes\WP\Settings;
+use \Nextgenthemes\WP\Settings;
 use Exception;
 
 function options(): array {
@@ -52,7 +52,7 @@ function settings_instance(): Settings {
 	return $inst;
 }
 
-function has_bool_default_options( $array ) {
+function has_bool_default_options( array $array ): bool {
 
 	return ! array_diff_key(
 		$array,
@@ -64,7 +64,7 @@ function has_bool_default_options( $array ) {
 	);
 }
 
-function settings() {
+function settings(): array {
 
 	$settings = all_settings();
 
@@ -97,14 +97,13 @@ function shortcode_settings(): array {
 	return $settings;
 }
 
-// TODO this is unused
-function gutenberg_ui_settings( $html5 = false ) {
+function gutenberg_ui_settings( bool $html5 = false ): array {
 	$settings = shortcode_settings();
 	unset( $settings['maxwidth'] );
 	return $settings;
 }
 
-function int_shortcode_args() {
+function int_shortcode_args(): array {
 
 	$settings = all_settings();
 
@@ -118,7 +117,7 @@ function int_shortcode_args() {
 	return $bool_attr;
 }
 
-function bool_shortcode_args() {
+function bool_shortcode_args(): array {
 
 	$settings = all_settings();
 
@@ -137,7 +136,7 @@ function bool_shortcode_args() {
 	return $bool_attr;
 }
 
-function is_bool_arg( $arg_name ) {
+function is_bool_arg( string $arg_name ): bool {
 
 	$s = all_settings()[ $arg_name ];
 
@@ -153,23 +152,17 @@ function is_bool_arg( $arg_name ) {
 	return false;
 }
 
-function get_arg_type( $arg_name ) {
+function get_arg_type( string $arg_name ): ?string {
 
 	if ( empty( all_settings()[ $arg_name ] ) ) {
-
-		switch ( $arg_name ) {
-			case 'width':
-				return 'int';
-			case 'height':
-				return 'float';
-		}
-
-		return 'string';
+		return null;
 	}
 
 	$s = all_settings()[ $arg_name ];
 
 	switch ( $s['type'] ) {
+		case 'attachment':
+			return 'string';
 		case 'select':
 			if ( ! empty( $s['options'] ) && has_bool_default_options( $s['options'] ) ) {
 				return 'bool';
@@ -932,7 +925,7 @@ function all_settings(): array {
 	return $settings;
 }
 
-function missing_settings_defaults( $settings ) {
+function missing_settings_defaults( array $settings ): array {
 
 	foreach ( $settings as $key => $value ) :
 

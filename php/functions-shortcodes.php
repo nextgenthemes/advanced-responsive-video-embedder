@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-function shortcode( $a ) {
+function shortcode( array $a ): string {
 
 	$a                        = (array) $a;
 	$a['errors']              = new \WP_Error();
@@ -38,11 +38,11 @@ function shortcode( $a ) {
 	return build_video( $a );
 }
 
-function error( $messages, $code = '' ) {
+function error( string $messages, string $code = '' ): string {
 
 	return sprintf(
 		PHP_EOL . PHP_EOL .
-			'<span class="arve-error"%s><abbr title="%s">ARVE</abbr> %s</span>' . PHP_EOL,
+		'<span class="arve-error"%s><abbr title="%s">ARVE</abbr> %s</span>' . PHP_EOL,
 		str_contains( $code, 'hidden' ) ? 'hidden' : '',
 		__( 'Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ),
 		// translators: Error message
@@ -50,7 +50,7 @@ function error( $messages, $code = '' ) {
 	);
 }
 
-function get_error_html() {
+function get_error_html(): string {
 
 	$html     = '';
 	$messages = '';
@@ -79,7 +79,7 @@ function get_error_html() {
 	return $html;
 }
 
-function build_video( array $input_atts ) {
+function build_video( array $input_atts ): string {
 
 	if ( ! empty( $input_atts['errors'] ) ) {
 		arve_errors()->merge_from( $input_atts['errors'] );
@@ -89,7 +89,7 @@ function build_video( array $input_atts ) {
 	return $video->build_video();
 }
 
-function shortcode_option_defaults() {
+function shortcode_option_defaults(): array {
 
 	$properties = get_host_properties();
 	unset( $properties['video'] );
@@ -104,7 +104,7 @@ function shortcode_option_defaults() {
 	return $shortcodes;
 }
 
-function create_shortcodes() {
+function create_shortcodes(): void {
 
 	$options    = options();
 	$properties = get_host_properties();
@@ -138,7 +138,7 @@ function create_shortcodes() {
 }
 
 // TODO sometimes $attr is string, investigate when and what it is exacly
-function wp_video_shortcode_override( $out, $attr ) {
+function wp_video_shortcode_override( string $out, array $attr ): string {
 
 	$options = options();
 

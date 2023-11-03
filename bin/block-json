@@ -8,7 +8,7 @@ require dirname( __DIR__ ) . '/php/functions-settings.php';
 
 init();
 
-function init() {
+function init(): void {
 
 	$settings = gutenberg_ui_settings();
 
@@ -25,7 +25,7 @@ function init() {
 	update_block_json( $attr );
 }
 
-function update_block_json( array $attr ) {
+function update_block_json( array $attr ): void {
 
 	$file = dirname( __DIR__ ) . '/src/block.json';
 

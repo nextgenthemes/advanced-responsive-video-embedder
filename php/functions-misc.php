@@ -14,11 +14,16 @@ function arve_errors(): WP_Error {
 	return $errors;
 }
 
-function get_host_properties() {
+/**
+ * Undocumented function
+ *
+ * @return array <string, any>
+ */
+function get_host_properties(): array {
 	return require __DIR__ . '/providers.php';
 }
 
-function aspect_ratio_gcd( $aspect_ratio ) {
+function aspect_ratio_gcd( string $aspect_ratio ): string {
 
 	list( $width, $height ) = explode( ':', $aspect_ratio );
 	$gcd                    = gcd( $width, $height );
@@ -32,7 +37,7 @@ function gcd( $a, $b ) {
 	return $b ? gcd( $b, $a % $b ) : $a;
 }
 
-function load_textdomain() {
+function load_textdomain(): void {
 
 	\load_plugin_textdomain(
 		'advanced-responsive-video-embedder',
@@ -41,7 +46,10 @@ function load_textdomain() {
 	);
 }
 
-function check_filetype( $url, $ext ) {
+/**
+ * @return string|false
+ */
+function check_filetype( string $url, string $ext ) {
 
 	$check = wp_check_filetype( $url, wp_get_mime_types() );
 
@@ -62,7 +70,7 @@ function check_filetype( $url, $ext ) {
 function youtube_time_to_seconds( string $yttime ): int {
 
 	if ( \is_numeric( $yttime ) ) {
-		return $yttime;
+		return (int) $yttime;
 	}
 
 	$pattern = '/' .
@@ -83,7 +91,7 @@ function youtube_time_to_seconds( string $yttime ): int {
 		(int) $matches['s'];
 }
 
-function new_height( $old_width, $old_height, $new_width ) {
+function new_height( string $old_width, string $old_height, int $new_width ): float {
 
 	$aspect_num = (int) $old_width / (int) $old_height;
 	$new_height = (int) $new_width / $aspect_num;
@@ -98,9 +106,8 @@ function new_height( $old_width, $old_height, $new_width ) {
  *
  * @since 4.2.0
  *
- * @return float
  */
-function aspect_ratio_to_percentage( string $aspect_ratio ) {
+function aspect_ratio_to_percentage( string $aspect_ratio ): float {
 
 	list( $width, $height ) = explode( ':', $aspect_ratio );
 	$percentage             = ( $height / $width ) * 100;
@@ -108,11 +115,14 @@ function aspect_ratio_to_percentage( string $aspect_ratio ) {
 	return $percentage;
 }
 
-function disabled_on_feeds() {
+function disabled_on_feeds(): bool {
 	return is_feed() && ! options()['feed'] ? true : false;
 }
 
-function seconds_to_iso8601_duration( $time ) {
+/**
+ * @param string|int $time
+ */
+function seconds_to_iso8601_duration( $time ): string {
 	$units = array(
 		'Y' => 365 * 24 * 3600,
 		'D' => 24 * 3600,
@@ -144,7 +154,6 @@ function seconds_to_iso8601_duration( $time ) {
  * Check if Gutenberg is enabled.
  * Must be used not earlier than plugins_loaded action fired.
  *
- * @return bool
  */
 function is_gutenberg(): bool {
 

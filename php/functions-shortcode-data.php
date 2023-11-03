@@ -1,7 +1,10 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-function url_query_array( $url ) {
+/**
+ * @return array <string, any>
+ */
+function url_query_array( string $url ): array {
 
 	$url = wp_parse_url( $url );
 
@@ -14,7 +17,7 @@ function url_query_array( $url ) {
 	return $url_params;
 }
 
-function get_language_name_from_code( $lang_code ) {
+function get_language_name_from_code( string $lang_code ): string {
 	// based on:
 	// https://github.com/drupal/drupal/blob/9c7b7f7be26a1b9179010851e6800424c524acc9/core/lib/Drupal/Core/Language/LanguageManager.php#L224
 	// Copyright Drupal and contributors

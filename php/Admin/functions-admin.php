@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE\Admin;
 
 use const \Nextgenthemes\ARVE\PREMIUM_SECTIONS;
@@ -33,7 +33,7 @@ const ALLOWED_HTML = array(
 	'li'     => array(),
 );
 
-function action_admin_init_setup_messages() {
+function action_admin_init_setup_messages(): void {
 
 	$pro_ver = false;
 
@@ -75,7 +75,7 @@ function action_admin_init_setup_messages() {
 	}
 }
 
-function ad_html() {
+function ad_html(): string {
 
 	$html = esc_html__( 'Hi, this is Nico(las Jonas) the author of the ARVE Advanced Responsive Video Embedder plugin. If you are interrested in additional features and/or want to support the work I do on this plugin please consider buying the Pro Addon.', 'advanced-responsive-video-embedder' );
 
@@ -100,7 +100,7 @@ function ad_html() {
 	return $html;
 }
 
-function display_pro_ad() {
+function display_pro_ad(): bool {
 
 	$inst = (int) get_option( 'arve_install_date' );
 
@@ -114,7 +114,7 @@ function display_pro_ad() {
 	return true;
 }
 
-function widget_text() {
+function widget_text(): void {
 
 	echo '<p>';
 	printf( '<a href="%s">Documentation</a>, ', 'https://nextgenthemes.com/plugins/arve/documentation/' );
@@ -132,10 +132,10 @@ function widget_text() {
 	echo wp_kses( ad_html(), ALLOWED_HTML );
 }
 
-function add_dashboard_widget() {
+function add_dashboard_widget(): void {
 
 	if ( ! display_pro_ad() ) {
-		return false;
+		return;
 	}
 
 	wp_add_dashboard_widget(
@@ -159,7 +159,7 @@ function add_dashboard_widget() {
 	}
 }
 
-function add_action_links( $links ) {
+function add_action_links( array $links ): array {
 
 	if ( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
 
@@ -184,7 +184,7 @@ function add_action_links( $links ) {
 	return array_merge( $extra_links, $links );
 }
 
-function register_shortcode_ui() {
+function register_shortcode_ui(): void {
 
 	$settings = shortcode_settings();
 
@@ -245,7 +245,7 @@ function register_shortcode_ui() {
 	);
 }
 
-function admin_enqueue_styles() {
+function admin_enqueue_styles(): void {
 
 	enqueue_asset(
 		array(
@@ -268,46 +268,40 @@ function get_first_glob( string $pattern ): string {
 	return $res[0];
 }
 
-function admin_enqueue_scripts() {
+function admin_enqueue_scripts(): void {
+
+	foreach ( shortcode_settings() as $k => $v ) {
+		$options[ $k ] = '';
+	}
+
+	$settings_data = array(
+		'options'          => $options,
+		'nonce'            => wp_create_nonce( 'wp_rest' ),
+		'settings'         => shortcode_settings(),
+		'sections'         => settings_sections(),
+		'premiumSections'  => PREMIUM_SECTIONS,
+		'premiumUrlPrefix' => PREMIUM_URL_PREFIX,
+	);
 
 	if ( ! is_gutenberg() ) {
 
-		$shortcode_dialog_js  = get_first_glob( PLUGIN_DIR . '/vendor/nextgenthemes/wp-shared/dist/assets/shortcode-dialog-*.js' );
-		$shortcode_dialog_css = get_first_glob( PLUGIN_DIR . '/vendor/nextgenthemes/wp-shared/dist/assets/shortcode-dialog-*.css' );
+		enqueue_asset(
+			array(
+				'handle'               => 'arve-shortcode-dialog',
+				'src'                  => plugins_url( '/src/shortcode-dialog.js', PLUGIN_FILE ),
+				'path'                 => PLUGIN_DIR . '/src/shortcode-dialog.js',
+				#'deps'                 => [ 'alpinejs' ],
+				'inline_script_before' => $settings_data,
+			)
+		);
 
-		if ( $shortcode_dialog_js && $shortcode_dialog_css ) {
-
-			foreach ( shortcode_settings() as $k => $v ) {
-				$options[ $k ] = '';
-			}
-
-			$settings_data = array(
-				'options'          => $options,
-				'nonce'            => wp_create_nonce( 'wp_rest' ),
-				'settings'         => shortcode_settings(),
-				'sections'         => settings_sections(),
-				'premiumSections'  => PREMIUM_SECTIONS,
-				'premiumUrlPrefix' => PREMIUM_URL_PREFIX,
-			);
-
-			register_asset(
-				array(
-					'handle'               => 'arve-shortcode-dialog',
-					'src'                  => plugins_url( 'vendor/nextgenthemes/wp-shared/dist/assets/' . basename($shortcode_dialog_js), PLUGIN_FILE ),
-					'path'                 => $shortcode_dialog_js,
-					'inline_script_before' => $settings_data,
-					'module'               => true,
-				)
-			);
-
-			register_asset(
-				array(
-					'handle' => 'arve-shortcode-dialog',
-					'src'    => plugins_url( 'vendor/nextgenthemes/wp-shared/dist/assets/' . basename($shortcode_dialog_css), PLUGIN_FILE ),
-					'path'   => $shortcode_dialog_css,
-				)
-			);
-		}
+		// register_asset(
+		// 	array(
+		// 		'handle' => 'arve-shortcode-dialog',
+		// 		'src'    => plugins_url( 'vendor/nextgenthemes/wp-shared/dist/assets/' . basename($shortcode_dialog_css), PLUGIN_FILE ),
+		// 		'path'   => $shortcode_dialog_css,
+		// 	)
+		// );
 	}
 
 	enqueue_asset(
@@ -315,7 +309,7 @@ function admin_enqueue_scripts() {
 			'handle'               => 'arve-admin',
 			'src'                  => plugins_url( 'build/admin.js', PLUGIN_FILE ),
 			'path'                 => PLUGIN_DIR . '/build/admin.js',
-			'deps'                 => array(),
+			'deps'                 => array( 'alpinejs' ),
 			'inline_script_before' => 'var arveSCSettings = ' . \wp_json_encode( $settings_data ) . ';',
 		)
 	);
@@ -332,7 +326,7 @@ function admin_enqueue_scripts() {
 	}
 }
 
-function action_admin_bar_menu( $admin_bar ) {
+function action_admin_bar_menu( \WP_Admin_Bar $admin_bar ): void {
 
 	if ( current_user_can( 'manage_options' ) && options()['admin_bar_menu'] ) {
 
