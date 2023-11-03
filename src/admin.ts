@@ -10,7 +10,7 @@ declare global {
 	}
 }
 
-document.body.addEventListener( 'click', ( event ) => {
+document.addEventListener( 'click', ( event ) => {
 	const target = event?.target as HTMLElement | null;
 
 	if ( target && target.matches( '.notice-dismiss' ) ) {

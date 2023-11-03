@@ -51,10 +51,7 @@ function removeUnwantedStuff(): void {
 
 	qsa( '.wp-block-embed' ).forEach( ( el ) => {
 		if ( el.querySelector( '.arve' ) ) {
-			el.classList.remove(
-				'wp-embed-aspect-16-9',
-				'wp-has-aspect-ratio'
-			);
+			el.classList.remove( 'wp-embed-aspect-16-9', 'wp-has-aspect-ratio' );
 
 			const wrapper = el.querySelector( '.wp-block-embed__wrapper' );
 
