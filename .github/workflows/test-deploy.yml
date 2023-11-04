@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: nextgenthemes/arve-pro
-          ref: master
+          ref: v5
           path: symbiosistheme.com/web/app/plugins/arve-pro
           token: ${{ secrets.REPO_TOKEN }}
 
