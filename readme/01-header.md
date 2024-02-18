@@ -4,7 +4,7 @@ Donate link: https://nextgenthemes.com/donate/
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.9.16
 Tested up to: 6.0.2
-Requires PHP: 5.6
+Requires PHP: 7.4
 Stable tag: 9.9.10-alpha2
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
