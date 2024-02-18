@@ -35,6 +35,7 @@ function create_shortcode_dialog(): void {
 	}
 
 	wp_enqueue_script('arve-shortcode-dialog');
+	wp_enqueue_script('alpinejs');
 
 	$options  = ARVE\options();
 	$settings = ARVE\shortcode_settings();
@@ -49,13 +50,12 @@ function create_shortcode_dialog(): void {
 	}
 
 	$data = wp_json_encode( $data );
-
 	?>
-	<dialog class="arve-sc-dialog" x-data="arvedialog" x-ref="arvedialog" x-init="$watch( 'options', () => { updateShortcode() } )">
+	<dialog class="arve-sc-dialog ngt" x-data="arvedialog" x-ref="arvedialog" x-init="$watch( 'options', () => { updateShortcode() } )">
 
 		<button class="arve-sc-dialog__close-btn" autofocus @click="$refs.arvedialog.close()">&times;</button>
 
-		<div>
+		<div class="grid">
 			<?php
 			print_settings_blocks(
 				$settings,
