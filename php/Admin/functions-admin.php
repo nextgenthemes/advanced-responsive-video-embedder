@@ -290,7 +290,6 @@ function admin_enqueue_scripts(): void {
 				'handle'               => 'arve-shortcode-dialog',
 				'src'                  => plugins_url( '/src/shortcode-dialog.js', PLUGIN_FILE ),
 				'path'                 => PLUGIN_DIR . '/src/shortcode-dialog.js',
-				#'deps'                 => [ 'alpinejs' ],
 				'inline_script_before' => $settings_data,
 			)
 		);
@@ -309,7 +308,6 @@ function admin_enqueue_scripts(): void {
 			'handle'               => 'arve-admin',
 			'src'                  => plugins_url( 'build/admin.js', PLUGIN_FILE ),
 			'path'                 => PLUGIN_DIR . '/build/admin.js',
-			'deps'                 => array( 'alpinejs' ),
 			'inline_script_before' => 'var arveSCSettings = ' . \wp_json_encode( $settings_data ) . ';',
 		)
 	);

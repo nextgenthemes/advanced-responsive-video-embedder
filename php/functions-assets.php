@@ -20,8 +20,7 @@ function register_assets(): void {
 			'handle'    => 'arve-main',
 			'src'       => plugins_url( 'build/main.js', PLUGIN_FILE ),
 			'path'      => PLUGIN_DIR . '/build/main.js',
-			'async'     => true,
-			'in_footer' => false,
+			'strategy'  => 'async',
 		)
 	);
 
