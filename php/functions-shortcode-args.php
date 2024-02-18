@@ -144,7 +144,7 @@ function compare_oembed_src_with_generated_src( string $src, string $src_gen, st
 }
 
 /**
- * Undocumented function
+ * Check for missing attributes that are required to build the embed.
  *
  * @param array <string, any> $a ARVE args
  *

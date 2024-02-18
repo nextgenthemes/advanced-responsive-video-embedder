@@ -55,7 +55,10 @@ function validate_url( string $argname, string $url ): string {
 	return $url;
 }
 
-function validate_bool( string $attr_name, mixed $value ): bool {
+/**
+ * @param mixed $value
+ */
+function validate_bool( string $attr_name, $value ): bool {
 
 	if ( is_bool( $value ) ) {
 		return $value;
@@ -133,7 +136,6 @@ function validate_align( string $align ): string {
 	return '';
 }
 
-
 /**
  * @param string|false $aspect_ratio
  */
@@ -170,7 +172,12 @@ function validate_aspect_ratio( $aspect_ratio ): string {
 	return $aspect_ratio;
 }
 
-function validate_height( mixed $height ): mixed {
+/**
+ * @param mixed $height
+ *
+ * @return mixed
+ */
+function validate_height( $height ) {
 
 	if ( ! is_numeric( $height ) ) {
 		arve_errors()->add(

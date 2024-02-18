@@ -15,7 +15,6 @@ function add_oembed_providers(): void {
 	wp_oembed_add_provider( 'https://rumble.com/*', 'https://rumble.com/api/Media/oembed.json' );
 }
 
-
 /**
  * Undocumented function
  *
