@@ -392,7 +392,9 @@ class Video {
 			return $ratio;
 		}
 
-		if ( ! empty( $this->oembed_data->width ) &&
+		if ( 'youtube' === $this->provider && str_contains( $this->url, '/shorts/' ) ) {
+			$ratio = '9:16';
+		} elseif ( ! empty( $this->oembed_data->width ) &&
 			! empty( $this->oembed_data->height ) &&
 			is_numeric( $this->oembed_data->width ) &&
 			is_numeric( $this->oembed_data->height )
