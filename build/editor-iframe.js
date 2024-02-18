@@ -1,1 +1,1 @@
-!function(){"use strict";document.querySelector(".editor-styles-wrapper")?.setAttribute("id","html")}();
+(()=>{"use strict";document.querySelector(".editor-styles-wrapper")?.setAttribute("id","html")})();
