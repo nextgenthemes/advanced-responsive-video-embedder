@@ -6,7 +6,7 @@ use function \Nextgenthemes\ARVE\get_host_properties;
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 
-	public function test_mode_fallback() {
+	public function test_mode_fallback(): void {
 
 		$html = shortcode(
 			array(
@@ -19,7 +19,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		#$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_wrong_thumb_id() {
+	public function test_wrong_thumb_id(): void {
 
 		$html = shortcode(
 			array(
@@ -30,7 +30,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_wrong_thumb_url() {
+	public function test_wrong_thumb_url(): void {
 
 		$html = shortcode(
 			array(
@@ -41,7 +41,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_wrong_no_req_param() {
+	public function test_wrong_no_req_param(): void {
 
 		#$this->expectException('Exception');
 
@@ -49,7 +49,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_wrong_align() {
+	public function test_wrong_align(): void {
 
 		$html = shortcode(
 			array(
@@ -60,7 +60,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_wrong_ar() {
+	public function test_wrong_ar(): void {
 
 		$html = shortcode(
 			array(
@@ -71,7 +71,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_legacy_yt_sc_no_id() {
+	public function test_legacy_yt_sc_no_id(): void {
 
 		#$this->expectException('Exception');
 
@@ -79,23 +79,23 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_empty_url() {
+	public function test_empty_url(): void {
 		$html = shortcode( array( 'url' => '' ) );
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_unknown_url() {
+	public function test_unknown_url(): void {
 		$html = shortcode( array( 'url' => 'https://example.com' ) );
 		$this->assertStringContainsString( '<iframe', $html );
 	}
 
-	public function test_wrong_url() {
+	public function test_wrong_url(): void {
 
 		$html = shortcode( array( 'url' => 'bullshit' ) );
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_wrong_sandbox() {
+	public function test_wrong_sandbox(): void {
 
 		$html = shortcode(
 			array(
@@ -106,7 +106,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_wrong_src() {
+	public function test_wrong_src(): void {
 
 		#$this->expectException('Exception');
 
@@ -118,7 +118,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_wrong_oembed_iframe_src() {
+	public function test_wrong_oembed_iframe_src(): void {
 
 		$od = new StdClass();
 

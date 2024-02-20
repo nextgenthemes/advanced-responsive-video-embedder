@@ -33,7 +33,7 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 	// 	$this->assertStringNotContainsString( 'Error', $html );
 	// }
 
-	public function test_align_maxwidth_option() {
+	public function test_align_maxwidth_option(): void {
 
 		update_option( 'nextgenthemes_arve', array( 'align_maxwidth' => '444' ) );
 		$output = shortcode(
@@ -47,7 +47,7 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'style="max-width:444px;"', $output );
 	}
 
-	public function test_align_maxwidth_default() {
+	public function test_align_maxwidth_default(): void {
 
 		$output = shortcode(
 			array(
