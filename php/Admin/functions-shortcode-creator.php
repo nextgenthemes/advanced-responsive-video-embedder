@@ -42,10 +42,6 @@ function create_shortcode_dialog(): void {
 	$data     = array();
 
 	foreach ( ARVE\shortcode_settings() as $k => $v ) {
-		if ( $options['gutenberg_help'] ) {
-			unset($settings[ $k ]['description']);
-		}
-
 		$data['options'][ $k ] = '';
 	}
 
@@ -53,37 +49,48 @@ function create_shortcode_dialog(): void {
 	?>
 	<dialog class="arve-sc-dialog ngt" x-data="arvedialog" x-ref="arvedialog" x-init="$watch( 'options', () => { updateShortcode() } )">
 
-		<button class="arve-sc-dialog__close-btn" autofocus @click="$refs.arvedialog.close()">&times;</button>
+		<div class="arve-sc-dialog__wrap">
 
-		<div class="grid">
-			<?php
-			print_settings_blocks(
-				$settings,
-				ARVE\settings_sections(),
-				ARVE\PREMIUM_SECTIONS,
-				'shortcode-dialog'
-			);
-			?>
-		</div>
+			<div class="arve-sc-dialog__header">
 
-		<p id="arve-shortcode" class="arve-shortcode" x-ref="arveShortcode" x-text="shortcode"></p>
+				<button class="arve-sc-dialog__close-btn" @click="toggleHelpTexts()">
+					<span class="dashicons dashicons-editor-help"></span>
+				</button>
+				<button class="arve-sc-dialog__close-btn" autofocus @click="$refs.arvedialog.close()">&times;</button>
+			</div>
 
-		<div>
-			<button 
-				class="arve-sc-dialog__cancel-btn button-secondary"
-				@click="$refs.arvedialog.close()"
-			>
-				<?php esc_html_e( 'Cancel', 'advanced-responsive-video-embedder' ); ?>
-			</button>
-			<button 
-				class="arve-sc-dialog__submit-btn button-primary"
-				@click="() => {
-					window.wp.media.editor.insert( shortcode );
-					$refs.arvedialog.close();
-				}"
-			>
-				<?php esc_html_e( 'Insert Shortcode', 'advanced-responsive-video-embedder' ); ?>
-			</button>
+			<div class="arve-sc-dialog__body">
+				<?php
+				print_settings_blocks(
+					$settings,
+					ARVE\settings_sections(),
+					ARVE\PREMIUM_SECTIONS,
+					'shortcode-dialog'
+				);
+				?>
+			</div>
+
+			<div class="arve-sc-dialog__footer">
+
+				<p id="arve-shortcode" class="arve-shortcode" x-ref="arveShortcode" x-text="shortcode"></p>
+
+				<button 
+					class="arve-sc-dialog__cancel-btn button-secondary"
+					@click="$refs.arvedialog.close()"
+				>
+					<?php esc_html_e( 'Cancel', 'advanced-responsive-video-embedder' ); ?>
+				</button>
+				<button 
+					class="arve-sc-dialog__submit-btn button-primary"
+					@click="() => {
+						window.wp.media.editor.insert( shortcode );
+						$refs.arvedialog.close();
+					}"
+				>
+					<?php esc_html_e( 'Insert Shortcode', 'advanced-responsive-video-embedder' ); ?>
+				</button>
+			</div>
+
 		</div>
 	</dialog>
 	<?php

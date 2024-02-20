@@ -1,4 +1,8 @@
 import './admin.scss';
+import './bootstrap-forms.scss';
+import './shortcode-dialog.scss';
+
+import { globalID } from './main';
 
 export {};
 declare global {
@@ -9,6 +13,31 @@ declare global {
 		ajaxurl;
 	}
 }
+
+globalID();
+
+// talken from https://github.com/WordPress/gutenberg/blob/3317ba195da0149d0bae221dc3516cd76f536c5d/packages/react-native-bridge/common/gutenberg-web-single-block/editor-behavior-overrides.js#L126
+// The editor-canvas iframe relies upon `srcdoc`, which does not trigger a
+// `load` event. Thus, we must poll for the iframe to be ready.
+let attemptsToApplyID = 0;
+const interval = setInterval( () => {
+	attemptsToApplyID++;
+	const canvasIframe = document.querySelector(
+		'iframe[name="editor-canvas"]'
+	) as HTMLIFrameElement | null;
+
+	const canvasBody = canvasIframe?.contentWindow?.document?.body;
+
+	if ( canvasBody ) {
+		clearInterval( interval );
+		canvasBody.setAttribute( 'id', 'html' );
+	}
+
+	// Safeguard against an infinite loop.
+	if ( attemptsToApplyID > 100 ) {
+		clearInterval( interval );
+	}
+}, 300 );
 
 document.addEventListener( 'click', ( event ) => {
 	const target = event?.target as HTMLElement | null;
@@ -29,7 +58,6 @@ document.addEventListener( 'click', ( event ) => {
 			id: noticeId,
 		} );
 
-		// does not work
 		// fetch( window.ajaxurl, {
 		// 	method: 'POST',
 		// 	headers: {
@@ -40,6 +68,13 @@ document.addEventListener( 'click', ( event ) => {
 		// 		url: window.ajaxurl,
 		// 		id: noticeId,
 		// 	} ),
-		// } );
+		// } )
+		// 	.then( ( response ) => response.json() )
+		// 	.then( ( data ) => {
+		// 		// Handle response data
+		// 	} )
+		// 	.catch( ( error ) => {
+		// 		// Handle error
+		// 	} );
 	}
 } );
