@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a1932b1baeca6e9133bb82101d89000",
+    "content-hash": "0f78f04a4ba117b7b27440c3ecfbf23b",
     "packages": [
         {
             "name": "nextgenthemes/wp-shared",
@@ -12,10 +12,10 @@
             "dist": {
                 "type": "path",
                 "url": "../../../composer-packages/wp-shared",
-                "reference": "12a2f129bc6286424d3c4c87299a802902a15bc3"
+                "reference": "b8eb72e0e37e1437326b5c5633edb3f722b6817e"
             },
             "require": {
-                "php": ">=7.2"
+                "php": ">=7.4"
             },
             "type": "wp-package",
             "autoload": {
@@ -35,6 +35,11 @@
                     "includes/WP/Admin/load-admin-files.php"
                 ]
             },
+            "scripts": {
+                "update": [
+                    "cd ~/websites && npm update; cp ./node_modules/alpinejs/dist/cdn.min.js ./includes/WP/Admin/alpine.js"
+                ]
+            },
             "license": [
                 "GPL-3.0"
             ],
@@ -52,23 +57,24 @@
     "packages-dev": [
         {
             "name": "automattic/jetpack-autoloader",
-            "version": "v2.12.0",
+            "version": "v3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-autoloader.git",
-                "reference": "632b69cfc73ed5505f2b03165e7f68d414d0da12"
+                "reference": "bbf43988d1538a9f2678809b0868dc42111d0b12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/632b69cfc73ed5505f2b03165e7f68d414d0da12",
-                "reference": "632b69cfc73ed5505f2b03165e7f68d414d0da12",
+                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/bbf43988d1538a9f2678809b0868dc42111d0b12",
+                "reference": "bbf43988d1538a9f2678809b0868dc42111d0b12",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.1 || ^2.0"
+                "composer-plugin-api": "^1.1 || ^2.0",
+                "php": ">=7.0"
             },
             "require-dev": {
-                "automattic/jetpack-changelogger": "^3.3.11",
+                "automattic/jetpack-changelogger": "^4.0.2",
                 "yoast/phpunit-polyfills": "1.1.0"
             },
             "type": "composer-plugin",
@@ -83,7 +89,7 @@
                     "::VERSION": "src/AutoloadGenerator.php"
                 },
                 "branch-alias": {
-                    "dev-trunk": "2.12.x-dev"
+                    "dev-trunk": "3.0.x-dev"
                 }
             },
             "autoload": {
@@ -108,9 +114,9 @@
                 "wordpress"
             ],
             "support": {
-                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v2.12.0"
+                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v3.0.2"
             },
-            "time": "2023-09-28T18:33:34+00:00"
+            "time": "2023-11-21T18:59:10+00:00"
         }
     ],
     "aliases": [],
