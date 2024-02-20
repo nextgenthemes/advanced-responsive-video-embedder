@@ -4,20 +4,19 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cf93abf1ab3f8d81b61337b0daf043bf",
+    "content-hash": "1a1932b1baeca6e9133bb82101d89000",
     "packages": [
         {
             "name": "nextgenthemes/wp-shared",
             "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nextgenthemes/wp-shared",
-                "reference": "b3df661276a20712883cd3faca9e50dbba58196b"
+            "dist": {
+                "type": "path",
+                "url": "../../../composer-packages/wp-shared",
+                "reference": "12a2f129bc6286424d3c4c87299a802902a15bc3"
             },
             "require": {
                 "php": ">=7.2"
             },
-            "default-branch": true,
             "type": "wp-package",
             "autoload": {
                 "psr-4": {
@@ -44,7 +43,10 @@
                     "name": "Nicolas Jonas"
                 }
             ],
-            "time": "2023-12-11T05:04:06+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         }
     ],
     "packages-dev": [
