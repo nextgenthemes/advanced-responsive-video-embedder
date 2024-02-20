@@ -2,7 +2,6 @@
 namespace Nextgenthemes\ARVE;
 
 use function \Nextgenthemes\WP\register_asset;
-use function \Nextgenthemes\WP\add_dep_to_script;
 
 function register_assets(): void {
 
@@ -23,8 +22,6 @@ function register_assets(): void {
 			'strategy'  => 'async',
 		)
 	);
-
-	#add_dep_to_script( 'wp-polyfill', 'arve-editor-iframe' );
 
 	// phpcs:disable WordPress.WP.EnqueuedResourceParameters.MissingVersion
 	wp_register_script( 'arve', null, array( 'arve-main' ), null, true );
