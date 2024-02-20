@@ -2,6 +2,7 @@
 namespace Nextgenthemes\ARVE;
 
 use \Nextgenthemes\WP\Settings;
+use \Nextgenthemes\WP;
 use Exception;
 
 function options(): array {
@@ -52,28 +53,14 @@ function settings_instance(): Settings {
 	return $inst;
 }
 
-function nextgenthemes_settings_instance(): Settings {
+/**
+ */
+function init_nextgenthemes_settings(): void {
 
-	static $inst = null;
-
-	if ( null === $inst ) {
-
-		$inst = new Settings(
-			array(
-				'namespace'           => 'nextgenthemes',
-				'settings'            => nextgenthemes_settings(),
-				'sections'            => array(
-					'keys'         => esc_html__( 'License Keys', 'advanced-responsive-video-embedder' ),
-					'beta-updates' => esc_html__( 'Beta Updates', 'advanced-responsive-video-embedder' ),
-				),
-				'menu_title'          => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
-				'settings_page_title' => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
-			)
-		);
-		$inst->set_defined_product_keys();
-	}
-
-	return $inst;
+	WP\nextgenthemes_settings_instance(
+		plugins_url( '', PLUGIN_FILE ),
+		PLUGIN_DIR
+	);
 }
 
 function has_bool_default_options( array $array ): bool {

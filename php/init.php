@@ -39,6 +39,7 @@ function init_public(): void {
 	require_once PLUGIN_DIR . '/php/Video.php';
 
 	add_action( 'init', __NAMESPACE__ . '\add_oembed_providers' );
+	add_action( 'init', __NAMESPACE__ . '\init_nextgenthemes_settings' );
 	add_action( 'init', __NAMESPACE__ . '\register_assets' );
 	add_filter( 'oembed_remote_get_args', __NAMESPACE__ . '\vimeo_referer', 10, 2 );
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\create_shortcodes', 999 );
