@@ -26,10 +26,11 @@ jobs:
 
     steps:
       - name: Checkout Websites
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: nextgenthemes/websites
           ref: master
+          sparse_checkout: .
           path: .
           token: ${{ secrets.REPO_TOKEN }}
 
@@ -58,7 +59,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: nextgenthemes/arve-random-video
-          ref: master
+          ref: v2
           path: symbiosistheme.com/web/app/plugins/arve-random-video
           token: ${{ secrets.REPO_TOKEN }}
 
@@ -74,7 +75,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: nextgenthemes/arve-sticky-videos
-          ref: master
+          ref: v1
           path: symbiosistheme.com/web/app/plugins/arve-sticky-videos
           token: ${{ secrets.REPO_TOKEN }}
 
