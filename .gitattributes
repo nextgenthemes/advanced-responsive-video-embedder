@@ -8,6 +8,7 @@
 /package*.json export-ignore
 /tests         export-ignore
 /readme        export-ignore
+/packages      export-ignore
 
 * text eol=lf
 *.gif binary

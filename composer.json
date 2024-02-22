@@ -4,9 +4,7 @@
 	"type": "wordpress-plugin",
 	"require": {
 		"php": ">=7.4",
-		"nextgenthemes/wp-shared": "@dev"
-	},
-	"require-dev": {
+		"nextgenthemes/wp-shared": "@dev",
 		"automattic/jetpack-autoloader": "^3.0.0"
 	},
 	"license": "GPL-3.0",
@@ -15,18 +13,18 @@
 			"name": "Nicolas Jonas"
 		}
 	],
-	"repositories": [
-		{
-			"type": "path",
-			"url": "../../../composer-packages/wp-shared",
-			"options": {
-				"symlink": true
-			}
-		}
-	],
 	"config": {
 		"allow-plugins": {
 			"automattic/jetpack-autoloader": true
+		}
+	},
+	"repositories": {
+		"nextgenthemes/wp-shared": {
+			"type": "path",
+			"url": "./packages/nextengthemes/wp-shared",
+			"options": {
+				"symlink": true
+			}
 		}
 	}
 }
