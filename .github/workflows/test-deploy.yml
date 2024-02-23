@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 jobs:
   test:
-    if: >-
+    if: >
       startsWith(github.ref, 'refs/tags')
       || contains(github.event.head_commit.message, '[ci]')
     name: PHP Unit tests
@@ -99,7 +99,7 @@ jobs:
         run: phpunit --testsuite advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos
 
   deploy:
-    if: >-
+    if: >
       (
         startsWith(github.ref, 'refs/tags')
         && ! startsWith(github.event.repository.name, 'arve-')
@@ -123,7 +123,7 @@ jobs:
 
       - name: Install composer dependencies
         working-directory: advanced-responsive-video-embedder
-        run: >-
+        run: >
           composer config repositories.nextgenthemes/wp-shared
           --json '{"type":"path", "url": "./packages/nextengthemes/wp-shared", "options": {"symlink": false}}'
           rm composer.lock
