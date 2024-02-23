@@ -125,7 +125,7 @@ jobs:
         working-directory: advanced-responsive-video-embedder
         run: >
           composer config repositories.nextgenthemes/wp-shared
-          --json '{"type":"path", "url": "./packages/nextengthemes/wp-shared", "options": {"symlink": false}}'
+          --json '{"type": "path", "url": "./packages/nextengthemes/wp-shared", "options": {"symlink": false}}'
           rm composer.lock
           composer install --optimize-autoloader --no-dev
 
@@ -139,8 +139,8 @@ jobs:
           build_dirs: vendor
           verbose: true
 
-        - name: create artifact
-          uses: actions/upload-artifact@v3
-          with:
-            name: advanced-responsive-video-embedder
-            path: /tmp/wp-deploy/git-archive-advanced-responsive-video-embedder
+      - name: create artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: advanced-responsive-video-embedder
+          path: /tmp/wp-deploy/git-archive-advanced-responsive-video-embedder
