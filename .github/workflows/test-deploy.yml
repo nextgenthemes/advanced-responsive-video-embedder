@@ -87,6 +87,14 @@ jobs:
           tools: phpunit-polyfills:1
           coverage: none #optional
 
+      - name: Install composer dependencies
+        working-directory: advanced-responsive-video-embedder
+        run: >
+          composer config repositories.nextgenthemes/wp-shared
+          --json '{"type": "path", "url": "./packages/nextengthemes/wp-shared", "options": {"symlink": false}}'
+          rm composer.lock
+          composer install --optimize-autoloader --no-dev
+
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
 
