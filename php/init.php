@@ -1,28 +1,30 @@
-<?php
+<?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
 init_920();
 
-function init_920() {
+function init_920(): void {
 	init_public();
-	init_admin();
+
+	if ( is_admin() ) {
+		init_admin();
+	}
 }
 
-function init_public() {
+function init_public(): void {
 
 	add_option( 'arve_install_date', time() );
 
-	if ( version_compare( get_option( 'arve_version' ), '9.5.3-alpha1', '<' ) ) {
+	if ( version_compare( get_option( 'arve_version', '' ), '9.5.3-alpha1', '<' ) ) {
 		$GLOBALS['wpdb']->query( "DELETE FROM {$GLOBALS['wpdb']->postmeta} WHERE meta_key LIKE '%_oembed_%'" );
 	}
 
-	if ( version_compare( get_option( 'arve_version' ), '9.5.14', '<' ) ) {
+	if ( version_compare( get_option( 'arve_version', '' ), '9.5.14', '<' ) ) {
 		$GLOBALS['wpdb']->query( "DELETE FROM {$GLOBALS['wpdb']->postmeta} WHERE meta_key LIKE '%_oembed_%' AND meta_value LIKE '%vimeocdn%'" );
 	}
 
 	update_option( 'arve_version', VERSION );
 
-	require_once PLUGIN_DIR . '/php/Common/init.php';
 	require_once PLUGIN_DIR . '/php/functions-deprecated.php';
 	require_once PLUGIN_DIR . '/php/functions-assets.php';
 	require_once PLUGIN_DIR . '/php/functions-html-output.php';
@@ -34,8 +36,10 @@ function init_public() {
 	require_once PLUGIN_DIR . '/php/functions-url-handlers.php';
 	require_once PLUGIN_DIR . '/php/functions-validation.php';
 	require_once PLUGIN_DIR . '/php/functions-settings.php';
+	require_once PLUGIN_DIR . '/php/Video.php';
 
 	add_action( 'init', __NAMESPACE__ . '\add_oembed_providers' );
+	add_action( 'init', __NAMESPACE__ . '\init_nextgenthemes_settings' );
 	add_action( 'init', __NAMESPACE__ . '\register_assets' );
 	add_filter( 'oembed_remote_get_args', __NAMESPACE__ . '\vimeo_referer', 10, 2 );
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\create_shortcodes', 999 );
@@ -48,11 +52,12 @@ function init_public() {
 	add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', OEMBED_HTML_PRIORITY, 4 );
 }
 
-function init_admin() {
+function init_admin(): void {
 
 	require_once PLUGIN_DIR . '/php/Admin/functions-admin.php';
 	require_once PLUGIN_DIR . '/php/Admin/functions-settings-page.php';
 	require_once PLUGIN_DIR . '/php/Admin/functions-shortcode-creator.php';
+	require_once PLUGIN_DIR . '/php/Admin/functions-debug-info.php';
 
 	// Admin Hooks
 	add_action( 'nextgenthemes/arve/admin/settings/sidebar', __NAMESPACE__ . '\Admin\settings_sidebar' );
@@ -63,17 +68,18 @@ function init_admin() {
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\Admin\admin_enqueue_styles', 99 );
 	add_action( 'admin_init', __NAMESPACE__ . '\Admin\action_admin_init_setup_messages' );
 	add_action( 'media_buttons', __NAMESPACE__ . '\Admin\add_media_button', 11 );
+
 	add_action( 'admin_footer', __NAMESPACE__ . '\Admin\create_shortcode_dialog' );
 	add_action( 'register_shortcode_ui', __NAMESPACE__ . '\Admin\register_shortcode_ui' );
 	add_action( 'wp_dashboard_setup', __NAMESPACE__ . '\Admin\add_dashboard_widget' );
 
-	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), __NAMESPACE__ . '\Admin\add_action_links' );
+	add_filter( 'plugin_action_links_' . plugin_basename( PLUGIN_FILE ), __NAMESPACE__ . '\Admin\add_action_links' );
 	add_filter( 'nextgenthemes_arve_save_options', __NAMESPACE__ . '\Admin\filter_save_options' );
 }
 
-register_uninstall_hook( __FILE__, __NAMESPACE__ . '\\uninstall' );
+register_uninstall_hook( PLUGIN_FILE, __NAMESPACE__ . '\\uninstall' );
 
-function uninstall() {
+function uninstall(): void {
 
 	if ( version_compare( $GLOBALS['wpdb']->db_version(), '8.0', '>=' ) ) {
 		$GLOBALS['wpdb']->query(

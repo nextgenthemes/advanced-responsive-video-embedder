@@ -4,7 +4,7 @@
 /*.xml         export-ignore
 /*.yml         export-ignore
 /bin           export-ignore
-/composer*     export-ignore
+/composer.lock export-ignore
 /package*.json export-ignore
 /tests         export-ignore
 /readme        export-ignore

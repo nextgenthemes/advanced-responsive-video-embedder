@@ -1,5 +1,5 @@
-<?php
-namespace Nextgenthemes\ARVE\Common\Admin\EDD;
+<?php declare(strict_types=1);
+namespace Nextgenthemes\WP\Admin\EDD;
 
 /**
  * Theme updater class.

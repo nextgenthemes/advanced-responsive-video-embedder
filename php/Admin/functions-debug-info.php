@@ -1,9 +1,7 @@
-<?php
-namespace Nextgenthemes\ARVE\Common\Admin;
+<?php declare(strict_types=1);
+namespace Nextgenthemes\ARVE\Admin;
 
-use \Nextgenthemes\ARVE\Common;
-
-function plugin_ver_status( $folder_and_filename ) {
+function plugin_ver_status( string $folder_and_filename ): string {
 
 	$file = WP_PLUGIN_DIR . '/' . $folder_and_filename;
 
@@ -21,7 +19,7 @@ function plugin_ver_status( $folder_and_filename ) {
 	return $out;
 }
 
-function print_active_plugins() {
+function print_active_plugins(): void {
 	$allplugins     = get_plugins();
 	$active_plugins = get_option( 'active_plugins', array() );
 
@@ -35,7 +33,7 @@ function print_active_plugins() {
 	}
 }
 
-function print_network_active_plugins() {
+function print_network_active_plugins(): void {
 
 	if ( ! is_multisite() ) {
 		return;
@@ -55,13 +53,13 @@ function print_network_active_plugins() {
 	}
 }
 
-function list_hooks( $hook = '' ) {
+function list_hooks( string $hook = '' ): array {
 	global $wp_filter;
 
 	if ( isset( $wp_filter[ $hook ]->callbacks ) ) {
 		array_walk(
 			$wp_filter[ $hook ]->callbacks,
-			function( $callbacks, $priority ) use ( &$hooks ) {
+			function( $callbacks, $priority ) use ( &$hooks ): void {
 				foreach ( $callbacks as $id => $callback ) {
 					$hooks[] = array_merge(
 						[

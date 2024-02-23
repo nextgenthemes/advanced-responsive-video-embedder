@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [ '7.2', '7.3', '7.4', '8.0', '8.1', '8.2' ] # https://www.php.net/supported-versions
+        php: [ '7.4', '8.0', '8.1', '8.2' ] # https://www.php.net/supported-versions
         wordpress: [ 'latest' ] # https://wordpress.org/download/releases/
     services:
       mysql:
@@ -118,9 +118,20 @@ jobs:
         id: get_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
+      - name: Set composer shared code repo
+        working-directory: advanced-responsive-video-embedder
+        run: >-
+          composer config repositories.nextgenthemes/wp-shared
+          --json '{"type":"path", "url": "./packages/nextengthemes/wp-shared", "options": {"symlink": false}}'
+
+      - name: composer update --optimize-autoloader
+        working-directory: advanced-responsive-video-embedder
+        run: composer update --optimize-autoloader
+
       - name: Deploy
         uses: nextgenthemes/action-wordpress-plugin-deploy@master
         with:
+          workdir: advanced-responsive-video-embedder
           workdir: advanced-responsive-video-embedder
           version: ${{ steps.get_version.outputs.VERSION }}
           svn_user: ${{ secrets.SVN_USERNAME }}

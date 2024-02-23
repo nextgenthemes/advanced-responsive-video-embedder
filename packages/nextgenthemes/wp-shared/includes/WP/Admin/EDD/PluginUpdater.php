@@ -1,5 +1,5 @@
-<?php
-namespace Nextgenthemes\ARVE\Common\Admin\EDD;
+<?php declare(strict_types=1);
+namespace Nextgenthemes\WP\Admin\EDD;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,14 +14,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class PluginUpdater {
 
-	private $api_url              = '';
-	private $api_data             = array();
-	private $plugin_file          = '';
-	private $name                 = '';
-	private $slug                 = '';
-	private $version              = '';
-	private $wp_override          = false;
-	private $beta                 = false;
+	private $api_url     = '';
+	private $api_data    = array();
+	private $plugin_file = '';
+	private $name        = '';
+	private $slug        = '';
+	private $version     = '';
+	private $wp_override = false;
+	private $beta        = false;
 	private $failed_request_cache_key;
 
 	/**

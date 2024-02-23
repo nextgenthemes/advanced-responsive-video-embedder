@@ -1,0 +1,155 @@
+/* stylelint-disable declaration-no-important */
+.arve-sc-dialog {
+	height: 99.9dvh;
+	max-width: 900px;
+	width: 100vw;
+	border-radius: 5px;
+	border: none;
+	box-sizing: border-box;
+	padding: 0;
+
+	*,
+	*:before,
+	*:after {
+		box-sizing: inherit;
+	}
+
+	&::backdrop {
+		background-color: rgba(0, 0, 0, .8);
+	}
+
+	&[open] {
+		animation: arve-sc-dialog-zoom .4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+		&::backdrop {
+			animation: arve-sc-dialog-fade .4s ease-out;
+		}
+	}
+
+	&:not([open]) {
+		display: none;
+	}
+}
+
+.arve-sc-dialog__wrap {
+	container-type: inline-size;
+	height: 100%;
+	display: grid;
+	grid-template-columns: minmax(300px, 1fr);
+	grid-template-rows:
+		auto
+		1fr
+		auto;
+	grid-template-areas:
+		"."
+		"."
+		".";
+	gap: 0px 0px;
+}
+
+.arve-sc-dialog__header {
+	text-align: end;
+}
+
+.arve-sc-dialog__body {
+	padding-left: 10px;
+	padding-right: 10px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: relative;
+	background:
+		/* Shadow covers */
+		linear-gradient(white 30%, rgba(255,255,255,0)),
+		linear-gradient(rgba(255,255,255,0), white 70%) 0 100%,
+
+		/* Shadows */
+		radial-gradient(farthest-side at 50% 0, rgba(0,0,0,.2), rgba(0,0,0,0)),
+		radial-gradient(farthest-side at 50% 100%, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 100%;
+	background:
+		/* Shadow covers */
+		linear-gradient(white 30%, rgba(255,255,255,0)),
+		linear-gradient(rgba(255,255,255,0), white 70%) 0 100%,
+
+		/* Shadows */
+		radial-gradient(farthest-side at 50% 0, rgba(0,0,0,.2), rgba(0,0,0,0)),
+		radial-gradient(farthest-side at 50% 100%, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 100%;
+	background-repeat: no-repeat;
+	background-color: white;
+	background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+
+	/* Opera doesn't support this in the shorthand */
+	background-attachment: local, local, scroll, scroll;
+
+	hr {
+		display: none;
+	}
+
+	.ngt-option-block {
+		margin-bottom: 0.2em;
+	}
+
+	.ngt-option-block--url,
+	.ngt-option-block--description,
+	.ngt-option-block--random_video_url,
+	.ngt-option-block--random_video_urls {
+		grid-column: 1 / span 2;
+	}
+}
+
+.wp-core-ui .button-primary.arve-premium-link {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: .7rem;
+	min-height: 0;
+	line-height: 1.5;
+	padding: 0 .5em; 
+}
+
+@container (min-width: 700px) {
+	.arve-sc-dialog__body {
+		display: grid;
+		grid-template-columns: minmax(0,50%) minmax(0,50%);
+		column-gap: .5em;
+	}
+}
+
+.ngt .arve-sc-dialog__close-btn {
+	font-size: 2rem;
+	width: 2.1rem;
+	height: 2.1rem;
+	background: none;
+	border: none;
+}
+
+.ngt .arve-sc-dialog__description {
+	margin-top: .2rem;
+}
+
+#arve-shortcode {
+	margin-top: 1em;
+	font-size: 1.2em;
+	line-height: 1.2;
+}
+
+.arve-sc-dialog__footer {
+	padding: 10px;
+}
+
+@keyframes arve-sc-dialog-zoom {
+	from {
+		transform: scale(0.8);
+	}
+	to {
+		transform: scale(1);
+	}
+}
+
+@keyframes arve-sc-dialog-fade {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

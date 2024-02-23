@@ -1,14 +1,14 @@
-<?php
-namespace Nextgenthemes\ARVE\Common;
+<?php declare(strict_types=1);
+namespace Nextgenthemes\WP;
 
 // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
-function remote_get_json( $url, array $args = array(), $json_name = false ) {
-	return remote_get_json_cached( $url, $args, $json_name );
+function remote_get_json( string $url, array $args = array(), string $json_name = '', int $time = DAY_IN_SECONDS ) {
+	return remote_get_json_cached( $url, $args, $json_name, $time );
 }
 
-function remote_get_json_cached( $url, array $args = array(), $json_name = false ) {
+function remote_get_json_cached( string $url, array $args = array(), string $json_name = '', int $time = DAY_IN_SECONDS ) {
 
-	$response = remote_get_body_cached( $url, $args );
+	$response = remote_get_body_cached( $url, $args, $time );
 
 	if ( is_wp_error( $response ) ) {
 		return $response;
@@ -47,7 +47,11 @@ function remote_get_json_cached( $url, array $args = array(), $json_name = false
 	return $response;
 }
 
-function remote_get_body( $url, array $args = array() ) {
+/**
+ * Undocumented function
+ * @return mixed|WP_Error
+ */
+function remote_get_body( string $url, array $args = array() ) {
 
 	$response      = wp_safe_remote_get( $url, $args );
 	$response_code = wp_remote_retrieve_response_code( $response );
@@ -61,7 +65,7 @@ function remote_get_body( $url, array $args = array() ) {
 		return new \WP_Error(
 			$response_code,
 			sprintf(
-				// Translators: 1 URL 2 HTTP presponse code.
+				// Translators: 1 URL 2 HTTP response code.
 				__( 'url: %1$s Status code 200 expected but was %2$s.', 'advanced-responsive-video-embedder' ),
 				$url,
 				$response_code
@@ -85,7 +89,10 @@ function remote_get_body( $url, array $args = array() ) {
 	return $response;
 };
 
-function remote_get_body_cached( $url, array $args = array(), $time = DAY_IN_SECONDS ) {
+/**
+ * @return mixed
+ */
+function remote_get_body_cached( string $url, array $args = array(), int $time = DAY_IN_SECONDS ) {
 
 	$transient_name = 'nextgenthemes_remote_get_body_' . $url . wp_json_encode( $args );
 	$response       = get_transient( $transient_name );
@@ -99,7 +106,10 @@ function remote_get_body_cached( $url, array $args = array(), $time = DAY_IN_SEC
 	return $response;
 }
 
-function get_image_size( $img_url ) {
+/**
+ * @return array|false
+ */
+function get_image_size( string $img_url ) {
 	$response = remote_get_body( $img_url, [ 'timeout' => 0.5 ] );
 
 	if ( is_wp_error( $response ) ) {
@@ -107,4 +117,9 @@ function get_image_size( $img_url ) {
 	}
 
 	return getimagesizefromstring( $response );
+}
+
+function get_redirected_url( string $url ): string {
+	$headers = @get_headers($url, true);
+	return $headers['Location'];
 }

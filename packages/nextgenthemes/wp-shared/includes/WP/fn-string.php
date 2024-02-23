@@ -1,7 +1,7 @@
-<?php
-namespace Nextgenthemes\ARVE\Common;
+<?php declare(strict_types=1);
+namespace Nextgenthemes\WP;
 
-function str_contains_any( $haystack, array $needles ) {
+function str_contains_any( string $haystack, array $needles ): bool {
 
 	foreach ( $needles as $needle ) {
 
@@ -13,7 +13,7 @@ function str_contains_any( $haystack, array $needles ) {
 	return false;
 }
 
-function remove_url_query( $url ) {
+function remove_url_query( string $url ): string {
 
 	$parsed_url = parse_url( $url );
 
@@ -33,7 +33,7 @@ function remove_url_query( $url ) {
 	return "$scheme$user$pass$host$port$path$fragment";
 }
 
-function dashes_to_camel_case( $string, $capitalize_first_character = false ) {
+function dashes_to_camel_case( string $string, bool $capitalize_first_character = false ): string {
 
 	$str = str_replace( '-', '', ucwords( $string, '-' ) );
 
@@ -42,4 +42,13 @@ function dashes_to_camel_case( $string, $capitalize_first_character = false ) {
 	}
 
 	return $str;
+}
+
+function remove_suffix( string $haystack, string $needle ): string {
+
+	if ( str_ends_with($haystack, $needle) ) {
+		return substr($haystack, 0, strlen($haystack) - strlen($needle));
+	}
+
+	return $haystack;
 }

@@ -1,7 +1,10 @@
-<?php
-namespace Nextgenthemes\ARVE\Common;
+<?php declare(strict_types=1);
+namespace Nextgenthemes\WP;
 
-function ngt_get_block_wrapper_attributes( array $attr ) {
+/**
+ * @param array <string, string> $attr
+ */
+function ngt_get_block_wrapper_attributes( array $attr ): string {
 
 	foreach ( $attr as $key => $value ) {
 
@@ -13,10 +16,13 @@ function ngt_get_block_wrapper_attributes( array $attr ) {
 		}
 	}
 
-	return ' ' . get_block_wrapper_attributes( $attr );
+	return ' ' . \get_block_wrapper_attributes( $attr );
 }
 
-function attr( array $attr = array() ) {
+/**
+ * @param array <string, mixed> $attr
+ */
+function attr( array $attr = array() ): string {
 
 	$html = '';
 
@@ -47,9 +53,12 @@ function attr( array $attr = array() ) {
 	return $html;
 }
 
-function get_url_arg( $url, $arg ) {
+/**
+ * @return mixed
+ */
+function get_url_arg( string $url, string $arg ) {
 
-	$parsed_url = wp_parse_url( $url );
+	$parsed_url = \wp_parse_url( $url );
 
 	if ( ! empty( $parsed_url['query'] ) ) {
 
@@ -63,6 +72,11 @@ function get_url_arg( $url, $arg ) {
 	return false;
 }
 
+/**
+ * @param mixed $var
+ *
+ * @return string|false
+ */
 function get_var_dump( $var ) {
 	ob_start();
 	// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_dump
@@ -70,11 +84,22 @@ function get_var_dump( $var ) {
 	return ob_get_clean();
 };
 
-// this is to prevent constant() throwing as Error in PHP 8, E_WARNING in PHP < 8
-function get_constant( $const_name ) {
+/**
+ * This is to prevent constant() throwing as Error in PHP 8, E_WARNING in PHP < 8
+ *
+ * @return mixed
+ */
+function get_constant( string $const_name ) {
 	return defined( $const_name ) ? constant( $const_name ) : false;
 }
 
-function is_wp_debug() {
-	return get_constant( 'WP_DEBUG' );
+function is_wp_debug(): bool {
+	return defined( 'WP_DEBUG' ) && WP_DEBUG;
+}
+
+function replace_extension( string $filename, string $new_extension ): string {
+	$info = pathinfo( $filename );
+	$dir  = $info['dirname'] ? $info['dirname'] . DIRECTORY_SEPARATOR : '';
+
+	return $dir . $info['filename'] . '.' . $new_extension;
 }

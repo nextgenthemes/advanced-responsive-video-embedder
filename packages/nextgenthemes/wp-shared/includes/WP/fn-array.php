@@ -1,7 +1,7 @@
-<?php
-namespace Nextgenthemes\ARVE\Common;
+<?php declare(strict_types=1);
+namespace Nextgenthemes\WP;
 
-function array_whitelist_keys( array $arr, array $keys ) {
+function array_whitelist_keys( array $arr, array $keys ): array {
 
 	return array_intersect_key(
 		$arr,
@@ -9,13 +9,16 @@ function array_whitelist_keys( array $arr, array $keys ) {
 	);
 }
 
+/**
+ * @return mixed
+ */
 function first_array_value( array $array ) {
 	reset( $array );
 	$key = key( $array );
 	return $array[ $key ];
 }
 
-function prefix_array_keys( $keyprefix, array $array ) {
+function prefix_array_keys( string $keyprefix, array $array ): array {
 
 	foreach ( $array as $key => $value ) {
 		$array[ $keyprefix . $key ] = $value;
@@ -25,7 +28,13 @@ function prefix_array_keys( $keyprefix, array $array ) {
 	return $array;
 }
 
-function get_array_key_by_value( $array, $field, $value ) {
+/**
+ * @param mixed $field
+ * @param mixed $value
+ *
+ * @return mixed
+ */
+function get_array_key_by_value( array $array, $field, $value ) {
 
 	foreach ( $array as $key => $array_value ) {
 
@@ -40,17 +49,12 @@ function get_array_key_by_value( $array, $field, $value ) {
 /**
  * Inserts a new key/value before the key in the array.
  *
- * @param $key
- *   The key to insert before.
- * @param $array
- *   An array to insert in to.
- * @param $new_key
- *   The key to insert.
- * @param $new_value
- *   An value to insert.
+ * @param mixed $key        The key to insert before.
+ * @param array $array      An array to insert in to.
+ * @param mixed $new_key    The key to insert.
+ * @param mixed $new_value  An value to insert.
  *
- * @return
- *   The new array if the key exists, FALSE otherwise.
+ * @return array|false The new array if the key exists, FALSE otherwise.
  *
  * @see array_insert_after()
  */
@@ -71,17 +75,12 @@ function array_insert_before( $key, array &$array, $new_key, $new_value ) {
 /**
  * Inserts a new key/value after the key in the array.
  *
- * @param $key
- *   The key to insert after.
- * @param $array
- *   An array to insert in to.
- * @param $new_key
- *   The key to insert.
- * @param $new_value
- *   An value to insert.
+ * @param mixed $key        The key to insert after.
+ * @param array $array      An array to insert in to.
+ * @param mixed $new_key    The key to insert.
+ * @param mixed $new_value  An value to insert.
  *
- * @return
- *   The new array if the key exists, FALSE otherwise.
+ * @return array|false The new array if the key exists, FALSE otherwise.
  *
  * @see array_insert_before()
  */
@@ -97,4 +96,15 @@ function array_insert_after( $key, array &$array, $new_key, $new_value ) {
 		return $new;
 	}
 	return false;
+}
+
+function sort_array_by_array( array $array, array $order_array ): array {
+	$ordered = array();
+	foreach ( $order_array as $key ) {
+		if ( array_key_exists($key, $array) ) {
+			$ordered[ $key ] = $array[ $key ];
+			unset($array[ $key ]);
+		}
+	}
+	return $ordered + $array;
 }

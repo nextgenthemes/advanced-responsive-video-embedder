@@ -1,36 +1,5 @@
 /* stylelint-disable declaration-no-important */
 
-.arve-sc-dialog {
-	max-width: 900px;
-	width: 100vw;
-	border-radius: 5px;
-	border: none;
-	box-sizing: border-box;
-
-	&::backdrop {
-		background-color: rgba(0, 0, 0, .8);
-	}
-
-	&:not([open]) {
-		display: none;
-	}
-
-	@media (min-width: 900px) {
-		padding: 2rem;
-	}
-}
-
-.arve-sc-dialog__close-btn {
-	position: absolute;
-	right: 0;
-	top: 0;
-	font-size: 2rem;
-	width: 2.1rem;
-	height: 2.1rem;
-	background: none;
-	border: none;
-}
-
 .arve-license-input {
 	width: 280px;
 }
@@ -46,15 +15,15 @@
 .edit-shortcode-form-fields.shortcode-ui-edit-arve .field-block {
 	padding-top: .4em;
 	padding-bottom: .4em;
-}
 
-.edit-shortcode-form-fields.shortcode-ui-edit-arve .field-block label {
-	display: inline-block;
-	margin: 0;
-}
+	label {
+		display: inline-block;
+		margin: 0;
 
-.edit-shortcode-form-fields.shortcode-ui-edit-arve .field-block label:first-child {
-	width: 110px;
+		&:first-child {
+			width: 110px;
+		}
+	}
 }
 
 .edit-shortcode-form-fields.shortcode-ui-edit-arve {

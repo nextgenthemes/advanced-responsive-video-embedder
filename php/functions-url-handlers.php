@@ -1,7 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-function create_url_handlers() {
+function create_url_handlers(): void {
 
 	$properties = get_host_properties();
 
@@ -26,9 +26,10 @@ function create_url_handlers() {
  * @param array  $attr     Embed attributes.
  * @param string $url      The original URL that was matched by the regex.
  * @param array  $rawattr  The original unmodified attributes.
+ *
  * @return string  The embed HTML.
  */
-function url_handler( $provider, array $matches, array $attr, $url, $rawattr ) {
+function url_handler( string $provider, array $matches, array $attr, string $url, array $rawattr ): string {
 
 	if ( is_array( $rawattr ) ) {
 		$a = $rawattr;

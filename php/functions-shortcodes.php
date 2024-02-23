@@ -1,7 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-function shortcode( $a ) {
+function shortcode( array $a ): string {
 
 	$a                        = (array) $a;
 	$a['errors']              = new \WP_Error();
@@ -38,68 +38,58 @@ function shortcode( $a ) {
 	return build_video( $a );
 }
 
-function error( $msg, $code = '' ) {
+function error( string $messages, string $code = '' ): string {
 
 	return sprintf(
-		PHP_EOL . PHP_EOL .'<span class="arve-error"%s><abbr title="%s">ARVE</abbr> %s<br></span>' . PHP_EOL,
-		'hidden' === $code ? ' hidden' : '',
+		PHP_EOL . PHP_EOL .
+		'<span class="arve-error"%s><abbr title="%s">ARVE</abbr> %s</span>' . PHP_EOL,
+		str_contains( $code, 'hidden' ) ? 'hidden' : '',
 		__( 'Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ),
 		// translators: Error message
-		sprintf( __( 'Error: %s', 'advanced-responsive-video-embedder' ), $msg )
+		sprintf( __( 'Error: %s', 'advanced-responsive-video-embedder' ), $messages ),
 	);
 }
 
-function get_error_html( array $a ) {
+function get_error_html(): string {
 
-	$html = '';
+	$html     = '';
+	$messages = '';
 
-	foreach ( $a['errors']->get_error_codes() as $code ) {
-		foreach ( $a['errors']->get_error_messages( $code ) as $key => $message ) {
-			$html .= error( $message, $code );
+	foreach ( arve_errors()->get_error_codes() as $code ) {
+
+		$message = '';
+
+		foreach ( arve_errors()->get_error_messages( $code ) as $key => $message ) {
+			$messages .= sprintf( '%s<br>', $message );
 		}
+
+		$html .= $messages;
+		$data  = arve_errors()->get_error_data( $code );
+
+		if ( ! empty( $data ) && ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ) {
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
+			$html .= sprintf( 'Data: %s', var_export( $data, true ) );
+		}
+
+		$html = error( $html );
+
+		arve_errors()->remove($code);
 	}
 
 	return $html;
 }
 
-function build_video( array $input_atts ) {
+function build_video( array $input_atts ): string {
 
-	$html = '';
-	$a    = [];
-
-	try {
-		$a = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
-		Common\check_product_keys();
-		$a = process_shortcode_args( $a );
-
-		ksort( $a );
-		ksort( $input_atts );
-
-		$html .= get_error_html( $a );
-		$html .= build_html( $a );
-		$html .= get_debug_info( $html, $a, $input_atts );
-
-		wp_enqueue_style( 'arve' );
-		wp_enqueue_script( 'arve' );
-
-		return apply_filters( 'nextgenthemes/arve/html', $html, $a );
-
-	} catch ( \Exception $e ) {
-
-		if ( ! isset( $a['errors'] ) ) {
-			$a['errors'] = new \WP_Error();
-		}
-
-		$a['errors']->add( $e->getCode(), $e->getMessage() );
-
-		$html .= get_error_html( $a );
-		$html .= get_debug_info( '', $a, $input_atts );
-
-		return $html;
+	if ( ! empty( $input_atts['errors'] ) ) {
+		arve_errors()->merge_from( $input_atts['errors'] );
 	}
+
+	$video = new Video( $input_atts );
+	return $video->build_video();
 }
 
-function shortcode_option_defaults() {
+function shortcode_option_defaults(): array {
 
 	$properties = get_host_properties();
 	unset( $properties['video'] );
@@ -114,7 +104,7 @@ function shortcode_option_defaults() {
 	return $shortcodes;
 }
 
-function create_shortcodes() {
+function create_shortcodes(): void {
 
 	$options    = options();
 	$properties = get_host_properties();
@@ -148,7 +138,7 @@ function create_shortcodes() {
 }
 
 // TODO sometimes $attr is string, investigate when and what it is exacly
-function wp_video_shortcode_override( $out, $attr ) {
+function wp_video_shortcode_override( string $out, array $attr ): string {
 
 	$options = options();
 
@@ -165,10 +155,6 @@ function wp_video_shortcode_override( $out, $attr ) {
 
 	if ( empty( $attr['url'] ) && ! empty( $attr['src'] ) ) {
 		$attr['url'] = $attr['src'];
-	}
-
-	if ( isset( $attr['loop'] ) ) {
-		$attr['loop'] = bool_to_shortcode_string( $attr['loop'] );
 	}
 
 	if ( ! empty( $attr['poster'] ) ) {

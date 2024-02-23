@@ -31,9 +31,7 @@ function arveExtractURL( changed, collection, shortcode ) {
 
 	// <iframe src="https://example.com" width="640" height="360"></iframe>
 
-	const $iframe = domParser
-		.parseFromString( val, 'text/html' )
-		.querySelector( 'iframe' );
+	const $iframe = domParser.parseFromString( val, 'text/html' ).querySelector( 'iframe' );
 
 	if ( $iframe && $iframe.hasAttribute( 'src' ) ) {
 		urlInput.val( $iframe.src ).trigger( 'input' );

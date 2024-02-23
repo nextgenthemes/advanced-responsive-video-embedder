@@ -1,5 +1,5 @@
-<?php
-namespace Nextgenthemes\ARVE\Common;
+<?php declare(strict_types=1);
+namespace Nextgenthemes\WP;
 
 function contains( $haystack, $needle ) {
 	return str_contains( $haystack, $needle );

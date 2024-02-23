@@ -1,5 +1,7 @@
 import './admin.scss';
-import './admin-shortcode-creator';
+import './bootstrap-forms.scss';
+import './shortcode-dialog.scss';
+
 import { globalID } from './main';
 
 export {};
@@ -13,23 +15,6 @@ declare global {
 }
 
 globalID();
-
-window.addEventListener( 'load', () => {
-	const editorIframe = document.querySelector(
-		'iframe[name="editor-canvas"]'
-	) as HTMLIFrameElement | null;
-
-	if ( editorIframe ) {
-		const interval = setInterval( () => {
-			const iframeBody = editorIframe?.contentWindow?.document?.body;
-
-			if ( iframeBody ) {
-				iframeBody.setAttribute( 'id', 'html' );
-				clearInterval( interval );
-			}
-		}, 200 );
-	}
-} );
 
 // talken from https://github.com/WordPress/gutenberg/blob/3317ba195da0149d0bae221dc3516cd76f536c5d/packages/react-native-bridge/common/gutenberg-web-single-block/editor-behavior-overrides.js#L126
 // The editor-canvas iframe relies upon `srcdoc`, which does not trigger a
@@ -73,7 +58,6 @@ document.addEventListener( 'click', ( event ) => {
 			id: noticeId,
 		} );
 
-		// does not work
 		// fetch( window.ajaxurl, {
 		// 	method: 'POST',
 		// 	headers: {
@@ -84,6 +68,13 @@ document.addEventListener( 'click', ( event ) => {
 		// 		url: window.ajaxurl,
 		// 		id: noticeId,
 		// 	} ),
-		// } );
+		// } )
+		// 	.then( ( response ) => response.json() )
+		// 	.then( ( data ) => {
+		// 		// Handle response data
+		// 	} )
+		// 	.catch( ( error ) => {
+		// 		// Handle error
+		// 	} );
 	}
 } );

@@ -1,11 +1,18 @@
-<?php
-namespace Nextgenthemes\ARVE\Common;
+<?php declare(strict_types=1);
+namespace Nextgenthemes\WP;
 
-function nextgenthemes_settings_instance() {
+use \Nextgenthemes\WP\Settings;
+
+require_once 'Settings.php';
+
+/**
+ * @return mixed
+ */
+function nextgenthemes_settings_instance( string $base_url, string $base_path ) {
 
 	static $inst = null;
 
-	if ( null === $inst ) {
+	if ( ! $inst instanceof Settings ) {
 
 		$inst = new Settings(
 			array(
@@ -15,54 +22,20 @@ function nextgenthemes_settings_instance() {
 					'keys'         => esc_html__( 'License Keys', 'advanced-responsive-video-embedder' ),
 					'beta-updates' => esc_html__( 'Beta Updates', 'advanced-responsive-video-embedder' ),
 				),
-				'menu_title'          => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
+				'menu_title'          => esc_html__( 'NextGenThemes', 'advanced-responsive-video-embedder' ),
 				'settings_page_title' => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
+				'base_url'            => $base_url,
+				'base_path'           => $base_path,
 			)
 		);
-		$inst->set_defined_product_keys();
+
+		$inst->setup_license_options();
 	}
 
 	return $inst;
 }
 
-function ngt_options() {
-	$o = nextgenthemes_settings_instance()->get_options();
-	return apply_filters( 'nextgenthemes/settings', $o );
-}
-
-function migrate_old_licenses() {
-
-	$options_ver = get_option( 'nextgenthemes_options_ver' );
-
-	if ( \version_compare( $options_ver, '9.0', '>=' ) ) {
-		return;
-	}
-
-	$products = get_products();
-	foreach ( $products as $p => $value ) {
-
-		$old_key        = get_option( "nextgenthemes_{$p}_key" );
-		$old_key_status = get_option( "nextgenthemes_{$p}_key_status" );
-
-		$new_options = get_option( 'nextgenthemes', array() );
-
-		if ( $old_key ) {
-			$options       = (array) get_option( 'nextgenthemes' );
-			$options[ $p ] = $old_key;
-			update_option( 'nextgenthemes', $options );
-		}
-
-		if ( $old_key_status ) {
-			$options                   = (array) get_option( 'nextgenthemes' );
-			$options[ $p . '_status' ] = $old_key_status;
-			update_option( 'nextgenthemes', $options );
-		}
-	}
-
-	update_option( 'nextgenthemes_options_ver', '9.0' );
-}
-
-function nextgenthemes_settings() {
+function nextgenthemes_settings(): array {
 
 	$products = get_products();
 
@@ -74,7 +47,7 @@ function nextgenthemes_settings() {
 			// translators: %s is Product name
 			'label'   => sprintf( esc_html__( '%s license Key', 'advanced-responsive-video-embedder' ), $value['name'] ),
 			'type'    => 'string',
-			'ui'      => 'licensekey',
+			'ui'      => 'license_key',
 		);
 
 		$settings[ $p . '_status' ] = array(
@@ -121,10 +94,10 @@ function nextgenthemes_settings() {
 	return $settings;
 }
 
-function get_products() {
+function get_products(): array {
 
 	$products = array(
-		'arve_pro'           => array(
+		'arve_pro' => array(
 			'namespace' => 'ARVE\Pro',
 			'name'      => 'ARVE Pro',
 			'id'        => 1253,
@@ -132,7 +105,7 @@ function get_products() {
 			'author'    => 'Nicolas Jonas',
 			'url'       => 'https://nextgenthemes.com/plugins/arve-pro/',
 		),
-		'arve_amp'           => array(
+		'arve_amp' => array(
 			'namespace' => 'ARVE\AMP',
 			'name'      => 'ARVE AMP',
 			'id'        => 16941,
@@ -140,7 +113,7 @@ function get_products() {
 			'author'    => 'Nicolas Jonas',
 			'url'       => 'https://nextgenthemes.com/plugins/arve-amp/',
 		),
-		'arve_random_video'  => array(
+		'arve_random_video' => array(
 			'namespace' => 'ARVE\RandomVideo',
 			'name'      => 'ARVE Random Video',
 			'id'        => 31933,

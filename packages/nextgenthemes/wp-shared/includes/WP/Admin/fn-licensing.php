@@ -1,45 +1,48 @@
-<?php
-namespace Nextgenthemes\ARVE\Common\Admin;
+<?php declare(strict_types=1);
+namespace Nextgenthemes\WP\Admin;
 
-use \Nextgenthemes\ARVE\Common;
+use \Nextgenthemes\WP\Admin\EDD\PluginUpdater;
+use \Nextgenthemes\WP\Admin\EDD\ThemeUpdater;
 
-function init_edd_updaters() {
+use function \Nextgenthemes\WP\get_products;
 
-	$products = Common\get_products();
+function init_edd_updaters( array $options ): void {
+
+	$products = get_products();
 
 	foreach ( $products as $product ) {
 
 		if ( 'plugin' === $product['type'] && ! empty( $product['file'] ) ) {
-			init_plugin_updater( $product );
+			init_plugin_updater( $product, $options );
 		} elseif ( 'theme' === $product['type'] ) {
-			init_theme_updater( $product );
+			init_theme_updater( $product, $options );
 		}
 	}
 }
 
-function init_plugin_updater( $product ) {
+function init_plugin_updater( array $product, array $options ): void {
 
 	// setup the updater
-	new EDD\PluginUpdater(
+	new PluginUpdater(
 		'https://nextgenthemes.com',
 		$product['file'],
 		array(
+			'license' => $options[ $product['slug'] ],
+			'beta'    => $options[ $product['slug'] . '_beta' ],
 			'version' => $product['version'],
-			'license' => Common\ngt_options()[ $product['slug'] ],
 			'item_id' => $product['id'],
 			'author'  => $product['author'],
-			'beta'    => Common\ngt_options()[ $product['slug'] . '_beta' ],
 		)
 	);
 }
 
-function init_theme_updater( $product ) {
+function init_theme_updater( array $product, array $options ): void {
 
-	new EDD\ThemeUpdater(
+	new ThemeUpdater(
 		array(
+			'license'        => $options[ $product['slug'] ],
 			'remote_api_url' => 'https://nextgenthemes.com',
 			'version'        => $product['version'],
-			'license'        => Common\ngt_options()[ $product['slug'] ],
 			'item_id'        => $product['id'],
 			'author'         => $product['author'],
 			'theme_slug'     => $product['slug'],
@@ -75,4 +78,31 @@ function init_theme_updater( $product ) {
 			'update-available'          => __( '<strong>%1$s %2$s</strong> is available. <a href="%3$s" class="thickbox" title="%4s">Check out what\'s new</a> or <a href="%5$s"%6$s>update now</a>.', 'advanced-responsive-video-embedder' ),
 		)
 	);
+}
+
+// phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
+function activation_notices(): void {
+
+	$products = get_products();
+
+	foreach ( $products as $key => $value ) :
+
+		if ( $value['active'] && ! $value['valid_key'] ) {
+			$msg = sprintf(
+				// Translators: First %1$s is product name.
+				__( 'Hi there, thanks for your purchase. One last step, please activate your %1$s <a href="%2$s">here now</a>.', 'advanced-responsive-video-embedder' ),
+				$value['name'],
+				get_admin_url() . 'options-general.php?page=nextgenthemes'
+			);
+
+			Notices::instance()->register_notice(
+				"ngt-$key-activation-notice",
+				'notice-info',
+				'<p>' . $msg . '</p>',
+				array(
+					'cap' => 'change_options',
+				)
+			);
+		}
+	endforeach;
 }

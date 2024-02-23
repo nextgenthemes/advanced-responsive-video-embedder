@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE\Admin;
 
 use \Nextgenthemes\ARVE;
-use \Nextgenthemes\ARVE\Common;
+use \Nextgenthemes\WP;
 
-function settings_content() {
+function settings_content(): void {
 
 	$link_code_only = array(
 		'code' => array(),
@@ -16,7 +16,7 @@ function settings_content() {
 	);
 	?>
 
-	<div class="ngt-block" v-show="onlySectionDisplayed === 'urlparams'">
+	<div x-show="'urlparams' === tab">
 		<p>
 			<?php
 			printf(
@@ -27,17 +27,27 @@ function settings_content() {
 			?>
 		</p>
 		<p>
-			See
+			See 
 			<a target="_blank" href="https://developers.google.com/youtube/player_parameters#Parameters">Youtube Parameters</a>,
 			<a target="_blank" href="http://www.dailymotion.com/doc/api/player.html#parameters">Dailymotion Parameters</a>,
 			<a target="_blank" href="https://developer.vimeo.com/player/embedding">Vimeo Parameters</a>
 		</p>
 	</div>
+
+	<div x-show="'debug' === tab">
+		<?php require_once __DIR__ . '/partials/debug-info-textarea.php'; ?>
+	</div>
+
+	<div x-show="['pro', 'random-video', 'sticky-videos'].includes(tab)">
+		<?php print_premium_section_message(); ?>
+	</div>
 	<?php
 }
 
-function settings_sidebar() {
+function settings_sidebar(): void {
+	?>
 
+	<?php
 	if ( ! current_user_can('install_plugins') ) {
 		echo '<div class="ngt-sidebar-box">';
 		esc_html_e( 'Note that you are logged in with a user who that can\'t install plugins, ask someone who can if you are interrested in ARVE Extensions.', 'advanced-responsive-video-embedder' );
@@ -61,33 +71,44 @@ function settings_sidebar() {
 	}
 
 	print_settings_box_html( '/partials/settings-sidebar-rate.html' );
+	?>
+
+	<?php
 }
 
+function print_premium_section_message(): void {
+	?>
+		<p>
+			<?php
+			esc_html_e( 'You may already set options for addons but they will only take effect if the associated addons are installed.', 'advanced-responsive-video-embedder' );
+			?>
+		</p>
+	<?php
+}
 
-
-function print_settings_box_html( $file ) {
+function print_settings_box_html( string $file ): void {
 	echo '<div class="ngt-sidebar-box">';
 	readfile( __DIR__ . $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
 	echo '</div>';
 }
 
-function filter_save_options( $options ) {
+function filter_save_options( array $options ): array {
 
 	$action            = json_decode( $options['action'] );
 	$options['action'] = '';
 
 	if ( $action ) {
-		$product_id  = get_products()[ $action->product ]['id'];
+		$product_id  = WP\get_products()[ $action->product ]['id'];
 		$product_key = $options[ $action->product ];
 
-		$options[ $action->product . '_status' ] = api_action( $product_id, $product_key, $action->action );
+		$options[ $action->product . '_status' ] = WP\api_action( $product_id, $product_key, $action->action );
 	}
 
-	return $option;
+	return $options;
 }
 
 // unused, trigger recaching is rebuild is probably better, also there this leaves the times in the DB so will this even work?
-function delete_oembed_caches() {
+function delete_oembed_caches(): void {
 
 	global $wpdb;
 

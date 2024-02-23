@@ -1,9 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-function register_assets() {
+use function \Nextgenthemes\WP\register_asset;
 
-	Common\register_asset(
+function register_assets(): void {
+
+	register_asset(
 		array(
 			'handle' => 'arve-main',
 			'src'    => plugins_url( 'build/main.css', PLUGIN_FILE ),
@@ -12,13 +14,12 @@ function register_assets() {
 		)
 	);
 
-	Common\register_asset(
+	register_asset(
 		array(
 			'handle'    => 'arve-main',
 			'src'       => plugins_url( 'build/main.js', PLUGIN_FILE ),
 			'path'      => PLUGIN_DIR . '/build/main.js',
-			'async'     => true,
-			'in_footer' => true,
+			'strategy'  => 'async',
 		)
 	);
 
@@ -42,13 +43,13 @@ function register_assets() {
 			}
 		}
 
-		Common\register_asset(
+		register_asset(
 			array(
 				'handle'               => 'arve-block',
 				'src'                  => plugins_url( 'build/block.js', PLUGIN_FILE ),
 				'path'                 => PLUGIN_DIR . '/build/block.js',
 				//'deps'                 => array( 'arve' ),
-				'footer'               => 'false',
+				'in_footer'            => false,
 				'inline_script_before' => [
 					'settings' => $settings,
 					'options'  => $options,
@@ -76,7 +77,7 @@ function register_assets() {
 	endif;
 }
 
-function action_wp_enqueue_scripts() {
+function action_wp_enqueue_scripts(): void {
 
 	$options = options();
 
@@ -88,7 +89,7 @@ function action_wp_enqueue_scripts() {
 	}
 }
 
-function gutenberg_block( $attr, $content, $block ) {
+function gutenberg_block( array $attr ): string {
 
 	if ( empty( $attr['url'] ) && empty( $attr['random_video_url'] ) && empty( $attr['random_video_urls'] ) ) {
 		\ob_start();
@@ -117,14 +118,8 @@ function gutenberg_block( $attr, $content, $block ) {
 		return \ob_get_clean();
 	}
 
-	foreach ( $attr as $key => $value ) {
-
-		if ( is_bool( $value ) ) {
-			$attr[ $key ] = $value ? 'true' : 'false';
-		}
-	}
-
-	$attr['origin_data']['gutenberg'] = true;
+	$attr['origin_data']['gutenberg']    = true;
+	$attr['origin_data'][ __FUNCTION__ ] = true;
 
 	return shortcode( $attr );
 }

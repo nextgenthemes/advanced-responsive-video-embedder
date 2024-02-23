@@ -1,7 +1,7 @@
-<?php
-namespace Nextgenthemes\ARVE\Common;
+<?php declare(strict_types=1);
+namespace Nextgenthemes\WP;
 
-function check_product_keys() {
+function check_product_keys(): void {
 
 	$products = get_products();
 
@@ -22,13 +22,15 @@ function check_product_keys() {
 	endforeach;
 }
 
-function has_valid_key( $product ) {
-	$o = (array) get_option( 'nextgenthemes' );
-
-	return ( ! empty( $o[ "{$product}_status" ] ) && 'valid' === $o[ "{$product}_status" ] );
+function has_valid_key( string $product ): bool {
+	$options = (array) get_option( 'nextgenthemes' );
+	return ( ! empty( $options[ "{$product}_status" ] ) && 'valid' === $options[ "{$product}_status" ] );
 }
 
-function get_defined_key( $slug ) {
+/**
+ * @return mixed
+ */
+function get_defined_key( string $slug ) {
 
 	$constant_name = str_replace( '-', '_', strtoupper( $slug . '_KEY' ) );
 
@@ -39,7 +41,7 @@ function get_defined_key( $slug ) {
 	}
 }
 
-function activate_product_key( $product, $key ) {
+function activate_product_key( string $product, string $key ): void {
 
 	$product_id = get_products()[ $product ]['id'];
 
@@ -49,7 +51,7 @@ function activate_product_key( $product, $key ) {
 	update_option( 'nextgenthemes', $options );
 }
 
-function activate_defined_key( $file, $theme_name = '' ) {
+function activate_defined_key( string $file, string $theme_name = '' ): void {
 
 	if ( 'functions.php' === $file ) {
 		return;
@@ -67,7 +69,10 @@ function activate_defined_key( $file, $theme_name = '' ) {
 	}
 }
 
-function api_action( $item_id, $key, $action = 'check' ) {
+/**
+ * @return void|string
+ */
+function api_action( int $item_id, string $key, string $action = 'check' ) {
 
 	if ( ! in_array( $action, array( 'activate', 'deactivate', 'check' ), true ) ) {
 		wp_die( 'invalid action' );
@@ -113,7 +118,7 @@ function api_action( $item_id, $key, $action = 'check' ) {
 	return $message;
 }
 
-function get_api_error_message( $license_data ) {
+function get_api_error_message( object $license_data ): string {
 
 	if ( false !== $license_data->success ) {
 		return '';
@@ -154,6 +159,8 @@ function get_api_error_message( $license_data ) {
 			$message = __( 'An error occurred, please try again.', 'advanced-responsive-video-embedder' );
 			break;
 	}//end switch
+
+	return $message;
 }
 
 function textarea_dump( $var ) {

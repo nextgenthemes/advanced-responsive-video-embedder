@@ -1,7 +1,5 @@
-<?php
-namespace Nextgenthemes\ARVE\Common\Admin;
-
-use function \Nextgenthemes\ARVE\Common\get_var_dump;
+<?php declare(strict_types=1);
+namespace Nextgenthemes\ARVE\Admin;
 
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
 ?>
@@ -13,7 +11,6 @@ ARVE Sticky Videos: <?php echo esc_html( plugin_ver_status( 'arve-sticky-videos/
 ARVE Random Video:  <?php echo esc_html( plugin_ver_status( 'arve-random-video/arve-random-video.php' ) . "\n" ); ?>
 WordPress Version:  <?php echo esc_html( $GLOBALS['wp_version'] . "\n" ); ?>
 PHP Version:        <?php echo esc_html( phpversion() . "\n" ); ?>
-REST URL:           <?php echo esc_html( get_rest_url( null, $this->rest_namespace ) . "\n" ); ?>
 
 <?php print_active_plugins(); ?>
 
@@ -25,3 +22,4 @@ ARVE Options:
 Dismissed Notices:
 <?php echo wp_kses( var_export( get_user_meta( get_current_user_id(), 'dnh_dismissed_notices' ), true ), array() ); ?>
 </textarea>
+
