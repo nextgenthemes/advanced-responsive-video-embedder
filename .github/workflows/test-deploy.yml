@@ -88,7 +88,7 @@ jobs:
           coverage: none #optional
 
       - name: Install composer dependencies
-        working-directory: advanced-responsive-video-embedder
+        working-directory: symbiosistheme.com/web/app/plugins/advanced-responsive-video-embedder
         run: >
           composer config repositories.nextgenthemes/wp-shared
           --json '{"type": "path", "url": "./packages/nextengthemes/wp-shared", "options": {"symlink": false}}'
