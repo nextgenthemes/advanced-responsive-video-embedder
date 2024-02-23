@@ -91,9 +91,8 @@ jobs:
         working-directory: symbiosistheme.com/web/app/plugins/advanced-responsive-video-embedder
         run: >
           composer config repositories.nextgenthemes/wp-shared
-          --json '{"type": "path", "url": "./packages/nextengthemes/wp-shared", "options": {"symlink": false}}'
-          rm composer.lock
-          composer install --optimize-autoloader --no-dev
+          --json '{"type": "path", "url": "./packages/nextgenthemes/wp-shared", "options": {"symlink": false}}' &&
+          composer update --optimize-autoloader --no-dev
 
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
@@ -133,9 +132,8 @@ jobs:
         working-directory: advanced-responsive-video-embedder
         run: >
           composer config repositories.nextgenthemes/wp-shared
-          --json '{"type": "path", "url": "./packages/nextengthemes/wp-shared", "options": {"symlink": false}}'
-          rm composer.lock
-          composer install --optimize-autoloader --no-dev
+          --json '{"type": "path", "url": "./packages/nextgenthemes/wp-shared", "options": {"symlink": false}}' &&
+          composer update --optimize-autoloader --no-dev
 
       - name: Deploy
         uses: nextgenthemes/action-wordpress-plugin-deploy@master
