@@ -100,9 +100,12 @@ jobs:
 
   deploy:
     if: >-
-      startsWith(github.ref, 'refs/tags')
-      && ! startsWith(github.event.repository.name, 'arve-')
-      && ! contains(github.ref, 'alpha')
+      (
+        startsWith(github.ref, 'refs/tags')
+        && ! startsWith(github.event.repository.name, 'arve-')
+        && ! contains(github.ref, 'alpha')
+      ) || 
+      contains(github.event.head_commit.message, '[deploy-test]')
     needs: test
     name: SVN commit to wp.org
     runs-on: ubuntu-22.04
@@ -118,22 +121,26 @@ jobs:
         id: get_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
-      - name: Set composer shared code repo
+      - name: Install composer dependencies
         working-directory: advanced-responsive-video-embedder
         run: >-
           composer config repositories.nextgenthemes/wp-shared
           --json '{"type":"path", "url": "./packages/nextengthemes/wp-shared", "options": {"symlink": false}}'
-
-      - name: composer update --optimize-autoloader
-        working-directory: advanced-responsive-video-embedder
-        run: composer update --optimize-autoloader
+          rm composer.lock
+          composer install --optimize-autoloader --no-dev
 
       - name: Deploy
         uses: nextgenthemes/action-wordpress-plugin-deploy@master
         with:
           workdir: advanced-responsive-video-embedder
-          workdir: advanced-responsive-video-embedder
           version: ${{ steps.get_version.outputs.VERSION }}
           svn_user: ${{ secrets.SVN_USERNAME }}
           svn_pass: ${{ secrets.SVN_PASSWORD }}
+          build_dirs: vendor
           verbose: true
+
+        - name: create artifact
+          uses: actions/upload-artifact@v3
+          with:
+            name: advanced-responsive-video-embedder
+            path: /tmp/wp-deploy/git-archive-advanced-responsive-video-embedder
