@@ -15,7 +15,7 @@ function arve_errors(): WP_Error {
 }
 
 /**
- * Undocumented function
+ * Get host properties
  *
  * @return array <string, any>
  */
@@ -23,17 +23,30 @@ function get_host_properties(): array {
 	return require __DIR__ . '/providers.php';
 }
 
+/**
+ * Calculate the greatest common divisor of the given aspect ratio and return the simplified aspect ratio.
+ * When the aspect ratio in invalid contains floating point value, the original aspect ratio will be returned.
+ *
+ * @param string $aspect_ratio The input aspect ratio in the format 'width:height'
+ * @return string The simplified aspect ratio in the format 'newWidth:newHeight'
+ */
 function aspect_ratio_gcd( string $aspect_ratio ): string {
 
 	list( $width, $height ) = explode( ':', $aspect_ratio );
-	$gcd                    = gcd( $width, $height );
 
-	$aspect_ratio = $width / $gcd . ':' . $height / $gcd;
+	if ( ctype_digit( $width ) && ctype_digit( $height ) ) {
+
+		$gcd          = gcd( (int) $width, (int) $height );
+		$aspect_ratio = $width / $gcd . ':' . $height / $gcd;
+	}
 
 	return $aspect_ratio;
 }
 
-function gcd( $a, $b ) {
+/**
+ * Calculate the greatest common divisor of two numbers using the Euclidean algorithm.
+ */
+function gcd( int $a, int $b ): int {
 	return $b ? gcd( $b, $a % $b ) : $a;
 }
 
@@ -91,10 +104,17 @@ function youtube_time_to_seconds( string $yttime ): int {
 		(int) $matches['s'];
 }
 
-function new_height( string $old_width, string $old_height, int $new_width ): float {
-
-	$aspect_num = (int) $old_width / (int) $old_height;
-	$new_height = (int) $new_width / $aspect_num;
+/**
+ * Calculate the new height based on the old width, old height, and new width.
+ *
+ * @param float $old_width The old width
+ * @param float $old_height The old height
+ * @param int $new_width The new width
+ * @return float The new height
+ */
+function new_height( float $old_width, float $old_height, int $new_width ): float {
+	$aspect_num = $old_width / $old_height;
+	$new_height = $new_width / $aspect_num;
 
 	return $new_height;
 }
