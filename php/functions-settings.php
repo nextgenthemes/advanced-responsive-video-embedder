@@ -966,37 +966,5 @@ function missing_settings_defaults( array $settings ): array {
 
 	endforeach;
 
-	// foreach ( $settings as $key => $value ) {
-
-	// 	$settings[ $key ] = Common\sort_array_by_array(
-	// 		$settings[ $key ],
-	// 		array(
-	// 			'tag',
-	// 			'label',
-	// 			'type',
-	// 			'sanitze_callback',
-	// 			'default',
-	// 			'placeholder',
-	// 			'option',
-	// 			'shortcode',
-	// 			'description',
-	// 			'descriptionlink',
-	// 			'descriptionlinktext',
-	// 			'options',
-	// 		),
-	// 	);
-	// }
-
-	// dd(var_export($settings, true));
-
 	return $settings;
 }
-
-// function sort_array_by_array_key_in_value( $array, $key ) {
-// 	usort(
-// 		$array,
-// 		function ($a, $b) use ( $key ) {
-// 			return $b['tag'] - $a['tag'];
-// 		}
-// 	);
-// }
