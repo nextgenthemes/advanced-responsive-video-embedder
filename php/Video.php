@@ -1,11 +1,12 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-use function Nextgenthemes\WP\get_var_dump;
-use function Nextgenthemes\WP\get_url_arg;
-use function Nextgenthemes\WP\ngt_get_block_wrapper_attributes;
-use function Nextgenthemes\WP\attr;
-use function Nextgenthemes\WP\check_product_keys;
+use function \Nextgenthemes\WP\get_var_dump;
+use function \Nextgenthemes\WP\get_url_arg;
+use function \Nextgenthemes\WP\ngt_get_block_wrapper_attributes;
+use function \Nextgenthemes\WP\attr;
+use function \Nextgenthemes\WP\check_product_keys;
+use function \Nextgenthemes\WP\valid_url;
 
 use WP_Error;
 

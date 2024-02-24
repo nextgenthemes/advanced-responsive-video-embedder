@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
+use function \Nextgenthemes\WP\valid_url;
+
 /**
  * @param string|int $id_or_url
  */
@@ -217,19 +219,3 @@ function validate_int( string $prop_name, $value ): int {
 	return 0;
 }
 
-function valid_url( string $url ): bool {
-
-	if ( empty( $url ) ) {
-		return false;
-	}
-
-	if ( str_starts_with( $url, '//' ) ) {
-		$url = 'https:' . $url;
-	}
-
-	if ( filter_var( $url, FILTER_VALIDATE_URL ) !== false ) {
-		return true;
-	}
-
-	return false;
-}
