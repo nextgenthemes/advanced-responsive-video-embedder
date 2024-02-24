@@ -2,7 +2,10 @@
 namespace Nextgenthemes\WP;
 
 /**
- * @param array <string, string> $attr
+ * This function returns the block wrapper attributes as a string, it ignores null and false values to align the functionality with nextgentheme's `attr` function. And is escapes the URL values with `esc_url`.
+ *
+ * @param array <string, string> $attr The array of attributes.
+ * @return string The block wrapper attributes as a string.
  */
 function ngt_get_block_wrapper_attributes( array $attr ): string {
 
@@ -54,9 +57,13 @@ function attr( array $attr = array() ): string {
 }
 
 /**
- * @return mixed
+ * Retrieves the value of a specific query argument from the given URL.
+ *
+ * @param string $url The URL containing the query parameters.
+ * @param string $arg The name of the query argument to retrieve.
+ * @return string|null The value of the specified query argument, or null if it is not found.
  */
-function get_url_arg( string $url, string $arg ) {
+function get_url_arg( string $url, string $arg ): ?string {
 
 	$parsed_url = \wp_parse_url( $url );
 
@@ -69,7 +76,7 @@ function get_url_arg( string $url, string $arg ) {
 		}
 	}
 
-	return false;
+	return null;
 }
 
 /**
@@ -97,6 +104,13 @@ function is_wp_debug(): bool {
 	return defined( 'WP_DEBUG' ) && WP_DEBUG;
 }
 
+/**
+ * Replaces the extension of the given filename with the new extension.
+ *
+ * @param string $filename The original filename including the path.
+ * @param string $new_extension The new extension to replace the existing one.
+ * @return string The modified filename with the new extension.
+ */
 function replace_extension( string $filename, string $new_extension ): string {
 	$info = pathinfo( $filename );
 	$dir  = $info['dirname'] ? $info['dirname'] . DIRECTORY_SEPARATOR : '';
