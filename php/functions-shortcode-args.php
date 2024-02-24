@@ -1,7 +1,10 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-use Nextgenthemes\WP as Common;
+use function Nextgenthemes\WP\remove_url_query;
+use function Nextgenthemes\WP\get_url_arg;
+use function Nextgenthemes\WP\valid_url;
+use function Nextgenthemes\WP\get_attribute_value_from_html_tag;
 
 function sane_provider_name( string $provider ): string {
 	$provider = preg_replace( '/[^a-z0-9]/', '', strtolower( $provider ) );
@@ -21,31 +24,43 @@ function oembed_html2src( object $data ): string {
 	$data->html = htmlspecialchars_decode( $data->html, ENT_COMPAT | ENT_HTML5 );
 
 	if ( 'TikTok' === $data->provider_name ) {
-		preg_match( '/ data-video-id="([^"]+)"/', $data->html, $matches );
+
+		$tiktok_video_id = get_attribute_value_from_html_tag( array( 'class' => 'tiktok-embed' ), 'data-video-id', $data->html );
+
+		if ( $tiktok_video_id ) {
+			return 'https://www.tiktok.com/embed/v2/' . $tiktok_video_id;
+		} else {
+			$err_msg = 'Failed to extract tiktok video id from this html:' . esc_html( $data->html );
+		}
 	} elseif ( 'Facebook' === $data->provider_name ) {
-		preg_match( '/class="fb-video" data-href="([^"]+)"/', $data->html, $matches );
+
+		$facebook_video_url = get_attribute_value_from_html_tag( array( 'class' => 'fb-video' ), 'data-href', $data->html );
+
+		if ( $facebook_video_url ) {
+			return 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $facebook_video_url );
+		} else {
+			$err_msg = 'Failed to extract facebook video url from this html:' . esc_html( $data->html );
+		}
 	} else {
-		preg_match( '/<iframe [^>]*src="([^"]+)"/', $data->html, $matches );
+		$iframe_src = get_attribute_value_from_html_tag( array( 'tag_name' => 'iframe' ), 'src', $data->html );
+
+		if ( $iframe_src ) {
+
+			if ( valid_url( $iframe_src) ) {
+				return $iframe_src;
+			} else {
+				$err_msg = 'Invalid oembed src url detected:' . esc_html( $iframe_src );
+			}
+		} else {
+			$err_msg = 'Failed to extract iframe src from this html:' . esc_html( $data->html );
+		}
 	}
 
-	if ( empty( $matches[1] ) ) {
-		arve_errors()->add( 'no-oembed-src', 'No oembed src detected' );
-		return '';
-	}
-
-	if ( 'TikTok' !== $data->provider_name && ! valid_url( $matches[1] ) ) {
-		arve_errors()->add( 'invalid-oembed-src-url', 'Invalid oembed src url detected:' . $matches[1] );
-		return '';
-	}
-
-	if ( 'TikTok' === $data->provider_name ) {
-		return 'https://www.tiktok.com/embed/v2/' . $matches[1];
-	} elseif ( 'Facebook' === $data->provider_name ) {
-		return 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $matches[1] );
-	}
-
-	return $matches[1];
+	arve_errors()->add( 'oembed-html2src', $err_msg );
+	return '';
 }
+
+
 
 function arg_maxwidth( int $maxwidth, string $provider, string $align ): int {
 
@@ -109,8 +124,8 @@ function compare_oembed_src_with_generated_src( string $src, string $src_gen, st
 	switch ( $provider ) {
 		case 'wistia':
 		case 'vimeo':
-			$src     = Common\remove_url_query( $src );
-			$src_gen = Common\remove_url_query( $src_gen );
+			$src     = remove_url_query( $src );
+			$src_gen = remove_url_query( $src_gen );
 			break;
 		case 'youtube':
 			$src = remove_query_arg( 'feature', $src );
@@ -228,7 +243,7 @@ function height_from_width_and_ratio( int $width, string $ratio ): float {
 
 	list( $old_width, $old_height ) = explode( ':', $ratio, 2 );
 
-	return new_height( $old_width, $old_height, $width );
+	return new_height( (float) $old_width, (float) $old_height, $width );
 }
 
 /**
@@ -256,8 +271,8 @@ function special_iframe_src_mods( string $src, string $provider, string $url, bo
 
 	switch ( $provider ) {
 		case 'youtube':
-			$yt_v    = Common\get_url_arg( $url, 'v' );
-			$yt_list = Common\get_url_arg( $url, 'list' );
+			$yt_v    = get_url_arg( $url, 'v' );
+			$yt_list = get_url_arg( $url, 'list' );
 
 			if ( $oembed_src &&
 				str_contains( $src, '/embed/videoseries?' ) &&
