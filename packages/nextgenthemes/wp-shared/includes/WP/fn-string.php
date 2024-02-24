@@ -1,6 +1,12 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\WP;
 
+/**
+ * Checks if any of the needles are contained within the haystack.
+ *
+ * @param string $haystack The string to search in.
+ * @param array $needles An array of strings to search for.
+ */
 function str_contains_any( string $haystack, array $needles ): bool {
 
 	foreach ( $needles as $needle ) {
@@ -44,6 +50,13 @@ function dashes_to_camel_case( string $string, bool $capitalize_first_character 
 	return $str;
 }
 
+/**
+ * Removes the specified suffix from the given string.
+ *
+ * @param string $haystack The input string
+ * @param string $needle The suffix to be removed
+ * @return string The modified string
+ */
 function remove_suffix( string $haystack, string $needle ): string {
 
 	if ( str_ends_with($haystack, $needle) ) {
@@ -51,4 +64,26 @@ function remove_suffix( string $haystack, string $needle ): string {
 	}
 
 	return $haystack;
+}
+
+/**
+ * Validates a URL.
+ *
+ * @param string $url The URL to be validated.
+ */
+function valid_url( string $url ): bool {
+
+	if ( empty( $url ) ) {
+		return false;
+	}
+
+	if ( str_starts_with( $url, '//' ) ) {
+		$url = 'https:' . $url;
+	}
+
+	if ( filter_var( $url, FILTER_VALIDATE_URL ) !== false ) {
+		return true;
+	}
+
+	return false;
 }
