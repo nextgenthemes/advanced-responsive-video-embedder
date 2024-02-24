@@ -144,9 +144,10 @@ jobs:
           svn_pass: ${{ secrets.SVN_PASSWORD }}
           build_dirs: vendor
           verbose: true
+          dry-run: ${{ contains(github.event.head_commit.message, '[deploy-test]') }}
 
       - name: create artifact
         uses: actions/upload-artifact@v3
         with:
           name: advanced-responsive-video-embedder
-          path: /tmp/wp-deploy/git-archive-advanced-responsive-video-embedder
+          path: /tmp/wp-deploy/svn-advanced-responsive-video-embedder
