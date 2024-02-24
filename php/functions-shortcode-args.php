@@ -6,6 +6,12 @@ use function Nextgenthemes\WP\get_url_arg;
 use function Nextgenthemes\WP\valid_url;
 use function Nextgenthemes\WP\get_attribute_value_from_html_tag;
 
+/**
+ * Sanitizes the provider name by removing special characters and converting to lowercase.
+ *
+ * @param string $provider The provider name to be sanitized.
+ * @return string The sanitized provider name.
+ */
 function sane_provider_name( string $provider ): string {
 	$provider = preg_replace( '/[^a-z0-9]/', '', strtolower( $provider ) );
 	$provider = str_replace( 'wistiainc', 'wistia', $provider );
@@ -14,6 +20,12 @@ function sane_provider_name( string $provider ): string {
 	return $provider;
 }
 
+/**
+ * Generates the source URL from the oEmbed HTML data.
+ *
+ * @param object $data The oEmbed HTML data.
+ * @return string The source URL generated from the oEmbed HTML data.
+ */
 function oembed_html2src( object $data ): string {
 
 	if ( empty( $data->html ) ) {
@@ -59,8 +71,6 @@ function oembed_html2src( object $data ): string {
 	arve_errors()->add( 'oembed-html2src', $err_msg );
 	return '';
 }
-
-
 
 function arg_maxwidth( int $maxwidth, string $provider, string $align ): int {
 
