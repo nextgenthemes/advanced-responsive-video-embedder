@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - name: Checkout Websites
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: nextgenthemes/websites
           ref: master
@@ -40,14 +40,14 @@ jobs:
         run: rm composer.json
 
       - name: Checkout ARVE
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: nextgenthemes/advanced-responsive-video-embedder
           path: symbiosistheme.com/web/app/plugins/advanced-responsive-video-embedder
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Checkout ARVE Pro
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: nextgenthemes/arve-pro
           ref: master
@@ -55,7 +55,7 @@ jobs:
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Checkout ARVE Random Video
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: nextgenthemes/arve-random-video
           ref: master
@@ -63,7 +63,7 @@ jobs:
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Checkout ARVE AMP
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: nextgenthemes/arve-amp
           ref: master
@@ -71,7 +71,7 @@ jobs:
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Checkout ARVE Sticky Videos
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: nextgenthemes/arve-sticky-videos
           ref: master
@@ -112,7 +112,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: advanced-responsive-video-embedder
 
@@ -135,13 +135,17 @@ jobs:
           workdir: advanced-responsive-video-embedder
           version: ${{ steps.get_version.outputs.VERSION }}
           svn_user: ${{ secrets.SVN_USERNAME }}
-          svn_pass: disabled # ${{ secrets.SVN_PASSWORD }}
+          svn_pass: ${{ secrets.SVN_PASSWORD }}
           build_dirs: vendor
           verbose: true
           dry-run: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'dev') }}
+
+      - run: >
+          mv /tmp/wp-deploy/svn-advanced-responsive-video-embedder/tags/${{ steps.get_version.outputs.VERSION }}
+          /tmp/wp-deploy/svn-advanced-responsive-video-embedder/tags/advanced-responsive-video-embedder
 
       - name: create artifact
         uses: actions/upload-artifact@v3
         with:
           name: advanced-responsive-video-embedder
-          path: /tmp/wp-deploy/svn-advanced-responsive-video-embedder
+          path: /tmp/wp-deploy/svn-advanced-responsive-video-embedder/tags
