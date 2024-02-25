@@ -107,12 +107,8 @@ jobs:
 
   deploy:
     if: >
-      (
-        startsWith(github.ref, 'refs/tags')
-        && ! startsWith(github.event.repository.name, 'arve-')
-        && ! contains(github.ref, 'alpha')
-      ) || 
-      contains(github.event.head_commit.message, '[deploy-test]')
+      ( startsWith(github.ref, 'refs/tags') && ! contains(github.ref, 'alpha') ) ||
+      contains(github.event.head_commit.message, '[test-deploy]')
     needs: test
     name: SVN commit to wp.org
     runs-on: ubuntu-22.04
@@ -141,10 +137,10 @@ jobs:
           workdir: advanced-responsive-video-embedder
           version: ${{ steps.get_version.outputs.VERSION }}
           svn_user: ${{ secrets.SVN_USERNAME }}
-          svn_pass: ${{ secrets.SVN_PASSWORD }}
+          svn_pass: disabled # ${{ secrets.SVN_PASSWORD }}
           build_dirs: vendor
           verbose: true
-          dry-run: ${{ contains(github.event.head_commit.message, '[deploy-test]') }}
+          dry-run: ${{ contains(github.event.head_commit.message, '[test-deploy]') }}
 
       - name: create artifact
         uses: actions/upload-artifact@v3
