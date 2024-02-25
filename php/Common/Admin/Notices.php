@@ -66,7 +66,7 @@ if ( 'always' ) {
 		 * @since     1.0
 		 * @return object Notices Unique instance of the handler
 		 */
-		public static function instance() {
+		public static function instance(): object {
 
 			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Notices ) ) {
 				self::$instance = new Notices();
@@ -81,9 +81,8 @@ if ( 'always' ) {
 		 * Initialize the library
 		 *
 		 * @since 1.0
-		 * @return void
 		 */
-		private function init() {
+		private function init(): void {
 
 			// Make sure WordPress is compatible
 			if ( ! self::$instance->is_wp_compatible() ) {
@@ -120,9 +119,8 @@ if ( 'always' ) {
 		 * Check if the current WordPress version fits the requirements
 		 *
 		 * @since  1.0
-		 * @return boolean
 		 */
-		private function is_wp_compatible() {
+		private function is_wp_compatible(): bool {
 
 			if ( version_compare( get_bloginfo( 'version' ), self::$instance->wordpress_version_required, '<' ) ) {
 				return false;
@@ -136,9 +134,8 @@ if ( 'always' ) {
 		 * Check if the version of PHP is compatible with this library
 		 *
 		 * @since  1.0
-		 * @return boolean
 		 */
-		private function is_php_compatible() {
+		private function is_php_compatible(): bool {
 
 			if ( version_compare( phpversion(), self::$instance->php_version_required, '<' ) ) {
 				return false;
@@ -152,9 +149,8 @@ if ( 'always' ) {
 		 * Display all the registered notices
 		 *
 		 * @since 1.0
-		 * @return void
 		 */
-		public function display() {
+		public function display(): void {
 
 			if ( is_null( self::$instance->notices ) || empty( self::$instance->notices ) ) {
 				return;
@@ -199,9 +195,8 @@ if ( 'always' ) {
 		 *
 		 * @param string $error Error message to spit
 		 *
-		 * @return void
 		 */
-		protected function spit_error( $error ) {
+		protected function spit_error( string $error ): void {
 			printf(
 				'<div style="margin: 20px; text-align: center;"><strong>%1$s</strong> %2$s</pre></div>',
 				esc_html__( 'Dismissible Notices Handler Error:', 'advanced-responsive-video-embedder' ),
@@ -214,11 +209,9 @@ if ( 'always' ) {
 		 *
 		 * @since 1.0
 		 *
-		 * @param string $id
 		 *
-		 * @return string
 		 */
-		public function get_id( $id ) {
+		public function get_id( string $id ): string {
 			return sanitize_key( $id );
 		}
 
@@ -228,7 +221,7 @@ if ( 'always' ) {
 		 * @since 1.0
 		 * @return array
 		 */
-		public function get_types() {
+		public function get_types(): array {
 
 			$types = array(
 				'error',
@@ -250,7 +243,7 @@ if ( 'always' ) {
 		 * @since 1.0
 		 * @return array
 		 */
-		private function default_args() {
+		private function default_args(): array {
 
 			$args = array(
 				'screen' => '', // Coming soon
@@ -273,9 +266,8 @@ if ( 'always' ) {
 		 * @param string $content Notice content
 		 * @param array  $args    Additional parameters
 		 *
-		 * @return bool
 		 */
-		public function register_notice( $id, $type, $content, $args = array() ) {
+		public function register_notice( string $id, string $type, string $content, array $args = array() ): bool {
 
 			if ( is_null( self::$instance->notices ) ) {
 				self::$instance->notices = array();
@@ -317,9 +309,8 @@ if ( 'always' ) {
 		 * Notice dismissal triggered by Ajax
 		 *
 		 * @since 1.0
-		 * @return void
 		 */
-		public function dismiss_notice_ajax() {
+		public function dismiss_notice_ajax(): void {
 
 			// phpcs:disable WordPress.Security.NonceVerification.Missing
 			if ( ! isset( $_POST['id'] ) ) {
@@ -346,9 +337,8 @@ if ( 'always' ) {
 		 *
 		 * @param string $id ID of the notice to dismiss
 		 *
-		 * @return bool
 		 */
-		public function dismiss_notice( $id ) {
+		public function dismiss_notice( string $id ): bool {
 
 			$notice = self::$instance->get_notice( self::$instance->get_id( $id ) );
 
@@ -373,7 +363,7 @@ if ( 'always' ) {
 		 *
 		 * @return int|bool
 		 */
-		private function dismiss_user( $id ) {
+		private function dismiss_user( string $id ) {
 
 			$dismissed = self::$instance->dismissed_user();
 
@@ -394,9 +384,8 @@ if ( 'always' ) {
 		 *
 		 * @param string $id Notice ID
 		 *
-		 * @return bool
 		 */
-		private function dismiss_global( $id ) {
+		private function dismiss_global( string $id ): bool {
 
 			$dismissed = self::$instance->dismissed_global();
 
@@ -417,9 +406,8 @@ if ( 'always' ) {
 		 *
 		 * @param string $id ID of the notice to restore
 		 *
-		 * @return bool
 		 */
-		public function restore_notice( $id ) {
+		public function restore_notice( string $id ): bool {
 
 			$id     = self::$instance->get_id( $id );
 			$notice = self::$instance->get_notice( $id );
@@ -439,9 +427,8 @@ if ( 'always' ) {
 		 *
 		 * @param string $id ID of the notice to restore
 		 *
-		 * @return bool
 		 */
-		private function restore_user( $id ) {
+		private function restore_user( string $id ): bool {
 
 			$id     = self::$instance->get_id( $id );
 			$notice = self::$instance->get_notice( $id );
@@ -472,9 +459,8 @@ if ( 'always' ) {
 		 *
 		 * @param string $id ID of the notice to restore
 		 *
-		 * @return bool
 		 */
-		private function restore_global( $id ) {
+		private function restore_global( string $id ): bool {
 
 			$id     = self::$instance->get_id( $id );
 			$notice = self::$instance->get_notice( $id );
@@ -506,7 +492,7 @@ if ( 'always' ) {
 		 * @since 1.0
 		 * @return array
 		 */
-		public function dismissed_notices() {
+		public function dismissed_notices(): array {
 
 			$user   = self::$instance->dismissed_user();
 			$global = self::$instance->dismissed_global();
@@ -521,7 +507,7 @@ if ( 'always' ) {
 		 * @since 1.0
 		 * @return array
 		 */
-		private function dismissed_user() {
+		private function dismissed_user(): array {
 
 			$dismissed = get_user_meta( get_current_user_id(), 'dnh_dismissed_notices', true );
 
@@ -539,7 +525,7 @@ if ( 'always' ) {
 		 * @since 1.0
 		 * @return array
 		 */
-		private function dismissed_global() {
+		private function dismissed_global(): array {
 			return get_option( 'dnh_dismissed_notices', array() );
 		}
 
@@ -550,9 +536,8 @@ if ( 'always' ) {
 		 *
 		 * @param string $id Notice ID
 		 *
-		 * @return bool
 		 */
-		public function is_dismissed( $id ) {
+		public function is_dismissed( string $id ): bool {
 
 			$dismissed = self::$instance->dismissed_notices();
 
@@ -570,7 +555,7 @@ if ( 'always' ) {
 		 * @since 1.0
 		 * @return array|null
 		 */
-		public function get_notices() {
+		public function get_notices(): ?array {
 			return self::$instance->notices;
 		}
 
@@ -583,7 +568,7 @@ if ( 'always' ) {
 		 *
 		 * @return array|false
 		 */
-		public function get_notice( $id ) {
+		public function get_notice( string $id ) {
 
 			$id = self::$instance->get_id( $id );
 

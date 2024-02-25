@@ -114,7 +114,7 @@ function shortcode_option_defaults() {
 	return $shortcodes;
 }
 
-function create_shortcodes() {
+function create_shortcodes(): void {
 
 	$options    = options();
 	$properties = get_host_properties();

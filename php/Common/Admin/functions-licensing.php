@@ -3,7 +3,7 @@ namespace Nextgenthemes\ARVE\Common\Admin;
 
 use \Nextgenthemes\ARVE\Common;
 
-function init_edd_updaters() {
+function init_edd_updaters(): void {
 
 	$products = Common\get_products();
 
@@ -17,7 +17,7 @@ function init_edd_updaters() {
 	}
 }
 
-function init_plugin_updater( $product ) {
+function init_plugin_updater( $product ): void {
 
 	// setup the updater
 	new EDD\PluginUpdater(
@@ -33,7 +33,7 @@ function init_plugin_updater( $product ) {
 	);
 }
 
-function init_theme_updater( $product ) {
+function init_theme_updater( $product ): void {
 
 	new EDD\ThemeUpdater(
 		array(

@@ -7,16 +7,16 @@ function theme_version() {
 }
 
 // TODO: deprecated use register_asset in all ARVE addons
-function asset( array $args ) {
+function asset( array $args ): void {
 	register_asset( $args );
 }
 
-function register_asset( array $args ) {
+function register_asset( array $args ): void {
 	$args['enqueue'] = false;
 	_asset( $args );
 }
 
-function enqueue_asset( array $args ) {
+function enqueue_asset( array $args ): void {
 	$args['enqueue'] = true;
 	_asset( $args );
 }
@@ -64,7 +64,7 @@ function replace_extension( $filename, $new_extension ) {
 	return $dir . $info['filename'] . '.' . $new_extension;
 }
 
-function _asset( array $args ) {
+function _asset( array $args ): void {
 
 	$defaults = array(
 		// wp_register_script args in order

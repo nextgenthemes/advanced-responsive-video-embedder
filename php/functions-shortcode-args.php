@@ -463,7 +463,7 @@ function build_iframe_src( array $a ) {
 	return $src;
 }
 
-function compare_oembed_src_with_generated_src( array $a ) {
+function compare_oembed_src_with_generated_src( array $a ): void {
 
 	if ( empty($a['src']) || empty($a['src_gen']) ) {
 		return;

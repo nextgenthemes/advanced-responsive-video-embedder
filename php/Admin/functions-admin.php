@@ -26,7 +26,7 @@ const ALLOWED_HTML = array(
 	'li'     => array(),
 );
 
-function action_admin_init_setup_messages() {
+function action_admin_init_setup_messages(): void {
 
 	$pro_ver = false;
 
@@ -120,7 +120,7 @@ function display_pro_ad() {
 	return true;
 }
 
-function widget_text() {
+function widget_text(): void {
 
 	echo '<p>';
 	printf( '<a href="%s">Documentation</a>, ', 'https://nextgenthemes.com/plugins/arve/documentation/' );
@@ -190,7 +190,7 @@ function add_action_links( $links ) {
 	return array_merge( $extra_links, $links );
 }
 
-function register_shortcode_ui() {
+function register_shortcode_ui(): void {
 
 	$settings = ARVE\shortcode_settings();
 
@@ -251,7 +251,7 @@ function register_shortcode_ui() {
 	);
 }
 
-function admin_enqueue_styles() {
+function admin_enqueue_styles(): void {
 
 	enqueue_asset(
 		array(
@@ -263,7 +263,7 @@ function admin_enqueue_styles() {
 	);
 }
 
-function admin_enqueue_scripts() {
+function admin_enqueue_scripts(): void {
 
 	foreach ( ARVE\shortcode_settings() as $k => $v ) {
 		$options[ $k ] = '';
@@ -300,7 +300,7 @@ function admin_enqueue_scripts() {
 	}
 }
 
-function action_admin_bar_menu( $admin_bar ) {
+function action_admin_bar_menu( $admin_bar ): void {
 
 	if ( current_user_can( 'manage_options' ) && ARVE\options()['admin_bar_menu'] ) {
 

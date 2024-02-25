@@ -168,7 +168,7 @@ function shortcode_pairs() {
 	return apply_filters( 'nextgenthemes/arve/shortcode_pairs', $pairs );
 }
 
-function upgrade_options( $settings_instance ) {
+function upgrade_options( $settings_instance ): void {
 
 	$options_ver           = get_option( 'nextgenthemes_arve_options_ver' );
 	$options_ver_when_done = '9.0.0-beta9';

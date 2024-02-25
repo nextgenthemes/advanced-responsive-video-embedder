@@ -6,12 +6,12 @@ use \Nextgenthemes\ARVE;
 // phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
 class Tests_Scripts_And_Styles extends WP_UnitTestCase {
 
-	public function test_hooks() {
+	public function test_hooks(): void {
 
 		$this->assertNotFalse( has_action( 'wp_enqueue_scripts', 'Nextgenthemes\ARVE\action_wp_enqueue_scripts' ) );
 	}
 
-	public function test_scripts() {
+	public function test_scripts(): void {
 
 		do_action( 'wp_enqueue_scripts' );
 

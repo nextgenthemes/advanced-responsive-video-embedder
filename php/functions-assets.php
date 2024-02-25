@@ -1,7 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-function register_assets() {
+function register_assets(): void {
 
 	Common\register_asset(
 		array(
@@ -76,7 +76,7 @@ function register_assets() {
 	endif;
 }
 
-function action_wp_enqueue_scripts() {
+function action_wp_enqueue_scripts(): void {
 
 	$options = options();
 

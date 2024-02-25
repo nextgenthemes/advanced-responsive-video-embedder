@@ -1,7 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE\Common;
 
-function check_product_keys() {
+function check_product_keys(): void {
 
 	$products = get_products();
 
@@ -39,7 +39,7 @@ function get_defined_key( $slug ) {
 	}
 }
 
-function activate_product_key( $product, $key ) {
+function activate_product_key( $product, $key ): void {
 
 	$product_id = get_products()[ $product ]['id'];
 
@@ -49,7 +49,7 @@ function activate_product_key( $product, $key ) {
 	update_option( 'nextgenthemes', $options );
 }
 
-function activate_defined_key( $file, $theme_name = '' ) {
+function activate_defined_key( $file, $theme_name = '' ): void {
 
 	if ( 'functions.php' === $file ) {
 		return;

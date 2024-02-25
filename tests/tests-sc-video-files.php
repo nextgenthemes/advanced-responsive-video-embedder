@@ -5,7 +5,7 @@ use function \Nextgenthemes\ARVE\get_host_properties;
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_ShortcodeVideoFiles extends WP_UnitTestCase {
 
-	public function test_av1_url() {
+	public function test_av1_url(): void {
 
 		$html = shortcode( array( 'url' => 'https://example.com/video.av1.mp4' ) );
 
@@ -15,7 +15,7 @@ class Tests_ShortcodeVideoFiles extends WP_UnitTestCase {
 		$this->assertStringNotContainsString( 'Error', $html );
 	}
 
-	public function test_av1_arg() {
+	public function test_av1_arg(): void {
 
 		$html = shortcode( array( 'av1mp4' => 'https://example.com/video.mp4' ) );
 
@@ -26,13 +26,13 @@ class Tests_ShortcodeVideoFiles extends WP_UnitTestCase {
 		$this->assertStringNotContainsString( 'Error', $html );
 	}
 
-	public function test_do_not_override_wmv() {
+	public function test_do_not_override_wmv(): void {
 
 		$html = do_shortcode( '[video wmv="https://example.com/video.wmv" /]' );
 		$this->assertStringNotContainsString( 'id="arve-"', $html );
 	}
 
-	public function test_wp_video_mp4_with_poster() {
+	public function test_wp_video_mp4_with_poster(): void {
 
 		$html = do_shortcode( '[video mp4="https://example.com/video.mp4" poster="https://example.com/poster.jpg" /]' );
 
@@ -43,7 +43,7 @@ class Tests_ShortcodeVideoFiles extends WP_UnitTestCase {
 		$this->assertStringNotContainsString( 'Error', $html );
 	}
 
-	public function test_html5() {
+	public function test_html5(): void {
 
 		$html5_ext = array( 'av1mp4', 'mp4', 'webm', 'ogv' );
 

@@ -14,7 +14,7 @@ if ( ! function_exists( 'nextgenthemes_maybe_add_async_or_defer' ) ) {
 	 * @param string $handle The script handle.
 	 * @return string Script HTML string.
 	 */
-	function nextgenthemes_maybe_add_async_or_defer( $tag, $handle ) {
+	function nextgenthemes_maybe_add_async_or_defer( string $tag, string $handle ): string {
 		foreach ( array( 'async', 'defer' ) as $attr ) {
 			if ( ! wp_scripts()->get_data( $handle, $attr ) ) {
 				continue;

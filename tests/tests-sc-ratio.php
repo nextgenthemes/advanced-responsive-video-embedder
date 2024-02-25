@@ -5,7 +5,7 @@ use function \Nextgenthemes\ARVE\get_host_properties;
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_Ratio extends WP_UnitTestCase {
 
-	public function test_ratio() {
+	public function test_ratio(): void {
 
 		$html = shortcode(
 			array(
@@ -16,7 +16,7 @@ class Tests_Ratio extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'arve-embed--has-aspect-ratio', $html );
 	}
 
-	public function test_ratio_1by1() {
+	public function test_ratio_1by1(): void {
 
 		$html = shortcode(
 			array(
@@ -28,7 +28,7 @@ class Tests_Ratio extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'style="aspect-ratio: 1 / 1', $html );
 	}
 
-	public function test_ratio_1by3() {
+	public function test_ratio_1by3(): void {
 
 		$html = shortcode(
 			array(

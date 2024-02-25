@@ -4,7 +4,7 @@ namespace Nextgenthemes\ARVE\Admin;
 use \Nextgenthemes\ARVE;
 use \Nextgenthemes\ARVE\Common;
 
-function settings_content() {
+function settings_content(): void {
 
 	$link_code_only = array(
 		'code' => array(),
@@ -36,7 +36,7 @@ function settings_content() {
 	<?php
 }
 
-function settings_sidebar() {
+function settings_sidebar(): void {
 
 	if ( ! current_user_can('install_plugins') ) {
 		echo '<div class="ngt-sidebar-box">';
@@ -65,7 +65,7 @@ function settings_sidebar() {
 
 
 
-function print_settings_box_html( $file ) {
+function print_settings_box_html( $file ): void {
 	echo '<div class="ngt-sidebar-box">';
 	readfile( __DIR__ . $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
 	echo '</div>';
@@ -87,7 +87,7 @@ function filter_save_options( $options ) {
 }
 
 // unused, trigger recaching is rebuild is probably better, also there this leaves the times in the DB so will this even work?
-function delete_oembed_caches() {
+function delete_oembed_caches(): void {
 
 	global $wpdb;
 

@@ -52,7 +52,7 @@ class Settings {
 		add_action( 'admin_menu', array( $this, 'register_setting_page' ) );
 	}
 
-	public function set_defined_product_keys() {
+	public function set_defined_product_keys(): void {
 
 		$products = get_products();
 		foreach ( $products as $p => $value ) {
@@ -73,7 +73,7 @@ class Settings {
 		return $this->options_defaults;
 	}
 
-	public function save_options( $options ) {
+	public function save_options( $options ): void {
 
 		if ( 'nextgenthemes' === $this->slugged_namespace ) {
 
@@ -96,7 +96,7 @@ class Settings {
 		update_option( $this->slugged_namespace, $options );
 	}
 
-	public function register_rest_route() {
+	public function register_rest_route(): void {
 
 		register_rest_route(
 			$this->rest_namespace,
@@ -107,7 +107,7 @@ class Settings {
 				'permission_callback' => function() {
 					return current_user_can( 'manage_options' );
 				},
-				'callback'            => function( \WP_REST_Request $request ) {
+				'callback'            => function( \WP_REST_Request $request ): void {
 					$this->save_options( $request->get_params() );
 					die( '1' );
 				},
@@ -115,7 +115,7 @@ class Settings {
 		);
 	}
 
-	public function assets( $page ) {
+	public function assets( $page ): void {
 
 		enqueue_asset(
 			array(
@@ -150,7 +150,7 @@ class Settings {
 		);
 	}
 
-	private function print_settings_tabs() {
+	private function print_settings_tabs(): void {
 		?>
 		<h2 class="nav-tab-wrapper">
 			<a @click='showAllSectionsButDebug()'
@@ -169,7 +169,7 @@ class Settings {
 		<?php
 	}
 
-	public function print_save_section() {
+	public function print_save_section(): void {
 		?>
 		<p v-show="onlySectionDisplayed !== 'debug'">
 			<button @click='saveOptions'
@@ -186,7 +186,7 @@ class Settings {
 		<?php
 	}
 
-	private function print_paid_section_message() {
+	private function print_paid_section_message(): void {
 
 		if ( empty( $this->premium_sections ) ) {
 			return;
@@ -205,7 +205,7 @@ class Settings {
 		<?php
 	}
 
-	private function print_debug_info_block() {
+	private function print_debug_info_block(): void {
 		?>
 		<div class="ngt-block"
 			v-show="sectionsDisplayed.debug">
@@ -214,7 +214,7 @@ class Settings {
 		<?php
 	}
 
-	private function print_reset_bottons() {
+	private function print_reset_bottons(): void {
 		?>
 		<p>
 			<?php
@@ -244,7 +244,7 @@ class Settings {
 		<?php
 	}
 
-	public function print_errors() {
+	public function print_errors(): void {
 		?>
 		<div class="ngt-block"
 			v-if="errors.length">
@@ -256,7 +256,7 @@ class Settings {
 		<?php
 	}
 
-	public function print_outdated_php_msg() {
+	public function print_outdated_php_msg(): void {
 
 		$link_only = array(
 			'a' => array(
@@ -300,7 +300,7 @@ class Settings {
 		}
 	}
 
-	public function print_admin_page() {
+	public function print_admin_page(): void {
 		?>
 		<div class='wrap wrap--nextgenthemes'
 			id='nextgenthemes-vue'>
@@ -329,7 +329,7 @@ class Settings {
 		<?php
 	}
 
-	public function register_setting_page() {
+	public function register_setting_page(): void {
 
 		// The HTML Document title for our settings page.
 		$page_title = $this->settings_page_title;

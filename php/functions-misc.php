@@ -19,7 +19,7 @@ function gcd( $a, $b ) {
 	return $b ? gcd( $b, $a % $b ) : $a;
 }
 
-function load_textdomain() {
+function load_textdomain(): void {
 
 	\load_plugin_textdomain(
 		'advanced-responsive-video-embedder',
@@ -46,7 +46,7 @@ function check_filetype( $url, $ext ) {
  *
  * @return int Starttime in seconds.
  */
-function youtube_time_to_seconds( $yttime ) {
+function youtube_time_to_seconds( string $yttime ): int {
 
 	if ( \is_numeric( $yttime ) ) {
 		return $yttime;
@@ -85,9 +85,8 @@ function new_height( $old_width, $old_height, $new_width ) {
  *
  * @since 4.2.0
  *
- * @return float
  */
-function aspect_ratio_to_percentage( $aspect_ratio ) {
+function aspect_ratio_to_percentage( string $aspect_ratio ): float {
 
 	list( $width, $height ) = explode( ':', $aspect_ratio );
 	$percentage             = ( $height / $width ) * 100;
@@ -131,9 +130,8 @@ function seconds_to_iso8601_duration( $time ) {
  * Check if Gutenberg is enabled.
  * Must be used not earlier than plugins_loaded action fired.
  *
- * @return bool
  */
-function is_gutenberg() {
+function is_gutenberg(): bool {
 
 	$gutenberg    = false;
 	$block_editor = false;

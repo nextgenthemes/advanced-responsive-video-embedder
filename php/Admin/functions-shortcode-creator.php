@@ -4,7 +4,7 @@ namespace Nextgenthemes\ARVE\Admin;
 use \Nextgenthemes\ARVE;
 use \Nextgenthemes\ARVE\Common;
 
-function add_media_button() {
+function add_media_button(): void {
 
 	printf(
 		'<button id="arve-btn" title="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
@@ -13,7 +13,7 @@ function add_media_button() {
 	);
 }
 
-function create_shortcode_dialog() {
+function create_shortcode_dialog(): void {
 
 	$options  = ARVE\options();
 	$settings = ARVE\shortcode_settings();
@@ -53,7 +53,7 @@ function create_shortcode_dialog() {
 	<?php
 }
 
-function print_shortcode_template() {
+function print_shortcode_template(): void {
 
 	$html = '[arve';
 

@@ -6,14 +6,14 @@ use function \Nextgenthemes\ARVE\Common\remote_get_body;
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_Shortcode extends WP_UnitTestCase {
 
-	public function test_arve_test_sc() {
+	public function test_arve_test_sc(): void {
 
 		$html = do_shortcode( '[arve_test]' );
 
 		$this->assertStringNotContainsString( 'Error', $html );
 	}
 
-	public function test_sc_overwrite() {
+	public function test_sc_overwrite(): void {
 
 		add_filter(
 			'nextgenthemes/arve/shortcode_override',
@@ -34,7 +34,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'override', $html );
 	}
 
-	public function test_slashes_url() {
+	public function test_slashes_url(): void {
 
 		$html = shortcode(
 			array(
@@ -45,7 +45,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertStringNotContainsString( 'Error', $html );
 	}
 
-	public function test_schema_enabled() {
+	public function test_schema_enabled(): void {
 
 		$html = shortcode( array( 'url' => 'https://example.com' ) );
 
@@ -53,7 +53,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertStringContainsString( '<script type="application/ld+json">{"@context":"http:\/\/schema.org\/"', $html );
 	}
 
-	public function logfile( $msg, $file ) {
+	public function logfile( $msg, $file ): void {
 		$msg = print_r( $msg, true );
 		error_log( $msg . PHP_EOL, 3, "$file.log" );
 	}
@@ -66,7 +66,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		return $a;
 	}
 
-	public function check_link( $url ) {
+	public function check_link( $url ): void {
 
 		if (
 			! in_array(
@@ -93,7 +93,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		}
 	}
 
-	public function test_api_data() {
+	public function test_api_data(): void {
 
 		$properties = get_host_properties();
 
@@ -157,7 +157,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		endforeach;
 	}
 
-	public function test_sandbox() {
+	public function test_sandbox(): void {
 
 		$html = shortcode(
 			array(
@@ -179,13 +179,13 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertStringNotContainsString( 'sandbox="', $html );
 	}
 
-	public function test_shortcodes_are_registered() {
+	public function test_shortcodes_are_registered(): void {
 		$this->assertArrayHasKey( 'arve', $GLOBALS['shortcode_tags'] );
 		$this->assertArrayHasKey( 'youtube', $GLOBALS['shortcode_tags'] );
 		$this->assertArrayHasKey( 'vimeo', $GLOBALS['shortcode_tags'] );
 	}
 
-	public function test_ted_talks_lang() {
+	public function test_ted_talks_lang(): void {
 
 		$html = shortcode(
 			array( 'url' => 'https://www.ted.com/talks/auke_ijspeert_a_robot_that_runs_and_swims_like_a_salamander?language=de' )
@@ -199,7 +199,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		);
 	}
 
-	public function test_attr() {
+	public function test_attr(): void {
 
 		$output = shortcode(
 			array(
@@ -229,7 +229,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertStringContainsString( '<a href="https://nextgenthemes.com/plugins/arve-pro/" title="Powered by ARVE Advanced Responsive Video Embedder WordPress plugin" class="arve-promote-link" target="_blank">ARVE</a>', $output );
 	}
 
-	public function test_iframe() {
+	public function test_iframe(): void {
 
 		$output = shortcode( array( 'url' => 'https://example.com' ) );
 
@@ -238,7 +238,7 @@ class Tests_Shortcode extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'data-provider="iframe"', $output );
 	}
 
-	public function test_regex() {
+	public function test_regex(): void {
 
 		$properties = \Nextgenthemes\ARVE\get_host_properties();
 
