@@ -1,28 +1,43 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\WP;
 
-// phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
-function remote_get_json( string $url, array $args = array(), string $json_name = '', int $time = DAY_IN_SECONDS ) {
-	return remote_get_json_cached( $url, $args, $json_name, $time );
+/**
+ * Retrieves JSON data from a remote URL.
+ *
+ * @return mixed
+ */
+function remote_get_json( string $url, array $args = array(), string $json_name = '' ) {
+	return remote_get_json_cached( $url, $args, $json_name, 0 );
 }
 
+/**
+ * Remote get JSON from a URL and cache the response.
+ *
+ * @return mixed The decoded JSON response, or the specified JSON value if $json_name is provided.
+ */
 function remote_get_json_cached( string $url, array $args = array(), string $json_name = '', int $time = DAY_IN_SECONDS ) {
 
-	$response = remote_get_body_cached( $url, $args, $time );
+	if ( $time <= 0 ) {
+		$response = remote_get_body( $url, $args );
+	} else {
+		$response = remote_get_body_cached( $url, $args, $time );
+	}
 
 	if ( is_wp_error( $response ) ) {
 		return $response;
 	}
 
-	$response = json_decode( $response );
+	try {
+		$response = json_decode( $response, false, 128, JSON_THROW_ON_ERROR );
+	} catch ( \Exception $e ) {
 
-	if ( null === $response ) {
 		return new \WP_Error(
-			'json-null',
+			'json-decode-error',
 			sprintf(
 				// Translators: URL.
-				__( 'url: %s json_decode returned null.', 'advanced-responsive-video-embedder' ),
-				esc_url( $url )
+				__( 'url: %1$s json_decode error: %2$s.', 'advanced-responsive-video-embedder' ),
+				esc_html( $url ),
+				$e->getMessage()
 			)
 		);
 	}
@@ -34,9 +49,10 @@ function remote_get_json_cached( string $url, array $args = array(), string $jso
 				'json-value-empty',
 				sprintf(
 					// Translators: 1 URL 2 JSON value
-					__( 'url: %1$s JSON value <code>%2$s</code> does not exist or is empty', 'advanced-responsive-video-embedder' ),
-					esc_url( $url ),
-					esc_html( $json_name )
+					__( 'url: %1$s JSON value <code>%2$s</code> does not exist or is empty. Full Json: %3$s', 'advanced-responsive-video-embedder' ),
+					esc_html( $url ),
+					esc_html( $json_name ),
+					esc_html( $response )
 				)
 			);
 		} else {
@@ -90,7 +106,12 @@ function remote_get_body( string $url, array $args = array() ) {
 };
 
 /**
- * @return mixed
+ * Retrieves the body content from a remote URL, with caching for improved performance.
+ *
+ * @param string $url The URL of the remote resource.
+ * @param array $args Optional. Additional arguments to include in the request.
+ * @param int $time Optional. The duration in seconds to cache the response. Default is DAY_IN_SECONDS. 0 to disable caching.
+ * @return mixed The response body content from the remote URL.
  */
 function remote_get_body_cached( string $url, array $args = array(), int $time = DAY_IN_SECONDS ) {
 
