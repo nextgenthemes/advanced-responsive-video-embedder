@@ -13,7 +13,7 @@
         "vimeo",
         "odysee"
     ],
-    "version": "9.10.12",
+    "version": "10.0.0-dev",
     "textdomain": "advanced-responsive-video-embedder",
     "supports": {
         "align": [
@@ -38,10 +38,10 @@
         "url": {
             "type": "string"
         },
-        "title": {
+        "description": {
             "type": "string"
         },
-        "description": {
+        "title": {
             "type": "string"
         },
         "upload_date": {
@@ -81,7 +81,7 @@
             "type": "string"
         },
         "autoplay": {
-            "type": "boolean"
+            "type": "string"
         },
         "lightbox_maxwidth": {
             "type": "integer"
