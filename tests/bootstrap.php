@@ -33,7 +33,7 @@ require_once "{$_tests_dir}/includes/functions.php";
 /**
  * Manually load the plugin being tested.
  */
-function _manually_load_plugin() {
+function _manually_load_plugin(): void {
 	# /home/travis/build/nextgenthemes/advanced-responsive-video-embedder
 	require dirname( __DIR__ ) . '/advanced-responsive-video-embedder.php';
 }

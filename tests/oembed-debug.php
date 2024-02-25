@@ -14,7 +14,7 @@ class Tests_OembedD extends WP_UnitTestCase {
 
 	private $oembed_debug = [];
 
-	public function test_oembed_debug() {
+	public function test_oembed_debug(): void {
 
 		$properties = get_host_properties();
 		foreach ( $properties as $provider => $v ) :

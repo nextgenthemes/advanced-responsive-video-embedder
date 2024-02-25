@@ -50,12 +50,12 @@ class ThemeUpdater {
 		add_action( 'load-themes.php', array( &$this, 'load_themes_screen' ) );
 	}
 
-	function load_themes_screen() {
+	function load_themes_screen(): void {
 		add_thickbox();
 		add_action( 'admin_notices', array( &$this, 'update_nag' ) );
 	}
 
-	function update_nag() {
+	function update_nag(): void {
 
 		$strings = $this->strings;
 
@@ -97,7 +97,7 @@ class ThemeUpdater {
 		return $value;
 	}
 
-	function delete_theme_update_transient() {
+	function delete_theme_update_transient(): void {
 		delete_transient( $this->response_key );
 	}
 
