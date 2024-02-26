@@ -45,7 +45,7 @@ function filter_oembed_dataparse( $result, $data, $url ) {
  * @param array        $attr
  * @return void
  */
-function filter_embed_oembed_html( $cache, string $url, array $attr, int $post_ID ) {
+function filter_embed_oembed_html( $cache, $url, array $attr, $post_ID ) {
 
 	$a['errors'] = new \WP_Error();
 	$oembed_data = extract_oembed_json( $cache, $url, $a );
@@ -53,16 +53,16 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, int $post_I
 	if ( $oembed_data ) {
 		$a['url']         = $url;
 		$a['oembed_data'] = $oembed_data;
-		$a['origin_data'] = [
+		$a['origin_data'] = array(
 			'from'    => 'filter_embed_oembed_html',
 			'post_id' => $post_ID,
-		];
+		);
 
 		$cache = build_video( $a );
 	}
 
 	// if ( isset( $_GET['arve-debug-oembed'] ) ) {
-	// 	$cache .= '<template class="arve-filter-oembed-html"></template>';
+	//  $cache .= '<template class="arve-filter-oembed-html"></template>';
 	// }
 
 	return $cache;
