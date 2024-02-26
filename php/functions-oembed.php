@@ -64,16 +64,16 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 	if ( $oembed_data ) {
 		$a['url']         = $url;
 		$a['oembed_data'] = $oembed_data;
-		$a['origin_data'] = [
+		$a['origin_data'] = array(
 			'from'    => 'filter_embed_oembed_html',
 			'post_id' => $post_id,
-		];
+		);
 
 		$cache = build_video( $a );
 	}
 
 	// if ( isset( $_GET['arve-debug-oembed'] ) ) {
-	// 	$cache .= '<template class="arve-filter-oembed-html"></template>';
+	//  $cache .= '<template class="arve-filter-oembed-html"></template>';
 	// }
 
 	return $cache;
