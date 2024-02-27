@@ -68,9 +68,12 @@ function action_admin_init_setup_messages() {
 		);
 	}
 
-	if ( PHP_VERSION_ID < 70400 ) {
+	//  delete_user_meta( get_current_user_id(), 'dnh_dismissed_notices' )
+
+	if ( true || PHP_VERSION_ID < 70400 ) {
+
 		$msg = esc_html__(
-			'Your php version is very outdated, the next version of ARVE will probably require 7.4+ please update (ask your host to update).',
+			'Your php version is very outdated, the next version of ARVE will require 7.4+ please update (ask your host to update).',
 			'advanced-responsive-video-embedder'
 		);
 
@@ -84,7 +87,7 @@ function action_admin_init_setup_messages() {
 
 function ad_html() {
 
-	$html = esc_html__( 'Hi, this is Nico(las Jonas) the author of the ARVE Advanced Responsive Video Embedder plugin. If you are interrested in additional features and/or want to support the work I do on this plugin please consider buying the Pro Addon.', 'advanced-responsive-video-embedder' );
+	$html = esc_html__( 'Hi, this is Nico(las Jonas) the author of the ARVE Advanced Responsive Video Embedder plugin. If you are interested in additional features and/or want to support the work I do on this plugin, please consider buying the Pro Addon.', 'advanced-responsive-video-embedder' );
 
 	$html = "<p>$html</p><ul>";
 
