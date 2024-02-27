@@ -67,23 +67,13 @@ document.addEventListener( 'click', ( event ) => {
 			return;
 		}
 
-		window.jQuery.post( window.ajaxurl, {
-			action: 'dnh_dismiss_notice',
-			url: window.ajaxurl,
-			id: noticeId,
+		fetch( window.ajaxurl, {
+			method: 'POST',
+			credentials: 'same-origin',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+			},
+			body: 'action=dnh_dismiss_notice&id=' + noticeId,
 		} );
-
-		// does not work
-		// fetch( window.ajaxurl, {
-		// 	method: 'POST',
-		// 	headers: {
-		// 		'Content-Type': 'application/json',
-		// 	},
-		// 	body: JSON.stringify( {
-		// 		action: 'dnh_dismiss_notice',
-		// 		url: window.ajaxurl,
-		// 		id: noticeId,
-		// 	} ),
-		// } );
 	}
 } );
