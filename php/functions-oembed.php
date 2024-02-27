@@ -43,7 +43,9 @@ function filter_oembed_dataparse( $result, $data, $url ) {
  * Callback for embed_oembed_html filter
  *
  * @param string|false $cache
+ * @param string       $url
  * @param array        $attr
+ * @param int          $post_ID
  * @return void
  */
 function filter_embed_oembed_html( $cache, $url, array $attr, $post_ID ) {

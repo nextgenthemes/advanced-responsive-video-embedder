@@ -20,7 +20,6 @@ function settings_content() {
 	<div class="ngt-block" v-show="onlySectionDisplayed === 'urlparams'">
 		<p>
 			<?php
-// phpcs:disable SlevomatCodingStandard.TypeHints
 			printf(
 				// Translators: URL
 				wp_kses( __( 'This parameters will be added to the <code>iframe src</code> urls, you can control the video players behavior with them. Please read <a href="%s" target="_blank">the documentation</a> on.', 'advanced-responsive-video-embedder' ), $link_code_only ),
@@ -36,7 +35,6 @@ function settings_content() {
 		</p>
 	</div>
 	<?php
-// phpcs:disable SlevomatCodingStandard.TypeHints
 }
 
 function settings_sidebar() {
@@ -83,10 +81,10 @@ function filter_save_options( $options ) {
 		$product_id  = get_products()[ $action->product ]['id'];
 		$product_key = $options[ $action->product ];
 
-		$options[ $action->product . '_status' ] = api_action( $product_id, $product_key, $action->action );
+		$options[ $action->product . '_status' ] = Common\api_action( $product_id, $product_key, $action->action );
 	}
 
-	return $option;
+	return $options;
 }
 
 // unused, trigger recaching is rebuild is probably better, also there this leaves the times in the DB so will this even work?
