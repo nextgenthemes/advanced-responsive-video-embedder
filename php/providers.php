@@ -1,5 +1,4 @@
-<?php
-// phpcs:disable SlevomatCodingStandard.TypeHints return [
+<?php return array(
 	'alugha' => array(
 		'name'           => 'Alugha',
 		'regex'          => '#https?://(www\\.)?alugha\\.com/(1/)?videos/(?<id>[a-z0-9_\\-]+)#i',
@@ -637,7 +636,7 @@
 			15 => '[youtube id="uCQXKYPiz6M" parameters="start=61"]',
 		),
 	),
-	'youtubelist' => [
+	'youtubelist' => array(
 		'oembed'         => true,
 		'regex'          => '#https?://(www\\.)?youtube\\.com/(embed/videoseries|playlist)\\?list=(?<id>[-_a-z0-9]+)#i',
 		'name'           => 'YouTube Playlist',
@@ -645,15 +644,15 @@
 		'rebuild_url'    => 'https://www.youtube.com/watch?list=%s',
 		'default_params' => 'iv_load_policy=3&modestbranding=1&rel=0&autohide=1&playsinline=0',
 		'auto_thumbnail' => true,
-		'tests'          => [
+		'tests'          => array(
 			0 => array(
 				'url' => 'https://www.youtube.com/playlist?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
 				'id'  => 'PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
 			),
-			1 => [
+			1 => array(
 				'url' => 'https://www.youtube.com/watch?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk&v=cyoffsDl4Hw',
 				'id'  => 'PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
-			],
-		],
-	],
-	];
+			),
+		),
+	),
+);
