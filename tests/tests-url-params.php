@@ -1,11 +1,12 @@
 <?php
-use function \Nextgenthemes\ARVE\shortcode;
-use function \Nextgenthemes\ARVE\get_host_properties;
+// phpcs:disable SlevomatCodingStandard.TypeHints
+use function Nextgenthemes\ARVE\shortcode;
+use function Nextgenthemes\ARVE\get_host_properties;
 
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_URLParams extends WP_UnitTestCase {
 
-	public function test_vimeo(): void {
+	public function test_vimeo() {
 
 		update_option( 'nextgenthemes_arve', array( 'url_params_vimeo' => 'title=0&byline=0&portrait=0' ) );
 		$html = shortcode(

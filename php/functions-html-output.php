@@ -1,7 +1,8 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE;
 
-use function \Nextgenthemes\ARVE\Common\get_var_dump;
+use function Nextgenthemes\ARVE\Common\get_var_dump;
 
 function build_html( array $a ) {
 
@@ -91,7 +92,7 @@ function build_video_tag( array $a ) {
 	$autoplay = in_array( $a['mode'], array( 'lazyload', 'lightbox', 'link-lightbox' ), true ) ? false : $a['autoplay'];
 	$preload  = 'metadata';
 
-	if ( in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true ) && ! empty( $a['img_src'] ) ) {
+	if ( in_array( $a['mode'], array( 'lazyload', 'lightbox' ), true ) && ! empty( $a['img_src'] ) ) {
 		$preload = 'none';
 	}
 
@@ -334,7 +335,7 @@ function arve_embed( $html, array $a ) {
 		$class     .= ' arve-embed--has-aspect-ratio';
 		$ratio_span = sprintf( '<span class="arve-ar" style="padding-top:%F%%"></span>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
 
-		if ( ! in_array($a['aspect_ratio'], [ '16:9', '375:211' ], true) ) {
+		if ( ! in_array($a['aspect_ratio'], array( '16:9', '375:211' ), true) ) {
 			$ar    = str_replace( ':', ' / ', $a['aspect_ratio'] );
 			$style = sprintf( 'aspect-ratio: %s', $ar );
 		}

@@ -21,7 +21,7 @@ window.addEventListener( 'DOMContentLoaded', () => {
 	init();
 } );
 
-function init(): void {
+function init(){
 	// const arveBtn = id( 'arve-btn' );
 	const arveBtn = id( 'arve-btn' );
 	const dialog = qs( '.arve-sc-dialog' ) as HTMLDialogElement | null;

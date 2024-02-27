@@ -1,7 +1,8 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Common;
 
-function check_product_keys(): void {
+function check_product_keys() {
 
 	$products = get_products();
 
@@ -39,7 +40,7 @@ function get_defined_key( $slug ) {
 	}
 }
 
-function activate_product_key( $product, $key ): void {
+function activate_product_key( $product, $key ) {
 
 	$product_id = get_products()[ $product ]['id'];
 
@@ -49,7 +50,7 @@ function activate_product_key( $product, $key ): void {
 	update_option( 'nextgenthemes', $options );
 }
 
-function activate_defined_key( $file, $theme_name = '' ): void {
+function activate_defined_key( $file, $theme_name = '' ) {
 
 	if ( 'functions.php' === $file ) {
 		return;

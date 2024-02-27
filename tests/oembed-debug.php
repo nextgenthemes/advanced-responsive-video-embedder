@@ -1,7 +1,8 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 
-use function \Nextgenthemes\ARVE\shortcode;
-use function \Nextgenthemes\ARVE\get_host_properties;
+use function Nextgenthemes\ARVE\shortcode;
+use function Nextgenthemes\ARVE\get_host_properties;
 
 // phpcs:disable Squiz.Classes.ClassFileName.NoMatch
 // phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
@@ -9,12 +10,14 @@ use function \Nextgenthemes\ARVE\get_host_properties;
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
 // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_read_fwrite
 // phpcs:disable WordPress.PHP.DiscouragedPHPFunctions.system_calls_system
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
+// phpcs:disable SlevomatCodingStandard.TypeHints
 
 class Tests_OembedD extends WP_UnitTestCase {
 
-	private $oembed_debug = [];
+	private $oembed_debug = array();
 
-	public function test_oembed_debug(): void {
+	public function test_oembed_debug() {
 
 		$properties = get_host_properties();
 		foreach ( $properties as $provider => $v ) :
@@ -60,11 +63,11 @@ class Tests_OembedD extends WP_UnitTestCase {
 	public function get_oembed_for_url( $url ) {
 
 		remove_filter( 'oembed_dataparse', 'Nextgenthemes\ARVE\filter_oembed_dataparse', 11, 3 );
-		add_filter( 'oembed_dataparse', [ $this, 'filter_oembed_dataparse' ], PHP_INT_MAX, 3 );
+		add_filter( 'oembed_dataparse', array( $this, 'filter_oembed_dataparse' ), PHP_INT_MAX, 3 );
 
 		$this->oembed_debug[ $url ] = false;
 
-		return $GLOBALS['wp_embed']->shortcode( [], $url );
+		return $GLOBALS['wp_embed']->shortcode( array(), $url );
 	}
 
 	public function filter_oembed_dataparse( $result, $data, $url ) {

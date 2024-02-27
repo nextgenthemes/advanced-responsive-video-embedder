@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Common;
 
 const VERSION = '1.0.0';

@@ -18,7 +18,7 @@ function sys( $command ) {
 function replace_in_file( string $file, string $str, string $rep ) {
 	$file_content=file_get_contents( $file );
 	$file_content=str_replace( $str, $rep, $file_content );
-	file_put_contents($file, $file_content);
+	file_put_contents( $file, $file_content);
 }
 
 function __( $a, $b ) {}

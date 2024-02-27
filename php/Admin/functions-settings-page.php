@@ -1,10 +1,11 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Admin;
 
-use \Nextgenthemes\ARVE;
-use \Nextgenthemes\ARVE\Common;
+use Nextgenthemes\ARVE;
+use Nextgenthemes\ARVE\Common;
 
-function settings_content(): void {
+function settings_content() {
 
 	$link_code_only = array(
 		'code' => array(),
@@ -19,6 +20,7 @@ function settings_content(): void {
 	<div class="ngt-block" v-show="onlySectionDisplayed === 'urlparams'">
 		<p>
 			<?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 			printf(
 				// Translators: URL
 				wp_kses( __( 'This parameters will be added to the <code>iframe src</code> urls, you can control the video players behavior with them. Please read <a href="%s" target="_blank">the documentation</a> on.', 'advanced-responsive-video-embedder' ), $link_code_only ),
@@ -34,9 +36,10 @@ function settings_content(): void {
 		</p>
 	</div>
 	<?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 }
 
-function settings_sidebar(): void {
+function settings_sidebar() {
 
 	if ( ! current_user_can('install_plugins') ) {
 		echo '<div class="ngt-sidebar-box">';
@@ -65,7 +68,7 @@ function settings_sidebar(): void {
 
 
 
-function print_settings_box_html( $file ): void {
+function print_settings_box_html( $file ) {
 	echo '<div class="ngt-sidebar-box">';
 	readfile( __DIR__ . $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
 	echo '</div>';
@@ -87,7 +90,7 @@ function filter_save_options( $options ) {
 }
 
 // unused, trigger recaching is rebuild is probably better, also there this leaves the times in the DB so will this even work?
-function delete_oembed_caches(): void {
+function delete_oembed_caches() {
 
 	global $wpdb;
 

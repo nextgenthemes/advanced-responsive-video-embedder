@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE;
 
 function process_shortcode_args( array $a ) {
@@ -150,13 +151,13 @@ function args_validate( array $a ) {
 
 	foreach ( bool_shortcode_args() as $attr_name ) {
 		$a[ $attr_name ] = validate_bool( $attr_name, $a );
-	};
+	}
 
-	$url_args = array_merge( VIDEO_FILE_EXTENSIONS, [ 'url' ] );
+	$url_args = array_merge( VIDEO_FILE_EXTENSIONS, array( 'url' ) );
 
 	foreach ( $url_args as $argname ) {
 		$a[ $argname ] = validate_url( $a[ $argname ], $argname, $a );
-	};
+	}
 
 	$a['align']        = validate_align( $a );
 	$a['aspect_ratio'] = validate_aspect_ratio( $a );
@@ -385,7 +386,7 @@ function arg_iframe_src( array $a ) {
 function iframe_src_jsapi_arg( $src, $a ) {
 
 	if ( function_exists('Nextgenthemes\ARVE\Pro\init') && 'youtube' === $a['provider'] ) {
-		$src = add_query_arg( [ 'enablejsapi' => 1 ], $src );
+		$src = add_query_arg( array( 'enablejsapi' => 1 ), $src );
 	}
 
 	return $src;
@@ -463,7 +464,7 @@ function build_iframe_src( array $a ) {
 	return $src;
 }
 
-function compare_oembed_src_with_generated_src( array $a ): void {
+function compare_oembed_src_with_generated_src( array $a ) {
 
 	if ( empty($a['src']) || empty($a['src_gen']) ) {
 		return;

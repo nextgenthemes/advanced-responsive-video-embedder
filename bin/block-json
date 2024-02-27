@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE;
 
 require dirname( __DIR__ ) . '/advanced-responsive-video-embedder.php';

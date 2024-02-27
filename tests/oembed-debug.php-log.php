@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 array(
 	'https://alugha.com/videos/e269333a-579b-11e5-aa10-8587cc892389/share' => false,
 	'https://alugha.com/1/videos/youtube-54m1YfEuYU8'  => false,
@@ -116,7 +117,7 @@ array(
 		'duration'                       => 119,
 		'description'                    => 'A little light rises from the deep sea.
 
-Pictures : ClÃ',
+Pictures : Clï¿½',
 		'thumbnail_url'                  => 'https://i.vimeocdn.com/video/514111591_295x166.jpg',
 		'thumbnail_width'                => 295,
 		'thumbnail_height'               => 166,
@@ -142,7 +143,7 @@ Pictures : ClÃ',
 		'duration'                       => 119,
 		'description'                    => 'A little light rises from the deep sea.
 
-Pictures : ClÃ',
+Pictures : Clï¿½',
 		'thumbnail_url'                  => 'https://i.vimeocdn.com/video/514111591_295x166.jpg',
 		'thumbnail_width'                => 295,
 		'thumbnail_height'               => 166,

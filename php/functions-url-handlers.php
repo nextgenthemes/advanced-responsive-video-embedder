@@ -1,13 +1,14 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE;
 
-function create_url_handlers(): void {
+function create_url_handlers() {
 
 	$properties = get_host_properties();
 
 	foreach ( $properties as $provider => $values ) {
 
-		$function = function( $matches, $attr, $url, $rawattr ) use ( $provider ) {
+		$function = function ( $matches, $attr, $url, $rawattr ) use ( $provider ) {
 			return url_handler( $provider, $matches, $attr, $url, $rawattr );
 		};
 
@@ -40,12 +41,12 @@ function url_handler( string $provider, array $matches, array $attr, string $url
 
 	$a['provider']    = $provider;
 	$a['url']         = $url;
-	$a['origin_data'] = [
+	$a['origin_data'] = array(
 		'from'    => 'url_handler',
 		'matches' => $matches,
 		'attr'    => $attr,
 		'rawattr' => $rawattr,
-	];
+	);
 
 	return build_video( $a );
 }

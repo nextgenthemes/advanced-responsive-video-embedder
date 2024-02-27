@@ -1,17 +1,18 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 
-use \Nextgenthemes\ARVE;
+use Nextgenthemes\ARVE;
 
 // phpcs:disable Squiz.Classes.ClassFileName.NoMatch
 // phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
 class Tests_Scripts_And_Styles extends WP_UnitTestCase {
 
-	public function test_hooks(): void {
+	public function test_hooks() {
 
 		$this->assertNotFalse( has_action( 'wp_enqueue_scripts', 'Nextgenthemes\ARVE\action_wp_enqueue_scripts' ) );
 	}
 
-	public function test_scripts(): void {
+	public function test_scripts() {
 
 		do_action( 'wp_enqueue_scripts' );
 

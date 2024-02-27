@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE;
 
 function get_host_properties() {
@@ -19,7 +20,7 @@ function gcd( $a, $b ) {
 	return $b ? gcd( $b, $a % $b ) : $a;
 }
 
-function load_textdomain(): void {
+function load_textdomain() {
 
 	\load_plugin_textdomain(
 		'advanced-responsive-video-embedder',
@@ -46,7 +47,7 @@ function check_filetype( $url, $ext ) {
  *
  * @return int Starttime in seconds.
  */
-function youtube_time_to_seconds( string $yttime ): int {
+function youtube_time_to_seconds( $yttime ) {
 
 	if ( \is_numeric( $yttime ) ) {
 		return $yttime;

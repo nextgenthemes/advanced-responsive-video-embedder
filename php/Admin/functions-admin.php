@@ -1,15 +1,16 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Admin;
 
-use const \Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
+use const Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
 
-use \Nextgenthemes\ARVE;
-use \Nextgenthemes\ARVE\Common\Admin\Notices;
+use Nextgenthemes\ARVE;
+use Nextgenthemes\ARVE\Common\Admin\Notices;
 
-use function \Nextgenthemes\ARVE\Common\ver;
-use function \Nextgenthemes\ARVE\Common\attr;
-use function \Nextgenthemes\ARVE\Common\kses_basic;
-use function \Nextgenthemes\ARVE\Common\enqueue_asset;
+use function Nextgenthemes\ARVE\Common\ver;
+use function Nextgenthemes\ARVE\Common\attr;
+use function Nextgenthemes\ARVE\Common\kses_basic;
+use function Nextgenthemes\ARVE\Common\enqueue_asset;
 
 const ALLOWED_HTML = array(
 	'a'      => array(
@@ -26,7 +27,7 @@ const ALLOWED_HTML = array(
 	'li'     => array(),
 );
 
-function action_admin_init_setup_messages(): void {
+function action_admin_init_setup_messages() {
 
 	$pro_ver = false;
 
@@ -120,7 +121,7 @@ function display_pro_ad() {
 	return true;
 }
 
-function widget_text(): void {
+function widget_text() {
 
 	echo '<p>';
 	printf( '<a href="%s">Documentation</a>, ', 'https://nextgenthemes.com/plugins/arve/documentation/' );
@@ -190,7 +191,7 @@ function add_action_links( $links ) {
 	return array_merge( $extra_links, $links );
 }
 
-function register_shortcode_ui(): void {
+function register_shortcode_ui() {
 
 	$settings = ARVE\shortcode_settings();
 
@@ -251,7 +252,7 @@ function register_shortcode_ui(): void {
 	);
 }
 
-function admin_enqueue_styles(): void {
+function admin_enqueue_styles() {
 
 	enqueue_asset(
 		array(
@@ -263,7 +264,7 @@ function admin_enqueue_styles(): void {
 	);
 }
 
-function admin_enqueue_scripts(): void {
+function admin_enqueue_scripts() {
 
 	foreach ( ARVE\shortcode_settings() as $k => $v ) {
 		$options[ $k ] = '';
@@ -300,7 +301,7 @@ function admin_enqueue_scripts(): void {
 	}
 }
 
-function action_admin_bar_menu( $admin_bar ): void {
+function action_admin_bar_menu( $admin_bar ) {
 
 	if ( current_user_can( 'manage_options' ) && ARVE\options()['admin_bar_menu'] ) {
 

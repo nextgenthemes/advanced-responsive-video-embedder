@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE;
 
 function shortcode( $a ) {
@@ -65,7 +66,7 @@ function get_error_html( array $a ) {
 function build_video( array $input_atts ) {
 
 	$html = '';
-	$a    = [];
+	$a    = array();
 
 	try {
 		$a = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
@@ -114,7 +115,7 @@ function shortcode_option_defaults() {
 	return $shortcodes;
 }
 
-function create_shortcodes(): void {
+function create_shortcodes() {
 
 	$options    = options();
 	$properties = get_host_properties();
@@ -125,7 +126,7 @@ function create_shortcodes(): void {
 
 		foreach ( $shortcode_options as $provider => $shortcode ) {
 
-			$function = function( $a ) use ( $provider, $properties ) {
+			$function = function ( $a ) use ( $provider, $properties ) {
 
 				$a['provider'] = $provider;
 

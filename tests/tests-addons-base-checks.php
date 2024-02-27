@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 use function Nextgenthemes\ARVE\shortcode;
 
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found
@@ -6,7 +7,7 @@ use function Nextgenthemes\ARVE\shortcode;
 // phpcs:disable Squiz.PHP.Classes.ValidClassName.NotCamelCaps
 class Tests_AddonsBaseChecks extends WP_UnitTestCase {
 
-	public function test_product_data(): void {
+	public function test_product_data() {
 
 		$products = \Nextgenthemes\ARVE\Common\get_products();
 
@@ -27,6 +28,6 @@ class Tests_AddonsBaseChecks extends WP_UnitTestCase {
 			$this->assertTrue( $products[ $p ]['active'], 'active not true' );
 
 			$this->assertEquals( $products[ $p ]['type'], 'plugin' );
-		};
+		}
 	}
 }

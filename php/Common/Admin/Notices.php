@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Common\Admin;
 
 /**
@@ -74,7 +75,6 @@ if ( 'always' ) {
 			}
 
 			return self::$instance;
-
 		}
 
 		/**
@@ -82,7 +82,7 @@ if ( 'always' ) {
 		 *
 		 * @since 1.0
 		 */
-		private function init(): void {
+		private function init() {
 
 			// Make sure WordPress is compatible
 			if ( ! self::$instance->is_wp_compatible() ) {
@@ -112,7 +112,6 @@ if ( 'always' ) {
 
 			add_action( 'admin_notices', array( self::$instance, 'display' ) );
 			add_action( 'wp_ajax_dnh_dismiss_notice', array( self::$instance, 'dismiss_notice_ajax' ) );
-
 		}
 
 		/**
@@ -127,7 +126,6 @@ if ( 'always' ) {
 			}
 
 			return true;
-
 		}
 
 		/**
@@ -142,7 +140,6 @@ if ( 'always' ) {
 			}
 
 			return true;
-
 		}
 
 		/**
@@ -150,7 +147,7 @@ if ( 'always' ) {
 		 *
 		 * @since 1.0
 		 */
-		public function display(): void {
+		public function display() {
 
 			if ( is_null( self::$instance->notices ) || empty( self::$instance->notices ) ) {
 				return;
@@ -185,7 +182,6 @@ if ( 'always' ) {
 				);
 
 			}
-
 		}
 
 		/**
@@ -196,7 +192,7 @@ if ( 'always' ) {
 		 * @param string $error Error message to spit
 		 *
 		 */
-		protected function spit_error( string $error ): void {
+		protected function spit_error( string $error ) {
 			printf(
 				'<div style="margin: 20px; text-align: center;"><strong>%1$s</strong> %2$s</pre></div>',
 				esc_html__( 'Dismissible Notices Handler Error:', 'advanced-responsive-video-embedder' ),
@@ -234,7 +230,6 @@ if ( 'always' ) {
 			);
 
 			return apply_filters( 'dnh_notice_types', $types );
-
 		}
 
 		/**
@@ -253,7 +248,6 @@ if ( 'always' ) {
 			);
 
 			return apply_filters( 'dnh_default_args', $args );
-
 		}
 
 		/**
@@ -302,7 +296,6 @@ if ( 'always' ) {
 			self::$instance->notices[ $id ] = $notice;
 
 			return true;
-
 		}
 
 		/**
@@ -310,7 +303,7 @@ if ( 'always' ) {
 		 *
 		 * @since 1.0
 		 */
-		public function dismiss_notice_ajax(): void {
+		public function dismiss_notice_ajax() {
 
 			// phpcs:disable WordPress.Security.NonceVerification.Missing
 			if ( ! isset( $_POST['id'] ) ) {
@@ -351,7 +344,6 @@ if ( 'always' ) {
 			}
 
 			return 'user' === $notice['scope'] ? self::$instance->dismiss_user( $id ) : self::$instance->dismiss_global( $id );
-
 		}
 
 		/**
@@ -374,7 +366,6 @@ if ( 'always' ) {
 			array_push( $dismissed, $id );
 
 			return update_user_meta( get_current_user_id(), 'dnh_dismissed_notices', $dismissed );
-
 		}
 
 		/**
@@ -396,7 +387,6 @@ if ( 'always' ) {
 			array_push( $dismissed, $id );
 
 			return update_option( 'dnh_dismissed_notices', $dismissed );
-
 		}
 
 		/**
@@ -417,7 +407,6 @@ if ( 'always' ) {
 			}
 
 			return 'user' === $notice['scope'] ? self::$instance->restore_user( $id ) : self::$instance->restore_global( $id );
-
 		}
 
 		/**
@@ -449,7 +438,6 @@ if ( 'always' ) {
 			unset( $dismissed[ $key ] );
 
 			return update_user_meta( get_current_user_id(), 'dnh_dismissed_notices', $dismissed );
-
 		}
 
 		/**
@@ -481,7 +469,6 @@ if ( 'always' ) {
 			unset( $dismissed[ $key ] );
 
 			return update_option( 'dnh_dismissed_notices', $dismissed );
-
 		}
 
 		/**
@@ -498,7 +485,6 @@ if ( 'always' ) {
 			$global = self::$instance->dismissed_global();
 
 			return array_merge( $user, $global );
-
 		}
 
 		/**
@@ -516,7 +502,6 @@ if ( 'always' ) {
 			}
 
 			return $dismissed;
-
 		}
 
 		/**
@@ -546,7 +531,6 @@ if ( 'always' ) {
 			}
 
 			return true;
-
 		}
 
 		/**
@@ -577,9 +561,7 @@ if ( 'always' ) {
 			}
 
 			return self::$instance->notices[ $id ];
-
 		}
-
 	}
 
 }

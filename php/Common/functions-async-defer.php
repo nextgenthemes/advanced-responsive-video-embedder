@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 if ( ! function_exists( 'nextgenthemes_maybe_add_async_or_defer' ) ) {
 
 	add_action( 'script_loader_tag', 'nextgenthemes_maybe_add_async_or_defer', 10, 2 );

@@ -25,7 +25,7 @@ if ( jq && typeof jq.fn.fitVids !== 'undefined' ) {
 	} );
 }
 
-function removeUnwantedStuff(): void {
+function removeUnwantedStuff(){
 	qsa(
 		'.arve p, .arve .video-wrap, .arve .fluid-width-video-wrapper, .arve .fluid-vids'
 	).forEach( ( el ) => {
@@ -62,7 +62,7 @@ function removeUnwantedStuff(): void {
 	} );
 }
 
-export function globalID(): void {
+export function globalID(){
 	// Usually the id should be already there added with php using the language_attributes filter
 	if ( 'html' === d.documentElement.id ) {
 		return;
@@ -75,7 +75,7 @@ export function globalID(): void {
 	}
 }
 
-function unwrap( el: Element ): void {
+function unwrap( el: Element ){
 	const parent = el.parentNode;
 	// make eslint STFU
 	if ( ! parent ) {
@@ -89,7 +89,7 @@ function unwrap( el: Element ): void {
 	parent.removeChild( el );
 }
 
-export function domReady( callback ): void {
+export function domReady( callback ){
 	if ( typeof d === 'undefined' ) {
 		return;
 	}

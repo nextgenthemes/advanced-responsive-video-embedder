@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 
 if ( ! function_exists( 'str_contains' ) ) {
 

@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Common;
 
 function array_whitelist_keys( array $arr, array $keys ) {
@@ -9,27 +10,27 @@ function array_whitelist_keys( array $arr, array $keys ) {
 	);
 }
 
-function first_array_value( array $array ) {
-	reset( $array );
-	$key = key( $array );
-	return $array[ $key ];
+function first_array_value( array $arr ) {
+	reset( $arr );
+	$key = key( $arr );
+	return $arr[ $key ];
 }
 
-function prefix_array_keys( $keyprefix, array $array ) {
+function prefix_array_keys( $keyprefix, array $arr ) {
 
-	foreach ( $array as $key => $value ) {
-		$array[ $keyprefix . $key ] = $value;
-		unset( $array[ $key ] );
+	foreach ( $arr as $key => $value ) {
+		$arr[ $keyprefix . $key ] = $value;
+		unset( $arr[ $key ] );
 	}
 
-	return $array;
+	return $arr;
 }
 
-function get_array_key_by_value( $array, $field, $value ) {
+function get_array_key_by_value( $arr, $field, $value ) {
 
-	foreach ( $array as $key => $array_value ) {
+	foreach ( $arr as $key => $arr_value ) {
 
-		if ( $array_value[ $field ] === $value ) {
+		if ( $arr_value[ $field ] === $value ) {
 			return $key;
 		}
 	}
@@ -42,7 +43,7 @@ function get_array_key_by_value( $array, $field, $value ) {
  *
  * @param $key
  *   The key to insert before.
- * @param $array
+ * @param $arr
  *   An array to insert in to.
  * @param $new_key
  *   The key to insert.
@@ -54,10 +55,10 @@ function get_array_key_by_value( $array, $field, $value ) {
  *
  * @see array_insert_after()
  */
-function array_insert_before( $key, array &$array, $new_key, $new_value ) {
-	if ( array_key_exists( $key, $array ) ) {
+function array_insert_before( $key, array &$arr, $new_key, $new_value ) {
+	if ( array_key_exists( $key, $arr ) ) {
 		$new = array();
-		foreach ( $array as $k => $value ) {
+		foreach ( $arr as $k => $value ) {
 			if ( $k === $key ) {
 				$new[ $new_key ] = $new_value;
 			}
@@ -73,7 +74,7 @@ function array_insert_before( $key, array &$array, $new_key, $new_value ) {
  *
  * @param $key
  *   The key to insert after.
- * @param $array
+ * @param $arr
  *   An array to insert in to.
  * @param $new_key
  *   The key to insert.
@@ -85,10 +86,10 @@ function array_insert_before( $key, array &$array, $new_key, $new_value ) {
  *
  * @see array_insert_before()
  */
-function array_insert_after( $key, array &$array, $new_key, $new_value ) {
-	if ( array_key_exists( $key, $array ) ) {
+function array_insert_after( $key, array &$arr, $new_key, $new_value ) {
+	if ( array_key_exists( $key, $arr ) ) {
 		$new = array();
-		foreach ( $array as $k => $value ) {
+		foreach ( $arr as $k => $value ) {
 			$new[ $k ] = $value;
 			if ( $k === $key ) {
 				$new[ $new_key ] = $new_value;

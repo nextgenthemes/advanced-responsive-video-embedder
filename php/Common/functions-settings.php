@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Common;
 
 function nextgenthemes_settings_instance() {
@@ -30,7 +31,7 @@ function ngt_options() {
 	return apply_filters( 'nextgenthemes/settings', $o );
 }
 
-function migrate_old_licenses(): void {
+function migrate_old_licenses() {
 
 	$options_ver = get_option( 'nextgenthemes_options_ver' );
 

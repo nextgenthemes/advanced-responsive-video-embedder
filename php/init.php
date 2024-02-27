@@ -1,14 +1,15 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE;
 
 init_920();
 
-function init_920(): void {
+function init_920() {
 	init_public();
 	init_admin();
 }
 
-function init_public(): void {
+function init_public() {
 
 	add_option( 'arve_install_date', time() );
 
@@ -48,7 +49,7 @@ function init_public(): void {
 	add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', OEMBED_HTML_PRIORITY, 4 );
 }
 
-function init_admin(): void {
+function init_admin() {
 
 	require_once PLUGIN_DIR . '/php/Admin/functions-admin.php';
 	require_once PLUGIN_DIR . '/php/Admin/functions-settings-page.php';
@@ -73,7 +74,7 @@ function init_admin(): void {
 
 register_uninstall_hook( __FILE__, __NAMESPACE__ . '\\uninstall' );
 
-function uninstall(): void {
+function uninstall() {
 
 	if ( version_compare( $GLOBALS['wpdb']->db_version(), '8.0', '>=' ) ) {
 		$GLOBALS['wpdb']->query(

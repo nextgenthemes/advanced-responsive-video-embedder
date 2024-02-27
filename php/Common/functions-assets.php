@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Common;
 
 function theme_version() {
@@ -7,16 +8,16 @@ function theme_version() {
 }
 
 // TODO: deprecated use register_asset in all ARVE addons
-function asset( array $args ): void {
+function asset( array $args ) {
 	register_asset( $args );
 }
 
-function register_asset( array $args ): void {
+function register_asset( array $args ) {
 	$args['enqueue'] = false;
 	_asset( $args );
 }
 
-function enqueue_asset( array $args ): void {
+function enqueue_asset( array $args ) {
 	$args['enqueue'] = true;
 	_asset( $args );
 }
@@ -64,7 +65,7 @@ function replace_extension( $filename, $new_extension ) {
 	return $dir . $info['filename'] . '.' . $new_extension;
 }
 
-function _asset( array $args ): void {
+function _asset( array $args ) {
 
 	$defaults = array(
 		// wp_register_script args in order
@@ -139,7 +140,7 @@ function _asset( array $args ): void {
 		if ( $args['mce'] ) {
 			add_filter(
 				'mce_css',
-				function( $mce_css ) use ( $args ) {
+				function ( $mce_css ) use ( $args ) {
 					if ( ! empty( $mce_css ) ) {
 						$mce_css .= ',';
 					}

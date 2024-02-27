@@ -1,12 +1,13 @@
 <?php
-use function \Nextgenthemes\ARVE\shortcode;
-use function \Nextgenthemes\ARVE\build_video;
-use function \Nextgenthemes\ARVE\get_host_properties;
+// phpcs:disable SlevomatCodingStandard.TypeHints
+use function Nextgenthemes\ARVE\shortcode;
+use function Nextgenthemes\ARVE\build_video;
+use function Nextgenthemes\ARVE\get_host_properties;
 
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 
-	public function test_mode_fallback(): void {
+	public function test_mode_fallback() {
 
 		$html = shortcode(
 			array(
@@ -19,7 +20,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		#$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_wrong_thumb_id(): void {
+	public function test_wrong_thumb_id() {
 
 		$html = shortcode(
 			array(
@@ -30,7 +31,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_wrong_thumb_url(): void {
+	public function test_wrong_thumb_url() {
 
 		$html = shortcode(
 			array(
@@ -41,7 +42,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_wrong_no_req_param(): void {
+	public function test_wrong_no_req_param() {
 
 		#$this->expectException('Exception');
 
@@ -49,7 +50,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_wrong_align(): void {
+	public function test_wrong_align() {
 
 		$html = shortcode(
 			array(
@@ -60,7 +61,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_wrong_ar(): void {
+	public function test_wrong_ar() {
 
 		$html = shortcode(
 			array(
@@ -71,7 +72,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_legacy_yt_sc_no_id(): void {
+	public function test_legacy_yt_sc_no_id() {
 
 		#$this->expectException('Exception');
 
@@ -79,23 +80,23 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_empty_url(): void {
+	public function test_empty_url() {
 		$html = shortcode( array( 'url' => '' ) );
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_unknown_url(): void {
+	public function test_unknown_url() {
 		$html = shortcode( array( 'url' => 'https://example.com' ) );
 		$this->assertStringContainsString( '<iframe', $html );
 	}
 
-	public function test_wrong_url(): void {
+	public function test_wrong_url() {
 
 		$html = shortcode( array( 'url' => 'bullshit' ) );
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_wrong_sandbox(): void {
+	public function test_wrong_sandbox() {
 
 		$html = shortcode(
 			array(
@@ -106,7 +107,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_wrong_src(): void {
+	public function test_wrong_src() {
 
 		#$this->expectException('Exception');
 
@@ -118,7 +119,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_wrong_oembed_iframe_src(): void {
+	public function test_wrong_oembed_iframe_src() {
 
 		$od = new StdClass();
 
@@ -126,10 +127,10 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$od->html          = '<iframe src="?bullshit">';
 
 		$html = build_video(
-			[
+			array(
 				'url'         => 'http://example.com',
 				'oembed_data' => $od,
-			]
+			)
 		);
 
 		$this->assertStringContainsString( 'Error', $html );

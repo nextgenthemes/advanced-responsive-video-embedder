@@ -1,11 +1,12 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Common\Admin;
 
-use \Nextgenthemes\ARVE\Common;
-use \Nextgenthemes\ARVE\Common\Admin\Notices;
+use Nextgenthemes\ARVE\Common;
+use Nextgenthemes\ARVE\Common\Admin\Notices;
 
 // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
-function activation_notices(): void {
+function activation_notices() {
 
 	$products = Common\get_products();
 

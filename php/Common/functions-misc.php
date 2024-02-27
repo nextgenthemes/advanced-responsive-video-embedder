@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Common;
 
 function ngt_get_block_wrapper_attributes( array $attr ) {
@@ -68,7 +69,7 @@ function get_var_dump( $var ) {
 	// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_dump
 	var_dump( $var );
 	return ob_get_clean();
-};
+}
 
 // this is to prevent constant() throwing as Error in PHP 8, E_WARNING in PHP < 8
 function get_constant( $const_name ) {

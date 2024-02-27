@@ -1,9 +1,10 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Common\Admin;
 
-use \Nextgenthemes\ARVE\Common;
+use Nextgenthemes\ARVE\Common;
 
-function init_edd_updaters(): void {
+function init_edd_updaters() {
 
 	$products = Common\get_products();
 
@@ -17,7 +18,7 @@ function init_edd_updaters(): void {
 	}
 }
 
-function init_plugin_updater( $product ): void {
+function init_plugin_updater( $product ) {
 
 	// setup the updater
 	new EDD\PluginUpdater(
@@ -33,7 +34,7 @@ function init_plugin_updater( $product ): void {
 	);
 }
 
-function init_theme_updater( $product ): void {
+function init_theme_updater( $product ) {
 
 	new EDD\ThemeUpdater(
 		array(
