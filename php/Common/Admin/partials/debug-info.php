@@ -1,7 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE\Common\Admin;
 
-use function \Nextgenthemes\ARVE\Common\get_var_dump;
+use function Nextgenthemes\ARVE\Common\get_var_dump;
 
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
 ?>
