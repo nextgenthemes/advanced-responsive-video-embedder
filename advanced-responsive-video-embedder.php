@@ -1,5 +1,4 @@
 <?php
-// phpcs:disable SlevomatCodingStandard.TypeHints
 /**
  * Plugin Name:       ARVE Advanced Responsive Video Embedder
  * Plugin URI:        https://nextgenthemes.com/plugins/arve-pro/
@@ -18,6 +17,8 @@
  * @link    https://nextgenthemes.com
  */
 namespace Nextgenthemes\ARVE;
+
+// phpcs:disable SlevomatCodingStandard.TypeHints
 
 const VERSION               = '9.10.13-alpha1';
 const PRO_VERSION_REQUIRED  = '5.3.0-alpha1';
