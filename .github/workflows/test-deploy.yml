@@ -9,7 +9,7 @@ jobs:
     name: PHP Unit tests
     runs-on: ubuntu-22.04
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         php: [ '7.2', '7.3', '7.4', '8.0', '8.1', '8.2' ] # https://www.php.net/supported-versions
         wordpress: [ 'nightly' ] # https://wordpress.org/download/releases/
@@ -30,7 +30,9 @@ jobs:
         with:
           repository: nextgenthemes/websites
           ref: master
-          sparse-checkout: .
+          sparse-checkout: |
+            .
+            bin
           path: .
           token: ${{ secrets.REPO_TOKEN }}
 
