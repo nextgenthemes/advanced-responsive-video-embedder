@@ -1,15 +1,14 @@
+/.*            export-ignore
 /*.dist        export-ignore
 /*.js          export-ignore
 /*.xml         export-ignore
 /*.yml         export-ignore
-/.*            export-ignore
 /bin           export-ignore
 /composer*     export-ignore
 /package*.json export-ignore
-/packages      export-ignore
-/readme        export-ignore
-/tests         export-ignore
 /tsconfig.json export-ignore
+/tests         export-ignore
+/readme        export-ignore
 
 build/* -diff
 
