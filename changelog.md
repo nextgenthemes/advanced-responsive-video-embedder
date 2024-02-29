@@ -3,6 +3,9 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-02-29 9.10.13.1 ###
+* Cut development files from the distribution.
+
 ### 2024-02-29 9.10.13 ###
 * Improved: Make Admin notice dismiss without jQuery. May fix an extremly rare issue of dismiss failing.   
 * Tested with latest WP 6.5-nightly
