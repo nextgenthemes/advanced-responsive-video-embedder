@@ -6,6 +6,7 @@
 /bin           export-ignore
 /composer*     export-ignore
 /package*.json export-ignore
+/tsconfig.json export-ignore
 /tests         export-ignore
 /readme        export-ignore
 
