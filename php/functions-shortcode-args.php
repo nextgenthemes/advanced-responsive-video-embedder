@@ -211,40 +211,6 @@ function missing_attribute_check( array $a ) {
 	}
 }
 
-/**
- * @param array <string, any> $a ARVE args
- *
- * @return false|string
- */
-function arg_aspect_ratio( array $a ) {
-
-	if ( ! empty( $a['aspect_ratio'] ) ) {
-		return $a['aspect_ratio'];
-	}
-
-	if ( ! empty( $a['oembed_data']->width ) &&
-		! empty( $a['oembed_data']->height ) &&
-		is_numeric( $a['oembed_data']->width ) &&
-		is_numeric( $a['oembed_data']->height )
-	) {
-		$a['aspect_ratio'] = $a['oembed_data']->width . ':' . $a['oembed_data']->height;
-	} else {
-		$properties = get_host_properties();
-
-		if ( isset( $properties[ $a['provider'] ]['aspect_ratio'] ) ) {
-			$a['aspect_ratio'] = $properties[ $a['provider'] ]['aspect_ratio'];
-		} else {
-			$a['aspect_ratio'] = '16:9';
-		}
-	}
-
-	if ( $a['aspect_ratio'] ) {
-		$a['aspect_ratio'] = aspect_ratio_gcd( $a['aspect_ratio'] );
-	}
-
-	return $a['aspect_ratio'];
-}
-
 function height_from_width_and_ratio( int $width, string $ratio ): float {
 
 	if ( empty( $ratio ) ) {
@@ -417,7 +383,7 @@ function get_video_type( string $ext ): string {
 function iframesrc_urlarg_enablejsapi( string $src, string $provider ): string {
 
 	if ( function_exists('Nextgenthemes\ARVE\Pro\init') && 'youtube' === $provider ) {
-		$src = add_query_arg( [ 'enablejsapi' => 1 ], $src );
+		$src = add_query_arg( array( 'enablejsapi' => 1 ), $src );
 	}
 
 	return $src;
