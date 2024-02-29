@@ -1,9 +1,9 @@
 <?php
 namespace Nextgenthemes\ARVE\Common\Admin;
 
-use \Nextgenthemes\ARVE\Common;
+use Nextgenthemes\ARVE\Common;
 
-function label_text( $option ) {
+function label_text( $option ): void {
 	?>
 	<span class="nextgenthemes-label-text">
 		<?php
@@ -29,7 +29,7 @@ function label_text( $option ) {
 	<?php
 }
 
-function print_boolean_field( $key, $option ) {
+function print_boolean_field( $key, $option ): void {
 	?>
 	<p>
 		<label>
@@ -44,7 +44,7 @@ function print_boolean_field( $key, $option ) {
 	<?php
 }
 
-function print_boolean_radio_field( $key, $option ) {
+function print_boolean_radio_field( $key, $option ): void {
 	?>
 	<p>
 		<?php label_text( $option ); ?>
@@ -71,7 +71,7 @@ function print_boolean_radio_field( $key, $option ) {
 	<?php
 }
 
-function print_string_field( $key, $option ) {
+function print_string_field( $key, $option ): void {
 	?>
 	<p>
 		<label>
@@ -87,15 +87,15 @@ function print_string_field( $key, $option ) {
 	<?php
 }
 
-function print_hidden_field( $key, $option ) {} // yes we need this nothing function
+function print_hidden_field( $key, $option ): void {} // yes we need this nothing function
 
-function print_old_hidden_field( $key, $option ) {
+function print_old_hidden_field( $key, $option ): void {
 	?>
 	<input v-model="<?php echo esc_attr( "vm.$key" ); ?>" type="hidden" />
 	<?php
 }
 
-function print_licensekey_field( $key, $option ) {
+function print_licensekey_field( $key, $option ): void {
 
 	$readonly = Common\get_defined_key( $key ) ? 'readonly' : '';
 	?>
@@ -115,7 +115,7 @@ function print_licensekey_field( $key, $option ) {
 	<?php
 }
 
-function print_image_upload_field( $key, $option ) {
+function print_image_upload_field( $key, $option ): void {
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_media();
 	?>
@@ -131,7 +131,7 @@ function print_image_upload_field( $key, $option ) {
 	<?php
 }
 
-function print_integer_field( $key, $option ) {
+function print_integer_field( $key, $option ): void {
 	?>
 	<p>
 		<label>
@@ -142,7 +142,7 @@ function print_integer_field( $key, $option ) {
 	<?php
 }
 
-function print_select_field( $key, $option ) {
+function print_select_field( $key, $option ): void {
 
 	?>
 	<p>
@@ -173,7 +173,7 @@ function block_attr( $key, $option ) {
 	return Common\attr( $block_attr );
 }
 
-function print_settings_blocks( array $settings, array $sections, array $premium_sections, $context ) {
+function print_settings_blocks( array $settings, array $sections, array $premium_sections, $context ): void {
 
 	$description_allowed_html = array(
 		'a'      => array(
