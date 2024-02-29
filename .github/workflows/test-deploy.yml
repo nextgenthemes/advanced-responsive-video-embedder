@@ -30,11 +30,11 @@ jobs:
         with:
           repository: nextgenthemes/websites
           ref: master
+          sparse-checkout: |
+            .
+            bin
           path: .
           token: ${{ secrets.REPO_TOKEN }}
-
-      - name: rm -rf symbiosistheme.com
-        run: rm -rf symbiosistheme.com
 
       - name: rm composer.json
         run: rm composer.json
