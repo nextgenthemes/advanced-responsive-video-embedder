@@ -68,9 +68,7 @@ function action_admin_init_setup_messages() {
 		);
 	}
 
-	//  delete_user_meta( get_current_user_id(), 'dnh_dismissed_notices' )
-
-	if ( true || PHP_VERSION_ID < 70400 ) {
+	if ( PHP_VERSION_ID < 70400 ) {
 
 		$msg = esc_html__(
 			'Your php version is very outdated, the next version of ARVE will require 7.4+ please update (ask your host to update).',
