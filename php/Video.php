@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-use function \Nextgenthemes\WP\get_var_dump;
-use function \Nextgenthemes\WP\get_url_arg;
-use function \Nextgenthemes\WP\ngt_get_block_wrapper_attributes;
-use function \Nextgenthemes\WP\attr;
-use function \Nextgenthemes\WP\check_product_keys;
-use function \Nextgenthemes\WP\valid_url;
+use function Nextgenthemes\WP\get_var_dump;
+use function Nextgenthemes\WP\get_url_arg;
+use function Nextgenthemes\WP\ngt_get_block_wrapper_attributes;
+use function Nextgenthemes\WP\attr;
+use function Nextgenthemes\WP\check_product_keys;
+use function Nextgenthemes\WP\valid_url;
 
 use WP_Error;
 
@@ -330,7 +330,7 @@ class Video {
 	 */
 	public function current_set_props(): array {
 
-		$current_args = [];
+		$current_args = array();
 
 		foreach ( $this as $key => $val ) {
 			if ( isset( $this->$key ) || null === $val ) {
@@ -385,9 +385,12 @@ class Video {
 	}
 
 	/**
-	 * @return string|bool
+	 * A description of the entire PHP function.
+	 *
+	 * @param string $ratio colon separated string (width:height)
+	 * @return string|null ratio or null to disable
 	 */
-	private function arg_aspect_ratio( string $ratio ) {
+	private function arg_aspect_ratio( string $ratio ): ?string {
 
 		if ( ! empty( $ratio ) ) {
 			return $ratio;
@@ -569,7 +572,7 @@ class Video {
 			throw new \Exception( "$prop_name 'property does not exists" );
 		}
 
-		$url_args      = array_merge( VIDEO_FILE_EXTENSIONS, [ 'url' ] );
+		$url_args      = array_merge( VIDEO_FILE_EXTENSIONS, array( 'url' ) );
 		$type          = get_arg_type( $prop_name );
 		$property_type = ( new \ReflectionProperty(__CLASS__, $prop_name) )->getType()->getName();
 
@@ -685,7 +688,7 @@ class Video {
 			$this->autoplay;
 		$preload  = 'metadata';
 
-		if ( in_array( $this->mode, [ 'lazyload', 'lightbox' ], true ) && ! empty( $this->img_src ) ) {
+		if ( in_array( $this->mode, array( 'lazyload', 'lightbox' ), true ) && ! empty( $this->img_src ) ) {
 			$preload = 'none';
 		}
 
@@ -907,7 +910,7 @@ class Video {
 			$class     .= ' arve-embed--has-aspect-ratio';
 			$ratio_span = sprintf( '<span class="arve-ar" style="padding-top:%F%%"></span>', aspect_ratio_to_percentage( $this->aspect_ratio ) );
 
-			if ( ! in_array($this->aspect_ratio, [ '16:9', '375:211' ], true) ) {
+			if ( ! in_array($this->aspect_ratio, array( '16:9', '375:211' ), true) ) {
 				$ar    = str_replace( ':', ' / ', $this->aspect_ratio );
 				$style = sprintf( 'aspect-ratio: %s', $ar );
 			}

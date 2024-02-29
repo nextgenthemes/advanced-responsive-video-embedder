@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-use \Nextgenthemes\WP\Settings;
-use \Nextgenthemes\WP;
+use Nextgenthemes\WP\Settings;
+use Nextgenthemes\WP;
 use Exception;
 
 function options(): array {
@@ -822,7 +822,6 @@ function all_settings(): array {
 			'default'     => true,
 			'shortcode'   => false,
 			'option'      => true,
-
 			'label'       => __( 'Enable lagacy shortcodes', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
 			'description' => __( 'Enable the old and deprected <code>[youtube id="abcde" /]</code> or <code>[vimeo id="abcde" /]</code> ... style shortcodes. Only enable if you have them in your content.', 'advanced-responsive-video-embedder' ),
@@ -831,7 +830,6 @@ function all_settings(): array {
 			'default'     => true,
 			'shortcode'   => true,
 			'option'      => true,
-
 			'label'       => __( 'Sandbox', 'advanced-responsive-video-embedder' ),
 			'type'        => 'select',
 			'options'     => $def_bool_options,
@@ -842,7 +840,6 @@ function all_settings(): array {
 			'default'     => true,
 			'shortcode'   => false,
 			'option'      => true,
-
 			'label'       => __( 'Enable structured data (schema.org)', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
 			'description' => __( 'ARVE Pro helps you autofill the data so you do not have to manually enter things for every single video to make it complete.', 'advanced-responsive-video-embedder' ),
@@ -851,7 +848,6 @@ function all_settings(): array {
 			'default'     => true,
 			'shortcode'   => false,
 			'option'      => true,
-
 			'label'       => __( 'Enable help text?', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
 			'description' => __( 'Disabling this makes the interface in Gutenberg/Shortcode dialog much cleaner.', 'advanced-responsive-video-embedder' ),
@@ -864,21 +860,21 @@ function all_settings(): array {
 			'type'        => 'boolean',
 			'description' => __( 'Enable the plugin in RSS/Atom feeds? Disabling will not completely diable everything but it will use native WP behavior in feeds where possible.', 'advanced-responsive-video-embedder' ),
 		),
-		'reset_after_played' => [
+		'reset_after_played' => array(
 			'tag'         => 'pro',
 			'default'     => 'enabled',
 			'shortcode'   => false,
 			'option'      => true,
 			'label'       => __( 'Reset after played', 'advanced-responsive-video-embedder' ),
 			'type'        => 'select',
-			'options'     => [
+			'options'     => array(
 				''                   => __( 'Default', 'advanced-responsive-video-embedder' ),
 				'enabled'            => __( 'Enabled', 'advanced-responsive-video-embedder' ),
 				'disabled'           => __( 'Disabled', 'advanced-responsive-video-embedder' ),
 				'disabled-for-vimeo' => __( 'Disabled for Vimeo only', 'advanced-responsive-video-embedder' ),
-			],
+			),
 			'description' => __( 'When enabled ARVE Pro will display the thumbnail again like it is shown before the video was loaded. When a video is displayed in a lightbox the lightbox will automatically close. If you are using Vimeos "call to action" feature for example you want to disable this for vimeo.', 'advanced-responsive-video-embedder' ),
-		],
+		),
 		/*
 		'videojs_theme' => [
 			'tag'       => 'videojs',
@@ -910,6 +906,23 @@ function all_settings(): array {
 			'label'       => __( 'Admin bar ARVE button', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
 			'description' => __( 'For quickly accessing the ARVE settings page.', 'advanced-responsive-video-embedder' ),
+		),
+		'lightbox_aspect_ratio' => array(
+			'tag'         => 'pro',
+			'default'     => null,
+			'shortcode'   => true,
+			'option'      => false,
+			'label'       => __( 'Lightbox aspect ratio', 'advanced-responsive-video-embedder' ),
+			'type'        => 'string',
+			'description' => __( 'The aspect ratio of the lightbox. Leave empty to use the original video aspect ratio.', 'advanced-responsive-video-embedder' ),
+		),
+		'eager_load_first_thumbnail' => array(
+			'tag'         => 'pro',
+			'default'     => false,
+			'shortcode'   => false,
+			'option'      => true,
+			'label'       => __( 'Eager load first thumbnail', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'Enable eager loading of the first thumbnail on every page.', 'advanced-responsive-video-embedder' ),
 		),
 	);
 
