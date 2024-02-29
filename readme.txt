@@ -195,8 +195,13 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-02-29 9.10.13 ###
+* Improved: Make Admin notice dismiss without jQuery. May fix an extremly rare issue of dismiss failing.   
+* Tested with latest WP 6.5-nightly
+* Plugin is no longer being tested with PHP versions below 7.2+, in theory the 9.x versions should work with PHP 5.6+.
+
 ### 2023-09-16 9.10.12 ###
-* Tested with latest WP version.
+* Tested with latest WP 6.5-nightly
 * Updated warning that next major version will required php 7.4+.
 
 ### 2023-05-17 9.10.9 ###
