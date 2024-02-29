@@ -195,6 +195,9 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-02-29 9.10.14 ###
+* Fix: Wrongly displayed message about outdated PHP version.
+
 ### 2024-02-29 9.10.13.1 ###
 * Cut development files from the distribution.
 
