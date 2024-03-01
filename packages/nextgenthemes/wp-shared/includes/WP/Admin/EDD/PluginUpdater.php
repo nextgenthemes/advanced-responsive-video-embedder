@@ -1,5 +1,7 @@
-<?php declare(strict_types=1);
+<?php
 namespace Nextgenthemes\WP\Admin\EDD;
+
+// phpcs:disable
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,18 +12,18 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Allows plugins to use their own update API.
  *
  * @author Easy Digital Downloads
- * @version 1.9.1
+ * @version 1.9.2
  */
 class PluginUpdater {
 
-	private $api_url     = '';
-	private $api_data    = array();
-	private $plugin_file = '';
-	private $name        = '';
-	private $slug        = '';
-	private $version     = '';
-	private $wp_override = false;
-	private $beta        = false;
+	private $api_url              = '';
+	private $api_data             = array();
+	private $plugin_file          = '';
+	private $name                 = '';
+	private $slug                 = '';
+	private $version              = '';
+	private $wp_override          = false;
+	private $beta                 = false;
 	private $failed_request_cache_key;
 
 	/**
@@ -34,7 +36,7 @@ class PluginUpdater {
 	 * @param string  $_plugin_file Path to the plugin file.
 	 * @param array   $_api_data    Optional data to send with API calls.
 	 */
-	public function __construct( string $_api_url, string $_plugin_file, array $_api_data = null ) {
+	public function __construct( $_api_url, $_plugin_file, $_api_data = null ) {
 
 		global $edd_plugin_data;
 
@@ -69,8 +71,9 @@ class PluginUpdater {
 	 *
 	 * @uses add_filter()
 	 *
+	 * @return void
 	 */
-	public function init(): void {
+	public function init() {
 
 		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'check_update' ) );
 		add_filter( 'plugins_api', array( $this, 'plugins_api_filter' ), 10, 3 );
@@ -92,12 +95,12 @@ class PluginUpdater {
 	 * @param array   $_transient_data Update array build by WordPress.
 	 * @return array Modified update array with custom plugin data.
 	 */
-	public function check_update( array $_transient_data ): array {
+	public function check_update( $_transient_data ) {
 
 		global $pagenow;
 
 		if ( ! is_object( $_transient_data ) ) {
-			$_transient_data = new \stdClass();
+			$_transient_data = new stdClass();
 		}
 
 		if ( ! empty( $_transient_data->response ) && ! empty( $_transient_data->response[ $this->name ] ) && false === $this->wp_override ) {
@@ -123,8 +126,9 @@ class PluginUpdater {
 	 * Get repo API data from store.
 	 * Save to cache.
 	 *
+	 * @return \stdClass
 	 */
-	public function get_repo_api_data(): \stdClass {
+	public function get_repo_api_data() {
 		$version_info = $this->get_cached_version_info();
 
 		if ( false === $version_info ) {
@@ -142,6 +146,7 @@ class PluginUpdater {
 			// This is required for your plugin to support auto-updates in WordPress 5.5.
 			$version_info->plugin = $this->name;
 			$version_info->id     = $this->name;
+			$version_info->tested = $this->get_tested_version( $version_info );
 
 			$this->set_version_info_cache( $version_info );
 		}
@@ -150,11 +155,44 @@ class PluginUpdater {
 	}
 
 	/**
+	 * Gets the plugin's tested version.
+	 *
+	 * @since 1.9.2
+	 * @param object $version_info
+	 * @return null|string
+	 */
+	private function get_tested_version( $version_info ) {
+
+		// There is no tested version.
+		if ( empty( $version_info->tested ) ) {
+			return null;
+		}
+
+		// Strip off extra version data so the result is x.y or x.y.z.
+		list( $current_wp_version ) = explode( '-', get_bloginfo( 'version' ) );
+
+		// The tested version is greater than or equal to the current WP version, no need to do anything.
+		if ( version_compare( $version_info->tested, $current_wp_version, '>=' ) ) {
+			return $version_info->tested;
+		}
+		$current_version_parts = explode( '.', $current_wp_version );
+		$tested_parts          = explode( '.', $version_info->tested );
+
+		// The current WordPress version is x.y.z, so update the tested version to match it.
+		if ( isset( $current_version_parts[2] ) && $current_version_parts[0] === $tested_parts[0] && $current_version_parts[1] === $tested_parts[1] ) {
+			$tested_parts[2] = $current_version_parts[2];
+		}
+
+		return implode( '.', $tested_parts );
+	}
+
+	/**
 	 * Show the update notification on multisite subsites.
 	 *
+	 * @param string  $file
 	 * @param array   $plugin
 	 */
-	public function show_update_notification( string $file, array $plugin ): void {
+	public function show_update_notification( $file, $plugin ) {
 
 		// Return early if in the network admin, or if this is not a multisite install.
 		if ( is_network_admin() || ! is_multisite() ) {
@@ -175,7 +213,7 @@ class PluginUpdater {
 
 		if ( ! isset( $update_cache->response[ $this->name ] ) ) {
 			if ( ! is_object( $update_cache ) ) {
-				$update_cache = new \stdClass();
+				$update_cache = new stdClass();
 			}
 			$update_cache->response[ $this->name ] = $this->get_repo_api_data();
 		}
@@ -264,7 +302,7 @@ class PluginUpdater {
 	 *
 	 * @return array
 	 */
-	private function get_active_plugins(): array {
+	private function get_active_plugins() {
 		$active_plugins         = (array) get_option( 'active_plugins' );
 		$active_network_plugins = (array) get_site_option( 'active_sitewide_plugins' );
 
@@ -277,9 +315,11 @@ class PluginUpdater {
 	 * @uses api_request()
 	 *
 	 * @param mixed   $_data
+	 * @param string  $_action
+	 * @param object  $_args
 	 * @return object $_data
 	 */
-	public function plugins_api_filter( $_data, string $_action = '', object $_args = null ): object {
+	public function plugins_api_filter( $_data, $_action = '', $_args = null ) {
 
 		if ( 'plugin_information' !== $_action ) {
 
@@ -356,10 +396,11 @@ class PluginUpdater {
 	 *
 	 * @since 3.6.5
 	 *
+	 * @param stdClass $data
 	 *
 	 * @return array
 	 */
-	private function convert_object_to_array( stdClass $data ): array {
+	private function convert_object_to_array( $data ) {
 		if ( ! is_array( $data ) && ! is_object( $data ) ) {
 			return array();
 		}
@@ -375,9 +416,10 @@ class PluginUpdater {
 	 * Disable SSL verification in order to prevent download update failures
 	 *
 	 * @param array   $args
+	 * @param string  $url
 	 * @return object $array
 	 */
-	public function http_request_args( array $args, string $url ): object {
+	public function http_request_args( $args, $url ) {
 
 		if ( strpos( $url, 'https://' ) !== false && strpos( $url, 'edd_action=package_download' ) ) {
 			$args['sslverify'] = $this->verify_ssl();
@@ -397,7 +439,7 @@ class PluginUpdater {
 	 * @param array   $_data   Parameters for the API action.
 	 * @return false|object|void
 	 */
-	private function api_request( string $_action, array $_data ) {
+	private function api_request( $_action, $_data ) {
 		$data = array_merge( $this->api_data, $_data );
 
 		if ( $data['slug'] !== $this->slug ) {
@@ -421,8 +463,9 @@ class PluginUpdater {
 	 *
 	 * @since 1.9.1
 	 *
+	 * @return bool
 	 */
-	private function request_recently_failed(): bool {
+	private function request_recently_failed() {
 		$failed_request_details = get_option( $this->failed_request_cache_key );
 
 		// Request has never failed.
@@ -454,14 +497,14 @@ class PluginUpdater {
 	 *
 	 * @since 1.9.1
 	 */
-	private function log_failed_request(): void {
+	private function log_failed_request() {
 		update_option( $this->failed_request_cache_key, strtotime( '+1 hour' ) );
 	}
 
 	/**
 	 * If available, show the changelog for sites in a multisite install.
 	 */
-	public function show_changelog(): void {
+	public function show_changelog() {
 
 		if ( empty( $_REQUEST['edd_sl_action'] ) || 'view_plugin_changelog' !== $_REQUEST['edd_sl_action'] ) {
 			return;
@@ -562,8 +605,10 @@ class PluginUpdater {
 	/**
 	 * Get the version info from the cache, if it exists.
 	 *
+	 * @param string $cache_key
+	 * @return object
 	 */
-	public function get_cached_version_info( string $cache_key = '' ): object {
+	public function get_cached_version_info( $cache_key = '' ) {
 
 		if ( empty( $cache_key ) ) {
 			$cache_key = $this->get_cache_key();
@@ -589,8 +634,10 @@ class PluginUpdater {
 	/**
 	 * Adds the plugin version information to the database.
 	 *
+	 * @param string $value
+	 * @param string $cache_key
 	 */
-	public function set_version_info_cache( string $value = '', string $cache_key = '' ): void {
+	public function set_version_info_cache( $value = '', $cache_key = '' ) {
 
 		if ( empty( $cache_key ) ) {
 			$cache_key = $this->get_cache_key();
@@ -611,8 +658,9 @@ class PluginUpdater {
 	 * Returns if the SSL of the store should be verified.
 	 *
 	 * @since  1.6.13
+	 * @return bool
 	 */
-	private function verify_ssl(): bool {
+	private function verify_ssl() {
 		return (bool) apply_filters( 'edd_sl_api_request_verify_ssl', true, $this );
 	}
 
@@ -620,8 +668,9 @@ class PluginUpdater {
 	 * Gets the unique key (option name) for a plugin.
 	 *
 	 * @since 1.9.0
+	 * @return string
 	 */
-	private function get_cache_key(): string {
+	private function get_cache_key() {
 		$string = $this->slug . $this->api_data['license'] . $this->beta;
 
 		return 'edd_sl_' . md5( serialize( $string ) );
