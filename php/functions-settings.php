@@ -916,14 +916,6 @@ function all_settings(): array {
 			'type'        => 'string',
 			'description' => __( 'The aspect ratio of the lightbox. Leave empty to use the original video aspect ratio.', 'advanced-responsive-video-embedder' ),
 		),
-		'eager_load_first_thumbnail' => array(
-			'tag'         => 'pro',
-			'default'     => false,
-			'shortcode'   => false,
-			'option'      => true,
-			'label'       => __( 'Eager load first thumbnail', 'advanced-responsive-video-embedder' ),
-			'description' => __( 'Enable eager loading of the first thumbnail on every page.', 'advanced-responsive-video-embedder' ),
-		),
 	);
 
 	//$settings = apply_filters( 'nextgenthemes/arve/settings', $settings );
