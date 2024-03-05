@@ -72,13 +72,13 @@ function remove_url_query( string $url ): string {
 /**
  * Convert a string with dashes to camel case.
  *
- * @param string $string The input string with dashes.
+ * @param string $str The input string with dashes.
  * @param bool $capitalize_first_character Whether to capitalize the first character.
  * @return string The converted camel case string.
  */
-function dashes_to_camel_case( string $string, bool $capitalize_first_character = false ): string {
+function dashes_to_camel_case( string $str, bool $capitalize_first_character = false ): string {
 
-	$str = str_replace( '-', '', ucwords( $string, '-' ) );
+	$str = str_replace( '-', '', ucwords( $str, '-' ) );
 
 	if ( ! $capitalize_first_character ) {
 		$str = lcfirst( $str );
