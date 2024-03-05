@@ -1,0 +1,34 @@
+{
+    "name": "nextgenthemes/wp-shared",
+    "type": "wp-package",
+    "license": "GPL-3.0",
+    "autoload": {
+        "psr-4": {
+            "WP\\": "includes/WP"
+        },
+        "files": [
+            "includes/WP/fn-asset-helpers.php",
+            "includes/WP/fn-compat.php",
+            "includes/WP/fn-deprecated.php",
+            "includes/WP/fn-array.php",
+            "includes/WP/fn-string.php",
+            "includes/WP/fn-misc.php",
+            "includes/WP/fn-settings.php",
+            "includes/WP/fn-license.php",
+            "includes/WP/fn-remote-get.php",
+            "includes/WP/Admin/load-admin-files.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Nicolas Jonas"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "scripts": {
+        "update-alpine": "wget https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js -O ./includes/WP/Admin/alpine.js"
+    },
+    "version": "2024.03.05.08.36.26"
+}

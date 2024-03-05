@@ -87,13 +87,6 @@ jobs:
           tools: phpunit-polyfills:1
           coverage: none #optional
 
-      - name: Install composer dependencies
-        working-directory: symbiosistheme.com/web/app/plugins/advanced-responsive-video-embedder
-        run: >
-          composer config repositories.nextgenthemes/wp-shared
-          --json '{"type": "path", "url": "./packages/nextgenthemes/wp-shared", "options": {"symlink": false}}' &&
-          composer update --optimize-autoloader --no-dev
-
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
 
@@ -121,13 +114,6 @@ jobs:
       - name: Get the version
         id: get_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-
-      - name: Install composer dependencies
-        working-directory: advanced-responsive-video-embedder
-        run: >
-          composer config repositories.nextgenthemes/wp-shared
-          --json '{"type": "path", "url": "./packages/nextgenthemes/wp-shared", "options": {"symlink": false}}' &&
-          composer update --optimize-autoloader --no-dev
 
       - name: Deploy
         uses: nextgenthemes/action-wordpress-plugin-deploy@master
