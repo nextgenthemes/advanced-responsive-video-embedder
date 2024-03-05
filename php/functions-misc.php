@@ -202,3 +202,18 @@ function is_gutenberg(): bool {
 
 	return $use_block_editor;
 }
+
+/**
+ * Register oEmbed Widget.
+ *
+ * Include widget file and register widget class.
+ *
+ * @since 1.0.0
+ * @param \Elementor\Widgets_Manager $widgets_manager Elementor widgets manager.
+ */
+function register_elementor_widget( \Elementor\Widgets_Manager $widgets_manager ): void {
+
+	require_once __DIR__ . '/ElementorWidget.php';
+
+	$widgets_manager->register( new ElementorWidget() );
+}
