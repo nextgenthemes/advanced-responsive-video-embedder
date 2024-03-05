@@ -50,6 +50,8 @@ function init_public(): void {
 	add_filter( 'language_attributes', __NAMESPACE__ . '\html_id' );
 	add_filter( 'oembed_dataparse', __NAMESPACE__ . '\filter_oembed_dataparse', PHP_INT_MAX, 3 );
 	add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', OEMBED_HTML_PRIORITY, 4 );
+
+	add_action( 'elementor/widgets/register', __NAMESPACE__ . '\register_elementor_widget' );
 }
 
 function init_admin(): void {
