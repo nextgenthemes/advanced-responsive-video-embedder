@@ -187,7 +187,7 @@ class Asset {
 			if ( $this->mce ) {
 				add_filter(
 					'mce_css',
-					function( $mce_css ) {
+					function ( $mce_css ) {
 						if ( ! empty( $mce_css ) ) {
 							$mce_css .= ',';
 						}
@@ -283,7 +283,7 @@ class Asset {
 				if ( 'SCRIPT' === $tag_processor->get_tag() && $tag_processor->get_attribute( 'src' ) ) {
 					$tag_processor->set_attribute( 'type', $type );
 					break;
-				};
+				}
 			}
 
 			$tag = $tag_processor->get_updated_html();
