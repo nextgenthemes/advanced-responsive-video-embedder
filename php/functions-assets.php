@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-use function \Nextgenthemes\WP\register_asset;
+use function Nextgenthemes\WP\register_asset;
 
 function register_assets(): void {
 
@@ -46,10 +46,17 @@ function register_assets(): void {
 		register_asset(
 			array(
 				'handle'               => 'arve-block',
+				'src'                  => plugins_url( 'build/block.css', PLUGIN_FILE ),
+				'path'                 => PLUGIN_DIR . '/build/block.css',
+				'deps'                 => array( 'arve' ),
+			)
+		);
+
+		register_asset(
+			array(
+				'handle'               => 'arve-block',
 				'src'                  => plugins_url( 'build/block.js', PLUGIN_FILE ),
 				'path'                 => PLUGIN_DIR . '/build/block.js',
-				//'deps'                 => array( 'arve' ),
-				'in_footer'            => false,
 				'inline_script_before' => [
 					'settings' => $settings,
 					'options'  => $options,
