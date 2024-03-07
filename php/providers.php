@@ -655,4 +655,17 @@
 			),
 		),
 	),
+	'kick' => array(
+		'name'           => 'Kick',
+		'oembed'         => false,
+		'regex'          => '#https?://(?:player\\.)?kick\\.com/(?<id>[a-z0-9]+)#i',
+		'embed_url'      => 'https://player.kick.com/%s',
+		'default_params' => 'allowfullscreen=true',
+		'tests'          => array(
+			0 => array(
+				'url' => 'https://kick.com/judiliusd',
+				'id'  => 'judiliusd',
+			),
+		),
+	),
 );
