@@ -1,8 +1,7 @@
 <?php
-use function \Nextgenthemes\ARVE\shortcode;
-use function \Nextgenthemes\ARVE\get_host_properties;
+use function Nextgenthemes\ARVE\shortcode;
+use function Nextgenthemes\ARVE\get_host_properties;
 
-// phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_Ratio extends WP_UnitTestCase {
 
 	public function test_ratio(): void {
@@ -28,7 +27,7 @@ class Tests_Ratio extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'style="aspect-ratio: 1 / 1', $html );
 	}
 
-	public function test_ratio_1by3(): void {
+	public function test_ratio_1by4(): void {
 
 		$html = shortcode(
 			array(
@@ -38,6 +37,21 @@ class Tests_Ratio extends WP_UnitTestCase {
 		);
 		$this->assertStringNotContainsString( 'Error', $html );
 		$this->assertStringContainsString( 'style="aspect-ratio: 1 / 4', $html );
+	}
 
+	/**
+	 * Test the YouTube short ratio function.
+	 *
+	 * @group ytshorts
+	 */
+	public function test_youtube_short_ratio(): void {
+
+		$html = shortcode(
+			array(
+				'url' => 'https://www.youtube.com/shorts/hgPa4VzuHdY',
+			)
+		);
+		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringContainsString( 'style="aspect-ratio: 9 / 16', $html );
 	}
 }
