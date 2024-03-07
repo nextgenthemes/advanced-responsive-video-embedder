@@ -65,18 +65,15 @@ function attr( array $attr = array() ): string {
  */
 function get_url_arg( string $url, string $arg ): ?string {
 
-	$parsed_url = \wp_parse_url( $url );
+	$query_string = parse_url( $url, PHP_URL_QUERY );
 
-	if ( ! empty( $parsed_url['query'] ) ) {
-
-		parse_str( $parsed_url['query'], $url_query );
-
-		if ( isset( $url_query[ $arg ] ) ) {
-			return $url_query[ $arg ];
-		}
+	if ( empty( $query_string ) || ! is_string( $query_string ) ) {
+		return null;
 	}
 
-	return null;
+	parse_str( $query_string, $query_args );
+
+	return $query_args[ $arg ] ?? null;
 }
 
 /**
@@ -89,7 +86,7 @@ function get_var_dump( $var ) {
 	// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_dump
 	var_dump( $var );
 	return ob_get_clean();
-};
+}
 
 /**
  * This is to prevent constant() throwing as Error in PHP 8, E_WARNING in PHP < 8
