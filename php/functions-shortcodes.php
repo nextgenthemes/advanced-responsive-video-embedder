@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
+use function Nextgenthemes\WP\is_wp_debug;
+
 function shortcode( array $a ): string {
 
 	$a                        = (array) $a;
@@ -40,10 +42,16 @@ function shortcode( array $a ): string {
 
 function error( string $messages, string $code = '' ): string {
 
+	$hide = false;
+
+	if ( str_contains( $code, 'hidden' ) && ! is_wp_debug() ) {
+		$hide = true;
+	}
+
 	return sprintf(
 		PHP_EOL . PHP_EOL .
 		'<span class="arve-error"%s><abbr title="%s">ARVE</abbr> %s</span>' . PHP_EOL,
-		str_contains( $code, 'hidden' ) ? 'hidden' : '',
+		$hide ? 'hidden' : '',
 		__( 'Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ),
 		// translators: Error message
 		sprintf( __( 'Error: %s', 'advanced-responsive-video-embedder' ), $messages ),
