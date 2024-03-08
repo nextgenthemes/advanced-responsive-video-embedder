@@ -7,7 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     '43a21213b4da0f477aca1a29680efb75' => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/fn-asset-helpers.php',
-    'd1723f1a8b014655d7deae1d0e168ab4' => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/fn-compat.php',
     '7bb4640fe0b0b617681aef28cdb79e0d' => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/fn-deprecated.php',
     '37dd8fa3c77ee4ed9386d4281e889d6b' => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/fn-array.php',
     '3ccff2c7bceb2ad4cdfe20147906989a' => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/fn-string.php',

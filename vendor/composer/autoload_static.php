@@ -8,7 +8,6 @@ class ComposerStaticInit9efe32db768b97aefc1d2657c3980c69
 {
     public static $files = array (
         '43a21213b4da0f477aca1a29680efb75' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/fn-asset-helpers.php',
-        'd1723f1a8b014655d7deae1d0e168ab4' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/fn-compat.php',
         '7bb4640fe0b0b617681aef28cdb79e0d' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/fn-deprecated.php',
         '37dd8fa3c77ee4ed9386d4281e889d6b' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/fn-array.php',
         '3ccff2c7bceb2ad4cdfe20147906989a' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/fn-string.php',

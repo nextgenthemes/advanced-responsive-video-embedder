@@ -55,23 +55,23 @@ return array(
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-manifest-reader.php'
 	),
 	'Nextgenthemes\\WP\\Admin\\EDD\\PluginUpdater' => array(
-		'version' => '2024.03.05.08.36.26',
+		'version' => '2024.03.08.07.10.32',
 		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/Admin/EDD/PluginUpdater.php'
 	),
 	'Nextgenthemes\\WP\\Admin\\EDD\\ThemeUpdater' => array(
-		'version' => '2024.03.05.08.36.26',
+		'version' => '2024.03.08.07.10.32',
 		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/Admin/EDD/ThemeUpdater.php'
 	),
 	'Nextgenthemes\\WP\\Admin\\Notices' => array(
-		'version' => '2024.03.05.08.36.26',
+		'version' => '2024.03.08.07.10.32',
 		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/Admin/Notices.php'
 	),
 	'Nextgenthemes\\WP\\Asset' => array(
-		'version' => '2024.03.05.08.36.26',
+		'version' => '2024.03.08.07.10.32',
 		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/Asset.php'
 	),
 	'Nextgenthemes\\WP\\Settings' => array(
-		'version' => '2024.03.05.08.36.26',
+		'version' => '2024.03.08.07.10.32',
 		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/Settings.php'
 	),
 	'PHP_Autoloader' => array(
