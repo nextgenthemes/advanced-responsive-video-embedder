@@ -21,9 +21,9 @@
 	"repositories": {
 		"nextgenthemes/wp-shared": {
 			"type": "path",
-			"url": "./packages/nextengthemes/wp-shared",
+			"url": "../nextgenthemes/wp-shared",
 			"options": {
-				"symlink": true
+				"symlink": false
 			}
 		}
 	}

@@ -4,57 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5347ddb75b8a9be1428c6a52f6ba1d1b",
+    "content-hash": "6439486b14679fa22f773b23a255df9f",
     "packages": [
-        {
-            "name": "nextgenthemes/wp-shared",
-            "version": "dev-videoclass72",
-            "dist": {
-                "type": "path",
-                "url": "packages/nextgenthemes/wp-shared",
-                "reference": "b566fcac1a8c5fc98b9109a752e25da8e9474e38"
-            },
-            "require": {
-                "php": ">=7.4"
-            },
-            "type": "wp-package",
-            "autoload": {
-                "psr-4": {
-                    "WP\\": "includes/WP"
-                },
-                "files": [
-                    "includes/WP/fn-asset-helpers.php",
-                    "includes/WP/fn-compat.php",
-                    "includes/WP/fn-deprecated.php",
-                    "includes/WP/fn-array.php",
-                    "includes/WP/fn-string.php",
-                    "includes/WP/fn-misc.php",
-                    "includes/WP/fn-settings.php",
-                    "includes/WP/fn-license.php",
-                    "includes/WP/fn-remote-get.php",
-                    "includes/WP/Admin/load-admin-files.php"
-                ]
-            },
-            "scripts": {
-                "update": [
-                    "wget https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js -O ./includes/WP/Admin/alpine.js"
-                ]
-            },
-            "license": [
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Jonas"
-                }
-            ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        }
-    ],
-    "packages-dev": [
         {
             "name": "automattic/jetpack-autoloader",
             "version": "v3.0.2",
@@ -117,8 +68,55 @@
                 "source": "https://github.com/Automattic/jetpack-autoloader/tree/v3.0.2"
             },
             "time": "2023-11-21T18:59:10+00:00"
+        },
+        {
+            "name": "nextgenthemes/wp-shared",
+            "version": "2024.03.08.07.10.32",
+            "dist": {
+                "type": "path",
+                "url": "./packages/nextgenthemes/wp-shared",
+                "reference": "53f12bd260431deba5a5d4f32408b852f6ee293d"
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "type": "wp-package",
+            "autoload": {
+                "psr-4": {
+                    "WP\\": "includes/WP"
+                },
+                "files": [
+                    "includes/WP/fn-asset-helpers.php",
+                    "includes/WP/fn-deprecated.php",
+                    "includes/WP/fn-array.php",
+                    "includes/WP/fn-string.php",
+                    "includes/WP/fn-misc.php",
+                    "includes/WP/fn-settings.php",
+                    "includes/WP/fn-license.php",
+                    "includes/WP/fn-remote-get.php",
+                    "includes/WP/Admin/load-admin-files.php"
+                ]
+            },
+            "scripts": {
+                "update-alpine": [
+                    "wget https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js -O ./includes/WP/Admin/alpine.js"
+                ]
+            },
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Jonas"
+                }
+            ],
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
         }
     ],
+    "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
