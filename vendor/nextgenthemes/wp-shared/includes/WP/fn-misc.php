@@ -65,31 +65,15 @@ function attr( array $attr = array() ): string {
  */
 function get_url_arg( string $url, string $arg ): ?string {
 
-	$parsed_url = \wp_parse_url( $url );
+	$query_string = parse_url( $url, PHP_URL_QUERY );
 
-	if ( ! empty( $parsed_url['query'] ) ) {
-
-		parse_str( $parsed_url['query'], $url_query );
-
-		if ( isset( $url_query[ $arg ] ) ) {
-			return $url_query[ $arg ];
-		}
+	if ( empty( $query_string ) || ! is_string( $query_string ) ) {
+		return null;
 	}
 
-	return null;
-}
-
-/**
- * Retrieves the value of a specified query parameter from the given URL.
- *
- * @param string $url The URL from which to retrieve the query parameter.
- * @param string $arg_name The name of the query parameter to retrieve.
- * @return ?string The value of the specified query parameter, or null if it doesn't exist.
- */
-function get_url_arg_new( string $url, string $arg_name ): ?string {
-	$query_string = parse_url( $url, PHP_URL_QUERY );
 	parse_str( $query_string, $query_args );
-	return $query_args[ $arg_name ] ?? null;
+
+	return $query_args[ $arg ] ?? null;
 }
 
 /**
