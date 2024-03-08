@@ -35,11 +35,11 @@ function update_block_json( array $attr ): void {
 	try {
 		$json = json_decode( $json, true, 15, JSON_THROW_ON_ERROR );
 	} catch (\JsonException $exception) {
-		wp_die( esc_html( $exception->getMessage() ) );
+		die( esc_html( $exception->getMessage() ) );
 	}
 
 	if ( empty( $json ) ) {
-		wp_die( esc_html( 'Empty JSON' ) );
+		die( esc_html( 'Empty JSON' ) );
 	}
 
 	$json['attributes'] = $attr;
@@ -50,7 +50,7 @@ function update_block_json( array $attr ): void {
 }
 
 function __( string $a, string $b ): string {
-	return 'dummy';
+	return $a;
 }
 
 function esc_html( string $str ): string {

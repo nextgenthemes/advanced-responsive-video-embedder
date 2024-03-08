@@ -1,0 +1,13 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+use function \escapeshellarg as e;
+
+require_once getenv('HOME') . '/bin/tools-dev/php-common/common.php';
+
+chdir( dirname(__DIR__) );
+
+$now = new DateTime();
+
+sys('rsync --delete -av ./vendor/nextgenthemes/wp-shared ../nextgenthemes/');
+sys('composer --working-dir ../nextgenthemes/wp-shared config version ' . e( $now->format('Y.m.d.H.i.s') ) );
+sys('composer update --optimize-autoloader');

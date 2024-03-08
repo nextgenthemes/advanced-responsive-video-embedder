@@ -6,5 +6,4 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 
 "$SCRIPTPATH"/block-json
 "$SCRIPTPATH"/build-readme
-"$SCRIPTPATH"/sort-provider-array
-
+"$SCRIPTPATH"/composer-update

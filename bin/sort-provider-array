@@ -9,6 +9,7 @@ namespace Nextgenthemes\ARVE;
 function __( string $a, string $b ): string {
 	return $a;
 }
+
 function varexport($expression, $return = false) {
 	$export = var_export($expression, true);
 	$export = preg_replace('/^([ ]*)(.*)/m', '$1$1$2', $export);
