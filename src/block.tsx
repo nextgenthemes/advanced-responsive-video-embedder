@@ -28,6 +28,7 @@ import {
 } from '@wordpress/components';
 import { registerBlockType } from '@wordpress/blocks';
 import classnames from 'classnames';
+import { Fragment } from '@wordpress/element';
 
 export {};
 declare global {
@@ -70,11 +71,11 @@ interface OptionProps {
 const { name } = json;
 const { settings, options } = window.ArveBlockJsBefore;
 delete settings.align.options.center;
-
 const domParser = new DOMParser();
 
-/*
+/**
  * Keypair to gutenberg component
+ * @param selectOptions
  */
 function PrepareSelectOptions( selectOptions: OptionProps ) {
 	const gboptions = [] as Array< SelectOption >;
@@ -91,24 +92,34 @@ function PrepareSelectOptions( selectOptions: OptionProps ) {
 	return gboptions;
 }
 
-function maybeSetAspectRatio( key: string, value: string, props ) {
+function changeTextControl( key: string, value: string, props ) {
 	if ( 'url' === key ) {
 		const iframe = domParser.parseFromString( value, 'text/html' ).querySelector( 'iframe' );
 		if ( iframe && iframe.getAttribute( 'src' ) ) {
-			value = iframe.src;
-			const w = iframe.width;
-			const h = iframe.height;
-			if ( w && h ) {
-				props.setAttributes( {
-					aspect_ratio: aspectRatio( w, h ),
-				} );
+			props.setAttributes( {
+				[ key ]: iframe.getAttribute( 'src' ),
+			} );
+
+			if ( iframe.width && iframe.height ) {
+				const ratio = aspectRatio( iframe.width, iframe.height );
+
+				if ( '16:9' !== ratio ) {
+					props.setAttributes( {
+						aspect_ratio: ratio,
+					} );
+				}
 			}
+			return;
 		}
 	}
+
+	props.setAttributes( {
+		[ key ]: value,
+	} );
 }
-const mediaUploadRender = ( open: VoidFunction, val, url ) => {
+
+const mediaUploadRender = ( open: VoidFunction, val, url: string ) => {
 	return (
-		// @ts-ignore
 		<div className="editor-post-featured-image__container">
 			{ /* @ts-ignore */ }
 			<Button
@@ -122,14 +133,8 @@ const mediaUploadRender = ( open: VoidFunction, val, url ) => {
 				aria-describedby={ ! val ? '' : `editor-post-featured-image-${ val }-describedby` }
 			>
 				{ !! val && !! url && (
-					<div
-						style={ {
-							overflow: 'hidden',
-						} }
-					>
-						{ /* @ts-ignore */ }
+					<div style={ { overflow: 'hidden' } }>
 						<ResponsiveWrapper naturalWidth={ 640 } naturalHeight={ 360 } isInline>
-							{ /* @ts-ignore */ }
 							<img
 								src={ url }
 								alt="ARVE Thumbnail"
@@ -144,7 +149,6 @@ const mediaUploadRender = ( open: VoidFunction, val, url ) => {
 				) }
 				{ ! val && __( 'Set Thumbnail' ) }
 			</Button>
-			{ /* @ts-ignore */ }
 			<DropZone />
 		</div>
 	);
@@ -167,13 +171,11 @@ function buildControls( props ) {
 		const url = '';
 
 		sectionControls[ option.tag ].push(
-			<>
+			<Fragment key={ key + '-fragment' }>
 				{ 'boolean' === option.type && (
-					// @ts-ignore
 					<ToggleControl
 						key={ key }
 						label={ option.label }
-						// @ts-ignore
 						help={ createHelp( option ) }
 						checked={ !! val }
 						onChange={ ( value ) => {
@@ -188,7 +190,6 @@ function buildControls( props ) {
 						key={ key }
 						value={ val }
 						label={ option.label }
-						// @ts-ignore
 						help={ createHelp( option ) }
 						options={ PrepareSelectOptions( option.options ) }
 						onChange={ ( value ) => {
@@ -199,37 +200,29 @@ function buildControls( props ) {
 					/>
 				) }
 				{ 'string' === option.type && (
-					// @ts-ignore
 					<TextControl
 						key={ key }
 						label={ option.label }
 						placeholder={ option.placeholder }
-						// @ts-ignore
 						help={ createHelp( option ) }
 						value={ val }
 						onChange={ ( value ) => {
-							maybeSetAspectRatio( key, value, props );
-							return props.setAttributes( {
-								[ key ]: value,
-							} );
+							changeTextControl( key, value, props );
 						} }
 					/>
 				) }
 				{ 'attachment' === option.type && (
-					// @ts-ignore
 					<BaseControl
 						key={ key }
 						className="editor-post-featured-image"
-						// @ts-ignore
 						help={ createHelp( option ) }
 					>
-						{ /* @ts-ignore */ }
 						<MediaUploadCheck
-							// @ts-ignore
+							key={ key + '-MediaUploadCheck-1' }
 							fallback={ mediaUploadInstructions }
 						>
-							{ /* @ts-ignore */ }
 							<MediaUpload
+								key={ key + '-MediaUpload-1' }
 								title={ __( 'Thumbnail' ) }
 								onSelect={ ( media ) => {
 									selectedMedia = media;
@@ -240,7 +233,6 @@ function buildControls( props ) {
 								} }
 								allowedTypes={ [ 'image' ] }
 								modalClass="editor-post-featured-image__media-modal"
-								// @ts-ignore
 								render={ ( { open } ) => {
 									return mediaUploadRender( open, val, url );
 								} }
@@ -248,10 +240,9 @@ function buildControls( props ) {
 							/>
 						</MediaUploadCheck>
 						{ !! val && !! url && (
-							// @ts-ignore
-							<MediaUploadCheck>
-								{ /* @ts-ignore */ }
+							<MediaUploadCheck key={ key + '-MediaUploadCheck-2' }>
 								<MediaUpload
+									key={ key + '-MediaUpload-2' }
 									title={ __( 'Thumbnail' ) }
 									onSelect={ ( media ) => {
 										selectedMedia = media;
@@ -263,7 +254,6 @@ function buildControls( props ) {
 									allowedTypes={ [ 'image' ] }
 									modalClass="editor-post-featured-image__media-modal"
 									render={ ( { open } ) => (
-										// @ts-ignore
 										<Button onClick={ open } variant="secondary">
 											{ __( 'Replace Thumbnail' ) }
 										</Button>
@@ -272,10 +262,9 @@ function buildControls( props ) {
 							</MediaUploadCheck>
 						) }
 						{ !! val && (
-							// @ts-ignore
-							<MediaUploadCheck>
-								{ /* @ts-ignore */ }
+							<MediaUploadCheck key={ key + '-MediaUploadCheck-3' }>
 								<Button
+									key={ key + '-MediaUpload-3-btn' }
 									onClick={ () => {
 										return props.setAttributes( {
 											[ key ]: '',
@@ -291,11 +280,9 @@ function buildControls( props ) {
 						) }
 					</BaseControl>
 				) }
-			</>
+			</Fragment>
 		);
 	} );
-
-	let open = true;
 
 	sectionControls.main.push(
 		<BaseControl
@@ -305,7 +292,6 @@ function buildControls( props ) {
 				'advanced-responsive-video-embedder'
 			) }
 		>
-			{ /* @ts-ignore */ }
 			<BaseControl.VisualLabel>
 				{ __( 'Info', 'advanced-responsive-video-embedder' ) }
 			</BaseControl.VisualLabel>
@@ -314,15 +300,24 @@ function buildControls( props ) {
 
 	Object.keys( sectionControls ).forEach( ( key ) => {
 		controls.push(
-			// @ts-ignore
-			<PanelBody key={ key } title={ capitalizeFirstLetter( key ) } initialOpen={ open }>
+			<PanelBody key={ key } title={ capitalizeFirstLetter( key ) } initialOpen={ true }>
 				{ sectionControls[ key ] }
 			</PanelBody>
 		);
-		open = false;
 	} );
 
 	return controls;
+
+	// Object.keys( sectionControls ).forEach( ( key ) => {
+	// 	controls.push( sectionControls[ key ] );
+	// 	open = false;
+	// } );
+
+	// return (
+	// 	<PanelBody key="arve" title="ARVE" initialOpen={ true }>
+	// 		{ controls }
+	// 	</PanelBody>
+	// );
 }
 
 function createHelp( option: OptionProps ) {
@@ -344,11 +339,11 @@ function createHelp( option: OptionProps ) {
 	return option.description;
 }
 
-function capitalizeFirstLetter( string ) {
-	return string.charAt( 0 ).toUpperCase() + string.slice( 1 );
+function capitalizeFirstLetter( str: string ): string {
+	return str.charAt( 0 ).toUpperCase() + str.slice( 1 );
 }
 
-function Edit( props ) {
+function Edit( props: Record< string, any > ) {
 	const {
 		attributes: { mode, align, maxwidth },
 	} = props;
@@ -375,7 +370,6 @@ function Edit( props ) {
 	return (
 		<>
 			<div { ...blockProps } key="block">
-				{ /* @ts-ignore */ }
 				<ServerSideRender
 					className={ classnames( {
 						'arve-ssr': true,
@@ -386,11 +380,7 @@ function Edit( props ) {
 					skipBlockSupportAttributes={ true }
 				/>
 			</div>
-			{ /* @ts-ignore */ }
-			<InspectorControls key="insp">
-				{ /* @ts-ignore */ }
-				{ buildControls( props ) }
-			</InspectorControls>
+			<InspectorControls key="insp">{ buildControls( props ) }</InspectorControls>
 		</>
 	);
 }
@@ -400,29 +390,30 @@ registerBlockType( name, {
 	edit: Edit,
 } );
 
-function aspectRatio( w, h ) {
-	const arGCD = gcd( w, h );
+function aspectRatio( width: string, height: string ): string {
+	if ( isIntOverZero( width ) && isIntOverZero( height ) ) {
+		const w = parseInt( width );
+		const h = parseInt( height );
+		const arGCD = gcd( w, h );
 
-	return w / arGCD + ':' + h / arGCD;
+		return w / arGCD + ':' + h / arGCD;
+	}
+
+	return width + ':' + height;
 }
 
-function gcd( a, b ) {
+function isIntOverZero( str: string ): boolean {
+	const n = Math.floor( Number( str ) );
+	return n !== Infinity && String( n ) === str && n > 0;
+}
+
+function gcd( a: number, b: number ): number {
 	if ( ! b ) {
 		return a;
 	}
 
 	return gcd( b, a % b );
 }
-
-/*
-wp.data.dispatch( 'core/edit-post' ).hideBlockTypes( [
-	'core-embed/youtube',
-	'core-embed/vimeo',
-	'core-embed/dailymotion',
-	'core-embed/collegehumor',
-	'core-embed/ted',
-] );
-*/
 
 /*
 TODO when the sanitizer API
