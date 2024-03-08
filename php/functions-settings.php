@@ -23,7 +23,7 @@ function settings_sections(): array {
 		'sticky-videos' => __( 'Sticky Videos', 'advanced-responsive-video-embedder' ),
 		'random-video'  => __( 'Random Video', 'advanced-responsive-video-embedder' ),
 		'urlparams'     => __( 'URL Parameters', 'advanced-responsive-video-embedder' ),
-		'html5'         => __( 'HTML5', 'advanced-responsive-video-embedder' ),
+		'html5'         => __( 'Video Files', 'advanced-responsive-video-embedder' ),
 		'debug'         => __( 'Debug Info', 'advanced-responsive-video-embedder' ),
 		#'videojs'      => __( 'Video.js', 'advanced-responsive-video-embedder' ),
 	);
@@ -63,10 +63,10 @@ function init_nextgenthemes_settings(): void {
 	);
 }
 
-function has_bool_default_options( array $array ): bool {
+function has_bool_default_options( array $arr ): bool {
 
 	return ! array_diff_key(
-		$array,
+		$arr,
 		array(
 			''      => true,
 			'true'  => true,
@@ -108,7 +108,7 @@ function shortcode_settings(): array {
 	return $settings;
 }
 
-function gutenberg_ui_settings( bool $html5 = false ): array {
+function gutenberg_ui_settings(): array {
 	$settings = shortcode_settings();
 	unset( $settings['maxwidth'] );
 	return $settings;
@@ -280,20 +280,30 @@ function all_settings(): array {
 			'descriptionlinktext' => esc_html__( 'unlisted', 'advanced-responsive-video-embedder' ),
 			'shortcode'           => true,
 		),
-		'description' => array(
-			'default'             => '',
-			'option'              => false,
-			'shortcode'           => true,
-			'label'               => __( 'Description', 'advanced-responsive-video-embedder' ),
-			'type'                => 'string',
-			'placeholder'         => __( 'Description Text', 'advanced-responsive-video-embedder' ),
-			'description'         => sprintf(
-				// translators: URL
-				__( 'Needed for SEO <a href="%s">ARVE Pro</a> fills this automatically', 'advanced-responsive-video-embedder' ),
-				esc_url( $pro_addon_link )
-			),
-			'descriptionlink'     => esc_url( $pro_addon_link ),
-			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
+		'loop' => array(
+			'default'     => 'n',
+			'shortcode'   => true,
+			'option'      => false,
+			'label'       => __( 'Loop?', 'advanced-responsive-video-embedder' ),
+			'type'        => 'boolean',
+			'description' => __( 'Note not all video hosts provide this feature.', 'advanced-responsive-video-embedder' ),
+		),
+		'muted' => array(
+			'default'     => 'n',
+			'shortcode'   => true,
+			'option'      => false,
+			'label'       => __( 'Mute?', 'advanced-responsive-video-embedder' ),
+			'type'        => 'boolean',
+			'description' => __( 'Note not all video hosts provide this feature.', 'advanced-responsive-video-embedder' ),
+		),
+		'controls' => array(
+			'default'     => true,
+			'label'       => __( 'Show Controls? (Video file only)', 'advanced-responsive-video-embedder' ),
+			'type'        => 'select',
+			'options'     => $def_bool_options,
+			'description' => __( 'Note that not all video hosts provide this feature.', 'advanced-responsive-video-embedder' ),
+			'shortcode'   => true,
+			'option'      => true,
 		),
 		'title' => array(
 			'type'                => 'string',
@@ -671,7 +681,7 @@ function all_settings(): array {
 			'type'        => 'boolean',
 			'description' => __( 'Use ARVE to embed HTML5 video files. ARVE uses the browsers players instead of loading the mediaelement player that WP uses.', 'advanced-responsive-video-embedder' ),
 		),
-		'controlslist'                  => array(
+		'controlslist' => array(
 			'tag'         => 'html5',
 			'default'     => '',
 			'label'       => __( 'Chrome HTML5 Player controls', 'advanced-responsive-video-embedder' ),
@@ -681,36 +691,7 @@ function all_settings(): array {
 			'shortcode'   => true,
 			'option'      => true,
 		),
-		'controls'                      => array(
-			'tag'         => 'html5',
-			'default'     => true,
-			'label'       => __( 'Show Controls? (Video file only)', 'advanced-responsive-video-embedder' ),
-			'type'        => 'select',
-			'options'     => $def_bool_options,
-			'description' => __( 'Show controls on HTML5 video.', 'advanced-responsive-video-embedder' ),
-
-			'shortcode'   => true,
-			'option'      => true,
-		),
-		'loop' => array(
-			'tag'         => 'html5',
-			'default'     => 'n',
-			'shortcode'   => true,
-			'option'      => false,
-			'label'       => __( 'Loop?', 'advanced-responsive-video-embedder' ),
-			'type'        => 'boolean',
-			'description' => __( 'Loop HTML5 video.', 'advanced-responsive-video-embedder' ),
-		),
-		'muted'                         => array(
-			'tag'         => 'html5',
-			'default'     => 'n',
-			'shortcode'   => true,
-			'option'      => false,
-			'label'       => __( 'Mute?', 'advanced-responsive-video-embedder' ),
-			'type'        => 'boolean',
-			'description' => __( 'Mute HTML5 video.', 'advanced-responsive-video-embedder' ),
-		),
-		'volume'                        => array(
+		'volume' => array(
 			'tag'         => 'pro',
 			'default'     => 100,
 			'shortcode'   => true,
@@ -720,7 +701,7 @@ function all_settings(): array {
 			'type'        => 'integer',
 			'description' => __( 'Works with video files only.', 'advanced-responsive-video-embedder' ),
 		),
-		'always_enqueue_assets'         => array(
+		'always_enqueue_assets' => array(
 			'shortcode'   => false,
 			'option'      => true,
 
@@ -729,14 +710,13 @@ function all_settings(): array {
 			'type'        => 'boolean',
 			'description' => __( 'Default=No ARVE will loads its scripts and styles only when the posts content contains a arve video. In case your content is loaded via AJAX at a later stage this detection will not work or the styles are not loaded for another reason you may have to enable this option', 'advanced-responsive-video-embedder' ),
 		),
-		'youtube_nocookie'              => array(
+		'youtube_nocookie' => array(
 			'default'     => true,
 			'shortcode'   => false,
 			'option'      => true,
-
 			'label'       => __( 'Use youtube-nocookie.com url?', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
-			'description' => __( 'Privacy enhanced mode, will NOT disable cookies but only sets them when a user starts to play a video. There is currently a youtube bug that opens highlighed video boxes with a wrong -nocookie.com url so you need to disble this if you need those.', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'Privacy enhanced mode, will NOT disable cookies but only sets them when a user starts to play a video.', 'advanced-responsive-video-embedder' ),
 		),
 		'vimeo_api_id'                  => array(
 			'tag'                 => 'random-video',
@@ -909,7 +889,8 @@ function all_settings(): array {
 		),
 		'lightbox_aspect_ratio' => array(
 			'tag'         => 'pro',
-			'default'     => null,
+			'default'     => '',
+			'placeholder' => '9:16',
 			'shortcode'   => true,
 			'option'      => false,
 			'label'       => __( 'Lightbox aspect ratio', 'advanced-responsive-video-embedder' ),
