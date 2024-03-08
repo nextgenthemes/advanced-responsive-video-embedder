@@ -310,6 +310,10 @@ function iframesrc_urlarg_autoplay( string $src, string $provider, bool $autopla
 			return $autoplay ?
 				add_query_arg( 'autoplay', 1, $src ) :
 				add_query_arg( 'autoplay', 0, $src );
+		case 'rumble':
+			return $autoplay ?
+				add_query_arg( 'autoplay', 2, $src ) :
+				add_query_arg( 'autoplay', 0, $src );
 		case 'twitch':
 		case 'ustream':
 			return $autoplay ?
@@ -333,6 +337,7 @@ function iframesrc_urlarg_autoplay( string $src, string $provider, bool $autopla
 			return $autoplay ?
 				add_query_arg( 'autoplay', 1, $src ) :
 				remove_query_arg( 'autoplay', $src );
+		case 'kick':
 		case 'yahoo':
 			return $autoplay ?
 				add_query_arg( 'autoplay', 'true', $src ) :
