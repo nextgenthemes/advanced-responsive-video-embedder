@@ -115,7 +115,7 @@ function create_shortcodes(): void {
 
 		foreach ( $shortcode_options as $provider => $shortcode ) {
 
-			$function = function( $a ) use ( $provider, $properties ) {
+			$function = function ( $a ) use ( $provider, $properties ) {
 
 				$a['provider'] = $provider;
 
