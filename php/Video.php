@@ -155,6 +155,7 @@ class Video {
 	private function process_shortcode_atts(): void {
 
 		$this->missing_attribute_check();
+		$this->detect_from_embed_code();
 
 		foreach ( $this->shortcode_atts as $arg_name => $value ) {
 			$this->set_prop( $arg_name, $value );
@@ -181,6 +182,36 @@ class Video {
 		$this->set_prop( 'autoplay', $this->arg_autoplay( $this->autoplay ) );
 		$this->set_prop( 'src', $this->arg_iframe_src( $this->src ) );
 		$this->set_prop( 'uid', sanitize_key( uniqid( "arve-{$this->provider}-{$this->id}", true ) ) );
+	}
+
+	/**
+	 * If a iframe embed code is passed through the url argument, we extract src and ratio.
+	 *
+	 */
+	private function detect_from_embed_code(): void {
+
+		if ( empty( $this->shortcode_atts['url'] ) ||
+			! str_contains( $this->shortcode_atts['url'], '<iframe' )
+		) {
+			return;
+		}
+
+		$p = new \WP_HTML_Tag_Processor( $this->shortcode_atts['url'] );
+		$p->next_tag( 'iframe' );
+
+		$src = $p->get_attribute( 'src' );
+		$w   = $p->get_attribute( 'width' );
+		$h   = $p->get_attribute( 'height' );
+
+		if ( ! empty( $src ) && is_string( $src ) ) {
+			$this->shortcode_atts['url'] = $src;
+		}
+
+		if ( ! empty( $w ) && is_numeric( $w ) &&
+			! empty( $h ) && is_numeric( $h )
+		) {
+			$this->shortcode_atts['aspect_ratio'] = "$w:$h";
+		}
 	}
 
 	private function arg_iframe_src( string $src ): string {
