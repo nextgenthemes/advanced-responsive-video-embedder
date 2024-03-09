@@ -59,7 +59,7 @@ function list_hooks( string $hook = '' ): array {
 	if ( isset( $wp_filter[ $hook ]->callbacks ) ) {
 		array_walk(
 			$wp_filter[ $hook ]->callbacks,
-			function( $callbacks, $priority ) use ( &$hooks ): void {
+			function ( $callbacks, $priority ) use ( &$hooks ): void {
 				foreach ( $callbacks as $id => $callback ) {
 					$hooks[] = array_merge(
 						[

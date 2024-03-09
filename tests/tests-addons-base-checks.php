@@ -27,6 +27,6 @@ class Tests_AddonsBaseChecks extends WP_UnitTestCase {
 			$this->assertTrue( $products[ $p ]['active'], 'active not true' );
 
 			$this->assertEquals( $products[ $p ]['type'], 'plugin' );
-		};
+		}
 	}
 }

@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE\Admin;
 
-use \Nextgenthemes\ARVE;
+use Nextgenthemes\ARVE;
 
 use function Nextgenthemes\ARVE\shortcode_settings;
-use function \Nextgenthemes\WP\Admin\print_settings_blocks;
+use function Nextgenthemes\WP\Admin\print_settings_blocks;
 
 function add_media_button(): void {
 

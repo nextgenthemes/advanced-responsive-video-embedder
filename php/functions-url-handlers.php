@@ -7,7 +7,7 @@ function create_url_handlers(): void {
 
 	foreach ( $properties as $provider => $values ) {
 
-		$function = function( $matches, $attr, $url, $rawattr ) use ( $provider ) {
+		$function = function ( $matches, $attr, $url, $rawattr ) use ( $provider ) {
 			return url_handler( $provider, $matches, $attr, $url, $rawattr );
 		};
 

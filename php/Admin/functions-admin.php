@@ -1,22 +1,22 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE\Admin;
 
-use const \Nextgenthemes\ARVE\PREMIUM_SECTIONS;
-use const \Nextgenthemes\ARVE\PREMIUM_URL_PREFIX;
-use const \Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
-use const \Nextgenthemes\ARVE\PLUGIN_DIR;
-use const \Nextgenthemes\ARVE\PLUGIN_FILE;
-use function \Nextgenthemes\ARVE\is_gutenberg;
-use function \Nextgenthemes\ARVE\shortcode_settings;
-use function \Nextgenthemes\ARVE\settings_sections;
-use function \Nextgenthemes\ARVE\options;
+use const Nextgenthemes\ARVE\PREMIUM_SECTIONS;
+use const Nextgenthemes\ARVE\PREMIUM_URL_PREFIX;
+use const Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
+use const Nextgenthemes\ARVE\PLUGIN_DIR;
+use const Nextgenthemes\ARVE\PLUGIN_FILE;
+use function Nextgenthemes\ARVE\is_gutenberg;
+use function Nextgenthemes\ARVE\shortcode_settings;
+use function Nextgenthemes\ARVE\settings_sections;
+use function Nextgenthemes\ARVE\options;
 
-use \Nextgenthemes\WP\Admin\Notices;
-use function \Nextgenthemes\WP\enqueue_asset;
-use function \Nextgenthemes\WP\register_asset;
-use function \Nextgenthemes\WP\ver;
-use function \Nextgenthemes\WP\attr;
-use function \Nextgenthemes\WP\kses_basic;
+use Nextgenthemes\WP\Admin\Notices;
+use function Nextgenthemes\WP\enqueue_asset;
+use function Nextgenthemes\WP\register_asset;
+use function Nextgenthemes\WP\ver;
+use function Nextgenthemes\WP\attr;
+use function Nextgenthemes\WP\kses_basic;
 
 const ALLOWED_HTML = array(
 	'a'      => array(
@@ -308,11 +308,11 @@ function admin_enqueue_scripts(): void {
 		);
 
 		// register_asset(
-		// 	array(
-		// 		'handle' => 'arve-shortcode-dialog',
-		// 		'src'    => plugins_url( 'vendor/nextgenthemes/wp-shared/dist/assets/' . basename($shortcode_dialog_css), PLUGIN_FILE ),
-		// 		'path'   => $shortcode_dialog_css,
-		// 	)
+		//  array(
+		//      'handle' => 'arve-shortcode-dialog',
+		//      'src'    => plugins_url( 'vendor/nextgenthemes/wp-shared/dist/assets/' . basename($shortcode_dialog_css), PLUGIN_FILE ),
+		//      'path'   => $shortcode_dialog_css,
+		//  )
 		// );
 	}
 

@@ -1,6 +1,6 @@
 <?php
 
-use \Nextgenthemes\ARVE;
+use Nextgenthemes\ARVE;
 
 // phpcs:disable Squiz.Classes.ClassFileName.NoMatch
 // phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps

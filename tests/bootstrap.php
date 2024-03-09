@@ -7,7 +7,7 @@
 
 define( 'ARVE_UNIT_TESTS', true );
 
-require_once dirname( dirname( __FILE__ ) ) . '/vendor/autoload.php';
+require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
@@ -54,5 +54,3 @@ wp_update_user(
 		'last_name'  => 'User',
 	)
 );
-
-

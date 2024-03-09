@@ -1,7 +1,7 @@
 <?php
 
-use \Nextgenthemes\ARVE;
-use \Nextgenthemes\ARVE\Admin;
+use Nextgenthemes\ARVE;
+use Nextgenthemes\ARVE\Admin;
 
 
 // phpcs:disable Squiz.Classes.ClassFileName.NoMatch

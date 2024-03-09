@@ -89,4 +89,3 @@ function promote_link( bool $arve_link ): string {
 
 	return '';
 }
-

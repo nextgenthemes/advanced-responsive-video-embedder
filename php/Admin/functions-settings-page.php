@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE\Admin;
 
-use \Nextgenthemes\ARVE;
-use \Nextgenthemes\WP;
+use Nextgenthemes\ARVE;
+use Nextgenthemes\WP;
 
 function settings_content(): void {
 

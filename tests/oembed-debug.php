@@ -1,7 +1,7 @@
 <?php
 
-use function \Nextgenthemes\ARVE\shortcode;
-use function \Nextgenthemes\ARVE\get_host_properties;
+use function Nextgenthemes\ARVE\shortcode;
+use function Nextgenthemes\ARVE\get_host_properties;
 
 // phpcs:disable Squiz.Classes.ClassFileName.NoMatch
 // phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
