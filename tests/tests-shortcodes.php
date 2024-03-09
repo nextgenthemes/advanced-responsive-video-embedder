@@ -1,7 +1,7 @@
 <?php
-use function \Nextgenthemes\ARVE\shortcode;
-use function \Nextgenthemes\ARVE\get_host_properties;
-use function \Nextgenthemes\WP\remote_get_body;
+use function Nextgenthemes\ARVE\shortcode;
+use function Nextgenthemes\ARVE\get_host_properties;
+use function Nextgenthemes\WP\remote_get_body;
 
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_Shortcodes extends WP_UnitTestCase {
@@ -17,7 +17,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 
 		add_filter(
 			'nextgenthemes/arve/shortcode_override',
-			function() {
+			function () {
 				return 'override';
 			},
 			10,
@@ -98,7 +98,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 		$properties = get_host_properties();
 
 		// if ( ! getenv('CI') ) {
-		// 	add_filter( 'shortcode_atts_arve', [ $this, 'oembed_log' ], 999 );
+		//  add_filter( 'shortcode_atts_arve', [ $this, 'oembed_log' ], 999 );
 		// }
 
 		foreach ( $properties as $provider => $v ) :
@@ -170,8 +170,8 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 
 		$html = shortcode(
 			array(
-				'url'     => 'https://example.com',
-				'sandbox' => 'no',
+				'url'             => 'https://example.com',
+				'encrypted_media' => 'y',
 			)
 		);
 
@@ -280,5 +280,30 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 			endforeach;
 
 		endforeach;
+	}
+
+	/**
+	 * Test the extraction of iframes from the provided URL.
+	 *
+	 * @group iframe-extraction
+	 */
+	public function test_iframe_extraction(): void {
+
+		$html = shortcode(
+			array(
+				'url' => '<iframe src="https://example.com" width="640" height="320" frameborder="0" allowfullscreen></iframe>',
+			)
+		);
+
+		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringContainsString( 'aspect-ratio: 640 / 320', $html );
+
+		$p = new \WP_HTML_Tag_Processor( $html );
+
+		$this->assertTrue( $p->next_tag( [ 'class_name' => 'arve' ] ), $html );
+		$this->assertEquals( 'iframe', $p->get_attribute( 'data-provider' ) );
+
+		$this->assertTrue( $p->next_tag( 'iframe' ), $html );
+		$this->assertEquals( 'https://example.com', $p->get_attribute( 'src' ) );
 	}
 }
