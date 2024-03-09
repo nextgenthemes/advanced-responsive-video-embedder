@@ -8,6 +8,5 @@ Requires PHP: 7.4
 Stable tag: 10.0.0-dev
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-embedder/
 
 Easy video embeds via URLs, Shortcodes or Blocks. Perfect drop-in replacement for WordPress' default embeds. Best plugin for videos?
