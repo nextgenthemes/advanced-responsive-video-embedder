@@ -5,7 +5,7 @@ Tags: embed, video, lazyload, lightbox, rumble
 Requires at least: 6.3.0
 Tested up to: 6.5.0
 Requires PHP: 7.4
-Stable tag: 10.0.0-dev
+Stable tag: 10.0.0-alpha1
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-embedder/
