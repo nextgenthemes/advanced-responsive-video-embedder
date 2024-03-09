@@ -11,13 +11,14 @@
 * Optional ARVE button on the admin bar for quick access to the ARVE Settings page.
 
 #### Fixed ####
-* Pasting iframe embed code pasting it the block editor.
+* Pasting iframe embed code in the URL field in the Block Editor.
 
 #### Improved ####
 * Make embeds even more private.
 * New look and UX improvement to the shortcode creation dialog in Classic Editor.
 * Loop and Mute previously were only used for (self hosted) video files. These shortcode attributes now add `loop=1&mute1` to the iframe `src` as well. Note not every provider supports them. For loop on youtube embeds the video ID is also need as the `playlist=` parameter. ARVE is doing this automatically now.
 * Lots code changes to modernize and make the code more robust.
+* Sandbox setting has been replaced with 'Enabled Encrypted Media'.
 
 ### 2024-02-29 9.10.14 ###
 * Fix: Wrongly displayed message about outdated PHP version.
