@@ -1,7 +1,7 @@
 === Advanced Responsive Video Embedder (Rumble, YouTube, Vimeo, HTML5 Video ...) ===
 Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
-Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
+Tags: Rumble, Video, Embed, Lazyload, iframe
 Requires at least: 4.9.16
 Tested up to: 6.5
 Requires PHP: 5.6
