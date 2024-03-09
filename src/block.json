@@ -13,7 +13,7 @@
         "vimeo",
         "odysee"
     ],
-    "version": "10.0.0-dev",
+    "version": "10.0.0-alpha1",
     "textdomain": "advanced-responsive-video-embedder",
     "supports": {
         "align": [
@@ -40,10 +40,19 @@
         "url": {
             "type": "string"
         },
-        "description": {
+        "loop": {
+            "type": "boolean"
+        },
+        "muted": {
+            "type": "boolean"
+        },
+        "controls": {
             "type": "string"
         },
         "title": {
+            "type": "string"
+        },
+        "description": {
             "type": "string"
         },
         "upload_date": {
@@ -106,15 +115,6 @@
         "controlslist": {
             "type": "string"
         },
-        "controls": {
-            "type": "string"
-        },
-        "loop": {
-            "type": "boolean"
-        },
-        "muted": {
-            "type": "boolean"
-        },
         "volume": {
             "type": "integer"
         },
@@ -124,7 +124,10 @@
         "random_video_urls": {
             "type": "string"
         },
-        "sandbox": {
+        "encrypted_media": {
+            "type": "boolean"
+        },
+        "lightbox_aspect_ratio": {
             "type": "string"
         },
         "thumbnail_url": {
