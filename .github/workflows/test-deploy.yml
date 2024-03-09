@@ -124,7 +124,7 @@ jobs:
           svn_pass: ${{ secrets.SVN_PASSWORD }}
           build_dirs: vendor
           verbose: true
-          dry-run: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'dev') }}
+          dry-run: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'dev') }}
 
       - run: >
           mv /tmp/wp-deploy/svn-advanced-responsive-video-embedder/tags/${{ steps.get_version.outputs.VERSION }}
