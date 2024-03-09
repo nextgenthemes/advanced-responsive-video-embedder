@@ -34,6 +34,8 @@
     },
     "editorScript": "arve-block",
     "editorStyle": "arve-block",
+    "viewScript": "arve",
+    "viewStyle": "arve",
     "attributes": {
         "url": {
             "type": "string"
