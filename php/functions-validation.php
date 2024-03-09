@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-use function \Nextgenthemes\WP\valid_url;
+use function Nextgenthemes\WP\valid_url;
 
 /**
  * @param string|int $id_or_url
@@ -40,6 +40,14 @@ function validate_thumbnail( $id_or_url ): string {
 	return '';
 }
 
+
+/**
+ * Validates a URL and returns the validated URL or an error message.
+ *
+ * @param string $argname The name of the argument being validated.
+ * @param string $value The value of the argument being validated. Can be an URL or a HTML string with the a embed code.
+ * @return string The validated URL or an error message.
+ */
 function validate_url( string $argname, string $url ): string {
 
 	if ( ! empty( $url ) && ! valid_url( $url ) ) {
@@ -60,7 +68,7 @@ function validate_url( string $argname, string $url ): string {
 /**
  * @param mixed $value
  */
-function validate_bool( string $attr_name, $value ): bool {
+function validate_type_bool( string $attr_name, $value ): bool {
 
 	if ( is_bool( $value ) ) {
 		return $value;
@@ -196,7 +204,7 @@ function validate_height( $height ) {
 /**
  * @param mixed $value
  */
-function validate_int( string $prop_name, $value ): int {
+function validate_type_int( string $prop_name, $value ): int {
 
 	if ( is_int( $value ) ) {
 		return $value;
@@ -218,4 +226,3 @@ function validate_int( string $prop_name, $value ): int {
 
 	return 0;
 }
-
