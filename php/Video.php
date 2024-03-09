@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
+use WP_Error;
 use function Nextgenthemes\WP\get_var_dump;
 use function Nextgenthemes\WP\get_url_arg;
 use function Nextgenthemes\WP\ngt_get_block_wrapper_attributes;
 use function Nextgenthemes\WP\attr;
 use function Nextgenthemes\WP\check_product_keys;
 use function Nextgenthemes\WP\valid_url;
-
-use WP_Error;
+use function Nextgenthemes\WP\str_contains_any;
 
 class Video {
 
@@ -21,7 +21,7 @@ class Video {
 	private bool $hide_title;
 	private bool $loop;
 	private bool $muted;
-	private bool $sandbox;
+	private bool $encrypted_media;
 	private bool $sticky;
 	private bool $sticky_on_mobile;
 
@@ -58,6 +58,7 @@ class Video {
 	private string $thumbnail_fallback;
 	private string $title;
 	private string $upload_date;
+	private ?string $lightbox_aspect_ratio;
 
 	// html5
 	private string $av1mp4;
@@ -103,6 +104,16 @@ class Video {
 		ksort( $this->org_args );
 	}
 
+	/**
+	 * Set the value of a property.
+	 *
+	 * @param string $property The name of the property to set.
+	 * @param mixed $value The value to set for the property.
+	 */
+	public function __set( string $property, $value ): void {
+		wp_trigger_error( __METHOD__, 'Not allowed to directly set properties, use private set_prop()' );
+	}
+
 	public function build_video(): string {
 
 		$html = '';
@@ -117,8 +128,9 @@ class Video {
 			$html .= $this->build_html();
 			$html .= $this->get_debug_info( $html );
 
-			wp_enqueue_style( 'arve' );
-			wp_enqueue_script( 'arve' );
+			if ( empty( $this->origin_data['gutenberg'] ) ) {
+				wp_enqueue_script( 'arve' );
+			}
 
 			return apply_filters( 'nextgenthemes/arve/html', $html, $this->current_set_props() );
 
@@ -126,12 +138,12 @@ class Video {
 
 			$trace = '';
 
-			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
-				$trace = '<br>Exception Trace:<br>' . var_export($e->getTrace(), true);
-			}
+			// if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			// 	// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
+			//  $trace = '<br>Exception Trace:<br>' . var_export($e->getTrace(), true);
+			// }
 
-			arve_errors()->add( $e->getCode(), $e->getMessage() . $trace );
+			$this->errors->add( $e->getCode(), $e->getMessage() . $trace );
 
 			$html .= get_error_html();
 			$html .= $this->get_debug_info();
@@ -171,21 +183,13 @@ class Video {
 		$this->set_prop( 'uid', sanitize_key( uniqid( "arve-{$this->provider}-{$this->id}", true ) ) );
 	}
 
-	private function arg_iframe_src( ?string $src ): string {
+	private function arg_iframe_src( string $src ): string {
 
 		if ( 'html5' === $this->provider ) {
 			return '';
 		}
 
-		$src_gen = $this->build_iframe_src(
-			$this->src,
-			$this->provider,
-			$this->id,
-			$this->account_id,
-			$this->brightcove_embed,
-			$this->brightcove_player,
-			$this->url
-		);
+		$src_gen = $this->build_iframe_src();
 
 		$src_gen = special_iframe_src_mods( $src_gen, $this->provider, $this->url );
 
@@ -203,11 +207,63 @@ class Video {
 		$src = iframesrc_urlargs( $src, $this->provider, $this->mode, $this->parameters );
 		$src = iframesrc_urlarg_autoplay( $src, $this->provider, $this->autoplay );
 		$src = iframesrc_urlarg_enablejsapi( $src, $this->provider );
+		$src = $this->iframesrc_urlarg_loop( $src );
+
+		if ( 'kick' === $this->provider && $this->muted ) {
+			$src = add_query_arg( 'muted', 'true', $src );
+		} elseif ( $this->muted ) {
+			$src = add_query_arg( 'mute', '1', $src );
+		}
+
+		if ( ! $this->controls ) {
+			$src = add_query_arg( 'controls', '0', $src );
+		}
 
 		return $src;
 	}
 
-	private function build_iframe_src( string $src, string $provider, string $id, string $account_id, string $brightcove_embed, string $brightcove_player, string $url ): string {
+	public static function src_is_youtube_playlist( string $src ): bool {
+
+		if ( get_url_arg( 'list', $src ) ||
+			get_url_arg( 'playlist', $src ) ||
+			str_contains_any( $src, [ '/playlist', '/videoseries' ] )
+		) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private function iframesrc_urlarg_loop( string $src ): string {
+
+		if ( ! $this->loop ) {
+			return $src;
+		}
+
+		if ( 'youtube' === $this->provider ) {
+
+			if ( $this->src_is_youtube_playlist( $src ) ) {
+				$src = add_query_arg( 'loop', '1', $src );
+			} elseif ( $this->id ) {
+				$src = add_query_arg( 'loop', '1', $src );
+				$src = add_query_arg( 'playlist', $this->id, $src );
+			}
+		} else {
+			$src = add_query_arg( 'loop', '1', $src );
+		}
+
+		return $src;
+	}
+
+	private function build_iframe_src(): string {
+
+		$src               = $this->src;
+		$provider          = $this->provider;
+		$id                = $this->id;
+		$account_id        = $this->account_id;
+		$brightcove_embed  = $this->brightcove_embed;
+		$brightcove_player = $this->brightcove_player;
+		$url               = $this->url;
 
 		// we do not have provider and id to build a src with
 		if ( ! $provider || ! $id ) {
@@ -325,8 +381,11 @@ class Video {
 		}
 	}
 
+
 	/**
-	 * @return array <string, any>
+	 * Retrieves the current set properties as an array.
+	 *
+	 * @return array The current set properties
 	 */
 	public function current_set_props(): array {
 
@@ -569,7 +628,7 @@ class Video {
 	public function set_prop( string $prop_name, $value ): void {
 
 		if ( ! property_exists($this, $prop_name) ) {
-			throw new \Exception( "$prop_name 'property does not exists" );
+			throw new \Exception( esc_html( "'$prop_name' property does not exists" ) );
 		}
 
 		$url_args      = array_merge( VIDEO_FILE_EXTENSIONS, array( 'url' ) );
@@ -585,8 +644,8 @@ class Video {
 			return;
 		}
 
+		$validate_type_function = __NAMESPACE__ . "\\validate_type_{$type}";
 		$validate_function      = __NAMESPACE__ . "\\validate_{$prop_name}";
-		$validate_type_function = __NAMESPACE__ . "\\validate_{$type}";
 
 		if ( function_exists( $validate_function ) ) {
 			$this->$prop_name = $validate_function( $value );
@@ -635,16 +694,11 @@ class Video {
 
 	private function build_iframe_tag(): string {
 
-		$allow   = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
 		$class   = 'arve-iframe fitvidsignore';
 		$sandbox = 'allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox';
 
 		if ( 'vimeo' === $this->provider || \str_contains( $this->src, 'vimeo.com' ) ) {
 			$sandbox .= ' allow-forms';
-		}
-
-		if ( ! $this->sandbox ) {
-			$sandbox = false;
 		}
 
 		if ( 'wistia' === $this->provider ) {
@@ -653,8 +707,63 @@ class Video {
 		}
 
 		if ( 'zoom' === $this->provider ) {
-			$allow   .= '; microphone; camera';
 			$sandbox .= ' allow-forms';
+		}
+
+		// https://github.com/w3c/webappsec-permissions-policy/issues/208
+		// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy#directives
+		$allow_directives = [
+			'accelerometer'                   => 'none',
+			'ambient-light-sensor'            => 'none',
+			'autoplay'                        => $this->autoplay ? 'self' : 'none',
+			'battery'                         => 'none',
+			'bluetooth'                       => 'none',
+			'browsing-topics'                 => 'none',
+			'camera'                          => ( 'zoom' === $this->provider ) ? 'self' : 'none',
+			'ch-ua'                           => 'none',
+			'clipboard-write'                 => 'self',
+			'display-capture'                 => 'none',
+			'document-domain'                 => 'none',
+			'domain-agent'                    => 'none',
+			'encrypted-media'                 => $this->encrypted_media ? 'self' : 'none',
+			'execution-while-not-rendered'    => 'none',
+			'execution-while-out-of-viewport' => 'none',
+			'gamepad'                         => 'none',
+			'geolocation'                     => 'none',
+			'gyroscope'                       => 'none',
+			'hid'                             => 'none',
+			'identity-credentials-get'        => 'none',
+			'idle-detection'                  => 'none',
+			'keyboard-map'                    => 'none',
+			'local-fonts'                     => 'none',
+			'magnetometer'                    => 'none',
+			'microphone'                      => ( 'zoom' === $this->provider ) ? 'self' : 'none',
+			'midi'                            => 'none',
+			'navigation-override'             => 'none',
+			'otp-credentials'                 => 'none',
+			'payment'                         => 'none',
+			'picture-in-picture'              => 'self',
+			'publickey-credentials-create'    => 'none',
+			'publickey-credentials-get'       => 'none',
+			'screen-wake-lock'                => 'none',
+			'serial'                          => 'none',
+			'speaker-selection'               => 'none',
+			'sync-xhr'                        => 'none',
+			'usb'                             => 'none',
+			'web-share'                       => 'self',
+			'window-management'               => 'none',
+			'xr-spatial-tracking'             => 'none',
+		];
+
+		$allow = '';
+
+		foreach ( $allow_directives as $key => $value ) {
+
+			if ( 'self' === $value ) {
+				$allow .= "$key;";
+			} else {
+				$allow .= "$key '$value';";
+			}
 		}
 
 		return $this->build_tag(
@@ -663,6 +772,8 @@ class Video {
 				'tag'        => 'iframe',
 				'inner_html' => '',
 				'attr'       => array(
+					'credentialless'  => '',
+					'referrerpolicy'  => 'no-referrer',
 					'allow'           => $allow,
 					'allowfullscreen' => '',
 					'class'           => $class,
@@ -671,7 +782,7 @@ class Video {
 					'frameborder'     => '0',
 					'height'          => $this->height,
 					'name'            => $this->iframe_name,
-					'sandbox'         => $sandbox,
+					'sandbox'         => $this->encrypted_media ? null : $sandbox,
 					'scrolling'       => 'no',
 					'src'             => $this->src,
 					'width'           => $this->width,
