@@ -1,7 +1,7 @@
 <?php
-use function \Nextgenthemes\ARVE\shortcode;
-use function \Nextgenthemes\ARVE\build_video;
-use function \Nextgenthemes\ARVE\get_host_properties;
+use function Nextgenthemes\ARVE\shortcode;
+use function Nextgenthemes\ARVE\build_video;
+use function Nextgenthemes\ARVE\get_host_properties;
 
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
@@ -95,12 +95,12 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Error', $html );
 	}
 
-	public function test_wrong_sandbox(): void {
+	public function test_wrong_encrypted_media(): void {
 
 		$html = shortcode(
 			array(
-				'url'     => 'example.com',
-				'sandbox' => 'bullshit',
+				'url'             => 'example.com',
+				'encrypted_media' => 'bullshit',
 			)
 		);
 		$this->assertStringContainsString( 'Error', $html );
