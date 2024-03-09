@@ -477,7 +477,6 @@ if ( 'always' ) {
 		 * This includes notices dismissed globally or per user.
 		 *
 		 * @since 1.0
-		 * @return array
 		 */
 		public function dismissed_notices(): array {
 
@@ -491,7 +490,6 @@ if ( 'always' ) {
 		 * Get user dismissed notices
 		 *
 		 * @since 1.0
-		 * @return array
 		 */
 		private function dismissed_user(): array {
 
@@ -508,7 +506,6 @@ if ( 'always' ) {
 		 * Get globally dismissed notices
 		 *
 		 * @since 1.0
-		 * @return array
 		 */
 		private function dismissed_global(): array {
 			return get_option( 'dnh_dismissed_notices', array() );
