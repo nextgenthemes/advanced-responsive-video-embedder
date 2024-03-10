@@ -68,12 +68,12 @@
         },
         {
             "name": "nextgenthemes/wp-shared",
-            "version": "2024.03.09.14.46.39",
-            "version_normalized": "2024.03.09.14.46.39",
+            "version": "2024.03.10.01.53.48",
+            "version_normalized": "2024.03.10.01.53.48",
             "dist": {
                 "type": "path",
                 "url": "../nextgenthemes/wp-shared",
-                "reference": "f8259092ccd9557f4cab00bf33b44f5adb14e0ee"
+                "reference": "d6e8ee77ae6c12065e28ebc3ee4a9ef35c5d3e93"
             },
             "require": {
                 "php": ">=7.4"
@@ -117,5 +117,8 @@
         }
     ],
     "dev": true,
-    "dev-package-names": []
+    "dev-package-names": [
+        "automattic/jetpack-autoloader",
+        "nextgenthemes/wp-shared"
+    ]
 }

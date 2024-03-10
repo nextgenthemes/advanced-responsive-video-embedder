@@ -3,7 +3,9 @@
 	"description": "ARVE Advanced Responsive Video Embedder",
 	"type": "wordpress-plugin",
 	"require": {
-		"php": ">=7.4",
+		"php": ">=7.4"
+	},
+	"require-dev": {
 		"nextgenthemes/wp-shared": "@dev",
 		"automattic/jetpack-autoloader": "^3.0.0"
 	},
