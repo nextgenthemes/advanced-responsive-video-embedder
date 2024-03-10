@@ -3,8 +3,6 @@ namespace Nextgenthemes\WP;
 
 use Exception;
 
-add_filter( 'script_loader_tag', __NAMESPACE__ . '\\Asset::add_attributes', 10, 2 );
-
 class Asset {
 
 	// See wp_register_script / wp_register_styles
@@ -257,38 +255,5 @@ class Asset {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Adds type attribute to enqueued / registered scripts. To be used for type="module".
-	 *
-	 *
-	 * @link https://github.com/WordPress/wordpress-develop/blob/trunk/src/wp-content/themes/twentytwenty/classes/class-twentytwenty-script-loader.php
-	 *
-	 * @param string $tag    The script tag.
-	 * @param string $handle The script handle.
-	 *
-	 * @return string Script HTML string.
-	 */
-	public static function add_attributes( string $tag, string $handle ): string {
-
-		$type = wp_scripts()->get_data( $handle, 'type' );
-
-		if ( $type ) {
-
-			$tag_processor = new \WP_HTML_Tag_Processor( $tag );
-
-			while ( $tag_processor->next_tag() ) {
-
-				if ( 'SCRIPT' === $tag_processor->get_tag() && $tag_processor->get_attribute( 'src' ) ) {
-					$tag_processor->set_attribute( 'type', $type );
-					break;
-				}
-			}
-
-			$tag = $tag_processor->get_updated_html();
-		}
-
-		return $tag;
 	}
 }
