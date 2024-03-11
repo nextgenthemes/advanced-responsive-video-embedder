@@ -15,7 +15,7 @@ class Tests_Scripts_And_Styles extends WP_UnitTestCase {
 
 		do_action( 'wp_enqueue_scripts' );
 
-		$this->assertTrue( wp_script_is( 'arve-main', 'registered' ) );
-		$this->assertTrue( wp_style_is( 'arve-main', 'registered' ) );
+		$this->assertTrue( wp_script_is( 'arve', 'registered' ) );
+		$this->assertTrue( wp_style_is( 'arve', 'registered' ) );
 	}
 }

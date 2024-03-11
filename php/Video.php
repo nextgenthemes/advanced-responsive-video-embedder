@@ -129,7 +129,11 @@ class Video {
 			$html .= $this->get_debug_info( $html );
 
 			if ( empty( $this->origin_data['gutenberg'] ) ) {
-				wp_enqueue_script( 'arve' );
+
+				foreach ( VIEW_SCRIPT_HANDLES as $handle ) {
+					wp_enqueue_style( $handle );
+					wp_enqueue_script( $handle );
+				}
 			}
 
 			return apply_filters( 'nextgenthemes/arve/html', $html, $this->current_set_props() );
@@ -752,6 +756,7 @@ class Video {
 			'browsing-topics'                 => 'none',
 			'camera'                          => ( 'zoom' === $this->provider ) ? 'self' : 'none',
 			'ch-ua'                           => 'none',
+			'clipboard-read'                  => 'none',
 			'clipboard-write'                 => 'self',
 			'display-capture'                 => 'none',
 			'document-domain'                 => 'none',

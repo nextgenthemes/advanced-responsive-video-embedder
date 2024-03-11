@@ -25,7 +25,6 @@
         "className": true,
         "customClassName": true
     },
-    "styles": [],
     "example": {
         "attributes": {
             "url": "https://www.youtube.com/watch?v=oe452WcY7fA",
@@ -34,8 +33,18 @@
     },
     "editorScript": "arve-block",
     "editorStyle": "arve-block",
-    "viewScript": "arve",
-    "viewStyle": "arve",
+    "viewScript": [
+        "arve",
+        "arve-pro",
+        "arve-random-video",
+        "arve-sticky-videos"
+    ],
+    "viewStyle": [
+        "arve",
+        "arve-pro",
+        "arve-random-video",
+        "arve-sticky-videos"
+    ],
     "attributes": {
         "url": {
             "type": "string"

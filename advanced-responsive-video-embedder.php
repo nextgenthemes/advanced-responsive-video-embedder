@@ -31,6 +31,7 @@ const PREMIUM_SECTIONS      = array( 'pro', 'sticky-videos', 'random-video', 'vi
 const PREMIUM_URL_PREFIX    = 'https://nextgenthemes.com/plugins/arve-';
 const DEFAULT_MAXWIDTH      = 900;
 const OEMBED_HTML_PRIORITY  = -5;
+const VIEW_SCRIPT_HANDLES   = array( 'arve', 'arve-pro', 'arve-random-video', 'arve-sticky-videos' );
 
 if ( defined( 'WP_INSTALLING' ) && WP_INSTALLING ) {
 	return;

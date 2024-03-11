@@ -43,6 +43,8 @@ function update_block_json( array $attr ): void {
 	}
 
 	$json['attributes'] = $attr;
+	$json['viewScript'] = VIEW_SCRIPT_HANDLES;
+	$json['viewStyle']  = VIEW_SCRIPT_HANDLES;
 	$json['version']    = VERSION;
 
 	// phpcs:ignore
