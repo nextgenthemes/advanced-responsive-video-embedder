@@ -11,8 +11,11 @@ class Asset {
 	private array $deps      = array();
 	private string $media    = 'all';
 	private string $strategy = '';
-	private $ver             = false;
-	private bool $in_footer  = false;
+	/**
+	 * @var mixed
+	 */
+	private $ver            = false;
+	private bool $in_footer = false;
 
 	// this class only
 	private string $type  = '';
@@ -59,66 +62,75 @@ class Asset {
 
 	public function __construct( array $args ) {
 
-		foreach ( $args as $name => $value ) {
+		foreach ( $args as $arg_name => $value ) {
 
-			if ( ! property_exists( __CLASS__, $name ) ) {
-				throw new Exception( "Trying to set property '$name', but it does not exits" );
+			if ( ! property_exists( __CLASS__, $arg_name ) ) {
+				wp_trigger_error( __METHOD__, 'Trying to set property <code>' . $arg_name . '</code>, but it does not exist' );
+				return;
 			}
 
-			if ( 'ver' === $name ) {
-				$this->ver = $this->validate_ver( $value );
-				continue;
+			switch ($arg_name) {
+				case 'ver':
+					if ( ! $this->validate_ver($value) ) {
+						return;
+					}
+					break;
+				case 'inline_script_before':
+				case 'inline_script_after':
+					if ( ! $this->validate_inline_script($value) ) {
+						return;
+					}
+					break;
+				default:
+					if ( gettype($this->$arg_name) !== gettype($value) ) {
+						wp_trigger_error(__METHOD__, "trying to set property <code>$arg_name</code>, with wrong type");
+						return;
+					}
+					break;
 			}
 
-			if ( in_array( $name, [ 'inline_script_before', 'inline_script_after' ], true ) ) {
-				$this->$name = $this->validate_inline_script( $value );
-				continue;
-			}
-
-			$prop_type = gettype( $this->$name );
-			$arg_type  = gettype( $value );
-
-			if ( $arg_type !== $prop_type ) {
-				throw new Exception( "trying to set property '$name', with wrong type" );
-			}
-
-			$this->$name = $value;
+			$this->$arg_name = $value;
 		}
 
 		$this->run();
 	}
 
 	/**
-	 * Undocumented function
+	 * Validate inline_script_xxxxx arg.
 	 *
 	 * @param mixed $inline_script
-	 *
-	 * @return mixed
 	 */
-	private function validate_inline_script( $inline_script ) {
+	private function validate_inline_script( $inline_script ): bool {
 		if ( ! is_string( $inline_script ) &&
 			! is_array( $inline_script )
 		) {
-			throw new Exception( 'Wrong inline_script_xxxxx type' );
+			wp_trigger_error( __METHOD__, 'Wrong inline_script_xxxxx type' );
+			return false;
 		}
 
-		return $inline_script;
+		return true;
 	}
 
 	/**
-	 * @param mixed $ver
+	 * Check if the version argument is valid.
 	 *
-	 * @return mixed
+	 * The version argument can be `null`, `false` or a string.
+	 * If it's anything else, it's not valid.
+	 *
+	 * @param mixed $ver Version argument.
+	 * @return bool True if valid, false if invalid.
 	 */
-	private function validate_ver( $ver ) {
+	private function validate_ver( $ver ): bool {
+
 		if ( null !== $ver &&
 			false !== $ver &&
 			! is_string( $ver )
 		) {
-			throw new Exception( 'Wrong src type' );
+			wp_trigger_error( __METHOD__, 'Wrong version arg' );
+			return false;
 		}
 
-		return $ver;
+		return true;
 	}
 
 	private function run(): void {
@@ -257,3 +269,4 @@ class Asset {
 		return true;
 	}
 }
+
