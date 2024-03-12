@@ -18,6 +18,10 @@
 	"config": {
 		"allow-plugins": {
 			"automattic/jetpack-autoloader": true
+		},
+		"optimize-autoloader": true,
+		"platform": {
+			"php": "7.4"
 		}
 	},
 	"repositories": {
