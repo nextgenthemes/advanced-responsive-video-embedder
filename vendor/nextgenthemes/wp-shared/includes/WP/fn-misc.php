@@ -41,7 +41,19 @@ function attr( array $attr = array() ): string {
 
 		} elseif ( is_array( $value ) || is_object( $value ) ) {
 
-			$html .= sprintf( " %s='%s'", esc_html( $key ), wp_json_encode( $value ) );
+			// Fails
+			#$html .= sprintf( " %s='%s'", esc_html( $key ), json_encode( $value ) );
+			// single quoteded works
+			#$html .= sprintf( " %s='%s'", esc_html( $key ), json_encode( $value, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ) );
+			// for ARVE just escaping single quotes works
+			$html .= sprintf( " %s='%s'", esc_html( $key ), wp_json_encode( $value, JSON_HEX_APOS ) );
+			// double quoted FAILS! WHY?
+			#$html .= sprintf( ' %s="%s"', esc_html( $key ), wp_json_encode( $value, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ) );
+			// works, apperantly has issues with double quotes
+			#$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( wp_json_encode( $value ) ) );
+			// works, no matter the quotes
+			#$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_json_encode( $value ) );
+			#$html .= sprintf( " %s='%s'", esc_html( $key ), esc_json_encode( $value ) );
 
 		} elseif ( in_array( $key, array( 'href', 'data-href', 'src', 'data-src' ), true ) ) {
 
@@ -54,6 +66,21 @@ function attr( array $attr = array() ): string {
 	}
 
 	return $html;
+}
+
+/**
+ *  Escaping for HTML attributes use this instead of esc_attr( json_encode( ) )
+ *
+ * @link https://core.trac.wordpress.org/ticket/29910
+ * 
+ * @param  array or object $data array or object to be escaped 
+ * @return properly escaped data
+ */
+function esc_json_encode( $data ) {
+
+	$data = wp_json_encode( $data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT );
+
+	return _wp_specialchars( $data, ENT_QUOTES, false, true );
 }
 
 /**
