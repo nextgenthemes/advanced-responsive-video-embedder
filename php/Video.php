@@ -84,6 +84,8 @@ class Video {
 	private ?array $tracks;
 	private string $src_gen;
 	private string $first_video_file;
+	private array $iframe_attr;
+	private array $video_attr;
 
 	// args
 	private array $org_args;
@@ -671,7 +673,7 @@ class Video {
 		$property_type = ( new \ReflectionProperty(__CLASS__, $prop_name) )->getType()->getName();
 
 		if ( $type && $type !== $property_type ) {
-			throw new \Exception( "$prop_name 'property has the wrong type" );
+			throw new \Exception( esc_html( $prop_name ) . 'property has the wrong type' );
 		}
 
 		if ( in_array($prop_name, $url_args, true) ) {
@@ -727,7 +729,7 @@ class Video {
 		);
 	}
 
-	private function build_iframe_tag(): string {
+	private function build_iframe_attr(): void {
 
 		$class   = 'arve-iframe fitvidsignore';
 		$sandbox = 'allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox';
@@ -802,29 +804,66 @@ class Video {
 			}
 		}
 
+		$this->iframe_attr = array(
+			'credentialless'  => '',
+			'referrerpolicy'  => 'no-referrer',
+			'allow'           => $allow,
+			'allowfullscreen' => '',
+			'class'           => $class,
+			'data-arve'       => $this->uid,
+			'data-src-no-ap'  => iframesrc_urlarg_autoplay( $this->src, $this->provider, false ),
+			'frameborder'     => '0',
+			'height'          => $this->height,
+			'name'            => $this->iframe_name,
+			'sandbox'         => $this->encrypted_media ? null : $sandbox,
+			'scrolling'       => 'no',
+			'src'             => $this->src,
+			'width'           => $this->width,
+			'title'           => $this->title,
+			'loading'         => ( 'normal' === $this->mode ) ? 'lazy' : 'eager',
+		);
+
+		$this->iframe_attr = apply_filters( 'nextgenthemes/arve/iframe_attr', $this->iframe_attr, $this->current_set_props() );
+	}
+
+	private function build_iframe_tag(): string {
+
 		return $this->build_tag(
 			array(
 				'name'       => 'iframe',
 				'tag'        => 'iframe',
 				'inner_html' => '',
-				'attr'       => array(
-					'credentialless'  => '',
-					'referrerpolicy'  => 'no-referrer',
-					'allow'           => $allow,
-					'allowfullscreen' => '',
-					'class'           => $class,
-					'data-arve'       => $this->uid,
-					'data-src-no-ap'  => iframesrc_urlarg_autoplay( $this->src, $this->provider, false ),
-					'frameborder'     => '0',
-					'height'          => $this->height,
-					'name'            => $this->iframe_name,
-					'sandbox'         => $this->encrypted_media ? null : $sandbox,
-					'scrolling'       => 'no',
-					'src'             => $this->src,
-					'width'           => $this->width,
-					'title'           => $this->title,
-				),
+				'attr'       => $this->iframe_attr,
 			)
+		);
+	}
+
+	private function build_video_attr(): void {
+
+		$autoplay = in_array( $this->mode, array( 'lazyload', 'lightbox', 'link-lightbox' ), true ) ?
+			false :
+			$this->autoplay;
+		$preload  = 'metadata';
+
+		if ( in_array( $this->mode, array( 'lazyload', 'lightbox' ), true ) && ! empty( $this->img_src ) ) {
+			$preload = 'none';
+		}
+
+		$this->video_attr = array(
+			// WP
+			'autoplay'           => $autoplay,
+			'controls'           => $this->controls,
+			'controlslist'       => $this->controlslist,
+			'loop'               => $this->loop,
+			'preload'            => $preload,
+			'width'              => is_feed() ? $this->width : false,
+			'poster'             => empty( $this->img_src ) ? false : $this->img_src,
+			// ARVE only
+			'data-arve'          => $this->uid,
+			'class'              => 'arve-video fitvidsignore',
+			'muted'              => $autoplay ? 'muted by ARVE because autoplay is on' : $this->muted,
+			'playsinline'        => in_array( $this->mode, array( 'lightbox', 'link-lightbox' ), true ) ? '' : false,
+			'webkit-playsinline' => in_array( $this->mode, array( 'lightbox', 'link-lightbox' ), true ) ? '' : false,
 		);
 	}
 
@@ -930,9 +969,14 @@ class Video {
 		$html = '';
 
 		if ( 'html5' === $this->provider ) {
+			$this->build_video_attr();
 			$html .= $this->build_video_tag();
 		} else {
-			$html .= $this->build_iframe_tag();
+			$this->build_iframe_attr();
+
+			if ( 'lightbox' !== $this->mode ) {
+				$html .= $this->build_iframe_tag();
+			}
 		}
 
 		if ( ! empty( $this->img_src ) ) {
@@ -1010,6 +1054,7 @@ class Video {
 				$attr = attr( $tag['attr'] );
 			}
 
+			// Check if 'inner_html' is not empty or explicitly set to an empty string.
 			if ( ! empty( $tag['inner_html'] ) ||
 				( isset( $tag['inner_html'] ) && '' === $tag['inner_html'] )
 			) {
@@ -1021,6 +1066,7 @@ class Video {
 					$attr,
 					$inner_html
 				);
+				// Tag without closing tag
 			} else {
 				$html = sprintf(
 					'<%s%s>' . PHP_EOL,
