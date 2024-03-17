@@ -6,8 +6,8 @@ use Exception;
 class Asset {
 
 	// See wp_register_script / wp_register_styles
-	private string $handle   = '';
-	private string $src      = '';
+	private string $handle;
+	private string $src;
 	private array $deps      = array();
 	private string $media    = 'all';
 	private string $strategy = '';
@@ -62,6 +62,11 @@ class Asset {
 
 	public function __construct( array $args ) {
 
+		if ( empty( $args['src'] ) ) {
+			wp_trigger_error(__METHOD__, 'empty src is not supported yet');
+			return;
+		}
+
 		foreach ( $args as $arg_name => $value ) {
 
 			if ( ! property_exists( __CLASS__, $arg_name ) ) {
@@ -82,7 +87,10 @@ class Asset {
 					}
 					break;
 				default:
-					if ( gettype($this->$arg_name) !== gettype($value) ) {
+					$property_type = ( new \ReflectionProperty(__CLASS__, $arg_name) )->getType()->getName();
+					$property_type = str_replace( 'bool', 'boolean', $property_type );
+
+					if ( $property_type !== gettype($value) ) {
 						wp_trigger_error(__METHOD__, "trying to set property <code>$arg_name</code>, with wrong type");
 						return;
 					}
