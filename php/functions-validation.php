@@ -146,23 +146,11 @@ function validate_align( string $align ): string {
 	return '';
 }
 
-/**
- * @param string|false $aspect_ratio
- */
-function validate_aspect_ratio( $aspect_ratio ): string {
+function validate_aspect_ratio( ?string $aspect_ratio ): ?string {
 
-	if ( false !== $aspect_ratio && ! is_string( $aspect_ratio ) ) {
-		arve_errors()->add(
-			'validate_aspect_ratio',
-			// Translators: attribute
-			sprintf( __( 'Aspect ratio <code>%s</code> is not valid', 'advanced-responsive-video-embedder' ), $aspect_ratio )
-		);
-
-		return '16:9';
-	}
-
-	if ( empty( $aspect_ratio ) ) {
-		return '';
+	// first time we set it it will be an empty string
+	if ( '' === $aspect_ratio || null === $aspect_ratio ) {
+		return $aspect_ratio;
 	}
 
 	$ratio = explode( ':', $aspect_ratio );
@@ -179,6 +167,7 @@ function validate_aspect_ratio( $aspect_ratio ): string {
 		return '16:9';
 	}
 
+	// valid aspect ratio
 	return $aspect_ratio;
 }
 

@@ -34,7 +34,7 @@ class Video {
 	private ?string $url;
 	private string $account_id;
 	private string $align;
-	private string $aspect_ratio;
+	private ?string $aspect_ratio;
 	private string $author_name;
 	private string $brightcove_embed;
 	private string $brightcove_player;
@@ -100,7 +100,6 @@ class Video {
 	 * @param array <string, any> $args
 	 */
 	public function __construct( array $args ) {
-
 		$this->errors   = arve_errors();
 		$this->org_args = $args;
 		ksort( $this->org_args );
@@ -495,8 +494,8 @@ class Video {
 		if ( 'youtube' === $this->provider && str_contains( $this->url, '/shorts/' ) ) {
 			$ratio = '9:16';
 		} elseif ( ! empty( $this->oembed_data->width ) &&
-			! empty( $this->oembed_data->height ) &&
 			is_numeric( $this->oembed_data->width ) &&
+			! empty( $this->oembed_data->height ) &&
 			is_numeric( $this->oembed_data->height )
 		) {
 			$ratio = $this->oembed_data->width . ':' . $this->oembed_data->height;
@@ -504,6 +503,12 @@ class Video {
 			$properties = get_host_properties();
 
 			if ( isset( $properties[ $this->provider ]['aspect_ratio'] ) ) {
+
+				// explicity disabled aspect ratio, use null because easy php 7.4 nullable types
+				if ( false === $properties[ $this->provider ]['aspect_ratio'] ) {
+					return null;
+				}
+
 				$ratio = $properties[ $this->provider ]['aspect_ratio'];
 			} else {
 				$ratio = '16:9';
@@ -673,7 +678,7 @@ class Video {
 		$property_type = ( new \ReflectionProperty(__CLASS__, $prop_name) )->getType()->getName();
 
 		if ( $type && $type !== $property_type ) {
-			throw new \Exception( esc_html( $prop_name ) . 'property has the wrong type' );
+			throw new \Exception( esc_html( $prop_name ) . ' property has the wrong type' );
 		}
 
 		if ( in_array($prop_name, $url_args, true) ) {
@@ -681,17 +686,20 @@ class Video {
 			return;
 		}
 
-		$validate_type_function = __NAMESPACE__ . "\\validate_type_{$type}";
-		$validate_function      = __NAMESPACE__ . "\\validate_{$prop_name}";
+		$validate_function = __NAMESPACE__ . "\\validate_{$prop_name}";
 
 		if ( function_exists( $validate_function ) ) {
 			$this->$prop_name = $validate_function( $value );
 			return;
 		}
 
-		if ( $type && function_exists( $validate_type_function ) ) {
-			$this->$prop_name = $validate_type_function( $prop_name, $value );
-			return;
+		switch ( $type ) {
+			case 'bool':
+				$this->$prop_name = validate_type_bool( $prop_name, $value );
+				return;
+			case 'int':
+				$this->$prop_name = validate_type_int( $prop_name, $value );
+				return;
 		}
 
 		$this->$prop_name = $value;

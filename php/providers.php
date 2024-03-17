@@ -227,7 +227,7 @@
 	),
 	'html5' => array(
 		'name'         => 'mp4 or webm video files',
-		'aspect_ratio' => null,
+		'aspect_ratio' => false,
 	),
 	'iframe' => array(
 		'name'           => 'ARVE general iframe embed',
@@ -435,7 +435,7 @@
 		'name'           => 'TikTok',
 		'oembed'         => true,
 		'auto_thumbnail' => true,
-		'aspect_ratio'   => null,
+		'aspect_ratio'   => false,
 	),
 	'twitch' => array(
 		'name'           => 'Twitch',
