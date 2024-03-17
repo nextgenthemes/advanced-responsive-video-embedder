@@ -5,6 +5,7 @@
  * Description:       Easy responsive video embeds via URL (like WordPress) or Shortcodes. Supports almost anything you can imagine.
  * Version:           10.0.0-alpha3
  * Requires PHP:      7.4
+ * Requires at least: 6.2
  * Author:            Nicolas Jonas
  * Author URI:        https://nextgenthemes.com
  * License:           GPL-3.0
