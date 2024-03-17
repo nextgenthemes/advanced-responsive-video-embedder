@@ -217,3 +217,18 @@ function register_elementor_widget( \Elementor\Widgets_Manager $widgets_manager 
 
 	$widgets_manager->register( new ElementorWidget() );
 }
+
+/**
+ * Return an array of translated strings for ARVE Addons
+ */
+function translations(): array {
+
+	return array(
+		// Pro
+		'play_video'               => __( 'Play video', 'advanced-responsive-video-embedder' ),
+		'open_lightbox_with_video' => __( 'Open lightbox with video', 'advanced-responsive-video-embedder' ),
+		'latest_video_from_youtube_channel_could_not_be_detected' =>
+			// Translators: URL.
+			__( 'Latest video from <a href="%s">YouTube channel</a> could not be detected.', 'advanced-responsive-video-embedder' ),
+	);
+}
