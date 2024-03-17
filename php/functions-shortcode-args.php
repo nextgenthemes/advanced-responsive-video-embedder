@@ -211,7 +211,7 @@ function missing_attribute_check( array $a ) {
 	}
 }
 
-function height_from_width_and_ratio( int $width, string $ratio ): float {
+function height_from_width_and_ratio( int $width, ?string $ratio ): float {
 
 	if ( empty( $ratio ) ) {
 		return 0;
