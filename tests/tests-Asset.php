@@ -81,6 +81,7 @@ class Tests_Asset extends WP_UnitTestCase {
 			register_asset(
 				[
 					'bullshit' => 'bullshit',
+					'src'      => 'https://example.org/script.js',
 				]
 			);
 		} catch ( Throwable $e ) {
