@@ -48,14 +48,27 @@ function error( string $messages, string $code = '' ): string {
 		$hide = true;
 	}
 
-	return sprintf(
+	$allowed_tags = array(
+		'abbr'     => array(),
+		'span'     => array(),
+		'code'     => array(),
+		'a'        => array(
+			'href'   => array(),
+			'target' => array(),
+			'title'  => array(),
+		),
+	);
+
+	$error_html = sprintf(
 		PHP_EOL . PHP_EOL .
-		'<span class="arve-error"%s><abbr title="%s">ARVE</abbr> %s</span>' . PHP_EOL,
+		'<span class="arve-error"%s><abbr title="Advanced Responsive Video Embedder">ARVE</abbr> %s</span>' .
+		PHP_EOL,
 		$hide ? 'hidden' : '',
-		__( 'Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ),
 		// translators: Error message
 		sprintf( __( 'Error: %s', 'advanced-responsive-video-embedder' ), $messages ),
 	);
+
+	return wp_kses( $error_html, $allowed_tags );
 }
 
 function get_error_html(): string {
