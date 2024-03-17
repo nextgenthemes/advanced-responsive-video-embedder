@@ -7,7 +7,7 @@ declare global {
 }
 
 const d = document;
-const qsa = d.querySelectorAll.bind( d ) as typeof d.querySelectorAll;
+const qsa = d.querySelectorAll.bind( d );
 const jq = window.jQuery;
 
 globalID();
@@ -47,18 +47,6 @@ function removeUnwantedStuff(): void {
 		el.removeAttribute( 'width' );
 		el.removeAttribute( 'height' );
 		el.removeAttribute( 'style' );
-	} );
-
-	qsa( '.wp-block-embed' ).forEach( ( el ) => {
-		if ( el.querySelector( '.arve' ) ) {
-			el.classList.remove( 'wp-embed-aspect-16-9', 'wp-has-aspect-ratio' );
-
-			const wrapper = el.querySelector( '.wp-block-embed__wrapper' );
-
-			if ( wrapper ) {
-				unwrap( wrapper );
-			}
-		}
 	} );
 }
 

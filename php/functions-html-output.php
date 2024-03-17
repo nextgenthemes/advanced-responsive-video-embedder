@@ -89,3 +89,35 @@ function promote_link( bool $arve_link ): string {
 
 	return '';
 }
+
+function remove_embed_block_aspect_ratio( string $block_content ): string {
+
+	// Could check for this class with WP_HTML_Tag_Processor but it would require 2 booksmarks
+	// I guess this is less expensive and simpler code.
+	if ( ! str_contains( $block_content, 'arve-embed' ) ) {
+		return $block_content;
+	}
+
+	$p = new \WP_HTML_Tag_Processor( $block_content );
+
+	if ( $p->next_tag( [ 'class_name' => 'wp-has-aspect-ratio' ] ) ) {
+
+		// wp-includes/blocks/embed/style.css
+		$p->remove_class( 'wp-has-aspect-ratio' );
+		$p->remove_class( 'wp-embed-aspect-21-9' );
+		$p->remove_class( 'wp-embed-aspect-18-9' );
+		$p->remove_class( 'wp-embed-aspect-16-9' );
+		$p->remove_class( 'wp-embed-aspect-4-3' );
+		$p->remove_class( 'wp-embed-aspect-1-1' );
+		$p->remove_class( 'wp-embed-aspect-9-16' );
+		$p->remove_class( 'wp-embed-aspect-1-2' );
+
+		if ( $p->next_tag( [ 'class_name' => 'wp-block-embed__wrapper' ] ) ) {
+			// Go away <div> you do not exist!
+			$p->remove_class( 'wp-block-embed__wrapper' );
+			$p->set_attribute( 'style', 'display: contents;' );
+		}
+	}
+
+	return $p->get_updated_html();
+}

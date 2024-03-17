@@ -46,6 +46,7 @@ function init_public(): void {
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\create_url_handlers', 999 );
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\load_textdomain' );
 	add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\action_wp_enqueue_scripts' );
+	add_filter( 'render_block_core/embed', __NAMESPACE__ . '\remove_embed_block_aspect_ratio' );
 	add_action( 'wp_video_shortcode_override', __NAMESPACE__ . '\wp_video_shortcode_override', 10, 4 );
 	add_filter( 'language_attributes', __NAMESPACE__ . '\html_id' );
 	add_filter( 'oembed_dataparse', __NAMESPACE__ . '\filter_oembed_dataparse', PHP_INT_MAX, 3 );

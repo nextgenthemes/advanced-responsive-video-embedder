@@ -14,4 +14,29 @@ class Tests_Blocks extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'extra class names', $html );
 		$this->assertStringContainsString( 'Block Testing Title', $html );
 	}
+
+	/**
+	 * Test that the aspect ratio classes are removed
+	 *
+	 * @group blocks
+	 */
+	public function test_aspect_ratio_class_removals(): void {
+
+		// we need the_content filter or the URL will not be transformed to embed code
+		$html = apply_filters(
+			'the_content',
+			'<!-- wp:embed {"url":"https://www.youtube.com/watch?v=c7M4mBVgP3Y","type":"video","providerNameSlug":"youtube","responsive":true,"className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+			<figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+			https://www.twitch.tv/imaqtpie
+			</div></figure>
+			<!-- /wp:embed -->'
+		);
+
+		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsString( 'wp-has-aspect-ratio', $html );
+		$this->assertStringNotContainsString( 'wp-embed-aspect-16-9', $html );
+		$this->assertStringNotContainsString( 'wp-block-embed__wrapper', $html );
+		$this->assertStringContainsString( 'arve-embed', $html );
+		$this->assertStringContainsString( 'data-provider="twitch"', $html );
+	}
 }
