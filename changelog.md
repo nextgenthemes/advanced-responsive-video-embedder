@@ -11,9 +11,10 @@
 * Optional ARVE button on the admin bar for quick access to the ARVE Settings page.
 
 #### Fixed ####
-* Pasting iframe embed code in the URL field in the Block Editor.
+* Pasting iframe embed code in the URL/Embed Code field in the Block Editor.
 
 #### Improved ####
+* Better way to negate WPs own aspect ratio for embed blocks.
 * Make embeds even more private.
 * New look and UX improvement to the shortcode creation dialog in Classic Editor.
 * Loop and Mute previously were only used for (self hosted) video files. These shortcode attributes now add `loop=1&mute1` to the iframe `src` as well. Note not every provider supports them. For loop on youtube embeds the video ID is also need as the `playlist=` parameter. ARVE is doing this automatically now.
