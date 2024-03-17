@@ -49,7 +49,9 @@ function error( string $messages, string $code = '' ): string {
 	}
 
 	$allowed_tags = array(
-		'abbr'     => array(),
+		'abbr'     => array(
+			'title' => array(),
+		),
 		'span'     => array(),
 		'code'     => array(),
 		'a'        => array(
