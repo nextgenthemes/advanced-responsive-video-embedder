@@ -367,7 +367,13 @@ class Settings {
 
 					<?php do_action( $this->slashed_namespace . '/admin/settings/content', $this ); ?>
 
-					<?php Admin\print_settings_blocks($this->settings, $this->sections, $this->premium_sections, 'settings-page'); ?>
+					<?php Admin\print_settings_blocks(
+						$this->settings,
+						$this->sections,
+						$this->premium_sections,
+						$this->premium_url_prefix
+					);
+					?>
 
 				</div>
 

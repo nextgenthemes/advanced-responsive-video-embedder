@@ -1,10 +1,7 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\WP\Admin;
 
-use \Nextgenthemes\ARVE;
 use \Nextgenthemes\WP;
-
-use const Nextgenthemes\ARVE\PREMIUM_URL_PREFIX;
 
 use function \Nextgenthemes\WP\attr;
 use function \Nextgenthemes\WP\get_defined_key;
@@ -12,9 +9,9 @@ use function \Nextgenthemes\WP\has_valid_key;
 
 const DESCRIPTION_ALLOWED_HTML = array(
 	'a'      => array(
-		'href'   => array(),
-		'target' => array(),
-		'title'  => array(),
+		'href'   => true,
+		'target' => true,
+		'title'  => true,
 	),
 	'br'     => array(),
 	'em'     => array(),
@@ -98,7 +95,6 @@ function print_string_field( string $key, array $option ): void {
 				class="large-text"
 				placeholder="<?php echo esc_attr( $option['placeholder'] ); ?>"
 			/>
-			<span x-text="<?php echo esc_attr( "options.$key" ); ?>"></span>
 		</label>
 	</p>
 	<?php
@@ -194,7 +190,13 @@ function block_attr( string $key, array $option ): string {
 	return attr( $block_attr );
 }
 
-function print_settings_blocks( array $settings, array $sections, array $premium_sections, string $context ): void {
+function print_settings_blocks(
+	array $settings,
+	array $sections,
+	array $premium_sections,
+	string $premium_url_prefix,
+	string $context = 'settings-page'
+): void {
 
 	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	foreach ( $settings as $key => $option ) {
@@ -212,43 +214,43 @@ function print_settings_blocks( array $settings, array $sections, array $premium
 		$field_type         = isset( $option['ui'] ) ? $option['ui'] : $option['type'];
 		$block_class        = "ngt-option-block ngt-option-block--$key ngt-option-block--{$option['tag']}";
 
-		if ( 'hidden' !== $field_type ) :
+		if ( 'hidden' === $field_type ) {
+			continue;
+		}
 
-			?>
-			<div 
-				class="<?php echo esc_attr( $block_class ); ?>"
-				<?php if ( 'settings-page' === $context ) : ?>
-					x-show="tab == '<?php echo esc_attr( $option['tag'] ); ?>'"
-				<?php endif; ?>
-			>
-				<?php
-				$function = ( 'settings-page' === $context ) ?
-					__NAMESPACE__ . "\\print_{$field_type}_field" :
-					__NAMESPACE__ . '\\print_dialog_field';
+		?>
+		<div <?php echo WP\attr( [
+			'class'  => $block_class,
+			'x-show' => ( 'settings-page' === $context ) ? "tab == '{$option['tag']}'" : false,
+		] ); ?>
+		>
+			<?php
+			if ( 'settings-page' === $context ) {
+				$function = __NAMESPACE__ . "\\print_{$field_type}_field";
 				$function( $key, $option );
+			} else {
+				print_dialog_field( $key, $option, $premium_url_prefix );					
+			}
 
-				if ( ! empty( $option['description'] ) ) {
+			if ( ! empty( $option['description'] ) ) {
 
-					$attr = array(
+				printf(
+					'<p %s>%s</p>',
+					WP\attr( [
 						'class'  => 'arve-sc-dialog__description',
 						'hidden' => ( 'settings-page' === $context ) ? false : true,
-					);
-
-					printf(
-						'<p %s>%s</p>',
-						attr( $attr ),
-						wp_kses( $option['description'], DESCRIPTION_ALLOWED_HTML )
-					);
-				}
-				?>
-				<hr>
-			</div>
-			<?php
-		endif;
+					] ),
+					\wp_kses( $option['description'], DESCRIPTION_ALLOWED_HTML, array( 'http', 'https' ) )
+				);
+			}
+			?>
+			<hr>
+		</div>
+		<?php
 	}
 }
 
-function print_dialog_field( string $key, array $option ): void {
+function print_dialog_field( string $key, array $option, string $premium_url_prefix ): void {
 
 	$wrapper_attr = array(
 		'class' => ( 'attachment' === $option['type'] ) ? 'input-group' : false,
@@ -319,19 +321,19 @@ function print_dialog_field( string $key, array $option ): void {
 				esc_html( $option['label'] )
 			);
 
-	if ( $option['premium'] ) {
-		printf(
-			'<a %s>%s</a>',
-			WP\attr(
-				array(
-					'class' => 'button-primary arve-premium-link',
-					'href'  => PREMIUM_URL_PREFIX . $option['tag'],
-				)
-			),
-			esc_html( $option['tag'] )
-		);
-	}
-	?>
+			if ( $option['premium'] ) {
+				printf(
+					'<a %s>%s</a>',
+					WP\attr(
+						array(
+							'class' => 'button-primary arve-premium-link',
+							'href'  => $premium_url_prefix . $option['tag'],
+						)
+					),
+					esc_html( $option['tag'] )
+				);
+			}
+			?>
 		</div>
 
 		<?php if ( 'attachment' === $option['type'] ) : ?>
@@ -339,6 +341,5 @@ function print_dialog_field( string $key, array $option ): void {
 		<?php endif; ?>
 
 	</div>
-
 	<?php
 }
