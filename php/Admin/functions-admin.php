@@ -6,6 +6,8 @@ use const Nextgenthemes\ARVE\PREMIUM_URL_PREFIX;
 use const Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
 use const Nextgenthemes\ARVE\PLUGIN_DIR;
 use const Nextgenthemes\ARVE\PLUGIN_FILE;
+use const Nextgenthemes\ARVE\ALLOWED_HTML;
+
 use function Nextgenthemes\ARVE\is_gutenberg;
 use function Nextgenthemes\ARVE\shortcode_settings;
 use function Nextgenthemes\ARVE\settings_sections;
@@ -17,21 +19,6 @@ use function Nextgenthemes\WP\register_asset;
 use function Nextgenthemes\WP\ver;
 use function Nextgenthemes\WP\attr;
 use function Nextgenthemes\WP\kses_basic;
-
-const ALLOWED_HTML = array(
-	'a'      => array(
-		'href'   => array(),
-		'target' => array(),
-		'title'  => array(),
-	),
-	'p'      => array(),
-	'br'     => array(),
-	'em'     => array(),
-	'strong' => array(),
-	'code'   => array(),
-	'ul'     => array(),
-	'li'     => array(),
-);
 
 function action_admin_init_setup_messages(): void {
 
@@ -56,7 +43,7 @@ function action_admin_init_setup_messages(): void {
 		Notices::instance()->register_notice(
 			'ngt-arve-outdated-pro-v' . PRO_VERSION_REQUIRED,
 			'notice-error',
-			wp_kses( $msg, ALLOWED_HTML ),
+			wp_kses( $msg, ALLOWED_HTML, array( 'htts', 'https' ) ),
 			array(
 				'cap' => 'update_plugins',
 			)
@@ -67,7 +54,7 @@ function action_admin_init_setup_messages(): void {
 		Notices::instance()->register_notice(
 			'ngt-arve-addon-ad',
 			'notice-info',
-			wp_kses( ad_html(), ALLOWED_HTML ),
+			wp_kses( ad_html(), ALLOWED_HTML, array( 'htts', 'https' ) ),
 			array(
 				'cap' => 'install_plugins',
 			)
@@ -142,7 +129,7 @@ function widget_text(): void {
 	printf( '<a href="%s">ARVE Pro Addon Features</a>:', 'https://nextgenthemes.com/plugins/arve-pro/' );
 
 	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
-	echo wp_kses( ad_html(), ALLOWED_HTML );
+	echo wp_kses( ad_html(), ALLOWED_HTML, array( 'htts', 'https' ) );
 }
 
 function add_dashboard_widget(): void {

@@ -203,11 +203,11 @@ function missing_attribute_check( array $a ) {
 
 		$msg = sprintf(
 			// Translators: Attributes.
-			esc_html__( 'The [[arve]] shortcode needs one of this attributes %s', 'advanced-responsive-video-embedder' ),
+			__( 'The [[arve]] shortcode needs one of these attributes %s', 'advanced-responsive-video-embedder' ),
 			implode( ', ', $required_attributes )
 		);
 
-		throw new \Exception( $msg );
+		throw new \Exception( esc_html( $msg ) );
 	}
 }
 

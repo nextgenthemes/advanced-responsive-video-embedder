@@ -6,22 +6,24 @@ use Nextgenthemes\WP;
 
 function settings_content(): void {
 
-	$link_code_only = array(
-		'code' => array(),
-		'a'    => array(
-			'href'   => array(),
-			'target' => array(),
-			'title'  => array(),
-		),
-	);
 	?>
-
 	<div x-show="'urlparams' === tab">
 		<p>
 			<?php
 			printf(
-				// Translators: URL
-				wp_kses( __( 'This parameters will be added to the <code>iframe src</code> urls, you can control the video players behavior with them. Please read <a href="%s" target="_blank">the documentation</a> on.', 'advanced-responsive-video-embedder' ), $link_code_only ),
+				wp_kses(
+					// Translators: URL
+					__( 'This parameters will be added to the <code>iframe src</code> urls, you can control the video players behavior with them. Please read <a href="%s" target="_blank">the documentation</a> on.', 'advanced-responsive-video-embedder' ),
+					array(
+						'code' => array(),
+						'a'    => array(
+							'href'   => true,
+							'target' => true,
+							'title'  => true,
+						),
+					),
+					array( 'http', 'https' )
+				),
 				esc_url( 'https://nextgenthemes.com/arve/documentation' )
 			);
 			?>

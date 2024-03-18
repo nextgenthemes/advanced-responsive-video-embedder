@@ -2,6 +2,7 @@
 namespace Nextgenthemes\ARVE;
 
 use function Nextgenthemes\WP\is_wp_debug;
+use const Nextgenthemes\ARVE\ALLOWED_HTML;
 
 function shortcode( array $a ): string {
 
@@ -48,19 +49,6 @@ function error( string $messages, string $code = '' ): string {
 		$hide = true;
 	}
 
-	$allowed_tags = array(
-		'abbr'     => array(
-			'title' => array(),
-		),
-		'span'     => array(),
-		'code'     => array(),
-		'a'        => array(
-			'href'   => array(),
-			'target' => array(),
-			'title'  => array(),
-		),
-	);
-
 	$error_html = sprintf(
 		PHP_EOL . PHP_EOL .
 		'<span class="arve-error"%s><abbr title="Advanced Responsive Video Embedder">ARVE</abbr> %s</span>' .
@@ -70,7 +58,11 @@ function error( string $messages, string $code = '' ): string {
 		sprintf( __( 'Error: %s', 'advanced-responsive-video-embedder' ), $messages ),
 	);
 
-	return wp_kses( $error_html, $allowed_tags );
+	return wp_kses(
+		$error_html,
+		ALLOWED_HTML,
+		array( 'http', 'https' )
+	);
 }
 
 function get_error_html(): string {

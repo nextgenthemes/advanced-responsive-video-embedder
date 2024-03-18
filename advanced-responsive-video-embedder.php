@@ -33,6 +33,22 @@ const PREMIUM_URL_PREFIX    = 'https://nextgenthemes.com/plugins/arve-';
 const DEFAULT_MAXWIDTH      = 900;
 const OEMBED_HTML_PRIORITY  = -5;
 const VIEW_SCRIPT_HANDLES   = array( 'arve', 'arve-pro', 'arve-random-video', 'arve-sticky-videos' );
+// For error messages and stuff on the admin screens.
+const ALLOWED_HTML = array(
+	'a'      => array(
+		'href'   => true,
+		'target' => true,
+		'title'  => true,
+	),
+	'abbr'   => array( 'title' => true ),
+	'p'      => array(),
+	'br'     => array(),
+	'em'     => array(),
+	'strong' => array(),
+	'code'   => array(),
+	'ul'     => array(),
+	'li'     => array(),
+);
 
 if ( defined( 'WP_INSTALLING' ) && WP_INSTALLING ) {
 	return;
