@@ -3,9 +3,6 @@ namespace Nextgenthemes\ARVE\Admin;
 
 use Nextgenthemes\ARVE;
 
-use function Nextgenthemes\ARVE\shortcode_settings;
-use function Nextgenthemes\WP\Admin\print_settings_blocks;
-
 function add_media_button(): void {
 
 	wp_enqueue_script( 'arve-shortcode-dialog' );
@@ -65,6 +62,7 @@ function create_shortcode_dialog(): void {
 					$settings,
 					ARVE\settings_sections(),
 					ARVE\PREMIUM_SECTIONS,
+					ARVE\PREMIUM_URL_PREFIX,
 					'shortcode-dialog'
 				);
 				?>
