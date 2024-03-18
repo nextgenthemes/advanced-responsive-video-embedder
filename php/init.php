@@ -26,6 +26,7 @@ function init_public(): void {
 	update_option( 'arve_version', VERSION );
 
 	require_once PLUGIN_DIR . '/php/functions-deprecated.php';
+	require_once PLUGIN_DIR . '/php/functions-compat.php';
 	require_once PLUGIN_DIR . '/php/functions-assets.php';
 	require_once PLUGIN_DIR . '/php/functions-html-output.php';
 	require_once PLUGIN_DIR . '/php/functions-misc.php';
