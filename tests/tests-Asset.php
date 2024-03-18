@@ -36,7 +36,7 @@ class Tests_Asset extends WP_UnitTestCase {
 				]
 			);
 		} catch ( Throwable $e ) {
-			$this->assertEquals('Nextgenthemes\WP\Asset::validate_inline_script(): Wrong inline_script_xxxxx type', $e->getMessage());
+			$this->assertEquals('Nextgenthemes\WP\Asset::validate_inline_script(): Wrong inline_script_xxxxx type', wp_strip_all_tags( $e->getMessage() ) );
 		}
 	}
 
@@ -85,7 +85,7 @@ class Tests_Asset extends WP_UnitTestCase {
 				]
 			);
 		} catch ( Throwable $e ) {
-			$this->assertEquals('Nextgenthemes\WP\Asset::__construct(): Trying to set property bullshit, but it does not exist', $e->getMessage());
+			$this->assertEquals('Nextgenthemes\WP\Asset::__construct(): Trying to set property bullshit, but it does not exist', wp_strip_all_tags( $e->getMessage() ) );
 		}
 	}
 }
