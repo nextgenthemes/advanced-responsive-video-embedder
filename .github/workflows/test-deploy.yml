@@ -121,27 +121,34 @@ jobs:
 
       - run: pwd
 
-      - name: Get the version
-        id: get_version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-
       - name: Deploy
         uses: nextgenthemes/action-wordpress-plugin-deploy@master
         with:
           workdir: advanced-responsive-video-embedder
-          version: ${{ steps.get_version.outputs.VERSION }}
+          version: ${{github.ref_name}}
           svn_user: ${{ secrets.SVN_USERNAME }}
           svn_pass: ${{ secrets.SVN_PASSWORD }}
-          build_dirs: vendor
           verbose: true
           dry-run: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'dev') }}
 
-      - run: >
-          mv /tmp/wp-deploy/svn-advanced-responsive-video-embedder/tags/${{ steps.get_version.outputs.VERSION }}
-          /tmp/wp-deploy/svn-advanced-responsive-video-embedder/tags/advanced-responsive-video-embedder
+      - if: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'dev') }}
+        name: rename the folder with tag name into arve for zipping
+        run: >
+          mv /tmp/wp-deploy/svn-advanced-responsive-video-embedder/tags/${{github.ref_name}}
+          /tmp/wp-deploy/svn-advanced-responsive-video-embedder/tags/gihub-release/advanced-responsive-video-embedder
 
-      - name: create artifact
-        uses: actions/upload-artifact@v3
+      - if: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'dev') }}
+        name: Zip what the deploy action (git archive) has created
+        run: zip -r advanced-responsive-video-embedder-${{github.ref_name}} /tmp/wp-deploy/svn-advanced-responsive-video-embedder/github-release
+
+      - if: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'dev') }}
+        name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
         with:
-          name: advanced-responsive-video-embedder
-          path: /tmp/wp-deploy/svn-advanced-responsive-video-embedder/tags
+          tag_name: ${{github.ref_name}}
+          release_name: ${{github.ref_name}}
+          draft: false
+          prerelease: true       
