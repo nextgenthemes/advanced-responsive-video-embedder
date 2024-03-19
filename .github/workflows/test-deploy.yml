@@ -11,7 +11,7 @@ jobs:
       WP_BETA_VERSION: ${{ env.WP_BETA_VERSION }}
     steps:
       - name: Get latest WP beta version
-        run: php --run "echo 'WP_BETA_VERSION=' . json_decode( file_get_contents( 'https://api.wordpress.org/core/version-check/1.7/?version=6.4&channel=beta' ) )->offers[0]->version;"
+        run: php --run "echo 'WP_BETA_VERSION=' . json_decode( file_get_contents( 'https://api.wordpress.org/core/version-check/1.7/?version=6.4&channel=beta' ) )->offers[0]->version;" >> $GITHUB_OUTPUT
   test:
     needs: wp-beta
     name: PHP Unit tests
