@@ -15,7 +15,7 @@ jobs:
         run: php --run "echo 'ver=' . json_decode( file_get_contents( 'https://api.wordpress.org/core/version-check/1.7/?version=6.4&channel=beta' ) )->offers[0]->version;" >> "$GITHUB_OUTPUT"
 
   test:
-    needs: wp-beta
+    needs: beta
     name: PHP Unit tests
     runs-on: ubuntu-22.04
     strategy:
