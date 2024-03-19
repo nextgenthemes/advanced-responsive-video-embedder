@@ -108,9 +108,11 @@ jobs:
       - name: Run PHPUnit without code coverage
         run: phpunit --testsuite advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos
 
-  deploy:
-    if: startsWith(github.ref, 'refs/tags')
+  deploy-wporg:
     needs: test
+    if: >
+      startsWith(github.ref, 'refs/tags') &&
+      ( !contains(github.ref, 'alpha') && !contains(github.ref, 'beta') && !contains(github.ref, 'dev') )
     name: SVN commit to wp.org
     runs-on: ubuntu-22.04
     steps:
@@ -119,9 +121,8 @@ jobs:
         with:
           path: advanced-responsive-video-embedder
 
-      - run: pwd
-
-      - name: Deploy
+      - if: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'dev') }}
+        name: Deploy to WP.org
         uses: nextgenthemes/action-wordpress-plugin-deploy@master
         with:
           workdir: advanced-responsive-video-embedder
@@ -131,24 +132,36 @@ jobs:
           verbose: true
           dry-run: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'dev') }}
 
-      - if: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'dev') }}
-        name: rename the folder with tag name into arve for zipping
-        run: >
-          mv /tmp/wp-deploy/svn-advanced-responsive-video-embedder/tags/${{github.ref_name}}
-          /tmp/wp-deploy/svn-advanced-responsive-video-embedder/tags/gihub-release/advanced-responsive-video-embedder
+  deploy-github:
+    needs: test
+    if: contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'dev')
+    name: Upload Release Asset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
 
-      - if: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'dev') }}
-        name: Zip what the deploy action (git archive) has created
-        run: zip -r advanced-responsive-video-embedder-${{github.ref_name}} /tmp/wp-deploy/svn-advanced-responsive-video-embedder/github-release
+      - name: git archive .zip
+        run: git archive -o /tmp/advanced-responsive-video-embedder-${{ github.ref_name }}.zip --prefix=advanced-responsive-video-embedder/ ${{ github.ref_name }}
 
-      - if: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'dev') }}
-        name: Create Release
+      - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
         with:
-          tag_name: ${{github.ref_name}}
-          release_name: ${{github.ref_name}}
+          tag_name: ${{ github.ref_name }}
+          release_name: ${{ github.ref_name }}
           draft: false
-          prerelease: true       
+          prerelease: true
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /tmp/advanced-responsive-video-embedder-${{ github.ref_name }}.zip
+          asset_name: git-updater-${{ github.ref_name }}.zip
+          asset_content_type: application/zip
