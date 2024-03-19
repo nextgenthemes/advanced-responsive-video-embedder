@@ -16,21 +16,7 @@ class Tests_Blocks extends WP_UnitTestCase {
 	 */
 	public function test_class_and_title(): void {
 
-		// phpcs:ignore
-		$errorlevel = error_reporting();
-
-		if (
-			version_compare( $GLOBALS['wp_version'], '6.2', '<=' ) &&
-			version_compare( PHP_VERSION, '8.3', '>=' )
-		) {
-			// phpcs:ignore
-			error_reporting($errorlevel & ~E_DEPRECATED);
-		}
-
 		$html = do_blocks( '<!-- wp:nextgenthemes/arve-block {"url":"https://example.com","title":"Block Testing Title","mode":"normal","className":"extra-cls extra-cls-two"} /-->' );
-
-		// phpcs:ignore
-		error_reporting($errorlevel);
 
 		$this->assertStringNotContainsString( 'Error', $html );
 		$this->assertStringContainsString( 'extra-cls extra-cls-two', $html );
