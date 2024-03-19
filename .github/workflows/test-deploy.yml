@@ -2,17 +2,25 @@ name: test-deploy
 on: [push, pull_request]
 
 jobs:
-  test:
+  wp-beta:
     if: >
       startsWith(github.ref, 'refs/tags')
       || contains(github.event.head_commit.message, '[ci]')
+    runs-on: ubuntu-latest
+    outputs:
+      WP_BETA_VERSION: ${{ env.WP_BETA_VERSION }}
+    steps:
+      - name: Get latest WP beta version
+        run: php --run "echo 'WP_BETA_VERSION=' . json_decode( file_get_contents( 'https://api.wordpress.org/core/version-check/1.7/?version=6.4&channel=beta' ) )->offers[0]->version;"
+  test:
+    needs: wp-beta
     name: PHP Unit tests
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
         php: [ '7.4', '8.0', '8.1', '8.2', '8.3' ] # https://www.php.net/supported-versions
-        wordpress: [ '6.2', 'latest' ] # https://wordpress.org/download/releases/
+        wordpress: [ '6.2', "${{ needs.wp-beta.outputs.WP_BETA_VERSION }}" ] # https://wordpress.org/download/releases/
     services:
       mysql:
         image: mysql:5.7
