@@ -6,20 +6,35 @@ use function Nextgenthemes\WP\remote_get_body;
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_Blocks extends WP_UnitTestCase {
 
+	public function deprecation_error_handler( int $errno, string $errstr ): bool {
+		$this->assertStringContainsString( 'Calling get_class() without arguments is deprecated', $errstr );
+		return true;
+	}
+
 	/**
 	 * @group blocks
 	 */
 	public function test_class_and_title(): void {
 
-		try {
-			$html = do_blocks( '<!-- wp:nextgenthemes/arve-block {"url":"https://example.com","title":"Block Testing Title","mode":"normal","className":"extra-cls extra-cls-two"} /-->' );
-		} catch ( \Exception $e ) {
-			// We need this for WP 6.2 and PHP >= 8.3
-			$this->assertStringContainsString( 'Calling get_class() without arguments is deprecated', $e->getMessage() );
+		// phpcs:ignore
+		$errorlevel = error_reporting();
+		$skip_dep   = (
+			version_compare( $GLOBALS['wp_version'], '6.2', '<=' ) &&
+			version_compare( PHP_VERSION, '8.3', '>=' )
+		);
+
+		if ( $skip_dep ) {
+			// phpcs:ignore
+			error_reporting($errorlevel & ~E_DEPRECATED);
 		}
 
+		$html = do_blocks( '<!-- wp:nextgenthemes/arve-block {"url":"https://example.com","title":"Block Testing Title","mode":"normal","className":"extra-cls extra-cls-two"} /-->' );
+
+		// phpcs:ignore
+		error_reporting($errorlevel);
+
 		$this->assertStringNotContainsString( 'Error', $html );
-		$this->assertStringContainsString( 'extra-cls extra-cls-two', $html );
+		$this->assertStringContainsString( 'extra-cls extra-class-two', $html );
 		$this->assertStringContainsString( 'Block Testing Title', $html );
 	}
 
