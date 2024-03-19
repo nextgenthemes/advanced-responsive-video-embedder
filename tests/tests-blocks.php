@@ -18,12 +18,11 @@ class Tests_Blocks extends WP_UnitTestCase {
 
 		// phpcs:ignore
 		$errorlevel = error_reporting();
-		$skip_dep   = (
+
+		if (
 			version_compare( $GLOBALS['wp_version'], '6.2', '<=' ) &&
 			version_compare( PHP_VERSION, '8.3', '>=' )
-		);
-
-		if ( $skip_dep ) {
+		) {
 			// phpcs:ignore
 			error_reporting($errorlevel & ~E_DEPRECATED);
 		}
@@ -34,7 +33,7 @@ class Tests_Blocks extends WP_UnitTestCase {
 		error_reporting($errorlevel);
 
 		$this->assertStringNotContainsString( 'Error', $html );
-		$this->assertStringContainsString( 'extra-cls extra-class-two', $html );
+		$this->assertStringContainsString( 'extra-cls extra-cls-two', $html );
 		$this->assertStringContainsString( 'Block Testing Title', $html );
 	}
 
