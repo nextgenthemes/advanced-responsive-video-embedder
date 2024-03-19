@@ -2,14 +2,14 @@
 Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: embed, video, lazyload, lightbox, rumble
-Requires at least: 6.3.0
+Requires at least: 6.2
 Tested up to: 6.5.0
 Requires PHP: 7.4
 Stable tag: 10.0.0-alpha6
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Easy video embeds via URLs, Shortcodes or Blocks. Perfect drop-in replacement for WordPress' default embeds. Best plugin for videos?
+Level up your basic video embeds! Advanced features, privacy. Use URLs, Shortcodes or Blocks to customize videos to your needs.
 
 ## Description ##
 
@@ -203,9 +203,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * Optional ARVE button on the admin bar for quick access to the ARVE Settings page.
 
 #### Fixed ####
-* Pasting iframe embed code in the URL field in the Block Editor.
+* Pasting iframe embed code in the URL/Embed Code field in the Block Editor.
 
 #### Improved ####
+* Better way to negate WPs own aspect ratio for embed blocks.
 * Make embeds even more private.
 * New look and UX improvement to the shortcode creation dialog in Classic Editor.
 * Loop and Mute previously were only used for (self hosted) video files. These shortcode attributes now add `loop=1&mute1` to the iframe `src` as well. Note not every provider supports them. For loop on youtube embeds the video ID is also need as the `playlist=` parameter. ARVE is doing this automatically now.
