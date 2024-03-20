@@ -32,5 +32,10 @@
 				"symlink": false
 			}
 		}
+	},
+	"autoload": {
+		"files": [
+			"php/init.php"
+		]
 	}
 }

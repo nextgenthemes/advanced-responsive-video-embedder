@@ -59,4 +59,3 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/vendor/autoload_packages.php';
-require_once __DIR__ . '/php/init.php';
