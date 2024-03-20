@@ -58,7 +58,7 @@ function create_shortcode_dialog(): void {
 
 			<div class="arve-sc-dialog__body">
 				<?php
-				print_settings_blocks(
+				\Nextgenthemes\WP\print_settings_blocks(
 					$settings,
 					ARVE\settings_sections(),
 					ARVE\PREMIUM_SECTIONS,

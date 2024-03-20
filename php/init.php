@@ -25,18 +25,18 @@ function init_public(): void {
 
 	update_option( 'arve_version', VERSION );
 
-	require_once PLUGIN_DIR . '/php/functions-deprecated.php';
-	require_once PLUGIN_DIR . '/php/functions-compat.php';
-	require_once PLUGIN_DIR . '/php/functions-assets.php';
-	require_once PLUGIN_DIR . '/php/functions-html-output.php';
-	require_once PLUGIN_DIR . '/php/functions-misc.php';
-	require_once PLUGIN_DIR . '/php/functions-oembed.php';
-	require_once PLUGIN_DIR . '/php/functions-shortcode-data.php';
-	require_once PLUGIN_DIR . '/php/functions-shortcode-args.php';
-	require_once PLUGIN_DIR . '/php/functions-shortcodes.php';
-	require_once PLUGIN_DIR . '/php/functions-url-handlers.php';
-	require_once PLUGIN_DIR . '/php/functions-validation.php';
-	require_once PLUGIN_DIR . '/php/functions-settings.php';
+	require_once PLUGIN_DIR . '/php/fn-deprecated.php';
+	require_once PLUGIN_DIR . '/php/fn-compat.php';
+	require_once PLUGIN_DIR . '/php/fn-assets.php';
+	require_once PLUGIN_DIR . '/php/fn-html-output.php';
+	require_once PLUGIN_DIR . '/php/fn-misc.php';
+	require_once PLUGIN_DIR . '/php/fn-oembed.php';
+	require_once PLUGIN_DIR . '/php/fn-shortcode-data.php';
+	require_once PLUGIN_DIR . '/php/fn-shortcode-args.php';
+	require_once PLUGIN_DIR . '/php/fn-shortcodes.php';
+	require_once PLUGIN_DIR . '/php/fn-url-handlers.php';
+	require_once PLUGIN_DIR . '/php/fn-validation.php';
+	require_once PLUGIN_DIR . '/php/fn-settings.php';
 	require_once PLUGIN_DIR . '/php/Video.php';
 
 	add_action( 'init', __NAMESPACE__ . '\add_oembed_providers' );
@@ -58,10 +58,10 @@ function init_public(): void {
 
 function init_admin(): void {
 
-	require_once PLUGIN_DIR . '/php/Admin/functions-admin.php';
-	require_once PLUGIN_DIR . '/php/Admin/functions-settings-page.php';
-	require_once PLUGIN_DIR . '/php/Admin/functions-shortcode-creator.php';
-	require_once PLUGIN_DIR . '/php/Admin/functions-debug-info.php';
+	require_once PLUGIN_DIR . '/php/Admin/fn-admin.php';
+	require_once PLUGIN_DIR . '/php/Admin/fn-settings-page.php';
+	require_once PLUGIN_DIR . '/php/Admin/fn-shortcode-creator.php';
+	require_once PLUGIN_DIR . '/php/Admin/fn-debug-info.php';
 
 	// Admin Hooks
 	add_action( 'nextgenthemes/arve/admin/settings/sidebar', __NAMESPACE__ . '\Admin\settings_sidebar' );

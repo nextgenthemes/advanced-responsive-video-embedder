@@ -7,22 +7,11 @@ namespace Composer\Autoload;
 class ComposerStaticInit9efe32db768b97aefc1d2657c3980c69
 {
     public static $files = array (
-        '43a21213b4da0f477aca1a29680efb75' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/fn-asset-helpers.php',
-        '7bb4640fe0b0b617681aef28cdb79e0d' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/fn-deprecated.php',
-        '37dd8fa3c77ee4ed9386d4281e889d6b' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/fn-array.php',
-        '3ccff2c7bceb2ad4cdfe20147906989a' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/fn-string.php',
-        'cff1fc03c04937219130a2070044eaf2' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/fn-misc.php',
-        'cb3bd5928a85d1cb4123d914e761a34c' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/fn-settings.php',
-        '8911f12c90f79aa362e6a22d36874b8f' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/fn-license.php',
-        'ab6bc4024621254c75eba933febe6ab4' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/fn-remote-get.php',
+        '2d1e3b3e432aed88c61afcb4f6d8c262' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/load-files.php',
         '83b8ee913c5d2d5a8f26b42bc5db8bfb' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/Admin/load-admin-files.php',
     );
 
     public static $prefixLengthsPsr4 = array (
-        'W' => 
-        array (
-            'WP\\' => 3,
-        ),
         'A' => 
         array (
             'Automattic\\Jetpack\\Autoloader\\' => 30,
@@ -30,10 +19,6 @@ class ComposerStaticInit9efe32db768b97aefc1d2657c3980c69
     );
 
     public static $prefixDirsPsr4 = array (
-        'WP\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP',
-        ),
         'Automattic\\Jetpack\\Autoloader\\' => 
         array (
             0 => __DIR__ . '/..' . '/automattic/jetpack-autoloader/src',
