@@ -15,7 +15,7 @@
             "includes/WP/fn-settings.php",
             "includes/WP/fn-license.php",
             "includes/WP/fn-remote-get.php",
-            "includes/WP/Admin/load-admin-files.php"
+            "includes/WPAdmin/load-admin-files.php"
         ]
     },
     "authors": [
@@ -29,5 +29,5 @@
     "scripts": {
         "update-alpine": "wget https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js -O ./includes/WP/Admin/alpine.js"
     },
-    "version": "2024.03.19.17.37.03"
+    "version": "2024.03.20.11.00.26"
 }

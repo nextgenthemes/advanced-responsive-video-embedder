@@ -15,7 +15,20 @@ class ComposerStaticInit9efe32db768b97aefc1d2657c3980c69
         'cb3bd5928a85d1cb4123d914e761a34c' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/fn-settings.php',
         '8911f12c90f79aa362e6a22d36874b8f' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/fn-license.php',
         'ab6bc4024621254c75eba933febe6ab4' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/fn-remote-get.php',
-        '83b8ee913c5d2d5a8f26b42bc5db8bfb' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/Admin/load-admin-files.php',
+        'f56674e603ae401aa6fed97f78649179' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WPAdmin/load-admin-files.php',
+        '029cf24255d9169da95c7335d1e9dcab' => __DIR__ . '/../..' . '/includes/ARVE/fn-deprecated.php',
+        '28bac9030b0504c0a4b2737d9034afa6' => __DIR__ . '/../..' . '/includes/ARVE/fn-compat.php',
+        'c340529a042e987b9d069ead9a9572cb' => __DIR__ . '/../..' . '/includes/ARVE/fn-assets.php',
+        '2f665aeced7ffd66478858ea7e385f5c' => __DIR__ . '/../..' . '/includes/ARVE/fn-html-output.php',
+        '6001da74e6373eb2f16703b7d42ae100' => __DIR__ . '/../..' . '/includes/ARVE/fn-misc.php',
+        '9e110b4a0685f4ff50346f3597db61ae' => __DIR__ . '/../..' . '/includes/ARVE/fn-oembed.php',
+        '72389820d502c9ec0df575ac2c07ca80' => __DIR__ . '/../..' . '/includes/ARVE/fn-shortcode-data.php',
+        '5af4c9467d68efe5813c17d261a610d5' => __DIR__ . '/../..' . '/includes/ARVE/fn-shortcode-args.php',
+        '7a2512ce3de44ab1cc16931cd806e291' => __DIR__ . '/../..' . '/includes/ARVE/fn-shortcodes.php',
+        '890740753fa16f7573ca50196c7c7609' => __DIR__ . '/../..' . '/includes/ARVE/fn-url-handlers.php',
+        '5ab31dae57c6e19e90ab25ebe03eba0b' => __DIR__ . '/../..' . '/includes/ARVE/fn-validation.php',
+        '991ad9b741be510a8c0ecc4bfe55c99b' => __DIR__ . '/../..' . '/includes/ARVE/fn-settings.php',
+        '369fd1321dacf4be071dfc2b060fb85f' => __DIR__ . '/../..' . '/includes/ARVEAdmin/load-admin-files.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -26,6 +39,7 @@ class ComposerStaticInit9efe32db768b97aefc1d2657c3980c69
         'A' => 
         array (
             'Automattic\\Jetpack\\Autoloader\\' => 30,
+            'ARVE\\' => 5,
         ),
     );
 
@@ -37,6 +51,10 @@ class ComposerStaticInit9efe32db768b97aefc1d2657c3980c69
         'Automattic\\Jetpack\\Autoloader\\' => 
         array (
             0 => __DIR__ . '/..' . '/automattic/jetpack-autoloader/src',
+        ),
+        'ARVE\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/includes',
         ),
     );
 

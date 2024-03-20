@@ -72,11 +72,11 @@
         },
         {
             "name": "nextgenthemes/wp-shared",
-            "version": "2024.03.19.17.37.03",
+            "version": "2024.03.20.11.00.26",
             "dist": {
                 "type": "path",
                 "url": "../nextgenthemes/wp-shared",
-                "reference": "088ca09f0b0649fab5ce060b94cf60164b73df0d"
+                "reference": "fea657b0d0876154a99f602284f433b9fbc3455e"
             },
             "require": {
                 "php": ">=7.4"
@@ -95,7 +95,7 @@
                     "includes/WP/fn-settings.php",
                     "includes/WP/fn-license.php",
                     "includes/WP/fn-remote-get.php",
-                    "includes/WP/Admin/load-admin-files.php"
+                    "includes/WPAdmin/load-admin-files.php"
                 ]
             },
             "scripts": {

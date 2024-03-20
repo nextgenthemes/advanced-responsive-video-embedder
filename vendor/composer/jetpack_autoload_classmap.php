@@ -54,24 +54,20 @@ return array(
 		'version' => '3.0.4',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-manifest-reader.php'
 	),
-	'Nextgenthemes\\WP\\Admin\\EDD\\PluginUpdater' => array(
-		'version' => '2024.03.19.17.37.03',
-		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/Admin/EDD/PluginUpdater.php'
+	'Nextgenthemes\\ARVE\\ElementorWidget' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/ARVE/ElementorWidget.php'
 	),
-	'Nextgenthemes\\WP\\Admin\\EDD\\ThemeUpdater' => array(
-		'version' => '2024.03.19.17.37.03',
-		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/Admin/EDD/ThemeUpdater.php'
-	),
-	'Nextgenthemes\\WP\\Admin\\Notices' => array(
-		'version' => '2024.03.19.17.37.03',
-		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/Admin/Notices.php'
+	'Nextgenthemes\\ARVE\\Video' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/ARVE/Video.php'
 	),
 	'Nextgenthemes\\WP\\Asset' => array(
-		'version' => '2024.03.19.17.37.03',
+		'version' => '2024.03.20.11.00.26',
 		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/Asset.php'
 	),
 	'Nextgenthemes\\WP\\Settings' => array(
-		'version' => '2024.03.19.17.37.03',
+		'version' => '2024.03.20.11.00.26',
 		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/Settings.php'
 	),
 	'PHP_Autoloader' => array(

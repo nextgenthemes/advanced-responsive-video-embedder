@@ -32,5 +32,25 @@
 				"symlink": false
 			}
 		}
+	},
+	"autoload": {
+		"psr-4": {
+			"ARVE\\": "includes/"
+		},
+		"files": [
+			"includes/ARVE/fn-deprecated.php",
+			"includes/ARVE/fn-compat.php",
+			"includes/ARVE/fn-assets.php",
+			"includes/ARVE/fn-html-output.php",
+			"includes/ARVE/fn-misc.php",
+			"includes/ARVE/fn-oembed.php",
+			"includes/ARVE/fn-shortcode-data.php",
+			"includes/ARVE/fn-shortcode-args.php",
+			"includes/ARVE/fn-shortcodes.php",
+			"includes/ARVE/fn-url-handlers.php",
+			"includes/ARVE/fn-validation.php",
+			"includes/ARVE/fn-settings.php",
+			"includes/ARVEAdmin/load-admin-files.php"
+		]
 	}
 }

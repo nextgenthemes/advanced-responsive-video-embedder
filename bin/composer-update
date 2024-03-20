@@ -2,8 +2,6 @@
 <?php declare(strict_types=1);
 use function \escapeshellarg as e;
 
-require_once getenv('HOME') . '/bin/tools-dev/php-common/common.php';
-
 chdir( dirname(__DIR__) );
 
 $now = new DateTime();
@@ -11,3 +9,18 @@ $now = new DateTime();
 sys('rsync --delete -av ./vendor/nextgenthemes/wp-shared ../nextgenthemes/');
 sys('composer --working-dir ../nextgenthemes/wp-shared config version ' . e( $now->format('Y.m.d.H.i.s') ) );
 sys('composer update --optimize-autoloader');
+
+
+function sys( string $command ): ?string {
+
+	echo "Executing: $command" . PHP_EOL;
+
+	$out = system( $command, $exit_code );
+
+	if ( 0 !== $exit_code || false === $out ) {
+		echo 'Exit Code: ' . $exit_code . PHP_EOL;
+		exit($exit_code);
+	}
+
+	return $out;
+}

@@ -7,39 +7,91 @@ $baseDir   = dirname($vendorDir);
 
 return array(
 	'43a21213b4da0f477aca1a29680efb75' => array(
-		'version' => '2024.03.19.17.37.03',
+		'version' => '2024.03.20.11.00.26',
 		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/fn-asset-helpers.php'
 	),
 	'7bb4640fe0b0b617681aef28cdb79e0d' => array(
-		'version' => '2024.03.19.17.37.03',
+		'version' => '2024.03.20.11.00.26',
 		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/fn-deprecated.php'
 	),
 	'37dd8fa3c77ee4ed9386d4281e889d6b' => array(
-		'version' => '2024.03.19.17.37.03',
+		'version' => '2024.03.20.11.00.26',
 		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/fn-array.php'
 	),
 	'3ccff2c7bceb2ad4cdfe20147906989a' => array(
-		'version' => '2024.03.19.17.37.03',
+		'version' => '2024.03.20.11.00.26',
 		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/fn-string.php'
 	),
 	'cff1fc03c04937219130a2070044eaf2' => array(
-		'version' => '2024.03.19.17.37.03',
+		'version' => '2024.03.20.11.00.26',
 		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/fn-misc.php'
 	),
 	'cb3bd5928a85d1cb4123d914e761a34c' => array(
-		'version' => '2024.03.19.17.37.03',
+		'version' => '2024.03.20.11.00.26',
 		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/fn-settings.php'
 	),
 	'8911f12c90f79aa362e6a22d36874b8f' => array(
-		'version' => '2024.03.19.17.37.03',
+		'version' => '2024.03.20.11.00.26',
 		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/fn-license.php'
 	),
 	'ab6bc4024621254c75eba933febe6ab4' => array(
-		'version' => '2024.03.19.17.37.03',
+		'version' => '2024.03.20.11.00.26',
 		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/fn-remote-get.php'
 	),
-	'83b8ee913c5d2d5a8f26b42bc5db8bfb' => array(
-		'version' => '2024.03.19.17.37.03',
-		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/Admin/load-admin-files.php'
+	'f56674e603ae401aa6fed97f78649179' => array(
+		'version' => '2024.03.20.11.00.26',
+		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WPAdmin/load-admin-files.php'
+	),
+	'029cf24255d9169da95c7335d1e9dcab' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/ARVE/fn-deprecated.php'
+	),
+	'28bac9030b0504c0a4b2737d9034afa6' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/ARVE/fn-compat.php'
+	),
+	'c340529a042e987b9d069ead9a9572cb' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/ARVE/fn-assets.php'
+	),
+	'2f665aeced7ffd66478858ea7e385f5c' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/ARVE/fn-html-output.php'
+	),
+	'6001da74e6373eb2f16703b7d42ae100' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/ARVE/fn-misc.php'
+	),
+	'9e110b4a0685f4ff50346f3597db61ae' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/ARVE/fn-oembed.php'
+	),
+	'72389820d502c9ec0df575ac2c07ca80' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/ARVE/fn-shortcode-data.php'
+	),
+	'5af4c9467d68efe5813c17d261a610d5' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/ARVE/fn-shortcode-args.php'
+	),
+	'7a2512ce3de44ab1cc16931cd806e291' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/ARVE/fn-shortcodes.php'
+	),
+	'890740753fa16f7573ca50196c7c7609' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/ARVE/fn-url-handlers.php'
+	),
+	'5ab31dae57c6e19e90ab25ebe03eba0b' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/ARVE/fn-validation.php'
+	),
+	'991ad9b741be510a8c0ecc4bfe55c99b' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/ARVE/fn-settings.php'
+	),
+	'369fd1321dacf4be071dfc2b060fb85f' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/ARVEAdmin/load-admin-files.php'
 	),
 );
