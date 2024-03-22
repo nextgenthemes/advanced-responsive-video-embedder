@@ -3,12 +3,14 @@
 namespace Nextgenthemes\ARVE;
 
 require dirname( __DIR__ ) . '/advanced-responsive-video-embedder.php';
-require dirname( __DIR__ ) . '/php/functions-misc.php';
-require dirname( __DIR__ ) . '/php/functions-settings.php';
+require dirname( __DIR__ ) . '/php/fn-misc.php';
+require dirname( __DIR__ ) . '/php/fn-settings.php';
 
 init();
 
 function init(): void {
+
+	echo 'Updating block.json...' . PHP_EOL;
 
 	$settings = gutenberg_ui_settings();
 

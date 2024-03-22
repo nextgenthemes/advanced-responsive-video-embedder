@@ -39,11 +39,17 @@
 		]
 	},
 	"scripts": {
+		"build": [
+			"./bin/block-json",
+			"./bin/build-readme"
+		],
 		"shared": [
 			"rsync --delete -av ./vendor/nextgenthemes/wp-shared ../nextgenthemes/",
 			"@composer --working-dir ../nextgenthemes/wp-shared config version $(php -r \"echo (new DateTime())->format('Y.m.d.H.i.s');\")"
 		],
-		"pre-install-cmd": "@shared",
-		"pre-update-cmd": "@shared"
+		"pre-update-cmd": [
+			"@build",
+			"@shared"
+		]
 	}
 }

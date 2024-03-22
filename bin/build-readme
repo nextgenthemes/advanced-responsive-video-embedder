@@ -2,6 +2,8 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+echo "Building Readme ..." . PHP_EOL;
+
 function sys( $command ) {
 
 	$out = system( $command, $exit_code );
@@ -36,7 +38,7 @@ function provider_list(): string {
 }
 
 $root = dirname( __DIR__ );
-require_once $root . '/php/functions-misc.php';
+require_once $root . '/php/fn-misc.php';
 $markdown = provider_list();
 
 file_put_contents( $root . '/readme/13-description-supported-providers.md', $markdown );
