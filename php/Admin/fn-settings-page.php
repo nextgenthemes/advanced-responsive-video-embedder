@@ -68,11 +68,9 @@ function settings_sidebar(): void {
 		print_settings_box_html( '/partials/settings-sidebar-random-video.html' );
 	}
 
-	if ( ! is_plugin_active( 'arve-amp/arve-amp.php' ) ) {
-		print_settings_box_html( '/partials/settings-sidebar-amp.html' );
-	}
-
 	print_settings_box_html( '/partials/settings-sidebar-rate.html' );
+
+	print_arve_news();
 	?>
 
 	<?php
@@ -90,7 +88,46 @@ function print_premium_section_message(): void {
 
 function print_settings_box_html( string $file ): void {
 	echo '<div class="ngt-sidebar-box">';
-	readfile( __DIR__ . $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
+	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+	echo wp_kses( file_get_contents( __DIR__ . $file, false ), ARVE\ALLOWED_HTML );
+	echo '</div>';
+}
+
+function print_arve_news(): void {
+
+	$response = WP\remote_get_body_cached(
+		add_query_arg(
+			array(
+				'per_page'    => 2,
+				'page'        => 1,
+				'orderby'     => 'date',
+				'order'       => 'asc',
+				'categories'  => 126,
+			),
+			'https://nextgenthemes.com/wp-json/wp/v2/posts'
+		)
+	);
+
+	if ( is_wp_error( $response ) ) {
+		esc_html_e( 'Error fetching news', 'advanced-responsive-video-embedder' );
+		return;
+	}
+
+	$posts = json_decode( $response );
+
+	if ( ! $posts ) {
+		esc_html_e( 'No ARVE news posts', 'advanced-responsive-video-embedder' );
+		return;
+	}
+
+	echo '<div class="ngt-sidebar-box">';
+	echo '<h3>' . esc_html__( 'ARVE News', 'advanced-responsive-video-embedder' ) . '</h3>';
+
+	foreach ( $posts as $post ) {
+		printf( '<h5><a href="%s">%s</a></h5>', esc_url( $post->link ), esc_html( $post->title->rendered ) );
+		echo wp_kses( $post->excerpt->rendered, ARVE\ALLOWED_HTML );
+	}
+
 	echo '</div>';
 }
 

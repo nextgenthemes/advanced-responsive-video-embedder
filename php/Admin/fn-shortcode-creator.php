@@ -22,17 +22,15 @@ function add_media_button(): void {
 	</button>
 	<?php
 
-	$GLOBALS['arve-print-dialog'] = true;
-}
+	add_action( 'admin_footer', __NAMESPACE__ . '\create_shortcode_dialog' );
 
-function create_shortcode_dialog(): void {
-
-	if ( empty( $GLOBALS['arve-print-dialog'] ) ) {
-		return;
-	}
+	#dd(wp_script_modules());
 
 	wp_enqueue_script('arve-shortcode-dialog');
 	wp_enqueue_script('alpinejs');
+}
+
+function create_shortcode_dialog(): void {
 
 	$options  = ARVE\options();
 	$settings = ARVE\shortcode_settings();
@@ -49,7 +47,6 @@ function create_shortcode_dialog(): void {
 		<div class="arve-sc-dialog__wrap">
 
 			<div class="arve-sc-dialog__header">
-
 				<button class="arve-sc-dialog__close-btn" @click="toggleHelpTexts()">
 					<span class="dashicons dashicons-editor-help"></span>
 				</button>
@@ -58,10 +55,11 @@ function create_shortcode_dialog(): void {
 
 			<div class="arve-sc-dialog__body">
 				<?php
-				\Nextgenthemes\WP\print_settings_blocks(
+				\Nextgenthemes\WP\Admin\print_settings_blocks(
 					$settings,
 					ARVE\settings_sections(),
 					ARVE\PREMIUM_SECTIONS,
+					'arve',
 					ARVE\PREMIUM_URL_PREFIX,
 					'shortcode-dialog'
 				);
