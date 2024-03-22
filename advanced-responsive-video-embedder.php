@@ -35,6 +35,12 @@ const OEMBED_HTML_PRIORITY  = -5;
 const VIEW_SCRIPT_HANDLES   = array( 'arve', 'arve-pro', 'arve-random-video', 'arve-sticky-videos' );
 // For error messages and stuff on the admin screens.
 const ALLOWED_HTML = array(
+	'h1'     => array(),
+	'h2'     => array(),
+	'h3'     => array(),
+	'h4'     => array(),
+	'h5'     => array(),
+	'h6'     => array(),
 	'a'      => array(
 		'href'   => true,
 		'target' => true,
