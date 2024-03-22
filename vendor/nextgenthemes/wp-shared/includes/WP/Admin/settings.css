@@ -2,6 +2,13 @@
 	display: none !important;
 }
 
+.wp-core-ui .button-primary--ngt-small {
+	height: 18px;
+	padding-right: 5px;
+	padding-left: 5px;
+	line-height: 12px;
+}
+
 .wrap--nextgenthemes {
 	max-width: 1100px;
 	margin-right: auto;
@@ -14,6 +21,11 @@
 	& .nav-tab:not(.nav-tab--ngt-highlight) {
 		font-weight: 400;
 	}
+
+	& a {
+		text-underline-offset: 2px;
+	}
+
 }
 
 .ngt-settings-grid {
@@ -41,6 +53,7 @@
 }
 
 .ngt-settings-grid__content {
+	padding-right: 5px;
 	grid-area: content;
 }
 
@@ -48,22 +61,8 @@
 	grid-area: sidebar;
 }
 
-.ngt-label-text {
-	display: block;
-	margin-bottom: 3px;
-	font-weight: 600;
-
-	& span {
-		opacity: .5;
-	}
-
-	[type="checkbox"] + & {
-		display: inline;
-	}
-}
-
 .ngt-sidebar-box {
-	padding: 1rem;
+	padding: 1rem 1rem .5rem;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
 	background: #fff;
@@ -80,14 +79,18 @@
 	}
 
 	& li {
-		padding-left: .7em;
-		margin-bottom: 1em;
+		padding-left: 0;
+		margin-bottom: .5em;
+	}
+
+	& h5 {
+		margin-bottom: .5em;
 	}
 
 	@media (min-width: 1200px) {
 
 		& {
-			padding: 3rem;
+			padding: 2rem 3rem 1.5rem;
 		}
 	}
 }
@@ -98,4 +101,64 @@
 	max-height: calc(100vh - 150px);
 	margin-top: 2em;
 	font-family: monospace;
+}
+
+.ngt-opt {
+	container-type: inline-size;
+
+	& a {
+		background-image: linear-gradient(
+			90deg,
+			#2271b1 0%,
+			hsl(350, 81%, 39%) 100%
+		);
+		background-clip: text;
+		color: transparent;
+		text-decoration: underline #2271b1 1px;
+		transition: text-decoration .2s ease-in-out;
+		text-underline-offset: 2px;
+
+		&:focus,
+		&:hover {
+			text-decoration: underline #2271b1 3px;
+			/* color: rgb(58, 14, 219);
+			background-image: none; */
+		}
+	}
+
+	& select {
+		width: 130px;
+	}
+
+	& [type="number"] {
+		width: 6em;
+	}
+
+	.ngt-label-text {
+		display: block;
+		margin-bottom: 3px;
+		font-weight: 600;
+
+		[type="checkbox"] + & {
+			display: inline;
+		}
+	}
+}
+
+.wp-core-ui .button--ngt-small {
+	padding-right: 5px;
+	padding-left: 5px;
+	min-height: 0px;
+	font-size: .7rem;
+}
+
+.ngt-opt--arve-lightbox_aspect_ratio,
+.ngt-opt--arve-aspect_ratio,
+.ngt-opt--arve-sticky_gap,
+.ngt-opt--arve-sticky_width,
+.ngt-opt--arve-sticky_max_width {
+
+	.large-text {
+		max-width: 6em;
+	}
 }

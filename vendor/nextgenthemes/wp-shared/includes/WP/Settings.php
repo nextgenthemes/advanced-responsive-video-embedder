@@ -207,6 +207,14 @@ class Settings {
 			)
 		);
 
+		register_asset(
+			array(
+				'handle' => 'nextgenthemes-settings',
+				'src'    => $this->base_url . 'vendor/nextgenthemes/wp-shared/includes/WP/Admin/settings.css',
+				'path'   => __DIR__ . '/settings.css',
+			)
+		);
+
 		// Check if we are currently viewing our setting page
 		if ( ! str_ends_with( $page, $this->slugged_namespace ) ) {
 			return;
@@ -227,13 +235,7 @@ class Settings {
 		// purpusefully NOT put into any deps because WP would not add defer to it in that case
 		wp_enqueue_script( 'alpinejs' );
 
-		enqueue_asset(
-			array(
-				'handle' => 'nextgenthemes-settings',
-				'src'    => $this->base_url . 'vendor/nextgenthemes/wp-shared/includes/WP/Admin/settings.css',
-				'path'   => __DIR__ . '/settings.css',
-			)
-		);
+		wp_enqueue_style( 'nextgenthemes-settings' );
 
 		enqueue_asset(
 			array(
@@ -289,7 +291,7 @@ class Settings {
 				src='<?php echo esc_url( get_admin_url() . '/images/wpspin_light-2x.gif' ); ?>'
 				alt='Loading indicator' />
 		</p>
-			<?php
+		<?php
 	}
 
 	private function print_paid_section_message(): void {
@@ -367,10 +369,14 @@ class Settings {
 
 					<?php do_action( $this->slashed_namespace . '/admin/settings/content', $this ); ?>
 
-					<?php Admin\print_settings_blocks(
+					<?php
+					$prefix = str_replace( 'nextgenthemes_', '', $this->slugged_namespace );
+
+					Admin\print_settings_blocks(
 						$this->settings,
 						$this->sections,
 						$this->premium_sections,
+						$prefix,
 						$this->premium_url_prefix
 					);
 					?>

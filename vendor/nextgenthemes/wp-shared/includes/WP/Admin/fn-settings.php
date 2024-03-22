@@ -28,7 +28,7 @@ function label_text( array $option ): void {
 		if ( $option['premium'] ) {
 
 			printf(
-				' <span>(</span><a href="https://nextgenthemes.com/plugins/arve-%s">%s</a><span>)</span>',
+				' <a href="https://nextgenthemes.com/plugins/arve-%s">%s</a>',
 				esc_attr( $option['tag'] ),
 				esc_html( $option['tag_name'] )
 			);
@@ -139,7 +139,12 @@ function print_image_upload_field( string $key, array $option ): void {
 	<p>
 		<label>
 			<?php label_text( $option ); ?>
-			<input x-model="<?php echo esc_attr( "options.$key" ); ?>" type="text" class="large-text" />
+			<input
+				x-model="<?php echo esc_attr( "options.$key" ); ?>"
+				type="text"
+				class="large-text"
+				placeholder="<?php echo esc_attr( $option['placeholder'] ); ?>"
+			/>
 			<a class="button-secondary" @click="<?php echo esc_attr( "uploadImage('$key')" ); ?>">
 				<?php esc_html_e( 'Upload Image', 'advanced-responsive-video-embedder' ); ?>
 			</a>
@@ -160,40 +165,32 @@ function print_integer_field( string $key, array $option ): void {
 }
 
 function print_select_field( string $key, array $option ): void {
-
 	?>
 	<p>
 		<label>
 			<?php label_text( $option ); ?>
 			<select x-model="<?php echo esc_attr( "options.$key" ); ?>" >
-				<option disabled>Please select one</option>
-				<?php foreach ( $option['options'] as $k => $v ) : ?>
-					<option value="<?php echo esc_attr( $k ); ?>"><?php echo esc_html( $v ); ?></option>
-				<?php endforeach; ?>
+				<?php
+				$first = true;
+				foreach ( $option['options'] as $k => $v ): ?>
+					<option value="<?php echo esc_attr( $k ); ?>" <?php echo $first ? 'selected' : ''; ?>>
+						<?php echo esc_html( $v ); ?>
+					</option>
+				<?php
+				$first = false;
+				endforeach;
+				?>
 			</select>
 		</label>
 	</p>
 	<?php
 }
 
-function block_attr( string $key, array $option ): string {
-
-	if ( empty( $option['tag'] ) ) {
-		$block_attr['class'] = "ngt-option-block ngt-option-block--$key";
-	} else {
-		$block_attr = array(
-			'class'  => "ngt-option-block ngt-option-block--$key ngt-option-block--{$option['tag']}",
-			'v-show' => "sectionsDisplayed['{$option['tag']}']",
-		);
-	}
-
-	return attr( $block_attr );
-}
-
 function print_settings_blocks(
 	array $settings,
 	array $sections,
 	array $premium_sections,
+	string $prefix,
 	string $premium_url_prefix,
 	string $context = 'settings-page'
 ): void {
@@ -212,7 +209,7 @@ function print_settings_blocks(
 		$option['premium']  = in_array( $option['tag'], $premium_sections, true );
 		$option['tag_name'] = $sections[ $option['tag'] ];
 		$field_type         = isset( $option['ui'] ) ? $option['ui'] : $option['type'];
-		$block_class        = "ngt-option-block ngt-option-block--$key ngt-option-block--{$option['tag']}";
+		$block_class        = "ngt-opt ngt-opt--$prefix-$key ngt-opt--{$option['tag']}";
 
 		if ( 'hidden' === $field_type ) {
 			continue;
@@ -225,7 +222,7 @@ function print_settings_blocks(
 		] ); ?>
 		>
 			<?php
-			if ( 'settings-page' === $context ) {
+			if ( true || 'settings-page' === $context ) {
 				$function = __NAMESPACE__ . "\\print_{$field_type}_field";
 				$function( $key, $option );
 			} else {
@@ -288,7 +285,21 @@ function print_dialog_field( string $key, array $option, string $premium_url_pre
 					x-model="<?php echo esc_attr( "options.$key" ); ?>"
 				>
 					<option disabled>Please select one</option>
-					<?php foreach ( $option['options'] as $k => $v ) : ?>
+					<?php
+					$first = true;
+
+					foreach ( $option['options'] as $k => $v ) :
+					
+						printf(
+							'<option %s>%s</option>',
+							[ 	
+								'value' => $k, 
+								'selected' => $first
+							],
+							esc_html( $v )
+						);
+
+						?>
 						<option value="<?php echo esc_attr( $k ); ?>"><?php echo esc_html( $v ); ?></option>
 					<?php endforeach; ?>
 				</select>
