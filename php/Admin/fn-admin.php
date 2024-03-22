@@ -252,7 +252,7 @@ function admin_enqueue_styles(): void {
 			'handle' => 'advanced-responsive-video-embedder',
 			'src'    => plugins_url( 'build/admin.css', PLUGIN_FILE ),
 			'path'   => PLUGIN_DIR . '/build/admin.css',
-			'deps'   => array(),
+			'deps'   => array( 'nextgenthemes-settings' ),
 		)
 	);
 }

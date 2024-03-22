@@ -1,5 +1,4 @@
 import './admin.scss';
-import './bootstrap-forms.scss';
 import './shortcode-dialog.scss';
 
 import { globalID } from './main';
