@@ -262,14 +262,13 @@ function all_settings(): array {
 		'true'  => __( 'True', 'advanced-responsive-video-embedder' ),
 		'false' => __( 'False', 'advanced-responsive-video-embedder' ),
 	);
-
-	$settings = array(
+	$settings           = array(
 		'url' => array(
 			'type'                => 'string',
 			'default'             => '',
 			'label'               => __( 'Video URL / iframe Embed Code', 'advanced-responsive-video-embedder' ),
 			'option'              => false,
-			'placeholder'         => 'http://example.com/?v=1234',
+			'placeholder'         => 'https://rumble.com/*, https://www.youtube.com/watch?v=*',
 			'description'         => sprintf(
 				// Translators: %1$s Providers
 				__( 'Post the URL of the video here. For %1$s and any <a href="%2$s">unlisted</a> video hosts paste their iframe embed codes.', 'advanced-responsive-video-embedder' ),
@@ -308,7 +307,7 @@ function all_settings(): array {
 		'title' => array(
 			'type'                => 'string',
 			'default'             => '',
-			'placeholder'         => __( 'Video Title', 'advanced-responsive-video-embedder' ),
+			'placeholder'         => __( 'Video Title (Pro automatically handles this)', 'advanced-responsive-video-embedder' ),
 			'label'               => __( 'Title', 'advanced-responsive-video-embedder' ),
 			'option'              => false,
 			'shortcode'           => true,
@@ -327,7 +326,7 @@ function all_settings(): array {
 			'shortcode'           => true,
 			'label'               => __( 'Description', 'advanced-responsive-video-embedder' ),
 			'type'                => 'string',
-			'placeholder'         => __( 'Description Text', 'advanced-responsive-video-embedder' ),
+			'placeholder'         => __( 'Description Text (Pro automatically handles this)', 'advanced-responsive-video-embedder' ),
 			'description'         => sprintf(
 				// translators: URL
 				__( 'Needed for SEO <a href="%s">ARVE Pro</a> fills this automatically', 'advanced-responsive-video-embedder' ),
@@ -342,7 +341,7 @@ function all_settings(): array {
 			'option'              => false,
 			'shortcode'           => true,
 			'label'               => __( 'Upload Date', 'advanced-responsive-video-embedder' ),
-			'placeholder'         => __( '2019-09-29 (ARVE Pro fills this with post date)', 'advanced-responsive-video-embedder' ),
+			'placeholder'         => __( '2019-09-29 (Pro automatically handles this)', 'advanced-responsive-video-embedder' ),
 			'description'         => sprintf(
 				// translators: URL
 				__( '<a href="%s">ARVE Pro</a> fills this automatically.', 'advanced-responsive-video-embedder' ),
@@ -402,7 +401,7 @@ function all_settings(): array {
 			'libraryType'         => array( 'image' ),
 			'addButton'           => __( 'Select Image', 'advanced-responsive-video-embedder' ),
 			'frameTitle'          => __( 'Select Image', 'advanced-responsive-video-embedder' ),
-			'placeholder'         => 1234,
+			'placeholder'         => '1234, https://* (Pro automatically handles this)',
 			'description'         => sprintf(
 				// Translators: 1 Link, 2 Provider list
 				__( 'Media library image ID or image URL for preview image for SEO and Lazyload modes. <a href="%1$s">ARVE Pro</a> is able to get them from %2$s automatically, leave empty in this case unless you want use a different thumbnail.', 'advanced-responsive-video-embedder' ),
