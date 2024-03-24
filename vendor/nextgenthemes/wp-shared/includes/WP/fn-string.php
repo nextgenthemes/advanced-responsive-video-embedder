@@ -124,3 +124,14 @@ function valid_url( string $url ): bool {
 
 	return false;
 }
+
+/**
+ * Returns the file extension from a given URL.
+ *
+ * @param string $url The URL from which to extract the file extension
+ * @return string The file extension, or an empty string if none is found
+ */
+function get_file_extension( string $url ): string {
+	// Return the file extension or an empty string if there is none
+	return pathinfo( (string) parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION);
+}

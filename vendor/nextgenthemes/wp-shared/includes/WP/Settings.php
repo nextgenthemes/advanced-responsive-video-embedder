@@ -294,25 +294,6 @@ class Settings {
 		<?php
 	}
 
-	private function print_paid_section_message(): void {
-
-		if ( empty( $this->premium_sections ) ) {
-			return;
-		}
-
-		foreach ( $this->premium_sections as $slug ) {
-			$d_sections[] = sprintf( "sectionsDisplayed['%s']", esc_attr( $slug ) );
-		}
-
-		$v_show = implode( ' || ', $d_sections );
-		?>
-		<div class="ngt-block" v-show="<?php echo $v_show; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
-			<p><?php esc_html_e( 'You may already set options for addons but they will only take effect if the associated addons are installed.', 'advanced-responsive-video-embedder' ); ?>
-			</p>
-		</div>
-		<?php
-	}
-
 	private function print_reset_bottons(): void {
 		?>
 		<p>

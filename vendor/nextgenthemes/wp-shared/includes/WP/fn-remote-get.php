@@ -13,7 +13,7 @@ function remote_get_json( string $url, array $args = array(), string $json_name 
 /**
  * Remote get JSON from a URL and cache the response.
  *
- * @return mixed The decoded JSON response, or the specified JSON value if $json_name is provided.
+ * @return mixed|WP_Error The decoded JSON response, or the specified JSON value if $json_name is provided.
  */
 function remote_get_json_cached( string $url, array $args = array(), string $json_name = '', int $time = DAY_IN_SECONDS ) {
 
@@ -43,7 +43,6 @@ function remote_get_json_cached( string $url, array $args = array(), string $jso
 	}
 
 	if ( $json_name ) {
-
 		if ( empty( $response->$json_name ) ) {
 			return new \WP_Error(
 				'json-value-empty',
@@ -127,18 +126,6 @@ function remote_get_body_cached( string $url, array $args = array(), int $time =
 	return $response;
 }
 
-/**
- * @return array|false
- */
-function get_image_size( string $img_url ) {
-	$response = remote_get_body( $img_url, [ 'timeout' => 0.5 ] );
-
-	if ( is_wp_error( $response ) ) {
-		return false;
-	}
-
-	return getimagesizefromstring( $response );
-}
 
 function get_redirected_url( string $url ): string {
 	$headers = @get_headers($url, true);
