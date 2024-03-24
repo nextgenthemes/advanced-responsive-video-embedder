@@ -10,21 +10,21 @@ function settings_content(): void {
 	<div x-show="'urlparams' === tab">
 		<p>
 			<?php
-			printf(
-				wp_kses(
+			echo wp_kses(
+				sprintf(
 					// Translators: URL
 					__( 'This parameters will be added to the <code>iframe src</code> urls, you can control the video players behavior with them. Please read <a href="%s" target="_blank">the documentation</a> on.', 'advanced-responsive-video-embedder' ),
-					array(
-						'code' => array(),
-						'a'    => array(
-							'href'   => true,
-							'target' => true,
-							'title'  => true,
-						),
-					),
-					array( 'http', 'https' )
+					esc_url( 'https://nextgenthemes.com/arve/documentation' )
 				),
-				esc_url( 'https://nextgenthemes.com/arve/documentation' )
+				array(
+					'code' => array(),
+					'a'    => array(
+						'href'   => true,
+						'target' => true,
+						'title'  => true,
+					),
+				),
+				array( 'http', 'https' )
 			);
 			?>
 		</p>
@@ -41,7 +41,19 @@ function settings_content(): void {
 	</div>
 
 	<div x-show="['pro', 'random-video', 'sticky-videos'].includes(tab)">
-		<?php print_premium_section_message(); ?>
+		<p>
+			<?php
+			echo wp_kses(
+				sprintf(
+					// Translators: URL
+					__( 'You may already set options for addons but they will only take effect if the associated addons are installed. If not done already, enter your license keys <a href="%s">here</a> --', 'advanced-responsive-video-embedder' ),
+					esc_url( admin_url( 'options-general.php?page=nextgenthemes' ) )
+				),
+				array( 'a' => array( 'href' => true ) ),
+				array( 'http', 'https' )
+			);
+			?>
+		</p>
 	</div>
 	<?php
 }
@@ -73,16 +85,6 @@ function settings_sidebar(): void {
 	print_arve_news();
 	?>
 
-	<?php
-}
-
-function print_premium_section_message(): void {
-	?>
-		<p>
-			<?php
-			esc_html_e( 'You may already set options for addons but they will only take effect if the associated addons are installed.', 'advanced-responsive-video-embedder' );
-			?>
-		</p>
 	<?php
 }
 
