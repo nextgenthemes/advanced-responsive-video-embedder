@@ -1,10 +1,11 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\WP\Admin;
 
-use \Nextgenthemes\WP\Admin\EDD\PluginUpdater;
-use \Nextgenthemes\WP\Admin\EDD\ThemeUpdater;
-
-use function \Nextgenthemes\WP\get_products;
+use Nextgenthemes\WP\Admin\EDD\PluginUpdater;
+use Nextgenthemes\WP\Admin\EDD\ThemeUpdater;
+use const Nextgenthemes\ARVE\VERSION;
+use function Nextgenthemes\WP\get_products;
+use function Nextgenthemes\WP\str_contains_any;
 
 function init_edd_updaters( array $options ): void {
 
@@ -28,7 +29,7 @@ function init_plugin_updater( array $product, array $options ): void {
 		$product['file'],
 		array(
 			'license' => $options[ $product['slug'] ],
-			'beta'    => $options[ $product['slug'] . '_beta' ],
+			'beta'    => str_contains_any( VERSION, [ 'alpha', 'beta' ] ),
 			'version' => $product['version'],
 			'item_id' => $product['id'],
 			'author'  => $product['author'],
