@@ -1,24 +1,21 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE\Admin;
 
-use const Nextgenthemes\ARVE\PREMIUM_SECTIONS;
-use const Nextgenthemes\ARVE\PREMIUM_URL_PREFIX;
-use const Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
-use const Nextgenthemes\ARVE\PLUGIN_DIR;
-use const Nextgenthemes\ARVE\PLUGIN_FILE;
-use const Nextgenthemes\ARVE\ALLOWED_HTML;
+use Nextgenthemes\WP\Admin\Notices;
 
 use function Nextgenthemes\ARVE\is_gutenberg;
 use function Nextgenthemes\ARVE\shortcode_settings;
 use function Nextgenthemes\ARVE\settings_sections;
 use function Nextgenthemes\ARVE\options;
 
-use Nextgenthemes\WP\Admin\Notices;
 use function Nextgenthemes\WP\enqueue_asset;
-use function Nextgenthemes\WP\register_asset;
-use function Nextgenthemes\WP\ver;
-use function Nextgenthemes\WP\attr;
-use function Nextgenthemes\WP\kses_basic;
+
+use const Nextgenthemes\ARVE\PREMIUM_SECTIONS;
+use const Nextgenthemes\ARVE\PREMIUM_URL_PREFIX;
+use const Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
+use const Nextgenthemes\ARVE\PLUGIN_DIR;
+use const Nextgenthemes\ARVE\PLUGIN_FILE;
+use const Nextgenthemes\ARVE\ALLOWED_HTML;
 
 function action_admin_init_setup_messages(): void {
 
@@ -58,19 +55,6 @@ function action_admin_init_setup_messages(): void {
 			array(
 				'cap' => 'install_plugins',
 			)
-		);
-	}
-
-	if ( PHP_VERSION_ID < 70400 ) {
-		$msg = esc_html__(
-			'Your php version is very outdated, the next version of ARVE will probably require 7.4+ please update (ask your host to update).',
-			'advanced-responsive-video-embedder'
-		);
-
-		Notices::instance()->register_notice(
-			'arve-php-outdated-warn-7-4',
-			'notice-error',
-			$msg
 		);
 	}
 }
