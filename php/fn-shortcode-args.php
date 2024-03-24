@@ -7,20 +7,6 @@ use function Nextgenthemes\WP\valid_url;
 use function Nextgenthemes\WP\get_attribute_value_from_html_tag;
 
 /**
- * Sanitizes the provider name by removing special characters and converting to lowercase.
- *
- * @param string $provider The provider name to be sanitized.
- * @return string The sanitized provider name.
- */
-function sane_provider_name( string $provider ): string {
-	$provider = preg_replace( '/[^a-z0-9]/', '', strtolower( $provider ) );
-	$provider = str_replace( 'wistiainc', 'wistia', $provider );
-	$provider = str_replace( 'rumblecom', 'rumble', $provider );
-
-	return $provider;
-}
-
-/**
  * Generates the source URL from the oEmbed HTML data.
  *
  * @param object $data The oEmbed HTML data.
