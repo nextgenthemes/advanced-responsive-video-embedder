@@ -19,8 +19,7 @@ function nextgenthemes_settings_instance( string $base_url, string $base_path ) 
 				'namespace'           => 'nextgenthemes',
 				'settings'            => nextgenthemes_settings(),
 				'sections'            => array(
-					'keys'         => esc_html__( 'License Keys', 'advanced-responsive-video-embedder' ),
-					'beta-updates' => esc_html__( 'Beta Updates', 'advanced-responsive-video-embedder' ),
+					'keys' => esc_html__( 'License Keys', 'advanced-responsive-video-embedder' ),
 				),
 				'menu_title'          => esc_html__( 'NextGenThemes', 'advanced-responsive-video-embedder' ),
 				'settings_page_title' => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
@@ -60,27 +59,6 @@ function nextgenthemes_settings(): array {
 			'ui'      => 'hidden',
 		);
 	}
-
-	foreach ( $products as $key => $value ) {
-		$settings[ $key . '_beta' ] = array(
-			'default' => false,
-			'option'  => true,
-			'tag'     => 'beta-updates',
-			// translators: Product name
-			'label'   => sprintf( esc_html__( '%s beta updates', 'advanced-responsive-video-embedder' ), $value['name'] ),
-			'type'    => 'boolean',
-		);
-	}
-
-	/*
-	$settings['cdn'] = array(
-		'tag'     => 'keys',
-		'default' => false,
-		'option'  => true,
-		'label'   => esc_html__( 'Use jsDelivr CDN for some assets', 'advanced-responsive-video-embedder' ),
-		'type'    => 'boolean',
-	);
-	*/
 
 	$settings['action'] = array(
 		'tag'     => 'keys',
