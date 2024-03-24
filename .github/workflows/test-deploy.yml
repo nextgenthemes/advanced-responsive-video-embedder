@@ -134,7 +134,6 @@ jobs:
 
   deploy-github:
     needs: test
-    if: contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'dev')
     name: Upload Release Asset
     runs-on: ubuntu-latest
     steps:
@@ -153,7 +152,7 @@ jobs:
           tag_name: ${{ github.ref_name }}
           release_name: ${{ github.ref_name }}
           draft: false
-          prerelease: true
+          prerelease: false # not doing this (for now) because this will as easy to grab with GitHub API and the realease API repsonse can apprently out of order so its hard to grab the latest pro-release from it. https://github.com/orgs/community/discussions/8226#discussioncomment-7704448
 
       - name: Upload Release Asset
         id: upload-release-asset
