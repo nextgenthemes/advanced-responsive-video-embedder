@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-use function Nextgenthemes\WP\get_image_size;
+use Nextgenthemes\WP;
 
 /**
  * Info: https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-oembed.php
@@ -16,35 +16,69 @@ function add_oembed_providers(): void {
 }
 
 /**
- * Undocumented function
+ * Add ARVE data to oEmbed cache
  *
- * @param string $return The returned oEmbed HTML.
- * @param object $data   A data object result from an oEmbed provider.
- * @param string $url    The URL of the content to be embedded.
+ * @param string $html The returned oEmbed HTML.
+ * @param object $data A data object result from an oEmbed provider.
+ * @param string $url  The URL of the content to be embedded.
  */
-function filter_oembed_dataparse( string $return, object $data, string $url ): string {
+function filter_oembed_dataparse( string $html, object $data, string $url ): string {
 
 	// this is to fix Divi endless reload issue.
 	if ( is_admin() && function_exists('et_setup_theme') ) {
-		return $return;
+		return $html;
 	}
 
 	if ( $data && 'video' === $data->type ) {
+		$data->arve_provider  = sane_provider_name( $data->provider_name );
 		$data->arve_cachetime = gmdate('Y-m-d H:i:s');
 		$data->arve_url       = $url;
 
-		if ( 'YouTube' === $data->provider_name && ! empty( $data->thumbnail_url ) ) {
-			$data->arve_srcset = yt_srcset( $data->thumbnail_url );
+		if ( 'youtube' === $data->arve_provider && ! empty( $data->thumbnail_url ) ) {
+
+			$yt_thumbnails = yt_thumbnails( $data->thumbnail_url );
+
+			// Replace with webp version
+			if ( ! empty( $yt_thumbnails['sizes'][480] ) ) {
+				$data->thumbnail_url = $yt_thumbnails['sizes'][480];
+			}
+
+			$data->arve_id              = yt_id_from_thumbnail_url( $data->thumbnail_url );
+			$data->arve_thumbnail_small = $yt_thumbnails['smallest'];
+			$data->arve_thumbnail_large = $yt_thumbnails['largest'];
+			$data->arve_srcset          = $yt_thumbnails['srcset'];
 		}
+
+		$data = apply_filters( 'nextgenthemes/arve/oembed_dataparse', $data, $yt_thumbnails );
 
 		foreach ( $data as $k => $v ) {
 			$data->$k = \esc_html($v);
 		}
 
-		$return .= '<script type="application/json" data-arve-oembed>' . \wp_json_encode($data, JSON_UNESCAPED_UNICODE) . '</script>';
+		$html .= '<script type="application/json" data-arve-oembed>' . \wp_json_encode($data, JSON_UNESCAPED_UNICODE) . '</script>';
 	}
 
-	return $return;
+	return $html;
+}
+
+/**
+ * Sanitizes the provider name by removing special characters and converting to lowercase.
+ *
+ * @param string $provider The provider name to be sanitized.
+ * @return string The sanitized provider name.
+ */
+function sane_provider_name( string $provider ): string {
+	$provider = preg_replace( '/[^a-z0-9]/', '', strtolower( $provider ) );
+	$provider = str_replace( 'wistiainc', 'wistia', $provider );
+	$provider = str_replace( 'rumblecom', 'rumble', $provider );
+
+	return $provider;
+}
+
+function yt_id_from_thumbnail_url( string $url ): string {
+	$path = parse_url( $url, PHP_URL_PATH );
+	$dir  = pathinfo( $path, PATHINFO_DIRNAME );
+	return str_replace( '/vi/', '', $dir );
 }
 
 /**
@@ -106,30 +140,11 @@ function extract_oembed_json( string $html, string $url ): ?object {
 	return $data;
 }
 
-function yt_srcset( string $url ): string {
+function yt_srcset( array $sizes ): string {
 
-	$re = '@[a-z]+.jpg$@';
+	if ( ! empty( $sizes ) ) {
 
-	$mq     = preg_replace($re, 'mqdefault.jpg', $url, 1);     // 320x180
-	$sd     = preg_replace($re, 'sddefault.jpg', $url, 1);     // 640x480
-	$maxres = preg_replace($re, 'maxresdefault.jpg', $url, 1); // hd, fullhd ...
-
-	$size_sd     = get_image_size( $sd );
-	$size_maxres = get_image_size( $maxres );
-
-	$srcset[320] = $mq;
-	$srcset[480] = $url; // hqdefault.jpg 480x360
-
-	if ( $size_sd && 640 === $size_sd[0] ) {
-		$srcset[640] = $sd;
-	}
-	if ( $size_maxres && $size_maxres[0] >= 1280 ) {
-		$srcset[ $size_maxres[0] ] = $maxres;
-	}
-
-	if ( ! empty( $srcset ) ) {
-
-		foreach ( $srcset as $size => $url ) {
+		foreach ( $sizes as $size => $url ) {
 			$srcset_comb[] = "$url {$size}w";
 		}
 
@@ -137,6 +152,35 @@ function yt_srcset( string $url ): string {
 	}
 
 	return '';
+}
+
+function yt_thumbnails( string $url ): array {
+
+	$sizes       = array();
+	$srcset      = array();
+	$url         = str_replace( '/vi/', '/vi_webp/', $url );
+	$sizes[320]  = str_replace( 'hqdefault.jpg', 'mqdefault.webp',     $url ); // 320x180
+	$sizes[480]  = str_replace( 'hqdefault.jpg', 'hqdefault.webp',     $url ); // 480x360
+	$sizes[640]  = str_replace( 'hqdefault.jpg', 'sddefault.webp',     $url ); // 640x480
+	$sizes[1280] = str_replace( 'hqdefault.jpg', 'hq720.webp',         $url ); // 1280x720
+	$sizes[1920] = str_replace( 'hqdefault.jpg', 'maxresdefault.webp', $url ); // 1920x1080
+
+	foreach ( $sizes as $size => $url ) {
+
+		if ( is_wp_error( WP\remote_get_body( $url, array( 'timeout' => 5 ) ) ) ) {
+			unset( $sizes[ $size ] );
+			continue;
+		}
+
+		$srcset[] = "$url {$size}w";
+	}
+
+	return array(
+		'smallest' => $sizes[ min( array_keys( $sizes ) ) ],
+		'largest'  => $sizes[ max( array_keys( $sizes ) ) ],
+		'srcset'   => implode( ', ', $srcset ),
+		'sizes'    => $sizes,
+	);
 }
 
 /**
