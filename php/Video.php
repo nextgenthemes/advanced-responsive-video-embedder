@@ -309,7 +309,7 @@ class Video {
 				return '';
 			} else {
 				throw new \Exception(
-					__( 'Need Provider and ID to build iframe src.', 'advanced-responsive-video-embedder' )
+					esc_html__( 'Need Provider and ID to build iframe src.', 'advanced-responsive-video-embedder' )
 				);
 			}
 		}
@@ -404,7 +404,7 @@ class Video {
 				implode( ', ', $required_attributes )
 			);
 
-			throw new \Exception( $msg );
+			throw new \Exception( esc_html( $msg ) );
 		}
 	}
 
@@ -416,7 +416,6 @@ class Video {
 			}
 		}
 	}
-
 
 	/**
 	 * Retrieves the current set properties as an array.
@@ -620,7 +619,7 @@ class Video {
 
 		if ( ! $this->url && ! $this->src ) {
 			throw new \Exception(
-				__( 'detect_provider_and_id_from_url method needs url.', 'advanced-responsive-video-embedder' )
+				esc_html__( 'detect_provider_and_id_from_url method needs url.', 'advanced-responsive-video-embedder' )
 			);
 		}
 
