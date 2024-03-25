@@ -14,7 +14,7 @@ function validate_thumbnail( $id_or_url ): string {
 
 	// attachment id
 	if ( is_int( $id_or_url ) ) {
-		// we cast to string here because we store this as string type and it would come as sting from a shortcode anyway
+		// we cast to string here because we store this as string type and it would come as string from a shortcode anyway
 		return (string) $id_or_url;
 	}
 
