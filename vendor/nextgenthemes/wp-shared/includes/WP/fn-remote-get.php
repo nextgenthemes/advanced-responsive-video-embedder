@@ -63,7 +63,6 @@ function remote_get_json_cached( string $url, array $args = array(), string $jso
 }
 
 /**
- * Undocumented function
  * @return mixed|WP_Error
  */
 function remote_get_body( string $url, array $args = array() ) {
@@ -102,7 +101,35 @@ function remote_get_body( string $url, array $args = array() ) {
 	}
 
 	return $response;
-};
+}
+
+/**
+ * @return mixed|WP_Error
+ */
+function remote_get_head( string $url, array $args = array() ) {
+
+	$response      = wp_safe_remote_head( $url, $args );
+	$response_code = wp_remote_retrieve_response_code( $response );
+
+	if ( is_wp_error( $response ) ) {
+		return $response;
+	}
+
+	if ( 200 !== $response_code ) {
+
+		return new \WP_Error(
+			$response_code,
+			sprintf(
+				// Translators: 1 URL 2 HTTP response code.
+				__( 'url: %1$s Status code 200 expected but was %2$s.', 'advanced-responsive-video-embedder' ),
+				$url,
+				$response_code
+			)
+		);
+	}
+
+	return $response;
+}
 
 /**
  * Retrieves the body content from a remote URL, with caching for improved performance.
