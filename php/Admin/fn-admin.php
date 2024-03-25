@@ -71,9 +71,10 @@ function action_admin_init_setup_messages(): void {
 			wp_kses(
 				sprintf(
 					// Translators: %1$s URL, %2$s version tag.
-					__( 'Latest ARVE pre-release is out! Please do a manual update. (1) Download <a href="%1$s">arve-%2$s.zip</a> (2) Go to Plugins > Add New > Upload Plugin. (3) Install', 'advanced-responsive-video-embedder' ),
+					__( 'Latest ARVE pre-release is out! Please do a manual update.<br>(1) Download <a href="%1$s">arve-%2$s.zip</a>. (2) Go to Plugins > Add New > Upload Plugin. (3) Install. (4) <a href="%3$s">nextgenthemes.com/support/</a> if something goes wrong.', 'advanced-responsive-video-embedder' ),
 					esc_url( "https://github.com/nextgenthemes/advanced-responsive-video-embedder/releases/download/$beta_ver/advanced-responsive-video-embedder-$beta_ver.zip" ),
-					esc_html( $beta_ver )
+					esc_html( $beta_ver ),
+					esc_url( 'https://nextgenthemes.com/support/' )
 				),
 				ALLOWED_HTML,
 				array( 'htts', 'https' )
