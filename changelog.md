@@ -3,6 +3,9 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-03-25 9.10.16 ###
+* Just a admin message asking to test the upcoming version 10.
+
 ### 2024-02-29 9.10.15 ###
 * Improved: Update Edd Updater Class.
 * Fix: Reduced changelog site and tags for correct display on wp.org
