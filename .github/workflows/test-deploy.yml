@@ -112,7 +112,7 @@ jobs:
     needs: test
     if: >
       startsWith(github.ref, 'refs/tags') &&
-      ( !contains(github.ref, 'alpha') && !contains(github.ref, 'beta') && !contains(github.ref, 'dev') )
+      (!contains(github.ref, 'alpha') && !contains(github.ref, 'beta') && !contains(github.ref, 'dev'))
     name: SVN commit to wp.org
     runs-on: ubuntu-22.04
     steps:
@@ -134,6 +134,7 @@ jobs:
 
   deploy-github:
     needs: test
+    if: startsWith(github.ref, 'refs/tags')
     name: Upload Release Asset
     runs-on: ubuntu-latest
     steps:
