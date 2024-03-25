@@ -9,6 +9,8 @@ use function Nextgenthemes\ARVE\settings_sections;
 use function Nextgenthemes\ARVE\options;
 
 use function Nextgenthemes\WP\enqueue_asset;
+use function Nextgenthemes\WP\remote_get_json_cached;
+use function Nextgenthemes\WP\str_contains_any;
 
 use const Nextgenthemes\ARVE\PREMIUM_SECTIONS;
 use const Nextgenthemes\ARVE\PREMIUM_URL_PREFIX;
@@ -16,6 +18,7 @@ use const Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
 use const Nextgenthemes\ARVE\PLUGIN_DIR;
 use const Nextgenthemes\ARVE\PLUGIN_FILE;
 use const Nextgenthemes\ARVE\ALLOWED_HTML;
+use const Nextgenthemes\ARVE\VERSION;
 
 function action_admin_init_setup_messages(): void {
 
@@ -57,6 +60,46 @@ function action_admin_init_setup_messages(): void {
 			)
 		);
 	}
+
+	$beta_ver = get_latest_beta();
+
+	if ( str_contains_any( VERSION, array( 'alpha', 'beta' ) ) && version_compare( VERSION, $beta_ver, '<' ) ) {
+
+		Notices::instance()->register_notice(
+			"ngt-arve-beta-$beta_ver",
+			'notice-info',
+			wp_kses(
+				sprintf(
+					// Translators: %1$s URL, %2$s version tag.
+					__( 'Latest ARVE pre-release is out! Please do a manual update. (1) Download <a href="%1$s">arve-%2$s.zip</a> (2) Go to Plugins > Add New > Upload Plugin. (3) Install', 'advanced-responsive-video-embedder' ),
+					esc_url( "https://github.com/nextgenthemes/advanced-responsive-video-embedder/releases/download/$beta_ver/advanced-responsive-video-embedder-$beta_ver.zip" ),
+					esc_html( $beta_ver )
+				),
+				ALLOWED_HTML,
+				array( 'htts', 'https' )
+			),
+			array(
+				'cap' => 'install_plugins',
+			)
+		);
+	}
+}
+
+function get_latest_beta(): string {
+
+	$ver    = '10.0.0-alpha9';
+	$gh_tag = remote_get_json_cached(
+		'https://api.github.com/repos/nextgenthemes/advanced-responsive-video-embedder/releases/latest',
+		array(),
+		'tag_name',
+		HOUR_IN_SECONDS
+	);
+
+	if ( ! is_wp_error( $gh_tag ) && str_contains_any( $gh_tag, array( 'alpha', 'beta' ) ) ) {
+		$ver = $gh_tag;
+	}
+
+	return $ver;
 }
 
 function ad_html(): string {
