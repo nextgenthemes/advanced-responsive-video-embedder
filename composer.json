@@ -33,11 +33,6 @@
 			}
 		}
 	},
-	"autoload": {
-		"files": [
-			"php/init.php"
-		]
-	},
 	"scripts": {
 		"build": [
 			"./bin/block-json",
