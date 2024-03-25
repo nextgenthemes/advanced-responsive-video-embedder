@@ -152,9 +152,3 @@ function remote_get_body_cached( string $url, array $args = array(), int $time =
 
 	return $response;
 }
-
-
-function get_redirected_url( string $url ): string {
-	$headers = @get_headers($url, true);
-	return $headers['Location'];
-}
