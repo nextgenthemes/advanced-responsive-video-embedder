@@ -29,34 +29,38 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 		return $html;
 	}
 
-	if ( $data && 'video' === $data->type ) {
-		$data->arve_provider  = sane_provider_name( $data->provider_name );
-		$data->arve_cachetime = gmdate('Y-m-d H:i:s');
-		$data->arve_url       = $url;
-
-		if ( 'youtube' === $data->arve_provider && ! empty( $data->thumbnail_url ) ) {
-
-			$yt_thumbnails = yt_thumbnails( $data->thumbnail_url );
-
-			// Replace with webp version
-			if ( ! empty( $yt_thumbnails['sizes'][480] ) ) {
-				$data->thumbnail_url = $yt_thumbnails['sizes'][480];
-			}
-
-			$data->arve_id              = yt_id_from_thumbnail_url( $data->thumbnail_url );
-			$data->arve_thumbnail_small = $yt_thumbnails['smallest'];
-			$data->arve_thumbnail_large = $yt_thumbnails['largest'];
-			$data->arve_srcset          = $yt_thumbnails['srcset'];
-		}
-
-		$data = apply_filters( 'nextgenthemes/arve/oembed_dataparse', $data, $yt_thumbnails );
-
-		foreach ( $data as $k => $v ) {
-			$data->$k = \esc_html($v);
-		}
-
-		$html .= '<script type="application/json" data-arve-oembed>' . \wp_json_encode($data, JSON_UNESCAPED_UNICODE) . '</script>';
+	if ( empty( $data ) || 'video' !== $data->type ) {
+		return $html;
 	}
+
+	$yt_thumbnails = false;
+
+	$data->arve_provider  = sane_provider_name( $data->provider_name );
+	$data->arve_cachetime = gmdate('Y-m-d H:i:s');
+	$data->arve_url       = $url;
+
+	if ( 'youtube' === $data->arve_provider && ! empty( $data->thumbnail_url ) ) {
+
+		$yt_thumbnails = yt_thumbnails( $data->thumbnail_url );
+
+		// Replace with webp version
+		if ( ! empty( $yt_thumbnails['sizes'][480] ) ) {
+			$data->thumbnail_url = $yt_thumbnails['sizes'][480];
+		}
+
+		$data->arve_id              = yt_id_from_thumbnail_url( $data->thumbnail_url );
+		$data->arve_thumbnail_small = $yt_thumbnails['smallest'];
+		$data->arve_thumbnail_large = $yt_thumbnails['largest'];
+		$data->arve_srcset          = $yt_thumbnails['srcset'];
+	}
+
+	$data = apply_filters( 'nextgenthemes/arve/oembed_dataparse', $data, $yt_thumbnails );
+
+	foreach ( $data as $k => $v ) {
+		$data->$k = \esc_html($v);
+	}
+
+	$html .= '<script type="application/json" data-arve-oembed>' . \wp_json_encode($data, JSON_UNESCAPED_UNICODE) . '</script>';
 
 	return $html;
 }
@@ -154,6 +158,15 @@ function yt_srcset( array $sizes ): string {
 	return '';
 }
 
+/**
+ * Generate thumbnail uris dir YouTube video based on the provided URL.
+ *
+ * default URI format: https://i.ytimg.com/vi/<id>/hqdefault.jpg
+ * webp URI format:    https://i.ytimg.com/vi_webp/<id>/hqdefault.webp
+ *
+ * @param string $url The URL of the YouTube video.
+ * @return array Array containing information about the thumbnails.
+ */
 function yt_thumbnails( string $url ): array {
 
 	$sizes       = array();
@@ -167,7 +180,7 @@ function yt_thumbnails( string $url ): array {
 
 	foreach ( $sizes as $size => $url ) {
 
-		if ( is_wp_error( WP\remote_get_body( $url, array( 'timeout' => 5 ) ) ) ) {
+		if ( is_wp_error( WP\remote_get_head( $url, array( 'timeout' => 5 ) ) ) ) {
 			unset( $sizes[ $size ] );
 			continue;
 		}
@@ -176,8 +189,8 @@ function yt_thumbnails( string $url ): array {
 	}
 
 	return array(
-		'smallest' => $sizes[ min( array_keys( $sizes ) ) ],
-		'largest'  => $sizes[ max( array_keys( $sizes ) ) ],
+		'smallest' => empty( $sizes ) ? '' : $sizes[ min( array_keys( $sizes ) ) ],
+		'largest'  => empty( $sizes ) ? '' : $sizes[ max( array_keys( $sizes ) ) ],
 		'srcset'   => implode( ', ', $srcset ),
 		'sizes'    => $sizes,
 	);
