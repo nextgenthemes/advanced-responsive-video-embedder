@@ -128,16 +128,3 @@ function is_wp_debug(): bool {
 	return defined( 'WP_DEBUG' ) && WP_DEBUG;
 }
 
-/**
- * Replaces the extension of the given filename with the new extension.
- *
- * @param string $filename The original filename including the path.
- * @param string $new_extension The new extension to replace the existing one.
- * @return string The modified filename with the new extension.
- */
-function replace_extension( string $filename, string $new_extension ): string {
-	$info = pathinfo( $filename );
-	$dir  = $info['dirname'] ? $info['dirname'] . DIRECTORY_SEPARATOR : '';
-
-	return $dir . $info['filename'] . '.' . $new_extension;
-}
