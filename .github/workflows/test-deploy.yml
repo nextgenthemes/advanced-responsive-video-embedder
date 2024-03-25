@@ -99,8 +99,8 @@ jobs:
         run: phpunit --testsuite advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos
 
   deploy:
-    if: startsWith(github.ref, 'refs/tags')
     needs: test
+    if: startsWith(github.ref, 'refs/tags')
     name: SVN commit to wp.org
     runs-on: ubuntu-22.04
     steps:

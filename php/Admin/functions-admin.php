@@ -2,15 +2,13 @@
 // phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Admin;
 
-use const Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
-
-use Nextgenthemes\ARVE;
 use Nextgenthemes\ARVE\Common\Admin\Notices;
-
+use Nextgenthemes\ARVE;
 use function Nextgenthemes\ARVE\Common\ver;
-use function Nextgenthemes\ARVE\Common\attr;
-use function Nextgenthemes\ARVE\Common\kses_basic;
 use function Nextgenthemes\ARVE\Common\enqueue_asset;
+use function Nextgenthemes\ARVE\Common\remote_get_json_cached;
+use const Nextgenthemes\ARVE\VERSION;
+use const Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
 
 const ALLOWED_HTML = array(
 	'a'      => array(
@@ -68,19 +66,45 @@ function action_admin_init_setup_messages() {
 		);
 	}
 
-	if ( PHP_VERSION_ID < 70400 ) {
+	$beta_version = get_latest_beta();
 
-		$msg = esc_html__(
-			'Your php version is very outdated, the next version of ARVE will require 7.4+ please update (ask your host to update).',
-			'advanced-responsive-video-embedder'
-		);
-
+	if ( version_compare( VERSION, $beta_version, '<' ) ) {
 		Notices::instance()->register_notice(
-			'arve-php-outdated-warn-7-4',
-			'notice-error',
-			$msg
+			'ngt-arve-beta',
+			'notice-info',
+			wp_kses(
+				sprintf(
+					// Translators: %1$s URL, %2$s version tag.
+					__( 'If you can, please help testing the upcoming ARVE version.<br>(1) Download <a href="%1$s">arve-%2$s.zip</a> (2) Go to Plugins > Add New > Upload Plugin. (3) Install. (4) <a href="%3$s">nextgenthemes.com/support/</a> if something goes wrong.', 'advanced-responsive-video-embedder' ),
+					esc_url( "https://github.com/nextgenthemes/advanced-responsive-video-embedder/releases/download/$beta_version/advanced-responsive-video-embedder-$beta_version.zip" ),
+					esc_html( $beta_version ),
+					esc_url( 'https://nextgenthemes.com/support/' )
+				),
+				ALLOWED_HTML,
+				array( 'htts', 'https' )
+			),
+			array(
+				'cap' => 'install_plugins',
+			)
 		);
 	}
+}
+
+function get_latest_beta(): string {
+
+	$ver    = '10.0.0-alpha9';
+	$gh_tag = remote_get_json_cached(
+		'https://api.github.com/repos/nextgenthemes/advanced-responsive-video-embedder/releases/latest',
+		array(),
+		'tag_name',
+		HOUR_IN_SECONDS
+	);
+
+	if ( ! is_wp_error( $gh_tag ) && str_contains_any( $gh_tag, array( 'alpha', 'beta' ) ) ) {
+		$ver = $gh_tag;
+	}
+
+	return $ver;
 }
 
 function ad_html() {
