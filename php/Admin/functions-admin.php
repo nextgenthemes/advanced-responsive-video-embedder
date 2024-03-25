@@ -100,7 +100,10 @@ function get_latest_beta(): string {
 		HOUR_IN_SECONDS
 	);
 
-	if ( ! is_wp_error( $gh_tag ) && str_contains_any( $gh_tag, array( 'alpha', 'beta' ) ) ) {
+	if ( ! is_wp_error( $gh_tag ) &&
+		str_contains( $gh_tag, 'alpha' ) &&
+		str_contains( $gh_tag, 'beta' )
+	) {
 		$ver = $gh_tag;
 	}
 
