@@ -156,7 +156,6 @@ jobs:
           prerelease: false # not doing this (for now) because this will as easy to grab with GitHub API and the realease API repsonse can apprently out of order so its hard to grab the latest pro-release from it. https://github.com/orgs/community/discussions/8226#discussioncomment-7704448
 
       - name: Upload Release Asset
-        id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
@@ -167,7 +166,6 @@ jobs:
           asset_content_type: application/zip
 
       - name: Upload Release Asset
-        id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
