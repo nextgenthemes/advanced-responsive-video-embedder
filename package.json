@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "cd ../../../../.. && npm run start:advanced-responsive-video-embedder",
-    "build": "cd ../../../../.. && npm run build:advanced-responsive-video-embedder; composer update",
+    "build": "composer run build",
     "test": "cd ../../../../.. && phpunit"
   },
   "repository": {
