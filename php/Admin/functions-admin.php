@@ -66,18 +66,15 @@ function action_admin_init_setup_messages() {
 		);
 	}
 
-	$beta_version = get_latest_beta();
-
-	if ( version_compare( VERSION, $beta_version, '<' ) ) {
+	if ( version_compare( VERSION, '10.0.0-alpha1', '<' ) ) {
 		Notices::instance()->register_notice(
 			'ngt-arve-beta',
 			'notice-info',
 			wp_kses(
 				sprintf(
 					// Translators: %1$s URL, %2$s version tag.
-					__( 'If you can, please help testing the upcoming ARVE version.<br>(1) Download <a href="%1$s">arve-%2$s.zip</a> (2) Go to Plugins > Add New > Upload Plugin. (3) Install. (4) <a href="%3$s">nextgenthemes.com/support/</a> if something goes wrong.', 'advanced-responsive-video-embedder' ),
-					esc_url( "https://github.com/nextgenthemes/advanced-responsive-video-embedder/releases/download/$beta_version/advanced-responsive-video-embedder-$beta_version.zip" ),
-					esc_html( $beta_version ),
+					__( 'If you can, please help testing the upcoming ARVE version.<br>(1) Download <a href="%1$s">arve.zip</a> (2) Go to Plugins > Add New > Upload Plugin. (3) Install. (4) <a href="%3$s">nextgenthemes.com/support/</a> if something goes wrong.', 'advanced-responsive-video-embedder' ),
+					esc_url( 'https://github.com/nextgenthemes/advanced-responsive-video-embedder/releases/latest/download/arve.zip' ),
 					esc_url( 'https://nextgenthemes.com/support/' )
 				),
 				ALLOWED_HTML,
@@ -88,26 +85,6 @@ function action_admin_init_setup_messages() {
 			)
 		);
 	}
-}
-
-function get_latest_beta(): string {
-
-	$ver    = '10.0.0-alpha9';
-	$gh_tag = remote_get_json_cached(
-		'https://api.github.com/repos/nextgenthemes/advanced-responsive-video-embedder/releases/latest',
-		array(),
-		'tag_name',
-		HOUR_IN_SECONDS
-	);
-
-	if ( ! is_wp_error( $gh_tag ) &&
-		str_contains( $gh_tag, 'alpha' ) &&
-		str_contains( $gh_tag, 'beta' )
-	) {
-		$ver = $gh_tag;
-	}
-
-	return $ver;
 }
 
 function ad_html() {

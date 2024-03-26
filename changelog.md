@@ -3,7 +3,7 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2024-03-25 9.10.16 ###
+### 2024-03-26 9.10.16 ###
 * Just a admin message asking to test the upcoming version 10.
 
 ### 2024-02-29 9.10.15 ###
