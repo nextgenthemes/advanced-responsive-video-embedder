@@ -47,7 +47,8 @@ class PluginUpdater {
 		$this->slug                     = basename( $_plugin_file, '.php' );
 		$this->version                  = $_api_data['version'];
 		$this->wp_override              = isset( $_api_data['wp_override'] ) ? (bool) $_api_data['wp_override'] : false;
-		$this->beta                     = ! empty( $this->api_data['beta'] ) ? true : false;
+		// TODO - this is probably a fixed EDD bug.
+		$this->beta                     = ! empty( $_api_data['beta'] ) ? true : false;
 		$this->failed_request_cache_key = 'edd_sl_failed_http_' . md5( $this->api_url );
 
 		$edd_plugin_data[ $this->slug ] = $this->api_data;
@@ -100,7 +101,7 @@ class PluginUpdater {
 		global $pagenow;
 
 		if ( ! is_object( $_transient_data ) ) {
-			$_transient_data = new stdClass();
+			$_transient_data = new \stdClass();
 		}
 
 		if ( ! empty( $_transient_data->response ) && ! empty( $_transient_data->response[ $this->name ] ) && false === $this->wp_override ) {
@@ -213,7 +214,7 @@ class PluginUpdater {
 
 		if ( ! isset( $update_cache->response[ $this->name ] ) ) {
 			if ( ! is_object( $update_cache ) ) {
-				$update_cache = new stdClass();
+				$update_cache = new \stdClass();
 			}
 			$update_cache->response[ $this->name ] = $this->get_repo_api_data();
 		}
