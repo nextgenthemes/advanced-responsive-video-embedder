@@ -37,8 +37,18 @@ function action_admin_init_setup_messages(): void {
 			PRO_VERSION_REQUIRED,
 			esc_url( get_admin_url() . 'options-general.php?page=nextgenthemes' ),
 			'https://nextgenthemes.com/support/',
-			'https://nextgenthemes.com/plugins/arve/documentation/installing-and-license-management/'
+			'https://nextgenthemes.com/plugins/arve/documentation/installation/'
 		);
+
+		if ( str_contains_any( VERSION, array( 'alpha', 'beta' ) ) ) {
+			$msg = sprintf(
+				// Translators: %1$s Pro Version required
+				__( 'Your ARVE Pro Addon is outdated, you need version %1$s or later. Pre release updates my need a manual update. Download from <a href="%2$s">your account</a>.', 'advanced-responsive-video-embedder' ),
+				PRO_VERSION_REQUIRED,
+				esc_url( get_admin_url() . 'options-general.php?page=nextgenthemes' ),
+				'https://nextgenthemes.com/my-account/'
+			);
+		}
 
 		Notices::instance()->register_notice(
 			'ngt-arve-outdated-pro-v' . PRO_VERSION_REQUIRED,
