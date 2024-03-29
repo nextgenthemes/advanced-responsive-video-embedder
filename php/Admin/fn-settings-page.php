@@ -38,6 +38,11 @@ function settings_content(): void {
 
 	<div x-show="'debug' === tab">
 		<?php require_once __DIR__ . '/partials/debug-info-textarea.php'; ?>
+
+		<div>
+			<button @click="deleteOembedCache();" class="button-primary"><?php esc_html_e( 'Delete oEmbed Cache', 'advanced-responsive-video-embedder' ); ?></button>
+			<span x-text="message"></span>
+		</div>
 	</div>
 
 	<div x-show="['pro', 'random-video', 'sticky-videos'].includes(tab)">

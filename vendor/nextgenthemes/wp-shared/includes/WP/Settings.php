@@ -193,6 +193,30 @@ class Settings {
 				},
 			)
 		);
+
+		if ( function_exists( '\Nextgenthemes\ARVE\delete_oembed_cache' ) ) {
+
+			register_rest_route(
+				$this->rest_namespace,
+				'/delete-oembed-cache',
+				array(
+					'methods'             => 'POST',
+					'permission_callback' => function() {
+						return current_user_can( 'manage_options' );
+					},
+					'callback'            => function( \WP_REST_Request $request ) {
+						
+						$deleted_rows = \Nextgenthemes\ARVE\delete_oembed_cache();
+
+						if ( false === $deleted_rows ) {
+							return new \WP_Error( 'rest_delete_oembed_cache_failed', 'Could not delete oEmbed cache', array( 'status' => 500 ) );
+						}
+
+						return rest_ensure_response( $deleted_rows );
+					}
+				)
+			);
+		}
 	}
 
 	public function assets( string $page ): void {
@@ -207,6 +231,7 @@ class Settings {
 			)
 		);
 
+		// always load this as the ARVE Shortcode dialog uses styles from this.
 		register_asset(
 			array(
 				'handle' => 'nextgenthemes-settings',
@@ -232,20 +257,21 @@ class Settings {
 			'definedKeys'      => $this->defined_keys,
 		);
 
-		// purpusefully NOT put into any deps because WP would not add defer to it in that case
-		wp_enqueue_script( 'alpinejs' );
-
-		wp_enqueue_style( 'nextgenthemes-settings' );
-
-		enqueue_asset(
+		register_asset(
 			array(
 				'handle'               => 'nextgenthemes-settings',
 				'src'                  => $this->base_url . 'vendor/nextgenthemes/wp-shared/includes/WP/Admin/settings.js',
 				'path'                 => __DIR__ . '/settings.js',
 				'deps'                 => array( 'jquery' ),
 				'inline_script_before' => "var {$this->slugged_namespace} = " . \wp_json_encode( $settings_data ) . ';',
+				'strategy'             => 'defer',
 			)
 		);
+
+		add_dep_to_script( 'alpinejs', 'nextgenthemes-settings' );
+		wp_enqueue_script( 'alpinejs' );
+
+		wp_enqueue_style( 'nextgenthemes-settings' );
 	}
 
 	private function get_index_js_filename(): void {

@@ -55,6 +55,42 @@ document.addEventListener( 'alpine:init', () => {
 					}
 				} );
 		},
+		deleteOembedCache() {
+			if ( this.isSaving ) {
+				this.message = 'too fast';
+				return;
+			}
+
+			// set the state so that another save cannot happen while processing
+			this.isSaving = true;
+			this.message = '...';
+
+			// Make a POST request to the REST API route that we registered in our PHP file
+			fetch( data.restUrl + '/delete-oembed-cache', {
+				method: 'POST',
+				body: JSON.stringify( { delete: true } ),
+				headers: {
+					'Content-Type': 'application/json',
+					'X-WP-Nonce': data.nonce,
+				},
+			} )
+				.then( ( response ) => {
+					if ( ! response.ok ) {
+						throw new Error( 'Network response was not ok' );
+					}
+					return response.json();
+				} )
+				.then( ( message ) => {
+					this.message = message;
+					setTimeout( () => ( this.message = '' ), 3000 );
+				} )
+				.catch( ( error ) => {
+					this.message = error.message;
+				} )
+				.finally( () => {
+					this.isSaving = false;
+				} );
+		},
 		uploadImage( optionKey ) {
 			const alpineThis = this;
 			const image = window.wp
