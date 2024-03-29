@@ -404,7 +404,7 @@ function all_settings(): array {
 			'placeholder'         => '1234, https://* (Pro automatically handles this)',
 			'description'         => sprintf(
 				// Translators: 1 Link, 2 Provider list
-				__( 'Media library image ID or image URL for preview image for SEO and Lazyload modes. <a href="%1$s">ARVE Pro</a> is able to get them from %2$s automatically, leave empty in this case unless you want use a different thumbnail.', 'advanced-responsive-video-embedder' ),
+				__( 'Media library image ID or image URL for preview image for SEO and Lazyload modes. <a href="%1$s">ARVE Pro</a> is able to get them from %2$s automatically, leave empty in this case unless you want use a different thumbnail. Type in <code>featured</code> to use the posts featured image.', 'advanced-responsive-video-embedder' ),
 				esc_url( $pro_addon_link ),
 				esc_html( $auto_thumbs )
 			),
