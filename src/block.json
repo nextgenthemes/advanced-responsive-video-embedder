@@ -28,7 +28,7 @@
     "example": {
         "attributes": {
             "url": "https://www.youtube.com/watch?v=oe452WcY7fA",
-            "title": "Example Title"
+            "title": "Example ARVE Video"
         }
     },
     "editorScript": "arve-block",
@@ -36,14 +36,14 @@
     "viewScript": [
         "arve",
         "arve-pro",
-        "arve-random-video",
-        "arve-sticky-videos"
+        "arve-sticky-videos",
+        "arve-random-video"
     ],
     "viewStyle": [
         "arve",
         "arve-pro",
-        "arve-random-video",
-        "arve-sticky-videos"
+        "arve-sticky-videos",
+        "arve-random-video"
     ],
     "attributes": {
         "url": {
