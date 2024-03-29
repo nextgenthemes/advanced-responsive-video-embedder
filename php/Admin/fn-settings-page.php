@@ -40,7 +40,7 @@ function settings_content(): void {
 		<?php require_once __DIR__ . '/partials/debug-info-textarea.php'; ?>
 
 		<div>
-			<button @click="deleteOembedCache();" class="button-primary"><?php esc_html_e( 'Delete oEmbed Cache', 'advanced-responsive-video-embedder' ); ?></button>
+			<button @click="deleteOembedCache();" class="button-primary" style="margin-inline-end: 1em;"><?php esc_html_e( 'Delete oEmbed Cache', 'advanced-responsive-video-embedder' ); ?></button>
 			<span x-text="message"></span>
 		</div>
 	</div>
