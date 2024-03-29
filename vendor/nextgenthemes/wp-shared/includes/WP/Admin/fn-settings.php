@@ -145,9 +145,9 @@ function print_image_upload_field( string $key, array $option ): void {
 				class="large-text"
 				placeholder="<?php echo esc_attr( $option['placeholder'] ); ?>"
 			/>
-			<a class="button-secondary" @click="<?php echo esc_attr( "uploadImage('$key')" ); ?>">
+			<button class="button-secondary" @click="<?php echo esc_attr( "uploadImage('$key')" ); ?>">
 				<?php esc_html_e( 'Upload Image', 'advanced-responsive-video-embedder' ); ?>
-			</a>
+			</button>
 		</label>
 	</p>
 	<?php
