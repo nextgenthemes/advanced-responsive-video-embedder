@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
+use DateTime;
 use Nextgenthemes\WP;
 
 /**
@@ -35,9 +36,11 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 
 	$yt_thumbnails = false;
 
-	$data->arve_provider  = sane_provider_name( $data->provider_name );
-	$data->arve_cachetime = gmdate('Y-m-d H:i:s');
-	$data->arve_url       = $url;
+	$data->arve_provider   = sane_provider_name( $data->provider_name );
+	$data->arve_cachetime  = ( new DateTime() )->format(DateTime::ATOM);
+	$data->arve_url        = $url;
+	$data->arve_iframe_src = oembed_html2src( $data );
+	unset( $data->html );
 
 	if ( 'youtube' === $data->arve_provider && ! empty( $data->thumbnail_url ) ) {
 
@@ -45,22 +48,18 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 
 		// Replace with webp version
 		if ( ! empty( $yt_thumbnails['sizes'][480] ) ) {
-			$data->thumbnail_url = $yt_thumbnails['sizes'][480];
+			$data->arve_thumbnail_url_org = $data->thumbnail_url;
+			$data->thumbnail_url          = $yt_thumbnails['sizes'][480];
 		}
 
-		$data->arve_id              = yt_id_from_thumbnail_url( $data->thumbnail_url );
 		$data->arve_thumbnail_small = $yt_thumbnails['smallest'];
 		$data->arve_thumbnail_large = $yt_thumbnails['largest'];
 		$data->arve_srcset          = $yt_thumbnails['srcset'];
 	}
 
-	$data = apply_filters( 'nextgenthemes/arve/oembed_dataparse', $data, $yt_thumbnails );
+	$data = apply_filters( 'arve_oembed_dataparse', $data, $yt_thumbnails );
 
-	foreach ( $data as $k => $v ) {
-		$data->$k = \esc_html($v);
-	}
-
-	$html .= '<script type="application/json" data-arve-oembed>' . \wp_json_encode($data, JSON_UNESCAPED_UNICODE) . '</script>';
+	$html .= sprintf( "<template data-arve='%s'></template>", \wp_json_encode($data, JSON_HEX_APOS) );
 
 	return $html;
 }
@@ -77,12 +76,6 @@ function sane_provider_name( string $provider ): string {
 	$provider = str_replace( 'rumblecom', 'rumble', $provider );
 
 	return $provider;
-}
-
-function yt_id_from_thumbnail_url( string $url ): string {
-	$path = parse_url( $url, PHP_URL_PATH );
-	$dir  = pathinfo( $path, PATHINFO_DIRNAME );
-	return str_replace( '/vi/', '', $dir );
 }
 
 /**
@@ -110,10 +103,6 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 		$cache = build_video( $a );
 	}
 
-	// if ( isset( $_GET['arve-debug-oembed'] ) ) {
-	//  $cache .= '<template class="arve-filter-oembed-html"></template>';
-	// }
-
 	return $cache;
 }
 
@@ -121,6 +110,33 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
  * Undocumented function
  */
 function extract_oembed_json( string $html, string $url ): ?object {
+
+	$data = WP\get_attribute_value_from_html_tag( array( 'tag_name' => 'template' ), 'data-arve', $html );
+
+	if ( empty( $data ) ) {
+		return null;
+	}
+
+	$data = json_decode( $data, false, 5, JSON_HEX_APOS );
+
+	if ( json_last_error() !== JSON_ERROR_NONE ) {
+
+		$error_code = esc_attr( "$url-extract-json" );
+
+		arve_errors()->add( $error_code, 'json decode error code: ' . json_last_error() . '<br>From url: ' . $url );
+		arve_errors()->add_data(
+			compact('html', 'matches', 'data', 'a'),
+			$error_code
+		);
+	}
+
+	return $data;
+}
+
+/**
+ * Undocumented function
+ */
+function extract_oembed_json_old( string $html, string $url ): ?object {
 
 	\preg_match( '#(?<=data-arve-oembed>).*?(?=</script>)#s', $html, $matches );
 
@@ -159,6 +175,58 @@ function yt_srcset( array $sizes ): string {
 }
 
 /**
+ * Generates the source URL from the oEmbed HTML data.
+ *
+ * @param object $data The oEmbed HTML data.
+ * @return string The source URL generated from the oEmbed HTML data.
+ */
+function oembed_html2src( object $data ): string {
+
+	if ( empty( $data->html ) ) {
+		arve_errors()->add( 'no-oembed-html', 'No oembed html' );
+		return '';
+	}
+
+	$data->html = htmlspecialchars_decode( $data->html, ENT_COMPAT | ENT_HTML5 );
+
+	if ( 'TikTok' === $data->provider_name ) {
+
+		$tiktok_video_id = WP\get_attribute_value_from_html_tag( array( 'class' => 'tiktok-embed' ), 'data-video-id', $data->html );
+
+		if ( $tiktok_video_id ) {
+			return 'https://www.tiktok.com/embed/v2/' . $tiktok_video_id;
+		} else {
+			$err_msg = 'Failed to extract tiktok video id from this html: ' . esc_html( $data->html );
+		}
+	} elseif ( 'Facebook' === $data->provider_name ) {
+
+		$facebook_video_url = WP\get_attribute_value_from_html_tag( array( 'class' => 'fb-video' ), 'data-href', $data->html );
+
+		if ( $facebook_video_url ) {
+			return 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $facebook_video_url );
+		} else {
+			$err_msg = 'Failed to extract facebook video url from this html: ' . esc_html( $data->html );
+		}
+	} else {
+		$iframe_src = WP\get_attribute_value_from_html_tag( array( 'tag_name' => 'iframe' ), 'src', $data->html );
+
+		if ( $iframe_src ) {
+
+			if ( WP\valid_url( $iframe_src) ) {
+				return $iframe_src;
+			} else {
+				$err_msg = 'Invalid iframe src url:' . esc_html( $iframe_src );
+			}
+		} else {
+			$err_msg = 'Failed to extract iframe src from this html: ' . esc_html( $data->html );
+		}
+	}
+
+	arve_errors()->add( 'oembed-html2src', $err_msg );
+	return '';
+}
+
+/**
  * Generate thumbnail uris dir YouTube video based on the provided URL.
  *
  * default URI format: https://i.ytimg.com/vi/<id>/hqdefault.jpg
@@ -186,6 +254,10 @@ function yt_thumbnails( string $url ): array {
 		}
 
 		$srcset[] = "$url {$size}w";
+	}
+
+	if ( empty( $sizes ) ) {
+		arve_errors()->add( 'no-thumbnails', __( 'No thumbnails found', 'advanced-responsive-video-embedder' ) );
 	}
 
 	return array(

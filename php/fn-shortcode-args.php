@@ -6,58 +6,6 @@ use function Nextgenthemes\WP\get_url_arg;
 use function Nextgenthemes\WP\valid_url;
 use function Nextgenthemes\WP\get_attribute_value_from_html_tag;
 
-/**
- * Generates the source URL from the oEmbed HTML data.
- *
- * @param object $data The oEmbed HTML data.
- * @return string The source URL generated from the oEmbed HTML data.
- */
-function oembed_html2src( object $data ): string {
-
-	if ( empty( $data->html ) ) {
-		arve_errors()->add( 'no-oembed-html', 'No oembed html' );
-		return '';
-	}
-
-	$data->html = htmlspecialchars_decode( $data->html, ENT_COMPAT | ENT_HTML5 );
-
-	if ( 'TikTok' === $data->provider_name ) {
-
-		$tiktok_video_id = get_attribute_value_from_html_tag( array( 'class' => 'tiktok-embed' ), 'data-video-id', $data->html );
-
-		if ( $tiktok_video_id ) {
-			return 'https://www.tiktok.com/embed/v2/' . $tiktok_video_id;
-		} else {
-			$err_msg = 'Failed to extract tiktok video id from this html: ' . esc_html( $data->html );
-		}
-	} elseif ( 'Facebook' === $data->provider_name ) {
-
-		$facebook_video_url = get_attribute_value_from_html_tag( array( 'class' => 'fb-video' ), 'data-href', $data->html );
-
-		if ( $facebook_video_url ) {
-			return 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $facebook_video_url );
-		} else {
-			$err_msg = 'Failed to extract facebook video url from this html: ' . esc_html( $data->html );
-		}
-	} else {
-		$iframe_src = get_attribute_value_from_html_tag( array( 'tag_name' => 'iframe' ), 'src', $data->html );
-
-		if ( $iframe_src ) {
-
-			if ( valid_url( $iframe_src) ) {
-				return $iframe_src;
-			} else {
-				$err_msg = 'Invalid iframe src url:' . esc_html( $iframe_src );
-			}
-		} else {
-			$err_msg = 'Failed to extract iframe src from this html: ' . esc_html( $data->html );
-		}
-	}
-
-	arve_errors()->add( 'oembed-html2src', $err_msg );
-	return '';
-}
-
 function arg_maxwidth( int $maxwidth, string $provider, string $align ): int {
 
 	if ( empty( $maxwidth ) ) {

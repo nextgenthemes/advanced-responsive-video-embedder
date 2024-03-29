@@ -166,9 +166,11 @@ class Video {
 			$this->set_prop( $arg_name, $value );
 		}
 
-		if ( ! empty( $this->oembed_data ) ) {
-			$this->set_prop( 'provider', sane_provider_name( $this->oembed_data->provider_name ) );
-			$this->set_prop( 'src', oembed_html2src( $this->oembed_data ) );
+		if ( ! empty( $this->oembed_data->arve_provider ) &&
+			! empty( $this->oembed_data->arve_iframe_src )
+		) {
+			$this->set_prop( 'provider', $this->oembed_data->arve_provider );
+			$this->set_prop( 'src', $this->oembed_data->arve_iframe_src );
 		}
 
 		$this->detect_html5();
