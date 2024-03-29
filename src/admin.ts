@@ -1,3 +1,4 @@
+import './modules/shortcode-ui.ts';
 import './admin.scss';
 import './shortcode-dialog.scss';
 
