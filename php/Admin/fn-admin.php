@@ -11,6 +11,9 @@ use function Nextgenthemes\ARVE\options;
 use function Nextgenthemes\WP\enqueue_asset;
 use function Nextgenthemes\WP\remote_get_json_cached;
 use function Nextgenthemes\WP\str_contains_any;
+use function Nextgenthemes\WP\register_asset;
+use function Nextgenthemes\WP\get_constant;
+
 
 use const Nextgenthemes\ARVE\PREMIUM_SECTIONS;
 use const Nextgenthemes\ARVE\PREMIUM_URL_PREFIX;
@@ -22,15 +25,7 @@ use const Nextgenthemes\ARVE\VERSION;
 
 function action_admin_init_setup_messages(): void {
 
-	$pro_ver = false;
-
-	if ( defined( 'ARVE_PRO_VERSION' ) ) {
-		$pro_ver = ARVE_PRO_VERSION;
-	} elseif ( defined( '\Nextgenthemes\ARVE\Pro\VERSION' ) ) {
-		$pro_ver = \Nextgenthemes\ARVE\Pro\VERSION;
-	}
-
-	if ( $pro_ver && version_compare( PRO_VERSION_REQUIRED, $pro_ver, '>' ) ) {
+	if ( defined( '\Nextgenthemes\ARVE\Pro\VERSION' ) && version_compare( PRO_VERSION_REQUIRED, \Nextgenthemes\ARVE\Pro\VERSION, '>' ) ) {
 		$msg = sprintf(
 			// Translators: %1$s Pro Version required
 			__( 'Your ARVE Pro Addon is outdated, you need version %1$s or later. If you have setup your license <a href="%2$s">here</a> semi auto updates should work (Admin panel notice and auto install on confirmation). If not please <a href="%3$s">report it</a> and manually update as <a href="%4$s">described here.</a>', 'advanced-responsive-video-embedder' ),
@@ -69,6 +64,28 @@ function action_admin_init_setup_messages(): void {
 				'cap' => 'install_plugins',
 			)
 		);
+	}
+
+	$object_cache_msg = get_option( 'arve_object_cache_msg' );
+
+	if ( $object_cache_msg ) {
+
+		Notices::instance()->register_notice(
+			'arve_object_cache_msg',
+			'notice-warning',
+			wp_kses(
+				$object_cache_msg,
+				ALLOWED_HTML,
+				array( 'htts', 'https' )
+			),
+			array(
+				'cap'   => 'manage_options',
+				'scope' => 'global',
+			)
+		);
+
+		Notices::instance()->restore_notice( 'arve_object_cache_msg' );
+		delete_option( 'arve_object_cache_msg' );
 	}
 
 	$beta_ver = get_latest_beta();
@@ -323,22 +340,15 @@ function admin_enqueue_scripts(): void {
 
 	if ( ! is_gutenberg() ) {
 
-		enqueue_asset(
+		register_asset(
 			array(
 				'handle'               => 'arve-shortcode-dialog',
 				'src'                  => plugins_url( '/src/shortcode-dialog.js', PLUGIN_FILE ),
 				'path'                 => PLUGIN_DIR . '/src/shortcode-dialog.js',
 				'inline_script_before' => $settings_data,
+				'strategy'             => 'defer',
 			)
 		);
-
-		// register_asset(
-		//  array(
-		//      'handle' => 'arve-shortcode-dialog',
-		//      'src'    => plugins_url( 'vendor/nextgenthemes/wp-shared/dist/assets/' . basename($shortcode_dialog_css), PLUGIN_FILE ),
-		//      'path'   => $shortcode_dialog_css,
-		//  )
-		// );
 	}
 
 	enqueue_asset(

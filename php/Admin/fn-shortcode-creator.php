@@ -2,11 +2,9 @@
 namespace Nextgenthemes\ARVE\Admin;
 
 use Nextgenthemes\ARVE;
+use Nextgenthemes\WP;
 
 function add_media_button(): void {
-
-	wp_enqueue_script( 'arve-shortcode-dialog' );
-	wp_enqueue_style( 'arve-shortcode-dialog' );
 
 	?>
 	<button
@@ -24,9 +22,7 @@ function add_media_button(): void {
 
 	add_action( 'admin_footer', __NAMESPACE__ . '\create_shortcode_dialog' );
 
-	#dd(wp_script_modules());
-
-	wp_enqueue_script('arve-shortcode-dialog');
+	WP\add_dep_to_script( 'alpinejs', 'arve-shortcode-dialog' );
 	wp_enqueue_script('alpinejs');
 }
 
