@@ -390,6 +390,13 @@ registerBlockType( name, {
 	edit: Edit,
 } );
 
+/**
+ * Calculate aspect ratio based on width and height.
+ *
+ * @param {string} width  - The width value
+ * @param {string} height - The height value
+ * @return {string} The aspect ratio in the format 'width:height'
+ */
 function aspectRatio( width: string, height: string ): string {
 	if ( isIntOverZero( width ) && isIntOverZero( height ) ) {
 		const w = parseInt( width );
@@ -402,11 +409,24 @@ function aspectRatio( width: string, height: string ): string {
 	return width + ':' + height;
 }
 
+/**
+ * Check if the input string is a positive integer.
+ *
+ * @param {string} str - The input string to be checked.
+ * @return {boolean} Whether the input string is a positive integer or not.
+ */
 function isIntOverZero( str: string ): boolean {
 	const n = Math.floor( Number( str ) );
 	return n !== Infinity && String( n ) === str && n > 0;
 }
 
+/**
+ * Calculates the greatest common divisor of two numbers using the Euclidean algorithm.
+ *
+ * @param {number} a - the first number
+ * @param {number} b - the second number
+ * @return {number} the greatest common divisor of the two numbers
+ */
 function gcd( a: number, b: number ): number {
 	if ( ! b ) {
 		return a;
