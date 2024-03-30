@@ -166,6 +166,10 @@ class Video {
 			$this->set_prop( $arg_name, $value );
 		}
 
+		if ( ! empty( $this->oembed_data->arve_error ) ) {
+			arve_errors()->add( 'oembed-data-error', $this->oembed_data->arve_error );
+		}
+
 		if ( ! empty( $this->oembed_data->arve_provider ) &&
 			! empty( $this->oembed_data->arve_iframe_src )
 		) {

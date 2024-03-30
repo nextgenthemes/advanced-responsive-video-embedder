@@ -35,11 +35,17 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 	}
 
 	$yt_thumbnails = false;
+	$iframe_src    = oembed_html2src( $data );
 
-	$data->arve_provider   = sane_provider_name( $data->provider_name );
-	$data->arve_cachetime  = ( new DateTime() )->format(DateTime::ATOM);
-	$data->arve_url        = $url;
-	$data->arve_iframe_src = oembed_html2src( $data );
+	if ( is_wp_error( $iframe_src ) ) {
+		$data->arve_error = $iframe_src->get_error_message();
+	} else {
+		$data->arve_iframe_src = $iframe_src;
+	}
+
+	$data->arve_provider  = sane_provider_name( $data->provider_name );
+	$data->arve_cachetime = ( new DateTime() )->format(DateTime::ATOM);
+	$data->arve_url       = $url;
 	unset( $data->html );
 
 	if ( 'youtube' === $data->arve_provider && ! empty( $data->thumbnail_url ) ) {
@@ -52,13 +58,12 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 			$data->thumbnail_url          = $yt_thumbnails['sizes'][480];
 		}
 
-		$data->arve_thumbnail_small = $yt_thumbnails['smallest'];
-		$data->arve_thumbnail_large = $yt_thumbnails['largest'];
+		$data->arve_thumbnail_small = $yt_thumbnails['small'];
+		$data->arve_thumbnail_large = $yt_thumbnails['large'];
 		$data->arve_srcset          = $yt_thumbnails['srcset'];
 	}
 
-	$data = apply_filters( 'arve_oembed_dataparse', $data, $yt_thumbnails );
-
+	$data  = apply_filters( 'arve_oembed_dataparse', $data, $yt_thumbnails );
 	$html .= sprintf( "<template data-arve='%s'></template>", \wp_json_encode($data, JSON_HEX_APOS) );
 
 	return $html;
@@ -178,13 +183,12 @@ function yt_srcset( array $sizes ): string {
  * Generates the source URL from the oEmbed HTML data.
  *
  * @param object $data The oEmbed HTML data.
- * @return string The source URL generated from the oEmbed HTML data.
+ * @return string|WP_Error The source URL generated from the oEmbed HTML data.
  */
-function oembed_html2src( object $data ): string {
+function oembed_html2src( object $data ) {
 
 	if ( empty( $data->html ) ) {
-		arve_errors()->add( 'no-oembed-html', 'No oembed html' );
-		return '';
+		return new \WP_Error( 'no-oembed-html', __( 'No oembed html', 'advanced-responsive-video-embedder' ) );
 	}
 
 	$data->html = htmlspecialchars_decode( $data->html, ENT_COMPAT | ENT_HTML5 );
@@ -196,7 +200,7 @@ function oembed_html2src( object $data ): string {
 		if ( $tiktok_video_id ) {
 			return 'https://www.tiktok.com/embed/v2/' . $tiktok_video_id;
 		} else {
-			$err_msg = 'Failed to extract tiktok video id from this html: ' . esc_html( $data->html );
+			return new \WP_Error( 'tiktok-video-id', __( 'Failed to extract tiktok video id from oembed html', 'advanced-responsive-video-embedder' ), $data->html );
 		}
 	} elseif ( 'Facebook' === $data->provider_name ) {
 
@@ -205,7 +209,7 @@ function oembed_html2src( object $data ): string {
 		if ( $facebook_video_url ) {
 			return 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $facebook_video_url );
 		} else {
-			$err_msg = 'Failed to extract facebook video url from this html: ' . esc_html( $data->html );
+			return new \WP_Error( 'facebook-video-id', __( 'Failed to extract facebook video url from this html', 'advanced-responsive-video-embedder' ), $data->html );
 		}
 	} else {
 		$iframe_src = WP\get_attribute_value_from_html_tag( array( 'tag_name' => 'iframe' ), 'src', $data->html );
@@ -215,15 +219,12 @@ function oembed_html2src( object $data ): string {
 			if ( WP\valid_url( $iframe_src) ) {
 				return $iframe_src;
 			} else {
-				$err_msg = 'Invalid iframe src url:' . esc_html( $iframe_src );
+				return new \WP_Error( 'facebook-video-id', __( 'Invalid iframe src url', 'advanced-responsive-video-embedder' ), $data->html, $iframe_src );
 			}
 		} else {
-			$err_msg = 'Failed to extract iframe src from this html: ' . esc_html( $data->html );
+			return new \WP_Error( 'iframe-src', __( 'Failed to extract iframe src from this html', 'advanced-responsive-video-embedder' ), $data->html );
 		}
 	}
-
-	arve_errors()->add( 'oembed-html2src', $err_msg );
-	return '';
 }
 
 /**
@@ -232,39 +233,46 @@ function oembed_html2src( object $data ): string {
  * default URI format: https://i.ytimg.com/vi/<id>/hqdefault.jpg
  * webp URI format:    https://i.ytimg.com/vi_webp/<id>/hqdefault.webp
  *
- * @param string $url The URL of the YouTube video.
+ * @param string $url The URL of the YouTube thumbnail.
  * @return array Array containing information about the thumbnails.
  */
 function yt_thumbnails( string $url ): array {
 
-	$sizes       = array();
-	$srcset      = array();
-	$url         = str_replace( '/vi/', '/vi_webp/', $url );
-	$sizes[320]  = str_replace( 'hqdefault.jpg', 'mqdefault.webp',     $url ); // 320x180
-	$sizes[480]  = str_replace( 'hqdefault.jpg', 'hqdefault.webp',     $url ); // 480x360
-	$sizes[640]  = str_replace( 'hqdefault.jpg', 'sddefault.webp',     $url ); // 640x480
-	$sizes[1280] = str_replace( 'hqdefault.jpg', 'hq720.webp',         $url ); // 1280x720
-	$sizes[1920] = str_replace( 'hqdefault.jpg', 'maxresdefault.webp', $url ); // 1920x1080
+	$sizes    = array();
+	$srcset   = array();
+	$webp_url = str_replace( '/vi/', '/vi_webp/', $url );
 
-	foreach ( $sizes as $size => $url ) {
+	if ( str_ends_with( $url, 'hqdefault.jpg' ) ) {
+		$sizes[320]  = str_replace( 'hqdefault.jpg', 'mqdefault.webp',     $webp_url ); // 320x180
+		$sizes[480]  = str_replace( 'hqdefault.jpg', 'hqdefault.webp',     $webp_url ); // 480x360
+		$sizes[640]  = str_replace( 'hqdefault.jpg', 'sddefault.webp',     $webp_url ); // 640x480
+		$sizes[1280] = str_replace( 'hqdefault.jpg', 'hq720.webp',         $webp_url ); // 1280x720
+		$sizes[1920] = str_replace( 'hqdefault.jpg', 'maxresdefault.webp', $webp_url ); // 1920x1080
+	}
 
-		if ( is_wp_error( WP\remote_get_head( $url, array( 'timeout' => 5 ) ) ) ) {
+	// shorts
+	if ( str_ends_with( $url, 'hq2.jpg' ) ) {
+		// shorts
+		$sizes[320] = str_replace( 'hq2.jpg', 'mq2.webp', $webp_url ); // 320x180
+		$sizes[480] = str_replace( 'hq2.jpg', 'hq2.webp', $webp_url ); // 480x360
+		$sizes[640] = str_replace( 'hq2.jpg', 'sd2.webp', $webp_url ); // 640x480
+	}
+
+	foreach ( $sizes as $size => $size_url ) {
+
+		if ( is_wp_error( WP\remote_get_head( $size_url, array( 'timeout' => 5 ) ) ) ) {
 			unset( $sizes[ $size ] );
 			continue;
 		}
 
-		$srcset[] = "$url {$size}w";
-	}
-
-	if ( empty( $sizes ) ) {
-		arve_errors()->add( 'no-thumbnails', __( 'No thumbnails found', 'advanced-responsive-video-embedder' ) );
+		$srcset[] = "$size_url {$size}w";
 	}
 
 	return array(
-		'smallest' => empty( $sizes ) ? '' : $sizes[ min( array_keys( $sizes ) ) ],
-		'largest'  => empty( $sizes ) ? '' : $sizes[ max( array_keys( $sizes ) ) ],
-		'srcset'   => implode( ', ', $srcset ),
-		'sizes'    => $sizes,
+		'small'  => empty( $sizes ) ? '' : $sizes[ min( array_keys( $sizes ) ) ],
+		'large'  => empty( $sizes ) ? '' : $sizes[ max( array_keys( $sizes ) ) ],
+		'srcset' => implode( ', ', $srcset ),
+		'sizes'  => $sizes,
 	);
 }
 
