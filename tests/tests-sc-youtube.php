@@ -5,6 +5,9 @@ use function Nextgenthemes\ARVE\get_host_properties;
 // phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 
+	/**
+	 * @group yt-time
+	 */
 	public function test_yt_time_h_m_s(): void {
 
 		$html = shortcode(
@@ -16,6 +19,9 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 		$this->assertStringContainsString( '?start=3662', $html );
 	}
 
+	/**
+	 * @group yt-time
+	 */
 	public function test_yt_time_h_s(): void {
 
 		$html = shortcode(
@@ -27,6 +33,9 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 		$this->assertStringContainsString( '?start=3602', $html );
 	}
 
+	/**
+	 * @group yt-time
+	 */
 	public function test_yt_time_m_s(): void {
 
 		$html = shortcode(
@@ -38,6 +47,9 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 		$this->assertStringContainsString( '?start=62', $html );
 	}
 
+	/**
+	 * @group yt-time
+	 */
 	public function test_yt_time_in_seconds(): void {
 
 		$html = shortcode(

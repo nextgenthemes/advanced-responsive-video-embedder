@@ -120,14 +120,15 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 
 	/**
 	 * A description of the entire PHP function.
-	 * @group failing
+	 *
+	 * @group oembed-data-trigger
 	 */
-	public function test_wrong_oembed_iframe_src(): void {
+	public function test_oembed_data_error_trigger(): void {
 
 		$od = new StdClass();
 
 		$od->provider_name = 'Unknown';
-		$od->html          = '<iframe src="bullshit"></iframe>';
+		$od->arve_error    = 'err-testing-str';
 
 		$html = build_video(
 			[
@@ -137,6 +138,6 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		);
 
 		$this->assertStringContainsString( 'Error', $html );
-		$this->assertStringContainsString( 'Invalid iframe src url', $html );
+		$this->assertStringContainsString( 'err-testing-str', $html );
 	}
 }
