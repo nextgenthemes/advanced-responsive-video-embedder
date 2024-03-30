@@ -63,7 +63,7 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 		$data->arve_srcset          = $yt_thumbnails['srcset'];
 	}
 
-	$data  = apply_filters( 'arve_oembed_dataparse', $data, $yt_thumbnails );
+	$data  = apply_filters( 'nextgenthemes/arve/oembed_dataparse', $data, $yt_thumbnails );
 	$html .= sprintf( "<template data-arve='%s'></template>", \wp_json_encode($data, JSON_HEX_APOS) );
 
 	return $html;
