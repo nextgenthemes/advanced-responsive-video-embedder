@@ -19,10 +19,6 @@ function init_public(): void {
 		delete_oembed_cache();
 	}
 
-	if ( version_compare( get_option( 'arve_version', '' ), '9.5.14', '<' ) ) {
-		$GLOBALS['wpdb']->query( "DELETE FROM {$GLOBALS['wpdb']->postmeta} WHERE meta_key LIKE '%_oembed_%' AND meta_value LIKE '%vimeocdn%'" );
-	}
-
 	update_option( 'arve_version', VERSION );
 
 	require_once PLUGIN_DIR . '/php/fn-deprecated.php';
@@ -86,7 +82,7 @@ function uninstall(): void {
 
 	if ( version_compare( $GLOBALS['wpdb']->db_version(), '8.0', '>=' ) ) {
 		$GLOBALS['wpdb']->query(
-			"UPDATE {$GLOBALS['wpdb']->postmeta} SET meta_value = REGEXP_REPLACE( meta_value, '<script type=\"application/json\" data-arve-oembed>[^<]+</script>', '' )"
+			"UPDATE {$GLOBALS['wpdb']->postmeta} SET meta_value = REGEXP_REPLACE( meta_value, '<template data-arve[^>]+></template>', '' )"
 		);
 	} else {
 		delete_oembed_cache();
