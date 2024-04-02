@@ -28,11 +28,10 @@ function add_media_button(): void {
 
 function create_shortcode_dialog(): void {
 
-	$options  = ARVE\options();
-	$settings = ARVE\shortcode_settings();
+	$settings = ARVE\settings( 'shortcode' );
 	$data     = array();
 
-	foreach ( ARVE\shortcode_settings() as $k => $v ) {
+	foreach ( ARVE\settings( 'shortcode' ) as $k => $v ) {
 		$data['options'][ $k ] = '';
 	}
 
@@ -93,7 +92,7 @@ function print_shortcode_template(): void {
 	$html = '[arve';
 
 	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-	foreach ( ARVE\shortcode_settings() as $key => $option ) {
+	foreach ( ARVE\settings( 'shortcode' ) as $key => $option ) {
 
 		if ( ! $option['shortcode'] ) {
 			continue;
