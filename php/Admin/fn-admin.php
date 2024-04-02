@@ -4,7 +4,7 @@ namespace Nextgenthemes\ARVE\Admin;
 use Nextgenthemes\WP\Admin\Notices;
 
 use function Nextgenthemes\ARVE\is_gutenberg;
-use function Nextgenthemes\ARVE\shortcode_settings;
+use function Nextgenthemes\ARVE\settings;
 use function Nextgenthemes\ARVE\settings_sections;
 use function Nextgenthemes\ARVE\options;
 
@@ -13,7 +13,6 @@ use function Nextgenthemes\WP\remote_get_json_cached;
 use function Nextgenthemes\WP\str_contains_any;
 use function Nextgenthemes\WP\register_asset;
 use function Nextgenthemes\WP\get_constant;
-
 
 use const Nextgenthemes\ARVE\PREMIUM_SECTIONS;
 use const Nextgenthemes\ARVE\PREMIUM_URL_PREFIX;
@@ -241,7 +240,7 @@ function add_action_links( array $links ): array {
 
 function register_shortcode_ui(): void {
 
-	$settings = shortcode_settings();
+	$settings = settings( 'shortcode' );
 
 	foreach ( $settings as $k => $v ) :
 
@@ -325,14 +324,14 @@ function get_first_glob( string $pattern ): string {
 
 function admin_enqueue_scripts(): void {
 
-	foreach ( shortcode_settings() as $k => $v ) {
+	foreach ( settings( 'shortcode' ) as $k => $v ) {
 		$options[ $k ] = '';
 	}
 
 	$settings_data = array(
 		'options'          => $options,
 		'nonce'            => wp_create_nonce( 'wp_rest' ),
-		'settings'         => shortcode_settings(),
+		'settings'         => settings( 'shortcode' ),
 		'sections'         => settings_sections(),
 		'premiumSections'  => PREMIUM_SECTIONS,
 		'premiumUrlPrefix' => PREMIUM_URL_PREFIX,
