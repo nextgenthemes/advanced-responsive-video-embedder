@@ -353,3 +353,48 @@ function iframesrc_urlargs( string $src, string $provider, string $mode, string 
 
 	return $src;
 }
+
+function shortcode_pairs(): array {
+
+	$options  = options();
+	$settings = settings( 'shortcode' );
+
+	foreach ( $settings as $k => $v ) {
+		if ( $v['option'] ) {
+			$pairs[ $k ] = $options[ $k ];
+		} else {
+			$pairs[ $k ] = $v['default'];
+		}
+	}
+
+	$pairs = array_merge(
+		$pairs,
+		array(
+			'id'                 => '',
+			'provider'           => '',
+			'img_srcset'         => '',
+			'maxwidth'           => 0, # Overwriting the option value ON PURPOSE here, see arg_maxwidth
+			'av1mp4'             => '',
+			'mp4'                => '',
+			'm4v'                => '',
+			'webm'               => '',
+			'ogv'                => '',
+			'account_id'         => '',
+			'iframe_name'        => '',
+			'brightcove_player'  => '',
+			'brightcove_embed'   => '',
+			'video_sources_html' => '',
+			'post_id'            => '',
+			'thumbnail_fallback' => '', # Pros
+			'oembed_data'        => null,
+			'origin_data'        => array(),
+		)
+	);
+
+	for ( $n = 1; $n <= NUM_TRACKS; $n++ ) {
+		$pairs[ "track_{$n}" ]       = '';
+		$pairs[ "track_{$n}_label" ] = '';
+	}
+
+	return apply_filters( 'nextgenthemes/arve/shortcode_pairs', $pairs );
+}
