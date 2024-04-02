@@ -45,13 +45,13 @@ function settings_content(): void {
 		</div>
 	</div>
 
-	<div x-show="['pro', 'random-video', 'sticky-videos'].includes(tab)">
+	<div x-show="['pro', 'privacy', 'random-video', 'sticky-videos'].includes(tab)">
 		<p>
 			<?php
 			echo wp_kses(
 				sprintf(
 					// Translators: URL
-					__( 'You may already set options for addons but they will only take effect if the associated addons are installed. If not done already, enter your license keys <a href="%s">here</a> --', 'advanced-responsive-video-embedder' ),
+					__( 'You may already set options for addons but they will only take effect if the associated addons are installed. If not done already, enter your license keys <a href="%s">here</a>', 'advanced-responsive-video-embedder' ),
 					esc_url( admin_url( 'options-general.php?page=nextgenthemes' ) )
 				),
 				array( 'a' => array( 'href' => true ) ),

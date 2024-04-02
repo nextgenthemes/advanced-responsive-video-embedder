@@ -20,13 +20,13 @@
  */
 namespace Nextgenthemes\ARVE;
 
-const VERSION               = '10.0.0-alpha13';
+const VERSION               = '10.0.0-alpha14';
 const PRO_VERSION_REQUIRED  = '6.0.0-alpha3';
 const NUM_TRACKS            = 3;
 const PLUGIN_FILE           = __FILE__;
 const PLUGIN_DIR            = __DIR__;
 const VIDEO_FILE_EXTENSIONS = array( 'av1mp4', 'mp4', 'm4v', 'webm', 'ogv' );
-const PREMIUM_SECTIONS      = array( 'pro', 'sticky-videos', 'random-video', 'videojs' );
+const PREMIUM_SECTIONS      = array( 'pro', 'privacy', 'sticky-videos', 'random-video', 'videojs' );
 const PREMIUM_URL_PREFIX    = 'https://nextgenthemes.com/plugins/arve-';
 const DEFAULT_MAXWIDTH      = 900;
 const OEMBED_HTML_PRIORITY  = -5;

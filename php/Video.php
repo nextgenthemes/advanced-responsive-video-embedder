@@ -24,6 +24,7 @@ class Video {
 	private bool $encrypted_media;
 	private bool $sticky;
 	private bool $sticky_on_mobile;
+	private bool $invidious;
 
 	// ints
 	private int $lightbox_maxwidth;

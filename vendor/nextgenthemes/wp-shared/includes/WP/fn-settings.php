@@ -107,6 +107,14 @@ function get_products(): array {
 			'author'    => 'Nicolas Jonas',
 			'url'       => 'https://nextgenthemes.com/plugins/arve-sticky-videos/',
 		),
+		'arve_privacy' => array(
+			'namespace' => 'ARVE\Privacy',
+			'name'      => 'ARVE Privacy',
+			'id'        => 49660,
+			'type'      => 'plugin',
+			'author'    => 'Nicolas Jonas',
+			'url'       => 'https://nextgenthemes.com/plugins/arve-privacy/',
+		),
 	);
 
 	foreach ( $products as $key => $value ) :
