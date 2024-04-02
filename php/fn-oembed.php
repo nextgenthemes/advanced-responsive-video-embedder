@@ -4,6 +4,8 @@ namespace Nextgenthemes\ARVE;
 use DateTime;
 use Nextgenthemes\WP;
 
+use function Nextgenthemes\WP\remove_url_query;
+
 /**
  * Info: https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-oembed.php
  * https://github.com/iamcal/oembed/tree/master/providers
@@ -44,7 +46,7 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 	}
 
 	$data->arve_provider  = sane_provider_name( $data->provider_name );
-	$data->arve_cachetime = ( new DateTime() )->format(DateTime::ATOM);
+	$data->arve_cachetime = current_datetime()->format( \DATETIME::ATOM );
 	$data->arve_url       = $url;
 	unset( $data->html );
 
@@ -276,13 +278,6 @@ function yt_thumbnails( string $url ): array {
 	);
 }
 
-/**
- * Undocumented function
- *
- * @param array <string, any> $args
- *
- * @return array <string, any>
- */
 function vimeo_referer( array $args, string $url ): array {
 
 	if ( str_contains( $url, 'vimeo' ) ) {
@@ -290,4 +285,14 @@ function vimeo_referer( array $args, string $url ): array {
 	}
 
 	return $args;
+}
+
+function remove_youtube_si_param( string $provider, string $url ): string {
+
+	if ( str_starts_with( $provider, 'https://www.youtube.com' ) ) {
+		$url      = remove_query_arg( 'si', $url );
+		$provider = add_query_arg( 'url', urlencode( $url ), $provider ); // phpcs:disable WordPress.PHP.DiscouragedPHPFunctions.urlencode_urlencode
+	}
+
+	return $provider;
 }
