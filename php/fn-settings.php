@@ -88,26 +88,6 @@ function settings( string $context = 'settings_page', array $settings = array() 
 	return $settings;
 }
 
-function shortcode_settings(): array {
-	return settings( 'shortcode' );
-}
-
-function is_bool_arg( string $arg_name ): bool {
-
-	$s = all_settings()[ $arg_name ];
-
-	if ( $s['shortcode'] &&
-		(
-			'boolean' === $s['type'] ||
-			( 'select' === $s['type'] && has_bool_default_options( $s['options'] ) )
-		)
-	) {
-		return true;
-	}
-
-	return false;
-}
-
 function get_arg_type( string $arg_name ): ?string {
 
 	if ( empty( all_settings()[ $arg_name ] ) ) {
