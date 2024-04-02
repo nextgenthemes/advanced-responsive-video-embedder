@@ -72,6 +72,14 @@ jobs:
           path: symbiosistheme.com/web/app/plugins/arve-random-video
           token: ${{ secrets.REPO_TOKEN }}
 
+      - name: Checkout ARVE Privacy
+        uses: actions/checkout@v4
+        with:
+          repository: nextgenthemes/arve-privacy
+          ref: master
+          path: symbiosistheme.com/web/app/plugins/arve-privacy
+          token: ${{ secrets.REPO_TOKEN }}
+
       - name: Checkout ARVE AMP
         uses: actions/checkout@v4
         with:
