@@ -6,13 +6,15 @@ use Nextgenthemes\WP;
 use Exception;
 
 function options(): array {
-	$i = settings_instance();
-	return $i->get_options();
+	return Base::get_instance()->get_settings_instance()->get_options();
 }
 
 function default_options(): array {
-	$i = settings_instance();
-	return $i->get_options_defaults();
+	return Base::get_instance()->get_settings_instance()->get_options_defaults();
+}
+
+function all_settings(): array {
+	return Base::get_instance()->get_settings_data();
 }
 
 function settings_sections(): array {
@@ -20,6 +22,7 @@ function settings_sections(): array {
 	return array(
 		'main'          => __( 'Main', 'advanced-responsive-video-embedder' ),
 		'pro'           => __( 'Pro', 'advanced-responsive-video-embedder' ),
+		'privacy'       => __( 'Extra Privacy', 'advanced-responsive-video-embedder' ),
 		'sticky-videos' => __( 'Sticky Videos', 'advanced-responsive-video-embedder' ),
 		'random-video'  => __( 'Random Video', 'advanced-responsive-video-embedder' ),
 		'urlparams'     => __( 'URL Parameters', 'advanced-responsive-video-embedder' ),
@@ -29,32 +32,6 @@ function settings_sections(): array {
 	);
 }
 
-function settings_instance(): Settings {
-
-	static $inst = null;
-
-	if ( null === $inst ) {
-
-		$inst = new Settings(
-			array(
-				'namespace'           => __NAMESPACE__,
-				'settings'            => settings(),
-				'sections'            => settings_sections(),
-				'premium_sections'    => PREMIUM_SECTIONS,
-				'premium_url_prefix'  => PREMIUM_URL_PREFIX,
-				'menu_title'          => __( 'ARVE', 'advanced-responsive-video-embedder' ),
-				'settings_page_title' => __( 'ARVE Settings', 'advanced-responsive-video-embedder' ),
-				'base_url'            => plugins_url( '', PLUGIN_FILE ),
-				'base_path'           => PLUGIN_DIR,
-			)
-		);
-	}
-
-	return $inst;
-}
-
-/**
- */
 function init_nextgenthemes_settings(): void {
 
 	WP\nextgenthemes_settings_instance(
@@ -75,76 +52,44 @@ function has_bool_default_options( array $arr ): bool {
 	);
 }
 
-function settings(): array {
+function settings( string $context = 'settings_page', array $settings = array() ): array {
 
-	$settings = all_settings();
+	if ( empty( $settings ) ) {
+		$settings = all_settings();
+	}
 
-	foreach ( $settings as $k => $v ) {
+	if ( in_array( $context, array( 'gutenberg_block', 'shortcode' ), true ) ) {
 
-		if ( ! $v['option'] ) {
-			unset( $settings[ $k ] );
+		foreach ( $settings as $k => $v ) {
+			if ( ! $v['shortcode'] ) {
+				unset( $settings[ $k ] );
+			}
 		}
+	}
 
-		if ( 'select' === $v['type'] && has_bool_default_options( $v['options'] ) ) {
-			$settings[ $k ]['type'] = 'boolean';
-			unset( $settings[ $k ]['options'] );
-		}
+	switch ( $context ) {
+		case 'gutenberg_block':
+			unset( $settings['maxwidth'] );
+			break;
+		case 'settings_page':
+			foreach ( $settings as $k => $v ) {
+				if ( ! $v['option'] ) {
+					unset( $settings[ $k ] );
+				}
+
+				if ( 'select' === $v['type'] && has_bool_default_options( $v['options'] ) ) {
+					$settings[ $k ]['type'] = 'boolean';
+					unset( $settings[ $k ]['options'] );
+				}
+			}
+			break;
 	}
 
 	return $settings;
 }
 
 function shortcode_settings(): array {
-
-	$settings = all_settings();
-
-	foreach ( $settings as $k => $v ) {
-
-		if ( ! $v['shortcode'] ) {
-			unset( $settings[ $k ] );
-		}
-	}
-
-	return $settings;
-}
-
-function gutenberg_ui_settings(): array {
-	$settings = shortcode_settings();
-	unset( $settings['maxwidth'] );
-	return $settings;
-}
-
-function int_shortcode_args(): array {
-
-	$settings = all_settings();
-
-	foreach ( $settings as $k => $v ) {
-
-		if ( $v['shortcode'] && 'integer' === $v['type'] ) {
-			$bool_attr[] = $k;
-		}
-	}
-
-	return $bool_attr;
-}
-
-function bool_shortcode_args(): array {
-
-	$settings = all_settings();
-
-	foreach ( $settings as $k => $v ) {
-
-		if ( $v['shortcode'] &&
-			(
-				'boolean' === $v['type'] ||
-				( 'select' === $v['type'] && has_bool_default_options( $v['options'] ) )
-			)
-		) {
-			$bool_attr[] = $k;
-		}
-	}
-
-	return $bool_attr;
+	return settings( 'shortcode' );
 }
 
 function is_bool_arg( string $arg_name ): bool {
@@ -188,52 +133,7 @@ function get_arg_type( string $arg_name ): ?string {
 	return $s['type'];
 }
 
-function shortcode_pairs(): array {
-
-	$options  = options();
-	$settings = shortcode_settings();
-
-	foreach ( $settings as $k => $v ) :
-		if ( $v['option'] ) {
-			$pairs[ $k ] = $options[ $k ];
-		} else {
-			$pairs[ $k ] = $v['default'];
-		}
-	endforeach;
-
-	$pairs = array_merge(
-		$pairs,
-		array(
-			'id'                 => '',
-			'provider'           => '',
-			'img_srcset'         => '',
-			'maxwidth'           => 0, # Overwriting the option value ON PURPOSE here, see arg_maxwidth
-			'av1mp4'             => '',
-			'mp4'                => '',
-			'm4v'                => '',
-			'webm'               => '',
-			'ogv'                => '',
-			'account_id'         => '',
-			'iframe_name'        => '',
-			'brightcove_player'  => '',
-			'brightcove_embed'   => '',
-			'video_sources_html' => '',
-			'post_id'            => '',
-			'thumbnail_fallback' => '', # Pros
-			'oembed_data'        => null,
-			'origin_data'        => array(),
-		)
-	);
-
-	for ( $n = 1; $n <= NUM_TRACKS; $n++ ) {
-		$pairs[ "track_{$n}" ]       = '';
-		$pairs[ "track_{$n}_label" ] = '';
-	}
-
-	return apply_filters( 'nextgenthemes/arve/shortcode_pairs', $pairs );
-}
-
-function all_settings(): array {
+function settings_data(): array {
 
 	$properties = get_host_properties();
 
@@ -297,7 +197,7 @@ function all_settings(): array {
 		),
 		'controls' => array(
 			'default'     => true,
-			'label'       => __( 'Show Controls? (Video file only)', 'advanced-responsive-video-embedder' ),
+			'label'       => __( 'Show Controls?', 'advanced-responsive-video-embedder' ),
 			'type'        => 'select',
 			'options'     => $def_bool_options,
 			'description' => __( 'Note that not all video hosts provide this feature.', 'advanced-responsive-video-embedder' ),
@@ -895,9 +795,40 @@ function all_settings(): array {
 			'type'        => 'string',
 			'description' => __( 'The aspect ratio of the lightbox. Leave empty to use the original video aspect ratio.', 'advanced-responsive-video-embedder' ),
 		),
+		'cache_thumbnails' => array(
+			'tag'         => 'privacy',
+			'default'     => false,
+			'shortcode'   => false,
+			'option'      => true,
+			'label'       => __( 'Cache thumbnails in Media Library', 'advanced-responsive-video-embedder' ),
+			'type'        => 'boolean',
+			'description' => __( 'No image hotlinking to video hosts. For Lazyload/Lightbox (Pro).', 'advanced-responsive-video-embedder' ),
+		),
+		'invidious' => array(
+			'tag'         => 'privacy',
+			'default'     => false,
+			'shortcode'   => true,
+			'option'      => true,
+			'options'     => $def_bool_options,
+			'label'       => __( 'Enable Invidious for YouTube', 'advanced-responsive-video-embedder' ),
+			'type'        => 'select',
+		),
+		'invidious_instance' => array(
+			'tag'                 => 'privacy',
+			'default'             => 'https://invidious.fdn.fr',
+			'shortcode'           => false,
+			'option'              => true,
+			'label'               => __( 'Invidious instance', 'advanced-responsive-video-embedder' ),
+			'type'                => 'string',
+			'description'         => sprintf(
+				// translators: %s is URL
+				__( 'Invidious instance <a href="%s" target="_blank">see here</a>.', 'advanced-responsive-video-embedder' ),
+				esc_url( 'https://docs.invidious.io/instances/' )
+			),
+			'descriptionlink'     => esc_url( 'https://docs.invidious.io/instances/' ),
+			'descriptionlinktext' => esc_html( 'see here' ),
+		),
 	);
-
-	//$settings = apply_filters( 'nextgenthemes/arve/settings', $settings );
 
 	foreach ( $properties as $provider => $v ) {
 

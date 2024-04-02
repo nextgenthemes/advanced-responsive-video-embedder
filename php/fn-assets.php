@@ -25,7 +25,7 @@ function register_assets(): void {
 
 	if ( function_exists( 'register_block_type' ) ) :
 
-		$settings = gutenberg_ui_settings();
+		$settings = settings( 'gutenberg_block' );
 		$options  = options();
 
 		foreach ( $settings as $key => $v ) {

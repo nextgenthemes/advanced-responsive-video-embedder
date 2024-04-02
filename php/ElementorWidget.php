@@ -103,7 +103,7 @@ class ElementorWidget extends \Elementor\Widget_Base {
 			]
 		);
 
-		foreach ( gutenberg_ui_settings() as $key => $s ) {
+		foreach ( settings( 'gutenberg_block' ) as $key => $s ) {
 
 			$control_args = array(
 				'label' => $s['label'],
@@ -181,7 +181,7 @@ class ElementorWidget extends \Elementor\Widget_Base {
 
 		foreach ( $settings as $key => $value ) {
 
-			if ( ! array_key_exists( $key, gutenberg_ui_settings() ) ) {
+			if ( ! array_key_exists( $key, settings( 'gutenberg_block' ) ) ) {
 				unset( $settings[ $key ] );
 			}
 		}

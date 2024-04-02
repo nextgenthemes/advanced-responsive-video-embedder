@@ -3,22 +3,10 @@ namespace Nextgenthemes\ARVE;
 
 use WP_Error;
 
-function arve_errors(): WP_Error {
-
-	static $errors;
-
-	if ( ! is_wp_error( $errors ) ) {
-		$errors = new \WP_Error();
-	}
-
-	return $errors;
+function arve_errors(): \WP_Error {
+	return Base::get_instance()->get_errors();
 }
 
-/**
- * Get host properties
- *
- * @return array <string, any>
- */
 function get_host_properties(): array {
 	return require __DIR__ . '/providers.php';
 }
