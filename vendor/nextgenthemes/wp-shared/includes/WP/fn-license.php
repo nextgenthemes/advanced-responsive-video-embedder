@@ -13,7 +13,7 @@ function check_product_keys(): void {
 			$msg = sprintf(
 				// Translators: URL, Product name
 				__( '<a href="%1$s">%2$s</a> license not activated or valid', 'advanced-responsive-video-embedder' ),
-				esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/installing-and-license-management/' ),
+				esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/installation/' ),
 				$value['name']
 			);
 
