@@ -138,7 +138,7 @@ class Video {
 				}
 			}
 
-			return apply_filters( 'nextgenthemes/arve/html', $html, $this->current_set_props() );
+			return apply_filters( 'nextgenthemes/arve/html', $html, get_object_vars($this) );
 
 		} catch ( \Exception $e ) {
 
@@ -182,7 +182,7 @@ class Video {
 		$this->detect_provider_and_id_from_url();
 
 		$this->set_prop( 'aspect_ratio', $this->arg_aspect_ratio( $this->aspect_ratio ) );
-		$this->set_prop( 'thumbnail', apply_filters( 'nextgenthemes/arve/args/thumbnail', $this->thumbnail, $this->current_set_props() ) );
+		$this->set_prop( 'thumbnail', apply_filters( 'nextgenthemes/arve/args/thumbnail', $this->thumbnail, get_object_vars($this) ) );
 		$this->set_prop( 'img_src', $this->arg_img_src( $this->img_src ) );
 
 		$this->set_video_properties_from_attachments();
@@ -261,6 +261,8 @@ class Video {
 		if ( ! $this->controls ) {
 			$src = add_query_arg( 'controls', '0', $src );
 		}
+
+		$src = apply_filters( 'nextgenthemes/arve/args/iframe_src', $src, get_object_vars($this) );
 
 		return $src;
 	}
@@ -424,24 +426,6 @@ class Video {
 		}
 	}
 
-	/**
-	 * Retrieves the current set properties as an array.
-	 *
-	 * @return array The current set properties
-	 */
-	public function current_set_props(): array {
-
-		$current_args = array();
-
-		foreach ( $this as $key => $val ) {
-			if ( isset( $this->$key ) || null === $val ) {
-				$current_args[ $key ] = $val;
-			}
-		}
-
-		return $current_args;
-	}
-
 	private function arg_autoplay( bool $autoplay ): bool {
 
 		if ( 'normal' === $this->mode ) { // Prevent more then one vid autoplaying
@@ -457,7 +441,7 @@ class Video {
 			}
 		}
 
-		return apply_filters( 'nextgenthemes/arve/args/autoplay', $autoplay, $this->current_set_props() );
+		return apply_filters( 'nextgenthemes/arve/args/autoplay', $autoplay, get_object_vars($this) );
 	}
 
 	private function arg_img_src( string $img_src ): string {
@@ -482,7 +466,7 @@ class Video {
 
 		endif; // thumbnail
 
-		return (string) apply_filters( 'nextgenthemes/arve/args/img_src', $img_src, $this->current_set_props() );
+		return (string) apply_filters( 'nextgenthemes/arve/args/img_src', $img_src, get_object_vars($this) );
 	}
 
 	/**
@@ -837,7 +821,7 @@ class Video {
 			'loading'         => ( 'normal' === $this->mode ) ? 'lazy' : 'eager',
 		);
 
-		$this->iframe_attr = apply_filters( 'nextgenthemes/arve/iframe_attr', $this->iframe_attr, $this->current_set_props() );
+		$this->iframe_attr = apply_filters( 'nextgenthemes/arve/iframe_attr', $this->iframe_attr, get_object_vars($this) );
 	}
 
 	private function build_iframe_tag(): string {
@@ -966,7 +950,7 @@ class Video {
 			$html .= sprintf(
 				'<pre style="%s">$a: %s</pre>',
 				esc_attr( $pre_style ),
-				esc_html( var_export( array_filter( $this->current_set_props() ), true ) )
+				esc_html( var_export( array_filter( get_object_vars($this) ), true ) )
 			);
 		}
 
@@ -1004,6 +988,7 @@ class Video {
 		}
 
 		$html .= $this->build_tag( array( 'name' => 'button' ) );
+		$html .= $this->build_tag( array( 'name' => 'consent' ) );
 
 		return $html;
 	}
@@ -1051,7 +1036,7 @@ class Video {
 	 */
 	private function build_tag( array $tag ): string {
 
-		$tag = apply_filters( "nextgenthemes/arve/{$tag['name']}", $tag, $this->current_set_props() );
+		$tag = apply_filters( "nextgenthemes/arve/{$tag['name']}", $tag, get_object_vars($this) );
 
 		if ( empty( $tag['tag'] ) ) {
 
@@ -1090,7 +1075,7 @@ class Video {
 			}
 		}
 
-		return apply_filters( "nextgenthemes/arve/{$tag['name']}_html", $html, $this->current_set_props() );
+		return apply_filters( "nextgenthemes/arve/{$tag['name']}_html", $html, get_object_vars($this) );
 	}
 
 	private static function promote_link( bool $arve_link ): string {
