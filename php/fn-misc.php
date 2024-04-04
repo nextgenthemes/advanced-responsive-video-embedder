@@ -206,17 +206,26 @@ function register_elementor_widget( \Elementor\Widgets_Manager $widgets_manager 
 	$widgets_manager->register( new ElementorWidget() );
 }
 
-/**
- * Return an array of translated strings for ARVE Addons
- */
-function translations(): array {
+function translation( string $context ): string {
 
-	return array(
+	switch ( $context ) {
 		// Pro
-		'play_video'               => __( 'Play video', 'advanced-responsive-video-embedder' ),
-		'open_lightbox_with_video' => __( 'Open lightbox with video', 'advanced-responsive-video-embedder' ),
-		'latest_video_from_youtube_channel_could_not_be_detected' =>
-			// Translators: URL.
-			__( 'Latest video from <a href="%s">YouTube channel</a> could not be detected.', 'advanced-responsive-video-embedder' ),
-	);
+		case 'play_video':
+			return __( 'Play video', 'advanced-responsive-video-embedder' );
+		case 'latest_video_from_youtube_channel_could_not_be_detected':
+			// Translators: %s URL
+			return __( 'Latest video from <a href="%s">YouTube channel</a> could not be detected.', 'advanced-responsive-video-embedder' );
+		case 'open_lightbox_with_video':
+			return __( 'Open lightbox with video', 'advanced-responsive-video-embedder' );
+		// Privacy
+		case 'arve_cached_thumbnail_for':
+			// Translators: %1$s URL, %2$s title.
+			return __( 'ARVE cached thumbnail for <a href="%1$s">%2$s</a>', 'advanced-responsive-video-embedder' );
+		case 'by_clicking_on_this_thumbnail_you_consent':
+			// Translators: %1$s domain name, %2$s URL, %3$s privacy policy URL, %4$s privacy policy title.
+			return __(
+				'By clicking on this thumbnail, you consent to load 3rd party content from %1$s in a <a href="%2$s">privacy enhanced iframe</a> and setting a cookie on this site to store your choice. See <a href="%3$s">%4$s</a>.',
+				'advanced-responsive-video-embedder'
+			);
+	}
 }
