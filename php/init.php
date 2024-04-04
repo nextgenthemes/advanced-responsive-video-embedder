@@ -21,6 +21,8 @@ function init_public(): void {
 
 	update_option( 'arve_version', VERSION );
 
+	require_once PLUGIN_DIR . '/php/Base.php';
+	require_once PLUGIN_DIR . '/php/Video.php';
 	require_once PLUGIN_DIR . '/php/fn-deprecated.php';
 	require_once PLUGIN_DIR . '/php/fn-compat.php';
 	require_once PLUGIN_DIR . '/php/fn-assets.php';
@@ -33,7 +35,6 @@ function init_public(): void {
 	require_once PLUGIN_DIR . '/php/fn-url-handlers.php';
 	require_once PLUGIN_DIR . '/php/fn-validation.php';
 	require_once PLUGIN_DIR . '/php/fn-settings.php';
-	require_once PLUGIN_DIR . '/php/Video.php';
 
 	add_action( 'init', __NAMESPACE__ . '\add_oembed_providers' );
 	add_action( 'init', __NAMESPACE__ . '\init_nextgenthemes_settings' );
@@ -76,18 +77,17 @@ function init_admin(): void {
 	add_filter( 'nextgenthemes_arve_save_options', __NAMESPACE__ . '\Admin\filter_save_options' );
 }
 
-register_uninstall_hook( PLUGIN_FILE, __NAMESPACE__ . '\\uninstall' );
+register_uninstall_hook( PLUGIN_FILE, __NAMESPACE__ . '\uninstall' );
 
 function uninstall(): void {
 
-	if ( version_compare( $GLOBALS['wpdb']->db_version(), '8.0', '>=' ) ) {
-		$GLOBALS['wpdb']->query(
-			"UPDATE {$GLOBALS['wpdb']->postmeta} SET meta_value = REGEXP_REPLACE( meta_value, '<template data-arve[^>]+></template>', '' )"
-		);
+	global $wpdb;
+
+	if ( version_compare( $wpdb->db_version(), '8.0', '>=' ) ) {
+		$wpdb->query( "UPDATE {$wpdb->postmeta} SET meta_value = REGEXP_REPLACE( meta_value, '<template data-arve[^>]+></template>', '' )" );
 	} else {
 		delete_oembed_cache();
-
-		delete_option('arve_version');
+		delete_option('arve_version'); // this will cause another cache clear on reinstall
 	}
 }
 
