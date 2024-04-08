@@ -39,10 +39,6 @@ function removeUnwantedStuff(): void {
 		}
 	} );
 
-	qsa( '.arve br' ).forEach( ( el ) => {
-		el.remove();
-	} );
-
 	qsa( '.arve-iframe, .arve-video' ).forEach( ( el ) => {
 		el.removeAttribute( 'width' );
 		el.removeAttribute( 'height' );
