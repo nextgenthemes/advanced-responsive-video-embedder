@@ -12,7 +12,7 @@ function init(): void {
 
 	echo 'Updating block.json...' . PHP_EOL;
 
-	$settings = gutenberg_ui_settings();
+	$settings = settings( 'gutenberg_block', settings_data() );
 
 	foreach ( $settings as $key => $v ) {
 
