@@ -195,12 +195,13 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2024-03-xx 10.0.0 ###
+### 2024-04-xx 10.0.0 ###
 
 #### New ####
 * Elementor Widget.
 * Support for Kick.
 * Optional ARVE button on the admin bar for quick access to the ARVE Settings page.
+* Support for new [GDPR and Extra Privacy](https://nextgenthemes.com/plugins/arve-privacy/) addon.
 
 #### Fixed ####
 * Pasting iframe embed code in the URL/Embed Code field in the Block Editor.

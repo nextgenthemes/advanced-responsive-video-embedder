@@ -13,7 +13,7 @@
         "vimeo",
         "odysee"
     ],
-    "version": "10.0.0-alpha12",
+    "version": "10.0.0-alpha14",
     "textdomain": "advanced-responsive-video-embedder",
     "supports": {
         "align": [
@@ -137,6 +137,9 @@
             "type": "boolean"
         },
         "lightbox_aspect_ratio": {
+            "type": "string"
+        },
+        "invidious": {
             "type": "string"
         },
         "thumbnail_url": {
