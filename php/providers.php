@@ -380,7 +380,7 @@
 		'name'           => 'Rumble.com',
 		'oembed'         => true,
 		'embed_url'      => 'https://rumble.com/embed/%s/',
-		'default_params' => '',
+		'default_params' => 'rel=0',
 		'auto_thumbnail' => true,
 		'auto_title'     => true,
 	),

@@ -233,7 +233,6 @@ class Video {
 		}
 
 		$src_gen = $this->build_iframe_src();
-
 		$src_gen = special_iframe_src_mods( $src_gen, $this->provider, $this->url );
 
 		if ( ! empty( $src ) ) {
