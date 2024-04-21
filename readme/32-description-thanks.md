@@ -10,4 +10,3 @@
 ### Thanks to the developers of the software used in ARVE ###
 
 *   [BigPicture](https://github.com/henrygd/bigpicture), used in [Pro Addon](https://nextgenthemes.com/plugins/arve-pro/)
-*   [Shortcode UI](https://wordpress.org/plugins/shortcode-ui/), optional plugin (no longer maintained)
