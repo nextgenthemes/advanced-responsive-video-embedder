@@ -220,7 +220,7 @@ function translation( string $context ): string {
 		// Privacy
 		case 'arve_cached_thumbnail_for':
 			// Translators: %1$s URL, %2$s title.
-			return __( 'ARVE cached thumbnail for <a href="%1$s">%2$s</a>', 'advanced-responsive-video-embedder' );
+			return __( 'ARVE cached thumbnail for %s', 'advanced-responsive-video-embedder' );
 		case 'by_clicking_on_this_thumbnail_you_consent':
 			// Translators: %1$s domain name, %2$s URL, %3$s privacy policy URL, %4$s privacy policy title.
 			return __(
