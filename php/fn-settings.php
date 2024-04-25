@@ -597,7 +597,7 @@ function settings_data(): array {
 			'type'        => 'boolean',
 			'description' => __( 'Privacy enhanced mode, will NOT disable cookies but only sets them when a user starts to play a video.', 'advanced-responsive-video-embedder' ),
 		),
-		'vimeo_api_id'                  => array(
+		'vimeo_api_id' => array(
 			'tag'                 => 'random-video',
 			'default'             => '',
 			'shortcode'           => false,
