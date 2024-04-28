@@ -76,20 +76,6 @@ function build_tag( array $tag, array $a ): string {
 	return apply_filters( "nextgenthemes/arve/{$tag['name']}_html", $html, $a );
 }
 
-function promote_link( bool $arve_link ): string {
-
-	if ( $arve_link ) {
-		return sprintf(
-			'<a href="%s" title="%s" class="arve-promote-link" target="_blank">%s</a>',
-			esc_url( 'https://nextgenthemes.com/plugins/arve-pro/' ),
-			esc_attr( __( 'Powered by ARVE Advanced Responsive Video Embedder WordPress plugin', 'advanced-responsive-video-embedder' ) ),
-			esc_html__( 'ARVE', 'advanced-responsive-video-embedder' )
-		);
-	}
-
-	return '';
-}
-
 function remove_embed_block_aspect_ratio( string $block_content ): string {
 
 	// Could check for this class with WP_HTML_Tag_Processor but it would require 2 booksmarks
