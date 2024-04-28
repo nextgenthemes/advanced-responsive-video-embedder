@@ -9,16 +9,16 @@
     "packages-dev": [
         {
             "name": "automattic/jetpack-autoloader",
-            "version": "v3.0.4",
+            "version": "v3.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-autoloader.git",
-                "reference": "40c359a1cfdbca433a194197cb2627dad383d80d"
+                "reference": "0b5758ce7481ba5e46fd9e4e8ad81d02a11b837e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/40c359a1cfdbca433a194197cb2627dad383d80d",
-                "reference": "40c359a1cfdbca433a194197cb2627dad383d80d",
+                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/0b5758ce7481ba5e46fd9e4e8ad81d02a11b837e",
+                "reference": "0b5758ce7481ba5e46fd9e4e8ad81d02a11b837e",
                 "shasum": ""
             },
             "require": {
@@ -26,7 +26,8 @@
                 "php": ">=7.0"
             },
             "require-dev": {
-                "automattic/jetpack-changelogger": "^4.1.2",
+                "automattic/jetpack-changelogger": "^4.2.2",
+                "composer/composer": "^1.1 || ^2.0",
                 "yoast/phpunit-polyfills": "1.1.0"
             },
             "type": "composer-plugin",
@@ -66,17 +67,17 @@
                 "wordpress"
             ],
             "support": {
-                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v3.0.4"
+                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v3.0.6"
             },
-            "time": "2024-03-18T17:10:51+00:00"
+            "time": "2024-04-22T18:47:38+00:00"
         },
         {
             "name": "nextgenthemes/wp-shared",
-            "version": "2024.04.09.03.40.29",
+            "version": "2024.04.27.22.37.06",
             "dist": {
                 "type": "path",
                 "url": "../nextgenthemes/wp-shared",
-                "reference": "029ac9dab84aefb1bfdb6f85fcb37a3eea072fcc"
+                "reference": "08d500ba77c1df28861c7b14f9acd3d93d87a440"
             },
             "require": {
                 "php": ">=7.4"
