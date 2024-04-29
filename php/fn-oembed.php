@@ -36,8 +36,8 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 		return $html;
 	}
 
-	$yt_thumbnails = false;
-	$iframe_src    = oembed_html2src( $data );
+	$thumbnails = array();
+	$iframe_src = oembed_html2src( $data );
 
 	if ( is_wp_error( $iframe_src ) ) {
 		$data->arve_error = $iframe_src->get_error_message();
@@ -50,22 +50,22 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 	$data->arve_url       = $url;
 	unset( $data->html );
 
-	if ( 'youtube' === $data->arve_provider && ! empty( $data->thumbnail_url ) ) {
+	if ( in_array( $data->arve_provider, [ 'youtube', 'vimeo' ], true ) ) {
 
-		$yt_thumbnails = yt_thumbnails( $data->thumbnail_url );
+		$thumbnails = thumbnail_sizes( $data->arve_provider, $data->thumbnail_url );
 
-		// Replace with webp version
-		if ( ! empty( $yt_thumbnails['sizes'][480] ) ) {
+		// Replace default thumbnail with webp (yt), avif (vimeo)
+		if ( ! empty( $thumbnails['sizes'][480] ) ) {
 			$data->arve_thumbnail_url_org = $data->thumbnail_url;
-			$data->thumbnail_url          = $yt_thumbnails['sizes'][480];
+			$data->thumbnail_url          = $thumbnails['sizes'][480];
 		}
 
-		$data->arve_thumbnail_small = $yt_thumbnails['small'];
-		$data->arve_thumbnail_large = $yt_thumbnails['large'];
-		$data->arve_srcset          = $yt_thumbnails['srcset'];
+		$data->arve_thumbnail_small = $thumbnails['small'];
+		$data->arve_thumbnail_large = $thumbnails['large'];
+		$data->arve_srcset          = $thumbnails['srcset'];
 	}
 
-	$data  = apply_filters( 'nextgenthemes/arve/oembed_dataparse', $data, $yt_thumbnails );
+	$data  = apply_filters( 'nextgenthemes/arve/oembed_dataparse', $data, $thumbnails );
 	$html .= sprintf( "<template data-arve='%s'></template>", \wp_json_encode($data, JSON_HEX_APOS) );
 
 	return $html;
@@ -232,32 +232,76 @@ function oembed_html2src( object $data ) {
 /**
  * Generate thumbnail uris dir YouTube video based on the provided URL.
  *
- * default URI format: https://i.ytimg.com/vi/<id>/hqdefault.jpg
- * webp URI format:    https://i.ytimg.com/vi_webp/<id>/hqdefault.webp
+ * YT default URI format: https://i.ytimg.com/vi/<id>/hqdefault.jpg
+ * YT webp URI format:    https://i.ytimg.com/vi_webp/<id>/hqdefault.webp
+ *
+ * Vimeo default URI format: https://i.vimeocdn.com/video/<id>-<some_hash>-d_295x166
+ * Vimeo avif URI format:    https://i.vimeocdn.com/video/<id>-<some_hash>-d_1280.avif
  *
  * @param string $url The URL of the YouTube thumbnail.
  * @return array Array containing information about the thumbnails.
  */
-function yt_thumbnails( string $url ): array {
+function thumbnail_sizes( string $provider, string $url ): array {
 
-	$sizes    = array();
-	$srcset   = array();
-	$webp_url = str_replace( '/vi/', '/vi_webp/', $url );
+	$sizes  = array();
+	$srcset = array();
 
-	if ( str_ends_with( $url, 'hqdefault.jpg' ) ) {
-		$sizes[320]  = str_replace( 'hqdefault.jpg', 'mqdefault.webp',     $webp_url ); // 320x180
-		$sizes[480]  = str_replace( 'hqdefault.jpg', 'hqdefault.webp',     $webp_url ); // 480x360
-		$sizes[640]  = str_replace( 'hqdefault.jpg', 'sddefault.webp',     $webp_url ); // 640x480
-		$sizes[1280] = str_replace( 'hqdefault.jpg', 'hq720.webp',         $webp_url ); // 1280x720
-		$sizes[1920] = str_replace( 'hqdefault.jpg', 'maxresdefault.webp', $webp_url ); // 1920x1080
+	switch ( $provider ) {
+
+		case 'youtube':
+			$webp_url = str_replace( '/vi/', '/vi_webp/', $url );
+
+			if ( str_ends_with( $url, 'hqdefault.jpg' ) ) {
+				$sizes[320]  = str_replace( 'hqdefault.jpg', 'mqdefault.webp',     $webp_url ); // 320x180
+				$sizes[480]  = str_replace( 'hqdefault.jpg', 'hqdefault.webp',     $webp_url ); // 480x360
+				$sizes[640]  = str_replace( 'hqdefault.jpg', 'sddefault.webp',     $webp_url ); // 640x480
+				$sizes[1280] = str_replace( 'hqdefault.jpg', 'hq720.webp',         $webp_url ); // 1280x720
+				$sizes[1920] = str_replace( 'hqdefault.jpg', 'maxresdefault.webp', $webp_url ); // 1920x1080
+			}
+
+			// shorts
+			if ( str_ends_with( $url, 'hq2.jpg' ) ) {
+				// shorts
+				$sizes[320] = str_replace( 'hq2.jpg', 'mq2.webp', $webp_url ); // 320x180
+				$sizes[480] = str_replace( 'hq2.jpg', 'hq2.webp', $webp_url ); // 480x360
+				$sizes[640] = str_replace( 'hq2.jpg', 'sd2.webp', $webp_url ); // 640x480
+			}
+
+			break;
+		case 'vimeo':
+			foreach ( [ 320, 640, 960, 1280 ] as $width ) {
+				$sizes[ $width ] = preg_replace( '/^(.*)_([0-9x]{3,9}(\.jpg)?)$/i', "$1_$width", $url );
+			}
+
+			break;
 	}
 
-	// shorts
-	if ( str_ends_with( $url, 'hq2.jpg' ) ) {
-		// shorts
-		$sizes[320] = str_replace( 'hq2.jpg', 'mq2.webp', $webp_url ); // 320x180
-		$sizes[480] = str_replace( 'hq2.jpg', 'hq2.webp', $webp_url ); // 480x360
-		$sizes[640] = str_replace( 'hq2.jpg', 'sd2.webp', $webp_url ); // 640x480
+	foreach ( $sizes as $size => $size_url ) {
+
+		if ( 'youtube' === $provider && is_wp_error( WP\remote_get_head( $size_url, array( 'timeout' => 5 ) ) ) ) {
+			unset( $sizes[ $size ] );
+			continue;
+		}
+
+		$srcset[] = "$size_url {$size}w";
+	}
+
+	return array(
+		'small'  => empty( $sizes ) ? '' : $sizes[ min( array_keys( $sizes ) ) ],
+		'large'  => empty( $sizes ) ? '' : $sizes[ max( array_keys( $sizes ) ) ],
+		'srcset' => implode( ', ', $srcset ),
+		'sizes'  => $sizes,
+	);
+}
+
+function vimeo_thumbnails( string $url ): array {
+
+	$sizes  = array();
+	$srcset = array();
+
+	foreach ( [ 320, 640, 960, 1280, 1920 ] as $width ) {
+
+		$sizes[ $width ] = preg_replace( '#^(.*)_([0-9x]{3,9}(\.jpg)?)$#i', "$1_$width.avif", $url );
 	}
 
 	foreach ( $sizes as $size => $size_url ) {
