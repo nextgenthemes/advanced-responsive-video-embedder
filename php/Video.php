@@ -696,10 +696,16 @@ class Video {
 
 	private function build_html(): string {
 
-		$wrapped_video = $this->build_tag(
+		if ( 'html5' === $this->provider ) {
+			$this->build_video_attr();
+		} else {
+			$this->build_iframe_attr();
+		}
+
+		$inner = $this->build_tag(
 			array(
 				'name'       => 'inner',
-				'tag'        => 'span',
+				'tag'        => 'div',
 				'inner_html' => $this->arve_embed( $this->arve_embed_inner_html() ),
 				'attr'       => array(
 					'class' => 'arve-inner',
@@ -713,7 +719,7 @@ class Video {
 			array(
 				'name'       => 'arve',
 				'tag'        => 'div',
-				'inner_html' => $wrapped_video . $this->promote_link( $this->arve_link ) . $this->build_seo_data(),
+				'inner_html' => $inner . $this->promote_link() . $this->build_seo_data(),
 				'attr'       => array(
 					'class'         => 'arve' . $align_class,
 					'data-mode'     => $this->mode,
@@ -965,25 +971,21 @@ class Video {
 
 		$html = '';
 
-		if ( 'html5' === $this->provider ) {
-			$this->build_video_attr();
-			$html .= $this->build_video_tag();
-		} else {
-			$this->build_iframe_attr();
+		if ( ! in_array( $this->mode, array( 'lightbox', 'link-lightbox' ), true ) ) {
 
-			if ( 'lightbox' !== $this->mode ) {
+			if ( 'html5' === $this->provider ) {
+				$html .= $this->build_video_tag();
+			} else {
 				$html .= $this->build_iframe_tag();
 			}
 		}
 
 		if ( ! empty( $this->img_src ) ) {
-			$tag   = array( 'name' => 'thumbnail' );
-			$html .= $this->build_tag( $tag );
+			$html .= $this->build_tag( array( 'name' => 'thumbnail' ) );
 		}
 
 		if ( $this->title ) {
-			$tag   = array( 'name' => 'title' );
-			$html .= $this->build_tag( $tag );
+			$html .= $this->build_tag( array( 'name' => 'title' ) );
 		}
 
 		$html .= $this->build_tag( array( 'name' => 'button' ) );
@@ -1077,13 +1079,13 @@ class Video {
 		return apply_filters( "nextgenthemes/arve/{$tag['name']}_html", $html, get_object_vars($this) );
 	}
 
-	private static function promote_link( bool $arve_link ): string {
+	private function promote_link(): string {
 
-		if ( $arve_link ) {
+		if ( $this->arve_link && 'link-lightbox' !== $this->mode ) {
 			return sprintf(
 				'<a href="%s" title="%s" class="arve-promote-link" target="_blank">%s</a>',
 				esc_url( 'https://nextgenthemes.com/plugins/arve-pro/' ),
-				esc_attr( __( 'Powered by ARVE Advanced Responsive Video Embedder WordPress plugin', 'advanced-responsive-video-embedder' ) ),
+				esc_attr( __( 'Powered by Advanced Responsive Video Embedder WordPress plugin', 'advanced-responsive-video-embedder' ) ),
 				esc_html__( 'ARVE', 'advanced-responsive-video-embedder' )
 			);
 		}
@@ -1110,7 +1112,7 @@ class Video {
 		return $this->build_tag(
 			array(
 				'name'       => 'embed',
-				'tag'        => 'span', // so we output it within <p>
+				'tag'        => 'div',
 				'inner_html' => $ratio_span . $html,
 				'attr'       => array(
 					'class' => $class,
