@@ -221,10 +221,10 @@ function translation( string $context ): string {
 		case 'arve_cached_thumbnail_for':
 			// Translators: %1$s URL, %2$s title.
 			return __( 'ARVE cached thumbnail for %s', 'advanced-responsive-video-embedder' );
-		case 'by_clicking_on_this_thumbnail_you_consent':
+		case 'by_clicking_below_you_consent':
 			// Translators: %1$s domain name, %2$s URL, %3$s privacy policy URL, %4$s privacy policy title.
 			return __(
-				'By clicking on this thumbnail, you consent to load 3rd party content from %1$s in a <a href="%2$s">privacy enhanced iframe</a> and setting a cookie on this site to store your choice. See <a href="%3$s">%4$s</a>.',
+				'By clicking below, you consent to load content from %1$s in a <a href="%2$s">privacy enhanced iframe</a> and setting a cookie on this site to store your choice. See <a href="%3$s">%4$s</a>.',
 				'advanced-responsive-video-embedder'
 			);
 	}
