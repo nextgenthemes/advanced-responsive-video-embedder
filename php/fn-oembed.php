@@ -50,7 +50,7 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 	$data->arve_url       = $url;
 	unset( $data->html );
 
-	if ( in_array( $data->arve_provider, [ 'youtube', 'vimeo' ], true ) ) {
+	if ( ! empty( $data->thumbnail_url ) && in_array( $data->arve_provider, [ 'youtube', 'vimeo' ], true ) ) {
 
 		$thumbnails = thumbnail_sizes( $data->arve_provider, $data->thumbnail_url );
 
