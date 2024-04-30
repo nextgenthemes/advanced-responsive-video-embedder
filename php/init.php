@@ -144,7 +144,7 @@ function delete_oembed_cache(): string {
 	}
 
 	// Delete posts oEmbed caches
-	foreach ( $oembed_ post_post_ids as $post_id ) {
+	foreach ( $oembed_post_post_ids as $post_id ) {
 		wp_delete_post( $post_id, true );
 	}
 
