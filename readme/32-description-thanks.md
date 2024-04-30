@@ -9,4 +9,4 @@
 
 ### Thanks to the developers of the software used in ARVE ###
 
-*   [BigPicture](https://github.com/henrygd/bigpicture), used in [Pro Addon](https://nextgenthemes.com/plugins/arve-pro/)
+*   [Bigger Picture](https://github.com/henrygd/bigger-picture), used in [Pro Addon](https://nextgenthemes.com/plugins/arve-pro/)
