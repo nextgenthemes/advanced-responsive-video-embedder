@@ -152,33 +152,15 @@ jobs:
       - name: git archive .zip
         run: git archive -o /tmp/advanced-responsive-video-embedder-${{ github.ref_name }}.zip --prefix=advanced-responsive-video-embedder/ ${{ github.ref_name }}
 
+      - name: Copy to arve.zip for permalink to latest version
+        run: cp /tmp/advanced-responsive-video-embedder-${{ github.ref_name }}.zip /tmp/arve.zip 
+
       - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        uses: softprops/action-gh-release@9d7c94cfd0a1f3ed45544c887983e9fa900f0564 # 2.0.4 https://github.com/softprops/action-gh-release/releases
         with:
+          token: ${{ secrets.REPO_TOKEN }}
           tag_name: ${{ github.ref_name }}
-          release_name: ${{ github.ref_name }}
-          draft: false
-          prerelease: false # not doing this (for now) because this will as easy to grab with GitHub API and the realease API repsonse can apprently out of order so its hard to grab the latest pro-release from it. https://github.com/orgs/community/discussions/8226#discussioncomment-7704448
-
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/advanced-responsive-video-embedder-${{ github.ref_name }}.zip
-          asset_name: advanced-responsive-video-embedder-${{ github.ref_name }}.zip
-          asset_content_type: application/zip
-
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/advanced-responsive-video-embedder-${{ github.ref_name }}.zip
-          asset_name: arve.zip
-          asset_content_type: application/zip
+          make_latest: true
+          files: |
+            /tmp/advanced-responsive-video-embedder-${{ github.ref_name }}.zip
+            /tmp/arve.zip
