@@ -141,7 +141,7 @@ When you use the AMP or 'AMP for WP' plugin you need this.
 
 ### Thanks to the developers of the software used in ARVE ###
 
-*   [Bigger Picture](https://github.com/henrygd/bigger-picture), used in [Pro Addon](https://nextgenthemes.com/plugins/arve-pro/)
+*   [BigPicture](https://github.com/henrygd/bigpicture), used in [Pro Addon](https://nextgenthemes.com/plugins/arve-pro/)
 
 ## Frequently Asked Questions ##
 
