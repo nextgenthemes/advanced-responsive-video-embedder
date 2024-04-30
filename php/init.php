@@ -115,9 +115,7 @@ function delete_oembed_cache(): string {
 	// Get posts oEmbed caches
 	$oembed_post_post_ids = (array) $wpdb->get_col(
 		"SELECT ID FROM $wpdb->posts
-		WHERE post_type = 'oembed_cache'
-		AND post_status = 'publish'
-		AND post_name REGEXP '^[0-9a-f]{32}$'"
+		WHERE post_type = 'oembed_cache'"
 	);
 
 	// Get transient oEmbed caches
@@ -146,7 +144,7 @@ function delete_oembed_cache(): string {
 	}
 
 	// Delete posts oEmbed caches
-	foreach ( $oembed_post_post_ids as $post_id ) {
+	foreach ( $oembed_ post_post_ids as $post_id ) {
 		wp_delete_post( $post_id, true );
 	}
 
