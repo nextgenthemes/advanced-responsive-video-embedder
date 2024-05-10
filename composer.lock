@@ -9,16 +9,16 @@
     "packages-dev": [
         {
             "name": "automattic/jetpack-autoloader",
-            "version": "v3.0.6",
+            "version": "v3.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-autoloader.git",
-                "reference": "0b5758ce7481ba5e46fd9e4e8ad81d02a11b837e"
+                "reference": "2a3ab8c22cefdb7a48f1c704696c821d1e9a5ebb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/0b5758ce7481ba5e46fd9e4e8ad81d02a11b837e",
-                "reference": "0b5758ce7481ba5e46fd9e4e8ad81d02a11b837e",
+                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/2a3ab8c22cefdb7a48f1c704696c821d1e9a5ebb",
+                "reference": "2a3ab8c22cefdb7a48f1c704696c821d1e9a5ebb",
                 "shasum": ""
             },
             "require": {
@@ -26,7 +26,7 @@
                 "php": ">=7.0"
             },
             "require-dev": {
-                "automattic/jetpack-changelogger": "^4.2.2",
+                "automattic/jetpack-changelogger": "^4.2.3",
                 "composer/composer": "^1.1 || ^2.0",
                 "yoast/phpunit-polyfills": "1.1.0"
             },
@@ -67,17 +67,17 @@
                 "wordpress"
             ],
             "support": {
-                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v3.0.6"
+                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v3.0.7"
             },
-            "time": "2024-04-22T18:47:38+00:00"
+            "time": "2024-05-06T17:33:09+00:00"
         },
         {
             "name": "nextgenthemes/wp-shared",
-            "version": "2024.04.30.13.14.11",
+            "version": "2024.05.10.04.02.31",
             "dist": {
                 "type": "path",
                 "url": "../nextgenthemes/wp-shared",
-                "reference": "ca8f16a25eb07079e61c19542d68bad864adfc44"
+                "reference": "c88848246053f7a8b30431a6065297a786390df0"
             },
             "require": {
                 "php": ">=7.4"
