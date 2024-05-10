@@ -45,4 +45,4 @@ function arveExtractURL( changed, collection, shortcode ) {
 	}
 }
 
-window.wp.shortcake.hooks.addAction( 'arve.url', arveExtractURL );
+window?.wp?.shortcake?.hooks?.addAction( 'arve.url', arveExtractURL );
