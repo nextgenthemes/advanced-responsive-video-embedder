@@ -40,9 +40,9 @@ const interval = setInterval( () => {
 }, 300 );
 
 document.addEventListener( 'click', ( event ) => {
-	const target = event?.target as HTMLElement | null;
+	const target = event?.target;
 
-	if ( target && target.matches( '.notice-dismiss' ) ) {
+	if ( target instanceof HTMLElement && target.matches( '.notice-dismiss' ) ) {
 		event.preventDefault();
 
 		const parent = target.parentNode as HTMLDivElement | null;
