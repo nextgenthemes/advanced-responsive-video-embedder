@@ -131,8 +131,7 @@ jobs:
         with:
           path: advanced-responsive-video-embedder
 
-      - if: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'dev') }}
-        name: Deploy to WP.org
+      - name: Deploy to WP.org
         uses: nextgenthemes/action-wordpress-plugin-deploy@master
         with:
           workdir: advanced-responsive-video-embedder
