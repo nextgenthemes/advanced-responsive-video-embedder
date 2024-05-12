@@ -809,7 +809,7 @@ class Video {
 
 		$this->iframe_attr = array(
 			'credentialless'  => '',
-			'referrerpolicy'  => 'no-referrer',
+			'referrerpolicy'  => ( 'vimeo' === $this->provider ) ? false : 'no-referrer', // needed for domain restriction
 			'allow'           => $allow,
 			'allowfullscreen' => '',
 			'class'           => $class,
