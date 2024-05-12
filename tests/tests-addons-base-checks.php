@@ -9,11 +9,12 @@ class Tests_AddonsBaseChecks extends WP_UnitTestCase {
 	public function test_product_data(): void {
 
 		$products = \Nextgenthemes\WP\get_products();
+		$addons   = $GLOBALS['arve_detected_addons'] ?? [];
 
-		$this->assertNotEmpty( $GLOBALS['arve_detected_addons'] );
-		$this->assertTrue( is_array( $GLOBALS['arve_detected_addons'] ) );
+		$this->assertNotEmpty( $products );
+		$this->assertTrue( is_array( $addons ) );
 
-		foreach ( $GLOBALS['arve_detected_addons'] as $addon_dirname ) {
+		foreach ( $addons as $addon_dirname ) {
 
 			$p = str_replace( '-', '_', $addon_dirname );
 
