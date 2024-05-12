@@ -98,6 +98,11 @@ jobs:
           path: symbiosistheme.com/web/app/plugins/arve-sticky-videos
           token: ${{ secrets.REPO_TOKEN }}
 
+      - name: Set coverage
+        if: matrix.php == 8.3 && matrix.wordpress == needs.beta.outputs.ver
+        id: coverage
+        run: echo "enable=${{ contains(github.event.head_commit.message, '[coverage]') && 'true' || 'false' }}" >> $GITHUB_OUTPUT
+
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@7fdd3ece872ec7ec4c098ae5ab7637d5e0a96067 # 2.26.0 # https://github.com/shivammathur/setup-php/releases/
         with:
@@ -105,7 +110,8 @@ jobs:
           ini-values: zend.assertions=1, error_reporting=-1, display_errors=On
           extensions: mbstring, dom, zip, mysql, gd
           tools: phpunit-polyfills:1
-          coverage: none #optional
+          coverage: ${{ steps.coverage.outputs.enable == 'true' && 'xdebug' || 'none' }}
+          #coverage: none #optional
 
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
@@ -116,7 +122,14 @@ jobs:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
 
       - name: Run PHPUnit without code coverage
-        run: phpunit --testsuite advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos
+        run: phpunit --testsuite advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos ${{ steps.coverage.outputs.enable == 'true' && '--coverage-html coverage' || '' }}
+
+      - name: Archive code coverage results
+        if: steps.coverage.outputs.enable == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-report
+          path: coverage
 
   deploy-wporg:
     needs: test
