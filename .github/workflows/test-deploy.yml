@@ -119,11 +119,12 @@ jobs:
 
       - name: Run PHPUnit without code coverage
         if: (!contains(github.event.head_commit.message, '[cov]'))
-        run: phpunit --testsuite advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos 
+        run: phpunit --testsuite advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos,arve-privacy
 
-      - name: Run PHPUnit without code coverage
+      - name: Run PHPUnit with code coverage
         if: contains(github.event.head_commit.message, '[cov]') && matrix.php == '8.3' && matrix.wordpress == needs.beta.outputs.ver
-        run: phpunit --testsuite advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos --coverage-html coverage          
+        run: phpunit --testsuite advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos --coverage-html coverage
+        # export WP_TEST_PLUGINS="advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos,arve-privacy"
 
       - name: Archive code coverage results
         if: contains(github.event.head_commit.message, '[cov]') && matrix.php == '8.3' && matrix.wordpress == needs.beta.outputs.ver
