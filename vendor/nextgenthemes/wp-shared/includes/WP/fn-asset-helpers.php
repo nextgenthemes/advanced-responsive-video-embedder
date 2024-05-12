@@ -32,9 +32,16 @@ function add_dep_to_style( string $handle, string $dep ): bool {
 	return add_dep_to_asset( $asset, $dep );
 }
 
-function add_dep_to_asset( \_WP_Dependency $asset, string $dep ): bool {
+/**
+ * Adds a dependency to a given asset if it is not already present.
+ *
+ * @param \_WP_Dependency|bool $asset The asset to add the dependency to.
+ * @param string $dep The dependency to add.
+ * @return bool Returns true if the dependency was added successfully, false otherwise.
+ */
+function add_dep_to_asset( $asset, string $dep ): bool {
 
-	if ( ! $asset ) {
+	if ( ! ( $asset instanceof \_WP_Dependency ) ) {
 		return false;
 	}
 
