@@ -15,13 +15,14 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *  Takes over WordPress embeds with URLs on their own line and `[embed]` shortcodes.
 *  Can take over WP's default video file embeds.
 
-#### Gutenberg ####
+#### Block Editor (Gutenberg) ####
 
 *  Works with Embed, YouTube, Vimeo, Shortcode ... blocks.
 *  Provides it's own powerful ARVE Block with all the features the `[arve]` shortcode offers, with a nice UI and detailed settings descriptions.
 
 #### Both ####
 
+*   Makes your video embeds [more secure and enhances visitors privacy](https://nextgenthemes.com/privacy-enhanced-and-safer-iframes-in-arve-10-0/).
 *   Magically makes videos responsive you already embedded with WordPress default features.
 *   SEO friendly, lets you specify title, description, upload date to provide search engines with the schema.org data they like to have for better indexing. Pro can autofill this for you.
 *   No 'lock in' if you do not use the ARVE Gutenberg Block or `[arve]` shortcodes.
