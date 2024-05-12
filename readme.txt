@@ -32,7 +32,11 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *  Works with Embed, YouTube, Vimeo, Shortcode ... blocks.
 *  Provides it's own powerful ARVE Block with all the features the `[arve]` shortcode offers, with a nice UI and detailed settings descriptions.
 
-#### Both ####
+#### Elementor Widget ####
+
+* Provides UI for the entire feature set of ARVE inside Elementor
+
+#### All ####
 
 *   Makes your video embeds [more secure and enhances visitors privacy](https://nextgenthemes.com/privacy-enhanced-and-safer-iframes-in-arve-10-0/).
 *   Magically makes videos responsive you already embedded with WordPress default features.
@@ -204,7 +208,7 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * Elementor Widget.
 * Support for Kick.
 * Optional ARVE button on the admin bar for quick access to the ARVE Settings page.
-* Support for new [GDPR and Extra Privacy](https://nextgenthemes.com/plugins/arve-privacy/) addon.
+* Support for new [DSGVO and Extra Privacy](https://nextgenthemes.com/plugins/arve-privacy/) addon.
 
 #### Fixed ####
 * Pasting iframe embed code in the URL/Embed Code field in the Block Editor.
@@ -224,7 +228,7 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * Cut development files from the distribution.
 
 ### 2024-02-29 9.10.13 ###
-* Improved: Make Admin notice dismiss without jQuery. May fix an extremly rare issue of dismiss failing.   
+* Improved: Make Admin notice dismiss without jQuery. May fix an extremely rare issue of dismiss failing.   
 * Tested with latest WP 6.5-nightly
 * Plugin is no longer being tested with PHP versions below 7.2+, in theory the 9.x versions should work with PHP 5.6+.
 

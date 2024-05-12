@@ -12,7 +12,7 @@
 * Elementor Widget.
 * Support for Kick.
 * Optional ARVE button on the admin bar for quick access to the ARVE Settings page.
-* Support for new [GDPR and Extra Privacy](https://nextgenthemes.com/plugins/arve-privacy/) addon.
+* Support for new [DSGVO and Extra Privacy](https://nextgenthemes.com/plugins/arve-privacy/) addon.
 
 #### Fixed ####
 * Pasting iframe embed code in the URL/Embed Code field in the Block Editor.
@@ -32,7 +32,7 @@
 * Cut development files from the distribution.
 
 ### 2024-02-29 9.10.13 ###
-* Improved: Make Admin notice dismiss without jQuery. May fix an extremly rare issue of dismiss failing.   
+* Improved: Make Admin notice dismiss without jQuery. May fix an extremely rare issue of dismiss failing.   
 * Tested with latest WP 6.5-nightly
 * Plugin is no longer being tested with PHP versions below 7.2+, in theory the 9.x versions should work with PHP 5.6+.
 

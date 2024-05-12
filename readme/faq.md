@@ -27,10 +27,4 @@ Feel free to ask.
 
 ### How do I embed videos from a unlisted providers / iframes? ###
 
-This plugin not changes anything to usual HTML `<iframe>` embed codes you have to use the shortcodes or the Gutenberg Block. They will become `[arve url="https://..."]`. The url represents what is the `src` in HTML embeds. It works as simple as this, if the `[arve]` shortcode does not detect a known URL structure then it will treat the URL as a `src` for the iframe. 
-
-### Why does my YouTube video not repeat/loop? ###
-
-This plugins embed is considered as 'custom player' by YouTube so you have to pass the video ID as playlist parameters to make the loop work.
-
-`[arve url="https://www.youtube.com/watch?v=pvRqvX413Ik" parameters="loop=1&playlist=pvRqvX413Ik"]`
+This plugin not changes anything to usual HTML `<iframe>` embed codes you have to use the shortcodes or the Gutenberg Block. They will become `[arve url="https://..."]`. The url represents what is the `src` in HTML embeds. It works as simple as this, if the `[arve]` shortcode does not detect a known URL structure then it will treat the URL as a `src` for the iframe.

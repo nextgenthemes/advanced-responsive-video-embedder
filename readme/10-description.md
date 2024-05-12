@@ -20,7 +20,11 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *  Works with Embed, YouTube, Vimeo, Shortcode ... blocks.
 *  Provides it's own powerful ARVE Block with all the features the `[arve]` shortcode offers, with a nice UI and detailed settings descriptions.
 
-#### Both ####
+#### Elementor Widget ####
+
+* Provides UI for the entire feature set of ARVE inside Elementor
+
+#### All ####
 
 *   Makes your video embeds [more secure and enhances visitors privacy](https://nextgenthemes.com/privacy-enhanced-and-safer-iframes-in-arve-10-0/).
 *   Magically makes videos responsive you already embedded with WordPress default features.
