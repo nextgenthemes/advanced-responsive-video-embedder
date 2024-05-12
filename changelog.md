@@ -3,6 +3,9 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-05-12 10.0.2 ###
+* Fixing activation error related to script dependencies. (still investigating)
+
 ### 2024-05-11 10.0.1 ###
 
 #### New ####
@@ -17,7 +20,7 @@
 #### Improved ####
 * Lots code changes to modernize and make the code more robust.
 * Better way to negate WPs own aspect ratio for embed blocks.
-* [Forther privacy enhancements](https://nextgenthemes.com/privacy-enhanced-and-safer-iframes-in-arve-10-0/).
+* [Further privacy enhancements](https://nextgenthemes.com/privacy-enhanced-and-safer-iframes-in-arve-10-0/).
 * New look and UX improvement to the shortcode creation dialog in Classic Editor.
 * Loop and Mute previously were only used for (self hosted) video files. These shortcode attributes now add `loop=1&mute1` to the iframe `src` as well. Note not every provider supports them. To loop YouTube videos the video ID was also need as the `playlist=` parameter. ARVE is doing this automatically now.
 * Sandbox setting has been replaced with 'Enable Encrypted Media'.

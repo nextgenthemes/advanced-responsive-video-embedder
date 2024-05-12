@@ -27,13 +27,14 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *  Takes over WordPress embeds with URLs on their own line and `[embed]` shortcodes.
 *  Can take over WP's default video file embeds.
 
-#### Gutenberg ####
+#### Block Editor (Gutenberg) ####
 
 *  Works with Embed, YouTube, Vimeo, Shortcode ... blocks.
 *  Provides it's own powerful ARVE Block with all the features the `[arve]` shortcode offers, with a nice UI and detailed settings descriptions.
 
 #### Both ####
 
+*   Makes your video embeds [more secure and enhances visitors privacy](https://nextgenthemes.com/privacy-enhanced-and-safer-iframes-in-arve-10-0/).
 *   Magically makes videos responsive you already embedded with WordPress default features.
 *   SEO friendly, lets you specify title, description, upload date to provide search engines with the schema.org data they like to have for better indexing. Pro can autofill this for you.
 *   No 'lock in' if you do not use the ARVE Gutenberg Block or `[arve]` shortcodes.
@@ -208,7 +209,7 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 #### Improved ####
 * Lots code changes to modernize and make the code more robust.
 * Better way to negate WPs own aspect ratio for embed blocks.
-* [Forther privacy enhancements](https://nextgenthemes.com/privacy-enhanced-and-safer-iframes-in-arve-10-0/).
+* [Further privacy enhancements](https://nextgenthemes.com/privacy-enhanced-and-safer-iframes-in-arve-10-0/).
 * New look and UX improvement to the shortcode creation dialog in Classic Editor.
 * Loop and Mute previously were only used for (self hosted) video files. These shortcode attributes now add `loop=1&mute1` to the iframe `src` as well. Note not every provider supports them. To loop YouTube videos the video ID was also need as the `playlist=` parameter. ARVE is doing this automatically now.
 * Sandbox setting has been replaced with 'Enable Encrypted Media'.
