@@ -7,6 +7,7 @@ namespace Nextgenthemes\ARVE;
  * Elementor widget that inserts an embbedable content into the page, from any given URL.
  *
  * @since 10.0.0
+ * @codeCoverageIgnore
  */
 class ElementorWidget extends \Elementor\Widget_Base {
 
