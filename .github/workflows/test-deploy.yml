@@ -111,7 +111,7 @@ jobs:
           extensions: mbstring, dom, zip, mysql, gd
           tools: phpunit-polyfills:1
           coverage: ${{ steps.coverage.outputs.enable == 'true' && 'xdebug' || 'none' }}
-          #coverage: none #optional
+          #coverage: none
 
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
