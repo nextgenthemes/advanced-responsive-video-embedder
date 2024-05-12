@@ -26,15 +26,6 @@ jobs:
       matrix:
         php: [ '7.4', '8.0', '8.1', '8.2', '8.3' ] # https://www.php.net/supported-versions
         wordpress: [ '6.2', "${{ needs.beta.outputs.ver }}" ] # https://wordpress.org/download/releases/
-        exclude:
-          - php:       ${{ contains(github.event.head_commit.message, '[cov]') && '7.4' || 'nothing' }}
-            wordpress: ${{ contains(github.event.head_commit.message, '[cov]') && '6.2' || 'nothing' }}
-          - php:       ${{ contains(github.event.head_commit.message, '[cov]') && '8.0' || 'nothing' }}
-            wordpress: ${{ contains(github.event.head_commit.message, '[cov]') && '6.2' || 'nothing' }}
-          - php:       ${{ contains(github.event.head_commit.message, '[cov]') && '8.1' || 'nothing' }}
-            wordpress: ${{ contains(github.event.head_commit.message, '[cov]') && '6.2' || 'nothing' }}
-          - php:       ${{ contains(github.event.head_commit.message, '[cov]') && '8.2' || 'nothing' }}
-            wordpress: ${{ contains(github.event.head_commit.message, '[cov]') && '6.2' || 'nothing' }}
     services:
       mysql:
         image: mysql:5.7
@@ -127,12 +118,15 @@ jobs:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
 
       - name: Run PHPUnit without code coverage
-        run: >
-          phpunit --testsuite advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos 
-          ${{ contains(github.event.head_commit.message, '[cov]') && '--coverage-html coverage' || '' }}
+        if: (!contains(github.event.head_commit.message, '[cov]'))
+        run: phpunit --testsuite advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos 
+
+      - name: Run PHPUnit without code coverage
+        if: contains(github.event.head_commit.message, '[cov]') && matrix.php == '8.3' && matrix.wordpress == needs.beta.outputs.ver
+        run: phpunit --testsuite advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos --coverage-html coverage          
 
       - name: Archive code coverage results
-        if: contains(github.event.head_commit.message, '[cov]')
+        if: contains(github.event.head_commit.message, '[cov]') && matrix.php == '8.3' && matrix.wordpress == needs.beta.outputs.ver
         uses: actions/upload-artifact@v4
         with:
           name: code-coverage-report
