@@ -195,6 +195,9 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-05-12 10.0.2 ###
+* Fixing activation error related to script dependencies. (still investigating)
+
 ### 2024-05-11 10.0.1 ###
 
 #### New ####
