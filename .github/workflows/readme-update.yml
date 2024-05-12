@@ -17,7 +17,7 @@ jobs:
 
       - run: pwd
 
-      - name: Deploy
+      - name: Deploy readme only to wp.org
         uses: nextgenthemes/action-wordpress-plugin-deploy@master
         with:
           workdir: advanced-responsive-video-embedder
@@ -25,5 +25,3 @@ jobs:
           svn_pass: ${{ secrets.SVN_PASSWORD }}
           readme-and-assets-only: true
           verbose: true
-
-
