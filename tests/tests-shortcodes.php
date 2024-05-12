@@ -53,12 +53,18 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 		$this->assertStringContainsString( '<script type="application/ld+json">{"@context":"http:\/\/schema.org\/"', $html );
 	}
 
-	public function logfile( $msg, $file ): void {
+	/**
+	 * @codeCoverageIgnore
+	 */
+	public function logfile( string $msg, string $file ): void {
 		$msg = print_r( $msg, true );
 		error_log( $msg . PHP_EOL, 3, "$file.log" );
 	}
 
-	public function oembed_log( $a ) {
+	/**
+	 * @codeCoverageIgnore
+	 */
+	public function oembed_log( array $a ): array {
 		if ( $a['oembed_data'] ) {
 			$this->logfile( $a['provider'], __FILE__ );
 			$this->logfile( $a['oembed_data'], __FILE__ );
@@ -66,7 +72,10 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 		return $a;
 	}
 
-	public function check_link( $url ): void {
+	/**
+	 * @codeCoverageIgnore
+	 */
+	public function check_link( string $provider, string $url ): void {
 
 		if (
 			! in_array(
