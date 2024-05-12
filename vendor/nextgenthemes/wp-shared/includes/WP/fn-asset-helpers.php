@@ -35,7 +35,7 @@ function add_dep_to_style( string $handle, string $dep ): bool {
 /**
  * Adds a dependency to a given asset if it is not already present.
  *
- * @param \_WP_Dependency|bool $asset The asset to add the dependency to.
+ * @param bool|\_WP_Dependency $asset The asset to add the dependency to.
  * @param string $dep The dependency to add.
  * @return bool Returns true if the dependency was added successfully, false otherwise.
  */
