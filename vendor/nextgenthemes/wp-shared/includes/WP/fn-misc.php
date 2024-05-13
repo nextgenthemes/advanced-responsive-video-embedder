@@ -43,7 +43,7 @@ function attr( array $attr = array() ): string {
 
 			// Fails
 			#$html .= sprintf( " %s='%s'", esc_html( $key ), json_encode( $value ) );
-			// single quoteded works
+			// single quoted works
 			#$html .= sprintf( " %s='%s'", esc_html( $key ), json_encode( $value, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ) );
 			// for ARVE just escaping single quotes works
 			$html .= sprintf( " %s='%s'", esc_html( $key ), wp_json_encode( $value, JSON_HEX_APOS ) );
@@ -128,3 +128,21 @@ function is_wp_debug(): bool {
 	return defined( 'WP_DEBUG' ) && WP_DEBUG;
 }
 
+/**
+ * This PHP function takes a delimiter string as input and converts it into an array.
+ * It removes any leading or trailing spaces from each element and filters out any empty
+ * elements from the resulting array.
+ *
+ * @param string $str The input comma-separated string
+ * @param string $delimiter The delimiter to use. Space will NOT work!
+ * @return array The resulting array
+ */
+function str_to_array( string $str, string $delimiter = ',' ): array {
+	return array_filter(
+		array_map(
+			'trim',
+			explode( $delimiter, $str )
+		),
+		'strlen'
+	);
+}
