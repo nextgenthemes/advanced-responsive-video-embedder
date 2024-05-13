@@ -3,6 +3,9 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-05-13 10.0.4 ###
+* Fix: Fatal error prevention for people using outdated versions of ARVE Pro while upgrading the main plugin to version 10. Update to Pro 6.x.x is mandatory.
+
 ### 2024-05-12 10.0.3 ###
 * Fix: Vimeo domain restriction
 
