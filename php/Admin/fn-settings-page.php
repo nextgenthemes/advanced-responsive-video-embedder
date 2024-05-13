@@ -105,10 +105,9 @@ function print_arve_news(): void {
 	$response = WP\remote_get_body_cached(
 		add_query_arg(
 			array(
-				'per_page'    => 2,
+				'per_page'    => 4,
 				'page'        => 1,
 				'orderby'     => 'date',
-				'order'       => 'asc',
 				'categories'  => 126,
 			),
 			'https://nextgenthemes.com/wp-json/wp/v2/posts'
@@ -126,16 +125,21 @@ function print_arve_news(): void {
 		esc_html_e( 'No ARVE news posts', 'advanced-responsive-video-embedder' );
 		return;
 	}
-
-	echo '<div class="ngt-sidebar-box">';
-	echo '<h3>' . esc_html__( 'ARVE News', 'advanced-responsive-video-embedder' ) . '</h3>';
-
-	foreach ( $posts as $post ) {
-		printf( '<h5><a href="%s">%s</a></h5>', esc_url( $post->link ), esc_html( $post->title->rendered ) );
-		echo wp_kses( $post->excerpt->rendered, ARVE\ALLOWED_HTML );
-	}
-
-	echo '</div>';
+	?>
+	<div class="ngt-sidebar-box">
+		<h3>
+			<a href="https://nextgenthemes.com/category/arve/">
+				<?php esc_html_e( 'ARVE Blog', 'advanced-responsive-video-embedder' ); ?>
+			</a>
+		</h3>
+		<?php
+		foreach ( $posts as $post ) {
+			printf( '<h5><a href="%s">%s</a></h5>', esc_url( $post->link ), esc_html( $post->title->rendered ) );
+			echo wp_kses( $post->excerpt->rendered, ARVE\ALLOWED_HTML );
+		}
+		?>
+	</div>
+	<?php
 }
 
 function filter_save_options( array $options ): array {
