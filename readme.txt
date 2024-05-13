@@ -32,9 +32,9 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *  Works with Embed, YouTube, Vimeo, Shortcode ... blocks.
 *  Provides it's own powerful ARVE Block with all the features the `[arve]` shortcode offers, with a nice UI and detailed settings descriptions.
 
-#### Elementor Widget ####
+#### Elementor ####
 
-* Provides UI for the entire feature set of ARVE inside Elementor
+* Provides a widget for the entire feature set of ARVE inside Elementor
 
 #### All ####
 
@@ -49,7 +49,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *   One shortcode or Block for all video providers.
 *   Responsive embeds with CSS, much better than with JavaScript.
 *   Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disables related videos from other channels at the end … to help keep people on your site rather then going to YouTube or keep watching videos.
-*   Limited Autoplay (for providers that support it, they may mute it. Mobile browsers prevent autoplay with audio so ARVE will automatically mute HTML5 videos set to autoplay)
+*   Limited Autoplay (Mobile browsers usually prevent autoplay or allow it only muted. ARVE will automatically mute it but browser settings can still prevent it, even on Desktop)
 *   Custom URL parameters to use all options providers offer.
 *   Optional maximal width.
 *   Video alignment.
@@ -192,6 +192,9 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2024-05-13 10.0.4 ###
+* Fix: Fatal error prevention for people using outdated versions of ARVE Pro while upgrading the main plugin to version 10. Update to Pro 6.x.x is mandatory.
 
 ### 2024-05-12 10.0.3 ###
 * Fix: Vimeo domain restriction
