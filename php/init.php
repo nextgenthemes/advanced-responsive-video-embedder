@@ -21,6 +21,8 @@ function init_public(): void {
 
 	update_option( 'arve_version', VERSION );
 
+	require_once PLUGIN_DIR . '/php/Common/init.php';
+
 	require_once PLUGIN_DIR . '/php/Base.php';
 	require_once PLUGIN_DIR . '/php/Video.php';
 	require_once PLUGIN_DIR . '/php/fn-deprecated.php';
