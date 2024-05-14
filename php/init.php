@@ -16,7 +16,13 @@ function init_public(): void {
 	add_option( 'arve_install_date', time() );
 
 	if ( version_compare( get_option( 'arve_version', '' ), '10.0.0-alpha13', '<=' ) ) {
-		delete_oembed_cache();
+
+		add_action(
+			'wp_loaded',
+			function (): void {
+				delete_oembed_cache();
+			}
+		);
 	}
 
 	update_option( 'arve_version', VERSION );
