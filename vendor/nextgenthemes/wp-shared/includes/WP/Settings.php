@@ -146,7 +146,11 @@ class Settings {
 	public function get_options(): array {
 		$options = (array) get_option( $this->slugged_namespace, array() );
 		$options = $options + $this->options_defaults;
-		return $options;
+
+		return apply_filters(
+			$this->slashed_namespace . '/settings',
+			$this->options_defaults
+		);
 	}
 
 	public function get_options_defaults(): array {
