@@ -2,6 +2,10 @@
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+### 2024-05-15 10.0.5 ###
+* Fix?: Initialize deletion of oembed caches later.
+* New/Fix: Setting to allow domain restricted videos.
+* Fix: Show Blog entries in correct order on settings page.
 
 ### 2024-05-13 10.0.4 ###
 * Fix: Fatal error prevention for people using outdated versions of ARVE Pro while upgrading the main plugin to version 10. Update to Pro 6.x.x is mandatory.
