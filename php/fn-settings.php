@@ -558,7 +558,7 @@ function settings_data(): array {
 			'option'      => true,
 			'label'       => __( 'Use ARVE for video files?', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
-			'description' => __( 'Use ARVE to embed HTML5 video files. ARVE uses the browsers players instead of loading the mediaelement player that WP uses.', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'Overwrite the default WordPress behavior.', 'advanced-responsive-video-embedder' ),
 		),
 		'controlslist' => array(
 			'tag'         => 'html5',
@@ -807,6 +807,15 @@ function settings_data(): array {
 			),
 			'descriptionlink'     => esc_url( 'https://docs.invidious.io/instances/' ),
 			'descriptionlinktext' => esc_html( 'see here' ),
+		),
+		'allow_referrer' => array(
+			'label'       => __( 'Allow domain restricted videos (referrerpolicy)', 'advanced-responsive-video-embedder' ),
+			'tag'         => 'main',
+			'default'     => 'vimeo, rumble',
+			'type'        => 'string',
+			'option'      => true,
+			'shortcode'   => false,
+			'description' => __( 'Comma separated list of lowercase hosts that will remove <code>referrerpolicy="no-referer"</code> from <code>iframe</code>. This will make video less private for the visitor as the host will be able to see on what website they are watching on but its needed for vimeo, rumble and possible others for domain restricted videos.', 'advanced-responsive-video-embedder' ),
 		),
 	);
 
