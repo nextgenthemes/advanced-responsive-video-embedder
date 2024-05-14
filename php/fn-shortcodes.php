@@ -6,7 +6,6 @@ use const Nextgenthemes\ARVE\ALLOWED_HTML;
 
 function shortcode( array $a ): string {
 
-	$a                        = (array) $a;
 	$a['errors']              = new \WP_Error();
 	$a['origin_data']['from'] = 'shortcode';
 
@@ -100,6 +99,11 @@ function build_video( array $input_atts ): string {
 		arve_errors()->merge_from( $input_atts['errors'] );
 	}
 
+	// If maxwidth is not set, use width as alias
+	if ( empty( $input_atts['maxwidth'] ) && ! empty( $input_atts['width'] ) ) {
+		$input_atts['maxwidth'] = $input_atts['width'];
+	}
+
 	$video = new Video( $input_atts );
 	return $video->build_video();
 }
@@ -152,7 +156,6 @@ function create_shortcodes(): void {
 	add_shortcode( 'arve', __NAMESPACE__ . '\shortcode' );
 }
 
-// TODO sometimes $attr is string, investigate when and what it is exacly
 function wp_video_shortcode_override( string $out, array $attr ): string {
 
 	$options = options();
@@ -160,7 +163,6 @@ function wp_video_shortcode_override( string $out, array $attr ): string {
 	if (
 		! $options['wp_video_override'] ||
 		empty( $attr ) ||
-		! is_array( $attr ) ||
 		! empty( $attr['wmv'] ) ||
 		! empty( $attr['flv'] ) ||
 		disabled_on_feeds()
