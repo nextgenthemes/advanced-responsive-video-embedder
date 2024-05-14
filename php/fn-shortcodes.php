@@ -100,9 +100,9 @@ function build_video( array $input_atts ): string {
 	}
 
 	// If maxwidth is not set, use width as alias
-	#if ( empty( $input_atts['maxwidth'] ) && ! empty( $input_atts['width'] ) ) {
-		#$input_atts['maxwidth'] = $input_atts['width'];
-	#}
+	if ( empty( $input_atts['maxwidth'] ) && ! empty( $input_atts['width'] ) ) {
+		$input_atts['maxwidth'] = $input_atts['width'];
+	}
 
 	$video = new Video( $input_atts );
 	return $video->build_video();
