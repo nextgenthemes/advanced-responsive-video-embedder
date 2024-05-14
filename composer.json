@@ -43,6 +43,9 @@
 		"pre-update-cmd": [
 			"rsync --delete -av ./vendor/nextgenthemes/wp-shared ../nextgenthemes/",
 			"@composer --working-dir ../nextgenthemes/wp-shared config version $(php -r \"echo (new DateTime())->format('Y.m.d.H.i.s');\")"
+		],
+		"tests": [
+			"cd ../../../../.. && NGT_PHPUNIT_LOAD_PLUGINS=\"advanced-responsive-video-embedder\" phpunit"
 		]
 	}
 }
