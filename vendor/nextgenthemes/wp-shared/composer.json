@@ -19,5 +19,5 @@
     "scripts": {
         "update-alpine": "wget https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js -O ./includes/WP/Admin/alpine.js"
     },
-    "version": "2024.05.15.00.22.43"
+    "version": "2024.05.15.01.56.34"
 }
