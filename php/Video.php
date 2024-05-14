@@ -9,10 +9,11 @@ use function Nextgenthemes\WP\attr;
 use function Nextgenthemes\WP\check_product_keys;
 use function Nextgenthemes\WP\valid_url;
 use function Nextgenthemes\WP\str_contains_any;
+use function Nextgenthemes\WP\str_to_array;
 
 class Video {
 
-	// bools
+	// bool
 	private bool $arve_link;
 	private bool $autoplay;
 	private bool $controls;
@@ -427,7 +428,7 @@ class Video {
 
 	private function arg_autoplay( bool $autoplay ): bool {
 
-		if ( 'normal' === $this->mode ) { // Prevent more then one vid autoplaying
+		if ( 'normal' === $this->mode ) { // Prevent more then one vid auto-playing
 
 			static $did_run = false;
 
@@ -809,7 +810,7 @@ class Video {
 
 		$this->iframe_attr = array(
 			'credentialless'  => '',
-			'referrerpolicy'  => ( 'vimeo' === $this->provider ) ? false : 'no-referrer', // needed for domain restriction
+			'referrerpolicy'  => $this->referrerpolicy(),
 			'allow'           => $allow,
 			'allowfullscreen' => '',
 			'class'           => $class,
@@ -839,6 +840,17 @@ class Video {
 				'attr'       => $this->iframe_attr,
 			)
 		);
+	}
+
+	private function referrerpolicy(): ?string {
+
+		$providers_allowed = str_to_array( options()['allow_referrer'] );
+
+		if ( ! in_array( $this->provider, $providers_allowed, true ) ) {
+			return null; // needed for domain restriction
+		}
+
+		return 'no-referrer';
 	}
 
 	private function build_video_attr(): void {
