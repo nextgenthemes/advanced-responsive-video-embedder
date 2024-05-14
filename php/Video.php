@@ -846,7 +846,7 @@ class Video {
 
 		$providers_allowed = str_to_array( options()['allow_referrer'] );
 
-		if ( ! in_array( $this->provider, $providers_allowed, true ) ) {
+		if ( in_array( $this->provider, $providers_allowed, true ) ) {
 			return null; // needed for domain restriction
 		}
 
