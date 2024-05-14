@@ -45,7 +45,7 @@
 			"@composer --working-dir ../nextgenthemes/wp-shared config version $(php -r \"echo (new DateTime())->format('Y.m.d.H.i.s');\")"
 		],
 		"tests": [
-			"cd ../../../../.. && NGT_PHPUNIT_LOAD_PLUGINS=\"advanced-responsive-video-embedder\" phpunit"
+			"cd ../../../../.. && NGT_PHPUNIT_LOAD_PLUGINS=\"advanced-responsive-video-embedder\" phpunit --testsuite advanced-responsive-video-embedder"
 		]
 	}
 }
