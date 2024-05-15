@@ -13,6 +13,6 @@ Paid addons that finance this project are available:
 * [Pro](https://nextgenthemes.com/plugins/arve-pro) for Lightbox, Lazyload, Autofill of SEO data and more.
 * [Privacy](https://nextgenthemes.com/plugins/arve-privacy) for DSGVO complienace, self hosted thumbnails, load YouTube videos via an invideo.us instance.
 * [Sticky Videos](https://nextgenthemes.com/plugins/arve-sticky-videos/)
-* [Random Video](https://nextgenthemes.com/plugins/arve-privacy)
+* [Random Video](https://nextgenthemes.com/plugins/arve-random-video)
 
 If you have an idea for a functionality or addon you like to pay for, please [reach out](https://nextgenthemes.com/contact/).
