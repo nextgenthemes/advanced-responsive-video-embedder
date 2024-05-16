@@ -117,7 +117,10 @@ class Video {
 		wp_trigger_error( __METHOD__, 'Not allowed to directly set properties, use private set_prop()' );
 	}
 
-	public function build_video(): string {
+	/**
+	 * @return string|WP_REST_Response The built video, error message or REST response.
+	 */
+	public function build_video() {
 
 		$html = '';
 
@@ -138,9 +141,6 @@ class Video {
 					wp_enqueue_script( $handle );
 				}
 			}
-
-			return apply_filters( 'nextgenthemes/arve/html', $html, get_object_vars($this) );
-
 		} catch ( \Exception $e ) {
 
 			$trace = '';
@@ -154,9 +154,9 @@ class Video {
 
 			$html .= get_error_html();
 			$html .= $this->get_debug_info();
-
-			return $html;
 		}
+
+		return apply_filters( 'nextgenthemes/arve/html', $html, get_object_vars($this) );
 	}
 
 	private function process_shortcode_atts(): void {
