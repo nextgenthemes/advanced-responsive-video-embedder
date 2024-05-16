@@ -117,7 +117,10 @@ function delete_oembed_cache(): string {
 
 	// Get post meta oEmbed caches
 	$oembed_post_meta_post_ids = (array) $wpdb->get_col(
-		"SELECT DISTINCT post_id FROM $wpdb->postmeta WHERE meta_key LIKE '%_oembed_%'"
+		$wpdb->prepare(
+			"SELECT DISTINCT post_id FROM $wpdb->postmeta WHERE meta_key LIKE %s",
+			$wpdb->esc_like( '_oembed_' ) . '%'
+		)
 	);
 
 	// Get posts oEmbed caches
@@ -128,7 +131,10 @@ function delete_oembed_cache(): string {
 
 	// Get transient oEmbed caches
 	$oembed_transients = $wpdb->get_col(
-		"SELECT option_name FROM $wpdb->options WHERE option_name LIKE '%_transient_oembed_%'"
+		$wpdb->prepare(
+			"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s",
+			$wpdb->esc_like( '_transient_oembed_' ) . '%'
+		)
 	);
 
 	$oembed_caches = array(
