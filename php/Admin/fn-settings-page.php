@@ -37,12 +37,15 @@ function settings_content(): void {
 	</div>
 
 	<div x-show="'debug' === tab">
-		<?php require_once __DIR__ . '/partials/debug-info-textarea.php'; ?>
 
-		<div>
-			<button @click="deleteOembedCache();" class="button-primary" style="margin-inline-end: 1em;"><?php esc_html_e( 'Delete oEmbed Cache', 'advanced-responsive-video-embedder' ); ?></button>
+		<div style="margin-top: 1.2rem; margin-bottom: 1.2rem;">
+			<button @click="deleteOembedCache();" class="button-primary" style="margin-inline-end: 1em;">
+				<?php esc_html_e( 'Delete oEmbed Cache', 'advanced-responsive-video-embedder' ); ?>
+			</button>
 			<span x-text="message"></span>
 		</div>
+
+		<?php require_once __DIR__ . '/partials/debug-info-textarea.php'; ?>
 	</div>
 
 	<div x-show="['pro', 'privacy', 'random-video', 'sticky-videos'].includes(tab)">
@@ -64,12 +67,10 @@ function settings_content(): void {
 }
 
 function settings_sidebar(): void {
-	?>
 
-	<?php
 	if ( ! current_user_can('install_plugins') ) {
 		echo '<div class="ngt-sidebar-box">';
-		esc_html_e( 'Note that you are logged in with a user who that can\'t install plugins, ask someone who can if you are interrested in ARVE Extensions.', 'advanced-responsive-video-embedder' );
+		esc_html_e( 'Note that you are logged in with a user who that can\'t install plugins, ask someone who can if you are interested in ARVE Extensions.', 'advanced-responsive-video-embedder' );
 		echo '</div>';
 	}
 
@@ -88,9 +89,6 @@ function settings_sidebar(): void {
 	print_settings_box_html( '/partials/settings-sidebar-rate.html' );
 
 	print_arve_news();
-	?>
-
-	<?php
 }
 
 function print_settings_box_html( string $file ): void {
@@ -157,7 +155,7 @@ function filter_save_options( array $options ): array {
 	return $options;
 }
 
-// unused, trigger recaching is rebuild is probably better, also there this leaves the times in the DB so will this even work?
+// unused, trigger re-caching is rebuild is probably better, also there this leaves the times in the DB so will this even work?
 function delete_oembed_caches(): void {
 
 	global $wpdb;
