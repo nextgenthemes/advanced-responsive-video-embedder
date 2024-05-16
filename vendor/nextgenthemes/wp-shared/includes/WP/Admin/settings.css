@@ -25,7 +25,6 @@
 	& a {
 		text-underline-offset: 2px;
 	}
-
 }
 
 .ngt-settings-grid {
@@ -99,7 +98,6 @@
 	width: 100%;
 	height: 1000px;
 	max-height: calc(100vh - 150px);
-	margin-top: 2em;
 	font-family: monospace;
 }
 
