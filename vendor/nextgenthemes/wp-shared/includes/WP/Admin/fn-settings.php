@@ -292,10 +292,10 @@ function print_dialog_field( string $key, array $option, string $premium_url_pre
 					
 						printf(
 							'<option %s>%s</option>',
-							[ 	
+							WP\attr( [ 	
 								'value' => $k, 
 								'selected' => $first
-							],
+							] ),
 							esc_html( $v )
 						);
 
