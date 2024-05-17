@@ -66,7 +66,7 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 	}
 
 	$data  = apply_filters( 'nextgenthemes/arve/oembed_dataparse', $data, $thumbnails );
-	$html .= sprintf( "<template data-arve='%s'></template>", \wp_json_encode($data, JSON_HEX_APOS) );
+	$html .= sprintf( "<template data-arve='%s'></template>", \wp_json_encode($data, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP), 5 );
 
 	return $html;
 }
@@ -113,9 +113,6 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 	return $cache;
 }
 
-/**
- * Undocumented function
- */
 function extract_oembed_json( string $html, string $url ): ?object {
 
 	$data = WP\get_attribute_value_from_html_tag( array( 'tag_name' => 'template' ), 'data-arve', $html );
@@ -124,34 +121,7 @@ function extract_oembed_json( string $html, string $url ): ?object {
 		return null;
 	}
 
-	$data = json_decode( $data, false, 5, JSON_HEX_APOS );
-
-	if ( json_last_error() !== JSON_ERROR_NONE ) {
-
-		$error_code = esc_attr( "$url-extract-json" );
-
-		arve_errors()->add( $error_code, 'json decode error code: ' . json_last_error() . '<br>From url: ' . $url );
-		arve_errors()->add_data(
-			compact('html', 'matches', 'data', 'a'),
-			$error_code
-		);
-	}
-
-	return $data;
-}
-
-/**
- * Undocumented function
- */
-function extract_oembed_json_old( string $html, string $url ): ?object {
-
-	\preg_match( '#(?<=data-arve-oembed>).*?(?=</script>)#s', $html, $matches );
-
-	if ( empty( $matches[0] ) ) {
-		return null;
-	}
-
-	$data = json_decode( $matches[0], false, 512, JSON_UNESCAPED_UNICODE );
+	$data = json_decode( $data, false, 5, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP );
 
 	if ( json_last_error() !== JSON_ERROR_NONE ) {
 
