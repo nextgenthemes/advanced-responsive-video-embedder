@@ -2,6 +2,13 @@
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2024-05-17 10.0.6 ###
+
+#### Improved
+* Performance of oembed deletion.
+* Move the "Delete oEmbed cache" button to the top of the Debug tab in the Settings. Press it if you have trouble with thumbnails.
+
 ### 2024-05-15 10.0.5 ###
 * Fix?: Initialize deletion of oembed caches later.
 * New/Fix: Setting to allow domain restricted videos.
