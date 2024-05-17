@@ -4,7 +4,13 @@ namespace Nextgenthemes\ARVE;
 use function Nextgenthemes\WP\is_wp_debug;
 use const Nextgenthemes\ARVE\ALLOWED_HTML;
 
-function shortcode( array $a ): string {
+/**
+ * Processes the shortcode attributes and builds the video html.
+ *
+ * @param array $a The array of shortcode attributes.
+ * @return string|WP_REST_Response The generated video output.
+ */
+function shortcode( array $a ) {
 
 	$a['errors']              = new \WP_Error();
 	$a['origin_data']['from'] = 'shortcode';
@@ -93,7 +99,13 @@ function get_error_html(): string {
 	return $html;
 }
 
-function build_video( array $input_atts ): string {
+/**
+ * Builds a video based on the input attributes.
+ *
+ * @param array $input_atts The input attributes for the video.
+ * @return string|WP_REST_Response The built video.
+ */
+function build_video( array $input_atts ) {
 
 	if ( ! empty( $input_atts['errors'] ) ) {
 		arve_errors()->merge_from( $input_atts['errors'] );
