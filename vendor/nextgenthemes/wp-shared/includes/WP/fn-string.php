@@ -70,15 +70,21 @@ function remove_url_query( string $url ): string {
 }
 
 /**
- * Convert a string with dashes to camel case.
+ * Convert a string to camel case.
  *
  * @param string $str The input string with dashes.
+ * @param string $separator The separators to use.
  * @param bool $capitalize_first_character Whether to capitalize the first character.
  * @return string The converted camel case string.
  */
-function dashes_to_camel_case( string $str, bool $capitalize_first_character = false ): string {
+function camel_case( string $str, string $separator = '-', bool $capitalize_first_character = false ): string {
 
-	$str = str_replace( '-', '', ucwords( $str, '-' ) );
+	if ( strlen( $separator ) !== 1 ) {
+		wp_trigger_error( __FUNCTION__, '$separator must be a single character.' );
+		return $str;
+	}
+
+	$str = str_replace( $separator, '', ucwords( $str, $separator ) );
 
 	if ( ! $capitalize_first_character ) {
 		$str = lcfirst( $str );
@@ -148,4 +154,24 @@ function replace_extension( string $filename, string $new_extension ): string {
 	$dir  = $info['dirname'] ? $info['dirname'] . DIRECTORY_SEPARATOR : '';
 
 	return $dir . $info['filename'] . '.' . $new_extension;
+}
+
+/**
+ * Retrieves the value of a specific query argument from the given URL.
+ *
+ * @param string $url The URL containing the query parameters.
+ * @param string $arg The name of the query argument to retrieve.
+ * @return string|null The value of the specified query argument, or null if it is not found.
+ */
+function get_url_arg( string $url, string $arg ): ?string {
+
+	$query_string = parse_url( $url, PHP_URL_QUERY );
+
+	if ( empty( $query_string ) || ! is_string( $query_string ) ) {
+		return null;
+	}
+
+	parse_str( $query_string, $query_args );
+
+	return $query_args[ $arg ] ?? null;
 }
