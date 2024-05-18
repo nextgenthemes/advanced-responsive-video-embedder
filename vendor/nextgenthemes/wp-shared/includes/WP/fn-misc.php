@@ -41,19 +41,7 @@ function attr( array $attr = array() ): string {
 
 		} elseif ( is_array( $value ) || is_object( $value ) ) {
 
-			// Fails
-			#$html .= sprintf( " %s='%s'", esc_html( $key ), json_encode( $value ) );
-			// single quoted works
-			#$html .= sprintf( " %s='%s'", esc_html( $key ), json_encode( $value, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ) );
-			// for ARVE just escaping single quotes works
-			$html .= sprintf( " %s='%s'", esc_html( $key ), wp_json_encode( $value, JSON_HEX_APOS ) );
-			// double quoted FAILS! WHY?
-			#$html .= sprintf( ' %s="%s"', esc_html( $key ), wp_json_encode( $value, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ) );
-			// works, apperantly has issues with double quotes
-			#$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_attr( wp_json_encode( $value ) ) );
-			// works, no matter the quotes
-			#$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_json_encode( $value ) );
-			#$html .= sprintf( " %s='%s'", esc_html( $key ), esc_json_encode( $value ) );
+			$html .= sprintf( " %s='%s'", esc_html( $key ), wp_json_encode( $value, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP ) );
 
 		} elseif ( in_array( $key, array( 'href', 'data-href', 'src', 'data-src' ), true ) ) {
 
@@ -66,41 +54,6 @@ function attr( array $attr = array() ): string {
 	}
 
 	return $html;
-}
-
-/**
- *  Escaping for HTML attributes use this instead of esc_attr( json_encode( ) )
- *
- * @link https://core.trac.wordpress.org/ticket/29910
- * 
- * @param  array or object $data array or object to be escaped 
- * @return properly escaped data
- */
-function esc_json_encode( $data ) {
-
-	$data = wp_json_encode( $data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT );
-
-	return _wp_specialchars( $data, ENT_QUOTES, false, true );
-}
-
-/**
- * Retrieves the value of a specific query argument from the given URL.
- *
- * @param string $url The URL containing the query parameters.
- * @param string $arg The name of the query argument to retrieve.
- * @return string|null The value of the specified query argument, or null if it is not found.
- */
-function get_url_arg( string $url, string $arg ): ?string {
-
-	$query_string = parse_url( $url, PHP_URL_QUERY );
-
-	if ( empty( $query_string ) || ! is_string( $query_string ) ) {
-		return null;
-	}
-
-	parse_str( $query_string, $query_args );
-
-	return $query_args[ $arg ] ?? null;
 }
 
 /**
@@ -144,5 +97,18 @@ function str_to_array( string $str, string $delimiter = ',' ): array {
 			explode( $delimiter, $str )
 		),
 		'strlen'
+	);
+}
+
+function array_map_key( string $callback, array $arr ): array {
+
+	return array_combine(
+		array_map(
+			function ( $key ) use ( $callback ) {
+				return call_user_func($callback, $key);
+			},
+			array_keys($arr)
+		),
+		$arr
 	);
 }
