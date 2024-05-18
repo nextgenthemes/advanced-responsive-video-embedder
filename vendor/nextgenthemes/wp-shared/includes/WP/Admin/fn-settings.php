@@ -6,6 +6,7 @@ use \Nextgenthemes\WP;
 use function \Nextgenthemes\WP\attr;
 use function \Nextgenthemes\WP\get_defined_key;
 use function \Nextgenthemes\WP\has_valid_key;
+use function wp_interactivity_data_wp_context as data_wp_context;
 
 const DESCRIPTION_ALLOWED_HTML = array(
 	'a'      => array(
@@ -196,159 +197,126 @@ function print_settings_blocks(
 ): void {
 
 	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-	foreach ( $settings as $key => $option ) {
+	foreach ( $settings as $key => $setting ) {
 
-		if ( 'settings-page' === $context && empty($option['option']) ) {
+		if ( 'settings-page' === $context && empty($setting['option']) ) {
 			continue;
 		}
 
-		if ( 'settings-page' === $context && ! empty($option['options']) ) {
-			unset($option['options']['']);
+		// remove default empty select option, its for the sc dialog only
+		if ( 'settings-page' === $context && ! empty($setting['options']) ) {
+			unset($setting['options']['']);
 		}
 
-		$option['premium']  = in_array( $option['tag'], $premium_sections, true );
-		$option['tag_name'] = $sections[ $option['tag'] ];
-		$field_type         = isset( $option['ui'] ) ? $option['ui'] : $option['type'];
-		$block_class        = "ngt-opt ngt-opt--$prefix-$key ngt-opt--{$option['tag']}";
+		$setting['premium']  = in_array( $setting['tag'], $premium_sections, true );
+		$setting['tag_name'] = $sections[ $setting['tag'] ];
+		$field_type          = $setting['ui'] ?? $setting['type'];
 
 		if ( 'hidden' === $field_type ) {
 			continue;
 		}
 
 		?>
-		<div <?php echo WP\attr( [
-			'class'  => $block_class,
-			'x-show' => ( 'settings-page' === $context ) ? "tab == '{$option['tag']}'" : false,
-		] ); ?>
+		<div 
+			class="<?= esc_attr( "ngt-opt ngt-opt--$prefix-$key ngt-opt--{$setting['tag']}" ); ?>"
+			data-wp-bind--hidden="!state.activeTabs.<?= esc_attr( WP\camel_case( $setting['tag'] ) ); ?>"
+			<?= data_wp_context( [ 'section' => $setting['tag'] ] ); // phpcs:ignore ?>
 		>
-			<?php
-			if ( true || 'settings-page' === $context ) {
-				$function = __NAMESPACE__ . "\\print_{$field_type}_field";
-				$function( $key, $option );
-			} else {
-				print_dialog_field( $key, $option, $premium_url_prefix );					
-			}
+			<?php option_block( $key, $setting, $premium_url_prefix ); ?>
 
-			if ( ! empty( $option['description'] ) ) {
-
-				printf(
-					'<p %s>%s</p>',
-					WP\attr( [
-						'class'  => 'arve-sc-dialog__description',
-						'hidden' => ( 'settings-page' === $context ) ? false : true,
-					] ),
-					\wp_kses( $option['description'], DESCRIPTION_ALLOWED_HTML, array( 'http', 'https' ) )
-				);
-			}
-			?>
+			<?php if ( ! empty( $setting['description'] ) ) : ?>
+				<p class="ngt-opt__description" data-wp-bind--hidden="!state.help">
+					<?= \wp_kses( $setting['description'], DESCRIPTION_ALLOWED_HTML, array( 'http', 'https' ) ); ?>
+				</p>
+			<?php endif; ?>
 			<hr>
 		</div>
 		<?php
 	}
 }
 
-function print_dialog_field( string $key, array $option, string $premium_url_prefix ): void {
+function option_block( string $key, array $setting, string $premium_url_prefix ): void {
 
-	$wrapper_attr = array(
-		'class' => ( 'attachment' === $option['type'] ) ? 'input-group' : false,
-	);
-
-	$inner_wrapper_attr = array(
-		'class' => ( 'boolean' === $option['type'] ) ? 'form-check form-switch' : 'form-floating',
-		'style' => 'position: relative',
-	);
+	$id = 'ngt_opt__' . $key;
 
 	?>
-	<div <?php echo WP\attr( $wrapper_attr ); ?>>
+	<div class="ngt-opt__wrap" <?= data_wp_context( [ 'section' => $setting['tag'] ]); // phpcs:ignore ?>>
 
-		<div <?php echo WP\attr( $inner_wrapper_attr ); ?>>
+		<div class="ngt-opt__input_wrap">
 
 			<?php
-			switch ( $option['type'] ) {
-				case 'attachment':
-				case 'string':
-					$input_type = 'text';
-					break;
-				case 'integer':
-					$input_type = 'number';
-					break;
-				case 'boolean':
-					$input_type = 'checkbox';
-					break;
-			}
-
-			if ( 'select' === $option['type'] ) {
+			if ( 'select' === $setting['type'] ) {
 				?>
 				<select 
-					id="<?php echo esc_attr( "options.$key" ); ?>"
 					class="form-select"
-					x-model="<?php echo esc_attr( "options.$key" ); ?>"
+					id="<?= esc_attr( $id ); ?>"
+					data-ngt-option="<?= esc_attr( $key ); ?>"
+					data-wp-bind--value="context.options.<?= esc_attr( $key ); ?>"
+					data-wp-on--change="actions.inputChange"
+					<?= data_wp_context( [ 'optionKey' => $key ] ); // phpcs:ignore ?>
 				>
-					<option disabled>Please select one</option>
-					<?php
-					$first = true;
-
-					foreach ( $option['options'] as $k => $v ) :
-					
-						printf(
-							'<option %s>%s</option>',
-							WP\attr( [ 	
-								'value' => $k, 
-								'selected' => $first
-							] ),
-							esc_html( $v )
-						);
-
-						?>
-						<option value="<?php echo esc_attr( $k ); ?>"><?php echo esc_html( $v ); ?></option>
+					<?php foreach ( $setting['options'] as $k => $v ) : ?>
+						<option value="<?= esc_attr( $k ); ?>"><?= esc_html( $v ); ?></option>
 					<?php endforeach; ?>
 				</select>
 				<?php
-			} else {
+
+			} elseif ( 'boolean' === $setting['type'] ) {
+
 				printf(
-					'<input %s />',
+					'<input %s/>',
 					WP\attr(
 						array(
-							'type'        => $input_type,
-							'id'          => "options.$key",
-							'x-model'     => "options.$key",
-							'value'       => ( 'checkbox' === $input_type ) ? 'ttrue' : false,
-							'placeholder' => isset($option['placeholder']) ? $option['placeholder'] : false,
-							'class'       => ( 'boolean' === $option['type'] ) ? 'form-check-input' : 'form-control',
-						)
-					)
-				);
-			}
-
-			printf(
-				'<label %s>%s</label>',
-				WP\attr(
-					array(
-						'for'         => "options.$key",
-						'x-model'     => "options.$key",
-						'class'       => ( 'boolean' === $option['type'] ) ? 'form-check-label' : false,
-					)
-				),
-				esc_html( $option['label'] )
-			);
-
-			if ( $option['premium'] ) {
-				printf(
-					'<a %s>%s</a>',
-					WP\attr(
-						array(
-							'class' => 'button-primary arve-premium-link',
-							'href'  => $premium_url_prefix . $option['tag'],
+							'type'               => 'checkbox',
+							'id'                 => $id,
+							'data-wp-on--change' => 'actions.checkboxChange',
+							'placeholder'        => $setting['placeholder'] ?? false,
+							'class'              => 'form-check-input',
+							'data-wp-context'    => [ 'optionKey' => $key ],
 						)
 					),
-					esc_html( $option['tag'] )
 				);
+			} elseif ( 'string' === $setting['type'] ) {
+				printf(
+					'<input %s/>',
+					WP\attr(
+						array(
+							'type'                => ( 'integer' === $setting['type'] ) ? 'number' : 'text',
+							'id'                  => $id,
+							'data-wp-on--keyup'   => 'actions.inputChange',
+							'data-arve-url'       => ( 'url' === $key ),
+							'data-wp-bind--value' => "context.options.$key",
+							'placeholder'         => $setting['placeholder'] ?? false,
+							'class'               => 'form-control',
+							'data-wp-context'     => [ 'optionKey' => $key ],
+						)
+					),
+				);
+			} else {
+				esc_attr_e( 'Type not implemented' );
 			}
+
 			?>
+			<label for="<?= esc_attr( $id ); ?>">
+				<?php esc_html_e( $setting['label'] ); ?>
+			</label>
+
+			<?php if ( $setting['premium'] ) : ?>
+				<a class="ngt-opt__premium-link" href="<?= esc_url( $premium_url_prefix . $setting['tag'] ); ?>">
+					<?php esc_html_e( $setting['tag'] ); ?>
+				</a>
+			<?php endif; ?>
 		</div>
 
-		<?php if ( 'attachment' === $option['type'] ) : ?>
-			<button class="button-secondary button-secondary--select-thumbnail" type="button" @click="<?php echo esc_attr( "uploadImage('$key')" ); ?>">Select Image</button>
+		<?php if ( 'attachment' === $setting['type'] ) : ?>
+			<button
+				class="button-secondary button-secondary--select-thumbnail"
+				type="button"
+				data-ngt-option="<?= esc_attr( $key ); ?>"
+				wp-on--click="actions.selectThumbnail"
+			>
+				Select Image
+			</button>
 		<?php endif; ?>
 
 	</div>
