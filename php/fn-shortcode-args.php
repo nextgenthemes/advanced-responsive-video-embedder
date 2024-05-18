@@ -4,7 +4,7 @@ namespace Nextgenthemes\ARVE;
 use function Nextgenthemes\WP\remove_url_query;
 use function Nextgenthemes\WP\get_url_arg;
 use function Nextgenthemes\WP\valid_url;
-use function Nextgenthemes\WP\get_attribute_value_from_html_tag;
+use function Nextgenthemes\WP\get_attribute_from_html_tag;
 
 function arg_maxwidth( int $maxwidth, string $provider, string $align ): int {
 
