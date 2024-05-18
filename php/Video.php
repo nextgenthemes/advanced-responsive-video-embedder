@@ -832,6 +832,10 @@ class Video {
 
 	private function build_iframe_tag(): string {
 
+		if ( in_array($this->mode, [ 'lightbox', 'link-lightbox' ], true) ) {
+			return '';
+		}
+
 		return $this->build_tag(
 			array(
 				'name'       => 'iframe',
@@ -883,6 +887,10 @@ class Video {
 	}
 
 	private function build_video_tag(): string {
+
+		if ( 'link-lightbox' === $this->mode ) {
+			return '';
+		}
 
 		$autoplay = in_array( $this->mode, array( 'lazyload', 'lightbox', 'link-lightbox' ), true ) ?
 			false :
@@ -983,13 +991,14 @@ class Video {
 
 		$html = '';
 
-		if ( ! in_array( $this->mode, array( 'lightbox', 'link-lightbox' ), true ) ) {
+		if ( 'html5' === $this->provider ) {
+			$html .= $this->build_video_tag();
+		} else {
+			$html .= $this->build_iframe_tag();
+		}
 
-			if ( 'html5' === $this->provider ) {
-				$html .= $this->build_video_tag();
-			} else {
-				$html .= $this->build_iframe_tag();
-			}
+		if ( 'normal' === $this->mode ) {
+			$html .= $this->build_tag( array( 'name' => 'description' ) );
 		}
 
 		if ( ! empty( $this->img_src ) ) {
