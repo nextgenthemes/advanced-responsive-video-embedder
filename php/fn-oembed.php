@@ -71,6 +71,7 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 	return $html;
 }
 
+
 /**
  * Sanitizes the provider name by removing special characters and converting to lowercase.
  *
@@ -115,23 +116,25 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 
 function extract_oembed_json( string $html, string $url ): ?object {
 
-	$data = WP\get_attribute_value_from_html_tag( array( 'tag_name' => 'template' ), 'data-arve', $html );
+	$data = WP\get_attribute_from_html_tag( array( 'tag_name' => 'template' ), 'data-arve', $html );
 
 	if ( empty( $data ) ) {
 		return null;
 	}
 
-	$data = json_decode( $data, false, 5, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP );
+	try {
+		$data = json_decode($data, false, 5, JSON_THROW_ON_ERROR);
+	} catch ( \JsonException $e ) {
 
-	if ( json_last_error() !== JSON_ERROR_NONE ) {
+		$error_code = __FUNCTION__;
 
-		$error_code = esc_attr( "$url-extract-json" );
-
-		arve_errors()->add( $error_code, 'json decode error code: ' . json_last_error() . '<br>From url: ' . $url );
+		arve_errors()->add( $error_code, $e->getMessage() . ' URL: ' . $url );
 		arve_errors()->add_data(
-			compact('html', 'matches', 'data', 'a'),
+			compact( 'data', 'html', 'url'),
 			$error_code
 		);
+
+		return null;
 	}
 
 	return $data;
@@ -167,7 +170,7 @@ function oembed_html2src( object $data ) {
 
 	if ( 'TikTok' === $data->provider_name ) {
 
-		$tiktok_video_id = WP\get_attribute_value_from_html_tag( array( 'class' => 'tiktok-embed' ), 'data-video-id', $data->html );
+		$tiktok_video_id = WP\get_attribute_from_html_tag( array( 'class' => 'tiktok-embed' ), 'data-video-id', $data->html );
 
 		if ( $tiktok_video_id ) {
 			return 'https://www.tiktok.com/embed/v2/' . $tiktok_video_id;
@@ -176,7 +179,7 @@ function oembed_html2src( object $data ) {
 		}
 	} elseif ( 'Facebook' === $data->provider_name ) {
 
-		$facebook_video_url = WP\get_attribute_value_from_html_tag( array( 'class' => 'fb-video' ), 'data-href', $data->html );
+		$facebook_video_url = WP\get_attribute_from_html_tag( array( 'class' => 'fb-video' ), 'data-href', $data->html );
 
 		if ( $facebook_video_url ) {
 			return 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $facebook_video_url );
@@ -184,7 +187,7 @@ function oembed_html2src( object $data ) {
 			return new \WP_Error( 'facebook-video-id', __( 'Failed to extract facebook video url from this html', 'advanced-responsive-video-embedder' ), $data->html );
 		}
 	} else {
-		$iframe_src = WP\get_attribute_value_from_html_tag( array( 'tag_name' => 'iframe' ), 'src', $data->html );
+		$iframe_src = WP\get_attribute_from_html_tag( array( 'tag_name' => 'iframe' ), 'src', $data->html );
 
 		if ( $iframe_src ) {
 
