@@ -9,7 +9,7 @@ namespace Nextgenthemes\WP;
  * @param string $html HTML string to parse
  * @return string|null attribute value or null if not found or empty
  */
-function get_attribute_value_from_html_tag( array $query, string $attribute, string $html ): ?string {
+function get_attribute_from_html_tag( array $query, string $attribute, string $html ): ?string {
 
 	$wphtml = new \WP_HTML_Tag_Processor( $html );
 
