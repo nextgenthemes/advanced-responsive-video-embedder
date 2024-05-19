@@ -892,13 +892,10 @@ class Video {
 			return '';
 		}
 
-		$autoplay = in_array( $this->mode, array( 'lazyload', 'lightbox', 'link-lightbox' ), true ) ?
-			false :
-			$this->autoplay;
-		$preload  = 'metadata';
+		$attr = $this->video_attr;
 
-		if ( in_array( $this->mode, array( 'lazyload', 'lightbox' ), true ) && ! empty( $this->img_src ) ) {
-			$preload = 'none';
+		if ( in_array( $this->mode, array( 'lazyload', 'lightbox' ), true ) ) {
+			$attr['controls'] = false;
 		}
 
 		return $this->build_tag(
@@ -906,22 +903,7 @@ class Video {
 				'name'       => 'video',
 				'tag'        => 'video',
 				'inner_html' => $this->video_sources_html . tracks_html( $this->tracks ),
-				'attr'       => array(
-					// WP
-					'autoplay'           => $autoplay,
-					'controls'           => $this->controls,
-					'controlslist'       => $this->controlslist,
-					'loop'               => $this->loop,
-					'preload'            => $preload,
-					'width'              => is_feed() ? $this->width : false,
-					'poster'             => empty( $this->img_src ) ? false : $this->img_src,
-					// ARVE only
-					'data-arve'          => $this->uid,
-					'class'              => 'arve-video fitvidsignore',
-					'muted'              => $autoplay ? 'muted by ARVE because autoplay is on' : $this->muted,
-					'playsinline'        => in_array( $this->mode, array( 'lightbox', 'link-lightbox' ), true ) ? '' : false,
-					'webkit-playsinline' => in_array( $this->mode, array( 'lightbox', 'link-lightbox' ), true ) ? '' : false,
-				),
+				'attr'       => $attr,
 			)
 		);
 	}
