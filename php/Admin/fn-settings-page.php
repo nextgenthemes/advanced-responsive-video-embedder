@@ -7,7 +7,7 @@ use Nextgenthemes\WP;
 function settings_content(): void {
 
 	?>
-	<div x-show="'urlparams' === tab">
+	<div data-wp-bind--hidden="!context.activeTabs.urlparams">
 		<p>
 			<?php
 			echo wp_kses(
@@ -36,10 +36,10 @@ function settings_content(): void {
 		</p>
 	</div>
 
-	<div x-show="'debug' === tab">
+	<div data-wp-bind--hidden="!context.activeTabs.debug">
 
 		<div style="margin-top: 1.2rem; margin-bottom: 1.2rem;">
-			<button @click="deleteOembedCache();" class="button-primary" style="margin-inline-end: 1em;">
+			<button data-wp-on--click="actions.deleteOembedCache" class="button-primary" style="margin-inline-end: 1em;">
 				<?php esc_html_e( 'Delete oEmbed Cache', 'advanced-responsive-video-embedder' ); ?>
 			</button>
 			<span x-text="message"></span>
@@ -48,23 +48,60 @@ function settings_content(): void {
 		<?php require_once __DIR__ . '/partials/debug-info-textarea.php'; ?>
 	</div>
 
-	<div x-show="['pro', 'privacy', 'random-video', 'sticky-videos'].includes(tab)">
-		<p>
-			<?php
-			echo wp_kses(
-				sprintf(
-					// Translators: URL
-					__( 'You may already set options for addons but they will only take effect if the associated addons are installed. If not done already, enter your license keys <a href="%s">here</a>', 'advanced-responsive-video-embedder' ),
-					esc_url( admin_url( 'options-general.php?page=nextgenthemes' ) )
-				),
-				array( 'a' => array( 'href' => true ) ),
-				array( 'http', 'https' )
-			);
-			?>
-		</p>
-	</div>
+	<?php if ( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) : ?>
+		<div data-wp-bind--hidden="!context.activeTabs.pro">
+			<p>
+				<?= pro_message( 'ARVE Pro', 'arve-pro' ); // phpcs:ignore ?>
+			</p>
+		</div>
+	<?php endif; ?>
+
+	<?php if ( ! is_plugin_active( 'arve-privacy/arve-privacy.php' ) ) : ?>
+		<div data-wp-bind--hidden="!context.activeTabs.privacy">
+			<p>
+				<?= pro_message( 'ARVE Privacy', 'arve-privacy' ); // phpcs:ignore ?>
+			</p>
+		</div>
+	<?php endif; ?>
+
+	<?php if ( ! is_plugin_active( 'arve-stick-videos/arve-sticky-videos.php' ) ) : ?>
+		<div data-wp-bind--hidden="!context.activeTabs.stickyVideos">
+			<p>
+				<?= pro_message( 'ARVE Sticky Videos', '/arve-stick-videos' ); // phpcs:ignore ?>
+			</p>
+		</div>
+	<?php endif; ?>
+
+	<?php if ( ! is_plugin_active( 'arve-random-video/arve-random-video.php' ) ) : ?>
+		<div data-wp-bind--hidden="!context.activeTabs.randomVideo">
+			<p>
+				<?= pro_message( 'ARVE Radom Video', '/arve-random-video' ); // phpcs:ignore ?>
+			</p>
+		</div>
+	<?php endif; ?>
+
 	<?php
 }
+
+function pro_message( string $addon_name = 'ARVE Pro', string $slug = 'arve-pro' ): string {
+	return wp_kses(
+		sprintf(
+			// Translators: Addon Name
+			__( '<strong>%s is not installed.</strong> You may already set options for this addon but they will only take effect if its installed later.', 'advanced-responsive-video-embedder' ),
+			sprintf( '<a href="%s">%s</a>', 'https://nextgenthemes.com/plugins/' . $slug . '/', $addon_name )
+		),
+		array(
+			'strong' => array(),
+			'a'      => array( 'href' => true ),
+		),
+		array( 'http', 'https' )
+	);
+}
+
+function get_addon_link( string $addon_name, string $slug ): string {
+	return sprintf( '<a href="%s">%s</a>', 'https://nextgenthemes.com/plugins/' . $slug . '/', $addon_name );
+}
+
 
 function settings_sidebar(): void {
 

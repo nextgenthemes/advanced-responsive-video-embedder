@@ -2,6 +2,7 @@
 namespace Nextgenthemes\WP;
 
 use Exception;
+use function wp_interactivity_data_wp_context as data_wp_context;
 
 class Settings {
 	private static $no_reset_sections = array( 'debug', 'random-video', 'keys' );
@@ -55,6 +56,14 @@ class Settings {
 		add_action( 'admin_enqueue_scripts', array( $this, 'assets' ), 9 );
 		add_action( 'rest_api_init', array( $this, 'register_rest_route' ) );
 		add_action( 'admin_menu', array( $this, 'register_setting_page' ) );
+
+		// from WP_Script_Modules::add_hooks
+		add_action( 'admin_head', array( wp_script_modules(), 'print_import_map' ) );
+		add_action( 'admin_head', array( wp_script_modules(), 'print_enqueued_script_modules' ) );
+		add_action( 'admin_head', array( wp_script_modules(), 'print_script_module_preloads' ) );
+		// from WP_Interactivity::add_hooks
+		add_action( 'admin_enqueue_scripts', array( wp_interactivity(), 'register_script_modules' ) );
+		add_action( 'admin_footer', array( wp_interactivity(), 'print_client_interactivity_data' ) );
 	}
 
 	public function setup_license_options(): void {
@@ -179,6 +188,12 @@ class Settings {
 		update_option( $this->slugged_namespace, $options );
 	}
 
+	public function reset_options( string $section ): void {
+
+
+
+	}
+
 	public function register_rest_route(): void {
 
 		register_rest_route(
@@ -197,6 +212,38 @@ class Settings {
 			)
 		);
 
+		register_rest_route(
+			$this->rest_namespace,
+			'/reset',
+			array(
+				'methods'             => 'POST',
+				'args'                => $this->settings,
+				'permission_callback' => function() {
+					return current_user_can( 'manage_options' );
+				},
+				'callback'            => function( \WP_REST_Request $request ): void {
+
+					$section = $request->get_param( 'section' );
+
+					if ( 'all' === $section ) {
+						$this->save_options( [] );
+					} else {
+						$options_to_keep = $this->get_options();
+
+						foreach( $options_to_keep as $key => $value ) {
+
+							if ( $key === $this->settings[ $key ]['tag'] ) {
+								unset( $options_to_keep[ $key ] );
+							}
+						}
+					}
+
+					$this->save_options( $options_to_keep );
+					die( '1' );
+				},
+			)
+		);
+
 		if ( function_exists( '\Nextgenthemes\ARVE\delete_oembed_cache' ) ) {
 
 			register_rest_route(
@@ -208,7 +255,7 @@ class Settings {
 						return current_user_can( 'manage_options' );
 					},
 					'callback'            => function( \WP_REST_Request $request ) {
-						
+
 						$deleted_rows = \Nextgenthemes\ARVE\delete_oembed_cache();
 
 						if ( false === $deleted_rows ) {
@@ -223,6 +270,15 @@ class Settings {
 	}
 
 	public function assets( string $page ): void {
+
+		$asset_info = Asset::deps_and_ver( $this->base_path . 'vendor/nextgenthemes/wp-shared/includes/WP/Admin/settings.js' );
+
+		wp_register_script_module(
+			'nextgenthemes-settings',
+			$this->base_url . 'vendor/nextgenthemes/wp-shared/includes/WP/Admin/settings.js',
+			$asset_info[ 'dependencies' ] + [ '@wordpress/interactivity' ],
+			$asset_info[ 'version' ]
+		);
 
 		// always load this as the ARVE Shortcode dialog uses styles from this.
 		register_asset(
@@ -250,16 +306,7 @@ class Settings {
 			'definedKeys'      => $this->defined_keys,
 		);
 
-		$asset_info = Asset::deps_and_ver( $this->base_path . 'vendor/nextgenthemes/wp-shared/includes/WP/Admin/settings.js' );
-
-		wp_register_script_module(
-			'nextgenthemes-settings',
-			$this->base_url . 'vendor/nextgenthemes/wp-shared/includes/WP/Admin/settings-new.js',
-			$asset_info[ 'dependencies' ] + [ 'wp-interactivity' ],
-			$asset_info[ 'version' ]
-		);
 		wp_enqueue_script_module( 'nextgenthemes-settings' );
-
 		wp_enqueue_style( 'nextgenthemes-settings' );
 	}
 
@@ -314,80 +361,25 @@ class Settings {
 
 		wp_enqueue_media();
 
-		?>
-		<div class="wrap wrap--nextgenthemes"
-			x-data='<?php echo wp_json_encode( [ 'tab' => array_key_first( $this->sections ) ], JSON_PRETTY_PRINT, JSON_HEX_APOS ); ?>'
-		>
-			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
-
-			<h2 class="nav-tab-wrapper" >
-				<div x-data='<?php echo wp_json_encode( [ 'sections' => $this->sections ], JSON_PRETTY_PRINT, JSON_HEX_APOS ); ?>'>
-					<template x-for="[id, value] in Object.entries(sections)">
-						<button class="nav-tab" :class="id === tab ? 'nav-tab-active' : ''" @click="tab = id">
-							<span x-text="value"></span>
-						</button>
-					</template>
-				</div>
-			</h2>
-
-			<div class="ngt-settings-grid" x-data="ngtsettings" x-init="$watch('options', value => saveOptions())">
-
-				<div class="ngt-settings-grid__content">
-
-					<?php do_action( $this->slashed_namespace . '/admin/settings/content', $this ); ?>
-
-					<?php
-					$prefix = str_replace( 'nextgenthemes_', '', $this->slugged_namespace );
-
-					Admin\print_settings_blocks(
-						$this->settings,
-						$this->sections,
-						$this->premium_sections,
-						$prefix,
-						$this->premium_url_prefix
-					);
-					?>
-
-				</div>
-
-				<div class="ngt-settings-grid__sidebar">
-
-					<p></p>
-					<p><span x-text="message"></span>&nbsp;</p>
-
-					<?php do_action( $this->slashed_namespace . '/admin/settings/sidebar', $this ); ?>
-				</div>
-			</div>
-
-			<?php
-			/*
-			do_action( $this->slashed_namespace . '/admin/settings/content', $this );
-			$this->print_paid_section_message();
-			$this->print_save_section();
-			$this->print_debug_info_block();
-			$this->print_save_section();
-			$this->print_reset_bottons();
-			*/
-			?>
-		</div>
-		<?php
-	}
-
-	public function print_admin_page_new(): void {
-
-		wp_enqueue_media();
-		wp_enqueue_script_module( 'nextgenthemes-settings-new' );
-
 		$sections_camel_keys = array_map_key( 'Nextgenthemes\WP\camel_case', $this->sections );
 		$active_tabs = array_map( '__return_false', $sections_camel_keys );
 	
 		$active_tabs[ array_key_first( $active_tabs ) ] = true;
-	
+
+		wp_interactivity_config(
+			$this->slugged_namespace,
+			[
+				'restUrl' => esc_url( get_rest_url( null, $this->rest_namespace ) ),
+				'nonce'   => wp_create_nonce( 'wp_rest' ),
+			]
+		);
+
 		wp_interactivity_state(
 			$this->slugged_namespace,
 			[
-				'activeTabs' => $active_tabs,
-				'help'       => true,
+				'options'    => $this->options,
+				'shortcode'  => '[arve]',
+				'message'    => 'init state msg',
 			]
 		);
 
@@ -396,9 +388,14 @@ class Settings {
 		<div 
 			class="wrap wrap--nextgenthemes"
 			data-wp-interactive="<?= esc_attr( $this->slugged_namespace ); ?>"
-			data-wp-watch="callbacks.saveOptions"
 			data-wp-init="callbacks.init"
-			<?= wp_interactivity_data_wp_context( [ 'options' => $this->options ] ); // phpcs:ignore ?>
+			ddddata-wp-watch="callbacks.saveOptions"
+			<?= wp_interactivity_data_wp_context(
+				[
+					'activeTabs' => $active_tabs,
+					'help'       => true,
+				]
+			); ?>
 		>
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 
@@ -407,8 +404,8 @@ class Settings {
 					<button
 						class="nav-tab"
 						data-wp-on--click="actions.changeTab"
-						data-wp-class--active="state.activeTabs.<?= esc_attr( $k ); ?>"
-						data-section="<?= esc_attr( $k ); ?>"
+						data-wp-class--active="context.activeTabs.<?= esc_attr( $k ); ?>"
+						<?= data_wp_context( [ 'section' => $k ] ); // phpcs:ignore ?>
 					>
 						<?= esc_html( $v); ?>
 					</button>
@@ -438,7 +435,9 @@ class Settings {
 				<div class="ngt-settings-grid__sidebar">
 
 					<p></p>
-					<p><span data-wp-text="context.message"></span>&nbsp;</p>
+					<p><span data-wp-text="state.message"></span>&nbsp;</p>
+
+					<pre data-wp-text="state.debug"></pre>
 
 					<?php do_action( $this->slashed_namespace . '/admin/settings/sidebar', $this ); ?>
 				</div>

@@ -7,5 +7,4 @@ if ( function_exists( '\is_admin' ) && \is_admin() ) {
 	require_once __DIR__ . '/Notices.php';
 	require_once __DIR__ . '/fn-licensing.php';
 	require_once __DIR__ . '/fn-settings.php';
-	require_once __DIR__ . '/fn-wp-interactivity.php';
 }

@@ -104,6 +104,24 @@
 .ngt-opt {
 	container-type: inline-size;
 
+	& select {
+		width: 130px;
+	}
+
+	& [type="number"] {
+		width: 6em;
+	}
+}
+
+.ngt-label-wrap {
+	display: block;
+	margin-bottom: 3px;
+	font-weight: 600;
+
+	[type="checkbox"] + & {
+		display: inline;
+	}
+
 	& a {
 		background-image: linear-gradient(
 			90deg,
@@ -123,24 +141,10 @@
 			background-image: none; */
 		}
 	}
+}
 
-	& select {
-		width: 130px;
-	}
-
-	& [type="number"] {
-		width: 6em;
-	}
-
-	.ngt-label-text {
-		display: block;
-		margin-bottom: 3px;
-		font-weight: 600;
-
-		[type="checkbox"] + & {
-			display: inline;
-		}
-	}
+input[type=checkbox]:has(+ .ngt-label-wrap) {
+	margin-top: -3px;
 }
 
 .wp-core-ui .button--ngt-small {

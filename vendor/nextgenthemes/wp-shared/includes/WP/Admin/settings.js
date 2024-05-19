@@ -2,66 +2,146 @@ import { store, getContext, getConfig, getElement } from '@wordpress/interactivi
 const l = console.log; // eslint-disable-line
 const domParser = new DOMParser();
 
-const url = new URL( window.location.href );
-let namespace = url.searchParams.get( 'page' );
+const namespace = document.querySelector( '[data-wp-interactive^="nextgenthemes"]' )?.dataset
+	?.wpInteractive;
+
 if ( ! namespace ) {
-	namespace = 'arveRestFrontend';
+	alert( 'no namespace' );
 }
 
-l( 'namespace', namespace );
+function debounce( func, wait ) {
+	let timeout;
 
-const { state, callbacks, helpers } = store( namespace, {
-	state: {
-		get isActiveTab() {
-			const context = getContext();
-			return state.activeTab[ context.section ];
-		},
-		get isPremiumSection() {
-			const config = getConfig();
-			const el = getElement();
+	return function executedFunction( ...args ) {
+		const later = () => {
+			clearTimeout( timeout );
+			func( ...args );
+		};
 
-			const isPremium = Object.values( config.premiumSections ).includes(
-				el.attributes[ 'data-section' ]
-			);
+		clearTimeout( timeout );
+		timeout = setTimeout( later, wait );
+		l( 'inside debounce' );
+	};
+}
 
-			return isPremium;
-		},
-	},
+const { state, actions, callbacks, helpers } = store( namespace, {
 	actions: {
-		changeTab: ( event ) => {
-			const section = event.target.dataset.section;
+		changeTab: () => {
+			const context = getContext();
+			l( 'change tab context', context );
 
-			for ( const key in state.activeTabs ) {
-				state.activeTabs[ key ] = false;
+			for ( const key in context.activeTabs ) {
+				context.activeTabs[ key ] = false;
 			}
 
-			state.activeTabs[ section ] = true;
+			context.activeTabs[ context.section ] = true;
 		},
 		doShit: () => {
-			const context = getContext();
-			context.options.description = 'desc';
-			context.options.title = 'title';
-			context.options.controls = 'true';
-			context.options.align = 'left';
-			context.options.autoplay = 'true';
-			context.options.loop = 'true';
-			context.options.maxWidth = '444';
-
-			l( state );
+			state.options.description = 'desc';
+			state.options.title = 'title';
+			state.options.controls = 'true';
+			state.options.align = 'left';
+			state.options.autoplay = 'true';
+			state.options.loop = 'true';
+			state.options.maxWidth = '444';
 		},
 		inputChange: ( event ) => {
 			const context = getContext();
-			const optionKey = helpers.getOptionKey( event );
 			if ( 'arveUrl' in event.target.dataset ) {
-				helpers.extractFromEmbedCode( context, event.target.value );
+				helpers.extractFromEmbedCode( state, event.target.value );
 			} else {
-				context.options[ optionKey ] = event.target.value;
+				state.options[ context.key ] = event.target.value;
 			}
+
+			debounce( helpers.saveOptions(), 5000 );
 		},
 		checkboxChange: ( event ) => {
 			const context = getContext();
-			const optionKey = helpers.getOptionKey( event );
-			context.options[ optionKey ] = event.target.checked;
+			state.options[ context.key ] = event.target.checked;
+			debounce( helpers.saveOptions(), 5000 );
+		},
+		selectImage: () => {
+			const context = getContext();
+			const image = window.wp
+				.media( {
+					title: 'Upload Image',
+					multiple: false,
+				} )
+				.open()
+				.on( 'select', function () {
+					// This will return the selected image from the Media Uploader, the result is an object
+					const uploadedImage = image.state().get( 'selection' ).first();
+					// We convert uploadedImage to a JSON object to make accessing it easier
+					const attachmentID = uploadedImage.toJSON().id;
+					state.options[ context.key ] = attachmentID;
+				} );
+		},
+		deleteOembedCache: () => {
+			if ( state.isSaving ) {
+				state.message = 'too fast';
+				return;
+			}
+
+			const config = getConfig();
+
+			// set the state so that another save cannot happen while processing
+			state.isSaving = true;
+			state.message = '...';
+
+			// Make a POST request to the REST API route that we registered in our PHP file
+			fetch( config.restUrl + '/delete-oembed-cache', {
+				method: 'POST',
+				body: JSON.stringify( { delete: true } ),
+				headers: {
+					'Content-Type': 'application/json',
+					'X-WP-Nonce': state.nonce,
+				},
+			} )
+				.then( ( response ) => {
+					if ( ! response.ok ) {
+						l( response );
+						helpers.debugJson( response );
+						throw new Error( 'Network response was not ok' );
+					}
+					return response.json();
+				} )
+				.then( ( message ) => {
+					state.message = message;
+					setTimeout( () => ( state.message = '' ), 3000 );
+				} )
+				.catch( ( error ) => {
+					state.message = error.message;
+				} )
+				.finally( () => {
+					state.isSaving = false;
+				} );
+		},
+
+		eddLicenseAction: () => {
+			const context = getContext();
+			const url = new URL( 'https://nextgenthemes.com' ); // Site with Software Licensing activated.
+			const urlParams = new URLSearchParams( {
+				edd_action: context.eddAction,
+				license: state.options[ context.key ], // License key
+				item_id: context.eddProductId, // Product ID
+				url: context.eddAction, // Domain the request is coming from.
+			} );
+			url.search = urlParams.toString();
+			fetch( url.toString() )
+				.then( ( response ) => {
+					if ( response.ok ) {
+						return response.json();
+					}
+					return Promise.reject( response );
+				} )
+				.then( ( data ) => {
+					// Software Licensing has a valid response to parse
+					console.log( 'Successful response', data );
+				} )
+				.catch( ( error ) => {
+					// Error handling. rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+					console.log( 'Error', error );
+				} );
 		},
 	},
 	callbacks: {
@@ -70,9 +150,12 @@ const { state, callbacks, helpers } = store( namespace, {
 			//callbacks.updatePreview();
 		},
 		init() {
-			l( 'init fn log state', state );
+			const context = getContext();
+			l( 'init fn log context', context );
 		},
 		updateShortcode() {
+			l( 'update shortcode', 'options', getContext().options );
+
 			const context = getContext();
 
 			let out = '';
@@ -86,11 +169,6 @@ const { state, callbacks, helpers } = store( namespace, {
 			}
 
 			context.shortcode = '[arve ' + out + '/]';
-		},
-		isPremium() {
-			const config = getConfig();
-
-			return config.premium;
 		},
 		updatePreview() {
 			const url = new URL( 'https://symbiosistheme.test/wp-json/arve/v1/shortcode' );
@@ -120,8 +198,56 @@ const { state, callbacks, helpers } = store( namespace, {
 		},
 	},
 	helpers: {
-		getOptionKey( event ) {
-			return event.target.id.replace( 'ngt_opt__', '' );
+		debugJson( data ) {
+			state.debug = JSON.stringify( data, null, 2 );
+		},
+		saveOptions() {
+			l( 'save options' );
+
+			helpers.debugJson( state.options );
+
+			if ( state.isSaving ) {
+				state.message = 'trying to save too fast';
+				return;
+			}
+
+			// set the state so that another save cannot happen while processing
+			state.isSaving = true;
+			state.message = 'Saving...';
+
+			const config = getConfig();
+
+			// Make a POST request to the REST API route that we registered in our PHP file
+			fetch( config.restUrl + '/save', {
+				method: 'POST',
+				body: JSON.stringify( state.options ),
+				headers: {
+					'Content-Type': 'application/json',
+					'X-WP-Nonce': config.nonce,
+				},
+			} )
+				.then( ( response ) => {
+					if ( ! response.ok ) {
+						throw new Error( 'Network response was not ok' );
+					}
+					return response.json();
+				} )
+				.then( () => {
+					state.message = 'Options saved';
+					setTimeout( () => ( state.message = '' ), 1000 );
+				} )
+				.catch( ( error ) => {
+					state.message = error.message;
+					state.refreshAfterSave = false;
+				} )
+				.finally( () => {
+					state.isSaving = false;
+
+					if ( state.refreshAfterSave ) {
+						state.refreshAfterSave = false;
+						window.location.reload();
+					}
+				} );
 		},
 		extractFromEmbedCode( context, url ) {
 			const iframe = domParser.parseFromString( url, 'text/html' ).querySelector( 'iframe' );
@@ -186,63 +312,11 @@ const gcd = ( a, b ) => {
 	return gcd( b, a % b );
 };
 
-/* global Alpine */
-const url = new URL( window.location.href );
-const pageQueryVal = url.searchParams.get( 'page' );
-const { log } = console;
-if ( ! pageQueryVal ) {
-	throw 'Need page url arg';
-}
-
-const data = window[ pageQueryVal ];
-
 document.addEventListener( 'alpine:init', () => {
 	Alpine.data( 'ngtsettings', () => ( {
 		options: data.options,
 		message: '',
 		isSaving: false,
-		saveOptions( refreshAfterSave = false ) {
-			if ( this.isSaving ) {
-				this.message = 'trying to save too fast';
-				return;
-			}
-
-			// set the state so that another save cannot happen while processing
-			this.isSaving = true;
-			this.message = 'Saving...';
-
-			// Make a POST request to the REST API route that we registered in our PHP file
-			fetch( data.restUrl + '/save', {
-				method: 'POST',
-				body: JSON.stringify( this.options ),
-				headers: {
-					'Content-Type': 'application/json',
-					'X-WP-Nonce': data.nonce,
-				},
-			} )
-				.then( ( response ) => {
-					if ( ! response.ok ) {
-						throw new Error( 'Network response was not ok' );
-					}
-					return response.json();
-				} )
-				.then( () => {
-					this.message = 'Options saved';
-					setTimeout( () => ( this.message = '' ), 1000 );
-				} )
-				.catch( ( error ) => {
-					this.message = error.message;
-					refreshAfterSave = false;
-				} )
-				.finally( () => {
-					this.isSaving = false;
-
-					if ( refreshAfterSave ) {
-						refreshAfterSave = false;
-						window.location.reload();
-					}
-				} );
-		},
 		deleteOembedCache() {
 			if ( this.isSaving ) {
 				this.message = 'too fast';
@@ -279,22 +353,7 @@ document.addEventListener( 'alpine:init', () => {
 					this.isSaving = false;
 				} );
 		},
-		uploadImage( optionKey ) {
-			const alpineThis = this;
-			const image = window.wp
-				.media( {
-					title: 'Upload Image',
-					multiple: false,
-				} )
-				.open()
-				.on( 'select', function () {
-					// This will return the selected image from the Media Uploader, the result is an object
-					const uploadedImage = image.state().get( 'selection' ).first();
-					// We convert uploadedImage to a JSON object to make accessing it easier
-					const attachmentID = uploadedImage.toJSON().id;
-					alpineThis.options[ optionKey ] = attachmentID;
-				} );
-		},
+
 		licenseKeyAction( action, product ) {
 			this.options.action = JSON.stringify( { action, product } );
 			this.saveOptions( true );
