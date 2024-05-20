@@ -166,20 +166,6 @@ class Settings {
 	}
 
 	public function save_options( array $options ): void {
-
-		if ( 'nextgenthemes' === $this->slugged_namespace ) {
-
-			$action            = json_decode( $options['action'] );
-			$options['action'] = 'str';
-
-			if ( $action ) {
-				$product_id  = get_products()[ $action->product ]['id'];
-				$product_key = $options[ $action->product ];
-
-				$options[ $action->product . '_status' ] = api_action( $product_id, $product_key, $action->action );
-			}
-		}
-
 		// remove all items from options that are not also in defaults.
 		$options = array_diff_assoc( $options, $this->options_defaults );
 		// store only the options that differ from the defaults.
@@ -196,6 +182,7 @@ class Settings {
 
 	public function register_rest_route(): void {
 
+		// register save options route
 		register_rest_route(
 			$this->rest_namespace,
 			'/save',
@@ -212,6 +199,53 @@ class Settings {
 			)
 		);
 
+		// register EDD license action route
+		register_rest_route(
+			$this->rest_namespace,
+			'/edd-license-action',
+			array(
+				'methods' => 'POST',
+				'args'    => array(
+					'action' => array(
+						'type' => 'string',
+						'required' => true
+					),
+					'key' => array(
+						'type' => 'string',
+						'required' => true
+					),
+					'productId' => array(
+						'type' => 'integer',
+						'required' => true
+					),
+					'productKey' => array(
+						'type' => 'string',
+						'required' => true
+					)
+				),
+				'permission_callback' => function() {
+					return true;
+					return current_user_can( 'manage_options' );
+				},
+				'callback'            => function( \WP_REST_Request $request ) {
+
+					$p = $request->get_params();
+
+					if ( ! in_array( $p['action'], array( 'activate_license', 'deactivate_license', 'check_license' ), true ) ) {
+						return new \WP_Error( 'invalid action', 'Invalid action', array( 'status' => 500 ) );
+					}
+
+					$options = $this->get_options();
+					$options[ $p['key'] ] = $p['productKey'];
+					$options[ $p['key'] . '_status' ] = api_action( (int) $p['productId'], $p['productKey'], $p['action'] );
+
+					$this->save_options( $options );
+					return rest_ensure_response( $options[ $p['key'] . '_status' ] );
+				},
+			)
+		);
+
+		// register reset options route
 		register_rest_route(
 			$this->rest_namespace,
 			'/reset',
@@ -369,8 +403,10 @@ class Settings {
 		wp_interactivity_config(
 			$this->slugged_namespace,
 			[
-				'restUrl' => esc_url( get_rest_url( null, $this->rest_namespace ) ),
+				'restUrl' => get_rest_url( null, $this->rest_namespace ),
 				'nonce'   => wp_create_nonce( 'wp_rest' ),
+				'siteUrl' => get_site_url(),
+				'homeUrl' => get_home_url(),
 			]
 		);
 

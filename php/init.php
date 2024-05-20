@@ -82,7 +82,7 @@ function init_admin(): void {
 	add_action( 'wp_dashboard_setup', __NAMESPACE__ . '\Admin\add_dashboard_widget' );
 
 	add_filter( 'plugin_action_links_' . plugin_basename( PLUGIN_FILE ), __NAMESPACE__ . '\Admin\add_action_links' );
-	add_filter( 'nextgenthemes_arve_save_options', __NAMESPACE__ . '\Admin\filter_save_options' );
+	//add_filter( 'nextgenthemes_arve_save_options', __NAMESPACE__ . '\Admin\filter_save_options' ); // TODO remove?
 }
 
 register_uninstall_hook( PLUGIN_FILE, __NAMESPACE__ . '\uninstall' );

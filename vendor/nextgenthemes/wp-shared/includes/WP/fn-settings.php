@@ -45,14 +45,11 @@ function nextgenthemes_settings(): array {
 			'tag'     => 'keys',
 			// translators: %s is Product name
 			'label'      => sprintf( esc_html__( '%s license Key', 'advanced-responsive-video-embedder' ), $value['name'] ),
-			'type'       => 'string',
-			'ui'         => 'license_key',
-			'wp-context' => array(
-				'product-id'     => $value['id'],
-				'item-name'      => $value['name'],
-				'edd-store-url'  => 'https://nextgenthemes.com',
-				'site-url'       => get_site_url(),
-			)
+			'type'         => 'string',
+			'ui'           => 'license_key',
+			'eddProductId' => $value['id'],
+			'eddItemName'  => $value['name'],
+			'eddStoreUrl'  => 'https://nextgenthemes.com',
 		);
 
 		$settings[ $p . '_status' ] = array(

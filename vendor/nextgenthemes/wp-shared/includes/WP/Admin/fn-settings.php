@@ -200,7 +200,9 @@ function print_settings_blocks(
 function option_block( string $key, array $setting, string $premium_url_prefix ): void {
 
 	$input_id = 'ngt-option--' . $key;
-	$section  = $setting['section'];
+	$section  = $setting['tag'];
+
+	$setting['ui'] = $setting['ui'] ?? null;
 
 	?>
 	<div 
@@ -260,12 +262,36 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 									'data-wp-context'     => ( 'url' === $key ) ? 'url' : false,
 									'data-wp-bind--value' => "state.options.$key",
 									'placeholder'         => $setting['placeholder'] ?? false,
-									'class'               => 'large-text form-control',
+									'class'               => 'large-text',
+									'style'               => ( 'license_key' === $setting['ui'] ) ? 'max-width: 350px;' : false,
+									'readonly'            => ( 'license_key' === $setting['ui'] && get_defined_key( $key ) ) ? 'readonly' : false,
 								)
-							),
+							)
 						);
 
-						if ( ! empty($setting['ui'] ) && 'image_upload' === $setting['ui'] ) : ?>
+						if ( 'license_key' === $setting['ui'] ) : ?>
+			
+							<button
+								data-wp-on--click="actions.eddLicenseAction"
+								data-wp-bind--hidden="state.isValidLicenseKey"
+								class="button button-secondary"
+								<?= data_wp_context( [ 'eddAction' => 'deactivate_license' ] ); // phpcs:ignore ?>
+							>
+								Deactivate
+							</button>
+							<button
+								data-wp-on--click="actions.eddLicenseAction"
+								data-wp-bind--hidden="!state.isValidLicenseKey"
+								class="button button-secondary"
+								<?= data_wp_context( [ 'eddAction' => 'activate_license' ] ); // phpcs:ignore ?>
+							>
+								Activate
+							</button>
+							<br>
+							<pre data-wp-text="<?= esc_attr( "state.options.{$key}_status" ); ?>"></pre>
+						<?php endif; ?>
+
+						<?php if ( 'image_upload' === $setting['ui'] ) : ?>
 							<button
 								class="button-secondary button-secondary--select-thumbnail"
 								type="button"

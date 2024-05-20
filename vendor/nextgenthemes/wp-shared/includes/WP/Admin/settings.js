@@ -25,6 +25,12 @@ function debounce( func, wait ) {
 }
 
 const { state, actions, callbacks, helpers } = store( namespace, {
+	state: {
+		get isValidKey() {
+			const context = getContext();
+			return 'valid' === state.options[ context.key + '_status' ];
+		},
+	},
 	actions: {
 		changeTab: () => {
 			const context = getContext();
@@ -116,18 +122,163 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 					state.isSaving = false;
 				} );
 		},
-
-		eddLicenseAction: () => {
+		eddLicenseAction44() {
 			const context = getContext();
-			const url = new URL( 'https://nextgenthemes.com' ); // Site with Software Licensing activated.
+
+			helpers.debugJson( context );
+
+			state.refreshAfterSave = true;
+			state.options.action = JSON.stringify( {
+				action: context.eddAction,
+				product: context.eddProductId,
+			} );
+			helpers.saveOptions( true );
+		},
+		saveOptions() {
+			l( 'save options' );
+
+			helpers.debugJson( state.options );
+
+			if ( state.isSaving ) {
+				state.message = 'trying to save too fast';
+				return;
+			}
+
+			// set the state so that another save cannot happen while processing
+			state.isSaving = true;
+			state.message = 'Saving...';
+
+			const config = getConfig();
+
+			// Make a POST request to the REST API route that we registered in our PHP file
+			fetch( config.restUrl + '/save', {
+				method: 'POST',
+				body: JSON.stringify( state.options ),
+				headers: {
+					'Content-Type': 'application/json',
+					'X-WP-Nonce': config.nonce,
+				},
+			} )
+				.then( ( response ) => {
+					if ( ! response.ok ) {
+						throw new Error( 'Network response was not ok' );
+					}
+					return response.json();
+				} )
+				.then( () => {
+					state.message = 'Options saved';
+					setTimeout( () => ( state.message = '' ), 1000 );
+				} )
+				.catch( ( error ) => {
+					state.message = error.message;
+				} )
+				.finally( () => {
+					state.isSaving = false;
+				} );
+		},
+		eddLicenseAction() {
+			if ( state.isSaving ) {
+				state.message = 'trying to save too fast';
+				return;
+			}
+
+			// set the state so that another save cannot happen while processing
+			state.isSaving = true;
+			state.message = 'Saving...';
+
+			const config = getConfig();
+			const context = getContext();
+
+			helpers.debugJson( {
+				action: context.eddAction,
+				key: context.key,
+				productId: context.eddProductId,
+				productKey: state.options[ context.key ],
+			} );
+
+			// Make a POST request to the REST API route that we registered in our PHP file
+			fetch( config.restUrl + '/edd-license-action', {
+				method: 'POST',
+				body: JSON.stringify( {
+					action: context.eddAction,
+					key: context.key,
+					productId: context.eddProductId,
+					productKey: state.options[ context.key ],
+				} ),
+				headers: {
+					'Content-Type': 'application/json',
+					'X-WP-Nonce': config.nonce,
+				},
+			} )
+				.then( ( response ) => {
+					if ( ! response.ok ) {
+						throw new Error( 'Network response was not ok' );
+					}
+					return response.json();
+				} )
+				.then( () => {
+					state.message = 'Options saved';
+					setTimeout( () => ( state.message = '' ), 1000 );
+				} )
+				.catch( ( error ) => {
+					state.message = error.message;
+				} )
+				.finally( () => {
+					state.isSaving = false;
+					//window.location.reload();
+				} );
+		},
+		eddLicenseActionGet: () => {
+			const context = getContext();
+			const config = getConfig();
+			const url = new URL( context.eddStoreUrl ); // Site with EDD Software Licensing activated.
+
 			const urlParams = new URLSearchParams( {
 				edd_action: context.eddAction,
 				license: state.options[ context.key ], // License key
 				item_id: context.eddProductId, // Product ID
-				url: context.eddAction, // Domain the request is coming from.
+				url: config.homeUrl, // Domain the request is coming from.
 			} );
+
 			url.search = urlParams.toString();
-			fetch( url.toString() )
+
+			helpers.debugJson( url.toString() );
+
+			fetch( url.toString(), {
+				mode: 'no-cors',
+			} )
+				.then( ( response ) => {
+					l( 'response', response );
+					if ( response.ok ) {
+						return response.json();
+					}
+					return Promise.reject( response );
+				} )
+				.then( ( data ) => {
+					// Software Licensing has a valid response to parse
+					console.log( 'Successful response', data );
+				} )
+				.catch( ( error ) => {
+					// Error handling.
+					console.log( 'Error', error );
+				} );
+		},
+		eddLicenseActionPost: () => {
+			const context = getContext();
+			const config = getConfig();
+
+			const formData = new FormData();
+			formData.append( 'edd_action', context.eddAction ); // Valid actions are activate_license, deactivate_license, get_version, check_license
+			formData.append( 'license', state.options[ context.key ] ); // License key
+			formData.append( 'item_id', context.eddProductId ); // Product ID
+			formData.append( 'url', config.homeUrl ); // If you disable URL checking you do not need this entry.
+
+			// Site with Software Licensing activated.
+			fetch( context.eddStoreUrl, {
+				mode: 'no-cors',
+				method: 'POST',
+				body: formData,
+			} )
 				.then( ( response ) => {
 					if ( response.ok ) {
 						return response.json();
@@ -139,7 +290,7 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 					console.log( 'Successful response', data );
 				} )
 				.catch( ( error ) => {
-					// Error handling. rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+					// Error handling.
 					console.log( 'Error', error );
 				} );
 		},
@@ -201,54 +352,7 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 		debugJson( data ) {
 			state.debug = JSON.stringify( data, null, 2 );
 		},
-		saveOptions() {
-			l( 'save options' );
 
-			helpers.debugJson( state.options );
-
-			if ( state.isSaving ) {
-				state.message = 'trying to save too fast';
-				return;
-			}
-
-			// set the state so that another save cannot happen while processing
-			state.isSaving = true;
-			state.message = 'Saving...';
-
-			const config = getConfig();
-
-			// Make a POST request to the REST API route that we registered in our PHP file
-			fetch( config.restUrl + '/save', {
-				method: 'POST',
-				body: JSON.stringify( state.options ),
-				headers: {
-					'Content-Type': 'application/json',
-					'X-WP-Nonce': config.nonce,
-				},
-			} )
-				.then( ( response ) => {
-					if ( ! response.ok ) {
-						throw new Error( 'Network response was not ok' );
-					}
-					return response.json();
-				} )
-				.then( () => {
-					state.message = 'Options saved';
-					setTimeout( () => ( state.message = '' ), 1000 );
-				} )
-				.catch( ( error ) => {
-					state.message = error.message;
-					state.refreshAfterSave = false;
-				} )
-				.finally( () => {
-					state.isSaving = false;
-
-					if ( state.refreshAfterSave ) {
-						state.refreshAfterSave = false;
-						window.location.reload();
-					}
-				} );
-		},
 		extractFromEmbedCode( context, url ) {
 			const iframe = domParser.parseFromString( url, 'text/html' ).querySelector( 'iframe' );
 			if ( iframe && iframe.getAttribute( 'src' ) ) {
@@ -353,7 +457,6 @@ document.addEventListener( 'alpine:init', () => {
 					this.isSaving = false;
 				} );
 		},
-
 		licenseKeyAction( action, product ) {
 			this.options.action = JSON.stringify( { action, product } );
 			this.saveOptions( true );
