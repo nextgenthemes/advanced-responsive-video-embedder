@@ -130,7 +130,7 @@ function extract_oembed_json( string $html, string $url ): ?object {
 
 		arve_errors()->add( $error_code, $e->getMessage() . ' URL: ' . $url );
 		arve_errors()->add_data(
-			compact( 'data', 'html', 'url'),
+			compact( 'html', 'url'),
 			$error_code
 		);
 
