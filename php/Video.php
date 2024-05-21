@@ -40,6 +40,7 @@ class Video {
 	private string $author_name;
 	private string $brightcove_embed;
 	private string $brightcove_player;
+	private string $vimeo_secret;
 	private string $controlslist;
 	private string $description;
 	private string $duration;
@@ -334,14 +335,11 @@ class Video {
 		if ( 'facebook' === $provider && is_numeric( $id ) ) {
 
 			$id = "https://www.facebook.com/facebook/videos/{$id}/";
+			$id = rawurlencode( str_replace( '&', '&amp;', $id ) );
 
 		} elseif ( 'twitch' === $provider && is_numeric( $id ) ) {
 
 			$pattern = 'https://player.twitch.tv/?video=v%s';
-		}
-
-		if ( isset( $properties[ $provider ]['url_encode_id'] ) && $properties[ $provider ]['url_encode_id'] ) {
-			$id = rawurlencode( str_replace( '&', '&amp;', $id ) );
 		}
 
 		if ( 'gab' === $provider ) {
@@ -376,6 +374,10 @@ class Video {
 					$src = str_replace( 'ted.com/talks/', "ted.com/talks/lang/{$lang}/", $src );
 				}
 				break;
+		}
+
+		if ( ! empty( $this->vimeo_secret ) ) {
+			$src = add_query_arg( 'h', $this->vimeo_secret, $src );
 		}
 
 		return $src;
