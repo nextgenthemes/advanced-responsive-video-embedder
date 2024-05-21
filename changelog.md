@@ -2,6 +2,10 @@
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2024-05-21 10.0.8.1 ###
+* Fix: Do not delete cache every time.
+
 ### 2024-05-21 10.0.8 ###
 * Fix: Some broken Vimeo videos. And possibly other bugs.
 
