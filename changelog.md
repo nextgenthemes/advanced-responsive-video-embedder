@@ -2,11 +2,12 @@
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+### 2024-05-21 10.0.8 ###
+* Fix: Some broken Vimeo videos. And possibly other bugs.
 
 ### 2024-05-21 10.0.7 ###
 
 * Fix: Lazyload and Lightbox (Pro) were not displayed when used with video files.
-* Fix: Some broken Vimeo videos.
 
 ### 2024-05-17 10.0.6 ###
 
