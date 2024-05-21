@@ -180,7 +180,6 @@
 		'name'           => 'Facebook',
 		'oembed'         => false,
 		'regex'          => '#(?<id>https?://([a-z]+\\.)?facebook\\.com/[-.a-z0-9]+/videos/[^\\s]+)#i',
-		'url_encode_id'  => true,
 		'embed_url'      => 'https://www.facebook.com/plugins/video.php?href=%s',
 		'auto_thumbnail' => false,
 		'tests'          => array(
@@ -495,6 +494,10 @@
 			1 => array(
 				'url' => 'https://player.vimeo.com/video/265932452',
 				'id'  => 265932452,
+			),
+			2 => array(
+				'url' => 'https://vimeo.com/909011674/f862274b67?share=copy',
+				'id'  => 909011674,
 			),
 		),
 	),
