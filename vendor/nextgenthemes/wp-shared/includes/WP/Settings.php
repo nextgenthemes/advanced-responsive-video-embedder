@@ -206,19 +206,24 @@ class Settings {
 			array(
 				'methods' => 'POST',
 				'args'    => array(
-					'action' => array(
+					'edd_store_url' => array(
 						'type' => 'string',
 						'required' => true
 					),
-					'key' => array(
+					'option_key' => array(
 						'type' => 'string',
 						'required' => true
 					),
-					'productId' => array(
+					// edd api args below
+					'edd_action' => array(
+						'type' => 'string',
+						'required' => true
+					),
+					'item_id' => array(
 						'type' => 'integer',
 						'required' => true
 					),
-					'productKey' => array(
+					'license' => array(
 						'type' => 'string',
 						'required' => true
 					)
@@ -232,12 +237,12 @@ class Settings {
 					$p = $request->get_params();
 
 					if ( ! in_array( $p['action'], array( 'activate_license', 'deactivate_license', 'check_license' ), true ) ) {
-						return new \WP_Error( 'invalid action', 'Invalid action', array( 'status' => 500 ) );
+						return new \WP_Error( 'invalid_action', 'Invalid action', array( 'status' => 500 ) );
 					}
 
 					$options = $this->get_options();
-					$options[ $p['key'] ] = $p['productKey'];
-					$options[ $p['key'] . '_status' ] = api_action( (int) $p['productId'], $p['productKey'], $p['action'] );
+					$options[ $p['option_key'] ] = $p['license'];
+					$options[ $p['option_key'] . '_status' ] = api_action( (int) $p['item_id'], $p['license'], $p['edd_action'], $p['edd_store_url'] );
 
 					$this->save_options( $options );
 					return rest_ensure_response( $options[ $p['key'] . '_status' ] );

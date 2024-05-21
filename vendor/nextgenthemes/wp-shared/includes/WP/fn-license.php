@@ -69,22 +69,19 @@ function activate_defined_key( string $file, string $theme_name = '' ): void {
 	}
 }
 
-/**
- * @return void|string
- */
-function api_action( int $item_id, string $key, string $action = 'check_license' ) {
+function api_action( int $item_id, string $license, string $edd_action = 'check_license', string $edd_store_url = 'https://nextgenthemes.com' ): string {
 
 	//return wp_json_encode( [ 'item_id' => $item_id, 'key' => $key, 'action' => $action ], JSON_PRETTY_PRINT ); 
 
 	// Call the custom API.
 	$response = remote_get_json(
-		'https://nextgenthemes.com',
+		$edd_store_url,
 		array(
 			'timeout' => 10,
 			'body'    => array(
-				'edd_action' => $action,
+				'edd_action' => $edd_action,
 				'item_id'    => $item_id,
-				'license'    => sanitize_text_field( $key ),
+				'license'    => sanitize_text_field( $license ),
 				'url'        => home_url(),
 			),
 		)

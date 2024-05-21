@@ -273,7 +273,7 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 			
 							<button
 								data-wp-on--click="actions.eddLicenseAction"
-								data-wp-bind--hidden="state.isValidLicenseKey"
+								data-wp-bind--hidden="!state.isValidLicenseKey"
 								class="button button-secondary"
 								<?= data_wp_context( [ 'eddAction' => 'deactivate_license' ] ); // phpcs:ignore ?>
 							>
@@ -281,12 +281,20 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 							</button>
 							<button
 								data-wp-on--click="actions.eddLicenseAction"
-								data-wp-bind--hidden="!state.isValidLicenseKey"
+								data-wp-bind--hidden="state.isValidLicenseKey"
 								class="button button-secondary"
 								<?= data_wp_context( [ 'eddAction' => 'activate_license' ] ); // phpcs:ignore ?>
 							>
 								Activate
 							</button>
+							<button
+								data-wp-on--click="actions.eddLicenseAction"
+								data-wp-bind--hidden="!state.isLongEnoughLicenseKey"
+								class="button button-secondary"
+								<?= data_wp_context( [ 'eddAction' => 'check_license' ] ); // phpcs:ignore ?>
+							>
+								Check Status
+							</button>							
 							<br>
 							<pre data-wp-text="<?= esc_attr( "state.options.{$key}_status" ); ?>"></pre>
 						<?php endif; ?>

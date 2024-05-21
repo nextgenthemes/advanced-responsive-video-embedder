@@ -40,16 +40,16 @@ function nextgenthemes_settings(): array {
 
 	foreach ( $products as $p => $value ) {
 		$settings[ $p ] = array(
-			'default' => '',
-			'option'  => true,
-			'tag'     => 'keys',
+			'default'       => '',
+			'option'        => true,
+			'tag'           => 'keys',
 			// translators: %s is Product name
-			'label'      => sprintf( esc_html__( '%s license Key', 'advanced-responsive-video-embedder' ), $value['name'] ),
-			'type'         => 'string',
-			'ui'           => 'license_key',
-			'eddProductId' => $value['id'],
-			'eddItemName'  => $value['name'],
-			'eddStoreUrl'  => 'https://nextgenthemes.com',
+			'label'         => sprintf( esc_html__( '%s license Key', 'advanced-responsive-video-embedder' ), $value['name'] ),
+			'type'          => 'string',
+			'ui'            => 'license_key',
+			'edd_item_id'   => $value['id'],
+			'edd_item_name' => $value['name'],
+			'edd_store_url' => 'https://nextgenthemes.com',
 		);
 
 		$settings[ $p . '_status' ] = array(

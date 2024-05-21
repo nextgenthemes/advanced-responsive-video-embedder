@@ -9,62 +9,41 @@ if ( ! namespace ) {
 	alert( 'no namespace' );
 }
 
-function debounce( func, wait ) {
-	let timeout;
-
-	return function executedFunction( ...args ) {
-		const later = () => {
-			clearTimeout( timeout );
-			func( ...args );
-		};
-
-		clearTimeout( timeout );
-		timeout = setTimeout( later, wait );
-		l( 'inside debounce' );
-	};
-}
-
 const { state, actions, callbacks, helpers } = store( namespace, {
 	state: {
-		get isValidKey() {
+		isValidLicenseKey: () => {
 			const context = getContext();
 			return 'valid' === state.options[ context.key + '_status' ];
+		},
+		isLongEnoughLicenseKey: () => {
+			const context = getContext();
+			return state.options[ context.key ].length >= 32;
 		},
 	},
 	actions: {
 		changeTab: () => {
 			const context = getContext();
-			l( 'change tab context', context );
 
 			for ( const key in context.activeTabs ) {
 				context.activeTabs[ key ] = false;
 			}
-
 			context.activeTabs[ context.section ] = true;
-		},
-		doShit: () => {
-			state.options.description = 'desc';
-			state.options.title = 'title';
-			state.options.controls = 'true';
-			state.options.align = 'left';
-			state.options.autoplay = 'true';
-			state.options.loop = 'true';
-			state.options.maxWidth = '444';
 		},
 		inputChange: ( event ) => {
 			const context = getContext();
+			l( 'inputChange context, event', context, event );
+
 			if ( 'arveUrl' in event.target.dataset ) {
-				helpers.extractFromEmbedCode( state, event.target.value );
+				helpers.extractFromEmbedCode( event.target.value );
 			} else {
 				state.options[ context.key ] = event.target.value;
 			}
-
-			debounce( helpers.saveOptions(), 5000 );
+			actions.saveOptions();
 		},
 		checkboxChange: ( event ) => {
 			const context = getContext();
 			state.options[ context.key ] = event.target.checked;
-			debounce( helpers.saveOptions(), 5000 );
+			actions.saveOptions();
 		},
 		selectImage: () => {
 			const context = getContext();
@@ -122,20 +101,9 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 					state.isSaving = false;
 				} );
 		},
-		eddLicenseAction44() {
-			const context = getContext();
-
-			helpers.debugJson( context );
-
-			state.refreshAfterSave = true;
-			state.options.action = JSON.stringify( {
-				action: context.eddAction,
-				product: context.eddProductId,
-			} );
-			helpers.saveOptions( true );
-		},
-		saveOptions() {
-			l( 'save options' );
+		// debounced version created later
+		saveOptionsReal() {
+			l( 'save options real' );
 
 			helpers.debugJson( state.options );
 
@@ -189,22 +157,20 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			const config = getConfig();
 			const context = getContext();
 
-			helpers.debugJson( {
-				action: context.eddAction,
-				key: context.key,
-				productId: context.eddProductId,
-				productKey: state.options[ context.key ],
-			} );
+			const bodyToStringify = {
+				option_key: context.key,
+				edd_store_url: context.edd_store_url, // EDD Store URL
+				edd_action: context.edd_action, // edd api arg has same edd_ prefix
+				item_id: context.edd_item_id, // edd api arg WITHOUT edd_ prefix
+				license: state.options[ context.key ], // edd api arg WITHOUT edd_ prefix
+			};
+
+			helpers.debugJson( bodyToStringify );
 
 			// Make a POST request to the REST API route that we registered in our PHP file
 			fetch( config.restUrl + '/edd-license-action', {
 				method: 'POST',
-				body: JSON.stringify( {
-					action: context.eddAction,
-					key: context.key,
-					productId: context.eddProductId,
-					productKey: state.options[ context.key ],
-				} ),
+				body: JSON.stringify( bodyToStringify ),
 				headers: {
 					'Content-Type': 'application/json',
 					'X-WP-Nonce': config.nonce,
@@ -349,11 +315,29 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 		},
 	},
 	helpers: {
+		debounce( func, wait, immediate ) {
+			let timeout;
+			return function () {
+				const context = this;
+				const args = arguments;
+				const later = function () {
+					timeout = null;
+					if ( ! immediate ) {
+						func.apply( context, args );
+					}
+				};
+				const callNow = immediate && ! timeout;
+				clearTimeout( timeout );
+				timeout = setTimeout( later, wait );
+				if ( callNow ) {
+					func.apply( context, args );
+				}
+			};
+		},
 		debugJson( data ) {
 			state.debug = JSON.stringify( data, null, 2 );
 		},
-
-		extractFromEmbedCode( context, url ) {
+		extractFromEmbedCode( url ) {
 			const iframe = domParser.parseFromString( url, 'text/html' ).querySelector( 'iframe' );
 			if ( iframe && iframe.getAttribute( 'src' ) ) {
 				url = iframe.getAttribute( 'src' );
@@ -362,14 +346,16 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 					const ratio = aspectRatio( iframe.width, iframe.height );
 
 					if ( '16:9' !== ratio ) {
-						context.options.aspect_ratio = ratio;
+						state.options.aspect_ratio = ratio;
 					}
 				}
 			}
-			context.options.url = url;
+			state.options.url = url;
 		},
 	},
 } );
+
+actions.saveOptions = helpers.debounce( actions.saveOptionsReal, 250 );
 
 /**
  * Calculate aspect ratio based on width and height.
