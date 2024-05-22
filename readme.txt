@@ -193,6 +193,11 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-05-22 10.0.9 ###
+* Fix: Some Vimeo videos not working without cache working.
+* Fix: src mismatch error testing.
+* Improved: Error display.
+
 ### 2024-05-21 10.0.8.1 ###
 * Fix: Do not delete cache every time.
 
@@ -200,7 +205,6 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * Fix: Some broken Vimeo videos. And possibly other bugs.
 
 ### 2024-05-21 10.0.7 ###
-
 * Fix: Lazyload and Lightbox (Pro) were not displayed when used with video files.
 
 ### 2024-05-17 10.0.6 ###
