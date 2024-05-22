@@ -21,6 +21,7 @@ class Settings {
 	private array $sections = array( 'main' => 'Main' );
 	private array $options;
 	private array $options_defaults;
+	private array $options_defaults_by_section;
 	private array $premium_sections = array();
 	private array $settings;
 	private array $defined_keys = array();
@@ -93,6 +94,7 @@ class Settings {
 			}
 
 			$this->options_defaults[ $key ] = $value['default'];
+			$this->options_defaults_by_section[ $value['tag'] ][$key] = $value['default'];
 		}
 	}
 
@@ -236,7 +238,7 @@ class Settings {
 
 					$p = $request->get_params();
 
-					if ( ! in_array( $p['action'], array( 'activate_license', 'deactivate_license', 'check_license' ), true ) ) {
+					if ( ! in_array( $p['edd_action'], array( 'activate_license', 'deactivate_license', 'check_license' ), true ) ) {
 						return new \WP_Error( 'invalid_action', 'Invalid action', array( 'status' => 500 ) );
 					}
 
@@ -245,7 +247,7 @@ class Settings {
 					$options[ $p['option_key'] . '_status' ] = api_action( (int) $p['item_id'], $p['license'], $p['edd_action'], $p['edd_store_url'] );
 
 					$this->save_options( $options );
-					return rest_ensure_response( $options[ $p['key'] . '_status' ] );
+					return rest_ensure_response( $options[ $p['option_key'] . '_status' ] );
 				},
 			)
 		);
@@ -412,6 +414,7 @@ class Settings {
 				'nonce'   => wp_create_nonce( 'wp_rest' ),
 				'siteUrl' => get_site_url(),
 				'homeUrl' => get_home_url(),
+				'defaultOptions' => $this->options_defaults_by_section,
 			]
 		);
 
@@ -419,13 +422,14 @@ class Settings {
 			$this->slugged_namespace,
 			[
 				'options'    => $this->options,
-				'shortcode'  => '[arve]',
-				'message'    => 'init state msg',
+				'shortcode'  => '[arve url="" /]',
+				'message'    => '',
 			]
 		);
 
 		ob_start();
 		?>
+
 		<div 
 			class="wrap wrap--nextgenthemes"
 			data-wp-interactive="<?= esc_attr( $this->slugged_namespace ); ?>"
@@ -459,6 +463,42 @@ class Settings {
 
 					<?php do_action( $this->slashed_namespace . '/admin/settings/content', $this ); ?>
 
+					<button
+						class="button button-secondary"
+						data-wp-bind--hidden="!state.isActiveSection"
+						data-wp-on--click="actions.resetOptionsSection"
+						data-wp-context='{ "section": "main" }'
+					>
+						Reset Main Section
+					</button>
+
+					<button
+						class="button button-secondary"
+						data-wp-bind--hidden="!state.isActiveSection"
+						data-wp-on--click="actions.resetOptionsSection"
+						data-wp-context='{ "section": "pro" }'
+					>
+						Reset Pro Section
+					</button>
+
+					<button
+						class="button button-secondary"
+						data-wp-bind--hidden="!state.isActiveSection"
+						data-wp-on--click="actions.resetOptionsSection"
+						<?= data_wp_context( [ 'section' => 'main' ] ); // phpcs:ignore ?>
+					>
+						Reset Main Section
+					</button>
+
+					<button
+						class="button button-secondary"
+						data-wp-bind--hidden="!state.isActiveSection"
+						data-wp-on--click="actions.resetOptionsSection"
+						data-wp-context='{ "section": "pro" }'
+					>
+						Reset Pro Section
+					</button>						
+
 					<?php
 					$prefix = str_replace( 'nextgenthemes_', '', $this->slugged_namespace );
 
@@ -470,6 +510,15 @@ class Settings {
 						$this->premium_url_prefix
 					);
 					?>
+
+					<button
+						data-wp-bind--hidden="state.isActiveSection"
+						data-wp-on--click="actions.resetOptionsSection"
+						<?= data_wp_context( [ 'section' => 'main' ] ); // phpcs:ignore ?>
+					>
+						Reset Main Section
+					</button>
+					<span data-wp-text="state.message"></span>
 
 				</div>
 

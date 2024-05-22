@@ -113,12 +113,8 @@ function api_action( int $item_id, string $license, string $edd_action = 'check_
 
 function get_api_error_message( object $license_data ): string {
 
-	if ( false !== $license_data->success ) {
+	if ( false !== $license_data->success || empty( $license_data->error ) ) {
 		return '';
-	}
-
-	if ( empty( $license_data->error ) ) {
-		return 'no success and no error:' . PHP_EOL . wp_json_encode( $license_data, JSON_PRETTY_PRINT );
 	}
 
 	switch ( $license_data->error ) {

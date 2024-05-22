@@ -19,6 +19,10 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			const context = getContext();
 			return state.options[ context.key ].length >= 32;
 		},
+		get isActiveSection() {
+			const context = getContext();
+			return true === context.activeTabs[ context.section ];
+		},
 	},
 	actions: {
 		changeTab: () => {
@@ -165,8 +169,6 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 				license: state.options[ context.key ], // edd api arg WITHOUT edd_ prefix
 			};
 
-			helpers.debugJson( bodyToStringify );
-
 			// Make a POST request to the REST API route that we registered in our PHP file
 			fetch( config.restUrl + '/edd-license-action', {
 				method: 'POST',
@@ -194,71 +196,32 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 					//window.location.reload();
 				} );
 		},
-		eddLicenseActionGet: () => {
-			const context = getContext();
+		openDialog() {
+			state.dialog = document.querySelector( '.ngt-dialog' );
+		},
+		resetOptionsSection() {
 			const config = getConfig();
-			const url = new URL( context.eddStoreUrl ); // Site with EDD Software Licensing activated.
+			const context = getContext();
+			const sectionToReset = context.section;
 
-			const urlParams = new URLSearchParams( {
-				edd_action: context.eddAction,
-				license: state.options[ context.key ], // License key
-				item_id: context.eddProductId, // Product ID
-				url: config.homeUrl, // Domain the request is coming from.
+			l( 'sectionToReset', sectionToReset, 'config', config, 'context', context );
+
+			Object.entries( config.defaultOptions ).forEach( ( [ section, options ] ) => {
+				if ( 'all' === sectionToReset ) {
+					// reset all
+					Object.entries( options ).forEach( ( [ key, value ] ) => {
+						state.options[ key ] = value;
+					} );
+				} else {
+					Object.entries( options ).forEach( ( [ key, value ] ) => {
+						if ( section === sectionToReset ) {
+							state.options[ key ] = value;
+						}
+					} );
+				}
 			} );
 
-			url.search = urlParams.toString();
-
-			helpers.debugJson( url.toString() );
-
-			fetch( url.toString(), {
-				mode: 'no-cors',
-			} )
-				.then( ( response ) => {
-					l( 'response', response );
-					if ( response.ok ) {
-						return response.json();
-					}
-					return Promise.reject( response );
-				} )
-				.then( ( data ) => {
-					// Software Licensing has a valid response to parse
-					console.log( 'Successful response', data );
-				} )
-				.catch( ( error ) => {
-					// Error handling.
-					console.log( 'Error', error );
-				} );
-		},
-		eddLicenseActionPost: () => {
-			const context = getContext();
-			const config = getConfig();
-
-			const formData = new FormData();
-			formData.append( 'edd_action', context.eddAction ); // Valid actions are activate_license, deactivate_license, get_version, check_license
-			formData.append( 'license', state.options[ context.key ] ); // License key
-			formData.append( 'item_id', context.eddProductId ); // Product ID
-			formData.append( 'url', config.homeUrl ); // If you disable URL checking you do not need this entry.
-
-			// Site with Software Licensing activated.
-			fetch( context.eddStoreUrl, {
-				mode: 'no-cors',
-				method: 'POST',
-				body: formData,
-			} )
-				.then( ( response ) => {
-					if ( response.ok ) {
-						return response.json();
-					}
-					return Promise.reject( response );
-				} )
-				.then( ( data ) => {
-					// Software Licensing has a valid response to parse
-					console.log( 'Successful response', data );
-				} )
-				.catch( ( error ) => {
-					// Error handling.
-					console.log( 'Error', error );
-				} );
+			actions.saveOptionsReal();
 		},
 	},
 	callbacks: {

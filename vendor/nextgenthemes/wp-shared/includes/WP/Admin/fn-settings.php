@@ -130,17 +130,6 @@ function print_image_upload_field( string $key, array $option ): void {
 	<?php
 }
 
-function print_integer_field( string $key, array $option ): void {
-	?>
-	<p>
-		<label>
-			<?php label_text( $option ); ?>
-			<input x-model="<?php echo esc_attr( "options.$key" ); ?>" type="number" />
-		</label>
-	</p>
-	<?php
-}
-
 function print_select_field( string $key, array $option ): void {
 	?>
 	<p>
@@ -211,8 +200,7 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 		<?= data_wp_context( $setting ); // phpcs:ignore ?>
 	>
 		<div>
-
-			<p>
+			<div>
 				<?php
 				switch ( $setting['type'] ) {
 					case 'select':
@@ -258,6 +246,7 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 									'type'                => ( 'integer' === $setting['type'] ) ? 'number' : 'text',
 									'id'                  => $input_id,
 									'data-wp-on--keyup'   => 'actions.inputChange',
+									'data-wp-on--change'  => 'actions.inputChange',
 									'data-arve-url'       => ( 'url' === $key ), // TODO: remove
 									'data-wp-context'     => ( 'url' === $key ) ? 'url' : false,
 									'data-wp-bind--value' => "state.options.$key",
@@ -268,38 +257,14 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 								)
 							)
 						);
+						
+						if ( 'license_key' === $setting['ui'] ) {
+							license_key_ui( $key );	
+						}
 
-						if ( 'license_key' === $setting['ui'] ) : ?>
-			
-							<button
-								data-wp-on--click="actions.eddLicenseAction"
-								data-wp-bind--hidden="!state.isValidLicenseKey"
-								class="button button-secondary"
-								<?= data_wp_context( [ 'eddAction' => 'deactivate_license' ] ); // phpcs:ignore ?>
-							>
-								Deactivate
-							</button>
-							<button
-								data-wp-on--click="actions.eddLicenseAction"
-								data-wp-bind--hidden="state.isValidLicenseKey"
-								class="button button-secondary"
-								<?= data_wp_context( [ 'eddAction' => 'activate_license' ] ); // phpcs:ignore ?>
-							>
-								Activate
-							</button>
-							<button
-								data-wp-on--click="actions.eddLicenseAction"
-								data-wp-bind--hidden="!state.isLongEnoughLicenseKey"
-								class="button button-secondary"
-								<?= data_wp_context( [ 'eddAction' => 'check_license' ] ); // phpcs:ignore ?>
-							>
-								Check Status
-							</button>							
-							<br>
-							<pre data-wp-text="<?= esc_attr( "state.options.{$key}_status" ); ?>"></pre>
-						<?php endif; ?>
-
-						<?php if ( 'image_upload' === $setting['ui'] ) : ?>
+						if ( 'image_upload' === $setting['ui'] ) : 
+							wp_enqueue_media();
+							?>
 							<button
 								class="button-secondary button-secondary--select-thumbnail"
 								type="button"
@@ -320,7 +285,7 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 						<?php esc_html_e( $setting['tag'] ); ?>
 					</a>
 				<?php endif; ?>
-			</p>
+			</div>
 		</div>
 
 		<?php if ( ! empty( $setting['description'] ) ) : ?>
@@ -330,6 +295,38 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 		<?php endif; ?>
 		<hr>
 	</div>
+	<?php
+}
+
+function license_key_ui( string $key ): void {
+
+	?>
+	<button
+		data-wp-on--click="actions.eddLicenseAction"
+		data-wp-bind--hidden="!state.isValidLicenseKey"
+		class="button button-secondary"
+		<?= data_wp_context( [ 'edd_action' => 'deactivate_license' ] ); // phpcs:ignore ?>
+	>
+		Deactivate
+	</button>
+	<button
+		data-wp-on--click="actions.eddLicenseAction"
+		data-wp-bind--hidden="state.isValidLicenseKey"
+		class="button button-secondary"
+		<?= data_wp_context( [ 'edd_action' => 'activate_license' ] ); // phpcs:ignore ?>
+	>
+		Activate
+	</button>
+	<button
+		data-wp-on--click="actions.eddLicenseAction"
+		data-wp-bind--hidden="!state.isLongEnoughLicenseKey"
+		class="button button-secondary"
+		<?= data_wp_context( [ 'edd_action' => 'check_license' ] ); // phpcs:ignore ?>
+	>
+		Check Status
+	</button>
+
+	<pre data-wp-text="<?= esc_attr( "state.options.{$key}_status" ); ?>"></pre>
 	<?php
 }
 

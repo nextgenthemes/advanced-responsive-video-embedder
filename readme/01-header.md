@@ -3,7 +3,7 @@ Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: embed, video, lazyload, lightbox, rumble
 Requires at least: 6.2
-Tested up to: 6.5.0
+Tested up to: 6.5.3
 Requires PHP: 7.4
 Stable tag: 10.0.7-beta1
 License: GPL-3.0

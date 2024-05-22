@@ -6,24 +6,23 @@ use Nextgenthemes\WP;
 
 function add_media_button(): void {
 
+	ob_start();
 	?>
 	<button
 		id="arve-btn"
-		title="<?php esc_html_e( 'Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ); ?>"
+		title="<?php esc_attr_e( 'Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ); ?>"
 		class="arve-btn button add_media"
 		type="button"
-		x-data
-		@click="document.querySelector('[x-ref=arvedialog]').showModal()"
+		data-wp-interactive="nextgenthemes_arve_dialog"
+		data-wp-on--click="actions.openShortcodeDialog"
 	>
-		<span class="wp-media-buttons-icon arve-icon"></span> 
+	<span class="wp-media-buttons-icon arve-icon"></span> 
 		<?php esc_html_e( 'Video (ARVE)', 'advanced-responsive-video-embedder' ); ?>
 	</button>
 	<?php
+	echo wp_interactivity_process_directives( ob_get_clean() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 	add_action( 'admin_footer', __NAMESPACE__ . '\create_shortcode_dialog' );
-
-	WP\add_dep_to_script( 'alpinejs', 'arve-shortcode-dialog' );
-	wp_enqueue_script('alpinejs');
 }
 
 function create_shortcode_dialog(): void {

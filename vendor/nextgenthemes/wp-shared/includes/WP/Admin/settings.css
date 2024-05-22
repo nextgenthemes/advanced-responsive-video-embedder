@@ -111,6 +111,11 @@
 	& [type="number"] {
 		width: 6em;
 	}
+
+	> div {
+		margin-block-start: 1em;
+		margin-block-end: 1em;
+	}
 }
 
 .ngt-label-wrap {
