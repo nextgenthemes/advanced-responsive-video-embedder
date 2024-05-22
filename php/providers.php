@@ -480,7 +480,7 @@
 	'vimeo' => array(
 		'name'           => 'Vimeo',
 		'oembed'         => true,
-		'regex'          => '#https?://(player\\.)?vimeo\\.com/((video/)|(channels/[a-z]+/)|(groups/[a-z]+/videos/))?(?<id>[0-9]+)(?<vimeo_secret>/[0-9a-z]+)?#i',
+		'regex'          => '#https?://(player\.)?vimeo\.com/((video/)|(channels/[a-z]+/)|(groups/[a-z]+/videos/))?(?<id>[0-9]+)(/(?<vimeo_secret>[0-9a-z]+))?#i',
 		'embed_url'      => 'https://player.vimeo.com/video/%s',
 		'rebuild_url'    => 'https://vimeo.com/%s',
 		'default_params' => 'transparent=0&title=1&byline=0&portrait=0',
