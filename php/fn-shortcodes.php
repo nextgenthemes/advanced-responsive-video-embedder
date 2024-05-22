@@ -48,23 +48,27 @@ function shortcode( array $a ) {
 
 function error( string $messages, string $code = '' ): string {
 
-	$hide = false;
+	$hide        = false;
+	$is_dev_mode = (
+		( defined( 'WP_DEBUG' ) && WP_DEBUG ) ||
+		wp_get_development_mode() || // Any 'theme', 'plugin', or 'all'
+		'development' === wp_get_environment_type() ||
+		'local' === wp_get_environment_type()
+	);
 
-	if ( str_contains( $code, 'hidden' ) && ! is_wp_debug() ) {
+	if ( str_contains( $code, 'hidden' ) && ! $is_dev_mode ) {
 		$hide = true;
 	}
 
 	$error_html = sprintf(
-		PHP_EOL . PHP_EOL .
-		'<span class="arve-error"%s><abbr title="Advanced Responsive Video Embedder">ARVE</abbr> %s</span>' .
-		PHP_EOL,
+		'<div class="arve-error alignwide" %s><abbr title="Advanced Responsive Video Embedder">ARVE</abbr> %s</div>',
 		$hide ? 'hidden' : '',
 		// translators: Error message
 		sprintf( __( 'Error: %s', 'advanced-responsive-video-embedder' ), $messages ),
 	);
 
 	return wp_kses(
-		$error_html,
+		PHP_EOL . PHP_EOL . $error_html . PHP_EOL,
 		ALLOWED_HTML,
 		array( 'http', 'https' )
 	);

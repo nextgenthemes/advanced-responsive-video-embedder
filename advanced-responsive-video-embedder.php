@@ -52,6 +52,8 @@ const ALLOWED_HTML = array(
 	'code'   => array(),
 	'ul'     => array(),
 	'li'     => array(),
+	'pre'    => array(),
+	'div'    => array( 'class' => true ),
 );
 
 if ( defined( 'WP_INSTALLING' ) && WP_INSTALLING ) {
