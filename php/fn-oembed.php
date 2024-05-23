@@ -66,7 +66,10 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 	}
 
 	$data  = apply_filters( 'nextgenthemes/arve/oembed_dataparse', $data, $thumbnails );
-	$html .= '<script type="application/json" data-arve-oembed>' . \wp_json_encode($data, JSON_UNESCAPED_UNICODE, 5) . '</script>';
+	$html .= sprintf(
+		'<script type="application/json" data-arve-oembed>%s</script>',
+		\wp_json_encode($data, JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT, 5)
+	);
 
 	return $html;
 }
@@ -127,10 +130,12 @@ function extract_oembed_json( string $html, string $url ): ?object {
 	} catch ( \JsonException $e ) {
 
 		$error_code = __FUNCTION__;
+		$function   = __FUNCTION__;
+		$url        = $url; // to make intellisense happy
 
-		arve_errors()->add( $error_code, $e->getMessage() . ' URL: ' . $url );
+		arve_errors()->add( $error_code, $e->getMessage());
 		arve_errors()->add_data(
-			compact( 'html', 'url'),
+			compact( 'html', 'url', 'function' ),
 			$error_code
 		);
 
