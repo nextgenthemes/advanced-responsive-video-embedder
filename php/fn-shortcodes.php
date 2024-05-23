@@ -46,17 +46,20 @@ function shortcode( array $a ) {
 	return build_video( $a );
 }
 
-function error( string $messages, string $code = '' ): string {
-
-	$hide        = false;
-	$is_dev_mode = (
+function is_dev_mode(): bool {
+	return (
 		( defined( 'WP_DEBUG' ) && WP_DEBUG ) ||
 		wp_get_development_mode() || // Any 'theme', 'plugin', or 'all'
 		'development' === wp_get_environment_type() ||
 		'local' === wp_get_environment_type()
 	);
+}
 
-	if ( str_contains( $code, 'hidden' ) && ! $is_dev_mode ) {
+function error( string $messages, string $code = '' ): string {
+
+	$hide = false;
+
+	if ( str_contains( $code, 'hidden' ) && ! is_dev_mode() ) {
 		$hide = true;
 	}
 
@@ -90,9 +93,9 @@ function get_error_html(): string {
 		$html .= $messages;
 		$data  = arve_errors()->get_error_data( $code );
 
-		if ( ! empty( $data ) && ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ) {
+		if ( ! empty( $data ) && is_dev_mode() ) {
 			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
-			$html .= sprintf( 'Data: %s', var_export( $data, true ) );
+			$html .= sprintf( '<pre>%s</pre>', var_export( $data, true ) );
 		}
 
 		$html = error( $html );
