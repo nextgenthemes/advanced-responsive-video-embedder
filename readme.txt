@@ -193,6 +193,9 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-05-23 10.0.10 ###
+* Fix: Videos with quotes in the title/description caused json_decode syntax error.
+
 ### 2024-05-22 10.0.9 ###
 * Fix: Some Vimeo videos not working without cache working.
 * Fix: src mismatch error testing.
