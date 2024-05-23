@@ -6,7 +6,7 @@ const namespace = document.querySelector( '[data-wp-interactive^="nextgenthemes"
 	?.wpInteractive;
 
 if ( ! namespace ) {
-	alert( 'no namespace' );
+	console.log( 'no namespace' ); // eslint-disable-line
 }
 
 const { state, actions, callbacks, helpers } = store( namespace, {
@@ -21,10 +21,33 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 		},
 		get isActiveSection() {
 			const context = getContext();
-			return true === context.activeTabs[ context.section ];
+
+			if ( ! context.activeTabs ) {
+				return true; // shortcode dialog has no sections
+			}
+
+			return true === context?.activeTabs[ context.section ];
 		},
 	},
 	actions: {
+		toggleHelp: () => {
+			context.help = ! context.help;
+		},
+		openShortcodeDialog: () => {
+			state.dialog = document.querySelector(
+				'dialog[data-wp-interactive="nextgenthemes_arve_dialog"]'
+			);
+			l( 'dialog', state.dialog );
+
+			state.dialog.showModal();
+		},
+		insertShortcode: () => {
+			window.wp.media.editor.insert( state.shortcode );
+			state.dialog.close();
+		},
+		closeShortcodeDialog: () => {
+			state.dialog.close();
+		},
 		changeTab: () => {
 			const context = getContext();
 
@@ -34,20 +57,29 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			context.activeTabs[ context.section ] = true;
 		},
 		inputChange: ( event ) => {
+			l( 'inputChange' );
+
 			const context = getContext();
-			l( 'inputChange context, event', context, event );
 
 			if ( 'arveUrl' in event.target.dataset ) {
-				helpers.extractFromEmbedCode( event.target.value );
+				helpers.extractFromEmbedCode( context, event.target.value );
 			} else {
 				state.options[ context.key ] = event.target.value;
 			}
-			actions.saveOptions();
+
+			if ( 'nextgenthemes_arve_dialog' !== namespace ) {
+				actions.saveOptions();
+			}
 		},
 		checkboxChange: ( event ) => {
+			l( 'checkboxChange' );
+
 			const context = getContext();
 			state.options[ context.key ] = event.target.checked;
-			actions.saveOptions();
+
+			if ( 'nextgenthemes_arve_dialog' !== namespace ) {
+				actions.saveOptions();
+			}
 		},
 		selectImage: () => {
 			const context = getContext();
@@ -73,6 +105,8 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 
 			const config = getConfig();
 
+			helpers.debugJson( config );
+
 			// set the state so that another save cannot happen while processing
 			state.isSaving = true;
 			state.message = '...';
@@ -83,13 +117,11 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 				body: JSON.stringify( { delete: true } ),
 				headers: {
 					'Content-Type': 'application/json',
-					'X-WP-Nonce': state.nonce,
+					'X-WP-Nonce': config.nonce,
 				},
 			} )
 				.then( ( response ) => {
 					if ( ! response.ok ) {
-						l( response );
-						helpers.debugJson( response );
 						throw new Error( 'Network response was not ok' );
 					}
 					return response.json();
@@ -106,10 +138,8 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 				} );
 		},
 		// debounced version created later
-		saveOptionsReal() {
-			l( 'save options real' );
-
-			helpers.debugJson( state.options );
+		saveOptionsReal: () => {
+			l( 'saveOptionsReal' );
 
 			if ( state.isSaving ) {
 				state.message = 'trying to save too fast';
@@ -139,7 +169,44 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 				} )
 				.then( () => {
 					state.message = 'Options saved';
-					setTimeout( () => ( state.message = '' ), 1000 );
+					setTimeout( () => ( state.message = '' ), 2500 );
+				} )
+				.catch( ( error ) => {
+					state.message = error.message;
+				} )
+				.finally( () => {
+					state.isSaving = false;
+				} );
+		},
+		restCall: ( restRoute, body ) => {
+			if ( state.isSaving ) {
+				state.message = 'trying to save too fast';
+				return;
+			}
+			const config = getConfig();
+
+			// set the state so that another save cannot happen while processing
+			state.isSaving = true;
+			state.message = 'Saving...';
+
+			// Make a POST request to the REST API route that we registered in our PHP file
+			fetch( config.restUrl + restRoute, {
+				method: 'POST',
+				body: JSON.stringify( body ),
+				headers: {
+					'Content-Type': 'application/json',
+					'X-WP-Nonce': config.nonce,
+				},
+			} )
+				.then( ( response ) => {
+					if ( ! response.ok ) {
+						throw new Error( 'Network response was not ok' );
+					}
+					return response.json();
+				} )
+				.then( ( message ) => {
+					state.message = message;
+					setTimeout( () => ( state.message = '' ), 2500 );
 				} )
 				.catch( ( error ) => {
 					state.message = error.message;
@@ -193,18 +260,13 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 				} )
 				.finally( () => {
 					state.isSaving = false;
-					//window.location.reload();
+					window.location.reload();
 				} );
-		},
-		openDialog() {
-			state.dialog = document.querySelector( '.ngt-dialog' );
 		},
 		resetOptionsSection() {
 			const config = getConfig();
 			const context = getContext();
 			const sectionToReset = context.section;
-
-			l( 'sectionToReset', sectionToReset, 'config', config, 'context', context );
 
 			Object.entries( config.defaultOptions ).forEach( ( [ section, options ] ) => {
 				if ( 'all' === sectionToReset ) {
@@ -225,22 +287,53 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 		},
 	},
 	callbacks: {
-		update() {
-			callbacks.updateShortcode();
-			//callbacks.updatePreview();
-		},
-		init() {
+		saveOptions: () => {
+			l( 'saveOptionsReal' );
+
+			if ( state.isSaving ) {
+				state.message = 'trying to save too fast';
+				return;
+			}
+
+			// set the state so that another save cannot happen while processing
+			state.isSaving = true;
+			state.message = 'Saving...';
+
+			const config = getConfig();
 			const context = getContext();
-			l( 'init fn log context', context );
+
+			// Make a POST request to the REST API route that we registered in our PHP file
+			fetch( config.restUrl + '/save', {
+				method: 'POST',
+				body: JSON.stringify( state.options ),
+				headers: {
+					'Content-Type': 'application/json',
+					'X-WP-Nonce': config.nonce,
+				},
+			} )
+				.then( ( response ) => {
+					if ( ! response.ok ) {
+						throw new Error( 'Network response was not ok' );
+					}
+					return response.json();
+				} )
+				.then( () => {
+					state.message = 'Options saved';
+					// setTimeout( () => ( state.message = '' ), 2500 );
+					//state.isSaving = false;
+				} )
+				.catch( ( error ) => {
+					state.message = error.message;
+				} );
+			// .finally( () => {
+			// 	state.isSaving = false;
+			// } );
 		},
 		updateShortcode() {
-			l( 'update shortcode', 'options', getContext().options );
-
 			const context = getContext();
-
 			let out = '';
 
-			for ( const [ key, value ] of Object.entries( context.options ) ) {
+			for ( const [ key, value ] of Object.entries( state.options ) ) {
 				if ( true === value ) {
 					out += `${ key }="true" `;
 				} else if ( value.length ) {
@@ -248,7 +341,7 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 				}
 			}
 
-			context.shortcode = '[arve ' + out + '/]';
+			state.shortcode = '[arve ' + out + '/]';
 		},
 		updatePreview() {
 			const url = new URL( 'https://symbiosistheme.test/wp-json/arve/v1/shortcode' );
@@ -278,47 +371,51 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 		},
 	},
 	helpers: {
-		debounce( func, wait, immediate ) {
-			let timeout;
-			return function () {
-				const context = this;
-				const args = arguments;
-				const later = function () {
-					timeout = null;
-					if ( ! immediate ) {
-						func.apply( context, args );
-					}
-				};
-				const callNow = immediate && ! timeout;
-				clearTimeout( timeout );
-				timeout = setTimeout( later, wait );
-				if ( callNow ) {
-					func.apply( context, args );
-				}
-			};
-		},
 		debugJson( data ) {
 			state.debug = JSON.stringify( data, null, 2 );
-		},
-		extractFromEmbedCode( url ) {
-			const iframe = domParser.parseFromString( url, 'text/html' ).querySelector( 'iframe' );
-			if ( iframe && iframe.getAttribute( 'src' ) ) {
-				url = iframe.getAttribute( 'src' );
-
-				if ( iframe.width && iframe.height ) {
-					const ratio = aspectRatio( iframe.width, iframe.height );
-
-					if ( '16:9' !== ratio ) {
-						state.options.aspect_ratio = ratio;
-					}
-				}
-			}
-			state.options.url = url;
 		},
 	},
 } );
 
-actions.saveOptions = helpers.debounce( actions.saveOptionsReal, 250 );
+actions.saveOptions = debounce( actions.saveOptionsReal, 1111 );
+
+function debounce( func, wait, immediate ) {
+	l( 'debounce' );
+
+	let timeout;
+	return function () {
+		const context = this;
+		const args = arguments;
+		const later = function () {
+			timeout = null;
+			if ( ! immediate ) {
+				func.apply( context, args );
+			}
+		};
+		const callNow = immediate && ! timeout;
+		clearTimeout( timeout );
+		timeout = setTimeout( later, wait );
+		if ( callNow ) {
+			func.apply( context, args );
+		}
+	};
+}
+
+function extractFromEmbedCode( context, url ) {
+	const iframe = domParser.parseFromString( url, 'text/html' ).querySelector( 'iframe' );
+	if ( iframe && iframe.getAttribute( 'src' ) ) {
+		url = iframe.getAttribute( 'src' );
+
+		if ( iframe.width && iframe.height ) {
+			const ratio = aspectRatio( iframe.width, iframe.height );
+
+			if ( '16:9' !== ratio ) {
+				state.options.aspect_ratio = ratio;
+			}
+		}
+	}
+	state.options.url = url;
+}
 
 /**
  * Calculate aspect ratio based on width and height.
@@ -327,7 +424,7 @@ actions.saveOptions = helpers.debounce( actions.saveOptionsReal, 250 );
  * @param {string} height - The height value
  * @return {string} The aspect ratio in the format 'width:height'
  */
-const aspectRatio = ( width, height ) => {
+function aspectRatio( width, height ) {
 	if ( isIntOverZero( width ) && isIntOverZero( height ) ) {
 		const w = parseInt( width );
 		const h = parseInt( height );
@@ -337,7 +434,7 @@ const aspectRatio = ( width, height ) => {
 	}
 
 	return width + ':' + height;
-};
+}
 
 /**
  * Checks if the input string represents a positive integer.
@@ -345,10 +442,10 @@ const aspectRatio = ( width, height ) => {
  * @param {string} str - the input string to be checked
  * @return {boolean} true if the input string represents a positive integer, false otherwise
  */
-const isIntOverZero = ( str ) => {
+function isIntOverZero( str ) {
 	const n = Math.floor( Number( str ) );
 	return n !== Infinity && String( n ) === str && n > 0;
-};
+}
 
 /**
  * Calculate the greatest common divisor of two numbers using the Euclidean algorithm.
@@ -357,58 +454,10 @@ const isIntOverZero = ( str ) => {
  * @param {number} b - the second number
  * @return {number} the greatest common divisor of the two input numbers
  */
-const gcd = ( a, b ) => {
+function gcd( a, b ) {
 	if ( ! b ) {
 		return a;
 	}
 
 	return gcd( b, a % b );
-};
-
-document.addEventListener( 'alpine:init', () => {
-	Alpine.data( 'ngtsettings', () => ( {
-		options: data.options,
-		message: '',
-		isSaving: false,
-		deleteOembedCache() {
-			if ( this.isSaving ) {
-				this.message = 'too fast';
-				return;
-			}
-
-			// set the state so that another save cannot happen while processing
-			this.isSaving = true;
-			this.message = '...';
-
-			// Make a POST request to the REST API route that we registered in our PHP file
-			fetch( data.restUrl + '/delete-oembed-cache', {
-				method: 'POST',
-				body: JSON.stringify( { delete: true } ),
-				headers: {
-					'Content-Type': 'application/json',
-					'X-WP-Nonce': data.nonce,
-				},
-			} )
-				.then( ( response ) => {
-					if ( ! response.ok ) {
-						throw new Error( 'Network response was not ok' );
-					}
-					return response.json();
-				} )
-				.then( ( message ) => {
-					this.message = message;
-					setTimeout( () => ( this.message = '' ), 3000 );
-				} )
-				.catch( ( error ) => {
-					this.message = error.message;
-				} )
-				.finally( () => {
-					this.isSaving = false;
-				} );
-		},
-		licenseKeyAction( action, product ) {
-			this.options.action = JSON.stringify( { action, product } );
-			this.saveOptions( true );
-		},
-	} ) );
-} );
+}

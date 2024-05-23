@@ -32,6 +32,18 @@
 	&:not([open]) {
 		display: none;
 	}
+
+	.media-modal-close {
+		right: 10px;
+	}
+
+	.media-modal-close[data-wp-on--click="actions.toggleHelp"] {
+		right: 52px;
+	}
+
+	.dashicons-editor-help:before {
+		content: "\f223" !important;
+	}
 }
 
 .arve-sc-dialog__wrap {
@@ -86,11 +98,11 @@
 		display: none;
 	}
 
-	.ngt-opt--arve-url,
-	.ngt-opt--arve-description,
-	.ngt-opt--arve-random_video_url,
+	.ngt-opt--url,
+	.ngt-opt--description,
+	.ngt-opt--random_video_url,
 	.ngt-opt--arve-random_video_urls {
-		grid-column: 1 / span 2;
+		grid-column: 1 / span 2 !important;
 	}
 }
 

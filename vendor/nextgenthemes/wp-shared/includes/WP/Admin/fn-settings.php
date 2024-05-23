@@ -3,10 +3,9 @@ namespace Nextgenthemes\WP\Admin;
 
 use \Nextgenthemes\WP;
 
-use function \Nextgenthemes\WP\attr;
 use function \Nextgenthemes\WP\get_defined_key;
 use function \Nextgenthemes\WP\has_valid_key;
-use function wp_interactivity_data_wp_context as data_wp_context;
+use function wp_interactivity_data_wp_context as data_wp_context; // This is actually a deprecated function but we use the real one. Avoiding the deprecation warning and the awful long function name.
 
 const DESCRIPTION_ALLOWED_HTML = array(
 	'a'      => array(
@@ -156,7 +155,6 @@ function print_settings_blocks(
 	array $settings,
 	array $sections,
 	array $premium_sections,
-	string $prefix,
 	string $premium_url_prefix,
 	string $context = 'settings-page'
 ): void {
@@ -172,13 +170,13 @@ function print_settings_blocks(
 			unset($setting['options']['']);
 		}
 
+ 		$setting['ui']       = $setting['ui'] ?? null;
 		$setting['key']      = $key;
-		$setting['section']  = $setting['tag'];
+		$setting['section']  = WP\camel_case( $setting['tag'] );
 		$setting['premium']  = in_array( $setting['tag'], $premium_sections, true );
 		$setting['tag_name'] = $sections[ $setting['tag'] ];
-		$field_type          = $setting['ui'] ?? $setting['type'];
 
-		if ( 'hidden' === $field_type ) {
+		if ( 'hidden' === $setting['ui'] ) {
 			continue;
 		}
 
@@ -189,14 +187,12 @@ function print_settings_blocks(
 function option_block( string $key, array $setting, string $premium_url_prefix ): void {
 
 	$input_id = 'ngt-option--' . $key;
-	$section  = $setting['tag'];
-
-	$setting['ui'] = $setting['ui'] ?? null;
+	$section = str_replace( '_', '-', $setting['section'] );
 
 	?>
 	<div 
 		class="<?= esc_attr( "ngt-opt ngt-opt--$key ngt-opt--section--$section" ); ?>"
-		data-wp-bind--hidden="!context.activeTabs.<?= esc_attr( WP\camel_case( $setting['tag'] ) ); ?>"
+		data-wp-bind--hidden="!state.isActiveSection"
 		<?= data_wp_context( $setting ); // phpcs:ignore ?>
 	>
 		<div>
@@ -212,6 +208,7 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 							data-ngt-option="<?= esc_attr( $key ); ?>"
 							data-wp-bind--value="state.options.<?= esc_attr( $key ); ?>"
 							data-wp-on--change="actions.inputChange"
+							data-wp-bind--disabled="state.isSaving"
 						>
 							<?php foreach ( $setting['options'] as $k => $v ) : ?>
 								<option value="<?= esc_attr( $k ); ?>"><?= esc_html( $v ); ?></option>
@@ -230,6 +227,7 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 									'data-wp-bind--checked' => "state.options.$key",
 									'placeholder'        => $setting['placeholder'] ?? false,
 									'class'              => 'form-check-input',
+									'data-wp-bind--disabled' => 'state.isSaving',
 								)
 							),
 						);
@@ -305,7 +303,7 @@ function license_key_ui( string $key ): void {
 		data-wp-on--click="actions.eddLicenseAction"
 		data-wp-bind--hidden="!state.isValidLicenseKey"
 		class="button button-secondary"
-		<?= data_wp_context( [ 'edd_action' => 'deactivate_license' ] ); // phpcs:ignore ?>
+		data-wp-context='( { "edd_action": "deactivate_license" } )'
 	>
 		Deactivate
 	</button>
@@ -313,7 +311,7 @@ function license_key_ui( string $key ): void {
 		data-wp-on--click="actions.eddLicenseAction"
 		data-wp-bind--hidden="state.isValidLicenseKey"
 		class="button button-secondary"
-		<?= data_wp_context( [ 'edd_action' => 'activate_license' ] ); // phpcs:ignore ?>
+		data-wp-context='( { "edd_action": "activate_license" } )'
 	>
 		Activate
 	</button>
@@ -321,7 +319,7 @@ function license_key_ui( string $key ): void {
 		data-wp-on--click="actions.eddLicenseAction"
 		data-wp-bind--hidden="!state.isLongEnoughLicenseKey"
 		class="button button-secondary"
-		<?= data_wp_context( [ 'edd_action' => 'check_license' ] ); // phpcs:ignore ?>
+		data-wp-context='( { "edd_action": "check_license" } )'
 	>
 		Check Status
 	</button>
@@ -352,3 +350,4 @@ function label( string $input_id, array $setting ): void {
 	</span>
 	<?php
 }
+ 

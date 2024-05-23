@@ -38,52 +38,44 @@ function settings_content(): void {
 
 	<div data-wp-bind--hidden="!context.activeTabs.debug">
 
-		<div style="margin-top: 1.2rem; margin-bottom: 1.2rem;">
+		<p>
 			<button data-wp-on--click="actions.deleteOembedCache" class="button-primary" style="margin-inline-end: 1em;">
 				<?php esc_html_e( 'Delete oEmbed Cache', 'advanced-responsive-video-embedder' ); ?>
 			</button>
 			<span x-text="message"></span>
-		</div>
+		</p>
 
 		<?php require_once __DIR__ . '/partials/debug-info-textarea.php'; ?>
 	</div>
 
 	<?php if ( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) : ?>
-		<div data-wp-bind--hidden="!context.activeTabs.pro">
-			<p>
-				<?= pro_message( 'ARVE Pro', 'arve-pro' ); // phpcs:ignore ?>
-			</p>
-		</div>
+		<p data-wp-bind--hidden="!context.activeTabs.pro">
+			<?= pro_message( 'ARVE Pro', 'arve-pro' ); // phpcs:ignore ?>
+		</p>
 	<?php endif; ?>
 
 	<?php if ( ! is_plugin_active( 'arve-privacy/arve-privacy.php' ) ) : ?>
-		<div data-wp-bind--hidden="!context.activeTabs.privacy">
-			<p>
-				<?= pro_message( 'ARVE Privacy', 'arve-privacy' ); // phpcs:ignore ?>
-			</p>
-		</div>
+		<p data-wp-bind--hidden="!context.activeTabs.privacy">
+			<?= pro_message( 'ARVE Privacy', 'arve-privacy' ); // phpcs:ignore ?>
+		</p>
 	<?php endif; ?>
 
 	<?php if ( ! is_plugin_active( 'arve-stick-videos/arve-sticky-videos.php' ) ) : ?>
-		<div data-wp-bind--hidden="!context.activeTabs.stickyVideos">
-			<p>
-				<?= pro_message( 'ARVE Sticky Videos', '/arve-stick-videos' ); // phpcs:ignore ?>
-			</p>
-		</div>
+		<p data-wp-bind--hidden="!context.activeTabs.stickyVideos">
+			<?= pro_message( 'ARVE Sticky Videos', 'arve-stick-videos' ); // phpcs:ignore ?>
+		</p>
 	<?php endif; ?>
 
 	<?php if ( ! is_plugin_active( 'arve-random-video/arve-random-video.php' ) ) : ?>
-		<div data-wp-bind--hidden="!context.activeTabs.randomVideo">
-			<p>
-				<?= pro_message( 'ARVE Radom Video', '/arve-random-video' ); // phpcs:ignore ?>
-			</p>
-		</div>
+		<p data-wp-bind--hidden="!context.activeTabs.randomVideo">
+			<?= pro_message( 'ARVE Random Video', 'arve-random-video' ); // phpcs:ignore ?>
+		</p>
 	<?php endif; ?>
 
 	<?php
 }
 
-function pro_message( string $addon_name = 'ARVE Pro', string $slug = 'arve-pro' ): string {
+function pro_message( string $addon_name, string $slug ): string {
 	return wp_kses(
 		sprintf(
 			// Translators: Addon Name
@@ -146,7 +138,7 @@ function print_arve_news(): void {
 				'categories'  => 126,
 			),
 			'https://nextgenthemes.com/wp-json/wp/v2/posts'
-		)
+		),
 	);
 
 	if ( is_wp_error( $response ) ) {

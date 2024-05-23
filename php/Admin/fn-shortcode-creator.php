@@ -6,6 +6,31 @@ use Nextgenthemes\WP;
 
 function add_media_button(): void {
 
+	foreach ( ARVE\settings( 'shortcode' ) as $k => $v ) {
+		$options[ $k ] = '';
+	}
+
+	wp_interactivity_config(
+		'nextgenthemes_arve_dialog',
+		[
+			'restUrl'        => 'was',
+			'nonce'          => wp_create_nonce( 'wp_rest' ),
+			'siteUrl'        => get_site_url(),
+			'homeUrl'        => get_home_url(),
+			'defaultOptions' => array(),
+		]
+	);
+
+	wp_interactivity_state(
+		'nextgenthemes_arve_dialog',
+		[
+			'options'    => $options,
+			'shortcode'  => '[arve url="" /]',
+			'message'    => '',
+			'help'       => false,
+		]
+	);
+
 	ob_start();
 	?>
 	<button
@@ -27,33 +52,42 @@ function add_media_button(): void {
 
 function create_shortcode_dialog(): void {
 
-	$settings = ARVE\settings( 'shortcode' );
-	$data     = array();
+	ob_start();
 
-	foreach ( ARVE\settings( 'shortcode' ) as $k => $v ) {
-		$data['options'][ $k ] = '';
-	}
-
-	$data = wp_json_encode( $data );
 	?>
-	<dialog class="arve-sc-dialog ngt" x-data="arvedialog" x-ref="arvedialog" x-init="$watch( 'options', () => { updateShortcode() } )">
-
+	<dialog 
+		class="arve-sc-dialog"
+		data-wp-interactive="nextgenthemes_arve_dialog"
+		data-wp-watch="callbacks.updateShortcode"
+	>
 		<div class="arve-sc-dialog__wrap">
 
 			<div class="arve-sc-dialog__header">
-				<button class="arve-sc-dialog__close-btn" @click="toggleHelpTexts()">
-					<span class="dashicons dashicons-editor-help"></span>
+
+				<button type="button" class="media-modal-close" data-wp-on--click="actions.toggleHelp">
+					<span class="media-modal-icon dashicons dashicons-editor-help">
+						<span class="screen-reader-text">
+							Toggle Help
+						</span>
+					</span>
 				</button>
-				<button class="arve-sc-dialog__close-btn" autofocus @click="$refs.arvedialog.close()">&times;</button>
+
+				<button type="button" class="media-modal-close" data-wp-on--click="actions.closeShortcodeDialog">
+					<span class="media-modal-icon">
+						<span class="screen-reader-text">
+							Close dialog
+						</span>
+					</span>
+				</button>
+
 			</div>
 
 			<div class="arve-sc-dialog__body">
 				<?php
 				\Nextgenthemes\WP\Admin\print_settings_blocks(
-					$settings,
+					ARVE\settings( 'shortcode' ),
 					ARVE\settings_sections(),
 					ARVE\PREMIUM_SECTIONS,
-					'arve',
 					ARVE\PREMIUM_URL_PREFIX,
 					'shortcode-dialog'
 				);
@@ -62,20 +96,20 @@ function create_shortcode_dialog(): void {
 
 			<div class="arve-sc-dialog__footer">
 
-				<p id="arve-shortcode" class="arve-shortcode" x-ref="arveShortcode" x-text="shortcode"></p>
+				<p id="arve-shortcode" class="arve-shortcode" data-wp-text="state.shortcode"></p>
 
-				<button 
+				<button
+					type="button"
 					class="arve-sc-dialog__cancel-btn button-secondary"
-					@click="$refs.arvedialog.close()"
+					data-wp-on--click="actions.closeShortcodeDialog"
+					autofocus
 				>
 					<?php esc_html_e( 'Cancel', 'advanced-responsive-video-embedder' ); ?>
 				</button>
-				<button 
+				<button
+					type="button"
 					class="arve-sc-dialog__submit-btn button-primary"
-					@click="() => {
-						window.wp.media.editor.insert( shortcode );
-						$refs.arvedialog.close();
-					}"
+					data-wp-on--click="actions.insertShortcode"
 				>
 					<?php esc_html_e( 'Insert Shortcode', 'advanced-responsive-video-embedder' ); ?>
 				</button>
@@ -84,6 +118,7 @@ function create_shortcode_dialog(): void {
 		</div>
 	</dialog>
 	<?php
+	echo wp_interactivity_process_directives( ob_get_clean() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 function print_shortcode_template(): void {

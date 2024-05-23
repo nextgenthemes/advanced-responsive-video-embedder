@@ -194,9 +194,9 @@ class Settings {
 				'permission_callback' => function() {
 					return current_user_can( 'manage_options' );
 				},
-				'callback'            => function( \WP_REST_Request $request ): void {
+				'callback'            => function( \WP_REST_Request $request ): \WP_REST_Response {
 					$this->save_options( $request->get_params() );
-					die( '1' );
+					return rest_ensure_response( __( 'Options saved', 'nextgenthemes' ) );
 				},
 			)
 		);
@@ -231,7 +231,6 @@ class Settings {
 					)
 				),
 				'permission_callback' => function() {
-					return true;
 					return current_user_can( 'manage_options' );
 				},
 				'callback'            => function( \WP_REST_Request $request ) {
@@ -252,39 +251,6 @@ class Settings {
 			)
 		);
 
-		// register reset options route
-		register_rest_route(
-			$this->rest_namespace,
-			'/reset',
-			array(
-				'methods'             => 'POST',
-				'args'                => $this->settings,
-				'permission_callback' => function() {
-					return current_user_can( 'manage_options' );
-				},
-				'callback'            => function( \WP_REST_Request $request ): void {
-
-					$section = $request->get_param( 'section' );
-
-					if ( 'all' === $section ) {
-						$this->save_options( [] );
-					} else {
-						$options_to_keep = $this->get_options();
-
-						foreach( $options_to_keep as $key => $value ) {
-
-							if ( $key === $this->settings[ $key ]['tag'] ) {
-								unset( $options_to_keep[ $key ] );
-							}
-						}
-					}
-
-					$this->save_options( $options_to_keep );
-					die( '1' );
-				},
-			)
-		);
-
 		if ( function_exists( '\Nextgenthemes\ARVE\delete_oembed_cache' ) ) {
 
 			register_rest_route(
@@ -293,17 +259,11 @@ class Settings {
 				array(
 					'methods'             => 'POST',
 					'permission_callback' => function() {
+						return true;
 						return current_user_can( 'manage_options' );
 					},
-					'callback'            => function( \WP_REST_Request $request ) {
-
-						$deleted_rows = \Nextgenthemes\ARVE\delete_oembed_cache();
-
-						if ( false === $deleted_rows ) {
-							return new \WP_Error( 'rest_delete_oembed_cache_failed', 'Could not delete oEmbed cache', array( 'status' => 500 ) );
-						}
-
-						return rest_ensure_response( $deleted_rows );
+					'callback'            => function(): \WP_REST_Response {
+						return rest_ensure_response( \Nextgenthemes\ARVE\delete_oembed_cache() );
 					}
 				)
 			);
@@ -320,6 +280,8 @@ class Settings {
 			$asset_info[ 'dependencies' ] + [ '@wordpress/interactivity' ],
 			$asset_info[ 'version' ]
 		);
+
+		wp_enqueue_script_module( 'nextgenthemes-settings' );
 
 		// always load this as the ARVE Shortcode dialog uses styles from this.
 		register_asset(
@@ -351,52 +313,7 @@ class Settings {
 		wp_enqueue_style( 'nextgenthemes-settings' );
 	}
 
-	public function print_save_section(): void {
-		?>
-		<p v-show="onlySectionDisplayed !== 'debug'">
-			<button @click='saveOptions'
-				:disabled='isSaving'
-				class='button button-primary'>
-				Save
-			</button>
-			<strong v-if='message'>{{ message }}</strong>
-			<img v-if='isSaving == true'
-				class="wrap--nextgenthemes__loading-indicator"
-				src='<?php echo esc_url( get_admin_url() . '/images/wpspin_light-2x.gif' ); ?>'
-				alt='Loading indicator' />
-		</p>
-		<?php
-	}
 
-	private function print_reset_bottons(): void {
-		?>
-		<p>
-		<?php
-		foreach ( $this->sections as $key => $label ) {
-
-			if ( in_array( $key, self::$no_reset_sections, true ) ) {
-				continue;
-			}
-
-			?>
-				<button @click="resetOptions('<?php echo esc_attr( $key ); ?>')"
-					:disabled='isSaving'
-					class='button button--ngt-reset button-secondary'
-					v-show="sectionsDisplayed['<?php echo esc_attr( $key ); ?>']">
-				<?php
-				printf(
-					// translators: Options section
-					esc_html__( 'Reset %s section', 'advanced-responsive-video-embedder' ),
-					esc_html( $label )
-				);
-				?>
-				</button>
-				<?php
-		}
-		?>
-		</p>
-		<?php
-	}
 
 	public function print_admin_page(): void {
 
@@ -422,7 +339,6 @@ class Settings {
 			$this->slugged_namespace,
 			[
 				'options'    => $this->options,
-				'shortcode'  => '[arve url="" /]',
 				'message'    => '',
 			]
 		);
@@ -433,12 +349,10 @@ class Settings {
 		<div 
 			class="wrap wrap--nextgenthemes"
 			data-wp-interactive="<?= esc_attr( $this->slugged_namespace ); ?>"
-			data-wp-init="callbacks.init"
-			ddddata-wp-watch="callbacks.saveOptions"
-			<?= wp_interactivity_data_wp_context(
+			<?= data_wp_context(
 				[
 					'activeTabs' => $active_tabs,
-					'help'       => true,
+					'help'       => true
 				]
 			); ?>
 		>
@@ -469,7 +383,7 @@ class Settings {
 						data-wp-on--click="actions.resetOptionsSection"
 						data-wp-context='{ "section": "main" }'
 					>
-						Reset Main Section
+						Reset Main Options
 					</button>
 
 					<button
@@ -478,26 +392,17 @@ class Settings {
 						data-wp-on--click="actions.resetOptionsSection"
 						data-wp-context='{ "section": "pro" }'
 					>
-						Reset Pro Section
+						Reset Pro Options
 					</button>
 
 					<button
 						class="button button-secondary"
 						data-wp-bind--hidden="!state.isActiveSection"
 						data-wp-on--click="actions.resetOptionsSection"
-						<?= data_wp_context( [ 'section' => 'main' ] ); // phpcs:ignore ?>
+						data-wp-context='{ "section": "stickyVideos" }'
 					>
-						Reset Main Section
+						Reset Sticky Videos Options
 					</button>
-
-					<button
-						class="button button-secondary"
-						data-wp-bind--hidden="!state.isActiveSection"
-						data-wp-on--click="actions.resetOptionsSection"
-						data-wp-context='{ "section": "pro" }'
-					>
-						Reset Pro Section
-					</button>						
 
 					<?php
 					$prefix = str_replace( 'nextgenthemes_', '', $this->slugged_namespace );
@@ -506,20 +411,25 @@ class Settings {
 						$this->settings,
 						$this->sections,
 						$this->premium_sections,
-						$prefix,
 						$this->premium_url_prefix
 					);
+
+					foreach ( $this->sections as $key ) {
+
+						?>
+						<button
+							class="button button-secondary"
+							type="button"
+							data-wp-bind--hidden="state.isActiveSection"
+							data-wp-on--click="actions.resetOptionsSection"
+							data-wp-context='{ "section": "<?= esc_attr( $key ); ?>" }'
+						>
+							<?= esc_html( $this->sections[ $key ] ); ?>
+						</button>
+						<span data-wp-text="state.message"></span>
+						<?php
+					}
 					?>
-
-					<button
-						data-wp-bind--hidden="state.isActiveSection"
-						data-wp-on--click="actions.resetOptionsSection"
-						<?= data_wp_context( [ 'section' => 'main' ] ); // phpcs:ignore ?>
-					>
-						Reset Main Section
-					</button>
-					<span data-wp-text="state.message"></span>
-
 				</div>
 
 				<div class="ngt-settings-grid__sidebar">
@@ -536,6 +446,40 @@ class Settings {
 
 		<?php
 		echo wp_interactivity_process_directives( ob_get_clean() );
+	}
+
+	private function print_reset_buttons(): void {
+		?>
+		<p>
+		<?php
+		foreach ( $this->sections as $key => $label ) {
+
+			if ( in_array( $key, self::$no_reset_sections, true ) ) {
+				continue;
+			}
+
+			?>
+			<button
+				class="button button-secondary"
+				type="button"
+				data-wp-bind--hidden="state.isActiveSection"
+				data-wp-on--click="actions.resetOptionsSection"
+				data-wp-context='{ "section": "<?= esc_attr( $key ); ?>" }'
+			>
+				<?php
+				printf(
+					// translators: Options section
+					esc_html__( 'Reset %s section', 'advanced-responsive-video-embedder' ),
+					$label
+				);
+				?>
+			</button>
+			<span data-wp-text="state.message"></span>
+			<?php
+		}
+		?>
+		</p>
+		<?php
 	}
 
 	public function register_setting_page(): void {
