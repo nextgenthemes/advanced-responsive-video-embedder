@@ -16,6 +16,9 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			return 'valid' === state.options[ context.key + '_status' ];
 		},
 		isLongEnoughLicenseKey: () => {
+			l( state.options );
+			helpers.debugJson( state.options );
+
 			const context = getContext();
 			return state.options[ context.key ].length >= 32;
 		},

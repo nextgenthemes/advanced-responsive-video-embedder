@@ -363,7 +363,7 @@ class Settings {
 					<button
 						class="nav-tab"
 						data-wp-on--click="actions.changeTab"
-						data-wp-class--active="context.activeTabs.<?= esc_attr( $k ); ?>"
+						data-wp-class--nav-tab-active="context.activeTabs.<?= esc_attr( $k ); ?>"
 						<?= data_wp_context( [ 'section' => $k ] ); // phpcs:ignore ?>
 					>
 						<?= esc_html( $v); ?>
@@ -375,37 +375,8 @@ class Settings {
 
 				<div class="ngt-settings-grid__content">
 
-					<?php do_action( $this->slashed_namespace . '/admin/settings/content', $this ); ?>
-
-					<button
-						class="button button-secondary"
-						data-wp-bind--hidden="!state.isActiveSection"
-						data-wp-on--click="actions.resetOptionsSection"
-						data-wp-context='{ "section": "main" }'
-					>
-						Reset Main Options
-					</button>
-
-					<button
-						class="button button-secondary"
-						data-wp-bind--hidden="!state.isActiveSection"
-						data-wp-on--click="actions.resetOptionsSection"
-						data-wp-context='{ "section": "pro" }'
-					>
-						Reset Pro Options
-					</button>
-
-					<button
-						class="button button-secondary"
-						data-wp-bind--hidden="!state.isActiveSection"
-						data-wp-on--click="actions.resetOptionsSection"
-						data-wp-context='{ "section": "stickyVideos" }'
-					>
-						Reset Sticky Videos Options
-					</button>
-
 					<?php
-					$prefix = str_replace( 'nextgenthemes_', '', $this->slugged_namespace );
+					do_action( $this->slashed_namespace . '/admin/settings/content', $this );
 
 					Admin\print_settings_blocks(
 						$this->settings,
@@ -414,21 +385,7 @@ class Settings {
 						$this->premium_url_prefix
 					);
 
-					foreach ( $this->sections as $key ) {
-
-						?>
-						<button
-							class="button button-secondary"
-							type="button"
-							data-wp-bind--hidden="state.isActiveSection"
-							data-wp-on--click="actions.resetOptionsSection"
-							data-wp-context='{ "section": "<?= esc_attr( $key ); ?>" }'
-						>
-							<?= esc_html( $this->sections[ $key ] ); ?>
-						</button>
-						<span data-wp-text="state.message"></span>
-						<?php
-					}
+					$this->print_reset_buttons();
 					?>
 				</div>
 
@@ -462,7 +419,7 @@ class Settings {
 			<button
 				class="button button-secondary"
 				type="button"
-				data-wp-bind--hidden="state.isActiveSection"
+				data-wp-bind--hidden="!state.isActiveSection"
 				data-wp-on--click="actions.resetOptionsSection"
 				data-wp-context='{ "section": "<?= esc_attr( $key ); ?>" }'
 			>
