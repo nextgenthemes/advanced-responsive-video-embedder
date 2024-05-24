@@ -3,6 +3,12 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-05-24 10.1.0 ###
+* Improved: ARVE own video IDs are no longer random, this is better for SEO and other things.
+* Improved: ARVE own video IDs are no longer random, this is better for SEO and other things.
+* New: Support for [ok.ru](http://ok.ru).
+* New: Rutube video url detection. (only embed code worked before).
+
 ### 2024-05-23 10.0.10 ###
 * Fix: Videos with quotes in the title/description caused json_decode syntax error.
 
