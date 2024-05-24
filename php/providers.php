@@ -386,7 +386,7 @@
 	'okru' => array(
 		'name'        => 'ok.ru',
 		'oembed'      => false,
-		'regex'       => '//ok\.ru\/video(embed)?\/(?<id>[a-z0-9]+)/i',
+		'regex'       => '#//ok\.ru/video(embed)?/(?<id>[a-z0-9]+)#i',
 		'embed_url'   => 'https://ok.ru/videoembed/%s',
 		'tests'       => array(
 			0 => array(
