@@ -67,7 +67,7 @@ function validate_url( string $arg_name, string $url ): string {
 		arve_errors()->add( "validate_url $arg_name", $error_msg );
 	}
 
-	return $url;
+	return (string) $url;
 }
 
 /**
