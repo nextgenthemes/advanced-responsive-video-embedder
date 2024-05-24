@@ -59,7 +59,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 #### Supported Providers ####
 
 [All providers with iframe embed codes](https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding)
-Alugha, Archive.org, Banned.video, Bitchute, Brightcove, Brighteon, cantcensortruth.com, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Gab TV, Google Drive, mp4 or webm video files, ARVE general iframe embed, IGN, IMDB, Kickstarter, kla.tv, Livestream.com, Mail.ru, Metacafe, myspace, ooyala, v.qq.com, Rumble.com, RuTube.ru, Snotr, TED Talks, TikTok, Twitch, Viddler, Vimeo, VK, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist, Kick
+Alugha, Archive.org, Banned.video, Bitchute, Brightcove, Brighteon, cantcensortruth.com, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Gab TV, Google Drive, mp4 or webm video files, ARVE general iframe embed, IGN, IMDB, Kickstarter, kla.tv, Livestream.com, Mail.ru, Metacafe, myspace, ooyala, v.qq.com, Rumble.com, ok.ru, RuTube.ru, Snotr, TED Talks, TikTok, Twitch, Viddler, Vimeo, VK, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist, Kick
 ### Reviews ###
 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Great plugin, great support ####
@@ -192,6 +192,12 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2024-05-24 10.1.0 ###
+* Improved: ARVE own video IDs are no longer random, this is better for SEO and other things.
+* Improved: ARVE own video IDs are no longer random, this is better for SEO and other things.
+* New: Support for [ok.ru](http://ok.ru).
+* New: Rutube video url detection. (only embed code worked before).
 
 ### 2024-05-23 10.0.10 ###
 * Fix: Videos with quotes in the title/description caused json_decode syntax error.
