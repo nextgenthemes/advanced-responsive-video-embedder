@@ -195,7 +195,25 @@ class Video {
 		$this->set_prop( 'mode', arg_mode( $this->mode ) );
 		$this->set_prop( 'autoplay', $this->arg_autoplay( $this->autoplay ) );
 		$this->set_prop( 'src', $this->arg_iframe_src( $this->src ) );
-		$this->set_prop( 'uid', sanitize_key( uniqid( "arve-{$this->provider}-{$this->id}", true ) ) );
+		$this->set_prop( 'uid',  $this->create_uid() );
+	}
+
+	private function create_uid(): string {
+		static $ids = [];
+
+		$id = sanitize_key( 'arve-' . $this->provider . '-' . $this->id );
+
+		if ( empty( $ids[ $id ] ) ) { // counter
+			$ids[ $id ] = 1;
+		} else {
+			++$ids[ $id ];
+		}
+
+		if ( $ids[ $id ] > 1 ) {
+			$id .= '-' . $ids[ $id ];
+		}
+
+		return $id;
 	}
 
 	/**
