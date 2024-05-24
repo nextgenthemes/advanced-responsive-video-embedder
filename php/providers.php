@@ -383,15 +383,35 @@
 		'auto_thumbnail' => true,
 		'auto_title'     => true,
 	),
+	'okru' => array(
+		'name'        => 'ok.ru',
+		'oembed'      => false,
+		'regex'       => '//ok\.ru\/video(embed)?\/(?<id>[a-z0-9]+)/i',
+		'embed_url'   => 'https://ok.ru/videoembed/%s',
+		'tests'       => array(
+			0 => array(
+				'url' => 'https://ok.ru/video/6571197270599',
+				'id'  => '6571197270599',
+			),
+			1 => array(
+				'url' => '//ok.ru/videoembed/6571197270599',
+				'id'  => '6571197270599',
+			),
+		),
+	),
 	'rutube' => array(
 		'name'        => 'RuTube.ru',
 		'oembed'      => false,
-		'regex'       => '#https?://(www\\.)?rutube\\.ru/play/embed/(?<id>[0-9]+)#i',
+		'regex'       => '#//(www\\.)?rutube\\.ru\/(video|play/embed)/(?<id>[a-z0-9]+)#i',
 		'embed_url'   => 'https://rutube.ru/play/embed/%s',
 		'tests'       => array(
 			0 => array(
 				'url' => 'https://rutube.ru/play/embed/9822149',
 				'id'  => '9822149',
+			),
+			1 => array(
+				'url' => 'https://rutube.ru/video/f9f835e0f550443681d7638eaa16cbad/',
+				'id'  => 'f9f835e0f550443681d7638eaa16cbad',
 			),
 		),
 		'embed_codes' => array(
@@ -480,7 +500,7 @@
 	'vimeo' => array(
 		'name'           => 'Vimeo',
 		'oembed'         => true,
-		'regex'          => '#https?://(player\.)?vimeo\.com/((video/)|(channels/[a-z]+/)|(groups/[a-z]+/videos/))?(?<id>[0-9]+)(/(?<vimeo_secret>[0-9a-z]+))?#i',
+		'regex'          => '#https?://(player\\.)?vimeo\\.com/((video/)|(channels/[a-z]+/)|(groups/[a-z]+/videos/))?(?<id>[0-9]+)(/(?<vimeo_secret>[0-9a-z]+))?#i',
 		'embed_url'      => 'https://player.vimeo.com/video/%s',
 		'rebuild_url'    => 'https://vimeo.com/%s',
 		'default_params' => 'transparent=0&title=1&byline=0&portrait=0',
