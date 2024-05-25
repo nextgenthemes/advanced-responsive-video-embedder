@@ -1,9 +1,7 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-use Nextgenthemes\WP\Settings;
-use Nextgenthemes\WP;
-use Exception;
+use function Nextgenthemes\WP\nextgenthemes_settings_instance;
 
 function options(): array {
 	return Base::get_instance()->get_settings_instance()->get_options();
@@ -23,8 +21,8 @@ function settings_sections(): array {
 		'main'          => __( 'Main', 'advanced-responsive-video-embedder' ),
 		'pro'           => __( 'Pro', 'advanced-responsive-video-embedder' ),
 		'privacy'       => __( 'Extra Privacy', 'advanced-responsive-video-embedder' ),
-		'sticky-videos' => __( 'Sticky Videos', 'advanced-responsive-video-embedder' ),
-		'random-video'  => __( 'Random Video', 'advanced-responsive-video-embedder' ),
+		'sticky_videos' => __( 'Sticky Videos', 'advanced-responsive-video-embedder' ),
+		'random_video'  => __( 'Random Video', 'advanced-responsive-video-embedder' ),
 		'urlparams'     => __( 'URL Parameters', 'advanced-responsive-video-embedder' ),
 		'html5'         => __( 'Video Files', 'advanced-responsive-video-embedder' ),
 		'debug'         => __( 'Debug Info', 'advanced-responsive-video-embedder' ),
@@ -34,7 +32,7 @@ function settings_sections(): array {
 
 function init_nextgenthemes_settings(): void {
 
-	WP\nextgenthemes_settings_instance(
+	nextgenthemes_settings_instance(
 		plugins_url( '', PLUGIN_FILE ),
 		PLUGIN_DIR
 	);
@@ -442,7 +440,7 @@ function settings_data(): array {
 		'sticky' => array(
 			'type'        => 'select',
 			'default'     => true,
-			'tag'         => 'sticky-videos',
+			'tag'         => 'sticky_videos',
 			'option'      => true,
 			'shortcode'   => true,
 			'label'       => __( 'Sticky', 'advanced-responsive-video-embedder' ),
@@ -452,7 +450,7 @@ function settings_data(): array {
 		'sticky_width' => array(
 			'type'        => 'string',
 			'default'     => '500px',
-			'tag'         => 'sticky-videos',
+			'tag'         => 'sticky_videos',
 			'shortcode'   => false,
 			'option'      => true,
 			'label'       => __( 'Sticky Video Width', 'advanced-responsive-video-embedder' ),
@@ -461,7 +459,7 @@ function settings_data(): array {
 		'sticky_max_width' => array(
 			'type'        => 'string',
 			'default'     => '40vw',
-			'tag'         => 'sticky-videos',
+			'tag'         => 'sticky_videos',
 			'shortcode'   => false,
 
 			'option'      => true,
@@ -472,7 +470,7 @@ function settings_data(): array {
 		'sticky_gap' => array(
 			'type'        => 'string',
 			'default'     => '0.7rem',
-			'tag'         => 'sticky-videos',
+			'tag'         => 'sticky_videos',
 			'shortcode'   => false,
 			'option'      => true,
 
@@ -482,7 +480,7 @@ function settings_data(): array {
 		'sticky_navbar_selector' => array(
 			'type'        => 'string',
 			'default'     => '.navbar--primary',
-			'tag'         => 'sticky-videos',
+			'tag'         => 'sticky_videos',
 			'shortcode'   => false,
 			'option'      => true,
 
@@ -493,7 +491,7 @@ function settings_data(): array {
 			'type'        => 'select',
 			'default'     => true,
 			'options'     => $def_bool_options,
-			'tag'         => 'sticky-videos',
+			'tag'         => 'sticky_videos',
 			'shortcode'   => true,
 
 			'option'      => true,
@@ -502,7 +500,7 @@ function settings_data(): array {
 			'description' => __( 'Stick the video to the top of screens below 768px width in portrait orientation. The Video will always be as wide as the screen ignoring the Stick Width and Stick Maxwidth settings.', 'advanced-responsive-video-embedder' ),
 		),
 		'sticky_position'               => array(
-			'tag'         => 'sticky-videos',
+			'tag'         => 'sticky_videos',
 			'default'     => 'bottom-right',
 			'label'       => __( 'Sticky Video Position', 'advanced-responsive-video-embedder' ),
 			'type'        => 'select',
@@ -598,7 +596,7 @@ function settings_data(): array {
 			'description' => __( 'Privacy enhanced mode, will NOT disable cookies but only sets them when a user starts to play a video.', 'advanced-responsive-video-embedder' ),
 		),
 		'vimeo_api_id' => array(
-			'tag'                 => 'random-video',
+			'tag'                 => 'random_video',
 			'default'             => '',
 			'shortcode'           => false,
 			'option'              => true,
@@ -614,7 +612,7 @@ function settings_data(): array {
 			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		),
 		'vimeo_api_secret' => array(
-			'tag'                 => 'random-video',
+			'tag'                 => 'random_video',
 			'default'             => '',
 			'shortcode'           => false,
 			'option'              => true,
@@ -630,7 +628,7 @@ function settings_data(): array {
 			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		),
 		'vimeo_api_token' => array(
-			'tag'                 => 'random-video',
+			'tag'                 => 'random_video',
 			'default'             => '',
 			'shortcode'           => false,
 			'option'              => true,
@@ -646,7 +644,7 @@ function settings_data(): array {
 			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		),
 		'random_video_url' => array(
-			'tag'                 => 'random-video',
+			'tag'                 => 'random_video',
 			'default'             => '',
 			'placeholder'         => 'https://www.youtube.com/playlist?list=PL...',
 			'option'              => false,
@@ -662,7 +660,7 @@ function settings_data(): array {
 			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		),
 		'random_video_urls' => array(
-			'tag'                 => 'random-video',
+			'tag'                 => 'random_video',
 			'default'             => '',
 			'placeholder'         => 'https://youtu.be/abc, https://vimeo.com/123',
 			'option'              => false,

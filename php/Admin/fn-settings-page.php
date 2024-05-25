@@ -61,13 +61,13 @@ function settings_content(): void {
 	<?php endif; ?>
 
 	<?php if ( ! is_plugin_active( 'arve-stick-videos/arve-sticky-videos.php' ) ) : ?>
-		<p data-wp-bind--hidden="!context.activeTabs.stickyVideos">
+		<p data-wp-bind--hidden="!context.activeTabs.sticky_videos">
 			<?= pro_message( 'ARVE Sticky Videos', 'arve-stick-videos' ); // phpcs:ignore ?>
 		</p>
 	<?php endif; ?>
 
 	<?php if ( ! is_plugin_active( 'arve-random-video/arve-random-video.php' ) ) : ?>
-		<p data-wp-bind--hidden="!context.activeTabs.randomVideo">
+		<p data-wp-bind--hidden="!context.activeTabs.random_video">
 			<?= pro_message( 'ARVE Random Video', 'arve-random-video' ); // phpcs:ignore ?>
 		</p>
 	<?php endif; ?>
@@ -79,7 +79,7 @@ function pro_message( string $addon_name, string $slug ): string {
 	return wp_kses(
 		sprintf(
 			// Translators: Addon Name
-			__( '<strong>%s is not installed.</strong> You may already set options for this addon but they will only take effect if its installed later.', 'advanced-responsive-video-embedder' ),
+			__( '<strong>%s is not active.</strong> You may already set options for this addon but they will only take effect if its installed/activated later.', 'advanced-responsive-video-embedder' ),
 			sprintf( '<a href="%s">%s</a>', 'https://nextgenthemes.com/plugins/' . $slug . '/', $addon_name )
 		),
 		array(
@@ -167,21 +167,6 @@ function print_arve_news(): void {
 		?>
 	</div>
 	<?php
-}
-
-function filter_save_options( array $options ): array {
-
-	$action            = json_decode( $options['action'] );
-	$options['action'] = '';
-
-	if ( $action ) {
-		$product_id  = WP\get_products()[ $action->product ]['id'];
-		$product_key = $options[ $action->product ];
-
-		$options[ $action->product . '_status' ] = WP\api_action( $product_id, $product_key, $action->action );
-	}
-
-	return $options;
 }
 
 // unused, trigger re-caching is rebuild is probably better, also there this leaves the times in the DB so will this even work?

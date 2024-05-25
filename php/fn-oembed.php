@@ -4,7 +4,8 @@ namespace Nextgenthemes\ARVE;
 use DateTime;
 use Nextgenthemes\WP;
 
-use function Nextgenthemes\WP\remove_url_query;
+use function Nextgenthemes\WP\get_attribute_from_html_tag;
+use function Nextgenthemes\WP\valid_url;
 
 /**
  * Info: https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-oembed.php
@@ -116,7 +117,7 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 
 function extract_oembed_json( string $html, string $url ): ?object {
 
-	$data = WP\get_attribute_from_html_tag( array( 'tag_name' => 'template' ), 'data-arve', $html );
+	$data = get_attribute_from_html_tag( array( 'tag_name' => 'template' ), 'data-arve', $html );
 
 	if ( empty( $data ) ) {
 		return null;
@@ -170,7 +171,7 @@ function oembed_html2src( object $data ) {
 
 	if ( 'TikTok' === $data->provider_name ) {
 
-		$tiktok_video_id = WP\get_attribute_from_html_tag( array( 'class' => 'tiktok-embed' ), 'data-video-id', $data->html );
+		$tiktok_video_id = get_attribute_from_html_tag( array( 'class' => 'tiktok-embed' ), 'data-video-id', $data->html );
 
 		if ( $tiktok_video_id ) {
 			return 'https://www.tiktok.com/embed/v2/' . $tiktok_video_id;
@@ -179,7 +180,7 @@ function oembed_html2src( object $data ) {
 		}
 	} elseif ( 'Facebook' === $data->provider_name ) {
 
-		$facebook_video_url = WP\get_attribute_from_html_tag( array( 'class' => 'fb-video' ), 'data-href', $data->html );
+		$facebook_video_url = get_attribute_from_html_tag( array( 'class' => 'fb-video' ), 'data-href', $data->html );
 
 		if ( $facebook_video_url ) {
 			return 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $facebook_video_url );
@@ -187,11 +188,11 @@ function oembed_html2src( object $data ) {
 			return new \WP_Error( 'facebook-video-id', __( 'Failed to extract facebook video url from this html', 'advanced-responsive-video-embedder' ), $data->html );
 		}
 	} else {
-		$iframe_src = WP\get_attribute_from_html_tag( array( 'tag_name' => 'iframe' ), 'src', $data->html );
+		$iframe_src = get_attribute_from_html_tag( array( 'tag_name' => 'iframe' ), 'src', $data->html );
 
 		if ( $iframe_src ) {
 
-			if ( WP\valid_url( $iframe_src) ) {
+			if ( valid_url( $iframe_src) ) {
 				return $iframe_src;
 			} else {
 				return new \WP_Error( 'facebook-video-id', __( 'Invalid iframe src url', 'advanced-responsive-video-embedder' ), $data->html, $iframe_src );
