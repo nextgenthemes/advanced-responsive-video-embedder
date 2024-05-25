@@ -9,18 +9,37 @@ if ( ! namespace ) {
 	console.log( 'no namespace' ); // eslint-disable-line
 }
 
+// interface optionContext {
+// 	section: string;
+// 	option_key: string;
+// 	edd_item_id: string;
+// 	edd_action: string;
+// 	edd_store_url: string;
+// 	activeTabs: { [ key: string ]: boolean };
+// }
+
+// interface stateInterface {
+// 	options: Record< string, string | number | boolean >;
+// 	help: boolean;
+// 	dialog: HTMLDialogElement;
+// 	isSaving: boolean;
+// 	message: string;
+// 	shortcode: string;
+// 	debug: string;
+// }
+
 const { state, actions, callbacks, helpers } = store( namespace, {
 	state: {
 		isValidLicenseKey: () => {
 			const context = getContext();
-			return 'valid' === state.options[ context.key + '_status' ];
-		},
-		isLongEnoughLicenseKey: () => {
-			l( state.options );
-			helpers.debugJson( state.options );
 
+			helpers.debugJson( { st: state.options[ context.option_key + '_status' ] } );
+
+			return 'valid' === state.options[ context.option_key + '_status' ];
+		},
+		is32charactersLong: () => {
 			const context = getContext();
-			return state.options[ context.key ].length >= 32;
+			return state.options[ context.option_key ].length === 32;
 		},
 		get isActiveSection() {
 			const context = getContext();
@@ -34,14 +53,12 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 	},
 	actions: {
 		toggleHelp: () => {
-			context.help = ! context.help;
+			state.help = ! state.help;
 		},
 		openShortcodeDialog: () => {
 			state.dialog = document.querySelector(
 				'dialog[data-wp-interactive="nextgenthemes_arve_dialog"]'
 			);
-			l( 'dialog', state.dialog );
-
 			state.dialog.showModal();
 		},
 		insertShortcode: () => {
@@ -65,9 +82,9 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			const context = getContext();
 
 			if ( 'arveUrl' in event.target.dataset ) {
-				helpers.extractFromEmbedCode( context, event.target.value );
+				helpers.extractFromEmbedCode( event.target.value );
 			} else {
-				state.options[ context.key ] = event.target.value;
+				state.options[ context.option_key ] = event.target.value;
 			}
 
 			if ( 'nextgenthemes_arve_dialog' !== namespace ) {
@@ -78,7 +95,7 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			l( 'checkboxChange' );
 
 			const context = getContext();
-			state.options[ context.key ] = event.target.checked;
+			state.options[ context.option_key ] = event.target.checked;
 
 			if ( 'nextgenthemes_arve_dialog' !== namespace ) {
 				actions.saveOptions();
@@ -97,7 +114,7 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 					const uploadedImage = image.state().get( 'selection' ).first();
 					// We convert uploadedImage to a JSON object to make accessing it easier
 					const attachmentID = uploadedImage.toJSON().id;
-					state.options[ context.key ] = attachmentID;
+					state.options[ context.option_key ] = attachmentID;
 				} );
 		},
 		deleteOembedCache: () => {
@@ -181,7 +198,7 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 					state.isSaving = false;
 				} );
 		},
-		restCall: ( restRoute, body ) => {
+		restCall: ( restRoute, body, refreshAfter = false ) => {
 			if ( state.isSaving ) {
 				state.message = 'trying to save too fast';
 				return;
@@ -209,13 +226,17 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 				} )
 				.then( ( message ) => {
 					state.message = message;
-					setTimeout( () => ( state.message = '' ), 2500 );
+					setTimeout( () => ( state.message = '' ), 666 );
 				} )
 				.catch( ( error ) => {
 					state.message = error.message;
 				} )
 				.finally( () => {
 					state.isSaving = false;
+
+					if ( refreshAfter ) {
+						window.location.reload();
+					}
 				} );
 		},
 		eddLicenseAction() {
@@ -232,11 +253,11 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			const context = getContext();
 
 			const bodyToStringify = {
-				option_key: context.key,
+				option_key: context.option_key,
 				edd_store_url: context.edd_store_url, // EDD Store URL
 				edd_action: context.edd_action, // edd api arg has same edd_ prefix
 				item_id: context.edd_item_id, // edd api arg WITHOUT edd_ prefix
-				license: state.options[ context.key ], // edd api arg WITHOUT edd_ prefix
+				license: state.options[ context.option_key ], // edd api arg WITHOUT edd_ prefix
 			};
 
 			// Make a POST request to the REST API route that we registered in our PHP file
@@ -254,8 +275,8 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 					}
 					return response.json();
 				} )
-				.then( () => {
-					state.message = 'Options saved';
+				.then( ( response ) => {
+					state.message = response;
 					setTimeout( () => ( state.message = '' ), 1000 );
 				} )
 				.catch( ( error ) => {
@@ -290,50 +311,7 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 		},
 	},
 	callbacks: {
-		saveOptions: () => {
-			l( 'saveOptionsReal' );
-
-			if ( state.isSaving ) {
-				state.message = 'trying to save too fast';
-				return;
-			}
-
-			// set the state so that another save cannot happen while processing
-			state.isSaving = true;
-			state.message = 'Saving...';
-
-			const config = getConfig();
-			const context = getContext();
-
-			// Make a POST request to the REST API route that we registered in our PHP file
-			fetch( config.restUrl + '/save', {
-				method: 'POST',
-				body: JSON.stringify( state.options ),
-				headers: {
-					'Content-Type': 'application/json',
-					'X-WP-Nonce': config.nonce,
-				},
-			} )
-				.then( ( response ) => {
-					if ( ! response.ok ) {
-						throw new Error( 'Network response was not ok' );
-					}
-					return response.json();
-				} )
-				.then( () => {
-					state.message = 'Options saved';
-					// setTimeout( () => ( state.message = '' ), 2500 );
-					//state.isSaving = false;
-				} )
-				.catch( ( error ) => {
-					state.message = error.message;
-				} );
-			// .finally( () => {
-			// 	state.isSaving = false;
-			// } );
-		},
 		updateShortcode() {
-			const context = getContext();
 			let out = '';
 
 			for ( const [ key, value ] of Object.entries( state.options ) ) {
@@ -374,8 +352,23 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 		},
 	},
 	helpers: {
-		debugJson( data ) {
+		debugJson: ( data ) => {
 			state.debug = JSON.stringify( data, null, 2 );
+		},
+		extractFromEmbedCode: ( url ) => {
+			const iframe = domParser.parseFromString( url, 'text/html' ).querySelector( 'iframe' );
+			if ( iframe && iframe.getAttribute( 'src' ) ) {
+				url = iframe.getAttribute( 'src' );
+
+				if ( iframe.width && iframe.height ) {
+					const ratio = aspectRatio( iframe.width, iframe.height );
+
+					if ( '16:9' !== ratio ) {
+						state.options.aspect_ratio = ratio;
+					}
+				}
+			}
+			state.options.url = url;
 		},
 	},
 } );
@@ -402,22 +395,6 @@ function debounce( func, wait, immediate ) {
 			func.apply( context, args );
 		}
 	};
-}
-
-function extractFromEmbedCode( context, url ) {
-	const iframe = domParser.parseFromString( url, 'text/html' ).querySelector( 'iframe' );
-	if ( iframe && iframe.getAttribute( 'src' ) ) {
-		url = iframe.getAttribute( 'src' );
-
-		if ( iframe.width && iframe.height ) {
-			const ratio = aspectRatio( iframe.width, iframe.height );
-
-			if ( '16:9' !== ratio ) {
-				state.options.aspect_ratio = ratio;
-			}
-		}
-	}
-	state.options.url = url;
 }
 
 /**

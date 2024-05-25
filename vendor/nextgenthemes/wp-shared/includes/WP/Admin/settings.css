@@ -118,6 +118,12 @@
 	}
 }
 
+input.text-large--ngt-key {
+	/* https://github.com/twbs/bootstrap/blob/72d3b6efc4b92e83a4abca6f5bc0cd7e6fd25931/scss/_variables.scss#L607C31-L607C115 */
+	font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+	width: 21em;
+}
+
 .ngt-label-wrap {
 	display: block;
 	margin-bottom: 3px;

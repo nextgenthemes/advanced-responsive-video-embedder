@@ -63,15 +63,6 @@ function nextgenthemes_settings(): array {
 		);
 	}
 
-	$settings['action'] = array(
-		'tag'     => 'keys',
-		'default' => '',
-		'option'  => true,
-		'label'   => esc_html__( 'Action', 'advanced-responsive-video-embedder' ),
-		'type'    => 'string',
-		'ui'      => 'hidden',
-	);
-
 	return $settings;
 }
 

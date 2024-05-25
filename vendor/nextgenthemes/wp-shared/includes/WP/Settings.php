@@ -85,16 +85,16 @@ class Settings {
 
 	private function set_default_options(): void {
 
-		foreach ( $this->settings as $key => $value ) {
+		foreach ( $this->settings as $key => $setting ) {
 
 			$type = $this->get_php_type_from_setting( $key );
 
-			if ( gettype( $value['default'] ) !== $type ) {
+			if ( gettype( $setting['default'] ) !== $type ) {
 				throw new Exception( "Default value for '$key' has wring type" );
 			}
 
-			$this->options_defaults[ $key ] = $value['default'];
-			$this->options_defaults_by_section[ $value['tag'] ][$key] = $value['default'];
+			$this->options_defaults[ $key ] = $setting['default'];
+			$this->options_defaults_by_section[ $setting['tag'] ][$key] = $setting['default'];
 		}
 	}
 
@@ -174,12 +174,6 @@ class Settings {
 		$options = array_intersect_key( $options, $this->options_defaults );
 
 		update_option( $this->slugged_namespace, $options );
-	}
-
-	public function reset_options( string $section ): void {
-
-
-
 	}
 
 	public function register_rest_route(): void {
@@ -297,23 +291,9 @@ class Settings {
 			return;
 		}
 
-		$settings_data = array(
-			'options'          => $this->options,
-			'home_url'         => get_home_url(),
-			'restUrl'          => esc_url( get_rest_url( null, $this->rest_namespace ) ),
-			'nonce'            => wp_create_nonce( 'wp_rest' ),
-			'settings'         => $this->settings,
-			'sections'         => $this->sections,
-			'premiumSections'  => $this->premium_sections,
-			'premiumUrlPrefix' => $this->premium_url_prefix,
-			'definedKeys'      => $this->defined_keys,
-		);
-
 		wp_enqueue_script_module( 'nextgenthemes-settings' );
 		wp_enqueue_style( 'nextgenthemes-settings' );
 	}
-
-
 
 	public function print_admin_page(): void {
 
@@ -408,33 +388,33 @@ class Settings {
 	private function print_reset_buttons(): void {
 		?>
 		<p>
-		<?php
-		foreach ( $this->sections as $key => $label ) {
-
-			if ( in_array( $key, self::$no_reset_sections, true ) ) {
-				continue;
-			}
-
-			?>
-			<button
-				class="button button-secondary"
-				type="button"
-				data-wp-bind--hidden="!state.isActiveSection"
-				data-wp-on--click="actions.resetOptionsSection"
-				data-wp-context='{ "section": "<?= esc_attr( $key ); ?>" }'
-			>
-				<?php
-				printf(
-					// translators: Options section
-					esc_html__( 'Reset %s section', 'advanced-responsive-video-embedder' ),
-					$label
-				);
-				?>
-			</button>
-			<span data-wp-text="state.message"></span>
 			<?php
-		}
-		?>
+			foreach ( $this->sections as $key => $label ) {
+
+				if ( in_array( $key, self::$no_reset_sections, true ) ) {
+					continue;
+				}
+
+				?>
+				<button
+					class="button button-secondary"
+					type="button"
+					data-wp-bind--hidden="!state.isActiveSection"
+					data-wp-on--click="actions.resetOptionsSection"
+					data-wp-context='{ "section": "<?= esc_attr( $key ); ?>" }'
+				>
+					<?php
+					printf(
+						// translators: Options section
+						esc_html__( 'Reset %s section', 'advanced-responsive-video-embedder' ),
+						$label
+					);
+					?>
+				</button>
+				<?php
+			}
+			?>
+			<span data-wp-text="state.message"></span>
 		</p>
 		<?php
 	}

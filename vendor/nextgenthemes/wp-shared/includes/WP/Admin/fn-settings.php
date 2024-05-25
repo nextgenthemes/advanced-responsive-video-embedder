@@ -19,8 +19,6 @@ const DESCRIPTION_ALLOWED_HTML = array(
 	'code'   => array(),
 );
 
-
-
 function print_boolean_field( string $key, array $option ): void {
 	?>
 	<p>
@@ -170,11 +168,11 @@ function print_settings_blocks(
 			unset($setting['options']['']);
 		}
 
- 		$setting['ui']       = $setting['ui'] ?? null;
-		$setting['key']      = $key;
-		$setting['section']  = WP\camel_case( $setting['tag'] );
-		$setting['premium']  = in_array( $setting['tag'], $premium_sections, true );
-		$setting['tag_name'] = $sections[ $setting['tag'] ];
+ 		$setting['ui']         = $setting['ui'] ?? null;
+		$setting['option_key'] = $key;
+		$setting['section']    = $setting['tag'];
+		$setting['premium']    = in_array( $setting['tag'], $premium_sections, true );
+		$setting['tag_name']   = $sections[ $setting['tag'] ];
 
 		if ( 'hidden' === $setting['ui'] ) {
 			continue;
@@ -208,7 +206,7 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 							data-ngt-option="<?= esc_attr( $key ); ?>"
 							data-wp-bind--value="state.options.<?= esc_attr( $key ); ?>"
 							data-wp-on--change="actions.inputChange"
-							data-wp-bind--disabled="state.isSaving"
+							data-wp-bind--readonly="state.isSaving"
 						>
 							<?php foreach ( $setting['options'] as $k => $v ) : ?>
 								<option value="<?= esc_attr( $k ); ?>"><?= esc_html( $v ); ?></option>
@@ -249,9 +247,12 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 									'data-wp-context'     => ( 'url' === $key ) ? 'url' : false,
 									'data-wp-bind--value' => "state.options.$key",
 									'placeholder'         => $setting['placeholder'] ?? false,
-									'class'               => 'large-text',
-									'style'               => ( 'license_key' === $setting['ui'] ) ? 'max-width: 350px;' : false,
-									'readonly'            => ( 'license_key' === $setting['ui'] && get_defined_key( $key ) ) ? 'readonly' : false,
+									'class'               => ( 'license_key' === $setting['ui'] ) ?
+										'large-text text-large--ngt-key' :
+										'large-text',
+									'maxlength'           => ( 'license_key' === $setting['ui'] ) ? 32 : false,
+									'data-wp-bind--readonly' => 'state.isSaving',
+									'readonly'               => ( 'license_key' === $setting['ui'] && get_defined_key( $key ) ) ? 'readonly' : false,
 								)
 							)
 						);
@@ -300,26 +301,29 @@ function license_key_ui( string $key ): void {
 
 	?>
 	<button
+		type="button"
+		data-wp-context='{ "edd_action": "deactivate_license" }'
 		data-wp-on--click="actions.eddLicenseAction"
 		data-wp-bind--hidden="!state.isValidLicenseKey"
 		class="button button-secondary"
-		data-wp-context='( { "edd_action": "deactivate_license" } )'
 	>
 		Deactivate
 	</button>
 	<button
+		type="button"
+		data-wp-context='{ "edd_action": "activate_license" }'
 		data-wp-on--click="actions.eddLicenseAction"
 		data-wp-bind--hidden="state.isValidLicenseKey"
 		class="button button-secondary"
-		data-wp-context='( { "edd_action": "activate_license" } )'
 	>
 		Activate
 	</button>
 	<button
+		type="button"
+		data-wp-context='{ "edd_action": "check_license" }'
 		data-wp-on--click="actions.eddLicenseAction"
-		data-wp-bind--hidden="!state.isLongEnoughLicenseKey"
+		data-wp-bind--hidden="!state.is32charactersLong"
 		class="button button-secondary"
-		data-wp-context='( { "edd_action": "check_license" } )'
 	>
 		Check Status
 	</button>
