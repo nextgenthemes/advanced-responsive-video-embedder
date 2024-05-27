@@ -17,6 +17,7 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 		);
 		$this->assertStringNotContainsString( 'Error', $html );
 		$this->assertStringContainsString( '?start=3662', $html );
+		$this->assertStringContainsString( 'referrerpolicy="strict-origin-when-cross-origin"', $html );
 	}
 
 	/**
@@ -31,6 +32,7 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 		);
 		$this->assertStringNotContainsString( 'Error', $html );
 		$this->assertStringContainsString( '?start=3602', $html );
+		$this->assertStringContainsString( 'referrerpolicy="strict-origin-when-cross-origin"', $html );
 	}
 
 	/**
@@ -45,6 +47,7 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 		);
 		$this->assertStringNotContainsString( 'Error', $html );
 		$this->assertStringContainsString( '?start=62', $html );
+		$this->assertStringContainsString( 'referrerpolicy="strict-origin-when-cross-origin"', $html );
 	}
 
 	/**
@@ -60,6 +63,7 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 
 		$this->assertStringNotContainsString( 'Error', $html );
 		$this->assertStringContainsString( '?start=1621', $html );
+		$this->assertStringContainsString( 'referrerpolicy="strict-origin-when-cross-origin"', $html );
 	}
 
 	/**
@@ -91,5 +95,6 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 		$this->assertStringContainsString( '/videoseries', $html );
 		$this->assertStringNOTContainsString( 'playlist=', $html );
 		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringContainsString( 'referrerpolicy="strict-origin-when-cross-origin"', $html );
 	}
 }

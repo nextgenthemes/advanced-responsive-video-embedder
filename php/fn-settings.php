@@ -811,11 +811,11 @@ function settings_data(): array {
 		'allow_referrer' => array(
 			'label'       => __( 'Allow domain restricted videos (referrerpolicy)', 'advanced-responsive-video-embedder' ),
 			'tag'         => 'main',
-			'default'     => 'vimeo, rumble',
+			'default'     => 'youtube, vimeo, rumble',
 			'type'        => 'string',
 			'option'      => true,
 			'shortcode'   => false,
-			'description' => __( 'Comma separated list of lowercase hosts that will remove <code>referrerpolicy="no-referer"</code> from <code>iframe</code>. This will make video less private for the visitor as the host will be able to see on what website they are watching on but its needed for vimeo, rumble and possible others for domain restricted videos.', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'Comma separated list of lowercase hosts that will set <code>referrerpolicy="origin-when-cross-origin"</code> instead of the default <code>referrerpolicy="no-referer"</code> on <code>iframe</code>. This will make video less private for the visitor as the host will be able to see on what website they are watching on but its needed for youtube, vimeo, rumble and possible others for domain restricted videos.', 'advanced-responsive-video-embedder' ),
 		),
 	);
 

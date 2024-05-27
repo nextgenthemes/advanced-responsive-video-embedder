@@ -809,7 +809,7 @@ class Video {
 			'publickey-credentials-get'       => 'none',
 			'screen-wake-lock'                => 'none',
 			'serial'                          => 'none',
-			'speaker-selection'               => 'none',
+			'speaker-selection'               => 'self',
 			'sync-xhr'                        => 'none',
 			'usb'                             => 'none',
 			'web-share'                       => 'self',
@@ -871,7 +871,8 @@ class Video {
 		$providers_allowed = str_to_array( options()['allow_referrer'] );
 
 		if ( in_array( $this->provider, $providers_allowed, true ) ) {
-			return null; // needed for domain restriction
+			// needed for domain restriction
+			return 'strict-origin-when-cross-origin';
 		}
 
 		return 'no-referrer';
