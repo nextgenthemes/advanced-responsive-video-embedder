@@ -69,12 +69,12 @@
         },
         {
             "name": "nextgenthemes/wp-shared",
-            "version": "2024.05.27.12.52.50",
-            "version_normalized": "2024.05.27.12.52.50",
+            "version": "2024.05.27.13.12.34",
+            "version_normalized": "2024.05.27.13.12.34",
             "dist": {
                 "type": "path",
                 "url": "../nextgenthemes/wp-shared",
-                "reference": "aeddbe78181c128464e1266c01a9b97e00da1e0e"
+                "reference": "f089f1c2c71938058db667fd29ebf4a984d90b33"
             },
             "require": {
                 "php": ">=7.4"
