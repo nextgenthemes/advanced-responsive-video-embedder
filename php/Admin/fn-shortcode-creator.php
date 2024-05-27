@@ -10,6 +10,7 @@ function add_media_button(): void {
 		$options[ $k ] = '';
 	}
 
+	wp_enqueue_script_module( 'nextgenthemes-settings' );
 	wp_interactivity_config(
 		'nextgenthemes_arve_dialog',
 		[
@@ -119,23 +120,4 @@ function create_shortcode_dialog(): void {
 	</dialog>
 	<?php
 	echo wp_interactivity_process_directives( ob_get_clean() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-}
-
-function print_shortcode_template(): void {
-
-	$html = '[arve';
-
-	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-	foreach ( ARVE\settings( 'shortcode' ) as $key => $option ) {
-
-		if ( ! $option['shortcode'] ) {
-			continue;
-		}
-
-		$html .= "{{ vm.$key ? ' $key=\"' + vm.$key + '\"' : '' }}";
-	}
-
-	$html .= ' /]';
-
-	echo $html;
 }

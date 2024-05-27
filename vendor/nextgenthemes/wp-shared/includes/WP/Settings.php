@@ -268,6 +268,7 @@ class Settings {
 
 		$asset_info = Asset::deps_and_ver( $this->base_path . 'vendor/nextgenthemes/wp-shared/includes/WP/Admin/settings.js' );
 
+		// always register this as the ARVE Shortcode dialog uses this.
 		wp_register_script_module(
 			'nextgenthemes-settings',
 			$this->base_url . 'vendor/nextgenthemes/wp-shared/includes/WP/Admin/settings.js',
@@ -275,9 +276,7 @@ class Settings {
 			$asset_info[ 'version' ]
 		);
 
-		wp_enqueue_script_module( 'nextgenthemes-settings' );
-
-		// always load this as the ARVE Shortcode dialog uses styles from this.
+		// always register this as the ARVE Shortcode dialog uses styles from this.
 		register_asset(
 			array(
 				'handle' => 'nextgenthemes-settings',

@@ -6,7 +6,7 @@ const namespace = document.querySelector( '[data-wp-interactive^="nextgenthemes"
 	?.wpInteractive;
 
 if ( ! namespace ) {
-	console.log( 'no namespace' ); // eslint-disable-line
+	throw new Error( 'no namespace' );
 }
 
 // interface optionContext {
@@ -32,9 +32,6 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 	state: {
 		isValidLicenseKey: () => {
 			const context = getContext();
-
-			helpers.debugJson( { st: state.options[ context.option_key + '_status' ] } );
-
 			return 'valid' === state.options[ context.option_key + '_status' ];
 		},
 		is32charactersLong: () => {
@@ -160,45 +157,11 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 		// debounced version created later
 		saveOptionsReal: () => {
 			l( 'saveOptionsReal' );
-
-			if ( state.isSaving ) {
-				state.message = 'trying to save too fast';
-				return;
-			}
-
-			// set the state so that another save cannot happen while processing
-			state.isSaving = true;
-			state.message = 'Saving...';
-
-			const config = getConfig();
-
-			// Make a POST request to the REST API route that we registered in our PHP file
-			fetch( config.restUrl + '/save', {
-				method: 'POST',
-				body: JSON.stringify( state.options ),
-				headers: {
-					'Content-Type': 'application/json',
-					'X-WP-Nonce': config.nonce,
-				},
-			} )
-				.then( ( response ) => {
-					if ( ! response.ok ) {
-						throw new Error( 'Network response was not ok' );
-					}
-					return response.json();
-				} )
-				.then( () => {
-					state.message = 'Options saved';
-					setTimeout( () => ( state.message = '' ), 2500 );
-				} )
-				.catch( ( error ) => {
-					state.message = error.message;
-				} )
-				.finally( () => {
-					state.isSaving = false;
-				} );
+			actions.restCall( '/save', state.options );
 		},
 		restCall: ( restRoute, body, refreshAfter = false ) => {
+			l( 'restCall' );
+
 			if ( state.isSaving ) {
 				state.message = 'trying to save too fast';
 				return;

@@ -1,10 +1,9 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\WP\Admin;
 
-use \Nextgenthemes\WP;
-
 use function \Nextgenthemes\WP\get_defined_key;
 use function \Nextgenthemes\WP\has_valid_key;
+use function \Nextgenthemes\WP\attr;
 use function wp_interactivity_data_wp_context as data_wp_context; // This is actually a deprecated function but we use the real one. Avoiding the deprecation warning and the awful long function name.
 
 const DESCRIPTION_ALLOWED_HTML = array(
@@ -206,7 +205,7 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 							data-ngt-option="<?= esc_attr( $key ); ?>"
 							data-wp-bind--value="state.options.<?= esc_attr( $key ); ?>"
 							data-wp-on--change="actions.inputChange"
-							data-wp-bind--readonly="state.isSaving"
+							data-wp-bind--disabled="state.isSaving"
 						>
 							<?php foreach ( $setting['options'] as $k => $v ) : ?>
 								<option value="<?= esc_attr( $k ); ?>"><?= esc_html( $v ); ?></option>
@@ -217,7 +216,7 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 					case 'boolean':
 						printf(
 							'<input %s/>',
-							WP\attr(
+							attr(
 								array(
 									'type'               => 'checkbox',
 									'id'                 => $input_id,
@@ -237,7 +236,7 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 						label($input_id, $setting );
 						printf(
 							'<input %s/>',
-							WP\attr(
+							attr(
 								array(
 									'type'                => ( 'integer' === $setting['type'] ) ? 'number' : 'text',
 									'id'                  => $input_id,
@@ -300,33 +299,34 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 function license_key_ui( string $key ): void {
 
 	?>
-	<button
-		type="button"
-		data-wp-context='{ "edd_action": "deactivate_license" }'
-		data-wp-on--click="actions.eddLicenseAction"
-		data-wp-bind--hidden="!state.isValidLicenseKey"
-		class="button button-secondary"
-	>
-		Deactivate
-	</button>
-	<button
-		type="button"
-		data-wp-context='{ "edd_action": "activate_license" }'
-		data-wp-on--click="actions.eddLicenseAction"
-		data-wp-bind--hidden="state.isValidLicenseKey"
-		class="button button-secondary"
-	>
-		Activate
-	</button>
-	<button
-		type="button"
-		data-wp-context='{ "edd_action": "check_license" }'
-		data-wp-on--click="actions.eddLicenseAction"
-		data-wp-bind--hidden="!state.is32charactersLong"
-		class="button button-secondary"
-	>
-		Check Status
-	</button>
+	<span data-wp-bind--hidden="!state.is32charactersLong">
+		<button
+			type="button"
+			data-wp-context='{ "edd_action": "deactivate_license" }'
+			data-wp-on--click="actions.eddLicenseAction"
+			data-wp-bind--hidden="!state.isValidLicenseKey"
+			class="button button-secondary"
+		>
+			Deactivate
+		</button>
+		<button
+			type="button"
+			data-wp-context='{ "edd_action": "activate_license" }'
+			data-wp-on--click="actions.eddLicenseAction"
+			data-wp-bind--hidden="state.isValidLicenseKey"
+			class="button button-secondary"
+		>
+			Activate
+		</button>
+		<button
+			type="button"
+			data-wp-context='{ "edd_action": "check_license" }'
+			data-wp-on--click="actions.eddLicenseAction"
+			class="button button-secondary"
+		>
+			Check Status
+		</button>
+	</span>
 
 	<pre data-wp-text="<?= esc_attr( "state.options.{$key}_status" ); ?>"></pre>
 	<?php
@@ -341,7 +341,6 @@ function label( string $input_id, array $setting ): void {
 		>
 			<?= esc_html( $setting['label'] ); ?>
 		</label>
-
 		<?php
 		if ( $setting['premium'] ) {
 			printf(
