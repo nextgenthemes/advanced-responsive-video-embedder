@@ -535,7 +535,7 @@ function settings_data(): array {
 			'label'       => __( 'Aspect Ratio', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
 			'description' => __( 'E.g. 4:3, 21:9. ARVE is usually smart enough to figure this out on its own.', 'advanced-responsive-video-embedder' ),
-			'placeholder' => __( '4:3, 21:9 ...', 'advanced-responsive-video-embedder' ),
+			'placeholder' => '4:3, 21:9 ...',
 		),
 		'parameters' => array(
 			'default'     => '',
@@ -576,7 +576,7 @@ function settings_data(): array {
 			'shortcode'   => true,
 			'option'      => true,
 
-			'label'       => __( 'Volume?', 'advanced-responsive-video-embedder' ),
+			'label'       => __( 'Volume', 'advanced-responsive-video-embedder' ),
 			'type'        => 'integer',
 			'description' => __( 'Works with video files only.', 'advanced-responsive-video-embedder' ),
 		),
@@ -671,7 +671,7 @@ function settings_data(): array {
 			'type'                => 'string',
 			'description'         => sprintf(
 				// Translators: URL
-				__( 'Video URLs seperated by commas. <a href="%s">(Random Video Addon)</a>.', 'advanced-responsive-video-embedder' ),
+				__( 'Video URLs separated by commas. <a href="%s">(Random Video Addon)</a>.', 'advanced-responsive-video-embedder' ),
 				esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' )
 			),
 			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
@@ -681,9 +681,9 @@ function settings_data(): array {
 			'default'     => true,
 			'shortcode'   => false,
 			'option'      => true,
-			'label'       => __( 'Enable lagacy shortcodes', 'advanced-responsive-video-embedder' ),
+			'label'       => __( 'Enable legacy shortcodes', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
-			'description' => __( 'Enable the old and deprected <code>[youtube id="abcde" /]</code> or <code>[vimeo id="abcde" /]</code> ... style shortcodes. Only enable if you have them in your content.', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'Enable the old and deprecated <code>[youtube id="abcde" /]</code> or <code>[vimeo id="abcde" /]</code> ... style shortcodes. Only enable if you have them in your content.', 'advanced-responsive-video-embedder' ),
 		),
 		'encrypted_media' => array(
 			'default'     => false,
@@ -731,7 +731,7 @@ function settings_data(): array {
 				'disabled'           => __( 'Disabled', 'advanced-responsive-video-embedder' ),
 				'disabled-for-vimeo' => __( 'Disabled for Vimeo only', 'advanced-responsive-video-embedder' ),
 			),
-			'description' => __( 'When enabled ARVE Pro will display the thumbnail again like it is shown before the video was loaded. When a video is displayed in a lightbox the lightbox will automatically close. If you are using Vimeos "call to action" feature for example you want to disable this for vimeo.', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'When enabled ARVE Pro will display the thumbnail again like it is shown before the video was loaded. When a video is displayed in a lightbox the lightbox will automatically close. If you are using Vimeo\'s "call to action" feature for example you want to disable this for vimeo.', 'advanced-responsive-video-embedder' ),
 		),
 		/*
 		'videojs_theme' => [
@@ -854,16 +854,16 @@ function missing_settings_defaults( array $settings ): array {
 			$settings[ $key ]['placeholder'] = $value['default'];
 		}
 
-		if ( empty( $settings[ $key ]['sanitze_callback'] ) ) {
+		if ( empty( $settings[ $key ]['sanitize_callback'] ) ) {
 
 			switch ( $value['type'] ) {
 				case 'integer':
-					$settings[ $key ]['sanitze_callback'] = 'absint';
+					$settings[ $key ]['sanitize_callback'] = 'absint';
 					break;
 
 				case 'string':
 				default:
-					$settings[ $key ]['sanitze_callback'] = 'sanitize_text_field';
+					$settings[ $key ]['sanitize_callback'] = 'sanitize_text_field';
 					break;
 			}
 		}
