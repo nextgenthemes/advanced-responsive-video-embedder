@@ -9,7 +9,6 @@
 
 ### 2024-05-24 10.1.0 ###
 * Improved: ARVE own video IDs are no longer random, this is better for SEO and other things.
-* Improved: ARVE own video IDs are no longer random, this is better for SEO and other things.
 * New: Support for [ok.ru](http://ok.ru).
 * New: Rutube video url detection. (only embed code worked before).
 
