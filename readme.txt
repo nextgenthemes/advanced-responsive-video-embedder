@@ -193,6 +193,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-05-27 10.1.1 ###
+* Improved: Changes how the referrer setting works. `no-referrer` by default `strict-origin-when-cross-origin` for selected providers.
+* Fix: Some YouTube videos (music?) do not without without allowing reverer to to be send so YouTube was added to the lost to allow it by default.
+
 ### 2024-05-24 10.1.0 ###
 * Improved: ARVE own video IDs are no longer random, this is better for SEO and other things.
 * Improved: ARVE own video IDs are no longer random, this is better for SEO and other things.
