@@ -808,6 +808,21 @@ function settings_data(): array {
 			'descriptionlink'     => esc_url( 'https://docs.invidious.io/instances/' ),
 			'descriptionlinktext' => esc_html( 'see here' ),
 		),
+		'invidious_parameters' => array(
+			'tag'                 => 'privacy',
+			'default'             => '',
+			'shortcode'           => false,
+			'option'              => true,
+			'label'               => __( 'Invidious URL parameters', 'advanced-responsive-video-embedder' ),
+			'type'                => 'string',
+			'description'         => sprintf(
+				// translators: %s is URL
+				__( 'Invidious <a href="%s" target="_blank">url parameters</a>.', 'advanced-responsive-video-embedder' ),
+				esc_url( 'https://docs.invidious.io/url-parameters/' )
+			),
+			'descriptionlink'     => esc_url( 'https://docs.invidious.io/url-parameters/' ),
+			'descriptionlinktext' => esc_html( 'url parameters' ),
+		),
 		'allow_referrer' => array(
 			'label'       => __( 'Allow domain restricted videos (referrerpolicy)', 'advanced-responsive-video-embedder' ),
 			'tag'         => 'main',
