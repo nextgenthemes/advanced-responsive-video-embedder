@@ -66,7 +66,7 @@ function remove_url_query( string $url ): string {
 	$path     = isset( $parsed_url['path'] ) ? $parsed_url['path'] : '';
 	$fragment = isset( $parsed_url['fragment'] ) ? '#' . $parsed_url['fragment'] : '';
 
-	return "$scheme$user$pass$host$port$path$fragment";
+	return $scheme . $user . $pass . $host . $port . $path . $fragment;
 }
 
 /**
