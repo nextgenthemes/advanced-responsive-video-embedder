@@ -20,7 +20,7 @@
  */
 namespace Nextgenthemes\ARVE;
 
-const VERSION               = '10.1.1';
+const VERSION               = '10.1.2-alpha1';
 const PRO_VERSION_REQUIRED  = '6.0.0-alpha3';
 const NUM_TRACKS            = 3;
 const PLUGIN_FILE           = __FILE__;
