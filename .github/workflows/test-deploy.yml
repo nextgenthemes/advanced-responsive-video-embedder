@@ -13,8 +13,11 @@ jobs:
     steps:
       - name: Get latest WP beta version
         id: get
-        run: php --run "echo 'ver=' . json_decode( file_get_contents( 'https://api.wordpress.org/core/version-check/1.7/?version=6.5&channel=beta' ) )->offers[0]->version;" >> "$GITHUB_OUTPUT"
-      - name: Echo latest WP beta version
+        run: >-
+          php --run "echo 'ver=' .
+          json_decode( file_get_contents( 'https://api.wordpress.org/core/version-check/1.7/?version=6.5&channel=beta' ) )->offers[0]->version;"
+          >> "$GITHUB_OUTPUT"
+      - name: Echo latest WP version (including beta releases)
         run: echo ${{ steps.get.outputs.ver }}
 
   test:
