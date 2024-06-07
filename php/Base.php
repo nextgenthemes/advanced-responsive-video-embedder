@@ -2,11 +2,11 @@
 namespace Nextgenthemes\ARVE;
 
 use WP_Error;
-use Nextgenthemes\WP;
+use Nextgenthemes\WP\Settings;
 
 class Base {
 	private static $instance = null;
-	private WP\Settings $settings_instance;
+	private Settings $settings_instance;
 	private \WP_Error $errors;
 
 	/** @readonly */
@@ -15,7 +15,7 @@ class Base {
 	public function __construct() {
 		$this->settings_data     = settings_data();
 		$this->errors            = new \WP_Error();
-		$this->settings_instance = new WP\Settings(
+		$this->settings_instance = new Settings(
 			array(
 				'namespace'           => __NAMESPACE__,
 				'settings'            => settings( 'settings_page', $this->settings_data ),
@@ -30,7 +30,7 @@ class Base {
 		);
 	}
 
-	public function get_settings_instance(): WP\Settings {
+	public function get_settings_instance(): Settings {
 		return $this->settings_instance;
 	}
 
