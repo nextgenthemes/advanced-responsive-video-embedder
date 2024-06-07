@@ -210,7 +210,7 @@ function translation( string $context ): string {
 
 	switch ( $context ) {
 		// Pro
-		case 'play_video':
+		case 'play_video': // deprecated
 			return __( 'Play video', 'advanced-responsive-video-embedder' );
 		case 'latest_video_from_youtube_channel_could_not_be_detected':
 			// Translators: %s URL
