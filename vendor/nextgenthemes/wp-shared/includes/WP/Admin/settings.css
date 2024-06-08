@@ -25,6 +25,14 @@
 	& a {
 		text-underline-offset: 2px;
 	}
+
+	& .ngt-label-wrap {
+		display: block;
+
+		& a {
+			display: none;
+		}
+	}
 }
 
 .ngt-settings-grid {
