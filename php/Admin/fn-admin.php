@@ -238,67 +238,6 @@ function add_action_links( array $links ): array {
 	return array_merge( $extra_links, $links );
 }
 
-function register_shortcode_ui(): void {
-
-	$settings = settings( 'shortcode' );
-
-	foreach ( $settings as $k => $v ) :
-
-		if ( 'boolean' === $v['type'] ) {
-			$v['type'] = 'select';
-
-			if ( isset( $v['option'] ) && true === $v['option'] ) {
-				$v['options'] = array(
-					array(
-						'value' => '',
-						'label' => esc_html__( 'Default', 'advanced-responsive-video-embedder' ),
-					),
-					array(
-						'value' => 'yes',
-						'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
-					),
-					array(
-						'value' => 'no',
-						'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
-					),
-				);
-			} else {
-				$v['options'] = array(
-					array(
-						'value' => 'no',
-						'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
-					),
-					array(
-						'value' => 'yes',
-						'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
-					),
-				);
-			}
-		}
-		if ( 'string' === $v['type'] ) {
-			$v['type'] = 'text';
-		}
-		if ( 'integer' === $v['type'] ) {
-			$v['type'] = 'number';
-		}
-		if ( ! empty( $v['placeholder'] ) ) {
-			$v['meta']['placeholder'] = $v['placeholder'];
-		}
-
-		$v['attr'] = $k;
-		$attrs[]   = $v;
-	endforeach;
-
-	shortcode_ui_register_for_shortcode(
-		'arve',
-		array(
-			'label'         => esc_html( 'ARVE' ),
-			'listItemImage' => 'dashicons-format-video',
-			'attrs'         => $attrs,
-		)
-	);
-}
-
 function admin_enqueue_styles(): void {
 
 	enqueue_asset(
