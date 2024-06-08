@@ -40,6 +40,7 @@ class Video {
 	private string $author_name;
 	private string $brightcove_embed;
 	private string $brightcove_player;
+	private string $vimeo_secret;
 	private string $controlslist;
 	private string $description;
 	private string $duration;
@@ -194,7 +195,25 @@ class Video {
 		$this->set_prop( 'mode', arg_mode( $this->mode ) );
 		$this->set_prop( 'autoplay', $this->arg_autoplay( $this->autoplay ) );
 		$this->set_prop( 'src', $this->arg_iframe_src( $this->src ) );
-		$this->set_prop( 'uid', sanitize_key( uniqid( "arve-{$this->provider}-{$this->id}", true ) ) );
+		$this->set_prop( 'uid',  $this->create_uid() );
+	}
+
+	private function create_uid(): string {
+		static $ids = [];
+
+		$id = sanitize_key( 'arve-' . $this->provider . '-' . $this->id );
+
+		if ( empty( $ids[ $id ] ) ) { // counter
+			$ids[ $id ] = 1;
+		} else {
+			++$ids[ $id ];
+		}
+
+		if ( $ids[ $id ] > 1 ) {
+			$id .= '-' . $ids[ $id ];
+		}
+
+		return $id;
 	}
 
 	/**
@@ -334,14 +353,11 @@ class Video {
 		if ( 'facebook' === $provider && is_numeric( $id ) ) {
 
 			$id = "https://www.facebook.com/facebook/videos/{$id}/";
+			$id = rawurlencode( str_replace( '&', '&amp;', $id ) );
 
 		} elseif ( 'twitch' === $provider && is_numeric( $id ) ) {
 
 			$pattern = 'https://player.twitch.tv/?video=v%s';
-		}
-
-		if ( isset( $properties[ $provider ]['url_encode_id'] ) && $properties[ $provider ]['url_encode_id'] ) {
-			$id = rawurlencode( str_replace( '&', '&amp;', $id ) );
 		}
 
 		if ( 'gab' === $provider ) {
@@ -376,6 +392,10 @@ class Video {
 					$src = str_replace( 'ted.com/talks/', "ted.com/talks/lang/{$lang}/", $src );
 				}
 				break;
+		}
+
+		if ( ! empty( $this->vimeo_secret ) ) {
+			$src = add_query_arg( 'h', $this->vimeo_secret, $src );
 		}
 
 		return $src;
@@ -789,7 +809,7 @@ class Video {
 			'publickey-credentials-get'       => 'none',
 			'screen-wake-lock'                => 'none',
 			'serial'                          => 'none',
-			'speaker-selection'               => 'none',
+			'speaker-selection'               => 'self',
 			'sync-xhr'                        => 'none',
 			'usb'                             => 'none',
 			'web-share'                       => 'self',
@@ -851,7 +871,8 @@ class Video {
 		$providers_allowed = str_to_array( options()['allow_referrer'] );
 
 		if ( in_array( $this->provider, $providers_allowed, true ) ) {
-			return null; // needed for domain restriction
+			// needed for domain restriction
+			return 'strict-origin-when-cross-origin';
 		}
 
 		return 'no-referrer';

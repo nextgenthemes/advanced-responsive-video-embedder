@@ -12,7 +12,7 @@ class Tests_ShortcodeVimeo extends WP_UnitTestCase {
 		);
 
 		$this->assertStringNotContainsString( 'Error', $html );
-		$this->assertStringNotContainsString( 'referrerpolicy', $html );
+		$this->assertStringContainsString( 'referrerpolicy="strict-origin-when-cross-origin"', $html );
 		$this->assertMatchesRegularExpression( '@src="https://player.vimeo.com/.*#t=33"@', $html );
 		$this->assertStringContainsString( 'allow-forms', $html );
 	}

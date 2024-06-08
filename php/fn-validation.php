@@ -40,29 +40,34 @@ function validate_thumbnail( $id_or_url ): string {
 	return '';
 }
 
-
 /**
- * Validates a URL and returns the validated URL or an error message.
+ * Validates a URL and returns the validated URL or an error message. Upgrades // to https:// if needed.
  *
- * @param string $argname The name of the argument being validated.
+ * @param string $arg_name The name of the argument being validated.
  * @param string $value The value of the argument being validated. Can be an URL or a HTML string with the a embed code.
  * @return string The validated URL or an error message.
  */
-function validate_url( string $argname, string $url ): string {
+function validate_url( string $arg_name, string $url ): string {
 
-	if ( ! empty( $url ) && ! valid_url( $url ) ) {
+	if ( '' === $url ) {
+		return $url;
+	}
+
+	$url = valid_url( $url );
+
+	if ( ! $url ) { // invalid url
 
 		$error_msg = sprintf(
 			// Translators: 1 URL 2 Attr name
 			__( 'Invalid URL <code>%1$s</code> in <code>%2$s</code>', 'advanced-responsive-video-embedder' ),
 			esc_html( $url ),
-			esc_html( $argname )
+			esc_html( $arg_name )
 		);
 
-		arve_errors()->add( "validate_url $argname", $error_msg );
+		arve_errors()->add( "validate_url $arg_name", $error_msg );
 	}
 
-	return $url;
+	return (string) $url;
 }
 
 /**

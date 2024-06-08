@@ -58,7 +58,7 @@ function arg_mode( string $mode ): string {
 
 function compare_oembed_src_with_generated_src( string $src, string $src_gen, string $provider, string $url ): void {
 
-	if ( empty($src) || empty($src_arve) ) {
+	if ( empty($src) || empty($src_gen) ) {
 		return;
 	}
 
@@ -66,8 +66,12 @@ function compare_oembed_src_with_generated_src( string $src, string $src_gen, st
 	$org_src_gen = $src_gen;
 
 	switch ( $provider ) {
-		case 'wistia':
 		case 'vimeo':
+			$src     = remove_query_arg( 'app_id', $src );
+			$src     = remove_query_arg( 'dnt', $src );
+			$src_gen = remove_query_arg( 'dnt', $src_gen );
+			break;
+		case 'wistia':
 			$src     = remove_url_query( $src );
 			$src_gen = remove_url_query( $src_gen );
 			break;
@@ -82,21 +86,24 @@ function compare_oembed_src_with_generated_src( string $src, string $src_gen, st
 	}
 
 	if ( $src !== $src_gen ) {
+		$l = 13;
 
 		$msg  = 'src mismatch<br>' . PHP_EOL;
-		$msg .= sprintf( 'provider: %s<br>' . PHP_EOL, esc_html($provider) );
-		$msg .= sprintf( 'url: %s<br>' . PHP_EOL, esc_url($url) );
-		$msg .= sprintf( 'src in org: %s<br>' . PHP_EOL, esc_url($org_src) );
+		$msg .= '<pre>' . PHP_EOL;
+		$msg .= str_pad('provider:', $l, ' ') . esc_html($provider) . '<br>';
+		$msg .= str_pad('url:', $l, ' ') . esc_url($url) . '<br><br>';
+		$msg .= str_pad('src:', $l, ' ') . esc_url($org_src) . '<br>';
 
 		if ( $src !== $org_src ) {
-			$msg .= sprintf( 'src in mod: %s<br>' . PHP_EOL, esc_url($src) );
+			$msg .= str_pad('src mod:', $l, ' ') . esc_url($src) . '<br>';
 		}
 
 		if ( $src_gen !== $org_src_gen ) {
-			$msg .= sprintf( 'src gen in mod: %s<br>' . PHP_EOL, esc_url($src_gen) );
+			$msg .= str_pad('src gen mod:', $l, ' ') . esc_url($src_gen) . '<br>';
 		}
 
-		$msg .= sprintf( 'src gen org: %s<br>' . PHP_EOL, esc_url($org_src_gen) );
+		$msg .= str_pad('src gen:', $l, ' ') . esc_url($org_src_gen) . '<br>';
+		$msg .= '</pre>';
 
 		arve_errors()->add( 'hidden', $msg );
 	}

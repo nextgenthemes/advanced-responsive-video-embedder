@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "automattic/jetpack-autoloader",
-            "version": "v3.0.7",
-            "version_normalized": "3.0.7.0",
+            "version": "v3.0.8",
+            "version_normalized": "3.0.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-autoloader.git",
-                "reference": "2a3ab8c22cefdb7a48f1c704696c821d1e9a5ebb"
+                "reference": "1e1e4a6d2757f3ecbb9d98dcdd817a6c7c02a67d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/2a3ab8c22cefdb7a48f1c704696c821d1e9a5ebb",
-                "reference": "2a3ab8c22cefdb7a48f1c704696c821d1e9a5ebb",
+                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/1e1e4a6d2757f3ecbb9d98dcdd817a6c7c02a67d",
+                "reference": "1e1e4a6d2757f3ecbb9d98dcdd817a6c7c02a67d",
                 "shasum": ""
             },
             "require": {
@@ -20,11 +20,11 @@
                 "php": ">=7.0"
             },
             "require-dev": {
-                "automattic/jetpack-changelogger": "^4.2.3",
+                "automattic/jetpack-changelogger": "^4.2.4",
                 "composer/composer": "^1.1 || ^2.0",
                 "yoast/phpunit-polyfills": "1.1.0"
             },
-            "time": "2024-05-06T17:33:09+00:00",
+            "time": "2024-05-29T09:45:26+00:00",
             "type": "composer-plugin",
             "extra": {
                 "autotagger": true,
@@ -63,18 +63,18 @@
                 "wordpress"
             ],
             "support": {
-                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v3.0.7"
+                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v3.0.8"
             },
             "install-path": "../automattic/jetpack-autoloader"
         },
         {
             "name": "nextgenthemes/wp-shared",
-            "version": "2024.05.22.12.03.54",
-            "version_normalized": "2024.05.22.12.03.54",
+            "version": "2024.06.07.20.33.24",
+            "version_normalized": "2024.06.07.20.33.24",
             "dist": {
                 "type": "path",
                 "url": "../nextgenthemes/wp-shared",
-                "reference": "7b46e0253ab2f15e50cfb3a6b42567a765b88ce2"
+                "reference": "49f3f58162547d062500686e5eb07146772edd04"
             },
             "require": {
                 "php": ">=7.4"

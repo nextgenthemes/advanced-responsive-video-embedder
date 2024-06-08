@@ -3,7 +3,36 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2024-05-19 10.0.7 ###
+### 2024-06-08 10.1.2 ###
+* Fix: Encoding and JSON errors related to oembed cache.
+* New: Invidious URL Parameter setting for new extra privacy addon.
+* Improved: Fixed a couple of typos.
+* Compatibility with latest Pro addon.
+
+### 2024-05-27 10.1.1 ###
+* Improved: Changes how the referrer setting works. `no-referrer` by default `strict-origin-when-cross-origin` for selected providers.
+* Fix: Some YouTube videos (music?) do not without without allowing reverer to to be send so YouTube was added to the list to allow it by default.
+
+### 2024-05-24 10.1.0 ###
+* Improved: ARVE own video IDs are no longer random, this is better for SEO and other things.
+* New: Support for [ok.ru](http://ok.ru).
+* New: Rutube video url detection. (only embed code worked before).
+
+### 2024-05-23 10.0.10 ###
+* Fix: Videos with quotes in the title/description caused json_decode syntax error.
+
+### 2024-05-22 10.0.9 ###
+* Fix: Some Vimeo videos not working without cache working.
+* Fix: src mismatch error testing.
+* Improved: Error display.
+
+### 2024-05-21 10.0.8.1 ###
+* Fix: Do not delete cache every time.
+
+### 2024-05-21 10.0.8 ###
+* Fix: Some broken Vimeo videos. And possibly other bugs.
+
+### 2024-05-21 10.0.7 ###
 * Fix: Lazyload and Lightbox (Pro) were not displayed when used with video files.
 
 ### 2024-05-17 10.0.6 ###

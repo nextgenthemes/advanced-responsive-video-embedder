@@ -1,11 +1,10 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-use DateTime;
-use Nextgenthemes\WP;
-
-use function Nextgenthemes\WP\get_attribute_from_html_tag;
 use function Nextgenthemes\WP\valid_url;
+use function Nextgenthemes\WP\get_attribute_from_html_tag;
+use function Nextgenthemes\WP\remote_get_head;
+use function Nextgenthemes\WP\attr;
 
 /**
  * Info: https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-oembed.php
@@ -49,7 +48,6 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 	$data->arve_provider  = sane_provider_name( $data->provider_name );
 	$data->arve_cachetime = current_datetime()->format( \DATETIME::ATOM );
 	$data->arve_url       = $url;
-	unset( $data->html );
 
 	if ( ! empty( $data->thumbnail_url ) && in_array( $data->arve_provider, [ 'youtube', 'vimeo' ], true ) ) {
 
@@ -66,8 +64,15 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 		$data->arve_srcset          = $thumbnails['srcset'];
 	}
 
-	$data  = apply_filters( 'nextgenthemes/arve/oembed_dataparse', $data, $thumbnails );
-	$html .= sprintf( "<template data-arve='%s'></template>", \wp_json_encode($data, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP), 5 );
+	unset( $data->html );
+
+	$data = apply_filters( 'nextgenthemes/arve/oembed_dataparse', $data, $thumbnails );
+
+	foreach ( $data as $key => $value ) {
+		$attr[ 'data-' . $key ] = $value;
+	}
+
+	$html .= sprintf( '<template class="arve-data" %s></template>', attr( $attr ) );
 
 	return $html;
 }
@@ -99,7 +104,7 @@ function sane_provider_name( string $provider ): string {
  */
 function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_id ): string {
 
-	$oembed_data = extract_oembed_json( $cache, $url );
+	$oembed_data = extract_oembed_data( $cache );
 
 	if ( $oembed_data ) {
 		$a['url']         = $url;
@@ -115,27 +120,20 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 	return $cache;
 }
 
-function extract_oembed_json( string $html, string $url ): ?object {
+function extract_oembed_data( string $html ): ?object {
 
-	$data = get_attribute_from_html_tag( array( 'tag_name' => 'template' ), 'data-arve', $html );
+	$p = new \WP_HTML_Tag_Processor( $html );
 
-	if ( empty( $data ) ) {
+	if ( ! $p->next_tag( array( 'class_name' => 'arve-data' ) ) ) {
 		return null;
 	}
 
-	try {
-		$data = json_decode($data, false, 5, JSON_THROW_ON_ERROR);
-	} catch ( \JsonException $e ) {
+	$data            = (object) [];
+	$data_attr_names = $p->get_attribute_names_with_prefix( 'data-' );
 
-		$error_code = __FUNCTION__;
-
-		arve_errors()->add( $error_code, $e->getMessage() . ' URL: ' . $url );
-		arve_errors()->add_data(
-			compact( 'data', 'html', 'url'),
-			$error_code
-		);
-
-		return null;
+	foreach ( $data_attr_names as $name ) {
+		$no_data_name          = str_replace( 'data-', '', $name );
+		$data->{$no_data_name} = $p->get_attribute( $name );
 	}
 
 	return $data;
@@ -192,7 +190,9 @@ function oembed_html2src( object $data ) {
 
 		if ( $iframe_src ) {
 
-			if ( valid_url( $iframe_src) ) {
+			$iframe_src = valid_url( $iframe_src );
+
+			if ( $iframe_src ) {
 				return $iframe_src;
 			} else {
 				return new \WP_Error( 'facebook-video-id', __( 'Invalid iframe src url', 'advanced-responsive-video-embedder' ), $data->html, $iframe_src );
@@ -252,7 +252,7 @@ function thumbnail_sizes( string $provider, string $url ): array {
 
 	foreach ( $sizes as $size => $size_url ) {
 
-		if ( 'youtube' === $provider && is_wp_error( WP\remote_get_head( $size_url, array( 'timeout' => 5 ) ) ) ) {
+		if ( 'youtube' === $provider && is_wp_error( remote_get_head( $size_url, array( 'timeout' => 5 ) ) ) ) {
 			unset( $sizes[ $size ] );
 			continue;
 		}

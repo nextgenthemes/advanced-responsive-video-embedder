@@ -35,7 +35,7 @@ function shortcode( array $a ) {
 		$maybe_arve_html = $GLOBALS['wp_embed']->shortcode( array(), $a['url'] );
 		add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', OEMBED_HTML_PRIORITY, 4 );
 
-		$oembed_data = extract_oembed_json( $maybe_arve_html, $a['url'], $a );
+		$oembed_data = extract_oembed_data( $maybe_arve_html );
 
 		if ( $oembed_data ) {
 			$a['oembed_data']         = $oembed_data;
@@ -46,25 +46,32 @@ function shortcode( array $a ) {
 	return build_video( $a );
 }
 
+function is_dev_mode(): bool {
+	return (
+		( defined( 'WP_DEBUG' ) && WP_DEBUG ) ||
+		wp_get_development_mode() || // Any 'theme', 'plugin', or 'all'
+		'development' === wp_get_environment_type() ||
+		'local' === wp_get_environment_type()
+	);
+}
+
 function error( string $messages, string $code = '' ): string {
 
 	$hide = false;
 
-	if ( str_contains( $code, 'hidden' ) && ! is_wp_debug() ) {
+	if ( str_contains( $code, 'hidden' ) && ! is_dev_mode() ) {
 		$hide = true;
 	}
 
 	$error_html = sprintf(
-		PHP_EOL . PHP_EOL .
-		'<span class="arve-error"%s><abbr title="Advanced Responsive Video Embedder">ARVE</abbr> %s</span>' .
-		PHP_EOL,
+		'<div class="arve-error alignwide" %s><abbr title="Advanced Responsive Video Embedder">ARVE</abbr> %s</div>',
 		$hide ? 'hidden' : '',
 		// translators: Error message
 		sprintf( __( 'Error: %s', 'advanced-responsive-video-embedder' ), $messages ),
 	);
 
 	return wp_kses(
-		$error_html,
+		PHP_EOL . PHP_EOL . $error_html . PHP_EOL,
 		ALLOWED_HTML,
 		array( 'http', 'https' )
 	);
@@ -86,9 +93,9 @@ function get_error_html(): string {
 		$html .= $messages;
 		$data  = arve_errors()->get_error_data( $code );
 
-		if ( ! empty( $data ) && ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ) {
+		if ( ! empty( $data ) && is_dev_mode() ) {
 			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
-			$html .= sprintf( 'Data: %s', var_export( $data, true ) );
+			$html .= sprintf( '<pre>%s</pre>', var_export( $data, true ) );
 		}
 
 		$html = error( $html );

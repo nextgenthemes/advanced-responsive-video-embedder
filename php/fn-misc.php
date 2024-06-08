@@ -210,13 +210,16 @@ function translation( string $context ): string {
 
 	switch ( $context ) {
 		// Pro
-		case 'play_video':
+		case 'play_video': // deprecated
 			return __( 'Play video', 'advanced-responsive-video-embedder' );
 		case 'latest_video_from_youtube_channel_could_not_be_detected':
 			// Translators: %s URL
 			return __( 'Latest video from <a href="%s">YouTube channel</a> could not be detected.', 'advanced-responsive-video-embedder' );
-		case 'open_lightbox_with_video':
+		case 'open_lightbox_with_video': // deprecated
 			return __( 'Open lightbox with video', 'advanced-responsive-video-embedder' );
+		case 'play_video_%':
+			// Translators: %s Video Title
+			return __( 'Play video: %s', 'advanced-responsive-video-embedder' );
 		// Privacy
 		case 'arve_cached_thumbnail_for':
 			// Translators: %1$s URL, %2$s title.
@@ -227,5 +230,15 @@ function translation( string $context ): string {
 				'By clicking below, you consent to load content from %1$s in a <a href="%2$s">privacy enhanced iframe</a> and setting a cookie on this site to store your choice. See <a href="%3$s">%4$s</a>.',
 				'advanced-responsive-video-embedder'
 			);
+		default:
+			arve_errors()->add(
+				'no-translation',
+				sprintf(
+					// Translators: %s translation key
+					__( 'Unknown translation key <code>%s</code>', 'advanced-responsive-video-embedder' ),
+					$context
+				)
+			);
+			return '';
 	}
 }
