@@ -77,37 +77,18 @@ class Settings {
 		Admin\init_edd_updaters( $this->options );
 	}
 
-	private function set_namespaces( string $namespace ): void {
-		$this->slugged_namespace = sanitize_key( str_replace( '\\', '_', $namespace ) );
-		$this->slashed_namespace = str_replace( '_', '/', $this->slugged_namespace );
-		$this->rest_namespace    = $this->slugged_namespace . '/v1';
-	}
-
 	private function set_default_options(): void {
 
 		foreach ( $this->settings as $key => $setting ) {
 
-			$type = $this->get_php_type_from_setting( $key );
-
-			if ( gettype( $value['default'] ) !== $type ) {
-				wp_trigger_error( __FUNCTION__, "Default value for '$key' has wring type" );
+			if ( gettype( $setting['default'] ) !== $setting['type'] ) {
 				unset( $this->settings[ $key ] );
+				wp_trigger_error( __FUNCTION__, "Default value for '$key' has wring type" );
 			}
 
 			$this->options_defaults[ $key ] = $setting['default'];
 			$this->options_defaults_by_section[ $setting['tag'] ][$key] = $setting['default'];
 		}
-	}
-
-	public function get_php_type_from_setting( string $setting_key ): string {
-
-		$setting_props = $this->settings[ $setting_key ];
-
-		if ( 'select' === $setting_props['type'] ) {
-			return 'string';
-		}
-
-		return $setting_props['type'];
 	}
 
 	/**
@@ -116,7 +97,8 @@ class Settings {
 	public function __set( string $name, $value ): void {
 
 		if ( ! property_exists( __CLASS__, $name ) ) {
-			throw new Exception( "Trying to set property '$name', but it does not exits" );
+			wp_trigger_error( __METHOD__, "Trying to set property '$name', but it does not exits" );
+			return;
 		}
 
 		$this->$name = $value;
