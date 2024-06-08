@@ -35,7 +35,7 @@ function shortcode( array $a ) {
 		$maybe_arve_html = $GLOBALS['wp_embed']->shortcode( array(), $a['url'] );
 		add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', OEMBED_HTML_PRIORITY, 4 );
 
-		$oembed_data = extract_oembed_json( $maybe_arve_html, $a['url'], $a );
+		$oembed_data = extract_oembed_data( $maybe_arve_html );
 
 		if ( $oembed_data ) {
 			$a['oembed_data']         = $oembed_data;
