@@ -1,5 +1,5 @@
 /**
- * Copyright 2019-2023 Nicolas Jonas
+ * Copyright 2019-2024 Nicolas Jonas
  * License: GPL 3.0
  *
  * Based on: https://gist.github.com/pento/cf38fd73ce0f13fcf0f0ae7d6c4b685d
@@ -65,7 +65,10 @@ interface OptionProps {
 	descriptionlink?: string;
 	descriptionlinktext?: string;
 	placeholder?: string;
-	options?;
+	options?: Record< string, string >;
+	ui?: 'image_upload';
+	ui_element: 'select' | 'input';
+	ui_element_type: 'text' | 'number' | 'checkbox';
 }
 
 const { name } = json;
@@ -118,7 +121,18 @@ function changeTextControl( key: string, value: string, props ) {
 	} );
 }
 
-const mediaUploadRender = ( open: VoidFunction, val, url: string ) => {
+// function changeSelectControl( key: string, value: string, props ) {
+
+// 	if ( ! value ) {
+
+// 	}
+
+// 	props.setAttributes( {
+// 		[ key ]: value,
+// 	} );
+// }
+
+const mediaUploadRender = ( open: VoidFunction, val, url: string ): JSX.Element => {
 	return (
 		<div className="editor-post-featured-image__container">
 			{ /* @ts-ignore */ }
@@ -154,6 +168,8 @@ const mediaUploadRender = ( open: VoidFunction, val, url: string ) => {
 	);
 };
 
+function select( val );
+
 function buildControls( props ) {
 	const controls = [] as Array< JSX.Element >;
 	const sectionControls = {} as sectionControls;
@@ -172,7 +188,7 @@ function buildControls( props ) {
 
 		sectionControls[ option.tag ].push(
 			<Fragment key={ key + '-fragment' }>
-				{ 'boolean' === option.type && (
+				{ 'checkbox' === option.ui_element_type && (
 					<ToggleControl
 						key={ key }
 						label={ option.label }
@@ -185,9 +201,19 @@ function buildControls( props ) {
 						} }
 					/>
 				) }
-				{ 'select' === option.type && (
+				{ [ 'text', 'number' ].includes( option.ui_element_type ) && (
+					<TextControl
+						label={ option.label }
+						placeholder={ option.placeholder }
+						help={ createHelp( option ) }
+						value={ val }
+						onChange={ ( value ) => {
+							changeTextControl( key, value, props );
+						} }
+					/>
+				) }
+				{ 'select' === option.ui_element && (
 					<SelectControl
-						key={ key }
 						value={ val }
 						label={ option.label }
 						help={ createHelp( option ) }
@@ -199,30 +225,13 @@ function buildControls( props ) {
 						} }
 					/>
 				) }
-				{ 'string' === option.type && (
-					<TextControl
-						key={ key }
-						label={ option.label }
-						placeholder={ option.placeholder }
-						help={ createHelp( option ) }
-						value={ val }
-						onChange={ ( value ) => {
-							changeTextControl( key, value, props );
-						} }
-					/>
-				) }
-				{ 'attachment' === option.type && (
+				{ 'image_upload' === option.ui && (
 					<BaseControl
-						key={ key }
 						className="editor-post-featured-image"
 						help={ createHelp( option ) }
 					>
-						<MediaUploadCheck
-							key={ key + '-MediaUploadCheck-1' }
-							fallback={ mediaUploadInstructions }
-						>
+						<MediaUploadCheck fallback={ mediaUploadInstructions }>
 							<MediaUpload
-								key={ key + '-MediaUpload-1' }
 								title={ __( 'Thumbnail' ) }
 								onSelect={ ( media ) => {
 									selectedMedia = media;
@@ -242,7 +251,6 @@ function buildControls( props ) {
 						{ !! val && !! url && (
 							<MediaUploadCheck key={ key + '-MediaUploadCheck-2' }>
 								<MediaUpload
-									key={ key + '-MediaUpload-2' }
 									title={ __( 'Thumbnail' ) }
 									onSelect={ ( media ) => {
 										selectedMedia = media;
@@ -264,7 +272,6 @@ function buildControls( props ) {
 						{ !! val && (
 							<MediaUploadCheck key={ key + '-MediaUploadCheck-3' }>
 								<Button
-									key={ key + '-MediaUpload-3-btn' }
 									onClick={ () => {
 										return props.setAttributes( {
 											[ key ]: '',

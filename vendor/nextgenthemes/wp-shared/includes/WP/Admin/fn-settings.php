@@ -250,7 +250,7 @@ function print_settings_blocks(
 function print_dialog_field( string $key, array $option, string $premium_url_prefix ): void {
 
 	$wrapper_attr = array(
-		'class' => ( 'attachment' === $option['type'] ) ? 'input-group' : false,
+		'class' => ( isset( $option['ui'] ) && 'image_upload' === $option['ui'] ) ? 'input-group' : false,
 	);
 
 	$inner_wrapper_attr = array(
@@ -264,20 +264,7 @@ function print_dialog_field( string $key, array $option, string $premium_url_pre
 		<div <?php echo WP\attr( $inner_wrapper_attr ); ?>>
 
 			<?php
-			switch ( $option['type'] ) {
-				case 'attachment':
-				case 'string':
-					$input_type = 'text';
-					break;
-				case 'integer':
-					$input_type = 'number';
-					break;
-				case 'boolean':
-					$input_type = 'checkbox';
-					break;
-			}
-
-			if ( 'select' === $option['type'] ) {
+			if ( 'select' === $option['ui_element'] ) {
 				?>
 				<select 
 					id="<?php echo esc_attr( "options.$key" ); ?>"
@@ -309,10 +296,10 @@ function print_dialog_field( string $key, array $option, string $premium_url_pre
 					'<input %s />',
 					WP\attr(
 						array(
-							'type'        => $input_type,
+							'type'        => $option['ui_element_type'],
 							'id'          => "options.$key",
 							'x-model'     => "options.$key",
-							'value'       => ( 'checkbox' === $input_type ) ? 'ttrue' : false,
+							'value'       => ( 'checkbox' === $option['ui_element_type'] ) ? 'true' : false,
 							'placeholder' => isset($option['placeholder']) ? $option['placeholder'] : false,
 							'class'       => ( 'boolean' === $option['type'] ) ? 'form-check-input' : 'form-control',
 						)

@@ -78,7 +78,8 @@ class Settings {
 			$type = $this->get_php_type_from_setting( $key );
 
 			if ( gettype( $value['default'] ) !== $type ) {
-				throw new Exception( "Default value for '$key' has wring type" );
+				wp_trigger_error( __FUNCTION__, "Default value for '$key' has wring type" );
+				unset( $this->settings[ $key ] );
 			}
 
 			$this->options_defaults[ $key ] = $value['default'];
@@ -90,25 +91,10 @@ class Settings {
 		$setting_props = $this->settings[ $setting_key ];
 
 		if ( 'select' === $setting_props['type'] ) {
-			if ( ! empty( $setting_props['options'] ) && $this->has_bool_default_options( $setting_props['options'] ) ) {
-				return 'boolean';
-			}
 			return 'string';
 		}
 
 		return $setting_props['type'];
-	}
-
-	public static function has_bool_default_options( array $array ): bool {
-
-		return ! array_diff_key(
-			$array,
-			array(
-				''      => true,
-				'true'  => true,
-				'false' => true,
-			)
-		);
 	}
 
 	/**

@@ -17,11 +17,10 @@ function init(): void {
 	foreach ( $settings as $key => $v ) {
 
 		$attr[ $key ] = array(
-			'type' => ( 'select' === $v['type'] ) ? 'string' : $v['type'],
+			'type' => $v['type'],
 		);
 	}
 
-	$attr['thumbnail']     = array( 'type' => 'string' );
 	$attr['thumbnail_url'] = array( 'type' => 'string' );
 
 	update_block_json( $attr );

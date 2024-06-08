@@ -3,10 +3,11 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2024-06-08 10.1.2 ###
+### 2024-06-08 10.2.0 ###
 * Fix: Encoding and JSON errors related to oembed cache.
 * New: Invidious URL Parameter setting for new extra privacy addon.
 * Improved: Fixed a couple of typos.
+* Removed Shortcode UI support. (That plugin did now have a release in 5 years, the ARVE dialog is better anyway IMO)
 * Compatibility with latest Pro addon.
 
 ### 2024-05-27 10.1.1 ###
