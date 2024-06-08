@@ -876,6 +876,10 @@ function missing_settings_defaults( array $settings ): array {
 					$settings[ $key ]['sanitize_callback'] = 'absint';
 					break;
 
+				// case 'boolean':
+				//  $settings[ $key ]['sanitize_callback'] = 'boolval';
+				//  break;
+
 				case 'string':
 				default:
 					$settings[ $key ]['sanitize_callback'] = 'sanitize_text_field';
