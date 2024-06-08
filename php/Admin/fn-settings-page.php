@@ -7,7 +7,7 @@ use Nextgenthemes\WP;
 function settings_content(): void {
 
 	?>
-	<div x-show="'urlparams' === tab">
+	<div data-wp-bind--hidden="!context.activeTabs.urlparams">
 		<p>
 			<?php
 			echo wp_kses(
@@ -36,35 +36,64 @@ function settings_content(): void {
 		</p>
 	</div>
 
-	<div x-show="'debug' === tab">
+	<div data-wp-bind--hidden="!context.activeTabs.debug">
 
-		<div style="margin-top: 1.2rem; margin-bottom: 1.2rem;">
-			<button @click="deleteOembedCache();" class="button-primary" style="margin-inline-end: 1em;">
+		<p>
+			<button data-wp-on--click="actions.deleteOembedCache" class="button-primary" style="margin-inline-end: 1em;">
 				<?php esc_html_e( 'Delete oEmbed Cache', 'advanced-responsive-video-embedder' ); ?>
 			</button>
 			<span x-text="message"></span>
-		</div>
+		</p>
 
 		<?php require_once __DIR__ . '/partials/debug-info-textarea.php'; ?>
 	</div>
 
-	<div x-show="['pro', 'privacy', 'random-video', 'sticky-videos'].includes(tab)">
-		<p>
-			<?php
-			echo wp_kses(
-				sprintf(
-					// Translators: URL
-					__( 'You may already set options for addons but they will only take effect if the associated addons are installed. If not done already, enter your license keys <a href="%s">here</a>', 'advanced-responsive-video-embedder' ),
-					esc_url( admin_url( 'options-general.php?page=nextgenthemes' ) )
-				),
-				array( 'a' => array( 'href' => true ) ),
-				array( 'http', 'https' )
-			);
-			?>
+	<?php if ( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) : ?>
+		<p data-wp-bind--hidden="!context.activeTabs.pro">
+			<?= pro_message( 'ARVE Pro', 'arve-pro' ); // phpcs:ignore ?>
 		</p>
-	</div>
+	<?php endif; ?>
+
+	<?php if ( ! is_plugin_active( 'arve-privacy/arve-privacy.php' ) ) : ?>
+		<p data-wp-bind--hidden="!context.activeTabs.privacy">
+			<?= pro_message( 'ARVE Privacy', 'arve-privacy' ); // phpcs:ignore ?>
+		</p>
+	<?php endif; ?>
+
+	<?php if ( ! is_plugin_active( 'arve-stick-videos/arve-sticky-videos.php' ) ) : ?>
+		<p data-wp-bind--hidden="!context.activeTabs.sticky_videos">
+			<?= pro_message( 'ARVE Sticky Videos', 'arve-stick-videos' ); // phpcs:ignore ?>
+		</p>
+	<?php endif; ?>
+
+	<?php if ( ! is_plugin_active( 'arve-random-video/arve-random-video.php' ) ) : ?>
+		<p data-wp-bind--hidden="!context.activeTabs.random_video">
+			<?= pro_message( 'ARVE Random Video', 'arve-random-video' ); // phpcs:ignore ?>
+		</p>
+	<?php endif; ?>
+
 	<?php
 }
+
+function pro_message( string $addon_name, string $slug ): string {
+	return wp_kses(
+		sprintf(
+			// Translators: Addon Name
+			__( '<strong>%s is not active.</strong> You may already set options for this addon but they will only take effect if its installed/activated later.', 'advanced-responsive-video-embedder' ),
+			sprintf( '<a href="%s">%s</a>', 'https://nextgenthemes.com/plugins/' . $slug . '/', $addon_name )
+		),
+		array(
+			'strong' => array(),
+			'a'      => array( 'href' => true ),
+		),
+		array( 'http', 'https' )
+	);
+}
+
+function get_addon_link( string $addon_name, string $slug ): string {
+	return sprintf( '<a href="%s">%s</a>', 'https://nextgenthemes.com/plugins/' . $slug . '/', $addon_name );
+}
+
 
 function settings_sidebar(): void {
 
@@ -109,7 +138,7 @@ function print_arve_news(): void {
 				'categories'  => 126,
 			),
 			'https://nextgenthemes.com/wp-json/wp/v2/posts'
-		)
+		),
 	);
 
 	if ( is_wp_error( $response ) ) {
@@ -138,21 +167,6 @@ function print_arve_news(): void {
 		?>
 	</div>
 	<?php
-}
-
-function filter_save_options( array $options ): array {
-
-	$action            = json_decode( $options['action'] );
-	$options['action'] = '';
-
-	if ( $action ) {
-		$product_id  = WP\get_products()[ $action->product ]['id'];
-		$product_key = $options[ $action->product ];
-
-		$options[ $action->product . '_status' ] = WP\api_action( $product_id, $product_key, $action->action );
-	}
-
-	return $options;
 }
 
 // unused, trigger re-caching is rebuild is probably better, also there this leaves the times in the DB so will this even work?

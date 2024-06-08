@@ -25,6 +25,14 @@
 	& a {
 		text-underline-offset: 2px;
 	}
+
+	& .ngt-label-wrap {
+		display: block;
+
+		& a {
+			display: none;
+		}
+	}
 }
 
 .ngt-settings-grid {
@@ -104,6 +112,35 @@
 .ngt-opt {
 	container-type: inline-size;
 
+	& select {
+		width: 130px;
+	}
+
+	& [type="number"] {
+		width: 6em;
+	}
+
+	> div {
+		margin-block-start: 1em;
+		margin-block-end: 1em;
+	}
+}
+
+input.text-large--ngt-key {
+	/* https://github.com/twbs/bootstrap/blob/72d3b6efc4b92e83a4abca6f5bc0cd7e6fd25931/scss/_variables.scss#L607C31-L607C115 */
+	font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+	width: 21em;
+}
+
+.ngt-label-wrap {
+	display: block;
+	margin-bottom: 3px;
+	font-weight: 600;
+
+	[type="checkbox"] + & {
+		display: inline;
+	}
+
 	& a {
 		background-image: linear-gradient(
 			90deg,
@@ -123,24 +160,10 @@
 			background-image: none; */
 		}
 	}
+}
 
-	& select {
-		width: 130px;
-	}
-
-	& [type="number"] {
-		width: 6em;
-	}
-
-	.ngt-label-text {
-		display: block;
-		margin-bottom: 3px;
-		font-weight: 600;
-
-		[type="checkbox"] + & {
-			display: inline;
-		}
-	}
+input[type=checkbox]:has(+ .ngt-label-wrap) {
+	margin-top: -3px;
 }
 
 .wp-core-ui .button--ngt-small {

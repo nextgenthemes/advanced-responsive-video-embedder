@@ -47,8 +47,9 @@ interface sectionControls {
 	main: Array< JSX.Element >;
 	pro: Array< JSX.Element >;
 	html5: Array< JSX.Element >;
-	'sticky-videos': Array< JSX.Element >;
-	'random-video': Array< JSX.Element >;
+	sticky_videos: Array< JSX.Element >;
+	random_video: Array< JSX.Element >;
+	privacy: Array< JSX.Element >;
 }
 
 interface SelectOption {

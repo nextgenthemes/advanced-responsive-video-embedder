@@ -6,55 +6,89 @@ use Nextgenthemes\WP;
 
 function add_media_button(): void {
 
+	foreach ( ARVE\settings( 'shortcode' ) as $k => $v ) {
+		$options[ $k ] = '';
+	}
+
+	wp_enqueue_script_module( 'nextgenthemes-settings' );
+	wp_interactivity_config(
+		'nextgenthemes_arve_dialog',
+		[
+			'restUrl'        => 'was',
+			'nonce'          => wp_create_nonce( 'wp_rest' ),
+			'siteUrl'        => get_site_url(),
+			'homeUrl'        => get_home_url(),
+			'defaultOptions' => array(),
+		]
+	);
+
+	wp_interactivity_state(
+		'nextgenthemes_arve_dialog',
+		[
+			'options'    => $options,
+			'shortcode'  => '[arve url="" /]',
+			'message'    => '',
+			'help'       => false,
+		]
+	);
+
+	ob_start();
 	?>
 	<button
 		id="arve-btn"
-		title="<?php esc_html_e( 'Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ); ?>"
+		title="<?php esc_attr_e( 'Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ); ?>"
 		class="arve-btn button add_media"
 		type="button"
-		x-data
-		@click="document.querySelector('[x-ref=arvedialog]').showModal()"
+		data-wp-interactive="nextgenthemes_arve_dialog"
+		data-wp-on--click="actions.openShortcodeDialog"
 	>
-		<span class="wp-media-buttons-icon arve-icon"></span> 
+	<span class="wp-media-buttons-icon arve-icon"></span> 
 		<?php esc_html_e( 'Video (ARVE)', 'advanced-responsive-video-embedder' ); ?>
 	</button>
 	<?php
+	echo wp_interactivity_process_directives( ob_get_clean() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 	add_action( 'admin_footer', __NAMESPACE__ . '\create_shortcode_dialog' );
-
-	WP\add_dep_to_script( 'alpinejs', 'arve-shortcode-dialog' );
-	wp_enqueue_script('alpinejs');
 }
 
 function create_shortcode_dialog(): void {
 
-	$settings = ARVE\settings( 'shortcode' );
-	$data     = array();
+	ob_start();
 
-	foreach ( ARVE\settings( 'shortcode' ) as $k => $v ) {
-		$data['options'][ $k ] = '';
-	}
-
-	$data = wp_json_encode( $data );
 	?>
-	<dialog class="arve-sc-dialog ngt" x-data="arvedialog" x-ref="arvedialog" x-init="$watch( 'options', () => { updateShortcode() } )">
-
+	<dialog 
+		class="arve-sc-dialog"
+		data-wp-interactive="nextgenthemes_arve_dialog"
+		data-wp-watch="callbacks.updateShortcode"
+	>
 		<div class="arve-sc-dialog__wrap">
 
 			<div class="arve-sc-dialog__header">
-				<button class="arve-sc-dialog__close-btn" @click="toggleHelpTexts()">
-					<span class="dashicons dashicons-editor-help"></span>
+
+				<button type="button" class="media-modal-close" data-wp-on--click="actions.toggleHelp">
+					<span class="media-modal-icon dashicons dashicons-editor-help">
+						<span class="screen-reader-text">
+							Toggle Help
+						</span>
+					</span>
 				</button>
-				<button class="arve-sc-dialog__close-btn" autofocus @click="$refs.arvedialog.close()">&times;</button>
+
+				<button type="button" class="media-modal-close" data-wp-on--click="actions.closeShortcodeDialog">
+					<span class="media-modal-icon">
+						<span class="screen-reader-text">
+							Close dialog
+						</span>
+					</span>
+				</button>
+
 			</div>
 
 			<div class="arve-sc-dialog__body">
 				<?php
 				\Nextgenthemes\WP\Admin\print_settings_blocks(
-					$settings,
+					ARVE\settings( 'shortcode' ),
 					ARVE\settings_sections(),
 					ARVE\PREMIUM_SECTIONS,
-					'arve',
 					ARVE\PREMIUM_URL_PREFIX,
 					'shortcode-dialog'
 				);
@@ -63,20 +97,20 @@ function create_shortcode_dialog(): void {
 
 			<div class="arve-sc-dialog__footer">
 
-				<p id="arve-shortcode" class="arve-shortcode" x-ref="arveShortcode" x-text="shortcode"></p>
+				<p id="arve-shortcode" class="arve-shortcode" data-wp-text="state.shortcode"></p>
 
-				<button 
+				<button
+					type="button"
 					class="arve-sc-dialog__cancel-btn button-secondary"
-					@click="$refs.arvedialog.close()"
+					data-wp-on--click="actions.closeShortcodeDialog"
+					autofocus
 				>
 					<?php esc_html_e( 'Cancel', 'advanced-responsive-video-embedder' ); ?>
 				</button>
-				<button 
+				<button
+					type="button"
 					class="arve-sc-dialog__submit-btn button-primary"
-					@click="() => {
-						window.wp.media.editor.insert( shortcode );
-						$refs.arvedialog.close();
-					}"
+					data-wp-on--click="actions.insertShortcode"
 				>
 					<?php esc_html_e( 'Insert Shortcode', 'advanced-responsive-video-embedder' ); ?>
 				</button>
@@ -85,23 +119,5 @@ function create_shortcode_dialog(): void {
 		</div>
 	</dialog>
 	<?php
-}
-
-function print_shortcode_template(): void {
-
-	$html = '[arve';
-
-	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-	foreach ( ARVE\settings( 'shortcode' ) as $key => $option ) {
-
-		if ( ! $option['shortcode'] ) {
-			continue;
-		}
-
-		$html .= "{{ vm.$key ? ' $key=\"' + vm.$key + '\"' : '' }}";
-	}
-
-	$html .= ' /]';
-
-	echo $html;
+	echo wp_interactivity_process_directives( ob_get_clean() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }

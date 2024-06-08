@@ -69,24 +69,19 @@ function activate_defined_key( string $file, string $theme_name = '' ): void {
 	}
 }
 
-/**
- * @return void|string
- */
-function api_action( int $item_id, string $key, string $action = 'check' ) {
+function api_action( int $item_id, string $license, string $edd_action = 'check_license', string $edd_store_url = 'https://nextgenthemes.com' ): string {
 
-	if ( ! in_array( $action, array( 'activate', 'deactivate', 'check' ), true ) ) {
-		wp_die( 'invalid action' );
-	}
+	//return wp_json_encode( [ 'item_id' => $item_id, 'key' => $key, 'action' => $action ], JSON_PRETTY_PRINT ); 
 
 	// Call the custom API.
 	$response = remote_get_json(
-		'https://nextgenthemes.com',
+		$edd_store_url,
 		array(
 			'timeout' => 10,
 			'body'    => array(
-				'edd_action' => $action . '_license',
-				'license'    => sanitize_text_field( $key ),
+				'edd_action' => $edd_action,
 				'item_id'    => $item_id,
+				'license'    => sanitize_text_field( $license ),
 				'url'        => home_url(),
 			),
 		)
@@ -103,12 +98,10 @@ function api_action( int $item_id, string $key, string $action = 'check' ) {
 
 		if ( empty( $response->license ) ) {
 
-			$textarea_dump = textarea_dump( $response );
-
 			$message = sprintf(
 				// Translators: Error message
-				__( 'Error. Please report the following:<br>%s', 'advanced-responsive-video-embedder' ),
-				$textarea_dump
+				__( 'Error. Please report the following:%s', 'advanced-responsive-video-embedder' ),
+				PHP_EOL . wp_json_encode( $response, JSON_PRETTY_PRINT )
 			);
 		} else {
 			$message = $response->license;
@@ -120,7 +113,7 @@ function api_action( int $item_id, string $key, string $action = 'check' ) {
 
 function get_api_error_message( object $license_data ): string {
 
-	if ( false !== $license_data->success ) {
+	if ( false !== $license_data->success || empty( $license_data->error ) ) {
 		return '';
 	}
 
@@ -161,8 +154,4 @@ function get_api_error_message( object $license_data ): string {
 	}//end switch
 
 	return $message;
-}
-
-function textarea_dump( $var ) {
-	return sprintf( '<textarea style="width: 100%; height: 70vh;">%s</textarea>', esc_textarea( get_var_dump( $var ) ) );
 }
