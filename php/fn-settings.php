@@ -2,6 +2,7 @@
 namespace Nextgenthemes\ARVE;
 
 use function Nextgenthemes\WP\nextgenthemes_settings_instance;
+use function Nextgenthemes\WP\missing_settings_defaults;
 
 function options(): array {
 	return Base::get_instance()->get_settings_instance()->get_options();
@@ -50,6 +51,15 @@ function settings( string $context = 'settings_page', array $settings = array() 
 			if ( ! $v['shortcode'] ) {
 				unset( $settings[ $k ] );
 				continue;
+			}
+
+			if ( 'boolean' === $v['type'] && $v['option'] ) {
+				$settings[ $k ]['ui_element'] = 'select';
+				$settings[ $k ]['options']    = array(
+					''      => __( 'Default', 'advanced-responsive-video-embedder' ),
+					'true'  => __( 'True', 'advanced-responsive-video-embedder' ),
+					'false' => __( 'False', 'advanced-responsive-video-embedder' ),
+				);
 			}
 		}
 	}
@@ -453,7 +463,7 @@ function settings_data(): array {
 		'sticky_on_mobile'              => array(
 			'type'        => 'boolean',
 			'default'     => true,
-			'tag'         => 'sticky-videos',
+			'tag'         => 'sticky_videos',
 			'shortcode'   => true,
 			'option'      => true,
 			'label'       => __( 'Sticky top on smaller screens', 'advanced-responsive-video-embedder' ),
@@ -784,97 +794,3 @@ function settings_data(): array {
 
 	return $settings;
 }
-
-function missing_settings_defaults( array $settings ): array {
-
-	foreach ( $settings as $key => $value ) :
-
-		if ( empty( $settings[ $key ]['tag'] ) ) {
-			$settings[ $key ]['tag'] = 'main';
-		}
-
-		if ( 'string' === $value['type'] &&
-			! isset( $settings[ $key ]['placeholder'] )
-		) {
-			$settings[ $key ]['placeholder'] = $value['default'];
-		}
-
-		$sanitize_function = __NAMESPACE__ . '\sanitize_callback_' . $value['type'];
-
-		if ( ! function_exists( $sanitize_function ) ) {
-			wp_trigger_error( __FUNCTION__, 'Sanitize function for ' . $value['type'] . ' not found' );
-		} else {
-			$settings[ $key ]['sanitize_callback'] = $sanitize_function;
-		}
-
-		if ( 'boolean' === $value['type'] && $value['option'] ) {
-			$settings[ $key ]['options'] = array(
-				''      => __( 'Default', 'advanced-responsive-video-embedder' ),
-				'true'  => __( 'True', 'advanced-responsive-video-embedder' ),
-				'false' => __( 'False', 'advanced-responsive-video-embedder' ),
-			);
-		}
-
-		if ( ! empty( $settings[ $key ]['options'] ) ) {
-			$settings[ $key ]['ui_element'] = 'select';
-		} else {
-			$settings[ $key ]['ui_element']      = 'input';
-			$settings[ $key ]['ui_element_type'] = input_type( $value['type'] );
-		}
-
-	endforeach;
-
-	return $settings;
-}
-
-function input_type( string $type ): string {
-
-	switch ( $type ) {
-		case 'string':
-			return 'text';
-		case 'integer':
-			return 'number';
-		case 'boolean':
-			return 'checkbox';
-	}
-}
-
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
-
-/**
- * Sanitizes a value to a boolean.
- *
- * @param mixed $value The value to sanitize.
- * @param WP_REST_Request $request The request object.
- * @param string $param The parameter name.
- * @return int The sanitized boolean value.
- */
-function sanitize_callback_integer( $value, \WP_REST_Request $request, string $param ): int {
-	return (int) $value;
-}
-
-/**
- * Sanitizes a value to a boolean.
- *
- * @param mixed $value The value to sanitize.
- * @param WP_REST_Request $request The request object.
- * @param string $param The parameter name.
- * @return bool The sanitized boolean value.
- */
-function sanitize_callback_boolean( $value, \WP_REST_Request $request, string $param ): bool {
-	return (bool) $value;
-}
-
-/**
- * Sanitizes a value to a boolean.
- *
- * @param mixed $value The value to sanitize.
- * @param WP_REST_Request $request The request object.
- * @param string $param The parameter name.
- * @return string The sanitized boolean value.
- */
-function sanitize_callback_string( $value, \WP_REST_Request $request, string $param ): string {
-	return sanitize_text_field( $value );
-}
-
-// phpcs:enable

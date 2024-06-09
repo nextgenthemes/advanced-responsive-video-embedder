@@ -195,86 +195,78 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 		<div>
 			<div>
 				<?php
-				switch ( $setting['type'] ) {
-					case 'select':
-						label($input_id, $setting );
-						?>
-						<select 
-							class="form-select"
-							id="<?= esc_attr( $input_id ); ?>"
-							data-ngt-option="<?= esc_attr( $key ); ?>"
-							data-wp-bind--value="state.options.<?= esc_attr( $key ); ?>"
-							data-wp-on--change="actions.inputChange"
-							data-wp-bind--disabled="state.isSaving"
-						>
-							<?php foreach ( $setting['options'] as $k => $v ) : ?>
-								<option value="<?= esc_attr( $k ); ?>"><?= esc_html( $v ); ?></option>
-							<?php endforeach; ?>
-						</select>
-						<?php
-						break;
-					case 'boolean':
-						printf(
-							'<input %s/>',
-							attr(
-								array(
-									'type'               => 'checkbox',
-									'id'                 => $input_id,
-									'data-wp-on--change' => 'actions.checkboxChange',
-									'data-wp-bind--checked' => "state.options.$key",
-									'placeholder'        => $setting['placeholder'] ?? false,
-									'class'              => 'form-check-input',
-									'data-wp-bind--disabled' => 'state.isSaving',
-								)
-							),
-						);
-						label($input_id, $setting );
-						break;
-					case 'integer':
-					case 'string':
-					case 'attachment':
-						label($input_id, $setting );
-						printf(
-							'<input %s/>',
-							attr(
-								array(
-									'type'                => ( 'integer' === $setting['type'] ) ? 'number' : 'text',
-									'id'                  => $input_id,
-									'data-wp-on--keyup'   => 'actions.inputChange',
-									'data-wp-on--change'  => 'actions.inputChange',
-									'data-arve-url'       => ( 'url' === $key ), // TODO: remove
-									'data-wp-context'     => ( 'url' === $key ) ? 'url' : false,
-									'data-wp-bind--value' => "state.options.$key",
-									'placeholder'         => $setting['placeholder'] ?? false,
-									'class'               => ( 'license_key' === $setting['ui'] ) ?
-										'large-text text-large--ngt-key' :
-										'large-text',
-									'maxlength'           => ( 'license_key' === $setting['ui'] ) ? 32 : false,
-									'data-wp-bind--readonly' => 'state.isSaving',
-									'readonly'               => ( 'license_key' === $setting['ui'] && get_defined_key( $key ) ) ? 'readonly' : false,
-								)
+				if ( 'select' === $setting['ui_element'] ) {
+
+					label($input_id, $setting );
+					?>
+					<select 
+						class="form-select"
+						id="<?= esc_attr( $input_id ); ?>"
+						data-ngt-option="<?= esc_attr( $key ); ?>"
+						data-wp-bind--value="state.options.<?= esc_attr( $key ); ?>"
+						data-wp-on--change="actions.inputChange"
+						data-wp-bind--disabled="state.isSaving"
+					>
+						<?php foreach ( $setting['options'] as $k => $v ) : ?>
+							<option value="<?= esc_attr( $k ); ?>"><?= esc_html( $v ); ?></option>
+						<?php endforeach; ?>
+					</select>
+					<?php
+				} elseif ( 'checkbox' === $setting['ui_element_type'] ) {
+					printf(
+						'<input %s/>',
+						attr(
+							array(
+								'type'               => 'checkbox',
+								'id'                 => $input_id,
+								'data-wp-on--change' => 'actions.checkboxChange',
+								'data-wp-bind--checked' => "state.options.$key",
+								'placeholder'        => $setting['placeholder'] ?? false,
+								'class'              => 'form-check-input',
+								'data-wp-bind--disabled' => 'state.isSaving',
 							)
-						);
-						
-						if ( 'license_key' === $setting['ui'] ) {
-							license_key_ui( $key );	
-						}
+						),
+					);
+					label($input_id, $setting );
+				} else {
+					label($input_id, $setting );
+					printf(
+						'<input %s/>',
+						attr(
+							array(
+								'type'                => $setting['ui_element_type'],
+								'id'                  => $input_id,
+								'data-wp-on--keyup'   => 'actions.inputChange',
+								'data-wp-on--change'  => 'actions.inputChange',
+								'data-arve-url'       => ( 'url' === $key ), // TODO: remove
+								'data-wp-context'     => ( 'url' === $key ) ? 'url' : false,
+								'data-wp-bind--value' => "state.options.$key",
+								'placeholder'         => $setting['placeholder'] ?? false,
+								'class'               => ( 'license_key' === $setting['ui'] ) ?
+									'large-text text-large--ngt-key' :
+									'large-text',
+								'maxlength'           => ( 'license_key' === $setting['ui'] ) ? 32 : false,
+								'data-wp-bind--readonly' => 'state.isSaving',
+								'readonly'               => ( 'license_key' === $setting['ui'] && get_defined_key( $key ) ) ? 'readonly' : false,
+							)
+						)
+					);
+					
+					if ( 'license_key' === $setting['ui'] ) {
+						license_key_ui( $key );	
+					}
 
-						if ( 'image_upload' === $setting['ui'] ) : 
-							wp_enqueue_media();
-							?>
-							<button
-								class="button-secondary button-secondary--select-thumbnail"
-								type="button"
-								data-wp-on--click="actions.selectImage"
-							>
-								Select Image
-							</button>
-						<?php endif;
-
-						break;
-					default:
-						esc_attr_e( 'Type not implemented' );
+					if ( 'image_upload' === $setting['ui'] ) : 
+						wp_enqueue_media();
+						?>
+						<button
+							class="button-secondary button-secondary--select-thumbnail"
+							type="button"
+							data-wp-on--click="actions.selectImage"
+						>
+							Select Image
+						</button>
+					<?php endif;
 				}
 				?>
 
