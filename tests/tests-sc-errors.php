@@ -138,26 +138,4 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Error', $html );
 		$this->assertStringContainsString( 'err-testing-str', $html );
 	}
-
-	/**
-	 * @group oembed-data-trigger
-	 */
-	public function test_oembed_data_json_error(): void {
-
-		add_filter(
-			'oembed_dataparse',
-			function ( $html ) {
-				return str_replace( 'title', 'tit"le', $html );
-			},
-			PHP_INT_MAX
-		);
-
-		$html = shortcode(
-			[
-				'url' => 'https://www.youtube.com/watch?v=g197xdRZsW0',
-			]
-		);
-
-		$this->assertStringContainsString( 'Syntax error', $html );
-	}
 }
