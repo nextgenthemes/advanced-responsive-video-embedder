@@ -2,6 +2,7 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+require dirname( __DIR__ ) . '/vendor/nextgenthemes/wp-shared/includes/WP/fn-settings.php';
 require dirname( __DIR__ ) . '/advanced-responsive-video-embedder.php';
 require dirname( __DIR__ ) . '/php/fn-misc.php';
 require dirname( __DIR__ ) . '/php/fn-settings.php';
