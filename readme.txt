@@ -2,8 +2,8 @@
 Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: embed, video, lazyload, lightbox, rumble
-Requires at least: 6.2
-Tested up to: 6.5.3
+Requires at least: 6.5
+Tested up to: 6.6
 Requires PHP: 7.4
 Stable tag: 10.1.2-alpha1
 License: GPL-3.0
@@ -193,10 +193,13 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2024-06-09 10.1.2 ###
-* Fix: Encoding and JSON errors related to oembed cache.
+### 2024-06-09 10.2.0 ###
 * New: Invidious URL Parameter setting for new extra privacy addon.
-* Improved: Fixed a couple of typos.
+* Fix: Encoding and JSON errors related how things were stored in oembed cache.
+* Improved: Yet another Setting page overhaul, dropping Alpine.js for WP Interactivity API.
+* Improved: Bring back reset buttons for settings sections.
+* Improved: A couple of typos.
+* Removed Shortcode UI support. (That plugin did now have a release in 5 years, the ARVE dialog is better anyway IMO)
 * Compatibility with latest Pro addon.
 
 ### 2024-05-27 10.1.1 ###
@@ -223,9 +226,6 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * Fix: Some broken Vimeo videos. And possibly other bugs.
 
 ### 2024-05-21 10.0.7 ###
-* Fix: Lazyload and Lightbox (Pro) were not displayed when used with video files.
-
-### 2024-05-19 10.0.7 ###
 * Fix: Lazyload and Lightbox (Pro) were not displayed when used with video files.
 
 ### 2024-05-17 10.0.6 ###
