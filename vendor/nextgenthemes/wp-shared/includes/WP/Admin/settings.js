@@ -115,44 +115,7 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 				} );
 		},
 		deleteOembedCache: () => {
-			if ( state.isSaving ) {
-				state.message = 'too fast';
-				return;
-			}
-
-			const config = getConfig();
-
-			helpers.debugJson( config );
-
-			// set the state so that another save cannot happen while processing
-			state.isSaving = true;
-			state.message = '...';
-
-			// Make a POST request to the REST API route that we registered in our PHP file
-			fetch( config.restUrl + '/delete-oembed-cache', {
-				method: 'POST',
-				body: JSON.stringify( { delete: true } ),
-				headers: {
-					'Content-Type': 'application/json',
-					'X-WP-Nonce': config.nonce,
-				},
-			} )
-				.then( ( response ) => {
-					if ( ! response.ok ) {
-						throw new Error( 'Network response was not ok' );
-					}
-					return response.json();
-				} )
-				.then( ( message ) => {
-					state.message = message;
-					setTimeout( () => ( state.message = '' ), 3000 );
-				} )
-				.catch( ( error ) => {
-					state.message = error.message;
-				} )
-				.finally( () => {
-					state.isSaving = false;
-				} );
+			actions.restCall( '/delete-oembed-cache', { delete: true } );
 		},
 		// debounced version created later
 		saveOptionsReal: () => {
@@ -203,52 +166,19 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 				} );
 		},
 		eddLicenseAction() {
-			if ( state.isSaving ) {
-				state.message = 'trying to save too fast';
-				return;
-			}
-
-			// set the state so that another save cannot happen while processing
-			state.isSaving = true;
-			state.message = 'Saving...';
-
-			const config = getConfig();
 			const context = getContext();
 
-			const bodyToStringify = {
-				option_key: context.option_key,
-				edd_store_url: context.edd_store_url, // EDD Store URL
-				edd_action: context.edd_action, // edd api arg has same edd_ prefix
-				item_id: context.edd_item_id, // edd api arg WITHOUT edd_ prefix
-				license: state.options[ context.option_key ], // edd api arg WITHOUT edd_ prefix
-			};
-
-			// Make a POST request to the REST API route that we registered in our PHP file
-			fetch( config.restUrl + '/edd-license-action', {
-				method: 'POST',
-				body: JSON.stringify( bodyToStringify ),
-				headers: {
-					'Content-Type': 'application/json',
-					'X-WP-Nonce': config.nonce,
+			actions.restCall(
+				'/edd-license-action',
+				{
+					option_key: context.option_key,
+					edd_store_url: context.edd_store_url, // EDD Store URL
+					edd_action: context.edd_action, // edd api arg has same edd_ prefix
+					item_id: context.edd_item_id, // edd api arg WITHOUT edd_ prefix
+					license: state.options[ context.option_key ], // edd api arg WITHOUT edd_ prefix
 				},
-			} )
-				.then( ( response ) => {
-					if ( ! response.ok ) {
-						throw new Error( 'Network response was not ok' );
-					}
-					return response.json();
-				} )
-				.then( ( response ) => {
-					state.message = response;
-					setTimeout( () => ( state.message = '' ), 1000 );
-				} )
-				.catch( ( error ) => {
-					state.message = error.message;
-				} )
-				.finally( () => {
-					state.isSaving = false;
-					window.location.reload();
-				} );
+				true
+			);
 		},
 		resetOptionsSection() {
 			const config = getConfig();
