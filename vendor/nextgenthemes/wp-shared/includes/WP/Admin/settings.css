@@ -14,11 +14,11 @@
 	margin-right: auto;
 	margin-left: auto;
 
-	& .nav-tab {
+	.nav-tab {
 		cursor: pointer;
 	}
 
-	& .nav-tab:not(.nav-tab--ngt-highlight) {
+	.nav-tab:not(.nav-tab--ngt-highlight) {
 		font-weight: 400;
 	}
 
@@ -26,7 +26,7 @@
 		text-underline-offset: 2px;
 	}
 
-	& .ngt-label-wrap {
+	.ngt-label-wrap {
 		display: block;
 
 		& a {
