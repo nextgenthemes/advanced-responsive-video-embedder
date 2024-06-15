@@ -3,6 +3,9 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-06-15 10.2.1 ###
+* Improved: Set WP required version to 6.5 in main plugin file, previously only set in readme.
+
 ### 2024-06-15 10.2.0 ###
 * New: Invidious URL Parameter setting for new extra privacy addon.
 * Fix: Encoding and JSON errors related how things were stored in oembed cache.
