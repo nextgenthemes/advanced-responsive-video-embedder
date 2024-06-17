@@ -6,16 +6,13 @@ import { globalID } from './main';
 export {};
 declare global {
 	interface Window {
-		wp;
-		jQuery;
-		sui;
 		ajaxurl;
 	}
 }
 
 globalID();
 
-// talken from https://github.com/WordPress/gutenberg/blob/3317ba195da0149d0bae221dc3516cd76f536c5d/packages/react-native-bridge/common/gutenberg-web-single-block/editor-behavior-overrides.js#L126
+// taken from https://github.com/WordPress/gutenberg/blob/3317ba195da0149d0bae221dc3516cd76f536c5d/packages/react-native-bridge/common/gutenberg-web-single-block/editor-behavior-overrides.js#L126
 // The editor-canvas iframe relies upon `srcdoc`, which does not trigger a
 // `load` event. Thus, we must poll for the iframe to be ready.
 let attemptsToApplyID = 0;
