@@ -55,7 +55,6 @@ function arg_mode( string $mode ): string {
 	return $mode;
 }
 
-
 function compare_oembed_src_with_generated_src( string $src, string $src_gen, string $provider, string $url ): void {
 
 	if ( empty($src) || empty($src_gen) ) {
@@ -79,6 +78,9 @@ function compare_oembed_src_with_generated_src( string $src, string $src_gen, st
 			$src = remove_query_arg( 'feature', $src );
 			$src = remove_query_arg( 'origin', $src );
 			$src = remove_query_arg( 'enablejsapi', $src );
+			$src = remove_query_arg( 'width', $src );
+			$src = remove_query_arg( 'height', $src );
+			$src = remove_query_arg( 'discover', $src );
 			break;
 		case 'dailymotion':
 			$src = remove_query_arg( 'pubtool', $src );
