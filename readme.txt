@@ -193,7 +193,12 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2024-06-15 10.2.1 ###
+### 2024-06-17 10.2.2 ###
+* Fix: Rare src mismatch errors with YouTube.
+* Improved: Set block api version to 3.
+* Improved: Show message that the ARVE Block needs Gutenberg active or WP 6.6.
+
+### 2024-06-17 10.2.1 ###
 * Improved: Set WP required version to 6.5 in main plugin file, previously only set in readme.
 
 ### 2024-06-15 10.2.0 ###
