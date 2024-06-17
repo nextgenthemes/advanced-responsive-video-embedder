@@ -121,7 +121,7 @@ function action_admin_init_setup_messages(): void {
 			wp_kses(
 				sprintf(
 					// Translators: %1$s URL, %2$s version tag.
-					__( 'For the ARVE Block to work you currently need the <a href="%1$s">Gutenberg plugin</a> to be installed or <a href="$2$s">WP 6.6-beta2</a> or later. Reason is unknown at the time of writing this.', 'advanced-responsive-video-embedder' ),
+					__( 'For the ARVE Block to work you currently need the <a href="%1$s">Gutenberg plugin</a> active or <a href="$2$s">WP 6.6-beta2</a> or later. Reason is unknown at the time of writing this.', 'advanced-responsive-video-embedder' ),
 					\admin_url( 'plugin-install.php?s=Gutenberg%2520Team&tab=search&type=term' ),
 					esc_url( 'https://wordpress.org/news/2024/06/wordpress-6-6-beta-2/' )
 				),
