@@ -103,7 +103,30 @@ function action_admin_init_setup_messages(): void {
 					esc_url( 'https://nextgenthemes.com/support/' )
 				),
 				ALLOWED_HTML,
-				array( 'htts', 'https' )
+				array( 'http', 'https' )
+			),
+			array(
+				'cap' => 'install_plugins',
+			)
+		);
+	}
+
+	if ( is_gutenberg() &&
+		! is_plugin_active( 'gutenberg/gutenberg.php' ) &&
+		version_compare( $GLOBALS['wp_version'], '6.6-beta2', '<' )
+	) {
+		Notices::instance()->register_notice(
+			'ngt-arve-need-gb2',
+			'notice-info',
+			wp_kses(
+				sprintf(
+					// Translators: %1$s URL, %2$s version tag.
+					__( 'For the ARVE Block to work you currently need the <a href="%1$s">Gutenberg plugin</a> to be installed or <a href="$2$s">WP 6.6-beta2</a> or later. Reason is unknown at the time of writing this.', 'advanced-responsive-video-embedder' ),
+					\admin_url( 'plugin-install.php?s=Gutenberg%2520Team&tab=search&type=term' ),
+					esc_url( 'https://wordpress.org/news/2024/06/wordpress-6-6-beta-2/' )
+				),
+				ALLOWED_HTML,
+				array( 'http', 'https' )
 			),
 			array(
 				'cap' => 'install_plugins',
