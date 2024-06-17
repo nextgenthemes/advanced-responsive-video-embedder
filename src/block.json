@@ -1,6 +1,6 @@
 {
     "$schema": "https://schemas.wp.org/trunk/block.json",
-    "apiVersion": 2,
+    "apiVersion": 3,
     "name": "nextgenthemes/arve-block",
     "title": "Video Embed (ARVE)",
     "category": "embed",
