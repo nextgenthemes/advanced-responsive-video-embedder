@@ -3,6 +3,10 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-07-06 10.2.3 ###
+* Fix: Help toggle in new ARVE Shortcode dialog.
+* Improved: Show message that the ARVE Button in Classic Editor needs WP 6.6 (sorry, to be released 2024-07-16).
+
 ### 2024-06-17 10.2.2 ###
 * Fix: Rare src mismatch errors with YouTube.
 * Improved: Set block api version to 3.

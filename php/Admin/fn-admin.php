@@ -121,9 +121,44 @@ function action_admin_init_setup_messages(): void {
 			wp_kses(
 				sprintf(
 					// Translators: %1$s URL, %2$s version tag.
-					__( 'For the ARVE Block to work you currently need the <a href="%1$s">Gutenberg plugin</a> active or <a href="$2$s">WP 6.6-beta2</a> or later. Reason is unknown at the time of writing this.', 'advanced-responsive-video-embedder' ),
+					__( 'For the ARVE Block to work you currently need the <a href="%1$s">Gutenberg plugin</a> active or <a href="$2$s">WP 6.6-RC2</a> or later. Reason is unknown at the time of writing this.', 'advanced-responsive-video-embedder' ),
 					\admin_url( 'plugin-install.php?s=Gutenberg%2520Team&tab=search&type=term' ),
-					esc_url( 'https://wordpress.org/news/2024/06/wordpress-6-6-beta-2/' )
+					esc_url( 'https://wordpress.org/news/2024/07/wordpress-6-6-rc2/' )
+				),
+				ALLOWED_HTML,
+				array( 'http', 'https' )
+			),
+			array(
+				'cap' => 'install_plugins',
+			)
+		);
+	}
+
+	if ( is_plugin_active( 'classic-editor/classic-editor.php' ) &&
+		version_compare( $GLOBALS['wp_version'], '6.6-beta2', '<' )
+	) {
+		Notices::instance()->register_notice(
+			'ngt-arve-need-classic-editor-needs-6.6',
+			'notice-info',
+			wp_kses(
+				sprintf(
+					// Translators: %s URL.
+					__(
+						'Apologies, for the ARVE button in Classic Editor to work you need WP 6.6 that is about to release 2024-07-16. Three not ideal options for the time being:
+						<ul>
+							<li>
+								You can create the shortcodes manually and wait for the regular 6.6 update.
+							</li>
+							<li>
+								Update WordPress already to the 6.6 release candidate 2 (basically ready) <a href="%s">6.6-RC2</a>.
+							</li>
+							<li>
+								Downgrade ARVE to 10.1.1 (with WP-Rollback for example).
+							</li>
+						</ul>',
+						'advanced-responsive-video-embedder'
+					),
+					esc_url( 'https://wordpress.org/news/2024/07/wordpress-6-6-rc2/' )
 				),
 				ALLOWED_HTML,
 				array( 'http', 'https' )
