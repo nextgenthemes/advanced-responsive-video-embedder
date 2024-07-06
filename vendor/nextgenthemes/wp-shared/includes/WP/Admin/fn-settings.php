@@ -279,7 +279,7 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 		</div>
 
 		<?php if ( ! empty( $setting['description'] ) ) : ?>
-			<p class="ngt-opt__description" data-wp-bind--hidden="!context.help">
+			<p class="ngt-opt__description" data-wp-bind--hidden="!state.help">
 				<?= \wp_kses( $setting['description'], DESCRIPTION_ALLOWED_HTML, array( 'http', 'https' ) ); ?>
 			</p>
 		<?php endif; ?>
