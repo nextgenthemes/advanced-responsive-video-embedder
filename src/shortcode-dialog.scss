@@ -109,7 +109,6 @@
 @container (min-width: 700px) {
 	.arve-sc-dialog__body {
 		display: grid;
-		align-items: center;
 		grid-template-columns: minmax(0,50%) minmax(0,50%);
 		column-gap: 2em;
 		row-gap: 1em;
