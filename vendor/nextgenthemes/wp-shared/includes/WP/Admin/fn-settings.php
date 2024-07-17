@@ -238,8 +238,8 @@ function option_block( string $key, array $setting, string $premium_url_prefix )
 								'id'                  => $input_id,
 								'data-wp-on--keyup'   => 'actions.inputChange',
 								'data-wp-on--change'  => 'actions.inputChange',
-								'data-arve-url'       => ( 'url' === $key ), // TODO: remove
-								'data-wp-context'     => ( 'url' === $key ) ? 'url' : false,
+								// 'data-arve-url'       => ( 'url' === $key ), // TODO: remove
+								// 'data-wp-context'     => ( 'url' === $key ) ? 'url' : false,
 								'data-wp-bind--value' => "state.options.$key",
 								'placeholder'         => $setting['placeholder'] ?? false,
 								'class'               => ( 'license_key' === $setting['ui'] ) ?
