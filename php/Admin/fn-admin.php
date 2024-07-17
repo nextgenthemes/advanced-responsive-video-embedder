@@ -259,12 +259,12 @@ function register_shortcode_ui(): void {
 						'label' => esc_html__( 'Default', 'advanced-responsive-video-embedder' ),
 					),
 					array(
-						'value' => 'true',
-						'label' => esc_html__( 'True', 'advanced-responsive-video-embedder' ),
+						'value' => 'yes',
+						'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
 					),
 					array(
-						'value' => 'false',
-						'label' => esc_html__( 'False', 'advanced-responsive-video-embedder' ),
+						'value' => 'no',
+						'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
 					),
 				);
 				break;
