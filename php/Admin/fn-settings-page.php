@@ -79,7 +79,7 @@ function pro_message( string $addon_name, string $slug ): string {
 	return wp_kses(
 		sprintf(
 			// Translators: Addon Name
-			__( '<strong>%s is not active.</strong> You may already set options for this addon but they will only take effect if its installed/activated later.', 'advanced-responsive-video-embedder' ),
+			__( '<strong>%s is not active.</strong> You may already set options for this addon but they will only take effect if its installed and activated later.', 'advanced-responsive-video-embedder' ),
 			sprintf( '<a href="%s">%s</a>', 'https://nextgenthemes.com/plugins/' . $slug . '/', $addon_name )
 		),
 		array(
