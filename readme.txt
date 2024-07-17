@@ -2,7 +2,7 @@
 Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: embed, video, lazyload, lightbox, rumble
-Requires at least: 6.5
+Requires at least: 6.6
 Tested up to: 6.6
 Requires PHP: 7.4
 Stable tag: 10.2.3
@@ -192,6 +192,12 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2024-07-17 10.3.0 ###
+* WP 6.6 marked as required.
+* New: Brings back support for Shortcode UI that was removed previously. Note that in SCUI it uses yes/no and ARVE dialog uses true/false. There may come some improvement on that later.
+* Fix: Remove script module and WP interactivity registering as this is done by WP in 6.6 now and caused double register and ordering issues.
+* Fix: Make sure the ARVE shortcode modal is closed when selecting a thumbnail and reopened afterwards.
 
 ### 2024-07-06 10.2.3 ###
 * Fix: Help toggle in new ARVE Shortcode dialog.
