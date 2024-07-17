@@ -1,6 +1,5 @@
 import './admin.scss';
 import './shortcode-dialog.scss';
-
 import { globalID } from './main';
 
 export {};
