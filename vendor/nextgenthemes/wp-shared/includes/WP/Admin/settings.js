@@ -95,7 +95,10 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			}
 		},
 		selectImage: () => {
-			state.dialog.close();
+			if ( state.dialog ) {
+				state.dialog.close();
+			}
+
 			const context = getContext();
 			const image = window.wp
 				.media( {
@@ -109,10 +112,14 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 					// We convert uploadedImage to a JSON object to make accessing it easier
 					const attachmentID = uploadedImage.toJSON().id;
 					state.options[ context.option_key ] = attachmentID;
-					state.dialog.showModal();
+					if ( state.dialog ) {
+						state.dialog.showModal();
+					}
 				} )
 				.on( 'close', function () {
-					state.dialog.showModal();
+					if ( state.dialog ) {
+						state.dialog.showModal();
+					}
 				} );
 		},
 		deleteOembedCache: () => {
