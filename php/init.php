@@ -77,6 +77,7 @@ function init_admin(): void {
 	add_action( 'admin_init', __NAMESPACE__ . '\Admin\action_admin_init_setup_messages' );
 	add_action( 'media_buttons', __NAMESPACE__ . '\Admin\add_media_button', 11 );
 
+	add_action( 'register_shortcode_ui', __NAMESPACE__ . '\Admin\register_shortcode_ui' );
 	add_action( 'wp_dashboard_setup', __NAMESPACE__ . '\Admin\add_dashboard_widget' );
 
 	add_filter( 'plugin_action_links_' . plugin_basename( PLUGIN_FILE ), __NAMESPACE__ . '\Admin\add_action_links' );

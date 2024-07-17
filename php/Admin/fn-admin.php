@@ -244,6 +244,73 @@ function widget_text(): void {
 	echo wp_kses( ad_html(), ALLOWED_HTML, array( 'htts', 'https' ) );
 }
 
+function register_shortcode_ui(): void {
+
+	$settings = settings( 'shortcode' );
+
+	foreach ( $settings as $k => $v ) :
+
+		switch ( $v['type'] ) {
+			case 'boolean':
+				$v['type'] = 'select';
+				if ( isset( $v['option'] ) && true === $v['option'] ) {
+					$v['options'] = array(
+						array(
+							'value' => '',
+							'label' => esc_html__( 'Default', 'advanced-responsive-video-embedder' ),
+						),
+						array(
+							'value' => 'yes',
+							'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
+						),
+						array(
+							'value' => 'no',
+							'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
+						),
+					);
+				} else {
+					$v['options'] = array(
+						array(
+							'value' => 'no',
+							'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
+						),
+						array(
+							'value' => 'yes',
+							'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
+						),
+					);
+				}
+				break;
+			case 'string':
+				$v['type'] = 'text';
+				break;
+			case 'integer':
+				$v['type'] = 'number';
+				break;
+		}
+
+		if ( 'thumbnail' === $k ) {
+			$v['type'] = 'attachment';
+		}
+
+		if ( ! empty( $v['placeholder'] ) ) {
+			$v['meta']['placeholder'] = $v['placeholder'];
+		}
+
+		$v['attr'] = $k;
+		$attrs[]   = $v;
+	endforeach;
+
+	shortcode_ui_register_for_shortcode(
+		'arve',
+		array(
+			'label'         => esc_html( 'ARVE' ),
+			'listItemImage' => 'dashicons-format-video',
+			'attrs'         => $attrs,
+		)
+	);
+}
+
 function add_dashboard_widget(): void {
 
 	if ( ! display_pro_ad() ) {

@@ -1,6 +1,6 @@
 import { store, getContext, getConfig, getElement } from '@wordpress/interactivity';
-const l = console.log; // eslint-disable-line
 const domParser = new DOMParser();
+const _ = window._;
 
 const namespace = document.querySelector( '[data-wp-interactive^="nextgenthemes"]' )?.dataset
 	?.wpInteractive;
@@ -74,8 +74,6 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			context.activeTabs[ context.section ] = true;
 		},
 		inputChange: ( event ) => {
-			l( 'inputChange' );
-
 			const context = getContext();
 
 			if ( 'arveUrl' in event.target.dataset ) {
@@ -89,8 +87,6 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			}
 		},
 		checkboxChange: ( event ) => {
-			l( 'checkboxChange' );
-
 			const context = getContext();
 			state.options[ context.option_key ] = event.target.checked;
 
@@ -99,6 +95,7 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			}
 		},
 		selectImage: () => {
+			state.dialog.close();
 			const context = getContext();
 			const image = window.wp
 				.media( {
@@ -112,6 +109,10 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 					// We convert uploadedImage to a JSON object to make accessing it easier
 					const attachmentID = uploadedImage.toJSON().id;
 					state.options[ context.option_key ] = attachmentID;
+					state.dialog.showModal();
+				} )
+				.on( 'close', function () {
+					state.dialog.showModal();
 				} );
 		},
 		deleteOembedCache: () => {
@@ -119,12 +120,9 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 		},
 		// debounced version created later
 		saveOptionsReal: () => {
-			l( 'saveOptionsReal' );
 			actions.restCall( '/save', state.options );
 		},
 		restCall: ( restRoute, body, refreshAfter = false ) => {
-			l( 'restCall' );
-
 			if ( state.isSaving ) {
 				state.message = 'trying to save too fast';
 				return;
@@ -223,6 +221,10 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			const options = getContext().options;
 			const preview = document.getElementById( 'preview' );
 
+			if ( ! preview ) {
+				throw new Error( 'No preview element' );
+			}
+
 			for ( const [ key, value ] of Object.entries( options ) ) {
 				if ( true === value ) {
 					params.append( key, 'true' );
@@ -233,12 +235,9 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 
 			url.search = params.toString();
 
-			l( url.href );
-
 			fetch( url.href )
 				.then( ( response ) => response.json() )
 				.then( ( data ) => {
-					l( data );
 					preview.innerHTML = data.html;
 				} )
 				.catch( ( error ) => l( error ) );
@@ -269,8 +268,6 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 actions.saveOptions = debounce( actions.saveOptionsReal, 1111 );
 
 function debounce( func, wait, immediate ) {
-	l( 'debounce' );
-
 	let timeout;
 	return function () {
 		const context = this;
@@ -334,3 +331,35 @@ function gcd( a, b ) {
 
 	return gcd( b, a % b );
 }
+
+function shortCodeUiExtractUrl( changed, collection ) {
+	function attrByName( name ) {
+		return _.find( collection, function ( viewModel ) {
+			return name === viewModel.model.get( 'attr' );
+		} );
+	}
+
+	const val = changed.value;
+
+	if ( typeof val === 'undefined' ) {
+		return;
+	}
+
+	const urlInput = attrByName( 'url' ).$el.find( 'input' );
+	const aspectRatioInput = attrByName( 'aspect_ratio' ).$el.find( 'input' );
+
+	const iframe = domParser.parseFromString( val, 'text/html' ).querySelector( 'iframe' );
+	if ( iframe && iframe.getAttribute( 'src' ) ) {
+		urlInput.val( iframe.src ).trigger( 'input' );
+
+		if ( iframe.width && iframe.height ) {
+			const ratio = aspectRatio( iframe.width, iframe.height );
+
+			if ( '16:9' !== ratio ) {
+				aspectRatioInput.val( ratio ).trigger( 'input' );
+			}
+		}
+	}
+}
+
+window?.wp?.shortcake?.hooks?.addAction( 'arve.url', shortCodeUiExtractUrl );
