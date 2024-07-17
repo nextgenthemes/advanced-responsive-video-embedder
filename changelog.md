@@ -3,6 +3,12 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-07-17 10.3.0 ###
+* WP 6.6 marked as required.
+* New: Brings back support for Shortcode UI that was removed previously. Note that in SCUI it uses yes/no and ARVE dialog uses true/false. There may come some improvement on that later.
+* Fix: Remove script module and WP interactivity registering as this is done by WP in 6.6 now and caused double register and ordering issues.
+* Fix: Make sure the ARVE shortcode modal is closed when selecting a thumbnail and reopened afterwards.
+
 ### 2024-07-06 10.2.3 ###
 * Fix: Help toggle in new ARVE Shortcode dialog.
 * Improved: Show message that the ARVE Button in Classic Editor needs WP 6.6 (sorry, to be released 2024-07-16).
