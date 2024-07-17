@@ -252,34 +252,21 @@ function register_shortcode_ui(): void {
 
 		switch ( $v['type'] ) {
 			case 'boolean':
-				$v['type'] = 'select';
-				if ( isset( $v['option'] ) && true === $v['option'] ) {
-					$v['options'] = array(
-						array(
-							'value' => '',
-							'label' => esc_html__( 'Default', 'advanced-responsive-video-embedder' ),
-						),
-						array(
-							'value' => 'yes',
-							'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
-						),
-						array(
-							'value' => 'no',
-							'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
-						),
-					);
-				} else {
-					$v['options'] = array(
-						array(
-							'value' => 'no',
-							'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
-						),
-						array(
-							'value' => 'yes',
-							'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
-						),
-					);
-				}
+				$v['type']    = 'select';
+				$v['options'] = array(
+					array(
+						'value' => '',
+						'label' => esc_html__( 'Default', 'advanced-responsive-video-embedder' ),
+					),
+					array(
+						'value' => 'true',
+						'label' => esc_html__( 'True', 'advanced-responsive-video-embedder' ),
+					),
+					array(
+						'value' => 'false',
+						'label' => esc_html__( 'False', 'advanced-responsive-video-embedder' ),
+					),
+				);
 				break;
 			case 'string':
 				$v['type'] = 'text';
