@@ -17,7 +17,7 @@ function arg_maxwidth( int $maxwidth, string $provider, string $align ): int {
 		} elseif ( is_gutenberg() ) {
 			$maxwidth = 0;
 		} elseif ( empty( $options['maxwidth'] ) ) {
-			$maxwidth = (int) empty( $GLOBALS['content_width'] ) ? DEFAULT_MAXWIDTH : $GLOBALS['content_width'];
+			$maxwidth = empty( $GLOBALS['content_width'] ) ? DEFAULT_MAXWIDTH : (int) $GLOBALS['content_width'];
 		} else {
 			$maxwidth = (int) $options['maxwidth'];
 		}

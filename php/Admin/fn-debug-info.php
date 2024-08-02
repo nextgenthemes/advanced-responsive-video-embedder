@@ -20,16 +20,19 @@ function plugin_ver_status( string $folder_and_filename ): string {
 }
 
 function print_active_plugins(): void {
-	$allplugins     = get_plugins();
+	$all_plugins    = get_plugins();
 	$active_plugins = get_option( 'active_plugins', array() );
 
 	echo "ACTIVE PLUGINS:\n";
-	foreach ( $allplugins as $plugin_path => $plugin ) {
+	foreach ( $all_plugins as $plugin_path => $plugin ) {
 		// If the plugin isn't active, don't show it.
 		if ( ! in_array( $plugin_path, $active_plugins, true ) ) {
 			continue;
 		}
-		echo esc_html( "{$plugin['Name']}: {$plugin['Version']}\n" );
+		$name = $plugin['Name'];
+		$ver  = $plugin['Version'];
+
+		echo esc_html( "$name: $ver\n" );
 	}
 }
 
@@ -40,16 +43,19 @@ function print_network_active_plugins(): void {
 	}
 
 	echo "NETWORK ACTIVE PLUGINS: \n";
-	$allplugins     = wp_get_active_network_plugins();
+	$all_plugins    = wp_get_active_network_plugins();
 	$active_plugins = get_site_option( 'active_sitewide_plugins', array() );
-	foreach ( $allplugins as $plugin_path ) {
+	foreach ( $all_plugins as $plugin_path ) {
 		$plugin_base = plugin_basename( $plugin_path );
 		// If the plugin isn't active, don't show it.
 		if ( ! array_key_exists( $plugin_base, $active_plugins ) ) {
 			continue;
 		}
 		$plugin = get_plugin_data( $plugin_path );
-		echo esc_html( "{$plugin['Name']}: {$plugin['Version']}\n" );
+		$name   = $plugin['Name'];
+		$ver    = $plugin['Version'];
+
+		echo esc_html( "$name: $ver\n" );
 	}
 }
 

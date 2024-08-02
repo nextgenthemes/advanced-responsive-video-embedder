@@ -1,6 +1,10 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE\Admin;
 
+$theme      = wp_get_theme();
+$theme_name = $theme->get( 'Name' );
+$theme_ver  = $theme->get( 'Version' );
+
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
 ?>
 <textarea class="ngt-debug-textarea">
@@ -11,6 +15,7 @@ ARVE Sticky Videos: <?php echo esc_html( plugin_ver_status( 'arve-sticky-videos/
 ARVE Random Video:  <?php echo esc_html( plugin_ver_status( 'arve-random-video/arve-random-video.php' ) . "\n" ); ?>
 WordPress Version:  <?php echo esc_html( $GLOBALS['wp_version'] . "\n" ); ?>
 PHP Version:        <?php echo esc_html( phpversion() . "\n" ); ?>
+Active theme:       <?php echo esc_html( "$theme_name $theme_ver\n" ); ?>
 
 <?php print_active_plugins(); ?>
 

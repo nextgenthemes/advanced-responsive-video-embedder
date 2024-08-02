@@ -3,6 +3,11 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-08-02 10.3.1 ###
+
+* New: Add current theme and version to Debug Info.
+* Fix: PHP error when `$GLOBALS['content_width']` is not an integer. Props Gianluca.
+
 ### 2024-07-17 10.3.0 ###
 * WP 6.6 marked as required.
 * New: Brings back support for Shortcode UI that was removed previously. Note that in SCUI it uses yes/no and ARVE dialog uses true/false. There may come some improvement on that later.
