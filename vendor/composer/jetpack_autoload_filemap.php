@@ -7,11 +7,11 @@ $baseDir   = dirname($vendorDir);
 
 return array(
 	'2d1e3b3e432aed88c61afcb4f6d8c262' => array(
-		'version' => '2024.07.17.22.18.28',
+		'version' => '2024.08.02.02.36.29',
 		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/load-files.php'
 	),
 	'83b8ee913c5d2d5a8f26b42bc5db8bfb' => array(
-		'version' => '2024.07.17.22.18.28',
+		'version' => '2024.08.02.02.36.29',
 		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/Admin/load-admin-files.php'
 	),
 );
