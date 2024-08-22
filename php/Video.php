@@ -47,6 +47,7 @@ class Video {
 	private string $fullscreen;
 	private string $hover_effect;
 	private string $id;
+	private string $oid;
 	private string $iframe_name;
 	private string $img_srcset;
 	private string $mode;
@@ -321,13 +322,9 @@ class Video {
 
 	private function build_iframe_src(): string {
 
-		$src               = $this->src;
-		$provider          = $this->provider;
-		$id                = $this->id;
-		$account_id        = $this->account_id;
-		$brightcove_embed  = $this->brightcove_embed;
-		$brightcove_player = $this->brightcove_player;
-		$url               = $this->url;
+		$src      = $this->src;
+		$provider = $this->provider;
+		$id       = $this->id;
 
 		// we do not have provider and id to build a src with
 		if ( ! $provider || ! $id ) {
@@ -361,9 +358,11 @@ class Video {
 		}
 
 		if ( 'gab' === $provider ) {
-			$src = sprintf( $pattern, $account_id, $id );
+			$src = sprintf( $pattern, $this->account_id, $id );
 		} elseif ( 'brightcove' === $provider ) {
-			$src = sprintf( $pattern, $account_id, $brightcove_player, $brightcove_embed, $id );
+			$src = sprintf( $pattern, $this->account_id, $this->brightcove_player, $this->brightcove_embed, $id );
+		} elseif ( 'vk' === $provider ) {
+			$src = sprintf( $pattern, $this->oid, $id );
 		} else {
 			$src = sprintf( $pattern, $id );
 		}
@@ -371,9 +370,9 @@ class Video {
 		switch ( $provider ) {
 
 			case 'youtube':
-				$t_arg         = get_url_arg( $url, 't' );
-				$time_continue = get_url_arg( $url, 'time_continue' );
-				$list_arg      = get_url_arg( $url, 'list' );
+				$t_arg         = get_url_arg( $this->url, 't' );
+				$time_continue = get_url_arg( $this->url, 'time_continue' );
+				$list_arg      = get_url_arg( $this->url, 'list' );
 
 				if ( $t_arg ) {
 					$src = add_query_arg( 'start', youtube_time_to_seconds( $t_arg ), $src );
@@ -387,7 +386,7 @@ class Video {
 				}
 				break;
 			case 'ted':
-				$lang = get_url_arg( $url, 'language' );
+				$lang = get_url_arg( $this->url, 'language' );
 				if ( $lang ) {
 					$src = str_replace( 'ted.com/talks/', "ted.com/talks/lang/{$lang}/", $src );
 				}

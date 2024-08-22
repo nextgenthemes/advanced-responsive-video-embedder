@@ -524,15 +524,32 @@
 	'vk' => array(
 		'name'           => 'VK',
 		'oembed'         => false,
-		'regex'          => '#https?://(www\\.)?vk\\.com/video_ext\\.php\\?(?<id>[^ ]+)#i',
-		'embed_url'      => 'https://vk.com/video_ext.php?%s',
-		'rebuild_url'    => 'https://vk.com/video_ext.php?%s',
+		#'regex'          => '#https?://(www\\.)?vk\\.com/video_ext\\.php\\?(?<id>[^ ]+)#i',
+		'regex'          => '#https?://(www\.)?vk\.com/video(_ext\.php\?oid=)?(\?z=video)?(?<oid>[-0-9]+)(_|&id=)(?<id>[-0-9]+)#i',
+		'embed_url'      => 'https://vk.com/video_ext.php?oid=%s&id=%s',
+		'rebuild_url'    => 'https://vk.com/video_ext.php?oid=%s&id=%s',
 		'requires_src'   => true,
 		'auto_thumbnail' => false,
 		'tests'          => array(
 			0 => array(
 				'url' => 'https://vk.com/video_ext.php?oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1',
-				'id'  => 'oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1',
+				'oid' => '162756656',
+				'id'  => '171388096',
+			),
+			1 => array(
+				'url' => 'https://vk.com/video?z=video-218565915_456239135%2Fpl_cat_trends',
+				'oid' => '-218565915',
+				'id'  => '456239135',
+			),
+			2 => array(
+				'url' => 'https://vk.com/video708859644_456239023',
+				'oid' => '708859644',
+				'id'  => '456239023',
+			),
+			3 => array(
+				'url' => 'https://vk.com/video-218565915_456239135',
+				'oid' => '-218565915',
+				'id'  => '456239135',
 			),
 		),
 		'embed_codes'    => array(

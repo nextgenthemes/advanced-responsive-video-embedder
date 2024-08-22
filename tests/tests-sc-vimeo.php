@@ -3,6 +3,9 @@ use function Nextgenthemes\ARVE\shortcode;
 
 class Tests_ShortcodeVimeo extends WP_UnitTestCase {
 
+	/**
+	 * @group vimeo
+	 */
 	public function test_vimeo_time_and_sandbox(): void {
 
 		$html = shortcode(
