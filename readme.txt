@@ -193,6 +193,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-08-22 10.3.2 ###
+
+* New: URL detection for VK.com videos.
+
 ### 2024-08-02 10.3.1 ###
 
 * New: Add current theme and version to Debug Info.
