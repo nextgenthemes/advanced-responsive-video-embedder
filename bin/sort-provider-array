@@ -10,6 +10,18 @@ function __( string $a, string $b ): string {
 	return $a;
 }
 
+/**
+ * Converts a PHP expression into a string representation with a custom format.
+ *
+ * This function mimics the behavior of var_export() but applies a custom
+ * formatting to the output. It formats arrays using square brackets and
+ * adjusts indentation to use tabs instead of spaces.
+ *
+ * @param mixed $expression The expression to be exported.
+ * @param bool $return Optional. If set to true, the function will return
+ *                      the export string instead of outputting it. Default false.
+ * @return string|null The formatted export string if $return is true, otherwise null.
+ */
 function varexport($expression, $return = false) {
 	$export = var_export($expression, true);
 	$export = preg_replace('/^([ ]*)(.*)/m', '$1$1$2', $export);
