@@ -69,12 +69,12 @@
         },
         {
             "name": "nextgenthemes/wp-shared",
-            "version": "2024.08.22.18.50.32",
-            "version_normalized": "2024.08.22.18.50.32",
+            "version": "2024.10.21.21.46.06",
+            "version_normalized": "2024.10.21.21.46.06",
             "dist": {
                 "type": "path",
                 "url": "../nextgenthemes/wp-shared",
-                "reference": "115035a41d4fdd0335fe41078132f45151fd8015"
+                "reference": "f2aa9d85924a0433cefa7b7afc791dbccec59ddf"
             },
             "require": {
                 "php": ">=7.4"
@@ -85,11 +85,6 @@
                 "files": [
                     "includes/WP/load-files.php",
                     "includes/WP/Admin/load-admin-files.php"
-                ]
-            },
-            "scripts": {
-                "update-alpine": [
-                    "wget https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js -O ./includes/WP/Admin/alpine.js"
                 ]
             },
             "license": [
