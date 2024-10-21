@@ -279,6 +279,7 @@ class Settings {
 			[
 				'options'    => $this->options,
 				'message'    => '',
+				'help'       => true,
 			]
 		);
 
