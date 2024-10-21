@@ -7,7 +7,7 @@
 	},
 	"require-dev": {
 		"nextgenthemes/wp-shared": "@dev",
-		"automattic/jetpack-autoloader": "^3.0.0"
+		"automattic/jetpack-autoloader": "3.0.9"
 	},
 	"license": "GPL-3.0",
 	"authors": [
