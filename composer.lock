@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d96e8a3a344c4dc78d86a005e677d5b6",
+    "content-hash": "68fd46d9fa0cca0329c4df3ede202ad6",
     "packages": [],
     "packages-dev": [
         {
@@ -73,11 +73,11 @@
         },
         {
             "name": "nextgenthemes/wp-shared",
-            "version": "2024.08.22.18.50.32",
+            "version": "2024.10.21.02.00.44",
             "dist": {
                 "type": "path",
                 "url": "../nextgenthemes/wp-shared",
-                "reference": "115035a41d4fdd0335fe41078132f45151fd8015"
+                "reference": "cf75be78f9ecefb3d70263419f6cbb7fd0c6ba15"
             },
             "require": {
                 "php": ">=7.4"
@@ -87,11 +87,6 @@
                 "files": [
                     "includes/WP/load-files.php",
                     "includes/WP/Admin/load-admin-files.php"
-                ]
-            },
-            "scripts": {
-                "update-alpine": [
-                    "wget https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js -O ./includes/WP/Admin/alpine.js"
                 ]
             },
             "license": [
