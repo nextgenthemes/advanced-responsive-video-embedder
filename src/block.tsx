@@ -189,6 +189,19 @@ function buildControls( props ) {
 
 		sectionControls[ option.tag ].push(
 			<Fragment key={ key + '-fragment' }>
+				{ 'select' === option.ui_element && (
+					<SelectControl
+						value={ val }
+						label={ option.label }
+						help={ createHelp( option ) }
+						options={ PrepareSelectOptions( option.options ) }
+						onChange={ ( value ) => {
+							return props.setAttributes( {
+								[ key ]: value,
+							} );
+						} }
+					/>
+				) }
 				{ 'checkbox' === option.ui_element_type && (
 					<ToggleControl
 						key={ key }
@@ -210,19 +223,6 @@ function buildControls( props ) {
 						value={ val }
 						onChange={ ( value ) => {
 							changeTextControl( key, value, props );
-						} }
-					/>
-				) }
-				{ 'select' === option.ui_element && (
-					<SelectControl
-						value={ val }
-						label={ option.label }
-						help={ createHelp( option ) }
-						options={ PrepareSelectOptions( option.options ) }
-						onChange={ ( value ) => {
-							return props.setAttributes( {
-								[ key ]: value,
-							} );
 						} }
 					/>
 				) }
