@@ -16,8 +16,5 @@
     "require": {
         "php": ">=7.4"
     },
-    "scripts": {
-        "update-alpine": "wget https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js -O ./includes/WP/Admin/alpine.js"
-    },
-    "version": "2024.08.22.18.50.32"
+    "version": "2024.10.21.02.00.44"
 }
