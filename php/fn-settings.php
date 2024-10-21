@@ -54,8 +54,9 @@ function settings( string $context = 'settings_page', array $settings = array() 
 			}
 
 			if ( 'boolean' === $v['type'] && $v['option'] ) {
-				$settings[ $k ]['ui_element'] = 'select';
-				$settings[ $k ]['options']    = array(
+				$settings[ $k ]['ui_element']      = 'select';
+				$settings[ $k ]['ui_element_type'] = 'select';
+				$settings[ $k ]['options']         = array(
 					''      => __( 'Default', 'advanced-responsive-video-embedder' ),
 					'true'  => __( 'True', 'advanced-responsive-video-embedder' ),
 					'false' => __( 'False', 'advanced-responsive-video-embedder' ),
