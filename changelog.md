@@ -3,6 +3,12 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-10-23 10.3.3 ###
+
+* Show messages about incompatibility issue with All in One SEO Pack.
+* Fix: Duplicated controls for in ARVE Block sidebar.
+* Fix: Help tests were not showing in Settings page.
+
 ### 2024-08-22 10.3.2 ###
 
 * New: URL detection for VK.com videos.
