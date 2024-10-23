@@ -168,6 +168,32 @@ function action_admin_init_setup_messages(): void {
 			)
 		);
 	}
+
+	if ( is_plugin_active( 'all-in-one-seo-pack/all_in_one_seo_pack.php' )
+		&& ! is_gutenberg()
+	) {
+		Notices::instance()->register_notice(
+			'aio-seo-notice',
+			'notice-info',
+			sprintf(
+				wp_kses(
+					// Translators: %s URL
+					__(
+						'There is compatibility issue with All In One SEO Pack effecting ARVE. With the AIO-SEO plugin active the "Embed Video (ARVE)" button will not work in Classic Editor. Please contact the AIO-SEO plugin <a href="%1$s">support</a> / <a href="%2$s">support for pro users</a> if they can fix this issue.',
+						'advanced-responsive-video-embedder'
+					),
+					array(
+						'a' => array(
+							'href' => array(),
+						),
+					),
+					array( 'https' )
+				),
+				'https://wordpress.org/support/plugin/all-in-one-seo-pack/#new-topic-0',
+				'https://aioseo.com/login/?redirect_to=%2Faccount%2Fsupport%2F'
+			)
+		);
+	}
 }
 
 function get_latest_beta(): string {
@@ -189,7 +215,7 @@ function get_latest_beta(): string {
 
 function ad_html(): string {
 
-	$html = esc_html__( 'Hi, this is Nico(las Jonas) the author of the ARVE Advanced Responsive Video Embedder plugin. If you are interrested in additional features and/or want to support the work I do on this plugin please consider buying the Pro Addon.', 'advanced-responsive-video-embedder' );
+	$html = esc_html__( 'Hi, this is Nico(las Jonas) the author of the ARVE Advanced Responsive Video Embedder plugin. If you are interested in additional features and/or want to support the work I do on this plugin please consider buying the Pro Addon.', 'advanced-responsive-video-embedder' );
 
 	$html = "<p>$html</p><ul>";
 

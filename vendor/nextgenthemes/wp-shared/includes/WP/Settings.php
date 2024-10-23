@@ -298,6 +298,29 @@ class Settings {
 		>
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 
+			<?php if ( is_plugin_active( 'all-in-one-seo-pack/all_in_one_seo_pack.php' ) ) : ?>
+				<p class="ngt-sidebar-box">
+					<strong>
+						<?= sprintf(
+							wp_kses(
+								__(
+									'There is a compatibility issue with the All in One SEO Pack plugin that prevents this settings page from working. Please deactivate All in One SEO Pack temporarily to make ARVE Settings and contact their <a href="%1$s">support</a> / <a href="%2$s">support for pro users</a> to ask them if they can resolve this issue.',
+									'advanced-responsive-video-embedder'
+								),
+								array(
+									'a' => array(
+										'href' => array()
+									)
+								),
+								array( 'https' )
+							),
+							'https://wordpress.org/support/plugin/all-in-one-seo-pack/#new-topic-0',
+							'https://aioseo.com/login/?redirect_to=%2Faccount%2Fsupport%2F'
+						); ?>
+					</strong>
+				</p>
+			<?php endif; ?>
+
 			<h2 class="nav-tab-wrapper">
 				<?php foreach ( $sections_camel_keys as $k => $v ) : ?>
 					<button
@@ -311,7 +334,7 @@ class Settings {
 				<?php endforeach; ?>
 			</h2>
 
-			<div class="ngt-settings-grid" x-data="ngtsettings">
+			<div class="ngt-settings-grid">
 
 				<div class="ngt-settings-grid__content">
 
