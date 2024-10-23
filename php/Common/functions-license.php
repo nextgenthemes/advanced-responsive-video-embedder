@@ -18,7 +18,13 @@ function check_product_keys() {
 				$value['name']
 			);
 
-			throw new \Exception( $msg );
+			throw new \Exception(
+				wp_kses(
+					$msg,
+					array( 'a' => array( 'href' => array() ) ),
+					array( 'https' )
+				)
+			);
 		}
 	endforeach;
 }
