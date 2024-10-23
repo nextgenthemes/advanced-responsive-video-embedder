@@ -6,7 +6,7 @@
 ### 2024-10-23 10.3.3 ###
 
 * Show messages about incompatibility issue with All in One SEO Pack.
-* Fix: Duplicated controls for in ARVE Block sidebar.
+* Fix: Duplicated controls in ARVE Block sidebar.
 * Fix: Help tests were not showing in Settings page.
 
 ### 2024-08-22 10.3.2 ###
@@ -48,7 +48,7 @@
 
 ### 2024-05-27 10.1.1 ###
 * Improved: Changes how the referrer setting works. `no-referrer` by default `strict-origin-when-cross-origin` for selected providers.
-* Fix: Some YouTube videos (music?) do not without without allowing reverer to to be send so YouTube was added to the list to allow it by default.
+* Fix: Some YouTube videos (music?) do not without without allowing reverer to be send so YouTube was added to the list to allow it by default.
 
 ### 2024-05-24 10.1.0 ###
 * Improved: ARVE own video IDs are no longer random, this is better for SEO and other things.
