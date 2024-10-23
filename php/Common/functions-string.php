@@ -16,7 +16,7 @@ function str_contains_any( $haystack, array $needles ) {
 
 function remove_url_query( $url ) {
 
-	$parsed_url = parse_url( $url );
+	$parsed_url = wp_parse_url( $url );
 
 	if ( ! $parsed_url ) {
 		return $url;
