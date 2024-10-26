@@ -1,0 +1,35 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"landingPage": "\/wp-admin\/edit.php",
+	"preferredVersions": {
+		"php": "8.2",
+		"wp": "latest"
+	},
+	"features": {
+		"networking": true
+	},
+	"steps": [
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "wordpress.org/plugins",
+				"slug": "classic-editor"
+			}
+		},
+		{
+			"step": "activatePlugin",
+			"pluginPath": "classic-editor/classic-editor.php"
+		},
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "wordpress.org/plugins",
+				"slug": "advanced-responsive-video-embedder"
+			}
+		},
+		{
+			"step": "activatePlugin",
+			"pluginPath": "advanced-responsive-video-embedder/advanced-responsive-video-embedder.php"
+		}
+	]
+}
