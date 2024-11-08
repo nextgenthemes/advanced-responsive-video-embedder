@@ -3,6 +3,11 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-11-08 10.3.4 ###
+
+* Fix: xHamster not working. Its direclty supported with normal URLs now.
+* Fix: multisite (needs to be confirmed).
+
 ### 2024-10-23 10.3.3 ###
 
 * Show messages about incompatibility issue with All in One SEO Pack.
