@@ -767,7 +767,7 @@ function settings_data(): array {
 		'allow_referrer' => array(
 			'label'       => __( 'Allow domain restricted videos (referrerpolicy)', 'advanced-responsive-video-embedder' ),
 			'tag'         => 'main',
-			'default'     => 'youtube, vimeo, rumble',
+			'default'     => 'youtube, vimeo, rumble, xhamster',
 			'type'        => 'string',
 			'option'      => true,
 			'shortcode'   => false,

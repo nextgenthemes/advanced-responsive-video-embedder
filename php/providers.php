@@ -589,6 +589,27 @@
 			),
 		),
 	),
+	'xhamster' => array(
+		'name'           => 'xHamster',
+		'oembed'         => false,
+		'regex'          => '#https://([a-z]+.)?xhamster\.com/(videos/[a-z0-9-]+-|xembed\.php\?video=)(?<id>[a-z0-9]{7,9})$#i',
+		'embed_url'      => 'https://xhamster.com/xembed.php?video=%s',
+		'auto_thumbnail' => false,
+		'tests'          => array(
+			0 => array(
+				'url' => 'https://xhamster.com/videos/some-test-video-title-1234567',
+				'id'  => 1234567,
+			),
+			1 => array(
+				'url' => 'https://ge.xhamster.com/videos/some-test-video-title-1234567',
+				'id'  => 1234567,
+			),
+			2 => array(
+				'url' => 'https://xhamster.com/xembed.php?video=1234567',
+				'id'  => 1234567,
+			)
+		),
+	),
 	'yahoo' => array(
 		'name'           => 'Yahoo',
 		'oembed'         => false,
