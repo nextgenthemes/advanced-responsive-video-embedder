@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-init_920();
+add_action( 'plugins_loaded', __NAMESPACE__ . '\init_920' );
 
 function init_920(): void {
 	init_public();

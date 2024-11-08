@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "68fd46d9fa0cca0329c4df3ede202ad6",
+    "content-hash": "ae7d7b06a98a49256d800e66480919df",
     "packages": [],
     "packages-dev": [
         {
             "name": "automattic/jetpack-autoloader",
-            "version": "v3.0.9",
+            "version": "v3.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-autoloader.git",
-                "reference": "a571038214fc3e142e10f38d1bb97e470fa7b0ec"
+                "reference": "e7e49a4e2f16cb2dfd3e58c478499a60d7d51839"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/a571038214fc3e142e10f38d1bb97e470fa7b0ec",
-                "reference": "a571038214fc3e142e10f38d1bb97e470fa7b0ec",
+                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/e7e49a4e2f16cb2dfd3e58c478499a60d7d51839",
+                "reference": "e7e49a4e2f16cb2dfd3e58c478499a60d7d51839",
                 "shasum": ""
             },
             "require": {
@@ -26,9 +26,9 @@
                 "php": ">=7.0"
             },
             "require-dev": {
-                "automattic/jetpack-changelogger": "^4.2.5",
+                "automattic/jetpack-changelogger": "^4.2.8",
                 "composer/composer": "^1.1 || ^2.0",
-                "yoast/phpunit-polyfills": "1.1.0"
+                "yoast/phpunit-polyfills": "^1.1.1"
             },
             "type": "composer-plugin",
             "extra": {
@@ -42,7 +42,7 @@
                     "::VERSION": "src/AutoloadGenerator.php"
                 },
                 "branch-alias": {
-                    "dev-trunk": "3.0.x-dev"
+                    "dev-trunk": "3.1.x-dev"
                 }
             },
             "autoload": {
@@ -67,17 +67,17 @@
                 "wordpress"
             ],
             "support": {
-                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v3.0.9"
+                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v3.1.3"
             },
-            "time": "2024-07-10T07:51:07+00:00"
+            "time": "2024-11-04T09:23:56+00:00"
         },
         {
             "name": "nextgenthemes/wp-shared",
-            "version": "2024.10.23.07.27.29",
+            "version": "2024.11.08.17.22.38",
             "dist": {
                 "type": "path",
                 "url": "../nextgenthemes/wp-shared",
-                "reference": "47d76ac2b4cb75987fa4bf1b5971832f80dc5667"
+                "reference": "1cd9ecb28adb4a8d67ab8fbb83a7f0d5d16322ad"
             },
             "require": {
                 "php": ">=7.4"
@@ -113,9 +113,9 @@
     "platform": {
         "php": ">=7.4"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "7.4"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
