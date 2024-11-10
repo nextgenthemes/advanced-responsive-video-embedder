@@ -1,27 +1,27 @@
 {
 	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
-	"landingPage": "\/wp-admin\/edit.php",
 	"preferredVersions": {
 		"php": "8.2",
 		"wp": "latest"
 	},
+	"siteOptions": {
+		"blogname": "ARVE Testing Playground",
+		"blogdescription": "Test ARVE in Classic Editor",
+		"permalink_structure": "/%postname%/"
+	},
+	"landingPage": "\/wp-admin\/post.php?post=4&action=edit",
 	"features": {
 		"networking": true
 	},
-	"siteOptions": {
-		"blogname": "ARVE Testing Playground",
-		"blogdescription": "Just another WordPress site",
-		"permalink_structure": "/%postname%/"
-	},
+	"login": true,
 	"plugins": [
 		"classic-editor",
 		"advanced-responsive-video-embedder"
 	],
-	"login": true,
 	"steps": [
 		{
 			"step": "writeFile",
-			"path": "/wordpress/wp-content/postcontent.md",
+			"path": "/wordpress/wp-content/post-content-classic-editor.md",
 			"data": {
 				"resource": "url",
 				"url": "https://raw.githubusercontent.com/nextgenthemes/advanced-responsive-video-embedder/refs/heads/master/.wordpress-org/blueprints/post-content-classic-editor.md"
