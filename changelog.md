@@ -5,7 +5,7 @@
 
 ### 2024-11-08 10.3.4 ###
 
-* Fix: xHamster not working. Its direclty supported with normal URLs now.
+* Fix: xHamster not working. Its direclty supported with normal URLs now. Note ARVE needs to allow referrer to me send, with this privacy enhancement disabled xHamster will see the domain you are embedding from.
 * Fix: multisite (needs to be confirmed).
 
 ### 2024-10-23 10.3.3 ###
