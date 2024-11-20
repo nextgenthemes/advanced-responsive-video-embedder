@@ -51,7 +51,7 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 
 	if ( ! empty( $data->thumbnail_url ) && in_array( $data->arve_provider, [ 'youtube', 'vimeo' ], true ) ) {
 
-		$thumbnails = thumbnail_sizes( $data->arve_provider, $data->thumbnail_url );
+		$thumbnails = thumbnail_sizes( $data->arve_provider, $data->thumbnail_url, $data->width, $data->height );
 
 		// Replace default thumbnail with webp (yt), avif (vimeo)
 		if ( ! empty( $thumbnails['sizes'][480] ) ) {
@@ -59,9 +59,12 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 			$data->thumbnail_url          = $thumbnails['sizes'][480];
 		}
 
-		$data->arve_thumbnail_small = $thumbnails['small'];
-		$data->arve_thumbnail_large = $thumbnails['large'];
-		$data->arve_srcset          = $thumbnails['srcset'];
+		$data->arve_thumbnail_small_url    = $thumbnails['small_url'];
+		$data->arve_thumbnail_large_url    = $thumbnails['large_url'];
+		$data->arve_thumbnail_large_width  = $thumbnails['large_width'];
+		$data->arve_thumbnail_large_height = $thumbnails['large_height'];
+
+		$data->arve_srcset = $thumbnails['srcset'];
 	}
 
 	unset( $data->html );
@@ -215,7 +218,7 @@ function oembed_html2src( object $data ) {
  * @param string $url The URL of the YouTube thumbnail.
  * @return array Array containing information about the thumbnails.
  */
-function thumbnail_sizes( string $provider, string $url ): array {
+function thumbnail_sizes( string $provider, string $url, float $vid_width, float $vid_height ): array {
 
 	$sizes  = array();
 	$srcset = array();
@@ -226,71 +229,61 @@ function thumbnail_sizes( string $provider, string $url ): array {
 			$webp_url = str_replace( '/vi/', '/vi_webp/', $url );
 
 			if ( str_ends_with( $url, 'hqdefault.jpg' ) ) {
-				$sizes[320]  = str_replace( 'hqdefault.jpg', 'mqdefault.webp',     $webp_url ); // 320x180
-				$sizes[480]  = str_replace( 'hqdefault.jpg', 'hqdefault.webp',     $webp_url ); // 480x360
-				$sizes[640]  = str_replace( 'hqdefault.jpg', 'sddefault.webp',     $webp_url ); // 640x480
-				$sizes[1280] = str_replace( 'hqdefault.jpg', 'hq720.webp',         $webp_url ); // 1280x720
-				$sizes[1920] = str_replace( 'hqdefault.jpg', 'maxresdefault.webp', $webp_url ); // 1920x1080
+				$sizes[320]['url']  = str_replace( 'hqdefault.jpg', 'mqdefault.webp',     $webp_url ); // 320x180
+				$sizes[480]['url']  = str_replace( 'hqdefault.jpg', 'hqdefault.webp',     $webp_url ); // 480x360
+				$sizes[640]['url']  = str_replace( 'hqdefault.jpg', 'sddefault.webp',     $webp_url ); // 640x480
+				$sizes[1280]['url'] = str_replace( 'hqdefault.jpg', 'hq720.webp',         $webp_url ); // 1280x720
+				$sizes[1920]['url'] = str_replace( 'hqdefault.jpg', 'maxresdefault.webp', $webp_url ); // 1920x1080
+
+				$sizes[320]['height']  = 180;
+				$sizes[480]['height']  = 360;
+				$sizes[640]['height']  = 480;
+				$sizes[1280]['height'] = 720;
+				$sizes[1920]['height'] = 1080;
 			}
 
 			// shorts
 			if ( str_ends_with( $url, 'hq2.jpg' ) ) {
 				// shorts
-				$sizes[320] = str_replace( 'hq2.jpg', 'mq2.webp', $webp_url ); // 320x180
-				$sizes[480] = str_replace( 'hq2.jpg', 'hq2.webp', $webp_url ); // 480x360
-				$sizes[640] = str_replace( 'hq2.jpg', 'sd2.webp', $webp_url ); // 640x480
+				$sizes[320]['url'] = str_replace( 'hq2.jpg', 'mq2.webp', $webp_url ); // 320x180
+				$sizes[480]['url'] = str_replace( 'hq2.jpg', 'hq2.webp', $webp_url ); // 480x360
+				$sizes[640]['url'] = str_replace( 'hq2.jpg', 'sd2.webp', $webp_url ); // 640x480
+
+				$sizes[320]['height'] = 180;
+				$sizes[480]['height'] = 360;
+				$sizes[640]['height'] = 480;
 			}
 
 			break;
 		case 'vimeo':
 			foreach ( [ 320, 640, 960, 1280 ] as $width ) {
-				$sizes[ $width ] = preg_replace( '/^(.*)_([0-9x]{3,9}(\.jpg)?)$/i', "$1_$width", $url );
+
+				$height = (int) height_from_width_and_ratio( $width, "{$vid_width}:{$vid_height}" );
+
+				$sizes[ $width ]['url']    = preg_replace( '/^(.*)_([0-9x]{3,9}(\.jpg)?)$/i', "$1_{$width}x{$height}", $url );
+				$sizes[ $width ]['height'] = $height;
 			}
 
 			break;
 	}
 
-	foreach ( $sizes as $size => $size_url ) {
+	foreach ( $sizes as $width => $size ) {
 
-		if ( 'youtube' === $provider && is_wp_error( remote_get_head( $size_url, array( 'timeout' => 5 ) ) ) ) {
+		if ( 'youtube' === $provider && is_wp_error( remote_get_head( $size['url'], array( 'timeout' => 5 ) ) ) ) {
 			unset( $sizes[ $size ] );
 			continue;
 		}
 
-		$srcset[] = "$size_url {$size}w";
+		$srcset[] = $size['url'] . " {$width}w";
 	}
+
+	$max_key = max( array_keys( $sizes ) );
 
 	return array(
-		'small'  => empty( $sizes ) ? '' : $sizes[ min( array_keys( $sizes ) ) ],
-		'large'  => empty( $sizes ) ? '' : $sizes[ max( array_keys( $sizes ) ) ],
-		'srcset' => implode( ', ', $srcset ),
-		'sizes'  => $sizes,
-	);
-}
-
-function vimeo_thumbnails( string $url ): array {
-
-	$sizes  = array();
-	$srcset = array();
-
-	foreach ( [ 320, 640, 960, 1280, 1920 ] as $width ) {
-
-		$sizes[ $width ] = preg_replace( '#^(.*)_([0-9x]{3,9}(\.jpg)?)$#i', "$1_$width.avif", $url );
-	}
-
-	foreach ( $sizes as $size => $size_url ) {
-
-		if ( is_wp_error( WP\remote_get_head( $size_url, array( 'timeout' => 5 ) ) ) ) {
-			unset( $sizes[ $size ] );
-			continue;
-		}
-
-		$srcset[] = "$size_url {$size}w";
-	}
-
-	return array(
-		'small'  => empty( $sizes ) ? '' : $sizes[ min( array_keys( $sizes ) ) ],
-		'large'  => empty( $sizes ) ? '' : $sizes[ max( array_keys( $sizes ) ) ],
+		'small_url'    => empty( $sizes ) ? '' : $sizes[ min( array_keys( $sizes ) ) ]['url'],
+		'large_url'    => empty( $sizes ) ? '' : $sizes[ $max_key ]['url'],
+		'large_width'  => empty( $sizes ) ? '' : $max_key,
+		'large_height' => empty( $sizes ) ? '' : $sizes[ $max_key ]['height'],
 		'srcset' => implode( ', ', $srcset ),
 		'sizes'  => $sizes,
 	);

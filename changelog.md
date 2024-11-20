@@ -3,6 +3,10 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-11-19 10.3.5 ###
+
+* Improved: Some changes enabling latest ARVE Pro versions to use `sizes="auto"` for more efficient image loading.
+
 ### 2024-11-08 10.3.4 ###
 
 * Fix: xHamster not working. Its direclty supported with normal URLs now. Note ARVE needs to allow referrer to me send, with this privacy enhancement disabled xHamster will see the domain you are embedding from.
@@ -359,3 +363,5 @@ Improved:
 
 * New: Vimeo play button option for ARVE Pro
 * Improved: Fitvids conflict mitigation
+
+[Older Changes](https://github.com/nextgenthemes/advanced-responsive-video-embedder/blob/master/changelog-2020.md)
