@@ -110,10 +110,10 @@ function remove_suffix( string $haystack, string $needle ): string {
 }
 
 /**
- * Validates a URL. Returns the URL back if it is valid.
+ * Validates a URL. Returns the URL back if it is valid. Upgrades // to https:// if needed.
  *
  * @param string $url The URL to be validated.
- * @return string url back if valid. Upgrades // to https:// if needed.
+ * @return string|null url back if valid or null if invalid
  */
 function valid_url( string $url ): ?string {
 
