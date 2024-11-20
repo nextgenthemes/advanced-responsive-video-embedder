@@ -108,12 +108,13 @@ function remote_get_body( string $url, array $args = array() ) {
  */
 function remote_get_head( string $url, array $args = array() ) {
 
-	$response      = wp_safe_remote_head( $url, $args );
-	$response_code = wp_remote_retrieve_response_code( $response );
+	$response = wp_safe_remote_head( $url, $args );
 
 	if ( is_wp_error( $response ) ) {
 		return $response;
 	}
+
+	$response_code = wp_remote_retrieve_response_code( $response );
 
 	if ( 200 !== $response_code ) {
 
