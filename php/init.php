@@ -15,7 +15,7 @@ function init_public(): void {
 
 	add_option( 'arve_install_date', time() );
 
-	if ( version_compare( get_option( 'arve_version', '' ), '10.1.2', '<' ) ) {
+	if ( version_compare( get_option( 'arve_version', '' ), '10.3.5-alpha1', '<' ) ) {
 		add_action(
 			'wp_loaded',
 			function (): void {
