@@ -14,9 +14,6 @@
 		"networking": true
 	},
 	"login": true,
-	"plugins": [
-		"advanced-responsive-video-embedder"
-	],
 	"steps": [
 		{
 			"step": "writeFile",
