@@ -98,19 +98,17 @@ class Video {
 	// process data
 	private ?object $oembed_data;
 	private array $origin_data;
-	private WP_Error $errors;
 
 	/**
 	 * @param array <string, any> $args
 	 */
 	public function __construct( array $args ) {
-		$this->errors   = arve_errors();
 		$this->org_args = $args;
 		ksort( $this->org_args );
 	}
 
 	/**
-	 * Set the value of a property.
+	 * Prevent setting properties directly
 	 *
 	 * @param string $property The name of the property to set.
 	 * @param mixed $value The value to set for the property.
@@ -152,7 +150,7 @@ class Video {
 			//  $trace = '<br>Exception Trace:<br>' . var_export($e->getTrace(), true);
 			// }
 
-			$this->errors->add( $e->getCode(), $e->getMessage() . $trace );
+			arve_errors()->add( $e->getCode(), $e->getMessage() . $trace );
 
 			$html .= get_error_html();
 			$html .= $this->get_debug_info();
