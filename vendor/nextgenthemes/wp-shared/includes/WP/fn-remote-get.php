@@ -17,18 +17,14 @@ function remote_get_json( string $url, array $args = array(), string $json_name 
  */
 function remote_get_json_cached( string $url, array $args = array(), string $json_name = '', int $time = DAY_IN_SECONDS ) {
 
-	if ( $time <= 0 ) {
-		$response = remote_get_body( $url, $args );
-	} else {
-		$response = remote_get_body_cached( $url, $args, $time );
-	}
+	$response = remote_get_body_cached( $url, $args, $time );
 
 	if ( is_wp_error( $response ) ) {
 		return $response;
 	}
 
 	try {
-		$response = json_decode( $response, false, 128, JSON_THROW_ON_ERROR );
+		$response = json_decode( $response, true, 128, JSON_THROW_ON_ERROR );
 	} catch ( \Exception $e ) {
 
 		return new \WP_Error(
@@ -43,7 +39,7 @@ function remote_get_json_cached( string $url, array $args = array(), string $jso
 	}
 
 	if ( $json_name ) {
-		if ( empty( $response->$json_name ) ) {
+		if ( empty( $response[ $json_name ] ) ) {
 			return new \WP_Error(
 				'json-value-empty',
 				sprintf(
@@ -55,7 +51,7 @@ function remote_get_json_cached( string $url, array $args = array(), string $jso
 				)
 			);
 		} else {
-			return $response->$json_name;
+			return $response[ $json_name ];
 		}
 	}
 
@@ -143,12 +139,14 @@ function remote_get_head( string $url, array $args = array() ) {
 function remote_get_body_cached( string $url, array $args = array(), int $time = DAY_IN_SECONDS ) {
 
 	$transient_name = 'nextgenthemes_remote_get_body_' . $url . wp_json_encode( $args );
-	$response       = get_transient( $transient_name );
+	$response       = $time ? get_transient( $transient_name ) : false;
 
 	if ( false === $response ) {
 		$response = remote_get_body( $url, $args );
 
-		set_transient( $transient_name, $response, $time );
+		if ( $time ) {
+			set_transient( $transient_name, $response, $time );
+		}
 	}
 
 	return $response;
