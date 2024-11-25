@@ -26,15 +26,15 @@
 		'auto_thumbnail' => false,
 		'tests'          => array(
 			0 => array(
-				'url' => 'https://archive.org/details/arashyekt4_gmail_Cat',
-				'id'  => 'arashyekt4',
+				'url' => 'https://archive.org/details/cure_20211214',
+				'id'  => 'cure_20211214',
 			),
 		),
 	),
 	'bannedvideo' => array(
 		'name'      => 'Banned.video',
 		'oembed'    => false,
-		'regex'     => '#https://banned\\.video/watch\\?id=(?<id>[a-z0-9]+)#i',
+		'regex'     => '#https://(banned\\.video|cantcensortruth\\.com)/watch\\?id=(?<id>[a-z0-9]+)#i',
 		'embed_url' => 'https://api.banned.video/embed/%s',
 		'tests'     => array(
 			0 => array(
@@ -98,18 +98,6 @@
 			0 => array(
 				'url' => 'https://www.brighteon.com/e7d18308-7cae-4a04-8a42-7088a8bea02c',
 				'id'  => 'e7d18308-7cae-4a04-8a42-7088a8bea02c',
-			),
-		),
-	),
-	'cantcensortruthcom' => array(
-		'name'      => 'cantcensortruth.com',
-		'oembed'    => false,
-		'regex'     => '#https://cantcensortruth\\.com/watch\\?id=(?<id>[a-z0-9]+)#i',
-		'embed_url' => 'https://api.banned.video/embed/%s',
-		'tests'     => array(
-			0 => array(
-				'url' => 'https://cantcensortruth.com/watch?id=601218b0de226411596203ae',
-				'id'  => '601218b0de226411596203ae',
 			),
 		),
 	),
@@ -302,8 +290,8 @@
 		'auto_thumbnail' => false,
 		'tests'          => array(
 			0 => array(
-				'url' => 'https://livestream.com/accounts/23470201/events/7021166',
-				'id'  => '23470201/events/7021166',
+				'url' => 'https://livestream.com/accounts/4091035/events/8205804/videos/174917539',
+				'id'  => '4091035/events/8205804/videos/174917539',
 			),
 			1 => array(
 				'url' => 'https://livestream.com/accounts/467901/events/2015991/videos/17500857/player?width=640&height=360&enableInfo=true&defaultDrawer=&autoPlay=true&mute=false',
@@ -349,14 +337,10 @@
 		'auto_thumbnail' => false,
 		'tests'          => array(
 			0 => array(
-				'url' => 'https://myspace.com/myspace/video/dark-rooms-the-shadow-that-looms-o-er-my-heart-live-/109471212',
+				'url' => 'https://myspace.com/onetwowatch/video/dark-rooms-the-shadow-that-looms-o-er-my-heart-/109471212',
 				'id'  => 109471212,
 			),
 		),
-	),
-	'ooyala' => array(
-		'name'         => 'ooyala',
-		'requires_src' => true,
 	),
 	'qq' => array(
 		'name'           => 'v.qq.com',
