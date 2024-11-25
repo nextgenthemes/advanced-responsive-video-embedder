@@ -78,7 +78,7 @@ function build_tag( array $tag, array $a ): string {
 
 function remove_embed_block_aspect_ratio( string $block_content ): string {
 
-	// Could check for this class with WP_HTML_Tag_Processor but it would require 2 booksmarks
+	// Could check for this class with WP_HTML_Tag_Processor but it would require 2 bookmarks
 	// I guess this is less expensive and simpler code.
 	if ( ! str_contains( $block_content, 'arve-embed' ) ) {
 		return $block_content;
