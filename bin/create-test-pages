@@ -1,0 +1,74 @@
+#!/bin/env php
+<?php
+namespace Nextgenthemes\ARVE;
+
+use function escapeshellarg as e;
+
+define( 'ABSPATH', dirname( __DIR__, 4 ) . '/wp/' );
+define( 'WPINC', 'wp-includes' );
+
+require ABSPATH . WPINC . '/functions.php';
+require ABSPATH . WPINC . '/formatting.php';
+require dirname( __DIR__ ) . '/php/fn-misc.php';
+
+foreach ( get_host_properties() as $host => $host_props ) {
+
+	if ( empty( $host_props['tests'] ) ) {
+		continue;
+	}
+
+	$host_slug = \sanitize_title_with_dashes( $host );
+	$tests     = $host_props['tests'];
+	$url       = $tests[ array_key_first( $tests ) ]['url'];
+	$page_id   = cmd( 'wp @sdev post list', array(
+		'name'      => 'arve-test-page-for-' . $host_slug,
+		'field'     => 'ID',
+		'post_type' => 'page',
+	) );
+
+	ob_start();
+	include __DIR__ . '/create-test-page-template.php';
+	$wp_html = ob_get_clean();
+
+	$args = array(
+		'post_type'    => 'page',
+		'post_title'   => 'ARVE Test Page for ' . $host_props['name'],
+		'post_status'  => 'publish',
+		'post_content' => $wp_html,
+		'post_parent'  => 2,
+	);
+
+	if ( empty( $page_id ) ) {
+		cmd( 'wp @sdev post create', $args );
+	} else {
+		cmd( 'wp @sdev post update '.e($page_id), $args );
+	}
+}
+
+/**
+* Executes a system command with optional arguments.
+*
+* @param string $command The system command to execute
+* @param array $args An associative array of optional --arg="x" command arguments
+* @return string The output of the system command
+*/
+function cmd( string $command, array $args = array(), bool $verbose = true ): string {
+
+	foreach ( $args as $k => $v ) {
+		$command .= " --$k=" . escapeshellarg($v);
+	}
+
+	if ( $verbose ) {
+		echo "Executing: $command" . PHP_EOL;
+		$out = system( $command, $exit_code );
+	} else {
+		$out = exec( command: $command, result_code: $exit_code );
+	}
+
+	if ( 0 !== $exit_code || false === $out ) {
+		echo "Exit Code: $exit_code" . PHP_EOL;
+		exit($exit_code);
+	}
+
+	return $out;
+}
