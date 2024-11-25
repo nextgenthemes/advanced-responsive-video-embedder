@@ -53,10 +53,10 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 
 		$thumbnails = thumbnail_sizes( $data->arve_provider, $data->thumbnail_url, $data->width, $data->height );
 
-		// Replace default thumbnail with webp (yt), avif (vimeo)
-		if ( ! empty( $thumbnails['sizes'][480] ) ) {
+		// Replace default thumbnail with webp (yt)
+		if ( ! empty( $thumbnails['sizes'][480]['url'] ) ) {
 			$data->arve_thumbnail_url_org = $data->thumbnail_url;
-			$data->thumbnail_url          = $thumbnails['sizes'][480];
+			$data->thumbnail_url          = $thumbnails['sizes'][480]['url'];
 		}
 
 		$data->arve_thumbnail_small_url    = $thumbnails['small_url'];
