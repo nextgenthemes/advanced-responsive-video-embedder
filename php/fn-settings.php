@@ -234,7 +234,7 @@ function settings_data(): array {
 		),
 		'thumbnail_fallback' => array(
 			'type'        => 'string',
-			'default'     => '',
+			'default'     => plugins_url( 'src/img/thumbnail.avif', PLUGIN_FILE ),
 			'tag'         => 'pro',
 			'ui'          => 'image_upload',
 			'shortcode'   => false,
@@ -244,7 +244,7 @@ function settings_data(): array {
 		),
 		'thumbnail_post_image_fallback' => array(
 			'tag'         => 'pro',
-			'default'     => false,
+			'default'     => true,
 			'shortcode'   => false,
 			'option'      => true,
 			'label'       => __( 'Thumbnail Featured Image Fallback', 'advanced-responsive-video-embedder' ),
@@ -736,7 +736,7 @@ function settings_data(): array {
 		),
 		'invidious_instance' => array(
 			'tag'                 => 'privacy',
-			'default'             => 'https://invidious.fdn.fr',
+			'default'             => 'https://invidious.nerdvpn.de',
 			'shortcode'           => false,
 			'option'              => true,
 			'label'               => __( 'Invidious instance', 'advanced-responsive-video-embedder' ),
@@ -767,7 +767,7 @@ function settings_data(): array {
 		'allow_referrer' => array(
 			'label'       => __( 'Allow domain restricted videos (referrerpolicy)', 'advanced-responsive-video-embedder' ),
 			'tag'         => 'main',
-			'default'     => 'youtube, vimeo, rumble, xhamster',
+			'default'     => 'youtube, vimeo, rumble, xhamster, kick',
 			'type'        => 'string',
 			'option'      => true,
 			'shortcode'   => false,
