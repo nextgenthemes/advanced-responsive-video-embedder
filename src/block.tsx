@@ -74,7 +74,7 @@ interface OptionProps {
 
 const { name } = json;
 const { settings, options } = window.ArveBlockJsBefore;
-delete settings.align.options.center;
+delete settings?.align?.options?.center;
 const domParser = new DOMParser();
 
 /**
