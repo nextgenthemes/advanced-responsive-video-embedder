@@ -5,7 +5,10 @@
 
 ### 2024-11-19 10.3.5 ###
 
-* Improved: Some changes enabling latest ARVE Pro versions to use `sizes="auto"` for more efficient image loading.
+* Fix Viddler by allowing `sync-xhr`.
+* Improved: Changes enabling latest ARVE Pro versions to use `sizes="auto"` for more efficient image loading.
+* Improved: Featured image as fallback 
+* Improved: Removed some legacy code, outdated addons are prevented from executing.
 
 ### 2024-11-08 10.3.4 ###
 
