@@ -4,6 +4,8 @@ namespace Nextgenthemes\ARVE;
 add_action( 'plugins_loaded', __NAMESPACE__ . '\init_920' );
 
 function init_920(): void {
+
+	stop_outdated_addons_from_executing();
 	init_public();
 
 	if ( is_admin() ) {
@@ -25,8 +27,6 @@ function init_public(): void {
 	}
 
 	update_option( 'arve_version', VERSION );
-
-	require_once PLUGIN_DIR . '/php/Common/init.php';
 
 	require_once PLUGIN_DIR . '/php/Base.php';
 	require_once PLUGIN_DIR . '/php/Video.php';
@@ -197,4 +197,20 @@ function delete_oembed_cache(): string {
 	}
 
 	return $message;
+}
+
+function stop_outdated_addons_from_executing() {
+
+	if ( defined('Nextgenthemes\ARVE\Pro\VERSION')
+		&& version_compare( \Nextgenthemes\ARVE\Pro\VERSION, '6.0.0', '<' )
+	) {
+		remove_action( 'plugins_loaded', 'Nextgenthemes\ARVE\Pro\init', 15 );
+	}
+
+	if ( defined('Nextgenthemes\ARVE\RandomVideo\VERSION')
+		&& version_compare( \Nextgenthemes\ARVE\RandomVideo\VERSION, '2.1.5', '<' )
+	) {
+		remove_action( 'init', 'Nextgenthemes\ARVE\RandomVideo\init', 15 );
+		remove_action( 'plugins_loaded', 'Nextgenthemes\ARVE\RandomVideo\init', 15 );
+	}
 }
