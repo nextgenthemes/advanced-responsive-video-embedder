@@ -807,7 +807,7 @@ class Video {
 			'screen-wake-lock'                => 'none',
 			'serial'                          => 'none',
 			'speaker-selection'               => 'self',
-			'sync-xhr'                        => 'none',
+			'sync-xhr'                        => 'self', // viddler fails without this
 			'usb'                             => 'none',
 			'web-share'                       => 'self',
 			'window-management'               => 'none',
