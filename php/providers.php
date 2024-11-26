@@ -20,7 +20,7 @@
 	'archiveorg' => array(
 		'name'           => 'Archive.org',
 		'oembed'         => false,
-		'regex'          => '#https?://(www\\.)?archive\\.org/(details|embed)/(?<id>[0-9a-z\\-]+)#i',
+		'regex'          => '#https?://(www\\.)?archive\\.org/(details|embed)/(?<id>[0-9a-z\\-_]+)#i',
 		'embed_url'      => 'https://www.archive.org/embed/%s/',
 		'default_params' => '',
 		'auto_thumbnail' => false,
@@ -33,9 +33,11 @@
 	),
 	'bannedvideo' => array(
 		'name'      => 'Banned.video',
-		'oembed'    => false,
+		'oembed'    => true, // ARVE Pro will inject fake oembed data from their graphQL API
 		'regex'     => '#https://(banned\\.video|cantcensortruth\\.com)/watch\\?id=(?<id>[a-z0-9]+)#i',
 		'embed_url' => 'https://api.banned.video/embed/%s',
+		'auto_title'     => true,
+		'auto_thumbnail' => true,
 		'tests'     => array(
 			0 => array(
 				'url' => 'https://banned.video/watch?id=5ffe509f0d763c3dca0e8ad7',
