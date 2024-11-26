@@ -244,7 +244,7 @@ function thumbnail_sizes( string $provider, string $url, float $vid_width, float
 
 			// shorts
 			if ( str_ends_with( $url, 'hq2.jpg' ) ) {
-				// shorts
+
 				$sizes[320]['url'] = str_replace( 'hq2.jpg', 'mq2.webp', $webp_url ); // 320x180
 				$sizes[480]['url'] = str_replace( 'hq2.jpg', 'hq2.webp', $webp_url ); // 480x360
 				$sizes[640]['url'] = str_replace( 'hq2.jpg', 'sd2.webp', $webp_url ); // 640x480
@@ -277,13 +277,16 @@ function thumbnail_sizes( string $provider, string $url, float $vid_width, float
 		$srcset[] = $size['url'] . " {$width}w";
 	}
 
-	$max_key = max( array_keys( $sizes ) );
+	if ( ! empty( $sizes ) ) {
+		$largest  = max( array_keys( $sizes ) );
+		$smallest = min( array_keys( $sizes ) );
+	}
 
 	return array(
-		'small_url'    => empty( $sizes ) ? '' : $sizes[ min( array_keys( $sizes ) ) ]['url'],
-		'large_url'    => empty( $sizes ) ? '' : $sizes[ $max_key ]['url'],
-		'large_width'  => empty( $sizes ) ? '' : $max_key,
-		'large_height' => empty( $sizes ) ? '' : $sizes[ $max_key ]['height'],
+		'small_url'    => empty( $sizes ) ? '' : $sizes[ $smallest ]['url'],
+		'large_url'    => empty( $sizes ) ? '' : $sizes[ $largest ]['url'],
+		'large_width'  => empty( $sizes ) ? '' : $largest,
+		'large_height' => empty( $sizes ) ? '' : $sizes[ $largest ]['height'],
 		'srcset'       => implode( ', ', $srcset ),
 		'sizes'        => $sizes,
 	);
