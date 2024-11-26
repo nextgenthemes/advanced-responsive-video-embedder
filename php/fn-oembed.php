@@ -270,7 +270,7 @@ function thumbnail_sizes( string $provider, string $url, float $vid_width, float
 	foreach ( $sizes as $width => $size ) {
 
 		if ( 'youtube' === $provider && is_wp_error( remote_get_head( $size['url'], array( 'timeout' => 5 ) ) ) ) {
-			unset( $sizes[ $size ] );
+			unset( $sizes[ $width ] );
 			continue;
 		}
 
@@ -284,8 +284,8 @@ function thumbnail_sizes( string $provider, string $url, float $vid_width, float
 		'large_url'    => empty( $sizes ) ? '' : $sizes[ $max_key ]['url'],
 		'large_width'  => empty( $sizes ) ? '' : $max_key,
 		'large_height' => empty( $sizes ) ? '' : $sizes[ $max_key ]['height'],
-		'srcset' => implode( ', ', $srcset ),
-		'sizes'  => $sizes,
+		'srcset'       => implode( ', ', $srcset ),
+		'sizes'        => $sizes,
 	);
 }
 
