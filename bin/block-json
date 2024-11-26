@@ -68,3 +68,7 @@ function esc_html__( string $str, string $str2 ): string {
 function esc_url( string $str ): string {
 	return $str;
 }
+
+function plugins_url( string $path, string $file ): string {
+	return 'https://example.org/app/plugins/arve/' . $path;
+}
