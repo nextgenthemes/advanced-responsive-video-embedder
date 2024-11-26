@@ -59,7 +59,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 #### Supported Providers ####
 
 [All providers with iframe embed codes](https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding)
-Alugha, Archive.org, Banned.video, Bitchute, Brightcove, Brighteon, cantcensortruth.com, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Gab TV, Google Drive, mp4 or webm video files, ARVE general iframe embed, IGN, IMDB, Kickstarter, kla.tv, Livestream.com, Mail.ru, Metacafe, myspace, ooyala, v.qq.com, Rumble.com, ok.ru, RuTube.ru, Snotr, TED Talks, TikTok, Twitch, Viddler, Vimeo, VK, Wistia, XTube, xHamster, Yahoo, Youku, YouTube, YouTube Playlist, Kick
+Alugha, Archive.org, Banned.video, Bitchute, Brightcove, Brighteon, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Gab TV, Google Drive, mp4 or webm video files, ARVE general iframe embed, IGN, IMDB, Kickstarter, kla.tv, Livestream.com, Mail.ru, Metacafe, myspace, v.qq.com, Rumble.com, ok.ru, RuTube.ru, Snotr, TED Talks, TikTok, Twitch, Viddler, Vimeo, VK, Wistia, XTube, xHamster, Yahoo, Youku, YouTube, YouTube Playlist, Kick
 ### Reviews ###
 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Great plugin, great support ####
@@ -193,9 +193,13 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2024-11-19 10.3.5 ###
+### 2024-11-26 10.3.5 ###
 
-* Improved: Some changes enabling latest ARVE Pro versions to use `sizes="auto"` for more efficient image loading.
+* Fix: Viddler not working by allowing `sync-xhr`.
+* Improved: Changes enabling latest ARVE Pro versions to use `sizes="auto"` for more efficient image loading.
+* Improved: Featured image as fallback default change to `true` (Pro).
+* Improved: ARVE now includes a black image with stripes used as default fallback thumbnail.
+* Improved: Removed some legacy code, outdated addons are prevented from executing.
 
 ### 2024-11-08 10.3.4 ###
 
