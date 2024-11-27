@@ -202,15 +202,8 @@ function delete_oembed_cache(): string {
 function stop_outdated_addons_from_executing() {
 
 	if ( defined('Nextgenthemes\ARVE\Pro\VERSION')
-		&& version_compare( \Nextgenthemes\ARVE\Pro\VERSION, '6.0.0', '<' )
+		&& version_compare( \Nextgenthemes\ARVE\Pro\VERSION, PRO_VERSION_REQUIRED, '<' )
 	) {
 		remove_action( 'plugins_loaded', 'Nextgenthemes\ARVE\Pro\init', 15 );
-	}
-
-	if ( defined('Nextgenthemes\ARVE\RandomVideo\VERSION')
-		&& version_compare( \Nextgenthemes\ARVE\RandomVideo\VERSION, '2.1.5-beta1', '<' )
-	) {
-		remove_action( 'init', 'Nextgenthemes\ARVE\RandomVideo\init', 15 );
-		remove_action( 'plugins_loaded', 'Nextgenthemes\ARVE\RandomVideo\init', 15 );
 	}
 }
