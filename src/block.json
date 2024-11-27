@@ -13,7 +13,7 @@
         "vimeo",
         "odysee"
     ],
-    "version": "10.3.5-beta3",
+    "version": "10.3.5-beta4",
     "textdomain": "advanced-responsive-video-embedder",
     "supports": {
         "align": [
