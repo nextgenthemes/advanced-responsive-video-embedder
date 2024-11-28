@@ -17,6 +17,7 @@ class Video {
 	private bool $arve_link;
 	private bool $autoplay;
 	private bool $controls;
+	private bool $credentialless;
 	private bool $disable_links;
 	private bool $grow;
 	private bool $hide_title;
@@ -826,7 +827,7 @@ class Video {
 		}
 
 		$this->iframe_attr = array(
-			'credentialless'  => '',
+			'credentialless'  => $this->credentialless,
 			'referrerpolicy'  => $this->referrerpolicy(),
 			'allow'           => $allow,
 			'allowfullscreen' => '',

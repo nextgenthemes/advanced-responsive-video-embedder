@@ -659,6 +659,14 @@ function settings_data(): array {
 			'type'        => 'boolean',
 			'description' => __( "Only needed in specific situations. Reduces privacy of the iframe embed. 'Disable Links' feature from ARVE Pro will not work with this.", 'advanced-responsive-video-embedder' ),
 		),
+		'credentialless'  => array(
+			'default'     => true,
+			'shortcode'   => true,
+			'option'      => false,
+			'label'       => __( 'Set <code>credentialless</code> on iframe', 'advanced-responsive-video-embedder' ),
+			'type'        => 'boolean',
+			'description' => __( 'Only needed in specific situations like webvideocore.net payment popup. Reduces privacy of the iframe embed.','advanced-responsive-video-embedder' ),
+		),
 		'seo_data' => array(
 			'tag'         => 'main',
 			'default'     => true,
