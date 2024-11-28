@@ -3,8 +3,9 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2024-11-26 10.3.5 ###
+### 2024-11-30 10.3.5 ###
 
+* New: Added `credentialless="false"` parameter that can be used to remove the same named attribute from the iframe.
 * Fix: Viddler not working by allowing `sync-xhr`.
 * Improved: Changes enabling latest ARVE Pro versions to use `sizes="auto"` for more efficient image loading.
 * Improved: Featured image as fallback default change to `true` (Pro).
