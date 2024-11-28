@@ -31,7 +31,6 @@ function init_public(): void {
 	require_once PLUGIN_DIR . '/php/Base.php';
 	require_once PLUGIN_DIR . '/php/Video.php';
 	require_once PLUGIN_DIR . '/php/fn-deprecated.php';
-	require_once PLUGIN_DIR . '/php/fn-compat.php';
 	require_once PLUGIN_DIR . '/php/fn-assets.php';
 	require_once PLUGIN_DIR . '/php/fn-html-output.php';
 	require_once PLUGIN_DIR . '/php/fn-misc.php';
