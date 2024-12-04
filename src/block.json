@@ -136,6 +136,9 @@
         "encrypted_media": {
             "type": "boolean"
         },
+        "credentialless": {
+            "type": "boolean"
+        },
         "lightbox_aspect_ratio": {
             "type": "string"
         },
