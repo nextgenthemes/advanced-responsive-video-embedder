@@ -247,7 +247,9 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 				.then( ( data ) => {
 					preview.innerHTML = data.html;
 				} )
-				.catch( ( error ) =>  );
+				.catch( () => {
+					//console.error( error );
+				} );
 		},
 	},
 	helpers: {
