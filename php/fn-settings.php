@@ -659,13 +659,13 @@ function settings_data(): array {
 			'type'        => 'boolean',
 			'description' => __( "Only needed in specific situations. Reduces privacy of the iframe embed. 'Disable Links' feature from ARVE Pro will not work with this.", 'advanced-responsive-video-embedder' ),
 		),
-		'credentialless'  => array(
+		'credentialless' => array(
 			'default'     => true,
 			'shortcode'   => true,
 			'option'      => false,
 			'label'       => __( 'Set <code>credentialless</code> on iframe', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
-			'description' => __( 'Only needed in specific situations like webvideocore.net payment popup. Reduces privacy of the iframe embed.','advanced-responsive-video-embedder' ),
+			'description' => __( 'Only needed in specific situations like webvideocore.net payment popup. Reduces privacy of the iframe embed.', 'advanced-responsive-video-embedder' ),
 		),
 		'seo_data' => array(
 			'tag'         => 'main',
@@ -744,7 +744,7 @@ function settings_data(): array {
 		),
 		'invidious_instance' => array(
 			'tag'                 => 'privacy',
-			'default'             => 'https://invidious.nerdvpn.de',
+			'default'             => 'https://inv.nadeko.net/',
 			'shortcode'           => false,
 			'option'              => true,
 			'label'               => __( 'Invidious instance', 'advanced-responsive-video-embedder' ),
@@ -759,7 +759,7 @@ function settings_data(): array {
 		),
 		'invidious_parameters' => array(
 			'tag'                 => 'privacy',
-			'default'             => '',
+			'default'             => 'local=true',
 			'shortcode'           => false,
 			'option'              => true,
 			'label'               => __( 'Invidious URL parameters', 'advanced-responsive-video-embedder' ),
