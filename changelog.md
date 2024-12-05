@@ -3,7 +3,7 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2024-11-30 10.3.5 ###
+### 2024-12-05 10.4.0 ###
 
 * New: Added `credentialless="false"` parameter that can be used to remove the same named attribute from the iframe.
 * Fix: Added `data-lenis-prevent` to the ARVE wrapper div to prevent issues with Lenis Smooth Scroll script.
