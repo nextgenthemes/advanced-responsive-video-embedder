@@ -1,8 +1,6 @@
 <?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE;
 
-use WP_Error;
-
 function arve_errors(): \WP_Error {
 	return Base::get_instance()->get_errors();
 }
