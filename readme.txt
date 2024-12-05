@@ -193,8 +193,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2024-11-26 10.3.5 ###
+### 2024-12-05 10.4.0 ###
 
+* New: Added `credentialless="false"` parameter that can be used to remove the same named attribute from the iframe.
+* Fix: Added `data-lenis-prevent` to the ARVE wrapper div to prevent issues with Lenis Smooth Scroll script.
 * Fix: Viddler not working by allowing `sync-xhr`.
 * Improved: Changes enabling latest ARVE Pro versions to use `sizes="auto"` for more efficient image loading.
 * Improved: Featured image as fallback default change to `true` (Pro).
@@ -203,7 +205,7 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 ### 2024-11-08 10.3.4 ###
 
-* Fix: xHamster not working. Its direclty supported with normal URLs now. Note ARVE needs to allow referrer to me send, with this privacy enhancement disabled xHamster will see the domain you are embedding from.
+* Fix: xHamster not working. Its direclty supported with normal URLs now. Note ARVE needs to allow referrer to be send, with this privacy enhancement disabled xHamster will see the domain you are embedding from.
 * Fix: multisite (needs to be confirmed).
 
 ### 2024-10-23 10.3.3 ###
