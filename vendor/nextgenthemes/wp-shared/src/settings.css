@@ -1,7 +1,3 @@
-[hidden] {
-	display: none !important;
-}
-
 .wp-core-ui .button-primary--ngt-small {
 	height: 18px;
 	padding-right: 5px;
@@ -100,13 +96,6 @@
 			padding: 2rem 3rem 1.5rem;
 		}
 	}
-}
-
-.ngt-debug-textarea {
-	width: 100%;
-	height: 1000px;
-	max-height: calc(100vh - 150px);
-	font-family: monospace;
 }
 
 .ngt-opt {
