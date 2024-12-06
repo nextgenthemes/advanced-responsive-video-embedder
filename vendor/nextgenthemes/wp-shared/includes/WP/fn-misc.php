@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\WP;
 
 /**
@@ -54,18 +57,6 @@ function attr( array $attr = array() ): string {
 	}
 
 	return $html;
-}
-
-/**
- * @param mixed $var
- *
- * @return string|false
- */
-function get_var_dump( $var ) {
-	ob_start();
-	// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_dump
-	var_dump( $var );
-	return ob_get_clean();
 }
 
 /**
