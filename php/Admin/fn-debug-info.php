@@ -1,5 +1,62 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\ARVE\Admin;
+
+// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
+function add_site_health_metadata( array $metadata ): array {
+
+	$arve_metadata['arve'] = [
+		'label'  => __( 'ARVE - Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ),
+		'fields' => [
+			'options' => [
+				'label' => __( 'ARVE Options', 'advanced-responsive-video-embedder' ),
+				'value' => var_export( get_option( 'nextgenthemes_arve' ), true ),
+			],
+			'arve' => [
+				'label' => __( 'ARVE', 'advanced-responsive-video-embedder' ),
+				'value' => plugin_ver_status( 'advanced-responsive-video-embedder/advanced-responsive-video-embedder.php' ),
+			],
+			'arve-pro' => [
+				'label' => __( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
+				'value' => plugin_ver_status( 'arve-pro/arve-pro.php' ),
+			],
+			'arve-amp' => [
+				'label' => __( 'ARVE AMP', 'advanced-responsive-video-embedder' ),
+				'value' => plugin_ver_status( 'arve-amp/arve-amp.php' ),
+			],
+			'arve-sticky-videos' => [
+				'label' => __( 'ARVE Sticky Videos', 'advanced-responsive-video-embedder' ),
+				'value' => plugin_ver_status( 'arve-sticky-videos/arve-sticky-videos.php' ),
+			],
+			'arve-random-video' => [
+				'label' => __( 'ARVE Random Video', 'advanced-responsive-video-embedder' ),
+				'value' => plugin_ver_status( 'arve-random-video/arve-random-video.php' ),
+			],
+			'wp-version' => [
+				'label' => __( 'WordPress Version', 'advanced-responsive-video-embedder' ),
+				'value' => $metadata['wp-core']['fields']['version']['value'],
+			],
+			'php-version' => [
+				'label' => __( 'PHP Version', 'advanced-responsive-video-embedder' ),
+				'value' => $metadata['wp-server']['fields']['php_version']['value'],
+			],
+			'webserver' => [
+				'label' => __( 'Web Server', 'advanced-responsive-video-embedder' ),
+				'value' => $metadata['wp-server']['fields']['httpd_software']['value'],
+			],
+			'dismissed-notices' => [
+				'label' => __( 'Dismissed Notices', 'advanced-responsive-video-embedder' ),
+				'value' => var_export( get_user_meta( get_current_user_id(), 'dnh_dismissed_notices' ), true ),
+			],
+		],
+	];
+
+	$metadata = array_merge( $arve_metadata, $metadata );
+
+	return $metadata;
+}
 
 function plugin_ver_status( string $folder_and_filename ): string {
 
@@ -17,46 +74,6 @@ function plugin_ver_status( string $folder_and_filename ): string {
 	}
 
 	return $out;
-}
-
-function print_active_plugins(): void {
-	$all_plugins    = get_plugins();
-	$active_plugins = get_option( 'active_plugins', array() );
-
-	echo "ACTIVE PLUGINS:\n";
-	foreach ( $all_plugins as $plugin_path => $plugin ) {
-		// If the plugin isn't active, don't show it.
-		if ( ! in_array( $plugin_path, $active_plugins, true ) ) {
-			continue;
-		}
-		$name = $plugin['Name'];
-		$ver  = $plugin['Version'];
-
-		echo esc_html( "$name: $ver\n" );
-	}
-}
-
-function print_network_active_plugins(): void {
-
-	if ( ! is_multisite() ) {
-		return;
-	}
-
-	echo "NETWORK ACTIVE PLUGINS: \n";
-	$all_plugins    = wp_get_active_network_plugins();
-	$active_plugins = get_site_option( 'active_sitewide_plugins', array() );
-	foreach ( $all_plugins as $plugin_path ) {
-		$plugin_base = plugin_basename( $plugin_path );
-		// If the plugin isn't active, don't show it.
-		if ( ! array_key_exists( $plugin_base, $active_plugins ) ) {
-			continue;
-		}
-		$plugin = get_plugin_data( $plugin_path );
-		$name   = $plugin['Name'];
-		$ver    = $plugin['Version'];
-
-		echo esc_html( "$name: $ver\n" );
-	}
 }
 
 function list_hooks( string $hook = '' ): array {

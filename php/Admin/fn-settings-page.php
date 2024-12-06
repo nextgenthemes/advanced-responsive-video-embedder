@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\ARVE\Admin;
 
 use Nextgenthemes\ARVE;
@@ -38,14 +41,20 @@ function settings_content(): void {
 
 	<div data-wp-bind--hidden="!context.activeTabs.debug">
 
+		<?php
+		printf(
+			'<p><a href="%s">%s</a></p>',
+			esc_url( admin_url( 'site-health.php?tab=debug' ) ),
+			esc_html__( 'Site Health Debug Info', 'advanced-responsive-video-embedder' )
+		);
+		?>
+
 		<p>
-			<button data-wp-on--click="actions.deleteOembedCache" class="button-primary" style="margin-inline-end: 1em;">
+			<button data-wp-on--click="actions.deleteOembedCache" class="button-secondary" style="margin-inline-end: 1em;">
 				<?php esc_html_e( 'Delete oEmbed Cache', 'advanced-responsive-video-embedder' ); ?>
 			</button>
 			<span x-text="message"></span>
 		</p>
-
-		<?php require_once __DIR__ . '/partials/debug-info-textarea.php'; ?>
 	</div>
 
 	<?php if ( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) : ?>
