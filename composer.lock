@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae7d7b06a98a49256d800e66480919df",
+    "content-hash": "e6f1c8036c69866ca5c6f337a4eb9ca1",
     "packages": [],
     "packages-dev": [
         {
@@ -73,11 +73,11 @@
         },
         {
             "name": "nextgenthemes/wp-shared",
-            "version": "2024.12.05.14.18.58",
+            "version": "2024.12.07.21.41.57",
             "dist": {
                 "type": "path",
-                "url": "../nextgenthemes/wp-shared",
-                "reference": "8ae90d30b73017d4eafb55cef6b156380ed0dd7e"
+                "url": "../../../../../../dev/composer-packages/wp-shared",
+                "reference": "6cb9ab2561deab8dde208a138c2fb7a82dda6cee"
             },
             "require": {
                 "php": ">=7.4"
