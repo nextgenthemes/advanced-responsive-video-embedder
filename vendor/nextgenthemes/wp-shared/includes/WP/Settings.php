@@ -96,7 +96,7 @@ class Settings {
 
 			if ( gettype( $setting['default'] ) !== $setting['type'] ) {
 				unset( $this->settings[ $key ] );
-				wp_trigger_error( __FUNCTION__, "Default value for '$key' has wring type" );
+				wp_trigger_error( __FUNCTION__, "Default value for '$key' has wrong type" );
 			}
 
 			$this->options_defaults[ $key ]                               = $setting['default'];
