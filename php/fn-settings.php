@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\ARVE;
 
 use function Nextgenthemes\WP\nextgenthemes_settings_instance;
@@ -294,7 +297,7 @@ function settings_data(): array {
 			'default'     => 'disabled',
 			'tag'         => 'pro',
 			'label'       => __( 'Go Fullscreen on opening Lightbox?', 'advanced-responsive-video-embedder' ),
-			'desc_detail' => __( 'Makes the Browser go fullscreen when opening the Lighbox. Optionally stay in Fullscreen mode even after the Lightbox is closed', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'Makes the Browser go fullscreen when opening the Lighbox. Optionally stay in Fullscreen mode even after the Lightbox is closed', 'advanced-responsive-video-embedder' ),
 			'options'     => array(
 				''              => __( 'Default', 'advanced-responsive-video-embedder' ),
 				'enabled-exit'  => __( 'Enabled, exit FS on lightbox close', 'advanced-responsive-video-embedder' ),

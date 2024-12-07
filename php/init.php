@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\ARVE;
 
 add_action( 'plugins_loaded', __NAMESPACE__ . '\init_920' );
@@ -81,6 +84,8 @@ function init_admin(): void {
 
 	add_filter( 'plugin_action_links_' . plugin_basename( PLUGIN_FILE ), __NAMESPACE__ . '\Admin\add_action_links' );
 	//add_filter( 'nextgenthemes_arve_save_options', __NAMESPACE__ . '\Admin\filter_save_options' ); // TODO remove?
+
+	add_filter( 'debug_information', __NAMESPACE__ . '\Admin\add_site_health_metadata' );
 }
 
 register_uninstall_hook( PLUGIN_FILE, __NAMESPACE__ . '\uninstall' );
@@ -198,7 +203,7 @@ function delete_oembed_cache(): string {
 	return $message;
 }
 
-function stop_outdated_addons_from_executing() {
+function stop_outdated_addons_from_executing(): void {
 
 	if ( defined('Nextgenthemes\ARVE\Pro\VERSION')
 		&& version_compare( \Nextgenthemes\ARVE\Pro\VERSION, PRO_VERSION_REQUIRED, '<' )

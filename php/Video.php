@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\ARVE;
 
 use WP_Error;
-use function Nextgenthemes\WP\get_var_dump;
 use function Nextgenthemes\WP\get_url_arg;
 use function Nextgenthemes\WP\ngt_get_block_wrapper_attributes;
 use function Nextgenthemes\WP\attr;
@@ -943,7 +945,7 @@ class Video {
 			static $show_options_debug = true;
 
 			if ( $show_options_debug ) {
-				$html .= sprintf( 'Options: <pre>%s</pre>', get_var_dump( options() ) );
+				$html .= sprintf( 'Options: <pre>%s</pre>', var_export( options(), true ) );
 			}
 
 			$show_options_debug = false;
