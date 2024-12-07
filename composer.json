@@ -27,7 +27,7 @@
 	"repositories": {
 		"nextgenthemes/wp-shared": {
 			"type": "path",
-			"url": "../nextgenthemes/wp-shared",
+			"url": "../../../../../../dev/composer-packages/wp-shared",
 			"options": {
 				"symlink": false
 			}
@@ -37,15 +37,15 @@
 		"build": [
 			"./bin/block-json",
 			"./bin/build-readme",
-			"cd ../../../../.. && npm run build:advanced-responsive-video-embedder",
+			"cd ${HOME}/websites && npm run build:advanced-responsive-video-embedder",
 			"@composer update"
 		],
 		"pre-update-cmd": [
-			"rsync --delete -av ./vendor/nextgenthemes/wp-shared ../nextgenthemes/",
-			"@composer --working-dir ../nextgenthemes/wp-shared config version $(php -r \"echo (new DateTime())->format('Y.m.d.H.i.s');\")"
+			"rsync --delete -av ./vendor/nextgenthemes/wp-shared ${HOME}/dev/composer-packages/",
+			"@composer --working-dir ${HOME}/dev/composer-packages/wp-shared config version $(php -r \"echo (new DateTime())->format('Y.m.d.H.i.s');\")"
 		],
 		"tests": [
-			"cd ../../../../.. && NGT_PHPUNIT_LOAD_PLUGINS=\"advanced-responsive-video-embedder\" phpunit --testsuite advanced-responsive-video-embedder"
+			"cd ${HOME}/websites && NGT_PHPUNIT_LOAD_PLUGINS=\"advanced-responsive-video-embedder\" phpunit --testsuite advanced-responsive-video-embedder"
 		]
 	}
 }
