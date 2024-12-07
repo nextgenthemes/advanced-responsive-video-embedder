@@ -20,7 +20,7 @@ class SettingValidator {
 	 * Whether the setting is a shortcode attribute
 	 */
 	private bool $shortcode;
-	private string $tag = 'main';
+	private string $tab = 'main';
 	private string $label;
 	private string $type;
 	private string $ui;

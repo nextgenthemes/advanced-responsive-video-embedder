@@ -216,7 +216,7 @@ function settings_data(): array {
 		'mode' => array(
 			'type'                => 'string',
 			'default'             => 'normal',
-			'tag'                 => 'pro',
+			'tab'                 => 'pro',
 			'label'               => __( 'Mode', 'advanced-responsive-video-embedder' ),
 			'options'             => array(
 				''              => __( 'Default', 'advanced-responsive-video-embedder' ),
@@ -238,7 +238,7 @@ function settings_data(): array {
 		'thumbnail_fallback' => array(
 			'type'        => 'string',
 			'default'     => plugins_url( 'src/img/thumbnail.avif', PLUGIN_FILE ),
-			'tag'         => 'pro',
+			'tab'         => 'pro',
 			'ui'          => 'image_upload',
 			'shortcode'   => false,
 			'option'      => true,
@@ -246,7 +246,7 @@ function settings_data(): array {
 			'description' => __( 'URL or media gallery image ID used for thumbnail', 'advanced-responsive-video-embedder' ),
 		),
 		'thumbnail_post_image_fallback' => array(
-			'tag'         => 'pro',
+			'tab'         => 'pro',
 			'default'     => true,
 			'shortcode'   => false,
 			'option'      => true,
@@ -279,7 +279,7 @@ function settings_data(): array {
 			'default'     => false,
 			'shortcode'   => true,
 			'option'      => true,
-			'tag'         => 'pro',
+			'tab'         => 'pro',
 			'label'       => __( 'Hide Title (Lazyload & Lightbox only)', 'advanced-responsive-video-embedder' ),
 			'description' => __( 'Useful when the thumbnail image already displays the video title (Lazyload & Lightbox modes).', 'advanced-responsive-video-embedder' ),
 		),
@@ -288,14 +288,14 @@ function settings_data(): array {
 			'default'     => true,
 			'shortcode'   => true,
 			'option'      => true,
-			'tag'         => 'pro',
+			'tab'         => 'pro',
 			'label'       => __( 'Expand on play? (Lazyload only)', 'advanced-responsive-video-embedder' ),
 			'description' => __( 'Expands video size after clicking the thumbnail (Lazyload Mode)', 'advanced-responsive-video-embedder' ),
 		),
 		'fullscreen' => array(
 			'type'        => 'string',
 			'default'     => 'disabled',
-			'tag'         => 'pro',
+			'tab'         => 'pro',
 			'label'       => __( 'Go Fullscreen on opening Lightbox?', 'advanced-responsive-video-embedder' ),
 			'description' => __( 'Makes the Browser go fullscreen when opening the Lightbox. Optionally stay in Fullscreen mode even after the Lightbox is closed', 'advanced-responsive-video-embedder' ),
 			'options'     => array(
@@ -310,7 +310,7 @@ function settings_data(): array {
 		'play_icon_style' => array(
 			'type'      => 'string',
 			'default'   => 'youtube',
-			'tag'       => 'pro',
+			'tab'       => 'pro',
 			'label'     => __( 'Play Button', 'advanced-responsive-video-embedder' ),
 			'options'   => array(
 				// Translators: 1 %s is play icon style.
@@ -329,7 +329,7 @@ function settings_data(): array {
 		'hover_effect' => array(
 			'type'      => 'string',
 			'default'   => 'darken',
-			'tag'       => 'pro',
+			'tab'       => 'pro',
 			'label'     => __( 'Hover Effect (Lazyload/Lightbox only)', 'advanced-responsive-video-embedder' ),
 			'options'   => array(
 				''          => __( 'Default', 'advanced-responsive-video-embedder' ),
@@ -343,7 +343,7 @@ function settings_data(): array {
 			'option'    => true,
 		),
 		'disable_links' => array(
-			'tag'         => 'pro',
+			'tab'         => 'pro',
 			'default'     => false,
 			'label'       => __( 'Disable links', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
@@ -411,7 +411,7 @@ function settings_data(): array {
 			'type'        => 'integer',
 			'default'     => 1174,
 			'placeholder' => 1174,
-			'tag'         => 'pro',
+			'tab'         => 'pro',
 			'label'       => __( 'Lightbox Maximal Width', 'advanced-responsive-video-embedder' ),
 			'description' => __( 'default 1174', 'advanced-responsive-video-embedder' ),
 			'shortcode'   => true,
@@ -420,7 +420,7 @@ function settings_data(): array {
 		'sticky' => array(
 			'type'        => 'boolean',
 			'default'     => true,
-			'tag'         => 'sticky_videos',
+			'tab'         => 'sticky_videos',
 			'option'      => true,
 			'shortcode'   => true,
 			'label'       => __( 'Sticky', 'advanced-responsive-video-embedder' ),
@@ -429,7 +429,7 @@ function settings_data(): array {
 		'sticky_width' => array(
 			'type'        => 'string',
 			'default'     => '500px',
-			'tag'         => 'sticky_videos',
+			'tab'         => 'sticky_videos',
 			'shortcode'   => false,
 			'option'      => true,
 			'label'       => __( 'Sticky Video Width', 'advanced-responsive-video-embedder' ),
@@ -438,7 +438,7 @@ function settings_data(): array {
 		'sticky_max_width' => array(
 			'type'        => 'string',
 			'default'     => '40vw',
-			'tag'         => 'sticky_videos',
+			'tab'         => 'sticky_videos',
 			'shortcode'   => false,
 			'option'      => true,
 			'label'       => __( 'Sticky Video Maximal Width', 'advanced-responsive-video-embedder' ),
@@ -447,7 +447,7 @@ function settings_data(): array {
 		'sticky_gap' => array(
 			'type'        => 'string',
 			'default'     => '0.7rem',
-			'tag'         => 'sticky_videos',
+			'tab'         => 'sticky_videos',
 			'shortcode'   => false,
 			'option'      => true,
 
@@ -457,7 +457,7 @@ function settings_data(): array {
 		'sticky_navbar_selector' => array(
 			'type'        => 'string',
 			'default'     => '.navbar--primary',
-			'tag'         => 'sticky_videos',
+			'tab'         => 'sticky_videos',
 			'shortcode'   => false,
 			'option'      => true,
 
@@ -467,14 +467,14 @@ function settings_data(): array {
 		'sticky_on_mobile'              => array(
 			'type'        => 'boolean',
 			'default'     => true,
-			'tag'         => 'sticky_videos',
+			'tab'         => 'sticky_videos',
 			'shortcode'   => true,
 			'option'      => true,
 			'label'       => __( 'Sticky top on smaller screens', 'advanced-responsive-video-embedder' ),
 			'description' => __( 'Stick the video to the top of screens below 768px width in portrait orientation. The Video will always be as wide as the screen ignoring the Stick Width and Stick Maxwidth settings.', 'advanced-responsive-video-embedder' ),
 		),
 		'sticky_position'               => array(
-			'tag'         => 'sticky_videos',
+			'tab'         => 'sticky_videos',
 			'default'     => 'bottom-right',
 			'label'       => __( 'Sticky Video Position', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
@@ -521,7 +521,7 @@ function settings_data(): array {
 			),
 		),
 		'wp_video_override' => array(
-			'tag'         => 'html5',
+			'tab'         => 'html5',
 			'default'     => true,
 			'shortcode'   => false,
 			'option'      => true,
@@ -530,7 +530,7 @@ function settings_data(): array {
 			'description' => __( 'Overwrite the default WordPress behavior.', 'advanced-responsive-video-embedder' ),
 		),
 		'controlslist' => array(
-			'tag'         => 'html5',
+			'tab'         => 'html5',
 			'default'     => '',
 			'label'       => __( 'Chrome HTML5 Player controls', 'advanced-responsive-video-embedder' ),
 			'type'        => 'string',
@@ -540,7 +540,7 @@ function settings_data(): array {
 			'option'      => true,
 		),
 		'volume' => array(
-			'tag'         => 'pro',
+			'tab'         => 'pro',
 			'default'     => 100,
 			'shortcode'   => true,
 			'option'      => true,
@@ -567,7 +567,7 @@ function settings_data(): array {
 			'description' => __( 'Privacy enhanced mode, will NOT disable cookies but only sets them when a user starts to play a video.', 'advanced-responsive-video-embedder' ),
 		),
 		'vimeo_api_id' => array(
-			'tag'                 => 'random_video',
+			'tab'                 => 'random_video',
 			'default'             => '',
 			'shortcode'           => false,
 			'option'              => true,
@@ -583,7 +583,7 @@ function settings_data(): array {
 			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		),
 		'vimeo_api_secret' => array(
-			'tag'                 => 'random_video',
+			'tab'                 => 'random_video',
 			'default'             => '',
 			'shortcode'           => false,
 			'option'              => true,
@@ -599,7 +599,7 @@ function settings_data(): array {
 			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		),
 		'vimeo_api_token' => array(
-			'tag'                 => 'random_video',
+			'tab'                 => 'random_video',
 			'default'             => '',
 			'shortcode'           => false,
 			'option'              => true,
@@ -615,7 +615,7 @@ function settings_data(): array {
 			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		),
 		'random_video_url' => array(
-			'tag'                 => 'random_video',
+			'tab'                 => 'random_video',
 			'default'             => '',
 			'placeholder'         => 'https://www.youtube.com/playlist?list=PL...',
 			'option'              => false,
@@ -631,7 +631,7 @@ function settings_data(): array {
 			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		),
 		'random_video_urls' => array(
-			'tag'                 => 'random_video',
+			'tab'                 => 'random_video',
 			'default'             => '',
 			'placeholder'         => 'https://youtu.be/abc, https://vimeo.com/123',
 			'option'              => false,
@@ -671,7 +671,7 @@ function settings_data(): array {
 			'description' => __( 'Only needed in specific situations like webvideocore.net payment popup. Reduces privacy of the iframe embed.', 'advanced-responsive-video-embedder' ),
 		),
 		'seo_data' => array(
-			'tag'         => 'main',
+			'tab'         => 'main',
 			'default'     => true,
 			'shortcode'   => false,
 			'option'      => true,
@@ -696,7 +696,7 @@ function settings_data(): array {
 			'description' => __( 'Enable the plugin in RSS/Atom feeds? Disabling will not completely diable everything but it will use native WP behavior in feeds where possible.', 'advanced-responsive-video-embedder' ),
 		),
 		'reset_after_played' => array(
-			'tag'         => 'pro',
+			'tab'         => 'pro',
 			'default'     => 'enabled',
 			'shortcode'   => false,
 			'option'      => true,
@@ -719,7 +719,7 @@ function settings_data(): array {
 			'description' => __( 'For quickly accessing the ARVE settings page.', 'advanced-responsive-video-embedder' ),
 		),
 		'lightbox_aspect_ratio' => array(
-			'tag'         => 'pro',
+			'tab'         => 'pro',
 			'default'     => '',
 			'placeholder' => '9:16',
 			'shortcode'   => true,
@@ -729,7 +729,7 @@ function settings_data(): array {
 			'description' => __( 'The aspect ratio of the lightbox. Leave empty to use the original video aspect ratio.', 'advanced-responsive-video-embedder' ),
 		),
 		'cache_thumbnails' => array(
-			'tag'         => 'privacy',
+			'tab'         => 'privacy',
 			'default'     => false,
 			'shortcode'   => false,
 			'option'      => true,
@@ -738,7 +738,7 @@ function settings_data(): array {
 			'description' => __( 'No image hotlinking to video hosts. For Lazyload/Lightbox (Pro).', 'advanced-responsive-video-embedder' ),
 		),
 		'invidious' => array(
-			'tag'         => 'privacy',
+			'tab'         => 'privacy',
 			'default'     => false,
 			'shortcode'   => true,
 			'option'      => true,
@@ -746,7 +746,7 @@ function settings_data(): array {
 			'type'        => 'boolean',
 		),
 		'invidious_instance' => array(
-			'tag'                 => 'privacy',
+			'tab'                 => 'privacy',
 			'default'             => 'https://inv.nadeko.net/',
 			'shortcode'           => false,
 			'option'              => true,
@@ -761,7 +761,7 @@ function settings_data(): array {
 			'descriptionlinktext' => esc_html( 'see here' ),
 		),
 		'invidious_parameters' => array(
-			'tag'                 => 'privacy',
+			'tab'                 => 'privacy',
 			'default'             => 'local=true',
 			'shortcode'           => false,
 			'option'              => true,
@@ -777,7 +777,7 @@ function settings_data(): array {
 		),
 		'allow_referrer' => array(
 			'label'       => __( 'Allow domain restricted videos (referrerpolicy)', 'advanced-responsive-video-embedder' ),
-			'tag'         => 'main',
+			'tab'         => 'main',
 			'default'     => 'youtube, vimeo, rumble, xhamster, kick',
 			'type'        => 'string',
 			'option'      => true,
@@ -791,7 +791,7 @@ function settings_data(): array {
 		if ( isset( $v['default_params'] ) ) {
 
 			$settings[ 'url_params_' . $provider ] = array(
-				'tag'       => 'urlparams',
+				'tab'       => 'urlparams',
 				'default'   => $v['default_params'],
 				'option'    => true,
 				'shortcode' => false,

@@ -100,7 +100,7 @@ class Settings {
 			}
 
 			$this->options_defaults[ $key ]                               = $setting['default'];
-			$this->options_defaults_by_section[ $setting['tag'] ][ $key ] = $setting['default'];
+			$this->options_defaults_by_section[ $setting['tab'] ][ $key ] = $setting['default'];
 		}
 	}
 

@@ -1,7 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\WP;
 
-use \Nextgenthemes\WP\Settings;
+use Nextgenthemes\WP\Settings;
 
 require_once 'Settings.php';
 
@@ -39,7 +42,7 @@ function nextgenthemes_settings(): array {
 		$settings[ $p ] = array(
 			'default'       => '',
 			'option'        => true,
-			'tag'           => 'keys',
+			'tab'           => 'keys',
 			// translators: %s is Product name
 			'label'         => sprintf( esc_html__( '%s license Key', 'advanced-responsive-video-embedder' ), $value['name'] ),
 			'type'          => 'string',
@@ -52,7 +55,7 @@ function nextgenthemes_settings(): array {
 		$settings[ $p . '_status' ] = array(
 			'default' => '',
 			'option'  => true,
-			'tag'     => 'keys',
+			'tab'     => 'keys',
 			// translators: %s is Product name
 			'label'   => sprintf( esc_html__( '%s license Key Status', 'advanced-responsive-video-embedder' ), $value['name'] ),
 			'type'    => 'string',
@@ -69,8 +72,8 @@ function missing_settings_defaults( array $settings ): array {
 
 	foreach ( $settings as $key => $value ) :
 
-		if ( empty( $settings[ $key ]['tag'] ) ) {
-			$settings[ $key ]['tag'] = 'main';
+		if ( empty( $settings[ $key ]['tab'] ) ) {
+			$settings[ $key ]['tab'] = 'main';
 		}
 
 		if ( 'string' === $value['type'] &&
