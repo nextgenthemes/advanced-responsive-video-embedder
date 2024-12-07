@@ -3,6 +3,11 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-12-08 10.5.0 ###
+
+* Improved: Removed the debug into in favor or adding data to the Site Health Info screen.
+* Improved: Introduced a `SettingValidator` class to make the code more robust self testing.
+
 ### 2024-12-05 10.4.0 ###
 
 * New: Added `credentialless="false"` parameter that can be used to remove the same named attribute from the iframe.
