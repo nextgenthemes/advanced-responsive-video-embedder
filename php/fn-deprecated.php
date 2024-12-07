@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\ARVE;
 
 function iframe_src_autoplay_args( string $src ): string {
