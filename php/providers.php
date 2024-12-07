@@ -1,4 +1,8 @@
-<?php return array(
+<?php
+
+declare(strict_types = 1);
+
+return array(
 	'alugha' => array(
 		'name'           => 'Alugha',
 		'regex'          => '#https?://(www\\.)?alugha\\.com/(1/)?videos/(?<id>[a-z0-9_\\-]+)#i',
@@ -32,13 +36,13 @@
 		),
 	),
 	'bannedvideo' => array(
-		'name'      => 'Banned.video',
-		'oembed'    => true, // ARVE Pro will inject fake oembed data from their graphQL API
-		'regex'     => '#https://(banned\\.video|cantcensortruth\\.com)/watch\\?id=(?<id>[a-z0-9]+)#i',
-		'embed_url' => 'https://api.banned.video/embed/%s',
+		'name'           => 'Banned.video',
+		'oembed'         => true, // ARVE Pro will inject fake oembed data from their graphQL API
+		'regex'          => '#https://(banned\\.video|cantcensortruth\\.com)/watch\\?id=(?<id>[a-z0-9]+)#i',
+		'embed_url'      => 'https://api.banned.video/embed/%s',
 		'auto_title'     => true,
 		'auto_thumbnail' => true,
-		'tests'     => array(
+		'tests'          => array(
 			0 => array(
 				'url' => 'https://banned.video/watch?id=5ffe509f0d763c3dca0e8ad7',
 				'id'  => '5ffe509f0d763c3dca0e8ad7',
@@ -593,7 +597,7 @@
 			2 => array(
 				'url' => 'https://xhamster.com/xembed.php?video=1234567',
 				'id'  => 1234567,
-			)
+			),
 		),
 	),
 	'yahoo' => array(

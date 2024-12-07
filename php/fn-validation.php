@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\ARVE;
 
 use function Nextgenthemes\WP\valid_url;
