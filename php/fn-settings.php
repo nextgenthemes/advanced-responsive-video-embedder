@@ -16,7 +16,7 @@ function default_options(): array {
 }
 
 function all_settings(): array {
-	return Base::get_instance()->get_settings_instance()->get_settings();
+	return Base::get_instance()->get_settings_data();
 }
 
 function settings_sections(): array {
