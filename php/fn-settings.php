@@ -802,7 +802,5 @@ function settings_data(): array {
 		}
 	}
 
-	$settings = missing_settings_defaults( $settings );
-
 	return $settings;
 }

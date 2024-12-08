@@ -1,7 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\WP;
 
-use \Nextgenthemes\WP\Settings;
+use Nextgenthemes\WP\Settings;
 
 require_once 'Settings.php';
 
@@ -59,8 +62,6 @@ function nextgenthemes_settings(): array {
 			'ui'      => 'hidden',
 		);
 	}
-
-	$settings = missing_settings_defaults( $settings );
 
 	return $settings;
 }
