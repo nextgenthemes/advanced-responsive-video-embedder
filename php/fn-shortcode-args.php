@@ -110,7 +110,9 @@ function compare_oembed_src_with_generated_src( string $src, string $src_gen, st
 		$msg .= str_pad('src gen:', $l, ' ') . esc_url($org_src_gen) . '<br>';
 		$msg .= '</pre>';
 
-		arve_errors()->add( 'hidden', $msg );
+		if ( is_dev_mode() && ! options()['never_show_src_mismatch_errors'] ) {
+			arve_errors()->add( 'src-mismatch', $msg );
+		}
 	}
 }
 

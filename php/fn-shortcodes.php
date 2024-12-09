@@ -51,24 +51,21 @@ function shortcode( array $a ) {
 
 function is_dev_mode(): bool {
 	return (
-		( defined( 'WP_DEBUG' ) && WP_DEBUG ) ||
-		wp_get_development_mode() || // Any 'theme', 'plugin', or 'all'
-		'development' === wp_get_environment_type() ||
-		'local' === wp_get_environment_type()
+		( defined( 'WP_DEBUG' ) && \WP_DEBUG )
+		|| wp_get_development_mode()
+		|| 'development' === wp_get_environment_type()
+		|| 'local' === wp_get_environment_type()
 	);
 }
 
 function error( string $messages, string $code = '' ): string {
 
-	$hide = false;
-
-	if ( str_contains( $code, 'hidden' ) && ! is_dev_mode() ) {
-		$hide = true;
-	}
-
 	$error_html = sprintf(
-		'<div class="arve-error alignwide" %s><abbr title="Advanced Responsive Video Embedder">ARVE</abbr> %s</div>',
-		$hide ? 'hidden' : '',
+		'<div class="arve-error alignwide" data-error-code="%s">
+			 <abbr title="%s">ARVE</abbr> %s
+		</div>',
+		$code,
+		'Advanced Responsive Video Embedder',
 		// translators: Error message
 		sprintf( __( 'Error: %s', 'advanced-responsive-video-embedder' ), $messages ),
 	);
