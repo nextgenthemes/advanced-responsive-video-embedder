@@ -12,20 +12,25 @@ class SettingValidator {
 	 * @var string|int|bool
 	 */
 	private $default;
+
 	/**
-	 * Whether the setting is an option
+	 * Special UI for the setting, e.g. 'image_upload'
 	 */
-	private bool $option;
+	private string $ui;
+
 	/**
-	 * Whether the setting is a shortcode attribute
+	 * Whether the setting has an UI element generated
+	 */
+	private bool $option = true;
+
+	/**
+	 * Whether the setting is a shortcode attribute (ARVE)
 	 */
 	private bool $shortcode;
+
 	private string $tab = 'main';
 	private string $label;
 	private string $type;
-	private string $ui;
-	private string $edd_item_name;
-	private string $edd_store_url;
 	private string $placeholder;
 	private string $description;
 	private string $descriptionlink;
@@ -34,7 +39,12 @@ class SettingValidator {
 	private string $sanitize_callback;
 	private string $ui_element;
 	private string $ui_element_type;
+
+	private string $edd_store_url;
+	private string $edd_item_name;
 	private int $edd_item_id;
+
+	private string $slugged_namespace;
 
 	/**
 	 * Magic setter method for setting the value of the specified property.
@@ -101,13 +111,6 @@ class SettingValidator {
 		$this->$name = $value;
 	}
 
-	public function maybe_set_placeholder_to_default(): void {
-
-		if ( 'string' === $this->type && ! isset( $this->placeholder ) ) {
-			$this->placeholder = $this->default;
-		}
-	}
-
 	public function set_ui_element(): void {
 
 		if ( ! empty( $this->options ) ) {
@@ -119,6 +122,9 @@ class SettingValidator {
 	}
 
 	public function get_setting_array(): array {
+
+		$this->set_ui_element();
+
 		return get_object_vars($this);
 	}
 }
