@@ -3,8 +3,9 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2024-12-08 10.5.0 ###
+### 2024-12-10 10.5.0 ###
 
+* New: Debug option to now show any src mismatch errors.
 * Improved: Removed the debug into in favor or adding data to the Site Health Info screen.
 * Improved: Introduced a `SettingValidator` class to make the code more robust self testing.
 
