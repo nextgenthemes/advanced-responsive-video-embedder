@@ -73,11 +73,11 @@
         },
         {
             "name": "nextgenthemes/wp-shared",
-            "version": "2024.12.09.19.31.33",
+            "version": "2024.12.09.19.35.17",
             "dist": {
                 "type": "path",
                 "url": "../../../../../../dev/composer-packages/wp-shared",
-                "reference": "87d727502928b17633f8ea81bc004773279324f8"
+                "reference": "9b2f33faad7236459c58037eb409dbe8cb82aaba"
             },
             "require": {
                 "php": ">=7.4"
