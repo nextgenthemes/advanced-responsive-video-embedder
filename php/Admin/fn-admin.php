@@ -361,20 +361,9 @@ function add_action_links( array $links ): array {
 		$extra_links['buy_pro_addon'] = sprintf(
 			'<a href="%s"><strong style="display: inline;">%s</strong></a>',
 			'https://nextgenthemes.com/plugins/arve-pro/',
-			__( 'Buy Pro Addon', 'advanced-responsive-video-embedder' )
+			__( 'Get Lazyload, Lightbox and more', 'advanced-responsive-video-embedder' )
 		);
 	}
-
-	$extra_links['donate'] = sprintf(
-		'<a href="https://nextgenthemes.com/donate/"><strong style="display: inline;">%s</strong></a>',
-		esc_html__( 'Donate', 'advanced-responsive-video-embedder' )
-	);
-
-	$extra_links['settings'] = sprintf(
-		'<a href="%s">%s</a>',
-		esc_url( admin_url( 'options-general.php?page=nextgenthemes_arve' ) ),
-		esc_html__( 'Settings', 'advanced-responsive-video-embedder' )
-	);
 
 	return array_merge( $extra_links, $links );
 }

@@ -19,6 +19,7 @@ class Settings {
 	private string $rest_namespace;
 	private string $base_path;
 	private string $base_url;
+	private string $plugin_file;
 	private string $premium_url_prefix = '';
 
 	private array $sections = array( 'main' => 'Main' );
@@ -40,10 +41,9 @@ class Settings {
 			}
 		}
 
-		$this->base_url  = trailingslashit( $args['base_url'] );
-		$this->base_path = trailingslashit( $args['base_path'] );
-
-		$this->validate_and_add_default_settings( $args['settings'] );
+		$this->base_url            = trailingslashit( $args['base_url'] );
+		$this->base_path           = trailingslashit( $args['base_path'] );
+		$this->plugin_file         = $args['plugin_file'] ?? '';
 		$this->sections            = $args['sections'];
 		$this->menu_title          = $args['menu_title'];
 		$this->settings_page_title = $args['settings_page_title'];
@@ -52,6 +52,7 @@ class Settings {
 		$this->slashed_namespace   = str_replace( '_', '/', $this->slugged_namespace );
 		$this->rest_namespace      = $this->slugged_namespace . '/v1';
 
+		$this->validate_and_add_default_settings( $args['settings'] );
 		$this->set_default_options();
 
 		$this->options = (array) get_option( $this->slugged_namespace, array() );
@@ -60,19 +61,61 @@ class Settings {
 		add_action( 'admin_enqueue_scripts', array( $this, 'assets' ), 9 );
 		add_action( 'rest_api_init', array( $this, 'register_rest_route' ) );
 		add_action( 'admin_menu', array( $this, 'register_setting_page' ) );
+
+		if ( ! empty( $this->plugin_file ) ) {
+			add_filter( 'plugin_action_links_' . plugin_basename( $this->plugin_file ), array( $this, 'add_action_links' ), 5, 1 );
+		}
+	}
+
+	public function add_action_links( array $links ): array {
+
+		$default_headers = array(
+			'ActionLink'  => 'Action Link',
+		);
+
+		$plugin_data = get_file_data( $this->plugin_file, $default_headers, 'plugin');
+
+		if ( ! empty( $plugin_data['ActionLink'] ) ) {
+			preg_match('/(?<text>.*?)(?<url>https\S+)/i', $plugin_data['ActionLink'], $matches);
+		}
+
+		if ( ! empty( $matches['url'] ) && ! empty( $matches['text'] ) ) {
+			$extra_links['ngt-action-link'] = sprintf(
+				'<a href="%s"><strong style="display: inline;">%s</strong></a>',
+				esc_url($matches['url']),
+				esc_html( $matches['text'] )
+			);
+		}
+
+		$extra_links['ngt-settings'] = sprintf(
+			'<a href="%s">%s</a>',
+			esc_url( admin_url( 'options-general.php?page=' . $this->slugged_namespace ) ),
+			esc_html__( 'Settings' ) // phpcs:ignore WordPress.WP.I18n.MissingArgDomain
+		);
+
+		return array_merge( $extra_links, $links );
+	}
+
+	private function check_option_and_shortcode( array $setting ): void {
+
+		if ( 'nextgenthemes_arve' === $this->slugged_namespace
+			&& ( ! isset( $setting['option'] ) || ! isset( $setting['shortcode'] ) )
+		) {
+			wp_trigger_error( __METHOD__, 'option or shortcode must be set in ARVE' );
+		}
 	}
 
 	private function validate_and_add_default_settings( array $settings ): void {
 
 		foreach ( $settings as $key => $setting ) {
+
+			$this->check_option_and_shortcode( $setting );
+
 			$validator = new SettingValidator( $setting );
 
 			foreach ( $setting as $setting_key => $setting_value ) {
 				$validator->{$setting_key} = $setting_value;
 			}
-
-			$validator->maybe_set_placeholder_to_default();
-			$validator->set_ui_element();
 
 			$settings[ $key ] = $validator->get_setting_array();
 		}

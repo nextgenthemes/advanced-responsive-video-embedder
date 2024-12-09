@@ -27,6 +27,7 @@ class Base {
 				'premium_url_prefix'  => PREMIUM_URL_PREFIX,
 				'menu_title'          => __( 'ARVE', 'advanced-responsive-video-embedder' ),
 				'settings_page_title' => __( 'ARVE Settings', 'advanced-responsive-video-embedder' ),
+				'plugin_file'         => PLUGIN_FILE,
 				'base_url'            => plugins_url( '', PLUGIN_FILE ),
 				'base_path'           => PLUGIN_DIR,
 			)
