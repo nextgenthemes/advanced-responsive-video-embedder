@@ -464,7 +464,7 @@ function settings_data(): array {
 			'label'       => __( 'Selector for fixed Navbar', 'advanced-responsive-video-embedder' ),
 			'description' => __( 'If you have a fixed navbar on the top if your site you need this. document.querySelector(x) for a fixed navbar element to account for its height when pinning videos to the top.', 'advanced-responsive-video-embedder' ),
 		),
-		'sticky_on_mobile'              => array(
+		'sticky_on_mobile' => array(
 			'type'        => 'boolean',
 			'default'     => true,
 			'tab'         => 'sticky_videos',
@@ -473,7 +473,7 @@ function settings_data(): array {
 			'label'       => __( 'Sticky top on smaller screens', 'advanced-responsive-video-embedder' ),
 			'description' => __( 'Stick the video to the top of screens below 768px width in portrait orientation. The Video will always be as wide as the screen ignoring the Stick Width and Stick Maxwidth settings.', 'advanced-responsive-video-embedder' ),
 		),
-		'sticky_position'               => array(
+		'sticky_position' => array(
 			'tab'         => 'sticky_videos',
 			'default'     => 'bottom-right',
 			'label'       => __( 'Sticky Video Position', 'advanced-responsive-video-embedder' ),
@@ -783,6 +783,14 @@ function settings_data(): array {
 			'option'      => true,
 			'shortcode'   => false,
 			'description' => __( 'Comma separated list of lowercase hosts that will set <code>referrerpolicy="origin-when-cross-origin"</code> instead of the default <code>referrerpolicy="no-referer"</code> on <code>iframe</code>. This will make video less private for the visitor as the host will be able to see on what website they are watching on but its needed for youtube, vimeo, rumble and possible others for domain restricted videos.', 'advanced-responsive-video-embedder' ),
+		),
+		'never_show_src_mismatch_errors' => array(
+			'tab'         => 'debug',
+			'default'     => false,
+			'shortcode'   => false,
+			'option'      => true,
+			'label'       => __( 'Never show src mismatch errors', 'advanced-responsive-video-embedder' ),
+			'type'        => 'boolean',
 		),
 	);
 
