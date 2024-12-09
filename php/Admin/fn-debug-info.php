@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE\Admin;
 
+use function Nextgenthemes\ARVE\is_dev_mode;
+
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
 function add_site_health_metadata( array $metadata ): array {
 
@@ -18,27 +20,27 @@ function add_site_health_metadata( array $metadata ): array {
 				'label' => __( 'ARVE', 'advanced-responsive-video-embedder' ),
 				'value' => plugin_ver_status( 'advanced-responsive-video-embedder/advanced-responsive-video-embedder.php' ),
 			],
-			'arve-pro' => [
+			'arve_pro' => [
 				'label' => __( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
 				'value' => plugin_ver_status( 'arve-pro/arve-pro.php' ),
 			],
-			'arve-amp' => [
+			'arve_amp' => [
 				'label' => __( 'ARVE AMP', 'advanced-responsive-video-embedder' ),
 				'value' => plugin_ver_status( 'arve-amp/arve-amp.php' ),
 			],
-			'arve-sticky-videos' => [
+			'arve_sticky_videos' => [
 				'label' => __( 'ARVE Sticky Videos', 'advanced-responsive-video-embedder' ),
 				'value' => plugin_ver_status( 'arve-sticky-videos/arve-sticky-videos.php' ),
 			],
-			'arve-random-video' => [
+			'arve_random_video' => [
 				'label' => __( 'ARVE Random Video', 'advanced-responsive-video-embedder' ),
 				'value' => plugin_ver_status( 'arve-random-video/arve-random-video.php' ),
 			],
-			'wp-version' => [
+			'wp_version' => [
 				'label' => __( 'WordPress Version', 'advanced-responsive-video-embedder' ),
 				'value' => $metadata['wp-core']['fields']['version']['value'],
 			],
-			'php-version' => [
+			'php_version' => [
 				'label' => __( 'PHP Version', 'advanced-responsive-video-embedder' ),
 				'value' => $metadata['wp-server']['fields']['php_version']['value'],
 			],
@@ -46,7 +48,11 @@ function add_site_health_metadata( array $metadata ): array {
 				'label' => __( 'Web Server', 'advanced-responsive-video-embedder' ),
 				'value' => $metadata['wp-server']['fields']['httpd_software']['value'],
 			],
-			'dismissed-notices' => [
+			'is_dev_mode' => [
+				'label' => __( 'is_dev_mode', 'advanced-responsive-video-embedder' ),
+				'value' => var_export( is_dev_mode(), true ),
+			],
+			'dismissed_notices' => [
 				'label' => __( 'Dismissed Notices', 'advanced-responsive-video-embedder' ),
 				'value' => var_export( get_user_meta( get_current_user_id(), 'dnh_dismissed_notices' ), true ),
 			],
