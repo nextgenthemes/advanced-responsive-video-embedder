@@ -17,7 +17,6 @@ function add_media_button(): void {
 	wp_interactivity_config(
 		'nextgenthemes_arve_dialog',
 		[
-			'restUrl'        => 'was',
 			'nonce'          => wp_create_nonce( 'wp_rest' ),
 			'siteUrl'        => get_site_url(),
 			'homeUrl'        => get_home_url(),
