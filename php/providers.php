@@ -38,7 +38,7 @@ return array(
 	'bannedvideo' => array(
 		'name'           => 'Banned.video',
 		'oembed'         => true, // ARVE Pro will inject fake oembed data from their graphQL API
-		'regex'          => '#https://(banned\\.video|cantcensortruth\\.com)/watch\\?id=(?<id>[a-z0-9]+)#i',
+		'regex'          => '#https://(banned\\.video|madmaxworld\\.tv|cantcensortruth\\.com)/watch\\?id=(?<id>[a-z0-9]+)#i',
 		'embed_url'      => 'https://api.banned.video/embed/%s',
 		'auto_title'     => true,
 		'auto_thumbnail' => true,
