@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
-use WP_Error;
 use Nextgenthemes\WP\Settings;
 
 class Base {
