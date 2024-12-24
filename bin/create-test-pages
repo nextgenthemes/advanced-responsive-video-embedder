@@ -62,6 +62,7 @@ function cmd( string $command, array $args = array(), bool $verbose = true ): st
 		echo "Executing: $command" . PHP_EOL;
 		$out = system( $command, $exit_code );
 	} else {
+		/** @disregard */
 		$out = exec( command: $command, result_code: $exit_code );
 	}
 
