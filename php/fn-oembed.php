@@ -31,7 +31,7 @@ function add_oembed_providers(): void {
 function filter_oembed_dataparse( string $html, object $data, string $url ): string {
 
 	// this is to fix Divi endless reload issue.
-	if ( is_admin() && function_exists('et_setup_theme') ) {
+	if ( is_admin() && function_exists( 'et_setup_theme' ) ) {
 		return $html;
 	}
 

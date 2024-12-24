@@ -159,7 +159,7 @@ class Video {
 			$html .= $this->get_debug_info();
 		}
 
-		return apply_filters( 'nextgenthemes/arve/html', $html, get_object_vars($this) );
+		return apply_filters( 'nextgenthemes/arve/html', $html, get_object_vars( $this ) );
 	}
 
 	private function process_shortcode_atts(): void {
@@ -186,7 +186,7 @@ class Video {
 		$this->detect_provider_and_id_from_url();
 
 		$this->set_prop( 'aspect_ratio', $this->arg_aspect_ratio( $this->aspect_ratio ) );
-		$this->set_prop( 'thumbnail', apply_filters( 'nextgenthemes/arve/args/thumbnail', $this->thumbnail, get_object_vars($this) ) );
+		$this->set_prop( 'thumbnail', apply_filters( 'nextgenthemes/arve/args/thumbnail', $this->thumbnail, get_object_vars( $this ) ) );
 		$this->set_prop( 'img_src', $this->arg_img_src( $this->img_src ) );
 
 		$this->set_video_properties_from_attachments();
@@ -220,7 +220,6 @@ class Video {
 
 	/**
 	 * If a iframe embed code is passed through the url argument, we extract src and ratio.
-	 *
 	 */
 	private function detect_from_embed_code(): void {
 
@@ -283,7 +282,7 @@ class Video {
 			$src = add_query_arg( 'controls', '0', $src );
 		}
 
-		$src = apply_filters( 'nextgenthemes/arve/args/iframe_src', $src, get_object_vars($this) );
+		$src = apply_filters( 'nextgenthemes/arve/args/iframe_src', $src, get_object_vars( $this ) );
 
 		return $src;
 	}
@@ -461,7 +460,7 @@ class Video {
 			}
 		}
 
-		return apply_filters( 'nextgenthemes/arve/args/autoplay', $autoplay, get_object_vars($this) );
+		return apply_filters( 'nextgenthemes/arve/args/autoplay', $autoplay, get_object_vars( $this ) );
 	}
 
 	private function arg_img_src( string $img_src ): string {
@@ -486,7 +485,7 @@ class Video {
 
 		endif; // thumbnail
 
-		return (string) apply_filters( 'nextgenthemes/arve/args/img_src', $img_src, get_object_vars($this) );
+		return (string) apply_filters( 'nextgenthemes/arve/args/img_src', $img_src, get_object_vars( $this ) );
 	}
 
 	/**
@@ -679,19 +678,19 @@ class Video {
 	 */
 	public function set_prop( string $prop_name, $value ): void {
 
-		if ( ! property_exists($this, $prop_name) ) {
+		if ( ! property_exists( $this, $prop_name ) ) {
 			throw new \Exception( esc_html( "'$prop_name' property does not exists" ) );
 		}
 
 		$url_args      = array_merge( VIDEO_FILE_EXTENSIONS, array( 'url' ) );
 		$type          = get_arg_type( $prop_name );
-		$property_type = ( new \ReflectionProperty(__CLASS__, $prop_name) )->getType()->getName();
+		$property_type = ( new \ReflectionProperty( __CLASS__, $prop_name ) )->getType()->getName();
 
 		if ( $type && $type !== $property_type ) {
 			throw new \Exception( esc_html( $prop_name ) . ' property has the wrong type' );
 		}
 
-		if ( in_array($prop_name, $url_args, true) ) {
+		if ( in_array( $prop_name, $url_args, true ) ) {
 			$this->$prop_name = validate_url( $prop_name, $value );
 			return;
 		}
@@ -848,12 +847,12 @@ class Video {
 			'loading'            => ( 'normal' === $this->mode ) ? 'lazy' : 'eager',
 		);
 
-		$this->iframe_attr = apply_filters( 'nextgenthemes/arve/iframe_attr', $this->iframe_attr, get_object_vars($this) );
+		$this->iframe_attr = apply_filters( 'nextgenthemes/arve/iframe_attr', $this->iframe_attr, get_object_vars( $this ) );
 	}
 
 	private function build_iframe_tag(): string {
 
-		if ( in_array($this->mode, [ 'lightbox', 'link-lightbox' ], true) ) {
+		if ( in_array( $this->mode, [ 'lightbox', 'link-lightbox' ], true ) ) {
 			return '';
 		}
 
@@ -979,7 +978,7 @@ class Video {
 			$html .= sprintf(
 				'<pre style="%s">$a: %s</pre>',
 				esc_attr( $pre_style ),
-				esc_html( var_export( array_filter( get_object_vars($this) ), true ) )
+				esc_html( var_export( array_filter( get_object_vars( $this ) ), true ) )
 			);
 		}
 
@@ -1054,7 +1053,7 @@ class Video {
 			}
 		}
 
-		return '<script type="application/ld+json">' . wp_json_encode($payload) . '</script>';
+		return '<script type="application/ld+json">' . wp_json_encode( $payload ) . '</script>';
 	}
 
 	/**
@@ -1062,7 +1061,7 @@ class Video {
 	 */
 	private function build_tag( array $tag ): string {
 
-		$tag = apply_filters( "nextgenthemes/arve/{$tag['name']}", $tag, get_object_vars($this) );
+		$tag = apply_filters( "nextgenthemes/arve/{$tag['name']}", $tag, get_object_vars( $this ) );
 
 		if ( empty( $tag['tag'] ) ) {
 
@@ -1101,7 +1100,7 @@ class Video {
 			}
 		}
 
-		return apply_filters( "nextgenthemes/arve/{$tag['name']}_html", $html, get_object_vars($this) );
+		return apply_filters( "nextgenthemes/arve/{$tag['name']}_html", $html, get_object_vars( $this ) );
 	}
 
 	private function promote_link(): string {
@@ -1128,7 +1127,7 @@ class Video {
 			$class     .= ' arve-embed--has-aspect-ratio';
 			$ratio_span = sprintf( '<span class="arve-ar" style="padding-top:%F%%"></span>', aspect_ratio_to_percentage( $this->aspect_ratio ) );
 
-			if ( ! in_array($this->aspect_ratio, array( '16:9', '375:211' ), true) ) {
+			if ( ! in_array( $this->aspect_ratio, array( '16:9', '375:211' ), true ) ) {
 				$ar    = str_replace( ':', ' / ', $this->aspect_ratio );
 				$style = sprintf( 'aspect-ratio: %s', $ar );
 			}
