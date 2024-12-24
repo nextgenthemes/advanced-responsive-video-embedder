@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Nextgenthemes\WP;
 
 /**
- * This function returns the block wrapper attributes as a string, it ignores null and false values to align the functionality with nextgentheme's `attr` function. And is escapes the URL values with `esc_url`.
+ * This function returns the block wrapper attributes as a string, it ignores null and false values to align the functionality with Nextgentheme's `attr` function. And is escapes the URL values with `esc_url`.
  *
  * @param array <string, string> $attr The array of attributes.
  * @return string The block wrapper attributes as a string.
@@ -60,6 +60,27 @@ function attr( array $attr = array() ): string {
 }
 
 /**
+ * Move certain keys to the start of an associative array.
+ *
+ * @param array<string, mixed> $org_array The original array.
+ * @param array<string>        $keys      The keys to move to the start.
+ *
+ * @return array<string, mixed> The modified array.
+ */
+function move_keys_to_start( array $org_array, array $keys ): array {
+	$new_array = [];
+
+	foreach ( $keys as $key ) {
+		if ( array_key_exists( $key, $org_array ) ) {
+			$new_array[ $key ] = $org_array[ $key ];
+			unset( $org_array[ $key ] );
+		}
+	}
+
+	return $new_array + $org_array;
+}
+
+/**
  * This is to prevent constant() throwing as Error in PHP 8, E_WARNING in PHP < 8
  *
  * @return mixed
@@ -96,9 +117,9 @@ function array_map_key( string $callback, array $arr ): array {
 	return array_combine(
 		array_map(
 			function ( $key ) use ( $callback ) {
-				return call_user_func($callback, $key);
+				return call_user_func( $callback, $key );
 			},
-			array_keys($arr)
+			array_keys( $arr )
 		),
 		$arr
 	);
