@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\WP;
 
 /**
@@ -17,7 +20,7 @@ function get_attribute_from_html_tag( array $query, string $attribute, string $h
 
 		$attr_value = $wphtml->get_attribute( $attribute );
 
-		if ( is_string( $attr_value ) && ! empty( $attr_value) ) {
+		if ( is_string( $attr_value ) && ! empty( $attr_value ) ) {
 			return $attr_value;
 		}
 	}
@@ -102,8 +105,8 @@ function camel_case( string $str, string $separator = '-', bool $capitalize_firs
  */
 function remove_suffix( string $haystack, string $needle ): string {
 
-	if ( str_ends_with($haystack, $needle) ) {
-		return substr($haystack, 0, strlen($haystack) - strlen($needle));
+	if ( str_ends_with( $haystack, $needle ) ) {
+		return substr( $haystack, 0, strlen( $haystack ) - strlen( $needle ) );
 	}
 
 	return $haystack;
@@ -140,7 +143,7 @@ function valid_url( string $url ): ?string {
  */
 function get_file_extension( string $url ): string {
 	// Return the file extension or an empty string if there is none
-	return pathinfo( (string) parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION);
+	return pathinfo( (string) parse_url( $url, PHP_URL_PATH ), PATHINFO_EXTENSION );
 }
 
 /**
@@ -151,7 +154,7 @@ function get_file_extension( string $url ): string {
  * @return string The modified filename with the new extension.
  */
 function replace_extension( string $filename, string $new_extension ): string {
-	$info = pathinfo( $filename,  );
+	$info = pathinfo( $filename );
 	$dir  = $info['dirname'] ? $info['dirname'] . DIRECTORY_SEPARATOR : '';
 
 	return $dir . $info['filename'] . '.' . $new_extension;
