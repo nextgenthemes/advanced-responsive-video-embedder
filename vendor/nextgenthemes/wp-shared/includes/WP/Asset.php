@@ -1,7 +1,8 @@
-<?php declare(strict_types=1);
-namespace Nextgenthemes\WP;
+<?php
 
-use Exception;
+declare(strict_types = 1);
+
+namespace Nextgenthemes\WP;
 
 class Asset {
 
@@ -63,7 +64,7 @@ class Asset {
 	public function __construct( array $args ) {
 
 		if ( empty( $args['src'] ) ) {
-			wp_trigger_error(__METHOD__, 'empty src is not supported yet');
+			wp_trigger_error( __METHOD__, 'empty src is not supported yet' );
 			return;
 		}
 
@@ -74,24 +75,24 @@ class Asset {
 				return;
 			}
 
-			switch ($arg_name) {
+			switch ( $arg_name ) {
 				case 'ver':
-					if ( ! $this->validate_ver($value) ) {
+					if ( ! $this->validate_ver( $value ) ) {
 						return;
 					}
 					break;
 				case 'inline_script_before':
 				case 'inline_script_after':
-					if ( ! $this->validate_inline_script($value) ) {
+					if ( ! $this->validate_inline_script( $value ) ) {
 						return;
 					}
 					break;
 				default:
-					$property_type = ( new \ReflectionProperty(__CLASS__, $arg_name) )->getType()->getName();
+					$property_type = ( new \ReflectionProperty( __CLASS__, $arg_name ) )->getType()->getName();
 					$property_type = str_replace( 'bool', 'boolean', $property_type );
 
-					if ( $property_type !== gettype($value) ) {
-						wp_trigger_error(__METHOD__, "trying to set property <code>$arg_name</code>, with wrong type");
+					if ( $property_type !== gettype( $value ) ) {
+						wp_trigger_error( __METHOD__, "trying to set property <code>$arg_name</code>, with wrong type" );
 						return;
 					}
 					break;
@@ -175,7 +176,7 @@ class Asset {
 			if ( $this->inline_script_before ) {
 				wp_add_inline_script(
 					$this->handle,
-					static::inline_script($this->inline_script_before, $this->handle, 'before'),
+					static::inline_script( $this->inline_script_before, $this->handle, 'before' ),
 					'before'
 				);
 			}
@@ -183,7 +184,7 @@ class Asset {
 			if ( $this->inline_script_after ) {
 				wp_add_inline_script(
 					$this->handle,
-					static::inline_script($this->inline_script_after, $this->handle, 'after'),
+					static::inline_script( $this->inline_script_after, $this->handle, 'after' ),
 					'after'
 				);
 			}
@@ -254,9 +255,9 @@ class Asset {
 	 */
 	public static function inline_script( $script, string $handle, string $position ): string {
 
-		if ( ! is_string($script) ) {
+		if ( ! is_string( $script ) ) {
 			// dash-ed-string to CamelCaseString
-			$js_var_name = str_replace('-', '', ucwords("{$handle}-js-{$position}", '-'));
+			$js_var_name = str_replace( '-', '', ucwords( "{$handle}-js-{$position}", '-' ) );
 
 			return "var $js_var_name = " . \wp_json_encode( $script ) . ';';
 		}
@@ -277,4 +278,3 @@ class Asset {
 		return true;
 	}
 }
-

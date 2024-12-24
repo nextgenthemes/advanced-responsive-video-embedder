@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\WP\Admin;
 
 /**
@@ -76,7 +79,6 @@ if ( 'always' ) {
 			}
 
 			return self::$instance;
-
 		}
 
 		/**
@@ -114,7 +116,6 @@ if ( 'always' ) {
 
 			add_action( 'admin_notices', array( self::$instance, 'display' ) );
 			add_action( 'wp_ajax_dnh_dismiss_notice', array( self::$instance, 'dismiss_notice_ajax' ) );
-
 		}
 
 		/**
@@ -129,7 +130,6 @@ if ( 'always' ) {
 			}
 
 			return true;
-
 		}
 
 		/**
@@ -144,7 +144,6 @@ if ( 'always' ) {
 			}
 
 			return true;
-
 		}
 
 		/**
@@ -187,7 +186,6 @@ if ( 'always' ) {
 				);
 
 			}
-
 		}
 
 		/**
@@ -221,7 +219,6 @@ if ( 'always' ) {
 		 * Get available notice types
 		 *
 		 * @since 1.0
-		 * @return array
 		 */
 		public function get_types(): array {
 
@@ -236,14 +233,12 @@ if ( 'always' ) {
 			);
 
 			return apply_filters( 'dnh_notice_types', $types );
-
 		}
 
 		/**
 		 * Get the default arguments for a notice
 		 *
 		 * @since 1.0
-		 * @return array
 		 */
 		private function default_args(): array {
 
@@ -255,7 +250,6 @@ if ( 'always' ) {
 			);
 
 			return apply_filters( 'dnh_default_args', $args );
-
 		}
 
 		/**
@@ -304,7 +298,6 @@ if ( 'always' ) {
 			self::$instance->notices[ $id ] = $notice;
 
 			return true;
-
 		}
 
 		/**
@@ -353,7 +346,6 @@ if ( 'always' ) {
 			}
 
 			return 'user' === $notice['scope'] ? self::$instance->dismiss_user( $id ) : self::$instance->dismiss_global( $id );
-
 		}
 
 		/**
@@ -376,7 +368,6 @@ if ( 'always' ) {
 			array_push( $dismissed, $id );
 
 			return update_user_meta( get_current_user_id(), 'dnh_dismissed_notices', $dismissed );
-
 		}
 
 		/**
@@ -398,7 +389,6 @@ if ( 'always' ) {
 			array_push( $dismissed, $id );
 
 			return update_option( 'dnh_dismissed_notices', $dismissed );
-
 		}
 
 		/**
@@ -419,7 +409,6 @@ if ( 'always' ) {
 			}
 
 			return 'user' === $notice['scope'] ? self::$instance->restore_user( $id ) : self::$instance->restore_global( $id );
-
 		}
 
 		/**
@@ -451,7 +440,6 @@ if ( 'always' ) {
 			unset( $dismissed[ $key ] );
 
 			return update_user_meta( get_current_user_id(), 'dnh_dismissed_notices', $dismissed );
-
 		}
 
 		/**
@@ -483,7 +471,6 @@ if ( 'always' ) {
 			unset( $dismissed[ $key ] );
 
 			return update_option( 'dnh_dismissed_notices', $dismissed );
-
 		}
 
 		/**
@@ -492,7 +479,6 @@ if ( 'always' ) {
 		 * This includes notices dismissed globally or per user.
 		 *
 		 * @since 1.0
-		 * @return array
 		 */
 		public function dismissed_notices(): array {
 
@@ -500,14 +486,12 @@ if ( 'always' ) {
 			$global = self::$instance->dismissed_global();
 
 			return array_merge( $user, $global );
-
 		}
 
 		/**
 		 * Get user dismissed notices
 		 *
 		 * @since 1.0
-		 * @return array
 		 */
 		private function dismissed_user(): array {
 
@@ -518,14 +502,12 @@ if ( 'always' ) {
 			}
 
 			return $dismissed;
-
 		}
 
 		/**
 		 * Get globally dismissed notices
 		 *
 		 * @since 1.0
-		 * @return array
 		 */
 		private function dismissed_global(): array {
 			return get_option( 'dnh_dismissed_notices', array() );
@@ -548,7 +530,6 @@ if ( 'always' ) {
 			}
 
 			return true;
-
 		}
 
 		/**
@@ -579,9 +560,7 @@ if ( 'always' ) {
 			}
 
 			return self::$instance->notices[ $id ];
-
 		}
-
 	}
 
 }

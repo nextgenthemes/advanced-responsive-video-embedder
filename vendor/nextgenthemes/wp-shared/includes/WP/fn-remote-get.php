@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\WP;
 
 /**
@@ -194,12 +197,12 @@ function shorten_transient_name( string $transient_name ): string {
 
 	$transient_name = str_replace( 'https://', '', $transient_name );
 
-	if ( strlen($transient_name) > 172 ) {
+	if ( strlen( $transient_name ) > 172 ) {
 		$transient_name = preg_replace( '/[^a-zA-Z0-9_]/', '', $transient_name );
 	}
 
-	if ( strlen($transient_name) > 172 ) {
-		$transient_name = substr($transient_name, 0, 107) . '_' . hash( 'sha256', $transient_name ); // 107 + 1 + 64
+	if ( strlen( $transient_name ) > 172 ) {
+		$transient_name = substr( $transient_name, 0, 107 ) . '_' . hash( 'sha256', $transient_name ); // 107 + 1 + 64
 	}
 
 	return $transient_name;

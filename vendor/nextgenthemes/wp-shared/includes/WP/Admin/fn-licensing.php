@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\WP\Admin;
 
 use Nextgenthemes\WP\Admin\EDD\PluginUpdater;
