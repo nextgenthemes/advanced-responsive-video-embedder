@@ -7,15 +7,22 @@ namespace Nextgenthemes\ARVE\Admin;
 use Nextgenthemes\ARVE;
 use Nextgenthemes\WP;
 
+const DIALOG_NAMESPACE = 'nextgenthemes_arve_dialog';
+
 function add_media_button(): void {
 
-	foreach ( ARVE\settings( 'shortcode' ) as $k => $v ) {
-		$options[ $k ] = '';
+	foreach ( ARVE\settings( 'shortcode' ) as $k => $setting ) {
+
+		if ( 'boolean' === $setting->type && ! $setting->option ) {
+			$options[ $k ] = $setting->default;
+		} else {
+			$options[ $k ] = '';
+		}
 	}
 
 	wp_enqueue_script_module( 'nextgenthemes-settings' );
 	wp_interactivity_config(
-		'nextgenthemes_arve_dialog',
+		DIALOG_NAMESPACE,
 		[
 			'nonce'          => wp_create_nonce( 'wp_rest' ),
 			'siteUrl'        => get_site_url(),
@@ -25,7 +32,7 @@ function add_media_button(): void {
 	);
 
 	wp_interactivity_state(
-		'nextgenthemes_arve_dialog',
+		DIALOG_NAMESPACE,
 		[
 			'options'    => $options,
 			'shortcode'  => '[arve url="" /]',
@@ -41,7 +48,7 @@ function add_media_button(): void {
 		title="<?php esc_attr_e( 'Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ); ?>"
 		class="arve-btn button add_media"
 		type="button"
-		data-wp-interactive="nextgenthemes_arve_dialog"
+		data-wp-interactive="<?= esc_attr( DIALOG_NAMESPACE ); ?>"
 		data-wp-on--click="actions.openShortcodeDialog"
 	>
 	<span class="wp-media-buttons-icon arve-icon"></span> 
@@ -60,7 +67,7 @@ function create_shortcode_dialog(): void {
 	?>
 	<dialog 
 		class="arve-sc-dialog"
-		data-wp-interactive="nextgenthemes_arve_dialog"
+		data-wp-interactive="<?= esc_attr( DIALOG_NAMESPACE ); ?>"
 		data-wp-watch="callbacks.updateShortcode"
 	>
 		<div class="arve-sc-dialog__wrap">
