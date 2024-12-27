@@ -1,6 +1,7 @@
 import { store, getContext, getConfig, getElement } from '@wordpress/interactivity';
 const domParser = new DOMParser();
 const _ = window._;
+const { log } = console;
 
 const namespace = document.querySelector( '[data-wp-interactive^="nextgenthemes"]' )?.dataset
 	?.wpInteractive;
@@ -38,14 +39,14 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			const context = getContext();
 			return state.options[ context.option_key ].length === 32;
 		},
-		get isActiveSection() {
+		get isActiveTab() {
 			const context = getContext();
 
 			if ( ! context.activeTabs ) {
 				return true; // shortcode dialog has no sections
 			}
 
-			return true === context?.activeTabs[ context.section ];
+			return true === context?.activeTabs[ context.tab ];
 		},
 	},
 	actions: {
@@ -71,7 +72,7 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			for ( const key in context.activeTabs ) {
 				context.activeTabs[ key ] = false;
 			}
-			context.activeTabs[ context.section ] = true;
+			context.activeTabs[ context.tab ] = true;
 		},
 		inputChange: ( event ) => {
 			const context = getContext();
@@ -188,7 +189,7 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 		resetOptionsSection() {
 			const config = getConfig();
 			const context = getContext();
-			const sectionToReset = context.section;
+			const sectionToReset = context.tab;
 
 			Object.entries( config.defaultOptions ).forEach( ( [ section, options ] ) => {
 				if ( 'all' === sectionToReset ) {
@@ -213,7 +214,11 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			let out = '';
 
 			for ( const [ key, value ] of Object.entries( state.options ) ) {
-				if ( true === value ) {
+				if ( 'credentialless' === key ) {
+					if ( false === value ) {
+						out += `${ key }="false" `;
+					}
+				} else if ( true === value ) {
 					out += `${ key }="true" `;
 				} else if ( value.length ) {
 					out += `${ key }="${ value }" `;
