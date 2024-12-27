@@ -112,15 +112,16 @@ function str_to_array( string $str, string $delimiter = ',' ): array {
 	);
 }
 
+/**
+ * Applies a callback function to each key of an array, returning a new array
+ * with the modified keys and original values.
+ *
+ * @param string   $callback The callback function to apply to each key.
+ * @param array    $arr      The input array.
+ *
+ * @return array   The resulting array with modified keys.
+ */
 function array_map_key( string $callback, array $arr ): array {
-
-	return array_combine(
-		array_map(
-			function ( $key ) use ( $callback ) {
-				return call_user_func( $callback, $key );
-			},
-			array_keys( $arr )
-		),
-		$arr
-	);
+	$keys = array_map( $callback, array_keys( $arr ) );
+	return array_combine( $keys, $arr );
 }
