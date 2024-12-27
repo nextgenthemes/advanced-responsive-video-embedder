@@ -83,8 +83,7 @@ function remove_url_query( string $url ): string {
 function camel_case( string $str, string $separator = '-', bool $capitalize_first_character = false ): string {
 
 	if ( strlen( $separator ) !== 1 ) {
-		wp_trigger_error( __FUNCTION__, '$separator must be a single character.' );
-		return $str;
+		throw new \InvalidArgumentException( 'Separator must be a single character.' );
 	}
 
 	$str = str_replace( $separator, '', ucwords( $str, $separator ) );
