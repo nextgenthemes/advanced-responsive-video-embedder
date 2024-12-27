@@ -95,6 +95,21 @@ function camel_case( string $str, string $separator = '-', bool $capitalize_firs
 	return $str;
 }
 
+function kses_https_links( string $html ): string {
+
+	return wp_kses(
+		$html,
+		array(
+			'a' => array(
+				'href'   => true,
+				'target' => true,
+				'class'  => true,
+			),
+		),
+		array( 'https' )
+	);
+}
+
 /**
  * Removes the specified suffix from the given string.
  *
