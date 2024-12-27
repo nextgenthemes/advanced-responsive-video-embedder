@@ -27,7 +27,7 @@ function settings_content(): void {
 						'title'  => true,
 					),
 				),
-				array( 'http', 'https' )
+				array( 'https' )
 			);
 			?>
 		</p>
@@ -95,7 +95,7 @@ function pro_message( string $addon_name, string $slug ): string {
 			'strong' => array(),
 			'a'      => array( 'href' => true ),
 		),
-		array( 'http', 'https' )
+		array( 'https' )
 	);
 }
 
@@ -106,7 +106,7 @@ function get_addon_link( string $addon_name, string $slug ): string {
 
 function settings_sidebar(): void {
 
-	if ( ! current_user_can('install_plugins') ) {
+	if ( ! current_user_can( 'install_plugins' ) ) {
 		echo '<div class="ngt-sidebar-box">';
 		esc_html_e( 'Note that you are logged in with a user who that can\'t install plugins, ask someone who can if you are interested in ARVE Extensions.', 'advanced-responsive-video-embedder' );
 		echo '</div>';
@@ -132,7 +132,7 @@ function settings_sidebar(): void {
 function print_settings_box_html( string $file ): void {
 	echo '<div class="ngt-sidebar-box">';
 	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-	echo wp_kses( file_get_contents( __DIR__ . $file, false ), ARVE\ALLOWED_HTML );
+	echo wp_kses( file_get_contents( __DIR__ . $file, false ), ARVE\ALLOWED_HTML, array( 'https' ) );
 	echo '</div>';
 }
 

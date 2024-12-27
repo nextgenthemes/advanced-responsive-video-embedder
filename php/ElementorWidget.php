@@ -107,19 +107,17 @@ class ElementorWidget extends \Elementor\Widget_Base {
 			]
 		);
 
-		foreach ( settings( 'gutenberg_block' ) as $key => $s ) {
+		foreach ( settings( 'gutenberg_block' )->get_all() as $key => $s ) {
 
 			$control_args = array(
-				'label' => $s['label'],
+				'label' => $s->label,
 			);
 
-			if ( ! empty( $s['placeholder'] ) ) {
-				$control_args['placeholder'] = $s['placeholder'];
+			if ( $s->placeholder ) {
+				$control_args['placeholder'] = $s->placeholder;
 			}
 
-			$control_args['placeholder'] = $s['placeholder'] ?? null;
-
-			switch ( $s['type'] ) {
+			switch ( $s->type ) {
 				case 'string':
 					$control_args['type']       = \Elementor\Controls_Manager::TEXT;
 					$control_args['input_type'] = 'text';
@@ -129,7 +127,7 @@ class ElementorWidget extends \Elementor\Widget_Base {
 					break;
 				case 'select':
 					$control_args['type']    = \Elementor\Controls_Manager::SELECT;
-					$control_args['options'] = $s['options'];
+					$control_args['options'] = $s->options;
 					break;
 				case 'integer':
 					$control_args['type'] = \Elementor\Controls_Manager::NUMBER;
@@ -185,7 +183,7 @@ class ElementorWidget extends \Elementor\Widget_Base {
 
 		foreach ( $settings as $key => $value ) {
 
-			if ( ! array_key_exists( $key, settings( 'gutenberg_block' ) ) ) {
+			if ( ! array_key_exists( $key, settings( 'gutenberg_block' )->get_all() ) ) {
 				unset( $settings[ $key ] );
 			}
 		}

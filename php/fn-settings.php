@@ -4,8 +4,10 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
+use Nextgenthemes\WP\SettingsData;
+
 use function Nextgenthemes\WP\nextgenthemes_settings_instance;
-use function Nextgenthemes\WP\missing_settings_defaults;
+use function Nextgenthemes\WP\validate_settings;
 
 function options(): array {
 	return Base::get_instance()->get_settings_instance()->get_options();
@@ -13,10 +15,6 @@ function options(): array {
 
 function default_options(): array {
 	return Base::get_instance()->get_settings_instance()->get_options_defaults();
-}
-
-function all_settings(): array {
-	return Base::get_instance()->get_settings_data();
 }
 
 function settings_sections(): array {
@@ -29,8 +27,41 @@ function settings_sections(): array {
 		'random_video'  => __( 'Random Video', 'advanced-responsive-video-embedder' ),
 		'urlparams'     => __( 'URL Parameters', 'advanced-responsive-video-embedder' ),
 		'html5'         => __( 'Video Files', 'advanced-responsive-video-embedder' ),
-		'debug'         => __( 'Debug Info', 'advanced-responsive-video-embedder' ),
+		'debug'         => __( 'Debug', 'advanced-responsive-video-embedder' ),
 		#'videojs'      => __( 'Video.js', 'advanced-responsive-video-embedder' ),
+	);
+}
+
+function settings_tabs(): array {
+
+	return array(
+		'main' => [
+			'title' => __( 'Main', 'advanced-responsive-video-embedder' ),
+		],
+		'pro' => [
+			'title'        => __( 'Pro', 'advanced-responsive-video-embedder' ),
+			'premium_link' => sprintf( '<a hidden href="%s">%s</a>', 'https://nextgenthemes.com/plugins/arve-pro/', __( 'Get Lazyload, Lightbox and more', 'advanced-responsive-video-embedder' ) ),
+		],
+		'privacy' => [
+			'title'   => __( 'Extra Privacy', 'advanced-responsive-video-embedder' ),
+		],
+		'sticky_videos' => [
+			'title'   => __( 'Sticky Videos', 'advanced-responsive-video-embedder' ),
+		],
+		'random_video' => [
+			'title'        => __( 'Random Video', 'advanced-responsive-video-embedder' ),
+			'premium'      => true,
+			'reset_button' => false,
+		],
+		'urlparams' => [
+			'title' => __( 'URL Parameters', 'advanced-responsive-video-embedder' ),
+		],
+		'html5' => [
+			'title' => __( 'Video Files', 'advanced-responsive-video-embedder' ),
+		],
+		'debug' => [
+			'title' => __( 'Debug', 'advanced-responsive-video-embedder' ),
+		],
 	);
 }
 
@@ -42,40 +73,32 @@ function init_nextgenthemes_settings(): void {
 	);
 }
 
-function settings( string $context = 'settings_page', array $settings = array() ): array {
+function settings( string $context = 'settings_page' ): SettingsData {
 
-	if ( empty( $settings ) ) {
-		$settings = all_settings();
-	}
+	$settings = settings_data();
 
 	if ( in_array( $context, array( 'gutenberg_block', 'shortcode' ), true ) ) {
 
-		foreach ( $settings as $k => $v ) {
-			if ( ! $v['shortcode'] ) {
-				unset( $settings[ $k ] );
+		foreach ( $settings->get_all() as $k => $s ) {
+			if ( ! $s->shortcode ) {
+				$settings->remove( $k );
 				continue;
 			}
 
-			if ( 'boolean' === $v['type'] && $v['option'] ) {
-				$settings[ $k ]['ui_element']      = 'select';
-				$settings[ $k ]['ui_element_type'] = 'select';
-				$settings[ $k ]['options']         = array(
-					''      => __( 'Default', 'advanced-responsive-video-embedder' ),
-					'true'  => __( 'True', 'advanced-responsive-video-embedder' ),
-					'false' => __( 'False', 'advanced-responsive-video-embedder' ),
-				);
+			if ( 'boolean' === $s->type && $s->option ) {
+				$s->bool_option_to_select();
 			}
 		}
 	}
 
 	switch ( $context ) {
 		case 'gutenberg_block':
-			unset( $settings['maxwidth'] );
+			$settings->remove( 'maxwidth' );
 			break;
 		case 'settings_page':
-			foreach ( $settings as $k => $v ) {
-				if ( ! $v['option'] ) {
-					unset( $settings[ $k ] );
+			foreach ( $settings->get_all() as $k => $s ) {
+				if ( ! $s->option ) {
+					$settings->remove( $k );
 				}
 			}
 			break;
@@ -86,13 +109,13 @@ function settings( string $context = 'settings_page', array $settings = array() 
 
 function get_arg_type( string $arg_name ): ?string {
 
-	if ( empty( all_settings()[ $arg_name ] ) ) {
+	$setting = settings_data()->get( $arg_name );
+
+	if ( ! $setting ) {
 		return null;
 	}
 
-	$s = all_settings()[ $arg_name ];
-
-	switch ( $s['type'] ) {
+	switch ( $setting->type ) {
 		case 'string':
 			return 'string';
 		case 'boolean':
@@ -102,7 +125,7 @@ function get_arg_type( string $arg_name ): ?string {
 	}
 }
 
-function settings_data(): array {
+function settings_data(): SettingsData {
 
 	$properties = get_host_properties();
 
@@ -144,7 +167,7 @@ function settings_data(): array {
 			'shortcode'           => true,
 		),
 		'loop' => array(
-			'default'     => 'n',
+			'default'     => false,
 			'shortcode'   => true,
 			'option'      => false,
 			'label'       => __( 'Loop?', 'advanced-responsive-video-embedder' ),
@@ -152,7 +175,7 @@ function settings_data(): array {
 			'description' => __( 'Note not all video hosts provide this feature.', 'advanced-responsive-video-embedder' ),
 		),
 		'muted' => array(
-			'default'     => 'n',
+			'default'     => false,
 			'shortcode'   => true,
 			'option'      => false,
 			'label'       => __( 'Mute?', 'advanced-responsive-video-embedder' ),
@@ -261,9 +284,7 @@ function settings_data(): array {
 			'shortcode'           => true,
 			'option'              => false,
 			'label'               => __( 'Thumbnail', 'advanced-responsive-video-embedder' ),
-			'libraryType'         => array( 'image' ),
-			'addButton'           => __( 'Select Image', 'advanced-responsive-video-embedder' ),
-			'frameTitle'          => __( 'Select Image', 'advanced-responsive-video-embedder' ),
+
 			'placeholder'         => '1234, https://* (Pro automatically handles this)',
 			'description'         => sprintf(
 				// Translators: 1 Link, 2 Provider list
@@ -402,7 +423,7 @@ function settings_data(): array {
 				__( 'In pixels. If set to 0 (default) the $content_width value from your theme is used if present, otherwise the default is %s.', 'advanced-responsive-video-embedder' ),
 				DEFAULT_MAXWIDTH
 			),
-			'placeholder' => 450,
+			'placeholder' => '450',
 			'shortcode'   => true,
 			'option'      => true,
 
@@ -410,7 +431,7 @@ function settings_data(): array {
 		'lightbox_maxwidth' => array(
 			'type'        => 'integer',
 			'default'     => 1174,
-			'placeholder' => 1174,
+			'placeholder' => '1174',
 			'tab'         => 'pro',
 			'label'       => __( 'Lightbox Maximal Width', 'advanced-responsive-video-embedder' ),
 			'description' => __( 'default 1174', 'advanced-responsive-video-embedder' ),
@@ -508,7 +529,6 @@ function settings_data(): array {
 		),
 		'parameters' => array(
 			'default'     => '',
-			'html5'       => false,
 			'option'      => false,
 			'shortcode'   => true,
 			'label'       => __( 'Parameters', 'advanced-responsive-video-embedder' ),
@@ -784,13 +804,18 @@ function settings_data(): array {
 			'shortcode'   => false,
 			'description' => __( 'Comma separated list of lowercase hosts that will set <code>referrerpolicy="origin-when-cross-origin"</code> instead of the default <code>referrerpolicy="no-referer"</code> on <code>iframe</code>. This will make video less private for the visitor as the host will be able to see on what website they are watching on but its needed for youtube, vimeo, rumble and possible others for domain restricted videos.', 'advanced-responsive-video-embedder' ),
 		),
-		'never_show_src_mismatch_errors' => array(
+		'show_src_mismatch_errors' => array(
+			'label'       => __( 'Show src mismatch errors', 'advanced-responsive-video-embedder' ),
 			'tab'         => 'debug',
-			'default'     => false,
-			'shortcode'   => false,
+			'type'        => 'string',
+			'default'     => 'dev-mode',
 			'option'      => true,
-			'label'       => __( 'Never show src mismatch errors', 'advanced-responsive-video-embedder' ),
-			'type'        => 'boolean',
+			'shortcode'   => false,
+			'options'     => array(
+				'always'   => __( 'Always', 'advanced-responsive-video-embedder' ),
+				'dev-mode' => __( 'Dev Modes Modes Only', 'advanced-responsive-video-embedder' ),
+				'never'    => __( 'Never', 'advanced-responsive-video-embedder' ),
+			),
 		),
 	);
 
@@ -809,6 +834,8 @@ function settings_data(): array {
 			);
 		}
 	}
+
+	$settings = new SettingsData( $settings, true );
 
 	return $settings;
 }

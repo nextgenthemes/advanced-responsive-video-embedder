@@ -28,7 +28,7 @@ function register_assets(): void {
 
 	if ( function_exists( 'register_block_type' ) ) :
 
-		$settings = settings( 'gutenberg_block' );
+		$settings = settings( 'gutenberg_block' )->to_array();
 		$options  = options();
 
 		foreach ( $settings as $key => $v ) {

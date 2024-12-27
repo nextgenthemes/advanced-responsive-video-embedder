@@ -4,14 +4,15 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE\Admin;
 
-use Nextgenthemes\ARVE;
-use Nextgenthemes\WP;
+use function Nextgenthemes\ARVE\settings;
+use function Nextgenthemes\ARVE\settings_tabs;
+use function Nextgenthemes\WP\Admin\print_settings_blocks;
 
 const DIALOG_NAMESPACE = 'nextgenthemes_arve_dialog';
 
 function add_media_button(): void {
 
-	foreach ( ARVE\settings( 'shortcode' ) as $k => $setting ) {
+	foreach ( settings( 'shortcode' )->get_all() as $k => $setting ) {
 
 		if ( 'boolean' === $setting->type && ! $setting->option ) {
 			$options[ $k ] = $setting->default;
@@ -94,11 +95,9 @@ function create_shortcode_dialog(): void {
 
 			<div class="arve-sc-dialog__body">
 				<?php
-				\Nextgenthemes\WP\Admin\print_settings_blocks(
-					ARVE\settings( 'shortcode' ),
-					ARVE\settings_sections(),
-					ARVE\PREMIUM_SECTIONS,
-					ARVE\PREMIUM_URL_PREFIX,
+				print_settings_blocks(
+					settings( 'shortcode' ),
+					settings_tabs(),
 					'shortcode-dialog'
 				);
 				?>

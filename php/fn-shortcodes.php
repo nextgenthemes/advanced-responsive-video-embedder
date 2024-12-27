@@ -73,7 +73,7 @@ function error( string $messages, string $code = '' ): string {
 	return wp_kses(
 		PHP_EOL . PHP_EOL . $error_html . PHP_EOL,
 		ALLOWED_HTML,
-		array( 'http', 'https' )
+		array( 'https' )
 	);
 }
 
@@ -100,7 +100,7 @@ function get_error_html(): string {
 
 		$html = error( $html );
 
-		arve_errors()->remove($code);
+		arve_errors()->remove( $code );
 	}
 
 	return $html;

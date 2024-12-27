@@ -21,6 +21,11 @@ function nextgenthemes_settings_instance( string $base_url, string $base_path ):
 				'sections'            => array(
 					'keys' => esc_html__( 'License Keys', 'advanced-responsive-video-embedder' ),
 				),
+				'tabs'                => array(
+					'keys' => array(
+						'title' => esc_html__( 'License Keys', 'advanced-responsive-video-embedder' ),
+					),
+				),
 				'menu_title'          => esc_html__( 'NextGenThemes', 'advanced-responsive-video-embedder' ),
 				'settings_page_title' => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
 				'base_url'            => $base_url,
@@ -34,7 +39,7 @@ function nextgenthemes_settings_instance( string $base_url, string $base_path ):
 	return $inst;
 }
 
-function nextgenthemes_settings(): array {
+function nextgenthemes_settings(): SettingsData {
 
 	$products = get_products();
 
@@ -54,7 +59,6 @@ function nextgenthemes_settings(): array {
 
 		$settings[ $p . '_status' ] = array(
 			'default' => '',
-			'option'  => true,
 			'tab'     => 'keys',
 			// translators: %s is Product name
 			'label'   => sprintf( esc_html__( '%s license Key Status', 'advanced-responsive-video-embedder' ), $value['name'] ),
@@ -63,96 +67,10 @@ function nextgenthemes_settings(): array {
 		);
 	}
 
-	$settings = missing_settings_defaults( $settings );
+	$settings = new SettingsData( $settings );
 
 	return $settings;
 }
-
-function missing_settings_defaults( array $settings ): array {
-
-	foreach ( $settings as $key => $value ) :
-
-		if ( empty( $settings[ $key ]['tab'] ) ) {
-			$settings[ $key ]['tab'] = 'main';
-		}
-
-		if ( 'string' === $value['type'] &&
-			! isset( $settings[ $key ]['placeholder'] )
-		) {
-			$settings[ $key ]['placeholder'] = $value['default'];
-		}
-
-		$sanitize_function = __NAMESPACE__ . '\sanitize_callback_' . $value['type'];
-
-		if ( ! function_exists( $sanitize_function ) ) {
-			wp_trigger_error( __FUNCTION__, 'Sanitize function for ' . $value['type'] . ' not found' );
-		} else {
-			$settings[ $key ]['sanitize_callback'] = $sanitize_function;
-		}
-
-		if ( ! empty( $settings[ $key ]['options'] ) ) {
-			$settings[ $key ]['ui_element'] = 'select';
-		} else {
-			$settings[ $key ]['ui_element']      = 'input';
-			$settings[ $key ]['ui_element_type'] = input_type( $value['type'] );
-		}
-
-	endforeach;
-
-	return $settings;
-}
-
-// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
-
-function input_type( string $type ): string {
-
-	switch ( $type ) {
-		case 'string':
-			return 'text';
-		case 'integer':
-			return 'number';
-		case 'boolean':
-			return 'checkbox';
-	}
-}
-
-/**
- * Sanitizes a value to a boolean.
- *
- * @param mixed $value The value to sanitize.
- * @param WP_REST_Request $request The request object.
- * @param string $param The parameter name.
- * @return int The sanitized boolean value.
- */
-function sanitize_callback_integer( $value, \WP_REST_Request $request, string $param ): int {
-	return (int) $value;
-}
-
-/**
- * Sanitizes a value to a boolean.
- *
- * @param mixed $value The value to sanitize.
- * @param WP_REST_Request $request The request object.
- * @param string $param The parameter name.
- * @return bool The sanitized boolean value.
- */
-function sanitize_callback_boolean( $value, \WP_REST_Request $request, string $param ): bool {
-	return (bool) $value;
-}
-
-/**
- * Sanitizes a value to a boolean.
- *
- * @param mixed $value The value to sanitize.
- * @param WP_REST_Request $request The request object.
- * @param string $param The parameter name.
- * @return string The sanitized boolean value.
- */
-function sanitize_callback_string( $value, \WP_REST_Request $request, string $param ): string {
-	return sanitize_text_field( $value );
-}
-
-// phpcs:enable
 
 function get_products(): array {
 
