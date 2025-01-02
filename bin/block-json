@@ -1,5 +1,8 @@
 #!/usr/bin/env php
 <?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\ARVE;
 
 require dirname( __DIR__ ) . '/vendor/nextgenthemes/wp-shared/includes/WP/SettingsData.php';
