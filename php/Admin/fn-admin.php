@@ -353,14 +353,14 @@ function add_action_links( array $links ): array {
 
 	if ( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
 
-		$extra_links['buy_pro_addon'] = sprintf(
+		$links['buy_pro_addon'] = sprintf(
 			'<a href="%s"><strong style="display: inline;">%s</strong></a>',
 			'https://nextgenthemes.com/plugins/arve-pro/',
 			__( 'Get Lazyload, Lightbox and more', 'advanced-responsive-video-embedder' )
 		);
 	}
 
-	return array_merge( $extra_links, $links );
+	return $links;
 }
 
 function admin_enqueue_styles(): void {
