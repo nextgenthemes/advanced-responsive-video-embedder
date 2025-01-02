@@ -185,7 +185,7 @@ function get_url_arg( string $url, string $arg ): ?string {
 
 	$query_string = parse_url( $url, PHP_URL_QUERY );
 
-	if ( empty( $query_string ) || ! is_string( $query_string ) ) {
+	if ( empty( $query_string ) ) {
 		return null;
 	}
 
