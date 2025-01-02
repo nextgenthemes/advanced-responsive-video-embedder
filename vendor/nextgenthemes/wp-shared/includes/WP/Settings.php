@@ -189,7 +189,7 @@ class Settings {
 				},
 				'callback'            => function ( \WP_REST_Request $request ): \WP_REST_Response {
 					$this->save_options( $request->get_params() );
-					return rest_ensure_response( __( 'Options saved', 'nextgenthemes' ) );
+					return rest_ensure_response( __( 'Options saved', 'advanced-responsive-video-embedder' ) );
 				},
 			)
 		);
