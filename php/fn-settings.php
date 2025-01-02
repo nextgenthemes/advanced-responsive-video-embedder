@@ -40,17 +40,35 @@ function settings_tabs(): array {
 		],
 		'pro' => [
 			'title'        => __( 'Pro', 'advanced-responsive-video-embedder' ),
-			'premium_link' => sprintf( '<a hidden href="%s">%s</a>', 'https://nextgenthemes.com/plugins/arve-pro/', __( 'Get Lazyload, Lightbox and more', 'advanced-responsive-video-embedder' ) ),
+			'premium_link' => sprintf(
+				'<a href="%s">%s</a>',
+				'https://nextgenthemes.com/plugins/arve-pro/',
+				__( 'Pro Addon', 'advanced-responsive-video-embedder' )
+			),
 		],
 		'privacy' => [
-			'title'   => __( 'Extra Privacy', 'advanced-responsive-video-embedder' ),
+			'title'        => __( 'Extra Privacy', 'advanced-responsive-video-embedder' ),
+			'premium_link' => sprintf(
+				'<a href="%s">%s</a>',
+				'https://nextgenthemes.com/plugins/arve-privacy/',
+				__( 'Privacy Addon', 'advanced-responsive-video-embedder' )
+			),
 		],
 		'sticky_videos' => [
-			'title'   => __( 'Sticky Videos', 'advanced-responsive-video-embedder' ),
+			'title'        => __( 'Sticky Videos', 'advanced-responsive-video-embedder' ),
+			'premium_link' => sprintf(
+				'<a href="%s">%s</a>',
+				'https://nextgenthemes.com/plugins/arve-sticky-videos/',
+				__( 'Sticky Videos Addon', 'advanced-responsive-video-embedder' )
+			),
 		],
 		'random_video' => [
 			'title'        => __( 'Random Video', 'advanced-responsive-video-embedder' ),
-			'premium'      => true,
+			'premium_link' => sprintf(
+				'<a href="%s">%s</a>',
+				'https://nextgenthemes.com/plugins/arve-random-video/',
+				__( 'Random Videos Addon', 'advanced-responsive-video-embedder' )
+			),
 			'reset_button' => false,
 		],
 		'urlparams' => [
