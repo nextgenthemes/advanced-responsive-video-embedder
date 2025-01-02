@@ -152,6 +152,8 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			} )
 				.then( ( response ) => {
 					if ( ! response.ok ) {
+						// eslint-disable-next-line no-console
+						console.log( response );
 						throw new Error( 'Network response was not ok' );
 					}
 					return response.json();

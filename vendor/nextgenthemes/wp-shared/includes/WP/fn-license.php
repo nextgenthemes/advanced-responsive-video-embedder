@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\WP;
 
 function check_product_keys(): void {
@@ -17,7 +20,7 @@ function check_product_keys(): void {
 				$value['name']
 			);
 
-			throw new \Exception( $msg );
+			throw new \Exception( esc_html( $msg ) );
 		}
 	endforeach;
 }
@@ -71,7 +74,7 @@ function activate_defined_key( string $file, string $theme_name = '' ): void {
 
 function api_action( int $item_id, string $license, string $edd_action = 'check_license', string $edd_store_url = 'https://nextgenthemes.com' ): string {
 
-	//return wp_json_encode( [ 'item_id' => $item_id, 'key' => $key, 'action' => $action ], JSON_PRETTY_PRINT ); 
+	//return wp_json_encode( [ 'item_id' => $item_id, 'key' => $key, 'action' => $action ], JSON_PRETTY_PRINT );
 
 	// Call the custom API.
 	$response = remote_get_json(
@@ -96,7 +99,7 @@ function api_action( int $item_id, string $license, string $edd_action = 'check_
 
 	if ( empty( $message ) ) {
 
-		if ( empty( $response->license ) ) {
+		if ( empty( $response['license'] ) ) {
 
 			$message = sprintf(
 				// Translators: Error message
@@ -104,25 +107,25 @@ function api_action( int $item_id, string $license, string $edd_action = 'check_
 				PHP_EOL . wp_json_encode( $response, JSON_PRETTY_PRINT )
 			);
 		} else {
-			$message = $response->license;
+			$message = $response['license'];
 		}
 	}
 
 	return $message;
 }
 
-function get_api_error_message( object $license_data ): string {
+function get_api_error_message( array $license_data ): string {
 
-	if ( false !== $license_data->success || empty( $license_data->error ) ) {
+	if ( false !== $license_data['success'] || empty( $license_data['error'] ) ) {
 		return '';
 	}
 
-	switch ( $license_data->error ) {
+	switch ( $license_data['error'] ) {
 		case 'expired':
 			$message = sprintf(
 				// Translators: Date
 				__( 'Your license key expired on %s.', 'advanced-responsive-video-embedder' ),
-				date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, time() ) )
+				date_i18n( get_option( 'date_format' ), strtotime( $license_data['expires'], time() ) )
 			);
 			break;
 
