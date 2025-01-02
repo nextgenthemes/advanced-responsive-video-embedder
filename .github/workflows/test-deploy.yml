@@ -110,7 +110,6 @@ jobs:
           extensions: mbstring, dom, zip, mysql, gd
           tools: phpunit-polyfills:1
           coverage: ${{ contains(github.event.head_commit.message, '[cov]') && 'xdebug' || 'none' }}
-          #coverage: none
 
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
