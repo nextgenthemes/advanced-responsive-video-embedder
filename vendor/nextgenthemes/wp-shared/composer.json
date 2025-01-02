@@ -4,8 +4,7 @@
     "license": "GPL-3.0",
     "autoload": {
         "files": [
-            "includes/WP/load-files.php",
-            "includes/WP/Admin/load-admin-files.php"
+            "includes/WP/init.php"
         ]
     },
     "authors": [
@@ -16,5 +15,5 @@
     "require": {
         "php": ">=7.4"
     },
-    "version": "2024.12.12.17.10.02"
+    "version": "2025.01.02.07.32.36"
 }

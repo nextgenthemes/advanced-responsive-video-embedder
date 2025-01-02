@@ -73,11 +73,11 @@
         },
         {
             "name": "nextgenthemes/wp-shared",
-            "version": "2024.12.12.17.10.02",
+            "version": "2025.01.02.07.32.36",
             "dist": {
                 "type": "path",
                 "url": "../../../../../../dev/composer-packages/wp-shared",
-                "reference": "71f99b6db93379668b4fa3f3f70c59fb49deb2e2"
+                "reference": "b4fc0680699b962a75ac3d4929cf88e028b08745"
             },
             "require": {
                 "php": ">=7.4"
@@ -85,8 +85,7 @@
             "type": "wp-package",
             "autoload": {
                 "files": [
-                    "includes/WP/load-files.php",
-                    "includes/WP/Admin/load-admin-files.php"
+                    "includes/WP/init.php"
                 ]
             },
             "license": [
