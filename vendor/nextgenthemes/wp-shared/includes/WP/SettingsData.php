@@ -27,8 +27,8 @@ class SettingsData {
 		unset( $this->settings[ $key ] );
 	}
 
-	public function get( string $key ): SettingValidator {
-		return $this->settings[ $key ];
+	public function get( string $key ): ?SettingValidator {
+		return $this->settings[ $key ] ?? null;
 	}
 
 	/**
