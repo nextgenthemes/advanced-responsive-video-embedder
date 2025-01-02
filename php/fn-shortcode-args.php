@@ -6,8 +6,6 @@ namespace Nextgenthemes\ARVE;
 
 use function Nextgenthemes\WP\remove_url_query;
 use function Nextgenthemes\WP\get_url_arg;
-use function Nextgenthemes\WP\valid_url;
-use function Nextgenthemes\WP\get_attribute_from_html_tag;
 
 function arg_maxwidth( int $maxwidth, string $provider, string $align ): int {
 
@@ -376,7 +374,7 @@ function iframesrc_urlargs( string $src, string $provider, string $mode, string 
 function shortcode_pairs(): array {
 
 	$options  = options();
-	$settings = settings( 'shortcode' );
+	$settings = settings( 'shortcode' )->get_all();
 
 	foreach ( $settings as $k => $setting ) {
 		if ( $setting->option ) {
@@ -404,7 +402,7 @@ function shortcode_pairs(): array {
 			'brightcove_embed'   => '',
 			'video_sources_html' => '',
 			'post_id'            => '',
-			'thumbnail_fallback' => '', # Pros
+			'thumbnail_fallback' => '', # Pro
 			'oembed_data'        => null,
 			'origin_data'        => array(),
 		)
