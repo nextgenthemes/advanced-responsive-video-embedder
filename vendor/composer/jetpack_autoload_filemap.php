@@ -7,7 +7,7 @@ $baseDir   = dirname($vendorDir);
 
 return array(
 	'47777597fbe681453e41ea4bf4ad9988' => array(
-		'version' => '2025.01.02.07.32.36',
+		'version' => '2025.01.02.08.08.04',
 		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/init.php'
 	),
 );
