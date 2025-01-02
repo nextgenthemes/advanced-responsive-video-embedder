@@ -151,3 +151,42 @@ function get_products(): array {
 
 	return $products;
 }
+
+/**
+ * Sanitizes a value to a boolean.
+ *
+ * @param mixed $value The value to sanitize.
+ * @param WP_REST_Request $request The request object.
+ * @param string $param The parameter name.
+ * @return int The sanitized boolean value.
+ */
+// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
+function sanitize_callback_integer( $value, \WP_REST_Request $request, string $param ): int {
+	return (int) $value;
+}
+
+/**
+ * Sanitizes a value to a boolean.
+ *
+ * @param mixed $value The value to sanitize.
+ * @param WP_REST_Request $request The request object.
+ * @param string $param The parameter name.
+ * @return bool The sanitized boolean value.
+ */
+// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
+function sanitize_callback_boolean( $value, \WP_REST_Request $request, string $param ): bool {
+	return (bool) $value;
+}
+
+/**
+ * Sanitizes a value to a boolean.
+ *
+ * @param mixed $value The value to sanitize.
+ * @param WP_REST_Request $request The request object.
+ * @param string $param The parameter name.
+ * @return string The sanitized boolean value.
+ */
+// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
+function sanitize_callback_string( $value, \WP_REST_Request $request, string $param ): string {
+	return sanitize_text_field( $value );
+}
