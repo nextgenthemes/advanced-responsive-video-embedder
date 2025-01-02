@@ -124,13 +124,9 @@ class SettingValidator {
 
 		switch ( $this->type ) {
 			case 'string':
-				$this->sanitize_callback = 'sanitize_text_field';
-				break;
 			case 'integer':
-				$this->sanitize_callback = 'absint';
-				break;
 			case 'boolean':
-				$this->sanitize_callback = 'boolval';
+				$this->sanitize_callback = __NAMESPACE__ . '\sanitize_callback_' . $this->type;
 				break;
 			default:
 				throw new \ErrorException( esc_html( 'Sanitize function for ' . $this->type . ' not implemented' ) );
@@ -148,10 +144,6 @@ class SettingValidator {
 	 * @throws \RuntimeException If called.
 	 */
 	public function __set( string $name, $value ): void {
-
-		if ( ! property_exists( $this, $name ) ) {
-			throw new \RuntimeException( esc_html( 'Property ' . $name . ' does not exist.' ) );
-		}
 
 		if ( ! property_exists( $this, $name ) ) {
 			throw new \RuntimeException( esc_html( 'Property ' . $name . ' does not exist.' ) );
