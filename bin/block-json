@@ -2,6 +2,8 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+require dirname( __DIR__ ) . '/vendor/nextgenthemes/wp-shared/includes/WP/SettingsData.php';
+require dirname( __DIR__ ) . '/vendor/nextgenthemes/wp-shared/includes/WP/SettingValidator.php';
 require dirname( __DIR__ ) . '/vendor/nextgenthemes/wp-shared/includes/WP/fn-settings.php';
 require dirname( __DIR__ ) . '/advanced-responsive-video-embedder.php';
 require dirname( __DIR__ ) . '/php/fn-misc.php';
@@ -13,7 +15,7 @@ function init(): void {
 
 	echo 'Updating block.json...' . PHP_EOL;
 
-	$settings = settings( 'gutenberg_block', settings_data() );
+	$settings = settings( 'gutenberg_block' )->get_all();
 
 	foreach ( $settings as $key => $v ) {
 
