@@ -41,10 +41,10 @@ function gcd( int $a, int $b ): int {
 
 function load_textdomain(): void {
 
-	\load_plugin_textdomain(
+	load_plugin_textdomain(
 		'advanced-responsive-video-embedder',
 		false,
-		dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
+		dirname( plugin_basename( __FILE__ ), 2 ) . '/languages/'
 	);
 }
 
