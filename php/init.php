@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
-add_action( 'plugins_loaded', __NAMESPACE__ . '\init_920' );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\init_920', 9 );
 
 function init_920(): void {
 
@@ -48,10 +48,10 @@ function init_public(): void {
 	add_action( 'init', __NAMESPACE__ . '\add_oembed_providers' );
 	add_action( 'init', __NAMESPACE__ . '\init_nextgenthemes_settings' );
 	add_action( 'init', __NAMESPACE__ . '\register_assets' );
+	add_action( 'init', __NAMESPACE__ . '\load_textdomain' );
 	add_filter( 'oembed_remote_get_args', __NAMESPACE__ . '\vimeo_referer', 10, 2 );
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\create_shortcodes', 999 );
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\create_url_handlers', 999 );
-	add_action( 'plugins_loaded', __NAMESPACE__ . '\load_textdomain' );
 	add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\action_wp_enqueue_scripts' );
 	add_filter( 'render_block_core/embed', __NAMESPACE__ . '\remove_embed_block_aspect_ratio' );
 	add_action( 'wp_video_shortcode_override', __NAMESPACE__ . '\wp_video_shortcode_override', 10, 4 );
@@ -98,7 +98,7 @@ function uninstall(): void {
 		$wpdb->query( "UPDATE {$wpdb->postmeta} SET meta_value = REGEXP_REPLACE( meta_value, '<template data-arve[^>]+></template>', '' )" );
 	} else {
 		delete_oembed_cache();
-		delete_option('arve_version'); // this will cause another cache clear on reinstall
+		delete_option( 'arve_version' ); // this will cause another cache clear on reinstall
 	}
 }
 
@@ -205,7 +205,7 @@ function delete_oembed_cache(): string {
 
 function stop_outdated_addons_from_executing(): void {
 
-	if ( defined('Nextgenthemes\ARVE\Pro\VERSION')
+	if ( defined( 'Nextgenthemes\ARVE\Pro\VERSION' )
 		&& version_compare( \Nextgenthemes\ARVE\Pro\VERSION, PRO_VERSION_REQUIRED, '<' )
 	) {
 		remove_action( 'plugins_loaded', 'Nextgenthemes\ARVE\Pro\init', 15 );
