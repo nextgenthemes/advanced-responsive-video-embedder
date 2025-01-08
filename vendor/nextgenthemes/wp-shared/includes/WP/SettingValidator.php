@@ -101,12 +101,13 @@ class SettingValidator {
 			throw new \InvalidArgumentException( esc_html( 'Property ' . $this->option_key . ' must be boolean' ) );
 		}
 
+		$this->type            = 'string';
 		$this->ui_element      = 'select';
 		$this->ui_element_type = 'select';
 		$this->options         = array(
-			''      => \__( 'Default', 'advanced-responsive-video-embedder' ),
-			'true'  => \__( 'True', 'advanced-responsive-video-embedder' ),
-			'false' => \__( 'False', 'advanced-responsive-video-embedder' ),
+			''      => __( 'Default', 'advanced-responsive-video-embedder' ),
+			'true'  => __( 'True', 'advanced-responsive-video-embedder' ),
+			'false' => __( 'False', 'advanced-responsive-video-embedder' ),
 		);
 	}
 

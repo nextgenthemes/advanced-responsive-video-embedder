@@ -3,6 +3,10 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-01-08 10.5.2 ###
+
+* Fix: Block errors.
+
 ### 2024-01-02 10.5.1 ###
 
 * Fix: Array merge with NULL error.

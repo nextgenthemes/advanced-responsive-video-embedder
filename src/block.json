@@ -56,7 +56,7 @@
             "type": "boolean"
         },
         "controls": {
-            "type": "boolean"
+            "type": "string"
         },
         "title": {
             "type": "string"
@@ -74,10 +74,10 @@
             "type": "string"
         },
         "hide_title": {
-            "type": "boolean"
+            "type": "string"
         },
         "grow": {
-            "type": "boolean"
+            "type": "string"
         },
         "fullscreen": {
             "type": "string"
@@ -89,28 +89,28 @@
             "type": "string"
         },
         "disable_links": {
-            "type": "boolean"
+            "type": "string"
         },
         "align": {
             "type": "string"
         },
         "arve_link": {
-            "type": "boolean"
+            "type": "string"
         },
         "duration": {
             "type": "string"
         },
         "autoplay": {
-            "type": "boolean"
+            "type": "string"
         },
         "lightbox_maxwidth": {
             "type": "integer"
         },
         "sticky": {
-            "type": "boolean"
+            "type": "string"
         },
         "sticky_on_mobile": {
-            "type": "boolean"
+            "type": "string"
         },
         "sticky_position": {
             "type": "string"
@@ -143,7 +143,7 @@
             "type": "string"
         },
         "invidious": {
-            "type": "boolean"
+            "type": "string"
         },
         "thumbnail_url": {
             "type": "string"

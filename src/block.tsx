@@ -60,7 +60,7 @@ interface SelectOption {
 
 interface OptionProps {
 	label: string;
-	tag: string;
+	tab: string;
 	type: string;
 	description?: string;
 	descriptionlink?: string;
@@ -78,22 +78,20 @@ delete settings?.align?.options?.center;
 const domParser = new DOMParser();
 
 /**
- * Keypair to gutenberg component
+ * Keypair to Gutenberg component
  * @param selectOptions
  */
-function PrepareSelectOptions( selectOptions: OptionProps ) {
-	const gboptions = [] as Array< SelectOption >;
+function PrepareSelectOptions(
+	selectOptions: Record< string, string > | undefined
+): Array< SelectOption > {
+	if ( ! selectOptions ) {
+		throw new Error( 'no options' );
+	}
 
-	Object.entries( selectOptions ).forEach( ( [ key, value ] ) => {
-		const o: SelectOption = {
-			label: value,
-			value: key,
-		};
-
-		gboptions.push( o );
-	} );
-
-	return gboptions;
+	return Object.entries( selectOptions ).map( ( [ key, value ] ) => ( {
+		label: value,
+		value: key,
+	} ) );
 }
 
 function changeTextControl( key: string, value: string, props ) {
@@ -121,17 +119,6 @@ function changeTextControl( key: string, value: string, props ) {
 		[ key ]: value,
 	} );
 }
-
-// function changeSelectControl( key: string, value: string, props ) {
-
-// 	if ( ! value ) {
-
-// 	}
-
-// 	props.setAttributes( {
-// 		[ key ]: value,
-// 	} );
-// }
 
 const mediaUploadRender = ( open: VoidFunction, val, url: string ): JSX.Element => {
 	return (
@@ -169,8 +156,6 @@ const mediaUploadRender = ( open: VoidFunction, val, url: string ): JSX.Element 
 	);
 };
 
-function select( val );
-
 function buildControls( props ) {
 	const controls = [] as Array< JSX.Element >;
 	const sectionControls = {} as sectionControls;
@@ -180,14 +165,14 @@ function buildControls( props ) {
 	let selectedMedia;
 
 	Object.values( settings ).forEach( ( option: OptionProps ) => {
-		sectionControls[ option.tag ] = [];
+		sectionControls[ option.tab ] = [];
 	} );
 
 	Object.entries( settings ).forEach( ( [ key, option ]: [ string, OptionProps ] ) => {
 		const val = props.attributes[ key ];
 		const url = '';
 
-		sectionControls[ option.tag ].push(
+		sectionControls[ option.tab ].push(
 			<Fragment key={ key + '-fragment' }>
 				{ 'select' === option.ui_element && (
 					<SelectControl
@@ -197,7 +182,7 @@ function buildControls( props ) {
 						options={ PrepareSelectOptions( option.options ) }
 						onChange={ ( value ) => {
 							return props.setAttributes( {
-								[ key ]: value,
+								[ key ]: '' === value ? undefined : value,
 							} );
 						} }
 					/>
