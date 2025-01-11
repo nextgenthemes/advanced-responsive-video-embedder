@@ -3,6 +3,10 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-01-11 10.5.3 ###
+
+* Fix: Fixed, improved and restored Shortcode UI functionality. 
+
 ### 2024-01-08 10.5.2 ###
 
 * Fix: Block errors.

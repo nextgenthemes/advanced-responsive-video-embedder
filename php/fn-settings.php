@@ -7,7 +7,6 @@ namespace Nextgenthemes\ARVE;
 use Nextgenthemes\WP\SettingsData;
 
 use function Nextgenthemes\WP\nextgenthemes_settings_instance;
-use function Nextgenthemes\WP\validate_settings;
 
 function options(): array {
 	return Base::get_instance()->get_settings_instance()->get_options();

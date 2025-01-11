@@ -267,49 +267,44 @@ function widget_text(): void {
 
 function register_shortcode_ui(): void {
 
-	$settings = settings( 'shortcode' )->to_array();
+	$settings = settings( 'shortcode' )->get_all();
 
-	foreach ( $settings as $k => $v ) :
+	foreach ( $settings as $key => $s ) :
 
-		switch ( $v['type'] ) {
+		$field = array(
+			'attr'  => $key,
+			'label' => $s->label,
+		);
+
+		if ( ! empty( $s->placeholder ) ) {
+			$field['meta']['placeholder'] = $s->placeholder;
+		}
+
+		if ( 'thumbnail' === $key ) {
+			$field['type']        = 'attachment';
+			$field['libraryType'] = array( 'image' );
+			$field['addButton']   = __( 'Select Image', 'advanced-responsive-video-embedder' );
+			$field['frameTitle']  = __( 'Select Image', 'advanced-responsive-video-embedder' );
+		}
+
+		switch ( $s->type ) {
 			case 'boolean':
-				$v['type']    = 'select';
-				$v['options'] = array(
-					array(
-						'value' => '',
-						'label' => esc_html__( 'Default', 'advanced-responsive-video-embedder' ),
-					),
-					array(
-						'value' => 'yes',
-						'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
-					),
-					array(
-						'value' => 'no',
-						'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
-					),
-				);
+				$field['type'] = 'checkbox';
 				break;
 			case 'string':
-				$v['type'] = 'text';
+				if ( $s->options ) {
+					$field['type']    = 'select';
+					$field['options'] = convert_to_shortcode_ui_options( $s->options );
+				} else {
+					$field['type'] = 'text';
+				}
 				break;
 			case 'integer':
-				$v['type'] = 'number';
+				$field['type'] = 'number';
 				break;
 		}
 
-		if ( 'thumbnail' === $k ) {
-			$v['type']        = 'attachment';
-			$v['libraryType'] = array( 'image' );
-			$v['addButton']   = __( 'Select Image', 'advanced-responsive-video-embedder' );
-			$v['frameTitle']  = __( 'Select Image', 'advanced-responsive-video-embedder' );
-		}
-
-		if ( ! empty( $v['placeholder'] ) ) {
-			$v['meta']['placeholder'] = $v['placeholder'];
-		}
-
-		$v['attr'] = $k;
-		$attrs[]   = $v;
+		$attrs[] = $field;
 	endforeach;
 
 	shortcode_ui_register_for_shortcode(
@@ -320,6 +315,26 @@ function register_shortcode_ui(): void {
 			'attrs'         => $attrs,
 		)
 	);
+}
+
+/**
+ * Converts an associative array to an array of options suitable for Shortcode UI.
+ * Each key-value pair in the input array is transformed into an associative array
+ * with 'value' and 'label' keys.
+ *
+ * @param array $arr An associative array with keys as option values and values as option labels.
+ *
+ * @return array An array of associative arrays, each containing 'value' and 'label' keys.
+ */
+function convert_to_shortcode_ui_options( array $arr ): array {
+	$result = array();
+	foreach ( $arr as $key => $value ) {
+		$result[] = array(
+			'value' => $key,
+			'label' => $value,
+		);
+	}
+	return $result;
 }
 
 function add_dashboard_widget(): void {
