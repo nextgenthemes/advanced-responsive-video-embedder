@@ -169,26 +169,6 @@ function action_admin_init_setup_messages(): void {
 			)
 		);
 	}
-
-	if ( is_plugin_active( 'all-in-one-seo-pack/all_in_one_seo_pack.php' )
-		&& ! is_gutenberg()
-	) {
-		Notices::instance()->register_notice(
-			'aio-seo-notice',
-			'notice-info',
-			sprintf(
-				kses_https_links(
-					// Translators: %s URL
-					__(
-						'There is compatibility issue with All In One SEO Pack effecting ARVE. With the AIO-SEO plugin active the "Embed Video (ARVE)" button will not work in Classic Editor. Please contact the AIO-SEO plugin <a href="%1$s">support</a> / <a href="%2$s">support for pro users</a> if they can fix this issue.',
-						'advanced-responsive-video-embedder'
-					),
-				),
-				'https://wordpress.org/support/plugin/all-in-one-seo-pack/#new-topic-0',
-				'https://aioseo.com/login/?redirect_to=%2Faccount%2Fsupport%2F'
-			)
-		);
-	}
 }
 
 function get_latest_beta(): string {
