@@ -165,10 +165,11 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 
 				if ( $v['oembed'] ) {
 
+					$skip_vimeo_locally = ( 'vimeo' === $provider )
+						&& str_contains( (string) getenv( 'WP_TESTS_DIR' ), '/dev/wptests' );
+
 					// Vimeo fails only locally?
-					if ( ( 'vimeo' !== $provider ) &&
-						! str_contains( getenv( 'WP_TESTS_DIR' ), '/dev/wptests' )
-					) {
+					if ( ! $skip_vimeo_locally ) {
 						$this->assertStringContainsString( 'data-oembed="1"', $html );
 					}
 				} else {
