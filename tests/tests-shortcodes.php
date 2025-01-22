@@ -112,26 +112,16 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 
 		$properties = get_host_properties();
 
-		// if ( ! getenv('CI') ) {
-		//  add_filter( 'shortcode_atts_arve', [ $this, 'oembed_log' ], 999 );
-		// }
-
 		foreach ( $properties as $provider => $v ) :
 
 			// Fails for some reason
 			if ( 'dailymotion' === $provider && getenv( 'CI' ) ) {
-				continue;
-			}
-			// TODO: This generates a error on symphony/yaml
-			if ( version_compare( $GLOBALS['wp_version'], '5.2.9', '<=' ) && 'dailymotion' === $provider ) {
-				continue;
-			}
-			// This generates a json syntax error.
-			if ( version_compare( $GLOBALS['wp_version'], '5.0', '<' ) && 'kickstarter' === $provider ) {
+				$this->markTestSkipped( 'skipped Dailymotion on Github.' );
 				continue;
 			}
 
 			if ( empty( $v['tests'] ) ) {
+				$this->markTestSkipped( 'no tests for ' . $provider );
 				continue;
 			}
 
@@ -145,8 +135,6 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 
 				//phpcs:ignore
 				fwrite( STDOUT, print_r( $test['url'], true ) . PHP_EOL );
-
-				#check_link( $test['url'] );
 
 				$html = shortcode(
 					array(
@@ -165,11 +153,11 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 
 				if ( $v['oembed'] ) {
 
-					$skip_vimeo_locally = ( 'vimeo' === $provider )
-						&& str_contains( (string) getenv( 'WP_TESTS_DIR' ), '/dev/wptests' );
+					$skip_vimeo_on_github = ( 'vimeo' === $provider ) && getenv( 'CI' );
 
-					// Vimeo fails only locally?
-					if ( ! $skip_vimeo_locally ) {
+					if ( $skip_vimeo_on_github ) {
+						$this->markTestSkipped( 'skipped Vimeo oembed check on Github.' );
+					} else {
 						$this->assertStringContainsString( 'data-oembed="1"', $html );
 					}
 				} else {
