@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 use function Nextgenthemes\ARVE\shortcode;
 use function Nextgenthemes\ARVE\get_host_properties;
 use function Nextgenthemes\WP\remote_get_body;
@@ -116,7 +119,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 		foreach ( $properties as $provider => $v ) :
 
 			// Fails for some reason
-			if ( 'dailymotion' === $provider && getenv('CI') ) {
+			if ( 'dailymotion' === $provider && getenv( 'CI' ) ) {
 				continue;
 			}
 			// TODO: This generates a error on symphony/yaml
@@ -164,7 +167,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 
 					// Vimeo fails only locally?
 					if ( ( 'vimeo' !== $provider ) &&
-						! str_contains( getenv('WP_TESTS_DIR'), '/dev/wptests' )
+						! str_contains( getenv( 'WP_TESTS_DIR' ), '/dev/wptests' )
 					) {
 						$this->assertStringContainsString( 'data-oembed="1"', $html );
 					}
@@ -235,6 +238,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 		);
 
 		$this->assertStringNotContainsString( 'Error', $output );
+		$this->assertStringNotContainsString( 'srcset=', $output );
 
 		$this->assertStringContainsString( 'alignleft', $output );
 		#$this->assertStringContainsString( 'autoplay=1', $output );
