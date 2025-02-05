@@ -52,10 +52,11 @@ function update_block_json( array $attr ): void {
 		die( esc_html( 'Empty JSON' ) );
 	}
 
-	$json['attributes'] = $attr;
-	$json['viewScript'] = VIEW_SCRIPT_HANDLES;
-	$json['viewStyle']  = VIEW_SCRIPT_HANDLES;
-	$json['version']    = VERSION;
+	$json['attributes']  = $attr;
+	$json['editorStyle'] = array_merge( array( 'arve-block' ), VIEW_SCRIPT_HANDLES );
+	$json['viewScript']  = VIEW_SCRIPT_HANDLES;
+	$json['viewStyle']   = VIEW_SCRIPT_HANDLES;
+	$json['version']     = VERSION;
 
 	// phpcs:ignore
 	file_put_contents( $file, json_encode( $json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) );
