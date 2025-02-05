@@ -5,7 +5,7 @@
     "title": "FAKE",
     "category": "embed",
     "icon": "video-alt3",
-    "description": "Used to compile settings.js interactivity api module",
+    "description": "Used to compile settings.js/css interactivity api module",
     "version": "1",
-    "viewScriptModule": "file:./settings.js"
+    "viewScriptModule": "file:./settings.ts"
 }

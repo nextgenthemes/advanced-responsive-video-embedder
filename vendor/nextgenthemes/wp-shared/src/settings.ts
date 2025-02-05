@@ -1,46 +1,92 @@
-import { store, getContext, getConfig, getElement } from '@wordpress/interactivity';
+import './settings.css';
+import { debounce, aspectRatio } from './helpers';
+import { store, getContext, getConfig } from '@wordpress/interactivity';
 const domParser = new DOMParser();
-const _ = window._;
-const { log } = console;
 
-const namespace = document.querySelector( '[data-wp-interactive^="nextgenthemes"]' )?.dataset
-	?.wpInteractive;
+declare global {
+	interface Window {
+		wp: any;
+	}
+}
+
+const namespace = document.querySelector< HTMLElement >( '[data-wp-interactive^="nextgenthemes"]' )
+	?.dataset?.wpInteractive;
 
 if ( ! namespace ) {
 	throw new Error( 'no namespace' );
 }
 
-// interface optionContext {
-// 	section: string;
-// 	option_key: string;
-// 	edd_item_id: string;
-// 	edd_action: string;
-// 	edd_store_url: string;
-// 	activeTabs: { [ key: string ]: boolean };
-// }
+interface storeInterface {
+	state: {
+		options: Record< string, string | number | boolean >;
+		help: boolean;
+		dialog: HTMLDialogElement;
+		isSaving: boolean;
+		message: string;
+		shortcode: string;
+		debug: string;
+		isValidLicenseKey: () => boolean;
+		is32charactersLong: () => boolean;
+		isActiveTab: boolean;
+	};
+	actions: {
+		toggleHelp: () => void;
+		openShortcodeDialog: () => void;
+		insertShortcode: () => void;
+		closeShortcodeDialog: () => void;
+		saveOptions: () => void;
+		saveOptionsReal: () => void;
+		changeTab: ( tab: string ) => void;
+		inputChange: ( event: Event ) => void;
+		checkboxChange: ( event: Event ) => void;
+		selectImage: () => void;
+		deleteOembedCache: () => void;
+		eddLicenseAction: () => void;
+		resetOptionsSection: () => void;
+		restCall: (
+			restRoute: string,
+			body: Record< string, any >,
+			refreshAfter?: boolean
+		) => void;
+	};
+	callbacks: {
+		updateShortcode: () => void;
+		updatePreview: () => void;
+	};
+	helpers: {
+		extractFromEmbedCode: ( url: string ) => void;
+		debugJson: ( data: Record< string, any > ) => void;
+	};
+}
 
-// interface stateInterface {
-// 	options: Record< string, string | number | boolean >;
-// 	help: boolean;
-// 	dialog: HTMLDialogElement;
-// 	isSaving: boolean;
-// 	message: string;
-// 	shortcode: string;
-// 	debug: string;
-// }
+interface optionContext {
+	tab: string;
+	option_key: string;
+	edd_item_id: string;
+	edd_action: string;
+	edd_store_url: string;
+	activeTabs: { [ key: string ]: boolean };
+}
 
-const { state, actions, callbacks, helpers } = store( namespace, {
+interface configInterface {
+	restUrl: string;
+	nonce: string;
+	defaultOptions: Record< string, string | number | boolean >;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const { state, actions, callbacks, helpers } = store< storeInterface >( namespace, {
 	state: {
 		isValidLicenseKey: () => {
-			const context = getContext();
+			const context = getContext< optionContext >();
 			return 'valid' === state.options[ context.option_key + '_status' ];
 		},
 		is32charactersLong: () => {
-			const context = getContext();
+			const context = getContext< optionContext >();
 			return state.options[ context.option_key ].length === 32;
 		},
 		get isActiveTab() {
-			const context = getContext();
+			const context = getContext< optionContext >();
 
 			if ( ! context.activeTabs ) {
 				return true; // shortcode dialog has no sections
@@ -67,15 +113,19 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			state.dialog.close();
 		},
 		changeTab: () => {
-			const context = getContext();
+			const context = getContext< optionContext >();
 
 			for ( const key in context.activeTabs ) {
 				context.activeTabs[ key ] = false;
 			}
 			context.activeTabs[ context.tab ] = true;
 		},
-		inputChange: ( event ) => {
-			const context = getContext();
+		inputChange: ( event: Event ) => {
+			const context = getContext< optionContext >();
+
+			if ( ! ( event?.target instanceof HTMLInputElement ) ) {
+				throw new Error( 'event.target is not HTMLElement' );
+			}
 
 			if ( 'arveUrl' in event.target.dataset ) {
 				helpers.extractFromEmbedCode( event.target.value );
@@ -88,7 +138,7 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			}
 		},
 		checkboxChange: ( event ) => {
-			const context = getContext();
+			const context = getContext< optionContext >();
 			state.options[ context.option_key ] = event.target.checked;
 
 			if ( 'nextgenthemes_arve_dialog' !== namespace ) {
@@ -100,7 +150,7 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 				state.dialog.close();
 			}
 
-			const context = getContext();
+			const context = getContext< optionContext >();
 			const image = window.wp
 				.media( {
 					title: 'Upload Image',
@@ -130,7 +180,11 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 		saveOptionsReal: () => {
 			actions.restCall( '/save', state.options );
 		},
-		restCall: ( restRoute, body, refreshAfter = false ) => {
+		restCall: (
+			restRoute: string,
+			body: Record< string, any >,
+			refreshAfter: boolean = false
+		) => {
 			if ( state.isSaving ) {
 				state.message = 'trying to save too fast';
 				return;
@@ -174,7 +228,7 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 				} );
 		},
 		eddLicenseAction() {
-			const context = getContext();
+			const context = getContext< optionContext >();
 
 			actions.restCall(
 				'/edd-license-action',
@@ -189,8 +243,8 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 			);
 		},
 		resetOptionsSection() {
-			const config = getConfig();
-			const context = getContext();
+			const config = getConfig() as configInterface;
+			const context = getContext< optionContext >();
 			const sectionToReset = context.tab;
 
 			Object.entries( config.defaultOptions ).forEach( ( [ section, options ] ) => {
@@ -222,51 +276,53 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 					}
 				} else if ( true === value ) {
 					out += `${ key }="true" `;
-				} else if ( value.length ) {
+				} else if ( value ) {
 					out += `${ key }="${ value }" `;
 				}
 			}
 
 			state.shortcode = '[arve ' + out + '/]';
 		},
-		updatePreview() {
-			const url = new URL( 'https://symbiosistheme.test/wp-json/arve/v1/shortcode' );
-			const params = new URLSearchParams();
-			const options = getContext().options;
-			const preview = document.getElementById( 'preview' );
+		// updatePreview() {
+		// 	const url = new URL( 'https://symbiosistheme.test/wp-json/arve/v1/shortcode' );
+		// 	const params = new URLSearchParams();
+		// 	const options = getContext< optionContext >().options;
+		// 	const preview = document.getElementById( 'preview' );
 
-			if ( ! preview ) {
-				throw new Error( 'No preview element' );
-			}
+		// 	if ( ! preview ) {
+		// 		throw new Error( 'No preview element' );
+		// 	}
 
-			for ( const [ key, value ] of Object.entries( options ) ) {
-				if ( true === value ) {
-					params.append( key, 'true' );
-				} else if ( value.length ) {
-					params.append( key, value );
-				}
-			}
+		// 	for ( const [ key, value ] of Object.entries( options ) ) {
+		// 		if ( true === value ) {
+		// 			params.append( key, 'true' );
+		// 		} else if ( value.length ) {
+		// 			params.append( key, value );
+		// 		}
+		// 	}
 
-			url.search = params.toString();
+		// 	url.search = params.toString();
 
-			fetch( url.href )
-				.then( ( response ) => response.json() )
-				.then( ( data ) => {
-					preview.innerHTML = data.html;
-				} )
-				.catch( () => {
-					//console.error( error );
-				} );
-		},
+		// 	fetch( url.href )
+		// 		.then( ( response ) => response.json() )
+		// 		.then( ( data ) => {
+		// 			preview.innerHTML = data.html;
+		// 		} )
+		// 		.catch( () => {
+		// 			//console.error( error );
+		// 		} );
+		// },
 	},
 	helpers: {
-		debugJson: ( data ) => {
+		debugJson: ( data: Record< string, unknown > ) => {
 			state.debug = JSON.stringify( data, null, 2 );
 		},
-		extractFromEmbedCode: ( url ) => {
+		extractFromEmbedCode: ( url: string ) => {
 			const iframe = domParser.parseFromString( url, 'text/html' ).querySelector( 'iframe' );
-			if ( iframe && iframe.getAttribute( 'src' ) ) {
-				url = iframe.getAttribute( 'src' );
+			const srcAttr = iframe && iframe.getAttribute( 'src' );
+
+			if ( srcAttr ) {
+				url = srcAttr;
 
 				if ( iframe.width && iframe.height ) {
 					const ratio = aspectRatio( iframe.width, iframe.height );
@@ -282,100 +338,3 @@ const { state, actions, callbacks, helpers } = store( namespace, {
 } );
 
 actions.saveOptions = debounce( actions.saveOptionsReal, 1111 );
-
-function debounce( func, wait, immediate ) {
-	let timeout;
-	return function () {
-		const context = this;
-		const args = arguments;
-		const later = function () {
-			timeout = null;
-			if ( ! immediate ) {
-				func.apply( context, args );
-			}
-		};
-		const callNow = immediate && ! timeout;
-		clearTimeout( timeout );
-		timeout = setTimeout( later, wait );
-		if ( callNow ) {
-			func.apply( context, args );
-		}
-	};
-}
-
-/**
- * Calculate aspect ratio based on width and height.
- *
- * @param {string} width  - The width value
- * @param {string} height - The height value
- * @return {string} The aspect ratio in the format 'width:height'
- */
-function aspectRatio( width, height ) {
-	if ( isIntOverZero( width ) && isIntOverZero( height ) ) {
-		const w = parseInt( width );
-		const h = parseInt( height );
-		const arGCD = gcd( w, h );
-
-		return w / arGCD + ':' + h / arGCD;
-	}
-
-	return width + ':' + height;
-}
-
-/**
- * Checks if the input string represents a positive integer.
- *
- * @param {string} str - the input string to be checked
- * @return {boolean} true if the input string represents a positive integer, false otherwise
- */
-function isIntOverZero( str ) {
-	const n = Math.floor( Number( str ) );
-	return n !== Infinity && String( n ) === str && n > 0;
-}
-
-/**
- * Calculate the greatest common divisor of two numbers using the Euclidean algorithm.
- *
- * @param {number} a - the first number
- * @param {number} b - the second number
- * @return {number} the greatest common divisor of the two input numbers
- */
-function gcd( a, b ) {
-	if ( ! b ) {
-		return a;
-	}
-
-	return gcd( b, a % b );
-}
-
-function shortCodeUiExtractUrl( changed, collection ) {
-	function attrByName( name ) {
-		return _.find( collection, function ( viewModel ) {
-			return name === viewModel.model.get( 'attr' );
-		} );
-	}
-
-	const val = changed.value;
-
-	if ( typeof val === 'undefined' ) {
-		return;
-	}
-
-	const urlInput = attrByName( 'url' ).$el.find( 'input' );
-	const aspectRatioInput = attrByName( 'aspect_ratio' ).$el.find( 'input' );
-
-	const iframe = domParser.parseFromString( val, 'text/html' ).querySelector( 'iframe' );
-	if ( iframe && iframe.getAttribute( 'src' ) ) {
-		urlInput.val( iframe.src ).trigger( 'input' );
-
-		if ( iframe.width && iframe.height ) {
-			const ratio = aspectRatio( iframe.width, iframe.height );
-
-			if ( '16:9' !== ratio ) {
-				aspectRatioInput.val( ratio ).trigger( 'input' );
-			}
-		}
-	}
-}
-
-window?.wp?.shortcake?.hooks?.addAction( 'arve.url', shortCodeUiExtractUrl );
