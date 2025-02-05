@@ -91,7 +91,7 @@ class Asset {
 					$property_type = ( new \ReflectionProperty( __CLASS__, $arg_name ) )->getType()->getName();
 					$property_type = str_replace( 'bool', 'boolean', $property_type );
 
-					if ( $property_type !== gettype( $value ) ) {
+					if ( gettype( $value ) !== $property_type ) {
 						wp_trigger_error( __METHOD__, "trying to set property <code>$arg_name</code>, with wrong type" );
 						return;
 					}
@@ -223,6 +223,25 @@ class Asset {
 		return str_ends_with( $src_without_query, '.js' );
 	}
 
+	/**
+	 * Gets the dependencies and version of a given script or stylesheet.
+	 *
+	 * When a `.asset.php` file exists next to the given file, it is required and
+	 * expected to return an array with two keys: `dependencies` and `version`.
+	 * The `dependencies` key should be an array of strings, where each string is
+	 * the handle of a registered script or stylesheet.
+	 * The `version` key should be a string or a number.
+	 *
+	 * When no `.asset.php` file exists, the file's modification time is used as
+	 * the version.
+	 *
+	 * @param string $path Absolute path to the file.
+	 *
+	 * @return array{
+	 *   dependencies: string[],
+	 *   version: string|number,
+	 * }
+	 */
 	public static function deps_and_ver( string $path ): array {
 
 		$dv = array(
