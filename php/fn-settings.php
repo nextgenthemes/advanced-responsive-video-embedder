@@ -275,6 +275,20 @@ function settings_data(): SettingsData {
 			'option'              => true,
 			'shortcode'           => true,
 		),
+		'lazyload_style' => array(
+			'type'                => 'string',
+			'default'             => 'thumbnail',
+			'tab'                 => 'pro',
+			'label'               => __( 'Lazyload Style', 'advanced-responsive-video-embedder' ),
+			'options'             => array(
+				''          => __( 'Default', 'advanced-responsive-video-embedder' ),
+				'thumbnail' => __( 'Thumbnail', 'advanced-responsive-video-embedder' ),
+				'card'      => __( 'Card', 'advanced-responsive-video-embedder' ),
+			),
+			'description'         => esc_html__( 'Chose the look of the video preview for Lazyload and Lightbox modes!', 'advanced-responsive-video-embedder' ),
+			'option'              => true,
+			'shortcode'           => true,
+		),
 		'thumbnail_fallback' => array(
 			'type'        => 'string',
 			'default'     => plugins_url( 'src/img/thumbnail.avif', PLUGIN_FILE ),
@@ -301,7 +315,6 @@ function settings_data(): SettingsData {
 			'shortcode'           => true,
 			'option'              => false,
 			'label'               => __( 'Thumbnail', 'advanced-responsive-video-embedder' ),
-
 			'placeholder'         => '1234, https://* (Pro automatically handles this)',
 			'description'         => sprintf(
 				// Translators: 1 Link, 2 Provider list
@@ -852,7 +865,7 @@ function settings_data(): SettingsData {
 		}
 	}
 
-	$settings = new SettingsData( $settings, true );
+		$settings = new SettingsData( $settings, true );
 
-	return $settings;
+		return $settings;
 }
