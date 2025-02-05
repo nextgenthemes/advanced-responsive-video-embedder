@@ -66,6 +66,7 @@ class Video {
 	private string $title;
 	private string $upload_date;
 	private ?string $lightbox_aspect_ratio;
+	private string $lazyload_style;
 
 	// html5
 	private string $av1mp4;
@@ -128,7 +129,7 @@ class Video {
 		$html = '';
 
 		try {
-			$this->shortcode_atts = \shortcode_atts( shortcode_pairs(), $this->org_args, 'arve' );
+			$this->shortcode_atts = shortcode_atts( shortcode_pairs(), $this->org_args, 'arve' );
 
 			check_product_keys();
 			$this->process_shortcode_atts();
@@ -733,15 +734,23 @@ class Video {
 			)
 		);
 
-		$align_class = $this->align ? " align{$this->align}" : '';
+		$arve_class = 'arve';
+
+		if ( 'card' === $this->lazyload_style ) {
+			$arve_class .= ' arve--card';
+		}
+
+		if ( $this->align ) {
+			$arve_class .= ' align' . $this->align;
+		}
 
 		return $this->build_tag(
 			array(
 				'name'       => 'arve',
-				'tag'        => 'div',
+				'tag'        => ( 'link-lightbox' === $this->mode ) ? 'span' : 'div',
 				'inner_html' => $inner . $this->promote_link() . $this->build_seo_data(),
 				'attr'       => array(
-					'class'         => 'arve' . $align_class,
+					'class'         => $arve_class,
 					'data-mode'     => $this->mode,
 					'data-oembed'   => $this->oembed_data ? '1' : false,
 					'data-provider' => $this->provider,
@@ -1046,7 +1055,7 @@ class Video {
 		foreach ( $metas as $key => $val ) {
 
 			if ( ! empty( $this->$key ) ) {
-				if ( 'duration' === $key && \is_numeric( $this->$key ) ) {
+				if ( 'duration' === $key && is_numeric( $this->$key ) ) {
 					$this->$key = seconds_to_iso8601_duration( $this->$key );
 				}
 				$payload[ $val ] = trim( $this->$key );
@@ -1125,11 +1134,14 @@ class Video {
 
 		if ( $this->aspect_ratio ) {
 			$class     .= ' arve-embed--has-aspect-ratio';
-			$ratio_span = sprintf( '<span class="arve-ar" style="padding-top:%F%%"></span>', aspect_ratio_to_percentage( $this->aspect_ratio ) );
+			$ratio_span = sprintf(
+				'<span class="arve-ar" style="padding-top:%F%%"></span>',
+				aspect_ratio_to_percentage( $this->aspect_ratio )
+			);
 
 			if ( ! in_array( $this->aspect_ratio, array( '16:9', '375:211' ), true ) ) {
 				$ar    = str_replace( ':', ' / ', $this->aspect_ratio );
-				$style = sprintf( 'aspect-ratio: %s', $ar );
+				$style = sprintf( 'aspect-ratio:%s', $ar );
 			}
 		}
 
