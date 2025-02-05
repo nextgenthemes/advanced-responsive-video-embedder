@@ -266,12 +266,12 @@ class Settings {
 
 	public function assets( string $page ): void {
 
-		$asset_info = Asset::deps_and_ver( $this->base_path . 'vendor/nextgenthemes/wp-shared/includes/WP/Admin/settings.js' );
+		$asset_info = Asset::deps_and_ver( $this->base_path . 'vendor/nextgenthemes/wp-shared/build/settings.js' );
 
 		// always register this as the ARVE Shortcode dialog uses this.
 		wp_register_script_module(
 			'nextgenthemes-settings',
-			$this->base_url . 'vendor/nextgenthemes/wp-shared/includes/WP/Admin/settings.js',
+			$this->base_url . 'vendor/nextgenthemes/wp-shared/build/settings.js',
 			$asset_info['dependencies'] + [ '@wordpress/interactivity' ],
 			$asset_info['version']
 		);
@@ -280,7 +280,7 @@ class Settings {
 		register_asset(
 			array(
 				'handle' => 'nextgenthemes-settings',
-				'src'    => $this->base_url . 'vendor/nextgenthemes/wp-shared/includes/WP/Admin/settings.css',
+				'src'    => $this->base_url . 'vendor/nextgenthemes/wp-shared/build/settings.css',
 				'path'   => __DIR__ . '/settings.css',
 			)
 		);
