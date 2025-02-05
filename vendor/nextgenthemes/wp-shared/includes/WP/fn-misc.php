@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Nextgenthemes\WP;
 
 /**
- * This function returns the block wrapper attributes as a string, it ignores null and false values to align the functionality with Nextgentheme's `attr` function. And is escapes the URL values with `esc_url`.
+ * This function returns the block wrapper attributes as a string, it ignores null and false values to align the functionality with Nextgenthemes `attr` function. And is escapes the URL values with `esc_url`.
  *
  * @param array <string, string> $attr The array of attributes.
  * @return string The block wrapper attributes as a string.
@@ -16,7 +16,6 @@ function ngt_get_block_wrapper_attributes( array $attr ): string {
 
 		if ( false === $value || null === $value ) {
 			unset( $attr[ $key ] );
-			continue;
 		} elseif ( in_array( $key, array( 'href', 'data-href', 'src', 'data-src' ), true ) ) {
 			$attr[ $key ] = esc_url( $value );
 		}
