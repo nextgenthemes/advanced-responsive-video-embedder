@@ -12,6 +12,13 @@ function get_host_properties(): array {
 	return require __DIR__ . '/providers.php';
 }
 
+function is_card( array $a ): bool {
+
+	$is_ll_mode = in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true );
+
+	return ( $is_ll_mode && 'card' === $a['lazyload_style'] );
+}
+
 /**
  * Calculate the greatest common divisor of the given aspect ratio and return the simplified aspect ratio.
  * When the aspect ratio in invalid contains floating point value, the original aspect ratio will be returned.
@@ -128,6 +135,8 @@ function disabled_on_feeds(): bool {
 	return is_feed() && ! options()['feed'] ? true : false;
 }
 
+
+
 /**
  * @param string|int $time
  */
@@ -140,17 +149,17 @@ function seconds_to_iso8601_duration( $time ): string {
 		'S' => 1,
 	);
 
-	$str    = 'P';
-	$istime = false;
+	$str     = 'P';
+	$is_time = false;
 
 	foreach ( $units as  $unit_name => $unit ) {
 		$quot  = intval( $time / $unit );
 		$time -= $quot * $unit;
 		$unit  = $quot;
 		if ( $unit > 0 ) {
-			if ( ! $istime && in_array( $unit_name, array( 'H', 'M', 'S' ), true ) ) { // There may be a better way to do this
-				$str   .= 'T';
-				$istime = true;
+			if ( ! $is_time && in_array( $unit_name, array( 'H', 'M', 'S' ), true ) ) { // There may be a better way to do this
+				$str    .= 'T';
+				$is_time = true;
 			}
 			$str .= strval( $unit ) . $unit_name;
 		}
@@ -190,6 +199,10 @@ function is_gutenberg(): bool {
 	$use_block_editor = ( get_option( 'classic-editor-replace' ) === 'no-replace' );
 
 	return $use_block_editor;
+}
+
+function is_amp(): bool {
+	return function_exists( '\Nextgenthemes\ARVE\AMP\is_amp' ) && \Nextgenthemes\ARVE\AMP\is_amp();
 }
 
 /**
