@@ -310,7 +310,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 		);
 
 		$this->assertStringNotContainsString( 'Error', $html );
-		$this->assertStringContainsString( 'aspect-ratio: 640 / 320', $html );
+		$this->assertStringContainsString( 'aspect-ratio:640/320', $html );
 
 		$p = new \WP_HTML_Tag_Processor( $html );
 

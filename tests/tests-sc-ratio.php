@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 use function Nextgenthemes\ARVE\shortcode;
 use function Nextgenthemes\ARVE\get_host_properties;
 
@@ -24,7 +27,7 @@ class Tests_Ratio extends WP_UnitTestCase {
 			)
 		);
 		$this->assertStringNotContainsString( 'Error', $html );
-		$this->assertStringContainsString( 'style="aspect-ratio: 1 / 1', $html );
+		$this->assertStringContainsString( 'style="aspect-ratio:1/1', $html );
 	}
 
 	public function test_ratio_1by4(): void {
@@ -36,7 +39,7 @@ class Tests_Ratio extends WP_UnitTestCase {
 			)
 		);
 		$this->assertStringNotContainsString( 'Error', $html );
-		$this->assertStringContainsString( 'style="aspect-ratio: 1 / 4', $html );
+		$this->assertStringContainsString( 'style="aspect-ratio:1/4', $html );
 	}
 
 	/**
@@ -52,6 +55,6 @@ class Tests_Ratio extends WP_UnitTestCase {
 			)
 		);
 		$this->assertStringNotContainsString( 'Error', $html );
-		$this->assertStringContainsString( 'style="aspect-ratio: 9 / 16', $html );
+		$this->assertStringContainsString( 'style="aspect-ratio:9/16', $html );
 	}
 }
