@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
+use WP_HTML_Tag_Processor;
+
 use function Nextgenthemes\WP\get_url_arg;
 use function Nextgenthemes\WP\apply_attr;
 use function Nextgenthemes\WP\check_product_keys;
@@ -229,7 +231,7 @@ class Video {
 			return;
 		}
 
-		$p = new \WP_HTML_Tag_Processor( $this->shortcode_atts['url'] );
+		$p = new WP_HTML_Tag_Processor( $this->shortcode_atts['url'] );
 		$p->next_tag( 'iframe' );
 
 		$src = $p->get_attribute( 'src' );
@@ -760,7 +762,7 @@ class Video {
 				</div>';
 		}
 
-		$p = new \WP_HTML_Tag_Processor( $html );
+		$p = new WP_HTML_Tag_Processor( $html );
 
 		if ( ! $p->next_tag( [ 'class_name' => 'arve' ] ) ) {
 			wp_trigger_error( __FUNCTION__, 'WP_HTML_Tag_Processor::next_tag() failed to find .arve tag' );

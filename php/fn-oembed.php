@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
+use WP_HTML_Tag_Processor;
+
 use function Nextgenthemes\WP\valid_url;
 use function Nextgenthemes\WP\get_attribute_from_html_tag;
 use function Nextgenthemes\WP\remote_get_head;
@@ -128,7 +130,7 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 
 function extract_oembed_data( string $html ): ?object {
 
-	$p = new \WP_HTML_Tag_Processor( $html );
+	$p = new WP_HTML_Tag_Processor( $html );
 
 	if ( ! $p->next_tag( array( 'class_name' => 'arve-data' ) ) ) {
 		return null;

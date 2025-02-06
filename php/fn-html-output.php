@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
+use WP_HTML_Tag_Processor;
+
 use function Nextgenthemes\WP\create_element;
 
 /**
@@ -38,7 +40,7 @@ function remove_embed_block_aspect_ratio( string $block_content ): string {
 		return $block_content;
 	}
 
-	$p = new \WP_HTML_Tag_Processor( $block_content );
+	$p = new WP_HTML_Tag_Processor( $block_content );
 
 	if ( $p->next_tag( [ 'class_name' => 'wp-has-aspect-ratio' ] ) ) {
 
