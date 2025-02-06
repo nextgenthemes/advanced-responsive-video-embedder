@@ -43,8 +43,7 @@ class Settings {
 		$this->menu_title          = $args['menu_title'];
 		$this->settings            = $args['settings'];
 		$this->settings_page_title = $args['settings_page_title'];
-		$this->slugged_namespace   = \sanitize_key( str_replace( '\\', '_', $args['namespace'] ) );
-		$this->camel_namespace     = camel_case( \sanitize_key( $this->slugged_namespace ), '\\' );
+		$this->slugged_namespace   = sanitize_key( str_replace( '\\', '_', $args['namespace'] ) );
 		$this->slashed_namespace   = str_replace( '_', '/', $this->slugged_namespace );
 		$this->rest_namespace      = $this->slugged_namespace . '/v1';
 		$this->is_arve             = 'nextgenthemes_arve' === $this->slugged_namespace;
@@ -285,8 +284,10 @@ class Settings {
 			)
 		);
 
+		$page_for_this_namespace = str_ends_with( $page, $this->slugged_namespace );
+
 		// Check if we are currently viewing our setting page
-		if ( ! $this->is_arve || ! str_ends_with( $page, $this->slugged_namespace ) ) {
+		if ( ! $this->is_arve && ! $page_for_this_namespace ) {
 			return;
 		}
 
@@ -338,7 +339,7 @@ class Settings {
 			);
 			?>
 		>
-			<h2><?= esc_html( get_admin_page_title() ); ?></h2>
+			<h1><?= esc_html( get_admin_page_title() ); ?></h1>
 
 			<h2 class="nav-tab-wrapper">
 				<?php foreach ( $sections_camel_keys as $k => $v ) : ?>
