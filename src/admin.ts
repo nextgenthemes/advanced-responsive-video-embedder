@@ -5,7 +5,7 @@ import { globalID } from './main';
 export {};
 declare global {
 	interface Window {
-		ajaxurl;
+		ajaxurl: string;
 	}
 }
 
