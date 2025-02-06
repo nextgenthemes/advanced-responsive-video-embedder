@@ -10,7 +10,7 @@ const _ = window._;
 const domParser = new DOMParser();
 
 function arveExtractURL( changed, collection, shortcode ) {
-	function attrByName( name ) {
+	function attrByName( name: string ) {
 		return _.find( collection, function ( viewModel ) {
 			return name === viewModel.model.get( 'attr' );
 		} );
