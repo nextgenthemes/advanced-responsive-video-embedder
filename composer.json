@@ -37,8 +37,8 @@
 		"build": [
 			"./bin/block-json",
 			"./bin/build-readme",
-			"npm run build-assets",
-			"npm run build-settings-assets",
+			"npm run build:assets",
+			"npm run build:settings",
 			"@composer update"
 		],
 		"pre-update-cmd": [
