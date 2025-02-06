@@ -312,7 +312,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 		$this->assertStringNotContainsString( 'Error', $html );
 		$this->assertStringContainsString( 'aspect-ratio:640/320', $html );
 
-		$p = new \WP_HTML_Tag_Processor( $html );
+		$p = new WP_HTML_Tag_Processor( $html );
 
 		$this->assertTrue( $p->next_tag( [ 'class_name' => 'arve' ] ), $html );
 		$this->assertEquals( 'iframe', $p->get_attribute( 'data-provider' ) );
