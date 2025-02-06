@@ -5,7 +5,9 @@ const domParser = new DOMParser();
 
 declare global {
 	interface Window {
-		wp: any;
+		wp: {
+			media: wpMedia;
+		};
 	}
 }
 
@@ -15,7 +17,14 @@ const namespace = document.querySelector< HTMLElement >( '[data-wp-interactive^=
 if ( ! namespace ) {
 	throw new Error( 'no namespace' );
 }
-
+interface wpMedia {
+	( options: any ): any; // Function-like usage
+	open: () => this; // Method to initialize the media dialog
+	on: ( eventName: string, callback: ( data: any ) => void ) => this; // Event subscription
+	editor: {
+		insert: ( content: string ) => void; // Method to insert content into the editor}
+	};
+}
 interface storeInterface {
 	state: {
 		options: Record< string, string | number | boolean >;
@@ -123,8 +132,11 @@ const { state, actions, callbacks, helpers } = store< storeInterface >( namespac
 		inputChange: ( event: Event ) => {
 			const context = getContext< optionContext >();
 
-			if ( ! ( event?.target instanceof HTMLInputElement ) ) {
-				throw new Error( 'event.target is not HTMLElement' );
+			const isInput = event?.target instanceof HTMLInputElement;
+			const isSelect = event?.target instanceof HTMLSelectElement;
+
+			if ( ! isInput && ! isSelect ) {
+				throw new Error( 'event.target is not HTMLInputElement or HTMLSelectElement' );
 			}
 
 			if ( 'arveUrl' in event.target.dataset ) {
