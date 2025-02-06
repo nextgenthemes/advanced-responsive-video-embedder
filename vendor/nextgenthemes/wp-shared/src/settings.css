@@ -29,6 +29,11 @@
 			display: none;
 		}
 	}
+
+	[hidden] {
+		/* this is needed, otherwise buttons with hidden attribute are visible */
+		display: none !important; /* stylelint-disable-line declaration-no-important */
+	}
 }
 
 .ngt-settings-grid {
