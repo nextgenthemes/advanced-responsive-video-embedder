@@ -54,7 +54,7 @@ function activate_product_key( string $product, string $key ): void {
 	update_option( 'nextgenthemes', $options );
 }
 
-function activate_defined_key( string $file, string $theme_name = '' ): void {
+function activate_defined_key( string $file ): void {
 
 	if ( 'functions.php' === $file ) {
 		return;
