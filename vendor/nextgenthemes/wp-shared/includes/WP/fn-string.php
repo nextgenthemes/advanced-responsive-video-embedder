@@ -4,6 +4,53 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\WP;
 
+use WP_HTML_Tag_Processor;
+
+/**
+ * Create an HTML element with given attributes.
+ *
+ * @param string $html_tag A HTML tag, e.g. '<input data-something="value">'
+ * @param array  $attr A list of attributes, e.g. class, src, href, etc.
+ *
+ * @return string The HTML element as string.
+ */
+function create_element( string $html_tag, array $attr ): string {
+
+	$p = new WP_HTML_Tag_Processor( $html_tag );
+
+	if ( ! $p->next_tag() ) {
+		wp_trigger_error( __FUNCTION__, 'WP_HTML_Tag_Processor::next_tag() failed' );
+		return $p->get_updated_html();
+	}
+
+	apply_attr( $p, $attr );
+
+	return $p->get_updated_html();
+}
+
+function apply_attr( WP_HTML_Tag_Processor $p, array $attr ): WP_HTML_Tag_Processor {
+
+	foreach ( $attr as $key => $value ) {
+
+		if ( null === $value ) {
+			$value = false;
+		}
+
+		if ( ! is_scalar( $value ) ) {
+			wp_trigger_error( __FUNCTION__, 'value must be null or scalar' );
+			continue;
+		}
+
+		if ( 'class' === $key && $value ) {
+			$p->add_class( $value );
+		} else {
+			$p->set_attribute( $key, $value );
+		}
+	}
+
+	return $p;
+}
+
 /**
  * Get the value of a specific attribute from an HTML string.
  *
@@ -14,7 +61,7 @@ namespace Nextgenthemes\WP;
  */
 function get_attribute_from_html_tag( array $query, string $attribute, string $html ): ?string {
 
-	$wphtml = new \WP_HTML_Tag_Processor( $html );
+	$wphtml = new WP_HTML_Tag_Processor( $html );
 
 	if ( $wphtml->next_tag( $query ) ) {
 
