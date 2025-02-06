@@ -843,7 +843,7 @@ function settings_data(): SettingsData {
 			'shortcode'   => false,
 			'options'     => array(
 				'always'   => __( 'Always', 'advanced-responsive-video-embedder' ),
-				'dev-mode' => __( 'Dev Modes Modes Only', 'advanced-responsive-video-embedder' ),
+				'dev-mode' => __( 'Dev Modes Only', 'advanced-responsive-video-embedder' ),
 				'never'    => __( 'Never', 'advanced-responsive-video-embedder' ),
 			),
 		),
