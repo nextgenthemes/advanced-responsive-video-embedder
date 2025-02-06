@@ -3,10 +3,11 @@
   "description": "Advanced Responsive Video Embedder WordPress Plugin",
   "private": true,
   "scripts": {
-    "start": "wp-scripts start src/main src/block src/admin src/shortcode-ui",
-    "build-assets": "wp-scripts build src/main src/block src/admin src/shortcode-ui",
-    "build-settings-assets": "wp-scripts build --experimental-modules --source-path=vendor/nextgenthemes/wp-shared/src --output-path=vendor/nextgenthemes/wp-shared/build",
     "build": "composer run build",
+    "start": "wp-scripts start src/main src/block src/admin src/shortcode-ui",
+    "build:assets": "wp-scripts build src/main src/block src/admin src/shortcode-ui",
+    "start:settings": "wp-scripts start --experimental-modules --source-path=vendor/nextgenthemes/wp-shared/src --output-path=vendor/nextgenthemes/wp-shared/build",
+    "build:settings": "wp-scripts build --experimental-modules --source-path=vendor/nextgenthemes/wp-shared/src --output-path=vendor/nextgenthemes/wp-shared/build",
     "test": "cd \"$(npm prefix)\" && phpunit"
   },
   "repository": {
