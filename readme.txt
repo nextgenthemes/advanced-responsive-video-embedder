@@ -193,6 +193,12 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### beta 10.6.0 ###
+
+* New: Lazyload Style Option (upcoming pro Feature).
+* Fix?: Conflict with Advanced Custom Fields.
+* Improved: Simplified the way ARVE generates HTML using `WP_HTML_Tag_Processor`.
+
 ### 2024-01-15 10.5.4 ###
 
 * Improved: Removed incompatibility notices for AIO SEO Pack (resolved).
