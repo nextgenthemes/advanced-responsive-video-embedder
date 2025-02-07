@@ -237,7 +237,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 		$this->assertStringContainsString( '"uploadDate":"2016-10-22"', $output );
 		$this->assertStringContainsString( '"duration":"PT1H2M3S"', $output );
 		$this->assertStringContainsString( 'src="https://example.com', $output );
-		$this->assertStringContainsString( '<a href="https://nextgenthemes.com/plugins/arve-pro/" title="Powered by Advanced Responsive Video Embedder WordPress plugin" class="arve-promote-link" target="_blank">ARVE</a>', $output );
+		$this->assertStringContainsString( '<a href="https://nextgenthemes.com/plugins/arve-pro/" title="Powered by Advanced Responsive Video Embedder WordPress plugin" target="_blank">ARVE</a>', $output );
 	}
 
 	public function test_iframe(): void {
