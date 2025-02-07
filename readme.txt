@@ -196,7 +196,7 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 ### beta 10.6.0 ###
 
 * New: Lazyload Style Option (upcoming pro Feature).
-* Fix?: Conflict with Advanced Custom Fields.
+* Fix?: Conflicts with Advanced Custom Fields and other plugins.
 * Improved: Simplified the way ARVE generates HTML using `WP_HTML_Tag_Processor`.
 
 ### 2024-01-15 10.5.4 ###
