@@ -718,8 +718,8 @@ class Video {
 
 	private function card_consent_html(): string {
 
-		if ( is_card( get_object_vars( $this ) ) && function_exists( '\NextGenThemes\ARVE\Privacy\consent_html' ) ) {
-			return \NextGenThemes\ARVE\Privacy\consent_html( get_object_vars( $this ) );
+		if ( is_card( get_object_vars( $this ) ) && function_exists( __NAMESPACE__ . '\ARVE\Privacy\consent_html' ) ) {
+			return Privacy\consent_html( get_object_vars( $this ) );
 		}
 
 		return '';
@@ -743,8 +743,8 @@ class Video {
 			}
 		}
 
-		if ( 'link-lightbox' === $this->mode && function_exists( '\NextGenThemes\ARVE\Pro\lightbox_link_html' ) ) {
-			$lightbox_link = \NextGenThemes\ARVE\Pro\lightbox_link_html( get_object_vars( $this ) );
+		if ( 'link-lightbox' === $this->mode && function_exists( __NAMESPACE__ . '\ARVE\Pro\lightbox_link_html' ) ) {
+			$lightbox_link = Pro\lightbox_link_html( get_object_vars( $this ) );
 			$html          =
 			'<span class="arve" ' . $block_attr . '>' . $lightbox_link . $this->build_seo_data() . '</span>';
 		} else {
@@ -786,8 +786,8 @@ class Video {
 			$p->add_class( 'align' . $this->align );
 		}
 
-		if ( function_exists( '\NextGenThemes\ARVE\Pro\process_tag' ) ) {
-			$p = \NextGenThemes\ARVE\Pro\process_tag( $p, get_object_vars( $this ) );
+		if ( function_exists( __NAMESPACE__ . '\ARVE\Pro\process_tag' ) ) {
+			$p = Pro\process_tag( $p, get_object_vars( $this ) );
 		}
 
 		if ( 'link-lightbox' !== $this->mode ) {
@@ -811,9 +811,11 @@ class Video {
 	}
 
 	private function card_html(): string {
-		if ( function_exists( '\NextGenThemes\ARVE\Pro\card_html' ) ) {
-			return \NextGenThemes\ARVE\Pro\card_html( get_object_vars( $this ) );
+		if ( function_exists( __NAMESPACE__ . '\Pro\card_html' ) ) {
+			return Pro\card_html( get_object_vars( $this ) );
 		}
+
+		return '';
 	}
 
 	private function build_iframe_attr(): void {
@@ -911,12 +913,12 @@ class Video {
 			'loading'            => ( 'normal' === $this->mode ) ? 'lazy' : 'eager',
 		);
 
-		if ( function_exists( '\Nextgenthemes\ARVE\Pro\iframe_attr' ) ) {
-			$this->iframe_attr = \Nextgenthemes\ARVE\Pro\iframe_attr( $this->iframe_attr, get_object_vars( $this ) );
+		if ( function_exists( __NAMESPACE__ . '\Pro\iframe_attr' ) ) {
+			$this->iframe_attr = Pro\iframe_attr( $this->iframe_attr, get_object_vars( $this ) );
 		}
 
-		if ( is_amp() && function_exists( '\Nextgenthemes\ARVE\AMP\amp_iframe_attr' ) ) {
-			$this->iframe_attr = \Nextgenthemes\ARVE\AMP\amp_iframe_attr( $this->iframe_attr, get_object_vars( $this ) );
+		if ( is_amp() && function_exists( __NAMESPACE__ . '\AMP\amp_iframe_attr' ) ) {
+			$this->iframe_attr = AMP\amp_iframe_attr( $this->iframe_attr, get_object_vars( $this ) );
 		}
 
 		$this->iframe_attr = apply_filters( 'nextgenthemes/arve/iframe_attr', $this->iframe_attr, get_object_vars( $this ) );
@@ -943,8 +945,8 @@ class Video {
 
 	private function iframe_tag(): string {
 
-		if ( is_amp() && function_exists( '\Nextgenthemes\ARVE\AMP\amp_iframe_tag' ) ) {
-			return \Nextgenthemes\ARVE\AMP\amp_iframe_tag( get_object_vars( $this ) );
+		if ( is_amp() && function_exists( __NAMESPACE__ . '\AMP\amp_iframe_tag' ) ) {
+			return AMP\amp_iframe_tag( get_object_vars( $this ) );
 		}
 
 		return 'iframe';
@@ -991,8 +993,8 @@ class Video {
 			'onloadstart'        => 'this.volume=' . ( $this->volume / 100 ),
 		);
 
-		if ( is_amp() && function_exists( '\Nextgenthemes\ARVE\AMP\amp_video_attr' ) ) {
-			$this->video_attr = \Nextgenthemes\ARVE\AMP\amp_video_attr( $this->video_attr );
+		if ( is_amp() && function_exists( __NAMESPACE__ . '\AMP\amp_video_attr' ) ) {
+			$this->video_attr = AMP\amp_video_attr( $this->video_attr );
 		}
 	}
 
@@ -1093,8 +1095,8 @@ class Video {
 			$html .= $this->build_iframe_tag();
 		}
 
-		if ( function_exists( '\NextGenThemes\ARVE\Pro\inner_html' ) ) {
-			$html .= \NextGenThemes\ARVE\Pro\inner_html( get_object_vars( $this ) );
+		if ( function_exists( __NAMESPACE__ . '\ARVE\Pro\inner_html' ) ) {
+			$html .= Pro\inner_html( get_object_vars( $this ) );
 		}
 
 		return $html;

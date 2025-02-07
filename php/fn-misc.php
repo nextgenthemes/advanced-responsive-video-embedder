@@ -202,7 +202,7 @@ function is_gutenberg(): bool {
 }
 
 function is_amp(): bool {
-	return function_exists( '\Nextgenthemes\ARVE\AMP\is_amp' ) && \Nextgenthemes\ARVE\AMP\is_amp();
+	return function_exists( __NAMESPACE__ . '\AMP\is_amp' ) && AMP\is_amp();
 }
 
 /**
