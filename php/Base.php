@@ -4,15 +4,16 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
+use WP_Error;
 use Nextgenthemes\WP\Settings;
 
 class Base {
 	private static $instance = null;
 	private Settings $settings_instance;
-	private \WP_Error $errors;
+	private WP_Error $errors;
 
 	public function __construct() {
-		$this->errors            = new \WP_Error();
+		$this->errors            = new WP_Error();
 		$this->settings_instance = new Settings(
 			array(
 				'namespace'           => __NAMESPACE__,
@@ -32,7 +33,7 @@ class Base {
 		return $this->settings_instance;
 	}
 
-	public function get_errors(): \WP_Error {
+	public function get_errors(): WP_Error {
 		return $this->errors;
 	}
 
