@@ -193,6 +193,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-02-07 10.5.5 ###
+
+* Fix?: Changed the way assets are loaded in the admin, this possibly fixes compatibility issues with other plugins.
+
 ### 2024-01-15 10.5.4 ###
 
 * Improved: Removed incompatibility notices for AIO SEO Pack (resolved).
