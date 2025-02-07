@@ -14,7 +14,7 @@ class Settings {
 	private string $settings_page_title;
 	private string $slashed_namespace;
 	private string $slugged_namespace;
-	private string $camel_namespace;
+	private bool $is_arve;
 	private string $rest_namespace;
 	private string $base_path;
 	private string $base_url;
@@ -43,10 +43,10 @@ class Settings {
 		$this->menu_title          = $args['menu_title'];
 		$this->settings            = $args['settings'];
 		$this->settings_page_title = $args['settings_page_title'];
-		$this->slugged_namespace   = \sanitize_key( str_replace( '\\', '_', $args['namespace'] ) );
-		$this->camel_namespace     = camel_case( \sanitize_key( $this->slugged_namespace ), '\\' );
+		$this->slugged_namespace   = sanitize_key( str_replace( '\\', '_', $args['namespace'] ) );
 		$this->slashed_namespace   = str_replace( '_', '/', $this->slugged_namespace );
 		$this->rest_namespace      = $this->slugged_namespace . '/v1';
+		$this->is_arve             = 'nextgenthemes_arve' === $this->slugged_namespace;
 
 		$this->set_default_options();
 
@@ -284,8 +284,10 @@ class Settings {
 			)
 		);
 
+		$page_for_this_namespace = str_ends_with( $page, $this->slugged_namespace );
+
 		// Check if we are currently viewing our setting page
-		if ( ! str_ends_with( $page, $this->slugged_namespace ) ) {
+		if ( ! $this->is_arve && ! $page_for_this_namespace ) {
 			return;
 		}
 

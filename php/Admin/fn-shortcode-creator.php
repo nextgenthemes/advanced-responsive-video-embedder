@@ -12,6 +12,8 @@ const DIALOG_NAMESPACE = 'nextgenthemes_arve_dialog';
 
 function add_media_button(): void {
 
+	static $ran_already = false;
+
 	foreach ( settings( 'shortcode' )->get_all() as $k => $setting ) {
 
 		if ( 'boolean' === $setting->type && ! $setting->option ) {
@@ -21,26 +23,28 @@ function add_media_button(): void {
 		}
 	}
 
-	wp_enqueue_script_module( 'nextgenthemes-settings' );
-	wp_interactivity_config(
-		DIALOG_NAMESPACE,
-		[
-			'nonce'          => wp_create_nonce( 'wp_rest' ),
-			'siteUrl'        => get_site_url(),
-			'homeUrl'        => get_home_url(),
-			'defaultOptions' => array(),
-		]
-	);
+	if ( ! $ran_already ) {
+		$ran_already = true;
+		wp_interactivity_config(
+			DIALOG_NAMESPACE,
+			[
+				'nonce'          => wp_create_nonce( 'wp_rest' ),
+				'siteUrl'        => get_site_url(),
+				'homeUrl'        => get_home_url(),
+				'defaultOptions' => array(),
+			]
+		);
 
-	wp_interactivity_state(
-		DIALOG_NAMESPACE,
-		[
-			'options'    => $options,
-			'shortcode'  => '[arve url="" /]',
-			'message'    => '',
-			'help'       => false,
-		]
-	);
+		wp_interactivity_state(
+			DIALOG_NAMESPACE,
+			[
+				'options'    => $options,
+				'shortcode'  => '[arve url="" /]',
+				'message'    => '',
+				'help'       => false,
+			]
+		);
+	}
 
 	ob_start();
 	?>
