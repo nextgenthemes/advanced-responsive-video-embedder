@@ -27,8 +27,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [ '7.4', '8.0', '8.1', '8.2', '8.3' ] # https://www.php.net/supported-versions
-        wordpress: [ '6.5', "${{ needs.beta.outputs.ver }}" ] # https://wordpress.org/download/releases/
+        php: [ '7.4', '8.0', '8.1', '8.2', '8.3', '8.4' ] # https://www.php.net/supported-versions
+        wordpress: [ '6.5', '6.7.1' ] # https://wordpress.org/download/releases/ TODO beta fails currently "${{ needs.beta.outputs.ver }}"
     services:
       mysql:
         image: mysql:5.7
@@ -103,7 +103,7 @@ jobs:
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@7fdd3ece872ec7ec4c098ae5ab7637d5e0a96067 # 2.26.0 # https://github.com/shivammathur/setup-php/releases/
+        uses: shivammathur/setup-php@9e72090525849c5e82e596468b86eb55e9cc5401 # 2.32.0 # https://github.com/shivammathur/setup-php/releases/
         with:
           php-version: ${{ matrix.php }}
           ini-values: zend.assertions=1, error_reporting=-1, display_errors=On
