@@ -1,0 +1,11 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "nextgenthemes/fake-block",
+  "title": "FAKE",
+  "category": "embed",
+  "icon": "video-alt3",
+  "description": "Used to compile settings.js/css interactivity api module",
+  "version": "1",
+  "viewScriptModule": "file:./settings.js"
+}
