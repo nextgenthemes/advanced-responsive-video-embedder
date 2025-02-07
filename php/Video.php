@@ -718,7 +718,9 @@ class Video {
 
 	private function card_consent_html(): string {
 
-		if ( is_card( get_object_vars( $this ) ) && function_exists( __NAMESPACE__ . '\ARVE\Privacy\consent_html' ) ) {
+		if ( is_card( get_object_vars( $this ) )
+			&& function_exists( __NAMESPACE__ . '\Privacy\consent_html' )
+		) {
 			return Privacy\consent_html( get_object_vars( $this ) );
 		}
 
@@ -743,23 +745,31 @@ class Video {
 			}
 		}
 
-		if ( 'link-lightbox' === $this->mode && function_exists( __NAMESPACE__ . '\ARVE\Pro\lightbox_link_html' ) ) {
-			$lightbox_link = Pro\lightbox_link_html( get_object_vars( $this ) );
-			$html          =
-			'<span class="arve" ' . $block_attr . '>' . $lightbox_link . $this->build_seo_data() . '</span>';
+		if ( 'link-lightbox' === $this->mode && function_exists( __NAMESPACE__ . '\Pro\lightbox_link_html' ) ) {
+
+			$html = sprintf(
+				'<span class="arve" %s>%s%s</span>',
+				$block_attr,
+				Pro\lightbox_link_html( get_object_vars( $this ) ),
+				$this->build_seo_data()
+			);
+
 		} else {
+
 			$inner_tag = is_card( get_object_vars( $this ) ) ? 'a' : 'div';
-			$html      =
-				'<div class="arve" ' . $block_attr . '>
-					<' . $inner_tag . ' class="arve-inner">
-						<div class="arve-embed">
-							' . $this->arve_embed_inner_html() . '
-						</div>
-							' . $this->card_html() . '
-					</' . $inner_tag . '>
-					' . $this->card_consent_html() . '
-					' . $this->promote_link() . $this->build_seo_data() . '
-				</div>';
+			$html      = <<<HTML
+<div class="arve" {$block_attr}>
+	<{$inner_tag} class="arve-inner">
+		<div class="arve-embed">
+			{$this->arve_embed_inner_html()}
+		</div>
+		{$this->card_html()}
+	</{$inner_tag}>
+	{$this->card_consent_html()}
+	{$this->promote_link()}
+	{$this->build_seo_data()}
+</div>
+HTML;
 		}
 
 		$p = new WP_HTML_Tag_Processor( $html );
@@ -770,6 +780,10 @@ class Video {
 		}
 
 		$p->set_bookmark( 'arve' );
+
+		if ( $this->align ) {
+			$p->add_class( 'align' . $this->align );
+		}
 
 		apply_attr(
 			$p,
@@ -782,12 +796,12 @@ class Video {
 			)
 		);
 
-		if ( $this->align ) {
-			$p->add_class( 'align' . $this->align );
+		if ( function_exists( __NAMESPACE__ . '\Pro\process_tags' ) ) {
+			$p = Pro\process_tags( $p, get_object_vars( $this ) );
 		}
 
-		if ( function_exists( __NAMESPACE__ . '\ARVE\Pro\process_tag' ) ) {
-			$p = Pro\process_tag( $p, get_object_vars( $this ) );
+		if ( function_exists( __NAMESPACE__ . '\StickyVideos\process_tags' ) ) {
+			$p = StickyVideos\process_tags( $p, get_object_vars( $this ) );
 		}
 
 		if ( 'link-lightbox' !== $this->mode ) {
@@ -932,12 +946,12 @@ class Video {
 
 		$tag  = $this->iframe_tag();
 		$html = create_element(
-			'<' . $tag . '></' . $tag . '>',
+			'<' . $tag . '></' . $tag . '>' . PHP_EOL,
 			$this->iframe_attr
 		);
 
 		if ( 'lazyload' === $this->mode ) {
-			$html = '<noscript class="arve-noscript">' . $html . '</noscript>';
+			$html = '<noscript class="arve-noscript">' . $html . '</noscript>' . PHP_EOL;
 		}
 
 		return $html;
@@ -1012,7 +1026,7 @@ class Video {
 		}
 
 		return create_element(
-			'<' . $amp . 'video>' . $this->video_sources_html . tracks_html( $this->tracks ) . '</' . $amp . 'video>',
+			'<' . $amp . 'video>' . $this->video_sources_html . tracks_html( $this->tracks ) . '</' . $amp . 'video>' . PHP_EOL,
 			$attr
 		);
 	}
@@ -1084,7 +1098,7 @@ class Video {
 
 		if ( $this->aspect_ratio ) {
 			$html .= sprintf(
-				'<div class="arve-ar" style="padding-top:%F%%"></div>',
+				'<div class="arve-ar" style="padding-top:%F%%"></div>' . PHP_EOL,
 				aspect_ratio_to_percentage( $this->aspect_ratio )
 			);
 		}
@@ -1095,7 +1109,7 @@ class Video {
 			$html .= $this->build_iframe_tag();
 		}
 
-		if ( function_exists( __NAMESPACE__ . '\ARVE\Pro\inner_html' ) ) {
+		if ( function_exists( __NAMESPACE__ . '\Pro\inner_html' ) ) {
 			$html .= Pro\inner_html( get_object_vars( $this ) );
 		}
 
@@ -1129,12 +1143,15 @@ class Video {
 
 		foreach ( $metas as $key => $val ) {
 
-			if ( ! empty( $this->$key ) ) {
-				if ( 'duration' === $key && is_numeric( $this->$key ) ) {
-					$this->$key = seconds_to_iso8601_duration( $this->$key );
-				}
-				$payload[ $val ] = trim( $this->$key );
+			if ( empty( $this->{$key} ) ) {
+				continue;
 			}
+
+			if ( 'duration' === $key && is_numeric( $this->$key ) ) {
+				$this->$key = seconds_to_iso8601_duration( $this->$key );
+			}
+
+			$payload[ $val ] = trim( $this->$key );
 		}
 
 		return '<script type="application/ld+json">' . wp_json_encode( $payload ) . '</script>';
