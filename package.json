@@ -1,14 +1,14 @@
 {
-  "name": "advanced-responsive-video-embedder",
-  "description": "",
-  "main": "build/block.js",
-  "directories": {
-    "test": "tests"
-  },
+  "name": "@nextgenthemes/arve",
+  "description": "Advanced Responsive Video Embedder WordPress Plugin",
+  "private": true,
   "scripts": {
-    "start": "cd ../../../../.. && npm run start:advanced-responsive-video-embedder",
     "build": "composer run build",
-    "test": "cd ../../../../.. && phpunit"
+    "start": "wp-scripts start src/main src/block src/admin src/shortcode-ui",
+    "build:assets": "wp-scripts build src/main src/block src/admin src/shortcode-ui",
+    "start:settings": "wp-scripts start --experimental-modules --source-path=vendor/nextgenthemes/wp-shared/src --output-path=vendor/nextgenthemes/wp-shared/build",
+    "build:settings": "wp-scripts build --experimental-modules --source-path=vendor/nextgenthemes/wp-shared/src --output-path=vendor/nextgenthemes/wp-shared/build",
+    "test": "cd \"$(npm prefix)\" && phpunit"
   },
   "repository": {
     "type": "git",
@@ -26,5 +26,9 @@
   "bugs": {
     "url": "https://github.com/nextgenthemes/advanced-responsive-video-embedder/issues"
   },
-  "homepage": "https://nextgenthemes.com/plugins/arve-pro"
+  "homepage": "https://nextgenthemes.com/plugins/arve-pro",
+  "dependencies": {
+    "@wordpress/interactivity": "^6.14.0",
+    "webpack-notifier": "^1.15.0"
+  }
 }

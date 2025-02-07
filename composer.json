@@ -37,7 +37,7 @@
 		"build": [
 			"./bin/block-json",
 			"./bin/build-readme",
-			"npm run build",
+			"npm run build:assets",
 			"@composer update"
 		],
 		"pre-update-cmd": [
