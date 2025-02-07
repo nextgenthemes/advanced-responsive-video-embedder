@@ -37,7 +37,7 @@
 		"build": [
 			"./bin/block-json",
 			"./bin/build-readme",
-			"cd ${HOME}/websites && npm run build:advanced-responsive-video-embedder",
+			"npm run build",
 			"@composer update"
 		],
 		"pre-update-cmd": [
