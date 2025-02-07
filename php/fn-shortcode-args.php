@@ -338,7 +338,7 @@ function get_video_type( string $ext ): string {
 
 function iframesrc_urlarg_enablejsapi( string $src, string $provider ): string {
 
-	if ( function_exists( 'Nextgenthemes\ARVE\Pro\init' ) && 'youtube' === $provider ) {
+	if ( function_exists( __NAMESPACE__ . '\Pro\init' ) && 'youtube' === $provider ) {
 		$src = add_query_arg( array( 'enablejsapi' => 1 ), $src );
 	}
 
