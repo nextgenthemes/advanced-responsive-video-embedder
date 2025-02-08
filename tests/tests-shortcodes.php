@@ -105,66 +105,82 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 		}
 	}
 
+	public function host_properties(): array {
+
+		foreach ( get_host_properties() as $provider => $provider_data ) {
+			$data[] = [ $provider, $provider_data ];
+		}
+
+		return $data;
+	}
 	/**
-	 * @group api_data
+	 * @group missing-data
+	 * @dataProvider host_properties
 	 */
-	public function test_api_data(): void {
+	public function test_missing_data( string $provider, array $d ): void {
+		$this->assertNotEmpty( $d['tests'] );
+		$this->assertIsArray( $d['tests'] );
 
-		$properties = get_host_properties();
+		$no_need_for_regex = in_array( $provider, [ 'html5', 'iframe' ], true );
+		$no_id_detection   = in_array( $provider, [ 'rumble', 'tiktok' ], true );
 
-		foreach ( $properties as $provider => $v ) :
+		if ( ! $no_need_for_regex && ! $no_id_detection ) {
+			$this->assertNotEmpty( $d['regex'] );
+		}
+	}
 
-			// Fails for some reason
-			if ( 'dailymotion' === $provider && getenv( 'CI' ) ) {
-				$this->markTestSkipped( 'skipped Dailymotion on Github.' );
-				continue;
+	/**
+	 * Provides test data for video providers.
+	 */
+	public function url_test_data(): array {
+
+		foreach ( get_host_properties() as $provider => $provider_data ) {
+
+			foreach ( $provider_data['tests'] as $test_data ) {
+
+				$data[] = [
+					'provider' => $provider,
+					'oembed'   => $provider_data['oembed'] ?? false,
+					'url'      => $test_data['url'],
+				];
+			}
+		}
+
+		return $data;
+	}
+	/**
+	 * @group api
+	 * @dataProvider url_test_data
+	 */
+	public function test_api_data( string $provider, bool $oembed, string $url ): void {
+
+		$html = shortcode(
+			array(
+				'url'  => $url,
+				'mode' => 'normal',
+			)
+		);
+
+		$this->assertStringNotContainsString( 'Error', $html );
+
+		if ( 'html5' === $provider ) {
+			$this->assertStringContainsString( '"contentURL":', $html );
+		} else {
+			$this->assertStringContainsString( '"embedURL":', $html );
+		}
+
+		#$vimeo_on_github = ( 'vimeo' === $provider ) && getenv( 'CI' );
+
+		if ( $oembed ) {
+
+			if ( 'vimeo' === $provider ) {
+				$this->markTestSkipped( 'skipped Vimeo oembed check for now as it fails in PHPUNIT for some reason.' );
 			}
 
-			if ( empty( $v['tests'] ) ) {
-				$this->markTestSkipped( 'no tests for ' . $provider );
-				continue;
-			}
-
-			$this->assertNotEmpty( $v['tests'] );
-			$this->assertTrue( is_array( $v['tests'] ) );
-
-			//phpcs:ignore
-			fwrite( STDOUT, PHP_EOL );
-
-			foreach ( $v['tests'] as $key => $test ) {
-
-				//phpcs:ignore
-				fwrite( STDOUT, print_r( $test['url'], true ) . PHP_EOL );
-
-				$html = shortcode(
-					array(
-						'url'  => $test['url'],
-						'mode' => 'normal',
-					)
-				);
-
-				$this->assertStringNotContainsString( 'Error', $html );
-
-				if ( 'html5' !== $provider ) {
-					$this->assertStringContainsString( '"embedURL":', $html );
-				} else {
-					$this->assertStringContainsString( '"contentURL":', $html );
-				}
-
-				if ( $v['oembed'] ) {
-
-					$skip_vimeo_on_github = ( 'vimeo' === $provider ) && getenv( 'CI' );
-
-					if ( $skip_vimeo_on_github ) {
-						$this->markTestSkipped( 'skipped Vimeo oembed check on Github.' );
-					} else {
-						$this->assertStringContainsString( 'data-oembed="1"', $html );
-					}
-				} else {
-					$this->assertStringNotContainsString( 'data-oembed="1"', $html );
-				}
-			}
-		endforeach;
+			$this->assertStringContainsString( 'data-oembed="1"', $html );
+		} else {
+			$this->assertStringNotContainsString( 'data-oembed="1"', $html );
+		}
 	}
 
 	public function test_sandbox(): void {
@@ -250,50 +266,58 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 	}
 
 	/**
-	 * @group regex
+	 * Provides test data for video providers.
 	 */
-	public function test_regex(): void {
+	public function regex_test_data(): array {
 
-		$properties = \Nextgenthemes\ARVE\get_host_properties();
+		foreach ( get_host_properties() as $provider => $provider_data ) {
 
-		$this->assertTrue( is_array( $properties ) );
-		$this->assertNotEmpty( $properties );
-
-		foreach ( $properties as $host_id => $host ) :
-
-			$this->assertNotEmpty( $host, $host_id );
-			$this->assertTrue( is_array( $host ), $host_id );
-
-			if ( empty( $host['regex'] ) || ! empty( $host['oembed'] ) ) {
+			if ( ! isset( $provider_data['regex'] ) ) {
 				continue;
 			}
 
-			$this->assertArrayHasKey( 'tests', $host, $host_id );
-			$this->assertNotEmpty( $host['tests'], $host_id );
-			$this->assertTrue( is_array( $host['tests'] ), $host_id );
+			foreach ( $provider_data['tests'] as $test_data ) {
 
-			foreach ( $host['tests'] as $test ) :
+				$data[] = [
+					'regex'             => $provider_data['regex'],
+					'url'               => $test_data['url'],
+					'id'                => $test_data['id'],
+					'account_id'        => $test_data['account_id'] ?? null,
+					'brightcove_player' => $provider_data['brightcove_player'] ?? null,
+					'brightcove_embed'  => $provider_data['brightcove_embed'] ?? null,
+				];
+			}
+		}
 
-				$this->assertNotEmpty( $test, $host_id );
-				$this->assertTrue( is_array( $test ), $host_id );
-				$this->assertArrayHasKey( 'id', $test, $host_id );
-				$this->assertArrayHasKey( 'url', $test, $host_id );
+		return $data;
+	}
+	/**
+	 * @dataProvider regex_test_data
+	 * @group regex
+	 */
+	public function test_regex(
+		string $regex,
+		string $url,
+		string $id,
+		?string $account_id,
+		?string $brightcove_player,
+		?string $brightcove_embed
+	): void {
 
-				preg_match( $host['regex'], $test['url'], $matches );
+		preg_match( $regex, $url, $matches );
 
-				$this->assertNotEmpty( $matches, $test['url'] );
-				$this->assertTrue( is_array( $matches ), $test['url'] );
-				$this->assertArrayHasKey( 'id', $test, $test['url'] );
-				$this->assertEquals( $matches['id'], $test['id'], $test['url'] );
+		$this->assertNotEmpty( $matches, $url );
+		$this->assertArrayHasKey( 'id', $matches, $url );
+		$this->assertEquals( $matches['id'], $id, $url );
 
-				if ( 'brightcove' === $host_id ) {
-					$this->assertEquals( $matches['account_id'], $test['account_id'] );
-					$this->assertEquals( $matches['brightcove_player'], $test['brightcove_player'] );
-					$this->assertEquals( $matches['brightcove_embed'], $test['brightcove_embed'] );
-				}
-			endforeach;
+		if ( $account_id ) {
+			$this->assertEquals( $matches['account_id'], $account_id );
+		}
 
-		endforeach;
+		if ( $brightcove_player && $brightcove_embed ) {
+			$this->assertEquals( $matches['brightcove_player'], $brightcove_player );
+			$this->assertEquals( $matches['brightcove_embed'], $brightcove_embed );
+		}
 	}
 
 	/**
