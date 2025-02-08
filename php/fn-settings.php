@@ -4,31 +4,39 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
+use Nextgenthemes\WP\Settings;
 use Nextgenthemes\WP\SettingsData;
-
 use function Nextgenthemes\WP\nextgenthemes_settings_instance;
 
+function settings_instance(): Settings {
+
+	static $instance = null;
+
+	if ( null === $instance ) {
+
+		$instance = new Settings(
+			array(
+				'namespace'           => __NAMESPACE__,
+				'settings'            => settings( 'settings_page' ),
+				'tabs'                => settings_tabs(),
+				'menu_title'          => __( 'ARVE', 'advanced-responsive-video-embedder' ),
+				'settings_page_title' => __( 'ARVE Settings', 'advanced-responsive-video-embedder' ),
+				'plugin_file'         => PLUGIN_FILE,
+				'base_url'            => plugins_url( '', PLUGIN_FILE ),
+				'base_path'           => PLUGIN_DIR,
+			)
+		);
+	}
+
+	return $instance;
+}
+
 function options(): array {
-	return Base::get_instance()->get_settings_instance()->get_options();
+	return settings_instance()->get_options();
 }
 
 function default_options(): array {
-	return Base::get_instance()->get_settings_instance()->get_options_defaults();
-}
-
-function settings_sections(): array {
-
-	return array(
-		'main'          => __( 'Main', 'advanced-responsive-video-embedder' ),
-		'pro'           => __( 'Pro', 'advanced-responsive-video-embedder' ),
-		'privacy'       => __( 'Extra Privacy', 'advanced-responsive-video-embedder' ),
-		'sticky_videos' => __( 'Sticky Videos', 'advanced-responsive-video-embedder' ),
-		'random_video'  => __( 'Random Video', 'advanced-responsive-video-embedder' ),
-		'urlparams'     => __( 'URL Parameters', 'advanced-responsive-video-embedder' ),
-		'html5'         => __( 'Video Files', 'advanced-responsive-video-embedder' ),
-		'debug'         => __( 'Debug', 'advanced-responsive-video-embedder' ),
-		#'videojs'      => __( 'Video.js', 'advanced-responsive-video-embedder' ),
-	);
+	return settings_instance()->get_options_defaults();
 }
 
 function settings_tabs(): array {

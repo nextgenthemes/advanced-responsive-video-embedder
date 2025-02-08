@@ -4,8 +4,17 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
-function arve_errors(): \WP_Error {
-	return Base::get_instance()->get_errors();
+use WP_Error;
+
+function arve_errors(): WP_Error {
+
+	static $instance = null;
+
+	if ( null === $instance ) {
+		$instance = new WP_Error();
+	}
+
+	return $instance;
 }
 
 function get_host_properties(): array {

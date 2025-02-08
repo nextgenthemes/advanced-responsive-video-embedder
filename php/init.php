@@ -31,7 +31,6 @@ function init_public(): void {
 
 	update_option( 'arve_version', VERSION );
 
-	require_once PLUGIN_DIR . '/php/Base.php';
 	require_once PLUGIN_DIR . '/php/Video.php';
 	require_once PLUGIN_DIR . '/php/fn-deprecated.php';
 	require_once PLUGIN_DIR . '/php/fn-assets.php';
@@ -44,6 +43,8 @@ function init_public(): void {
 	require_once PLUGIN_DIR . '/php/fn-url-handlers.php';
 	require_once PLUGIN_DIR . '/php/fn-validation.php';
 	require_once PLUGIN_DIR . '/php/fn-settings.php';
+
+	settings_instance();
 
 	add_action( 'init', __NAMESPACE__ . '\add_oembed_providers' );
 	add_action( 'init', __NAMESPACE__ . '\init_nextgenthemes_settings' );
