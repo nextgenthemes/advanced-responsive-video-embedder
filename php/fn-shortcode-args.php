@@ -59,7 +59,7 @@ function arg_mode( string $mode ): string {
 function compare_oembed_src_with_generated_src( string $src, string $src_gen, string $provider, string $url ): void {
 
 	$options       = options();
-	$always        = 'always' === $options['show_src_mismatch_errors'];
+	$always        = 'cli' === PHP_SAPI || 'always' === $options['show_src_mismatch_errors'];
 	$dev_mode_only = is_dev_mode() && 'dev-mode' === $options['show_src_mismatch_errors'];
 
 	if ( empty( $src )
