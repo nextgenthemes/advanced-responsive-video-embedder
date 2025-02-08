@@ -327,60 +327,64 @@ class Settings {
 		ob_start();
 		?>
 
-		<div 
-			class="wrap wrap--nextgenthemes"
-			data-wp-interactive="<?= esc_attr( $this->slugged_namespace ); ?>"
-			<?=
-			data_wp_context( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				[
-					'activeTabs' => $active_tabs,
-					'help'       => true,
-				]
-			);
-			?>
-		>
+		<div class="wrap wrap--nextgenthemes">
+
 			<h1><?= esc_html( get_admin_page_title() ); ?></h1>
 
-			<h2 class="nav-tab-wrapper">
-				<?php foreach ( $sections_camel_keys as $k => $v ) : ?>
-					<button
-						class="nav-tab"
-						data-wp-on--click="actions.changeTab"
-						data-wp-class--nav-tab-active="context.activeTabs.<?= esc_attr( $k ); ?>"
-						<?= data_wp_context( [ 'tab' => $k ] ); // phpcs:ignore ?>
-					>
-						<?= esc_html( $v['title'] ); ?>
-					</button>
-				<?php endforeach; ?>
-			</h2>
+			<div
+				class="ngt-settings-interactive"
+				data-wp-interactive="<?= esc_attr( $this->slugged_namespace ); ?>"
+				<?php
+				echo data_wp_context( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					[
+						'activeTabs' => $active_tabs,
+						'help'       => true,
+					]
+				);
+				?>
+			>
+				<h2 class="nav-tab-wrapper">
+					<?php foreach ( $sections_camel_keys as $k => $v ) : ?>
+						<button
+							class="nav-tab"
+							data-wp-on--click="actions.changeTab"
+							data-wp-class--nav-tab-active="context.activeTabs.<?= esc_attr( $k ); ?>"
+							<?= data_wp_context( [ 'tab' => $k ] ); // phpcs:ignore ?>
+						>
+							<?= esc_html( $v['title'] ); ?>
+						</button>
+					<?php endforeach; ?>
+				</h2>
 
-			<div class="ngt-settings-grid">
+				<div class="ngt-settings-grid">
 
-				<div class="ngt-settings-grid__content">
+					<div class="ngt-settings-grid__content">
 
-					<?php
-					do_action( $this->slashed_namespace . '/admin/settings/content', $this );
+						<?php
+						do_action( $this->slashed_namespace . '/admin/settings/content', $this );
 
-					Admin\print_settings_blocks(
-						$this->settings,
-						$this->tabs
-					);
+						Admin\print_settings_blocks(
+							$this->settings,
+							$this->tabs
+						);
 
-					$this->print_reset_buttons();
-					?>
-				</div>
+						$this->print_reset_buttons();
+						?>
+					</div>
 
-				<div class="ngt-settings-grid__sidebar">
+					<div class="ngt-settings-grid__sidebar">
 
-					<p></p>
-					<p><span data-wp-text="state.message"></span>&nbsp;</p>
+						<p></p>
+						<p><span data-wp-text="state.message"></span>&nbsp;</p>
 
-					<pre data-wp-text="state.debug"></pre>
+						<pre data-wp-text="state.debug"></pre>
 
-					<?php do_action( $this->slashed_namespace . '/admin/settings/sidebar', $this ); ?>
-				</div>
-			</div>
-		</div>
+						<?php do_action( $this->slashed_namespace . '/admin/settings/sidebar', $this ); ?>
+					</div>
+					
+				</div><!-- .ngt-settings-grid -->
+			</div><!-- .ngt-settings-interactive -->
+		</div><!-- .wrap--nextgenthemes -->
 
 		<?php
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
