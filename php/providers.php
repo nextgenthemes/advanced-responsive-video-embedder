@@ -509,7 +509,7 @@ return array(
 		'regex'          => '#https?://(player\\.)?vimeo\\.com/((video/)|(channels/[a-z]+/)|(groups/[a-z]+/videos/))?(?<id>[0-9]+)(/(?<vimeo_secret>[0-9a-z]+))?#i',
 		'embed_url'      => 'https://player.vimeo.com/video/%s',
 		'rebuild_url'    => 'https://vimeo.com/%s',
-		'default_params' => 'transparent=0&title=1&byline=0&portrait=0',
+		'default_params' => 'transparent=0&title=1&byline=0&portrait=0&dnt=1',
 		'auto_thumbnail' => true,
 		'auto_title'     => true,
 		'tests'          => array(
@@ -570,7 +570,7 @@ return array(
 		'oembed'         => true,
 		'regex'          => '#https?://([a-z0-9.-]+)wistia\\.(net|com)/(medias|embed/iframe)/(?<id>[a-z0-9]+)#i',
 		'embed_url'      => 'https://fast.wistia.net/embed/iframe/%s',
-		'default_params' => '',
+		'default_params' => 'dnt=1',
 		'tests'          => array(
 			0 => array(
 				'url' => 'https://fast.wistia.net/embed/iframe/g5pnf59ala',

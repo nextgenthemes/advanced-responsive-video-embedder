@@ -221,16 +221,11 @@ function special_iframe_src_mods( string $src, string $provider, string $url, bo
 
 			break;
 		case 'vimeo':
-			$src = add_query_arg( 'dnt', 1, $src );
+			$fragment = (string) wp_parse_url( $url, PHP_URL_FRAGMENT );
 
-			$parsed_url = wp_parse_url( $url );
-
-			if ( ! empty( $parsed_url['fragment'] ) && str_starts_with( $parsed_url['fragment'], 't' ) ) {
-				$src .= '#' . $parsed_url['fragment'];
+			if ( str_starts_with( $fragment, 't' ) ) {
+				$src .= '#' . $fragment;
 			}
-			break;
-		case 'wistia':
-			$src = add_query_arg( 'dnt', 1, $src );
 			break;
 	}
 

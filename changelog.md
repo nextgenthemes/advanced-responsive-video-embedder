@@ -5,9 +5,11 @@
 
 ### beta 10.6.0 ###
 
-* New: Lazyload Style Option (upcoming pro Feature).
+* New: Lazyload Style option (upcoming pro Feature).
 * Fix?: Conflicts with Advanced Custom Fields and other plugins.
+* Fix: Settings page conflicts with admin notices (from other plugins).
 * Improved: Simplified the way ARVE generates HTML using `WP_HTML_Tag_Processor`.
+* Improved: `dnt=1` parameter is now part of the visible default parameters for Vimeo and Wistia. You may need to remove it or set it to `0` to get your views tracked by them.
 
 ### 2024-01-15 10.5.4 ###
 
