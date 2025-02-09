@@ -9,32 +9,35 @@ declare global {
 	}
 }
 
+const d = document;
+const qs = d.querySelector.bind( d );
+
 globalID();
+setEditorCanvasID();
 
-// Taken from https://github.com/WordPress/gutenberg/blob/3317ba195da0149d0bae221dc3516cd76f536c5d/packages/react-native-bridge/common/gutenberg-web-single-block/editor-behavior-overrides.js#L126
-// The editor-canvas iframe relies upon `srcdoc`, which does not trigger a
-// `load` event. Thus, we must poll for the iframe to be ready.
-let attemptsToApplyID = 0;
-const interval = setInterval( () => {
-	attemptsToApplyID++;
-	const canvasIframe = document.querySelector(
-		'iframe[name="editor-canvas"]'
-	) as HTMLIFrameElement | null;
+function setEditorCanvasID() {
+	// Taken from https://github.com/WordPress/gutenberg/blob/3317ba195da0149d0bae221dc3516cd76f536c5d/packages/react-native-bridge/common/gutenberg-web-single-block/editor-behavior-overrides.js#L126
+	// The editor-canvas iframe relies upon `srcdoc`, which does not trigger a
+	// `load` event. Thus, we must poll for the iframe to be ready.
+	let attemptsToApplyID = 0;
+	const interval = setInterval( () => {
+		attemptsToApplyID++;
+		const canvasIframe = qs< HTMLIFrameElement >( 'iframe[name="editor-canvas"]' );
+		const canvasBody = canvasIframe?.contentDocument?.body;
 
-	const canvasBody = canvasIframe?.contentWindow?.document?.body;
+		if ( canvasBody ) {
+			clearInterval( interval );
+			canvasBody.setAttribute( 'id', 'html' );
+		}
 
-	if ( canvasBody ) {
-		clearInterval( interval );
-		canvasBody.setAttribute( 'id', 'html' );
-	}
+		// Safeguard against an infinite loop.
+		if ( attemptsToApplyID > 100 ) {
+			clearInterval( interval );
+		}
+	}, 300 );
+}
 
-	// Safeguard against an infinite loop.
-	if ( attemptsToApplyID > 100 ) {
-		clearInterval( interval );
-	}
-}, 300 );
-
-document.addEventListener( 'click', ( event ) => {
+d.addEventListener( 'click', ( event ) => {
 	const target = event?.target;
 
 	if ( target instanceof HTMLElement && target.matches( '.notice-dismiss' ) ) {
