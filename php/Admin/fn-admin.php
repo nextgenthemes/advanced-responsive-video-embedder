@@ -15,7 +15,6 @@ use function Nextgenthemes\WP\enqueue_asset;
 use function Nextgenthemes\WP\remote_get_json_cached;
 use function Nextgenthemes\WP\str_contains_any;
 use function Nextgenthemes\WP\register_asset;
-use function Nextgenthemes\WP\kses_https_links;
 
 use const Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
 use const Nextgenthemes\ARVE\PLUGIN_DIR;
@@ -413,6 +412,7 @@ function admin_enqueue_scripts(): void {
 			'src'                  => plugins_url( 'build/admin.js', PLUGIN_FILE ),
 			'path'                 => PLUGIN_DIR . '/build/admin.js',
 			'inline_script_before' => 'var arveSCSettings = ' . \wp_json_encode( $settings_data ) . ';',
+			'strategy'             => 'defer',
 		)
 	);
 
