@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
+use WP_Error;
 use WP_HTML_Tag_Processor;
-
 use function Nextgenthemes\WP\valid_url;
 use function Nextgenthemes\WP\get_attribute_from_html_tag;
 use function Nextgenthemes\WP\remote_get_head;
@@ -170,7 +170,7 @@ function yt_srcset( array $sizes ): string {
 function oembed_html2src( object $data ) {
 
 	if ( empty( $data->html ) ) {
-		return new \WP_Error( 'no-oembed-html', __( 'No oembed html', 'advanced-responsive-video-embedder' ) );
+		return new WP_Error( 'no-oembed-html', __( 'No oembed html', 'advanced-responsive-video-embedder' ) );
 	}
 
 	$data->html = htmlspecialchars_decode( $data->html, ENT_COMPAT | ENT_HTML5 );
@@ -182,7 +182,7 @@ function oembed_html2src( object $data ) {
 		if ( $tiktok_video_id ) {
 			return 'https://www.tiktok.com/embed/v2/' . $tiktok_video_id;
 		} else {
-			return new \WP_Error( 'tiktok-video-id', __( 'Failed to extract tiktok video id from oembed html', 'advanced-responsive-video-embedder' ), $data->html );
+			return new WP_Error( 'tiktok-video-id', __( 'Failed to extract tiktok video id from oembed html', 'advanced-responsive-video-embedder' ), $data->html );
 		}
 	} elseif ( 'Facebook' === $data->provider_name ) {
 
@@ -191,7 +191,7 @@ function oembed_html2src( object $data ) {
 		if ( $facebook_video_url ) {
 			return 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $facebook_video_url );
 		} else {
-			return new \WP_Error( 'facebook-video-id', __( 'Failed to extract facebook video url from this html', 'advanced-responsive-video-embedder' ), $data->html );
+			return new WP_Error( 'facebook-video-id', __( 'Failed to extract facebook video url from this html', 'advanced-responsive-video-embedder' ), $data->html );
 		}
 	} else {
 		$iframe_src = get_attribute_from_html_tag( array( 'tag_name' => 'iframe' ), 'src', $data->html );
@@ -203,10 +203,10 @@ function oembed_html2src( object $data ) {
 			if ( $iframe_src ) {
 				return $iframe_src;
 			} else {
-				return new \WP_Error( 'facebook-video-id', __( 'Invalid iframe src url', 'advanced-responsive-video-embedder' ), $data->html, $iframe_src );
+				return new WP_Error( 'facebook-video-id', __( 'Invalid iframe src url', 'advanced-responsive-video-embedder' ), $data->html, $iframe_src );
 			}
 		} else {
-			return new \WP_Error( 'iframe-src', __( 'Failed to extract iframe src from this html', 'advanced-responsive-video-embedder' ), $data->html );
+			return new WP_Error( 'iframe-src', __( 'Failed to extract iframe src from this html', 'advanced-responsive-video-embedder' ), $data->html );
 		}
 	}
 }
