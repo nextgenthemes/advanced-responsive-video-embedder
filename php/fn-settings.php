@@ -187,8 +187,6 @@ function settings_data(): SettingsData {
 				esc_html( $embed_code_only ),
 				esc_url( $provider_list_link )
 			),
-			'descriptionlink'     => esc_url( $provider_list_link ),
-			'descriptionlinktext' => esc_html__( 'unlisted', 'advanced-responsive-video-embedder' ),
 			'shortcode'           => true,
 		),
 		'loop' => array(
@@ -228,8 +226,6 @@ function settings_data(): SettingsData {
 				esc_url( $pro_addon_link ),
 				esc_html( $auto_title )
 			),
-			'descriptionlink'     => esc_url( $pro_addon_link ),
-			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
 		),
 		'description' => array(
 			'default'             => '',
@@ -243,8 +239,6 @@ function settings_data(): SettingsData {
 				__( 'Needed for SEO <a href="%s">ARVE Pro</a> fills this automatically', 'advanced-responsive-video-embedder' ),
 				esc_url( $pro_addon_link )
 			),
-			'descriptionlink'     => esc_url( $pro_addon_link ),
-			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
 		),
 		'upload_date' => array(
 			'type'                => 'string',
@@ -258,8 +252,6 @@ function settings_data(): SettingsData {
 				__( '<a href="%s">ARVE Pro</a> fills this automatically.', 'advanced-responsive-video-embedder' ),
 				esc_url( $pro_addon_link )
 			),
-			'descriptionlink'     => esc_url( $pro_addon_link ),
-			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
 		),
 		'mode' => array(
 			'type'                => 'string',
@@ -278,8 +270,6 @@ function settings_data(): SettingsData {
 				__( 'For Lazyload, Lightbox and Link mode check out <a href="%s">ARVE Pro</a>. Only use normal when Pro is not installed!', 'advanced-responsive-video-embedder' ),
 				'https://nextgenthemes.com/plugins/arve-pro/'
 			),
-			'descriptionlink'     => esc_url( $pro_addon_link ),
-			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
 			'option'              => true,
 			'shortcode'           => true,
 		),
@@ -330,8 +320,6 @@ function settings_data(): SettingsData {
 				esc_url( $pro_addon_link ),
 				esc_html( $auto_thumbs )
 			),
-			'descriptionlink'     => esc_url( $pro_addon_link ),
-			'descriptionlinktext' => esc_html__( 'ARVE Pro', 'advanced-responsive-video-embedder' ),
 		),
 		'hide_title' => array(
 			'type'        => 'boolean',
@@ -637,15 +625,12 @@ function settings_data(): SettingsData {
 				__( 'Needed for <a href="%s">Random Video Addon</a>.', 'advanced-responsive-video-embedder' ),
 				esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' )
 			),
-			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
-			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		),
 		'vimeo_api_secret' => array(
 			'tab'                 => 'random_video',
 			'default'             => '',
 			'shortcode'           => false,
 			'option'              => true,
-
 			'label'               => __( 'Vimeo client secret', 'advanced-responsive-video-embedder' ),
 			'type'                => 'string',
 			'description'         => sprintf(
@@ -653,15 +638,12 @@ function settings_data(): SettingsData {
 				__( 'Needed for <a href="%s">Random Video Addon</a>.', 'advanced-responsive-video-embedder' ),
 				esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' )
 			),
-			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
-			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		),
 		'vimeo_api_token' => array(
 			'tab'                 => 'random_video',
 			'default'             => '',
 			'shortcode'           => false,
 			'option'              => true,
-
 			'label'               => __( 'Vimeo API Token', 'advanced-responsive-video-embedder' ),
 			'type'                => 'string',
 			'description'         => sprintf(
@@ -669,8 +651,6 @@ function settings_data(): SettingsData {
 				__( 'Needed for <a href="%s">Random Video Addon</a>.', 'advanced-responsive-video-embedder' ),
 				esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' )
 			),
-			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
-			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		),
 		'random_video_url' => array(
 			'tab'                 => 'random_video',
@@ -685,8 +665,6 @@ function settings_data(): SettingsData {
 				__( 'Youtube Playlist or Vimeo showcase URL<a href="%s">(Random Video Addon)</a>.', 'advanced-responsive-video-embedder' ),
 				esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' )
 			),
-			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
-			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		),
 		'random_video_urls' => array(
 			'tab'                 => 'random_video',
@@ -701,8 +679,6 @@ function settings_data(): SettingsData {
 				__( 'Video URLs separated by commas. <a href="%s">(Random Video Addon)</a>.', 'advanced-responsive-video-embedder' ),
 				esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' )
 			),
-			'descriptionlink'     => esc_url( 'https://nextgenthemes.com/plugins/arve-random-video/' ),
-			'descriptionlinktext' => esc_html__( 'Random Video Addon', 'advanced-responsive-video-embedder' ),
 		),
 		'legacy_shortcodes' => array(
 			'default'     => true,
@@ -815,8 +791,6 @@ function settings_data(): SettingsData {
 				__( 'Invidious instance <a href="%s" target="_blank">see here</a>.', 'advanced-responsive-video-embedder' ),
 				esc_url( 'https://docs.invidious.io/instances/' )
 			),
-			'descriptionlink'     => esc_url( 'https://docs.invidious.io/instances/' ),
-			'descriptionlinktext' => esc_html( 'see here' ),
 		),
 		'invidious_parameters' => array(
 			'tab'                 => 'privacy',
@@ -830,8 +804,6 @@ function settings_data(): SettingsData {
 				__( 'Invidious <a href="%s" target="_blank">url parameters</a>.', 'advanced-responsive-video-embedder' ),
 				esc_url( 'https://docs.invidious.io/url-parameters/' )
 			),
-			'descriptionlink'     => esc_url( 'https://docs.invidious.io/url-parameters/' ),
-			'descriptionlinktext' => esc_html( 'url parameters' ),
 		),
 		'allow_referrer' => array(
 			'label'       => __( 'Allow domain restricted videos (referrerpolicy)', 'advanced-responsive-video-embedder' ),

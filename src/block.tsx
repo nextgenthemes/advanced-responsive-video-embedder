@@ -63,8 +63,6 @@ interface OptionProps {
 	tab: string;
 	type: string;
 	description?: string;
-	descriptionlink?: string;
-	descriptionlinktext?: string;
 	placeholder?: string;
 	options?: Record< string, string >;
 	ui?: 'image_upload';
@@ -178,7 +176,7 @@ function buildControls( props ) {
 					<SelectControl
 						value={ val }
 						label={ option.label }
-						help={ createHelp( option ) }
+						help={ createHelp( option?.description ) }
 						options={ PrepareSelectOptions( option.options ) }
 						onChange={ ( value ) => {
 							return props.setAttributes( {
@@ -191,7 +189,7 @@ function buildControls( props ) {
 					<ToggleControl
 						key={ key }
 						label={ option.label }
-						help={ createHelp( option ) }
+						help={ createHelp( option?.description ) }
 						checked={ !! val }
 						onChange={ ( value ) => {
 							return props.setAttributes( {
@@ -204,7 +202,7 @@ function buildControls( props ) {
 					<TextControl
 						label={ option.label }
 						placeholder={ option.placeholder }
-						help={ createHelp( option ) }
+						help={ createHelp( option?.description ) }
 						value={ val }
 						onChange={ ( value ) => {
 							changeTextControl( key, value, props );
@@ -214,7 +212,7 @@ function buildControls( props ) {
 				{ 'image_upload' === option.ui && (
 					<BaseControl
 						className="editor-post-featured-image"
-						help={ createHelp( option ) }
+						help={ createHelp( option?.description ) }
 					>
 						<MediaUploadCheck fallback={ mediaUploadInstructions }>
 							<MediaUpload
@@ -264,7 +262,6 @@ function buildControls( props ) {
 											[ key + '_url' ]: '',
 										} );
 									} }
-									isLink
 									isDestructive
 								>
 									{ __( 'Remove Thumbnail' ) }
@@ -313,23 +310,33 @@ function buildControls( props ) {
 	// );
 }
 
-function createHelp( option: OptionProps ) {
-	if ( typeof option.description !== 'string' ) {
+function createHelp( description: string | undefined ): string | JSX.Element {
+	if ( ! description ) {
 		return '';
 	}
 
-	if ( typeof option.descriptionlinktext === 'string' ) {
-		const textSplit = option.description.split( option.descriptionlinktext );
+	const doc = domParser.parseFromString( description, 'text/html' );
+	const link = doc.querySelector( 'a' );
+	if ( link ) {
+		const href = link.getAttribute( 'href' ) || '';
+		const linkText = link.textContent || '';
+		description = doc.body.textContent || '';
+		const textSplit = description.split( linkText );
+
+		if ( textSplit.length !== 2 ) {
+			throw new Error( 'textSplit.length must be 2' );
+		}
 
 		return (
 			<>
 				{ textSplit[ 0 ] }
-				<a href={ option.descriptionlink }>{ option.descriptionlinktext }</a>
+				<a href={ href }>{ linkText }</a>
 				{ textSplit[ 1 ] }
 			</>
 		);
 	}
-	return option.description;
+
+	return description;
 }
 
 function capitalizeFirstLetter( str: string ): string {
