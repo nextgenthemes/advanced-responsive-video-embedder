@@ -32,12 +32,8 @@ function register_assets(): void {
 		$options  = options();
 
 		foreach ( $settings as $key => $v ) {
-			if ( $options['gutenberg_help'] && ! empty( $v['description'] ) ) {
-				$settings[ $key ]['description'] = wp_strip_all_tags( $v['description'] );
-			} else {
+			if ( ! $options['gutenberg_help'] ) {
 				unset( $settings[ $key ]['description'] );
-				unset( $settings[ $key ]['descriptionlink'] );
-				unset( $settings[ $key ]['descriptionlinktext'] );
 			}
 		}
 
