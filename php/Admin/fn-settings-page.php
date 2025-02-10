@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE\Admin;
 
-use Nextgenthemes\ARVE;
-use Nextgenthemes\WP;
+use function Nextgenthemes\WP\remote_get_body_cached;
+use const Nextgenthemes\ARVE\ALLOWED_HTML;
 
 function settings_content(): void {
 
@@ -132,13 +132,13 @@ function settings_sidebar(): void {
 function print_settings_box_html( string $file ): void {
 	echo '<div class="ngt-sidebar-box">';
 	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-	echo wp_kses( file_get_contents( __DIR__ . $file, false ), ARVE\ALLOWED_HTML, array( 'https' ) );
+	echo wp_kses( file_get_contents( __DIR__ . $file, false ), ALLOWED_HTML, array( 'https' ) );
 	echo '</div>';
 }
 
 function print_arve_news(): void {
 
-	$response = WP\remote_get_body_cached(
+	$response = remote_get_body_cached(
 		add_query_arg(
 			array(
 				'per_page'    => 4,
@@ -171,23 +171,9 @@ function print_arve_news(): void {
 		<?php
 		foreach ( $posts as $post ) {
 			printf( '<h5><a href="%s">%s</a></h5>', esc_url( $post->link ), esc_html( $post->title->rendered ) );
-			echo wp_kses( $post->excerpt->rendered, ARVE\ALLOWED_HTML );
+			echo wp_kses( $post->excerpt->rendered, ALLOWED_HTML );
 		}
 		?>
 	</div>
 	<?php
-}
-
-// unused, trigger re-caching is rebuild is probably better, also there this leaves the times in the DB so will this even work?
-function delete_oembed_caches(): void {
-
-	global $wpdb;
-
-	$wpdb->query(
-		$wpdb->prepare(
-			"DELETE FROM {$wpdb->postmeta} WHERE meta_key LIKE %s AND meta_value LIKE %s",
-			'%_oembed_%',
-			'%' . $wpdb->esc_like( 'id="arve-' ) . '%'
-		)
-	);
 }
