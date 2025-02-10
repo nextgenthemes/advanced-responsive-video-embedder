@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\WP;
 
+use WP_Interactivity_API_Directives_Processor;
+
 class SettingValidator {
 
 	public string $option_key;
@@ -40,10 +42,8 @@ class SettingValidator {
 	 * @var string 'string', 'integer' or 'boolean'
 	 */
 	public string $type;
-	public ?string $placeholder         = null;
-	public ?string $description         = null;
-	public ?string $descriptionlink     = null;
-	public ?string $descriptionlinktext = null;
+	public ?string $placeholder = null;
+	public ?string $description = null;
 
 	/**
 	 * Options for to choose from, used for 'select'
@@ -70,18 +70,15 @@ class SettingValidator {
 
 		$this->set_type( $setting['type'] );
 		$this->set_default( $setting['default'] );
-		$this->option_key = $setting['option_key'];
-		$this->label      = $setting['label'];
-
-		$this->tab                 = $setting['tab'] ?? $this->tab;
-		$this->options             = $setting['options'] ?? $this->options;
-		$this->ui                  = $setting['ui'] ?? $this->ui;
-		$this->placeholder         = $setting['placeholder'] ?? $this->placeholder;
-		$this->description         = $setting['description'] ?? $this->description;
-		$this->descriptionlink     = $setting['descriptionlink'] ?? $this->descriptionlink;
-		$this->descriptionlinktext = $setting['descriptionlinktext'] ?? $this->descriptionlinktext;
-		$this->edd_item_id         = $setting['edd_item_id'] ?? $this->edd_item_id;
-		$this->edd_item_name       = $setting['edd_item_name'] ?? $this->edd_item_name;
+		$this->option_key    = $setting['option_key'];
+		$this->label         = $setting['label'];
+		$this->tab           = $setting['tab'] ?? $this->tab;
+		$this->options       = $setting['options'] ?? $this->options;
+		$this->ui            = $setting['ui'] ?? $this->ui;
+		$this->placeholder   = $setting['placeholder'] ?? $this->placeholder;
+		$this->description   = $setting['description'] ?? $this->description;
+		$this->edd_item_id   = $setting['edd_item_id'] ?? $this->edd_item_id;
+		$this->edd_item_name = $setting['edd_item_name'] ?? $this->edd_item_name;
 
 		if ( isset( $setting['edd_store_url'] ) ) {
 			$this->set_edd_store_url( $setting['edd_store_url'] );

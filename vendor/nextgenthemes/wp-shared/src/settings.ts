@@ -2,87 +2,24 @@ import './settings.css';
 import { debounce, aspectRatio } from './helpers';
 import { store, getContext, getConfig } from '@wordpress/interactivity';
 const domParser = new DOMParser();
+const d = document;
+const qs = d.querySelector.bind( d ) as typeof document.querySelector;
 
-declare global {
-	interface Window {
-		wp: {
-			media: wpMedia;
-		};
+setupInteractivityApi();
+setBodyBackgroundColorAsCssVar();
+
+function setBodyBackgroundColorAsCssVar() {
+	const backgroundColor = window.getComputedStyle( d.body ).backgroundColor;
+	const wrap = qs( '.wrap--nextgenthemes' );
+
+	if ( wrap ) {
+		wrap.setAttribute( 'style', `--ngt-wp-body-bg: ${ backgroundColor };` );
 	}
 }
 
-init();
-
-interface wpMedia {
-	( options: any ): any; // Function-like usage
-	open: () => this; // Method to initialize the media dialog
-	on: ( eventName: string, callback: ( data: any ) => void ) => this; // Event subscription
-	editor: {
-		insert: ( content: string ) => void; // Method to insert content into the editor}
-	};
-}
-interface storeInterface {
-	state: {
-		options: Record< string, string | number | boolean >;
-		help: boolean;
-		dialog: HTMLDialogElement;
-		isSaving: boolean;
-		message: string;
-		shortcode: string;
-		debug: string;
-		isValidLicenseKey: () => boolean;
-		is32charactersLong: () => boolean;
-		isActiveTab: boolean;
-	};
-	actions: {
-		toggleHelp: () => void;
-		openShortcodeDialog: () => void;
-		insertShortcode: () => void;
-		closeShortcodeDialog: () => void;
-		saveOptions: () => void;
-		saveOptionsReal: () => void;
-		changeTab: ( tab: string ) => void;
-		inputChange: ( event: Event ) => void;
-		checkboxChange: ( event: Event ) => void;
-		selectImage: () => void;
-		deleteOembedCache: () => void;
-		eddLicenseAction: () => void;
-		resetOptionsSection: () => void;
-		restCall: (
-			restRoute: string,
-			body: Record< string, any >,
-			refreshAfter?: boolean
-		) => void;
-	};
-	callbacks: {
-		updateShortcode: () => void;
-		updatePreview: () => void;
-	};
-	helpers: {
-		extractFromEmbedCode: ( url: string ) => void;
-		debugJson: ( data: Record< string, any > ) => void;
-	};
-}
-
-interface optionContext {
-	tab: string;
-	option_key: string;
-	edd_item_id: string;
-	edd_action: string;
-	edd_store_url: string;
-	activeTabs: { [ key: string ]: boolean };
-}
-
-interface configInterface {
-	restUrl: string;
-	nonce: string;
-	defaultOptions: Record< string, string | number | boolean >;
-}
-
-function init() {
-	const namespace = document.querySelector< HTMLElement >(
-		'[data-wp-interactive^="nextgenthemes"]'
-	)?.dataset?.wpInteractive;
+function setupInteractivityApi() {
+	const namespace = qs< HTMLElement >( '[data-wp-interactive^="nextgenthemes"]' )?.dataset
+		?.wpInteractive;
 
 	if ( ! namespace ) {
 		// In ARVE this script will always be loaded but the config is only output when the media button is on the page
@@ -358,4 +295,78 @@ function init() {
 	} );
 
 	actions.saveOptions = debounce( actions.saveOptionsReal, 1111 );
+}
+declare global {
+	interface Window {
+		wp: {
+			media: wpMedia;
+		};
+	}
+}
+
+interface wpMedia {
+	( options: any ): any; // Function-like usage
+	open: () => this; // Method to initialize the media dialog
+	on: ( eventName: string, callback: ( data: any ) => void ) => this; // Event subscription
+	editor: {
+		insert: ( content: string ) => void; // Method to insert content into the editor}
+	};
+}
+
+interface storeInterface {
+	state: {
+		options: Record< string, string | number | boolean >;
+		help: boolean;
+		dialog: HTMLDialogElement;
+		isSaving: boolean;
+		message: string;
+		shortcode: string;
+		debug: string;
+		isValidLicenseKey: () => boolean;
+		is32charactersLong: () => boolean;
+		isActiveTab: boolean;
+	};
+	actions: {
+		toggleHelp: () => void;
+		openShortcodeDialog: () => void;
+		insertShortcode: () => void;
+		closeShortcodeDialog: () => void;
+		saveOptions: () => void;
+		saveOptionsReal: () => void;
+		changeTab: ( tab: string ) => void;
+		inputChange: ( event: Event ) => void;
+		checkboxChange: ( event: Event ) => void;
+		selectImage: () => void;
+		deleteOembedCache: () => void;
+		eddLicenseAction: () => void;
+		resetOptionsSection: () => void;
+		restCall: (
+			restRoute: string,
+			body: Record< string, any >,
+			refreshAfter?: boolean
+		) => void;
+	};
+	callbacks: {
+		updateShortcode: () => void;
+		updatePreview: () => void;
+	};
+	helpers: {
+		extractFromEmbedCode: ( url: string ) => void;
+		debugJson: ( data: Record< string, any > ) => void;
+	};
+}
+
+interface optionContext {
+	tab: string;
+	option_key: string;
+	edd_item_id: string;
+	edd_action: string;
+	edd_store_url: string;
+	activeTabs: { [ key: string ]: boolean };
+}
+
+interface configInterface {
+	restUrl: string;
+	nonce: string;
+	defaultOptions: Record< string, string | number | boolean >;
 }

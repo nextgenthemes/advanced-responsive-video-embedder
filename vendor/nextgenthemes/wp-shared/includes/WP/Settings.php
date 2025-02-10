@@ -7,22 +7,84 @@ namespace Nextgenthemes\WP;
 use function wp_interactivity_data_wp_context as data_wp_context;
 
 class Settings {
-	private static $no_reset_sections = array( 'random-video', 'keys' );
-
+	/**
+	 * The slug of the parent menu under which the settings menu will appear.
+	 */
 	private string $menu_parent_slug = 'options-general.php';
+
 	private string $menu_title;
 	private string $settings_page_title;
+
+	/**
+	 * The namespace with slashes for internal use.
+	 * Gets generated from a php namespace.
+	 * example: nextgenthemes/arve
+	 */
 	private string $slashed_namespace;
+
+	/**
+	 * The namespace with slashes for internal use.
+	 * Gets generated from a php namespace.
+	 * example: nextgenthemes-arve
+	 */
 	private string $slugged_namespace;
+
+	/**
+	 * Flag to indicate if the current instance is for ARVE.
+	 */
 	private bool $is_arve;
+
+	/**
+	 * The REST API namespace.
+	 */
 	private string $rest_namespace;
+
+	/**
+	 * The base path of the plugin.
+	 */
 	private string $base_path;
+
+	/**
+	 * The base URL of the plugin.
+	 */
 	private string $base_url;
+
+	/**
+	 * The plugin file path, if available.
+	 */
 	private ?string $plugin_file;
+
+	/**
+	 * Tabs for the Setting Page
+	 *
+	 * Example:
+	 *      $tags = array(
+	 *          'tab_name' => array(
+	 *              'title'        => __( 'Tab Name', 'slug' ),
+	 *              'premium_link' => sprintf( // optional parameter
+	 *                  '<a href="%s">%s</a>',
+	 *                  'https://nextgenthemes.com/plugins/arve-random-video/',
+	 *                  __( 'Random Videos Addon', 'slug' )
+	 *              ),
+	 *              'reset_button' => false, // optional parameter, true by default
+	 *          ),
+	 *      );
+	 */
 	private array $tabs;
 
+	/**
+	 * Array of current option values.
+	 */
 	private array $options;
+
+	/**
+	 * Array of default option values.
+	 */
 	private array $options_defaults;
+
+	/**
+	 * Array of default option values organized by section.
+	 */
 	private array $options_defaults_by_section;
 
 	/**
@@ -329,7 +391,9 @@ class Settings {
 
 		<div class="wrap wrap--nextgenthemes">
 
-			<h1><?= esc_html( get_admin_page_title() ); ?></h1>
+			<div class="ngt-width-limiter">
+				<h1><?= esc_html( get_admin_page_title() ); ?></h1>
+			</div>
 
 			<div
 				class="ngt-settings-interactive"
@@ -343,46 +407,51 @@ class Settings {
 				);
 				?>
 			>
-				<h2 class="nav-tab-wrapper">
-					<?php foreach ( $sections_camel_keys as $k => $v ) : ?>
-						<button
-							class="nav-tab"
-							data-wp-on--click="actions.changeTab"
-							data-wp-class--nav-tab-active="context.activeTabs.<?= esc_attr( $k ); ?>"
-							<?= data_wp_context( [ 'tab' => $k ] ); // phpcs:ignore ?>
-						>
-							<?= esc_html( $v['title'] ); ?>
-						</button>
-					<?php endforeach; ?>
+				<h2 class="nav-tab-wrapper ngt-full-width">
+					<div class="ngt-width-limiter">
+						<?php foreach ( $sections_camel_keys as $k => $v ) : ?>
+							<button
+								class="nav-tab"
+								data-wp-on--click="actions.changeTab"
+								data-wp-class--nav-tab-active="context.activeTabs.<?= esc_attr( $k ); ?>"
+								<?= data_wp_context( [ 'tab' => $k ] ); // phpcs:ignore ?>
+							>
+								<?= esc_html( $v['title'] ); ?>
+							</button>
+						<?php endforeach; ?>
+					</div>
 				</h2>
 
-				<div class="ngt-settings-grid">
+				<div class="ngt-settings-bg ngt-full-width">
+					<div class="ngt-settings-grid ngt-width-limiter">
 
-					<div class="ngt-settings-grid__content">
+						<div class="ngt-settings-grid__content">
 
-						<?php
-						do_action( $this->slashed_namespace . '/admin/settings/content', $this );
+							<?php
+							do_action( $this->slashed_namespace . '/admin/settings/content', $this );
 
-						Admin\print_settings_blocks(
-							$this->settings,
-							$this->tabs
-						);
+							Admin\print_settings_blocks(
+								$this->settings,
+								$this->tabs
+							);
 
-						$this->print_reset_buttons();
-						?>
-					</div>
+							$this->print_reset_buttons();
+							?>
+						</div>
 
-					<div class="ngt-settings-grid__sidebar">
+						<div class="ngt-settings-grid__sidebar">
 
-						<p></p>
-						<p><span data-wp-text="state.message"></span>&nbsp;</p>
+							<p></p>
+							<p><span data-wp-text="state.message"></span>&nbsp;</p>
 
-						<pre data-wp-text="state.debug"></pre>
+							<pre data-wp-text="state.debug"></pre>
 
-						<?php do_action( $this->slashed_namespace . '/admin/settings/sidebar', $this ); ?>
-					</div>
-					
-				</div><!-- .ngt-settings-grid -->
+							<?php do_action( $this->slashed_namespace . '/admin/settings/sidebar', $this ); ?>
+						</div>
+						
+					</div><!-- .ngt-settings-grid -->
+				</div><!-- .ngt-settings-bg -->
+
 			</div><!-- .ngt-settings-interactive -->
 		</div><!-- .wrap--nextgenthemes -->
 
