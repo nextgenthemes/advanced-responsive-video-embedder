@@ -4,10 +4,12 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\WP;
 
+use WP_Error;
+
 /**
  * Retrieves JSON data from a remote URL.
  *
- * @return mixed
+ * @return mixed|WP_Error
  */
 function remote_get_json( string $url, array $args = array(), string $json_name = '' ) {
 	return remote_get_json_cached( $url, $args, $json_name, 0 );
@@ -30,7 +32,7 @@ function remote_get_json_cached( string $url, array $args = array(), string $jso
 		$response = json_decode( $response, true, 128, JSON_THROW_ON_ERROR );
 	} catch ( \Exception $e ) {
 
-		return new \WP_Error(
+		return new WP_Error(
 			'json-decode-error',
 			sprintf(
 				// Translators: URL.
@@ -43,7 +45,7 @@ function remote_get_json_cached( string $url, array $args = array(), string $jso
 
 	if ( $json_name ) {
 		if ( empty( $response[ $json_name ] ) ) {
-			return new \WP_Error(
+			return new WP_Error(
 				'json-value-empty',
 				sprintf(
 					// Translators: 1 URL 2 JSON value
@@ -79,7 +81,7 @@ function remote_get_body( string $url, array $args = array() ) {
 
 	if ( 200 !== $response_code ) {
 
-		return new \WP_Error(
+		return new WP_Error(
 			$response_code,
 			sprintf(
 				// Translators: 1 URL 2 HTTP response code.
@@ -93,7 +95,7 @@ function remote_get_body( string $url, array $args = array() ) {
 	$response = wp_remote_retrieve_body( $response );
 
 	if ( '' === $response ) {
-		return new \WP_Error(
+		return new WP_Error(
 			'empty-body',
 			sprintf(
 				// Translators: URL.
@@ -121,7 +123,7 @@ function remote_get_head( string $url, array $args = array() ) {
 
 	if ( 200 !== $response_code ) {
 
-		return new \WP_Error(
+		return new WP_Error(
 			$response_code,
 			sprintf(
 				// Translators: 1 URL 2 HTTP response code.
