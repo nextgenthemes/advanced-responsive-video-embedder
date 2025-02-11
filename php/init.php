@@ -46,10 +46,8 @@ function init_public(): void {
 
 	settings_instance();
 
-	add_action( 'init', __NAMESPACE__ . '\add_oembed_providers' );
 	add_action( 'init', __NAMESPACE__ . '\init_nextgenthemes_settings' );
 	add_action( 'init', __NAMESPACE__ . '\register_assets' );
-	add_action( 'init', __NAMESPACE__ . '\load_textdomain' );
 	add_filter( 'oembed_remote_get_args', __NAMESPACE__ . '\vimeo_referer', 10, 2 );
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\create_shortcodes', 999 );
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\create_url_handlers', 999 );
@@ -84,7 +82,6 @@ function init_admin(): void {
 	add_action( 'wp_dashboard_setup', __NAMESPACE__ . '\Admin\add_dashboard_widget' );
 
 	add_filter( 'plugin_action_links_' . plugin_basename( PLUGIN_FILE ), __NAMESPACE__ . '\Admin\add_action_links' );
-	//add_filter( 'nextgenthemes_arve_save_options', __NAMESPACE__ . '\Admin\filter_save_options' ); // TODO remove?
 
 	add_filter( 'debug_information', __NAMESPACE__ . '\Admin\add_site_health_metadata' );
 }
@@ -113,33 +110,61 @@ function uninstall(): void {
  *
  * @return int|false The number of rows deleted or false on failure.
  */
-function delete_oembed_cache(): string {
+function delete_oembed_cache( string $contains = '' ): string {
 
 	global $wpdb, $wp_embed;
 
 	$message = '';
 
 	// Get post meta oEmbed caches
-	$oembed_post_meta_post_ids = (array) $wpdb->get_col(
-		$wpdb->prepare(
-			"SELECT DISTINCT post_id FROM $wpdb->postmeta WHERE meta_key LIKE %s",
-			$wpdb->esc_like( '_oembed_' ) . '%'
-		)
-	);
+	if ( $contains ) {
+		$oembed_post_meta_post_ids = (array) $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT DISTINCT post_id FROM $wpdb->postmeta WHERE meta_key LIKE %s AND meta_value LIKE %s",
+				$wpdb->esc_like( '_oembed_' ) . '%',
+				'%' . $wpdb->esc_like( $contains ) . '%'
+			)
+		);
+	} else {
+		$oembed_post_meta_post_ids = (array) $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT DISTINCT post_id FROM $wpdb->postmeta WHERE meta_key LIKE %s",
+				$wpdb->esc_like( '_oembed_' ) . '%'
+			)
+		);
+	}
 
 	// Get posts oEmbed caches
-	$oembed_post_post_ids = (array) $wpdb->get_col(
-		"SELECT ID FROM $wpdb->posts
-		WHERE post_type = 'oembed_cache'"
-	);
+	if ( $contains ) {
+		$oembed_post_post_ids = (array) $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT ID FROM $wpdb->posts WHERE post_type = 'oembed_cache' AND post_content LIKE %s",
+				'%' . $wpdb->esc_like( $contains ) . '%'
+			)
+		);
+	} else {
+		$oembed_post_post_ids = (array) $wpdb->get_col(
+			"SELECT ID FROM $wpdb->posts WHERE post_type = 'oembed_cache'"
+		);
+	}
 
 	// Get transient oEmbed caches
-	$oembed_transients = $wpdb->get_col(
-		$wpdb->prepare(
-			"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s",
-			$wpdb->esc_like( '_transient_oembed_' ) . '%'
-		)
-	);
+	if ( $contains ) {
+		$oembed_transients = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s AND option_value LIKE %s",
+				$wpdb->esc_like( '_transient_oembed_' ) . '%',
+				'%' . $wpdb->esc_like( $contains ) . '%'
+			)
+		);
+	} else {
+		$oembed_transients = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s",
+				$wpdb->esc_like( '_transient_oembed_' ) . '%'
+			)
+		);
+	}
 
 	$oembed_caches = array(
 		'post'        => $oembed_post_meta_post_ids,
