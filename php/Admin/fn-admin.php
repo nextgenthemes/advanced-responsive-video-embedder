@@ -122,7 +122,7 @@ function action_admin_init_setup_messages(): void {
 				sprintf(
 					// Translators: %1$s URL, %2$s version tag.
 					__( 'For the ARVE Block to work you currently need the <a href="%1$s">Gutenberg plugin</a> active or <a href="$2$s">WP 6.6-RC2</a> or later. Reason is unknown at the time of writing this.', 'advanced-responsive-video-embedder' ),
-					\admin_url( 'plugin-install.php?s=Gutenberg%2520Team&tab=search&type=term' ),
+					admin_url( 'plugin-install.php?s=Gutenberg%2520Team&tab=search&type=term' ),
 					esc_url( 'https://wordpress.org/news/2024/07/wordpress-6-6-rc2/' )
 				),
 				ALLOWED_HTML,
