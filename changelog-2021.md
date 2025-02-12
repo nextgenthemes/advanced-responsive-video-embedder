@@ -2,6 +2,148 @@
 
 wp.org does not like this.
 
+### 2021-12-17 9.7.1 ###
+
+* Fix: Elements from the dialog showing up in Elemetor. (Button does not work)
+* New: Support for [brighteon](https://brighteon.com)
+* Improved: Make sure there is no ARVE pecific json left in the oemed caches after uninstalling the plugin.
+
+### 2021-12-09 9.7.0 ###
+
+* Fix: Partially reverse `preload="none"` on `<video>`. This causes thumbnails not to be generated from the video by the browser. `preload="none"` will be used only for Lazyload and Lightbox mode when there is a thumbnail image.
+* Improved: Seo data is now generated in `json-ld`.
+
+### 2021-12-07 9.6.0 ###
+
+* Deprecated: Shortcode UI dialog is no longer maintained but you can still use it by clicking on "Add Post Element" button when Shortcode UI is installed.
+* New: ARVE now has its own dependecy free Shortcode creator dialog in Classic Editor. It will pop up when you click the "Embed Video" button that previously opened up Shortcode UI dialog.
+* New: Support for tv.gab.com
+* Improved: Video files will be embedded with `preload="none"` to prevent desktop browsers from buffering videos without interaction.
+* Improved: Tested with WP 5.9 nighly and PHP 8.0
+* Improved: Make use of modern CSS `aspect-ratio` instead of padding hack.
+
+### 2021-09-21 9.5.13 ###
+
+* Fix: Vimeo color bar thumbnail issue. (they changed their URLs)
+* Fix: Vimeo chat can now be embedded with ARVE `allow-forms` will be added to sandbox attribute. 
+
+### 2021-04-22 9.5.12 ###
+
+* Fix: Removed `<template>` tag that was causing AMP errors messages.
+
+### 2021-04-04 9.5.11 ###
+
+* New: Support for v.qq.com videos.
+* Fix: `.m4v` files not loading.
+
+### 2021-03-25 9.5.10 ###
+
+* Fix: 'None numeric value' errors in some situations.
+
+### 2021-03-11 9.5.8 ###
+
+* Fix: Scripts wrongly moved to the `<head>` with the "Always load assets" option turned on.
+
+### 2021-03-11 9.5.7 ###
+
+* Minor tweak: Load main.js in `<head>`.
+* Tested with WP 5.7.0
+
+### 2021-03-09 9.5.6 ###
+
+* Improved: Load scripts with higher priority.
+* Fix: Error related to removed notice script.
+
+### 2021-03-08 9.5.5 ###
+
+* Fix: JSON decode error appearing. 
+* Fix: Error messages for no longer needed and not existing `.js` file.
+* Improved: Default width for sticky videos set to `500px`.
+* Tested with WP 5.7-RC2
+
+### 2021-03-02 9.5.4-beta1 ###
+
+* Fix: Possible conflict with PHP8 polyfills.
+* Fix: Unintentional newlines.
+* Improved: Tweaks to make debugging easier.
+* Options for [sticky videos](https://nextgenthemes.com/plugins/arve-sticky-videos/) are ready to use.
+
+### 2021-02-22 9.5.3-beta1 ###
+
+* Fix: Shortcode arguments not working in all situations.
+* Removed services that went down.
+
+### 2021-02-17 9.5.2-beta1 ###
+
+* Fix: Conflict with Notice library.
+* Changes to oembed data caching.
+
+### 2021-02-13 9.5.1-beta7 ###
+
+* Fixed and further simplified oembed caching.
+* Improved: Allow forms for Wistia.
+
+### 2021-02-13 9.5.1-beta1 ###
+
+* New video hosts support for
+  * [LBRY](https://lbry.com)
+  * [Odyssey](https://odysee.com)
+  * [mail.ru](https://my.mail.ru/videos/)
+  * [donnersender.ru](https://donnersender.ru)
+  * [banned.video](https://banned.video) & [cantcensortruth.com](https://cantcensortruth.com) mirror site. Works directly with their URLs, **not** their embed codes. ARVE works without using their JavaScript on your site.
+* Fix: Classic Video widget use with provider urls.
+* Fix: Filtered out link in new admin notices.
+* Improved: Caching system simplified and improved.
+* Improved: Added info if logged in user can not install plugins.
+* Improved: Make more tags filterable.
+
+### 2021-01-28 9.4.2 ###
+
+* Fix: Include new library for notices.
+
+### 2021-01-28 9.4.1 ###
+
+* Fix: (hopefully) Non dismissible admin notices. Also removed the notice that came with 9.0-beta completely.
+* Fix: rumble.com and other providers.
+* Improved: The __tiny__ JavaScript of ARVE is now loaded in the `<head>` with `<script async src=` this will deal with edge cases when styles would get applied late.
+
+### 2021-01-25 9.3.5 ###
+
+*  Fix: Avoid passing `null` to `str_contains`.
+*  Improved: Code related to the above.
+*  Improved: Added back Installation section to the readme.
+
+### 2021-01-24 9.3.0 ###
+
+Improved:
+*  Simplified CSS and reduced size.
+*  Security related escaping and filtering HTML output on settings page.
+*  No longer show save buttons on Debug Info tab. Nothing to save there.
+*  Added back info text for URL Parameters settings. Found in the code from 8.0.
+*  Added in placeholders for text fields.
+*  General code improvements and removal of unused code.
+
+### 2021-01-21 9.2.4 ###
+
+* Fix: Missing 'Normal' mode select
+
+### 2021-01-21 9.2.3 ###
+
+* Revert some things that made latest Pro tests fail
+
+### 2021-01-21 9.2.0 ###
+
+* Fix: Compatibility with Astor Theme.
+* Improved: Added notes that Shortcode UI is not maintained to the button and readme.
+* Improved: Added notes about outdated PHP versions to settings page sidebar.
+* Improved: Classic Tabs, new settings section for upcoming [ARVE sticky Videos](https://nextgenthemes.com/plugins/arve-sticky-videos/).
+* Improved: Lots of code restructured and improved.
+
+### 2021-01-03 9.1.3 ###
+
+* New: Vimeo play button option for ARVE Pro
+* Improved: Fitvids conflict mitigation
+
 ### 2020-12-24 9.1.2 ###
 
 * Fix: Missing attribute errors when using `[embed]https://example.com/vid.mp4[/embed]` like shortcodes.  
