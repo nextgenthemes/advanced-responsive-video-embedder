@@ -6,16 +6,46 @@ namespace Nextgenthemes\ARVE\Admin;
 
 use function Nextgenthemes\ARVE\settings;
 use function Nextgenthemes\ARVE\settings_tabs;
+use function Nextgenthemes\WP\first_tag_attr;
 use function Nextgenthemes\WP\Admin\print_settings_blocks;
 
 const DIALOG_NAMESPACE = 'nextgenthemes_arve_dialog';
 
 function add_media_button(): void {
 
+	dialog_interactivity();
+
+	$btn_html = first_tag_attr(
+		'<button>' .
+			'<span class="wp-media-buttons-icon arve-icon"></span>' .
+			esc_html__( 'Video (ARVE)', 'advanced-responsive-video-embedder' ) .
+		'</button>',
+		[
+			'type'                => 'button',
+			'class'               => 'arve-btn button add_media',
+			'title'               => __(
+				'Advanced Responsive Video Embedder Shortcode Creator',
+				'advanced-responsive-video-embedder'
+			),
+			'data-wp-interactive' => DIALOG_NAMESPACE,
+			'data-wp-on--click'   => 'actions.openShortcodeDialog',
+		],
+	);
+
+	echo wp_interactivity_process_directives( $btn_html ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+	add_action( 'admin_footer', __NAMESPACE__ . '\create_shortcode_dialog' );
+}
+
+function dialog_interactivity(): void {
+
 	static $ran_already = false;
 
-	foreach ( settings( 'shortcode' )->get_all() as $k => $setting ) {
+	if ( $ran_already ) {
+		return;
+	}
 
+	foreach ( settings( 'shortcode' )->get_all() as $k => $setting ) {
 		if ( 'boolean' === $setting->type && ! $setting->option ) {
 			$options[ $k ] = $setting->default;
 		} else {
@@ -23,46 +53,25 @@ function add_media_button(): void {
 		}
 	}
 
-	if ( ! $ran_already ) {
-		$ran_already = true;
-		wp_interactivity_config(
-			DIALOG_NAMESPACE,
-			[
-				'nonce'          => wp_create_nonce( 'wp_rest' ),
-				'siteUrl'        => get_site_url(),
-				'homeUrl'        => get_home_url(),
-				'defaultOptions' => array(),
-			]
-		);
+	wp_interactivity_config(
+		DIALOG_NAMESPACE,
+		[
+			'nonce'          => wp_create_nonce( 'wp_rest' ),
+			'siteUrl'        => get_site_url(),
+			'homeUrl'        => get_home_url(),
+			'defaultOptions' => array(),
+		]
+	);
 
-		wp_interactivity_state(
-			DIALOG_NAMESPACE,
-			[
-				'options'    => $options,
-				'shortcode'  => '[arve url="" /]',
-				'message'    => '',
-				'help'       => false,
-			]
-		);
-	}
-
-	ob_start();
-	?>
-	<button
-		id="arve-btn"
-		title="<?php esc_attr_e( 'Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ); ?>"
-		class="arve-btn button add_media"
-		type="button"
-		data-wp-interactive="<?= esc_attr( DIALOG_NAMESPACE ); ?>"
-		data-wp-on--click="actions.openShortcodeDialog"
-	>
-	<span class="wp-media-buttons-icon arve-icon"></span> 
-		<?php esc_html_e( 'Video (ARVE)', 'advanced-responsive-video-embedder' ); ?>
-	</button>
-	<?php
-	echo wp_interactivity_process_directives( ob_get_clean() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-
-	add_action( 'admin_footer', __NAMESPACE__ . '\create_shortcode_dialog' );
+	wp_interactivity_state(
+		DIALOG_NAMESPACE,
+		[
+			'options'    => $options,
+			'shortcode'  => '[arve url="" /]',
+			'message'    => '',
+			'help'       => false,
+		]
+	);
 }
 
 function create_shortcode_dialog(): void {
