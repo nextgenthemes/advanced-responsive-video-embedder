@@ -6,7 +6,7 @@ namespace Nextgenthemes\ARVE;
 
 use WP_HTML_Tag_Processor;
 
-use function Nextgenthemes\WP\create_element;
+use function Nextgenthemes\WP\first_tag_attr;
 
 /**
  * Undocumented function
@@ -17,7 +17,7 @@ function tracks_html( array $tracks ): string {
 	$html = '';
 
 	foreach ( $tracks as $track_attr ) {
-		$html .= create_element( '<track>', $track_attr );
+		$html .= first_tag_attr( '<track>', $track_attr );
 	}
 
 	return $html;

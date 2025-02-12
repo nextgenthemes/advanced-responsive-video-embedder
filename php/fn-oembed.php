@@ -4,24 +4,12 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
+use DateTime;
 use WP_Error;
 use WP_HTML_Tag_Processor;
 use function Nextgenthemes\WP\valid_url;
 use function Nextgenthemes\WP\get_attribute_from_html_tag;
-use function Nextgenthemes\WP\remote_get_head;
-use function Nextgenthemes\WP\attr;
-
-/**
- * Info: https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-oembed.php
- * https://github.com/iamcal/oembed/tree/master/providers
- */
-function add_oembed_providers(): void {
-	wp_oembed_add_provider( 'https://fast.wistia.com/embed/iframe/*', 'https://fast.wistia.com/oembed.json' );
-	wp_oembed_add_provider( 'https://fast.wistia.com/embed/playlists/*', 'https://fast.wistia.com/oembed.json' );
-	wp_oembed_add_provider( 'https://*.wistia.com/medias/*', 'https://fast.wistia.com/oembed.json' );
-	wp_oembed_add_provider( 'https://d.tube/v/*', 'https://api.d.tube/oembed' );
-	wp_oembed_add_provider( 'https://rumble.com/*', 'https://rumble.com/api/Media/oembed.json' );
-}
+use function Nextgenthemes\WP\first_tag_attr;
 
 /**
  * Add ARVE data to oEmbed cache
@@ -41,7 +29,6 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 		return $html;
 	}
 
-	$thumbnails = array();
 	$iframe_src = oembed_html2src( $data );
 
 	if ( is_wp_error( $iframe_src ) ) {
@@ -51,36 +38,19 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 	}
 
 	$data->arve_provider  = sane_provider_name( $data->provider_name );
-	$data->arve_cachetime = current_datetime()->format( \DATETIME::ATOM );
 	$data->arve_url       = $url;
+	$data->arve_cachetime = current_datetime()->format( DATETIME::ATOM );
 
-	if ( ! empty( $data->thumbnail_url ) && in_array( $data->arve_provider, [ 'youtube', 'vimeo' ], true ) ) {
-
-		$thumbnails = thumbnail_sizes( $data->arve_provider, $data->thumbnail_url, $data->width, $data->height );
-
-		// Replace default thumbnail with webp (yt)
-		if ( ! empty( $thumbnails['sizes'][480]['url'] ) ) {
-			$data->arve_thumbnail_url_org = $data->thumbnail_url;
-			$data->thumbnail_url          = $thumbnails['sizes'][480]['url'];
-		}
-
-		$data->arve_thumbnail_small_url    = $thumbnails['small_url'];
-		$data->arve_thumbnail_large_url    = $thumbnails['large_url'];
-		$data->arve_thumbnail_large_width  = $thumbnails['large_width'];
-		$data->arve_thumbnail_large_height = $thumbnails['large_height'];
-
-		$data->arve_srcset = $thumbnails['srcset'];
+	if ( function_exists( __NAMESPACE__ . '\Pro\oembed_data' ) ) {
+		$data = Pro\oembed_data( $data );
 	}
 
 	unset( $data->html );
-
-	$data = apply_filters( 'nextgenthemes/arve/oembed_dataparse', $data, $thumbnails );
-
 	foreach ( $data as $key => $value ) {
 		$attr[ 'data-' . $key ] = $value;
 	}
 
-	$html .= sprintf( '<template class="arve-data" %s></template>', attr( $attr ) );
+	$html .= first_tag_attr( '<template class="arve-data"></template>', $attr );
 
 	return $html;
 }
@@ -115,17 +85,52 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 	$oembed_data = extract_oembed_data( $cache );
 
 	if ( $oembed_data ) {
+
+		d( $oembed_data );
+
+		$pro_active = function_exists( __NAMESPACE__ . '\Pro\oembed_data' );
+
+		if ( $pro_active
+			&& 'youtube' === $oembed_data->arve_provider
+			&& ( empty( $oembed_data->description ) || empty( $oembed_data->arve_srcset ) )
+		) {
+			delete_oembed_cache( 'youtube.com' );
+		}
+
+		if ( $pro_active
+			&& 'vimeo' === $oembed_data->arve_provider
+			&& empty( $oembed_data->arve_srcset )
+		) {
+			delete_oembed_cache( 'vimeo.com' );
+		}
+
 		$a['url']         = $url;
 		$a['oembed_data'] = $oembed_data;
 		$a['origin_data'] = array(
 			'from'    => 'filter_embed_oembed_html',
 			'post_id' => $post_id,
+			'attr'    => $attr,
 		);
 
 		$cache = build_video( $a );
 	}
 
 	return $cache;
+}
+
+function delete_oembed_caches_when_missing_data( object $oembed_data ): void {
+
+	if ( 'youtube' === $oembed_data->arve_provider
+		&& ( empty( $oembed_data->description ) || empty( $oembed_data->arve_srcset ) )
+	) {
+		delete_oembed_cache( 'youtube.com' );
+	}
+
+	if ( 'vimeo' === $oembed_data->arve_provider
+		&& empty( $oembed_data->arve_srcset )
+	) {
+		delete_oembed_cache( 'vimeo.com' );
+	}
 }
 
 function extract_oembed_data( string $html ): ?object {
@@ -209,92 +214,6 @@ function oembed_html2src( object $data ) {
 			return new WP_Error( 'iframe-src', __( 'Failed to extract iframe src from this html', 'advanced-responsive-video-embedder' ), $data->html );
 		}
 	}
-}
-
-/**
- * Generate thumbnail uris dir YouTube video based on the provided URL.
- *
- * YT default URI format: https://i.ytimg.com/vi/<id>/hqdefault.jpg
- * YT webp URI format:    https://i.ytimg.com/vi_webp/<id>/hqdefault.webp
- *
- * Vimeo default URI format: https://i.vimeocdn.com/video/<id>-<some_hash>-d_295x166
- * Vimeo avif URI format:    https://i.vimeocdn.com/video/<id>-<some_hash>-d_1280.avif
- *
- * @param string $url The URL of the YouTube thumbnail.
- * @return array Array containing information about the thumbnails.
- */
-function thumbnail_sizes( string $provider, string $url, float $vid_width, float $vid_height ): array {
-
-	$sizes  = array();
-	$srcset = array();
-
-	switch ( $provider ) {
-
-		case 'youtube':
-			$webp_url = str_replace( '/vi/', '/vi_webp/', $url );
-
-			if ( str_ends_with( $url, 'hqdefault.jpg' ) ) {
-				$sizes[320]['url']  = str_replace( 'hqdefault.jpg', 'mqdefault.webp',     $webp_url ); // 320x180
-				$sizes[480]['url']  = str_replace( 'hqdefault.jpg', 'hqdefault.webp',     $webp_url ); // 480x360
-				$sizes[640]['url']  = str_replace( 'hqdefault.jpg', 'sddefault.webp',     $webp_url ); // 640x480
-				$sizes[1280]['url'] = str_replace( 'hqdefault.jpg', 'hq720.webp',         $webp_url ); // 1280x720
-				$sizes[1920]['url'] = str_replace( 'hqdefault.jpg', 'maxresdefault.webp', $webp_url ); // 1920x1080
-
-				$sizes[320]['height']  = 180;
-				$sizes[480]['height']  = 360;
-				$sizes[640]['height']  = 480;
-				$sizes[1280]['height'] = 720;
-				$sizes[1920]['height'] = 1080;
-			}
-
-			// shorts
-			if ( str_ends_with( $url, 'hq2.jpg' ) ) {
-
-				$sizes[320]['url'] = str_replace( 'hq2.jpg', 'mq2.webp', $webp_url ); // 320x180
-				$sizes[480]['url'] = str_replace( 'hq2.jpg', 'hq2.webp', $webp_url ); // 480x360
-				$sizes[640]['url'] = str_replace( 'hq2.jpg', 'sd2.webp', $webp_url ); // 640x480
-
-				$sizes[320]['height'] = 180;
-				$sizes[480]['height'] = 360;
-				$sizes[640]['height'] = 480;
-			}
-
-			break;
-		case 'vimeo':
-			foreach ( [ 320, 640, 960, 1280 ] as $width ) {
-
-				$height = (int) height_from_width_and_ratio( $width, "{$vid_width}:{$vid_height}" );
-
-				$sizes[ $width ]['url']    = preg_replace( '/^(.*)_([0-9x]{3,9}(\.jpg)?)$/i', "$1_{$width}x{$height}", $url );
-				$sizes[ $width ]['height'] = $height;
-			}
-
-			break;
-	}
-
-	foreach ( $sizes as $width => $size ) {
-
-		if ( 'youtube' === $provider && is_wp_error( remote_get_head( $size['url'], array( 'timeout' => 5 ) ) ) ) {
-			unset( $sizes[ $width ] );
-			continue;
-		}
-
-		$srcset[] = $size['url'] . " {$width}w";
-	}
-
-	if ( ! empty( $sizes ) ) {
-		$largest  = max( array_keys( $sizes ) );
-		$smallest = min( array_keys( $sizes ) );
-	}
-
-	return array(
-		'small_url'    => empty( $sizes ) ? '' : $sizes[ $smallest ]['url'],
-		'large_url'    => empty( $sizes ) ? '' : $sizes[ $largest ]['url'],
-		'large_width'  => empty( $sizes ) ? '' : $largest,
-		'large_height' => empty( $sizes ) ? '' : $sizes[ $largest ]['height'],
-		'srcset'       => implode( ', ', $srcset ),
-		'sizes'        => $sizes,
-	);
 }
 
 function vimeo_referer( array $args, string $url ): array {

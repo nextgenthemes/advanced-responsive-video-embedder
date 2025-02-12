@@ -9,7 +9,7 @@ use WP_HTML_Tag_Processor;
 use function Nextgenthemes\WP\get_url_arg;
 use function Nextgenthemes\WP\apply_attr;
 use function Nextgenthemes\WP\check_product_keys;
-use function Nextgenthemes\WP\create_element;
+use function Nextgenthemes\WP\first_tag_attr;
 use function Nextgenthemes\WP\valid_url;
 use function Nextgenthemes\WP\str_contains_any;
 use function Nextgenthemes\WP\str_to_array;
@@ -945,7 +945,7 @@ HTML;
 		}
 
 		$tag  = $this->iframe_tag();
-		$html = create_element(
+		$html = first_tag_attr(
 			'<' . $tag . '></' . $tag . '>' . PHP_EOL,
 			$this->iframe_attr
 		);
@@ -1025,7 +1025,7 @@ HTML;
 			$attr['controls'] = false;
 		}
 
-		return create_element(
+		return first_tag_attr(
 			'<' . $amp . 'video>' . $this->video_sources_html . tracks_html( $this->tracks ) . '</' . $amp . 'video>' . PHP_EOL,
 			$attr
 		);
