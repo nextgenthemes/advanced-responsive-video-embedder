@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 use function Nextgenthemes\ARVE\shortcode;
 use function Nextgenthemes\ARVE\get_host_properties;
 use function Nextgenthemes\WP\remote_get_body;

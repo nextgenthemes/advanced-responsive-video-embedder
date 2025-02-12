@@ -1,8 +1,7 @@
 <?php
-use function Nextgenthemes\ARVE\shortcode;
-// phpcs:disable Squiz.PHP.CommentedOutCode.Found
-// phpcs:disable Squiz.Classes.ClassFileName.NoMatch
-// phpcs:disable Squiz.PHP.Classes.ValidClassName.NotCamelCaps
+
+declare(strict_types = 1);
+
 class Tests_Legacy_Shortcodes extends WP_UnitTestCase {
 
 	public function test_legacy_youtube_shortcode(): void {

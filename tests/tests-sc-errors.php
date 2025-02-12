@@ -1,23 +1,11 @@
 <?php
+
+declare(strict_types = 1);
+
 use function Nextgenthemes\ARVE\shortcode;
 use function Nextgenthemes\ARVE\build_video;
-use function Nextgenthemes\ARVE\get_host_properties;
 
-// phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
-
-	public function test_mode_fallback(): void {
-
-		$html = shortcode(
-			array(
-				'url'  => 'https://example.com',
-				'mode' => 'lazyload',
-			)
-		);
-
-		$this->markTestSkipped('must be revisited.');
-		#$this->assertStringContainsString( 'Error', $html );
-	}
 
 	public function test_wrong_thumb_id(): void {
 

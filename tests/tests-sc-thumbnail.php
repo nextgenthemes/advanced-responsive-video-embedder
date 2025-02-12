@@ -1,8 +1,9 @@
 <?php
-use function Nextgenthemes\ARVE\shortcode;
-use function Nextgenthemes\ARVE\get_host_properties;
 
-// phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+declare(strict_types = 1);
+
+use function Nextgenthemes\ARVE\shortcode;
+
 class Tests_ShortcodeThumbnail extends WP_UnitTestCase {
 
 	public function test_thumbnail_by_upload_id(): void {

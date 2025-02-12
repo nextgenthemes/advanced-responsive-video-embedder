@@ -3,7 +3,6 @@
 declare(strict_types = 1);
 
 use function Nextgenthemes\ARVE\shortcode;
-use function Nextgenthemes\ARVE\get_host_properties;
 
 class Tests_Ratio extends WP_UnitTestCase {
 
@@ -45,7 +44,7 @@ class Tests_Ratio extends WP_UnitTestCase {
 	/**
 	 * Test the YouTube short ratio function.
 	 *
-	 * @group ytshorts
+	 * @group yt-shorts
 	 */
 	public function test_youtube_short_ratio(): void {
 

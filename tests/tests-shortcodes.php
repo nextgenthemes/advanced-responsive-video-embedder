@@ -6,7 +6,8 @@ use function Nextgenthemes\ARVE\shortcode;
 use function Nextgenthemes\ARVE\get_host_properties;
 use function Nextgenthemes\WP\remote_get_body;
 
-// phpcs:disable Squiz.PHP.CommentedOutCode.Found, Squiz.Classes.ClassFileName.NoMatch, Squiz.PHP.Classes.ValidClassName.NotCamelCaps, WordPress.PHP.DevelopmentFunctions.error_log_print_r, WordPress.PHP.DevelopmentFunctions.error_log_error_log
+// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
+// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_Shortcodes extends WP_UnitTestCase {
 
 	public function test_arve_test_sc(): void {
