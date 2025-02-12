@@ -8,7 +8,7 @@ use Nextgenthemes\WP\SettingsData;
 use Nextgenthemes\WP\SettingValidator;
 
 use function Nextgenthemes\WP\get_defined_key;
-use function Nextgenthemes\WP\create_element;
+use function Nextgenthemes\WP\first_tag_attr;
 use function Nextgenthemes\WP\kses_https_links;
 use function wp_interactivity_data_wp_context as data_wp_context; // This is actually a deprecated function but we use the real one. Avoiding the deprecation warning and the awful long function name.
 
@@ -90,7 +90,7 @@ function option_block( string $key, SettingValidator $setting, array $tabs ): vo
 					</select>
 					<?php
 				} elseif ( 'checkbox' === $setting->ui_element_type ) {
-					echo create_element( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo first_tag_attr( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						'<input>',
 						array(
 							'type'                   => 'checkbox',
@@ -106,7 +106,7 @@ function option_block( string $key, SettingValidator $setting, array $tabs ): vo
 				} else {
 					label( $input_id, $setting, $tabs );
 
-					echo create_element( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo first_tag_attr( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						'<input>',
 						array(
 							'type'                   => $setting->ui_element_type,

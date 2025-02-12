@@ -6,17 +6,22 @@ namespace Nextgenthemes\WP;
 
 use WP_HTML_Tag_Processor;
 
-/**
- * Create an HTML element with given attributes.
- *
- * @param string $html_tag A HTML tag, e.g. '<input data-something="value">'
- * @param array  $attr A list of attributes, e.g. class, src, href, etc.
- *
- * @return string The HTML element as string.
- */
-function create_element( string $html_tag, array $attr ): string {
+function create_element( string $html, array $attr ): string {
+	_deprecated_function( __FUNCTION__, '10.6.0-beta4' );
+	return first_tag_attr( $html, $attr );
+}
 
-	$p = new WP_HTML_Tag_Processor( $html_tag );
+/**
+ * Adds, updates or removes attributes to the first HTML tag passed in.
+ *
+ * @param string $html The HTML string, e.g. <div>...</div>.
+ * @param array  $attr A list of HTML attributes, e.g. class, src, href, etc.
+ *
+ * @return string The updated HTML updated as string.
+ */
+function first_tag_attr( string $html, array $attr ): string {
+
+	$p = new WP_HTML_Tag_Processor( $html );
 
 	if ( ! $p->next_tag() ) {
 		wp_trigger_error( __FUNCTION__, 'WP_HTML_Tag_Processor::next_tag() failed' );
@@ -28,7 +33,20 @@ function create_element( string $html_tag, array $attr ): string {
 	return $p->get_updated_html();
 }
 
+/**
+ * Applies attributes to the first HTML tag the processor is currently on.
+ *
+ * @param WP_HTML_Tag_Processor $p     The tag processor.
+ * @param array                 $attr  A list of HTML attributes, e.g. class, src, href, etc.
+ *
+ * @return WP_HTML_Tag_Processor The tag processor.
+ */
 function apply_attr( WP_HTML_Tag_Processor $p, array $attr ): WP_HTML_Tag_Processor {
+
+	if ( ! $p->get_tag() ) {
+		wp_trigger_error( __FUNCTION__, 'Not currently on a tag' );
+		return $p->get_updated_html();
+	}
 
 	foreach ( $attr as $key => $value ) {
 
