@@ -41,8 +41,9 @@ function arg_mode( string $mode ): string {
 		$mode = 'lazyload';
 	}
 
-	if ( 'normal' !== $mode &&
-		! defined( '\Nextgenthemes\ARVE\Pro\VERSION' ) ) {
+	if ( 'normal' !== $mode
+		&& ! has_action( 'plugins_loaded', '\Nextgenthemes\ARVE\Pro\init' )
+	) {
 
 		$err_msg = sprintf(
 			// Translators: Mode
