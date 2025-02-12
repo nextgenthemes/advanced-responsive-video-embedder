@@ -55,15 +55,6 @@ function gcd( int $a, int $b ): int {
 	return $b ? gcd( $b, $a % $b ) : $a;
 }
 
-function load_textdomain(): void {
-
-	load_plugin_textdomain(
-		'advanced-responsive-video-embedder',
-		false,
-		dirname( plugin_basename( __FILE__ ), 2 ) . '/languages/'
-	);
-}
-
 /**
  * @return string|false
  */
