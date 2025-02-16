@@ -37,7 +37,7 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 		$data->arve_iframe_src = $iframe_src;
 	}
 
-	$data->arve_provider  = sane_provider_name( $data->provider_name );
+	$data->provider       = sane_provider_name( $data->provider_name );
 	$data->arve_url       = $url;
 	$data->arve_cachetime = current_datetime()->format( DATETIME::ATOM );
 
@@ -86,20 +86,18 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 
 	if ( $oembed_data ) {
 
-		d( $oembed_data );
-
 		$pro_active = function_exists( __NAMESPACE__ . '\Pro\oembed_data' );
 
 		if ( $pro_active
-			&& 'youtube' === $oembed_data->arve_provider
-			&& ( empty( $oembed_data->description ) || empty( $oembed_data->arve_srcset ) )
+			&& 'youtube' === $oembed_data->provider
+			&& ( empty( $oembed_data->description ) || empty( $oembed_data->thumbnail_srcset ) )
 		) {
 			delete_oembed_cache( 'youtube.com' );
 		}
 
 		if ( $pro_active
-			&& 'vimeo' === $oembed_data->arve_provider
-			&& empty( $oembed_data->arve_srcset )
+			&& 'vimeo' === $oembed_data->provider
+			&& empty( $oembed_data->thumbnail_srcset )
 		) {
 			delete_oembed_cache( 'vimeo.com' );
 		}
@@ -120,14 +118,14 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 
 function delete_oembed_caches_when_missing_data( object $oembed_data ): void {
 
-	if ( 'youtube' === $oembed_data->arve_provider
-		&& ( empty( $oembed_data->description ) || empty( $oembed_data->arve_srcset ) )
+	if ( 'youtube' === $oembed_data->provider
+		&& ( empty( $oembed_data->description ) || empty( $oembed_data->thumbnail_srcset ) )
 	) {
 		delete_oembed_cache( 'youtube.com' );
 	}
 
-	if ( 'vimeo' === $oembed_data->arve_provider
-		&& empty( $oembed_data->arve_srcset )
+	if ( 'vimeo' === $oembed_data->provider
+		&& empty( $oembed_data->thumbnail_srcset )
 	) {
 		delete_oembed_cache( 'vimeo.com' );
 	}

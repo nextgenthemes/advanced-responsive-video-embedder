@@ -25,8 +25,6 @@ class Tests_AddonsBaseChecks extends WP_UnitTestCase {
 	 * array format. For each addon, it checks if the corresponding product
 	 * entry has a valid file, version, and active status. It also confirms
 	 * that the product type is 'plugin'.
-	 *
-	 * @dataProvider product_data
 	 */
 	public function test_product_data(): void {
 
@@ -39,20 +37,20 @@ class Tests_AddonsBaseChecks extends WP_UnitTestCase {
 		$this->assertNotEmpty( $addons );
 		$this->assertIsArray( $addons );
 
-		foreach ( $addons as $addon_dirname ) {
+		foreach ( $addons as $addon_slug ) {
 
-			$addon_dirname = str_replace( '-', '_', $addon_dirname );
+			$addon_slug = str_replace( '-', '_', $addon_slug );
 
-			$this->assertNotEmpty( $products[ $addon_dirname ]['file'], 'file' );
-			$this->assertIsString( $products[ $addon_dirname ]['file'], 'file' );
+			$this->assertNotEmpty( $products[ $addon_slug ]['file'], 'file' );
+			$this->assertIsString( $products[ $addon_slug ]['file'], 'file' );
 
-			$this->assertNotEmpty( $products[ $addon_dirname ]['version'], 'version' );
-			$this->assertIsString( $products[ $addon_dirname ]['version'], 'version' );
+			$this->assertNotEmpty( $products[ $addon_slug ]['version'], 'version' );
+			$this->assertIsString( $products[ $addon_slug ]['version'], 'version' );
 
-			$this->assertNotEmpty( $products[ $addon_dirname ]['active'], 'active' );
-			$this->assertTrue( $products[ $addon_dirname ]['active'], 'active not true' );
+			$this->assertNotEmpty( $products[ $addon_slug ]['active'], 'active' );
+			$this->assertTrue( $products[ $addon_slug ]['active'], 'active not true' );
 
-			$this->assertEquals( $products[ $addon_dirname ]['type'], 'plugin' );
+			$this->assertEquals( $products[ $addon_slug ]['type'], 'plugin' );
 		}
 	}
 }
