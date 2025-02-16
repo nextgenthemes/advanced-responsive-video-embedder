@@ -6,11 +6,6 @@ namespace Nextgenthemes\WP;
 
 use WP_HTML_Tag_Processor;
 
-function create_element( string $html, array $attr ): string {
-	_deprecated_function( __FUNCTION__, '10.6.0-beta4' );
-	return first_tag_attr( $html, $attr );
-}
-
 /**
  * Adds, updates or removes attributes to the first HTML tag passed in.
  *

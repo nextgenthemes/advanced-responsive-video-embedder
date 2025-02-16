@@ -32,7 +32,6 @@ function init_public(): void {
 	update_option( 'arve_version', VERSION );
 
 	require_once PLUGIN_DIR . '/php/Video.php';
-	require_once PLUGIN_DIR . '/php/fn-deprecated.php';
 	require_once PLUGIN_DIR . '/php/fn-assets.php';
 	require_once PLUGIN_DIR . '/php/fn-html-output.php';
 	require_once PLUGIN_DIR . '/php/fn-misc.php';
