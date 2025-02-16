@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Nextgenthemes\ARVE;
 
 use WP_HTML_Tag_Processor;
-
 use function Nextgenthemes\WP\get_url_arg;
 use function Nextgenthemes\WP\apply_attr;
 use function Nextgenthemes\WP\check_product_keys;
@@ -13,6 +12,7 @@ use function Nextgenthemes\WP\first_tag_attr;
 use function Nextgenthemes\WP\valid_url;
 use function Nextgenthemes\WP\str_contains_any;
 use function Nextgenthemes\WP\str_to_array;
+use function Nextgenthemes\WP\replace_links;
 
 class Video {
 
@@ -177,10 +177,10 @@ class Video {
 			arve_errors()->add( 'oembed-data-error', $this->oembed_data->arve_error );
 		}
 
-		if ( ! empty( $this->oembed_data->arve_provider ) &&
+		if ( ! empty( $this->oembed_data->provider ) &&
 			! empty( $this->oembed_data->arve_iframe_src )
 		) {
-			$this->set_prop( 'provider', $this->oembed_data->arve_provider );
+			$this->set_prop( 'provider', $this->oembed_data->provider );
 			$this->set_prop( 'src', $this->oembed_data->arve_iframe_src );
 		}
 
@@ -735,20 +735,19 @@ class Video {
 			$this->build_iframe_attr();
 		}
 
-		$block_attr = empty( $this->origin_data['gutenberg'] ) ? '' : get_block_wrapper_attributes();
+		$block_attr = empty( $this->origin_data['gutenberg'] ) ? '' : ' ' . get_block_wrapper_attributes();
 
 		if ( is_amp() ) {
+
 			if ( 'html5' === $this->provider ) {
 				return $this->build_video_tag() . $this->build_seo_data();
 			} else {
 				return $this->build_iframe_tag() . $this->build_seo_data();
 			}
-		}
-
-		if ( 'link-lightbox' === $this->mode && function_exists( __NAMESPACE__ . '\Pro\lightbox_link_html' ) ) {
+		} elseif ( 'link-lightbox' === $this->mode && function_exists( __NAMESPACE__ . '\Pro\lightbox_link_html' ) ) {
 
 			$html = sprintf(
-				'<span class="arve" %s>%s%s</span>',
+				PHP_EOL . '<span class="arve"%s>%s%s</span>',
 				$block_attr,
 				Pro\lightbox_link_html( get_object_vars( $this ) ),
 				$this->build_seo_data()
@@ -757,8 +756,8 @@ class Video {
 		} else {
 
 			$inner_tag = is_card( get_object_vars( $this ) ) ? 'a' : 'div';
-			$html      = <<<HTML
-<div class="arve" {$block_attr}>
+			$html      = PHP_EOL . <<<HTML
+<div class="arve"{$block_attr}>
 	<{$inner_tag} class="arve-inner">
 		<div class="arve-embed">
 			{$this->arve_embed_inner_html()}
@@ -775,7 +774,7 @@ HTML;
 		$p = new WP_HTML_Tag_Processor( $html );
 
 		if ( ! $p->next_tag( [ 'class_name' => 'arve' ] ) ) {
-			wp_trigger_error( __FUNCTION__, 'WP_HTML_Tag_Processor::next_tag() failed to find .arve tag' );
+			wp_trigger_error( __FUNCTION__, 'failed to find .arve tag' );
 			return $p->get_updated_html();
 		}
 
@@ -807,7 +806,7 @@ HTML;
 		if ( 'link-lightbox' !== $this->mode ) {
 
 			if ( ! $p->next_tag( [ 'class_name' => 'arve-embed' ] ) ) {
-				wp_trigger_error( __FUNCTION__, 'WP_HTML_Tag_Processor::next_tag() failed to find .arve-embed tag' );
+				wp_trigger_error( __FUNCTION__, 'failed to find .arve-embed tag' );
 				return $p->get_updated_html();
 			}
 
@@ -946,12 +945,12 @@ HTML;
 
 		$tag  = $this->iframe_tag();
 		$html = first_tag_attr(
-			'<' . $tag . '></' . $tag . '>' . PHP_EOL,
+			'<' . $tag . '></' . $tag . '>',
 			$this->iframe_attr
 		);
 
 		if ( 'lazyload' === $this->mode ) {
-			$html = '<noscript class="arve-noscript">' . $html . '</noscript>' . PHP_EOL;
+			$html = '<noscript class="arve-noscript">' . $html . '</noscript>';
 		}
 
 		return $html;
@@ -1026,7 +1025,7 @@ HTML;
 		}
 
 		return first_tag_attr(
-			'<' . $amp . 'video>' . $this->video_sources_html . tracks_html( $this->tracks ) . '</' . $amp . 'video>' . PHP_EOL,
+			'<' . $amp . 'video>' . $this->video_sources_html . tracks_html( $this->tracks ) . '</' . $amp . 'video>',
 			$attr
 		);
 	}
@@ -1095,18 +1094,19 @@ HTML;
 	private function arve_embed_inner_html(): string {
 
 		$html = '';
+		$lb   = PHP_EOL . "\t\t\t";
 
 		if ( $this->aspect_ratio ) {
 			$html .= sprintf(
-				'<div class="arve-ar" style="padding-top:%F%%"></div>' . PHP_EOL,
+				'<div class="arve-ar" style="padding-top:%F%%"></div>' . $lb,
 				aspect_ratio_to_percentage( $this->aspect_ratio )
 			);
 		}
 
 		if ( 'html5' === $this->provider ) {
-			$html .= $this->build_video_tag();
+			$html .= $this->build_video_tag() . $lb;
 		} else {
-			$html .= $this->build_iframe_tag();
+			$html .= $this->build_iframe_tag() . $lb;
 		}
 
 		if ( function_exists( __NAMESPACE__ . '\Pro\inner_html' ) ) {
@@ -1124,7 +1124,7 @@ HTML;
 			return '';
 		}
 
-		$payload = array(
+		$seo = array(
 			'@context' => 'http://schema.org/',
 			'@id'      => get_permalink() . '#' . $this->uid,
 			'type'     => 'VideoObject',
@@ -1141,29 +1141,31 @@ HTML;
 			'description'      => 'description',
 		);
 
-		foreach ( $metas as $key => $val ) {
+		foreach ( $metas as $prop => $json_name ) {
 
-			if ( empty( $this->{$key} ) ) {
+			if ( empty( $this->{$prop} ) ) {
 				continue;
 			}
 
-			if ( 'duration' === $key && is_numeric( $this->$key ) ) {
-				$this->$key = seconds_to_iso8601_duration( $this->$key );
+			if ( 'duration' === $prop && is_numeric( $this->$prop ) ) {
+				$seo[ $json_name ] = seconds_to_iso8601_duration( $this->$prop );
+			} elseif ( 'description' === $prop ) {
+				$seo[ $json_name ] = trim( replace_links( $this->$prop, '' ) );
+			} else {
+				$seo[ $json_name ] = trim( $this->$prop );
 			}
-
-			$payload[ $val ] = trim( $this->$key );
 		}
 
-		return '<script type="application/ld+json">' . wp_json_encode( $payload ) . '</script>';
+		return '<script type="application/ld+json">' . wp_json_encode( $seo ) . '</script>';
 	}
 
 	private function promote_link(): string {
 
 		if ( $this->arve_link && 'link-lightbox' !== $this->mode ) {
 			return sprintf(
-				'<div class="arve-promote">
-					<small><a href="%s" title="%s" target="_blank">%s</a></small>
-				</div>',
+				'<div class="arve-promote">' .
+					'<small><a href="%s" title="%s" target="_blank">%s</a></small>' .
+				'</div>',
 				esc_url( 'https://nextgenthemes.com/plugins/arve-pro/' ),
 				esc_attr( __( 'Powered by Advanced Responsive Video Embedder WordPress plugin', 'advanced-responsive-video-embedder' ) ),
 				esc_html__( 'ARVE', 'advanced-responsive-video-embedder' )
