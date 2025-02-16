@@ -42,9 +42,8 @@ function arg_mode( string $mode ): string {
 	}
 
 	if ( 'normal' !== $mode
-		&& ! has_action( 'plugins_loaded', '\Nextgenthemes\ARVE\Pro\init' )
+		&& ! has_action( 'plugins_loaded', 'Nextgenthemes\ARVE\Pro\init' )
 	) {
-
 		$err_msg = sprintf(
 			// Translators: Mode
 			__( 'Mode: %s not available (ARVE Pro not active?), switching to normal mode', 'advanced-responsive-video-embedder' ),
