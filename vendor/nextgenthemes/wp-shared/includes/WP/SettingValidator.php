@@ -4,7 +4,8 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\WP;
 
-use WP_Interactivity_API_Directives_Processor;
+use ErrorException;
+use InvalidArgumentException;
 
 class SettingValidator {
 
@@ -95,7 +96,7 @@ class SettingValidator {
 	public function bool_option_to_select(): void {
 
 		if ( 'boolean' !== $this->type ) {
-			throw new \InvalidArgumentException( esc_html( 'Property ' . $this->option_key . ' must be boolean' ) );
+			throw new InvalidArgumentException( esc_html( 'Property ' . $this->option_key . ' must be boolean' ) );
 		}
 
 		$this->type            = 'string';
@@ -127,7 +128,7 @@ class SettingValidator {
 				$this->sanitize_callback = __NAMESPACE__ . '\sanitize_callback_' . $this->type;
 				break;
 			default:
-				throw new \ErrorException( esc_html( 'Sanitize function for ' . $this->type . ' not implemented' ) );
+				throw new ErrorException( esc_html( 'Sanitize function for ' . $this->type . ' not implemented' ) );
 		}
 	}
 
@@ -139,12 +140,12 @@ class SettingValidator {
 	 * @param string $name  The name of the property to set.
 	 * @param mixed  $value The value to set for the property.
 	 *
-	 * @throws \RuntimeException If called.
+	 * @throws ErrorException If called.
 	 */
 	public function __set( string $name, $value ): void {
 
 		if ( ! property_exists( $this, $name ) ) {
-			throw new \RuntimeException( esc_html( 'Property ' . $name . ' does not exist.' ) );
+			throw new ErrorException( esc_html( 'Property ' . $name . ' does not exist.' ) );
 		}
 	}
 
@@ -155,18 +156,18 @@ class SettingValidator {
 	 *
 	 * @param int|bool|string $value The default value to set. Must be a string, integer or boolean.
 	 *
-	 * @throws \InvalidArgumentException If the default value is not a string, integer or boolean,
+	 * @throws InvalidArgumentException If the default value is not a string, integer or boolean,
 	 *                                   or if the type is not set before the default.
 	 */
 	public function set_default( $value ): void {
 		if ( ! is_string( $value ) && ! is_int( $value ) && ! is_bool( $value ) ) {
-			throw new \InvalidArgumentException( esc_html( 'Default value must be a string, integer or boolean' ) );
+			throw new InvalidArgumentException( esc_html( 'Default value must be a string, integer or boolean' ) );
 		}
 		if ( ! isset( $this->type ) ) {
-			throw new \InvalidArgumentException( esc_html( 'type must be set before default' ) );
+			throw new InvalidArgumentException( esc_html( 'type must be set before default' ) );
 		}
 		if ( gettype( $value ) !== $this->type ) {
-			throw new \InvalidArgumentException( esc_html( 'Default value must be a ' . $this->type ) );
+			throw new InvalidArgumentException( esc_html( 'Default value must be a ' . $this->type ) );
 		}
 		$this->default = $value;
 	}
@@ -178,18 +179,18 @@ class SettingValidator {
 	 *
 	 * @param string $value The type value to set. Must be one of: 'string', 'integer', 'boolean'.
 	 *
-	 * @throws \InvalidArgumentException If the type value is not one of: 'string', 'integer', 'boolean'.
+	 * @throws InvalidArgumentException If the type value is not one of: 'string', 'integer', 'boolean'.
 	 */
 	public function set_type( string $value ): void {
 		if ( ! in_array( $value, [ 'string', 'integer', 'boolean' ], true ) ) {
-			throw new \InvalidArgumentException( esc_html( "Type value must be a string, one of: 'string', 'integer' or 'boolean'" ) );
+			throw new InvalidArgumentException( esc_html( "Type value must be a string, one of: 'string', 'integer' or 'boolean'" ) );
 		}
 		$this->type = $value;
 	}
 
 	public function set_edd_store_url( string $value ): void {
 		if ( ! valid_url( $value ) ) {
-			throw new \InvalidArgumentException( esc_html( 'EDD store URL value must be a valid URL' ) );
+			throw new InvalidArgumentException( esc_html( 'EDD store URL value must be a valid URL' ) );
 		}
 		$this->edd_store_url = $value;
 	}
