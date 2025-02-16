@@ -224,6 +224,10 @@ function translation( string $context ): string {
 
 	switch ( $context ) {
 		// Pro
+		case 'link_removed':
+			return __( 'link removed', 'advanced-responsive-video-embedder' );
+		case 'video':
+			return __( 'Video', 'advanced-responsive-video-embedder' );
 		case 'play_video': // deprecated
 			return __( 'Play video', 'advanced-responsive-video-embedder' );
 		case 'latest_video_from_youtube_channel_could_not_be_detected':
