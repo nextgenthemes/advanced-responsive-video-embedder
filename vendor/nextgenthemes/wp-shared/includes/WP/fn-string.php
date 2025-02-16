@@ -258,3 +258,23 @@ function get_url_arg( string $url, string $arg ): ?string {
 
 	return $query_args[ $arg ] ?? null;
 }
+
+/**
+ * Replaces links in the given text with the given replacement, unless the link ends with a period.
+ *
+ * @see https://regex101.com/r/aElNTt/6
+ *
+ * @param string $text The text containing the links to replace.
+ * @param string $replacement The string to replace the links with.
+ * @return string The modified text with the replaced links.
+ */
+function replace_links( string $text, string $replacement ): string {
+
+	$pattern = '/https?:\/\/[^\s]+|[a-z0-9-]+\.[a-z0-9-]+\S*/i';
+
+	return preg_replace_callback(
+		$pattern,
+		fn ( $matches ) => str_ends_with( $matches[0], '.' ) ? $matches[0] : $replacement,
+		$text
+	);
+}
