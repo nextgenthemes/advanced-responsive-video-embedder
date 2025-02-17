@@ -6,26 +6,6 @@ use function Nextgenthemes\WP\get_products;
 
 class Tests_AddonsBaseChecks extends WP_UnitTestCase {
 
-	public function product_data(): array {
-
-		foreach ( get_products() as $plugin => $data ) {
-			$data[] = [
-				'plugin' => $plugin,
-				'data'   => $data,
-			];
-		}
-
-		return $data;
-	}
-	/**
-	 * Tests the integrity and structure of the product data.
-	 *
-	 * This test verifies that the list of products obtained from the global
-	 * settings is not empty and ensures that the detected addons are in an
-	 * array format. For each addon, it checks if the corresponding product
-	 * entry has a valid file, version, and active status. It also confirms
-	 * that the product type is 'plugin'.
-	 */
 	public function test_product_data(): void {
 
 		$products = get_products();
