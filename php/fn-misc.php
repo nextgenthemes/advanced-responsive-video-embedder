@@ -56,30 +56,16 @@ function gcd( int $a, int $b ): int {
 }
 
 /**
- * @return string|false
- */
-function check_filetype( string $url, string $ext ) {
-
-	$check = wp_check_filetype( $url, wp_get_mime_types() );
-
-	if ( strtolower( $check['ext'] ) === $ext ) {
-		return $check['type'];
-	} else {
-		return false;
-	}
-}
-
-/**
  * Calculates seconds based on youtube times if needed
  *
- * @param string $yttime   The 't=1h25m13s' or t=123 part of youtube URLs.
+ * @param string $time   The 't=1h25m13s' or t=123 part of youtube URLs.
  *
  * @return int Starttime in seconds.
  */
-function youtube_time_to_seconds( string $yttime ): int {
+function youtube_time_to_seconds( string $time ): int {
 
-	if ( \is_numeric( $yttime ) ) {
-		return (int) $yttime;
+	if ( is_numeric( $time ) ) {
+		return (int) $time;
 	}
 
 	$pattern = '/' .
@@ -87,7 +73,7 @@ function youtube_time_to_seconds( string $yttime ): int {
 		'(?<m>[0-9]+m)?' .
 		'(?<s>[0-9]+s)?/';
 
-	preg_match( $pattern, $yttime, $matches );
+	preg_match( $pattern, $time, $matches );
 
 	foreach ( array( 'h', 'm', 's' ) as $m ) {
 		if ( ! isset( $matches[ $m ] ) ) {
