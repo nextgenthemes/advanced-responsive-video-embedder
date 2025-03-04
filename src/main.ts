@@ -60,16 +60,18 @@ export function globalID(): void {
 }
 
 function unwrap( el: Element ): void {
+	// Type guard for parentNode to ensure it exists and is a Node
 	const parent = el.parentNode;
-	// make eslint STFU
-	if ( ! parent ) {
-		return;
+	if ( ! ( parent instanceof Node ) ) {
+		throw new Error( 'Element has no parent node' );
 	}
-	// move all children out of the element
-	while ( parent && el.firstChild ) {
+
+	// Move all children to parent
+	while ( el.firstChild ) {
 		parent.insertBefore( el.firstChild, el );
 	}
-	// remove the empty element
+
+	// Remove the empty element
 	parent.removeChild( el );
 }
 
