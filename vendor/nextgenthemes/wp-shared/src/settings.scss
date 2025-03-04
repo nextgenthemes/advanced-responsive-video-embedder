@@ -5,8 +5,13 @@
 }
 
 .ngt-full-width {
-	margin-right: -20px !important;
-	margin-left: -22px !important;
+
+	margin-left: -10px !important;
+
+	@media only screen and (min-width: 783px) {
+		margin-right: -20px !important;
+		margin-left: -22px !important;
+	}
 }
 
 .wrap--nextgenthemes {
@@ -31,17 +36,18 @@
 	}
 
 	.ngt-settings-bg {
+		padding: 1rem 0 1rem 1rem;
 		border-bottom: 1px solid #c3c4c7;
 	}
 
-	& a {
+	a {
 		text-underline-offset: 2px;
 	}
 
 	.ngt-label-wrap {
 		display: block;
 
-		& a {
+		a {
 			display: none;
 		}
 	}
@@ -93,21 +99,21 @@
 	border-left: 4px solid hsl(125.5deg, 44%, 49%);
 	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
 
-	& h3:first-child {
+	h3:first-child {
 		margin-top: 0;
 	}
 
-	& ul {
+	ul {
 		padding-left: 1em;
 		list-style: square;
 	}
 
-	& li {
+	li {
 		padding-left: 0;
 		margin-bottom: .5em;
 	}
 
-	& h5 {
+	h5 {
 		margin-bottom: .5em;
 	}
 
@@ -122,11 +128,11 @@
 .ngt-opt {
 	container-type: inline-size;
 
-	& select {
+	select {
 		width: 130px;
 	}
 
-	& [type="number"] {
+	[type="number"] {
 		width: 6em;
 	}
 
@@ -153,7 +159,7 @@ input.text-large--ngt-key { /* stylelint-disable-line selector-no-qualifying-typ
 		display: inline;
 	}
 
-	& a {
+	a {
 		--blue: oklch(53% .12 247.74deg);
 		--red: oklch(53% .19 21.07deg);
 		color: transparent;
