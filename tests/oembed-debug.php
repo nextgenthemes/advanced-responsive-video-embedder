@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
 use function Nextgenthemes\ARVE\shortcode;
 use function Nextgenthemes\ARVE\get_host_properties;
 
-// phpcs:disable Squiz.Classes.ClassFileName.NoMatch
-// phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
 // phpcs:disable WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
 // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_read_fwrite
@@ -27,7 +27,7 @@ class Tests_OembedD extends WP_UnitTestCase {
 			}
 
 			foreach ( $v['tests'] as $test ) {
-				$this->get_oembed_for_url($test['url']);
+				$this->get_oembed_for_url( $test['url'] );
 
 				if ( ! empty( $v['oembed'] ) &&
 					empty( $this->oembed_debug[ $test['url'] ] )
@@ -44,7 +44,7 @@ class Tests_OembedD extends WP_UnitTestCase {
 		endforeach;
 
 		$export = var_export( $this->oembed_debug, true );
-		$export = str_replace('  ', "\t", $export);
+		$export = str_replace( '  ', "\t", $export );
 
 		$file = __DIR__ . '/' . basename( __FILE__ ) . '-log.php';
 
@@ -70,7 +70,7 @@ class Tests_OembedD extends WP_UnitTestCase {
 	public function filter_oembed_dataparse( $result, $data, $url ) {
 
 		if ( ! empty( $data->description ) ) {
-			$data->description = substr($data->description, 0, 55);
+			$data->description = substr( $data->description, 0, 55 );
 		}
 
 		$this->oembed_debug[ $url ] = $data;
