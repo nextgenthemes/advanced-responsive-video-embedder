@@ -241,7 +241,7 @@ function widget_text(): void {
 	printf( '<a href="%s">ARVE Pro Addon Features</a>:', 'https://nextgenthemes.com/plugins/arve-pro/' );
 
 	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
-	echo wp_kses( ad_html(), ALLOWED_HTML, array( 'htts', 'https' ) );
+	echo wp_kses( ad_html(), ALLOWED_HTML, array( 'https' ) );
 }
 
 function register_shortcode_ui(): void {
@@ -359,9 +359,13 @@ function add_action_links( array $links ): array {
 
 function admin_enqueue_styles(): void {
 
+	if ( did_action( 'wp_enqueue_editor' ) ) {
+		return;
+	}
+
 	enqueue_asset(
 		array(
-			'handle' => 'advanced-responsive-video-embedder',
+			'handle' => 'arve-admin',
 			'src'    => plugins_url( 'build/admin.css', PLUGIN_FILE ),
 			'path'   => PLUGIN_DIR . '/build/admin.css',
 			'deps'   => array( 'nextgenthemes-settings' ),
@@ -411,7 +415,7 @@ function admin_enqueue_scripts(): void {
 			'handle'               => 'arve-admin',
 			'src'                  => plugins_url( 'build/admin.js', PLUGIN_FILE ),
 			'path'                 => PLUGIN_DIR . '/build/admin.js',
-			'inline_script_before' => 'var arveSCSettings = ' . \wp_json_encode( $settings_data ) . ';',
+			'inline_script_before' => 'var arveSCSettings = ' . wp_json_encode( $settings_data ) . ';',
 			'strategy'             => 'defer',
 		)
 	);
