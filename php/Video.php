@@ -755,15 +755,14 @@ class Video {
 
 		} else {
 
-			$inner_tag = is_card( get_object_vars( $this ) ) ? 'a' : 'div';
-			$html      = PHP_EOL . <<<HTML
+			$html = PHP_EOL . <<<HTML
 <div class="arve"{$block_attr}>
-	<{$inner_tag} class="arve-inner">
+	<div class="arve-inner">
 		<div class="arve-embed">
 			{$this->arve_embed_inner_html()}
 		</div>
 		{$this->card_html()}
-	</{$inner_tag}>
+	</div>
 	{$this->card_consent_html()}
 	{$this->promote_link()}
 	{$this->build_seo_data()}
@@ -1019,10 +1018,6 @@ HTML;
 
 		$attr = $this->video_attr;
 		$amp  = is_amp() ? 'amp-' : '';
-
-		if ( in_array( $this->mode, array( 'lazyload', 'lightbox' ), true ) ) {
-			$attr['controls'] = false;
-		}
 
 		return first_tag_attr(
 			'<' . $amp . 'video>' . $this->video_sources_html . tracks_html( $this->tracks ) . '</' . $amp . 'video>',
