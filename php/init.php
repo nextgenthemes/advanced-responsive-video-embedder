@@ -103,9 +103,10 @@ function uninstall(): void {
  * Deletes the oEmbed cache for all posts.
  *
  * @link https://github.com/wp-cli/embed-command/blob/c868ec31c65ffa1a61868a91c198a5d815b5bafa/src/Cache_Command.php
- * @author Nicolas Lemoine <https://n5s.dev>
  * @author Nicolas Jonas <https://nextgenthemes.com>
- * @copyright Copyright (c) 2024 Nicolas Lemoine, Nicolas Jonas
+ * @author Nicolas Lemoine <https://n5s.dev>
+ * @copyright Copyright (c) 2025, Nicolas Jonas
+ * @copyright Copyright (c) 2024, Nicolas Lemoine
  *
  * @return int|false The number of rows deleted or false on failure.
  */
