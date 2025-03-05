@@ -40,8 +40,11 @@ function shortcode( array $a ) {
 		$oembed_data = extract_oembed_data( $maybe_arve_html );
 
 		if ( $oembed_data ) {
-			$a['oembed_data']         = $oembed_data;
-			$a['origin_data']['from'] = 'shortcode oembed_data detected';
+			$a['oembed_data'] = $oembed_data;
+			$a['origin_data'] = array(
+				'from'  => 'shortcode oembed_data detected',
+				'cache' => delete_oembed_caches_when_missing_data( $oembed_data ),
+			);
 		}
 	}
 

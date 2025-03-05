@@ -86,28 +86,13 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 
 	if ( $oembed_data ) {
 
-		$pro_active = function_exists( __NAMESPACE__ . '\Pro\oembed_data' );
-
-		if ( $pro_active
-			&& 'youtube' === $oembed_data->provider
-			&& ( empty( $oembed_data->description ) || empty( $oembed_data->thumbnail_srcset ) )
-		) {
-			delete_oembed_cache( 'youtube.com' );
-		}
-
-		if ( $pro_active
-			&& 'vimeo' === $oembed_data->provider
-			&& empty( $oembed_data->thumbnail_srcset )
-		) {
-			delete_oembed_cache( 'vimeo.com' );
-		}
-
 		$a['url']         = $url;
 		$a['oembed_data'] = $oembed_data;
 		$a['origin_data'] = array(
 			'from'    => 'filter_embed_oembed_html',
 			'post_id' => $post_id,
 			'attr'    => $attr,
+			'cache'   => delete_oembed_caches_when_missing_data( $oembed_data ),
 		);
 
 		$cache = build_video( $a );
@@ -116,19 +101,31 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 	return $cache;
 }
 
-function delete_oembed_caches_when_missing_data( object $oembed_data ): void {
+function delete_oembed_caches_when_missing_data( object $oembed_data ): array {
 
-	if ( 'youtube' === $oembed_data->provider
+	$pro_active = function_exists( __NAMESPACE__ . '\Pro\oembed_data' );
+	$result     = [];
+
+	if ( empty( $oembed_data->provider ) ) {
+		$result['delete_oembed_cache'] = delete_oembed_cache();
+		return $result;
+	}
+
+	if ( $pro_active
+		&& 'youtube' === $oembed_data->provider
 		&& ( empty( $oembed_data->description ) || empty( $oembed_data->thumbnail_srcset ) )
 	) {
-		delete_oembed_cache( 'youtube.com' );
+		$result['delete_youtube_cache'] = delete_oembed_cache( 'youtube.com' );
 	}
 
-	if ( 'vimeo' === $oembed_data->provider
+	if ( $pro_active
+		&& 'vimeo' === $oembed_data->provider
 		&& empty( $oembed_data->thumbnail_srcset )
 	) {
-		delete_oembed_cache( 'vimeo.com' );
+		$result['delete_vimeo_cache'] = delete_oembed_cache( 'vimeo.com' );
 	}
+
+	return $result;
 }
 
 function extract_oembed_data( string $html ): ?object {
