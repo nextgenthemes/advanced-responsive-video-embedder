@@ -1,4 +1,4 @@
-import './settings.css';
+import './settings.scss';
 import { debounce, aspectRatio } from './helpers';
 import { store, getContext, getConfig } from '@wordpress/interactivity';
 const domParser = new DOMParser();
