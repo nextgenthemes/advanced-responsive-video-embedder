@@ -24,6 +24,8 @@ jobs:
     needs: beta
     name: PHP Unit tests
     runs-on: ubuntu-22.04
+    env:
+      NGT_PHPUNIT_LOAD_PLUGINS: advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos,arve-privacy
     strategy:
       fail-fast: false
       matrix:
@@ -110,7 +112,7 @@ jobs:
           extensions: mbstring, dom, zip, mysql, gd
           tools: phpunit-polyfills:1
           coverage: ${{ contains(github.event.head_commit.message, '[cov]') && 'xdebug' || 'none' }}
-
+  
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
 
@@ -121,13 +123,11 @@ jobs:
 
       - name: Run PHPUnit without code coverage
         if: (!contains(github.event.head_commit.message, '[cov]'))
-        run: >
-          phpunit --testsuite advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos,arve-privacy &&
-          NGT_PHPUNIT_LOAD_PLUGINS=advanced-responsive-video-embedder phpunit --group no-addons
+        run: phpunit --testsuite "$NGT_PHPUNIT_LOAD_PLUGINS" && phpunit --group no-addons
 
       - name: Run PHPUnit with code coverage
         if: contains(github.event.head_commit.message, '[cov]') && matrix.php == '8.3' && matrix.wordpress == needs.beta.outputs.ver
-        run: phpunit --testsuite advanced-responsive-video-embedder,arve-pro,arve-random-video,arve-amp,arve-sticky-videos --coverage-html coverage
+        run: phpunit --testsuite "$NGT_PHPUNIT_LOAD_PLUGINS" --coverage-html coverage
 
       - name: Archive code coverage results
         if: contains(github.event.head_commit.message, '[cov]') && matrix.php == '8.3' && matrix.wordpress == needs.beta.outputs.ver
