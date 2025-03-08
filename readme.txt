@@ -193,9 +193,9 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2025-03-07 10.6.0-beta4 ###
+### 2025-03-08 10.6.0 ###
 
-* New: Lazyload Style option (upcoming pro Feature).
+* New: Lazyload Style option (Pro Feature).
 * Fix: Settings page conflicts with admin notices (from other plugins).
 * Fix: `_load_textdomain_just_in_time` being triggered too early.
 * Improved: Styles for the settings page and Classic Editor shortcode creator dialog.
