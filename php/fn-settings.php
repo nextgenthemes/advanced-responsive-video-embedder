@@ -700,9 +700,9 @@ function settings_data(): SettingsData {
 			'default'     => true,
 			'shortcode'   => true,
 			'option'      => false,
-			'label'       => __( 'Set <code>credentialless</code> on iframe', 'advanced-responsive-video-embedder' ),
+			'label'       => __( 'Set credentialless on iframe', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
-			'description' => __( 'Only needed in specific situations like webvideocore.net payment popup. Reduces privacy of the iframe embed.', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'Needs to be disabled in specific situations like webvideocore.net payment popup. Reduces privacy of the iframe embeds when disabled.', 'advanced-responsive-video-embedder' ),
 		),
 		'seo_data' => array(
 			'tab'         => 'main',
