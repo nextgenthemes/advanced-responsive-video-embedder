@@ -193,7 +193,7 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### beta 10.6.0 ###
+### 2025-03-07 10.6.0-beta4 ###
 
 * New: Lazyload Style option (upcoming pro Feature).
 * Fix: Settings page conflicts with admin notices (from other plugins).
@@ -202,23 +202,23 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * Improved: Simplified the way ARVE generates HTML using `WP_HTML_Tag_Processor`.
 * Improved: `dnt=1` parameter is now part of the visible default parameters for Vimeo and Wistia. You may need to remove it or set it to `0` to get your views tracked by them.
 
-### 2024-01-15 10.5.4 ###
+### 2025-01-15 10.5.4 ###
 
 * Improved: Removed incompatibility notices for AIO SEO Pack (resolved).
 
-### 2024-01-11 10.5.3 ###
+### 2025-01-11 10.5.3 ###
 
 * Fix: Fixed, improved and restored Shortcode UI functionality. 
 
-### 2024-01-08 10.5.2 ###
+### 2025-01-08 10.5.2 ###
 
 * Fix: Block errors.
 
-### 2024-01-02 10.5.1 ###
+### 2025-01-02 10.5.1 ###
 
 * Fix: Array merge with NULL error.
 
-### 2024-01-02 10.5.0 ###
+### 2025-01-02 10.5.0 ###
 
 * New: Debug option to control src mismatch errors.
 * Improved: Removed the debug into in favor or adding data to the Site Health Info screen.
