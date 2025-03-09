@@ -43,19 +43,21 @@ function remote_get_json_cached( string $url, array $args = array(), string $jso
 		);
 	}
 
-	if ( $json_name && ! empty( $response[ $json_name ] ) ) {
-		return $response[ $json_name ];
-	} else {
-		return new WP_Error(
-			'json-value-empty',
-			sprintf(
-				// Translators: %1$s URL, %2$s JSON value, %3$s full JSON
-				__( 'url: %1$s JSON value <code>%2$s</code> does not exist or is empty. Full Json: %3$s', 'advanced-responsive-video-embedder' ),
-				esc_html( $url ),
-				esc_html( $json_name ),
-				esc_html( $response )
-			)
-		);
+	if ( $json_name ) {
+		if ( empty( $response[ $json_name ] ) ) {
+			return new WP_Error(
+				'json-value-empty',
+				sprintf(
+					// Translators: 1 URL 2 JSON value
+					__( 'url: %1$s JSON value <code>%2$s</code> does not exist or is empty. Full Json: %3$s', 'advanced-responsive-video-embedder' ),
+					esc_html( $url ),
+					esc_html( $json_name ),
+					esc_html( $response )
+				)
+			);
+		} else {
+			return $response[ $json_name ];
+		}
 	}
 
 	return $response;
