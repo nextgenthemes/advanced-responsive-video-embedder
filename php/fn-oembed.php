@@ -105,24 +105,18 @@ function delete_oembed_caches_when_missing_data( object $oembed_data ): array {
 
 	$pro_active = function_exists( __NAMESPACE__ . '\Pro\oembed_data' );
 	$result     = [];
-
-	if ( empty( $oembed_data->provider ) ) {
-		$result['delete_oembed_cache'] = delete_oembed_cache();
-		return $result;
-	}
-
-	if ( $pro_active
-		&& 'youtube' === $oembed_data->provider
-		&& ( ! isset( $oembed_data->description ) || empty( $oembed_data->thumbnail_srcset ) )
-	) {
-		$result['delete_youtube_cache'] = delete_oembed_cache( 'youtube.com' );
-	}
+	$url        = $oembed_data->arve_url ?? false;
+	$provider   = $oembed_data->provider ?? false;
+	$cachetime  = $oembed_data->arve_cachetime ?? false;
+	$old_enough = $cachetime && ( new DateTime( $cachetime ) )->modify( '+ 1 day' ) <= current_datetime();
 
 	if ( $pro_active
-		&& 'vimeo' === $oembed_data->provider
-		&& empty( $oembed_data->thumbnail_srcset )
+		&& $url
+		&& 'youtube' === $provider
+		&& ! isset( $oembed_data->description )
+		&& $old_enough
 	) {
-		$result['delete_vimeo_cache'] = delete_oembed_cache( 'vimeo.com' );
+		$result['delete_youtube_cache'] = delete_oembed_cache( $url );
 	}
 
 	return $result;

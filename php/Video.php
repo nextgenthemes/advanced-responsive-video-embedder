@@ -173,6 +173,13 @@ class Video {
 			$this->set_prop( $arg_name, $value );
 		}
 
+		if ( isset( $this->oembed_data->youtube_api_error ) && str_contains( $this->oembed_data->youtube_api_error, '403' ) ) {
+			unset( $this->oembed_data->youtube_api_error );
+			update_option( 'arve_youtube_api_error', $this->oembed_data->youtube_api_error );
+		}
+
+		unset( $this->oembed_data->arve_error ); // ignore old errors.
+
 		foreach ( (array) $this->oembed_data as $key => $value ) {
 			if ( str_contains( $key, 'error' ) ) {
 				arve_errors()->add( $key, $value );

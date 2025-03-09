@@ -5,7 +5,9 @@
 
 ### 2025-03-09 10.6.1 ###
 
-* Improved error handling.
+* Improved: Error handling. Show YouTube API errors only on the Admin screens.
+* Improved: Cache deletion.
+* New: Option to add your own YouTube Data API key to prevent limits of the one included in Pro.
 
 ### 2025-03-08 10.6.0 ###
 

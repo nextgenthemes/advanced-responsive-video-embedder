@@ -47,7 +47,7 @@ function action_admin_init_setup_messages(): void {
 		Notices::instance()->register_notice(
 			'ngt-arve-outdated-pro-v' . PRO_VERSION_REQUIRED,
 			'notice-error',
-			wp_kses( $msg, ALLOWED_HTML, array( 'htts', 'https' ) ),
+			wp_kses( $msg, ALLOWED_HTML, array( 'https' ) ),
 			array(
 				'cap' => 'update_plugins',
 			)
@@ -58,11 +58,39 @@ function action_admin_init_setup_messages(): void {
 		Notices::instance()->register_notice(
 			'ngt-arve-addon-ad',
 			'notice-info',
-			wp_kses( ad_html(), ALLOWED_HTML, array( 'htts', 'https' ) ),
+			wp_kses( ad_html(), ALLOWED_HTML, array( 'https' ) ),
 			array(
 				'cap' => 'install_plugins',
 			)
 		);
+	}
+
+	$youtube_api_error = get_option( 'arve_youtube_api_error' );
+
+	if ( str_contains( (string) $youtube_api_error, '403' ) ) {
+
+		$yt_api_error_msg = sprintf(
+			__( 'ARVE Pro\'s included YouTube API Key limit reached, sign up for your own API key at <a href="%1$s" target="_blank">developers.google.com</a> and enter it in <a href="%2$s">ARVE Settings</a>.', 'advanced-responsive-video-embedder' ),
+			'https://developers.google.com/youtube/v3/getting-started',
+			esc_url( admin_url( 'admin.php?page=advanced-responsive-video-embedder' ) )
+		);
+
+		Notices::instance()->register_notice(
+			'arve_youtube_api_error',
+			'notice-error',
+			wp_kses(
+				$yt_api_error_msg,
+				ALLOWED_HTML,
+				array( 'https' )
+			),
+			array(
+				'cap'   => 'manage_options',
+				'scope' => 'global',
+			)
+		);
+
+		Notices::instance()->restore_notice( 'arve_youtube_api_error' );
+		delete_option( 'arve_youtube_api_error' );
 	}
 
 	$object_cache_msg = get_option( 'arve_object_cache_msg' );
@@ -75,7 +103,7 @@ function action_admin_init_setup_messages(): void {
 			wp_kses(
 				$object_cache_msg,
 				ALLOWED_HTML,
-				array( 'htts', 'https' )
+				array( 'https' )
 			),
 			array(
 				'cap'   => 'manage_options',

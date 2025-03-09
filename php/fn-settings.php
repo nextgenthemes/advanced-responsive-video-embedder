@@ -829,6 +829,19 @@ function settings_data(): SettingsData {
 				'never'    => __( 'Never', 'advanced-responsive-video-embedder' ),
 			),
 		),
+		'youtube_data_api_key' => array(
+			'label'       => __( 'YouTube Data API Key', 'advanced-responsive-video-embedder' ),
+			'tab'         => 'pro',
+			'type'        => 'string',
+			'default'     => '',
+			'option'      => true,
+			'shortcode'   => false,
+			'description' => sprintf(
+				// translators: %s is URL
+				__( 'If you want ARVE Pro to pull video description text for Card view and SEO. You may need this if the included API key gets rate limited. Get your API key <a href="%s" target="_blank">here</a>.', 'advanced-responsive-video-embedder' ),
+				esc_url( 'https://developers.google.com/youtube/v3/getting-started' )
+			),
+		),
 	);
 
 	foreach ( $properties as $provider => $v ) {
