@@ -42,7 +42,7 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 	$data->arve_cachetime = current_datetime()->format( DATETIME::ATOM );
 
 	if ( function_exists( __NAMESPACE__ . '\Pro\oembed_data' ) ) {
-		$data = Pro\oembed_data( $data );
+		Pro\oembed_data( $data );
 	}
 
 	unset( $data->html );
@@ -54,7 +54,6 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 
 	return $html;
 }
-
 
 /**
  * Sanitizes the provider name by removing special characters and converting to lowercase.
@@ -110,13 +109,31 @@ function delete_oembed_caches_when_missing_data( object $oembed_data ): array {
 	$cachetime  = $oembed_data->arve_cachetime ?? false;
 	$old_enough = $cachetime && ( new DateTime( $cachetime ) )->modify( '+ 1 day' ) <= current_datetime();
 
+	if ( ! $url ) {
+		$result['delete_entire_oembed_cache'] = delete_oembed_cache();
+	}
+
+	if ( $url
+		&& ( ! $provider || ! $cachetime )
+	) {
+		$result['delete_oembed_cache_for_provider_or_cachetime'] = delete_oembed_cache( $url );
+	}
+
+	if ( $pro_active
+		&& $url
+		&& 'youtube' === $provider
+		&& ! isset( $oembed_data->thumbnail_srcset )
+	) {
+		$result['delete_youtube_cache_for_srcset'] = delete_oembed_cache( $url );
+	}
+
 	if ( $pro_active
 		&& $url
 		&& 'youtube' === $provider
 		&& ! isset( $oembed_data->description )
 		&& $old_enough
 	) {
-		$result['delete_youtube_cache'] = delete_oembed_cache( $url );
+		$result['delete_youtube_cache_for_description'] = delete_oembed_cache( $url );
 	}
 
 	return $result;
