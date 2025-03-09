@@ -114,7 +114,8 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		$od = new StdClass();
 
 		$od->provider_name = 'Unknown';
-		$od->arve_error    = 'err-testing-str';
+		$od->test_error    = 'err-testing-str';
+		$od->other_error   = 'another-error-str';
 
 		$html = build_video(
 			[
@@ -125,5 +126,6 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 
 		$this->assertStringContainsString( 'Error', $html );
 		$this->assertStringContainsString( 'err-testing-str', $html );
+		$this->assertStringContainsString( 'another-error-str', $html );
 	}
 }

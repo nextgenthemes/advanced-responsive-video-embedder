@@ -147,6 +147,8 @@ function get_arg_type( string $arg_name ): ?string {
 			return 'bool';
 		case 'integer':
 			return 'int';
+		default:
+			return null;
 	}
 }
 

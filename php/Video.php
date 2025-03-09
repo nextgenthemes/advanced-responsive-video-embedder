@@ -173,8 +173,10 @@ class Video {
 			$this->set_prop( $arg_name, $value );
 		}
 
-		if ( ! empty( $this->oembed_data->arve_error ) ) {
-			arve_errors()->add( 'oembed-data-error', $this->oembed_data->arve_error );
+		foreach ( (array) $this->oembed_data as $key => $value ) {
+			if ( str_contains( $key, 'error' ) ) {
+				arve_errors()->add( $key, $value );
+			}
 		}
 
 		if ( ! empty( $this->oembed_data->provider ) &&

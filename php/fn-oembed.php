@@ -32,7 +32,7 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 	$iframe_src = oembed_html2src( $data );
 
 	if ( is_wp_error( $iframe_src ) ) {
-		$data->arve_error = $iframe_src->get_error_message();
+		$data->iframe_src_error = $iframe_src->get_error_message();
 	} else {
 		$data->arve_iframe_src = $iframe_src;
 	}
@@ -113,7 +113,7 @@ function delete_oembed_caches_when_missing_data( object $oembed_data ): array {
 
 	if ( $pro_active
 		&& 'youtube' === $oembed_data->provider
-		&& ( empty( $oembed_data->description ) || empty( $oembed_data->thumbnail_srcset ) )
+		&& ( ! isset( $oembed_data->description ) || empty( $oembed_data->thumbnail_srcset ) )
 	) {
 		$result['delete_youtube_cache'] = delete_oembed_cache( 'youtube.com' );
 	}
