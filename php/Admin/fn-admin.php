@@ -70,9 +70,10 @@ function action_admin_init_setup_messages(): void {
 	if ( str_contains( (string) $youtube_api_error, '403' ) ) {
 
 		$yt_api_error_msg = sprintf(
+			// Translators: %1$s URL to tut video, %2$s URL to ARVE settings page
 			__( 'ARVE Pro\'s included YouTube API Key limit reached, sign up for your own API key at <a href="%1$s" target="_blank">developers.google.com</a> and enter it in <a href="%2$s">ARVE Settings</a>.', 'advanced-responsive-video-embedder' ),
-			'https://developers.google.com/youtube/v3/getting-started',
-			esc_url( admin_url( 'admin.php?page=advanced-responsive-video-embedder' ) )
+			'https://www.youtube.com/watch?v=EPeDTRNKAVo',
+			esc_url( admin_url( 'options-general.php?page=nextgenthemes_arve' ) )
 		);
 
 		Notices::instance()->register_notice(

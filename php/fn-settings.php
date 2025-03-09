@@ -839,7 +839,7 @@ function settings_data(): SettingsData {
 			'description' => sprintf(
 				// translators: %s is URL
 				__( 'If you want ARVE Pro to pull video description text for Card view and SEO. You may need this if the included API key gets rate limited. Get your API key <a href="%s" target="_blank">here</a>.', 'advanced-responsive-video-embedder' ),
-				esc_url( 'https://developers.google.com/youtube/v3/getting-started' )
+				esc_url( 'https://www.youtube.com/watch?v=EPeDTRNKAVo' )
 			),
 		),
 	);
