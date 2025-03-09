@@ -134,6 +134,7 @@ class Video {
 
 			check_product_keys();
 			$this->process_shortcode_atts();
+			$this->oembed_data_errors();
 
 			$html .= get_error_html();
 			$html .= $this->build_html();
@@ -164,18 +165,13 @@ class Video {
 		return apply_filters( 'nextgenthemes/arve/html', $html, get_object_vars( $this ) );
 	}
 
-	private function process_shortcode_atts(): void {
+	private function oembed_data_errors(): void {
 
-		$this->missing_attribute_check();
-		$this->detect_from_embed_code();
-
-		foreach ( $this->shortcode_atts as $arg_name => $value ) {
-			$this->set_prop( $arg_name, $value );
-		}
-
-		if ( isset( $this->oembed_data->youtube_api_error ) && str_contains( $this->oembed_data->youtube_api_error, '403' ) ) {
-			unset( $this->oembed_data->youtube_api_error );
+		if ( isset( $this->oembed_data->youtube_api_error )
+			&& str_contains( $this->oembed_data->youtube_api_error, '403' )
+		) {
 			update_option( 'arve_youtube_api_error', $this->oembed_data->youtube_api_error );
+			unset( $this->oembed_data->youtube_api_error );
 		}
 
 		unset( $this->oembed_data->arve_error ); // ignore old errors.
@@ -184,6 +180,16 @@ class Video {
 			if ( str_contains( $key, 'error' ) ) {
 				arve_errors()->add( $key, $value );
 			}
+		}
+	}
+
+	private function process_shortcode_atts(): void {
+
+		$this->missing_attribute_check();
+		$this->detect_from_embed_code();
+
+		foreach ( $this->shortcode_atts as $arg_name => $value ) {
+			$this->set_prop( $arg_name, $value );
 		}
 
 		if ( ! empty( $this->oembed_data->provider ) &&
