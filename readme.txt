@@ -193,6 +193,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2025-03-09 10.6.1 ###
+
+* Improved error handling.
+
 ### 2025-03-08 10.6.0 ###
 
 * New: Lazyload Style option (Pro Feature).
