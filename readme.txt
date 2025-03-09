@@ -193,6 +193,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2025-03-09 10.6.5 ###
+
+* Fix: Cache management related old YouTube video having broken thumbnails.
+
 ### 2025-03-09 10.6.4 ###
 
 * Fix: Link to settings page in API key notice.
