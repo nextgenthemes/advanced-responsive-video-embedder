@@ -3,11 +3,9 @@
 	"description": "ARVE Advanced Responsive Video Embedder",
 	"type": "wordpress-plugin",
 	"require": {
-		"php": ">=7.4"
-	},
-	"require-dev": {
-		"nextgenthemes/wp-shared": "@dev",
-		"automattic/jetpack-autoloader": "3.1.3"
+		"php": ">=7.4",
+		"nextgenthemes/wp-settings": "@dev",
+		"automattic/jetpack-autoloader": "^v5.0.2"
 	},
 	"license": "GPL-3.0",
 	"authors": [
@@ -25,9 +23,9 @@
 		}
 	},
 	"repositories": {
-		"nextgenthemes/wp-shared": {
+		"nextgenthemes/wp-settings": {
 			"type": "path",
-			"url": "../../../../../../dev/composer-packages/wp-shared",
+			"url": "../../../../../../dev/composer-packages/wp-settings",
 			"options": {
 				"symlink": false
 			}
@@ -42,8 +40,9 @@
 			"@composer update"
 		],
 		"pre-update-cmd": [
-			"rsync --delete -av ./vendor/nextgenthemes/wp-shared ${HOME}/dev/composer-packages/",
-			"@composer --working-dir ${HOME}/dev/composer-packages/wp-shared config version $(php -r \"echo (new DateTime())->format('Y.m.d.H.i.s');\")"
+			"rsync -av --delete --exclude='.git' ./vendor/nextgenthemes/wp-settings ${HOME}/dev/composer-packages/",
+			"cd ${HOME}/dev/composer-packages/wp-settings && git add . && git commit -am \"Auto-commit all changes $(date -u --rfc-3339=s)\" || [ $? -eq 1 ] && exit 0",
+			"cd ${HOME}/dev/composer-packages/wp-settings && git push origin master"
 		],
 		"tests": [
 			"cd ${HOME}/websites && NGT_PHPUNIT_LOAD_PLUGINS=\"advanced-responsive-video-embedder\" phpunit --testsuite advanced-responsive-video-embedder"
