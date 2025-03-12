@@ -17,7 +17,7 @@ require_once __DIR__ . '/SettingValidator.php';
 
 if ( function_exists( '\is_admin' ) && \is_admin() ) {
 	require_once __DIR__ . '/Admin/EDD/PluginUpdater.php';
-	require_once __DIR__ . '/Admin/EDD/ThemeUpdater.php';
+	#require_once __DIR__ . '/Admin/EDD/ThemeUpdater.php';
 	require_once __DIR__ . '/Admin/Notices.php';
 	require_once __DIR__ . '/Admin/fn-licensing.php';
 	require_once __DIR__ . '/Admin/fn-settings.php';

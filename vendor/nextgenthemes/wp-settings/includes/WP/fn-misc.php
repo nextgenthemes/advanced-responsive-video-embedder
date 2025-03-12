@@ -121,6 +121,8 @@ function str_to_array( string $str, string $delimiter = ',' ): array {
  * @return array   The resulting array with modified keys.
  */
 function array_map_key( string $callback, array $arr ): array {
-	$keys = array_map( $callback, array_keys( $arr ) );
-	return array_combine( $keys, $arr );
+	return array_combine(
+		array_map( $callback, array_keys( $arr ) ),
+		$arr
+	);
 }

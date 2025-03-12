@@ -21,7 +21,7 @@ class SettingValidator {
 	/**
 	 * Special UI for the setting, e.g. 'image_upload'
 	 */
-	public ?string $ui = null;
+	public ?string $ui;
 
 	/**
 	 * Whether the setting should get an UI element generated.
@@ -34,7 +34,7 @@ class SettingValidator {
 	public bool $shortcode;
 
 
-	public string $tab = 'main';
+	public string $tab;
 	public string $label;
 
 	/**
@@ -43,8 +43,8 @@ class SettingValidator {
 	 * @var string 'string', 'integer' or 'boolean'
 	 */
 	public string $type;
-	public ?string $placeholder = null;
-	public ?string $description = null;
+	public ?string $placeholder;
+	public ?string $description;
 
 	/**
 	 * Options for to choose from, used for 'select'
@@ -53,14 +53,14 @@ class SettingValidator {
 	 *
 	 * @var array <string, string>
 	 */
-	public ?array $options = null;
+	public ?array $options;
 	public string $sanitize_callback;
 	public string $ui_element;
 	public string $ui_element_type;
 
-	public ?string $edd_store_url = null;
-	public ?string $edd_item_name = null;
-	public ?int $edd_item_id      = null;
+	public ?string $edd_store_url;
+	public ?string $edd_item_name;
+	public ?int $edd_item_id;
 
 	public function __construct( array $setting, bool $arve = false ) {
 
@@ -73,13 +73,13 @@ class SettingValidator {
 		$this->set_default( $setting['default'] );
 		$this->option_key    = $setting['option_key'];
 		$this->label         = $setting['label'];
-		$this->tab           = $setting['tab'] ?? $this->tab;
-		$this->options       = $setting['options'] ?? $this->options;
-		$this->ui            = $setting['ui'] ?? $this->ui;
-		$this->placeholder   = $setting['placeholder'] ?? $this->placeholder;
-		$this->description   = $setting['description'] ?? $this->description;
-		$this->edd_item_id   = $setting['edd_item_id'] ?? $this->edd_item_id;
-		$this->edd_item_name = $setting['edd_item_name'] ?? $this->edd_item_name;
+		$this->tab           = $setting['tab'] ?? 'main';
+		$this->options       = $setting['options'] ?? null;
+		$this->ui            = $setting['ui'] ?? null;
+		$this->placeholder   = $setting['placeholder'] ?? null;
+		$this->description   = $setting['description'] ?? null;
+		$this->edd_item_id   = $setting['edd_item_id'] ?? null;
+		$this->edd_item_name = $setting['edd_item_name'] ?? null;
 
 		if ( isset( $setting['edd_store_url'] ) ) {
 			$this->set_edd_store_url( $setting['edd_store_url'] );
@@ -204,6 +204,8 @@ class SettingValidator {
 			case 'boolean':
 				return 'checkbox';
 		}
+
+		throw new ErrorException( esc_html( 'Input type for ' . $type . ' not implemented' ) );
 	}
 
 	public function to_array(): array {

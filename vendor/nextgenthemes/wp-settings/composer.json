@@ -1,6 +1,6 @@
 {
-    "name": "nextgenthemes/wp-shared",
-    "type": "wp-package",
+    "name": "nextgenthemes/wp-settings",
+    "type": "library",
     "license": "GPL-3.0",
     "autoload": {
         "files": [
@@ -13,7 +13,6 @@
         }
     ],
     "require": {
-        "php": ">=7.4"
-    },
-    "version": "2025.03.09.14.46.09"
+        "php": "^7.4"
+    }
 }

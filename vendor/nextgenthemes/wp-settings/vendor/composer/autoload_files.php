@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'b7fa01507ebc12cee9d707bcd605cd1e' => $vendorDir . '/nextgenthemes/wp-settings/includes/WP/init.php',
+    '47777597fbe681453e41ea4bf4ad9988' => $baseDir . '/includes/WP/init.php',
 );
