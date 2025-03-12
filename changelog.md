@@ -3,6 +3,12 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2025-03-12 10.6.6 ###
+
+* Improved: Tested with WP 6.8
+* Improved: Updated jetpack autoloader.
+* Renamed shared code package, now [nextgenthemes/wp-settings](https://packagist.org/packages/nextgenthemes/wp-settings) on Packagist.
+
 ### 2025-03-09 10.6.5 ###
 
 * Fix: Cache management related old YouTube video having broken thumbnails.
