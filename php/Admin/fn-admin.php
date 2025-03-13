@@ -424,23 +424,6 @@ function admin_enqueue_scripts(): void {
 		'tabs'             => settings_tabs(),
 	);
 
-	if ( ! is_gutenberg() ) {
-
-		wp_register_script(
-			'arve-shortcode-dialog',
-			plugins_url( '/src/shortcode-dialog.js', PLUGIN_FILE ),
-			array(),
-			ver( PLUGIN_DIR . '/src/shortcode-dialog.js', VERSION ),
-			array( 'strategy' => 'defer' ),
-		);
-
-		wp_add_inline_script(
-			'arve-shortcode-dialog',
-			'var ArveShortcodeDialogJsBefore = ' . wp_json_encode( $settings_data ) . ';',
-			'before'
-		);
-	}
-
 	wp_register_script(
 		'arve-admin',
 		plugins_url( 'build/admin.js', PLUGIN_FILE ),
@@ -458,14 +441,13 @@ function admin_enqueue_scripts(): void {
 	wp_enqueue_script( 'arve-admin' );
 
 	if ( is_plugin_active( 'shortcode-ui/shortcode-ui.php' ) ) {
-		wp_register_script(
+		wp_enqueue_script(
 			'arve-admin-sc-ui',
 			plugins_url( 'build/shortcode-ui.js', PLUGIN_FILE ),
 			array( 'shortcode-ui' ),
 			ver( PLUGIN_DIR . '/build/shortcode-ui.js', VERSION ),
 			array( 'strategy' => 'defer' ),
 		);
-		wp_enqueue_script( 'arve-admin-sc-ui' );
 	}
 }
 
