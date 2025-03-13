@@ -14,7 +14,7 @@ use function Nextgenthemes\ARVE\options;
 use function Nextgenthemes\WP\enqueue_asset;
 use function Nextgenthemes\WP\remote_get_json_cached;
 use function Nextgenthemes\WP\str_contains_any;
-use function Nextgenthemes\WP\register_asset;
+use function Nextgenthemes\WP\ver;
 
 use const Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
 use const Nextgenthemes\ARVE\PLUGIN_DIR;
@@ -428,36 +428,46 @@ function admin_enqueue_scripts(): void {
 
 	if ( ! is_gutenberg() ) {
 
-		register_asset(
-			array(
-				'handle'               => 'arve-shortcode-dialog',
-				'src'                  => plugins_url( '/src/shortcode-dialog.js', PLUGIN_FILE ),
-				'path'                 => PLUGIN_DIR . '/src/shortcode-dialog.js',
-				'inline_script_before' => $settings_data,
-				'strategy'             => 'defer',
-			)
+		wp_register_script(
+			'arve-shortcode-dialog',
+			plugins_url( '/src/shortcode-dialog.js', PLUGIN_FILE ),
+			array(),
+			ver( PLUGIN_DIR . '/src/shortcode-dialog.js', VERSION ),
+			array( 'strategy' => 'defer' ),
+		);
+
+		wp_add_inline_script(
+			'arve-shortcode-dialog',
+			'var ArveShortcodeDialogJsBefore = ' . wp_json_encode( $settings_data ) . ';',
+			'before'
 		);
 	}
 
-	enqueue_asset(
-		array(
-			'handle'               => 'arve-admin',
-			'src'                  => plugins_url( 'build/admin.js', PLUGIN_FILE ),
-			'path'                 => PLUGIN_DIR . '/build/admin.js',
-			'inline_script_before' => 'var arveSCSettings = ' . wp_json_encode( $settings_data ) . ';',
-			'strategy'             => 'defer',
-		)
+	wp_register_script(
+		'arve-admin',
+		plugins_url( 'build/admin.js', PLUGIN_FILE ),
+		array(),
+		ver( PLUGIN_DIR . '/build/admin.js', VERSION ),
+		array( 'strategy' => 'defer' ),
 	);
 
+	wp_add_inline_script(
+		'arve-admin',
+		'var arveSCSettings = ' . wp_json_encode( $settings_data ) . ';',
+		'before'
+	);
+
+	wp_enqueue_script( 'arve-admin' );
+
 	if ( is_plugin_active( 'shortcode-ui/shortcode-ui.php' ) ) {
-		enqueue_asset(
-			array(
-				'handle' => 'arve-admin-sc-ui',
-				'path'   => PLUGIN_DIR . '/build/shortcode-ui.js',
-				'src'    => plugins_url( 'build/shortcode-ui.js', PLUGIN_FILE ),
-				'deps'   => array( 'shortcode-ui' ),
-			)
+		wp_register_script(
+			'arve-admin-sc-ui',
+			plugins_url( 'build/shortcode-ui.js', PLUGIN_FILE ),
+			array( 'shortcode-ui' ),
+			ver( PLUGIN_DIR . '/build/shortcode-ui.js', VERSION ),
+			array( 'strategy' => 'defer' ),
 		);
+		wp_enqueue_script( 'arve-admin-sc-ui' );
 	}
 }
 

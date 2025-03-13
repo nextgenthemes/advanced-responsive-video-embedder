@@ -327,23 +327,22 @@ class Settings {
 
 	public function assets( string $page ): void {
 
-		$asset_info = Asset::deps_and_ver( $this->base_path . 'vendor/nextgenthemes/wp-shared/build/settings.js' );
+		$asset_data = require $this->base_path . 'vendor/nextgenthemes/wp-settings/build/settings.asset.php';
 
 		// always register this as the ARVE Shortcode dialog uses this.
 		wp_register_script_module(
 			'nextgenthemes-settings',
-			$this->base_url . 'vendor/nextgenthemes/wp-shared/build/settings.js',
-			$asset_info['dependencies'] + [ '@wordpress/interactivity' ],
-			$asset_info['version']
+			$this->base_url . 'vendor/nextgenthemes/wp-settings/build/settings.js',
+			$asset_data['dependencies'],
+			$asset_data['version']
 		);
 
 		// always register this as the ARVE Shortcode dialog uses styles from this.
-		register_asset(
-			array(
-				'handle' => 'nextgenthemes-settings',
-				'src'    => $this->base_url . 'vendor/nextgenthemes/wp-shared/build/settings.css',
-				'path'   => __DIR__ . '/settings.css',
-			)
+		wp_register_style(
+			'nextgenthemes-settings',
+			$this->base_url . 'vendor/nextgenthemes/wp-settings/build/settings.css',
+			array(),
+			$asset_data['version'],
 		);
 
 		$page_for_this_namespace = str_ends_with( $page, $this->slugged_namespace );

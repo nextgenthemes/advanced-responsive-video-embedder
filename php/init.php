@@ -47,6 +47,7 @@ function init_public(): void {
 
 	add_action( 'init', __NAMESPACE__ . '\init_nextgenthemes_settings' );
 	add_action( 'init', __NAMESPACE__ . '\register_assets' );
+	add_filter( 'mce_css', __NAMESPACE__ . '\add_styles_to_mce' );
 	add_filter( 'oembed_remote_get_args', __NAMESPACE__ . '\vimeo_referer', 10, 2 );
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\create_shortcodes', 999 );
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\create_url_handlers', 999 );

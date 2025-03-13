@@ -45,6 +45,10 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 		Pro\oembed_data( $data );
 	}
 
+	if ( function_exists( __NAMESPACE__ . '\Privacy\oembed_data' ) ) {
+		Privacy\oembed_data( $data );
+	}
+
 	unset( $data->html );
 	foreach ( $data as $key => $value ) {
 		$attr[ 'data-' . $key ] = $value;
@@ -107,31 +111,27 @@ function delete_oembed_caches_when_missing_data( object $oembed_data ): array {
 	$url        = $oembed_data->arve_url ?? false;
 	$provider   = $oembed_data->provider ?? false;
 	$cachetime  = $oembed_data->arve_cachetime ?? false;
-	$old_enough = $cachetime && ( new DateTime( $cachetime ) )->modify( '+ 1 day' ) <= current_datetime();
 
 	if ( ! $url ) {
 		$result['delete_entire_oembed_cache'] = delete_oembed_cache();
 	}
 
-	if ( $url
-		&& ( ! $provider || ! $cachetime )
-	) {
+	if ( ! $provider || ! $cachetime ) {
 		$result['delete_oembed_cache_for_provider_or_cachetime'] = delete_oembed_cache( $url );
 	}
 
 	if ( $pro_active
 		&& $url
-		&& 'youtube' === $provider
-		&& ! isset( $oembed_data->thumbnail_srcset )
+		&& in_array( $provider, [ 'youtube', 'vimeo' ], true )
+		&& ( ! isset( $oembed_data->thumbnail_srcset ) || ! isset( $oembed_data->thumbnail_large_url ) )
 	) {
-		$result['delete_youtube_cache_for_srcset'] = delete_oembed_cache( $url );
+		$result['delete_cache_for_srcset'] = delete_oembed_cache( $url );
 	}
 
 	if ( $pro_active
 		&& $url
 		&& 'youtube' === $provider
 		&& ! isset( $oembed_data->description )
-		&& $old_enough
 	) {
 		$result['delete_youtube_cache_for_description'] = delete_oembed_cache( $url );
 	}

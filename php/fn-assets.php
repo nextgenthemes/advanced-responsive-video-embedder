@@ -4,24 +4,24 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
-use function Nextgenthemes\WP\register_asset;
+use function Nextgenthemes\WP\ver;
+use const Nextgenthemes\ARVE\VIEW_SCRIPT_HANDLES;
 
 function register_assets(): void {
 
-	register_asset(
-		array(
-			'handle' => 'arve',
-			'src'    => plugins_url( 'build/main.css', PLUGIN_FILE ),
-			'path'   => PLUGIN_DIR . '/build/main.css',
-			'mce'    => true,
-		)
+	wp_register_style(
+		'arve',
+		plugins_url( 'build/main.css', PLUGIN_FILE ),
+		array(),
+		ver( PLUGIN_DIR . '/build/main.css', VERSION ),
 	);
 
-	register_asset(
+	wp_register_script(
+		'arve',
+		plugins_url( 'build/main.js', PLUGIN_FILE ),
+		array(),
+		ver( PLUGIN_DIR . '/build/main.css', VERSION ),
 		array(
-			'handle'   => 'arve',
-			'src'      => plugins_url( 'build/main.js', PLUGIN_FILE ),
-			'path'     => PLUGIN_DIR . '/build/main.js',
 			'strategy' => 'async',
 		)
 	);
@@ -37,25 +37,32 @@ function register_assets(): void {
 			}
 		}
 
-		register_asset(
+		wp_register_style(
+			'arve-block',
+			plugins_url( 'build/block.css', PLUGIN_FILE ),
+			array( 'arve' ),
+			ver( PLUGIN_DIR . '/build/block.css', VERSION ),
+		);
+
+		wp_register_script(
+			'arve-block',
+			plugins_url( 'build/block.js', PLUGIN_FILE ),
+			array(),
+			ver( PLUGIN_DIR . '/build/block.js', VERSION ),
 			array(
-				'handle' => 'arve-block',
-				'src'    => plugins_url( 'build/block.css', PLUGIN_FILE ),
-				'path'   => PLUGIN_DIR . '/build/block.css',
-				'deps'   => array( 'arve' ),
+				'strategy' => 'defer',
 			)
 		);
 
-		register_asset(
-			array(
-				'handle'               => 'arve-block',
-				'src'                  => plugins_url( 'build/block.js', PLUGIN_FILE ),
-				'path'                 => PLUGIN_DIR . '/build/block.js',
-				'inline_script_before' => [
-					'settings' => $settings,
-					'options'  => $options,
-				],
-			)
+		$block_inline_data = [
+			'settings' => $settings,
+			'options'  => $options,
+		];
+
+		wp_add_inline_script(
+			'arve-block',
+			'var ArveBlockJsBefore = ' . wp_json_encode( $block_inline_data ) . ';',
+			'before'
 		);
 
 		// Register our block, and explicitly define the attributes we accept.
@@ -67,6 +74,47 @@ function register_assets(): void {
 		);
 
 	endif;
+}
+
+/**
+ * Adds style URLs for VIEW_SCRIPT_HANDLES to the TinyMCE editor instance.
+ *
+ * @param string $mce_css Comma-separated string of style URLs to append to.
+ *
+ * @return string Modified string of style URLs.
+ */
+function add_styles_to_mce( string $mce_css ): string {
+
+	$wp_styles = wp_styles();
+
+	// Array to store the style URLs
+	$style_urls = [];
+
+	// Loop through target handles and get their source URLs
+	foreach ( VIEW_SCRIPT_HANDLES as $handle ) {
+
+		if ( empty( $wp_styles->registered[ $handle ]->src ) ) {
+			continue;
+		}
+
+		$src = $wp_styles->registered[ $handle ]->src;
+		$ver = $wp_styles->registered[ $handle ]->ver;
+
+		// Append version parameter for cache busting (if set)
+		if ( $ver ) {
+			$src = add_query_arg( 'ver', $ver, $src );
+		}
+
+		$style_urls[] = $src;
+	}
+
+	if ( ! empty( $mce_css ) ) {
+		$mce_css .= ',';
+	}
+
+	$mce_css .= implode( ',', $style_urls );
+
+	return $mce_css;
 }
 
 function action_wp_enqueue_scripts(): void {
