@@ -1,7 +1,9 @@
 
 ## Screenshots ##
 
-1. Shortcode dialog
-2. Main Options
-2. URL Parameter Options
-3. Pro Options
+1. Block Editor Example
+2. Shortcode creation dialog in Classic Editor
+3. Main Options
+4. Pro Options
+5. Video Files Options
+6. URL Parameter Options
