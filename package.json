@@ -9,7 +9,7 @@
     "build:arve": "wp-scripts build src/main src/block src/admin src/shortcode-ui",
     "start:common": "wp-scripts start --experimental-modules --source-path=vendor/nextgenthemes/wp-settings/src --output-path=vendor/nextgenthemes/wp-settings/build",
     "build:common": "wp-scripts build --experimental-modules --source-path=vendor/nextgenthemes/wp-settings/src --output-path=vendor/nextgenthemes/wp-settings/build",
-    "test": "cd \"$(npm prefix)\" && phpunit"
+    "test": "phpunit"
   },
   "repository": {
     "type": "git",
