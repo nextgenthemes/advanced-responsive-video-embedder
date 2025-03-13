@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
+  bootstrap="tests/phpunit-boot.php"
+  backupGlobals="false"
+  colors="true"
+  convertErrorsToExceptions="true"
+  convertNoticesToExceptions="true"
+  convertWarningsToExceptions="true"
+  convertDeprecationsToExceptions="false"
+  stopOnFailure="true"
+>
+  <coverage processUncoveredFiles="false">
+    <include>
+      <directory suffix=".php">.</directory>
+    </include>
+    <exclude>
+      <directory suffix=".asset.php">.</directory>
+      <directory>*/node_modules/*</directory>
+    </exclude>
+  </coverage>
+  <testsuites>
+    <testsuite name="advanced-responsive-video-embedder">
+      <directory prefix="tests-" suffix=".php">./tests/</directory>
+    </testsuite>
+    <testsuite name="arve-random-video">
+      <directory prefix="tests-" suffix=".php">../arve-random-video/tests/</directory>
+    </testsuite>
+    <testsuite name="arve-pro">
+      <directory prefix="tests-" suffix=".php">../arve-pro/tests/</directory>
+    </testsuite>
+    <testsuite name="arve-amp">
+      <directory prefix="tests-" suffix=".php">../arve-amp/tests/</directory>
+    </testsuite>
+    <testsuite name="arve-sticky-videos">
+      <directory prefix="tests-" suffix=".php">../arve-sticky-videos/tests/</directory>
+    </testsuite>
+    <testsuite name="arve-privacy">
+      <directory prefix="tests-" suffix=".php">../arve-privacy/tests/</directory>
+    </testsuite>
+    <testsuite name="tweakmaster">
+      <directory prefix="tests-" suffix=".php">../tweakmaster/tests/</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>
