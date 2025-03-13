@@ -12,9 +12,9 @@ init();
 
 function init(): void {
 
-	require_once dirname( __DIR__ ) . '/vendor/nextgenthemes/wp-shared/includes/WP/SettingsData.php';
-	require_once dirname( __DIR__ ) . '/vendor/nextgenthemes/wp-shared/includes/WP/SettingValidator.php';
-	require_once dirname( __DIR__ ) . '/vendor/nextgenthemes/wp-shared/includes/WP/fn-settings.php';
+	require_once dirname( __DIR__ ) . '/vendor/nextgenthemes/wp-settings/includes/WP/SettingsData.php';
+	require_once dirname( __DIR__ ) . '/vendor/nextgenthemes/wp-settings/includes/WP/SettingValidator.php';
+	require_once dirname( __DIR__ ) . '/vendor/nextgenthemes/wp-settings/includes/WP/fn-settings.php';
 	require_once dirname( __DIR__ ) . '/advanced-responsive-video-embedder.php';
 	require_once dirname( __DIR__ ) . '/php/fn-misc.php';
 	require_once dirname( __DIR__ ) . '/php/fn-settings.php';
