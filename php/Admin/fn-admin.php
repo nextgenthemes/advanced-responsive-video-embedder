@@ -392,13 +392,11 @@ function admin_enqueue_styles(): void {
 		return;
 	}
 
-	enqueue_asset(
-		array(
-			'handle' => 'arve-admin',
-			'src'    => plugins_url( 'build/admin.css', PLUGIN_FILE ),
-			'path'   => PLUGIN_DIR . '/build/admin.css',
-			'deps'   => array( 'nextgenthemes-settings' ),
-		)
+	wp_enqueue_style(
+		'arve-admin',
+		plugins_url( 'build/admin.css', PLUGIN_FILE ),
+		array( 'nextgenthemes-settings' ),
+		ver( PLUGIN_DIR . '/build/admin.css', VERSION ),
 	);
 }
 
