@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "automattic/jetpack-autoloader",
-            "version": "v5.0.2",
-            "version_normalized": "5.0.2.0",
+            "version": "v5.0.3",
+            "version_normalized": "5.0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-autoloader.git",
-                "reference": "495ec34a198ffc160d77e9393a6bdc461c4f06f1"
+                "reference": "108cc708cfc7b7a0e730b2bf12f389593f56f0a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/495ec34a198ffc160d77e9393a6bdc461c4f06f1",
-                "reference": "495ec34a198ffc160d77e9393a6bdc461c4f06f1",
+                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/108cc708cfc7b7a0e730b2bf12f389593f56f0a5",
+                "reference": "108cc708cfc7b7a0e730b2bf12f389593f56f0a5",
                 "shasum": ""
             },
             "require": {
@@ -20,11 +20,12 @@
                 "php": ">=7.2"
             },
             "require-dev": {
-                "automattic/jetpack-changelogger": "^6.0.0",
+                "automattic/jetpack-changelogger": "^6.0.1",
+                "automattic/phpunit-select-config": "^1.0.0",
                 "composer/composer": "^2.2",
                 "yoast/phpunit-polyfills": "^1.1.1"
             },
-            "time": "2025-02-24T17:06:04+00:00",
+            "time": "2025-03-12T19:15:00+00:00",
             "type": "composer-plugin",
             "extra": {
                 "class": "Automattic\\Jetpack\\Autoloader\\CustomAutoloaderPlugin",
@@ -63,7 +64,7 @@
                 "wordpress"
             ],
             "support": {
-                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.2"
+                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.3"
             },
             "install-path": "../automattic/jetpack-autoloader"
         },
@@ -74,7 +75,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../../../../../dev/composer-packages/wp-settings",
-                "reference": "bac99720af3826d3c47726d8c3fef1c21a4bfb2e"
+                "reference": "df8a66ad3101216fbe058bc882208b30ad4e5f93"
             },
             "require": {
                 "php": "^7.4"
@@ -101,6 +102,6 @@
             "install-path": "../nextgenthemes/wp-settings"
         }
     ],
-    "dev": true,
+    "dev": false,
     "dev-package-names": []
 }

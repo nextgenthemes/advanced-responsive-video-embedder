@@ -198,8 +198,8 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * Improved: Tested with WP 6.8
 * Improved: Updated jetpack autoloader.
 * Improved: Cache deletion.
-* Renamed shared code package, now [nextgenthemes/wp-settings](https://packagist.org/packages/nextgenthemes/wp-settings) on Packagist.
 * Abandoned asset wrappers.
+* Renamed shared code package, now [nextgenthemes/wp-settings](https://packagist.org/packages/nextgenthemes/wp-settings) on Packagist.
 
 ### 2025-03-09 10.6.5 ###
 

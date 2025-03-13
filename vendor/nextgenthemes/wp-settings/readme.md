@@ -1,8 +1,10 @@
 # Modern Lightweight WordPress Settings Framework
 
+Contribution are very welcome in the [ARVE Repo](https://github.com/nextgenthemes/advanced-responsive-video-embedder), also file issues there.
+
 Making use of the WP Interacticity API this Framework helps you create modern settings pages that:
 
-* Create Settings pages for you with minimal effort or boilerplace.
+* Create Settings pages for you with minimal effort and boilerplace.
 * Automattic buttons to reset setting for each tab seperately. 
 * Simple and minimalistic. All options are saved into a single array.
 * Save only the options that differ from the default options. As recommended by a WP Core developer or someone famous in the community (forgot who it was).
@@ -15,7 +17,10 @@ This repo also contains some general purpose utility functions that may be usefu
 
 ## Usage
 
-You need composer and php 7.4+
+If you just want to play with some code that works, just fork [TweakMaster](https://github.com/nextgenthemes/tweakmaster) where this package is used.
+
+You need composer and php 7.4+ and automattic/jetpack-autoloader. The Jetpack Autoloader makes it possible that this package is shared between plugins and that the latest version of the package is used.
+
 `composer.json`
 
 ```json
@@ -60,7 +65,7 @@ const VERSION       = '0.0.1';
 const PLUGIN_FILE   = __FILE__;
 const PLUGIN_DIR    = __DIR__;
 
-require_once __DIR__ . '/vendor/autoload_packages.php';
+require_once __DIR__ . '/vendor/autoload_packages.php'; // this is needed and it will load
 require_once __DIR__ . '/php/init.php';
 ```
 
