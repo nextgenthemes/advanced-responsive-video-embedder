@@ -37,7 +37,8 @@
 			"./bin/build-readme",
 			"npm run build:arve",
 			"npm run build:common",
-			"@composer update"
+			"@composer update --no-dev",
+			"@composer update --working-dir=tests"
 		],
 		"pre-update-cmd": [
 			"rsync -av --delete --exclude='.git' ./vendor/nextgenthemes/wp-settings ${HOME}/dev/composer-packages/",
