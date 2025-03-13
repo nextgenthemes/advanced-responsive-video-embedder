@@ -39,8 +39,5 @@
     <testsuite name="arve-privacy">
       <directory prefix="tests-" suffix=".php">../arve-privacy/tests/</directory>
     </testsuite>
-    <testsuite name="tweakmaster">
-      <directory prefix="tests-" suffix=".php">../tweakmaster/tests/</directory>
-    </testsuite>
   </testsuites>
 </phpunit>
