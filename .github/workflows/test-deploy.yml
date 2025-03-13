@@ -43,26 +43,16 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-      - name: Checkout Websites
-        uses: actions/checkout@v4
-        with:
-          repository: nextgenthemes/websites
-          ref: master
-          sparse-checkout: |
-            .
-            bin
-          path: .
-          token: ${{ secrets.REPO_TOKEN }}
-
-      - name: rm composer.json
-        run: rm composer.json
-
       - name: Checkout ARVE
         uses: actions/checkout@v4
         with:
           repository: nextgenthemes/advanced-responsive-video-embedder
           path: plugins/advanced-responsive-video-embedder
           token: ${{ secrets.REPO_TOKEN }}
+
+      - name: rm composer.json from ARVE
+        run: rm composer.json
+        working-directory: plugins/advanced-responsive-video-embedder
 
       - name: Checkout ARVE Pro
         uses: actions/checkout@v4
