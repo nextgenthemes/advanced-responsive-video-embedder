@@ -3,7 +3,7 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2025-03-xx 10.6.6 ###
+### 2025-03-x 10.6.6 ###
 
 * Improved: Tested with WP 6.8
 * Improved: Updated jetpack autoloader.
