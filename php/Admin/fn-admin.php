@@ -66,12 +66,13 @@ function action_admin_init_setup_messages(): void {
 	}
 
 	$youtube_api_error = get_option( 'arve_youtube_api_error' );
+	delete_option( 'arve_youtube_api_error' );
 
 	if ( $youtube_api_error ) {
 
 		$youtube_api_error .= '<br>' . sprintf(
 			// Translators: %1$s URL to tutorial video, %2$s URL to ARVE settings page
-			__( 'A 403 error code suggests the API limit (for the included API key) is reached. <a href="%1$s" target="_blank">Sign up for your own API key</a> and enter it in <a href="%2$s">ARVE Settings</a> to avoid limits.', 'advanced-responsive-video-embedder' ),
+			__( 'A 403 error code suggests the API limit (for the included API key) is reached. <a href="%1$s" target="_blank">Sign up for your own API key</a> and enter it in <a href="%2$s">ARVE Pro Settings</a> to avoid limits.', 'advanced-responsive-video-embedder' ),
 			'https://www.youtube.com/watch?v=EPeDTRNKAVo',
 			esc_url( admin_url( 'options-general.php?page=nextgenthemes_arve' ) )
 		);
@@ -80,7 +81,7 @@ function action_admin_init_setup_messages(): void {
 			'arve_youtube_api_error',
 			'notice-error',
 			wp_kses(
-				$yt_api_error_msg,
+				$youtube_api_error,
 				ALLOWED_HTML,
 				array( 'https' )
 			),
@@ -91,7 +92,6 @@ function action_admin_init_setup_messages(): void {
 		);
 
 		Notices::instance()->restore_notice( 'arve_youtube_api_error' );
-		delete_option( 'arve_youtube_api_error' );
 	}
 
 	$object_cache_msg = get_option( 'arve_object_cache_msg' );
