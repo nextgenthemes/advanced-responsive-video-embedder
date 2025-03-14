@@ -103,5 +103,8 @@
         }
     ],
     "dev": true,
-    "dev-package-names": []
+    "dev-package-names": [
+        "automattic/jetpack-autoloader",
+        "nextgenthemes/wp-settings"
+    ]
 }
