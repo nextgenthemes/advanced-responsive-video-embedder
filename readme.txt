@@ -184,18 +184,20 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 ## Screenshots ##
 
-1. Shortcode dialog
-2. Main Options
-2. URL Parameter Options
-3. Pro Options
+1. Block Editor Example
+2. Shortcode creation dialog in Classic Editor
+3. Main Options
+4. Pro Options
+5. Video Files Options
+6. URL Parameter Options
 ## Changelog ##
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2025-03-xx 10.6.6 ###
+### 2025-03-14 10.6.6 ###
 
-* Improved: Tested with WP 6.8
+* Improved: Tested with WP 6.8-beta2
 * Improved: Updated jetpack autoloader.
 * Improved: Cache deletion.
 * Abandoned asset wrappers.
