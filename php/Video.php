@@ -167,9 +167,7 @@ class Video {
 
 	private function oembed_data_errors(): void {
 
-		if ( isset( $this->oembed_data->youtube_api_error )
-			&& str_contains( $this->oembed_data->youtube_api_error, '403' )
-		) {
+		if ( isset( $this->oembed_data->youtube_api_error ) ) {
 			update_option( 'arve_youtube_api_error', $this->oembed_data->youtube_api_error );
 			unset( $this->oembed_data->youtube_api_error );
 		}

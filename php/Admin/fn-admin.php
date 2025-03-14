@@ -27,7 +27,7 @@ function action_admin_init_setup_messages(): void {
 	if ( defined( '\Nextgenthemes\ARVE\Pro\VERSION' ) && version_compare( PRO_VERSION_REQUIRED, \Nextgenthemes\ARVE\Pro\VERSION, '>' ) ) {
 		$msg = sprintf(
 			// Translators: %1$s Pro Version required
-			__( 'Your ARVE Pro Addon is outdated, you need version %1$s or later. If you have setup your license <a href="%2$s">here</a> semi auto updates should work (Admin panel notice and auto install on confirmation). If not please <a href="%3$s">report it</a> and manually update as <a href="%4$s">described here.</a>', 'advanced-responsive-video-embedder' ),
+			__( 'Your ARVE Pro Addon is outdated, you need version %1$s or later. If you have setup your license <a href="%2$s">here</a> semi auto updates should work (Admin panel notice and auto install on confirmation). If not please manually update as <a href="%4$s">described here.</a>', 'advanced-responsive-video-embedder' ),
 			PRO_VERSION_REQUIRED,
 			esc_url( get_admin_url() . 'options-general.php?page=nextgenthemes' ),
 			'https://nextgenthemes.com/support/',
@@ -67,11 +67,11 @@ function action_admin_init_setup_messages(): void {
 
 	$youtube_api_error = get_option( 'arve_youtube_api_error' );
 
-	if ( str_contains( (string) $youtube_api_error, '403' ) ) {
+	if ( $youtube_api_error ) {
 
-		$yt_api_error_msg = sprintf(
-			// Translators: %1$s URL to tut video, %2$s URL to ARVE settings page
-			__( 'ARVE Pro\'s included YouTube API Key limit reached, sign up for your own API key at <a href="%1$s" target="_blank">developers.google.com</a> and enter it in <a href="%2$s">ARVE Settings</a>.', 'advanced-responsive-video-embedder' ),
+		$youtube_api_error .= '<br>' . sprintf(
+			// Translators: %1$s URL to tutorial video, %2$s URL to ARVE settings page
+			__( 'A 403 error code suggests the API limit (for the included API key) is reached. <a href="%1$s" target="_blank">Sign up for your own API key</a> and enter it in <a href="%2$s">ARVE Settings</a> to avoid limits.', 'advanced-responsive-video-embedder' ),
 			'https://www.youtube.com/watch?v=EPeDTRNKAVo',
 			esc_url( admin_url( 'options-general.php?page=nextgenthemes_arve' ) )
 		);
