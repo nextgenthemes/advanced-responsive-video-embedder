@@ -5,7 +5,7 @@ Tags: embed, video, lazyload, lightbox, rumble
 Requires at least: 6.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 10.6.6-beta1
+Stable tag: 10.6.6-beta2
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
