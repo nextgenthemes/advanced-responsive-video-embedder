@@ -3,7 +3,9 @@
 	"description": "ARVE Advanced Responsive Video Embedder",
 	"type": "wordpress-plugin",
 	"require": {
-		"php": ">=7.4",
+		"php": ">=7.4"
+	},
+	"require-dev": {
 		"nextgenthemes/wp-settings": "@dev",
 		"automattic/jetpack-autoloader": "^v5.0.2"
 	},
@@ -37,7 +39,7 @@
 			"./bin/build-readme",
 			"npm run build:arve",
 			"npm run build:common",
-			"@composer update --no-dev",
+			"@composer update",
 			"@composer update --working-dir=tests"
 		],
 		"pre-update-cmd": [

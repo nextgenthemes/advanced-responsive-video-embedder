@@ -75,10 +75,10 @@
             "dist": {
                 "type": "path",
                 "url": "../../../../../../dev/composer-packages/wp-settings",
-                "reference": "df8a66ad3101216fbe058bc882208b30ad4e5f93"
+                "reference": "1c0ab1513a31cd98b79d5c876bb45da6a6ddadab"
             },
             "require": {
-                "php": "^7.4"
+                "php": "^7.4 || ^8.0"
             },
             "type": "library",
             "installation-source": "dist",
@@ -102,6 +102,6 @@
             "install-path": "../nextgenthemes/wp-settings"
         }
     ],
-    "dev": false,
+    "dev": true,
     "dev-package-names": []
 }
