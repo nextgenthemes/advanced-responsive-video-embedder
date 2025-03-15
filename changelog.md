@@ -3,11 +3,12 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2025-03-14 10.6.6 ###
+### 2025-03-15 10.6.6 ###
 
 * Improved: Tested with WP 6.8-beta2
 * Improved: Updated jetpack autoloader.
 * Improved: Cache deletion.
+* Improved: Handling of error messaged of YouTube Data API errors.
 * Abandoned asset wrappers.
 * Renamed shared code package, now [nextgenthemes/wp-settings](https://packagist.org/packages/nextgenthemes/wp-settings) on Packagist.
 
