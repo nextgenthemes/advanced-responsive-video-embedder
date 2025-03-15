@@ -3,7 +3,7 @@
         'name' => 'nextgenthemes/advanced-responsive-video-embedder',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'b452b015ccb25706bf47d0b75d1417c3c03f8cfa',
+        'reference' => '24960e6ad2d1a9f8a912899c645b18d3009b40fb',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'nextgenthemes/advanced-responsive-video-embedder' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'b452b015ccb25706bf47d0b75d1417c3c03f8cfa',
+            'reference' => '24960e6ad2d1a9f8a912899c645b18d3009b40fb',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -31,7 +31,7 @@
         'nextgenthemes/wp-settings' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '1c0ab1513a31cd98b79d5c876bb45da6a6ddadab',
+            'reference' => '4e400bdc35f179cd62a04ed4f32c294a68d39c34',
             'type' => 'library',
             'install_path' => __DIR__ . '/../nextgenthemes/wp-settings',
             'aliases' => array(),
