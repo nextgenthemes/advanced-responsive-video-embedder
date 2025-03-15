@@ -2,6 +2,14 @@
 	"name": "nextgenthemes/advanced-responsive-video-embedder",
 	"description": "ARVE Advanced Responsive Video Embedder",
 	"type": "wordpress-plugin",
+	"license": "GPL-3.0",
+	"authors": [
+		{
+			"name": "Nicolas Jonas",
+			"homepage": "https://nextgenthemes.com",
+			"role": "Developer"
+		}
+	],
 	"require": {
 		"php": ">=7.4"
 	},
@@ -9,12 +17,6 @@
 		"nextgenthemes/wp-settings": "@dev",
 		"automattic/jetpack-autoloader": "^v5.0.2"
 	},
-	"license": "GPL-3.0",
-	"authors": [
-		{
-			"name": "Nicolas Jonas"
-		}
-	],
 	"config": {
 		"allow-plugins": {
 			"automattic/jetpack-autoloader": true
