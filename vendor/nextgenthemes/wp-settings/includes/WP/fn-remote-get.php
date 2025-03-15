@@ -68,7 +68,7 @@ function remote_get_json_cached( string $url, array $args = array(), string $jso
  *
  * @param string $url The URL of the remote resource.
  * @param array $args Optional. Additional arguments for wp_safe_remote_get.
- * @return mixed|WP_Error The response body content from the remote URL, or a WP_Error on failure.
+ * @return string|WP_Error The response body content from the remote URL, or a WP_Error on failure.
  */
 function remote_get_body( string $url, array $args = array() ) {
 
@@ -109,7 +109,7 @@ function remote_get_body( string $url, array $args = array() ) {
 }
 
 /**
- * @return mixed|WP_Error
+ * @return array|WP_Error
  */
 function remote_get_head( string $url, array $args = array() ) {
 
