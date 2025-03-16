@@ -4,6 +4,7 @@ import { store, getContext, getConfig } from '@wordpress/interactivity';
 const domParser = new DOMParser();
 const d = document;
 const qs = d.querySelector.bind( d ) as typeof document.querySelector;
+const dialog = qs< HTMLDialogElement >( 'dialog[data-wp-interactive="nextgenthemes_arve_dialog"]' );
 
 setupInteractivityApi();
 setBodyBackgroundColorAsCssVar();
@@ -16,6 +17,23 @@ function setBodyBackgroundColorAsCssVar() {
 		wrap.setAttribute( 'style', `--ngt-wp-body-bg: ${ backgroundColor };` );
 	}
 }
+
+// ACF
+window.jQuery( document ).on( 'click', '.arve-btn:not([data-editor="content"])', ( e: Event ) => {
+	e.preventDefault();
+
+	const openBtn = qs< HTMLButtonElement >(
+		'[data-wp-on--click="actions.openShortcodeDialog"][data-editor="content"]'
+	);
+	const insertBtn = qs< HTMLButtonElement >( '[data-wp-on--click="actions.insertShortcode"]' );
+
+	if ( ! openBtn || ! insertBtn || ! dialog ) {
+		console.error( 'Open btn, insert btn od dialog not found' ); // eslint-disable-line
+		return;
+	}
+
+	openBtn.dispatchEvent( new Event( 'click' ) );
+} );
 
 function setupInteractivityApi() {
 	const namespace = qs< HTMLElement >( '[data-wp-interactive^="nextgenthemes"]' )?.dataset
@@ -51,18 +69,43 @@ function setupInteractivityApi() {
 			toggleHelp: () => {
 				state.help = ! state.help;
 			},
-			openShortcodeDialog: () => {
-				state.dialog = document.querySelector(
-					'dialog[data-wp-interactive="nextgenthemes_arve_dialog"]'
-				);
-				state.dialog.showModal();
+			openShortcodeDialog: ( event: Event ) => {
+				const editorId = event.target instanceof HTMLElement && event.target.dataset.editor;
+
+				if ( ! dialog || ! editorId ) {
+					console.error( 'Dialog or editorId not found' ); // eslint-disable-line
+					return;
+				}
+
+				dialog.dataset.editor = editorId;
+				dialog.showModal();
 			},
 			insertShortcode: () => {
-				window.wp.media.editor.insert( state.shortcode );
-				state.dialog.close();
+				const editorId = dialog?.dataset.editor;
+
+				if ( ! editorId ) {
+					console.error( 'Editor ID not found' ); // eslint-disable-line
+				} else if ( 'content' === editorId ) {
+					window.wp.media.editor.insert( state.shortcode );
+				} else {
+					// Ensure TinyMCE is loaded and the editor exists
+					if (
+						typeof window.tinymce === 'undefined' ||
+						! window.tinymce.get( editorId )
+					) {
+						console.error( 'TinyMCE not initialized for field: ' + editorId ); // eslint-disable-line
+						return;
+					}
+
+					window.tinymce.get( editorId ).insertContent( state.shortcode );
+				}
+
+				actions.closeShortcodeDialog();
 			},
 			closeShortcodeDialog: () => {
-				state.dialog.close();
+				if ( dialog ) {
+					dialog.close();
+				}
 			},
 			changeTab: () => {
 				const context = getContext< optionContext >();
@@ -101,8 +144,8 @@ function setupInteractivityApi() {
 				}
 			},
 			selectImage: () => {
-				if ( state.dialog ) {
-					state.dialog.close();
+				if ( dialog ) {
+					dialog.close();
 				}
 
 				const context = getContext< optionContext >();
@@ -118,13 +161,13 @@ function setupInteractivityApi() {
 						// We convert uploadedImage to a JSON object to make accessing it easier
 						const attachmentID = uploadedImage.toJSON().id;
 						state.options[ context.option_key ] = attachmentID;
-						if ( state.dialog ) {
-							state.dialog.showModal();
+						if ( dialog ) {
+							dialog.showModal();
 						}
 					} )
 					.on( 'close', function () {
-						if ( state.dialog ) {
-							state.dialog.showModal();
+						if ( dialog ) {
+							dialog.showModal();
 						}
 					} );
 			},
@@ -301,6 +344,10 @@ declare global {
 		wp: {
 			media: wpMedia;
 		};
+		jQuery: any;
+		tinymce: {
+			get: ( id: string ) => any;
+		};
 	}
 }
 
@@ -317,7 +364,6 @@ interface storeInterface {
 	state: {
 		options: Record< string, string | number | boolean >;
 		help: boolean;
-		dialog: HTMLDialogElement;
 		isSaving: boolean;
 		message: string;
 		shortcode: string;

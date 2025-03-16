@@ -11,7 +11,14 @@ use function Nextgenthemes\WP\Admin\print_settings_blocks;
 
 const DIALOG_NAMESPACE = 'nextgenthemes_arve_dialog';
 
-function add_media_button(): void {
+/**
+ * Adds a media button to the Classic Editor or other editors that use the same API.
+ *
+ * The button triggers a shortcode creator dialog when clicked.
+ *
+ * @param string $editor_id The ID of the editor to add the button to.
+ */
+function add_media_button( string $editor_id ): void {
 
 	dialog_interactivity();
 
@@ -29,6 +36,7 @@ function add_media_button(): void {
 			),
 			'data-wp-interactive' => DIALOG_NAMESPACE,
 			'data-wp-on--click'   => 'actions.openShortcodeDialog',
+			'data-editor'         => $editor_id,
 		],
 	);
 
@@ -79,6 +87,13 @@ function create_shortcode_dialog(): void {
 	ob_start();
 
 	?>
+	<button 
+		type="button"
+		data-wp-interactive="<?= esc_attr( DIALOG_NAMESPACE ); ?>"
+		data-wp-on--click="actions.openShortcodeDialog"
+		data-editor="content"
+		hidden
+	></button>
 	<dialog 
 		class="arve-sc-dialog"
 		data-wp-interactive="<?= esc_attr( DIALOG_NAMESPACE ); ?>"
@@ -91,7 +106,7 @@ function create_shortcode_dialog(): void {
 				<button type="button" class="media-modal-close" data-wp-on--click="actions.toggleHelp">
 					<span class="media-modal-icon dashicons dashicons-editor-help">
 						<span class="screen-reader-text">
-							Toggle Help
+							<?php esc_html_e( 'Toggle Help', 'advanced-responsive-video-embedder' ); ?>
 						</span>
 					</span>
 				</button>
@@ -99,7 +114,7 @@ function create_shortcode_dialog(): void {
 				<button type="button" class="media-modal-close" data-wp-on--click="actions.closeShortcodeDialog">
 					<span class="media-modal-icon">
 						<span class="screen-reader-text">
-							Close dialog
+							<?php esc_html_e( 'Close dialog', 'advanced-responsive-video-embedder' ); ?>
 						</span>
 					</span>
 				</button>

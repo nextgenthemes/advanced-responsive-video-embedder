@@ -388,9 +388,8 @@ function add_action_links( array $links ): array {
 
 function admin_enqueue_styles(): void {
 
-	if ( did_action( 'wp_enqueue_editor' ) ) {
-		return;
-	}
+	// This shit prevents 'arve-admin-css was added to the iframe incorrectly.' error but it doesn't work with enqueue_block_editor_assets
+	// if ( did_action( 'wp_enqueue_editor' ) ) { return; }
 
 	wp_enqueue_style(
 		'arve-admin',
@@ -431,13 +430,11 @@ function admin_enqueue_scripts(): void {
 		ver( PLUGIN_DIR . '/build/admin.js', VERSION ),
 		array( 'strategy' => 'defer' ),
 	);
-
 	wp_add_inline_script(
 		'arve-admin',
 		'var arveSCSettings = ' . wp_json_encode( $settings_data ) . ';',
 		'before'
 	);
-
 	wp_enqueue_script( 'arve-admin' );
 
 	if ( is_plugin_active( 'shortcode-ui/shortcode-ui.php' ) ) {
