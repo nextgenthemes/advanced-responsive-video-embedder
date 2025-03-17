@@ -104,17 +104,25 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 	return $cache;
 }
 
+function cache_is_old_enough( object $oembed_data ): bool {
+
+	if ( ! isset( $oembed_data->arve_cachetime ) ) {
+		return false;
+	}
+
+	$cache_date = DateTime::createFromFormat( DateTime::ATOM, $oembed_data->arve_cachetime );
+
+	return $cache_date && ( new DateTime() )->diff( $cache_date )->days > 7;
+}
+
 function delete_oembed_caches_when_missing_data( object $oembed_data ): array {
 
-	$pro_active = function_exists( __NAMESPACE__ . '\Pro\oembed_data' );
-	$result     = [];
-	$url        = $oembed_data->arve_url ?? false;
-	$provider   = $oembed_data->provider ?? false;
-	$cachetime  = $oembed_data->arve_cachetime ?? false;
-
-	if ( ! $url ) {
-		$result['delete_entire_oembed_cache'] = delete_oembed_cache();
-	}
+	$pro_active   = function_exists( __NAMESPACE__ . '\Pro\oembed_data' );
+	$result       = [];
+	$url          = $oembed_data->arve_url ?? false;
+	$provider     = $oembed_data->provider ?? false;
+	$cachetime    = $oembed_data->arve_cachetime ?? false;
+	$yt_api_error = $oembed_data->youtube_api_error ?? '';
 
 	if ( ! $provider || ! $cachetime ) {
 		$result['delete_oembed_cache_for_provider_or_cachetime'] = delete_oembed_cache( $url );
@@ -125,16 +133,19 @@ function delete_oembed_caches_when_missing_data( object $oembed_data ): array {
 		&& in_array( $provider, [ 'youtube', 'vimeo' ], true )
 		&& ( ! isset( $oembed_data->thumbnail_srcset ) || ! isset( $oembed_data->thumbnail_large_url ) )
 	) {
-		$result['delete_cache_for_srcset'] = delete_oembed_cache( $url );
+		$result['delete_cache_for_srcset_or_large_thumbnail'] = delete_oembed_cache( $url );
 	}
 
-	if ( $pro_active
-		&& $url
-		&& 'youtube' === $provider
-		&& ! isset( $oembed_data->description )
-	) {
-		$result['delete_youtube_cache_for_description'] = delete_oembed_cache( $url );
-	}
+	// Maybe later
+	// if ( $pro_active
+	//  && $url
+	//  && 'youtube' === $provider
+	//  && ! isset( $oembed_data->description )
+	//  && str_contains( $yt_api_error, '403' )
+	//  && cache_is_old_enough( $oembed_data )
+	// ) {
+	//  $result['delete_youtube_cache_for_description'] = delete_oembed_cache( $url );
+	// }
 
 	return $result;
 }
