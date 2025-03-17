@@ -3,6 +3,10 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2025-03-17 10.6.8 ###
+
+* Improved: Do not delete cache for missing descriptions for now.
+
 ### 2025-03-16 10.6.7 ###
 
 * Fixed: Compatibility with Advanced Custom Fields WYSIWYG editors. The ARVE shortcode creation button now finally works there.

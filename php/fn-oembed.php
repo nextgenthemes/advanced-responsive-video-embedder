@@ -112,10 +112,6 @@ function delete_oembed_caches_when_missing_data( object $oembed_data ): array {
 	$provider   = $oembed_data->provider ?? false;
 	$cachetime  = $oembed_data->arve_cachetime ?? false;
 
-	if ( ! $url ) {
-		$result['delete_entire_oembed_cache'] = delete_oembed_cache();
-	}
-
 	if ( ! $provider || ! $cachetime ) {
 		$result['delete_oembed_cache_for_provider_or_cachetime'] = delete_oembed_cache( $url );
 	}
@@ -126,14 +122,6 @@ function delete_oembed_caches_when_missing_data( object $oembed_data ): array {
 		&& ( ! isset( $oembed_data->thumbnail_srcset ) || ! isset( $oembed_data->thumbnail_large_url ) )
 	) {
 		$result['delete_cache_for_srcset'] = delete_oembed_cache( $url );
-	}
-
-	if ( $pro_active
-		&& $url
-		&& 'youtube' === $provider
-		&& ! isset( $oembed_data->description )
-	) {
-		$result['delete_youtube_cache_for_description'] = delete_oembed_cache( $url );
 	}
 
 	return $result;
