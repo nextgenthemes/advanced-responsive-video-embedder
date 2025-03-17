@@ -24,7 +24,7 @@ namespace Nextgenthemes\ARVE;
 
 const VERSION                       = '10.6.7';
 const PRO_VERSION_REQUIRED          = '7.0.5';
-const PRIVACY_VERSION_REQUIRED      = '1.1.4';
+const PRIVACY_VERSION_REQUIRED      = '1.1.5';
 const RANDOMVIDEO_VERSION_REQUIRED  = '2.1.8';
 const STICKYVIDEOS_VERSION_REQUIRED = '2.0.2';
 const AMP_VERSION_REQUIRED          = '2.2.1';
