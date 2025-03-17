@@ -195,9 +195,14 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2025-03-17 10.6.8 ###
+
+* Improved: ARVE now handles the execution of addons, not executing outdated addon.
+* Improved: Added outdated messages for all addons.
+
 ### 2025-03-16 10.6.7 ###
 
-* Fixed: Compatibility with Advanced Custom Fields WYSIWYG editors. The ARVE shortcode creation button now finally works there.
+* Fix: Compatibility with Advanced Custom Fields WYSIWYG editors. The ARVE shortcode creation button now finally works there.
 
 ### 2025-03-15 10.6.6 ###
 
