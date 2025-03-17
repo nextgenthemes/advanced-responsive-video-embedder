@@ -42,7 +42,7 @@ function arg_mode( string $mode ): string {
 	}
 
 	if ( 'normal' !== $mode
-		&& ! has_action( 'plugins_loaded', 'Nextgenthemes\ARVE\Pro\init' )
+		&& ! function_exists( 'Nextgenthemes\ARVE\Pro\register_assets' )
 	) {
 		$err_msg = sprintf(
 			// Translators: Mode
