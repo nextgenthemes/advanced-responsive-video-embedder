@@ -9,16 +9,16 @@
     "packages-dev": [
         {
             "name": "automattic/jetpack-autoloader",
-            "version": "v5.0.3",
+            "version": "v5.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-autoloader.git",
-                "reference": "108cc708cfc7b7a0e730b2bf12f389593f56f0a5"
+                "reference": "1d86b2d9aa97eb109bca5b5f0593f0c32647de9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/108cc708cfc7b7a0e730b2bf12f389593f56f0a5",
-                "reference": "108cc708cfc7b7a0e730b2bf12f389593f56f0a5",
+                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/1d86b2d9aa97eb109bca5b5f0593f0c32647de9c",
+                "reference": "1d86b2d9aa97eb109bca5b5f0593f0c32647de9c",
                 "shasum": ""
             },
             "require": {
@@ -68,9 +68,9 @@
                 "wordpress"
             ],
             "support": {
-                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.3"
+                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.4"
             },
-            "time": "2025-03-12T19:15:00+00:00"
+            "time": "2025-03-17T16:43:20+00:00"
         },
         {
             "name": "nextgenthemes/wp-settings",
@@ -78,7 +78,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../../../../../dev/composer-packages/wp-settings",
-                "reference": "046259272b104d5254e2fea589102cb7da259cdf"
+                "reference": "f0310dd5300817ee2b0fa72a3dd389efa449cfbc"
             },
             "require": {
                 "php": "^7.4 || ^8.0"
