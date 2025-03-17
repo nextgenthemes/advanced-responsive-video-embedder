@@ -22,15 +22,20 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
-const VERSION               = '10.6.7';
-const PRO_VERSION_REQUIRED  = '7.0.2';
-const NUM_TRACKS            = 3;
-const PLUGIN_FILE           = __FILE__;
-const PLUGIN_DIR            = __DIR__;
-const VIDEO_FILE_EXTENSIONS = array( 'av1mp4', 'mp4', 'm4v', 'webm', 'ogv' );
-const DEFAULT_MAXWIDTH      = 900;
-const OEMBED_HTML_PRIORITY  = -5;
-const VIEW_SCRIPT_HANDLES   = array( 'arve', 'arve-pro', 'arve-sticky-videos', 'arve-random-video' );
+const VERSION                       = '10.6.7';
+const PRO_VERSION_REQUIRED          = '7.0.5';
+const PRIVACY_VERSION_REQUIRED      = '1.1.4';
+const RANDOMVIDEO_VERSION_REQUIRED  = '2.1.8';
+const STICKYVIDEOS_VERSION_REQUIRED = '2.0.2';
+const AMP_VERSION_REQUIRED          = '2.2.1';
+const NUM_TRACKS                    = 3;
+const PLUGIN_FILE                   = __FILE__;
+const PLUGIN_DIR                    = __DIR__;
+const VIDEO_FILE_EXTENSIONS         = array( 'av1mp4', 'mp4', 'm4v', 'webm', 'ogv' );
+const DEFAULT_MAXWIDTH              = 900;
+const OEMBED_HTML_PRIORITY          = -5;
+const VIEW_SCRIPT_HANDLES           = array( 'arve', 'arve-pro', 'arve-sticky-videos', 'arve-random-video' );
+const ADDON_NAMES                   = array( 'RandomVideo', 'Pro', 'Privacy', 'StickyVideos', 'AMP' );
 // For error messages and stuff on the admin screens.
 const ALLOWED_HTML = array(
 	'h1'     => array(),

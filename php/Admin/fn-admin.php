@@ -11,47 +11,61 @@ use function Nextgenthemes\ARVE\settings;
 use function Nextgenthemes\ARVE\settings_tabs;
 use function Nextgenthemes\ARVE\options;
 
-use function Nextgenthemes\WP\enqueue_asset;
 use function Nextgenthemes\WP\remote_get_json_cached;
 use function Nextgenthemes\WP\str_contains_any;
 use function Nextgenthemes\WP\ver;
 
-use const Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
+use const Nextgenthemes\ARVE\ADDON_NAMES;
 use const Nextgenthemes\ARVE\PLUGIN_DIR;
 use const Nextgenthemes\ARVE\PLUGIN_FILE;
 use const Nextgenthemes\ARVE\ALLOWED_HTML;
 use const Nextgenthemes\ARVE\VERSION;
 
-function action_admin_init_setup_messages(): void {
+function addon_outdated_notice( string $name ): void {
 
-	if ( defined( '\Nextgenthemes\ARVE\Pro\VERSION' ) && version_compare( PRO_VERSION_REQUIRED, \Nextgenthemes\ARVE\Pro\VERSION, '>' ) ) {
+	$version_const_name = '\\Nextgenthemes\\ARVE\\' . $name . '\\VERSION';
+	$req_ver_const_name = '\\Nextgenthemes\\ARVE\\' . strtoupper( $name ) . '_VERSION_REQUIRED';
+	$version            = defined( $version_const_name ) ? constant( $version_const_name ) : '';
+	$req_ver            = defined( $req_ver_const_name ) ? constant( $req_ver_const_name ) : '';
+
+	if ( $version && version_compare( $req_ver, $version, '<' ) ) {
 		$msg = sprintf(
-			// Translators: %1$s Pro Version required
-			__( 'Your ARVE Pro Addon is outdated, you need version %1$s or later. If you have setup your license <a href="%2$s">here</a> semi auto updates should work (Admin panel notice and auto install on confirmation). If not please manually update as <a href="%4$s">described here.</a>', 'advanced-responsive-video-embedder' ),
-			PRO_VERSION_REQUIRED,
+			// Translators: %1$s Addon Name, %2$s Version required, %3$s Setup URL, %4$s Manual URL,
+			__(
+				'Your ARVE %1$s Addon is outdated, you need version %2$s or later. If you have setup your license <a href="%3$s">here</a> semi auto updates should work (Admin panel notice and install on confirmation). If not please manually update as <a href="%4$s">described here.</a>',
+				'advanced-responsive-video-embedder'
+			),
+			$name,
+			$req_ver,
 			esc_url( get_admin_url() . 'options-general.php?page=nextgenthemes' ),
-			'https://nextgenthemes.com/support/',
 			'https://nextgenthemes.com/plugins/arve/documentation/installation/'
 		);
 
 		if ( str_contains_any( VERSION, array( 'alpha', 'beta' ) ) ) {
 			$msg = sprintf(
 				// Translators: %1$s Pro Version required
-				__( 'Your ARVE Pro Addon is outdated, you need version %1$s or later. Pre release updates my need a manual update. Download from <a href="%2$s">your account</a>.', 'advanced-responsive-video-embedder' ),
-				PRO_VERSION_REQUIRED,
+				__( 'Your ARVE Pro Addon is outdated, you need version %2$s or later. Pre release updates my need a manual update. Download from <a href="%3$s">your account</a>.', 'advanced-responsive-video-embedder' ),
+				$req_ver,
 				esc_url( get_admin_url() . 'options-general.php?page=nextgenthemes' ),
 				'https://nextgenthemes.com/my-account/'
 			);
 		}
 
 		Notices::instance()->register_notice(
-			'ngt-arve-outdated-pro-v' . PRO_VERSION_REQUIRED,
+			'ngt-arve-' . $name . '-outdated-v' . $req_ver,
 			'notice-error',
 			wp_kses( $msg, ALLOWED_HTML, array( 'https' ) ),
 			array(
 				'cap' => 'update_plugins',
 			)
 		);
+	}
+}
+
+function action_admin_init_setup_messages(): void {
+
+	foreach ( ADDON_NAMES as $addon_name ) {
+		addon_outdated_notice( $addon_name );
 	}
 
 	if ( display_pro_ad() ) {

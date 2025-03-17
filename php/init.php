@@ -4,19 +4,10 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
-add_action( 'plugins_loaded', __NAMESPACE__ . '\init_920', 9 );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\init', 9 );
+add_action( 'admin_init', __NAMESPACE__ . '\init_admin', 9 );
 
-function init_920(): void {
-
-	stop_outdated_addons_from_executing();
-	init_public();
-
-	if ( is_admin() ) {
-		init_admin();
-	}
-}
-
-function init_public(): void {
+function init(): void {
 
 	add_option( 'arve_install_date', time() );
 
@@ -57,8 +48,29 @@ function init_public(): void {
 	add_filter( 'language_attributes', __NAMESPACE__ . '\html_id' );
 	add_filter( 'oembed_dataparse', __NAMESPACE__ . '\filter_oembed_dataparse', PHP_INT_MAX, 3 );
 	add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', OEMBED_HTML_PRIORITY, 4 );
-
 	add_action( 'elementor/widgets/register', __NAMESPACE__ . '\register_elementor_widget' );
+
+	// Stop outdated addons from executing
+	remove_action( 'plugins_loaded', 'Nextgenthemes\ARVE\Pro\init', 15 );
+	remove_action( 'plugins_loaded', 'Nextgenthemes\ARVE\RandomVideo\init', 15 );
+	remove_action( 'plugins_loaded', 'Nextgenthemes\ARVE\Privacy\init', 16 );
+
+	foreach ( ADDON_NAMES as $addon_name ) {
+		maybe_init_addon( $addon_name );
+	}
+}
+
+function maybe_init_addon( string $name ): void {
+
+	$init_function_name = '\\' . __NAMESPACE__ . '\\' . $name . '\\init';
+	$version_const_name = '\\' . __NAMESPACE__ . '\\' . $name . '\\VERSION';
+	$req_ver_const_name = '\\' . __NAMESPACE__ . '\\' . strtoupper( $name ) . '_REQUIRED_VERSION';
+	$version            = defined( $version_const_name ) ? constant( $version_const_name ) : '';
+	$req_ver            = defined( $req_ver_const_name ) ? constant( $req_ver_const_name ) : '';
+
+	if ( $version && version_compare( $version, $req_ver, '>=' ) && function_exists( $init_function_name ) ) {
+		$init_function_name();
+	}
 }
 
 function init_admin(): void {
@@ -68,7 +80,6 @@ function init_admin(): void {
 	require_once PLUGIN_DIR . '/php/Admin/fn-shortcode-creator.php';
 	require_once PLUGIN_DIR . '/php/Admin/fn-debug-info.php';
 
-	// Admin Hooks
 	add_action( 'nextgenthemes/arve/admin/settings/sidebar', __NAMESPACE__ . '\Admin\settings_sidebar' );
 	add_action( 'nextgenthemes/arve/admin/settings/content', __NAMESPACE__ . '\Admin\settings_content' );
 
@@ -228,13 +239,4 @@ function delete_oembed_cache( string $contains = '' ): string {
 	}
 
 	return $message;
-}
-
-function stop_outdated_addons_from_executing(): void {
-
-	if ( defined( 'Nextgenthemes\ARVE\Pro\VERSION' )
-		&& version_compare( \Nextgenthemes\ARVE\Pro\VERSION, PRO_VERSION_REQUIRED, '<' )
-	) {
-		remove_action( 'plugins_loaded', 'Nextgenthemes\ARVE\Pro\init', 15 );
-	}
 }
