@@ -28,7 +28,7 @@ function addon_outdated_notice( string $name ): void {
 	$version            = defined( $version_const_name ) ? constant( $version_const_name ) : '';
 	$req_ver            = defined( $req_ver_const_name ) ? constant( $req_ver_const_name ) : '';
 
-	if ( $version && version_compare( $req_ver, $version, '<' ) ) {
+	if ( $version && version_compare( $version, $req_ver, '<' ) ) {
 		$msg = sprintf(
 			// Translators: %1$s Addon Name, %2$s Version required, %3$s Setup URL, %4$s Manual URL,
 			__(
@@ -40,16 +40,6 @@ function addon_outdated_notice( string $name ): void {
 			esc_url( get_admin_url() . 'options-general.php?page=nextgenthemes' ),
 			'https://nextgenthemes.com/plugins/arve/documentation/installation/'
 		);
-
-		if ( str_contains_any( VERSION, array( 'alpha', 'beta' ) ) ) {
-			$msg = sprintf(
-				// Translators: %1$s Pro Version required
-				__( 'Your ARVE Pro Addon is outdated, you need version %2$s or later. Pre release updates my need a manual update. Download from <a href="%3$s">your account</a>.', 'advanced-responsive-video-embedder' ),
-				$req_ver,
-				esc_url( get_admin_url() . 'options-general.php?page=nextgenthemes' ),
-				'https://nextgenthemes.com/my-account/'
-			);
-		}
 
 		Notices::instance()->register_notice(
 			'ngt-arve-' . $name . '-outdated-v' . $req_ver,
