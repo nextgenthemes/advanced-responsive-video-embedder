@@ -4,24 +4,16 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\WP;
 
-require_once __DIR__ . '/Asset.php';
-
-// TODO: deprecated use register_asset in all ARVE addons
-function asset( array $args ): void {
+function asset(): void {
 	_deprecated_function( __FUNCTION__, '10.6.6' );
-	register_asset( $args );
 }
 
-function register_asset( array $args ): void {
+function register_asset(): void {
 	_deprecated_function( __FUNCTION__, '10.6.6' );
-	$args['enqueue'] = false;
-	new Asset( $args );
 }
 
-function enqueue_asset( array $args ): void {
+function enqueue_asset(): void {
 	_deprecated_function( __FUNCTION__, '10.6.6' );
-	$args['enqueue'] = true;
-	new Asset( $args );
 }
 
 function add_dep_to_script( string $handle, string $dep ): bool {
