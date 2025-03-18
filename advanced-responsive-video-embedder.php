@@ -23,7 +23,7 @@ declare(strict_types = 1);
 namespace Nextgenthemes\ARVE;
 
 const VERSION                       = '10.6.8-beta2';
-const PRO_VERSION_REQUIRED          = '7.0.5';
+const PRO_VERSION_REQUIRED          = '7.0.6';
 const PRIVACY_VERSION_REQUIRED      = '1.1.5';
 const RANDOMVIDEO_VERSION_REQUIRED  = '2.1.8';
 const STICKYVIDEOS_VERSION_REQUIRED = '2.0.2';
