@@ -37,8 +37,7 @@ function validate_thumbnail( $id_or_url ): string {
 		esc_html( $id_or_url ),
 	);
 
-	arve_errors()->add( 'validate_thumbnail', $error_msg );
-	arve_errors()->add_data( $id_or_url, 'validate_thumbnail' );
+	arve_errors()->add( 'validate_thumbnail', $error_msg, $id_or_url );
 
 	return '';
 }
@@ -120,12 +119,8 @@ function validate_type_bool( string $attr_name, $value ): bool {
 			__( '%1$s <code>%2$s</code> not valid', 'advanced-responsive-video-embedder' ),
 			esc_html( $attr_name ),
 			esc_html( $value )
-		)
-	);
-
-	arve_errors()->add_data(
-		compact( 'attr_name', 'value' ),
-		$error_code
+		),
+		compact( 'attr_name', 'value' )
 	);
 
 	return false;
@@ -163,8 +158,8 @@ function validate_aspect_ratio( ?string $aspect_ratio ): ?string {
 
 	$ratio = explode( ':', $aspect_ratio );
 
-	if ( empty( $ratio[0] ) || false === filter_var( $ratio[0], FILTER_VALIDATE_FLOAT) ||
-		empty( $ratio[1] ) || false === filter_var( $ratio[1], FILTER_VALIDATE_FLOAT)
+	if ( empty( $ratio[0] ) || false === filter_var( $ratio[0], FILTER_VALIDATE_FLOAT ) ||
+		empty( $ratio[1] ) || false === filter_var( $ratio[1], FILTER_VALIDATE_FLOAT )
 	) {
 		arve_errors()->add(
 			'validate_aspect_ratio',

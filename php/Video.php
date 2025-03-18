@@ -176,7 +176,7 @@ class Video {
 
 		foreach ( (array) $this->oembed_data as $key => $value ) {
 			if ( str_contains( $key, 'error' ) ) {
-				arve_errors()->add( $key, $value );
+				arve_errors()->add( $key, $value, $this->oembed_data );
 			}
 		}
 	}
@@ -487,7 +487,12 @@ class Video {
 				$img_src = wp_get_attachment_image_url( $this->thumbnail, 'small' );
 
 				if ( empty( $img_src ) ) {
-					arve_errors()->add( 'no-media-id', __( 'No attachment with that ID', 'advanced-responsive-video-embedder' ) );
+					arve_errors()->add(
+						'no-media-id',
+						// Translators: %s Value of thumbnail attribute
+						sprintf( __( 'No attachment with ID <code>%s</code>', 'advanced-responsive-video-embedder' ), $this->thumbnail ),
+						$this->thumbnail
+					);
 				}
 			} elseif ( valid_url( $this->thumbnail ) ) {
 
@@ -495,7 +500,12 @@ class Video {
 
 			} else {
 
-				arve_errors()->add( 'invalid-url', __( 'Not a valid thumbnail URL or Media ID given', 'advanced-responsive-video-embedder' ) );
+				arve_errors()->add(
+					'invalid-url-or-id',
+					// Translators: %s Value of thumbnail attribute
+					sprintf( __( 'No a valid thumbnail URL or Media ID given <code>%s</code>', 'advanced-responsive-video-embedder' ), $this->thumbnail ),
+					$this->thumbnail
+				);
 			}
 
 		endif; // thumbnail
