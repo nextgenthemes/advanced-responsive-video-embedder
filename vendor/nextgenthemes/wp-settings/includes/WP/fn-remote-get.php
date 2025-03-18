@@ -6,6 +6,8 @@ namespace Nextgenthemes\WP;
 
 use WP_Error;
 
+use function Nextgenthemes\ARVE\arve_errors;
+
 /**
  * Retrieves JSON data from a remote URL.
  *
@@ -188,6 +190,14 @@ function _remote_get_cached( string $url, array $args, int $time, string $type )
 		}
 
 		if ( $time ) {
+
+			if ( is_wp_error( $response ) ) {
+				$response->add(
+					$response->get_error_code(),
+					'This error is cached for ' . $time . ' seconds. If you delete the transient ' . $transient_name . ' the call will be made again.'
+				);
+			}
+
 			set_transient( $transient_name, $response, $time );
 		}
 	}
