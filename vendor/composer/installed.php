@@ -3,7 +3,7 @@
         'name' => 'nextgenthemes/advanced-responsive-video-embedder',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'b769cdac49f32b7285f9f916af8e651af9e704e6',
+        'reference' => '1a0ba66cf6c40fdc17c47ebfb35dc25c167502b8',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'nextgenthemes/advanced-responsive-video-embedder' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'b769cdac49f32b7285f9f916af8e651af9e704e6',
+            'reference' => '1a0ba66cf6c40fdc17c47ebfb35dc25c167502b8',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
