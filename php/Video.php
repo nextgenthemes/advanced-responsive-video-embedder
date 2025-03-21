@@ -168,13 +168,7 @@ class Video {
 
 	private function oembed_data_errors(): void {
 
-		unset( $this->oembed_data->arve_error ); // ignore old errors.
-
-		foreach ( (array) $this->oembed_data as $key => $value ) {
-			if ( str_contains( $key, 'error' ) ) {
-				arve_errors()->add( $key, $value, $this->oembed_data );
-			}
-		}
+		// TODO: add error message for missing oembed data
 	}
 
 	private function process_shortcode_atts(): void {
