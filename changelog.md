@@ -3,6 +3,12 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2025-03-21 10.6.10 ###
+
+* Fix: Removing ARVE data from oembed cache on uninstall.
+* Improved: Error messages and escaping for remote calls.
+* Improved: Lots of things around caching and how the errors are (not) displayed.
+
 ### 2025-03-17 10.6.8 ###
 
 * Improved: ARVE now handles the execution of addons, not executing outdated addon.
