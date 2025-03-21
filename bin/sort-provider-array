@@ -22,7 +22,7 @@ function __( string $a, string $b ): string {
  *                      the export string instead of outputting it. Default false.
  * @return string|null The formatted export string if $return is true, otherwise null.
  */
-function varexport($expression, $return = false) {
+function pretty_var_export($expression, $return = false) {
 	$export = var_export($expression, true);
 	$export = preg_replace('/^([ ]*)(.*)/m', '$1$1$2', $export);
 	$array  = preg_split("/\r\n|\n|\r/", $export);
@@ -41,7 +41,7 @@ $file  = dirname( __DIR__ ) . '/php/providers.php';
 $hosts = require $file;
 ksort( $hosts );
 
-$content = '<?php return ' . varexport( $hosts, true ) . ';';
+$content = '<?php return ' . pretty_var_export( $hosts, true ) . ';';
 file_put_contents( $file, $content );
 
 system( "phpcbf $file" );
