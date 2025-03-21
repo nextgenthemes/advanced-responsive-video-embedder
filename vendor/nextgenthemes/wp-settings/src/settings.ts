@@ -174,8 +174,6 @@ function setupInteractivityApi() {
 			deleteCaches: () => {
 				const context = getContext< clearCacheContext >();
 
-				console.log( context );
-
 				actions.restCall( '/delete-caches', {
 					type: context.type,
 					prefix: context.prefix,
