@@ -88,7 +88,6 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 	$oembed_data = extract_oembed_data( $cache );
 
 	if ( $oembed_data ) {
-
 		$a['url']         = $url;
 		$a['oembed_data'] = $oembed_data;
 		$a['origin_data'] = array(
@@ -117,12 +116,11 @@ function cache_is_old_enough( object $oembed_data ): bool {
 
 function delete_oembed_caches_when_missing_data( object $oembed_data ): array {
 
-	$pro_active   = function_exists( __NAMESPACE__ . '\Pro\oembed_data' );
-	$result       = [];
-	$url          = $oembed_data->arve_url ?? false;
-	$provider     = $oembed_data->provider ?? false;
-	$cachetime    = $oembed_data->arve_cachetime ?? false;
-	$yt_api_error = $oembed_data->youtube_api_error ?? '';
+	$pro_active = function_exists( __NAMESPACE__ . '\Pro\oembed_data' );
+	$result     = [];
+	$url        = $oembed_data->arve_url ?? false;
+	$provider   = $oembed_data->provider ?? false;
+	$cachetime  = $oembed_data->arve_cachetime ?? false;
 
 	if ( ! $provider || ! $cachetime ) {
 		$result['delete_oembed_cache_for_provider_or_cachetime'] = delete_oembed_cache( $url );

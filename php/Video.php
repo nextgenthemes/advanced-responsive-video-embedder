@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
+use WP_Error;
 use WP_HTML_Tag_Processor;
 use function Nextgenthemes\WP\get_url_arg;
 use function Nextgenthemes\WP\apply_attr;
@@ -166,11 +167,6 @@ class Video {
 	}
 
 	private function oembed_data_errors(): void {
-
-		if ( isset( $this->oembed_data->youtube_api_error ) ) {
-			update_option( 'arve_youtube_api_error', $this->oembed_data->youtube_api_error );
-			unset( $this->oembed_data->youtube_api_error );
-		}
 
 		unset( $this->oembed_data->arve_error ); // ignore old errors.
 

@@ -171,8 +171,18 @@ function setupInteractivityApi() {
 						}
 					} );
 			},
-			deleteOembedCache: () => {
-				actions.restCall( '/delete-oembed-cache', { delete: true } );
+			deleteCaches: () => {
+				const context = getContext< clearCacheContext >();
+
+				console.log( context );
+
+				actions.restCall( '/delete-caches', {
+					type: context.type,
+					prefix: context.prefix,
+					like: context.like,
+					not_like: context.type,
+					delete_option: context.delete_option,
+				} );
 			},
 			// debounced version created later
 			saveOptionsReal: () => {
@@ -383,7 +393,7 @@ interface storeInterface {
 		inputChange: ( event: Event ) => void;
 		checkboxChange: ( event: Event ) => void;
 		selectImage: () => void;
-		deleteOembedCache: () => void;
+		deleteCaches: () => void;
 		eddLicenseAction: () => void;
 		resetOptionsSection: () => void;
 		restCall: (
@@ -409,6 +419,14 @@ interface optionContext {
 	edd_action: string;
 	edd_store_url: string;
 	activeTabs: { [ key: string ]: boolean };
+}
+
+interface clearCacheContext {
+	type: string;
+	like: string;
+	not_like: string;
+	prefix: string;
+	delete_option: string;
 }
 
 interface configInterface {
