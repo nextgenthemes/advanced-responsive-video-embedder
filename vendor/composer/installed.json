@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "automattic/jetpack-autoloader",
-            "version": "v5.0.4",
-            "version_normalized": "5.0.4.0",
+            "version": "v5.0.5",
+            "version_normalized": "5.0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-autoloader.git",
-                "reference": "1d86b2d9aa97eb109bca5b5f0593f0c32647de9c"
+                "reference": "7bf3172e73c27c72d01d6de4796a41c7abc06d5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/1d86b2d9aa97eb109bca5b5f0593f0c32647de9c",
-                "reference": "1d86b2d9aa97eb109bca5b5f0593f0c32647de9c",
+                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/7bf3172e73c27c72d01d6de4796a41c7abc06d5a",
+                "reference": "7bf3172e73c27c72d01d6de4796a41c7abc06d5a",
                 "shasum": ""
             },
             "require": {
@@ -20,12 +20,12 @@
                 "php": ">=7.2"
             },
             "require-dev": {
-                "automattic/jetpack-changelogger": "^6.0.1",
-                "automattic/phpunit-select-config": "^1.0.0",
+                "automattic/jetpack-changelogger": "^6.0.2",
+                "automattic/phpunit-select-config": "^1.0.1",
                 "composer/composer": "^2.2",
-                "yoast/phpunit-polyfills": "^1.1.1"
+                "yoast/phpunit-polyfills": "^3.0.0"
             },
-            "time": "2025-03-17T16:43:20+00:00",
+            "time": "2025-03-21T09:05:50+00:00",
             "type": "composer-plugin",
             "extra": {
                 "class": "Automattic\\Jetpack\\Autoloader\\CustomAutoloaderPlugin",
@@ -64,7 +64,7 @@
                 "wordpress"
             ],
             "support": {
-                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.4"
+                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.5"
             },
             "install-path": "../automattic/jetpack-autoloader"
         },
@@ -75,7 +75,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../../../../../dev/composer-packages/wp-settings",
-                "reference": "627ae60f001d0462042693ed7daf9a4dbe34067b"
+                "reference": "8570f0355e41c34591139b5b891b62617e4f444b"
             },
             "require": {
                 "php": ">=7.4"
