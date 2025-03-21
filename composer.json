@@ -45,9 +45,7 @@
 			"@composer update --working-dir=tests"
 		],
 		"pre-update-cmd": [
-			"rsync -av --delete --exclude='.git' ./vendor/nextgenthemes/wp-settings ${HOME}/dev/composer-packages/",
-			"cd ${HOME}/dev/composer-packages/wp-settings && git add . && git commit -am \"Auto-commit all changes $(date -u --rfc-3339=s)\" || [ $? -eq 1 ] && exit 0",
-			"cd ${HOME}/dev/composer-packages/wp-settings && git push origin master"
+			"./bin/sync-wp-settings"
 		],
 		"tests": [
 			"cd ${HOME}/websites && NGT_PHPUNIT_LOAD_PLUGINS=\"advanced-responsive-video-embedder\" phpunit --testsuite advanced-responsive-video-embedder"

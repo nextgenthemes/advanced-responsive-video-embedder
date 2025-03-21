@@ -1,0 +1,43 @@
+#!/bin/bash
+set -Eeuxo pipefail # https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail/
+
+# Script to sync files, clean up Git, commit, and push changes
+
+# Define paths and variables
+SOURCE_DIR="./vendor/nextgenthemes/wp-settings/"
+TARGET_DIR="${HOME}/dev/composer-packages/wp-settings/"
+
+# Step 1: Sync files with rsync
+if ! rsync -av --delete --exclude='.git' "$SOURCE_DIR" "$TARGET_DIR"; then
+    echo "Error: rsync failed."
+    exit 1
+fi
+
+# Step 2: Change to target directory
+if ! cd "$TARGET_DIR"; then
+    echo "Error: Could not change to directory $TARGET_DIR."
+    exit 1
+fi
+
+# Step 3: Git cleanup and commit
+if ! git add -u || ! git rm -r --cached . || ! git add .; then
+    echo "Error: Git staging failed."
+    exit 1
+fi
+
+# Commit with a timestamped message
+TIMESTAMP=$(date -u --rfc-3339=seconds)
+if ! git commit -am "Auto-commit all changes $TIMESTAMP"; then
+    # If commit fails due to no changes, exit gracefully
+    echo "No changes to commit."
+    exit 0
+fi
+
+# Step 4: Push to remote
+if ! git push origin master; then
+    echo "Error: Git push failed."
+    exit 1
+fi
+
+echo "Sync, commit, and push completed successfully."
+exit 0
