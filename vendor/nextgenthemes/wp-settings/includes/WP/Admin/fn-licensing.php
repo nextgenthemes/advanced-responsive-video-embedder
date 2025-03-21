@@ -93,7 +93,7 @@ function activation_notices(): void {
 
 		if ( $value['active'] && ! $value['valid_key'] ) {
 			$msg = sprintf(
-				// Translators: First %1$s is product name.
+				// Translators: %1$s product name. %2$s url to settings page
 				__( 'Hi there, thanks for your purchase. One last step, please activate your %1$s <a href="%2$s">here now</a>.', 'advanced-responsive-video-embedder' ),
 				$value['name'],
 				get_admin_url() . 'options-general.php?page=nextgenthemes'

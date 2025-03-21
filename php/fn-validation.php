@@ -113,9 +113,8 @@ function validate_type_bool( string $attr_name, $value ): bool {
 
 	arve_errors()->add(
 		$error_code,
-		// Translators: %1$s = Attr Name, %2$s = Attribute array
 		sprintf(
-			// Translators: Attribute Name
+			// Translators: %1$s = attribute name, %2$s = attribute value
 			__( '%1$s <code>%2$s</code> not valid', 'advanced-responsive-video-embedder' ),
 			esc_html( $attr_name ),
 			esc_html( $value )
@@ -142,7 +141,7 @@ function validate_align( string $align ): string {
 
 	arve_errors()->add(
 		'validate_align',
-		// Translators: Alignment
+		// Translators: %s is align value
 		sprintf( __( 'Align <code>%s</code> not valid', 'advanced-responsive-video-embedder' ), esc_html( $align ) )
 	);
 
@@ -163,8 +162,8 @@ function validate_aspect_ratio( ?string $aspect_ratio ): ?string {
 	) {
 		arve_errors()->add(
 			'validate_aspect_ratio',
-			// Translators: attribute
-			sprintf( __( 'Aspect ratio <code>%s</code> is not valid', 'advanced-responsive-video-embedder' ), $aspect_ratio )
+			// Translators: %s is aspect_ratio value
+			sprintf( __( 'Aspect ratio <code>%s</code> is not valid', 'advanced-responsive-video-embedder' ), $aspect_ratio ),
 		);
 
 		return '16:9';
