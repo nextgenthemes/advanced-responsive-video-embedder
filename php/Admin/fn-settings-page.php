@@ -91,7 +91,7 @@ function settings_content(): void {
 			<p>
 				<button
 					data-wp-on--click="actions.deleteCaches"
-					data-wp-context='{ "type": "transients", "prefix": "ngt_www.googleapis.com/youtube", "like": "status_code:403" }'
+					data-wp-context='{ "type": "transients", "prefix": "ngt_www.googleapis.com/youtube", "like": "/youtube/v3/getting-started#quota" }'
 					class="button-secondary"
 				>
 					<?php esc_html_e( 'Delete YouTube API Transients', 'advanced-responsive-video-embedder' ); ?>
@@ -138,7 +138,7 @@ function settings_content(): void {
 }
 
 function print_transient_message(): void {
-	esc_html_e( 'ARVE Pro uses transients to store YouTube data API response data like video description and upload date or error messages from the calls.', 'advanced-responsive-video-embedder' );
+	esc_html_e( 'ARVE Pro uses transients to store YouTube data API response data like video description and upload date or error messages from the calls. Make sure you also delete the oEmbed cache if you delete the transients!', 'advanced-responsive-video-embedder' );
 }
 
 function pro_message( string $addon_name, string $slug ): string {
