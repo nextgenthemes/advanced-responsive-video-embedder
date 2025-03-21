@@ -15,7 +15,7 @@ function init(): void {
 		add_action(
 			'wp_loaded',
 			function (): void {
-				delete_oembed_cache();
+				delete_oembed_cache( '', 'arve-cachetime' );
 			}
 		);
 	}
@@ -104,15 +104,12 @@ function uninstall(): void {
 	global $wpdb;
 
 	if ( version_compare( $wpdb->db_version(), '8.0', '>=' ) ) {
-		$wpdb->query( "UPDATE {$wpdb->postmeta} SET meta_value = REGEXP_REPLACE( meta_value, '<template data-arve[^>]+></template>', '' )" );
-	} else {
-		delete_oembed_cache();
-		delete_option( 'arve_version' ); // this will cause another cache clear on reinstall
+		$wpdb->query( "UPDATE {$wpdb->postmeta} SET meta_value = REGEXP_REPLACE( meta_value, '<template[^>]+arve_cachetime[^>]+></template>', '' )" );
 	}
 }
 
 /**
- * Deletes the oEmbed cache for all posts.
+ * Deletes the oEmbed caches.
  *
  * @link https://github.com/wp-cli/embed-command/blob/c868ec31c65ffa1a61868a91c198a5d815b5bafa/src/Cache_Command.php
  * @author Nicolas Jonas <https://nextgenthemes.com>
@@ -122,19 +119,31 @@ function uninstall(): void {
  *
  * @return int|false The number of rows deleted or false on failure.
  */
-function delete_oembed_cache( string $contains = '' ): string {
+function delete_oembed_cache( string $like = '', string $not_like = '' ): string {
 
 	global $wpdb, $wp_embed;
 
 	$message = '';
 
 	// Get post meta oEmbed caches
-	if ( $contains ) {
+	if ( $like ) {
 		$oembed_post_meta_post_ids = (array) $wpdb->get_col(
 			$wpdb->prepare(
 				"SELECT DISTINCT post_id FROM $wpdb->postmeta WHERE meta_key LIKE %s AND meta_value LIKE %s",
 				$wpdb->esc_like( '_oembed_' ) . '%',
-				'%' . $wpdb->esc_like( $contains ) . '%'
+				'%' . $wpdb->esc_like( $like ) . '%'
+			)
+		);
+	} elseif ( $not_like ) {
+		$oembed_post_meta_post_ids = (array) $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT DISTINCT post_id FROM $wpdb->postmeta
+				WHERE meta_key LIKE %s
+				AND meta_key NOT LIKE %s
+				AND meta_value NOT LIKE %s",
+				$wpdb->esc_like( '_oembed_' ) . '%',
+				$wpdb->esc_like( '_oembed_time_' ) . '%',
+				'%' . $wpdb->esc_like( $not_like ) . '%'
 			)
 		);
 	} else {
@@ -147,11 +156,18 @@ function delete_oembed_cache( string $contains = '' ): string {
 	}
 
 	// Get posts oEmbed caches
-	if ( $contains ) {
+	if ( $like ) {
 		$oembed_post_post_ids = (array) $wpdb->get_col(
 			$wpdb->prepare(
 				"SELECT ID FROM $wpdb->posts WHERE post_type = 'oembed_cache' AND post_content LIKE %s",
-				'%' . $wpdb->esc_like( $contains ) . '%'
+				'%' . $wpdb->esc_like( $like ) . '%'
+			)
+		);
+	} elseif ( $not_like ) {
+		$oembed_post_post_ids = (array) $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT ID FROM $wpdb->posts WHERE post_type = 'oembed_cache' AND post_content NOT LIKE %s",
+				'%' . $wpdb->esc_like( $not_like ) . '%'
 			)
 		);
 	} else {
@@ -161,12 +177,20 @@ function delete_oembed_cache( string $contains = '' ): string {
 	}
 
 	// Get transient oEmbed caches
-	if ( $contains ) {
+	if ( $like ) {
 		$oembed_transients = $wpdb->get_col(
 			$wpdb->prepare(
 				"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s AND option_value LIKE %s",
 				$wpdb->esc_like( '_transient_oembed_' ) . '%',
-				'%' . $wpdb->esc_like( $contains ) . '%'
+				'%' . $wpdb->esc_like( $like ) . '%'
+			)
+		);
+	} elseif ( $not_like ) {
+		$oembed_transients = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s AND option_value NOT LIKE %s",
+				$wpdb->esc_like( '_transient_oembed_' ) . '%',
+				'%' . $wpdb->esc_like( $not_like ) . '%'
 			)
 		);
 	} else {
@@ -231,12 +255,50 @@ function delete_oembed_cache( string $contains = '' ): string {
 		$message .= esc_html__( 'No oEmbed caches to clear!', 'advanced-responsive-video-embedder' );
 	}
 
-	if ( wp_using_ext_object_cache() ) {
-		$object_cache_msg = esc_html__( 'Oembed transients are stored in an external object cache, and ARVE only deletes those stored in the database. You must flush the cache to delete all transients.', 'advanced-responsive-video-embedder' );
-		update_option( 'arve_object_cache_msg', $object_cache_msg );
+	return $message;
+}
 
-		$message .= ' ' . $object_cache_msg;
+/**
+ * @global wpdb $wpdb
+ */
+function delete_transients( string $prefix, string $contains = '' ): string {
+
+	global $wpdb;
+
+	if ( $contains ) {
+		$transients = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s AND option_value LIKE %s",
+				$wpdb->esc_like( '_transient_' . $prefix ) . '%',
+				'%' . $wpdb->esc_like( $contains ) . '%'
+			)
+		);
+	} else {
+		$transients = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s",
+				$wpdb->esc_like( '_transient_' . $prefix ) . '%'
+			)
+		);
 	}
 
-	return $message;
+	$count = 0;
+
+	foreach ( $transients as $transient_name ) {
+		// Strip '_transient_' to get the key for delete_transient()
+		$transient_key = str_replace( '_transient_', '', $transient_name );
+		if ( delete_transient( $transient_key ) ) {
+			++$count;
+		}
+	}
+
+	if ( $count > 0 ) {
+		return sprintf(
+			// translators: %d: Number of transients deleted.
+			esc_html__( 'Deleted %d transients.', 'advanced-responsive-video-embedder' ),
+			$count
+		);
+	}
+
+	return esc_html__( 'No transients deleted.', 'advanced-responsive-video-embedder' );
 }
