@@ -4,9 +4,9 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\WP;
 
+use DateTime;
+use Exception;
 use WP_Error;
-
-use function Nextgenthemes\ARVE\arve_errors;
 
 /**
  * Retrieves JSON data from a remote URL.
@@ -32,16 +32,17 @@ function remote_get_json_cached( string $url, array $args = array(), string $jso
 
 	try {
 		$response = json_decode( $response, true, 128, JSON_THROW_ON_ERROR );
-	} catch ( \Exception $e ) {
+	} catch ( Exception $exception ) {
 
 		return new WP_Error(
 			'json-decode-error',
 			sprintf(
 				// Translators: %1$s URL, %2$s json_decode error
-				__( 'url: %1$s json_decode error: %2$s.', 'advanced-responsive-video-embedder' ),
+				esc_html__( 'Remote get url: %1$s json_decode error: %2$s.', 'advanced-responsive-video-embedder' ),
 				esc_html( $url ),
-				$e->getMessage()
-			)
+				esc_html( $exception->getMessage() )
+			),
+			compact( 'url', 'response', 'exception' )
 		);
 	}
 
@@ -50,12 +51,16 @@ function remote_get_json_cached( string $url, array $args = array(), string $jso
 			return new WP_Error(
 				'json-value-empty',
 				sprintf(
-					// Translators: 1 URL 2 JSON value
-					__( 'url: %1$s JSON value <code>%2$s</code> does not exist or is empty. Full Json: %3$s', 'advanced-responsive-video-embedder' ),
+					wp_kses(
+						// Translators: 1 URL 2 JSON value
+						__( 'url: %1$s JSON value <code>%2$s</code> does not exist or is empty.', 'advanced-responsive-video-embedder' ),
+						array( 'code' => array() ),
+						array( 'https' )
+					),
 					esc_html( $url ),
-					esc_html( $json_name ),
-					esc_html( $response )
-				)
+					esc_html( $json_name )
+				),
+				compact( 'url', 'json_name', 'response' )
 			);
 		} else {
 			return $response[ $json_name ];
@@ -76,6 +81,7 @@ function remote_get_body( string $url, array $args = array() ) {
 
 	$response      = wp_safe_remote_get( $url, $args );
 	$response_code = wp_remote_retrieve_response_code( $response );
+	$body          = wp_remote_retrieve_body( $response );
 
 	if ( is_wp_error( $response ) ) {
 		return $response;
@@ -87,27 +93,27 @@ function remote_get_body( string $url, array $args = array() ) {
 			$response_code,
 			sprintf(
 				// Translators: 1 URL 2 HTTP response code.
-				__( 'url: %1$s Status code 200 expected but was %2$s.', 'advanced-responsive-video-embedder' ),
-				$url,
+				esc_html__( 'url: %1$s Status code 200 expected but was %2$d.', 'advanced-responsive-video-embedder' ),
+				esc_html( $url ),
 				$response_code
-			)
+			),
+			compact( 'url', 'response_code', 'response' )
 		);
 	}
 
-	$response = wp_remote_retrieve_body( $response );
-
-	if ( '' === $response ) {
+	if ( '' === $body ) {
 		return new WP_Error(
 			'empty-body',
 			sprintf(
 				// Translators: URL.
-				__( 'url: %s Empty Body.', 'advanced-responsive-video-embedder' ),
-				$url
-			)
+				esc_html__( 'Remote get url: %s Empty Body.', 'advanced-responsive-video-embedder' ),
+				esc_html( $url )
+			),
+			compact( 'url', 'response_code', 'response' )
 		);
 	}
 
-	return $response;
+	return $body;
 }
 
 /**
@@ -132,7 +138,8 @@ function remote_get_head( string $url, array $args = array() ) {
 				__( 'url: %1$s Status code 200 expected but was %2$s.', 'advanced-responsive-video-embedder' ),
 				$url,
 				$response_code
-			)
+			),
+			compact( 'url', 'response_code', 'response' )
 		);
 	}
 
@@ -166,6 +173,8 @@ function remote_get_head_cached( string $url, array $args = array(), int $time =
 /**
  * Retrieves the body content from a remote URL, with caching for improved performance.
  *
+ * TODO maybe use json to encode WP_Error to avoid WP using serialize
+ *
  * @param string $url The URL of the remote resource.
  * @param array $args Optional. Additional arguments to include in the request.
  * @param int $time Optional. The duration in seconds to cache the response. Default is DAY_IN_SECONDS. 0 to disable caching.
@@ -192,10 +201,26 @@ function _remote_get_cached( string $url, array $args, int $time, string $type )
 		if ( $time ) {
 
 			if ( is_wp_error( $response ) ) {
-				$response->add(
-					$response->get_error_code(),
-					'This error is cached for ' . $time . ' seconds. If you delete the transient ' . $transient_name . ' the call will be made again.'
+
+				$code = $response->get_error_code();
+				$msg  = $response->get_error_message();
+				$data = $response->get_error_data( $code );
+
+				$response->remove( $code );
+
+				$msg .= '<br>' . sprintf(
+					wp_kses(
+						// Translators: 1 Time in seconds, 2 Transient name.
+						__( 'Error triggerd on %1$s and is cached for %2$d seconds. If you delete the transient <code>%3$s</code> the remote call will be made again.', 'advanced-responsive-video-embedder' ),
+						array( 'code' => [] ),
+						array( 'https' )
+					),
+					current_datetime()->format( DATETIME::ATOM ),
+					$time,
+					esc_html( $transient_name )
 				);
+
+				$response->add( $code, $msg, $data );
 			}
 
 			set_transient( $transient_name, $response, $time );
@@ -205,6 +230,17 @@ function _remote_get_cached( string $url, array $args, int $time, string $type )
 	return $response;
 }
 
+/**
+ * Shorten a transient name if it is too long.
+ *
+ * WordPress transient names are limited to 172 characters. This function
+ * shortens the name by removing non-alphanumeric characters and then hashing
+ * the name if it is still too long.
+ *
+ * @param string $transient_name The transient name to shorten.
+ *
+ * @return string The shortened transient name.
+ */
 function shorten_transient_name( string $transient_name ): string {
 
 	$transient_name = str_replace( 'https://', '', $transient_name );
