@@ -71,7 +71,7 @@ if ( 'always' ) {
 		 * @since     1.0
 		 * @return object Notices Unique instance of the handler
 		 */
-		public static function instance(): object {
+		public static function instance(): Notices {
 
 			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Notices ) ) {
 				self::$instance = new Notices();
