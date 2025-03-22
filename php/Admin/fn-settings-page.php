@@ -117,7 +117,15 @@ function settings_content(): void {
 				<?= pro_message( 'ARVE Privacy', 'arve-privacy' ); // phpcs:ignore ?>
 			</p>
 			<p>
-				<?php esc_html_e( 'If you serve your site to european users you <strong>must</strong> comply with GDPR/DSGVO. The ARVE Privacy Addon automatically adds the required 3rd party content notice to your embeds in lazyload and lightbox modes! No option needed, just install the Privacy addon and activate it!', 'advanced-responsive-video-embedder' ); ?>
+				<?php
+				echo wp_kses(
+					__( 'If you serve your site to european users you <strong>must</strong> comply with GDPR/DSGVO. The ARVE Privacy Addon automatically adds the required 3rd party content notice to your embeds in lazyload and lightbox modes! No option needed, just install the Privacy addon and activate it!', 'advanced-responsive-video-embedder' ),
+					array(
+						'strong' => array(),
+					),
+					array( 'https' )
+				);
+				?>
 			</p>
 		</div>
 	<?php endif; ?>
