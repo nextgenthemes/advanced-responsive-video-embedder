@@ -112,23 +112,22 @@ function settings_content(): void {
 	<?php endif; ?>
 
 	<?php if ( ! is_plugin_active( 'arve-privacy/arve-privacy.php' ) ) : ?>
-		<div data-wp-bind--hidden="!context.activeTabs.privacy">
-			<p>
-				<?= pro_message( 'ARVE Privacy', 'arve-privacy' ); // phpcs:ignore ?>
-			</p>
-			<p>
-				<?php
-				echo wp_kses(
-					__( 'If you serve your site to european users you <strong>must</strong> comply with GDPR/DSGVO. The ARVE Privacy Addon automatically adds the required 3rd party content notice to your embeds in lazyload and lightbox modes! No option needed, just install the Privacy addon and activate it!', 'advanced-responsive-video-embedder' ),
-					array(
-						'strong' => array(),
-					),
-					array( 'https' )
-				);
-				?>
-			</p>
-		</div>
+		<p data-wp-bind--hidden="!context.activeTabs.privacy">
+			<?= pro_message( 'ARVE Privacy', 'arve-privacy' ); // phpcs:ignore ?>
+		</p>
 	<?php endif; ?>
+
+	<p data-wp-bind--hidden="!context.activeTabs.privacy">
+		<?php
+		echo wp_kses(
+			__( 'If you serve your site to european users you <strong>must</strong> comply with GDPR/DSGVO. The ARVE Privacy Addon automatically adds the required 3rd party content notice to your embeds in lazyload and lightbox modes! No option needed, you just need to have the Privacy Addon active!', 'advanced-responsive-video-embedder' ),
+			array(
+				'strong' => array(),
+			),
+			array( 'https' )
+		);
+		?>
+	</p>
 
 	<?php if ( ! is_plugin_active( 'arve-stick-videos/arve-sticky-videos.php' ) ) : ?>
 		<p data-wp-bind--hidden="!context.activeTabs.sticky_videos">
