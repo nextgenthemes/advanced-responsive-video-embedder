@@ -3,6 +3,10 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2025-03-22 10.6.12 ###
+* Fix: HTML mistake on the setting page.
+* Improved: Hide some old errors.
+
 ### 2025-03-21 10.6.10 ###
 
 * Fix: Removing ARVE data from oembed cache on uninstall.
