@@ -4,6 +4,7 @@
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
 ### 2025-03-22 10.6.12 ###
+
 * Fix: HTML mistake on the setting page.
 * Improved: Hide some old errors.
 
