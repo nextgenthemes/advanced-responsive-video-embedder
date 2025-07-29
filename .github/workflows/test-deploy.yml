@@ -35,8 +35,8 @@ jobs:
       mariadb:
         image: mariadb:10.11
         env:
-          MARIADB_ROOT_PASSWORD: dbpass
-          MARIADB_DATABASE: dbname
+          MYSQL_ROOT_PASSWORD: dbpass
+          MYSQL_DATABASE: dbname
         ports:
           - 3306/tcp
         options: --health-cmd="mysqladmin ping -h localhost" --health-interval=10s --health-timeout=5s --health-retries=3
