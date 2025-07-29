@@ -32,15 +32,14 @@ jobs:
         php: [ '7.4', '8.0', '8.1', '8.2', '8.3', '8.4' ] # https://www.php.net/supported-versions
         wordpress: [ '6.5', "${{ needs.beta.outputs.ver }}" ] # https://wordpress.org/download/releases/
     services:
-      mysql:
-        image: mysql:5.7
+      mariadb:
+        image: mariadb:10.11
         env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: false
-          MYSQL_ROOT_PASSWORD: dbpass
-          MYSQL_DATABASE: dbname
+          MARIADB_ROOT_PASSWORD: dbpass
+          MARIADB_DATABASE: dbname
         ports:
           - 3306/tcp
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: --health-cmd="mysqladmin ping -h localhost" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout ARVE
