@@ -4,7 +4,6 @@
 /*.xml         export-ignore
 /*.yml         export-ignore
 /bin           export-ignore
-/composer*     export-ignore
 /package*.json export-ignore
 /tsconfig.json export-ignore
 /tests         export-ignore
