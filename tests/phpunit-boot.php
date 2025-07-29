@@ -6,8 +6,10 @@ namespace Nextgenthemes\ARVE\phpUnit;
 
 use SimpleXMLElement;
 
-if ( is_file( __DIR__ . '/vendor/autoload.php' ) ) {
-	require_once __DIR__ . '/vendor/autoload.php';
+$kint = getenv( 'KINT_DEBUG_PLUGIN_FILE' );
+
+if ( $kint ) {
+	require_once $kint;
 }
 
 require_once __DIR__ . '/phpunit-debug-helpers.php';
