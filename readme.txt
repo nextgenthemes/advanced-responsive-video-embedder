@@ -198,6 +198,7 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 ### 2025-07-30 10.6.13 ###
 
 * Fix: _load_textdomain_just_in_time was called incorrectly.
+* Fix: Minor visible error on debug tab with WP_DEBUG enabled.
 
 ### 2025-03-22 10.6.12 ###
 
