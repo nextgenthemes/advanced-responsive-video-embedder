@@ -121,8 +121,6 @@ function disabled_on_feeds(): bool {
 	return is_feed() && ! options()['feed'] ? true : false;
 }
 
-
-
 /**
  * @param string|int $time
  */
