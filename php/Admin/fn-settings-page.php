@@ -246,16 +246,11 @@ function print_debug_errors(): void {
 
 	$youtube_api_error = get_option( 'arve_youtube_api_error' );
 
-	if ( ! $youtube_api_error ) {
-		return;
-	}
-
 	if ( ! is_wp_error( $youtube_api_error ) ) {
-		wp_trigger_error( __FUNCTION__, 'Not WP_Error' );
 		return;
 	}
 
-	$code    = $youtube_api_error->get_error_code();
+	#$code    = $youtube_api_error->get_error_code();
 	$message = $youtube_api_error->get_error_message();
 	$data    = $youtube_api_error->get_error_data();
 
