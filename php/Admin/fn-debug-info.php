@@ -9,13 +9,22 @@ use function Nextgenthemes\ARVE\is_dev_mode;
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
 function add_site_health_metadata( array $metadata ): array {
 
+	$option_fields = array();
+	$arve_options  = get_option( 'nextgenthemes_arve' );
+
+	if ( is_array( $arve_options ) ) {
+
+		foreach ( $arve_options as $key => $value ) {
+			$option_fields[ 'option_' . $key ] = [
+				'label'  => $key,
+				'value'  => var_export( $value, true ),
+			];
+		}
+	}
+
 	$arve_metadata['arve'] = [
 		'label'  => __( 'ARVE - Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ),
 		'fields' => [
-			'options' => [
-				'label' => __( 'ARVE Options', 'advanced-responsive-video-embedder' ),
-				'value' => var_export( get_option( 'nextgenthemes_arve' ), true ),
-			],
 			'arve' => [
 				'label' => __( 'ARVE', 'advanced-responsive-video-embedder' ),
 				'value' => plugin_ver_status( 'advanced-responsive-video-embedder/advanced-responsive-video-embedder.php' ),
@@ -58,6 +67,8 @@ function add_site_health_metadata( array $metadata ): array {
 			],
 		],
 	];
+
+	$arve_metadata['arve']['fields'] = $option_fields + $arve_metadata['arve']['fields'];
 
 	$metadata = array_merge( $arve_metadata, $metadata );
 
