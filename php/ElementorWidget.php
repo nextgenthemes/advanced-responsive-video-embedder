@@ -7,7 +7,7 @@ namespace Nextgenthemes\ARVE;
 /**
  * Elementor oEmbed Widget.
  *
- * Elementor widget that inserts an embbedable content into the page, from any given URL.
+ * Elementor widget that inserts an embed-able content into the page, from any given URL.
  *
  * @since 10.0.0
  * @codeCoverageIgnore
@@ -57,7 +57,7 @@ class ElementorWidget extends \Elementor\Widget_Base {
 	 *
 	 * @since 10.0.0
 	 * @access public
-	 * @return array Widget categories.
+	 * @return array <int, string> Widget categories.
 	 */
 	public function get_categories(): array {
 		return [ 'basic', 'general' ];
@@ -70,7 +70,7 @@ class ElementorWidget extends \Elementor\Widget_Base {
 	 *
 	 * @since 10.0.0
 	 * @access public
-	 * @return array Widget keywords.
+	 * @return array <int, string> Widget keywords.
 	 */
 	public function get_keywords(): array {
 		return [ 'oembed', 'url', 'link', 'video' ];

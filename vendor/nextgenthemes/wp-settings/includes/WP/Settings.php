@@ -60,6 +60,14 @@ class Settings {
 	/**
 	 * Tabs for the Setting Page
 	 *
+	 * @var array{
+	 *     string: array{
+	 *         title: string,
+	 *         premium_link?: string,
+	 *         reset_button?: bool
+	 *     }
+	 * }
+	 *
 	 * Example:
 	 *      $tags = array(
 	 *          'tab_name' => array(
@@ -77,27 +85,38 @@ class Settings {
 
 	/**
 	 * Array of current option values.
+	 *
+	 * @var array <string, int|float|string|bool>
 	 */
 	private array $options;
 
 	/**
 	 * Array of default option values.
+	 *
+	 * @var array <string, int|float|string|bool>
 	 */
 	private array $options_defaults;
 
 	/**
 	 * Array of default option values organized by section.
+	 *
+	 * @var array <string, array<string, int|float|string|bool>>
 	 */
 	private array $options_defaults_by_section;
 
 	/**
 	 * Each setting is a SettingValidator object
-	 *
-	 * @var SettingsData <string, SettingValidator>
 	 */
 	private SettingsData $settings;
+
+	/**
+	 * @var array <string, string>
+	 */
 	private array $defined_keys = array();
 
+	/**
+	 * @param array <int|string, mixed> $args
+	 */
 	public function __construct( array $args ) {
 
 		$this->menu_parent_slug    = $args['menu_parent_slug'] ?? 'options-general.php';
@@ -127,6 +146,10 @@ class Settings {
 		}
 	}
 
+	/**
+	 * @param array <int|string, string> $links
+	 * @return array <int|string, string> Modified links
+	 */
 	public function add_action_links( array $links ): array {
 
 		$default_headers = array(
@@ -154,15 +177,6 @@ class Settings {
 		);
 
 		return array_merge( $extra_links, $links );
-	}
-
-	private function check_option_and_shortcode( array $setting ): void {
-
-		if ( 'nextgenthemes_arve' === $this->slugged_namespace
-			&& ( ! isset( $setting['option'] ) || ! isset( $setting['shortcode'] ) )
-		) {
-			wp_trigger_error( __METHOD__, 'option or shortcode must be set in ARVE' );
-		}
 	}
 
 	public function setup_license_options(): void {
@@ -216,6 +230,9 @@ class Settings {
 		}
 	}
 
+	/**
+	 * @return array <string, int|float|string|bool>
+	 */
 	public function get_options(): array {
 		$options = (array) get_option( $this->slugged_namespace, array() );
 		$options = $options + $this->options_defaults;
@@ -223,6 +240,9 @@ class Settings {
 		return apply_filters( $this->slashed_namespace . '/settings', $options );
 	}
 
+	/**
+	 * @return array <string, int|float|string|bool>
+	 */
 	public function get_options_defaults(): array {
 		return $this->options_defaults;
 	}
@@ -231,6 +251,9 @@ class Settings {
 		return $this->settings;
 	}
 
+	/**
+	 * @param array <string, int|float|string|bool> $options
+	 */
 	public function save_options( array $options ): void {
 		// remove all items from options that are not also in defaults.
 		$options = array_diff_assoc( $options, $this->options_defaults );

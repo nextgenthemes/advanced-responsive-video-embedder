@@ -89,7 +89,7 @@ function get_constant( string $const_name ) {
 }
 
 function is_wp_debug(): bool {
-	return defined( 'WP_DEBUG' ) && WP_DEBUG;
+	return defined( 'WP_DEBUG' ) && WP_DEBUG; // @phpstan-ignore-line
 }
 
 /**
@@ -97,32 +97,56 @@ function is_wp_debug(): bool {
  * It removes any leading or trailing spaces from each element and filters out any empty
  * elements from the resulting array.
  *
- * @param string $str The input comma-separated string
- * @param string $delimiter The delimiter to use. Space will NOT work!
- * @return array The resulting array
+ * @param string   $str       The input comma-separated string
+ * @param string   $delimiter The delimiter to use. Space will NOT work!
+ * @return array<int,string>  The resulting array
  */
 function str_to_array( string $str, string $delimiter = ',' ): array {
-	return array_filter(
-		array_map(
-			'trim',
-			explode( $delimiter, $str )
-		),
-		'strlen'
+
+	// Trim spaces from each element
+	$arr = array_map( 'trim', explode( $delimiter, $str ) );
+
+	// Filter out empty elements
+	$arr = array_filter(
+		$arr,
+		fn ( string $s ): bool => (bool) strlen( $s )
 	);
+
+	// Remove duplicate elements
+	$arr = array_unique( $arr );
+
+	return $arr;
 }
 
 /**
  * Applies a callback function to each key of an array, returning a new array
  * with the modified keys and original values.
  *
- * @param string   $callback The callback function to apply to each key.
- * @param array    $arr      The input array.
+ * @param callable(string):string $callback The callback function to apply to each key, must return a string.
+ * @param array<mixed>            $arr      The input array with any value types.
  *
- * @return array   The resulting array with modified keys.
+ * @return array<mixed>                     The resulting array with modified keys.
+ * @throws \InvalidArgumentException        If the callback is not callable or if the callback returns non-string keys.
  */
-function array_map_key( string $callback, array $arr ): array {
-	return array_combine(
-		array_map( $callback, array_keys( $arr ) ),
-		$arr
+function array_map_key( callable $callback, array $arr ): array {
+
+	$keys     = array_keys( $arr );
+	$new_keys = array_map(
+		function ( $key ) use ( $callback ) {
+			$result = $callback( (string) $key );
+			if ( ! is_string( $result ) ) {
+				throw new \InvalidArgumentException( 'Callback must return a string, got ' . esc_html( gettype( $result ) ) );
+			}
+			return $result;
+		},
+		$keys
 	);
+
+	// Ensure no duplicate keys after mapping
+	if ( count( array_unique( $new_keys ) ) !== count( $new_keys ) ) {
+		throw new \InvalidArgumentException( 'Callback produced duplicate keys, which is not allowed.' );
+	}
+
+	// array_combine will fail if lengths don't match, but we're safe here
+	return array_combine( $new_keys, array_values( $arr ) );
 }

@@ -62,6 +62,10 @@ class SettingValidator {
 	public ?string $edd_item_name;
 	public ?int $edd_item_id;
 
+	/**
+	 * @param array <string, mixed> $setting
+	 * @param bool                  $arve     Indicates specific actions for ARVE plugin only.
+	 */
 	public function __construct( array $setting, bool $arve = false ) {
 
 		if ( $arve ) {
@@ -163,7 +167,7 @@ class SettingValidator {
 		if ( ! is_string( $value ) && ! is_int( $value ) && ! is_bool( $value ) ) {
 			throw new InvalidArgumentException( esc_html( 'Default value must be a string, integer or boolean' ) );
 		}
-		if ( ! isset( $this->type ) ) {
+		if ( empty( $this->type ) ) {
 			throw new InvalidArgumentException( esc_html( 'type must be set before default' ) );
 		}
 		if ( gettype( $value ) !== $this->type ) {
@@ -208,6 +212,9 @@ class SettingValidator {
 		throw new ErrorException( esc_html( 'Input type for ' . $type . ' not implemented' ) );
 	}
 
+	/**
+	 * @return array <string, string|int|bool|null>
+	 */
 	public function to_array(): array {
 		return get_object_vars( $this );
 	}

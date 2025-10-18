@@ -9,9 +9,13 @@ use WP_HTML_Tag_Processor;
 use function Nextgenthemes\WP\first_tag_attr;
 
 /**
- * Undocumented function
- *
- * @param array <int, Array> $tracks
+ * @param array <int, array{
+ *     default: bool,
+ *     kind: string,
+ *     label: string,
+ *     src: string,
+ *     srclang: string
+ * }> $tracks
  */
 function tracks_html( array $tracks ): string {
 	$html = '';

@@ -25,8 +25,6 @@ function delete_oembed_cache_on_update(): void {
  * @author Nicolas Lemoine <https://n5s.dev>
  * @copyright Copyright (c) 2025, Nicolas Jonas
  * @copyright Copyright (c) 2024, Nicolas Lemoine
- *
- * @return int|false The number of rows deleted or false on failure.
  */
 function delete_oembed_cache( string $like = '', string $not_like = '' ): string {
 

@@ -31,14 +31,24 @@ function settings_instance(): Settings {
 	return $instance;
 }
 
+
+/**
+ * @return array <string, bool|string>
+ */
 function options(): array {
 	return settings_instance()->get_options();
 }
 
+/**
+ * @return array <string, bool|string>
+ */
 function default_options(): array {
 	return settings_instance()->get_options_defaults();
 }
 
+/**
+ * @return array <string, array<string, string|false>>
+ */
 function settings_tabs(): array {
 
 	return array(
@@ -173,9 +183,9 @@ function settings_data(): SettingsData {
 
 	$provider_list_link = 'https://nextgenthemes.com/plugins/arve-pro/#support-table';
 	$pro_addon_link     = 'https://nextgenthemes.com/plugins/arve-pro/';
-	$auto_thumbs        = implode( ', ', $auto_thumbs );
-	$auto_title         = implode( ', ', $auto_title );
-	$embed_code_only    = implode( ', ', $embed_code_only );
+	$auto_thumbs        = implode( ', ', $auto_thumbs ?? '' );
+	$auto_title         = implode( ', ', $auto_title ?? '' );
+	$embed_code_only    = implode( ', ', $embed_code_only ?? '' );
 	$settings           = array(
 		'url' => array(
 			'type'                => 'string',

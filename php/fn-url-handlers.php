@@ -23,12 +23,11 @@ function create_url_handlers(): void {
 /**
  * Callback for wp_embed_register_handler
  *
- * @param string $provider The lower case provider name
- * @param array  $matches  The RegEx matches from the provided regex when calling
- *                          wp_embed_register_handler().
- * @param array  $attr     Embed attributes.
- * @param string $url      The original URL that was matched by the regex.
- * @param array  $rawattr  The original unmodified attributes.
+ * @param string $provider                     The lower case provider name
+ * @param array <int|string, string> $matches  The RegEx matches from the provided regex when calling wp_embed_register_handler().
+ * @param array <int|sting, mixed>   $attr     Embed attributes.
+ * @param string                     $url      The original URL that was matched by the regex.
+ * @param array <int|string, mixed>  $rawattr  The original unmodified attributes.
  *
  * @return string  The embed HTML.
  */

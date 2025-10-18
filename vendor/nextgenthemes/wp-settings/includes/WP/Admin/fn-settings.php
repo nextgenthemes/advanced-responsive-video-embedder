@@ -27,15 +27,15 @@ const DESCRIPTION_ALLOWED_HTML = array(
 /**
  * Prints all settings blocks.
  *
- * param array<string, SettingValidator> $settings The settings data.
- * @param array<string, array>            $tabs     The tabs.
- * @param string                          $context  The context, either 'settings-page' or 'gutenberg_block'. Default 'settings-page'.
+ * @param array{
+ *     string: array{
+ *         title: string,
+ *         premium_link?: string,
+ *         reset_button?: bool
+ *     }
+ * } $tabs
  */
-function print_settings_blocks(
-	SettingsData $settings,
-	array $tabs,
-	string $context = 'settings-page'
-): void {
+function print_settings_blocks( SettingsData $settings, array $tabs, string $context = 'settings-page' ): void {
 
 	$settings = $settings->get_all();
 
@@ -58,6 +58,15 @@ function print_settings_blocks(
 	}
 }
 
+/**
+ * @param array{
+ *     string: array{
+ *         title: string,
+ *         premium_link?: string,
+ *         reset_button?: bool
+ *     }
+ * } $tabs
+ */
 function option_block( string $key, SettingValidator $setting, array $tabs ): void {
 
 	$input_id = 'ngt-option--' . $key;
@@ -193,6 +202,15 @@ function license_key_ui( string $key ): void {
 	<?php
 }
 
+/**
+ * @param array{
+ *     string: array{
+ *         title: string,
+ *         premium_link?: string,
+ *         reset_button?: bool
+ *     }
+ * } $tabs
+ */
 function label( string $input_id, SettingValidator $setting, array $tabs ): void {
 
 	$premium_link = $tabs[ $setting->tab ]['premium_link'] ?? false;

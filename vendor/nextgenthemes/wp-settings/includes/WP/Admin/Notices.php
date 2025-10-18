@@ -1,9 +1,4 @@
 <?php
-
-declare(strict_types = 1);
-
-namespace Nextgenthemes\WP\Admin;
-
 /**
  * Dismissible Notices Handler.
  *
@@ -23,57 +18,57 @@ namespace Nextgenthemes\WP\Admin;
  * @link      https://nextgenthemes.com
  * @link      https://github.com/julien731/WP-Dismissible-Notices-Handler/blob/develop/handler.php
  * @copyright 2021 Nicolas Jonas, 2018 Julien Liabeuf
- */
+ **/
 
-if ( 'always' ) {
+declare(strict_types = 1);
 
+namespace Nextgenthemes\WP\Admin;
+
+if ( ! class_exists( 'Nextgenthemes\WP\Admin\Notices' ) ) {
 	final class Notices {
 
 		/**
-		 * @var Notices Holds the unique instance of the handler
 		 * @since 1.0
 		 */
-		private static $instance;
+		private static ?Notices $instance = null;
 
 		/**
 		 * Library version
 		 *
 		 * @since 1.0
-		 * @var string
 		 */
-		public $version = '1.2.1';
-
-		/**
-		 * Required version of PHP.
-		 *
-		 * @since 1.0
-		 * @var string
-		 */
-		public $php_version_required = '5.5';
+		public string $version = '1.2.2';
 
 		/**
 		 * Minimum version of WordPress required to use the library
 		 *
 		 * @since 1.0
-		 * @var string
 		 */
-		public $wordpress_version_required = '4.7';
+		public string $wordpress_version_required = '4.7';
 
 		/**
-		 * @var array Holds all our registered notices
-		 * @since 1.0
+		 * All registered notices.
+		 *
+		 * @var array <string, array{
+		 *     type: string,
+		 *     content: string,
+		 *     screen?: string,
+		 *     scope: string,
+		 *     cap?: string,
+		 *     class?: string
+		 * }>
 		 */
-		private $notices;
+		private array $notices = array();
 
 		/**
 		 * Instantiate and return the unique Notices object
 		 *
 		 * @since     1.0
-		 * @return object Notices Unique instance of the handler
+		 * @return Notices Notices Unique instance of the handler
 		 */
 		public static function instance(): Notices {
 
-			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Notices ) ) {
+			if ( ! ( self::$instance instanceof Notices ) ) {
 				self::$instance = new Notices();
 				self::$instance->init();
 			}
@@ -101,19 +96,6 @@ if ( 'always' ) {
 				return;
 			}
 
-			// Make sure PHP is compatible
-			if ( ! self::$instance->is_php_compatible() ) {
-				self::$instance->spit_error(
-					sprintf(
-						/* translators: %s: required php version */
-						esc_html__( 'The library can not be used because your version of PHP is too old. You need version %s at least.', 'advanced-responsive-video-embedder' ),
-						self::$instance->php_version_required
-					)
-				);
-
-				return;
-			}
-
 			add_action( 'admin_notices', array( self::$instance, 'display' ) );
 			add_action( 'wp_ajax_dnh_dismiss_notice', array( self::$instance, 'dismiss_notice_ajax' ) );
 		}
@@ -126,20 +108,6 @@ if ( 'always' ) {
 		private function is_wp_compatible(): bool {
 
 			if ( version_compare( get_bloginfo( 'version' ), self::$instance->wordpress_version_required, '<' ) ) {
-				return false;
-			}
-
-			return true;
-		}
-
-		/**
-		 * Check if the version of PHP is compatible with this library
-		 *
-		 * @since  1.0
-		 */
-		private function is_php_compatible(): bool {
-
-			if ( version_compare( phpversion(), self::$instance->php_version_required, '<' ) ) {
 				return false;
 			}
 
@@ -216,9 +184,9 @@ if ( 'always' ) {
 		}
 
 		/**
-		 * Get available notice types
+		 * Retrieve the list of allowed notice types.
 		 *
-		 * @since 1.0
+		 * @return string[]
 		 */
 		public function get_types(): array {
 
@@ -238,7 +206,12 @@ if ( 'always' ) {
 		/**
 		 * Get the default arguments for a notice
 		 *
-		 * @since 1.0
+		 * @return array <string, array{
+		 *     screen: string,
+		 *     scope: string,
+		 *     cap: string,
+		 *     class: string
+		 * }>
 		 */
 		private function default_args(): array {
 
@@ -257,10 +230,10 @@ if ( 'always' ) {
 		 *
 		 * @since 1.0
 		 *
-		 * @param string $id      Notice ID, used to identify it
-		 * @param string $type    Type of notice to display
-		 * @param string $content Notice content
-		 * @param array  $args    Additional parameters
+		 * @param string $id                      Notice ID, used to identify it
+		 * @param string $type                    Type of notice to display
+		 * @param string $content                 Notice content
+		 * @param array  <string, mixed> $args    Additional parameters
 		 *
 		 */
 		public function register_notice( string $id, string $type, string $content, array $args = array() ): bool {
@@ -321,7 +294,7 @@ if ( 'always' ) {
 			$id = self::$instance->get_id( str_replace( 'dnh-', '', $_POST['id'] ) );
 			// phpcs:enable
 
-			echo wp_kses_post( self::$instance->dismiss_notice( $id ) );
+			echo wp_kses_post( (string) self::$instance->dismiss_notice( $id ) );
 			exit;
 		}
 
@@ -478,7 +451,7 @@ if ( 'always' ) {
 		 *
 		 * This includes notices dismissed globally or per user.
 		 *
-		 * @since 1.0
+		 * @return array <string, string>
 		 */
 		public function dismissed_notices(): array {
 
@@ -491,7 +464,7 @@ if ( 'always' ) {
 		/**
 		 * Get user dismissed notices
 		 *
-		 * @since 1.0
+		 * @return array <string, string>
 		 */
 		private function dismissed_user(): array {
 
@@ -507,7 +480,7 @@ if ( 'always' ) {
 		/**
 		 * Get globally dismissed notices
 		 *
-		 * @since 1.0
+		 * @return array <string, string>
 		 */
 		private function dismissed_global(): array {
 			return get_option( 'dnh_dismissed_notices', array() );
@@ -535,10 +508,16 @@ if ( 'always' ) {
 		/**
 		 * Get all the registered notices
 		 *
-		 * @since 1.0
-		 * @return array|null
+		 * @return array <string, array{
+		 *     type: string,
+		 *     content: string,
+		 *     screen?: string,
+		 *     scope: string,
+		 *     cap?: string,
+		 *     class?: string
+		 * }>
 		 */
-		public function get_notices(): ?array {
+		public function get_notices(): array {
 			return self::$instance->notices;
 		}
 
@@ -549,7 +528,7 @@ if ( 'always' ) {
 		 *
 		 * @param string $id Notice ID
 		 *
-		 * @return array|false
+		 * @return false|array <string, string>
 		 */
 		public function get_notice( string $id ) {
 
@@ -562,5 +541,4 @@ if ( 'always' ) {
 			return self::$instance->notices[ $id ];
 		}
 	}
-
 }

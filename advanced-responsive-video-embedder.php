@@ -61,7 +61,7 @@ const ALLOWED_HTML = array(
 	'div'    => array( 'class' => true ),
 );
 
-if ( defined( 'WP_INSTALLING' ) && WP_INSTALLING ) {
+if ( defined( 'WP_INSTALLING' ) && WP_INSTALLING ) { // @phpstan-ignore-line
 	return;
 }
 

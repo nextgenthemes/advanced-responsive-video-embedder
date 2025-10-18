@@ -6,9 +6,10 @@ namespace Nextgenthemes\WP;
 
 class SettingsData {
 
-	/** @var array<string, SettingValidator> $settings */
+	/** @var array <string, SettingValidator> $settings */
 	private array $settings = [];
 
+	/** @param array <string, array<string, mixed>> $settings */
 	public function __construct( array $settings, bool $arve = false ) {
 		foreach ( $settings as $key => $setting ) {
 

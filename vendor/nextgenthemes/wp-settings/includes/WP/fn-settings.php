@@ -41,6 +41,7 @@ function nextgenthemes_settings_instance( string $base_url, string $base_path ):
 
 function nextgenthemes_settings(): SettingsData {
 
+	$settings = array();
 	$products = get_products();
 
 	foreach ( $products as $p => $value ) {
@@ -72,6 +73,9 @@ function nextgenthemes_settings(): SettingsData {
 	return $settings;
 }
 
+/**
+ * @return array<string,array<string,string|int|bool>> Product data
+ */
 function get_products(): array {
 
 	$products = array(
@@ -156,7 +160,7 @@ function get_products(): array {
  * Sanitizes a value to a boolean.
  *
  * @param mixed $value The value to sanitize.
- * @param WP_REST_Request $request The request object.
+ * @param \WP_REST_Request $request The request object.
  * @param string $param The parameter name.
  * @return int The sanitized boolean value.
  */
@@ -169,7 +173,7 @@ function sanitize_callback_integer( $value, \WP_REST_Request $request, string $p
  * Sanitizes a value to a boolean.
  *
  * @param mixed $value The value to sanitize.
- * @param WP_REST_Request $request The request object.
+ * @param \WP_REST_Request $request The request object.
  * @param string $param The parameter name.
  * @return bool The sanitized boolean value.
  */
@@ -182,7 +186,7 @@ function sanitize_callback_boolean( $value, \WP_REST_Request $request, string $p
  * Sanitizes a value to a boolean.
  *
  * @param mixed $value The value to sanitize.
- * @param WP_REST_Request $request The request object.
+ * @param \WP_REST_Request $request The request object.
  * @param string $param The parameter name.
  * @return string The sanitized boolean value.
  */

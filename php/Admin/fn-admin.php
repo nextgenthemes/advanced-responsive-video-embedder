@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE\Admin;
 
-use JsonException;
-use WP_Error;
 use Nextgenthemes\WP\Admin\Notices;
 use function Nextgenthemes\ARVE\is_gutenberg;
 use function Nextgenthemes\ARVE\settings;
@@ -192,6 +190,7 @@ function widget_text(): void {
 
 function register_shortcode_ui(): void {
 
+	$attrs    = array();
 	$settings = settings( 'shortcode' )->get_all();
 
 	foreach ( $settings as $key => $s ) :
@@ -232,7 +231,7 @@ function register_shortcode_ui(): void {
 		$attrs[] = $field;
 	endforeach;
 
-	shortcode_ui_register_for_shortcode(
+	\shortcode_ui_register_for_shortcode(
 		'arve',
 		array(
 			'label'         => esc_html( 'ARVE' ),
@@ -247,9 +246,9 @@ function register_shortcode_ui(): void {
  * Each key-value pair in the input array is transformed into an associative array
  * with 'value' and 'label' keys.
  *
- * @param array $arr An associative array with keys as option values and values as option labels.
+ * @param array <string, string>              $arr An associative array with keys as option values and values as option labels.
  *
- * @return array An array of associative arrays, each containing 'value' and 'label' keys.
+ * @return array <int, array<string, string>>      An array of associative arrays, each containing 'value' and 'label' keys.
  */
 function convert_to_shortcode_ui_options( array $arr ): array {
 	$result = array();
@@ -289,6 +288,10 @@ function add_dashboard_widget(): void {
 	}
 }
 
+/**
+ * @param array <int|string, string> $links Array containing link html as values.
+ * @return array <int|string, string>       Updated Array containing link html as values.
+ */
 function add_action_links( array $links ): array {
 
 	if ( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
@@ -328,6 +331,8 @@ function get_first_glob( string $pattern ): string {
 }
 
 function admin_enqueue_scripts(): void {
+
+	$options = array();
 
 	foreach ( settings( 'shortcode' )->get_all() as $k => $v ) {
 		$options[ $k ] = '';

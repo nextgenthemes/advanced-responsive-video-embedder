@@ -25,14 +25,14 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 		return $html;
 	}
 
-	if ( empty( $data ) || 'video' !== $data->type ) {
+	if ( ! empty( $data->type ) && 'video' !== $data->type ) {
 		return $html;
 	}
 
 	$iframe_src = oembed_html2src( $data );
 
 	if ( is_wp_error( $iframe_src ) ) {
-		$data->iframe_src_error = $iframe_src->get_error_message();
+		$data->arve_error_iframe_src = $iframe_src->get_error_message();
 	} else {
 		$data->arve_iframe_src = $iframe_src;
 	}
@@ -50,6 +50,7 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 	}
 
 	unset( $data->html );
+	$attr = array();
 	foreach ( $data as $key => $value ) {
 		$attr[ 'data-' . $key ] = $value;
 	}
@@ -78,10 +79,10 @@ function sane_provider_name( string $provider ): string {
  *
  * @see WP_Embed::shortcode()
  *
- * @param string|false        $cache   The cached HTML result, stored in post meta.
- * @param string              $url     The attempted embed URL.
- * @param array <string, any> $attr    An array of shortcode attributes.
- * @param ?int                $post_id Post ID.
+ * @param string|false          $cache   The cached HTML result, stored in post meta.
+ * @param string                $url     The attempted embed URL.
+ * @param array <string, mixed> $attr    An array of shortcode attributes.
+ * @param ?int                  $post_id Post ID.
  */
 function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_id ): string {
 
@@ -114,6 +115,25 @@ function cache_is_old_enough( object $oembed_data ): bool {
 	return $cache_date && ( new DateTime() )->diff( $cache_date )->days > 7;
 }
 
+/**
+ * Delete oEmbed caches when required data is missing from the supplied object.
+ *
+ * The function inspects the `$oembed_data` object for the presence of
+ * `provider`, `arve_cachetime`, and (when the Pro helper is available) for
+ * thumbnail information.  If any of those checks fail, the corresponding
+ * cache entry is removed via `delete_oembed_cache()` and a flag is added to
+ * the result array.
+ *
+ * @param object $oembed_data  An object (typically a `stdClass`) containing
+ *                             oEmbed fields such as:
+ *                             - `arve_url`                (string|null)
+ *                             - `provider`                (string|null)
+ *                             - `arve_cachetime`          (int|null)
+ *                             - `thumbnail_srcset`        (mixed, optional)
+ *                             - `thumbnail_large_url`     (mixed, optional)
+ *
+ * @return array<string, bool>
+ */
 function delete_oembed_caches_when_missing_data( object $oembed_data ): array {
 
 	$pro_active = function_exists( __NAMESPACE__ . '\Pro\oembed_data' );
@@ -167,6 +187,18 @@ function extract_oembed_data( string $html ): ?object {
 	return $data;
 }
 
+/**
+ * Build a srcset attribute string from an array of image URLs keyed by width.
+ *
+ * @param array<int, string> $sizes  An associative array where the key is the
+ *                                   image width (e.g. 300, 600) and the value
+ *                                   is the URL of the image at that size.
+ *
+ * @return string  A comma‑separated srcset string suitable for the HTML
+ *                 `srcset` attribute, e.g.
+ *                 "https://example.com/300.jpg 300w, https://example.com/600.jpg 600w".
+ *                 Returns an empty string when `$sizes` is empty.
+ */
 function yt_srcset( array $sizes ): string {
 
 	if ( ! empty( $sizes ) ) {
@@ -223,7 +255,11 @@ function oembed_html2src( object $data ) {
 			if ( $iframe_src ) {
 				return $iframe_src;
 			} else {
-				return new WP_Error( 'facebook-video-id', __( 'Invalid iframe src url', 'advanced-responsive-video-embedder' ), $data->html, $iframe_src );
+				return new WP_Error(
+					'facebook-video-id',
+					__( 'Invalid iframe src url', 'advanced-responsive-video-embedder' ),
+					$data->html
+				);
 			}
 		} else {
 			return new WP_Error( 'iframe-src', __( 'Failed to extract iframe src from this html', 'advanced-responsive-video-embedder' ), $data->html );
@@ -231,6 +267,16 @@ function oembed_html2src( object $data ) {
 	}
 }
 
+/**
+ * Add a Referer header for Vimeo URLs.
+ *
+ * @param array <string, mixed> $args  Request arguments.
+ * @param string                $url   The URL that will be fetched.
+ *
+ * @return array <string, mixed>       The same structure as $args, with
+ *                                     $args['headers']['Referer'] set to
+ *                                     site_url() when $url contains “vimeo”.
+ */
 function vimeo_referer( array $args, string $url ): array {
 
 	if ( str_contains( $url, 'vimeo' ) ) {

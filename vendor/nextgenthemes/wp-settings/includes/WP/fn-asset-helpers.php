@@ -57,12 +57,12 @@ function add_dep_to_asset( $asset, string $dep ): bool {
  * Otherwise, the given `$stable_ver` is returned.
  *
  * @param string $path The path to the file that should be versioned.
- * @param string $stable_ver The version string to return if debug mode is off.
+ * @param string|null $stable_ver The version string to return if debug mode is off.
  * @return string|null The version string, or null if no file at the given path exists.
  */
-function ver( string $path, string $stable_ver ): ?string {
+function ver( string $path, ?string $stable_ver ): ?string {
 
-	$debug = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || ( defined( 'WP_DEBUG' ) && WP_DEBUG );
+	$debug = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || ( defined( 'WP_DEBUG' ) && WP_DEBUG ); // @phpstan-ignore-line
 
 	return $debug ? (string) filemtime( $path ) : $stable_ver;
 }

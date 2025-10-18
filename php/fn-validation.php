@@ -22,12 +22,12 @@ function validate_thumbnail( $id_or_url ): string {
 	}
 
 	// attachment id as string
-	if ( is_string( $id_or_url ) && ctype_digit( $id_or_url ) ) {
+	if ( ctype_digit( $id_or_url ) ) {
 		return $id_or_url;
 	}
 
 	// url
-	if ( is_string( $id_or_url ) && ! empty( $id_or_url ) && valid_url( $id_or_url ) ) {
+	if ( ! empty( $id_or_url ) && valid_url( $id_or_url ) ) {
 		return $id_or_url;
 	}
 
@@ -46,8 +46,8 @@ function validate_thumbnail( $id_or_url ): string {
  * Validates a URL and returns the validated URL or an error message. Upgrades // to https:// if needed.
  *
  * @param string $arg_name The name of the argument being validated.
- * @param string $value The value of the argument being validated. Can be an URL or a HTML string with the a embed code.
- * @return string The validated URL or an error message.
+ * @param string $url      The value of the argument being validated. Can be an URL or a HTML string with the a embed code.
+ * @return string          The validated URL or an error message.
  */
 function validate_url( string $arg_name, string $url ): string {
 

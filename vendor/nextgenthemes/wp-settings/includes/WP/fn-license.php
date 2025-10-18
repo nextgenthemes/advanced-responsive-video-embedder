@@ -61,11 +61,9 @@ function activate_defined_key( string $file ): void {
 	}
 
 	$path_parts = pathinfo( $file );
-	$path_parts['filename'];
-
-	$product  = str_replace( '-', '_', $path_parts['filename'] );
-	$key_name = strtoupper( $product . '_KEY' );
-	$key      = defined( $key_name ) ? constant( $key_name ) : false;
+	$product    = str_replace( '-', '_', $path_parts['filename'] );
+	$key_name   = strtoupper( $product . '_KEY' );
+	$key        = defined( $key_name ) ? constant( $key_name ) : false;
 
 	if ( $key ) {
 		activate_product_key( $product, $key );
@@ -114,6 +112,9 @@ function api_action( int $item_id, string $license, string $edd_action = 'check_
 	return $message;
 }
 
+/**
+ * @param array <string, string> $license_data
+ */
 function get_api_error_message( array $license_data ): string {
 
 	if ( false !== $license_data['success'] || empty( $license_data['error'] ) ) {

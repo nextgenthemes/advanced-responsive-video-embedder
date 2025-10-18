@@ -4,14 +4,13 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
-use WP_Error;
 use const Nextgenthemes\ARVE\ALLOWED_HTML;
 
 /**
  * Processes the shortcode attributes and builds the video html.
  *
- * @param array $a The array of shortcode attributes.
- * @return string|WP_REST_Response The generated video output.
+ * @param array <string, mixed>    $a The array of shortcode attributes.
+ * @return string|\WP_REST_Response    The generated video output.
  */
 function shortcode( array $a ) {
 
@@ -53,7 +52,7 @@ function shortcode( array $a ) {
 
 function is_dev_mode(): bool {
 	return (
-		( defined( 'WP_DEBUG' ) && WP_DEBUG )
+		( defined( 'WP_DEBUG' ) && WP_DEBUG ) // @phpstan-ignore-line
 		|| wp_get_development_mode()
 		|| 'development' === wp_get_environment_type()
 		|| 'local' === wp_get_environment_type()
@@ -111,8 +110,8 @@ function get_error_html(): string {
 /**
  * Builds a video based on the input attributes.
  *
- * @param array $input_atts The input attributes for the video.
- * @return string|WP_REST_Response The built video.
+ * @param array <string, mixed>   $input_atts The input attributes for the video.
+ * @return string|\WP_REST_Response             The built video.
  */
 function build_video( array $input_atts ) {
 
@@ -125,8 +124,12 @@ function build_video( array $input_atts ) {
 	return $video->build_video();
 }
 
+/**
+ * @return array <string, mixed>
+ */
 function shortcode_option_defaults(): array {
 
+	$shortcodes = array();
 	$properties = get_host_properties();
 	unset( $properties['video'] );
 
@@ -173,6 +176,9 @@ function create_shortcodes(): void {
 	add_shortcode( 'arve', __NAMESPACE__ . '\shortcode' );
 }
 
+/**
+ * @param array <string, string> $attr
+ */
 function wp_video_shortcode_override( string $out, array $attr ): string {
 
 	$options = options();

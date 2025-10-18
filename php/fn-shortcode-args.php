@@ -119,49 +119,6 @@ function compare_oembed_src_with_generated_src( string $src, string $src_gen, st
 	}
 }
 
-/**
- * Check for missing attributes that are required to build the embed.
- *
- * @param array <string, any> $a ARVE args
- *
- * @return void|array <string,any>
- */
-function missing_attribute_check( array $a ) {
-
-	// Old shortcodes
-	if ( ! empty( $a['origin_data']['from'] ) && 'create_shortcodes' === $a['origin_data']['from'] ) {
-
-		if ( ! $a['id'] || ! $a['provider'] ) {
-			throw new \Exception( 'need id and provider' );
-		}
-
-		return $a;
-	}
-
-	$error                 = true;
-	$required_attributes   = VIDEO_FILE_EXTENSIONS;
-	$required_attributes[] = 'url';
-
-	foreach ( $required_attributes as $req_attr ) {
-
-		if ( $a[ $req_attr ] ) {
-			$error = false;
-			break;
-		}
-	}
-
-	if ( $error ) {
-
-		$msg = sprintf(
-			// Translators: Attributes.
-			__( 'The [[arve]] shortcode needs one of these attributes %s', 'advanced-responsive-video-embedder' ),
-			implode( ', ', $required_attributes )
-		);
-
-		throw new \Exception( esc_html( $msg ) );
-	}
-}
-
 function height_from_width_and_ratio( int $width, ?string $ratio ): float {
 
 	if ( empty( $ratio ) ) {
@@ -174,16 +131,16 @@ function height_from_width_and_ratio( int $width, ?string $ratio ): float {
 }
 
 /**
- * @param array <string, any> $a
+ * @param array <string, mixed> $a
  *
- * @return array <string, any>
+ * @return array <string, mixed>
  */
 function args_video( array $a ): array {
 
 	foreach ( VIDEO_FILE_EXTENSIONS as $ext ) {
 
 		if ( ! empty( $a[ $ext ] ) && is_numeric( $a[ $ext ] ) ) {
-			$a[ $ext ] = wp_get_attachment_url( $a[ $ext ] );
+			$a[ $ext ] = wp_get_attachment_url( (int) $a[ $ext ] );
 		}
 	}
 
@@ -366,8 +323,12 @@ function iframesrc_urlargs( string $src, string $provider, string $mode, string 
 	return $src;
 }
 
+/**
+ * @return array <string, mixed>
+ */
 function shortcode_pairs(): array {
 
+	$pairs    = array();
 	$options  = options();
 	$settings = settings( 'shortcode' )->get_all();
 

@@ -53,6 +53,8 @@ function dialog_interactivity(): void {
 		return;
 	}
 
+	$options = array();
+
 	foreach ( settings( 'shortcode' )->get_all() as $k => $setting ) {
 		if ( 'boolean' === $setting->type && ! $setting->option ) {
 			$options[ $k ] = $setting->default;

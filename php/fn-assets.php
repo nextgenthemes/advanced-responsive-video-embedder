@@ -134,6 +134,11 @@ function action_wp_enqueue_scripts(): void {
 	}
 }
 
+/**
+ * @param array <string, string|array<bool>> $attr GB attr.
+ *
+ * @return string Block HTML.
+ */
 function gutenberg_block( array $attr ): string {
 
 	if ( empty( $attr['url'] ) && empty( $attr['random_video_url'] ) && empty( $attr['random_video_urls'] ) ) {

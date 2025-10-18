@@ -4,14 +4,12 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\WP;
 
-use DateTime;
-use Exception;
-use WP_Error;
-
 /**
  * Retrieves JSON data from a remote URL.
  *
- * @return mixed|WP_Error
+ * @param array<string,mixed> $args
+ *
+ * @return mixed|\WP_Error
  */
 function remote_get_json( string $url, array $args = array(), string $json_name = '' ) {
 	return remote_get_json_cached( $url, $args, $json_name, 0 );
@@ -20,7 +18,9 @@ function remote_get_json( string $url, array $args = array(), string $json_name 
 /**
  * Remote get JSON from a URL and cache the response.
  *
- * @return mixed|WP_Error The decoded JSON response, or the specified JSON value if $json_name is provided.
+ * @param array<string,mixed> $args
+ *
+ * @return mixed|\WP_Error The decoded JSON response, or the specified JSON value if $json_name is provided.
  */
 function remote_get_json_cached( string $url, array $args = array(), string $json_name = '', int $time = DAY_IN_SECONDS ) {
 
@@ -32,9 +32,9 @@ function remote_get_json_cached( string $url, array $args = array(), string $jso
 
 	try {
 		$response = json_decode( $response, true, 128, JSON_THROW_ON_ERROR );
-	} catch ( Exception $exception ) {
+	} catch ( \Exception $exception ) {
 
-		return new WP_Error(
+		return new \WP_Error(
 			'json-decode-error',
 			sprintf(
 				// Translators: %1$s URL, %2$s json_decode error
@@ -48,7 +48,7 @@ function remote_get_json_cached( string $url, array $args = array(), string $jso
 
 	if ( $json_name ) {
 		if ( empty( $response[ $json_name ] ) ) {
-			return new WP_Error(
+			return new \WP_Error(
 				'json-value-empty',
 				sprintf(
 					wp_kses(
@@ -73,15 +73,33 @@ function remote_get_json_cached( string $url, array $args = array(), string $jso
 /**
  * Retrieves the body content from a remote URL.
  *
- * @param string $url The URL of the remote resource.
- * @param array $args Optional. Additional arguments for wp_safe_remote_get.
- * @return string|WP_Error The response body content from the remote URL, or a WP_Error on failure.
+ * @param string              $url  The URL of the remote resource.
+ * @param array<string,mixed> $args Optional. Additional arguments for wp_safe_remote_get.
+ * array{
+ *     method?:                string,
+ *     timeout?:               int|float,
+ *     redirection?:           int,
+ *     httpversion?:           string,
+ *     user-agent?:            string,
+ *     blocking?:              bool,
+ *     headers?:               array<string,string>,
+ *     cookies?:               array<string,string>,
+ *     body?:                  string|array,
+ *     compress?:              bool,
+ *     decompress?:            bool,
+ *     sslverify?:             bool,
+ *     sslcertificates?:       string,
+ *     stream?:                bool,
+ *     filename?:              string,
+ *     reject_unsafe_urls?:    bool
+ * }
+ * @return string|\WP_Error The response body content from the remote URL, or a WP_Error on failure.
  */
 function remote_get_body( string $url, array $args = array() ) {
 
 	$response      = wp_safe_remote_get( $url, $args );
 	$response_code = wp_remote_retrieve_response_code( $response );
-	$body          = wp_remote_retrieve_body( $response );
+	$body          = trim( wp_remote_retrieve_body( $response ) );
 
 	if ( is_wp_error( $response ) ) {
 		return $response;
@@ -89,7 +107,7 @@ function remote_get_body( string $url, array $args = array() ) {
 
 	if ( 200 !== $response_code ) {
 
-		return new WP_Error(
+		return new \WP_Error(
 			$response_code,
 			sprintf(
 				// Translators: 1 URL 2 HTTP response code.
@@ -102,7 +120,7 @@ function remote_get_body( string $url, array $args = array() ) {
 	}
 
 	if ( '' === $body ) {
-		return new WP_Error(
+		return new \WP_Error(
 			'empty-body',
 			sprintf(
 				// Translators: URL.
@@ -117,7 +135,9 @@ function remote_get_body( string $url, array $args = array() ) {
 }
 
 /**
- * @return array|WP_Error
+ * @param array<string,mixed> $args
+ *
+ * @return array<string,mixed>|\WP_Error
  */
 function remote_get_head( string $url, array $args = array() ) {
 
@@ -131,7 +151,7 @@ function remote_get_head( string $url, array $args = array() ) {
 
 	if ( 200 !== $response_code ) {
 
-		return new WP_Error(
+		return new \WP_Error(
 			$response_code,
 			sprintf(
 				// Translators: 1 URL 2 HTTP response code.
@@ -149,10 +169,10 @@ function remote_get_head( string $url, array $args = array() ) {
 /**
  * Retrieves the body content from a remote URL, with caching for improved performance.
  *
- * @param string $url The URL of the remote resource.
- * @param array $args Optional. Additional arguments for wp_safe_remote_get.
- * @param int $time Optional. The duration in seconds to cache the response. Default is DAY_IN_SECONDS. 0 to disable caching.
- * @return mixed|WP_Error The response body content from the remote URL, or a WP_Error on failure.
+ * @param string              $url  The URL of the remote resource.
+ * @param array<string,mixed> $args Optional. Additional arguments for wp_safe_remote_get.
+ * @param int                 $time Optional. The duration in seconds to cache the response. Default is DAY_IN_SECONDS. 0 to disable caching.
+ * @return mixed|\WP_Error          The response body content from the remote URL, or a WP_Error on failure.
  */
 function remote_get_body_cached( string $url, array $args = array(), int $time = DAY_IN_SECONDS ) {
 	return _remote_get_cached( $url, $args, $time, 'body' );
@@ -161,10 +181,10 @@ function remote_get_body_cached( string $url, array $args = array(), int $time =
 /**
  * Retrieves the body content from a remote URL, with caching for improved performance.
  *
- * @param string $url The URL of the remote resource.
- * @param array $args Optional. Additional arguments for wp_safe_remote_get.
- * @param int $time Optional. The duration in seconds to cache the response. Default is DAY_IN_SECONDS. 0 to disable caching.
- * @return mixed|WP_Error The response body content from the remote URL, or a WP_Error on failure.
+ * @param string              $url The URL of the remote resource.
+ * @param array<string,mixed> $args Optional. Additional arguments for wp_safe_remote_get.
+ * @param int                 $time Optional. The duration in seconds to cache the response. Default is DAY_IN_SECONDS. 0 to disable caching.
+ * @return mixed|\WP_Error                    The response body content from the remote URL, or a WP_Error on failure.
  */
 function remote_get_head_cached( string $url, array $args = array(), int $time = DAY_IN_SECONDS ) {
 	return _remote_get_cached( $url, $args, $time, 'head' );
@@ -175,10 +195,10 @@ function remote_get_head_cached( string $url, array $args = array(), int $time =
  *
  * TODO maybe use json to encode WP_Error to avoid WP using serialize
  *
- * @param string $url The URL of the remote resource.
- * @param array $args Optional. Additional arguments to include in the request.
- * @param int $time Optional. The duration in seconds to cache the response. Default is DAY_IN_SECONDS. 0 to disable caching.
- * @return WP_Error|mixed The response body content from the remote URL.
+ * @param string              $url  The URL of the remote resource.
+ * @param array<string,mixed> $args Optional. Additional arguments to include in the request.
+ * @param int                 $time Optional. The duration in seconds to cache the response. Default is DAY_IN_SECONDS. 0 to disable caching.
+ * @return \WP_Error|mixed          The response body content from the remote URL.
  */
 function _remote_get_cached( string $url, array $args, int $time, string $type ) {
 
@@ -215,7 +235,7 @@ function _remote_get_cached( string $url, array $args, int $time, string $type )
 						array( 'code' => [] ),
 						array( 'https' )
 					),
-					current_datetime()->format( DATETIME::ATOM ),
+					current_datetime()->format( \DATETIME::ATOM ),
 					$time,
 					esc_html( $transient_name )
 				);
