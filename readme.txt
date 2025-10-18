@@ -42,7 +42,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *   Magically makes videos responsive you already embedded with WordPress default features.
 *   SEO friendly, lets you specify title, description, upload date to provide search engines with the schema.org data they like to have for better indexing. Pro can autofill this for you.
 *   No 'lock in' if you do not use the ARVE Gutenberg Block or `[arve]` shortcodes.
-*   Supports [almost every video host](https://nextgenthemes.com/plugins/arve-pro/#support-table) that supports iframe embed codes.
+*   Supports [almost every video host](https://nextgenthemes.com/plugins/arve-pro/#provider-support) that supports iframe embed codes.
 *   Embeds via pasting the URL in its own line just like WordPress!
 *   Optionally use very powerful Shortcodes instead.
 *   Clean shortcode syntax `[arve url="https://youtu.be/yUCFRL43Zm4" parameters="start=30" ... /]`, no unnecessary shortcode wrapping.
