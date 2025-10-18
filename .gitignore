@@ -5,6 +5,7 @@ node_modules/
 .ignore/
 .symlinks/
 ignore*
+phpstan.neon
 
 # Numerous always-ignore extensions
 *.diff
