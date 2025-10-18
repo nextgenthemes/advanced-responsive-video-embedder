@@ -39,11 +39,16 @@
 		"build": [
 			"./bin/block-json",
 			"./bin/build-readme",
-			"npm run build:arve",
-			"npm run build:common",
+			"@build:common",
+			"@build:arve",
 			"@composer update",
 			"@composer update --working-dir=tests"
 		],
+		"start": "bash -c 'composer run start:arve & composer run start:common'",
+		"start:arve": "npx --no-install wp-scripts start src/main src/block src/admin src/shortcode-ui",
+		"build:arve": "npx --no-install wp-scripts build src/main src/block src/admin src/shortcode-ui",
+		"start:common": "npx --no-install wp-scripts start --experimental-modules --source-path=vendor/nextgenthemes/wp-settings/src --output-path=vendor/nextgenthemes/wp-settings/build",
+		"build:common": "npx --no-install wp-scripts build --experimental-modules --source-path=vendor/nextgenthemes/wp-settings/src --output-path=vendor/nextgenthemes/wp-settings/build",
 		"pre-update-cmd": [
 			"./bin/sync-wp-settings"
 		],
