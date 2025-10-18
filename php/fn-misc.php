@@ -17,10 +17,28 @@ function arve_errors(): WP_Error {
 	return $instance;
 }
 
+/**
+ * @return array <string, array{
+ *     name:           string,
+ *     regex:          string,
+ *     oembed:         bool,
+ *     embed_url:      string,
+ *     default_params: string,
+ *     auto_thumbnail: bool,
+ *     rebuild_url?:   string,
+ *     tests:          array<int, array{
+ *         url: string,
+ *         id:  string
+ *     }>
+ * }>
+ */
 function get_host_properties(): array {
 	return require __DIR__ . '/providers.php';
 }
 
+/**
+ * @param array <string, mixed> $a
+ */
 function is_card( array $a ): bool {
 
 	$is_ll_mode = in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true );
@@ -111,14 +129,30 @@ function new_height( float $old_width, float $old_height, int $new_width ): floa
  */
 function aspect_ratio_to_percentage( string $aspect_ratio ): float {
 
-	list( $width, $height ) = explode( ':', $aspect_ratio );
-	$percentage             = ( $height / $width ) * 100;
+	list(  $width, $height ) = explode( ':', $aspect_ratio );
+	$percentage              = ( (int) $height / (int) $width ) * 100;
 
 	return $percentage;
 }
 
 function disabled_on_feeds(): bool {
 	return is_feed() && ! options()['feed'] ? true : false;
+}
+
+function time_to_atom( string $time ): string {
+
+	try {
+		$dt = new \DateTime( $time );
+		return $dt->format( \DateTime::ATOM );
+	} catch ( \Exception $e ) {
+
+		arve_errors()->add(
+			'time-conversion',
+			$e->getMessage()
+		);
+	}
+
+	return $time;
 }
 
 /**

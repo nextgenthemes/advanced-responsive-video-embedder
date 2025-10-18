@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
-use WP_Error;
-use WP_HTML_Tag_Processor;
 use function Nextgenthemes\WP\get_url_arg;
 use function Nextgenthemes\WP\apply_attr;
 use function Nextgenthemes\WP\check_product_keys;
@@ -89,24 +87,56 @@ class Video {
 	private string $uid;
 	private string $img_src = '';
 	private string $src     = '';
+
+	/**
+	 * @var string[]
+	 */
 	private array $video_sources;
 	private ?string $video_sources_html = '';
+
+	/**
+	 * @var null|array <int, array{
+	 *     default: bool,
+	 *     kind: string,
+	 *     label: string,
+	 *     src: string,
+	 *     srclang: string
+	 * }>
+	 */
 	private ?array $tracks;
 	private string $src_gen;
 	private string $first_video_file;
+
+	/**
+	 * @var array <string, string|int|float|bool>
+	 */
 	private array $iframe_attr;
+
+	/**
+	 * @var array <string, string|int|float|bool>
+	 */
 	private array $video_attr;
 
-	// args
+	/**
+	 * @var array <string, mixed>
+	 */
 	private array $org_args;
+
+	/**
+	 * @var array <string, mixed>
+	 */
 	private array $shortcode_atts;
 
 	// process data
 	private ?object $oembed_data;
+
+	/**
+	 * @var array <string, string|array<string, string>>
+	 */
 	private array $origin_data;
 
 	/**
-	 * @param array <string, any> $args
+	 * @param array <string, mixed> $args
 	 */
 	public function __construct( array $args ) {
 		$this->org_args = $args;
@@ -124,7 +154,7 @@ class Video {
 	}
 
 	/**
-	 * @return string|WP_REST_Response The built video, error message or REST response.
+	 * @return string|\WP_REST_Response The built video, error message or REST response.
 	 */
 	public function build_video() {
 
@@ -137,8 +167,8 @@ class Video {
 			$this->process_shortcode_atts();
 			$this->oembed_data_errors();
 
-			$html .= get_error_html();
 			$html .= $this->build_html();
+			$html .= get_error_html();
 			$html .= $this->get_debug_info( $html );
 
 			if ( empty( $this->origin_data['gutenberg'] ) ) {
@@ -150,14 +180,7 @@ class Video {
 			}
 		} catch ( \Exception $e ) {
 
-			$trace = '';
-
-			// if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			// 	// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
-			//  $trace = '<br>Exception Trace:<br>' . var_export($e->getTrace(), true);
-			// }
-
-			arve_errors()->add( $e->getCode(), $e->getMessage() . $trace );
+			arve_errors()->add( $e->getCode(), $e->getMessage() );
 
 			$html .= get_error_html();
 			$html .= $this->get_debug_info();
@@ -168,7 +191,18 @@ class Video {
 
 	private function oembed_data_errors(): void {
 
-		// TODO: add error message for missing oembed data
+		if ( ! $this->oembed_data || ! is_dev_mode() ) {
+			return;
+		}
+
+		foreach ( get_object_vars( $this->oembed_data ) as $prop => $value ) {
+
+			if ( ! str_contains( $prop, 'error' ) || ! is_string( $value ) ) {
+				continue;
+			}
+
+			arve_errors()->add( $prop, $value );
+		}
 	}
 
 	private function process_shortcode_atts(): void {
@@ -234,7 +268,7 @@ class Video {
 			return;
 		}
 
-		$p = new WP_HTML_Tag_Processor( $this->shortcode_atts['url'] );
+		$p = new \WP_HTML_Tag_Processor( $this->shortcode_atts['url'] );
 		$p->next_tag( 'iframe' );
 
 		$src = $p->get_attribute( 'src' );
@@ -445,7 +479,7 @@ class Video {
 
 		foreach ( VIDEO_FILE_EXTENSIONS as $ext ) {
 			if ( ! empty( $this->$ext ) && is_numeric( $this->$ext ) ) {
-				$this->set_prop( $ext, wp_get_attachment_url( $this->$ext ) );
+				$this->set_prop( $ext, wp_get_attachment_url( (int) $this->$ext ) );
 			}
 		}
 	}
@@ -474,7 +508,7 @@ class Video {
 
 			if ( ctype_digit( (string) $this->thumbnail ) ) {
 
-				$img_src = wp_get_attachment_image_url( $this->thumbnail, 'small' );
+				$img_src = wp_get_attachment_image_url( (int) $this->thumbnail, 'small' );
 
 				if ( empty( $img_src ) ) {
 					arve_errors()->add(
@@ -575,7 +609,7 @@ class Video {
 				);
 
 				$this->video_sources[]     = $source;
-				$this->video_sources_html .= sprintf( '<source type="%s" src="%s">', $source['type'], $source['src'], $this->$ext );
+				$this->video_sources_html .= sprintf( '<source type="%s" src="%s">', $source['type'], $source['src'] );
 
 				if ( empty( $this->first_video_file ) ) {
 					$this->first_video_file = $this->$ext;
@@ -595,7 +629,15 @@ class Video {
 	}
 
 	/**
-	 * @return array <int, Array>
+	 * Detects media tracks and returns their attributes.
+	 *
+	 * @return array <int, array{
+	 *     default: bool,
+	 *     kind: string,
+	 *     label: string,
+	 *     src: string,
+	 *     srclang: string
+	 * }>
 	 */
 	private function detect_tracks(): array {
 
@@ -699,7 +741,7 @@ class Video {
 
 		$url_args      = array_merge( VIDEO_FILE_EXTENSIONS, array( 'url' ) );
 		$type          = get_arg_type( $prop_name );
-		$property_type = ( new \ReflectionProperty( __CLASS__, $prop_name ) )->getType()->getName();
+		$property_type = ( new \ReflectionProperty( __CLASS__, $prop_name ) )->getType()->getName(); // @phpstan-ignore-line
 
 		if ( $type && $type !== $property_type ) {
 			throw new \Exception( esc_html( $prop_name ) . ' property has the wrong type' );
@@ -783,7 +825,7 @@ class Video {
 HTML;
 		}
 
-		$p = new WP_HTML_Tag_Processor( $html );
+		$p = new \WP_HTML_Tag_Processor( $html );
 
 		if ( ! $p->next_tag( [ 'class_name' => 'arve' ] ) ) {
 			wp_trigger_error( __FUNCTION__, 'failed to find .arve tag' );
@@ -977,7 +1019,7 @@ HTML;
 		return 'iframe';
 	}
 
-	private function referrerpolicy(): ?string {
+	private function referrerpolicy(): string {
 
 		$providers_allowed = str_to_array( options()['allow_referrer'] );
 
@@ -1040,11 +1082,11 @@ HTML;
 
 	private function get_debug_info( string $input_html = '' ): string {
 
-		if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
+		if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) { // @phpstan-ignore-line
 			return '';
 		}
 
-		$html = '';
+		$html = ''; // @phpstan-ignore-line
 
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
@@ -1155,7 +1197,9 @@ HTML;
 				continue;
 			}
 
-			if ( 'duration' === $prop && is_numeric( $this->$prop ) ) {
+			if ( 'upload_date' === $prop ) {
+				$seo[ $json_name ] = time_to_atom( $this->$prop );
+			} elseif ( 'duration' === $prop && is_numeric( $this->$prop ) ) {
 				$seo[ $json_name ] = seconds_to_iso8601_duration( $this->$prop );
 			} elseif ( 'description' === $prop ) {
 				$seo[ $json_name ] = trim( replace_links( $this->$prop, '' ) );
