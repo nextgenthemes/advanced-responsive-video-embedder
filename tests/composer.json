@@ -13,7 +13,8 @@
 		"phpcompatibility/phpcompatibility-wp": "*",
 		"yoast/phpunit-polyfills": "^1.0.3",
 		"phpunit/php-code-coverage": "^9",
-		"vlucas/phpdotenv": "^5.5"
+		"vlucas/phpdotenv": "^5.5",
+		"phpstan/phpstan": "^2.1"
 	},
 	"config": {
 		"allow-plugins": {
