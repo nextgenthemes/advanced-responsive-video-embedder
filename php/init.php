@@ -31,7 +31,7 @@ function init(): void {
 	maybe_delete_oembed_cache(); // Must be before update_option arve_version
 	update_option( 'arve_version', VERSION );
 
-	add_action( 'init', __NAMESPACE__ . '\settings_instance' );
+	add_action( 'init', __NAMESPACE__ . '\create_settings_instance' );
 	add_action( 'init', __NAMESPACE__ . '\init_nextgenthemes_settings' );
 	add_action( 'init', __NAMESPACE__ . '\register_assets' );
 	add_action( 'init', __NAMESPACE__ . '\create_shortcodes' );
@@ -40,7 +40,7 @@ function init(): void {
 	add_filter( 'oembed_remote_get_args', __NAMESPACE__ . '\vimeo_referer', 10, 2 );
 	add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\action_wp_enqueue_scripts' );
 	add_filter( 'render_block_core/embed', __NAMESPACE__ . '\remove_embed_block_aspect_ratio' );
-	add_action( 'wp_video_shortcode_override', __NAMESPACE__ . '\wp_video_shortcode_override', 10, 4 );
+	add_filter( 'wp_video_shortcode_override', __NAMESPACE__ . '\wp_video_shortcode_override', 10, 2 );
 	add_filter( 'language_attributes', __NAMESPACE__ . '\html_id' );
 	add_filter( 'oembed_dataparse', __NAMESPACE__ . '\filter_oembed_dataparse', PHP_INT_MAX, 3 );
 	add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', OEMBED_HTML_PRIORITY, 4 );
@@ -86,15 +86,4 @@ function init_admin(): void {
 	add_filter( 'plugin_action_links_' . plugin_basename( PLUGIN_FILE ), __NAMESPACE__ . '\Admin\add_action_links' );
 
 	add_filter( 'debug_information', __NAMESPACE__ . '\Admin\add_site_health_metadata' );
-}
-
-register_uninstall_hook( PLUGIN_FILE, __NAMESPACE__ . '\uninstall' );
-
-function uninstall(): void {
-
-	global $wpdb;
-
-	if ( version_compare( $wpdb->db_version(), '8.0', '>=' ) ) {
-		$wpdb->query( "UPDATE {$wpdb->postmeta} SET meta_value = REGEXP_REPLACE( meta_value, '<template[^>]+arve_cachetime[^>]+></template>', '' )" );
-	}
 }
