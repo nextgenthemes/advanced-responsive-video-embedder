@@ -71,3 +71,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/vendor/autoload_packages.php';
 require_once __DIR__ . '/php/init.php';
+
+register_uninstall_hook( PLUGIN_FILE, __NAMESPACE__ . '\uninstall' );
+function uninstall(): void {
+
+	global $wpdb;
+
+	if ( version_compare( $wpdb->db_version(), '8.0', '>=' ) ) {
+		$wpdb->query( "UPDATE {$wpdb->postmeta} SET meta_value = REGEXP_REPLACE( meta_value, '<template[^>]+arve_cachetime[^>]+></template>', '' )" );
+	}
+}
