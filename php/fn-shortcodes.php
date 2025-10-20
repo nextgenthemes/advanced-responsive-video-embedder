@@ -52,7 +52,7 @@ function shortcode( array $a ) {
 
 function is_dev_mode(): bool {
 	return (
-		( defined( 'WP_DEBUG' ) && WP_DEBUG ) // @phpstan-ignore-line
+		( defined( 'WP_DEBUG' ) && WP_DEBUG )
 		|| wp_get_development_mode()
 		|| 'development' === wp_get_environment_type()
 		|| 'local' === wp_get_environment_type()

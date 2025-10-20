@@ -81,7 +81,7 @@ function register_assets(): void {
  *
  * @param string $mce_css Comma-separated string of style URLs to append to.
  *
- * @return string Modified string of style URLs.
+ * @return string         Modified string of style URLs.
  */
 function add_styles_to_mce( string $mce_css ): string {
 
@@ -137,7 +137,7 @@ function action_wp_enqueue_scripts(): void {
 /**
  * @param array <string, string|array<bool>> $attr GB attr.
  *
- * @return string Block HTML.
+ * @return string                                  Block HTML.
  */
 function gutenberg_block( array $attr ): string {
 

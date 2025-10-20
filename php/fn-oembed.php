@@ -124,13 +124,13 @@ function cache_is_old_enough( object $oembed_data ): bool {
  * cache entry is removed via `delete_oembed_cache()` and a flag is added to
  * the result array.
  *
- * @param object $oembed_data  An object (typically a `stdClass`) containing
- *                             oEmbed fields such as:
- *                             - `arve_url`                (string|null)
- *                             - `provider`                (string|null)
- *                             - `arve_cachetime`          (int|null)
- *                             - `thumbnail_srcset`        (mixed, optional)
- *                             - `thumbnail_large_url`     (mixed, optional)
+ * @param object{
+ *     arve_url?: string|null,
+ *     provider?: string|null,
+ *     arve_cachetime?: int|null,
+ *     thumbnail_srcset?: mixed,
+ *     thumbnail_large_url?: mixed
+ * } $oembed_data An object (typically a `stdClass`) containing oEmbed fields
  *
  * @return array<string, bool>
  */
@@ -153,17 +153,6 @@ function delete_oembed_caches_when_missing_data( object $oembed_data ): array {
 	) {
 		$result['delete_cache_for_srcset_or_large_thumbnail'] = delete_oembed_cache( $url );
 	}
-
-	// Maybe later
-	// if ( $pro_active
-	//  && $url
-	//  && 'youtube' === $provider
-	//  && ! isset( $oembed_data->description )
-	//  && str_contains( $yt_api_error, '403' )
-	//  && cache_is_old_enough( $oembed_data )
-	// ) {
-	//  $result['delete_youtube_cache_for_description'] = delete_oembed_cache( $url );
-	// }
 
 	return $result;
 }

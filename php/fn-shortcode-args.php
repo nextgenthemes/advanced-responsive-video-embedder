@@ -192,10 +192,10 @@ function special_iframe_src_mods( string $src, string $provider, string $url, bo
 /**
  * Generate the URL with autoplay parameter based on the provider.
  *
- * @param string $src The source URL of the iframe.
+ * @param string $src      The source URL of the iframe.
  * @param string $provider The provider of the iframe.
- * @param bool $autoplay The autoplay flag.
- * @return string The modified URL with autoplay parameter.
+ * @param bool   $autoplay The autoplay flag.
+ * @return string          The modified URL with autoplay parameter.
  */
 function iframesrc_urlarg_autoplay( string $src, string $provider, bool $autoplay ): string {
 
