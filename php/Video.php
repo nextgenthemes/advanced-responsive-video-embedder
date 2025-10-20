@@ -12,6 +12,7 @@ use function Nextgenthemes\WP\valid_url;
 use function Nextgenthemes\WP\str_contains_any;
 use function Nextgenthemes\WP\str_to_array;
 use function Nextgenthemes\WP\replace_links;
+use function Nextgenthemes\WP\move_keys_to_end;
 
 class Video {
 
@@ -1202,9 +1203,7 @@ HTML;
 		$obj_vars     = array_filter( get_object_vars( $this ) );
 		$org_args     = array_filter( $this->org_args );
 		$checked_keys = array();
-
-		// Move oembed_data to end of array
-		$org_args = $this->move_keys_to_end( $org_args, array( 'oembed_data', 'origin_data' ) );
+		$org_args     = move_keys_to_end( $org_args, array( 'oembed_data', 'origin_data' ) );
 
 		if ( ! empty( $obj_vars['oembed_data']->description ) ) {
 			$obj_vars['oembed_data']->description = str_replace( PHP_EOL, '', $obj_vars['oembed_data']->description );
