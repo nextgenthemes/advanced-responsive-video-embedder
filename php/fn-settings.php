@@ -8,6 +8,15 @@ use Nextgenthemes\WP\Settings;
 use Nextgenthemes\WP\SettingsData;
 use function Nextgenthemes\WP\nextgenthemes_settings_instance;
 
+/**
+ * This is used to initialize the settings without
+ * returning the instance for using it on the init action.
+ * Actions are not supposed to return values.
+ */
+function create_settings_instance(): void {
+	settings_instance();
+}
+
 function settings_instance(): Settings {
 
 	static $instance = null;
@@ -30,7 +39,6 @@ function settings_instance(): Settings {
 
 	return $instance;
 }
-
 
 /**
  * @return array <string, bool|string>
