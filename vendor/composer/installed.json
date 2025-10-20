@@ -69,13 +69,51 @@
             "install-path": "../automattic/jetpack-autoloader"
         },
         {
+            "name": "easy-digital-downloads/edd-sl-sdk",
+            "version": "1.0.0",
+            "version_normalized": "1.0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/awesomemotive/edd-sl-sdk.git",
+                "reference": "693ef3de0084e5df8481f7e93fd2911d497c1f10"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/awesomemotive/edd-sl-sdk/zipball/693ef3de0084e5df8481f7e93fd2911d497c1f10",
+                "reference": "693ef3de0084e5df8481f7e93fd2911d497c1f10",
+                "shasum": ""
+            },
+            "require-dev": {
+                "codedungeon/phpunit-result-printer": "dev-master",
+                "phpunit/phpunit": "^8",
+                "yoast/phpunit-polyfills": "^1.0.5",
+                "yoast/wp-test-utils": "^1.0"
+            },
+            "time": "2025-08-19T18:04:10+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "EasyDigitalDownloads\\Updater\\": "src/"
+                }
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "support": {
+                "source": "https://github.com/awesomemotive/edd-sl-sdk/tree/1.0.0",
+                "issues": "https://github.com/awesomemotive/edd-sl-sdk/issues"
+            },
+            "install-path": "../easy-digital-downloads/edd-sl-sdk"
+        },
+        {
             "name": "nextgenthemes/wp-settings",
             "version": "dev-master",
             "version_normalized": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "../../../../../../dev/composer-packages/wp-settings",
-                "reference": "4e26cd875e2ba18f6f1bb523ef51d01ec7f7869d"
+                "reference": "8439efe01443c223f2ad6ab66316d064f8edf6b7"
             },
             "require": {
                 "php": ">=7.4"
@@ -105,6 +143,7 @@
     "dev": true,
     "dev-package-names": [
         "automattic/jetpack-autoloader",
+        "easy-digital-downloads/edd-sl-sdk",
         "nextgenthemes/wp-settings"
     ]
 }

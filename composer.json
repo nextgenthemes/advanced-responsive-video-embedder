@@ -13,6 +13,9 @@
 	"require": {
 		"php": ">=7.4"
 	},
+	"extra": {
+		"easy-digital-downloads/edd-sl-sdk": "1.0.0"
+	},
 	"require-dev": {
 		"nextgenthemes/wp-settings": "@dev",
 		"automattic/jetpack-autoloader": "^v5.0.2"
@@ -33,6 +36,10 @@
 			"options": {
 				"symlink": false
 			}
+		},
+		"edd-sl-sdk": {
+			"type": "vcs",
+			"url": "git@github.com:awesomemotive/edd-sl-sdk.git"
 		}
 	},
 	"scripts": {
@@ -49,11 +56,8 @@
 		"build:arve": "npx --no-install wp-scripts build src/main src/block src/admin src/shortcode-ui",
 		"start:common": "npx --no-install wp-scripts start --experimental-modules --source-path=vendor/nextgenthemes/wp-settings/src --output-path=vendor/nextgenthemes/wp-settings/build",
 		"build:common": "npx --no-install wp-scripts build --experimental-modules --source-path=vendor/nextgenthemes/wp-settings/src --output-path=vendor/nextgenthemes/wp-settings/build",
-		"pre-update-cmd": [
-			"./bin/sync-wp-settings"
-		],
-		"tests": [
-			"cd ${HOME}/websites && NGT_PHPUNIT_LOAD_PLUGINS=\"advanced-responsive-video-embedder\" phpunit --testsuite advanced-responsive-video-embedder"
-		]
+		"pre-update-cmd": "./bin/sync-wp-settings",
+		"test": "phpunit",
+		"test-arve": "NGT_PHPUNIT_LOAD_PLUGINS=advanced-responsive-video-embedder phpunit --testsuite advanced-responsive-video-embedder"
 	}
 }

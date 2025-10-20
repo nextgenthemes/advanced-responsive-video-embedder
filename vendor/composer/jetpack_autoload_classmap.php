@@ -42,6 +42,62 @@ return array(
 		'version' => '5.0.11',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-container.php'
 	),
+	'EasyDigitalDownloads\\Updater\\Admin\\Notices' => array(
+		'version' => '1.0.0.0',
+		'path'    => $vendorDir . '/easy-digital-downloads/edd-sl-sdk/src/Admin/Notices.php'
+	),
+	'EasyDigitalDownloads\\Updater\\Handlers\\Handler' => array(
+		'version' => '1.0.0.0',
+		'path'    => $vendorDir . '/easy-digital-downloads/edd-sl-sdk/src/Handlers/Handler.php'
+	),
+	'EasyDigitalDownloads\\Updater\\Handlers\\Plugin' => array(
+		'version' => '1.0.0.0',
+		'path'    => $vendorDir . '/easy-digital-downloads/edd-sl-sdk/src/Handlers/Plugin.php'
+	),
+	'EasyDigitalDownloads\\Updater\\Handlers\\Theme' => array(
+		'version' => '1.0.0.0',
+		'path'    => $vendorDir . '/easy-digital-downloads/edd-sl-sdk/src/Handlers/Theme.php'
+	),
+	'EasyDigitalDownloads\\Updater\\Licensing\\License' => array(
+		'version' => '1.0.0.0',
+		'path'    => $vendorDir . '/easy-digital-downloads/edd-sl-sdk/src/Licensing/License.php'
+	),
+	'EasyDigitalDownloads\\Updater\\Licensing\\Messages' => array(
+		'version' => '1.0.0.0',
+		'path'    => $vendorDir . '/easy-digital-downloads/edd-sl-sdk/src/Licensing/Messages.php'
+	),
+	'EasyDigitalDownloads\\Updater\\Registry' => array(
+		'version' => '1.0.0.0',
+		'path'    => $vendorDir . '/easy-digital-downloads/edd-sl-sdk/src/Registry.php'
+	),
+	'EasyDigitalDownloads\\Updater\\Requests\\API' => array(
+		'version' => '1.0.0.0',
+		'path'    => $vendorDir . '/easy-digital-downloads/edd-sl-sdk/src/Requests/API.php'
+	),
+	'EasyDigitalDownloads\\Updater\\Templates' => array(
+		'version' => '1.0.0.0',
+		'path'    => $vendorDir . '/easy-digital-downloads/edd-sl-sdk/src/Templates.php'
+	),
+	'EasyDigitalDownloads\\Updater\\Updaters\\Plugin' => array(
+		'version' => '1.0.0.0',
+		'path'    => $vendorDir . '/easy-digital-downloads/edd-sl-sdk/src/Updaters/Plugin.php'
+	),
+	'EasyDigitalDownloads\\Updater\\Updaters\\Theme' => array(
+		'version' => '1.0.0.0',
+		'path'    => $vendorDir . '/easy-digital-downloads/edd-sl-sdk/src/Updaters/Theme.php'
+	),
+	'EasyDigitalDownloads\\Updater\\Updaters\\Updater' => array(
+		'version' => '1.0.0.0',
+		'path'    => $vendorDir . '/easy-digital-downloads/edd-sl-sdk/src/Updaters/Updater.php'
+	),
+	'EasyDigitalDownloads\\Updater\\Utilities\\Tokenizer' => array(
+		'version' => '1.0.0.0',
+		'path'    => $vendorDir . '/easy-digital-downloads/edd-sl-sdk/src/Utilities/Tokenizer.php'
+	),
+	'EasyDigitalDownloads\\Updater\\Versions' => array(
+		'version' => '1.0.0.0',
+		'path'    => $vendorDir . '/easy-digital-downloads/edd-sl-sdk/src/Versions.php'
+	),
 	'Hook_Manager' => array(
 		'version' => '5.0.11',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-hook-manager.php'
