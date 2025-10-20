@@ -747,7 +747,7 @@ function settings_data(): SettingsData {
 			'option'      => true,
 			'label'       => __( 'Use in RSS/Atom Feeds?', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
-			'description' => __( 'Enable the plugin in RSS/Atom feeds? Disabling will not completely diable everything but it will use native WP behavior in feeds where possible.', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'Enable the plugin in RSS/Atom feeds? Disabling will not completely disable everything but it will use native WP behavior in feeds where possible.', 'advanced-responsive-video-embedder' ),
 		),
 		'reset_after_played' => array(
 			'tab'         => 'pro',
@@ -789,7 +789,7 @@ function settings_data(): SettingsData {
 			'option'      => true,
 			'label'       => __( 'Cache thumbnails in Media Library', 'advanced-responsive-video-embedder' ),
 			'type'        => 'boolean',
-			'description' => __( 'No image hotlinking to video hosts. For Lazyload/Lightbox (Pro).', 'advanced-responsive-video-embedder' ),
+			'description' => __( 'No image hotlinks to video hosts. For Lazyload/Lightbox (Pro).', 'advanced-responsive-video-embedder' ),
 		),
 		'invidious' => array(
 			'tab'         => 'privacy',
@@ -878,7 +878,7 @@ function settings_data(): SettingsData {
 		}
 	}
 
-		$settings = new SettingsData( $settings, true );
+	$settings = new SettingsData( $settings, true );
 
-		return $settings;
+	return $settings;
 }
