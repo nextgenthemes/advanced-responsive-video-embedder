@@ -102,7 +102,7 @@ class ElementorWidget extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'content_section',
 			[
-				'label' => esc_html__( 'Content', 'elementor-oembed-widget' ),
+				'label' => esc_html__( 'Content', 'advanced-responsive-video-embedder' ),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
 			]
 		);
