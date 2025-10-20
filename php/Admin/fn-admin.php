@@ -160,7 +160,7 @@ function display_pro_ad(): bool {
 
 	$inst = (int) get_option( 'arve_install_date' );
 
-	if ( get_user_meta( get_current_user_id(), 'arve_dismiss_pro_notice' ) ||
+	if ( get_user_meta( get_current_user_id(), 'arve_dismiss_pro_notice', false ) ||
 		is_plugin_active( 'arve-pro/arve-pro.php' ) ||
 		time() < strtotime( '+3 weeks', $inst )
 	) {
