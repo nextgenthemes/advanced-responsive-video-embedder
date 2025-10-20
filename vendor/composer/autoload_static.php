@@ -11,10 +11,6 @@ class ComposerStaticInitfa4ebaf22f08a8b822c80bc4efcf7610
     );
 
     public static $prefixLengthsPsr4 = array (
-        'E' => 
-        array (
-            'EasyDigitalDownloads\\Updater\\' => 29,
-        ),
         'A' => 
         array (
             'Automattic\\Jetpack\\Autoloader\\' => 30,
@@ -22,10 +18,6 @@ class ComposerStaticInitfa4ebaf22f08a8b822c80bc4efcf7610
     );
 
     public static $prefixDirsPsr4 = array (
-        'EasyDigitalDownloads\\Updater\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/easy-digital-downloads/edd-sl-sdk/src',
-        ),
         'Automattic\\Jetpack\\Autoloader\\' => 
         array (
             0 => __DIR__ . '/..' . '/automattic/jetpack-autoloader/src',
@@ -39,20 +31,6 @@ class ComposerStaticInitfa4ebaf22f08a8b822c80bc4efcf7610
         'Automattic\\Jetpack\\Autoloader\\CustomAutoloaderPlugin' => __DIR__ . '/..' . '/automattic/jetpack-autoloader/src/CustomAutoloaderPlugin.php',
         'Automattic\\Jetpack\\Autoloader\\ManifestGenerator' => __DIR__ . '/..' . '/automattic/jetpack-autoloader/src/ManifestGenerator.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'EasyDigitalDownloads\\Updater\\Admin\\Notices' => __DIR__ . '/..' . '/easy-digital-downloads/edd-sl-sdk/src/Admin/Notices.php',
-        'EasyDigitalDownloads\\Updater\\Handlers\\Handler' => __DIR__ . '/..' . '/easy-digital-downloads/edd-sl-sdk/src/Handlers/Handler.php',
-        'EasyDigitalDownloads\\Updater\\Handlers\\Plugin' => __DIR__ . '/..' . '/easy-digital-downloads/edd-sl-sdk/src/Handlers/Plugin.php',
-        'EasyDigitalDownloads\\Updater\\Handlers\\Theme' => __DIR__ . '/..' . '/easy-digital-downloads/edd-sl-sdk/src/Handlers/Theme.php',
-        'EasyDigitalDownloads\\Updater\\Licensing\\License' => __DIR__ . '/..' . '/easy-digital-downloads/edd-sl-sdk/src/Licensing/License.php',
-        'EasyDigitalDownloads\\Updater\\Licensing\\Messages' => __DIR__ . '/..' . '/easy-digital-downloads/edd-sl-sdk/src/Licensing/Messages.php',
-        'EasyDigitalDownloads\\Updater\\Registry' => __DIR__ . '/..' . '/easy-digital-downloads/edd-sl-sdk/src/Registry.php',
-        'EasyDigitalDownloads\\Updater\\Requests\\API' => __DIR__ . '/..' . '/easy-digital-downloads/edd-sl-sdk/src/Requests/API.php',
-        'EasyDigitalDownloads\\Updater\\Templates' => __DIR__ . '/..' . '/easy-digital-downloads/edd-sl-sdk/src/Templates.php',
-        'EasyDigitalDownloads\\Updater\\Updaters\\Plugin' => __DIR__ . '/..' . '/easy-digital-downloads/edd-sl-sdk/src/Updaters/Plugin.php',
-        'EasyDigitalDownloads\\Updater\\Updaters\\Theme' => __DIR__ . '/..' . '/easy-digital-downloads/edd-sl-sdk/src/Updaters/Theme.php',
-        'EasyDigitalDownloads\\Updater\\Updaters\\Updater' => __DIR__ . '/..' . '/easy-digital-downloads/edd-sl-sdk/src/Updaters/Updater.php',
-        'EasyDigitalDownloads\\Updater\\Utilities\\Tokenizer' => __DIR__ . '/..' . '/easy-digital-downloads/edd-sl-sdk/src/Utilities/Tokenizer.php',
-        'EasyDigitalDownloads\\Updater\\Versions' => __DIR__ . '/..' . '/easy-digital-downloads/edd-sl-sdk/src/Versions.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
