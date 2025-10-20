@@ -251,7 +251,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 		$this->assertStringContainsString( '"description":', $output );
 		$this->assertStringContainsString( 'style="max-width:333px;"', $output );
 		$this->assertStringContainsString( '"name":"Test', $output );
-		$this->assertStringContainsString( '"uploadDate":"2016-10-22"', $output );
+		$this->assertStringContainsString( '"uploadDate":"2016-10-22T00:00:00+00:00"', $output );
 		$this->assertStringContainsString( '"duration":"PT1H2M3S"', $output );
 		$this->assertStringContainsString( 'src="https://example.com', $output );
 		$this->assertStringContainsString( '<a href="https://nextgenthemes.com/plugins/arve-pro/" title="Powered by Advanced Responsive Video Embedder WordPress plugin" target="_blank">ARVE</a>', $output );
