@@ -51,7 +51,7 @@ function is_card( array $a ): bool {
  * When the aspect ratio in invalid contains floating point value, the original aspect ratio will be returned.
  *
  * @param string $aspect_ratio The input aspect ratio in the format 'width:height'
- * @return string The simplified aspect ratio in the format 'newWidth:newHeight'
+ * @return string              The simplified aspect ratio in the format 'newWidth:newHeight'
  */
 function aspect_ratio_gcd( string $aspect_ratio ): string {
 
@@ -76,9 +76,9 @@ function gcd( int $a, int $b ): int {
 /**
  * Calculates seconds based on youtube times if needed
  *
- * @param string $time   The 't=1h25m13s' or t=123 part of youtube URLs.
+ * @param string $time The 't=1h25m13s' or t=123 part of youtube URLs.
  *
- * @return int Starttime in seconds.
+ * @return int         Starttime in seconds.
  */
 function youtube_time_to_seconds( string $time ): int {
 
@@ -107,10 +107,7 @@ function youtube_time_to_seconds( string $time ): int {
 /**
  * Calculate the new height based on the old width, old height, and new width.
  *
- * @param float $old_width The old width
- * @param float $old_height The old height
- * @param int $new_width The new width
- * @return float The new height
+ * @return float            The new height
  */
 function new_height( float $old_width, float $old_height, int $new_width ): float {
 	$aspect_num = $old_width / $old_height;
@@ -122,7 +119,7 @@ function new_height( float $old_width, float $old_height, int $new_width ): floa
 /**
  * Calculates padding percentage value for a particular aspect ratio
  *
- * @param string $aspect_ratio example '4:3'
+ * @param string $aspect_ratio Example '4:3'
  *
  * @since 4.2.0
  *
@@ -139,20 +136,58 @@ function disabled_on_feeds(): bool {
 	return is_feed() && ! options()['feed'] ? true : false;
 }
 
-function time_to_atom( string $time ): string {
-
+function is_valid_date_time( string $datetime_str ): bool {
 	try {
-		$dt = new \DateTime( $time );
-		return $dt->format( \DateTime::ATOM );
+		new \DateTime( $datetime_str );
+		return true;
 	} catch ( \Exception $e ) {
 
 		arve_errors()->add(
-			'time-conversion',
-			$e->getMessage()
+			__FUNCTION__,
+			sprintf(
+				// Translators: %s is the invalid datetime string.
+				__( 'Invalid datetime string: <code>%s</code>', 'advanced-responsive-video-embedder' ),
+				$datetime_str
+			),
+			[
+				'code'    => $e->getCode(),
+				'message' => $e->getMessage(),
+			]
 		);
+
+		return false;
+	}
+}
+
+/**
+ * Checks if a datetime string contains timezone information.
+ *
+ * @param string $datetime_str The datetime string to check.
+ * @return bool                True if timezone is present, false otherwise.
+ */
+function has_timezone( string $datetime_str ): bool {
+	return preg_match( '/(Z|[+-]\d{4}|[+-]\d{2}:\d{2}|\w+\/\w+)$/i', $datetime_str ) === 1;
+}
+
+/**
+ * Normalizes a datetime string to ATOM format.
+ *
+ * @param string  $datetime_str The datetime string to normalize.
+ * @return string               The normalized datetime string in ATOM format.
+ */
+function normalize_datetime_to_atom( string $datetime_str ): string {
+
+	if ( '' === $datetime_str || ! is_valid_date_time( $datetime_str ) ) {
+		return '';
 	}
 
-	return $time;
+	if ( has_timezone( $datetime_str ) ) {
+		$dt = new \DateTime( $datetime_str );
+		return $dt->format( \DateTime::ATOM );
+	} else {
+		$dt = new \DateTime( $datetime_str, wp_timezone() );
+		return $dt->format( \DateTime::ATOM );
+	}
 }
 
 /**
@@ -226,9 +261,6 @@ function is_amp(): bool {
 /**
  * Register oEmbed Widget.
  *
- * Include widget file and register widget class.
- *
- * @since 1.0.0
  * @param \Elementor\Widgets_Manager $widgets_manager Elementor widgets manager.
  */
 function register_elementor_widget( \Elementor\Widgets_Manager $widgets_manager ): void {
