@@ -87,3 +87,27 @@ function init_admin(): void {
 
 	add_filter( 'debug_information', __NAMESPACE__ . '\Admin\add_site_health_metadata' );
 }
+
+function port_licenses(): void {
+
+	$plugins  = [ 'arve_pro', 'arve_amp', 'arve_random_video', 'arve_sticky_videos' ];
+	$settings = get_option( 'nextgenthemes', [] );
+
+	if ( empty( $settings ) ) {
+		return;
+	}
+
+	foreach ( $plugins as $plugin ) {
+
+		$key    = $settings[ $plugin ] ?? null;
+		$status = $settings[ $plugin . '_status' ] ?? null;
+		$plugin = str_replace( '_', '-', $plugin );
+
+		#df( $plugin, $key, $status );
+
+		if ( ! empty( $key ) && ! empty( $status ) ) {
+			add_option( $plugin . '_license_key', $key );
+			# TODO status
+		}
+	}
+}
