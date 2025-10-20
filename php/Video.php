@@ -168,8 +168,6 @@ class Video {
 		ksort( $this->org_args );
 	}
 
-
-
 	/**
 	 * Prevent setting properties directly
 	 *
@@ -224,7 +222,7 @@ class Video {
 
 		foreach ( get_object_vars( $this->oembed_data ) as $prop => $value ) {
 
-			if ( ! str_contains( $prop, 'error' ) || ! is_string( $value ) ) {
+			if ( ! is_string( $value ) || ! str_contains( $prop, 'error' ) ) {
 				continue;
 			}
 
@@ -235,14 +233,11 @@ class Video {
 	private function arg_upload_date( string $upload_date ): string {
 
 		// This suggests user entry.
-		if ( empty( $this->oembed_data->upload_date ) ) {
-			return normalize_datetime_to_atom( $upload_date );
-		} elseif ( ! is_valid_date_time( $upload_date ) ) {
-			return '';
+		if ( ! empty( $this->org_args['upload_date'] ) ) {
+			return normalize_datetime_to_atom( $upload_date, 'WP' );
 		}
 
-		$dt = new \DateTime( $upload_date );
-		return $dt->format( \DateTime::ATOM );
+		return $upload_date;
 	}
 
 	private function process_shortcode_atts(): void {

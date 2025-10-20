@@ -39,7 +39,17 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 
 	$data->provider       = sane_provider_name( $data->provider_name );
 	$data->arve_url       = $url;
-	$data->arve_cachetime = current_datetime()->format( DATETIME::ATOM );
+	$data->arve_cachetime = current_datetime()->format( DateTime::ATOM );
+
+	if ( ! empty( $data->upload_date ) ) {
+
+		$atom_upload_date = normalize_datetime_to_atom( $data->upload_date, 'UTC' );
+
+		if ( $atom_upload_date !== $data->upload_date ) {
+			$data->upload_data_org = $data->upload_date;
+			$data->upload_date     = $atom_upload_date;
+		}
+	}
 
 	if ( function_exists( __NAMESPACE__ . '\Pro\oembed_data' ) ) {
 		Pro\oembed_data( $data );

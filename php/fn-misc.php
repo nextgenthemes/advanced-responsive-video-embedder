@@ -146,7 +146,7 @@ function is_valid_date_time( string $datetime_str ): bool {
 			__FUNCTION__,
 			sprintf(
 				// Translators: %s is the invalid datetime string.
-				__( 'Invalid datetime string: <code>%s</code>', 'advanced-responsive-video-embedder' ),
+				__( 'Invalid datetime: <code>%s</code>', 'advanced-responsive-video-embedder' ),
 				$datetime_str
 			),
 			[
@@ -166,28 +166,43 @@ function is_valid_date_time( string $datetime_str ): bool {
  * @return bool                True if timezone is present, false otherwise.
  */
 function has_timezone( string $datetime_str ): bool {
-	return preg_match( '/(Z|[+-]\d{4}|[+-]\d{2}:\d{2}|\w+\/\w+)$/i', $datetime_str ) === 1;
+	// Match common timezone formats:
+	// Z - Zulu time (UTC)
+	// +00:00 or -05:00 - Offset format
+	// +0000 or -0500 - Compact offset format
+	// GMT, UTC, EST, etc. - Named timezones (3-5 letters)
+	// America/New_York - IANA timezone identifiers
+	return preg_match( '/(?:Z|[+-]\d{2}:?\d{2}|(?:GMT|UTC)|[A-Z]{3,5}|[A-Za-z]+\/[A-Za-z_]+)$/i', $datetime_str ) === 1;
 }
 
 /**
  * Normalizes a datetime string to ATOM format.
  *
- * @param string  $datetime_str The datetime string to normalize.
- * @return string               The normalized datetime string in ATOM format.
+ * @param string  $datetime_str      The datetime string to normalize.
+ * @param string  $fallback_timezone The fallback timezone 'UTC' or 'WP' for WordPress timezone.
+ * @return string                    The normalized datetime string in ATOM format.
  */
-function normalize_datetime_to_atom( string $datetime_str ): string {
+function normalize_datetime_to_atom( string $datetime_str, string $fallback_timezone ): string {
 
-	if ( '' === $datetime_str || ! is_valid_date_time( $datetime_str ) ) {
-		return '';
+	if ( ! is_valid_date_time( $datetime_str ) ) {
+		return $datetime_str;
 	}
 
-	if ( has_timezone( $datetime_str ) ) {
-		$dt = new \DateTime( $datetime_str );
-		return $dt->format( \DateTime::ATOM );
-	} else {
-		$dt = new \DateTime( $datetime_str, wp_timezone() );
-		return $dt->format( \DateTime::ATOM );
+	switch ( strtolower( $fallback_timezone ) ) {
+		case 'wp':
+			$fallback_timezone = wp_timezone();
+			break;
+		case 'utc':
+			$fallback_timezone = new \DateTimeZone( 'UTC' );
+			break;
+		default:
+			throw new \InvalidArgumentException( 'Invalid fallback timezone' );
 	}
+
+	$timezone = has_timezone( $datetime_str ) ? null : $fallback_timezone;
+	$dt       = new \DateTime( $datetime_str, $timezone );
+
+	return $dt->format( \DateTime::ATOM );
 }
 
 /**
