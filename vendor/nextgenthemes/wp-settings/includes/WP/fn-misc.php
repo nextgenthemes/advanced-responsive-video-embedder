@@ -61,22 +61,44 @@ function attr( array $attr = array() ): string {
 /**
  * Move certain keys to the start of an associative array.
  *
- * @param array<string, mixed> $org_array The original array.
- * @param array<string>        $keys      The keys to move to the start.
+ * @param array<string, mixed> $org  The original array.
+ * @param array<string>        $keys The keys to move to the start.
  *
  * @return array<string, mixed> The modified array.
  */
-function move_keys_to_start( array $org_array, array $keys ): array {
-	$new_array = [];
+function move_keys_to_start( array $org, array $keys ): array {
+
+	$moved = array();
 
 	foreach ( $keys as $key ) {
-		if ( array_key_exists( $key, $org_array ) ) {
-			$new_array[ $key ] = $org_array[ $key ];
-			unset( $org_array[ $key ] );
+		if ( array_key_exists( $key, $org ) ) {
+			$moved[ $key ] = $org[ $key ];
+			unset( $org[ $key ] );
 		}
 	}
 
-	return $new_array + $org_array;
+	return $moved + $org;
+}
+
+/**
+ * Move specified keys to the end of an array
+ *
+ * @param array<string, mixed> $org   Array to modify
+ * @param array<int, string>   $keys  Keys to move to the end
+ * @return array<string, mixed> Modified array with keys moved to end
+ */
+function move_keys_to_end( array $org, array $keys ): array {
+
+	$moved = array();
+
+	foreach ( $keys as $key ) {
+		if ( array_key_exists( $key, $org ) ) {
+			$moved[ $key ] = $org[ $key ];
+			unset( $org[ $key ] );
+		}
+	}
+
+	return $org + $moved;
 }
 
 /**
@@ -89,7 +111,7 @@ function get_constant( string $const_name ) {
 }
 
 function is_wp_debug(): bool {
-	return defined( 'WP_DEBUG' ) && WP_DEBUG; // @phpstan-ignore-line
+	return defined( 'WP_DEBUG' ) && WP_DEBUG;
 }
 
 /**
