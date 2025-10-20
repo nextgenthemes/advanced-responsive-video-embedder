@@ -127,7 +127,31 @@ class Video {
 	 */
 	private array $shortcode_atts;
 
-	// process data
+	/**
+	 * @var null|object{
+	 *     provider: string,
+	 *     author_name: string,
+	 *     author_url: string,
+	 *     aspect_ratio: string,
+	 *     height: int,
+	 *     html: string,
+	 *     thumbnail_url: string,
+	 *     thumbnail_width: int,
+	 *     thumbnail_height: int,
+	 *     title: string,
+	 *     type: string,
+	 *     version: string,
+	 *     width: int,
+	 *     upload_date: string,
+	 *     arve_iframe_src: string,
+	 *     arve_error_iframe_src: string,
+	 *     arve_url: string,
+	 *     arve_cachetime: string,
+	 *     thumbnail_large_url: string,
+	 *     thumbnail_large_width: int,
+	 *     thumbnail_large_height: int,
+	 * }
+	 */
 	private ?object $oembed_data;
 
 	/**
@@ -143,11 +167,13 @@ class Video {
 		ksort( $this->org_args );
 	}
 
+
+
 	/**
 	 * Prevent setting properties directly
 	 *
 	 * @param string $property The name of the property to set.
-	 * @param mixed $value The value to set for the property.
+	 * @param mixed  $value    The value to set for the property.
 	 */
 	public function __set( string $property, $value ): void {
 		wp_trigger_error( __METHOD__, 'Not allowed to directly set properties, use private set_prop()' );
@@ -205,6 +231,19 @@ class Video {
 		}
 	}
 
+	private function arg_upload_date( string $upload_date ): string {
+
+		// This suggests user entry.
+		if ( empty( $this->oembed_data->upload_date ) ) {
+			return normalize_datetime_to_atom( $upload_date );
+		} elseif ( ! is_valid_date_time( $upload_date ) ) {
+			return '';
+		}
+
+		$dt = new \DateTime( $upload_date );
+		return $dt->format( \DateTime::ATOM );
+	}
+
 	private function process_shortcode_atts(): void {
 
 		$this->missing_attribute_check();
@@ -224,6 +263,7 @@ class Video {
 		$this->detect_html5();
 		$this->detect_provider_and_id_from_url();
 
+		$this->set_prop( 'upload_date', $this->arg_upload_date( $this->upload_date ) );
 		$this->set_prop( 'aspect_ratio', $this->arg_aspect_ratio( $this->aspect_ratio ) );
 		$this->set_prop( 'thumbnail', apply_filters( 'nextgenthemes/arve/args/thumbnail', $this->thumbnail, get_object_vars( $this ) ) );
 		$this->set_prop( 'img_src', $this->arg_img_src( $this->img_src ) );
@@ -538,9 +578,7 @@ class Video {
 	}
 
 	/**
-	 * A description of the entire PHP function.
-	 *
-	 * @param string $ratio colon separated string (width:height)
+	 * @param string $ratio Colon separated string (width:height)
 	 * @return string|null ratio or null to disable
 	 */
 	private function arg_aspect_ratio( string $ratio ): ?string {
@@ -1082,11 +1120,11 @@ HTML;
 
 	private function get_debug_info( string $input_html = '' ): string {
 
-		if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) { // @phpstan-ignore-line
+		if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
 			return '';
 		}
 
-		$html = ''; // @phpstan-ignore-line
+		$html = '';
 
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
@@ -1101,44 +1139,115 @@ HTML;
 			$show_options_debug = false;
 		}
 
-		$pre_style =
-			'background-color: #111;' .
-			'color: #eee;' .
-			'font-size: 15px;' .
-			'white-space: pre-wrap;' .
-			'word-wrap: break-word;';
-
 		if ( ! empty( $_GET['arve-debug-attr'] ) ) {
 			$debug_attr = sanitize_text_field( wp_unslash( $_GET['arve-debug-attr'] ) );
 			$input_attr = isset( $this->org_args[ $debug_attr ] ) ? print_r( $this->org_args[ $debug_attr ], true ) : 'not set';
-			$html      .= sprintf(
-				'<pre style="%1$s">in %2$s: %3$s%2$s: %4$s</pre>',
-				esc_attr( $pre_style ),
-				esc_html( $debug_attr ),
-				esc_html( $input_attr ) . PHP_EOL,
-				esc_html( print_r( $this->$debug_attr, true ) )
+			$html      .= $this->debug_pre(
+				sprintf(
+					'in %1$s: %2$s%1$s: %3$s',
+					esc_html( $debug_attr ),
+					esc_html( $input_attr ) . PHP_EOL,
+					esc_html( print_r( $this->$debug_attr, true ) )
+				)
 			);
 		}
 
 		if ( isset( $_GET['arve-debug-atts'] ) ) {
-			$html .= sprintf(
-				'<pre style="%s">in: %s</pre>',
-				esc_attr( $pre_style ),
-				esc_html( var_export( array_filter( $this->org_args ), true ) )
-			);
-			$html .= sprintf(
-				'<pre style="%s">$a: %s</pre>',
-				esc_attr( $pre_style ),
-				esc_html( var_export( array_filter( get_object_vars( $this ) ), true ) )
-			);
+			$html .= $this->debug_pre( $this->debug_compare_args_to_props() );
 		}
 
 		if ( isset( $_GET['arve-debug-html'] ) ) {
-			$html .= sprintf( '<pre style="%s">%s</pre>', esc_attr( $pre_style ), esc_html( $input_html ) );
+			$html .= $this->debug_pre( $input_html );
 		}
 		// phpcs:enable
 
 		return $html;
+	}
+
+	/**
+	 * Wrap content in a styled pre element
+	 *
+	 * @param string $content Content to wrap
+	 * @return string         HTML with styled pre element
+	 */
+	private function debug_pre( string $content ): string {
+
+		$style =
+			'display: block;' .
+			'background-color: #111;' .
+			'color: #eee;' .
+			'font-size: 15px;' .
+			'white-space: pre;' .
+			'overflow-x: auto;' .
+			'padding: 1em;' .
+			'box-sizing: border-box;';
+
+		return sprintf( '<pre class="alignfull" style="%s">%s</pre>', esc_attr( $style ), esc_html( $content ) );
+	}
+
+	/**
+	 * Debug function to compare org_args with object properties
+	 *
+	 * @return string Debug output
+	 */
+	private function debug_compare_args_to_props(): string {
+
+		if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
+			return '';
+		}
+
+		// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
+
+		$output       = '';
+		$obj_vars     = array_filter( get_object_vars( $this ) );
+		$org_args     = array_filter( $this->org_args );
+		$checked_keys = array();
+
+		// Move oembed_data to end of array
+		$org_args = $this->move_keys_to_end( $org_args, array( 'oembed_data', 'origin_data' ) );
+
+		if ( ! empty( $obj_vars['oembed_data']->description ) ) {
+			$obj_vars['oembed_data']->description = str_replace( PHP_EOL, '', $obj_vars['oembed_data']->description );
+		}
+
+		unset( $obj_vars['org_args'] );
+		unset( $obj_vars['shortcode_atts'] );
+
+		// Compare values from org_args with object properties
+		foreach ( $org_args as $key => $org_value ) {
+
+			$checked_keys[] = $key;
+
+			if ( ! isset( $obj_vars[ $key ] ) ) {
+				continue;
+			}
+
+			$prop_value = $obj_vars[ $key ];
+
+			if ( $org_value === $prop_value ) {
+				$output .= sprintf( "%s: %s\n", $key, var_export( $org_value, true ) );
+			} else {
+				$output .= sprintf(
+					"%s:\n  org_args: %s\n  property: %s\n",
+					$key,
+					var_export( $org_value, true ),
+					var_export( $prop_value, true )
+				);
+			}
+		}
+
+		// Find properties missing from org_args
+		foreach ( $obj_vars as $key => $value ) {
+
+			if ( in_array( $key, $checked_keys, true ) ) {
+				continue;
+			}
+
+			$output .= sprintf( "Prop only: %s: %s\n", $key, var_export( $value, true ) );
+		}
+
+		// phpcs:enable
+		return $output;
 	}
 
 	private function arve_embed_inner_html(): string {
@@ -1197,9 +1306,7 @@ HTML;
 				continue;
 			}
 
-			if ( 'upload_date' === $prop ) {
-				$seo[ $json_name ] = time_to_atom( $this->$prop );
-			} elseif ( 'duration' === $prop && is_numeric( $this->$prop ) ) {
+			if ( 'duration' === $prop && is_numeric( $this->$prop ) ) {
 				$seo[ $json_name ] = seconds_to_iso8601_duration( $this->$prop );
 			} elseif ( 'description' === $prop ) {
 				$seo[ $json_name ] = trim( replace_links( $this->$prop, '' ) );
