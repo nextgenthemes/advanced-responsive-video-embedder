@@ -30,8 +30,8 @@ return array(
 		'auto_thumbnail' => false,
 		'tests'          => array(
 			0 => array(
-				'url' => 'https://archive.org/details/cure_20211214',
-				'id'  => 'cure_20211214',
+				'url' => 'https://archive.org/details/electricsheep-flock-248-32500-3/00248%3D32663%3D28059%3D27827.avi',
+				'id'  => 'electricsheep-flock-248-32500-3', # TODO this actually only matches the first part of the url. Seems wrong, nobody uses this anyway.
 			),
 		),
 	),
@@ -107,24 +107,6 @@ return array(
 			),
 		),
 	),
-	'comedycentral' => array(
-		'name'           => 'Comedy Central',
-		'oembed'         => false,
-		'regex'          => '#https?://media\\.mtvnservices\\.com/embed/mgid:arc:video:comedycentral\\.com:(?<id>[-a-z0-9]{36})#i',
-		'embed_url'      => 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:%s',
-		'requires_src'   => true,
-		'auto_thumbnail' => false,
-		'tests'          => array(
-			0 => array(
-				'url' => 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:c80adf02-3e24-437a-8087-d6b77060571c',
-				'id'  => 'c80adf02-3e24-437a-8087-d6b77060571c',
-			),
-			1 => array(
-				'url' => 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:c3c1da76-96c2-48b4-b38d-8bb16fbf7a58',
-				'id'  => 'c3c1da76-96c2-48b4-b38d-8bb16fbf7a58',
-			),
-		),
-	),
 	'dailymotion' => array(
 		'name'           => 'Dailymotion',
 		'oembed'         => true,
@@ -187,25 +169,6 @@ return array(
 			),
 		),
 	),
-	'gab' => array(
-		'name'           => 'Gab TV',
-		'oembed'         => false,
-		'regex'          => '#https?://tv\\.gab\\.com/channel/(?<account_id>[a-z0-9]+)/(view|embed)/(?<id>[^\\s/]+)#i',
-		'embed_url'      => 'https://tv.gab.com/channel/%s/embed/%s',
-		'default_params' => '',
-		'tests'          => array(
-			0 => array(
-				'url'     => 'https://tv.gab.com/channel/owenbenjamin/view/1190-live-with-curtis-stone-the-60fb935386d788cd4a48c43a',
-				'channel' => 'owenbenjamin',
-				'id'      => '1190-live-with-curtis-stone-the-60fb935386d788cd4a48c43a',
-			),
-			1 => array(
-				'url'     => 'https://tv.gab.com/channel/realalexjones/embed/doctor-exposes-covid-vaccine-attacking-blood-6155ff91153e0a6ab9e5ef93',
-				'channel' => 'owenbenjamin',
-				'id'      => 'doctor-exposes-covid-vaccine-attacking-blood-6155ff91153e0a6ab9e5ef93',
-			),
-		),
-	),
 	'googledrive' => array(
 		'name'      => 'Google Drive',
 		'oembed'    => false,
@@ -213,8 +176,8 @@ return array(
 		'embed_url' => 'https://drive.google.com/file/d/%s/preview',
 		'tests'     => array(
 			0 => array(
-				'url' => 'https://drive.google.com/file/d/0BymXD1aD6QzJWkh4Q0hPRWlPYkk/edit',
-				'id'  => '0BymXD1aD6QzJWkh4Q0hPRWlPYkk',
+				'url' => 'https://drive.google.com/file/d/1txsjJmglNY-dYa9jE9_e9Wap_86WDnTn/view',
+				'id'  => '1txsjJmglNY-dYa9jE9_e9Wap_86WDnTn',
 			),
 		),
 	),
@@ -306,24 +269,6 @@ return array(
 			),
 		),
 	),
-	'livestream' => array(
-		'name'           => 'Livestream.com',
-		'oembed'         => false,
-		'regex'          => '#https?://(www\\.)?livestream\\.com/accounts/(?<id>[0-9]+/events/[0-9]+(/videos/[0-9]+)?)#i',
-		'embed_url'      => 'https://livestream.com/accounts/%s/player',
-		'default_params' => 'width=1280&height=720&enableInfoAndActivity=true&defaultDrawer=&mute=false',
-		'auto_thumbnail' => false,
-		'tests'          => array(
-			0 => array(
-				'url' => 'https://livestream.com/accounts/4091035/events/8205804/videos/174917539',
-				'id'  => '4091035/events/8205804/videos/174917539',
-			),
-			1 => array(
-				'url' => 'https://livestream.com/accounts/467901/events/2015991/videos/17500857/player?width=640&height=360&enableInfo=true&defaultDrawer=&autoPlay=true&mute=false',
-				'id'  => '467901/events/2015991/videos/17500857',
-			),
-		),
-	),
 	'mailru' => array(
 		'name'         => 'Mail.ru',
 		'oembed'       => false,
@@ -337,23 +282,6 @@ return array(
 			),
 		),
 	),
-	'metacafe' => array(
-		'name'           => 'Metacafe',
-		'oembed'         => false,
-		'regex'          => '#https?://(www\\.)?metacafe\\.com/(watch|fplayer)/(?<id>[0-9]+)#i',
-		'embed_url'      => 'http://www.metacafe.com/embed/%s/',
-		'auto_thumbnail' => false,
-		'tests'          => array(
-			0 => array(
-				'url' => 'http://www.metacafe.com/watch/11433151/magical-handheld-fireballs/',
-				'id'  => '11433151',
-			),
-			1 => array(
-				'url' => 'http://www.metacafe.com/watch/11322264/everything_wrong_with_robocop_in_7_minutes/',
-				'id'  => '11322264',
-			),
-		),
-	),
 	'myspace' => array(
 		'name'           => 'myspace',
 		'oembed'         => false,
@@ -362,8 +290,8 @@ return array(
 		'auto_thumbnail' => false,
 		'tests'          => array(
 			0 => array(
-				'url' => 'https://myspace.com/onetwowatch/video/dark-rooms-the-shadow-that-looms-o-er-my-heart-/109471212',
-				'id'  => '109471212',
+				'url' => 'https://myspace.com/onetwowatch/video/little-simz/109557939',
+				'id'  => '109557939',
 			),
 		),
 	),
@@ -379,8 +307,8 @@ return array(
 				'id'  => 'u0863pgoecf',
 			),
 			1 => array(
-				'url' => 'https://v.qq.com/x/cover/zf2z0xpqcculhcz/y0016tj0qvh.html',
-				'id'  => 'y0016tj0qvh',
+				'url' => 'https://v.qq.com/x/cover/mzc002006ow2bqh/h4101sa1uh1.html',
+				'id'  => 'h4101sa1uh1',
 			),
 		),
 	),
@@ -400,7 +328,7 @@ return array(
 	'okru' => array(
 		'name'        => 'ok.ru',
 		'oembed'      => false,
-		'regex'       => '#//ok\.ru/video(embed)?/(?<id>[a-z0-9]+)#i',
+		'regex'       => '#https?://ok\.ru/video(embed)?/(?<id>[a-z0-9]+)#i',
 		'embed_url'   => 'https://ok.ru/videoembed/%s',
 		'tests'       => array(
 			0 => array(
@@ -408,7 +336,7 @@ return array(
 				'id'  => '6571197270599',
 			),
 			1 => array(
-				'url' => '//ok.ru/videoembed/6571197270599',
+				'url' => 'https://ok.ru/videoembed/6571197270599',
 				'id'  => '6571197270599',
 			),
 		),
@@ -729,8 +657,8 @@ return array(
 		'default_params' => 'allowfullscreen=true',
 		'tests'          => array(
 			0 => array(
-				'url' => 'https://kick.com/judiliusd',
-				'id'  => 'judiliusd',
+				'url' => 'https://kick.com/raizon',
+				'id'  => 'raizon',
 			),
 		),
 	),
