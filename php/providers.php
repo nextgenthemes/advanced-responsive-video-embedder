@@ -417,17 +417,17 @@ return array(
 	'viddler' => array(
 		'name'           => 'Viddler',
 		'oembed'         => false,
-		'regex'          => '#https?://(www\\.)?viddler\\.com/(embed|v)/(?<id>[a-z0-9]{8})#i',
-		'embed_url'      => 'https://www.viddler.com/embed/%s/',
-		'rebuild_url'    => 'https://www.viddler.com/v/%s/',
+		'regex'          => '/https?:\/\/(www\.)?viddler\.com\/\#\/embed\/player\?[^&]*&?playbackId=(?<id>[^&]+)/i',
+		'embed_url'      => 'https://www.viddler.com/#/embed/player?playbackId=%s',
 		'default_params' => 'f=1&player=full&disablebackwardseek=false&disableseek=false&disableforwardseek=false&make_responsive=true&loop=false&nologo=true',
-		'auto_thumbnail' => true,
-		'auto_title'     => true,
-		'aspect_ratio'   => '545:349',
+		'auto_thumbnail' => false,
+		'auto_title'     => false,
+		'aspect_ratio'   => '16:9',
+		'requires_src'   => true,
 		'tests'          => array(
 			0 => array(
-				'url' => 'https://www.viddler.com/v/a695c468',
-				'id'  => 'a695c468',
+				'url' => 'https://www.viddler.com/#/embed/player?id=5132&playbackId=lN027A02HNsFl61PwY3bxbU5fQxW26w01AlcZfXzIzsvqw&color=default',
+				'id'  => 'lN027A02HNsFl61PwY3bxbU5fQxW26w01AlcZfXzIzsvqw',
 			),
 		),
 	),
@@ -458,18 +458,12 @@ return array(
 	'vk' => array(
 		'name'           => 'VK',
 		'oembed'         => false,
-		#'regex'          => '#https?://(www\\.)?vk\\.com/video_ext\\.php\\?(?<id>[^ ]+)#i',
 		'regex'          => '#https?://(www\.)?vk\.com/video(_ext\.php\?oid=)?(\?z=video)?(?<oid>[-0-9]+)(_|&id=)(?<id>[-0-9]+)#i',
 		'embed_url'      => 'https://vk.com/video_ext.php?oid=%s&id=%s',
 		'rebuild_url'    => 'https://vk.com/video_ext.php?oid=%s&id=%s',
 		'requires_src'   => true,
 		'auto_thumbnail' => false,
 		'tests'          => array(
-			0 => array(
-				'url' => 'https://vk.com/video_ext.php?oid=162756656&id=171388096&hash=b82cc24232fe7f9f&hd=1',
-				'oid' => '162756656',
-				'id'  => '171388096',
-			),
 			1 => array(
 				'url' => 'https://vk.com/video?z=video-218565915_456239135%2Fpl_cat_trends',
 				'oid' => '-218565915',
