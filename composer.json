@@ -44,8 +44,8 @@
 	},
 	"scripts": {
 		"build": [
-			"./bin/block-json",
-			"./bin/build-readme",
+			"./bin/block-json.php",
+			"./bin/build-readme.php",
 			"@build:common",
 			"@build:arve",
 			"@composer update",
