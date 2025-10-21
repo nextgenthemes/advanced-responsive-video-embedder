@@ -24,8 +24,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 			function () {
 				return 'override';
 			},
-			10,
-			2
+			10
 		);
 
 		$html = shortcode(
@@ -66,7 +65,11 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Logs oEmbed data for debugging purposes.
+	 *
 	 * @codeCoverageIgnore
+	 * @param  array<string, mixed>  $a  ARVE god array.
+	 * @return array<string, mixed>      ARVE god array.
 	 */
 	public function oembed_log( array $a ): array {
 		if ( $a['oembed_data'] ) {
@@ -100,13 +103,21 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 			$html = remote_get_body( $url, [ 'timeout' => 10 ] );
 
 			if ( is_wp_error( $html ) ) {
-				pd( $html );
+				debug( $html );
 			}
-			$this->assertTrue( ! is_wp_error( $html ) );
+
+			$this->assertFalse( is_wp_error( $html ) );
 		}
 	}
 
+	/**
+	 * Provides host properties data for testing.
+	 *
+	 * @return array<int, array{0: string, 1: array<string, mixed>}> Array of provider data.
+	 */
 	public function host_properties(): array {
+
+		$data = [];
 
 		foreach ( get_host_properties() as $provider => $provider_data ) {
 			$data[] = [ $provider, $provider_data ];
@@ -114,9 +125,12 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 
 		return $data;
 	}
+
 	/**
 	 * @group missing-data
 	 * @dataProvider host_properties
+	 * @param  string                $provider  The provider name.
+	 * @param  array<string, mixed>  $d         The provider data.
 	 */
 	public function test_missing_data( string $provider, array $d ): void {
 		$this->assertNotEmpty( $d['tests'] );
@@ -132,8 +146,12 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 
 	/**
 	 * Provides test data for video providers.
+	 *
+	 * @return array<int, array{provider: string, oembed: bool, url: string}> Array of test data.
 	 */
 	public function url_test_data(): array {
+
+		$data = [];
 
 		foreach ( get_host_properties() as $provider => $provider_data ) {
 
@@ -148,6 +166,43 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 		}
 
 		return $data;
+	}
+	/**
+	 * @group manual
+	 * @dataProvider url_test_data
+	 */
+	public function test_urls_checker( string $provider, bool $oembed, string $url ): void {
+
+		$skip = [
+			'kickstarter', // does not work for some reason
+			'html5', // not a real url
+			'xtube', // not a real url
+			'xhamster', // not a real url
+			'vimeo', // 401 Unauthorized
+			'kick', // 403 Forbidden
+		];
+
+		if ( in_array( $provider, $skip, true ) ) {
+			$this->assertNotEmpty( $url ); // just so PHPUnit does not complain
+			return;
+		}
+
+		$args = [
+			'timeout'    => 10,
+			'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+		];
+
+		if ( str_contains( $url, 'myspace.com' ) ) {
+			$args['sslverify'] = false;
+		}
+
+		$response = wp_safe_remote_get( $url, $args );
+
+		$this->assertNotWPError( $response, $url . ' request should not return WP_Error' );
+		$this->assertSame( 200, wp_remote_retrieve_response_code( $response ), $url . ' should return 200 HTTP status code' );
+
+		$body = wp_remote_retrieve_body( $response );
+		$this->assertNotEmpty( $body, $url . ' response body should not be empty' );
 	}
 	/**
 	 * @group api
@@ -268,8 +323,19 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 
 	/**
 	 * Provides test data for video providers.
+	 *
+	 * @return array<int, array{
+	 *     regex: string,
+	 *     url: string,
+	 *     id: string,
+	 *     account_id: string|null,
+	 *     brightcove_player: string|null,
+	 *     brightcove_embed: string|null
+	 * }> Array of regex test data.
 	 */
 	public function regex_test_data(): array {
+
+		$data = [];
 
 		foreach ( get_host_properties() as $provider => $provider_data ) {
 
