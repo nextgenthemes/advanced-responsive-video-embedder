@@ -3,21 +3,22 @@
 
 declare(strict_types = 1);
 
+use function Nextgenthemes\ARVE\settings;
 use const Nextgenthemes\ARVE\VIEW_SCRIPT_HANDLES;
 use const Nextgenthemes\ARVE\VERSION;
-
-use function Nextgenthemes\ARVE\settings;
 
 init();
 
 function init(): void {
-
+	require_once __DIR__ . '/fn-common-shell.php';
 	require_once dirname( __DIR__ ) . '/vendor/nextgenthemes/wp-settings/includes/WP/SettingsData.php';
 	require_once dirname( __DIR__ ) . '/vendor/nextgenthemes/wp-settings/includes/WP/SettingValidator.php';
 	require_once dirname( __DIR__ ) . '/vendor/nextgenthemes/wp-settings/includes/WP/fn-settings.php';
 	require_once dirname( __DIR__ ) . '/advanced-responsive-video-embedder.php';
 	require_once dirname( __DIR__ ) . '/php/fn-misc.php';
 	require_once dirname( __DIR__ ) . '/php/fn-settings.php';
+
+	bootstrap_wp();
 
 	echo 'Updating block.json...' . PHP_EOL;
 
@@ -35,16 +36,22 @@ function init(): void {
 	update_block_json( $attr );
 }
 
+/**
+ * Updates the block.json file with attributes and configuration.
+ *
+ * Reads the existing block.json file, updates it with the provided attributes,
+ * editor styles, view scripts, view styles, and version, then writes it back.
+ *
+ * @param  array<string, array<string, string>>  $attr  Block attributes to update.
+ */
 function update_block_json( array $attr ): void {
 
 	$file = dirname( __DIR__ ) . '/src/block.json';
-
-	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 	$json = file_get_contents( $file );
 
 	try {
 		$json = json_decode( $json, true, 15, JSON_THROW_ON_ERROR );
-	} catch (\JsonException $exception) {
+	} catch ( \JsonException $exception ) {
 		die( esc_html( $exception->getMessage() ) );
 	}
 
@@ -58,26 +65,5 @@ function update_block_json( array $attr ): void {
 	$json['viewStyle']   = VIEW_SCRIPT_HANDLES;
 	$json['version']     = VERSION;
 
-	// phpcs:ignore
 	file_put_contents( $file, json_encode( $json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) );
-}
-
-function __( string $a, string $b ): string {
-	return $a;
-}
-
-function esc_html( string $str ): string {
-	return $str;
-}
-
-function esc_html__( string $str, string $str2 ): string {
-	return $str;
-}
-
-function esc_url( string $str ): string {
-	return $str;
-}
-
-function plugins_url( string $path, string $file ): string {
-	return 'https://example.org/app/plugins/arve/' . $path;
 }
