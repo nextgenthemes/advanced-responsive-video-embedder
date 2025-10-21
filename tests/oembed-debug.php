@@ -10,6 +10,7 @@ use function Nextgenthemes\ARVE\get_host_properties;
 // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_read_fwrite
 // phpcs:disable WordPress.PHP.DiscouragedPHPFunctions.system_calls_system
 // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
 
 class Tests_OembedD extends WP_UnitTestCase {
 
@@ -52,7 +53,6 @@ class Tests_OembedD extends WP_UnitTestCase {
 
 		$file = __DIR__ . '/' . basename( __FILE__ ) . '-log.php';
 
-		// phpcs:ignore
 		file_put_contents(
 			$file,
 			'<?php' . PHP_EOL . $export . ';' . PHP_EOL
