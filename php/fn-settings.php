@@ -41,14 +41,14 @@ function settings_instance(): Settings {
 }
 
 /**
- * @return array <string, bool|string>
+ * @return array <string, bool|string|int>
  */
 function options(): array {
 	return settings_instance()->get_options();
 }
 
 /**
- * @return array <string, bool|string>
+ * @return array <string, bool|string|int>
  */
 function default_options(): array {
 	return settings_instance()->get_options_defaults();
