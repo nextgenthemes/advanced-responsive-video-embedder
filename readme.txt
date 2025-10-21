@@ -3,7 +3,7 @@ Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: embed, video, lazyload, lightbox, rumble
 Requires at least: 6.6
-Tested up to: 6.8
+Tested up to: 6.8.3
 Requires PHP: 7.4
 Stable tag: 10.7.0-beta1
 License: GPL-3.0
@@ -59,7 +59,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 #### Supported Providers ####
 
 [All providers with iframe embed codes](https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding)
-Alugha, Archive.org, Banned.video, Bitchute, Brightcove, Brighteon, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Gab TV, Google Drive, mp4 or webm video files, ARVE general iframe embed, IGN, IMDB, Kickstarter, kla.tv, Livestream.com, Mail.ru, Metacafe, myspace, v.qq.com, Rumble.com, ok.ru, RuTube.ru, TED Talks, TikTok, Twitch, Viddler, Vimeo, VK, Wistia, XTube, xHamster, Yahoo, Youku, YouTube, YouTube Playlist, Kick
+Alugha, Archive.org, Banned.video, Bitchute, Brightcove, Brighteon, Dailymotion, Dailymotion Playlist, DTube, Facebook, Google Drive, mp4 or webm video files, ARVE general iframe embed, IGN, IMDB, Kickstarter, kla.tv, Mail.ru, myspace, v.qq.com, Rumble.com, ok.ru, RuTube.ru, TED Talks, TikTok, Twitch, Viddler, Vimeo, VK, Wistia, XTube, xHamster, Yahoo, Youku, YouTube, YouTube Playlist, Kick
 ### Reviews ###
 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Great plugin, great support ####
