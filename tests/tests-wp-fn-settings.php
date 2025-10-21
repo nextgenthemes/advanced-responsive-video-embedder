@@ -12,8 +12,6 @@ class Tests_AddonsBaseChecks extends WP_UnitTestCase {
 		$addons   = $GLOBALS['arve_detected_addons'] ?? [];
 
 		$this->assertNotEmpty( $products );
-		$this->assertIsArray( $products );
-
 		$this->assertNotEmpty( $addons );
 		$this->assertIsArray( $addons );
 

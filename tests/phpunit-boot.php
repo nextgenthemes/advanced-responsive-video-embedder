@@ -68,6 +68,11 @@ function manually_load_plugins(): void {
 	}
 }
 
+/**
+ * Returns the list of plugins to activate for the test suite.
+ *
+ * @return string[] Array of plugin slugs to activate.
+ */
 function plugins_to_activate(): array {
 
 	$plugins = getenv( 'NGT_PHPUNIT_LOAD_PLUGINS' );
@@ -88,32 +93,48 @@ function plugins_to_activate(): array {
 	return $plugins;
 }
 
+/**
+ * Filters array values that start with a given prefix.
+ *
+ * @param  array<mixed>  $arr     Array to filter.
+ * @param  string        $prefix  Prefix to match.
+ * @return array<mixed>           Filtered array containing only values starting with the prefix.
+ */
 function arr_values_starts_with( array $arr, string $prefix ): array {
 	return array_filter( $arr, fn( $value ) => str_starts_with( $value, $prefix ) );
 }
 
 /**
- * Converts a comma-separated string into an array.
+ * This PHP function takes a delimiter string as input and converts it into an array.
+ * It removes any leading or trailing spaces from each element and filters out any empty
+ * elements from the resulting array.
  *
- * Each element in the resulting array is first trimmed of any leading or trailing spaces.
- * The array is then filtered to remove any empty elements.
- * Finally, the resulting array is optionally made unique.
- *
- * @param string $str The input comma-separated string
- * @param bool $unique Whether or not to make the resulting array unique. Defaults to true.
- * @return array The resulting array
+ * @param string   $str       The input comma-separated string
+ * @param string   $delimiter The delimiter to use. Space will NOT work!
+ * @return array<int,string>  The resulting array
  */
-function str_to_array( string $str, bool $unique = true ): array {
-	$array = array_map( 'trim', explode( ',', $str ) );
-	$array = array_filter( $array, 'strlen' );
+function str_to_array( string $str, string $delimiter = ',' ): array {
 
-	if ( $unique ) {
-		$array = array_unique( $array );
-	}
+	// Trim spaces from each element
+	$arr = array_map( 'trim', explode( $delimiter, $str ) );
 
-	return $array;
+	// Filter out empty elements
+	$arr = array_filter(
+		$arr,
+		fn ( string $s ): bool => (bool) strlen( $s )
+	);
+
+	// Remove duplicate elements
+	$arr = array_unique( $arr );
+
+	return $arr;
 }
 
+/**
+ * Extracts test suite names from the phpunit.xml configuration file.
+ *
+ * @return string[] Array of test suite names.
+ */
 function get_testsuites_from_phpunit_config(): array {
 
 	$xml              = new SimpleXMLElement( file_get_contents( dirname( __DIR__ ) . '/phpunit.xml' ) );

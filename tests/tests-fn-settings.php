@@ -7,6 +7,13 @@ use function Nextgenthemes\ARVE\default_options;
 
 class Tests_Settings extends WP_UnitTestCase {
 
+	/**
+	 * Provides options data for testing.
+	 *
+	 * @return array<int, array{
+	 *     options: array<string, mixed>
+	 * }> Array of options data.
+	 */
 	public function data_options(): array {
 
 		$data[]['options'] = options();
@@ -20,6 +27,7 @@ class Tests_Settings extends WP_UnitTestCase {
 	 *
 	 * @group options
 	 * @dataProvider data_options
+	 * @param  array<string, mixed>  $options  The options array to test.
 	 */
 	public function test_settings_page( array $options ): void {
 		$this->assertArrayHasKey( 'maxwidth', $options );

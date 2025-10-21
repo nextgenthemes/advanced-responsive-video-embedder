@@ -72,7 +72,7 @@ class Tests_NoAddons extends WP_UnitTestCase {
 	 *
 	 * @param string $html The HTML content from which to extract JSON-LD data.
 	 *
-	 * @return array|WP_Error The decoded JSON-LD data as an array, or a WP_Error object if decoding fails.
+	 * @return array<mixed>|WP_Error The decoded JSON-LD data as an array, or a WP_Error object if decoding fails.
 	 */
 	public function extract_json_ld( string $html ) {
 
