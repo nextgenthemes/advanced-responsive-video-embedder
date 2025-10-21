@@ -64,11 +64,18 @@ function add_site_health_metadata( array $metadata ): array {
 			],
 			'is_dev_mode' => [
 				'label' => __( 'is_dev_mode', 'advanced-responsive-video-embedder' ),
-				'value' => var_export( is_dev_mode(), true ),
+				'value' => var_export( is_dev_mode(), true ), // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
 			],
 			'dismissed_notices' => [
 				'label' => __( 'Dismissed Notices', 'advanced-responsive-video-embedder' ),
-				'value' => var_export( get_user_meta( get_current_user_id(), 'dnh_dismissed_notices' ), true ),
+				'value' => var_export( // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
+					get_user_meta(
+						get_current_user_id(),
+						'dnh_dismissed_notices',
+						false
+					),
+					true
+				),
 			],
 		],
 	];
