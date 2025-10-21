@@ -3,7 +3,7 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2025-10-22 10.7.0 ###
+### 2025-10-22 10.7.1 ###
 
 * Fix: SEO `uploadDate` not being in ATOM format for Vimeo.
 * Improved: `uploadDate` timezone handling. All formats that php can handle are converted to ATOM format. If timezone is not part of the string, the WordPress timezone setting is used when the time was manually entered. Otherwise UTC is used.
