@@ -78,7 +78,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../../../../../dev/composer-packages/wp-settings",
-                "reference": "02f6023ed82196b1112efec280126c086386d5d0"
+                "reference": "c899134604cca1d2cbea92ccebc8acdb2eb84429"
             },
             "require": {
                 "php": ">=7.4"
