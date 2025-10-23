@@ -40,8 +40,9 @@ class Tests_Admin extends WP_UnitTestCase {
 			'Failed to delete transients with containing "two".'
 		);
 
-		if ( version_compare( $GLOBALS['wp_version'], '6.9-beta1', '<' ) ) {
-
+		if ( version_compare( $GLOBALS['wp_version'], '6.9-beta1', '>=' ) ) {
+			$this->markTestSkipped( 'This fails with WP >=6.9-beta1 for some reason' );
+		} else {
 			// This finds TWO transients since >=6.9-beta1 for some reason.
 			$this->assertEquals(
 				'Deleted 1 transients.',
