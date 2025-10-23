@@ -16,7 +16,7 @@ class Tests_Admin extends WP_UnitTestCase {
 	public function test_transient_deletion(): void {
 
 		if ( version_compare( $GLOBALS['wp_version'], '6.9-beta1', '>=' ) ) {
-			$this->markTestSkipped( 'This fails with WP 6.9-beta1 for some reason' );
+			#$this->markTestSkipped( 'This fails with WP >=6.9-beta1 for some reason' );
 		}
 
 		set_transient( 'ngt_phpunit_test_1_one', '1 one' );
@@ -27,23 +27,27 @@ class Tests_Admin extends WP_UnitTestCase {
 		set_transient( 'ngt_phpunit_test_3_two', '3 two' );
 
 		$this->assertEquals(
+			'Deleted 2 transients.',
 			delete_transients( 'ngt_phpunit_test_1' ),
-			'Deleted 2 transients.'
+			'Failed to delete transients with prefix "ngt_phpunit_test_1".'
 		);
 
 		$this->assertEquals(
+			'Deleted 1 transients.',
 			delete_transients( 'ngt_phpunit_test_2', 'one' ),
-			'Deleted 1 transients.'
+			'Failed to delete transients with prefix "ngt_phpunit_test_2" and containing "one".'
 		);
 
 		$this->assertEquals(
+			'Deleted 2 transients.',
 			delete_transients( '', 'two' ),
-			'Deleted 2 transients.'
+			'Failed to delete transients with containing "two".'
 		);
 
 		$this->assertEquals(
+			'Deleted 1 transients.',
 			delete_transients( '', '' ),
-			'Deleted 1 transients.'
+			'Failed to delete transients with no prefix and no containing string.'
 		);
 	}
 }
