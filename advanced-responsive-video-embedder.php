@@ -72,6 +72,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once __DIR__ . '/vendor/autoload_packages.php';
 require_once __DIR__ . '/php/init.php';
 
+if ( defined( 'WP_CLI' ) && WP_CLI ) { // @phpstan-ignore-line
+	require_once __DIR__ . '/php/CLI.php';
+	\WP_CLI::add_command( 'arve', 'Nextgenthemes\ARVE\CLI' );
+}
+
 register_uninstall_hook( PLUGIN_FILE, __NAMESPACE__ . '\uninstall' );
 function uninstall(): void {
 
@@ -79,5 +84,6 @@ function uninstall(): void {
 
 	if ( version_compare( $wpdb->db_version(), '8.0', '>=' ) ) {
 		$wpdb->query( "UPDATE {$wpdb->postmeta} SET meta_value = REGEXP_REPLACE( meta_value, '<template[^>]+arve_cachetime[^>]+></template>', '' )" );
+		$wpdb->query( "UPDATE {$wpdb->postmeta} SET meta_value = REGEXP_REPLACE( meta_value, '<script[^>]*class=\"arve-oembed-json\"[^>]*>.*?</script>', '' )" );
 	}
 }

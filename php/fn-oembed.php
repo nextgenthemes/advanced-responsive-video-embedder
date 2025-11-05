@@ -11,6 +11,8 @@ use function Nextgenthemes\WP\valid_url;
 use function Nextgenthemes\WP\get_attribute_from_html_tag;
 use function Nextgenthemes\WP\first_tag_attr;
 
+const OEMBED_SCRIPT_CLASS = 'arve-oembed-json';
+
 /**
  * Add ARVE data to oEmbed cache
  *
@@ -59,12 +61,19 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 		Privacy\oembed_data( $data );
 	}
 
-	unset( $data->html );
+	$html .= PHP_EOL . PHP_EOL;
+	$html .=
+		'<script class="' . OEMBED_SCRIPT_CLASS . '" type="application/json">' .
+		wp_json_encode( $data, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT ) .
+		'</script>';
+
+	#unset( $data->html );
 	$attr = array();
 	foreach ( $data as $key => $value ) {
 		$attr[ 'data-' . $key ] = $value;
 	}
 
+	$html .= PHP_EOL . PHP_EOL;
 	$html .= first_tag_attr( '<template class="arve-data"></template>', $attr );
 
 	return $html;
@@ -84,6 +93,40 @@ function sane_provider_name( string $provider ): string {
 	return $provider;
 }
 
+function new_oembed_data_extraction( string $html, ?object $old_data ): ?object {
+	$new_data = extract_oembed_data_new( $html );
+
+	if ( $old_data && ! $new_data ) {
+		return $old_data;
+	}
+
+	if ( ! $old_data && ! $new_data ) {
+		return null;
+	}
+
+	$log_entry = [];
+	$old       = (array) $old_data;
+	$new       = (array) $new_data;
+	ksort( $old );
+	ksort( $new );
+
+	if ( $old !== $new ) {
+
+		$old_text = print_r( $old, true ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+		$new_text = print_r( $new, true ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+
+		$diff      = new \jblond\Diff( $old_text, $new_text, [ 'context' => 1 ] );
+		$renderer  = new \jblond\Diff\Renderer\Text\Unified();
+		$log_entry = $diff->render( $renderer );
+
+		TransientLog::add( $old_data->arve_url, (string) $log_entry );
+
+		$new_data->arve_diff_fail = $log_entry;
+	}
+
+	return $old_data;
+}
+
 /**
  * Filters the cached oEmbed HTML.
  *
@@ -97,16 +140,16 @@ function sane_provider_name( string $provider ): string {
 function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_id ): string {
 
 	$oembed_data = extract_oembed_data( $cache );
+	$oembed_data = new_oembed_data_extraction( $cache, $oembed_data );
 
 	if ( $oembed_data ) {
-		$a['url']         = $url;
-		$a['oembed_data'] = $oembed_data;
-		$a['origin_data'] = array(
-			'from'    => 'filter_embed_oembed_html',
-			'post_id' => $post_id,
-			'attr'    => $attr,
-			'cache'   => delete_oembed_caches_when_missing_data( $oembed_data ),
-		);
+		$a['url']                 = $url;
+		$a['oembed_data']         = $oembed_data;
+		$a['origin_data']['from'] = 'filter_embed_oembed_html';
+
+		$a['origin_data'][ __FUNCTION__ ]['post_id'] = $post_id;
+		$a['origin_data'][ __FUNCTION__ ]['cache']   = delete_oembed_caches_when_missing_data( $oembed_data );
+		$a['origin_data'][ __FUNCTION__ ]['attr']    = $attr;
 
 		$cache = build_video( $a );
 	}
@@ -186,6 +229,19 @@ function extract_oembed_data( string $html ): ?object {
 	return $data;
 }
 
+function extract_oembed_data_new( string $html ): ?object {
+
+	$p = new WP_HTML_Tag_Processor( $html );
+
+	if ( ! $p->next_tag( array( 'class_name' => OEMBED_SCRIPT_CLASS ) ) ) {
+		return null;
+	}
+
+	$data = json_decode( $p->get_modifiable_text(), );
+
+	return $data;
+}
+
 /**
  * Build a srcset attribute string from an array of image URLs keyed by width.
  *
@@ -224,28 +280,32 @@ function oembed_html2src( object $data ) {
 		return new WP_Error( 'no-oembed-html', __( 'No oembed html', 'advanced-responsive-video-embedder' ) );
 	}
 
-	$data->html = htmlspecialchars_decode( $data->html, ENT_COMPAT | ENT_HTML5 );
+	$html = htmlspecialchars_decode( $data->html, ENT_COMPAT | ENT_HTML5 );
 
 	if ( 'TikTok' === $data->provider_name ) {
 
-		$tiktok_video_id = get_attribute_from_html_tag( array( 'class' => 'tiktok-embed' ), 'data-video-id', $data->html );
+		$tiktok_video_id = get_attribute_from_html_tag( array( 'class' => 'tiktok-embed' ), 'data-video-id', $html );
 
 		if ( $tiktok_video_id ) {
 			return 'https://www.tiktok.com/embed/v2/' . $tiktok_video_id;
 		} else {
-			return new WP_Error( 'tiktok-video-id', __( 'Failed to extract tiktok video id from oembed html', 'advanced-responsive-video-embedder' ), $data->html );
+			return new WP_Error( 'tiktok-video-id', __( 'Failed to extract tiktok video id from oembed html', 'advanced-responsive-video-embedder' ), $html );
 		}
 	} elseif ( 'Facebook' === $data->provider_name ) {
 
-		$facebook_video_url = get_attribute_from_html_tag( array( 'class' => 'fb-video' ), 'data-href', $data->html );
+		$facebook_video_url = get_attribute_from_html_tag( array( 'class' => 'fb-video' ), 'data-href', $html );
 
 		if ( $facebook_video_url ) {
 			return 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $facebook_video_url );
 		} else {
-			return new WP_Error( 'facebook-video-id', __( 'Failed to extract facebook video url from this html', 'advanced-responsive-video-embedder' ), $data->html );
+			return new WP_Error(
+				'facebook-video-id',
+				__( 'Failed to extract facebook video url from this html', 'advanced-responsive-video-embedder' ),
+				$html
+			);
 		}
 	} else {
-		$iframe_src = get_attribute_from_html_tag( array( 'tag_name' => 'iframe' ), 'src', $data->html );
+		$iframe_src = get_attribute_from_html_tag( array( 'tag_name' => 'iframe' ), 'src', $html );
 
 		if ( $iframe_src ) {
 
@@ -257,11 +317,15 @@ function oembed_html2src( object $data ) {
 				return new WP_Error(
 					'facebook-video-id',
 					__( 'Invalid iframe src url', 'advanced-responsive-video-embedder' ),
-					$data->html
+					$html
 				);
 			}
 		} else {
-			return new WP_Error( 'iframe-src', __( 'Failed to extract iframe src from this html', 'advanced-responsive-video-embedder' ), $data->html );
+			return new WP_Error(
+				'iframe-src',
+				__( 'Failed to extract iframe src from this html', 'advanced-responsive-video-embedder' ),
+				$html
+			);
 		}
 	}
 }
