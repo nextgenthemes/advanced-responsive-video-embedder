@@ -169,7 +169,7 @@ function gutenberg_block( array $attr ): string {
 	}
 
 	$attr['origin_data']['gutenberg']    = true;
-	$attr['origin_data'][ __FUNCTION__ ] = true;
+	$attr['origin_data'][ __FUNCTION__ ] = 'end';
 
 	return shortcode( $attr );
 }

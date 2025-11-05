@@ -9,12 +9,13 @@ use const Nextgenthemes\ARVE\ALLOWED_HTML;
 /**
  * Processes the shortcode attributes and builds the video html.
  *
- * @param array <string, mixed>    $a The array of shortcode attributes.
- * @return string|\WP_REST_Response    The generated video output.
+ * @param array <string, mixed> $a The array of shortcode attributes.
+ *
+ * @return string|\WP_REST_Response The generated video output.
  */
 function shortcode( array $a ) {
 
-	$a['origin_data']['from'] = 'shortcode';
+	$a['origin_data'][ __FUNCTION__ ]['start'] = 'start';
 
 	foreach ( $a as $k => $v ) {
 		if ( '' === $v ) {
@@ -37,13 +38,13 @@ function shortcode( array $a ) {
 		add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', OEMBED_HTML_PRIORITY, 4 );
 
 		$oembed_data = extract_oembed_data( $maybe_arve_html );
+		$oembed_data = new_oembed_data_extraction( $maybe_arve_html, $oembed_data );
 
 		if ( $oembed_data ) {
 			$a['oembed_data'] = $oembed_data;
-			$a['origin_data'] = array(
-				'from'  => 'shortcode oembed_data detected',
-				'cache' => delete_oembed_caches_when_missing_data( $oembed_data ),
-			);
+
+			$a['origin_data'][ __FUNCTION__ ]['oembed_data'] = 'shortcode oembed_data detected';
+			$a['origin_data'][ __FUNCTION__ ]['cache']       = delete_oembed_caches_when_missing_data( $oembed_data );
 		}
 	}
 
@@ -96,7 +97,7 @@ function get_error_html(): string {
 
 		if ( ! empty( $data ) && is_dev_mode() ) {
 			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
-			$html .= sprintf( '<pre>%s</pre>', var_export( $data, true ) );
+			$html .= sprintf( '<pre>%s</pre>', esc_html( var_export( $data, true ) ) );
 		}
 
 		$html = error( $html );
@@ -110,8 +111,9 @@ function get_error_html(): string {
 /**
  * Builds a video based on the input attributes.
  *
- * @param array <string, mixed>   $input_atts The input attributes for the video.
- * @return string|\WP_REST_Response             The built video.
+ * @param array <string, mixed> $input_atts The input attributes for the video.
+ *
+ * @return string|\WP_REST_Response The built video.
  */
 function build_video( array $input_atts ) {
 
@@ -161,10 +163,10 @@ function create_shortcodes(): void {
 				if ( ! empty( $properties[ $provider ]['rebuild_url'] ) && ! empty( $a['id'] ) ) {
 					$a['url'] = sprintf( $properties[ $provider ]['rebuild_url'], $a['id'] );
 					unset( $a['id'] );
-					$a['origin_data']['from'] = 'create_shortcodes rebuild_url';
+					$a['origin_data'][ __FUNCTION__ ]['rebuild_url'] = 'rebuild_url';
 					return shortcode( $a );
 				} else {
-					$a['origin_data']['from'] = 'create_shortcodes';
+					$a['origin_data'][ __FUNCTION__ ]['create_shortcodes'] = 'create_shortcodes';
 					return build_video( $a );
 				}
 			};
