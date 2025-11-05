@@ -44,7 +44,7 @@ function cmd( string $command, string ...$values ): string {
 /**
  * Creates a string of long command line arguments from an array.
  *
- * Example: --post_type=page --post_title="Hello World"
+ * Example: --post_type="page" --post_title="Hello World"
  *
  * @param array<string, string|int> $args
  */
@@ -67,6 +67,7 @@ function bootstrap_wp(): void {
 	// Bootstrap WordPress
 	define( 'WP_USE_THEMES', false );
 	define( 'ABSPATH', getenv( 'WP_CORE_DIR' ) . '/' );
+	define( 'WP_DEBUG', true );
 
 	require_once ABSPATH . 'wp-load.php';
 }
