@@ -14,7 +14,6 @@ add_action( 'admin_init', __NAMESPACE__ . '\init_admin', 9 );
 
 function init(): void {
 
-	require_once PLUGIN_DIR . '/php/Video.php';
 	require_once PLUGIN_DIR . '/php/fn-cache.php';
 	require_once PLUGIN_DIR . '/php/fn-assets.php';
 	require_once PLUGIN_DIR . '/php/fn-html-output.php';
