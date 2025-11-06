@@ -16,6 +16,13 @@ function register_assets(): void {
 		ver( PLUGIN_DIR . '/build/main.css', VERSION ),
 	);
 
+	wp_register_style(
+		'arve-error',
+		plugins_url( 'build/error.css', PLUGIN_FILE ),
+		array(),
+		ver( PLUGIN_DIR . '/build/error.css', VERSION ),
+	);
+
 	wp_register_script(
 		'arve',
 		plugins_url( 'build/main.js', PLUGIN_FILE ),
