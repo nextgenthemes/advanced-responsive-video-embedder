@@ -9,6 +9,9 @@ use WP_REST_Request;
 use WP_REST_Response;
 use function wp_interactivity_data_wp_context as data_wp_context;
 
+/**
+ * @phpstan-import-type NgtSettingValue from SettingValidator
+ */
 class Settings {
 	/**
 	 * The slug of the parent menu under which the settings menu will appear.
@@ -86,21 +89,21 @@ class Settings {
 	/**
 	 * Array of current option values.
 	 *
-	 * @var array <string, int|float|string|bool>
+	 * @var array <string, NgtSettingValue>
 	 */
 	private array $options;
 
 	/**
 	 * Array of default option values.
 	 *
-	 * @var array <string, int|float|string|bool>
+	 * @var array <string, NgtSettingValue>
 	 */
 	private array $options_defaults;
 
 	/**
 	 * Array of default option values organized by section.
 	 *
-	 * @var array <string, array<string, int|float|string|bool>>
+	 * @var array <string, array<string, NgtSettingValue>>
 	 */
 	private array $options_defaults_by_section;
 
@@ -231,17 +234,17 @@ class Settings {
 	}
 
 	/**
-	 * @return array <string, int|float|string|bool>
+	 * @return array <string, NgtSettingValue>
 	 */
 	public function get_options(): array {
 		$options = (array) get_option( $this->slugged_namespace, array() );
 		$options = $options + $this->options_defaults;
 
-		return apply_filters( $this->slashed_namespace . '/settings', $options );
+		return apply_filters( $this->slashed_namespace . '/options', $options );
 	}
 
 	/**
-	 * @return array <string, int|float|string|bool>
+	 * @return array <string, NgtSettingValue>
 	 */
 	public function get_options_defaults(): array {
 		return $this->options_defaults;
@@ -252,7 +255,7 @@ class Settings {
 	}
 
 	/**
-	 * @param array <string, int|float|string|bool> $options
+	 * @param array <string, NgtSettingValue> $options
 	 */
 	public function save_options( array $options ): void {
 		// remove all items from options that are not also in defaults.
@@ -261,6 +264,15 @@ class Settings {
 		$options = array_intersect_key( $options, $this->options_defaults );
 
 		update_option( $this->slugged_namespace, $options );
+	}
+
+	/**
+	 * @param NgtSettingValue $value
+	 */
+	public function update_option( string $key, $value ): void {
+		$options         = $this->get_options();
+		$options[ $key ] = $value;
+		$this->save_options( $options );
 	}
 
 	public function register_rest_route(): void {
@@ -474,6 +486,7 @@ class Settings {
 					[
 						'activeTabs' => $active_tabs,
 						'help'       => true,
+						'settings'   => $this->settings->to_array(),
 					]
 				);
 				?>
