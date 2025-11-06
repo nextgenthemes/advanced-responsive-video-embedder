@@ -484,10 +484,10 @@ class Video {
 
 	private function missing_attribute_check(): void {
 
-		$origin_from = $this->org_args['origin_data']['from'] ?? '';
+		$from_legacy_shortcode = $this->org_args['origin_data']['Nextgenthemes\ARVE\{closure}']['create_legacy_shortcodes'] ?? '';
 
 		// Old shortcodes
-		if ( 'create_shortcodes' === $origin_from ) {
+		if ( ! empty( $this->org_args['origin_data']['from'] ) && 'create_shortcodes' === $this->org_args['origin_data']['from'] ) {
 
 			if ( ! $this->org_args['id'] || ! $this->org_args['provider'] ) {
 				throw new \Exception( 'need id and provider' );

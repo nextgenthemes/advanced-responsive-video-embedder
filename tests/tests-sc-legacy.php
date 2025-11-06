@@ -2,6 +2,10 @@
 
 declare(strict_types = 1);
 
+/**
+ * @group legacy
+ * @group shortcodes
+ */
 class Tests_Legacy_Shortcodes extends WP_UnitTestCase {
 
 	public function test_legacy_youtube_shortcode(): void {

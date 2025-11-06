@@ -115,10 +115,13 @@ function create_shortcodes(): void {
 				if ( ! empty( $properties[ $provider ]['rebuild_url'] ) && ! empty( $a['id'] ) ) {
 					$a['url'] = sprintf( $properties[ $provider ]['rebuild_url'], $a['id'] );
 					unset( $a['id'] );
+					$a['origin_data']['from'] = 'create_shortcodes rebuild_url';
 					$a['origin_data'][ __FUNCTION__ ]['rebuild_url'] = 'rebuild_url';
 					return shortcode( $a );
 				} else {
-					$a['origin_data'][ __FUNCTION__ ]['create_shortcodes'] = 'create_shortcodes';
+					$a['origin_data']['from'] = 'create_shortcodes';
+
+					$a['origin_data'][ __FUNCTION__ ]['create_legacy_shortcodes'] = 'create_legacy_shortcodes';
 					return build_video( $a );
 				}
 			};
