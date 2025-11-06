@@ -13,7 +13,7 @@ class Tests_Ratio extends WP_UnitTestCase {
 				'url' => 'https://www.example.com',
 			)
 		);
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString( 'arve-embed--has-aspect-ratio', $html );
 	}
 
@@ -25,7 +25,7 @@ class Tests_Ratio extends WP_UnitTestCase {
 				'aspect_ratio' => '1:1',
 			)
 		);
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString( 'style="aspect-ratio:1/1', $html );
 	}
 
@@ -37,7 +37,7 @@ class Tests_Ratio extends WP_UnitTestCase {
 				'aspect_ratio' => '1:4',
 			)
 		);
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString( 'style="aspect-ratio:1/4', $html );
 	}
 
@@ -53,7 +53,7 @@ class Tests_Ratio extends WP_UnitTestCase {
 				'url' => 'https://www.youtube.com/shorts/hgPa4VzuHdY',
 			)
 		);
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString( 'style="aspect-ratio:9/16', $html );
 	}
 }

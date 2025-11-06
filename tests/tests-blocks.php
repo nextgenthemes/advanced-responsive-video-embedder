@@ -21,7 +21,7 @@ class Tests_Blocks extends WP_UnitTestCase {
 
 		$html = do_blocks( '<!-- wp:nextgenthemes/arve-block {"url":"https://example.com","title":"Block Testing Title","mode":"normal","className":"extra-cls extra-cls-two"} /-->' );
 
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString( 'extra-cls extra-cls-two', $html );
 		$this->assertStringContainsString( 'Block Testing Title', $html );
 	}
@@ -43,7 +43,7 @@ class Tests_Blocks extends WP_UnitTestCase {
 			<!-- /wp:embed -->'
 		);
 
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringNotContainsString( 'wp-has-aspect-ratio', $html );
 		$this->assertStringNotContainsString( 'wp-embed-aspect-16-9', $html );
 		$this->assertStringNotContainsString( 'wp-block-embed__wrapper', $html );

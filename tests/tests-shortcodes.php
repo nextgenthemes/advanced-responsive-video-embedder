@@ -14,7 +14,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 
 		$html = do_shortcode( '[arve_test]' );
 
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 	}
 
 	public function test_sc_overwrite(): void {
@@ -33,7 +33,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString( 'override', $html );
 	}
 
@@ -45,14 +45,14 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 	}
 
 	public function test_schema_enabled(): void {
 
 		$html = shortcode( array( 'url' => 'https://example.com' ) );
 
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString( '<script type="application/ld+json">{"@context":"http:\/\/schema.org\/"', $html );
 	}
 
@@ -217,7 +217,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 
 		if ( 'html5' === $provider ) {
 			$this->assertStringContainsString( '"contentURL":', $html );
@@ -247,7 +247,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString( 'sandbox="', $html );
 
 		$html = shortcode(
@@ -257,7 +257,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringNotContainsString( 'sandbox="', $html );
 	}
 
@@ -273,7 +273,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 			array( 'url' => 'https://www.ted.com/talks/auke_ijspeert_a_robot_that_runs_and_swims_like_a_salamander?language=de' )
 		);
 
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString(
 			'https://embed.ted.com/talks/lang/de/auke_ijspeert_a_robot_that_runs_and_swims_like_a_salamander',
 			$html,
@@ -298,7 +298,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertStringNotContainsString( 'Error', $output );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $output );
 		$this->assertStringNotContainsString( 'srcset=', $output );
 
 		$this->assertStringContainsString( 'alignleft', $output );
@@ -316,7 +316,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 
 		$output = shortcode( array( 'url' => 'https://example.com' ) );
 
-		$this->assertStringNotContainsString( 'Error', $output );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $output );
 		$this->assertMatchesRegularExpression( '#<iframe .*src="https://example\.com#', $output );
 		$this->assertStringContainsString( 'data-provider="iframe"', $output );
 	}
@@ -400,7 +400,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString( 'aspect-ratio:640/320', $html );
 
 		$p = new WP_HTML_Tag_Processor( $html );

@@ -16,7 +16,7 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 				'url' => 'https://www.youtube.com/watch?v=--SCDa1zsYI&t=1h1m2s',
 			)
 		);
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString( '?start=3662', $html );
 		$this->assertStringContainsString( 'referrerpolicy="strict-origin-when-cross-origin"', $html );
 	}
@@ -31,7 +31,7 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 				'url' => 'https://www.youtube.com/watch?v=--SCDa1zsYI&t=1h2s',
 			)
 		);
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString( '?start=3602', $html );
 		$this->assertStringContainsString( 'referrerpolicy="strict-origin-when-cross-origin"', $html );
 	}
@@ -46,7 +46,7 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 				'url' => 'https://www.youtube.com/watch?v=--SCDa1zsYI&t=1m2s',
 			)
 		);
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString( '?start=62', $html );
 		$this->assertStringContainsString( 'referrerpolicy="strict-origin-when-cross-origin"', $html );
 	}
@@ -62,7 +62,7 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString( '?start=1621', $html );
 		$this->assertStringContainsString( 'referrerpolicy="strict-origin-when-cross-origin"', $html );
 	}
@@ -83,7 +83,7 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 
 		$this->assertStringContainsString( 'loop=1', $html );
 		$this->assertStringContainsString( 'playlist=5R0LrCfXQjQ', $html );
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 
 		$html = shortcode(
 			array(
@@ -95,7 +95,7 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'loop=1', $html );
 		$this->assertStringContainsString( '/videoseries', $html );
 		$this->assertStringNOTContainsString( 'playlist=', $html );
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString( 'referrerpolicy="strict-origin-when-cross-origin"', $html );
 	}
 }

@@ -15,7 +15,7 @@ class Tests_ShortcodeVideoFiles extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'arve-embed', $html );
 		$this->assertStringContainsString( '<video', $html );
 		$this->assertStringContainsString( 'src="https://example.com/video.av1.mp4"', $html );
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 	}
 
 	public function test_av1_arg(): void {
@@ -26,7 +26,7 @@ class Tests_ShortcodeVideoFiles extends WP_UnitTestCase {
 		$this->assertStringContainsString( '<video', $html );
 		$this->assertStringContainsString( 'src="https://example.com/video.mp4"', $html );
 		$this->assertStringContainsString( 'video/mp4; codecs=av01.0.05M.08', $html );
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 	}
 
 	public function test_do_not_override_wmv(): void {
@@ -43,7 +43,7 @@ class Tests_ShortcodeVideoFiles extends WP_UnitTestCase {
 		$this->assertStringContainsString( '<video', $html );
 		$this->assertStringContainsString( 'src="https://example.com/video.mp4"', $html );
 		$this->assertStringContainsString( 'https://example.com/poster.jpg', $html );
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 	}
 
 	public function test_html5(): void {
@@ -55,8 +55,8 @@ class Tests_ShortcodeVideoFiles extends WP_UnitTestCase {
 			$with_url = shortcode( array( 'url' => 'https://example.com/video.' . $ext ) );
 			$with_ext = shortcode( array( $ext => 'https://example.com/video.' . $ext ) );
 
-			$this->assertStringNotContainsString( 'Error', $with_url );
-			$this->assertStringNotContainsString( 'Error', $with_ext );
+			$this->assertStringNotContainsStringIgnoringCase( 'Error', $with_url );
+			$this->assertStringNotContainsStringIgnoringCase( 'Error', $with_ext );
 			$this->assertStringNotContainsString( '<iframe', $with_url );
 			$this->assertStringNotContainsString( '<iframe', $with_ext );
 			$this->assertStringContainsString( 'data-provider="html5"', $with_url );
@@ -83,7 +83,7 @@ class Tests_ShortcodeVideoFiles extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertStringNotContainsString( 'Error', $output );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $output );
 		$this->assertStringNotContainsString( '<iframe', $output );
 		$this->assertStringNotContainsString( 'should-be-ignored.mp4', $output );
 		$this->assertStringContainsString( 'data-provider="html5"', $output );

@@ -24,7 +24,7 @@ class Tests_ShortcodeThumbnail extends WP_UnitTestCase {
 		);
 
 		$this->assertMatchesRegularExpression( '#"thumbnailUrl":"http.*icon-128x128#', $html );
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 	}
 
 	public function test_thumbnail_by_url(): void {
@@ -37,6 +37,6 @@ class Tests_ShortcodeThumbnail extends WP_UnitTestCase {
 		);
 
 		$this->assertStringContainsString( '"thumbnailUrl":"https:\/\/example.com\/image.jpg"', $html );
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 	}
 }

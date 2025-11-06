@@ -17,7 +17,7 @@ class Tests_ShortcodeVimeo extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString( 'data-oembed="1"', $html );
 		$this->assertStringContainsString( 'referrerpolicy="strict-origin-when-cross-origin"', $html );
 		$this->assertMatchesRegularExpression( '@src="https://player.vimeo.com/.*#t=5"@', $html );

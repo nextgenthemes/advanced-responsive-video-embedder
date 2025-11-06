@@ -15,7 +15,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 				'thumbnail' => '666',
 			)
 		);
-		$this->assertStringContainsString( 'Error', $html );
+		$this->assertStringContainsStringIgnoringCase( 'Error', $html );
 	}
 
 	public function test_wrong_thumb_url(): void {
@@ -26,7 +26,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 				'thumbnail' => 'bullshit',
 			)
 		);
-		$this->assertStringContainsString( 'Error', $html );
+		$this->assertStringContainsStringIgnoringCase( 'Error', $html );
 	}
 
 	public function test_wrong_no_req_param(): void {
@@ -34,7 +34,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		#$this->expectException('Exception');
 
 		$html = shortcode( array( 'bullshit' => 'bullshit' ) );
-		$this->assertStringContainsString( 'Error', $html );
+		$this->assertStringContainsStringIgnoringCase( 'Error', $html );
 	}
 
 	public function test_wrong_align(): void {
@@ -45,7 +45,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 				'align' => 'bullshit',
 			)
 		);
-		$this->assertStringContainsString( 'Error', $html );
+		$this->assertStringContainsStringIgnoringCase( 'Error', $html );
 	}
 
 	public function test_wrong_ar(): void {
@@ -56,7 +56,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 				'aspect_ratio' => '4',
 			)
 		);
-		$this->assertStringContainsString( 'Error', $html );
+		$this->assertStringContainsStringIgnoringCase( 'Error', $html );
 	}
 
 	public function test_legacy_yt_sc_no_id(): void {
@@ -64,12 +64,12 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 		#$this->expectException('Exception');
 
 		$html = do_shortcode( '[youtube title="testing" /]' );
-		$this->assertStringContainsString( 'Error', $html );
+		$this->assertStringContainsStringIgnoringCase( 'Error', $html );
 	}
 
 	public function test_empty_url(): void {
 		$html = shortcode( array( 'url' => '' ) );
-		$this->assertStringContainsString( 'Error', $html );
+		$this->assertStringContainsStringIgnoringCase( 'Error', $html );
 	}
 
 	public function test_unknown_url(): void {
@@ -80,7 +80,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 	public function test_wrong_url(): void {
 
 		$html = shortcode( array( 'url' => 'bullshit' ) );
-		$this->assertStringContainsString( 'Error', $html );
+		$this->assertStringContainsStringIgnoringCase( 'Error', $html );
 	}
 
 	public function test_wrong_encrypted_media(): void {
@@ -91,7 +91,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 				'encrypted_media' => 'bullshit',
 			)
 		);
-		$this->assertStringContainsString( 'Error', $html );
+		$this->assertStringContainsStringIgnoringCase( 'Error', $html );
 	}
 
 	public function test_wrong_src(): void {
@@ -103,7 +103,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 				'src' => '?dnt=1',
 			)
 		);
-		$this->assertStringContainsString( 'Error', $html );
+		$this->assertStringContainsStringIgnoringCase( 'Error', $html );
 	}
 
 	/**
@@ -124,7 +124,7 @@ class Tests_ShortcodeArgValidationErrors extends WP_UnitTestCase {
 			]
 		);
 
-		$this->assertStringContainsString( 'Error', $html );
+		$this->assertStringContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString( 'err-testing-str', $html );
 		$this->assertStringContainsString( 'another-error-str', $html );
 	}

@@ -25,7 +25,7 @@ class Tests_NoAddons extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertStringContainsString( 'Error', $html );
+		$this->assertStringContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString( 'lazyload not available', $html );
 		$this->assertStringContainsString( 'data-mode="normal"', $html );
 	}
@@ -49,7 +49,7 @@ class Tests_NoAddons extends WP_UnitTestCase {
 			)
 		);
 
-		$this->assertStringNotContainsString( 'Error', $html );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$json_ld = $this->extract_json_ld( $html );
 		$this->assertNotInstanceOf( 'WP_Error', $json_ld );
 		$this->assertIsArray( $json_ld );

@@ -21,7 +21,7 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 	//  );
 
 	//  $this->assertStringContainsString( 'max-width:555px', $html );
-	//  $this->assertStringNotContainsString( 'Error', $html );
+	//  $this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 	// }
 
 	// public function test_maxwidth_set() {
@@ -33,7 +33,7 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 	//      )
 	//  );
 	//  $this->assertStringContainsString( 'max-width:666px', $html );
-	//  $this->assertStringNotContainsString( 'Error', $html );
+	//  $this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 	// }
 
 	public function test_align_maxwidth_option(): void {
@@ -45,7 +45,7 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 				'url'   => 'https://example.com',
 			)
 		);
-		$this->assertStringNotContainsString( 'Error', $output );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $output );
 		$this->assertStringContainsString( 'alignleft', $output );
 		$this->assertStringContainsString( 'style="max-width:444px;"', $output );
 	}
@@ -58,7 +58,7 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 				'url'   => 'https://example.com',
 			)
 		);
-		$this->assertStringNotContainsString( 'Error', $output );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $output );
 		$this->assertStringContainsString( 'alignleft', $output );
 		$this->assertStringContainsString( 'style="max-width:400px;"', $output );
 
@@ -68,7 +68,7 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 				'url'   => 'https://example.com',
 			)
 		);
-		$this->assertStringNotContainsString( 'Error', $output );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $output );
 		$this->assertStringContainsString( 'alignright', $output );
 		$this->assertStringContainsString( 'style="max-width:400px;"', $output );
 
@@ -78,7 +78,7 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 				'url'   => 'https://example.com',
 			)
 		);
-		$this->assertStringNotContainsString( 'Error', $output );
+		$this->assertStringNotContainsStringIgnoringCase( 'Error', $output );
 		$this->assertStringContainsString( 'aligncenter', $output );
 		$this->assertStringContainsString( 'style="max-width:400px;"', $output );
 	}
