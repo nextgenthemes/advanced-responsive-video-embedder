@@ -28,7 +28,7 @@ window.jQuery( document ).on( 'click', '.arve-btn:not([data-editor="content"])',
 	const insertBtn = qs< HTMLButtonElement >( '[data-wp-on--click="actions.insertShortcode"]' );
 
 	if ( ! openBtn || ! insertBtn || ! dialog ) {
-		console.error( 'Open btn, insert btn od dialog not found' ); // eslint-disable-line
+		console.error( 'Open btn, insert btn or dialog not found' ); // eslint-disable-line
 		return;
 	}
 
