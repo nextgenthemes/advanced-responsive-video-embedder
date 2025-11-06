@@ -11,6 +11,10 @@ class ComposerStaticInitfa4ebaf22f08a8b822c80bc4efcf7610
     );
 
     public static $prefixLengthsPsr4 = array (
+        'N' => 
+        array (
+            'Nextgenthemes\\ARVE\\' => 19,
+        ),
         'A' => 
         array (
             'Automattic\\Jetpack\\Autoloader\\' => 30,
@@ -18,6 +22,10 @@ class ComposerStaticInitfa4ebaf22f08a8b822c80bc4efcf7610
     );
 
     public static $prefixDirsPsr4 = array (
+        'Nextgenthemes\\ARVE\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/php',
+        ),
         'Automattic\\Jetpack\\Autoloader\\' => 
         array (
             0 => __DIR__ . '/..' . '/automattic/jetpack-autoloader/src',
@@ -31,6 +39,11 @@ class ComposerStaticInitfa4ebaf22f08a8b822c80bc4efcf7610
         'Automattic\\Jetpack\\Autoloader\\CustomAutoloaderPlugin' => __DIR__ . '/..' . '/automattic/jetpack-autoloader/src/CustomAutoloaderPlugin.php',
         'Automattic\\Jetpack\\Autoloader\\ManifestGenerator' => __DIR__ . '/..' . '/automattic/jetpack-autoloader/src/ManifestGenerator.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Nextgenthemes\\ARVE\\CLI' => __DIR__ . '/../..' . '/php/CLI.php',
+        'Nextgenthemes\\ARVE\\ElementorWidget' => __DIR__ . '/../..' . '/php/ElementorWidget.php',
+        'Nextgenthemes\\ARVE\\OembedDiffLog' => __DIR__ . '/../..' . '/php/OembedDiffLog.php',
+        'Nextgenthemes\\ARVE\\SettingsDefinitions' => __DIR__ . '/../..' . '/php/SettingsDefinitions.php',
+        'Nextgenthemes\\ARVE\\Video' => __DIR__ . '/../..' . '/php/Video.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

@@ -12,4 +12,9 @@ return array(
     'Automattic\\Jetpack\\Autoloader\\CustomAutoloaderPlugin' => $vendorDir . '/automattic/jetpack-autoloader/src/CustomAutoloaderPlugin.php',
     'Automattic\\Jetpack\\Autoloader\\ManifestGenerator' => $vendorDir . '/automattic/jetpack-autoloader/src/ManifestGenerator.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'Nextgenthemes\\ARVE\\CLI' => $baseDir . '/php/CLI.php',
+    'Nextgenthemes\\ARVE\\ElementorWidget' => $baseDir . '/php/ElementorWidget.php',
+    'Nextgenthemes\\ARVE\\OembedDiffLog' => $baseDir . '/php/OembedDiffLog.php',
+    'Nextgenthemes\\ARVE\\SettingsDefinitions' => $baseDir . '/php/SettingsDefinitions.php',
+    'Nextgenthemes\\ARVE\\Video' => $baseDir . '/php/Video.php',
 );

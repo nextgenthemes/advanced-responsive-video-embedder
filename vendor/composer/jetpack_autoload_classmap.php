@@ -54,6 +54,26 @@ return array(
 		'version' => '5.0.11',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-manifest-reader.php'
 	),
+	'Nextgenthemes\\ARVE\\CLI' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/php/CLI.php'
+	),
+	'Nextgenthemes\\ARVE\\ElementorWidget' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/php/ElementorWidget.php'
+	),
+	'Nextgenthemes\\ARVE\\OembedDiffLog' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/php/OembedDiffLog.php'
+	),
+	'Nextgenthemes\\ARVE\\SettingsDefinitions' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/php/SettingsDefinitions.php'
+	),
+	'Nextgenthemes\\ARVE\\Video' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/php/Video.php'
+	),
 	'PHP_Autoloader' => array(
 		'version' => '5.0.11',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-php-autoloader.php'
