@@ -17,6 +17,13 @@ function arve_errors(): WP_Error {
 	return $instance;
 }
 
+/** @param mixed $data */
+function is_wp_error_array( $data ): bool {
+	return is_array( $data ) &&
+		isset( $data['code'] ) &&
+		isset( $data['message'] );
+}
+
 /**
  * @return array <string, array{
  *     name:           string,
