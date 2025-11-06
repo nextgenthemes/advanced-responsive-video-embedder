@@ -22,6 +22,9 @@ class Tests_Legacy_Shortcodes extends WP_UnitTestCase {
 		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 	}
 
+	/**
+	 * @group legacy-iframe
+	 */
 	public function test_legacy_iframe_shortcode(): void {
 
 		$html = do_shortcode( '[iframe id="https://example.com" /]' );

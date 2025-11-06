@@ -99,38 +99,44 @@ function shortcode_option_defaults(): array {
 
 function create_shortcodes(): void {
 
-	$options    = options();
-	$properties = get_host_properties();
-
-	if ( $options['legacy_shortcodes'] ) {
-
-		$shortcode_options = wp_parse_args( get_option( 'arve_options_shortcodes', array() ), shortcode_option_defaults() );
-
-		foreach ( $shortcode_options as $provider => $shortcode ) {
-
-			$function = function ( $a ) use ( $provider, $properties ) {
-
-				$a['provider'] = $provider;
-
-				if ( ! empty( $properties[ $provider ]['rebuild_url'] ) && ! empty( $a['id'] ) ) {
-					$a['url'] = sprintf( $properties[ $provider ]['rebuild_url'], $a['id'] );
-					unset( $a['id'] );
-					$a['origin_data']['from'] = 'create_shortcodes rebuild_url';
-					$a['origin_data'][ __FUNCTION__ ]['rebuild_url'] = 'rebuild_url';
-					return shortcode( $a );
-				} else {
-					$a['origin_data']['from'] = 'create_shortcodes';
-
-					$a['origin_data'][ __FUNCTION__ ]['create_legacy_shortcodes'] = 'create_legacy_shortcodes';
-					return build_video( $a );
-				}
-			};
-
-			add_shortcode( $shortcode, $function );
-		}
-	}
+	$options = options();
 
 	add_shortcode( 'arve', __NAMESPACE__ . '\shortcode' );
+
+	if ( $options['legacy_shortcodes'] ) {
+		create_legacy_shortcodes();
+	}
+}
+
+function create_legacy_shortcodes(): void {
+
+	$properties        = get_host_properties();
+	$shortcode_options = wp_parse_args( get_option( 'arve_options_shortcodes', array() ), shortcode_option_defaults() );
+
+	foreach ( $shortcode_options as $provider => $shortcode ) {
+
+		$closure_name = __FUNCTION__ . '__closure';
+		$function     = function ( $a ) use ( $provider, $properties, $closure_name ) {
+
+			$a['provider'] = $provider;
+
+			if ( ! empty( $properties[ $provider ]['rebuild_url'] ) && ! empty( $a['id'] ) ) {
+
+				$a['url'] = sprintf( $properties[ $provider ]['rebuild_url'], $a['id'] );
+				unset( $a['id'] );
+				$a['origin_data'][ $closure_name ]['rebuild_url'] = 'rebuild_url';
+
+				return shortcode( $a );
+			} else {
+
+				$a['origin_data'][ $closure_name ]['create_legacy_shortcodes'] = 'create_legacy_shortcodes';
+
+				return build_video( $a );
+			}
+		};
+
+		add_shortcode( $shortcode, $function );
+	}
 }
 
 /**
