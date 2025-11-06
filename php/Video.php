@@ -196,7 +196,6 @@ class Video {
 			$this->oembed_data_errors();
 
 			$html .= $this->build_html();
-			$html .= get_error_html();
 			$html .= $this->get_debug_info( $html );
 
 			if ( empty( $this->origin_data['gutenberg'] ) ) {
@@ -210,8 +209,8 @@ class Video {
 
 			arve_errors()->add( $e->getCode(), $e->getMessage() );
 
-			$html .= get_error_html();
-			$html .= $this->get_debug_info();
+			$html .= $this->build_error_only_html();
+			$html .= $this->get_debug_info( $html );
 		}
 
 		return apply_filters( 'nextgenthemes/arve/html', $html, get_object_vars( $this ) );
@@ -824,6 +823,19 @@ class Video {
 		return '';
 	}
 
+	private function build_error_only_html(): string {
+		$block_attr = empty( $this->origin_data['gutenberg'] ) ? '' : ' ' . get_block_wrapper_attributes();
+		$error_html = get_error_html();
+		$html       = PHP_EOL . <<<HTML
+<div class="arve"{$block_attr}>
+	{$error_html}
+</div>
+HTML;
+
+		return $html;
+	}
+
+
 	private function build_html(): string {
 
 		if ( 'html5' === $this->provider ) {
@@ -852,7 +864,8 @@ class Video {
 
 		} else {
 
-			$html = PHP_EOL . <<<HTML
+			$error_html = get_error_html();
+			$html       = PHP_EOL . <<<HTML
 <div class="arve"{$block_attr}>
 	<div class="arve-inner">
 		<div class="arve-embed">
@@ -863,6 +876,7 @@ class Video {
 	{$this->card_consent_html()}
 	{$this->promote_link()}
 	{$this->build_seo_data()}
+	{$error_html}
 </div>
 HTML;
 		}
@@ -1134,7 +1148,7 @@ HTML;
 		return sanitize_text_field( wp_unslash( $_GET[ "arve-debug-{$param}" ] ) );
 	}
 
-	private function get_debug_info( string $input_html = '' ): string {
+	private function get_debug_info( string $input_html ): string {
 
 		if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
 			return '';
@@ -1157,15 +1171,11 @@ HTML;
 
 		if ( $arve_debug_attr ) {
 			$input_attr = isset( $this->org_args[ $arve_debug_attr ] ) ? print_r( $this->org_args[ $arve_debug_attr ], true ) : 'not set';
-			$html      .= debug_pre(
-				sprintf(
-					'in %1$s: %2$s%1$s: %3$s',
-					esc_html( $arve_debug_attr ),
-					esc_html( $input_attr ) . PHP_EOL,
-					esc_html( print_r( $this->$arve_debug_attr, true ) )
-				),
-				true
-			);
+			$prop       = isset( $this->$arve_debug_attr ) ? print_r( $this->$arve_debug_attr, true ) : 'not set';
+			$html      .= esc_html( $arve_debug_attr ) . PHP_EOL;
+			$html      .= esc_html( $input_attr ) . PHP_EOL;
+			$html      .= esc_html( $prop );
+			$html       = debug_pre( $html, true );
 		}
 
 		if ( $arve_debug_prop ) {

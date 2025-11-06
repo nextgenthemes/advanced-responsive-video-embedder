@@ -72,7 +72,7 @@ function remove_embed_block_aspect_ratio( string $block_content ): string {
 function error( string $messages, string $code = '' ): string {
 
 	$error_html = sprintf(
-		'<div class="arve-error alignwide" data-error-code="%s">
+		'<div class="arve-error" data-error-code="%s">
 			 <abbr title="Advanced Responsive Video Embedder">ARVE</abbr> %s
 		</div>',
 		esc_attr( $code ),
