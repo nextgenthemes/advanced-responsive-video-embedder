@@ -62,7 +62,9 @@ function add_dep_to_asset( $asset, string $dep ): bool {
  */
 function ver( string $path, ?string $stable_ver ): ?string {
 
-	$debug = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || ( defined( 'WP_DEBUG' ) && WP_DEBUG );
+	$debug =
+		( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ||
+		( defined( 'WP_DEBUG' ) && WP_DEBUG );
 
 	return $debug ? (string) filemtime( $path ) : $stable_ver;
 }

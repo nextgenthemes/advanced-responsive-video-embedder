@@ -11,7 +11,8 @@ use WP_HTML_Tag_Processor;
  *
  * @param string                               $html The HTML string, e.g. <div>...</div>.
  * @param array <string, int|string|bool|null> $attr A list of HTML attributes, e.g. class, src, href, etc.
- * @return string                                     The updated HTML updated as string.
+ *
+ * @return string The updated HTML updated as string.
  */
 function first_tag_attr( string $html, array $attr ): string {
 
@@ -30,9 +31,10 @@ function first_tag_attr( string $html, array $attr ): string {
 /**
  * Applies attributes to the HTML tag the WP_HTML_Tag_Processor is currently on.
  *
- * @param WP_HTML_Tag_Processor                 $p     The tag processor.
- * @param array <string, string|int|float|bool> $attr  A list of HTML attributes, e.g. class, src, href, etc.
- * @return WP_HTML_Tag_Processor                       The tag processor.
+ * @param WP_HTML_Tag_Processor                  $p     The tag processor.
+ * @param array <string, string|int|float|bool>  $attr  A list of HTML attributes, e.g. class, src, href, etc.
+ *
+ * @return WP_HTML_Tag_Processor  The tag processor.
  */
 function apply_attr( WP_HTML_Tag_Processor $p, array $attr ): WP_HTML_Tag_Processor {
 
@@ -89,10 +91,10 @@ function apply_attr( WP_HTML_Tag_Processor $p, array $attr ): WP_HTML_Tag_Proces
  * @return string|null      Attribute value or null if not found or empty.
  */
 function get_attribute_from_html_tag( array $query, string $attribute, string $html ): ?string {
-	$wphtml = new WP_HTML_Tag_Processor( $html );
+	$p = new WP_HTML_Tag_Processor( $html );
 
-	if ( $wphtml->next_tag( $query ) ) {
-		$attr_value = $wphtml->get_attribute( $attribute );
+	if ( $p->next_tag( $query ) ) {
+		$attr_value = $p->get_attribute( $attribute );
 
 		if ( is_string( $attr_value ) && ! empty( $attr_value ) ) {
 			return $attr_value;
@@ -121,7 +123,7 @@ function str_contains_any( string $haystack, array $needles ): bool {
 }
 
 /**
- * Removes the query string from the given URL.
+ * Removes the query string from the given URL. Keeps #hash!
  *
  * @param string $url The input URL
  * @return string The URL without the query string
