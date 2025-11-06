@@ -3,6 +3,11 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2025-11-04 10.7.2 ###
+
+* Fix: YouTube error 153 inside the Block editor.
+* Fix: YouTube playlists 153 error on Frontend.
+
 ### 2025-10-22 10.7.1 ###
 
 * Fix: SEO `uploadDate` not being in ATOM format for Vimeo.
