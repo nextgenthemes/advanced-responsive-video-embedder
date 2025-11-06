@@ -6,26 +6,38 @@ namespace Nextgenthemes\WP;
 
 class SettingsData {
 
-	/** @var array <string, SettingValidator> $settings */
+	/** @var array <string, SettingValidator> */
 	private array $settings = [];
 
 	/** @param array <string, array<string, mixed>> $settings */
 	public function __construct( array $settings, bool $arve = false ) {
+
 		foreach ( $settings as $key => $setting ) {
-
-			$setting['option_key'] = $key;
-
-			$this->settings[ $key ] = new SettingValidator( $setting, $arve );
+			$this->add( $key, $setting, $arve );
 		}
 	}
 
-	public function remove( string $key ): void {
+	/**
+	 * @param array<string, mixed> $setting
+	 */
+	public function add( string $key, array $setting, bool $arve = false ): void {
+
+		if ( isset( $this->settings[ $key ] ) ) {
+			throw new \InvalidArgumentException( esc_html( "Setting '$key' already exists." ) );
+		}
+
+		$setting['option_key']  = $key;
+		$this->settings[ $key ] = new SettingValidator( $setting, $arve );
+	}
+
+	public function remove( string $key ): bool {
 
 		if ( ! isset( $this->settings[ $key ] ) ) {
-			throw new \InvalidArgumentException( esc_html( 'Setting ' . $key . ' does not exist.' ) );
+			return false;
 		}
 
 		unset( $this->settings[ $key ] );
+		return true;
 	}
 
 	public function get( string $key ): ?SettingValidator {
@@ -45,7 +57,7 @@ class SettingsData {
 	 * Each key will be the key of the SettingValidator object, and the value will be the associative
 	 * array returned by SettingValidator::to_array().
 	 *
-	 * @return array<string, array<string, mixed>>
+	 * @return array <string, array<string, mixed>>
 	 */
 	public function to_array(): array {
 		$arr = [];
