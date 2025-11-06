@@ -38,7 +38,6 @@ function shortcode( array $a ) {
 		add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', OEMBED_HTML_PRIORITY, 4 );
 
 		$oembed_data = extract_oembed_data( $maybe_arve_html );
-		$oembed_data = new_oembed_data_extraction( $maybe_arve_html, $oembed_data );
 
 		if ( $oembed_data ) {
 			$a['oembed_data'] = $oembed_data;
@@ -60,53 +59,6 @@ function is_dev_mode(): bool {
 	);
 }
 
-function error( string $messages, string $code = '' ): string {
-
-	$error_html = sprintf(
-		'<div class="arve-error alignwide" data-error-code="%s">
-			 <abbr title="%s">ARVE</abbr> %s
-		</div>',
-		$code,
-		'Advanced Responsive Video Embedder',
-		// translators: Error message
-		sprintf( __( 'Error: %s', 'advanced-responsive-video-embedder' ), $messages ),
-	);
-
-	return wp_kses(
-		PHP_EOL . PHP_EOL . $error_html . PHP_EOL,
-		ALLOWED_HTML,
-		array( 'https' )
-	);
-}
-
-function get_error_html(): string {
-
-	$html     = '';
-	$messages = '';
-
-	foreach ( arve_errors()->get_error_codes() as $code ) {
-
-		$message = '';
-
-		foreach ( arve_errors()->get_error_messages( $code ) as $key => $message ) {
-			$messages .= sprintf( '%s<br>', $message );
-		}
-
-		$html .= $messages;
-		$data  = arve_errors()->get_error_data( $code );
-
-		if ( ! empty( $data ) && is_dev_mode() ) {
-			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
-			$html .= sprintf( '<pre>%s</pre>', esc_html( var_export( $data, true ) ) );
-		}
-
-		$html = error( $html );
-
-		arve_errors()->remove( $code );
-	}
-
-	return $html;
-}
 
 /**
  * Builds a video based on the input attributes.
