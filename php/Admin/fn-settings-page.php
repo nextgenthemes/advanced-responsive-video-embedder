@@ -6,6 +6,7 @@ namespace Nextgenthemes\ARVE\Admin;
 
 use function Nextgenthemes\ARVE\is_dev_mode;
 use function Nextgenthemes\WP\remote_get_body_cached;
+use function Nextgenthemes\WP\first_tag_attr;
 use const Nextgenthemes\ARVE\ALLOWED_HTML;
 
 function settings_content(): void {
