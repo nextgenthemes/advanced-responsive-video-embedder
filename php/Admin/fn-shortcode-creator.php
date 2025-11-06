@@ -6,6 +6,8 @@ namespace Nextgenthemes\ARVE\Admin;
 
 use function Nextgenthemes\ARVE\settings;
 use function Nextgenthemes\ARVE\settings_tabs;
+use function Nextgenthemes\ARVE\options;
+use function Nextgenthemes\ARVE\settings_data;
 use function Nextgenthemes\WP\first_tag_attr;
 use function Nextgenthemes\WP\Admin\print_settings_blocks;
 
@@ -52,6 +54,8 @@ function dialog_interactivity(): void {
 	if ( $ran_already ) {
 		return;
 	}
+
+	$ran_already = true;
 
 	$options = array();
 
