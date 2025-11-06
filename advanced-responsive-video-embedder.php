@@ -54,10 +54,10 @@ const ALLOWED_HTML = array(
 	'br'     => array(),
 	'em'     => array(),
 	'strong' => array(),
-	'code'   => array(),
+	'code'   => array( 'class' => true ),
 	'ul'     => array(),
 	'li'     => array(),
-	'pre'    => array(),
+	'pre'    => array( 'class' => true ),
 	'div'    => array( 'class' => true ),
 );
 
@@ -84,6 +84,5 @@ function uninstall(): void {
 
 	if ( version_compare( $wpdb->db_version(), '8.0', '>=' ) ) {
 		$wpdb->query( "UPDATE {$wpdb->postmeta} SET meta_value = REGEXP_REPLACE( meta_value, '<template[^>]+arve_cachetime[^>]+></template>', '' )" );
-		$wpdb->query( "UPDATE {$wpdb->postmeta} SET meta_value = REGEXP_REPLACE( meta_value, '<script[^>]*class=\"arve-oembed-json\"[^>]*>.*?</script>', '' )" );
 	}
 }
