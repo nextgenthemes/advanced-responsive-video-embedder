@@ -14,6 +14,31 @@ use function Nextgenthemes\WP\str_to_array;
 use function Nextgenthemes\WP\replace_links;
 use function Nextgenthemes\WP\move_keys_to_end;
 
+/**
+ * @phpstan-type OembedData object{
+ *     provider: string,
+ *     author_name: string,
+ *     author_url: string,
+ *     aspect_ratio: string,
+ *     height: int,
+ *     html: string,
+ *     thumbnail_url: string,
+ *     thumbnail_width: float,
+ *     thumbnail_height: float,
+ *     title: string,
+ *     type: string,
+ *     version: string,
+ *     width: int,
+ *     upload_date: string,
+ *     arve_iframe_src: string,
+ *     arve_error_iframe_src: string,
+ *     arve_url: string,
+ *     arve_cachetime: string,
+ *     thumbnail_large_url: string,
+ *     thumbnail_large_width: float,
+ *     thumbnail_large_height: float,
+ * }
+ */
 class Video {
 
 	// bool
@@ -129,29 +154,7 @@ class Video {
 	private array $shortcode_atts;
 
 	/**
-	 * @var null|object{
-	 *     provider: string,
-	 *     author_name: string,
-	 *     author_url: string,
-	 *     aspect_ratio: string,
-	 *     height: int,
-	 *     html: string,
-	 *     thumbnail_url: string,
-	 *     thumbnail_width: int,
-	 *     thumbnail_height: int,
-	 *     title: string,
-	 *     type: string,
-	 *     version: string,
-	 *     width: int,
-	 *     upload_date: string,
-	 *     arve_iframe_src: string,
-	 *     arve_error_iframe_src: string,
-	 *     arve_url: string,
-	 *     arve_cachetime: string,
-	 *     thumbnail_large_url: string,
-	 *     thumbnail_large_width: int,
-	 *     thumbnail_large_height: int,
-	 * }
+	 * @var null|OembedData
 	 */
 	private ?object $oembed_data;
 
@@ -222,11 +225,15 @@ class Video {
 
 		foreach ( get_object_vars( $this->oembed_data ) as $prop => $value ) {
 
-			if ( ! is_string( $value ) || ! str_contains( $prop, 'error' ) ) {
+			if ( ! str_contains( $prop, 'error' ) ) {
 				continue;
 			}
 
-			arve_errors()->add( $prop, $value );
+			if ( is_string( $value ) ) {
+				arve_errors()->add( $prop, $value );
+			} elseif ( is_wp_error_array( $value ) ) {
+				arve_errors()->add( $value['code'], $value['message'], $value['data'] ?? [] );
+			}
 		}
 	}
 
@@ -477,8 +484,10 @@ class Video {
 
 	private function missing_attribute_check(): void {
 
+		$origin_from = $this->org_args['origin_data']['from'] ?? '';
+
 		// Old shortcodes
-		if ( ! empty( $this->org_args['origin_data']['from'] ) && 'create_shortcodes' === $this->org_args['origin_data']['from'] ) {
+		if ( 'create_shortcodes' === $origin_from ) {
 
 			if ( ! $this->org_args['id'] || ! $this->org_args['provider'] ) {
 				throw new \Exception( 'need id and provider' );
@@ -875,10 +884,10 @@ HTML;
 		apply_attr(
 			$p,
 			array(
-				'data-mode'     => $this->mode,
-				'data-oembed'   => $this->oembed_data ? '1' : false,
-				'data-provider' => $this->provider,
 				'id'            => $this->uid,
+				'data-mode'     => $this->mode,
+				'data-provider' => $this->provider,
+				'data-oembed'   => $this->oembed_data ? '1' : false,
 				'style'         => $this->maxwidth ? sprintf( 'max-width:%dpx;', $this->maxwidth ) : false,
 			)
 		);
@@ -1108,6 +1117,24 @@ HTML;
 		);
 	}
 
+	/**
+	 * Get a debug parameter value from the request.
+	 *
+	 * @phpcs:disable WordPress.Security.NonceVerification.Recommended
+	 * @phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
+	 * @phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
+	 * @param  string  $param  Parameter name without the 'arve-debug-' prefix.
+	 *
+	 * @return string|null  The sanitized parameter value or null if not set.
+	 */
+	private static function get_debug_param( string $param ): ?string {
+		if ( ! isset( $_GET[ "arve-debug-{$param}" ] ) ) {
+			return null;
+		}
+
+		return sanitize_text_field( wp_unslash( $_GET[ "arve-debug-{$param}" ] ) );
+	}
+
 	private function get_debug_info( string $input_html = '' ): string {
 
 		if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
@@ -1116,9 +1143,6 @@ HTML;
 
 		$html = '';
 
-		// phpcs:disable WordPress.Security.NonceVerification.Recommended
-		// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
-		// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
 		if ( isset( $_GET['arve-debug-options'] ) ) {
 			static $show_options_debug = true;
 
@@ -1129,50 +1153,40 @@ HTML;
 			$show_options_debug = false;
 		}
 
-		if ( ! empty( $_GET['arve-debug-attr'] ) ) {
-			$debug_attr = sanitize_text_field( wp_unslash( $_GET['arve-debug-attr'] ) );
-			$input_attr = isset( $this->org_args[ $debug_attr ] ) ? print_r( $this->org_args[ $debug_attr ], true ) : 'not set';
-			$html      .= $this->debug_pre(
+		$arve_debug_attr = self::get_debug_param( 'attr' );
+		$arve_debug_prop = self::get_debug_param( 'prop' );
+
+		if ( $arve_debug_attr ) {
+			$input_attr = isset( $this->org_args[ $arve_debug_attr ] ) ? print_r( $this->org_args[ $arve_debug_attr ], true ) : 'not set';
+			$html      .= debug_pre(
 				sprintf(
 					'in %1$s: %2$s%1$s: %3$s',
-					esc_html( $debug_attr ),
+					esc_html( $arve_debug_attr ),
 					esc_html( $input_attr ) . PHP_EOL,
-					esc_html( print_r( $this->$debug_attr, true ) )
-				)
+					esc_html( print_r( $this->$arve_debug_attr, true ) )
+				),
+				true
 			);
 		}
 
+		if ( $arve_debug_prop ) {
+			$html .= debug_pre( var_export( $this->$arve_debug_prop, true ), true );
+		}
+
+		if ( isset( $_GET['arve-debug-oembed'] ) ) {
+			$html .= debug_pre( var_export( $this->oembed_data, true ), true );
+		}
+
 		if ( isset( $_GET['arve-debug-atts'] ) ) {
-			$html .= $this->debug_pre( $this->debug_compare_args_to_props() );
+			$html .= debug_pre( $this->debug_compare_args_to_props(), true );
 		}
 
 		if ( isset( $_GET['arve-debug-html'] ) ) {
-			$html .= $this->debug_pre( $input_html );
+			$html .= debug_pre( $input_html, true );
 		}
 		// phpcs:enable
 
 		return $html;
-	}
-
-	/**
-	 * Wrap content in a styled pre element
-	 *
-	 * @param string $content Content to wrap
-	 * @return string         HTML with styled pre element
-	 */
-	private function debug_pre( string $content ): string {
-
-		$style =
-			'display: block;' .
-			'background-color: #111;' .
-			'color: #eee;' .
-			'font-size: 15px;' .
-			'white-space: pre;' .
-			'overflow-x: auto;' .
-			'padding: 1em;' .
-			'box-sizing: border-box;';
-
-		return sprintf( '<pre class="alignfull" style="%s">%s</pre>', esc_attr( $style ), esc_html( $content ) );
 	}
 
 	/**
@@ -1303,7 +1317,9 @@ HTML;
 			}
 		}
 
-		return '<script type="application/ld+json">' . wp_json_encode( $seo ) . '</script>';
+		return '<script type="application/ld+json">' .
+			wp_json_encode( $seo ) .
+			'</script>';
 	}
 
 	private function promote_link(): string {
