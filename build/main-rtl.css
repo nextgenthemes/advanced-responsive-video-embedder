@@ -1,1 +1,127 @@
-#html div.arve,#html div.wp-block-nextgenthemes-arve-block,html div.arve,html div.wp-block-nextgenthemes-arve-block{display:block;margin-bottom:1.5em;transition-duration:.35s;transition-property:max-width,margin;transition-timing-function:ease-in-out;width:auto}#html div.arve.alignfull,#html div.wp-block-nextgenthemes-arve-block.alignfull,html div.arve.alignfull,html div.wp-block-nextgenthemes-arve-block.alignfull{max-width:100dvw!important}#html div.arve.alignleft,#html div.arve.alignright,#html div.wp-block-nextgenthemes-arve-block.alignleft,#html div.wp-block-nextgenthemes-arve-block.alignright,html div.arve.alignleft,html div.arve.alignright,html div.wp-block-nextgenthemes-arve-block.alignleft,html div.wp-block-nextgenthemes-arve-block.alignright{margin-top:.4em;width:100%}#html div.arve.alignleft,#html div.wp-block-nextgenthemes-arve-block.alignleft,html div.arve.alignleft,html div.wp-block-nextgenthemes-arve-block.alignleft{margin-left:1.5em}#html div.arve.alignright,#html div.wp-block-nextgenthemes-arve-block.alignright,html div.arve.alignright,html div.wp-block-nextgenthemes-arve-block.alignright{margin-right:1.5em}#html div.arve[data-provider=tiktok] .arve-embed,#html div.wp-block-nextgenthemes-arve-block[data-provider=tiktok] .arve-embed,html div.arve[data-provider=tiktok] .arve-embed,html div.wp-block-nextgenthemes-arve-block[data-provider=tiktok] .arve-embed{height:580px}#html .arve-inner,html .arve-inner{display:block;margin:0;padding:0;width:auto}#html .arve-embed,html .arve-embed{display:block;margin:0;max-height:100dvh;overflow:hidden;padding:0;position:relative;width:100%}#html .arve-embed--has-aspect-ratio,html .arve-embed--has-aspect-ratio{aspect-ratio:16/9}#html .arve-embed--has-aspect-ratio:after,html .arve-embed--has-aspect-ratio:after{clear:both;content:"";display:block}#html .arve-iframe,#html .arve-play-btn,#html .arve-thumbnail,html .arve-iframe,html .arve-play-btn,html .arve-thumbnail{border:0;bottom:0;height:100%!important;right:0;margin:0;padding:0;position:absolute;top:0;width:100%!important}#html .arve-video,html .arve-video{height:auto;margin:0;max-height:100dvh;padding:0;width:100%}#html .arve-iframe,#html .arve-video,html .arve-iframe,html .arve-video{background-color:#000}#html .arve-promote,html .arve-promote{text-align:end}@media(prefers-reduced-motion:reduce){#html .arve,#html .wp-block-nextgenthemes-arve-block,html .arve,html .wp-block-nextgenthemes-arve-block{transition:none}}@supports(aspect-ratio:16/9){#html .arve-ar,#html .arve-embed--has-aspect-ratio:after,html .arve-ar,html .arve-embed--has-aspect-ratio:after{display:none}}
+/*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!../../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!../../../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/main.scss ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************/
+/* stylelint-disable selector-max-id, selector-no-qualifying-type */
+html div.wp-block-nextgenthemes-arve-block,
+html div.arve,
+#html div.wp-block-nextgenthemes-arve-block,
+#html div.arve {
+  display: block;
+  width: auto;
+  margin-bottom: 1.5em;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.35s;
+  transition-property: max-width, margin;
+}
+html div.wp-block-nextgenthemes-arve-block.alignfull,
+html div.arve.alignfull,
+#html div.wp-block-nextgenthemes-arve-block.alignfull,
+#html div.arve.alignfull {
+  max-width: 100dvw !important;
+}
+html div.wp-block-nextgenthemes-arve-block.alignleft, html div.wp-block-nextgenthemes-arve-block.alignright,
+html div.arve.alignleft,
+html div.arve.alignright,
+#html div.wp-block-nextgenthemes-arve-block.alignleft,
+#html div.wp-block-nextgenthemes-arve-block.alignright,
+#html div.arve.alignleft,
+#html div.arve.alignright {
+  width: 100%;
+  margin-top: 0.4em;
+}
+html div.wp-block-nextgenthemes-arve-block.alignleft,
+html div.arve.alignleft,
+#html div.wp-block-nextgenthemes-arve-block.alignleft,
+#html div.arve.alignleft {
+  margin-left: 1.5em;
+}
+html div.wp-block-nextgenthemes-arve-block.alignright,
+html div.arve.alignright,
+#html div.wp-block-nextgenthemes-arve-block.alignright,
+#html div.arve.alignright {
+  margin-right: 1.5em;
+}
+html div.wp-block-nextgenthemes-arve-block[data-provider=tiktok] .arve-embed,
+html div.arve[data-provider=tiktok] .arve-embed,
+#html div.wp-block-nextgenthemes-arve-block[data-provider=tiktok] .arve-embed,
+#html div.arve[data-provider=tiktok] .arve-embed {
+  height: 580px;
+}
+html .arve-inner,
+#html .arve-inner {
+  display: block;
+  width: auto;
+  padding: 0;
+  margin: 0;
+}
+html .arve-embed,
+#html .arve-embed {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-height: 100dvh;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+html .arve-embed--has-aspect-ratio,
+#html .arve-embed--has-aspect-ratio {
+  aspect-ratio: 16/9;
+}
+html .arve-embed--has-aspect-ratio::after,
+#html .arve-embed--has-aspect-ratio::after {
+  display: block;
+  clear: both;
+  content: "";
+}
+html .arve-thumbnail,
+html .arve-play-btn,
+html .arve-iframe,
+#html .arve-thumbnail,
+#html .arve-play-btn,
+#html .arve-iframe {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+html .arve-video,
+#html .arve-video {
+  width: 100%;
+  height: auto;
+  max-height: 100dvh;
+  padding: 0;
+  margin: 0;
+}
+html .arve-iframe,
+html .arve-video,
+#html .arve-iframe,
+#html .arve-video {
+  background-color: #000;
+}
+html .arve-promote,
+#html .arve-promote {
+  text-align: end;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html .wp-block-nextgenthemes-arve-block,
+  html .arve,
+  #html .wp-block-nextgenthemes-arve-block,
+  #html .arve {
+    transition: none;
+  }
+}
+@supports (aspect-ratio: 16/9) {
+  html .arve-ar,
+  html .arve-embed--has-aspect-ratio::after,
+  #html .arve-ar,
+  #html .arve-embed--has-aspect-ratio::after {
+    display: none;
+  }
+}
