@@ -13,6 +13,11 @@
 	"require": {
 		"php": ">=7.4"
 	},
+	"autoload": {
+		"psr-4": {
+			"Nextgenthemes\\ARVE\\": "php/"
+		}
+	},
 	"extra": {
 		"easy-digital-downloads/edd-sl-sdk": "1.0.0"
 	},
@@ -44,16 +49,20 @@
 	},
 	"scripts": {
 		"build": [
-			"./bin/block-json.php",
+			"wp @sdev arve block_json > src/block-tmp.json; mv src/block-tmp.json src/block.json",
 			"./bin/build-readme.php",
 			"@build:common",
 			"@build:arve",
-			"@composer update",
+			"@composer update --optimize-autoloader",
 			"@composer update --working-dir=tests"
 		],
+		"build2": [
+			"bash -c 'wp arve block_json > src/block.json'"
+		],
+		"try": "npx --no-install wp-scripts build --experimental-modules",
 		"start": "bash -c 'composer run start:arve & composer run start:common'",
-		"start:arve": "npx --no-install wp-scripts start src/main src/block src/admin src/shortcode-ui",
-		"build:arve": "npx --no-install wp-scripts build src/main src/block src/admin src/shortcode-ui",
+		"start:arve": "npx --no-install wp-scripts start src/main src/error src/block src/admin src/shortcode-ui",
+		"build:arve": "npx --no-install wp-scripts build src/main src/error src/block src/admin src/shortcode-ui",
 		"start:common": "npx --no-install wp-scripts start --experimental-modules --source-path=vendor/nextgenthemes/wp-settings/src --output-path=vendor/nextgenthemes/wp-settings/build",
 		"build:common": "npx --no-install wp-scripts build --experimental-modules --source-path=vendor/nextgenthemes/wp-settings/src --output-path=vendor/nextgenthemes/wp-settings/build",
 		"pre-update-cmd": "./bin/sync-wp-settings",
