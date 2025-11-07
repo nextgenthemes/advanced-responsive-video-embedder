@@ -68,7 +68,6 @@ function remove_embed_block_aspect_ratio( string $block_content ): string {
 	return $p->get_updated_html();
 }
 
-
 function error( string $messages, string $code = '' ): string {
 
 	$error_html = sprintf(
@@ -85,39 +84,6 @@ function error( string $messages, string $code = '' ): string {
 		ALLOWED_HTML,
 		array( 'https' )
 	);
-}
-
-/**
- * Iterates over each error code, handling multiple messages and data per code.
- * Generates HTML for errors, with optional debug data in dev mode.
- * Fucking pain in the ass, thanks AI.
- */
-function get_error_html(): string {
-	$html = '';
-
-	foreach ( arve_errors()->get_error_codes() as $code ) {
-		$messages = arve_errors()->get_error_messages( $code );
-		if ( empty( $messages ) ) {
-			continue;
-		}
-
-		$all_data  = arve_errors()->get_all_error_data( $code );
-		$code_html = '';
-
-		foreach ( $messages as $index => $message ) {
-			$code_html .= $message . '<br>';
-
-			if ( isset( $all_data[ $index ] ) && is_dev_mode() ) {
-                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
-				$code_html .= debug_pre( var_export( $all_data[ $index ], true ) );
-			}
-		}
-
-		$html .= error( $code_html, (string) $code );
-		arve_errors()->remove( $code );
-	}
-
-	return $html;
 }
 
 /**

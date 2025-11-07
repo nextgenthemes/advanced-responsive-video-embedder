@@ -825,16 +825,48 @@ class Video {
 
 	private function build_error_only_html(): string {
 		$block_attr = empty( $this->origin_data['gutenberg'] ) ? '' : ' ' . get_block_wrapper_attributes();
-		$error_html = get_error_html();
-		$html       = PHP_EOL . <<<HTML
-<div class="arve"{$block_attr}>
-	{$error_html}
-</div>
-HTML;
+		$html       = sprintf(
+			'<div class="arve"%s>%s</div>',
+			$block_attr,
+			$this->get_error_html()
+		);
 
 		return $html;
 	}
 
+	/**
+	 * Iterates over each error code, handling multiple messages and data per code.
+	 * Generates HTML for errors, with optional debug data in dev mode.
+	 * Fucking pain in the ass, thanks AI.
+	 */
+	private function get_error_html(): string {
+
+		$html = '';
+
+		foreach ( arve_errors()->get_error_codes() as $code ) {
+			$messages = arve_errors()->get_error_messages( $code );
+			if ( empty( $messages ) ) {
+				continue;
+			}
+
+			$all_data  = arve_errors()->get_all_error_data( $code );
+			$code_html = '';
+
+			foreach ( $messages as $index => $message ) {
+				$code_html .= $message . '<br>';
+
+				if ( isset( $all_data[ $index ] ) && is_dev_mode() ) {
+					// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
+					$code_html .= debug_pre( var_export( $all_data[ $index ], true ) );
+				}
+			}
+
+			$html .= error( $code_html, (string) $code );
+			arve_errors()->remove( $code );
+		}
+
+		return $html;
+	}
 
 	private function build_html(): string {
 
@@ -864,8 +896,7 @@ HTML;
 
 		} else {
 
-			$error_html = get_error_html();
-			$html       = PHP_EOL . <<<HTML
+			$html = PHP_EOL . <<<HTML
 <div class="arve"{$block_attr}>
 	<div class="arve-inner">
 		<div class="arve-embed">
@@ -876,7 +907,7 @@ HTML;
 	{$this->card_consent_html()}
 	{$this->promote_link()}
 	{$this->build_seo_data()}
-	{$error_html}
+	{$this->get_error_html()}
 </div>
 HTML;
 		}
