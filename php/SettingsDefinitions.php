@@ -340,7 +340,7 @@ class SettingsDefinitions {
 	}
 
 	/**
-	 * @return array<string,array<string,mixed>>
+	 * @return array<string,NgtSetting>
 	 */
 	public static function url_params_settings(): array {
 
@@ -613,7 +613,7 @@ class SettingsDefinitions {
 	}
 
 	/**
-	 * @return array<string,array<string,mixed>>
+	 * @return array<string,NgtSetting>
 	 */
 	public static function html5_settings(): array {
 		return array(
@@ -670,7 +670,7 @@ class SettingsDefinitions {
 		return array(
 			'sticky' => array(
 				'type'        => 'boolean',
-				'default'     => false,
+				'default'     => true,
 				'tab'         => 'sticky_videos',
 				'option'      => true,
 				'shortcode'   => true,
