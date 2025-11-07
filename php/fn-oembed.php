@@ -69,12 +69,6 @@ function filter_oembed_dataparse( string $html, object $data, string $url ): str
 	$html .= PHP_EOL . PHP_EOL;
 	$html .= first_tag_attr( '<template class="arve-data"></template>', $attr );
 
-	$html .= PHP_EOL . PHP_EOL;
-	$html .= sprintf(
-		"<template data-arve-oembed='%s'></template>",
-		wp_json_encode( $data, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP )
-	);
-
 	return $html;
 }
 
@@ -92,8 +86,6 @@ function sane_provider_name( string $provider ): string {
 	return $provider;
 }
 
-
-
 /**
  * Filters the cached oEmbed HTML.
  *
@@ -109,9 +101,8 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 	$oembed_data = extract_oembed_data( $cache );
 
 	if ( $oembed_data ) {
-		$a['url']                 = $url;
-		$a['oembed_data']         = $oembed_data;
-		$a['origin_data']['from'] = 'filter_embed_oembed_html';
+		$a['url']         = $url;
+		$a['oembed_data'] = $oembed_data;
 
 		$a['origin_data'][ __FUNCTION__ ]['post_id'] = $post_id;
 		$a['origin_data'][ __FUNCTION__ ]['cache']   = delete_oembed_caches_when_missing_data( $oembed_data );
@@ -178,161 +169,22 @@ function delete_oembed_caches_when_missing_data( object $oembed_data ): array {
 
 function extract_oembed_data( string $html ): ?object {
 
-	$data_old = extract_oembed_data_old( $html );
-	$data_new = extract_oembed_data_new( $html );
-
-	return compare_and_choose_oembed_data( $data_old, $data_new );
-}
-
-function compare_and_choose_oembed_data( ?object $old_data, ?object $new_data ): ?object {
-
-	if ( $old_data && ! $new_data ) {
-		return $old_data;
-	}
-
-	if ( ! $old_data && ! $new_data ) {
-		return null;
-	}
-
-	$old = (array) $old_data;
-	$new = (array) $new_data;
-	ksort( $old );
-	ksort( $new );
-
-	if ( $old === $new ) {
-		return $new_data;
-	}
-
-	if ( loose_compare( $old, $new ) ) {
-		return $new_data;
-	}
-
-	$old_data->arve_oembed_diff_error = [
-		'code'    => 'oembed_diff_error',
-		'message' => 'oEmbed data diff error',
-		'data'    => [
-			'array_diff_assoc_recursive' => array_diff_assoc_recursive( $old, $new ),
-		],
-	];
-
-	return $old_data;
-}
-
-/**
- * Compare two values loosely (type-insensitive comparison).
- * Recursively handles arrays and objects by casting objects to arrays.
- *
- * @param mixed $a First value to compare.
- * @param mixed $b Second value to compare.
- * @return bool True if values are loosely equal, false otherwise.
- */
-function loose_compare( $a, $b ): bool {
-	$is_structural_a = is_array( $a ) || is_object( $a );
-	$is_structural_b = is_array( $b ) || is_object( $b );
-
-	if ( $is_structural_a && $is_structural_b ) {
-		// Cast objects to arrays and compare recursively
-		$a = (array) $a;
-		$b = (array) $b;
-
-		if ( count( $a ) !== count( $b ) ) {
-			return false;
-		}
-
-		foreach ( $a as $key => $value ) {
-			if ( ! array_key_exists( $key, $b ) || ! loose_compare( $value, $b[ $key ] ) ) {
-				return false;
-			}
-		}
-
-		return true;
-	} elseif ( ! $is_structural_a && ! $is_structural_b ) {
-		// For scalars, use string casting for type-insensitive comparison
-		return (string) $a === (string) $b;
-	}
-
-	// Mixed types (structural vs scalar) are not equal
-	return false;
-}
-
-/**
- * Compares two arrays and returns their differences.
- *
- * @template T
- * @param array<string, T> $array1 The first array to compare.
- * @param array<string, T> $array2 The second array to compare.
- * @return array<string, array{old: T, new: T}>|false Array of differences or false if arrays are identical.
- */
-function array_diff_assoc_recursive( array $array1, array $array2 ) {
-	$difference = array();
-
-	// Compare keys from first array
-	foreach ( $array1 as $key => $value ) {
-		if ( ! array_key_exists( $key, $array2 ) ) {
-			$difference[ $key ] = [
-				'old' => $value,
-				'new' => null,
-			];
-			continue;
-		}
-
-		if ( is_array( $value ) && is_array( $array2[ $key ] ) ) {
-			$recursive_diff = array_diff_assoc_recursive( $value, $array2[ $key ] );
-			if ( false !== $recursive_diff ) {
-				$difference[ $key ] = $recursive_diff;
-			}
-		} elseif ( $value !== $array2[ $key ] ) {
-			$difference[ $key ] = [
-				'old' => $value,
-				'new' => $array2[ $key ],
-			];
-		}
-	}
-
-	// Check for keys that are in array2 but not in array1
-	foreach ( $array2 as $key => $value ) {
-		if ( ! array_key_exists( $key, $array1 ) ) {
-			$difference[ $key ] = [
-				'old' => null,
-				'new' => $value,
-			];
-		}
-	}
-
-	return empty( $difference ) ? false : $difference;
-}
-
-function extract_oembed_data_old( string $html ): ?object {
-
 	$p = new WP_HTML_Tag_Processor( $html );
 
-	if ( ! $p->next_tag( array( 'class_name' => 'arve-data' ) ) ) {
+	if ( ! $p->next_tag( [ 'class_name' => 'arve-data' ] ) ) {
 		return null;
 	}
 
-	$data            = (object) [];
-	$data_attr_names = $p->get_attribute_names_with_prefix( 'data-' );
+	$data      = (object) [];
+	$data_atts = $p->get_attribute_names_with_prefix( 'data-' );
 
-	foreach ( $data_attr_names as $name ) {
-		$no_data_name          = str_replace( 'data-', '', $name );
-		$data->{$no_data_name} = $p->get_attribute( $name );
+	foreach ( $data_atts as $attr ) {
+		$name          = str_replace( 'data-', '', $attr );
+		$value         = $p->get_attribute( $attr );
+		$data->{$name} = ( 'version' !== $name && is_numeric( $value ) ) ? $value + 0 : $value;
 	}
 
 	return $data;
-}
-
-function extract_oembed_data_new( string $html ): ?object {
-
-	$p = new WP_HTML_Tag_Processor( $html );
-
-	while ( $p->next_tag( 'TEMPLATE' ) ) {
-		$oembed_json = $p->get_attribute( 'data-arve-oembed' );
-		if ( $oembed_json ) {
-			return json_decode( $oembed_json );
-		}
-	}
-
-	return null;
 }
 
 /**
