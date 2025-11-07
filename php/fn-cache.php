@@ -25,6 +25,8 @@ function delete_oembed_cache_on_update(): void {
  * @author Nicolas Lemoine <https://n5s.dev>
  * @copyright Copyright (c) 2025, Nicolas Jonas
  * @copyright Copyright (c) 2024, Nicolas Lemoine
+ *
+ * @return string The message about the number of caches deleted.
  */
 function delete_oembed_cache( string $like = '', string $not_like = '' ): string {
 
