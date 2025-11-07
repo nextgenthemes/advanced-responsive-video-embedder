@@ -3,8 +3,9 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2025-11-04 10.7.2 ###
+### 2025-11-xx 10.7.2 ###
 
+* New: Privacy addon feature now free: Removes `si` parameter from YouTube URLs when doing oEmbed requests.
 * Fix: YouTube error 153 inside the Block editor.
 * Fix: YouTube playlists 153 error on Frontend.
 
