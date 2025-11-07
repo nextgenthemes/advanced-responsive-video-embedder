@@ -37,6 +37,7 @@ function init(): void {
 	add_action( 'init', __NAMESPACE__ . '\create_url_handlers' );
 	add_filter( 'mce_css', __NAMESPACE__ . '\add_styles_to_mce' );
 	add_filter( 'oembed_remote_get_args', __NAMESPACE__ . '\vimeo_referer', 10, 2 );
+	add_filter( 'oembed_fetch_url', __NAMESPACE__ . '\remove_youtube_si_param', 10, 2 );
 	add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\action_wp_enqueue_scripts' );
 	add_filter( 'render_block_core/embed', __NAMESPACE__ . '\remove_embed_block_aspect_ratio' );
 	add_filter( 'wp_video_shortcode_override', __NAMESPACE__ . '\wp_video_shortcode_override', 10, 2 );
