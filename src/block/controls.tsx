@@ -7,48 +7,19 @@ import { __ } from '@wordpress/i18n';
 import { BaseControl, PanelBody, SelectControl, TextControl, ToggleControl } from '@wordpress/components';
 import { createElement } from '@wordpress/element';
 import ImageUpload from './components/ImageUpload';
-import type { BuildControlsProps, GutenbergSelectOption } from '../types';
 
-const domParser = new DOMParser();
-
-const { settingPageUrl } = window.ArveBlockJsBefore;
-const { options } = window.ArveBlockJsBefore;
+const { settingPageUrl, options, settings } = window.ArveBlockJsBefore;
 const { gutenberg_help } = options;
 
-export function createHelp3( description: string | undefined ): string | JSX.Element {
-	if ( ! description ) {
-		return '';
-	}
+function createHelp(html?: string): undefined | string | JSX.Element {
 
-	const doc = domParser.parseFromString( description, 'text/html' );
-	const link = doc.querySelector( 'a' );
-	if ( link ) {
-		const href = link.getAttribute( 'href' ) || '';
-		const linkText = link.textContent || '';
-		description = doc.body.textContent || '';
-		const textSplit = description.split( linkText );
+    if (!gutenberg_help || !html) {
+        return undefined;
+    }
 
-		if ( textSplit.length !== 2 ) {
-			throw new Error( 'textSplit.length must be 2' );
-		}
-
-		return (    
-			<>
-				{ textSplit[ 0 ] }
-				<a href={ href }>{ linkText }</a>
-				{ textSplit[ 1 ] }
-			</>
-		);
-	}
-
-	return description;
-}
-
-function createHelp(html?: string): string | JSX.Element {
-
-    // Quick check: if no <a> tags, return the html as a single string
-    if (!gutenberg_help || !html || !html.match(/<a/i)) {
-        return html || '';
+	// Quick check: if no <a> tags, return the html as a single string
+    if (!html.match(/<a/i)) {
+        return html;
     }
 
     const doc = new DOMParser().parseFromString(html, 'text/html');
@@ -102,7 +73,6 @@ function shouldHide(settingKey: string, attributes: Record<string, unknown>): bo
 		return true;
 	}
 
-	const { settings } = window.ArveBlockJsBefore;
 	const setting = settings[settingKey];
 
 	// If no dependencies, don't hide
@@ -125,8 +95,6 @@ function shouldHide(settingKey: string, attributes: Record<string, unknown>): bo
 export function buildControls({ attributes, setAttributes }: BuildControlsProps): JSX.Element[] {
 	const controls: JSX.Element[] = [];
 	const sectionControls: Record<string, JSX.Element[]> = {};
-
-	const { settings } = window.ArveBlockJsBefore;
 
 	// Initialize section controls
 	Object.values(settings).forEach((setting) => {
@@ -191,18 +159,22 @@ export function buildControls({ attributes, setAttributes }: BuildControlsProps)
 		}
 	});
 
-	// Add info panel to main section
-	sectionControls.main.push(
-		createElement(BaseControl, {
-			help: createHelp( __(
-				'Remember changing the defaults is possible on the <a href="' + settingPageUrl + '" target="_blank">Settings page</a>. You can disable the extensive help texts there.',
-				'advanced-responsive-video-embedder'
-			) ),
-			children: createElement(BaseControl.VisualLabel, null, 
-				__('Info', 'advanced-responsive-video-embedder')
-			)
-		})
-	);
+	if ( gutenberg_help ) {
+		// Add info panel to main section
+		sectionControls.main.push(
+			createElement(BaseControl, {
+				help: createHelp(
+					__(
+						'Remember changing the defaults is possible on the <a href="' + settingPageUrl + '" target="_blank">Settings page</a>. You can disable the extensive help texts there.',
+						'advanced-responsive-video-embedder'
+					)
+				),
+				children: createElement(BaseControl.VisualLabel, null, 
+					__('Info', 'advanced-responsive-video-embedder')
+				)
+			})
+		);
+	}
 
 	// Convert section controls to panels
 	Object.entries(sectionControls).forEach(([tab, tabControls]) => {
