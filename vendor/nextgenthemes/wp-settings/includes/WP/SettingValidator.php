@@ -50,8 +50,8 @@ class SettingValidator {
 	 */
 	public bool $shortcode;
 
-
 	public string $tab;
+	public string $category;
 	public string $label;
 
 	/**
@@ -100,6 +100,7 @@ class SettingValidator {
 		$this->option_key    = $setting['option_key'];
 		$this->label         = $setting['label'];
 		$this->tab           = $setting['tab'] ?? 'main';
+		$this->category      = $setting['category'] ?? '';
 		$this->options       = $setting['options'] ?? null;
 		$this->ui            = $setting['ui'] ?? null;
 		$this->placeholder   = $setting['placeholder'] ?? null;
