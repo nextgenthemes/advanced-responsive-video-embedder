@@ -109,7 +109,7 @@ class SettingsDefinitions {
 				'option'              => false,
 				'shortcode'           => true,
 				'label'               => __( 'Upload Date', 'advanced-responsive-video-embedder' ),
-				'placeholder'         => __( '2019-09-29 (Pro automatically handles this)', 'advanced-responsive-video-embedder' ),
+				'placeholder'         => __( '2025-09-29 (Pro automatically handles this)', 'advanced-responsive-video-embedder' ),
 				'description'         => sprintf(
 					// translators: URL
 					__( '<a href="%s">ARVE Pro</a> fills this automatically.', 'advanced-responsive-video-embedder' ),
@@ -217,11 +217,9 @@ class SettingsDefinitions {
 				),
 			),
 			'volume' => array(
-				'tab'         => 'pro',
 				'default'     => 100,
 				'shortcode'   => true,
 				'option'      => true,
-
 				'label'       => __( 'Volume', 'advanced-responsive-video-embedder' ),
 				'type'        => 'integer',
 				'description' => __( 'Works with video files only.', 'advanced-responsive-video-embedder' ),
@@ -234,7 +232,6 @@ class SettingsDefinitions {
 				'type'        => 'boolean',
 				'description' => __( 'Privacy enhanced mode, will NOT disable cookies but only sets them when a user starts to play a video.', 'advanced-responsive-video-embedder' ),
 			),
-
 			'legacy_shortcodes' => array(
 				'default'     => true,
 				'shortcode'   => false,
@@ -282,16 +279,9 @@ class SettingsDefinitions {
 					'disabled-for-vimeo' => __( 'Disabled for Vimeo only', 'advanced-responsive-video-embedder' ),
 				),
 				'description' => __( 'When enabled ARVE Pro will display the thumbnail again like it is shown before the video was loaded. When a video is displayed in a lightbox the lightbox will automatically close. If you are using Vimeo\'s "call to action" feature for example you want to disable this for vimeo.', 'advanced-responsive-video-embedder' ),
-			),
-			'lightbox_aspect_ratio' => array(
-				'tab'         => 'pro',
-				'default'     => '',
-				'placeholder' => '9:16',
-				'shortcode'   => true,
-				'option'      => false,
-				'label'       => __( 'Lightbox aspect ratio', 'advanced-responsive-video-embedder' ),
-				'type'        => 'string',
-				'description' => __( 'The aspect ratio of the lightbox. Leave empty to use the original video aspect ratio.', 'advanced-responsive-video-embedder' ),
+				'depends'     => array(
+					[ 'mode' => 'lazyload' ],
+				),
 			),
 			'allow_referrer' => array(
 				'label'       => __( 'Allow domain restricted videos (referrerpolicy)', 'advanced-responsive-video-embedder' ),
@@ -391,6 +381,10 @@ class SettingsDefinitions {
 					__( 'Invidious instance <a href="%s" target="_blank">see here</a>.', 'advanced-responsive-video-embedder' ),
 					esc_url( 'https://docs.invidious.io/instances/' )
 				),
+				'depends'     => array(
+					[ 'invidious' => true ],
+					[ 'invidious' => 'true' ],
+				),
 			),
 			'invidious_parameters' => array(
 				'tab'         => 'privacy',
@@ -403,6 +397,10 @@ class SettingsDefinitions {
 					// translators: %s is URL
 					__( 'Invidious <a href="%s" target="_blank">url parameters</a>.', 'advanced-responsive-video-embedder' ),
 					esc_url( 'https://docs.invidious.io/url-parameters/' )
+				),
+				'depends'     => array(
+					[ 'invidious' => true ],
+					[ 'invidious' => 'true' ],
 				),
 			),
 			'cache_thumbnails' => array(
@@ -500,6 +498,9 @@ class SettingsDefinitions {
 				'tab'         => 'pro',
 				'label'       => __( 'Expand on play? (Lazyload only)', 'advanced-responsive-video-embedder' ),
 				'description' => __( 'Expands video size after clicking the thumbnail (Lazyload Mode)', 'advanced-responsive-video-embedder' ),
+				'depends'     => array(
+					[ 'mode' => 'lazyload' ],
+				),
 			),
 			'fullscreen' => array(
 				'type'        => 'string',
@@ -515,6 +516,9 @@ class SettingsDefinitions {
 				),
 				'shortcode'   => true,
 				'option'      => true,
+				'depends'     => array(
+					[ 'mode' => 'lightbox' ],
+				),
 			),
 			'play_icon_style' => array(
 				'type'      => 'string',
@@ -532,6 +536,10 @@ class SettingsDefinitions {
 				),
 				'shortcode' => true,
 				'option'    => true,
+				'depends'   => array(
+					[ 'mode' => 'lazyload' ],
+					[ 'mode' => 'lightbox' ],
+				),
 			),
 			'hover_effect' => array(
 				'type'      => 'string',
@@ -546,6 +554,10 @@ class SettingsDefinitions {
 				),
 				'shortcode' => true,
 				'option'    => true,
+				'depends'   => array(
+					[ 'mode' => 'lazyload' ],
+					[ 'mode' => 'lightbox' ],
+				),
 			),
 			'disable_links' => array(
 				'tab'         => 'pro',
@@ -565,15 +577,10 @@ class SettingsDefinitions {
 				'description' => __( 'default 1174', 'advanced-responsive-video-embedder' ),
 				'shortcode'   => true,
 				'option'      => true,
-			),
-			'volume' => array(
-				'tab'         => 'pro',
-				'default'     => 100,
-				'shortcode'   => true,
-				'option'      => true,
-				'label'       => __( 'Volume', 'advanced-responsive-video-embedder' ),
-				'type'        => 'integer',
-				'description' => __( 'Volume in percent (0-100).', 'advanced-responsive-video-embedder' ),
+				'depends'     => array(
+					[ 'mode' => 'lightbox' ],
+					[ 'mode' => 'link-lightbox' ],
+				),
 			),
 			'reset_after_played' => array(
 				'tab'         => 'pro',
@@ -599,6 +606,10 @@ class SettingsDefinitions {
 				'label'       => __( 'Lightbox aspect ratio', 'advanced-responsive-video-embedder' ),
 				'type'        => 'string',
 				'description' => __( 'The aspect ratio of the lightbox. Leave empty to use the original video aspect ratio.', 'advanced-responsive-video-embedder' ),
+				'depends'     => array(
+					[ 'mode' => 'lightbox' ],
+					[ 'mode' => 'link-lightbox' ],
+				),
 			),
 			'youtube_data_api_key' => array(
 				'label'       => __( 'YouTube Data API Key', 'advanced-responsive-video-embedder' ),
@@ -687,6 +698,7 @@ class SettingsDefinitions {
 				'description' => __( 'CSS value (px, vw, ...) 350px is default.', 'advanced-responsive-video-embedder' ),
 				'depends'     => array(
 					[ 'sticky' => true ],
+					[ 'sticky' => 'true' ],
 				),
 			),
 			'sticky_max_width' => array(
@@ -699,6 +711,7 @@ class SettingsDefinitions {
 				'description' => __( 'A vw (viewport width) value is recommended. The default of 40vw tells the video it can never be wider than 40% of the screens width.', 'advanced-responsive-video-embedder' ),
 				'depends'     => array(
 					[ 'sticky' => true ],
+					[ 'sticky' => 'true' ],
 				),
 			),
 			'sticky_gap' => array(
@@ -711,6 +724,7 @@ class SettingsDefinitions {
 				'description' => __( 'CSS value (px, me, rem ...). Space between browser windows corner and pinned video.', 'advanced-responsive-video-embedder' ),
 				'depends'     => array(
 					[ 'sticky' => true ],
+					[ 'sticky' => 'true' ],
 				),
 			),
 			'sticky_navbar_selector' => array(
@@ -723,6 +737,7 @@ class SettingsDefinitions {
 				'description' => __( 'If you have a fixed navbar on the top if your site you need this. document.querySelector(x) for a fixed navbar element to account for its height when pinning videos to the top.', 'advanced-responsive-video-embedder' ),
 				'depends'     => array(
 					[ 'sticky' => true ],
+					[ 'sticky' => 'true' ],
 				),
 			),
 			'sticky_on_mobile' => array(
@@ -735,6 +750,7 @@ class SettingsDefinitions {
 				'description' => __( 'Stick the video to the top of screens below 768px width in portrait orientation. The Video will always be as wide as the screen ignoring the Stick Width and Stick Maxwidth settings.', 'advanced-responsive-video-embedder' ),
 				'depends'     => array(
 					[ 'sticky' => true ],
+					[ 'sticky' => 'true' ],
 				),
 			),
 			'sticky_position' => array(
@@ -754,6 +770,7 @@ class SettingsDefinitions {
 				'option'      => true,
 				'depends'     => array(
 					[ 'sticky' => true ],
+					[ 'sticky' => 'true' ],
 				),
 			),
 		);

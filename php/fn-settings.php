@@ -184,46 +184,41 @@ function settings_data(): SettingsData {
 	);
 
 	$order = [
-		'url'                           => 'required',
-		'random_video_url'              => 'required',
-		'random_video_urls'             => 'required',
-		'loop'                          => '',
-		'muted'                         => '',
-		'controls'                      => '',
-		'parameters'                    => '',
-		'credentialless'                => '',
+		'url'                           => 'main',
+		'mode'                          => 'visual',
+		'lazyload_style'                => 'visual',
+		'hover_effect'                  => 'visual',
+		'grow'                          => 'visual',
+		'reset_after_played'            => 'visual',
+		'hide_title'                    => 'visual',
+		'thumbnail_post_image_fallback' => 'visual',
+		'play_icon_style'               => 'visual',
+		'thumbnail'                     => 'visual',
+		'thumbnail_fallback'            => 'visual', # option only
+		'fullscreen'                    => 'lightbox',
+		'lightbox_maxwidth'             => 'lightbox',
+		'lightbox_aspect_ratio'         => 'lightbox',
 		'title'                         => 'data',
 		'description'                   => 'data',
 		'upload_date'                   => 'data',
-		'thumbnail'                     => 'visual',
-		'align'                         => '',
-		'arve_link'                     => 'data',
 		'duration'                      => 'data',
-		'autoplay'                      => '',
 		'seo_data'                      => 'data',
-		'maxwidth'                      => '',
-		'align_maxwidth'                => '',
-		'aspect_ratio'                  => '',
-		'mode'                          => 'visual',
-		'lazyload_style'                => 'visual',
-		'thumbnail_fallback'            => 'visual',
-		'thumbnail_post_image_fallback' => 'visual',
-		'hide_title'                    => 'visual',
-		'grow'                          => 'visual',
-		'fullscreen'                    => 'visual',
-		'play_icon_style'               => 'visual',
-		'hover_effect'                  => 'visual',
-		'lightbox_maxwidth'             => 'visual',
+		'loop'                          => 'functional',
+		'muted'                         => 'functional',
+		'controls'                      => 'functional',
+		'parameters'                    => 'functional',
+		'controlslist'                  => 'functional',
+		'autoplay'                      => 'functional',
 		'disable_links'                 => 'functional',
-		'volume'                        => 'functional',
-		'reset_after_played'            => '',
-		'lightbox_aspect_ratio'         => 'visual',
+		'maxwidth'                      => 'classic-editor',
+		'credentialless'                => 'privacy',
+		'allow_referrer'                => 'privacy',
 		'invidious'                     => 'privacy',
 		'invidious_instance'            => 'privacy',
 		'invidious_parameters'          => 'privacy',
 		'cache_thumbnails'              => 'privacy',
 		'encrypted_media'               => 'privacy',
-		'allow_referrer'                => 'privacy',
+		'youtube_nocookie'              => 'privacy',
 		'sticky'                        => 'sticky_videos',
 		'sticky_width'                  => 'sticky_videos',
 		'sticky_max_width'              => 'sticky_videos',
@@ -231,40 +226,40 @@ function settings_data(): SettingsData {
 		'sticky_navbar_selector'        => 'sticky_videos',
 		'sticky_on_mobile'              => 'sticky_videos',
 		'sticky_position'               => 'sticky_videos',
-		'controlslist'                  => 'functional',
-		'show_src_mismatch_errors'      => '',
-		'vimeo_api_id'                  => '',
-		'vimeo_api_secret'              => '',
-		'youtube_nocookie'              => 'functional',
+		'volume'                        => 'misc',
+		'arve_link'                     => 'misc',
+		'random_video_url'              => 'misc',
+		'random_video_urls'             => 'misc',
+		'align'                         => 'misc',
+		'align_maxwidth'                => 'misc',
+		'aspect_ratio'                  => 'misc',
+		'show_src_mismatch_errors'      => 'misc',
+		'vimeo_api_token'               => 'api_keys',
+		'vimeo_api_id'                  => 'api_keys',
+		'vimeo_api_secret'              => 'api_keys',
+		'youtube_data_api_key'          => 'api_keys',
 		'wp_video_override'             => 'wordpress',
 		'always_enqueue_assets'         => 'wordpress',
 		'admin_bar_menu'                => 'wordpress',
 		'feed'                          => 'wordpress',
 		'gutenberg_help'                => 'wordpress',
-		'vimeo_api_token'               => '',
-		'youtube_data_api_key'          => 'data',
 		'legacy_shortcodes'             => 'wordpress',
 	];
 
-	$order = array_merge( $order, SettingsDefinitions::url_params_settings() );
-
-	$settings_keys    = array_keys( $settings );
-	$order_keys       = array_keys( $order );
-	$missing_in_order = array_diff( $settings_keys, $order_keys );
-
-	if ( ! empty( $missing_in_order ) ) {
-		wp_trigger_error( __FUNCTION__, 'Missing keys in order array: ' . implode( ', ', $missing_in_order ) );
+	foreach ( SettingsDefinitions::url_params_settings() as $key => $setting ) {
+		$order[ $key ] = 'urlparams';
 	}
 
-	foreach ( $settings as $key => $setting ) {
-		if ( ! isset( $order[ $key ] ) ) {
-			wp_trigger_error( __FUNCTION__, "Key {$key} not found in order array" );
-		}
+	$diff = array_diff_key( $settings, $order );
 
-		$settings[ $key ]['category'] = $order[ $key ];
+	if ( ! empty( $diff ) ) {
+		wp_trigger_error( __FUNCTION__, 'diff failed' );
 	}
 
-	$settings = new SettingsData( $settings, true );
+	foreach ( $order as $order_key => $category ) {
+		$reordered_settings[ $order_key ]             = $settings[ $order_key ];
+		$reordered_settings[ $order_key ]['category'] = $category;
+	}
 
-	return $settings;
+	return new SettingsData( $reordered_settings, true );
 }
