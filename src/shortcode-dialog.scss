@@ -1,9 +1,12 @@
+html:has(.arve-sc-dialog[open]){
+	overflow: hidden;
+}
+
 .arve-sc-dialog {
 	--ngt-wp-body-bg: #f0f0f1;
 	box-sizing: border-box;
 	width: 900px;
 	max-width: 100dvw;
-
 	height: 100dvh;
 	padding: 0;
 	background-color: var(--ngt-wp-body-bg); // same as body from wp default styles

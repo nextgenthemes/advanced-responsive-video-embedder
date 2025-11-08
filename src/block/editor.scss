@@ -1,0 +1,33 @@
+.wp-block-nextgenthemes-arve-block {
+	grid-area: dummy-style-to-make-this-load-in-gb-iframe;
+}
+
+.arve-ssr--pointer-events-none {
+	pointer-events: none;
+}
+
+.arve-ctl-hidden {
+	display: none;
+}
+
+.arve-ctl-pro,
+.arve-ctl-privacy {
+	.components-input-control__label::after,
+	.components-base-control__label::after {
+		display: inline-block;
+		margin-inline-start: 6px;
+		background: #007cba;
+		color: white;
+		padding: 3px 6px;
+		border-radius: 2px;
+		font-size: 0.9em;
+		line-height: 1;
+	}
+}
+
+.arve-ctl-pro {
+	.components-input-control__label::after,
+	.components-base-control__label::after {
+        content: "Pro";
+    }
+}

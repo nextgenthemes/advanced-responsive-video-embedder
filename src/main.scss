@@ -95,6 +95,20 @@ html,
 	}
 }
 
+.arve-debug {
+	overflow-x: auto;
+	font-size: .88rem;
+
+	&--dark {
+		background-color: #111;
+		color: #eee;
+	}
+}
+
+.arve-debug:not(.arve-error > .arve-debug) {
+	padding: clamp(0.5rem, 2vw, 2rem);
+}
+
 @media (prefers-reduced-motion: reduce) {
 	html,
 	#html {

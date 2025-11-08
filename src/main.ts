@@ -27,7 +27,7 @@ if ( jq && typeof jq.fn.fitVids !== 'undefined' ) {
 
 function removeUnwantedStuff(): void {
 	qsa(
-		'.arve p, .arve .video-wrap, .arve .fluid-width-video-wrapper, .arve .fluid-vids'
+		'.arve p:not(.arve-error p), .arve .video-wrap, .arve .fluid-width-video-wrapper, .arve .fluid-vids'
 	).forEach( ( el ) => {
 		unwrap( el );
 	} );

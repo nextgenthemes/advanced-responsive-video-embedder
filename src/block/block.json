@@ -1,0 +1,161 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "nextgenthemes/arve-block",
+    "title": "Video Embed (ARVE)",
+    "category": "embed",
+    "icon": "video-alt3",
+    "description": "Advanced Responsive Video Embedder",
+    "keywords": [
+        "embed",
+        "youtube",
+        "rumble",
+        "vimeo",
+        "odysee"
+    ],
+    "version": "10.7.1",
+    "textdomain": "advanced-responsive-video-embedder",
+    "supports": {
+        "align": [
+            "wide",
+            "full",
+            "left",
+            "right"
+        ],
+        "className": true,
+        "customClassName": true
+    },
+    "example": {
+        "attributes": {
+            "url": "https://www.youtube.com/watch?v=oe452WcY7fA",
+            "title": "Example ARVE Video"
+        }
+    },
+    "editorScript": "file:./index.js",
+    "editorStyle": [
+        "file:./index.css",
+        "arve",
+        "arve-pro",
+        "arve-sticky-videos",
+        "arve-random-video"
+    ],
+    "viewScript": [
+        "arve",
+        "arve-pro",
+        "arve-sticky-videos",
+        "arve-random-video"
+    ],
+    "viewStyle": [
+        "arve",
+        "arve-pro",
+        "arve-sticky-videos",
+        "arve-random-video"
+    ],
+    "attributes": {
+        "url": {
+            "type": "string"
+        },
+        "loop": {
+            "type": "boolean"
+        },
+        "muted": {
+            "type": "boolean"
+        },
+        "controls": {
+            "type": "string"
+        },
+        "title": {
+            "type": "string"
+        },
+        "description": {
+            "type": "string"
+        },
+        "upload_date": {
+            "type": "string"
+        },
+        "thumbnail": {
+            "type": "string"
+        },
+        "align": {
+            "type": "string"
+        },
+        "arve_link": {
+            "type": "string"
+        },
+        "duration": {
+            "type": "string"
+        },
+        "autoplay": {
+            "type": "string"
+        },
+        "aspect_ratio": {
+            "type": "string"
+        },
+        "parameters": {
+            "type": "string"
+        },
+        "volume": {
+            "type": "integer"
+        },
+        "encrypted_media": {
+            "type": "boolean"
+        },
+        "credentialless": {
+            "type": "boolean"
+        },
+        "lightbox_aspect_ratio": {
+            "type": "string"
+        },
+        "controlslist": {
+            "type": "string"
+        },
+        "random_video_url": {
+            "type": "string"
+        },
+        "random_video_urls": {
+            "type": "string"
+        },
+        "mode": {
+            "type": "string"
+        },
+        "lazyload_style": {
+            "type": "string"
+        },
+        "hide_title": {
+            "type": "string"
+        },
+        "grow": {
+            "type": "string"
+        },
+        "fullscreen": {
+            "type": "string"
+        },
+        "play_icon_style": {
+            "type": "string"
+        },
+        "hover_effect": {
+            "type": "string"
+        },
+        "disable_links": {
+            "type": "string"
+        },
+        "lightbox_maxwidth": {
+            "type": "integer"
+        },
+        "invidious": {
+            "type": "string"
+        },
+        "sticky": {
+            "type": "string"
+        },
+        "sticky_on_mobile": {
+            "type": "string"
+        },
+        "sticky_position": {
+            "type": "string"
+        },
+        "thumbnail_url": {
+            "type": "string"
+        }
+    }
+}
