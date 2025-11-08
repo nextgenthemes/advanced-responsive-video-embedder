@@ -14,7 +14,7 @@ interface ImageUploadProps {
 	attributeKey: string;
 	val: string;
 	url: string;
-	help: string | JSX.Element;
+	help: undefined | string | JSX.Element;
 	setAttributes: (attributes: Record<string, any>) => void;
 }
 
