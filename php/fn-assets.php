@@ -31,12 +31,6 @@ function register_assets(): void {
 		$settings = settings( 'gutenberg_block' )->to_array();
 		$options  = options();
 
-		foreach ( $settings as $key => $v ) {
-			if ( ! $options['gutenberg_help'] ) {
-				unset( $settings[ $key ]['description'] );
-			}
-		}
-
 		// Register our block, and explicitly define the attributes we accept.
 		register_block_type(
 			PLUGIN_DIR . '/build/block/block.json',
