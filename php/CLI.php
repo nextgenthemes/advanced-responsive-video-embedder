@@ -62,7 +62,7 @@ class CLI extends WP_CLI_Command {
 		}
 
 		// Get fields to display
-		$default_fields = [ 'option_key', 'type', 'default', 'option', 'shortcode' ];
+		$default_fields = [ 'option_key', 'type', 'shortcode', 'option' ];
 		$fields         = ! empty( $assoc_args['fields'] )
 			? array_map( 'trim', explode( ',', $assoc_args['fields'] ) )
 			: $default_fields;
@@ -104,7 +104,7 @@ class CLI extends WP_CLI_Command {
 	 */
 	private static function update_block_json( array $attr ): array {
 
-		$file = PLUGIN_DIR . '/src/block.json';
+		$file = PLUGIN_DIR . '/src/block/block.json';
 		$json = file_get_contents( $file );
 
 		try {
@@ -118,7 +118,7 @@ class CLI extends WP_CLI_Command {
 		}
 
 		$json['attributes']  = $attr;
-		$json['editorStyle'] = array_merge( array( 'arve-block' ), VIEW_SCRIPT_HANDLES );
+		$json['editorStyle'] = array_merge( [ 'file:./index.css' ], VIEW_SCRIPT_HANDLES );
 		$json['viewScript']  = VIEW_SCRIPT_HANDLES;
 		$json['viewStyle']   = VIEW_SCRIPT_HANDLES;
 		$json['version']     = VERSION;
