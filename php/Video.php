@@ -853,7 +853,11 @@ class Video {
 			$code_html = '';
 
 			foreach ( $messages as $index => $message ) {
-				$code_html .= $message . '<br>';
+				$code_html .=
+					'<p><small><abbr title="Advanced Responsive Video Embedder">ARVE</abbr> ' .
+					__( 'error: ', 'advanced-responsive-video-embedder' ) .
+					$message .
+					'</small></p>';
 
 				if ( isset( $all_data[ $index ] ) && is_dev_mode() ) {
 					// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
@@ -861,7 +865,7 @@ class Video {
 				}
 			}
 
-			$html .= error( $code_html, (string) $code );
+			$html .= error_wrap( $code_html, (string) $code );
 			arve_errors()->remove( $code );
 		}
 
