@@ -51,22 +51,11 @@
 		"build": [
 			"wp @sdev arve block_json > src/block-tmp.json; mv src/block-tmp.json src/block.json",
 			"./bin/build-readme.php",
-			"@build:common",
-			"@build:arve",
+			"npm run build:arve",
+			"npm run build:common",
 			"@composer update --optimize-autoloader",
 			"@composer update --working-dir=tests"
 		],
-		"build2": [
-			"bash -c 'wp arve block_json > src/block.json'"
-		],
-		"try": "npx --no-install wp-scripts build --experimental-modules",
-		"start": "bash -c 'composer run start:arve & composer run start:common'",
-		"start:arve": "npx --no-install wp-scripts start src/main src/error src/block src/admin src/shortcode-ui",
-		"build:arve": "npx --no-install wp-scripts build src/main src/error src/block src/admin src/shortcode-ui",
-		"start:common": "npx --no-install wp-scripts start --experimental-modules --source-path=vendor/nextgenthemes/wp-settings/src --output-path=vendor/nextgenthemes/wp-settings/build",
-		"build:common": "npx --no-install wp-scripts build --experimental-modules --source-path=vendor/nextgenthemes/wp-settings/src --output-path=vendor/nextgenthemes/wp-settings/build",
-		"pre-update-cmd": "./bin/sync-wp-settings",
-		"test": "phpunit",
-		"test-arve": "NGT_PHPUNIT_LOAD_PLUGINS=advanced-responsive-video-embedder phpunit --testsuite advanced-responsive-video-embedder"
+		"pre-update-cmd": "./bin/sync-wp-settings"
 	}
 }

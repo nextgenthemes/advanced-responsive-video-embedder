@@ -16,13 +16,6 @@ function register_assets(): void {
 		ver( PLUGIN_DIR . '/build/main.css', VERSION ),
 	);
 
-	wp_register_style(
-		'arve-error',
-		plugins_url( 'build/error.css', PLUGIN_FILE ),
-		array(),
-		ver( PLUGIN_DIR . '/build/error.css', VERSION ),
-	);
-
 	wp_register_script(
 		'arve',
 		plugins_url( 'build/main.js', PLUGIN_FILE ),
@@ -44,40 +37,24 @@ function register_assets(): void {
 			}
 		}
 
-		wp_register_style(
-			'arve-block',
-			plugins_url( 'build/block.css', PLUGIN_FILE ),
-			array( 'arve' ),
-			ver( PLUGIN_DIR . '/build/block.css', VERSION ),
-		);
-
-		wp_register_script(
-			'arve-block',
-			plugins_url( 'build/block.js', PLUGIN_FILE ),
-			array(),
-			ver( PLUGIN_DIR . '/build/block.js', VERSION ),
+		// Register our block, and explicitly define the attributes we accept.
+		register_block_type(
+			PLUGIN_DIR . '/build/block/block.json',
 			array(
-				'strategy' => 'defer',
+				'render_callback' => __NAMESPACE__ . '\gutenberg_block',
 			)
 		);
 
 		$block_inline_data = [
-			'settings' => $settings,
-			'options'  => $options,
+			'settings'       => $settings,
+			'options'        => $options,
+			'settingPageUrl' => admin_url( 'options-general.php?page=nextgenthemes_arve' ),
 		];
 
 		wp_add_inline_script(
-			'arve-block',
+			'nextgenthemes-arve-block-editor-script',
 			'var ArveBlockJsBefore = ' . wp_json_encode( $block_inline_data ) . ';',
 			'before'
-		);
-
-		// Register our block, and explicitly define the attributes we accept.
-		register_block_type(
-			PLUGIN_DIR . '/src/block.json',
-			array(
-				'render_callback' => __NAMESPACE__ . '\gutenberg_block',
-			)
 		);
 
 	endif;
@@ -132,11 +109,11 @@ function action_wp_enqueue_scripts(): void {
 
 		if ( ! is_gutenberg() ) {
 			wp_enqueue_style( $handle );
-		}
 
-		if ( $options['always_enqueue_assets'] ) {
-			wp_enqueue_style( $handle );
-			wp_enqueue_script( $handle );
+			if ( $options['always_enqueue_assets'] ) {
+				wp_enqueue_style( $handle );
+				wp_enqueue_script( $handle );
+			}
 		}
 	}
 }
