@@ -68,19 +68,16 @@ function remove_embed_block_aspect_ratio( string $block_content ): string {
 	return $p->get_updated_html();
 }
 
-function error( string $messages, string $code = '' ): string {
+function error_wrap( string $message, string $code = '' ): string {
 
 	$error_html = sprintf(
-		'<div class="arve-error" data-error-code="%s">
-			 <abbr title="Advanced Responsive Video Embedder">ARVE</abbr> %s
-		</div>',
+		'<div class="arve-error" data-error-code="%s">%s</div>',
 		esc_attr( $code ),
-		// translators: Error message
-		sprintf( __( 'error: %s', 'advanced-responsive-video-embedder' ), $messages ),
+		$message
 	);
 
 	return wp_kses(
-		PHP_EOL . PHP_EOL . $error_html . PHP_EOL,
+		PHP_EOL . $error_html,
 		ALLOWED_HTML,
 		array( 'https' )
 	);
@@ -94,8 +91,6 @@ function error( string $messages, string $code = '' ): string {
  * @return string  HTML with styled pre element
  */
 function debug_pre( string $content, bool $dark = false ): string {
-
-	wp_enqueue_style( 'arve-error' );
 
 	return sprintf(
 		'<pre class="%s alignfull">' .
