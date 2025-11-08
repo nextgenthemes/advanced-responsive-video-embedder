@@ -92,7 +92,7 @@ class CLI extends WP_CLI_Command {
 
 		$json = $this->update_block_json( $attr );
 
-		WP_CLI::line( wp_json_encode( $json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) );
+		$this->pretty_json_output( $json );
 	}
 
 	/**
@@ -129,8 +129,8 @@ class CLI extends WP_CLI_Command {
 	/**
 	 * @param array<array-key, mixed> $data
 	 */
-	private static function pretty_json( array $data ): string {
-		return wp_json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
+	private static function pretty_json_output( array $data ): void {
+		WP_CLI::line( wp_json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) );
 	}
 
 	public function delete_oembed_cache(): void {
