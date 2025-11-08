@@ -185,16 +185,16 @@ function settings_data(): SettingsData {
 
 	$order = [
 		'url'                           => 'main',
-		'mode'                          => 'visual',
-		'lazyload_style'                => 'visual',
-		'hover_effect'                  => 'visual',
-		'grow'                          => 'visual',
-		'reset_after_played'            => 'visual',
-		'hide_title'                    => 'visual',
-		'thumbnail_post_image_fallback' => 'visual',
-		'play_icon_style'               => 'visual',
-		'thumbnail'                     => 'visual',
-		'thumbnail_fallback'            => 'visual', # option only
+		'thumbnail'                     => 'main',
+		'mode'                          => 'main',
+		'grow'                          => 'lazyload_and_lightbox',
+		'lazyload_style'                => 'lazyload_and_lightbox',
+		'hover_effect'                  => 'lazyload_and_lightbox',
+		'reset_after_played'            => 'lazyload_and_lightbox',
+		'hide_title'                    => 'lazyload_and_lightbox',
+		'thumbnail_post_image_fallback' => 'lazyload_and_lightbox',
+		'play_icon_style'               => 'lazyload_and_lightbox',
+		'thumbnail_fallback'            => 'lazyload_and_lightbox', # option only
 		'fullscreen'                    => 'lightbox',
 		'lightbox_maxwidth'             => 'lightbox',
 		'lightbox_aspect_ratio'         => 'lightbox',
