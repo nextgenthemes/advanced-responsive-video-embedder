@@ -1,1 +1,0 @@
-import './shortcode-dialog.scss';

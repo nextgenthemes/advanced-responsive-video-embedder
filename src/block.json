@@ -6,7 +6,6 @@
     "viewScript": [
         "file:./main.ts",
         "file:./admin.ts",
-        "file:./shortcode-ui.ts",
-        "file:./shortcode-dialog.ts"
+        "file:./shortcode-ui.ts"
     ]
 }
