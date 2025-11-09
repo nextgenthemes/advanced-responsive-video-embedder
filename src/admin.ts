@@ -1,6 +1,5 @@
 import './admin.scss';
 import './shortcode-dialog.scss';
-import { globalID } from './main';
 
 export {};
 declare global {
@@ -12,7 +11,6 @@ declare global {
 const d = document;
 const qs = d.querySelector.bind( d );
 
-globalID();
 setEditorCanvasID();
 
 function setEditorCanvasID() {
