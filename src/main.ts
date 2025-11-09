@@ -18,7 +18,7 @@ domReady( () => {
 
 // Mitigation for outdated versions of fitvids
 if ( jq && typeof jq.fn.fitVids !== 'undefined' ) {
-	jq( document ).ready( () => {
+	jq( d ).ready( () => {
 		setTimeout( () => {
 			removeUnwantedStuff();
 		}, 1 );
