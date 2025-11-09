@@ -103,11 +103,11 @@ function action_wp_enqueue_scripts(): void {
 
 		if ( ! is_gutenberg() ) {
 			wp_enqueue_style( $handle );
+		}
 
-			if ( $options['always_enqueue_assets'] ) {
-				wp_enqueue_style( $handle );
-				wp_enqueue_script( $handle );
-			}
+		if ( $options['always_enqueue_assets'] ) {
+			wp_enqueue_style( $handle );
+			wp_enqueue_script( $handle );
 		}
 	}
 }
