@@ -11,8 +11,8 @@ interface MediaItem {
 
 interface ImageUploadProps {
 	className?: string;
-	attributeKey: string;
-	val: string;
+	sKey: string;
+	val: number;
 	url: string;
 	help: undefined | string | JSX.Element;
 	setAttributes: (attributes: Record<string, any>) => void;
@@ -20,7 +20,7 @@ interface ImageUploadProps {
 
 const ImageUpload = ({
 	className,
-	attributeKey,
+	sKey,
 	val,
 	url,
 	help,
@@ -70,15 +70,15 @@ const ImageUpload = ({
 
 	const handleSelect = (media: MediaItem) => {
 		setAttributes({
-			[attributeKey]: media.id.toString(),
-			[`${attributeKey}_url`]: media.url || '',
+			[sKey]: media.id.toString(),
+			[`${sKey}_url`]: media.url || '',
 		});
 	};
 
 	const handleRemove = () => {
 		setAttributes({
-			[attributeKey]: '',
-			[`${attributeKey}_url`]: '',
+			[sKey]: '',
+			[`${sKey}_url`]: '',
 		});
 	};
 
@@ -98,7 +98,7 @@ const ImageUpload = ({
 				/>
 			</MediaUploadCheck>
 			{!!val && !!url && (
-				<MediaUploadCheck key={`${attributeKey}-MediaUploadCheck-2`}>
+				<MediaUploadCheck key={`${sKey}-MediaUploadCheck-2`}>
 					<MediaUpload
 						title={__('Thumbnail')}
 						onSelect={handleSelect}
@@ -113,7 +113,7 @@ const ImageUpload = ({
 				</MediaUploadCheck>
 			)}
 			{!!val && (
-				<MediaUploadCheck key={`${attributeKey}-MediaUploadCheck-3`}>
+				<MediaUploadCheck key={`${sKey}-MediaUploadCheck-3`}>
 					<Button
 						onClick={handleRemove}
 						isDestructive

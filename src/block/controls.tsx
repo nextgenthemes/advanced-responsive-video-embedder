@@ -5,8 +5,9 @@
 
 import { __ } from '@wordpress/i18n';
 import { BaseControl, PanelBody, SelectControl, TextControl, ToggleControl } from '@wordpress/components';
-import { createElement } from '@wordpress/element';
+// createElement import removed as we're using JSX syntax
 import ImageUpload from './components/ImageUpload';
+import UrlOrEmbedCode from './components/UrlOrEmbedCode';
 
 const { settingPageUrl, options, settings } = window.ArveBlockJsBefore;
 const { gutenberg_help } = options;
@@ -102,59 +103,83 @@ export function buildControls({ attributes, setAttributes }: BuildControlsProps)
 	});
 
 	// Add controls to sections
-	Object.entries(settings).forEach(([key, setting]) => {
-		const val = attributes[key];
-		const url = attributes[`${key}_url`] as string || '';
+	Object.entries(settings).forEach(([sKey, setting]) => {
+		const val = attributes[sKey];
+		const url = attributes[`${sKey}_url`] as string || '';
 		const tab = setting.category || 'no-category';
 
-		if (shouldHide(key, attributes)) {
+		if (shouldHide(sKey, attributes)) {
 			return;
 		}
 
-		if (setting.ui === 'image_upload') {
+		const compare = {
+			'': 'not-matter',
+			true: 'not-matter',
+			false: 'not-matter',
+		}
+
+		// if (setting.options && setting.options[0][0])
+
+		if ( 'url' === sKey ) {
 			sectionControls[tab].push(
-				createElement(ImageUpload, {
-					className: `arve-ctl-${setting.tab}`,
-					attributeKey: key,
-					val: val as string,
-					url,
-					help: createHelp(setting.description),
-					setAttributes
-				})
+				<UrlOrEmbedCode
+					key={sKey}
+					label={setting.label}
+					value={val as string}
+					onChange={(value: string) => setAttributes({ [sKey]: value })}
+					onAspectRatioChange={(ratio: string) => setAttributes({ aspect_ratio: ratio })}
+					placeholder={setting.placeholder}
+					help={createHelp(setting.description)}
+				/>
+			);
+		}else if (setting.ui === 'image_upload') {
+			sectionControls[tab].push(
+				<ImageUpload
+					key={sKey}
+					sKey={sKey}
+					className={`arve-ctl-${setting.tab}`}
+					val={val as number}
+					url={url}
+					help={createHelp(setting.description)}
+					setAttributes={setAttributes}
+				/>
 			);
 		} else if (setting.ui_element === 'select') {
 			const selectOptions = prepareSelectOptions(setting.options as Record<string, string>);
 			sectionControls[tab].push(
-				createElement(SelectControl, {
-					className: `arve-ctl-${setting.tab}`,
-					label: setting.label,
-					value: val as string,
-					options: selectOptions,
-					onChange: (value: string) => setAttributes({ [key]: value || undefined }),
-					help: createHelp(setting.description)
-				})
+				<SelectControl
+					key={sKey}
+					className={`arve-ctl-${setting.tab}`}
+					label={setting.label}
+					value={val as string}
+					options={selectOptions}
+					onChange={(value: string) => setAttributes({ [sKey]: value || undefined })}
+					help={createHelp(setting.description)}
+				/>
 			);
 		} else if (setting.ui_element_type === 'checkbox') {
 			sectionControls[tab].push(
-				createElement(ToggleControl, {
-					className: `arve-ctl-${setting.tab}`,
-					label: setting.label,
-					checked: Boolean(val),
-					onChange: (value: boolean) => setAttributes({ [key]: value }),
-					help: createHelp(setting.description)
-				})
+				<ToggleControl
+					key={sKey}
+					className={`arve-ctl-${setting.tab}`}
+					label={setting.label}
+					checked={Boolean(val)}
+					onChange={(value: boolean) => setAttributes({ [sKey]: value })}
+					help={createHelp(setting.description)}
+				/>
 			);
 		} else {
 			sectionControls[tab].push(
-				createElement(TextControl, {
-					className: `arve-ctl-${setting.tab}`,
-					label: setting.label,
-					type: setting.ui_element_type,
-					value: (val as string) || '',
-					placeholder: setting.placeholder,
-					onChange: (value: string) => setAttributes({ [key]: value }),
-					help: createHelp(setting.description)
-				})
+				<TextControl
+					key={sKey}
+					className={`arve-ctl-${setting.tab}`}
+					label={setting.label}
+					type={setting.ui_element_type}
+					value={(val as string) || ''}
+					placeholder={setting.placeholder}
+					onChange={(value: string) => setAttributes({ [sKey]: value })}
+					help={createHelp(setting.description)}
+				/>
 			);
 		}
 	});
@@ -162,29 +187,44 @@ export function buildControls({ attributes, setAttributes }: BuildControlsProps)
 	if ( gutenberg_help ) {
 		// Add info panel to main section
 		sectionControls.main.push(
-			createElement(BaseControl, {
-				help: createHelp(
+			<BaseControl
+				key="info-panel"
+				help={
 					__(
 						'Remember changing the defaults is possible on the <a href="' + settingPageUrl + '" target="_blank">Settings page</a>. You can disable the extensive help texts there.',
 						'advanced-responsive-video-embedder'
 					)
-				),
-				children: createElement(BaseControl.VisualLabel, null, 
-					__('Info', 'advanced-responsive-video-embedder')
-				)
-			})
+				}
+			>
+				<BaseControl.VisualLabel>
+					{__('Info', 'advanced-responsive-video-embedder')}
+				</BaseControl.VisualLabel>
+			</BaseControl>
 		);
+	}
+
+	const categories = {
+		main: __( 'Main', 'advanced-responsive-video-embedder' ),
+		lazyloadAndLightbox: __( 'Lazyload & Lightbox', 'advanced-responsive-video-embedder' ),
+		lightbox: __( 'Lightbox', 'advanced-responsive-video-embedder' ),
+		data: __( 'Data', 'advanced-responsive-video-embedder' ),
+		stickyVideos: __( 'Sticky Videos', 'advanced-responsive-video-embedder' ),
+		functional: __( 'Functional', 'advanced-responsive-video-embedder' ),
+		privacy: __( 'Privacy', 'advanced-responsive-video-embedder' ),
+		misc: __( 'Misc', 'advanced-responsive-video-embedder' ),
 	}
 
 	// Convert section controls to panels
 	Object.entries(sectionControls).forEach(([tab, tabControls]) => {
 		if (tabControls.length > 0) {
 			controls.push(
-				createElement(PanelBody, {
-					key: tab,
-					title: capitalizeFirstLetter(tab),
-					initialOpen: tab !== 'misc'
-				}, tabControls)
+				<PanelBody
+					key={tab}
+					title={categories[tab] ?? tab}
+					initialOpen={'main' === tab}
+				>
+					{tabControls}
+				</PanelBody>
 			);
 		}
 	});
