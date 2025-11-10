@@ -43,9 +43,10 @@ function setupInteractivityApi() {
 		// In ARVE this script will always be loaded but the config is only output when the media button is on the page
 		return;
 	}
+	const config = getConfig( namespace ) as configInterface;
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const { state, actions, callbacks, helpers } = store< storeInterface >( namespace, {
+	const { state, actions, callbacks, helpers } = store( namespace, {
 		state: {
 			isValidLicenseKey: () => {
 				const context = getContext< optionContext >();
@@ -131,17 +132,21 @@ function setupInteractivityApi() {
 					state.options[ context.option_key ] = event.target.value;
 				}
 
-				if ( 'nextgenthemes_arve_dialog' !== namespace ) {
-					actions.saveOptions();
-				}
+				actions.saveOptions();
 			},
-			checkboxChange: ( event ) => {
+			checkboxChange: ( event: Event ) => {
 				const context = getContext< optionContext >();
-				state.options[ context.option_key ] = event.target.checked;
 
-				if ( 'nextgenthemes_arve_dialog' !== namespace ) {
-					actions.saveOptions();
+				const isCheckbox =
+					event?.target instanceof HTMLInputElement && 'checkbox' === event?.target?.type;
+
+				if ( ! isCheckbox ) {
+					throw new Error( 'event.target is not HTMLInputElement type=checkbox' );
 				}
+
+				state.options[ context.option_key ] = event?.target.checked;
+
+				actions.saveOptions();
 			},
 			selectImage: () => {
 				if ( dialog ) {
@@ -174,7 +179,7 @@ function setupInteractivityApi() {
 			deleteCaches: () => {
 				const context = getContext< clearCacheContext >();
 
-				actions.restCall( '/delete-caches', {
+				actions.restCall( config.restUrl + '/delete-caches', {
 					type: context.type,
 					prefix: context.prefix,
 					like: context.like,
@@ -184,10 +189,12 @@ function setupInteractivityApi() {
 			},
 			// debounced version created later
 			saveOptionsReal: () => {
-				actions.restCall( '/save', state.options );
+				actions.restCall( config.restSettingsUrl, {
+					[ namespace ]: state.options,
+				} );
 			},
 			restCall: (
-				restRoute: string,
+				restUrl: string,
 				body: Record< string, any >,
 				refreshAfter: boolean = false
 			) => {
@@ -195,14 +202,15 @@ function setupInteractivityApi() {
 					state.message = 'trying to save too fast';
 					return;
 				}
-				const config = getConfig();
 
 				// set the state so that another save cannot happen while processing
 				state.isSaving = true;
-				state.message = 'Saving...';
+				state.message = 'Saving…';
+
+				let hadError = false;
 
 				// Make a POST request to the REST API route that we registered in our PHP file
-				fetch( config.restUrl + restRoute, {
+				fetch( restUrl, {
 					method: 'POST',
 					body: JSON.stringify( body ),
 					headers: {
@@ -212,15 +220,19 @@ function setupInteractivityApi() {
 				} )
 					.then( ( response ) => {
 						if ( ! response.ok ) {
-							// eslint-disable-next-line no-console
-							console.log( response );
-							throw new Error( 'Network response was not ok' );
+							hadError = true;
 						}
 						return response.json();
 					} )
-					.then( ( message ) => {
-						state.message = message;
-						setTimeout( () => ( state.message = '' ), 666 );
+					.then( ( json ) => {
+						if ( hadError ) {
+							state.message = 'Error:';
+							state.debug = JSON.stringify( json, null, 2 );
+						}
+
+						if ( ! hadError ) {
+							setTimeout( () => ( state.message = '' ), 666 );
+						}
 					} )
 					.catch( ( error ) => {
 						state.message = error.message;
@@ -237,7 +249,7 @@ function setupInteractivityApi() {
 				const context = getContext< optionContext >();
 
 				actions.restCall(
-					'/edd-license-action',
+					config.restUrl + '/edd-license-action',
 					{
 						option_key: context.option_key,
 						edd_store_url: context.edd_store_url, // EDD Store URL
@@ -249,7 +261,6 @@ function setupInteractivityApi() {
 				);
 			},
 			resetOptionsSection() {
-				const config = getConfig() as configInterface;
 				const context = getContext< optionContext >();
 				const sectionToReset = context.tab;
 
@@ -343,10 +354,15 @@ function setupInteractivityApi() {
 				state.options.url = url;
 			},
 		},
-	} );
+	} ) as any;
 
 	actions.saveOptions = debounce( actions.saveOptionsReal, 1111 );
+
+	if ( 'nextgenthemes_arve_dialog' === namespace ) {
+		actions.saveOptions = () => {};
+	}
 }
+
 declare global {
 	interface Window {
 		wp: {
@@ -365,48 +381,6 @@ interface wpMedia {
 	on: ( eventName: string, callback: ( data: any ) => void ) => this; // Event subscription
 	editor: {
 		insert: ( content: string ) => void; // Method to insert content into the editor}
-	};
-}
-
-interface storeInterface {
-	state: {
-		options: Record< string, string | number | boolean >;
-		help: boolean;
-		isSaving: boolean;
-		message: string;
-		shortcode: string;
-		debug: string;
-		isValidLicenseKey: () => boolean;
-		is32charactersLong: () => boolean;
-		isActiveTab: boolean;
-	};
-	actions: {
-		toggleHelp: () => void;
-		openShortcodeDialog: () => void;
-		insertShortcode: () => void;
-		closeShortcodeDialog: () => void;
-		saveOptions: () => void;
-		saveOptionsReal: () => void;
-		changeTab: ( tab: string ) => void;
-		inputChange: ( event: Event ) => void;
-		checkboxChange: ( event: Event ) => void;
-		selectImage: () => void;
-		deleteCaches: () => void;
-		eddLicenseAction: () => void;
-		resetOptionsSection: () => void;
-		restCall: (
-			restRoute: string,
-			body: Record< string, any >,
-			refreshAfter?: boolean
-		) => void;
-	};
-	callbacks: {
-		updateShortcode: () => void;
-		updatePreview: () => void;
-	};
-	helpers: {
-		extractFromEmbedCode: ( url: string ) => void;
-		debugJson: ( data: Record< string, any > ) => void;
 	};
 }
 
@@ -429,6 +403,7 @@ interface clearCacheContext {
 
 interface configInterface {
 	restUrl: string;
+	restSettingsUrl: string;
 	nonce: string;
 	defaultOptions: Record< string, string | number | boolean >;
 }
