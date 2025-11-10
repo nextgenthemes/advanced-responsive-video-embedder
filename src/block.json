@@ -1,11 +1,11 @@
 {
-    "$schema": "https://schemas.wp.org/trunk/block.json",
-    "apiVersion": 3,
-    "name": "nextgenthemes/fake-block",
-    "title": "JUST FOR wp-scripts compile",
-    "viewScript": [
-        "file:./main.ts",
-        "file:./admin.ts",
-        "file:./shortcode-ui.ts"
-    ]
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "nextgenthemes/fake-block",
+	"title": "JUST FOR wp-scripts compile",
+	"viewScript": [
+		"file:./main.ts",
+		"file:./admin.ts",
+		"file:./shortcode-ui.ts"
+	]
 }
