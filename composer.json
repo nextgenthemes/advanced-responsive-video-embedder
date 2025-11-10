@@ -49,7 +49,8 @@
 	},
 	"scripts": {
 		"build": [
-			"wp @sdev arve block_json > src/block-tmp.json; mv src/block-tmp.json src/block.json",
+			"wp @sdev arve block_json > src/block/block-tmp.json",
+			"mv src/block/block-tmp.json src/block/block.json",
 			"./bin/build-readme.php",
 			"npm run build:arve",
 			"npm run build:common",
