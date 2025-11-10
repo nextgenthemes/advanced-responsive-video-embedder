@@ -141,12 +141,54 @@ class Settings {
 		$this->options = $this->options + $this->options_defaults;
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'assets' ), 9 );
-		add_action( 'rest_api_init', array( $this, 'register_rest_route' ) );
+		add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
 		add_action( 'admin_menu', array( $this, 'register_setting_page' ) );
 
 		if ( $this->plugin_file ) {
 			add_filter( 'plugin_action_links_' . plugin_basename( $this->plugin_file ), array( $this, 'add_action_links' ), 5, 1 );
 		}
+
+		add_filter( "option_{$this->slugged_namespace}", [ $this, 'get_options_with_defaults' ], 10, 1 );
+		add_filter( "pre_update_option_{$this->slugged_namespace}", [ $this, 'pre_update_options' ], 10, 2 );
+	}
+
+	/**
+	 * Handle option updates for namespaced options
+	 *
+	 * @param mixed $new_options
+	 * @param mixed $old_options
+	 *
+	 * @return array <string, NgtSettingValue> The updated option value
+	 */
+	public function pre_update_options( $new_options, $old_options ): array {
+
+		$new_options = is_array( $new_options ) ? $new_options : array();
+		$old_options = is_array( $old_options ) ? $old_options : array();
+
+		// Merge new values with existing options
+		$updated_options = array_merge( $old_options, $new_options );
+		// remove all items match exact key-value pairs in defaults
+		$updated_options = array_diff_assoc( $updated_options, $this->options_defaults );
+		// remove all items that have a key that is not in defaults
+		$updated_options = array_intersect_key( $updated_options, $this->options_defaults );
+
+		return $updated_options;
+	}
+
+	/**
+	 * Handle option updates for namespaced options
+	 *
+	 * @param mixed $options
+	 *
+	 * @return array <string, NgtSettingValue> The updated option value
+	 */
+	public function get_options_with_defaults( $options ): array {
+
+		// in case the options are saved as the wrong type (we could also fatal error this by tying it to array)
+		$options = is_array( $options ) ? $options : array();
+		$options = $options + $this->options_defaults;
+
+		return $options;
 	}
 
 	/**
@@ -238,6 +280,8 @@ class Settings {
 	 */
 	public function get_options(): array {
 		$options = (array) get_option( $this->slugged_namespace, array() );
+
+		// Why the fuck is this needed for unit tests? The get_options_with_defaults seems not to be called in the unit tests
 		$options = $options + $this->options_defaults;
 
 		return apply_filters( $this->slashed_namespace . '/options', $options );
@@ -258,11 +302,6 @@ class Settings {
 	 * @param array <string, NgtSettingValue> $options
 	 */
 	public function save_options( array $options ): void {
-		// remove all items from options that are not also in defaults.
-		$options = array_diff_assoc( $options, $this->options_defaults );
-		// store only the options that differ from the defaults.
-		$options = array_intersect_key( $options, $this->options_defaults );
-
 		update_option( $this->slugged_namespace, $options );
 	}
 
@@ -275,7 +314,37 @@ class Settings {
 		$this->save_options( $options );
 	}
 
-	public function register_rest_route(): void {
+	private function register_settings_with_rest(): void {
+
+		$schema_properties = array();
+
+		foreach ( $this->settings->get_all() as $key => $setting ) {
+			$schema_properties[ $key ]['type']    = $setting->type;
+			$schema_properties[ $key ]['default'] = $setting->default;
+		}
+
+		// register settings to be updatable with the default /wp-json/wp/v2/settings endpoint
+		register_setting(
+			$this->slashed_namespace . '_options_group', // Group name.
+			$this->slugged_namespace, // Single option name for the entire array.
+			array(
+				'type'                => 'object',
+				'label'               => $this->slugged_namespace . ' Settings',
+				'description'         => 'Settings for ' . $this->slugged_namespace,
+				'show_in_rest'        => array(
+					'schema' => array(
+						'type'                 => 'object', // Matches the 'type' above.
+						'properties'           => $schema_properties, // Define types for each key in the array.
+						'additionalProperties' => false, // Optional: Prevent extra keys.
+					),
+				),
+			)
+		);
+	}
+
+	public function register_rest_routes(): void {
+
+		$this->register_settings_with_rest();
 
 		// register save options route
 		register_rest_route(
@@ -452,11 +521,12 @@ class Settings {
 		wp_interactivity_config(
 			$this->slugged_namespace,
 			[
-				'restUrl'        => get_rest_url( null, $this->rest_namespace ),
-				'nonce'          => wp_create_nonce( 'wp_rest' ),
-				'siteUrl'        => get_site_url(),
-				'homeUrl'        => get_home_url(),
-				'defaultOptions' => $this->options_defaults_by_section,
+				'restUrl'         => get_rest_url( null, $this->rest_namespace ),
+				'restSettingsUrl' => get_rest_url( null, '/wp/v2/settings' ),
+				'nonce'           => wp_create_nonce( 'wp_rest' ),
+				'siteUrl'         => get_site_url(),
+				'homeUrl'         => get_home_url(),
+				'defaultOptions'  => $this->options_defaults_by_section,
 			]
 		);
 
@@ -527,7 +597,6 @@ class Settings {
 
 							<p></p>
 							<p><span data-wp-text="state.message"></span>&nbsp;</p>
-
 							<pre data-wp-text="state.debug"></pre>
 
 							<?php do_action( $this->slashed_namespace . '/admin/settings/sidebar', $this ); ?>
