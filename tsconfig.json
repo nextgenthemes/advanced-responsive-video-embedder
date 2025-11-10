@@ -1,11 +1,4 @@
 {
 	"extends": "../../../../../tsconfig.base.json",
-	"compilerOptions": {
-		"rootDir": "src",
-		"declarationDir": "build-types",
-		"baseUrl": "src",
-	},
-	"include": ["src/**/*", "src/block.json"],
-	"references": [],
-	"files": []
+	"include": ["src/**/*", "src/block/block.json"]
 }
