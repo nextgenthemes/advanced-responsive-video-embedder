@@ -4,16 +4,17 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
+use Nextgenthemes\WP\Settings;
+
 // Stop outdated addons from executing
 remove_action( 'plugins_loaded', 'Nextgenthemes\ARVE\Pro\init', 15 );
 remove_action( 'plugins_loaded', 'Nextgenthemes\ARVE\RandomVideo\init', 15 );
 remove_action( 'plugins_loaded', 'Nextgenthemes\ARVE\Privacy\init', 16 );
 
-add_action( 'init', __NAMESPACE__ . '\init', 9 );
-add_action( 'admin_init', __NAMESPACE__ . '\init_admin', 9 );
+add_action( 'init', __NAMESPACE__ . '\init', 8 );
+add_action( 'admin_init', __NAMESPACE__ . '\init_admin', 8 );
 
 function init(): void {
-
 	require_once PLUGIN_DIR . '/php/fn-cache.php';
 	require_once PLUGIN_DIR . '/php/fn-assets.php';
 	require_once PLUGIN_DIR . '/php/fn-html-output.php';
@@ -30,11 +31,11 @@ function init(): void {
 	maybe_delete_oembed_cache(); // Must be before update_option arve_version
 	update_option( 'arve_version', VERSION );
 
-	add_action( 'init', __NAMESPACE__ . '\create_settings_instance' );
-	add_action( 'init', __NAMESPACE__ . '\init_nextgenthemes_settings' );
-	add_action( 'init', __NAMESPACE__ . '\register_assets' );
-	add_action( 'init', __NAMESPACE__ . '\create_shortcodes' );
-	add_action( 'init', __NAMESPACE__ . '\create_url_handlers' );
+	add_action( 'init', __NAMESPACE__ . '\create_settings_instance', 9 );
+	add_action( 'init', __NAMESPACE__ . '\init_nextgenthemes_settings', 9 );
+	add_action( 'init', __NAMESPACE__ . '\register_assets', 11 );
+	add_action( 'init', __NAMESPACE__ . '\create_shortcodes', 11 );
+	add_action( 'init', __NAMESPACE__ . '\create_url_handlers', 11 );
 	add_filter( 'mce_css', __NAMESPACE__ . '\add_styles_to_mce' );
 	add_filter( 'oembed_remote_get_args', __NAMESPACE__ . '\vimeo_referer', 10, 2 );
 	add_filter( 'oembed_fetch_url', __NAMESPACE__ . '\remove_youtube_si_param', 10, 2 );
@@ -50,6 +51,14 @@ function init(): void {
 		maybe_init_addon( $addon_name );
 	}
 }
+
+// add_action(
+//  'init',
+//  function (): void {
+//      d( get_option( 'nextgenthemes_arve' ) );
+//  },
+//  11
+// );
 
 function maybe_init_addon( string $name ): void {
 
