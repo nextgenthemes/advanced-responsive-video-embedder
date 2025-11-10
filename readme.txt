@@ -195,10 +195,13 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2025-11-04 10.7.2 ###
+### 2025-11-10 10.8.0 ###
 
-* Fix: YouTube error 153 inside the Block editor.
 * Fix: YouTube playlists 153 error on Frontend.
+* Fix: YouTube error 153 inside the Block editor.
+* Improved: Block improved, new sorting by categories.
+* Improved: Lots of code improvements.
+* New: Privacy addon feature now free: Removes `si` parameter from YouTube URLs when doing oEmbed requests.
 
 ### 2025-10-22 10.7.1 ###
 

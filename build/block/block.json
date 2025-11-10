@@ -55,13 +55,34 @@
     "url": {
       "type": "string"
     },
-    "loop": {
-      "type": "boolean"
+    "thumbnail": {
+      "type": "string"
     },
-    "muted": {
-      "type": "boolean"
+    "mode": {
+      "type": "string"
     },
-    "controls": {
+    "grow": {
+      "type": "string"
+    },
+    "lazyload_style": {
+      "type": "string"
+    },
+    "hover_effect": {
+      "type": "string"
+    },
+    "hide_title": {
+      "type": "string"
+    },
+    "play_icon_style": {
+      "type": "string"
+    },
+    "fullscreen": {
+      "type": "string"
+    },
+    "lightbox_maxwidth": {
+      "type": "integer"
+    },
+    "lightbox_aspect_ratio": {
       "type": "string"
     },
     "title": {
@@ -73,77 +94,38 @@
     "upload_date": {
       "type": "string"
     },
-    "thumbnail": {
-      "type": "string"
-    },
-    "align": {
-      "type": "string"
-    },
-    "arve_link": {
-      "type": "string"
-    },
     "duration": {
       "type": "string"
     },
-    "autoplay": {
-      "type": "string"
+    "loop": {
+      "type": "boolean"
     },
-    "aspect_ratio": {
+    "muted": {
+      "type": "boolean"
+    },
+    "controls": {
       "type": "string"
     },
     "parameters": {
       "type": "string"
     },
-    "volume": {
-      "type": "integer"
-    },
-    "encrypted_media": {
-      "type": "boolean"
-    },
-    "credentialless": {
-      "type": "boolean"
-    },
-    "lightbox_aspect_ratio": {
-      "type": "string"
-    },
     "controlslist": {
       "type": "string"
     },
-    "random_video_url": {
-      "type": "string"
-    },
-    "random_video_urls": {
-      "type": "string"
-    },
-    "mode": {
-      "type": "string"
-    },
-    "lazyload_style": {
-      "type": "string"
-    },
-    "hide_title": {
-      "type": "string"
-    },
-    "grow": {
-      "type": "string"
-    },
-    "fullscreen": {
-      "type": "string"
-    },
-    "play_icon_style": {
-      "type": "string"
-    },
-    "hover_effect": {
+    "autoplay": {
       "type": "string"
     },
     "disable_links": {
       "type": "string"
     },
-    "lightbox_maxwidth": {
-      "type": "integer"
+    "credentialless": {
+      "type": "boolean"
     },
     "invidious": {
       "type": "string"
+    },
+    "encrypted_media": {
+      "type": "boolean"
     },
     "sticky": {
       "type": "string"
@@ -152,6 +134,24 @@
       "type": "string"
     },
     "sticky_position": {
+      "type": "string"
+    },
+    "volume": {
+      "type": "integer"
+    },
+    "arve_link": {
+      "type": "string"
+    },
+    "random_video_url": {
+      "type": "string"
+    },
+    "random_video_urls": {
+      "type": "string"
+    },
+    "align": {
+      "type": "string"
+    },
+    "aspect_ratio": {
       "type": "string"
     },
     "thumbnail_url": {
