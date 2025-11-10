@@ -8,9 +8,9 @@ import { Edit } from './edit';
 
 const { registerBlockType } = window.wp.blocks;
 
-registerBlockType(metadata, {
-    edit: Edit,
-    // save() is intentionally omitted because we're using ServerSideRender
-    // which handles the frontend rendering on the server
-    save: () => null
-});
+registerBlockType( metadata, {
+	edit: Edit,
+	// save() is intentionally omitted because we're using ServerSideRender
+	// which handles the frontend rendering on the server
+	save: () => null,
+} );
