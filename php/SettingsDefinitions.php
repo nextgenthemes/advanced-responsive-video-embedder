@@ -382,8 +382,8 @@ class SettingsDefinitions {
 					esc_url( 'https://docs.invidious.io/instances/' )
 				),
 				'depends'     => array(
-					[ 'invidious' => true ],
 					[ 'invidious' => 'true' ],
+					[ 'invidious' => true ],
 				),
 			),
 			'invidious_parameters' => array(
@@ -399,8 +399,8 @@ class SettingsDefinitions {
 					esc_url( 'https://docs.invidious.io/url-parameters/' )
 				),
 				'depends'     => array(
-					[ 'invidious' => true ],
 					[ 'invidious' => 'true' ],
+					[ 'invidious' => true ],
 				),
 			),
 			'cache_thumbnails' => array(

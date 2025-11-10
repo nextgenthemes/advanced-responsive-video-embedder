@@ -11,8 +11,6 @@ use function Nextgenthemes\WP\valid_url;
 use function Nextgenthemes\WP\get_attribute_from_html_tag;
 use function Nextgenthemes\WP\first_tag_attr;
 
-const OEMBED_SCRIPT_CLASS = 'arve-oembed-json';
-
 /**
  * Add ARVE data to oEmbed cache
  *
