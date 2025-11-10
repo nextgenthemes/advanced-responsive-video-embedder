@@ -41,7 +41,6 @@ class ComposerStaticInitfa4ebaf22f08a8b822c80bc4efcf7610
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Nextgenthemes\\ARVE\\CLI' => __DIR__ . '/../..' . '/php/CLI.php',
         'Nextgenthemes\\ARVE\\ElementorWidget' => __DIR__ . '/../..' . '/php/ElementorWidget.php',
-        'Nextgenthemes\\ARVE\\OembedDiffLog' => __DIR__ . '/../..' . '/php/OembedDiffLog.php',
         'Nextgenthemes\\ARVE\\SettingsDefinitions' => __DIR__ . '/../..' . '/php/SettingsDefinitions.php',
         'Nextgenthemes\\ARVE\\Video' => __DIR__ . '/../..' . '/php/Video.php',
     );

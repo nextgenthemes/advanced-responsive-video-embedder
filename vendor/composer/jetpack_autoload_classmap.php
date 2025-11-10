@@ -62,10 +62,6 @@ return array(
 		'version' => 'dev-master',
 		'path'    => $baseDir . '/php/ElementorWidget.php'
 	),
-	'Nextgenthemes\\ARVE\\OembedDiffLog' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/php/OembedDiffLog.php'
-	),
 	'Nextgenthemes\\ARVE\\SettingsDefinitions' => array(
 		'version' => 'dev-master',
 		'path'    => $baseDir . '/php/SettingsDefinitions.php'
