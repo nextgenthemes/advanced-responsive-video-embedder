@@ -4,7 +4,7 @@ const WebpackNotifierPlugin = require( 'webpack-notifier' );
 
 let config = defaultConfig;
 
-// when --experimental-modules is NOT passed, the config is a single object, when its passed its an array with two config objects. For consistency, always make it any array
+// when --experimental-modules is NOT passed, the config is a single object, when its passed its an array with two config objects. For consistency, always make it an array
 if ( ! Array.isArray( config ) ) {
 	config = [ config ];
 }
