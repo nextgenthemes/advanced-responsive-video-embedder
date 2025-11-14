@@ -3,7 +3,7 @@ Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: embed, video, lazyload, lightbox, rumble
 Requires at least: 6.6
-Tested up to: 6.8.3
+Tested up to: 6.9-RC1
 Requires PHP: 7.4
 Stable tag: 10.8.0-beta1
 License: GPL-3.0
@@ -195,13 +195,13 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2025-11-10 10.8.0 ###
+### 2025-11-14 10.8.0 ###
 
 * Fix: YouTube playlists 153 error on Frontend.
 * Fix: YouTube error 153 inside the Block editor.
 * Improved: Block improved, new sorting by categories.
 * Improved: Lots of code improvements.
-* New: Privacy addon feature now free: Removes `si` parameter from YouTube URLs when doing oEmbed requests.
+* New: Privacy addon feature moved to free plugin: Removes `si` parameter from YouTube URLs when doing oEmbed requests.
 
 ### 2025-10-22 10.7.1 ###
 
