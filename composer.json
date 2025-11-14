@@ -53,6 +53,7 @@
 			"mv src/block/block-tmp.json src/block/block.json",
 			"./bin/build-readme.php",
 			"npm run build:arve",
+			"rm build/block.json",
 			"npm run build:common",
 			"@composer update --optimize-autoloader",
 			"@composer update --working-dir=tests"
