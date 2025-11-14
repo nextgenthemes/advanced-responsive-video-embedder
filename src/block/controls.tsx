@@ -2,7 +2,7 @@
  * Copyright 2019-2025 Nicolas Jonas
  * License: GPL 3.0
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import {
 	BaseControl,
 	PanelBody,
@@ -17,7 +17,7 @@ import ImageUpload from './components/ImageUpload';
 import UrlOrEmbedCode from './components/UrlOrEmbedCode';
 import { hasSameKeys } from './utils';
 
-const { settingPageUrl, options, settings } = window.ArveBlockJsBefore;
+const { settingPageUrl, options, settings, gutenbergActive } = window.ArveBlockJsBefore;
 const { gutenberg_help: gutenbergHelp } = options;
 
 function createHelp( html?: string ): undefined | string | JSX.Element {
@@ -208,19 +208,40 @@ export function buildControls( { attributes, setAttributes }: BuildControlsProps
 		}
 	} );
 
-	if ( gutenbergHelp ) {
+	if ( gutenbergHelp || gutenbergActive ) {
 		// Add info panel to main section
 		sectionControls.main.push(
 			<BaseControl
 				key="info-panel"
-				help={ sprintf(
-					/* translators: %s: URL to the settings page */
-					__(
-						'Remember changing the defaults is possible on the <a href="%s" target="_blank">Settings page</a>. You can disable the extensive help texts there.',
-						'advanced-responsive-video-embedder'
-					),
-					settingPageUrl
-				) }
+				help={
+					<>
+						{ gutenbergHelp && (
+							<>
+								{ __(
+									'Remember changing the defaults is possible on the',
+									'advanced-responsive-video-embedder'
+								) }{ ' ' }
+								<a href={ settingPageUrl } target="_blank" rel="noreferrer">
+									{ __( 'Settings page', 'advanced-responsive-video-embedder' ) }
+								</a>
+								{ '. ' }
+								{ __(
+									'You can also disable the extensive help texts there to clean up this UI.',
+									'advanced-responsive-video-embedder'
+								) }
+							</>
+						) }
+						{ gutenbergActive && (
+							<>
+								{ ' ' }
+								{ __(
+									'Error 153 in YouTube embeds, is a known issue with the Gutenberg plugin active and effects only the editor and normal mode. Your Videos will work fine on the front-end. Lazyload is not effected.',
+									'advanced-responsive-video-embedder'
+								) }
+							</>
+						) }
+					</>
+				}
 			>
 				<BaseControl.VisualLabel>
 					{ __( 'Info', 'advanced-responsive-video-embedder' ) }
