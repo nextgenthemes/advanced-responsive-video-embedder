@@ -7,6 +7,7 @@ interface Window {
             [key: string]: unknown;
         };
         settingPageUrl: string;
+        gutenbergActive: boolean;
     };
 }
 
