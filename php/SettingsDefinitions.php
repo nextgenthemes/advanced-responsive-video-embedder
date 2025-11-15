@@ -550,6 +550,7 @@ class SettingsDefinitions {
 					''          => __( 'Default', 'advanced-responsive-video-embedder' ),
 					'darken'    => __( 'Darken', 'advanced-responsive-video-embedder' ),
 					'zoom'      => __( 'Zoom', 'advanced-responsive-video-embedder' ),
+					'rectangle' => __( 'Rectangle', 'advanced-responsive-video-embedder' ),
 					'none'      => __( 'None', 'advanced-responsive-video-embedder' ),
 				),
 				'shortcode' => true,
