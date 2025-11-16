@@ -32,6 +32,7 @@ function createHelp( html?: string ): undefined | string | JSX.Element {
 
 	const doc = new DOMParser().parseFromString( html, 'text/html' );
 	const result: ( string | JSX.Element )[] = [];
+	let key = 1;
 
 	const walk = ( node: Node ) => {
 		if ( node.nodeType === Node.TEXT_NODE ) {
@@ -45,10 +46,11 @@ function createHelp( html?: string ): undefined | string | JSX.Element {
 				const a = el as HTMLAnchorElement;
 				const linkText = a.textContent || '';
 				result.push(
-					<a href={ a.href } target="_blank" rel="noreferrer">
+					<a href={ a.href } target="_blank" rel="noreferrer" key={ 'link-' + key }>
 						{ linkText }
 					</a>
 				);
+				key++;
 				return; // Don't process children since we handled the text
 			}
 
@@ -85,6 +87,11 @@ function shouldHide( settingKey: string, attributes: Record< string, unknown > )
 	const hide = ! setting.depends.some( ( condition ) => {
 		// Each condition is an object with a single key-value pair
 		const [ key, value ] = Object.entries( condition )[ 0 ] || [];
+
+		if ( ! attributes[ key ] ) {
+			return true; // If the is unset (default) show all settings, as advertisement
+		}
+
 		// If the attribute has the key and its value matches the condition, return true
 		return key !== undefined && attributes[ key ] === value;
 	} );
@@ -118,6 +125,7 @@ export function buildControls( { attributes, setAttributes }: BuildControlsProps
 		if ( hasSameKeys( settingOptions, boolWithDefaultKeys ) ) {
 			sectionControls[ tab ].push(
 				<ToggleGroupControl
+					key={ sKey }
 					label={ setting.label }
 					value={ ( val as string ) || '' }
 					isBlock

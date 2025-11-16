@@ -60,6 +60,7 @@ export function Edit( { attributes, setAttributes }: EditProps ) {
 		<>
 			<div { ...blockProps } key="block">
 				<ServerSideRender
+					key="ssr"
 					className={ clsx( {
 						'arve-ssr': true,
 						'arve-ssr--pointer-events-none': ! pointerEvents,
@@ -70,7 +71,7 @@ export function Edit( { attributes, setAttributes }: EditProps ) {
 				/>
 			</div>
 			<InspectorControls key="insp">
-				{ buildControls( { attributes, setAttributes } ) }
+				<>{ buildControls( { attributes, setAttributes } ) }</>
 			</InspectorControls>
 		</>
 	);
