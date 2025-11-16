@@ -46,7 +46,7 @@ function removeUnwantedStuff(): void {
 	} );
 }
 
-export function globalID(): void {
+function globalID(): void {
 	// Usually the id should be already there added with php using the language_attributes filter
 	if ( 'html' === d.documentElement.id ) {
 		return;
