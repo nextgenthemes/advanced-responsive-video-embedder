@@ -195,6 +195,11 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2025-11-16 10.8.1 ###
+
+* Fix: Give all React elements keys to prevent console errors.
+* Fix: Show all settings in Block when settings are set to default.
+
 ### 2025-11-14 10.8.0 ###
 
 * Fix: YouTube playlists 153 error on Frontend.

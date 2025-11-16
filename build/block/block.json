@@ -45,6 +45,12 @@
     "arve-sticky-videos",
     "arve-random-video"
   ],
+  "viewScriptModule": [
+    "arve",
+    "arve-pro",
+    "arve-sticky-videos",
+    "arve-random-video"
+  ],
   "viewStyle": [
     "arve",
     "arve-pro",
