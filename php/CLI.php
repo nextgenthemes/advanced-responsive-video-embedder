@@ -110,18 +110,19 @@ class CLI extends WP_CLI_Command {
 		try {
 			$json = json_decode( $json, true, 15, JSON_THROW_ON_ERROR );
 		} catch ( \JsonException $exception ) {
-			die( esc_html( $exception->getMessage() ) );
+			WP_CLI::error( $exception->getMessage() );
 		}
 
 		if ( empty( $json ) ) {
-			die( esc_html( 'Empty JSON' ) );
+			WP_CLI::error( 'Empty JSON' );
 		}
 
-		$json['attributes']  = $attr;
-		$json['editorStyle'] = array_merge( [ 'file:./index.css' ], VIEW_SCRIPT_HANDLES );
-		$json['viewScript']  = VIEW_SCRIPT_HANDLES;
-		$json['viewStyle']   = VIEW_SCRIPT_HANDLES;
-		$json['version']     = VERSION;
+		$json['version']          = VERSION;
+		$json['attributes']       = $attr;
+		$json['editorStyle']      = array_merge( [ 'file:./index.css' ], VIEW_SCRIPT_HANDLES );
+		$json['viewScript']       = VIEW_SCRIPT_HANDLES;
+		$json['viewScriptModule'] = VIEW_SCRIPT_HANDLES;
+		$json['viewStyle']        = VIEW_SCRIPT_HANDLES;
 
 		return $json;
 	}
@@ -130,7 +131,8 @@ class CLI extends WP_CLI_Command {
 	 * @param array<array-key, mixed> $data
 	 */
 	private static function pretty_json_output( array $data ): void {
-		WP_CLI::line( wp_json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) );
+		$json = wp_json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
+		WP_CLI::line( $json );
 	}
 
 	public function delete_oembed_cache(): void {
