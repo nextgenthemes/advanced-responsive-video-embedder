@@ -3,7 +3,7 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2026-01-18 10.8.3 ###
+### 2026-01-18 10.8.2 ###
 
 * New: Added `#t=0.1` to HTML5 video sources to fix Safari not showing still frames.
 
