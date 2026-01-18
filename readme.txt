@@ -195,6 +195,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2026-01-18 10.8.2 ###
+
+* New: Added `#t=0.1` to HTML5 video sources to fix Safari not showing still frames.
+
 ### 2025-11-16 10.8.1 ###
 
 * Fix: Give all React elements keys to prevent console errors.
