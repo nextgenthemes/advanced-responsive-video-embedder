@@ -14,7 +14,7 @@ class Tests_ShortcodeVideoFiles extends WP_UnitTestCase {
 
 		$this->assertStringContainsString( 'arve-embed', $html );
 		$this->assertStringContainsString( '<video', $html );
-		$this->assertStringContainsString( 'src="https://example.com/video.av1.mp4"', $html );
+		$this->assertStringContainsString( 'src="https://example.com/video.av1.mp4#t=0.1"', $html );
 		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 	}
 
@@ -24,7 +24,7 @@ class Tests_ShortcodeVideoFiles extends WP_UnitTestCase {
 
 		$this->assertStringContainsString( 'arve-embed', $html );
 		$this->assertStringContainsString( '<video', $html );
-		$this->assertStringContainsString( 'src="https://example.com/video.mp4"', $html );
+		$this->assertStringContainsString( 'src="https://example.com/video.mp4#t=0.1"', $html );
 		$this->assertStringContainsString( 'video/mp4; codecs=av01.0.05M.08', $html );
 		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 	}
@@ -41,7 +41,7 @@ class Tests_ShortcodeVideoFiles extends WP_UnitTestCase {
 
 		$this->assertStringContainsString( 'arve-embed', $html );
 		$this->assertStringContainsString( '<video', $html );
-		$this->assertStringContainsString( 'src="https://example.com/video.mp4"', $html );
+		$this->assertStringContainsString( 'src="https://example.com/video.mp4#t=0.1"', $html );
 		$this->assertStringContainsString( 'https://example.com/poster.jpg', $html );
 		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 	}
@@ -89,9 +89,9 @@ class Tests_ShortcodeVideoFiles extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'data-provider="html5"', $output );
 		$this->assertStringContainsString( '<video', $output );
 		$this->assertStringContainsString( 'poster="https://example.com/image.jpg"', $output );
-		$this->assertStringContainsString( '<source type="video/ogg" src="https://example.com/video.ogv">', $output );
-		$this->assertStringContainsString( '<source type="video/mp4" src="https://example.com/video.mp4">', $output );
-		$this->assertStringContainsString( '<source type="video/webm" src="https://example.com/video.webm">', $output );
+		$this->assertStringContainsString( '<source type="video/ogg" src="https://example.com/video.ogv#t=0.1">', $output );
+		$this->assertStringContainsString( '<source type="video/mp4" src="https://example.com/video.mp4#t=0.1">', $output );
+		$this->assertStringContainsString( '<source type="video/webm" src="https://example.com/video.webm#t=0.1">', $output );
 		$this->assertStringContainsString( 'controlslist="nofullscreen nodownload"', $output );
 
 		$this->assertStringContainsString( '<track default kind="subtitles" label="English" src="https://example.com/v-subtitles-en.vtt" srclang="en">', $output );
