@@ -650,7 +650,7 @@ class Video {
 				);
 
 				$this->video_sources[]     = $source;
-				$this->video_sources_html .= sprintf( '<source type="%s" src="%s">', $source['type'], $source['src'] );
+				$this->video_sources_html .= sprintf( '<source type="%s" src="%s#t=0.1">', $source['type'], $source['src'] );
 
 				if ( empty( $this->first_video_file ) ) {
 					$this->first_video_file = $this->$ext;
