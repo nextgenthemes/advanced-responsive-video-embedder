@@ -6,6 +6,13 @@ use function Nextgenthemes\ARVE\shortcode;
 use function Nextgenthemes\ARVE\get_host_properties;
 use function Nextgenthemes\WP\remote_get_body;
 
+const SKIP_PROVIDERS_GH_ACTIONS = [
+	'kickstarter', // does not work for some reason
+	'vimeo', // 401 Unauthorized
+	'kick', // 403 Forbidden
+	'rumble', // seems to get rate limited and oembed will not work
+];
+
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_error_log
 class Tests_Shortcodes extends WP_UnitTestCase {
@@ -183,14 +190,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 	 */
 	public function test_urls_checker( string $provider, bool $oembed, string $url ): void {
 
-		$skip_providers_gh_actions = [
-			'kickstarter', // does not work for some reason
-			'vimeo', // 401 Unauthorized
-			'kick', // 403 Forbidden
-			'rumble', // seems to get rate limited and oembed will not work
-		];
-
-		if ( getenv( 'GITHUB_ACTIONS' ) && in_array( $provider, $skip_providers_gh_actions, true ) ) {
+		if ( getenv( 'GITHUB_ACTIONS' ) && in_array( $provider, SKIP_PROVIDERS_GH_ACTIONS, true ) ) {
 			$this->markTestSkipped( "Skipping {$provider} provider - known issues in GitHub Actions" );
 		}
 
@@ -216,6 +216,10 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 	 * @dataProvider url_test_data
 	 */
 	public function test_api_data( string $provider, bool $oembed, string $url ): void {
+
+		if ( getenv( 'GITHUB_ACTIONS' ) && in_array( $provider, SKIP_PROVIDERS_GH_ACTIONS, true ) ) {
+			$this->markTestSkipped( "Skipping {$provider} provider - known issues in GitHub Actions" );
+		}
 
 		$html = shortcode(
 			array(
