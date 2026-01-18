@@ -153,7 +153,17 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 
 		$data = [];
 
+		$no_real_url_providers = [
+			'html5',
+			'xtube',
+			'xhamster',
+		];
+
 		foreach ( get_host_properties() as $provider => $provider_data ) {
+
+			if ( in_array( $provider, $no_real_url_providers, true ) ) {
+				continue;
+			}
 
 			foreach ( $provider_data['tests'] as $test_data ) {
 
@@ -173,18 +183,15 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 	 */
 	public function test_urls_checker( string $provider, bool $oembed, string $url ): void {
 
-		$skip = [
+		$skip_providers_gh_actions = [
 			'kickstarter', // does not work for some reason
-			'html5', // not a real url
-			'xtube', // not a real url
-			'xhamster', // not a real url
 			'vimeo', // 401 Unauthorized
 			'kick', // 403 Forbidden
+			'rumble', // seems to get rate limited and oembed will not work
 		];
 
-		if ( in_array( $provider, $skip, true ) ) {
-			$this->assertNotEmpty( $url ); // just so PHPUnit does not complain
-			return;
+		if ( getenv( 'GITHUB_ACTIONS' ) && in_array( $provider, $skip_providers_gh_actions, true ) ) {
+			$this->markTestSkipped( "Skipping {$provider} provider - known issues in GitHub Actions" );
 		}
 
 		$args = [
