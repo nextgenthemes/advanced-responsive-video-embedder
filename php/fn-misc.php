@@ -25,22 +25,11 @@ function is_wp_error_array( $data ): bool {
 }
 
 /**
- * @return array <string, array{
- *     name:           string,
- *     regex:          string,
- *     oembed:         bool,
- *     embed_url:      string,
- *     default_params: string,
- *     auto_thumbnail: bool,
- *     rebuild_url?:   string,
- *     tests:          array<int, array{
- *         url: string,
- *         id:  string
- *     }>
- * }>
+ * @deprecated Use PROVIDERS constant directly, kept for addon compatibility
+ * @phpstan-ignore-next-line
  */
 function get_host_properties(): array {
-	return require __DIR__ . '/providers.php';
+	return PROVIDERS;
 }
 
 /**

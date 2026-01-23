@@ -6,7 +6,7 @@ namespace Nextgenthemes\ARVE;
 
 function create_url_handlers(): void {
 
-	$properties = get_host_properties();
+	$properties = PROVIDERS;
 
 	foreach ( $properties as $provider => $values ) {
 

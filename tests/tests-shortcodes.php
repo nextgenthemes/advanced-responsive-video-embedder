@@ -3,8 +3,8 @@
 declare(strict_types = 1);
 
 use function Nextgenthemes\ARVE\shortcode;
-use function Nextgenthemes\ARVE\get_host_properties;
 use function Nextgenthemes\WP\remote_get_body;
+use const Nextgenthemes\ARVE\PROVIDERS;
 
 const SKIP_PROVIDERS_GH_ACTIONS = [
 	'kickstarter', // does not work for some reason
@@ -126,7 +126,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 
 		$data = [];
 
-		foreach ( get_host_properties() as $provider => $provider_data ) {
+		foreach ( PROVIDERS as $provider => $provider_data ) {
 			$data[] = [ $provider, $provider_data ];
 		}
 
@@ -166,7 +166,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 			'xhamster',
 		];
 
-		foreach ( get_host_properties() as $provider => $provider_data ) {
+		foreach ( PROVIDERS as $provider => $provider_data ) {
 
 			if ( in_array( $provider, $no_real_url_providers, true ) ) {
 				continue;
@@ -348,7 +348,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 
 		$data = [];
 
-		foreach ( get_host_properties() as $provider => $provider_data ) {
+		foreach ( PROVIDERS as $provider => $provider_data ) {
 
 			if ( ! isset( $provider_data['regex'] ) ) {
 				continue;

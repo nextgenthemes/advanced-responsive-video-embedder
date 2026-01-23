@@ -420,7 +420,7 @@ class Video {
 			}
 		}
 
-		$properties = get_host_properties();
+		$properties = PROVIDERS;
 
 		if ( isset( $properties[ $provider ]['embed_url'] ) ) {
 			$pattern = $properties[ $provider ]['embed_url'];
@@ -599,7 +599,7 @@ class Video {
 		) {
 			$ratio = $this->oembed_data->width . ':' . $this->oembed_data->height;
 		} else {
-			$properties = get_host_properties();
+			$properties = PROVIDERS;
 
 			if ( isset( $properties[ $this->provider ]['aspect_ratio'] ) ) {
 
@@ -731,7 +731,7 @@ class Video {
 			);
 		}
 
-		$properties     = get_host_properties();
+		$properties     = PROVIDERS;
 		$input_provider = $this->provider;
 		$check_url      = $this->url ? $this->url : $this->src;
 

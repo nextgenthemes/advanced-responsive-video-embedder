@@ -84,7 +84,7 @@ function build_video( array $input_atts ) {
 function shortcode_option_defaults(): array {
 
 	$shortcodes = array();
-	$properties = get_host_properties();
+	$properties = PROVIDERS;
 	unset( $properties['video'] );
 
 	foreach ( $properties as $provider => $values ) {
@@ -110,7 +110,7 @@ function create_shortcodes(): void {
 
 function create_legacy_shortcodes(): void {
 
-	$properties        = get_host_properties();
+	$properties        = PROVIDERS;
 	$shortcode_options = wp_parse_args( get_option( 'arve_options_shortcodes', array() ), shortcode_option_defaults() );
 
 	foreach ( $shortcode_options as $provider => $shortcode ) {

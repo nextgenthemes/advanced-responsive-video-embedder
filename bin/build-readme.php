@@ -6,6 +6,7 @@ declare(strict_types = 1);
 namespace Nextgenthemes\ARVE;
 
 $root = dirname( __DIR__ );
+require_once $root . '/php/providers.php';
 require_once $root . '/php/fn-misc.php';
 require_once __DIR__ . '/fn-common-shell.php';
 
@@ -63,7 +64,7 @@ function write_supported_providers_md( string $root ): void {
 
 	$list = [];
 
-	foreach ( get_host_properties() as $key => $value ) {
+	foreach ( PROVIDERS as $key => $value ) {
 		$list[] = $value['name'];
 	}
 

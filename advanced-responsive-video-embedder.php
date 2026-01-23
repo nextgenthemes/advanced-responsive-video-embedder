@@ -63,6 +63,8 @@ const ALLOWED_HTML = array(
 	'div'    => array( 'class' => true ),
 );
 
+require_once __DIR__ . '/php/providers.php';
+
 if ( defined( 'WP_INSTALLING' ) && WP_INSTALLING ) { // @phpstan-ignore-line
 	return;
 }
