@@ -334,6 +334,7 @@ class SettingsDefinitions {
 	 */
 	public static function url_params_settings(): array {
 
+		/** @var array<string,NgtSetting> $settings */
 		$settings   = array();
 		$properties = PROVIDERS;
 
