@@ -136,9 +136,7 @@ class Settings {
 		$this->is_arve             = 'nextgenthemes_arve' === $this->slugged_namespace;
 
 		$this->set_default_options();
-
-		$this->options = (array) get_option( $this->slugged_namespace, array() );
-		$this->options = $this->options + $this->options_defaults;
+		$this->set_options();
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'assets' ), 9 );
 		add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
@@ -173,6 +171,19 @@ class Settings {
 		$updated_options = array_intersect_key( $updated_options, $this->options_defaults );
 
 		return $updated_options;
+	}
+
+	/**
+	 * Set options from database with proper filtering
+	 */
+	private function set_options(): void {
+		$stored_options = (array) get_option( $this->slugged_namespace, array() );
+
+		// Remove all items that have a key that is not in defaults
+		$this->options = array_intersect_key( $stored_options, $this->options_defaults );
+
+		// Merge with defaults to ensure all keys exist
+		$this->options = $this->options + $this->options_defaults;
 	}
 
 	/**
