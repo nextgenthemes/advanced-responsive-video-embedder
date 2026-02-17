@@ -5,6 +5,7 @@
 
 ### 2026-02-17 10.8.3 ###
 
+* Fix: Errors on when saving settings related to old plugin options.
 * Improved: Provider data is not loaded more efficiently only once.
 
 ### 2026-01-18 10.8.2 ###
