@@ -4,9 +4,9 @@ wp.org does not like this.
 
 ### 2021-12-17 9.7.1 ###
 
-* Fix: Elements from the dialog showing up in Elemetor. (Button does not work)
+* Fix: Elements from the dialog showing up in Elementor. (Button does not work)
 * New: Support for [brighteon](https://brighteon.com)
-* Improved: Make sure there is no ARVE pecific json left in the oemed caches after uninstalling the plugin.
+* Improved: Make sure there is no ARVE specific json left in the oembed caches after uninstalling the plugin.
 
 ### 2021-12-09 9.7.0 ###
 
@@ -16,10 +16,10 @@ wp.org does not like this.
 ### 2021-12-07 9.6.0 ###
 
 * Deprecated: Shortcode UI dialog is no longer maintained but you can still use it by clicking on "Add Post Element" button when Shortcode UI is installed.
-* New: ARVE now has its own dependecy free Shortcode creator dialog in Classic Editor. It will pop up when you click the "Embed Video" button that previously opened up Shortcode UI dialog.
+* New: ARVE now has its own dependency free Shortcode creator dialog in Classic Editor. It will pop up when you click the "Embed Video" button that previously opened up Shortcode UI dialog.
 * New: Support for tv.gab.com
 * Improved: Video files will be embedded with `preload="none"` to prevent desktop browsers from buffering videos without interaction.
-* Improved: Tested with WP 5.9 nighly and PHP 8.0
+* Improved: Tested with WP 5.9 nightly and PHP 8.0
 * Improved: Make use of modern CSS `aspect-ratio` instead of padding hack.
 
 ### 2021-09-21 9.5.13 ###
@@ -169,7 +169,7 @@ Improved:
 
 * Fix: When no oembed data is found or input `src` is invalid url use generated `src` in all cases.
 * Improved: added check for valid url for `src` input.
-* Improved: 'src mismach' errors will be hidden as they are not critical and should not clutter peoples sites.
+* Improved: 'src mismatch' errors will be hidden as they are not critical and should not clutter peoples sites.
 
 ### 2020-12-14 9.0.0-beta12 ###
 
@@ -886,7 +886,7 @@ Just a small readme update and checking new release script, making sure everythi
 
 ### Pro Addon 1.1.5 ###
 
-* New: Added setting and parameter grow="yes/no" to control the grow-on-click behaviour that was introduced in 6.0 to your liking.
+* New: Added setting and parameter grow="yes/no" to control the grow-on-click behavior that was introduced in 6.0 to your liking.
 
 ### 6.1.2 ###
 
@@ -895,12 +895,12 @@ Just a small readme update and checking new release script, making sure everythi
 
 ### Pro Addon 1.1.3 ###
 
-* Improved: link-linghtbox mode does not force a newline for the link anymore.
-* Fix: Autoplaying in Background when navigating back in browser.
+* Improved: link-lightbox mode does not force a newline for the link anymore.
+* Fix: Auto play in background when navigating back in browser.
 
 ### Pro Addon 1.1.0 ###
 
-* Fix: Various issues reguarding lightbox mode.
+* Fix: Various issues regarding lightbox mode.
 
 ### 6.1.0 ###
 
@@ -908,7 +908,7 @@ Just a small readme update and checking new release script, making sure everythi
 
 ### Pro Addon 1.0.7 ###
 
-* Fix: Video start playing again invisible when closeing lightbox with ESC.
+* Fix: Video start playing again invisible when closing lightbox with ESC.
 
 ### 6.0.6 Beta ###
 
@@ -942,9 +942,9 @@ Just a small readme update and checking new release script, making sure everythi
 
 Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgrading to this version.
 
-* Fix: Jackpack Shortcode Embeds module incompatibility.
+* Fix: Jetpack Shortcode Embeds module incompatibility.
 * New: URL parameters are now possible via URLs used for embeds (passed to iframe src).
-* Changed: URL parameters to controll arve features are now 'arve[mode]=' style instead of 'arve-mode='.
+* Changed: URL parameters to control arve features are now 'arve[mode]=' style instead of 'arve-mode='.
 * Improved: Enabled HTTPS support for Viddler and MyVideo.
 * Improved: TED Talks shortcodes now support the 'lang' parameter.
 * Improved: New embed URLs for MyVideo.
@@ -963,22 +963,22 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 ### Pro Addon 0.9.7 ###
 
 * Fix: Lazyload videos not growing when global maxwidth setting was set.
-* Improved: Finally got rid of the jQuery Colorbox depency, the Pro Addon now includes lity for lightboxes.
+* Improved: Finally got rid of the jQuery Colorbox dependency, the Pro Addon now includes lity for lightboxes.
 
 ### Pro Addon 0.9.5 ###
 
-* Fix: Licensing Activation should now finally work correcty. (Multisite may need some tweaks)
-* Fix: Pissibility of unwanted margins/paddings on the transparent button.
+* Fix: Licensing Activation should now finally work correctly. (Multisite may need some tweaks)
+* Fix: Possibility of unwanted margins/paddings on the transparent button.
 
 ### Pro Addon 0.9.0 ###
 
 * Changed: 'Lazyload' mode now grows the video size after thumbnails are clicked.
 * Changed: 'Thumbnail' mode is now called 'Lazyload -> Colorbox' and has a sightly different behavior.
-* New: 'Lazyload -> Fullscreen' mode to instandly go Fullscreen after clicking the Lazyloaded preview image.
-* New: 'Lazyload -> Fixed' Fullscreen/-window mode (extremly experimental) with ability to resize fixed video on screen while reading the page.
-* New: 'thumbnail' parameter, take image URL or a ID to a media libray image to be used as thumbnail image.
+* New: 'Lazyload -> Fullscreen' mode to instantly go Fullscreen after clicking the lazy-loaded preview image.
+* New: 'Lazyload -> Fixed' Fullscreen/-window mode (extremely experimental) with ability to resize fixed video on screen while reading the page.
+* New: 'thumbnail' parameter, take image URL or a ID to a media library image to be used as thumbnail image.
 * Improved: Enabled fake thumbnails for USTREAM and myvideo.de.
-* Depricated: Providers that only support `<object>` are from now only supported in normal mode, will switch automatically. This effects only recorded Twitch videos, flickr and veoh.
+* Deprecated: Providers that only support `<object>` are from now only supported in normal mode, will switch automatically. This effects only recorded Twitch videos, Flickr and Veoh.
 
 ### 5.3.4 Beta - 2015/03/15 ###
 
@@ -987,7 +987,7 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 
 ### 5.3.3 Beta ###
 
-* Fix: Workarround for a currently ongoing YouTube issue causing YouTube embeds to fail with erros on mobile devives. This was not a 'bug' caused by this plugin btw.
+* Fix: Workaround for a currently ongoing YouTube issue causing YouTube embeds to fail with errors on mobile devices. This was not a 'bug' caused by this plugin btw.
 
 ### 5.3.2 Beta ###
 
@@ -1009,7 +1009,7 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 
 ### 5.1.1 ###
 
-* Fix: Removed mixed content warnungs for youtube and vimeo.
+* Fix: Removed mixed content warnings for youtube and vimeo.
 * Translation updates.
 
 ### 5.1.0 ###
@@ -1073,7 +1073,7 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 ### 4.3.0 ###
 
 * New: Added Iframe examples.
-* Improved: Limited support for self hosted Videos. Dialog will detect URLS that end up with .webm .mp4 .ogg creates a iframe embed code with them. This is probaly not the best way to do this but it works. Real HTML5 video tag embeds may come later.
+* Improved: Limited support for self hosted Videos. Dialog will detect URLS that end up with .webm .mp4 .ogg creates a iframe embed code with them. This is probably not the best way to do this but it works. Real HTML5 video tag embeds may come later.
 * Improved: Redesigned the button to look like WordPress and move it out of the Tiny MCE Editor. This enables you to embed videos in the code editor as well.
 * Improved: Redesigned the Shortcode Creator dialog. Less clutter, more compact and it now includes the recently introduced `aspect_ratio`.
 
@@ -1129,7 +1129,7 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 * New: Thanks to [Ilya Grishkov](https://ilyagrishkov.com) thumbnail URLs for Vimeo, Blip and Dailymotion Playlists are now cached (by default 24hours) this drastically reduces page loading times for thumbnail embeds from these providers because it bypasses calling their APIs for that period.
 * Fix: Thumbnails for YouTube playlists.
 * Fix: Shortcode creator ID detection for iframes (src URL)
-* Fix: Updated Dailymoton docs link on Options page
+* Fix: Updated Dailymotion docs link on Options page
 * Improved: Error messages are now all ready to be translated. Current Translation status: German 50%, French 50%, Spanish 84%. Register at [nextgenthemes.com](https://nextgenthemes.com/wp-login.php?action#register) and then login to [translate.nextgenthemes.com](https://translate.nextgenthemes.com) to help translate.
 
 ### 3.5.2 ###
@@ -1151,7 +1151,7 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 * New: Custom parameters!
 * Fix: Youtube playlists now work correctly
 * Fix: Translations are working again (incomplete German and French)
-* Deprecated: `start` and `end` shortcode parametets should not be used anymore with youtube, instead use the new parameters feature like `[youtube id#"123456" parameters#"start#60 end#120"]`
+* Deprecated: `start` and `end` shortcode parameters should not be used anymore with youtube, instead use the new parameters feature like `[youtube id#"123456" parameters#"start#60 end#120"]`
 
 ### 3.1.2 ###
 
@@ -1169,8 +1169,8 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 * Fix: Invisible normal mode embeds with align
 * Fix: Yahoo detection
 * Fix: Kickstarter detection
-* Fix: Daylimoition Playlist
-* Fix: Colleghumor
+* Fix: Dailymotion Playlist
+* Fix: Collegehumor
 * Improved: Screenshots updated
 * Improved: Beginning process of provider based aspect ratios.
 * Improved: Dailymotion playlists/jukeboxes now show Native thumbnails
@@ -1226,13 +1226,13 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 ### 2.6.2 ###
 
 * Fix: Objects open correctly in Colorbox
-* Fix: Iframe autoplay parameters startign with '&'
+* Fix: Iframe autoplay parameters starting with '&'
 * New: Added screenshot for options page
 * Improved: Youtube Videos with now me embedded with the same protocol your website is on, meaning if your website is https youtube embeds will be in https as well.
 
 ### 2.6.1 ###
 
-* Fix: Colorbox args script not having colorbox in depenency array
+* Fix: Colorbox args script not having colorbox in dependency array
 * Fix: Maxwidth shortcode generator field now has default value#""
 * Fix: Blip embed code detection
 
@@ -1252,7 +1252,7 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 
 ### 2.4 ###
 
-* propper licence
+* proper license
 * Class renamed
 
 ### 2.3 beta ###
@@ -1273,7 +1273,7 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 
 ### 1.9 beta ###
 
-* added youtubes modestbranding mode
+* added YouTube's modestbranding mode
 * added missing veoh id detection
 * fixed vimeo id detection
 * added now custom thumbnail feature
@@ -1283,7 +1283,7 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 
 ### 1.8 beta ###
 
-* added new tinymce botton with dialog to detect ids from URL's and embed codes and automatically create shortcodes
+* added new tinymce button with dialog to detect ids from URL's and embed codes and automatically create shortcodes
 * removed the image resizer (Faster and more secure for servers), now uses just CSS. Polyfill for for IE to support 'background-size' included.
 * changed the play overlay image to a bigger one
 * added comedycentral, spike
@@ -1292,8 +1292,8 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 
 ### 1.7 ###
 
-* fixed gametrailers and collegehumor
-* fixed options handling for updateded options
+* fixed Gametrailers and Collegehumor
+* fixed options handling for updated options
 * added ustream support
 * renamed a function to prevent issues with other plugins
 
@@ -1303,12 +1303,12 @@ Please check the [migration guide](https://nextgenthemes.com/?p=1875) about upgr
 
 ### 1.5 ###
 
-* lots of code improvements, now uses wordpress settings api, and propper sanitising
+* lots of code improvements, now uses wordpress settings api, and proper sanitizing
 
 ### 1.4.5 ###
 
-* added flickr video, archive.org
-* inproved how flashvars were implemented
+* added Flickr video, archive.org
+* improved how flashvars were implemented
 
 ### 1.4.4 ###
 
