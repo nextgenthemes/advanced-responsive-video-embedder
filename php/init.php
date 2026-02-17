@@ -52,14 +52,6 @@ function init(): void {
 	}
 }
 
-// add_action(
-//  'init',
-//  function (): void {
-//      d( get_option( 'nextgenthemes_arve' ) );
-//  },
-//  11
-// );
-
 function maybe_init_addon( string $name ): void {
 
 	$init_function_name = '\\' . __NAMESPACE__ . '\\' . $name . '\\init';
