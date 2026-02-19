@@ -32,8 +32,8 @@ function removeUnwantedStuff(): void {
 		unwrap( el );
 	} );
 
-	// Astor theme fix
-	qsa( '.ast-oembed-container' ).forEach( ( el ) => {
+	// Astor + Hueman Child theme fixes
+	qsa( '.ast-oembed-container, .video-container' ).forEach( ( el ) => {
 		if ( el.querySelector( '.arve' ) ) {
 			unwrap( el );
 		}

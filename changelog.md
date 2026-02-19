@@ -3,6 +3,10 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2026-02-19 10.8.4 ###
+
+* Fix: Removes `.video-container` from Hueman Child Theme to fix aspect ratios.
+
 ### 2026-02-17 10.8.3 ###
 
 * Fix: Errors on when saving settings related to old plugin options.
