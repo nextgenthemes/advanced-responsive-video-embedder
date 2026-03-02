@@ -332,32 +332,12 @@ function get_first_glob( string $pattern ): string {
 
 function admin_enqueue_scripts(): void {
 
-	$options = array();
-
-	foreach ( settings( 'shortcode' )->get_all() as $k => $v ) {
-		$options[ $k ] = '';
-	}
-
-	$settings_data = array(
-		'options'          => $options,
-		'nonce'            => wp_create_nonce( 'wp_rest' ),
-		'settings'         => settings( 'shortcode' )->to_array(),
-		'tabs'             => settings_tabs(),
-	);
-
-	wp_register_script(
+	wp_enqueue_script_module(
 		'arve-admin',
 		plugins_url( 'build/admin.js', PLUGIN_FILE ),
 		array(),
-		ver( PLUGIN_DIR . '/build/admin.js', VERSION ),
-		array( 'strategy' => 'defer' ),
+		ver( PLUGIN_DIR . '/build/admin.js', VERSION )
 	);
-	wp_add_inline_script(
-		'arve-admin',
-		'var arveSCSettings = ' . wp_json_encode( $settings_data ) . ';',
-		'before'
-	);
-	wp_enqueue_script( 'arve-admin' );
 
 	if ( is_plugin_active( 'shortcode-ui/shortcode-ui.php' ) ) {
 		wp_enqueue_script(

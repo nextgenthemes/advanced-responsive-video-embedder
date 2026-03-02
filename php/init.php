@@ -33,9 +33,10 @@ function init(): void {
 
 	add_action( 'init', __NAMESPACE__ . '\create_settings_instance', 9 );
 	add_action( 'init', __NAMESPACE__ . '\init_nextgenthemes_settings', 9 );
-	add_action( 'init', __NAMESPACE__ . '\register_assets', 11 );
 	add_action( 'init', __NAMESPACE__ . '\create_shortcodes', 11 );
 	add_action( 'init', __NAMESPACE__ . '\create_url_handlers', 11 );
+	add_action( 'init', __NAMESPACE__ . '\register_assets', 11 );
+	add_filter( 'script_loader_tag', __NAMESPACE__ . '\add_async_to_script_modules', 10, 2 );
 	add_filter( 'mce_css', __NAMESPACE__ . '\add_styles_to_mce' );
 	add_filter( 'oembed_remote_get_args', __NAMESPACE__ . '\vimeo_referer', 10, 2 );
 	add_filter( 'oembed_fetch_url', __NAMESPACE__ . '\remove_youtube_si_param', 10, 2 );

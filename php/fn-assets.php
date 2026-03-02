@@ -16,14 +16,11 @@ function register_assets(): void {
 		ver( PLUGIN_DIR . '/build/main.css', VERSION ),
 	);
 
-	wp_register_script(
+	wp_register_script_module(
 		'arve',
 		plugins_url( 'build/main.js', PLUGIN_FILE ),
 		array(),
-		ver( PLUGIN_DIR . '/build/main.css', VERSION ),
-		array(
-			'strategy' => 'async',
-		)
+		ver( PLUGIN_DIR . '/build/main.css', VERSION )
 	);
 
 	if ( function_exists( 'register_block_type' ) ) :
@@ -52,6 +49,22 @@ function register_assets(): void {
 		);
 
 	endif;
+}
+
+/**
+ * Adds async attribute to script module tags.
+ *
+ * @param string $tag The script tag HTML.
+ * @param string $handle The script handle.
+ * @return string The modified script tag.
+ */
+function add_async_to_script_modules( string $tag, string $handle ): string {
+
+	if ( 'arve' === $handle ) {
+		$tag = str_replace( 'type="module"', 'type="module" async', $tag );
+	}
+
+	return $tag;
 }
 
 /**
@@ -108,6 +121,7 @@ function action_wp_enqueue_scripts(): void {
 		if ( $options['always_enqueue_assets'] ) {
 			wp_enqueue_style( $handle );
 			wp_enqueue_script( $handle );
+			wp_enqueue_script_module( $handle );
 		}
 	}
 }
