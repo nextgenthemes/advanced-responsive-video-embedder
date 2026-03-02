@@ -1,7 +1,6 @@
 import './admin.scss';
 import './shortcode-dialog.scss';
 
-export {};
 declare global {
 	interface Window {
 		ajaxurl: string;

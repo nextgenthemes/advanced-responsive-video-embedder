@@ -5,8 +5,8 @@
 	"scripts": {
 		"build": "composer run build",
 		"start": "npm run start:arve & npm run start:common",
-		"start:arve": "wp-scripts start",
-		"build:arve": "wp-scripts build",
+		"start:arve": "wp-scripts start --experimental-modules",
+		"build:arve": "wp-scripts build --experimental-modules",
 		"start:common": "wp-scripts start --experimental-modules --source-path=vendor/nextgenthemes/wp-settings/src --output-path=vendor/nextgenthemes/wp-settings/build",
 		"build:common": "wp-scripts build --experimental-modules --source-path=vendor/nextgenthemes/wp-settings/src --output-path=vendor/nextgenthemes/wp-settings/build",
 		"test": "phpunit",

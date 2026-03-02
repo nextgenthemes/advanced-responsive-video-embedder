@@ -4,8 +4,10 @@
 	"name": "nextgenthemes/fake-block",
 	"title": "JUST FOR wp-scripts compile",
 	"viewScript": [
-		"file:./main.ts",
-		"file:./admin.ts",
 		"file:./shortcode-ui.ts"
+	],
+	"viewScriptModule": [
+		"file:./main.ts",
+		"file:./admin.ts"
 	]
 }
