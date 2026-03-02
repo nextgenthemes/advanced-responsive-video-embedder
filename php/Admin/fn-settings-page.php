@@ -267,7 +267,7 @@ function print_debug_errors(): void {
 		);
 	}
 
-	if ( is_dev_mode() ) {
+	if ( is_dev_mode() && ! empty( $data['response']['body'] ) ) {
 		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
 		$message .= '<pre><code>' . esc_html( var_export( $data['response']['body'], true ) ) . '</code></pre>';
 	}
