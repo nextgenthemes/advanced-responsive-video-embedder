@@ -28,8 +28,6 @@ class Tests_Scripts_And_Styles extends WP_UnitTestCase {
 		// Test script module registration
 		$wp_script_modules = wp_script_modules();
 
-		debug( $wp_script_modules );
-
 		$reflection          = new ReflectionClass( $wp_script_modules );
 		$registered_property = $reflection->getProperty( 'registered' );
 		$registered_property->setAccessible( true );
