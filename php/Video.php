@@ -203,6 +203,7 @@ class Video {
 				foreach ( VIEW_SCRIPT_HANDLES as $handle ) {
 					wp_enqueue_style( $handle );
 					wp_enqueue_script( $handle );
+					wp_enqueue_script_module( $handle );
 				}
 			}
 		} catch ( \Exception $e ) {
@@ -335,10 +336,10 @@ class Video {
 		}
 
 		$src_gen = $this->build_iframe_src();
-		$src_gen = special_iframe_src_mods( $src_gen, $this->provider, $this->url );
+		$src_gen = $this->special_iframe_src_mods( $src_gen );
 
 		if ( ! empty( $src ) ) {
-			$src = special_iframe_src_mods( $src, $this->provider, $this->url, true );
+			$src = $this->special_iframe_src_mods( $src, true );
 			compare_oembed_src_with_generated_src( $src, $src_gen, $this->provider, $this->url );
 		} else {
 			$src = '';
@@ -364,6 +365,49 @@ class Video {
 		}
 
 		$src = apply_filters( 'nextgenthemes/arve/args/iframe_src', $src, get_object_vars( $this ) );
+
+		return $src;
+	}
+
+	private function special_iframe_src_mods( string $src, bool $oembed_src = false ): string {
+
+		if ( empty( $src ) ) {
+			return $src;
+		}
+
+		switch ( $this->provider ) {
+			case 'youtube':
+				$yt_v    = get_url_arg( $this->url, 'v' );
+				$yt_list = get_url_arg( $this->url, 'list' );
+
+				if ( $oembed_src &&
+					str_contains( $src, '/embed/videoseries?' ) &&
+					$yt_v
+				) {
+					$src = str_replace( '/embed/videoseries?', "/embed/$yt_v?", $src );
+				}
+
+				if ( $yt_list ) {
+					$src = remove_query_arg( 'feature', $src );
+					$src = add_query_arg( 'list', $yt_list, $src );
+				}
+
+				$options = options();
+
+				if ( $options['youtube_nocookie'] ) {
+					$src = str_replace( 'https://www.youtube.com', 'https://www.youtube-nocookie.com', $src );
+				}
+
+				break;
+			case 'vimeo':
+				$src      = $this->vimeo_secret( $src );
+				$fragment = (string) wp_parse_url( $this->url, PHP_URL_FRAGMENT );
+
+				if ( str_starts_with( $fragment, 't' ) ) {
+					$src .= '#' . $fragment;
+				}
+				break;
+		}
 
 		return $src;
 	}
@@ -472,13 +516,21 @@ class Video {
 					$src = str_replace( 'ted.com/talks/', "ted.com/talks/lang/{$lang}/", $src );
 				}
 				break;
-		}
-
-		if ( ! empty( $this->vimeo_secret ) ) {
-			$src = add_query_arg( 'h', $this->vimeo_secret, $src );
+			case 'vimeo':
+				$src = $this->vimeo_secret( $src );
+				break;
 		}
 
 		return $src;
+	}
+
+	private function vimeo_secret( string $src ): string {
+
+		if ( empty( $this->vimeo_secret ) ) {
+			return $src;
+		}
+
+		return add_query_arg( 'h', $this->vimeo_secret, $src );
 	}
 
 	private function missing_attribute_check(): void {

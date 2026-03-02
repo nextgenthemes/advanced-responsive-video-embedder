@@ -147,48 +147,6 @@ function args_video( array $a ): array {
 	return $a;
 }
 
-function special_iframe_src_mods( string $src, string $provider, string $url, bool $oembed_src = false ): string {
-
-	if ( empty( $src ) ) {
-		return $src;
-	}
-
-	switch ( $provider ) {
-		case 'youtube':
-			$yt_v    = get_url_arg( $url, 'v' );
-			$yt_list = get_url_arg( $url, 'list' );
-
-			if ( $oembed_src &&
-				str_contains( $src, '/embed/videoseries?' ) &&
-				$yt_v
-			) {
-				$src = str_replace( '/embed/videoseries?', "/embed/$yt_v?", $src );
-			}
-
-			if ( $yt_list ) {
-				$src = remove_query_arg( 'feature', $src );
-				$src = add_query_arg( 'list', $yt_list, $src );
-			}
-
-			$options = options();
-
-			if ( $options['youtube_nocookie'] ) {
-				$src = str_replace( 'https://www.youtube.com', 'https://www.youtube-nocookie.com', $src );
-			}
-
-			break;
-		case 'vimeo':
-			$fragment = (string) wp_parse_url( $url, PHP_URL_FRAGMENT );
-
-			if ( str_starts_with( $fragment, 't' ) ) {
-				$src .= '#' . $fragment;
-			}
-			break;
-	}
-
-	return $src;
-}
-
 /**
  * Generate the URL with autoplay parameter based on the provider.
  *
