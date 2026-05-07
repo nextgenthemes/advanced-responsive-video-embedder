@@ -3,6 +3,14 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2026-05-07 10.8.5 ###
+
+* Improved: Change script into module.
+* Improved: Always add Vimeo secret ID do src URL.
+* Fix: Issues with black frames by improving Safari workarround to load video frames as poster image.
+* Fix: Corrected SEO data output.
+* Removed banned.video, it got taken down.
+
 ### 2026-02-19 10.8.4 ###
 
 * Fix: Removes `.video-container` from Hueman Child Theme to fix aspect ratios.
