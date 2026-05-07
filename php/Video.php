@@ -702,7 +702,7 @@ class Video {
 				);
 
 				$this->video_sources[]     = $source;
-				$this->video_sources_html .= sprintf( '<source type="%s" src="%s#t=0.1">', $source['type'], $source['src'] );
+				$this->video_sources_html .= sprintf( '<source type="%s" src="%s">', $source['type'], $source['src'] );
 
 				if ( empty( $this->first_video_file ) ) {
 					$this->first_video_file = $this->$ext;
@@ -724,7 +724,7 @@ class Video {
 	/**
 	 * Detects media tracks and returns their attributes.
 	 *
-	 * @return array <int, array{
+	 * @return array<int,array{
 	 *     default: bool,
 	 *     kind: string,
 	 *     label: string,
@@ -1374,48 +1374,84 @@ HTML;
 	}
 
 	private function build_seo_data(): string {
-
-		$options = options();
-
-		if ( ! $options['seo_data'] ) {
+		if ( ! $this->should_build_seo_data() ) {
 			return '';
 		}
 
-		$seo = array(
+		$seo_data = $this->build_base_seo_structure();
+		$seo_data = $this->add_author_to_seo( $seo_data );
+		$seo_data = $this->add_metadata_to_seo( $seo_data );
+
+		return '<script type="application/ld+json">' . wp_json_encode( $seo_data ) . '</script>';
+	}
+
+	private function should_build_seo_data(): bool {
+		$options = options();
+		return ! empty( $options['seo_data'] );
+	}
+
+	/**
+	 * @return array<string,string|array<string,string>>
+	 */
+	private function build_base_seo_structure(): array {
+		return [
 			'@context' => 'http://schema.org/',
 			'@id'      => get_permalink() . '#' . $this->uid,
-			'type'     => 'VideoObject',
-		);
+			'@type'    => 'VideoObject',
+		];
+	}
 
-		$metas = array(
+	/**
+	 * @param  array<string,string|array<string,string>> $seo_data
+	 * @return array<string,string|array<string,string>>
+	 */
+	private function add_author_to_seo( array $seo_data ): array {
+		if ( ! empty( $this->author_name ) ) {
+			$seo_data['author'] = [
+				'@type' => 'Organization',
+				'name'  => $this->author_name,
+			];
+		}
+
+		return $seo_data;
+	}
+
+	/**
+	 * @param  array<string,string|array<string,string>> $seo_data
+	 * @return array<string,string|array<string,string>>
+	 */
+	private function add_metadata_to_seo( array $seo_data ): array {
+		$property_mappings = [
 			'first_video_file' => 'contentURL',
 			'src'              => 'embedURL',
 			'title'            => 'name',
 			'img_src'          => 'thumbnailUrl',
 			'upload_date'      => 'uploadDate',
-			'author_name'      => 'author',
 			'duration'         => 'duration',
 			'description'      => 'description',
-		);
+		];
 
-		foreach ( $metas as $prop => $json_name ) {
-
-			if ( empty( $this->{$prop} ) ) {
+		foreach ( $property_mappings as $property => $json_key ) {
+			if ( empty( $this->{$property} ) ) {
 				continue;
 			}
 
-			if ( 'duration' === $prop && is_numeric( $this->$prop ) ) {
-				$seo[ $json_name ] = seconds_to_iso8601_duration( $this->$prop );
-			} elseif ( 'description' === $prop ) {
-				$seo[ $json_name ] = trim( replace_links( $this->$prop, '' ) );
-			} else {
-				$seo[ $json_name ] = trim( $this->$prop );
-			}
+			$seo_data[ $json_key ] = $this->format_seo_property( $property, $this->{$property} );
 		}
 
-		return '<script type="application/ld+json">' .
-			wp_json_encode( $seo ) .
-			'</script>';
+		return $seo_data;
+	}
+
+	private function format_seo_property( string $property, string $value ): string {
+		if ( 'duration' === $property && is_numeric( $value ) ) {
+			return seconds_to_iso8601_duration( $value );
+		}
+
+		if ( 'description' === $property ) {
+			return trim( replace_links( $value, '' ) );
+		}
+
+		return trim( $value );
 	}
 
 	private function promote_link(): string {

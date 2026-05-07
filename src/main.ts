@@ -9,11 +9,13 @@ declare global {
 const d = document;
 const qsa = d.querySelectorAll.bind( d );
 const jq = window.jQuery;
+const isSafari = /^((?!chrome|android).)*safari/i.test( navigator.userAgent );
 
 globalID();
 
 domReady( () => {
 	removeUnwantedStuff();
+	addSafariVideoWorkaround();
 } );
 
 // Mitigation for outdated versions of fitvids
@@ -22,6 +24,23 @@ if ( jq && typeof jq.fn.fitVids !== 'undefined' ) {
 		setTimeout( () => {
 			removeUnwantedStuff();
 		}, 1 );
+	} );
+}
+
+// Add workaround for videos without posters, so Safari shows a frame of the video as the poster
+function addSafariVideoWorkaround() {
+	if ( ! isSafari ) {
+		return;
+	}
+
+	document.querySelectorAll( 'video' ).forEach( ( video ) => {
+		if ( ! video.poster ) {
+			// Add #t=0.001 workaround for videos without posters
+			const src = video.src || video.querySelector( 'source' )?.src;
+			if ( src && ! src.includes( '#t=' ) ) {
+				video.src = src + '#t=0.001';
+			}
+		}
 	} );
 }
 
