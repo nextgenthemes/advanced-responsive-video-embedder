@@ -17,7 +17,6 @@ class Tests_Admin extends WP_UnitTestCase {
 
 		// # Since WP 6.9-beta1 WP creates one transient.
 		// if ( version_compare( $GLOBALS['wp_version'], '6.9-beta1', '>=' ) ) {
-
 		//  $this->assertEquals(
 		//      'Deleted 1 transients.',
 		//      delete_transients( '', '' ),
