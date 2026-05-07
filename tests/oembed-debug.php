@@ -2,6 +2,7 @@
 
 declare(strict_types = 1);
 
+use Nextgenthemes\ARVE\PROVIDERS;
 use function Nextgenthemes\ARVE\shortcode;
 use function Nextgenthemes\ARVE\get_host_properties;
 
