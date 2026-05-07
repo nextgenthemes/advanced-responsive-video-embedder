@@ -15,14 +15,16 @@ class Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function test_transient_deletion(): void {
 
-		// # Since WP 6.9-beta1 WP creates one transient.
-		// if ( version_compare( $GLOBALS['wp_version'], '6.9-beta1', '>=' ) ) {
-		//  $this->assertEquals(
-		//      'Deleted 1 transients.',
-		//      delete_transients( '', '' ),
-		//      'Failed to delete the assumed one transient WP creates.'
-		//  );
-		// }
+		# Since WP 6.9-beta1 WP creates one transient. And with 7.0-RC2 is does not anymore.
+		if ( version_compare( $GLOBALS['wp_version'], '6.9-beta1', '>=' ) &&
+			version_compare( $GLOBALS['wp_version'], '7.0-RC2', '<' )
+		) {
+			$this->assertEquals(
+				'Deleted 1 transients.',
+				delete_transients( '', '' ),
+				'Failed to delete the assumed one transient WP creates.'
+			);
+		}
 
 		# Set transients
 		set_transient( 'ngt_phpunit_test_1_one', '1 one' );
