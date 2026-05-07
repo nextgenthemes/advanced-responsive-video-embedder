@@ -27,7 +27,7 @@ class Tests_Settings extends WP_UnitTestCase {
 	 *
 	 * @group options
 	 * @dataProvider data_options
-	 * @param  array<string, mixed>  $options  The options array to test.
+	 * @param  array<string,mixed>  $options  The options array to test.
 	 */
 	public function test_settings_page( array $options ): void {
 		$this->assertArrayHasKey( 'maxwidth', $options );
