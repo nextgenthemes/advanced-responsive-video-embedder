@@ -50,26 +50,20 @@ class Tests_NoAddons extends WP_UnitTestCase {
 		);
 
 		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
-		$json_ld = $this->extract_json_ld( $html );
+		$json_ld        = $this->extract_json_ld( $html );
+		$json_ld_output = var_export( $json_ld, true );
+
 		$this->assertNotInstanceOf( 'WP_Error', $json_ld );
 		$this->assertIsArray( $json_ld );
 
-		$this->assertArrayHasKey( '@id', $json_ld, var_export( $json_ld, true ) );
-		$this->assertArrayHasKey( '@context', $json_ld, var_export( $json_ld, true ) );
-		$this->assertArrayHasKey( '@type', $json_ld, var_export( $json_ld, true ) );
-		$this->assertArrayHasKey( 'embedURL', $json_ld, var_export( $json_ld, true ) );
+		$this->assertArrayHasKey( '@id', $json_ld, $json_ld_output );
+		$this->assertArrayHasKey( '@context', $json_ld, $json_ld_output );
+		$this->assertArrayHasKey( '@type', $json_ld, $json_ld_output );
+		$this->assertArrayHasKey( 'embedURL', $json_ld, $json_ld_output );
 
-		$this->assertArrayNotHasKey( 'name', $json_ld, var_export( $json_ld, true ) );
-		$this->assertArrayNotHasKey( 'description', $json_ld, var_export( $json_ld, true ) );
-
-		// Check if author key exists and has correct structure
-		#if ( array_key_exists( 'author', $json_ld ) ) {
-			$this->assertIsArray( $json_ld['author'], 'Author should be an array' );
-			$this->assertArrayHasKey( '@type', $json_ld['author'], 'Author should have @type key' );
-			$this->assertEquals( 'TRY_Organization', $json_ld['author']['@type'], 'Author @type should be Organization' );
-			$this->assertArrayHasKey( 'name', $json_ld['author'], 'Author should have name key' );
-			$this->assertIsString( $json_ld['author']['name'], 'Author name should be a string' );
-		#}
+		$this->assertArrayNotHasKey( 'name', $json_ld, $json_ld_output );
+		$this->assertArrayNotHasKey( 'description', $json_ld, $json_ld_output );
+		$this->assertArrayNotHasKey( 'author', $json_ld, $json_ld_output );
 	}
 
 	/**
