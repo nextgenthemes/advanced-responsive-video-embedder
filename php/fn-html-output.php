@@ -9,7 +9,7 @@ use WP_HTML_Tag_Processor;
 use function Nextgenthemes\WP\first_tag_attr;
 
 /**
- * @param array <int, array{
+ * @param array<int,array{
  *     default: bool,
  *     kind: string,
  *     label: string,

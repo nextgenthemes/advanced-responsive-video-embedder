@@ -246,9 +246,9 @@ function register_shortcode_ui(): void {
  * Each key-value pair in the input array is transformed into an associative array
  * with 'value' and 'label' keys.
  *
- * @param array <string, string>              $arr An associative array with keys as option values and values as option labels.
+ * @param array<string,string>             $arr An associative array with keys as option values and values as option labels.
  *
- * @return array <int, array<string, string>>      An array of associative arrays, each containing 'value' and 'label' keys.
+ * @return array<int,array<string,string>>      An array of associative arrays, each containing 'value' and 'label' keys.
  */
 function convert_to_shortcode_ui_options( array $arr ): array {
 	$result = array();

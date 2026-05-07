@@ -9,7 +9,7 @@ use const Nextgenthemes\ARVE\ALLOWED_HTML;
 /**
  * Processes the shortcode attributes and builds the video html.
  *
- * @param array <string, mixed> $a The array of shortcode attributes.
+ * @param array<string,mixed> $a The array of shortcode attributes.
  *
  * @return string|\WP_REST_Response The generated video output.
  */
@@ -59,11 +59,10 @@ function is_dev_mode(): bool {
 	);
 }
 
-
 /**
  * Builds a video based on the input attributes.
  *
- * @param array <string, mixed> $input_atts The input attributes for the video.
+ * @param array<string,mixed> $input_atts The input attributes for the video.
  *
  * @return string|\WP_REST_Response The built video.
  */
@@ -79,7 +78,7 @@ function build_video( array $input_atts ) {
 }
 
 /**
- * @return array <string, mixed>
+ * @return array<string,mixed>
  */
 function shortcode_option_defaults(): array {
 

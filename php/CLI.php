@@ -17,8 +17,8 @@ class CLI extends WP_CLI_Command {
 	 *
 	 * @when after_wp_load
 	 *
-	 * @param array<string, mixed> $args
-	 * @param array<string, mixed> $assoc_args
+	 * @param array<string,mixed> $args
+	 * @param array<string,mixed> $assoc_args
 	 */
 	public function raw_settings( array $args, array $assoc_args ): void {
 		$raw_settings = settings_data()->to_array();
@@ -98,9 +98,9 @@ class CLI extends WP_CLI_Command {
 	/**
 	 * Updates block.json data with latest data from the plugin.
 	 *
-	 * @param  array<string, mixed>  $attr  Block attributes to update.
+	 * @param  array<string,mixed>  $attr  Block attributes to update.
 	 *
-	 * @return array<string, mixed>         Updated block.json data.
+	 * @return array<string,mixed>         Updated block.json data.
 	 */
 	private static function update_block_json( array $attr ): array {
 

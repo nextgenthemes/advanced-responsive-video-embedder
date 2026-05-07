@@ -41,21 +41,21 @@ function settings_instance(): Settings {
 }
 
 /**
- * @return array <string, bool|string|int>
+ * @return array<string,bool|string|int>
  */
 function options(): array {
 	return settings_instance()->get_options();
 }
 
 /**
- * @return array <string, bool|string|int>
+ * @return array<string,bool|string|int>
  */
 function default_options(): array {
 	return settings_instance()->get_options_defaults();
 }
 
 /**
- * @return array <string, array<string, string|false>>
+ * @return array<string,array<string,string|false>>
  */
 function settings_tabs(): array {
 
@@ -182,6 +182,8 @@ function settings_data(): SettingsData {
 		SettingsDefinitions::sticky_settings(),
 		SettingsDefinitions::debug_settings(),
 	);
+
+	$reordered_settings = [];
 
 	$order = [
 		'url'                           => 'main',

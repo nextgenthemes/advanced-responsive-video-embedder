@@ -7,7 +7,7 @@ namespace Nextgenthemes\ARVE;
 /**
  * Common helper – merges the provider‑specific query‑arg maps.
  *
- * @return array <string, array<int,array<string,mixed>>>  Provider → query‑args map.
+ * @return array<string,array<int,array<string,mixed>>>  Provider → query‑args map.
  */
 function query_args(): array {
 
@@ -19,7 +19,7 @@ function query_args(): array {
 }
 
 /**
- * @return array <int, array<string, mixed>>
+ * @return array<int,array<string,mixed>>
  *
  * Each element contains:
  *   - `attr`        : the query‑argument name used by DailyMotion.
