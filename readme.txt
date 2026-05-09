@@ -195,6 +195,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2026-05-09 10.8.6 ###
+
+* Fix: Outdated plugins getting executed.
+
 ### 2026-05-07 10.8.5 ###
 
 * Improved: Change script into module.
