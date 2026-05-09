@@ -56,10 +56,10 @@ function init(): void {
 function maybe_init_addon( string $name ): void {
 
 	$init_function_name = '\\' . __NAMESPACE__ . '\\' . $name . '\\init';
-	$version_const_name = '\\' . __NAMESPACE__ . '\\' . $name . '\\VERSION';
-	$req_ver_const_name = '\\' . __NAMESPACE__ . '\\' . strtoupper( $name ) . '_REQUIRED_VERSION';
-	$version            = defined( $version_const_name ) ? constant( $version_const_name ) : '';
-	$req_ver            = defined( $req_ver_const_name ) ? constant( $req_ver_const_name ) : '';
+	$ver_const_name     = '\\' . __NAMESPACE__ . '\\' . $name . '\\VERSION';
+	$ver_req_const_name = '\\' . __NAMESPACE__ . '\\' . strtoupper( $name ) . '_VERSION_REQUIRED';
+	$version            = defined( $ver_const_name ) ? constant( $ver_const_name ) : '';
+	$req_ver            = defined( $ver_req_const_name ) ? constant( $ver_req_const_name ) : '';
 
 	if ( $version && version_compare( $version, $req_ver, '>=' ) && function_exists( $init_function_name ) ) {
 		$init_function_name();
