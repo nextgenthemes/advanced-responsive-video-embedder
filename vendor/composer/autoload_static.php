@@ -11,22 +11,22 @@ class ComposerStaticInitfa4ebaf22f08a8b822c80bc4efcf7610
     );
 
     public static $prefixLengthsPsr4 = array (
-        'N' => 
+        'N' =>
         array (
             'Nextgenthemes\\ARVE\\' => 19,
         ),
-        'A' => 
+        'A' =>
         array (
             'Automattic\\Jetpack\\Autoloader\\' => 30,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Nextgenthemes\\ARVE\\' => 
+        'Nextgenthemes\\ARVE\\' =>
         array (
             0 => __DIR__ . '/../..' . '/php',
         ),
-        'Automattic\\Jetpack\\Autoloader\\' => 
+        'Automattic\\Jetpack\\Autoloader\\' =>
         array (
             0 => __DIR__ . '/..' . '/automattic/jetpack-autoloader/src',
         ),

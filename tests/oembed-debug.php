@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-use Nextgenthemes\ARVE\PROVIDERS;
 use function Nextgenthemes\ARVE\shortcode;
 use function Nextgenthemes\ARVE\get_host_properties;
+use const Nextgenthemes\ARVE\PROVIDERS;
 
 // phpcs:disable WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export

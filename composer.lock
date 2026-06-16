@@ -9,16 +9,16 @@
     "packages-dev": [
         {
             "name": "automattic/jetpack-autoloader",
-            "version": "v5.0.17",
+            "version": "v5.0.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-autoloader.git",
-                "reference": "6933cc3d91d155ed6935d9c189077e7e1a8845bd"
+                "reference": "be5ea0f2109f3300a22a05727721587c9116ffe8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/6933cc3d91d155ed6935d9c189077e7e1a8845bd",
-                "reference": "6933cc3d91d155ed6935d9c189077e7e1a8845bd",
+                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/be5ea0f2109f3300a22a05727721587c9116ffe8",
+                "reference": "be5ea0f2109f3300a22a05727721587c9116ffe8",
                 "shasum": ""
             },
             "require": {
@@ -26,7 +26,7 @@
                 "php": ">=7.2"
             },
             "require-dev": {
-                "automattic/phpunit-select-config": "^1.0.5",
+                "automattic/phpunit-select-config": "^1.0.6",
                 "composer/composer": "^2.2",
                 "yoast/phpunit-polyfills": "^4.0.0"
             },
@@ -67,9 +67,9 @@
                 "wordpress"
             ],
             "support": {
-                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.17"
+                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.18"
             },
-            "time": "2026-05-04T16:17:55+00:00"
+            "time": "2026-05-19T09:17:26+00:00"
         },
         {
             "name": "nextgenthemes/wp-settings",
@@ -116,5 +116,5 @@
     "platform-overrides": {
         "php": "7.4"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }

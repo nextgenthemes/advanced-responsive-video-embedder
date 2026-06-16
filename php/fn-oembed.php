@@ -91,7 +91,7 @@ function sane_provider_name( string $provider ): string {
  *
  * @param string|false          $cache   The cached HTML result, stored in post meta.
  * @param string                $url     The attempted embed URL.
- * @param array <string, mixed> $attr    An array of shortcode attributes.
+ * @param array<string,mixed>   $attr    An array of shortcode attributes.
  * @param ?int                  $post_id Post ID.
  */
 function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_id ): string {
@@ -107,6 +107,23 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 		$a['origin_data'][ __FUNCTION__ ]['attr']    = $attr;
 
 		$cache = build_video( $a );
+	}
+
+	return $cache;
+}
+
+/**
+ * Filters the HTML returned by the oEmbed provider.
+ *
+ * @param string|false $cache The returned oEmbed HTML (false if unsafe).
+ * @param string       $url  URL of the content to be embedded.
+ * @param string|array<string,mixed> $args Optional. Additional arguments for retrieving embed HTML.
+ *                           See wp_oembed_get() for accepted arguments. Default empty.
+ */
+function filter_oembed_result( $cache, string $url, $args ): string {
+
+	if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+		$cache = filter_embed_oembed_html( $cache, $url, $args, null );
 	}
 
 	return $cache;
@@ -201,6 +218,8 @@ function yt_srcset( array $sizes ): string {
 
 	if ( ! empty( $sizes ) ) {
 
+		$srcset_comb = array();
+
 		foreach ( $sizes as $size => $url ) {
 			$srcset_comb[] = "$url {$size}w";
 		}
@@ -276,10 +295,10 @@ function oembed_html2src( object $data ) {
 /**
  * Add a Referer header for Vimeo URLs.
  *
- * @param array <string, mixed> $args  Request arguments.
+ * @param array<string,mixed>   $args  Request arguments.
  * @param string                $url   The URL that will be fetched.
  *
- * @return array <string, mixed>       The same structure as $args, with
+ * @return array<string,mixed>         The same structure as $args, with
  *                                     $args['headers']['Referer'] set to
  *                                     site_url() when $url contains “vimeo”.
  */
