@@ -15,19 +15,19 @@
 	.components-input-control__label::after,
 	.components-base-control__label::after {
 		display: inline-block;
-		margin-inline-start: 6px;
-		background: #007cba;
-		color: white;
 		padding: 3px 6px;
-		border-radius: 2px;
-		font-size: 0.9em;
+		margin-inline-start: 6px;
+		font-size: .9em;
 		line-height: 1;
+		color: white;
+		background: #007cba;
+		border-radius: 2px;
 	}
 }
 
 .arve-ctl-pro {
 	.components-input-control__label::after,
 	.components-base-control__label::after {
-        content: "Pro";
-    }
+		content: "Pro";
+	}
 }
