@@ -29,8 +29,28 @@
 		"url": "https://github.com/nextgenthemes/advanced-responsive-video-embedder/issues"
 	},
 	"homepage": "https://nextgenthemes.com/plugins/arve-pro",
-	"dependencies": {
-		"@wordpress/interactivity": "^6.14.0",
+	"devDependencies": {
+		"@types/wordpress__block-editor": "*",
+		"@types/wordpress__blocks": "*",
+		"@wordpress/scripts": "^32.4.1",
 		"webpack-notifier": "^1.11.1"
+	},
+	"dependencies": {
+		"@wordpress/api-fetch": "^7.48.1",
+		"@wordpress/block-editor": "^15.21.1",
+		"@wordpress/blocks": "^15.21.1",
+		"@wordpress/components": "^35.0.1",
+		"@wordpress/compose": "^8.1.1",
+		"@wordpress/data": "^10.48.1",
+		"@wordpress/dom-ready": "^4.48.1",
+		"@wordpress/editor": "^14.48.1",
+		"@wordpress/element": "^8.0.1",
+		"@wordpress/eslint-plugin": "^25.4.1",
+		"@wordpress/hooks": "^4.48.1",
+		"@wordpress/i18n": "^6.21.1",
+		"@wordpress/icons": "^14.0.1",
+		"@wordpress/interactivity": "^6.14.0",
+		"@wordpress/server-side-render": "^6.24.1",
+		"clsx": "^2.1.1"
 	}
 }
