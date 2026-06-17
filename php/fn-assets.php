@@ -23,32 +23,58 @@ function register_assets(): void {
 		ver( PLUGIN_DIR . '/build/main.css', VERSION )
 	);
 
-	if ( function_exists( 'register_block_type' ) ) :
+	$settings          = settings( 'gutenberg_block' )->to_array();
+	$options           = options();
+	$block_inline_data = [
+		'settings'       => $settings,
+		'options'        => $options,
+		'settingPageUrl' => admin_url( 'options-general.php?page=nextgenthemes_arve' ),
+	];
 
-		$settings = settings( 'gutenberg_block' )->to_array();
-		$options  = options();
+	// Register our block, and explicitly define the attributes we accept.
+	register_block_type(
+		PLUGIN_DIR . '/build/block/block.json',
+		array( 'render_callback' => __NAMESPACE__ . '\gutenberg_block' )
+	);
+	wp_add_inline_script(
+		'nextgenthemes-arve-block-editor-script',
+		'var ArveBlockJsBefore = ' . wp_json_encode( $block_inline_data ) . ';',
+		'before'
+	);
 
-		// Register our block, and explicitly define the attributes we accept.
-		register_block_type(
-			PLUGIN_DIR . '/build/block/block.json',
-			array(
-				'render_callback' => __NAMESPACE__ . '\gutenberg_block',
-			)
-		);
+	// Register our block, and explicitly define the attributes we accept.
+	register_block_type( PLUGIN_DIR . '/build/embed-block-ext/block.json' );
+	wp_add_inline_script(
+		'nextgenthemes-embed-block-ext-editor-script',
+		'var ArveEmbedBlockExtData = ' . wp_json_encode( $block_inline_data ) . ';',
+		'before'
+	);
+}
 
-		$block_inline_data = [
-			'settings'       => $settings,
-			'options'        => $options,
-			'settingPageUrl' => admin_url( 'options-general.php?page=nextgenthemes_arve' ),
-		];
+function register_arve_block(): void {
 
-		wp_add_inline_script(
-			'nextgenthemes-arve-block-editor-script',
-			'var ArveBlockJsBefore = ' . wp_json_encode( $block_inline_data ) . ';',
-			'before'
-		);
+	$settings = settings( 'gutenberg_block' )->to_array();
+	$options  = options();
 
-	endif;
+	// Register our block, and explicitly define the attributes we accept.
+	register_block_type(
+		PLUGIN_DIR . '/build/block/block.json',
+		array(
+			'render_callback' => __NAMESPACE__ . '\gutenberg_block',
+		)
+	);
+
+	$block_inline_data = [
+		'settings'       => $settings,
+		'options'        => $options,
+		'settingPageUrl' => admin_url( 'options-general.php?page=nextgenthemes_arve' ),
+	];
+
+	wp_add_inline_script(
+		'nextgenthemes-arve-block-editor-script',
+		'var ArveBlockJsBefore = ' . wp_json_encode( $block_inline_data ) . ';',
+		'before'
+	);
 }
 
 /**

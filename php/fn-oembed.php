@@ -85,7 +85,7 @@ function sane_provider_name( string $provider ): string {
 }
 
 /**
- * Filters the cached oEmbed HTML.
+ * Filters the cached oEmbed HTML. Is not run on /oembed/1.0/proxy requests.
  *
  * @see WP_Embed::shortcode()
  *
@@ -98,22 +98,25 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
 
 	$oembed_data = extract_oembed_data( $cache );
 
-	if ( $oembed_data ) {
-		$a['url']         = $url;
-		$a['oembed_data'] = $oembed_data;
-
-		$a['origin_data'][ __FUNCTION__ ]['post_id'] = $post_id;
-		$a['origin_data'][ __FUNCTION__ ]['cache']   = delete_oembed_caches_when_missing_data( $oembed_data );
-		$a['origin_data'][ __FUNCTION__ ]['attr']    = $attr;
-
-		$cache = build_video( $a );
+	if ( ! $oembed_data ) {
+		return $cache;
 	}
+
+	$a['url']         = $url;
+	$a['oembed_data'] = $oembed_data;
+
+	$a['origin_data'][ __FUNCTION__ ]['post_id'] = $post_id;
+	$a['origin_data'][ __FUNCTION__ ]['cache']   = delete_oembed_caches_when_missing_data( $oembed_data );
+	$a['origin_data'][ __FUNCTION__ ]['attr']    = $attr;
+
+	$cache = build_video( $a );
 
 	return $cache;
 }
 
 /**
- * Filters the HTML returned by the oEmbed provider.
+ * Filters the HTML returned by the oEmbed provider. Is not run on /oembed/1.0/proxy requests.
+ * But only used for backend.
  *
  * @param string|false $cache The returned oEmbed HTML (false if unsafe).
  * @param string       $url  URL of the content to be embedded.
@@ -122,9 +125,29 @@ function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_
  */
 function filter_oembed_result( $cache, string $url, $args ): string {
 
-	if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
-		$cache = filter_embed_oembed_html( $cache, $url, $args, null );
+	if ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) {
+		return $cache;
 	}
+
+	$oembed_data = extract_oembed_data( $cache );
+	$editor_args = (array) ( $GLOBALS['_arve_oembed_proxy_params'] ?? [] );
+
+	if ( ! $oembed_data ) {
+		return $cache;
+	}
+
+	$a['url']         = $url;
+	$a['oembed_data'] = $oembed_data;
+
+	$a['origin_data'][ __FUNCTION__ ]['cache'] = delete_oembed_caches_when_missing_data( $oembed_data );
+	$a['origin_data'][ __FUNCTION__ ]['attr']  = $args;
+
+	$a = $a + $editor_args;
+
+	$cache  = editor_preview_style_link_tags();
+	$cache .= '<h5>test</h5>';
+	$cache .= '<pre>' . esc_html( print_r( $editor_args, true ) ) . '</pre>';
+	$cache .= build_video( $a );
 
 	return $cache;
 }

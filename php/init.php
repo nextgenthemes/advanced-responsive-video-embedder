@@ -26,6 +26,7 @@ function init(): void {
 	require_once PLUGIN_DIR . '/php/fn-url-handlers.php';
 	require_once PLUGIN_DIR . '/php/fn-validation.php';
 	require_once PLUGIN_DIR . '/php/fn-settings.php';
+	require_once PLUGIN_DIR . '/php/fn-embed-block.php';
 
 	add_option( 'arve_install_date', time() );
 	maybe_delete_oembed_cache(); // Must be before update_option arve_version
@@ -42,12 +43,15 @@ function init(): void {
 	add_filter( 'oembed_fetch_url', __NAMESPACE__ . '\remove_youtube_si_param', 10, 2 );
 	add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\action_wp_enqueue_scripts' );
 	add_filter( 'render_block_core/embed', __NAMESPACE__ . '\remove_embed_block_aspect_ratio' );
+	add_filter( 'rest_request_before_callbacks', __NAMESPACE__ . '\capture_arve_oembed_params', 10, 3 );
 	add_filter( 'wp_video_shortcode_override', __NAMESPACE__ . '\wp_video_shortcode_override', 10, 2 );
 	add_filter( 'language_attributes', __NAMESPACE__ . '\html_id' );
 	add_filter( 'oembed_dataparse', __NAMESPACE__ . '\filter_oembed_dataparse', PHP_INT_MAX, 3 );
 	add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', OEMBED_HTML_PRIORITY, 4 );
 	add_filter( 'oembed_result', __NAMESPACE__ . '\filter_oembed_result', 10, 3 );
 	add_action( 'elementor/widgets/register', __NAMESPACE__ . '\register_elementor_widget' );
+
+	add_filter( 'register_block_type_args', __NAMESPACE__ . '\register_embed_block_arve_attribute', 10, 2 );
 
 	foreach ( ADDON_NAMES as $addon_name ) {
 		maybe_init_addon( $addon_name );
