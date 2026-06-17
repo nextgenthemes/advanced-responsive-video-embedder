@@ -8,7 +8,7 @@ declare global {
 }
 
 const d = document;
-const qs = d.querySelector.bind( d );
+const qs = d.querySelector.bind(d);
 
 setEditorCanvasID();
 
@@ -17,43 +17,43 @@ function setEditorCanvasID() {
 	// The editor-canvas iframe relies upon `srcdoc`, which does not trigger a
 	// `load` event. Thus, we must poll for the iframe to be ready.
 	let attemptsToApplyID = 0;
-	const interval = setInterval( () => {
+	const interval = setInterval(() => {
 		attemptsToApplyID++;
-		const canvasIframe = qs< HTMLIFrameElement >( 'iframe[name="editor-canvas"]' );
+		const canvasIframe = qs<HTMLIFrameElement>('iframe[name="editor-canvas"]');
 		const canvasBody = canvasIframe?.contentDocument?.body;
 
-		if ( canvasBody ) {
-			clearInterval( interval );
-			canvasBody.setAttribute( 'id', 'html' );
+		if (canvasBody) {
+			clearInterval(interval);
+			canvasBody.setAttribute('id', 'html');
 		}
 
 		// Safeguard against an infinite loop.
-		if ( attemptsToApplyID > 100 ) {
-			clearInterval( interval );
+		if (attemptsToApplyID > 100) {
+			clearInterval(interval);
 		}
-	}, 300 );
+	}, 300);
 }
 
-d.addEventListener( 'click', ( event ) => {
+d.addEventListener('click', (event) => {
 	const target = event?.target;
 
-	if ( target instanceof HTMLElement && target.matches( '.notice-dismiss' ) ) {
+	if (target instanceof HTMLElement && target.matches('.notice-dismiss')) {
 		event.preventDefault();
 
 		const parent = target.parentNode as HTMLDivElement | null;
-		const noticeId = parent?.getAttribute( 'id' );
+		const noticeId = parent?.getAttribute('id');
 
-		if ( ! parent?.matches( '.notice.is-dismissible' ) || ! noticeId ) {
+		if (!parent?.matches('.notice.is-dismissible') || !noticeId) {
 			return;
 		}
 
-		fetch( window.ajaxurl, {
+		fetch(window.ajaxurl, {
 			method: 'POST',
 			credentials: 'same-origin',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
 			},
 			body: 'action=dnh_dismiss_notice&id=' + noticeId,
-		} );
+		});
 	}
-} );
+});
