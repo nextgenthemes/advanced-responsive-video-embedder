@@ -6,7 +6,7 @@
 // Import the editor styles
 import './editor.scss';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import ServerSideRender from '@wordpress/server-side-render';
+import { ServerSideRender } from '@wordpress/server-side-render';
 import clsx from 'clsx';
 import { buildControls } from './controls';
 
@@ -15,9 +15,9 @@ interface EditProps {
 		mode?: string;
 		align?: string;
 		maxwidth?: string;
-		[ key: string ]: any;
+		[key: string]: any;
 	};
-	setAttributes: ( attributes: Record< string, any > ) => void;
+	setAttributes: (attributes: Record<string, any>) => void;
 }
 
 declare const window: Window & {
@@ -25,12 +25,12 @@ declare const window: Window & {
 		options: {
 			mode?: string;
 			align_maxwidth?: string | number;
-			[ key: string ]: any;
+			[key: string]: any;
 		};
 	};
 };
 
-export function Edit( { attributes, setAttributes }: EditProps ) {
+export function Edit({ attributes, setAttributes }: EditProps) {
 	const { mode, align, maxwidth } = attributes;
 	const { options } = window.ArveBlockJsBefore;
 	let pointerEvents = true;
@@ -42,36 +42,36 @@ export function Edit( { attributes, setAttributes }: EditProps ) {
 	delete attrCopy.maxwidth;
 
 	// Handle alignment and max width styles
-	if ( maxwidth && ( 'left' === align || 'right' === align ) ) {
+	if (maxwidth && ('left' === align || 'right' === align)) {
 		style.width = '100%';
 		style.maxWidth = maxwidth;
-	} else if ( 'left' === align || 'right' === align ) {
+	} else if ('left' === align || 'right' === align) {
 		style.width = '100%';
 		style.maxWidth = options.align_maxwidth as string | number;
 	}
 
-	const blockProps = useBlockProps( { style } );
+	const blockProps = useBlockProps({ style });
 
-	if ( mode === 'normal' || ( ! mode && options.mode === 'normal' ) ) {
+	if (mode === 'normal' || (!mode && options.mode === 'normal')) {
 		pointerEvents = false;
 	}
 
 	return (
 		<>
-			<div { ...blockProps } key="block">
+			<div {...blockProps} key="block">
 				<ServerSideRender
 					key="ssr"
-					className={ clsx( {
+					className={clsx({
 						'arve-ssr': true,
-						'arve-ssr--pointer-events-none': ! pointerEvents,
-					} ) }
+						'arve-ssr--pointer-events-none': !pointerEvents,
+					})}
 					block="nextgenthemes/arve-block"
-					attributes={ attrCopy }
-					skipBlockSupportAttributes={ true }
+					attributes={attrCopy}
+					skipBlockSupportAttributes={true}
 				/>
 			</div>
 			<InspectorControls key="insp">
-				<>{ buildControls( { attributes, setAttributes } ) }</>
+				<>{buildControls({ attributes, setAttributes })}</>
 			</InspectorControls>
 		</>
 	);
