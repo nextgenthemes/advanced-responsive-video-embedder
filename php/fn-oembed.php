@@ -130,7 +130,6 @@ function filter_oembed_result( $cache, string $url, $args ): string {
 	}
 
 	$oembed_data = extract_oembed_data( $cache );
-	$editor_args = (array) ( $GLOBALS['_arve_oembed_proxy_params'] ?? [] );
 
 	if ( ! $oembed_data ) {
 		return $cache;
@@ -142,7 +141,8 @@ function filter_oembed_result( $cache, string $url, $args ): string {
 	$a['origin_data'][ __FUNCTION__ ]['cache'] = delete_oembed_caches_when_missing_data( $oembed_data );
 	$a['origin_data'][ __FUNCTION__ ]['attr']  = $args;
 
-	$a = $a + $editor_args;
+	$editor_args = (array) ( $GLOBALS['_arve_oembed_proxy_params'] ?? [] );
+	$a           = $a + $editor_args;
 
 	$cache  = editor_preview_style_link_tags();
 	$cache .= '<h5>test</h5>';

@@ -43,7 +43,6 @@ function init(): void {
 	add_filter( 'oembed_fetch_url', __NAMESPACE__ . '\remove_youtube_si_param', 10, 2 );
 	add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\action_wp_enqueue_scripts' );
 	add_filter( 'render_block_core/embed', __NAMESPACE__ . '\remove_embed_block_aspect_ratio' );
-	add_filter( 'rest_request_before_callbacks', __NAMESPACE__ . '\capture_arve_oembed_params', 10, 3 );
 	add_filter( 'wp_video_shortcode_override', __NAMESPACE__ . '\wp_video_shortcode_override', 10, 2 );
 	add_filter( 'language_attributes', __NAMESPACE__ . '\html_id' );
 	add_filter( 'oembed_dataparse', __NAMESPACE__ . '\filter_oembed_dataparse', PHP_INT_MAX, 3 );
@@ -51,6 +50,7 @@ function init(): void {
 	add_filter( 'oembed_result', __NAMESPACE__ . '\filter_oembed_result', 10, 3 );
 	add_action( 'elementor/widgets/register', __NAMESPACE__ . '\register_elementor_widget' );
 
+	add_filter( 'rest_request_before_callbacks', __NAMESPACE__ . '\capture_arve_oembed_params', 10, 3 );
 	add_filter( 'register_block_type_args', __NAMESPACE__ . '\register_embed_block_arve_attribute', 10, 2 );
 
 	foreach ( ADDON_NAMES as $addon_name ) {
