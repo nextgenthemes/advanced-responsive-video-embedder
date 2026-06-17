@@ -43,9 +43,10 @@ function register_assets(): void {
 	);
 
 	// Register our block, and explicitly define the attributes we accept.
-	register_block_type( PLUGIN_DIR . '/build/embed-block-ext/block.json' );
+	register_block_type( PLUGIN_DIR . '/build/embed-block/block.json' );
+	unset( $block_inline_data['settings']['url'] );
 	wp_add_inline_script(
-		'nextgenthemes-embed-block-ext-editor-script',
+		'nextgenthemes-embed-block-editor-script',
 		'var ArveEmbedBlockExtData = ' . wp_json_encode( $block_inline_data ) . ';',
 		'before'
 	);
