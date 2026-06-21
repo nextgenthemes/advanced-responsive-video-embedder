@@ -14,7 +14,6 @@ import {
 import { subscribe, select, dispatch } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
-
 import ImageUpload from '../block/components/ImageUpload';
 import UrlOrEmbedCode from './components/UrlOrEmbedCode';
 import { hasSameKeys } from '../block/utils';
@@ -369,22 +368,22 @@ const withArveControls = createHigherOrderComponent((BlockEdit) => {
 		const { attributes, setAttributes } = props;
 		const arve = attributes.arve || {};
 
-		const setArveAttributes = ( attrs: Record< string, unknown > ) => {
-			const topLevel: Record< string, unknown > = {};
-			const arveLevel: Record< string, unknown > = {};
-			for ( const [ key, value ] of Object.entries( attrs ) ) {
-				if ( key === 'url' ) {
-					topLevel[ key ] = value;
+		const setArveAttributes = (attrs: Record<string, unknown>) => {
+			const topLevel: Record<string, unknown> = {};
+			const arveLevel: Record<string, unknown> = {};
+			for (const [key, value] of Object.entries(attrs)) {
+				if (key === 'url') {
+					topLevel[key] = value;
 				} else {
-					arveLevel[ key ] = value;
+					arveLevel[key] = value;
 				}
 			}
-			const updates: Record< string, unknown > = {};
-			if ( Object.keys( arveLevel ).length > 0 ) {
+			const updates: Record<string, unknown> = {};
+			if (Object.keys(arveLevel).length > 0) {
 				updates.arve = { ...arve, ...arveLevel };
 			}
-			Object.assign( updates, topLevel );
-			setAttributes( updates );
+			Object.assign(updates, topLevel);
+			setAttributes(updates);
 		};
 
 		return (
