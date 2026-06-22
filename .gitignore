@@ -1,6 +1,7 @@
 vendor/
 !/vendor/
 /vendor/nextgenthemes/wp-settings/vendor/
+build/
 node_modules/
 .ignore/
 .symlinks/
