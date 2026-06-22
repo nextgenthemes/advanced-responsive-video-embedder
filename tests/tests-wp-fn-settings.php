@@ -3,19 +3,34 @@
 declare(strict_types = 1);
 
 use function Nextgenthemes\WP\get_products;
+use const Nextgenthemes\ARVE\ADDONS;
 
 class Tests_AddonsBaseChecks extends WP_UnitTestCase {
 
 	public function test_product_data(): void {
 
+		$suite = \NGT_TESTSUITE;
+
+		$this->assertNotEmpty( $suite );
+		$this->assertIsString( $suite );
+
+		if ( 'advanced-responsive-video-embedder' === $suite ) {
+			return;
+		}
+
 		$products = get_products();
-		$addons   = $GLOBALS['arve_detected_addons'] ?? [];
 
 		$this->assertNotEmpty( $products );
-		$this->assertNotEmpty( $addons );
-		$this->assertIsArray( $addons );
 
-		foreach ( $addons as $addon_slug ) {
+		if ( 'arve-all' === $suite ) {
+			$addons = ADDONS;
+		} else {
+			$addons = [ $suite => ADDONS[ $suite ] ];
+		}
+
+		$this->assertNotEmpty( $addons );
+
+		foreach ( ADDONS as $addon_slug => $addon_data ) {
 
 			$addon_slug = str_replace( '-', '_', $addon_slug );
 

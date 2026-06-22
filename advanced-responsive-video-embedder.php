@@ -35,7 +35,13 @@ const VIDEO_FILE_EXTENSIONS         = array( 'av1mp4', 'mp4', 'm4v', 'webm', 'og
 const DEFAULT_MAXWIDTH              = 900;
 const OEMBED_HTML_PRIORITY          = -5;
 const VIEW_SCRIPT_HANDLES           = array( 'arve', 'arve-pro', 'arve-sticky-videos', 'arve-random-video' );
-const ADDON_NAMES                   = array( 'RandomVideo', 'Pro', 'Privacy', 'StickyVideos', 'AMP' );
+const ADDONS                        = array(
+	'arve-random-video'  => 'RandomVideo',
+	'arve-pro'           => 'Pro',
+	'arve-privacy'       => 'Privacy',
+	'arve-sticky-videos' => 'StickyVideos',
+	'arve-amp'           => 'AMP',
+);
 // For error messages and stuff on the admin screens.
 const ALLOWED_HTML = array(
 	'h1'     => array( 'class' => true ),

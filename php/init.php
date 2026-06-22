@@ -48,7 +48,7 @@ function init(): void {
 	add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', OEMBED_HTML_PRIORITY, 4 );
 	add_action( 'elementor/widgets/register', __NAMESPACE__ . '\register_elementor_widget' );
 
-	foreach ( ADDON_NAMES as $addon_name ) {
+	foreach ( ADDONS as $addon_name ) {
 		maybe_init_addon( $addon_name );
 	}
 }

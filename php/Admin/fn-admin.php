@@ -12,7 +12,7 @@ use function Nextgenthemes\ARVE\options;
 use function Nextgenthemes\WP\remote_get_json_cached;
 use function Nextgenthemes\WP\str_contains_any;
 use function Nextgenthemes\WP\ver;
-use const Nextgenthemes\ARVE\ADDON_NAMES;
+use const Nextgenthemes\ARVE\ADDONS;
 use const Nextgenthemes\ARVE\PLUGIN_DIR;
 use const Nextgenthemes\ARVE\PLUGIN_FILE;
 use const Nextgenthemes\ARVE\ALLOWED_HTML;
@@ -51,7 +51,7 @@ function addon_outdated_notice( string $name ): void {
 
 function action_admin_init_setup_messages(): void {
 
-	foreach ( ADDON_NAMES as $addon_name ) {
+	foreach ( ADDONS as $addon_name ) {
 		addon_outdated_notice( $addon_name );
 	}
 

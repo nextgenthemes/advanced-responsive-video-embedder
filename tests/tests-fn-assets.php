@@ -30,7 +30,11 @@ class Tests_Scripts_And_Styles extends WP_UnitTestCase {
 
 		$reflection          = new ReflectionClass( $wp_script_modules );
 		$registered_property = $reflection->getProperty( 'registered' );
-		$registered_property->setAccessible( true );
+
+		if ( PHP_VERSION_ID < 80100 ) {
+			$registered_property->setAccessible( true );
+		}
+
 		$registered = $registered_property->getValue( $wp_script_modules );
 		$this->assertTrue( isset( $registered['arve'] ) );
 	}
