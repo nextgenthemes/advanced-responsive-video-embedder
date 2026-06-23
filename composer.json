@@ -35,7 +35,7 @@
 	"repositories": {
 		"nextgenthemes/wp-settings": {
 			"type": "path",
-			"url": "../../packages/wp-settings",
+			"url": "../wp-settings",
 			"options": {
 				"symlink": true
 			}
