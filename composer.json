@@ -21,7 +21,13 @@
 		}
 	},
 	"extra": {
-		"easy-digital-downloads/edd-sl-sdk": "1.0.0"
+		"easy-digital-downloads/edd-sl-sdk": "1.0.0",
+		"wp-settings-release": {
+			"repository": {
+				"type": "vcs",
+				"url": "https://github.com/nextgenthemes/wp-settings.git"
+			}
+		}
 	},
 	"config": {
 		"allow-plugins": {

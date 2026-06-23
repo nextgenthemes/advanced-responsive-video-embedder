@@ -1,0 +1,15 @@
+includes:
+	- ../phpstan.neon
+parameters:
+	level: 6
+	paths:
+		- advanced-responsive-video-embedder.php
+		- php/
+		- bin/
+		- tests/
+		- ../wp-settings/
+		- ../arve-pro/tests/phpunit-helpers.php
+	excludePaths:
+		analyse:
+			- vendor/nextgenthemes/wp-settings/includes/WP/Admin/EDD
+	treatPhpDocTypesAsCertain: false
