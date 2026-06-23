@@ -2,6 +2,9 @@
 	"name": "@nextgenthemes/advanced-responsive-video-embedder",
 	"description": "Advanced Responsive Video Embedder WordPress Plugin",
 	"private": true,
+	"ngt-bind": {
+		"sym-plugin": true
+	},
 	"scripts": {
 		"build": "composer run build",
 		"start": "npm run start:arve & npm run start:common",
