@@ -22,8 +22,8 @@
 	},
 	"extra": {
 		"easy-digital-downloads/edd-sl-sdk": "1.0.0",
-		"wp-settings-release": {
-			"repository": {
+		"release-repo-changes": {
+			"nextgenthemes/wp-settings": {
 				"type": "vcs",
 				"url": "https://github.com/nextgenthemes/wp-settings.git"
 			}
