@@ -11,7 +11,9 @@
 		}
 	],
 	"require": {
-		"php": ">=7.4"
+		"php": ">=7.4",
+		"nextgenthemes/wp-settings": "@dev",
+		"automattic/jetpack-autoloader": "^v5.0.2"
 	},
 	"autoload": {
 		"psr-4": {
@@ -20,10 +22,6 @@
 	},
 	"extra": {
 		"easy-digital-downloads/edd-sl-sdk": "1.0.0"
-	},
-	"require-dev": {
-		"nextgenthemes/wp-settings": "@dev",
-		"automattic/jetpack-autoloader": "^v5.0.2"
 	},
 	"config": {
 		"allow-plugins": {
@@ -37,9 +35,9 @@
 	"repositories": {
 		"nextgenthemes/wp-settings": {
 			"type": "path",
-			"url": "../../../../../../dev/composer-packages/wp-settings",
+			"url": "../../packages/wp-settings",
 			"options": {
-				"symlink": false
+				"symlink": true
 			}
 		},
 		"edd-sl-sdk": {
@@ -58,6 +56,9 @@
 			"@composer update --optimize-autoloader",
 			"@composer update --working-dir=tests"
 		],
-		"pre-update-cmd": "./bin/sync-wp-settings"
+		"release": [
+			"../../bin/sync-wp-settings",
+			"@composer install --no-dev --optimize-autoloader --classmap-authoritative"
+		]
 	}
 }

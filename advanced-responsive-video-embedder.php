@@ -79,7 +79,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	return; // no exit for use in build script
 }
 
-require_once __DIR__ . '/vendor/autoload_packages.php';
+$autoloader = __DIR__ . '/vendor/autoload_packages.php';
+if ( file_exists( $autoloader ) ) {
+	require_once $autoloader;
+}
+
 require_once __DIR__ . '/php/init.php';
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) { // @phpstan-ignore-line

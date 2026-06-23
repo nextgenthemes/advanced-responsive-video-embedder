@@ -1,6 +1,6 @@
 vendor/
-!/vendor/
-/vendor/nextgenthemes/wp-settings/vendor/
+!/composer.lock
+build/
 node_modules/
 .ignore/
 .symlinks/
