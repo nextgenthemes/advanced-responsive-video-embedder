@@ -1,5 +1,5 @@
 includes:
-	- ../phpstan.neon
+	- ../../phpstan.base.neon
 parameters:
 	level: 6
 	paths:
