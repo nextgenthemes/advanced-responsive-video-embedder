@@ -289,8 +289,8 @@ function add_dashboard_widget(): void {
 }
 
 /**
- * @param array <int|string, string> $links Array containing link html as values.
- * @return array <int|string, string>       Updated Array containing link html as values.
+ * @param array<int|string,string> $links Array containing link html as values.
+ * @return array<int|string,string>       Updated Array containing link html as values.
  */
 function add_action_links( array $links ): array {
 

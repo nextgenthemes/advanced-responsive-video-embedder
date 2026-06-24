@@ -131,9 +131,9 @@ function height_from_width_and_ratio( int $width, ?string $ratio ): float {
 }
 
 /**
- * @param array <string, mixed> $a
+ * @param array<string,mixed> $a
  *
- * @return array <string, mixed>
+ * @return array<string,mixed>
  */
 function args_video( array $a ): array {
 
@@ -282,7 +282,7 @@ function iframesrc_urlargs( string $src, string $provider, string $mode, string 
 }
 
 /**
- * @return array <string, mixed>
+ * @return array<string,mixed>
  */
 function shortcode_pairs(): array {
 

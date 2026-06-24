@@ -75,8 +75,8 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 	 * Logs oEmbed data for debugging purposes.
 	 *
 	 * @codeCoverageIgnore
-	 * @param  array<string, mixed>  $a  ARVE god array.
-	 * @return array<string, mixed>      ARVE god array.
+	 * @param  array<string,mixed>  $a  ARVE god array.
+	 * @return array<string,mixed>      ARVE god array.
 	 */
 	public function oembed_log( array $a ): array {
 		if ( $a['oembed_data'] ) {
@@ -120,7 +120,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 	/**
 	 * Provides host properties data for testing.
 	 *
-	 * @return array<int, array{0: string, 1: array<string, mixed>}> Array of provider data.
+	 * @return array<int, array{0: string,1: array<string,mixed>}> Array of provider data.
 	 */
 	public function host_properties(): array {
 
@@ -137,7 +137,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 	 * @group missing-data
 	 * @dataProvider host_properties
 	 * @param  string                $provider  The provider name.
-	 * @param  array<string, mixed>  $d         The provider data.
+	 * @param  array<string,mixed>  $d         The provider data.
 	 */
 	public function test_missing_data( string $provider, array $d ): void {
 		$this->assertNotEmpty( $d['tests'] );
@@ -154,7 +154,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 	/**
 	 * Provides test data for video providers.
 	 *
-	 * @return array<int, array{provider: string, oembed: bool, url: string}> Array of test data.
+	 * @return array<int, array{provider: string, oembed: bool,url: string}> Array of test data.
 	 */
 	public function url_test_data(): array {
 
@@ -340,8 +340,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 	 *     url: string,
 	 *     id: string,
 	 *     account_id: string|null,
-	 *     brightcove_player: string|null,
-	 *     brightcove_embed: string|null
+	 *     brightcove_player: string|null,*     brightcove_embed: string|null
 	 * }> Array of regex test data.
 	 */
 	public function regex_test_data(): array {

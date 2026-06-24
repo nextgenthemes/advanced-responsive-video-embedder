@@ -57,7 +57,7 @@ class ElementorWidget extends \Elementor\Widget_Base {
 	 *
 	 * @since 10.0.0
 	 * @access public
-	 * @return array <int, string> Widget categories.
+	 * @return array<int,string> Widget categories.
 	 */
 	public function get_categories(): array {
 		return [ 'basic', 'general' ];
@@ -70,7 +70,7 @@ class ElementorWidget extends \Elementor\Widget_Base {
 	 *
 	 * @since 10.0.0
 	 * @access public
-	 * @return array <int, string> Widget keywords.
+	 * @return array<int,string> Widget keywords.
 	 */
 	public function get_keywords(): array {
 		return [ 'oembed', 'url', 'link', 'video' ];

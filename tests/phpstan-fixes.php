@@ -24,19 +24,18 @@ declare(strict_types = 1);
  *         multiple?: bool,               // For fields that support multiple selections.
  *         libraryType?: string[],        // For attachment fields – allowed media types.
  *         addButton?: string,            // Text for the media library button.
- *         frameTitle?: string,           // Title for the media library modal.
- *         query?: array<string, mixed>,  // WP_Query args for post_select fields.
+ *         frameTitle?: string,// Title for the media library modal.
+ *         query?: array<string,mixed>,  // WP_Query args for post_select fields.
  *         taxonomy?: string,             // Taxonomy slug for term_select fields.
  *         options?: array<int, array{
  *             value?: string,            // Option value (empty string for placeholder).
- *             label?: string,            // Option label.
+ *             label?: string,// Option label.
  *             // For optgroup support:
  *             options?: array<int, array{
- *                 value: string,
- *                 label: string
+ *                 value: string,*                 label: string
  *             }>
  *         }>,
- *         meta?: array<string, mixed>    // Arbitrary HTML attributes for the field.
+ *         meta?: array<string,mixed>    // Arbitrary HTML attributes for the field.
  *     }>
  * } $shortcode_ui_args
  */

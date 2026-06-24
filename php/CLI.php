@@ -128,7 +128,7 @@ class CLI extends WP_CLI_Command {
 	}
 
 	/**
-	 * @param array<array-key, mixed> $data
+	 * @param array<array-key,mixed> $data
 	 */
 	private static function pretty_json_output( array $data ): void {
 		$json = wp_json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );

@@ -121,12 +121,11 @@ class Video {
 	private ?string $video_sources_html = '';
 
 	/**
-	 * @var null|array <int, array{
+	 * @var null|array<int, array{
 	 *     default: bool,
 	 *     kind: string,
 	 *     label: string,
-	 *     src: string,
-	 *     srclang: string
+	 *     src: string,*     srclang: string
 	 * }>
 	 */
 	private ?array $tracks;
@@ -134,22 +133,22 @@ class Video {
 	private string $first_video_file;
 
 	/**
-	 * @var array <string, string|int|float|bool>
+	 * @var array<string,string|int|float|bool>
 	 */
 	private array $iframe_attr;
 
 	/**
-	 * @var array <string, string|int|float|bool>
+	 * @var array<string,string|int|float|bool>
 	 */
 	private array $video_attr;
 
 	/**
-	 * @var array <string, mixed>
+	 * @var array<string,mixed>
 	 */
 	private array $org_args;
 
 	/**
-	 * @var array <string, mixed>
+	 * @var array<string,mixed>
 	 */
 	private array $shortcode_atts;
 
@@ -159,12 +158,12 @@ class Video {
 	private ?object $oembed_data;
 
 	/**
-	 * @var array <string, string|array<string, string>>
+	 * @var array<string,string|array<string,string>>
 	 */
 	private array $origin_data;
 
 	/**
-	 * @param array <string, mixed> $args
+	 * @param array<string,mixed> $args
 	 */
 	public function __construct( array $args ) {
 		$this->org_args = $args;
@@ -728,8 +727,7 @@ class Video {
 	 *     default: bool,
 	 *     kind: string,
 	 *     label: string,
-	 *     src: string,
-	 *     srclang: string
+	 *     src: string,*     srclang: string
 	 * }>
 	 */
 	private function detect_tracks(): array {

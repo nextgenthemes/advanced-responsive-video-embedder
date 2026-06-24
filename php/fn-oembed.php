@@ -91,7 +91,7 @@ function sane_provider_name( string $provider ): string {
  *
  * @param string|false          $cache   The cached HTML result, stored in post meta.
  * @param string                $url     The attempted embed URL.
- * @param array <string, mixed> $attr    An array of shortcode attributes.
+ * @param array<string,mixed> $attr    An array of shortcode attributes.
  * @param ?int                  $post_id Post ID.
  */
 function filter_embed_oembed_html( $cache, string $url, array $attr, ?int $post_id ): string {
@@ -140,7 +140,7 @@ function cache_is_old_enough( object $oembed_data ): bool {
  *     thumbnail_large_url?: mixed
  * } $oembed_data An object (typically a `stdClass`) containing oEmbed fields
  *
- * @return array<string, bool>
+ * @return array<string,bool>
  */
 function delete_oembed_caches_when_missing_data( object $oembed_data ): array {
 
@@ -188,7 +188,7 @@ function extract_oembed_data( string $html ): ?object {
 /**
  * Build a srcset attribute string from an array of image URLs keyed by width.
  *
- * @param array<int, string> $sizes  An associative array where the key is the
+ * @param array<int,string> $sizes  An associative array where the key is the
  *                                   image width (e.g. 300, 600) and the value
  *                                   is the URL of the image at that size.
  *
@@ -276,10 +276,10 @@ function oembed_html2src( object $data ) {
 /**
  * Add a Referer header for Vimeo URLs.
  *
- * @param array <string, mixed> $args  Request arguments.
+ * @param array<string,mixed> $args  Request arguments.
  * @param string                $url   The URL that will be fetched.
  *
- * @return array <string, mixed>       The same structure as $args, with
+ * @return array<string,mixed>       The same structure as $args, with
  *                                     $args['headers']['Referer'] set to
  *                                     site_url() when $url contains “vimeo”.
  */

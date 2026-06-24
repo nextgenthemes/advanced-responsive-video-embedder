@@ -127,7 +127,7 @@ function action_wp_enqueue_scripts(): void {
 }
 
 /**
- * @param array <string, string|array<bool>> $attr GB attr.
+ * @param array<string,string|array<bool>> $attr GB attr.
  *
  * @return string                                  Block HTML.
  */

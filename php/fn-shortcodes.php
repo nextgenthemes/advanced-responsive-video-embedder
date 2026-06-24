@@ -139,7 +139,7 @@ function create_legacy_shortcodes(): void {
 }
 
 /**
- * @param array <string, string> $attr
+ * @param array<string,string> $attr
  */
 function wp_video_shortcode_override( string $out, array $attr ): string {
 

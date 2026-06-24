@@ -10,8 +10,8 @@ class Tests_Settings extends WP_UnitTestCase {
 	/**
 	 * Provides options data for testing.
 	 *
-	 * @return array<int, array{
-	 *     options: array<string, mixed>
+	 * @return array<int,array{
+	 *     options: array<string,mixed>
 	 * }> Array of options data.
 	 */
 	public function data_options(): array {

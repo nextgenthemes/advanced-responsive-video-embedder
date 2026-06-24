@@ -13,8 +13,7 @@ use function Nextgenthemes\WP\first_tag_attr;
  *     default: bool,
  *     kind: string,
  *     label: string,
- *     src: string,
- *     srclang: string
+ *     src: string,*     srclang: string
  * }> $tracks
  */
 function tracks_html( array $tracks ): string {

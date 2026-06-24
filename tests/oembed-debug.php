@@ -16,7 +16,7 @@ use function Nextgenthemes\ARVE\get_host_properties;
 class Tests_OembedD extends WP_UnitTestCase {
 
 	/**
-	 * @var array<string, mixed>
+	 * @var array<string,mixed>
 	 */
 	private array $oembed_debug = [];
 

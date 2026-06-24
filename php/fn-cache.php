@@ -21,8 +21,8 @@ function delete_oembed_cache_on_update(): void {
  * Deletes the oEmbed caches.
  *
  * @link https://github.com/wp-cli/embed-command/blob/c868ec31c65ffa1a61868a91c198a5d815b5bafa/src/Cache_Command.php
- * @author Nicolas Jonas <https://nextgenthemes.com>
- * @author Nicolas Lemoine <https://n5s.dev>
+ * @author Nicolas Jonas<https://nextgenthemes.com>
+ * @author Nicolas Lemoine<https://n5s.dev>
  * @copyright Copyright (c) 2025, Nicolas Jonas
  * @copyright Copyright (c) 2024, Nicolas Lemoine
  *

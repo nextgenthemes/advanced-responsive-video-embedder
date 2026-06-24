@@ -69,7 +69,7 @@ class Tests_NoAddons extends WP_UnitTestCase {
 	/**
 	 * Extracts JSON-LD data from the provided HTML string.
 	 *
-	 * This function looks for a <script> tag within the HTML that contains JSON-LD data,
+	 * This function looks for a<script> tag within the HTML that contains JSON-LD data,
 	 * attempts to decode it, and returns the resulting array. If decoding fails, it returns
 	 * a WP_Error object with the error message.
 	 *

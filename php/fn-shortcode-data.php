@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Nextgenthemes\ARVE;
 
 /**
- * @return array <int|string, mixed>
+ * @return array<int|string,mixed>
  */
 function url_query_array( string $url ): array {
 

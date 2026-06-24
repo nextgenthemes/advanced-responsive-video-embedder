@@ -33,7 +33,7 @@ function get_host_properties(): array {
 }
 
 /**
- * @param array <string, mixed> $a
+ * @param array<string,mixed> $a
  */
 function is_card( array $a ): bool {
 

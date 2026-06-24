@@ -9,8 +9,8 @@ use function Nextgenthemes\ARVE\is_dev_mode;
 /**
  * Add ARVE‑related data to the Site Health metadata array.
  *
- * @param array   <string, array <string|array<mixed>>> $metadata Existing Site Health metadata.
- * @return array  <string, array <string|array<mixed>>>           Updated  Site Health metadata.
+ * @param array<string,array<string|array<mixed>>> $metadata Existing Site Health metadata.
+ * @return array<string,array<string|array<mixed>>>           Updated  Site Health metadata.
  */
 function add_site_health_metadata( array $metadata ): array {
 

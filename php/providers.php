@@ -5,21 +5,19 @@ declare(strict_types = 1);
 namespace Nextgenthemes\ARVE;
 
 /**
- * @var array <string, array{
+ * @var array<string, array{
  *     name:           string,
  *     regex:          string,
  *     oembed:         bool,
  *     embed_url:      string,
  *     default_params: string,
  *     auto_thumbnail: bool,
- *     rebuild_url?:   string,
- *     tests:          array<int, array{
+ *     rebuild_url?:   string,*     tests:          array<int, array{
  *         url: string,
  *         id:  string,
  *         account_id?: string,
  *         brightcove_player?: string,
- *         brightcove_embed?: string,
- *     }>
+ *         brightcove_embed?: string,*     }>
  * }>
  */
 const PROVIDERS = array(

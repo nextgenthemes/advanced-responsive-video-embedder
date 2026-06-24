@@ -46,7 +46,7 @@ function cmd( string $command, string ...$values ): string {
  *
  * Example: --post_type="page" --post_title="Hello World"
  *
- * @param array<string, string|int> $args
+ * @param array<string,string|int> $args
  */
 function cmd_args( array $args ): string {
 
