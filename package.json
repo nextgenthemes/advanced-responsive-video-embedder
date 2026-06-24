@@ -31,7 +31,9 @@
 	"homepage": "https://nextgenthemes.com/plugins/arve-pro",
 	"dependencies": {
 		"@wordpress/interactivity": "^6.14.0",
-		"clsx": "^2.1.1",
+		"clsx": "^2.1.1"
+	},
+	"devDependencies": {
 		"webpack-notifier": "^1.15.0"
 	}
 }
