@@ -9,8 +9,7 @@
 		"build:arve": "wp-scripts build --experimental-modules",
 		"start:common": "wp-scripts start --experimental-modules --source-path=vendor/nextgenthemes/wp-settings/src --output-path=vendor/nextgenthemes/wp-settings/build",
 		"build:common": "wp-scripts build --experimental-modules --source-path=vendor/nextgenthemes/wp-settings/src --output-path=vendor/nextgenthemes/wp-settings/build",
-		"test": "cd ../.. && phpunit --testsuite advanced-responsive-video-embedder",
-		"test-arve": "NGT_PHPUNIT_LOAD_PLUGINS=advanced-responsive-video-embedder phpunit --testsuite advanced-responsive-video-embedder"
+		"test": "cd ../.. && phpunit --testsuite advanced-responsive-video-embedder; phpunit --testsuite advanced-responsive-video-embedder --group no-addons"
 	},
 	"repository": {
 		"type": "git",
