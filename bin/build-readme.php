@@ -8,7 +8,6 @@ namespace Nextgenthemes\ARVE;
 $root = dirname( __DIR__ );
 require_once $root . '/php/providers.php';
 require_once $root . '/php/fn-misc.php';
-require_once __DIR__ . '/fn-common-shell.php';
 
 echo 'Building Readme ...' . PHP_EOL;
 
@@ -83,5 +82,43 @@ function convert_description_ext_md_to_html( string $root ): void {
 
 		$html_filename = 'settings-sidebar-' . $matches[1] . '.html';
 		cmd( "markdown $filename > $root/php/Admin/partials/$html_filename" );
+	}
+}
+
+/**
+ * Executes a system command with optional arguments.
+ *
+ * @param string $command The system command to execute
+ * @return string The output of the system command
+ */
+function run_cmd( string $command ): string {
+
+	$GLOBALS['verbose'] = $GLOBALS['verbose'] ?? true;
+
+	if ( $GLOBALS['verbose'] ) {
+		echo "Executing: $command" . PHP_EOL;
+		$out = system( $command, $exit_code );
+	} else {
+		$out = exec( $command, $unused_output, $exit_code );
+	}
+
+	if ( 0 !== $exit_code || false === $out ) {
+		echo "Exit Code: $exit_code" . PHP_EOL;
+		exit( $exit_code );
+	}
+
+	return $out;
+}
+
+function cmd( string $command, string ...$values ): string {
+
+	foreach ( $values as &$value ) {
+		$value = escapeshellarg( $value );
+	}
+
+	if ( 0 === count( $values ) ) {
+		return run_cmd( $command );
+	} else {
+		return run_cmd( sprintf( $command, ...$values ) );
 	}
 }
