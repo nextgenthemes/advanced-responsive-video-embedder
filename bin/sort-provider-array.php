@@ -1,16 +1,17 @@
 #!/usr/bin/env php
 <?php
 
-declare(strict_types = 1);
-
-namespace Nextgenthemes\ARVE;
-
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
 // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 // phpcs:disable WordPress.PHP.DiscouragedPHPFunctions.system_calls_system
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
+
+
+declare(strict_types = 1);
+
+namespace Nextgenthemes\ARVE;
 
 function __( string $a, string $b ): string {
 	return $a;
