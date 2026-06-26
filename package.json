@@ -4,15 +4,15 @@
 	"scripts": {
 		"start": "wp-scripts start --experimental-modules",
 		"build": "bash ./bin/build.sh",
-		"build:assets": "wp-scripts build --experimental-modules",
+		"build-assets": "wp-scripts build --experimental-modules",
 		"test": "cd ../.. && phpunit --testsuite advanced-responsive-video-embedder; phpunit --testsuite advanced-responsive-video-embedder --group no-addons"
 	},
 	"dependencies": {
-		"@wordpress/interactivity": "^6.14.0",
+		"@wordpress/interactivity": "^6.49.0",
 		"clsx": "^2.1.1"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^32.4.1",
+		"@wordpress/scripts": "^32.5.0",
 		"webpack-notifier": "^1.15.0"
 	},
 	"ngt-bind": {
