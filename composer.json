@@ -50,21 +50,5 @@
 			"type": "vcs",
 			"url": "git@github.com:awesomemotive/edd-sl-sdk.git"
 		}
-	},
-	"scripts": {
-		"build": [
-			"wp @sdev arve block_json > src/block/block-tmp.json",
-			"mv src/block/block-tmp.json src/block/block.json",
-			"./bin/build-readme.php",
-			"npm run build:arve",
-			"rm build/block.json",
-			"npm run build:common",
-			"@composer update --optimize-autoloader",
-			"@composer update --working-dir=tests"
-		],
-		"release": [
-			"../../bin/sync-wp-settings",
-			"@composer install --no-dev --optimize-autoloader --classmap-authoritative"
-		]
 	}
 }

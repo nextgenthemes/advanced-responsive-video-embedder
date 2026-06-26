@@ -1,16 +1,24 @@
 {
 	"name": "@nextgenthemes/advanced-responsive-video-embedder",
-	"description": "Advanced Responsive Video Embedder WordPress Plugin",
 	"private": true,
 	"scripts": {
-		"build": "composer run build",
-		"start": "npm run start:arve & npm run start:common",
-		"start:arve": "wp-scripts start --experimental-modules",
-		"build:arve": "wp-scripts build --experimental-modules",
-		"start:common": "wp-scripts start --experimental-modules --source-path=vendor/nextgenthemes/wp-settings/src --output-path=vendor/nextgenthemes/wp-settings/build",
-		"build:common": "wp-scripts build --experimental-modules --source-path=vendor/nextgenthemes/wp-settings/src --output-path=vendor/nextgenthemes/wp-settings/build",
-		"test": "cd ../.. && phpunit --testsuite advanced-responsive-video-embedder"
+		"start": "wp-scripts start --experimental-modules",
+		"build": "bash ./bin/build.sh",
+		"build:assets": "wp-scripts build --experimental-modules",
+		"test": "cd ../.. && phpunit --testsuite advanced-responsive-video-embedder; phpunit --testsuite advanced-responsive-video-embedder --group no-addons"
 	},
+	"dependencies": {
+		"@wordpress/interactivity": "^6.14.0",
+		"clsx": "^2.1.1"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^32.4.1",
+		"webpack-notifier": "^1.15.0"
+	},
+	"ngt-bind": {
+		"sym-plugin": true
+	},
+	"description": "Advanced Responsive Video Embedder WordPress Plugin",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/nextgenthemes/advanced-responsive-video-embedder.git"
@@ -23,16 +31,9 @@
 		"responsive"
 	],
 	"author": "Nicolas Jonas",
-	"license": "GPL-3.0",
+	"license": "GPL-3.0-only",
 	"bugs": {
 		"url": "https://github.com/nextgenthemes/advanced-responsive-video-embedder/issues"
 	},
-	"homepage": "https://nextgenthemes.com/plugins/arve-pro",
-	"dependencies": {
-		"@wordpress/interactivity": "^6.14.0",
-		"clsx": "^2.1.1"
-	},
-	"devDependencies": {
-		"webpack-notifier": "^1.15.0"
-	}
+	"homepage": "https://nextgenthemes.com/plugins/arve-pro"
 }
