@@ -13,7 +13,7 @@
 	"require": {
 		"php": ">=7.4",
 		"nextgenthemes/wp-settings": "@dev",
-		"automattic/jetpack-autoloader": "^v5.0.2"
+		"automattic/jetpack-autoloader": "^v5.0.2",
 	},
 	"autoload": {
 		"psr-4": {
@@ -21,7 +21,7 @@
 		}
 	},
 	"extra": {
-		"easy-digital-downloads/edd-sl-sdk": "1.0.0",
+		"easy-digital-downloads/edd-sl-sdk": "^1.0.3",
 		"release-repo-changes": {
 			"nextgenthemes/wp-settings": {
 				"type": "vcs",
