@@ -4,7 +4,23 @@ declare(strict_types = 1);
 
 use function Nextgenthemes\ARVE\shortcode;
 
+require_once __DIR__ . '/oembed-raw-fetcher.php';
+
 class Tests_ShortcodeVimeo extends WP_UnitTestCase {
+
+	/**
+	 * @group vimeo
+	 */
+	public function NO_test_vimeo_oembed_raw_has_upload_date(): void {
+
+		$data = get_oembed_direct( 'https://vimeo.com/265932452' );
+
+		debug( $data );
+
+		$this->assertNotNull( $data, 'Vimeo oEmbed endpoint did not respond' );
+		$this->assertObjectHasProperty( 'upload_date', $data );
+		$this->assertNotEmpty( $data->upload_date );
+	}
 
 	/**
 	 * @group vimeo
