@@ -68,11 +68,9 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 	}
 
 	/**
-	 * A description of the entire PHP function.
-	 *
 	 * @group yt-loop
 	 */
-	public function test_youtube_loop(): void {
+	public function test_youtube_loop_single(): void {
 
 		$html = shortcode(
 			array(
@@ -84,10 +82,16 @@ class Tests_ShortcodeYoutube extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'loop=1', $html );
 		$this->assertStringContainsString( 'playlist=5R0LrCfXQjQ', $html );
 		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
+	}
+
+	/**
+	 * @group yt-loop
+	 */
+	public function test_youtube_loop_playlist(): void {
 
 		$html = shortcode(
 			array(
-				'url'  => 'https://www.youtube.com/watch?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk', // buggy url actually
+				'url'  => 'https://www.youtube.com/watch?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
 				'loop' => 'yes',
 			)
 		);

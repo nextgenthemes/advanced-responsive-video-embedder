@@ -50,7 +50,7 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'style="max-width:444px;"', $output );
 	}
 
-	public function test_align_maxwidth_default(): void {
+	public function test_align_maxwidth_left(): void {
 
 		$output = shortcode(
 			array(
@@ -61,6 +61,9 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 		$this->assertStringNotContainsStringIgnoringCase( 'Error', $output );
 		$this->assertStringContainsString( 'alignleft', $output );
 		$this->assertStringContainsString( 'style="max-width:400px;"', $output );
+	}
+
+	public function test_align_maxwidth_right(): void {
 
 		$output = shortcode(
 			array(
@@ -71,6 +74,9 @@ class Tests_ShortcodeMaxWidth extends WP_UnitTestCase {
 		$this->assertStringNotContainsStringIgnoringCase( 'Error', $output );
 		$this->assertStringContainsString( 'alignright', $output );
 		$this->assertStringContainsString( 'style="max-width:400px;"', $output );
+	}
+
+	public function test_align_maxwidth_center(): void {
 
 		$output = shortcode(
 			array(

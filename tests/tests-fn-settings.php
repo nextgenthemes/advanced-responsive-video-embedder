@@ -7,32 +7,38 @@ use function Nextgenthemes\ARVE\default_options;
 
 class Tests_Settings extends WP_UnitTestCase {
 
-	/**
-	 * Provides options data for testing.
-	 *
-	 * @return array<int,array{
-	 *     options: array<string,mixed>
-	 * }> Array of options data.
-	 */
-	public function data_options(): array {
-
-		$data[]['options'] = options();
-		$data[]['options'] = default_options();
-
-		return $data;
+	public function test_options_is_array(): void {
+		$this->assertIsArray( options() );
+		$this->assertIsArray( default_options() );
 	}
 
 	/**
-	 * Asserts that the following keys exist in the options array:
-	 *
-	 * @group options
 	 * @dataProvider data_options
-	 * @param  array<string,mixed>  $options  The options array to test.
 	 */
-	public function test_settings_page( array $options ): void {
-		$this->assertArrayHasKey( 'maxwidth', $options );
-		$this->assertArrayHasKey( 'hide_title', $options );
-		$this->assertArrayHasKey( 'align', $options );
-		$this->assertArrayHasKey( 'legacy_shortcodes', $options );
+	public function test_options_contain_key( string $key ): void {
+		$opts = options();
+		$this->assertArrayHasKey( $key, $opts );
+	}
+
+	/**
+	 * @dataProvider data_options
+	 */
+	public function test_defaults_contain_key( string $key ): void {
+		$defaults = default_options();
+		$this->assertArrayHasKey( $key, $defaults );
+	}
+
+	/**
+	 * @return array<int,array{0: string}>
+	 */
+	public function data_options(): array {
+		return [
+			[ 'maxwidth' ],
+			[ 'align' ],
+			[ 'hide_title' ],
+			[ 'legacy_shortcodes' ],
+			[ 'autoplay' ],
+			[ 'always_enqueue_assets' ],
+		];
 	}
 }

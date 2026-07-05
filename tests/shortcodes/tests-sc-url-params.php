@@ -7,7 +7,7 @@ use function Nextgenthemes\ARVE\get_host_properties;
 
 class Tests_URLParams extends WP_UnitTestCase {
 
-	public function test_vimeo(): void {
+	public function test_vimeo_option_params(): void {
 
 		update_option( 'nextgenthemes_arve', array( 'url_params_vimeo' => 'title=0&byline=0&portrait=0' ) );
 		$html = shortcode(
@@ -18,6 +18,9 @@ class Tests_URLParams extends WP_UnitTestCase {
 
 		$this->assertStringContainsString( 'title=0&amp;byline=0&amp;portrait=0', $html );
 		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
+	}
+
+	public function test_vimeo_shortcode_params_override(): void {
 
 		$html = shortcode(
 			array(

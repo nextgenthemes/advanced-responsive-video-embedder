@@ -250,7 +250,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 		}
 	}
 
-	public function test_sandbox(): void {
+	public function test_sandbox_present(): void {
 
 		$html = shortcode(
 			array(
@@ -260,6 +260,9 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 
 		$this->assertStringNotContainsStringIgnoringCase( 'Error', $html );
 		$this->assertStringContainsString( 'sandbox="', $html );
+	}
+
+	public function test_sandbox_removed(): void {
 
 		$html = shortcode(
 			array(

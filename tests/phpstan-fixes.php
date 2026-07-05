@@ -32,7 +32,8 @@ declare(strict_types = 1);
  *             label?: string,// Option label.
  *             // For optgroup support:
  *             options?: array<int, array{
- *                 value: string,*                 label: string
+ *                 value: string,
+ *                 label: string
  *             }>
  *         }>,
  *         meta?: array<string,mixed>    // Arbitrary HTML attributes for the field.
