@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace Nextgenthemes\ARVE\Admin;
-
-use WP_UnitTestCase;
+use function Nextgenthemes\ARVE\Admin\get_json_body_error_message;
+use function Nextgenthemes\ARVE\Admin\pro_message;
+use function Nextgenthemes\ARVE\Admin\get_addon_link;
 
 class Tests_Settings_Page extends WP_UnitTestCase {
 

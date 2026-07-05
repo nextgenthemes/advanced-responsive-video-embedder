@@ -2,9 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Nextgenthemes\ARVE\Admin;
-
-use WP_UnitTestCase;
+use function Nextgenthemes\ARVE\Admin\dialog_interactivity;
 
 class Tests_Shortcode_Creator extends WP_UnitTestCase {
 

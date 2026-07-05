@@ -8,9 +8,18 @@ use function Nextgenthemes\ARVE\validate_type_bool;
 use function Nextgenthemes\ARVE\validate_align;
 use function Nextgenthemes\ARVE\validate_aspect_ratio;
 use function Nextgenthemes\ARVE\validate_height;
+use function Nextgenthemes\ARVE\arve_errors;
 use function Nextgenthemes\ARVE\validate_type_int;
 
 class Tests_Validation extends WP_UnitTestCase {
+
+	public function tear_down(): void {
+		foreach ( arve_errors()->get_error_codes() as $code ) {
+			arve_errors()->remove( $code );
+		}
+
+		parent::tear_down();
+	}
 
 	public function test_validate_thumbnail_empty(): void {
 		$this->assertSame( '', validate_thumbnail( '' ) );
@@ -46,6 +55,7 @@ class Tests_Validation extends WP_UnitTestCase {
 
 	/**
 	 * @dataProvider data_validate_type_bool_true
+	 * @param mixed $value
 	 */
 	public function test_validate_type_bool_true( $value ): void {
 		$this->assertTrue( validate_type_bool( 'test', $value ) );
@@ -53,6 +63,7 @@ class Tests_Validation extends WP_UnitTestCase {
 
 	/**
 	 * @dataProvider data_validate_type_bool_false
+	 * @param mixed $value
 	 */
 	public function test_validate_type_bool_false( $value ): void {
 		$this->assertFalse( validate_type_bool( 'test', $value ) );

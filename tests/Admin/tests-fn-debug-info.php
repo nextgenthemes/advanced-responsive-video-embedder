@@ -2,9 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Nextgenthemes\ARVE\Admin;
-
-use WP_UnitTestCase;
+use function Nextgenthemes\ARVE\Admin\plugin_ver_status;
 
 class Tests_Debug_Info extends WP_UnitTestCase {
 

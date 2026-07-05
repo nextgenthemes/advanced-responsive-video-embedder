@@ -13,8 +13,17 @@ use function Nextgenthemes\ARVE\has_timezone;
 use function Nextgenthemes\ARVE\normalize_datetime_to_atom;
 use function Nextgenthemes\ARVE\seconds_to_iso8601_duration;
 use function Nextgenthemes\ARVE\is_card;
+use function Nextgenthemes\ARVE\arve_errors;
 
 class Tests_Misc extends WP_UnitTestCase {
+
+	public function tear_down(): void {
+		foreach ( arve_errors()->get_error_codes() as $code ) {
+			arve_errors()->remove( $code );
+		}
+
+		parent::tear_down();
+	}
 
 	/**
 	 * @dataProvider data_youtube_time_to_seconds

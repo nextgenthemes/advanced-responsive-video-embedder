@@ -2,8 +2,6 @@
 
 declare(strict_types = 1);
 
-// phpcs:disable Squiz.Classes.ClassFileName.NoMatch
-// phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
 class Tests_URLs extends WP_UnitTestCase {
 
 	public function test_urls(): void {
