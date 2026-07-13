@@ -8,7 +8,6 @@
 // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
 
-
 declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
