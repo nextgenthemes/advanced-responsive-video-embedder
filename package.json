@@ -8,11 +8,11 @@
 		"test": "cd ../.. && phpunit --testsuite advanced-responsive-video-embedder; phpunit --testsuite advanced-responsive-video-embedder --group no-addons"
 	},
 	"dependencies": {
-		"@wordpress/interactivity": "^6.49.0",
+		"@wordpress/interactivity": "*",
 		"clsx": "^2.1.1"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^32.5.0",
+		"@wordpress/scripts": "*",
 		"webpack-notifier": "^1.15.0"
 	},
 	"ngt-bind": {
