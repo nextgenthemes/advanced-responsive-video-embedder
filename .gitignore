@@ -11,8 +11,8 @@ build/
 dist/
 
 # ── PHP — general ──
-phpstan.neon 
 # Track phpstan.neon.dist instead
+phpstan.neon
 
 # ── JavaScript / TypeScript / Node ──
 npm-debug.log*
@@ -21,6 +21,8 @@ yarn-error.log*
 .pnpm-store/
 .npm/
 tsconfig.tsbuildinfo
+.deno/
+.deno_task_cache/
 
 # ── Archives & databases ──
 *.zip
@@ -54,10 +56,11 @@ Thumbs.db
 *.esproj
 nbproject
 
-# ── Temp / cache ──
+# ── Temp / cache / backup ──
 *.tmp
 *.cache
 *.log
+*.bak
 
 # ── Env ──
 .env
