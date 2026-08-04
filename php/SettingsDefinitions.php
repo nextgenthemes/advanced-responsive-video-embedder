@@ -326,6 +326,14 @@ class SettingsDefinitions {
 				'type'        => 'boolean',
 				'description' => __( 'Disabling this makes the interface in Gutenberg/Shortcode dialog much cleaner.', 'advanced-responsive-video-embedder' ),
 			),
+			'news_opt_in' => array(
+				'default'     => false,
+				'shortcode'   => false,
+				'option'      => true,
+				'label'       => __( 'Show ARVE news in settings sidebar', 'advanced-responsive-video-embedder' ),
+				'type'        => 'boolean',
+				'description' => __( 'Opt in to show the latest ARVE news. This fetches Blog entries from nextgenthemes.com, your server IP can be logged in the process. Your local IP or any (browser) data is not tranferred.', 'advanced-responsive-video-embedder' ),
+			),
 		);
 	}
 

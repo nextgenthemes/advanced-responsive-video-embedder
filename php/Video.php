@@ -950,20 +950,24 @@ class Video {
 
 		} else {
 
-			$html = PHP_EOL . <<<HTML
-<div class="arve"{$block_attr}>
-	<div class="arve-inner">
-		<div class="arve-embed">
-			{$this->arve_embed_inner_html()}
-		</div>
-		{$this->card_html()}
-	</div>
-	{$this->card_consent_html()}
-	{$this->promote_link()}
-	{$this->build_seo_data()}
-	{$this->get_error_html()}
-</div>
-HTML;
+			// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+			ob_start();
+			?>
+			<div class="arve<?php echo $block_attr; ?>">
+				<div class="arve-inner">
+					<div class="arve-embed">
+						<?php echo $this->arve_embed_inner_html(); ?>
+					</div>
+					<?php echo $this->card_html(); ?>
+				</div>
+				<?php echo $this->card_consent_html(); ?>
+				<?php echo $this->promote_link(); ?>
+				<?php echo $this->build_seo_data(); ?>
+				<?php echo $this->get_error_html(); ?>
+			</div>
+			<?php
+			$html = ob_get_clean();
+			// phpcs:enable
 		}
 
 		$p = new \WP_HTML_Tag_Processor( $html );

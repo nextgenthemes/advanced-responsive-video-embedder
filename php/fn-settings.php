@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Nextgenthemes\ARVE;
 
+
 use Nextgenthemes\WP\Settings;
 use Nextgenthemes\WP\SettingsData;
 use function Nextgenthemes\WP\nextgenthemes_settings_instance;
@@ -245,6 +246,7 @@ function settings_data(): SettingsData {
 		'admin_bar_menu'                => 'wordpress',
 		'feed'                          => 'wordpress',
 		'gutenberg_help'                => 'wordpress',
+		'news_opt_in'                   => 'wordpress',
 		'legacy_shortcodes'             => 'wordpress',
 	];
 
