@@ -8,6 +8,6 @@ mv src/block/block.json.new src/block/block.json
 
 ./bin/build-readme.php
 
-deno task build-assets
+pnpm run build-assets
 
 ../wp-settings/bin/build-and-update.sh
