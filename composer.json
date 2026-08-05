@@ -2,7 +2,7 @@
 	"name": "nextgenthemes/advanced-responsive-video-embedder",
 	"description": "ARVE Advanced Responsive Video Embedder",
 	"type": "wordpress-plugin",
-	"license": "GPL-3.0",
+	"license": "GPL-3.0-only",
 	"authors": [
 		{
 			"name": "Nicolas Jonas",
