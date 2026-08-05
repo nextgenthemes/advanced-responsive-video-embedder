@@ -5,7 +5,7 @@ Tags: embed, video, lazyload, lightbox, rumble
 Requires at least: 6.6
 Tested up to: 7.0.2
 Requires PHP: 7.4
-Stable tag: 10.9.2
+Stable tag: 10.9.3
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -193,7 +193,7 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2026-08-05 10.9.2 ###
+### 2026-08-05 10.9.3 ###
 
 * Improved: Removed short php tags
 
