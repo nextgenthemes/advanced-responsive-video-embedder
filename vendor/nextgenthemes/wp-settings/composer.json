@@ -1,0 +1,18 @@
+{
+	"name": "nextgenthemes/wp-settings",
+	"type": "library",
+	"license": "GPL-3.0",
+	"autoload": {
+		"files": [
+			"includes/WP/init.php"
+		]
+	},
+	"authors": [
+		{
+			"name": "Nicolas Jonas"
+		}
+	],
+	"require": {
+		"php": ">=7.4"
+	}
+}
