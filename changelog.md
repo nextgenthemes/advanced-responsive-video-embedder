@@ -3,6 +3,10 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2026-08-05 10.9.2 ###
+
+* Improved: Removed short php tags
+
 ### 2026-08-05 10.9.1 ###
 
 * Improved: Removed node_modules inside vendor
