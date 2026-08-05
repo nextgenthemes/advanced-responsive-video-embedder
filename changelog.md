@@ -3,10 +3,10 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2026-08-04 10.9.0 ###
+### 2026-08-05 10.9.0 ###
 
-* New: Opt-in to ARVE news in the Settings page. News is no longer fetched by default, so your server IP is not sent to nextgenthemes.com unless you enable it.
-* Improved: Tested up to WordPress 7.0.1.
+* New: Opt-in to ARVE news in the Settings page. News is no longer fetched by default.
+* Improved: Tested up to WordPress 7.0.2.
 * Improved: No more heredoc syntax.
 
 ### 2026-05-09 10.8.6 ###
