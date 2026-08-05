@@ -12,7 +12,6 @@ use function Nextgenthemes\WP\valid_url;
 use function Nextgenthemes\WP\str_contains_any;
 use function Nextgenthemes\WP\str_to_array;
 use function Nextgenthemes\WP\replace_links;
-use function Nextgenthemes\WP\move_keys_to_end;
 
 /**
  * @phpstan-type OembedData object{
@@ -195,7 +194,6 @@ class Video {
 			$this->oembed_data_errors();
 
 			$html .= $this->build_html();
-			$html .= $this->get_debug_info( $html );
 
 			if ( empty( $this->origin_data['gutenberg'] ) ) {
 
@@ -210,7 +208,6 @@ class Video {
 			arve_errors()->add( $e->getCode(), $e->getMessage() );
 
 			$html .= $this->build_error_only_html();
-			$html .= $this->get_debug_info( $html );
 		}
 
 		return apply_filters( 'nextgenthemes/arve/html', $html, get_object_vars( $this ) );
@@ -1217,137 +1214,6 @@ class Video {
 			'<' . $amp . 'video>' . $this->video_sources_html . tracks_html( $this->tracks ) . '</' . $amp . 'video>',
 			$attr
 		);
-	}
-
-	/**
-	 * Get a debug parameter value from the request.
-	 *
-	 * @phpcs:disable WordPress.Security.NonceVerification.Recommended
-	 * @phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
-	 * @phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
-	 * @param  string  $param  Parameter name without the 'arve-debug-' prefix.
-	 *
-	 * @return string|null  The sanitized parameter value or null if not set.
-	 */
-	private static function get_debug_param( string $param ): ?string {
-		if ( ! isset( $_GET[ "arve-debug-{$param}" ] ) ) {
-			return null;
-		}
-
-		return sanitize_text_field( wp_unslash( $_GET[ "arve-debug-{$param}" ] ) );
-	}
-
-	private function get_debug_info( string $input_html ): string {
-
-		if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
-			return '';
-		}
-
-		$html = '';
-
-		if ( isset( $_GET['arve-debug-options'] ) ) {
-			static $show_options_debug = true;
-
-			if ( $show_options_debug ) {
-				$html .= sprintf( 'Options: <pre>%s</pre>', var_export( options(), true ) );
-			}
-
-			$show_options_debug = false;
-		}
-
-		$arve_debug_attr = self::get_debug_param( 'attr' );
-		$arve_debug_prop = self::get_debug_param( 'prop' );
-
-		if ( $arve_debug_attr ) {
-			$input_attr = isset( $this->org_args[ $arve_debug_attr ] ) ? print_r( $this->org_args[ $arve_debug_attr ], true ) : 'not set';
-			$prop       = isset( $this->$arve_debug_attr ) ? print_r( $this->$arve_debug_attr, true ) : 'not set';
-			$html      .= esc_html( $arve_debug_attr ) . PHP_EOL;
-			$html      .= esc_html( $input_attr ) . PHP_EOL;
-			$html      .= esc_html( $prop );
-			$html       = debug_pre( $html, true );
-		}
-
-		if ( $arve_debug_prop ) {
-			$html .= debug_pre( var_export( $this->$arve_debug_prop, true ), true );
-		}
-
-		if ( isset( $_GET['arve-debug-oembed'] ) ) {
-			$html .= debug_pre( var_export( $this->oembed_data, true ), true );
-		}
-
-		if ( isset( $_GET['arve-debug-atts'] ) ) {
-			$html .= debug_pre( $this->debug_compare_args_to_props(), true );
-		}
-
-		if ( isset( $_GET['arve-debug-html'] ) ) {
-			$html .= debug_pre( $input_html, true );
-		}
-		// phpcs:enable
-
-		return $html;
-	}
-
-	/**
-	 * Debug function to compare org_args with object properties
-	 *
-	 * @return string Debug output
-	 */
-	private function debug_compare_args_to_props(): string {
-
-		if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
-			return '';
-		}
-
-		// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
-
-		$output       = '';
-		$obj_vars     = array_filter( get_object_vars( $this ) );
-		$org_args     = array_filter( $this->org_args );
-		$checked_keys = array();
-		$org_args     = move_keys_to_end( $org_args, array( 'oembed_data', 'origin_data' ) );
-
-		if ( ! empty( $obj_vars['oembed_data']->description ) ) {
-			$obj_vars['oembed_data']->description = str_replace( PHP_EOL, '', $obj_vars['oembed_data']->description );
-		}
-
-		unset( $obj_vars['org_args'] );
-		unset( $obj_vars['shortcode_atts'] );
-
-		// Compare values from org_args with object properties
-		foreach ( $org_args as $key => $org_value ) {
-
-			$checked_keys[] = $key;
-
-			if ( ! isset( $obj_vars[ $key ] ) ) {
-				continue;
-			}
-
-			$prop_value = $obj_vars[ $key ];
-
-			if ( $org_value === $prop_value ) {
-				$output .= sprintf( "%s: %s\n", $key, var_export( $org_value, true ) );
-			} else {
-				$output .= sprintf(
-					"%s:\n  org_args: %s\n  property: %s\n",
-					$key,
-					var_export( $org_value, true ),
-					var_export( $prop_value, true )
-				);
-			}
-		}
-
-		// Find properties missing from org_args
-		foreach ( $obj_vars as $key => $value ) {
-
-			if ( in_array( $key, $checked_keys, true ) ) {
-				continue;
-			}
-
-			$output .= sprintf( "Prop only: %s: %s\n", $key, var_export( $value, true ) );
-		}
-
-		// phpcs:enable
-		return $output;
 	}
 
 	private function arve_embed_inner_html(): string {
