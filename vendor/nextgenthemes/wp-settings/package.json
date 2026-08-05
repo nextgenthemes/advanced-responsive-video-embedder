@@ -1,0 +1,18 @@
+{
+	"private": true,
+	"scripts": {
+		"start": "wp-scripts start --experimental-modules",
+		"build": "wp-scripts build --experimental-modules"
+	},
+	"dependencies": {
+		"@wordpress/interactivity": "*"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "*",
+		"webpack-notifier": "^1.15.0"
+	},
+	"ngt-bind": {
+		"sym-plugin": true
+	},
+	"license": "GPL-3.0-only"
+}
