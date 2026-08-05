@@ -3,6 +3,10 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2026-08-05 10.9.1 ###
+
+* Improved: Removed node_modules inside vendor
+
 ### 2026-08-05 10.9.0 ###
 
 * New: Opt-in to ARVE news in the Settings page. News is no longer fetched by default.
