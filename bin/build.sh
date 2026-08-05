@@ -3,7 +3,7 @@ set -Eeuo pipefail
 
 cd "$(dirname "$0")/.."
 
-wp @sdev arve block_json > src/block/block.json.new
+wp @stage arve block_json > src/block/block.json.new
 mv src/block/block.json.new src/block/block.json
 
 ./bin/build-readme.php
