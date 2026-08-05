@@ -3,9 +3,9 @@ Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: embed, video, lazyload, lightbox, rumble
 Requires at least: 6.6
-Tested up to: 7.0
+Tested up to: 7.0.2
 Requires PHP: 7.4
-Stable tag: 10.8.6
+Stable tag: 10.9.0
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -76,9 +76,7 @@ For speed, the product uses the thumbnails from the server. So many of the other
 So I have a responsive theme but on pages with you tube videos it wasn't making the you tube videos fit in the mobile screen. I have spent the last hour trying many plugins and researching on google and finally I installed this. And I didn't have to update any settings or anything just refreshed a post with videos and all the sudden it is beautiful and responsive on my mobile phone!!!!!! THANK YOU!!!! [review by happyecho][16]
 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Only Plug-in that worked ####
-I used a lot of high ranking plug-ins but they still broke my design. Downloaded this and worked right away. Thanks! [review by crconnell89][16]
-
-[16]: https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/?filter=5
+I used a lot of high ranking plug-ins but they still broke my design. Downloaded this and worked right away. Thanks!
 
 ### [ARVE Pro][20] ###
 
@@ -194,6 +192,12 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2026-08-05 10.9.0 ###
+
+* New: Opt-in to ARVE news in the Settings page. News is no longer fetched by default.
+* Improved: Tested up to WordPress 7.0.2.
+* Improved: No more heredoc syntax.
 
 ### 2026-05-09 10.8.6 ###
 
