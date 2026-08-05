@@ -110,13 +110,13 @@ function settings_content(): void {
 
 	<?php if ( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) : ?>
 		<p data-wp-bind--hidden="!context.activeTabs.pro">
-			<?= pro_message( 'ARVE Pro', 'arve-pro' ); // phpcs:ignore ?>
+			<?php echo pro_message( 'ARVE Pro', 'arve-pro' ); // phpcs:ignore ?>
 		</p>
 	<?php endif; ?>
 
 	<?php if ( ! is_plugin_active( 'arve-privacy/arve-privacy.php' ) ) : ?>
 		<p data-wp-bind--hidden="!context.activeTabs.privacy">
-			<?= pro_message( 'ARVE Privacy', 'arve-privacy' ); // phpcs:ignore ?>
+			<?php echo pro_message( 'ARVE Privacy', 'arve-privacy' ); // phpcs:ignore ?>
 		</p>
 	<?php endif; ?>
 
@@ -134,13 +134,13 @@ function settings_content(): void {
 
 	<?php if ( ! is_plugin_active( 'arve-stick-videos/arve-sticky-videos.php' ) ) : ?>
 		<p data-wp-bind--hidden="!context.activeTabs.sticky_videos">
-			<?= pro_message( 'ARVE Sticky Videos', 'arve-stick-videos' ); // phpcs:ignore ?>
+			<?php echo pro_message( 'ARVE Sticky Videos', 'arve-stick-videos' ); // phpcs:ignore ?>
 		</p>
 	<?php endif; ?>
 
 	<?php if ( ! is_plugin_active( 'arve-random-video/arve-random-video.php' ) ) : ?>
 		<p data-wp-bind--hidden="!context.activeTabs.random_video">
-			<?= pro_message( 'ARVE Random Video', 'arve-random-video' ); // phpcs:ignore ?>
+			<?php echo pro_message( 'ARVE Random Video', 'arve-random-video' ); // phpcs:ignore ?>
 		</p>
 	<?php endif; ?>
 

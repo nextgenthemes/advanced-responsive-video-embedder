@@ -95,14 +95,14 @@ function create_shortcode_dialog(): void {
 	?>
 	<button 
 		type="button"
-		data-wp-interactive="<?= esc_attr( DIALOG_NAMESPACE ); ?>"
+		data-wp-interactive="<?php esc_attr( DIALOG_NAMESPACE ); ?>"
 		data-wp-on--click="actions.openShortcodeDialog"
 		data-editor="content"
 		hidden
 	></button>
 	<dialog 
 		class="arve-sc-dialog"
-		data-wp-interactive="<?= esc_attr( DIALOG_NAMESPACE ); ?>"
+		data-wp-interactive="<?php esc_attr( DIALOG_NAMESPACE ); ?>"
 		data-wp-watch="callbacks.updateShortcode"
 	>
 		<div class="arve-sc-dialog__wrap">
