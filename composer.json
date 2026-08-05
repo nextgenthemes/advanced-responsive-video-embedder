@@ -10,9 +10,6 @@
 			"role": "Developer"
 		}
 	],
-	"_next_require": {
-		"easy-digital-downloads/edd-sl-sdk": "^1.0.3"
-	},
 	"require": {
 		"php": ">=7.4",
 		"nextgenthemes/wp-settings": "@dev",
@@ -24,6 +21,9 @@
 		}
 	},
 	"extra": {
+		"next-require": {
+			"easy-digital-downloads/edd-sl-sdk": "^1.0.3"
+		},
 		"release-repo-changes": {
 			"nextgenthemes/wp-settings": {
 				"type": "vcs",
