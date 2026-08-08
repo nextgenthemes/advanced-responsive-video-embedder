@@ -40,17 +40,19 @@
 			"php": "7.4"
 		}
 	},
-	"repositories": {
-		"nextgenthemes/wp-settings": {
+	"repositories": [
+		{
+			"name": "nextgenthemes/wp-settings",
 			"type": "path",
 			"url": "../wp-settings",
 			"options": {
 				"symlink": true
 			}
 		},
-		"edd-sl-sdk": {
+		{
+			"name": "edd-sl-sdk",
 			"type": "vcs",
 			"url": "git@github.com:awesomemotive/edd-sl-sdk.git"
 		}
-	}
+	]
 }
