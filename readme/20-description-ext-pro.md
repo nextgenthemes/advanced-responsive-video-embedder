@@ -20,7 +20,7 @@ This plugin is financed by purchases of [ARVE Pro][20]. The development and supp
 *   2 hover & 3 play icon styles
 *   Responsive thumbnails (srcset)
 *   **Feel good about yourself**<br>
-    for supporting my 8+ years work on this plugin. Tons of hours, weekends … always worked on improving it
+    for supporting my 14+ years work on this plugin. Tons of hours, weekends … always worked on improving it
 *   Show the latest video of a YouTube channel by using the channel URL (updated/cached hourly)
 *   **[Get ARVE Pro][20]**
 

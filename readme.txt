@@ -11,7 +11,7 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Level up your basic video embeds! Advanced features, privacy. Use URLs, Shortcodes or Blocks to customize videos to your needs.
 
-## Description ##
+## Description
 
 The best WordPress plugin for videos? Supports close to everything you can imagine, still keeping it easy & simple.
 
@@ -19,7 +19,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 
 [youtube https://www.youtube.com/watch?v=m6mkA6Zr1vY ]
 
-### Features ###
+### Features
 
 #### Classic Editor ####
 
@@ -60,7 +60,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 
 [All providers with iframe embed codes](https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding)
 Alugha, Archive.org, Bitchute, Brightcove, Brighteon, Dailymotion, Dailymotion Playlist, DTube, Facebook, Google Drive, mp4 or webm video files, ARVE general iframe embed, IGN, IMDB, Kickstarter, kla.tv, Mail.ru, myspace, v.qq.com, Rumble.com, ok.ru, RuTube.ru, TED Talks, TikTok, Twitch, Viddler, Vimeo, VK, Wistia, XTube, xHamster, Yahoo, Youku, YouTube, YouTube Playlist, Kick
-### Reviews ###
+### Reviews
 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Great plugin, great support ####
 I’ve been using this plugin (free version and pro add-on) for a few years now. It works very well for my purposes (mainly lazyload and lightbox functionality). Recently I had a support issue with the new version which required some intervention – it was a conflict with my theme. Nico, the developer, went above and beyond to get a fix promptly sorted out for me. Thank you Nico.
@@ -78,7 +78,7 @@ So I have a responsive theme but on pages with you tube videos it wasn't making 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Only Plug-in that worked ####
 I used a lot of high ranking plug-ins but they still broke my design. Downloaded this and worked right away. Thanks!
 
-### [ARVE Pro][20] ###
+### [ARVE Pro][20]
 
 **<big>10% off</big>** first year with discount code `wporg`.
 
@@ -105,7 +105,7 @@ This plugin is financed by purchases of [ARVE Pro][20]. The development and supp
 
 [20]: https://nextgenthemes.com/plugins/arve-pro/
 
-### [ARVE Sticky Videos][23] ###
+### [ARVE Sticky Videos][23]
 
 Keep videos on the screen when scrolling.
 
@@ -114,7 +114,7 @@ Keep videos on the screen when scrolling.
 
   [23]: https://nextgenthemes.com/plugins/arve-sticky-videos/
 
-### [Random Video Addon](https://nextgenthemes.com/plugins/arve-random-video/) ###
+### [Random Video Addon](https://nextgenthemes.com/plugins/arve-random-video/)
 
 Display random video from:
 
@@ -122,7 +122,7 @@ Display random video from:
 *  Vimeo Showcase
 *  Comma separated list of video URLs
 
-### [ARVE AMP][29] ###
+### [ARVE AMP][29]
 
 When you use the AMP or 'AMP for WP' plugin you need this.
 
@@ -134,7 +134,7 @@ When you use the AMP or 'AMP for WP' plugin you need this.
 
   [29]: https://nextgenthemes.com/plugins/arve-amp/
 
-### Thanks ###
+### Thanks
 
 *   Of course all the customers who bought a addon.
 *   Howard Iken of [myfloridalaw.com](https://www.myfloridalaw.com) top donor, super nice to me even if I was rude and not deserved it!
@@ -142,45 +142,45 @@ When you use the AMP or 'AMP for WP' plugin you need this.
 *   Everybody giving constructive feedback, testing beta versions.
 *   Everybody who donated back in the days when this was donation based.
 
-### Thanks to the developers of the software used in ARVE ###
+### Thanks to the developers of the software used in ARVE
 
 *   [Bigger Picture](https://github.com/henrygd/bigger-picture), used in [Pro Addon](https://nextgenthemes.com/plugins/arve-pro/)
 
-## Frequently Asked Questions ##
+## Frequently Asked Questions
 
-### I have a problem ... ###
+### I have a problem ...
 
 Please report it on [nextgenthemes.com/support/](https://nextgenthemes.com/support/) **and please do not on the wordpess.org forums, thanks.**
 
-### I’m experiencing these errors on Google Search Console ###
+### I’m experiencing these errors on Google Search Console
 
 Best option to resolve these errors is to get [ARVE Pro](https://nextgenthemes.com/plugins/arve-pro/) as it fills these in for you hassle-free, only activate the add-on - done. For more options, please see the [detailed answer](https://nextgenthemes.com/plugins/arve/faq/).
 
-### How to get the pro version working? ###
+### How to get the pro version working?
 
 1. Go though the purchase process on [nextgenthemes.com](https://nextgenthemes.com/plugins/arve-pro/)
 1. Follow the 3 easy steps you get with the purchase receipt. It is basically downloading a arve-pro.zip and installing it through your WordPress Admin panel.
 1. After that you may want to switch your default mode to Lazyload or Lightbox on the ARVE settings page.
 
-### Why are my videos not filling their container? ###
+### Why are my videos not filling their container?
 
 You may need to adjust your 'Maximal Width' setting to your liking.
 
 You are most likely use `align`, this plugin has a option for limiting video width with alignment. If you want your videos to fill their containers then you should not use the `align` shortcode attribute.
 
-### Can you add a video provider? ###
+### Can you add a video provider?
 
 Feel free to ask.
 
-### How do I embed videos from a unlisted providers / iframes? ###
+### How do I embed videos from a unlisted providers / iframes?
 
 This plugin not changes anything to usual HTML `<iframe>` embed codes you have to use the shortcodes or the Gutenberg Block. They will become `[arve url="https://..."]`. The url represents what is the `src` in HTML embeds. It works as simple as this, if the `[arve]` shortcode does not detect a known URL structure then it will treat the URL as a `src` for the iframe.
 
-## Installation ##
+## Installation
 
 Please read the [official documentation](https://wordpress.org/support/article/managing-plugins/#installing-plugins) for that.
 
-## Screenshots ##
+## Screenshots
 
 1. Block Editor Example
 2. Shortcode creation dialog in Classic Editor
@@ -188,34 +188,34 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 4. Pro Options
 5. Video Files Options
 6. URL Parameter Options
-## Changelog ##
+## Changelog
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2026-08-05 10.9.4 ###
+### 2026-08-05 10.9.4
 
 * Improved: Removed debug code
 
-### 2026-08-05 10.9.3 ###
+### 2026-08-05 10.9.3
 
 * Improved: Removed short php tags
 
-### 2026-08-05 10.9.1 ###
+### 2026-08-05 10.9.1
 
 * Improved: Removed node_modules inside vendor
 
-### 2026-08-05 10.9.0 ###
+### 2026-08-05 10.9.0
 
 * New: Opt-in to ARVE news in the Settings page. News is no longer fetched by default.
 * Improved: Tested up to WordPress 7.0.2.
 * Improved: No more heredoc syntax.
 
-### 2026-05-09 10.8.6 ###
+### 2026-05-09 10.8.6
 
 * Fix: Outdated plugins getting executed.
 
-### 2026-05-07 10.8.5 ###
+### 2026-05-07 10.8.5
 
 * Improved: Change script into module.
 * Improved: Always add Vimeo secret ID do src URL.
@@ -223,16 +223,16 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * Fix: Corrected SEO data output.
 * Removed banned.video, it got taken down.
 
-### 2026-02-19 10.8.4 ###
+### 2026-02-19 10.8.4
 
 * Fix: Removes `.video-container` from Hueman Child Theme to fix aspect ratios.
 
-### 2026-02-17 10.8.3 ###
+### 2026-02-17 10.8.3
 
 * Fix: Errors on when saving settings related to old plugin options.
 * Improved: Provider data is not loaded more efficiently only once.
 
-### 2026-01-18 10.8.2 ###
+### 2026-01-18 10.8.2
 
 * New: Added `#t=0.1` to HTML5 video sources to fix Safari not showing still frames.
 
