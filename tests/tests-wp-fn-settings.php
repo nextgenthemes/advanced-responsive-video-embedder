@@ -9,7 +9,7 @@ class Tests_AddonsBaseChecks extends WP_UnitTestCase {
 
 	public function test_product_data(): void {
 
-		$suite = \NGT_TESTSUITE;
+		$suite = \NGT_TESTSUITE; // @phpstan-ignore-line
 
 		$this->assertNotEmpty( $suite );
 		$this->assertIsString( $suite );
@@ -28,7 +28,7 @@ class Tests_AddonsBaseChecks extends WP_UnitTestCase {
 			$addons = [ $suite => ADDONS[ $suite ] ];
 		}
 
-		$this->assertNotEmpty( $addons );
+		$this->assertNotEmpty( $addons ); // @phpstan-ignore method.alreadyNarrowedType
 
 		foreach ( ADDONS as $addon_slug => $addon_data ) {
 

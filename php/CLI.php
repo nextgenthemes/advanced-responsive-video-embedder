@@ -138,4 +138,28 @@ class CLI extends WP_CLI_Command {
 	public function delete_oembed_cache(): void {
 		WP_CLI::line( delete_oembed_cache() );
 	}
+
+	/**
+	 * List all supported video providers as a comma-separated line.
+	 *
+	 * Same data as the ARVE Support List block.
+	 *
+	 * @when after_wp_load
+	 */
+	public function providers(): void {
+
+		$providers = get_host_properties();
+
+		// unset deprecated and doubled
+		unset( $providers['dailymotionlist'] );
+		unset( $providers['iframe'] );
+
+		$names = [];
+
+		foreach ( $providers as $key => $values ) {
+			$names[] = $values['name'] ?? $key;
+		}
+
+		WP_CLI::line( implode( ', ', $names ) );
+	}
 }

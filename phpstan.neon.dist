@@ -12,4 +12,5 @@ parameters:
 	excludePaths:
 		analyse:
 			- vendor/nextgenthemes/wp-settings/includes/WP/Admin/EDD
+			- ../wp-settings/includes/WP/Admin/EDD
 	treatPhpDocTypesAsCertain: false

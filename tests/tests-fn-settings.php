@@ -8,8 +8,8 @@ use function Nextgenthemes\ARVE\default_options;
 class Tests_Settings extends WP_UnitTestCase {
 
 	public function test_options_is_array(): void {
-		$this->assertIsArray( options() );
-		$this->assertIsArray( default_options() );
+		$this->assertIsArray( options() ); // @phpstan-ignore-line
+		$this->assertIsArray( default_options() ); // @phpstan-ignore-line
 	}
 
 	/**

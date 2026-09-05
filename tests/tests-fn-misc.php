@@ -88,13 +88,21 @@ class Tests_Misc extends WP_UnitTestCase {
 	}
 
 	public function test_is_wp_error_array_true(): void {
-		$this->assertTrue( is_wp_error_array( [ 'code' => 'error', 'message' => 'test' ] ) );
+		$this->assertTrue(
+			is_wp_error_array(
+				[
+					'code'    => 'error',
+					'message' => 'test',
+				]
+			)
+		);
 	}
 
 	/**
 	 * @dataProvider data_is_wp_error_array_false
+	 * @param $data array<int, mixed>
 	 */
-	public function test_is_wp_error_array_false( $data ): void {
+	public function test_is_wp_error_array_false( array $data ): void {
 		$this->assertFalse( is_wp_error_array( $data ) );
 	}
 
@@ -160,18 +168,46 @@ class Tests_Misc extends WP_UnitTestCase {
 	}
 
 	public function test_is_card_lazyload_card(): void {
-		$this->assertTrue( is_card( [ 'mode' => 'lazyload', 'lazyload_style' => 'card' ] ) );
+		$this->assertTrue(
+			is_card(
+				[
+					'mode'           => 'lazyload',
+					'lazyload_style' => 'card',
+				]
+			)
+		);
 	}
 
 	public function test_is_card_lightbox_card(): void {
-		$this->assertTrue( is_card( [ 'mode' => 'lightbox', 'lazyload_style' => 'card' ] ) );
+		$this->assertTrue(
+			is_card(
+				[
+					'mode'           => 'lightbox',
+					'lazyload_style' => 'card',
+				]
+			)
+		);
 	}
 
 	public function test_is_card_normal_mode(): void {
-		$this->assertFalse( is_card( [ 'mode' => 'normal', 'lazyload_style' => 'card' ] ) );
+		$this->assertFalse(
+			is_card(
+				[
+					'mode'           => 'normal',
+					'lazyload_style' => 'card',
+				]
+			)
+		);
 	}
 
 	public function test_is_card_non_card_style(): void {
-		$this->assertFalse( is_card( [ 'mode' => 'lazyload', 'lazyload_style' => 'basic' ] ) );
+		$this->assertFalse(
+			is_card(
+				[
+					'mode'           => 'lazyload',
+					'lazyload_style' => 'basic',
+				]
+			)
+		);
 	}
 }

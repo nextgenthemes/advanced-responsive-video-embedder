@@ -12,12 +12,14 @@ namespace Nextgenthemes\ARVE;
  *     embed_url:      string,
  *     default_params: string,
  *     auto_thumbnail: bool,
- *     rebuild_url?:   string,*     tests:          array<int, array{
+ *     rebuild_url?:   string,
+ *     tests:          array<int, array{
  *         url: string,
  *         id:  string,
  *         account_id?: string,
  *         brightcove_player?: string,
- *         brightcove_embed?: string,*     }>
+ *         brightcove_embed?: string
+ *     }>
  * }>
  */
 const PROVIDERS = array(

@@ -18,6 +18,7 @@ class Tests_Shortcode_Creator extends WP_UnitTestCase {
 		// Second call should be no-op (static guard)
 		dialog_interactivity();
 
-		$this->assertTrue( true );
+		$ref = new ReflectionFunction( 'Nextgenthemes\ARVE\Admin\dialog_interactivity' );
+		$this->assertTrue( $ref->getStaticVariables()['ran_already'] );
 	}
 }

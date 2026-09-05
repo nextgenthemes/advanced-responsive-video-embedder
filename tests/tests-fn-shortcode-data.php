@@ -46,7 +46,7 @@ class Tests_Shortcode_Data extends WP_UnitTestCase {
 		$caught = false;
 
 		try {
-			get_language_name_from_code( 'zz' );
+			get_language_name_from_code( 'zz' ); // @phpstan-ignore function.resultUnused
 		} catch ( \Throwable $e ) {
 			$caught = true;
 		}

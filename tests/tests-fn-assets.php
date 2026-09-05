@@ -43,7 +43,7 @@ class Tests_Scripts_And_Styles extends WP_UnitTestCase {
 
 	public function test_add_async_to_script_modules_arve(): void {
 
-		$tag    = '<script type="module" src="https://example.com/arve.js"></script>';
+		$tag    = '<script type="module" src="https://example.com/arve.js"></script>'; // phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript
 		$result = add_async_to_script_modules( $tag, 'arve' );
 
 		$this->assertStringContainsString( 'type="module" async', $result );
@@ -63,7 +63,7 @@ class Tests_Scripts_And_Styles extends WP_UnitTestCase {
 
 		$result = add_styles_to_mce( '' );
 
-		$this->assertIsString( $result );
+		$this->assertNotEmpty( $result );
 	}
 
 	public function test_add_styles_to_mce_appends_to_existing(): void {

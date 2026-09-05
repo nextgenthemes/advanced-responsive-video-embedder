@@ -124,7 +124,8 @@ class Video {
 	 *     default: bool,
 	 *     kind: string,
 	 *     label: string,
-	 *     src: string,*     srclang: string
+	 *     src: string,
+	 *     srclang: string
 	 * }>
 	 */
 	private ?array $tracks;
@@ -720,11 +721,12 @@ class Video {
 	/**
 	 * Detects media tracks and returns their attributes.
 	 *
-	 * @return array<int,array{
+	 * @return array<int, array{
 	 *     default: bool,
 	 *     kind: string,
 	 *     label: string,
-	 *     src: string,*     srclang: string
+	 *     src: string,
+	 *     srclang: string
 	 * }>
 	 */
 	private function detect_tracks(): array {

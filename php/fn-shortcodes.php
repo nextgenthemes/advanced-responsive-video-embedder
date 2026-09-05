@@ -84,7 +84,6 @@ function shortcode_option_defaults(): array {
 
 	$shortcodes = array();
 	$properties = PROVIDERS;
-	unset( $properties['video'] );
 
 	foreach ( $properties as $provider => $values ) {
 

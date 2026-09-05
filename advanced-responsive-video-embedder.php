@@ -86,7 +86,7 @@ if ( file_exists( $autoloader ) ) {
 
 require_once __DIR__ . '/php/init.php';
 
-if ( defined( 'WP_CLI' ) && WP_CLI ) { // @phpstan-ignore-line
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	\WP_CLI::add_command( 'arve', 'Nextgenthemes\ARVE\CLI' );
 }
 

@@ -108,11 +108,6 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 			)
 		) {
 			$html = remote_get_body( $url, [ 'timeout' => 10 ] );
-
-			if ( is_wp_error( $html ) ) {
-				debug( $html );
-			}
-
 			$this->assertFalse( is_wp_error( $html ) );
 		}
 	}
@@ -343,7 +338,8 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 	 *     url: string,
 	 *     id: string,
 	 *     account_id: string|null,
-	 *     brightcove_player: string|null,*     brightcove_embed: string|null
+	 *     brightcove_player: string|null,
+	 *     brightcove_embed: string|null
 	 * }> Array of regex test data.
 	 */
 	public function regex_test_data(): array {
@@ -362,7 +358,7 @@ class Tests_Shortcodes extends WP_UnitTestCase {
 					'regex'             => $provider_data['regex'],
 					'url'               => $test_data['url'],
 					'id'                => $test_data['id'],
-					'account_id'        => $test_data['account_id'] ?? null,
+					'account_id'        => $test_data['account_id'] ?? null, // @phpstan-ignore-line
 					'brightcove_player' => $provider_data['brightcove_player'] ?? null,
 					'brightcove_embed'  => $provider_data['brightcove_embed'] ?? null,
 				];
