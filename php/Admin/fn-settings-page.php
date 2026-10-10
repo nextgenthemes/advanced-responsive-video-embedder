@@ -38,8 +38,8 @@ function settings_content(): void {
 		<p>
 			See 
 			<a target="_blank" href="https://developers.google.com/youtube/player_parameters#Parameters">Youtube Parameters</a>,
-			<a target="_blank" href="http://www.dailymotion.com/doc/api/player.html#parameters">Dailymotion Parameters</a>,
-			<a target="_blank" href="https://developer.vimeo.com/player/embedding">Vimeo Parameters</a>
+			<a target="_blank" href="https://developers.dailymotion.com/reference/web-sdk-player-runtime-parameters">Dailymotion Parameters</a>,
+			<a target="_blank" href="https://help.vimeo.com/hc/en-us/articles/12426260232977-About-Player-Parameters">Vimeo Parameters</a>
 		</p>
 	</div>
 
