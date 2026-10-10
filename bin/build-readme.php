@@ -81,7 +81,7 @@ function convert_description_ext_md_to_html( string $root ): void {
 		\preg_match( '/description-ext-([^.]+)/', basename( $filename ), $matches );
 
 		$html_filename = 'settings-sidebar-' . $matches[1] . '.html';
-		cmd( "markdown $filename > $root/php/Admin/partials/$html_filename" );
+		cmd( "marked $filename > $root/php/Admin/partials/$html_filename" );
 	}
 }
 
