@@ -46,7 +46,7 @@
 			"type": "path",
 			"url": "../wp-settings",
 			"options": {
-				"symlink": true
+				"symlink": false
 			}
 		},
 		{
