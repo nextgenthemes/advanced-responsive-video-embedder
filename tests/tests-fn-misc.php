@@ -100,9 +100,9 @@ class Tests_Misc extends WP_UnitTestCase {
 
 	/**
 	 * @dataProvider data_is_wp_error_array_false
-	 * @param $data array<int, mixed>
+	 * @param mixed $data
 	 */
-	public function test_is_wp_error_array_false( array $data ): void {
+	public function test_is_wp_error_array_false( $data ): void {
 		$this->assertFalse( is_wp_error_array( $data ) );
 	}
 
